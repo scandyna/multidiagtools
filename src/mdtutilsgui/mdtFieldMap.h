@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FIEL_DMAP_H
-#define MDT_FIEL_DMAP_H
+#ifndef MDT_FIELD_MAP_H
+#define MDT_FIELD_MAP_H
 
 #include "mdtFieldMapItem.h"
 #include <QString>
@@ -107,6 +107,13 @@ class mdtFieldMap
    */
   mdtFieldMapItem *itemAtDisplayText(const QString &text);
 
+  /*! \brief Get the source field name for a given field index
+   *
+   * \param index In above example, it's the model column index.
+   * \return Source field name, or a empty string if field index was not found.
+   */
+  QString sourceFieldNameAtFieldIndex(int index) const;
+
   /*! \brief Get the items for given source index
    *
    * \param index In above example, it's the index of field in CSV header.
@@ -127,7 +134,7 @@ class mdtFieldMap
    * \param fieldIndex In above example, it's the model column index.
    * \return Converted data, or invalid QVariant if index was not found, or on failed conversion.
    */
-  QVariant dataForFieldIndex(const QStringList &sourceData, int fieldIndex);
+  QVariant dataForFieldIndex(const QStringList &sourceData, int fieldIndex) const;
 
   /*! \brief Get data for a given field name in source data
    *
@@ -159,6 +166,12 @@ class mdtFieldMap
    */
   QString dataForSourceFieldName(const QList<QVariant> &data, const QString &sourceFieldName);
 
+  /*! \brief Get display texts referenced by field names
+   *
+   * \return QHash with fieldName as key and displayText as value.
+   */
+  QHash<QString, QString> displayTextsByFieldNames() const;
+
  private:
 
   /*! \brief Insert data into string regarding item's source data offsets
@@ -167,6 +180,8 @@ class mdtFieldMap
 
   Q_DISABLE_COPY(mdtFieldMap);
 
+  // Main container
+  QList<mdtFieldMapItem*> pvItems;
   // To have a fast access, we refer items by several QHash containers
   QHash<int, mdtFieldMapItem*> pvItemsByFieldIndex;
   QHash<QString, mdtFieldMapItem*> pvItemsByFieldName;
@@ -175,4 +190,4 @@ class mdtFieldMap
   QMultiHash<QString, mdtFieldMapItem*> pvItemsBySourceFieldName;
 };
 
-#endif  // #ifndef MDT_FIEL_DMAP_H
+#endif  // #ifndef MDT_FIELD_MAP_H

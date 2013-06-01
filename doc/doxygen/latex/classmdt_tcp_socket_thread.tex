@@ -31,17 +31,40 @@ Collaboration diagram for mdtTcpSocketThread:\nopagebreak
 bool \hyperlink{classmdt_tcp_socket_thread_a3224f12c8ff8d695975030f3f6215010}{isReader} () const 
 \begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tcp_socket_thread_a014ad2b3a5fbe7031eeb1d42d8f0767d}{isWriter} () const 
-\begin{DoxyCompactList}\small\item\em Returns true if this thread writes date. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns true if this thread writes date. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tcp_socket_thread_aa14c9838dfb8d2defac449b8b58bbc7c}{handlesTimeout} () const 
+\begin{DoxyCompactList}\small\item\em Returns true. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 32 of file mdtTcpSocketThread.h.
+Definition at line 27 of file mdtTcpSocketThread.h.
 
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_tcp_socket_thread_aa14c9838dfb8d2defac449b8b58bbc7c}{
+\index{mdtTcpSocketThread@{mdtTcpSocketThread}!handlesTimeout@{handlesTimeout}}
+\index{handlesTimeout@{handlesTimeout}!mdtTcpSocketThread@{mdtTcpSocketThread}}
+\subsubsection[{handlesTimeout}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtTcpSocketThread::handlesTimeout (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_tcp_socket_thread_aa14c9838dfb8d2defac449b8b58bbc7c}
+
+
+Returns true. 
+
+\hyperlink{classmdt_port_manager}{mdtPortManager} uses this flag to know how to deal with timeouts. 
+
+Reimplemented from \hyperlink{classmdt_port_thread_aaf671b84f7c1fb508ff9221dccee4c15}{mdtPortThread}.
+
+
+
+Definition at line 47 of file mdtTcpSocketThread.cpp.
+
 \hypertarget{classmdt_tcp_socket_thread_a3224f12c8ff8d695975030f3f6215010}{
 \index{mdtTcpSocketThread@{mdtTcpSocketThread}!isReader@{isReader}}
 \index{isReader@{isReader}!mdtTcpSocketThread@{mdtTcpSocketThread}}
@@ -61,7 +84,7 @@ Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc3
 
 
 
-Definition at line 32 of file mdtTcpSocketThread.cpp.
+Definition at line 37 of file mdtTcpSocketThread.cpp.
 
 \hypertarget{classmdt_tcp_socket_thread_a014ad2b3a5fbe7031eeb1d42d8f0767d}{
 \index{mdtTcpSocketThread@{mdtTcpSocketThread}!isWriter@{isWriter}}
@@ -82,7 +105,7 @@ Reimplemented from \hyperlink{classmdt_port_thread_a0122a12262052cf3643241a3eaa3
 
 
 
-Definition at line 37 of file mdtTcpSocketThread.cpp.
+Definition at line 42 of file mdtTcpSocketThread.cpp.
 
 
 

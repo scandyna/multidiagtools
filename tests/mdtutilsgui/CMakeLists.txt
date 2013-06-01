@@ -32,3 +32,10 @@ add_executable(mdtdatatabletest "mdtDataTableTest.cpp" ${MDT_DATA_TABLE_TEST_MOC
 target_link_libraries(mdtdatatabletest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatatabletest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatatabletest "mdttest")
+
+# * mdtDatabaseTest executable *
+QT4_WRAP_CPP(MDT_DATABASE_TEST_MOC "mdtDatabaseTest.h")
+add_executable(mdtdatabasetest "mdtDatabaseTest.cpp" ${MDT_DATABASE_TEST_MOC})
+target_link_libraries(mdtdatabasetest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasetest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasetest "mdttest")

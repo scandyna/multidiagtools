@@ -1,5 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_digital_io.html" title="Representation of a digital I/O." alt="" coords="5,85,96,115"/>
-<area shape="rect" id="node4" href="$classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI." alt="" coords="67,5,171,35"/>
-<area shape="rect" id="node6" href="$classmdt_analog_io.html" title="Representation of a analog I/O." alt="" coords="120,85,213,115"/>
+<area shape="rect" id="node2" href="$classmdt_digital_io.html" title="Representation of a digital I/O." alt="" coords="5,181,96,211"/>
+<area shape="rect" id="node4" href="$classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI." alt="" coords="35,101,139,131"/>
+<area shape="rect" id="node8" href="$classmdt_analog_io.html" title="Representation of a analog I/O." alt="" coords="120,181,213,211"/>
+<area shape="rect" id="node6" href="$classmdt_value.html" title="Conatins a value with some attributes." alt="" coords="48,5,125,35"/>
 </map>

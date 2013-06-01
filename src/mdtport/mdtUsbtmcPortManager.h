@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -79,7 +79,7 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    *
    * \param command Command to send.
    * \param timeout Write timeout [ms]
-   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedReadTimeout() for details).
+   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedWriteTimeout() for details).
    * \return bTag on success, or a error < 0
    *          (see mdtUsbtmcPortManager::writeData() for details).
    */
@@ -109,20 +109,23 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    *  This method returns immediatly after enqueue,
    *  and don't wait until data was written.
    *
+   * This method does not use transaction, because no response will be returned.
+   *
    * \param data Data to write
    * \return bTag ID on success or mdtAbstractPort::WriteQueueEmpty (< 0).
    * \pre Port must be set with setPort() before use of this method.
    */
-  int writeData(QByteArray data);
+  int writeData(const QByteArray &data);
 
   /*! \brief Send a read request to device
    *
    * USBTMC standard need that a read request is sent to device
    *  before we can read any data.
    *
-   * \param transaction A pointer to a valid transaction, with setQueryReplyMode set.
+   * \param transaction A pointer to a valid transaction, with queryReplyMode set.
    *                     (id will be set internally).
    * \return bTag ID on success or value < 0 if write queue is full.
+   *          On failure, the transaction is restored to pool.
    * \pre port must be set
    * \pre transaction must be a valid pointer
    */
@@ -176,13 +179,17 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
  private slots:
 
-  /*! \brief Manage errors comming from port threads
+  /*! \brief Manage errors comming from usb port thread
+   *
+   * This implementation will handle some USB specific errors,
+   *  change the current state emiting transistion signal.
+   *  If state has changed, stateChanged() signal is emited.
+   *
+   * Some errors are handled here. For others, mdtUsbPortManager::onThreadsErrorOccured() is called.
    */
   void onThreadsErrorOccured(int error);
 
  private:
-
-  quint8 pvCurrentWritebTag;  // USBTMC's frame bTag
 
   // Diseable copy
   Q_DISABLE_COPY(mdtUsbtmcPortManager);

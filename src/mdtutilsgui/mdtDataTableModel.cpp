@@ -20,9 +20,6 @@
  ****************************************************************************/
 #include "mdtDataTableModel.h"
 #include "mdtError.h"
-///#include <QSqlError>
-///#include <QSqlQuery>
-///#include <QStringList>
 
 #include <QDebug>
 
@@ -58,6 +55,7 @@ bool mdtDataTableModel::addRow(const QMap<QString,QVariant> &data, int role)
   }
   for(it = data.constBegin(); it != data.constEnd(); it++){
     if(!QSqlTableModel::setData(index(modelRowIndex, fieldIndex(it.key())) , it.value(), role)){
+      ///qDebug() << __FUNCTION__ << ": reverting row " << modelRowIndex;
       revertRow(modelRowIndex);
       return false;
     }
@@ -81,12 +79,14 @@ bool mdtDataTableModel::addRow(const QList<QVariant> &data, bool pkNotInData, in
     // If PK is not in data, we must remap indexes
     if((pkNotInData)&&(pvPkIndexes.contains(modelColumnIndex))){
       if(modelColumnIndex >= columnCount()){
+        ///qDebug() << __FUNCTION__ << ": reverting row " << modelRowIndex;
         revertRow(modelRowIndex);
         return false;
       }
       modelColumnIndex++;
     }
     if(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data.at(dataColumnIndex), role)){
+      ///qDebug() << __FUNCTION__ << ": reverting row " << modelRowIndex;
       revertRow(modelRowIndex);
       return false;
     }
@@ -111,12 +111,14 @@ bool mdtDataTableModel::addRow(const QStringList &data, bool pkNotInData, int ro
     // If PK is not in data, we must remap indexes
     if((pkNotInData)&&(pvPkIndexes.contains(modelColumnIndex))){
       if(modelColumnIndex >= columnCount()){
+        ///qDebug() << __FUNCTION__ << ": reverting row " << modelRowIndex;
         revertRow(modelRowIndex);
         return false;
       }
       modelColumnIndex++;
     }
     if(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data.at(dataColumnIndex), role)){
+      ///qDebug() << __FUNCTION__ << ": reverting row " << modelRowIndex;
       revertRow(modelRowIndex);
       return false;
     }
@@ -126,37 +128,29 @@ bool mdtDataTableModel::addRow(const QStringList &data, bool pkNotInData, int ro
   return doSubmit();
 }
 
-bool mdtDataTableModel::addRows(const QList<QStringList> &dataList, bool pkNotInData, int role)
-///bool mdtDataTableModel::addRows(const QList<QList<QVariant> > &dataList, bool pkNotInData, int role)
+bool mdtDataTableModel::addRows(const QList<QStringList> &rows, const mdtFieldMap &fieldMap, int role)
 {
   int dataRowIndex;
   int modelRowIndex;
-  int dataColumnIndex;
   int modelColumnIndex;
+  QVariant data;
 
   modelRowIndex = rowCount();
-  if(!insertRows(modelRowIndex, dataList.size())){
-    qDebug() << "Cannot insert rows, n: " << dataList.size();
+  if(!insertRows(modelRowIndex, rows.size())){
     return false;
   }
-  for(dataRowIndex=0; dataRowIndex<dataList.size(); dataRowIndex++){
+  for(dataRowIndex=0; dataRowIndex<rows.size(); dataRowIndex++){
     // Add data of each column
-    modelColumnIndex = 0;
-    for(dataColumnIndex=0; dataColumnIndex<dataList.at(dataRowIndex).size(); dataColumnIndex++){
-      // If PK is not in data, we must remap indexes
-      if((pkNotInData)&&(pvPkIndexes.contains(modelColumnIndex))){
-        if(modelColumnIndex >= columnCount()){
+    for(modelColumnIndex=0; modelColumnIndex<columnCount(); modelColumnIndex++){
+      data = fieldMap.dataForFieldIndex(rows.at(dataRowIndex), modelColumnIndex);
+      // If data is empty, it's possible that we have auto values
+      if(data.isValid()){
+        if(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data, role)){
+          ///qDebug() << __FUNCTION__ << ": reverting row " << modelRowIndex;
           revertRow(modelRowIndex);
           return false;
         }
-        modelColumnIndex++;
       }
-      if(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), dataList.at(dataRowIndex).at(dataColumnIndex), role)){
-        qDebug() << "setData() failed for index " << index(modelRowIndex, modelColumnIndex);
-        revertRow(modelRowIndex);
-        return false;
-      }
-      modelColumnIndex++;
     }
     modelRowIndex++;
   }
@@ -167,7 +161,8 @@ bool mdtDataTableModel::addRows(const QList<QStringList> &dataList, bool pkNotIn
 bool mdtDataTableModel::setData(int row, int column, const QVariant &value, int role)
 {
   if(!QSqlTableModel::setData(index(row, column), value, role)){
-    revertRow(row);
+    ///qDebug() << __FUNCTION__ << ": reverting row " << row;
+    ///revertRow(row);
     return false;
   }
 

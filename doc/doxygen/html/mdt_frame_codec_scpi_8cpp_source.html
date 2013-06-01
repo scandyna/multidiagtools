@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -108,371 +108,400 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00046"></a><a class="code" href="classmdt_frame_codec_scpi.html#a37a1703b6daee6f6bf91c6afb46191b3">00046</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a37a1703b6daee6f6bf91c6afb46191b3" title="Decode SCPI value(s)">mdtFrameCodecScpi::decodeValues</a>(<span class="keyword">const</span> QByteArray &amp;data, QString sep)
 <a name="l00047"></a>00047 {
 <a name="l00048"></a>00048   <span class="keywordtype">int</span> i;
-<a name="l00049"></a>00049   QVariant value;
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052   <span class="comment">// Clear previous results</span>
-<a name="l00053"></a>00053   pvValues.clear();
-<a name="l00054"></a>00054   pvNodes.clear();
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="comment">// Store raw data in local QString constainer</span>
-<a name="l00057"></a>00057   pvAsciiData = data;
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="comment">// Remove begin/end spaces and EOF</span>
-<a name="l00060"></a>00060   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1" title="Clean frame.">clean</a>()){
-<a name="l00061"></a>00061     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00062"></a>00062   }
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064   <span class="comment">// Extract nodes</span>
-<a name="l00065"></a>00065   pvNodes = pvAsciiData.split(sep);
-<a name="l00066"></a>00066   <span class="keywordflow">for</span>(i=0; i&lt;pvNodes.size(); i++){
-<a name="l00067"></a>00067     <span class="comment">// We ignore empty nodes</span>
-<a name="l00068"></a>00068     <span class="keywordflow">if</span>(pvNodes.at(i).isEmpty()){
-<a name="l00069"></a>00069       <span class="keywordflow">continue</span>;
-<a name="l00070"></a>00070     }
-<a name="l00071"></a>00071     <span class="comment">// Convert node</span>
-<a name="l00072"></a>00072     value = <a class="code" href="classmdt_frame_codec_ascii.html#aca3ccdf0bc617747e99ed1672344b880" title="Convert a string to first matching type.">convertData</a>(pvNodes.at(i));
-<a name="l00073"></a>00073     <span class="comment">// Check limits if type is double</span>
-<a name="l00074"></a>00074     <span class="keywordflow">if</span>(value.type() == QVariant::Double){
-<a name="l00087"></a>00087       value = <a class="code" href="classmdt_frame_codec_scpi.html#a15e824b3d02798c49a750b69f597ad7c" title="Check the validity of a floating value.">checkFloatingValueValidity</a>(value.toDouble());
-<a name="l00088"></a>00088     }
-<a name="l00089"></a>00089     <span class="comment">// Add converted value</span>
-<a name="l00090"></a>00090     pvValues.append(value);
-<a name="l00091"></a>00091   }
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00094"></a>00094 }
-<a name="l00095"></a>00095 
-<a name="l00096"></a><a class="code" href="classmdt_frame_codec_scpi.html#afb2fe212cf3f99262e91e238c72e9e63">00096</a> QVariant <a class="code" href="classmdt_frame_codec_scpi.html#afb2fe212cf3f99262e91e238c72e9e63" title="Decode a signle value in double floating format.">mdtFrameCodecScpi::decodeSingleValueDouble</a>(<span class="keyword">const</span> QByteArray &amp;data)
-<a name="l00097"></a>00097 {
-<a name="l00098"></a>00098   QVariant value;
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100   <span class="comment">// Store raw data in local QString constainer</span>
-<a name="l00101"></a>00101   pvAsciiData = data;
-<a name="l00102"></a>00102   <span class="comment">// Remove white spaces at begin and end</span>
-<a name="l00103"></a>00103   <a class="code" href="classmdt_frame_codec_ascii.html#a0e8b9664e1451400e1b955c5180c0de8" title="Remove whitespaces at begin and end of data frame.">trim</a>();
-<a name="l00104"></a>00104   <span class="comment">// remove EofSeq</span>
-<a name="l00105"></a>00105   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#ab9aebbbadb6d40b1353634154e6a28c0" title="Remove the End Of Frame Sequence.">removeEofSeq</a>()){
-<a name="l00106"></a>00106     <span class="keywordflow">return</span> value;
-<a name="l00107"></a>00107   }
-<a name="l00108"></a>00108   <span class="comment">// Case of no data</span>
-<a name="l00109"></a>00109   <span class="keywordflow">if</span>(pvAsciiData.size() &lt; 1){
-<a name="l00110"></a>00110     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data&quot;</span> , mdtError::Warning);
-<a name="l00111"></a>00111     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00112"></a>00112     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00113"></a>00113     <span class="keywordflow">return</span> value;
-<a name="l00114"></a>00114   }
-<a name="l00115"></a>00115   <span class="comment">// Convert and check</span>
-<a name="l00116"></a>00116   value = pvAsciiData;
-<a name="l00117"></a>00117   <span class="keywordflow">if</span>(value.canConvert(QVariant::Double)){
-<a name="l00118"></a>00118     <span class="keywordflow">if</span>(value.convert(QVariant::Double)){
-<a name="l00119"></a>00119       <span class="keywordflow">return</span> <a class="code" href="classmdt_frame_codec_scpi.html#a15e824b3d02798c49a750b69f597ad7c" title="Check the validity of a floating value.">checkFloatingValueValidity</a>(value.toDouble());
-<a name="l00120"></a>00120     }
-<a name="l00121"></a>00121   }
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123   <span class="keywordflow">return</span> QVariant();
-<a name="l00124"></a>00124 }
-<a name="l00125"></a>00125 
-<a name="l00126"></a><a class="code" href="classmdt_frame_codec_scpi.html#a15e824b3d02798c49a750b69f597ad7c">00126</a> QVariant <a class="code" href="classmdt_frame_codec_scpi.html#a15e824b3d02798c49a750b69f597ad7c" title="Check the validity of a floating value.">mdtFrameCodecScpi::checkFloatingValueValidity</a>(<span class="keywordtype">double</span> x)<span class="keyword"> const</span>
-<a name="l00127"></a>00127 <span class="keyword"></span>{
-<a name="l00128"></a>00128   <span class="comment">// Check about NaN</span>
-<a name="l00129"></a>00129   <span class="keywordflow">if</span>(qAbs(x - pvNan) &lt;= FLT_EPSILON){
-<a name="l00130"></a>00130     <span class="keywordflow">return</span> QVariant();
-<a name="l00131"></a>00131   }
-<a name="l00132"></a>00132   <span class="comment">// Check about -OL and OL</span>
-<a name="l00133"></a>00133   <span class="keywordflow">if</span>((x &lt;= (pvNinfinity+FLT_EPSILON))||(x &gt;= (pvInfinity-FLT_EPSILON))){
-<a name="l00134"></a>00134     <span class="keywordflow">return</span> QVariant();
-<a name="l00135"></a>00135   }
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137   <span class="keywordflow">return</span> x;
-<a name="l00138"></a>00138 }
-<a name="l00139"></a>00139 
-<a name="l00140"></a><a class="code" href="classmdt_frame_codec_scpi.html#ac928eac971706f5c78f36d0ae4dc0c42">00140</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#ac928eac971706f5c78f36d0ae4dc0c42" title="Decode reply of type function/parameter.">mdtFrameCodecScpi::decodeFunctionParameters</a>(<span class="keyword">const</span> QByteArray &amp;data)
-<a name="l00141"></a>00141 {
-<a name="l00142"></a>00142   <span class="keywordtype">int</span> i;
-<a name="l00143"></a>00143   QVariant value;
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145   <span class="comment">// Clear previous results</span>
-<a name="l00146"></a>00146   pvValues.clear();
-<a name="l00147"></a>00147   pvNodes.clear();
-<a name="l00148"></a>00148   <span class="comment">// Store raw data in local QString constainer</span>
-<a name="l00149"></a>00149   pvAsciiData = data;
-<a name="l00150"></a>00150   <span class="comment">// Remove white spaces at begin and end</span>
-<a name="l00151"></a>00151   <a class="code" href="classmdt_frame_codec_ascii.html#a0e8b9664e1451400e1b955c5180c0de8" title="Remove whitespaces at begin and end of data frame.">trim</a>();
-<a name="l00152"></a>00152   <span class="comment">// remove EofSeq</span>
-<a name="l00153"></a>00153   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#ab9aebbbadb6d40b1353634154e6a28c0" title="Remove the End Of Frame Sequence.">removeEofSeq</a>()){
-<a name="l00154"></a>00154     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00155"></a>00155   }
-<a name="l00156"></a>00156   <span class="comment">// Case of no data</span>
-<a name="l00157"></a>00157   <span class="keywordflow">if</span>(pvAsciiData.size() &lt; 1){
-<a name="l00158"></a>00158     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data&quot;</span> , mdtError::Warning);
-<a name="l00159"></a>00159     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00160"></a>00160     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00161"></a>00161     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00162"></a>00162   }
-<a name="l00163"></a>00163   <span class="comment">// Separate &lt;function&gt; &lt;parameters&gt;</span>
-<a name="l00164"></a>00164   pvNodes = pvAsciiData.split(<span class="charliteral">&#39; &#39;</span>, QString::SkipEmptyParts);
-<a name="l00165"></a>00165   <span class="keywordflow">if</span>(pvNodes.size() &lt; 1){
-<a name="l00166"></a>00166     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected min. 1)&quot;</span> , mdtError::Warning);
-<a name="l00167"></a>00167     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00168"></a>00168     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00169"></a>00169     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00170"></a>00170   }
-<a name="l00171"></a>00171   <span class="comment">// Ad function to result</span>
-<a name="l00172"></a>00172   pvValues.append(pvNodes.at(0));
-<a name="l00173"></a>00173   <span class="keywordflow">if</span>(pvValues.at(0).type() != QVariant::String){
-<a name="l00174"></a>00174     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Function is not a string&quot;</span> , mdtError::Warning);
-<a name="l00175"></a>00175     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00176"></a>00176     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00177"></a>00177     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00178"></a>00178   }
-<a name="l00179"></a>00179   <span class="comment">// Separate parameters</span>
-<a name="l00180"></a>00180   <span class="keywordflow">if</span>(pvNodes.size() &gt; 1){
-<a name="l00181"></a>00181     <span class="keywordflow">if</span>(pvNodes.size() != 2){
-<a name="l00182"></a>00182       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected 2)&quot;</span> , mdtError::Warning);
-<a name="l00183"></a>00183       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00184"></a>00184       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00185"></a>00185       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00186"></a>00186     }
-<a name="l00187"></a>00187     pvNodes = pvNodes.at(1).split(<span class="charliteral">&#39;,&#39;</span>, QString::SkipEmptyParts);
-<a name="l00188"></a>00188     <span class="keywordflow">for</span>(i=0; i&lt;pvNodes.size(); i++){
-<a name="l00189"></a>00189       <span class="comment">// Convert node</span>
-<a name="l00190"></a>00190       value = <a class="code" href="classmdt_frame_codec_ascii.html#aca3ccdf0bc617747e99ed1672344b880" title="Convert a string to first matching type.">convertData</a>(pvNodes.at(i));
-<a name="l00191"></a>00191       <span class="comment">// Check limits if type is double</span>
-<a name="l00192"></a>00192       <span class="keywordflow">if</span>(value.type() == QVariant::Double){
-<a name="l00193"></a>00193         value = <a class="code" href="classmdt_frame_codec_scpi.html#a15e824b3d02798c49a750b69f597ad7c" title="Check the validity of a floating value.">checkFloatingValueValidity</a>(value.toDouble());
-<a name="l00194"></a>00194       }
-<a name="l00195"></a>00195       <span class="comment">// Add converted value</span>
-<a name="l00196"></a>00196       pvValues.append(value);
-<a name="l00197"></a>00197     }
-<a name="l00198"></a>00198   }
-<a name="l00199"></a>00199 
-<a name="l00200"></a>00200   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00201"></a>00201 }
-<a name="l00202"></a>00202 
-<a name="l00203"></a><a class="code" href="classmdt_frame_codec_scpi.html#a6ddd1b8e23252dc7f03c279a030cb36f">00203</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a6ddd1b8e23252dc7f03c279a030cb36f" title="Decode the IDN answer.">mdtFrameCodecScpi::decodeIdn</a>(<span class="keyword">const</span> QByteArray &amp;data)
-<a name="l00204"></a>00204 {
-<a name="l00205"></a>00205   QVariant value;
-<a name="l00206"></a>00206   <span class="keywordtype">int</span> i;
-<a name="l00207"></a>00207 
-<a name="l00208"></a>00208   <span class="comment">// Clear previous results</span>
-<a name="l00209"></a>00209   pvValues.clear();
-<a name="l00210"></a>00210   pvNodes.clear();
-<a name="l00211"></a>00211   <span class="comment">// Store raw data in local QString constainer</span>
-<a name="l00212"></a>00212   pvAsciiData = data;
-<a name="l00213"></a>00213   <span class="comment">// Remove begin/end spaces and EOF</span>
-<a name="l00214"></a>00214   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1" title="Clean frame.">clean</a>()){
-<a name="l00215"></a>00215     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00216"></a>00216   }
-<a name="l00217"></a>00217   <span class="comment">// Build the values list</span>
-<a name="l00218"></a>00218   pvNodes = pvAsciiData.split(<span class="stringliteral">&quot;,&quot;</span>);
-<a name="l00219"></a>00219   <span class="comment">// Store result in data list</span>
-<a name="l00220"></a>00220   <span class="keywordflow">for</span>(i=0; i&lt;pvNodes.size(); i++){
-<a name="l00221"></a>00221     pvValues &lt;&lt; pvNodes.at(i);
-<a name="l00222"></a>00222   }
-<a name="l00223"></a>00223 
-<a name="l00224"></a>00224   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00225"></a>00225 }
-<a name="l00226"></a>00226 
-<a name="l00227"></a><a class="code" href="classmdt_frame_codec_scpi.html#a3ae1183cbe26272a7a025e89fc961042">00227</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a3ae1183cbe26272a7a025e89fc961042" title="Decode the SCPI version returned by SYSTem:VERSion? query.">mdtFrameCodecScpi::decodeScpiVersion</a>(<span class="keyword">const</span> QByteArray &amp;data)
-<a name="l00228"></a>00228 {
-<a name="l00229"></a>00229   QVariant value;
-<a name="l00230"></a>00230 
-<a name="l00231"></a>00231   <span class="comment">// Clear previous results</span>
-<a name="l00232"></a>00232   pvValues.clear();
-<a name="l00233"></a>00233   pvNodes.clear();
-<a name="l00234"></a>00234   <span class="comment">// Store raw data in local QString constainer</span>
-<a name="l00235"></a>00235   pvAsciiData = data;
-<a name="l00236"></a>00236   <span class="comment">// Remove begin/end spaces and EOF</span>
-<a name="l00237"></a>00237   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1" title="Clean frame.">clean</a>()){
-<a name="l00238"></a>00238     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00239"></a>00239   }
-<a name="l00240"></a>00240   <span class="comment">// Separate YYYY and V</span>
-<a name="l00241"></a>00241   pvNodes = pvAsciiData.split(<span class="charliteral">&#39;.&#39;</span>, QString::SkipEmptyParts);
-<a name="l00242"></a>00242   <span class="keywordflow">if</span>(pvNodes.size() != 2){
-<a name="l00243"></a>00243     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected 2)&quot;</span> , mdtError::Warning);
-<a name="l00244"></a>00244     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00245"></a>00245     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00246"></a>00246     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00247"></a>00247   }
-<a name="l00248"></a>00248   <span class="comment">// Convert and store version</span>
-<a name="l00249"></a>00249   value = pvNodes.at(0);
-<a name="l00250"></a>00250   <span class="keywordflow">if</span>(!value.convert(QVariant::Int)){
-<a name="l00251"></a>00251     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Version has wrong format (expected YYYY.V)&quot;</span> , mdtError::Warning);
-<a name="l00252"></a>00252     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00253"></a>00253     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00254"></a>00254     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00255"></a>00255   }
-<a name="l00256"></a>00256   pvValues.append(value);
-<a name="l00257"></a>00257   value = pvNodes.at(1);
-<a name="l00258"></a>00258   <span class="keywordflow">if</span>(!value.convert(QVariant::Int)){
-<a name="l00259"></a>00259     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Version has wrong format (expected YYYY.V)&quot;</span> , mdtError::Warning);
-<a name="l00260"></a>00260     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00261"></a>00261     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00262"></a>00262     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00263"></a>00263   }
-<a name="l00264"></a>00264   pvValues.append(value);
-<a name="l00265"></a>00265 
-<a name="l00266"></a>00266   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00267"></a>00267 }
-<a name="l00268"></a>00268 
-<a name="l00269"></a><a class="code" href="classmdt_frame_codec_scpi.html#a9e38d8afadc7ff37821620feea6b0899">00269</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a9e38d8afadc7ff37821620feea6b0899" title="Decode error answer.">mdtFrameCodecScpi::decodeError</a>(<span class="keyword">const</span> QByteArray &amp;data)
-<a name="l00270"></a>00270 {
-<a name="l00271"></a>00271   QVariant value;
-<a name="l00272"></a>00272   <span class="keywordtype">bool</span> ok = <span class="keyword">false</span>;
-<a name="l00273"></a>00273   <span class="keywordtype">int</span> i;
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275   <span class="comment">// Clear previous results</span>
-<a name="l00276"></a>00276   pvValues.clear();
-<a name="l00277"></a>00277   pvNodes.clear();
+<a name="l00049"></a>00049   QVariant var;
+<a name="l00050"></a>00050   <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> value;
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053   <span class="comment">// Clear previous results</span>
+<a name="l00054"></a>00054   pvValues.clear();
+<a name="l00055"></a>00055   pvNodes.clear();
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057   <span class="comment">// Store raw data in local QString constainer</span>
+<a name="l00058"></a>00058   pvAsciiData = data;
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060   <span class="comment">// Remove begin/end spaces and EOF</span>
+<a name="l00061"></a>00061   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1" title="Clean frame.">clean</a>()){
+<a name="l00062"></a>00062     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00063"></a>00063   }
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065   <span class="comment">// Extract nodes</span>
+<a name="l00066"></a>00066   pvNodes = pvAsciiData.split(sep);
+<a name="l00067"></a>00067   <span class="keywordflow">for</span>(i=0; i&lt;pvNodes.size(); i++){
+<a name="l00068"></a>00068     <span class="comment">// We ignore empty nodes</span>
+<a name="l00069"></a>00069     <span class="keywordflow">if</span>(pvNodes.at(i).isEmpty()){
+<a name="l00070"></a>00070       <span class="keywordflow">continue</span>;
+<a name="l00071"></a>00071     }
+<a name="l00072"></a>00072     <span class="comment">// Convert node</span>
+<a name="l00073"></a>00073     var = <a class="code" href="classmdt_frame_codec_ascii.html#aca3ccdf0bc617747e99ed1672344b880" title="Convert a string to first matching type.">convertData</a>(pvNodes.at(i));
+<a name="l00074"></a>00074     <span class="comment">// Check limits if type is double</span>
+<a name="l00075"></a>00075     <span class="keywordflow">switch</span>(var.type()){
+<a name="l00076"></a>00076       <span class="keywordflow">case</span> QVariant::Double:
+<a name="l00077"></a>00077         value = <a class="code" href="classmdt_frame_codec_scpi.html#a90d550cfe0ed5605c63a064359fc762d" title="Check the validity of a floating value.">checkFloatingValueValidity</a>(var.toDouble());
+<a name="l00078"></a>00078         var.<a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521" title="Set value with double format.">setValue</a>(value);
+<a name="l00079"></a>00079         <span class="keywordflow">break</span>;
+<a name="l00080"></a>00080       <span class="keywordflow">case</span> QVariant::Int:
+<a name="l00081"></a>00081         value = var.toInt();
+<a name="l00082"></a>00082         var.<a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521" title="Set value with double format.">setValue</a>(value);
+<a name="l00083"></a>00083         <span class="keywordflow">break</span>;
+<a name="l00084"></a>00084       <span class="keywordflow">case</span> QVariant::Bool:
+<a name="l00085"></a>00085         value = var.toBool();
+<a name="l00086"></a>00086         var.<a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521" title="Set value with double format.">setValue</a>(value);
+<a name="l00087"></a>00087         <span class="keywordflow">break</span>;
+<a name="l00088"></a>00088       <span class="keywordflow">default</span>:
+<a name="l00089"></a>00089         <span class="comment">// Nothing to do</span>
+<a name="l00090"></a>00090         ;
+<a name="l00091"></a>00091     }
+<a name="l00092"></a>00092     <span class="keywordflow">if</span>(var.type() == QVariant::Double){
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107     }
+<a name="l00108"></a>00108     <span class="comment">// Add converted value</span>
+<a name="l00109"></a>00109     pvValues.append(var);
+<a name="l00110"></a>00110   }
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00113"></a>00113 }
+<a name="l00114"></a>00114 
+<a name="l00142"></a>00142 
+<a name="l00149"></a><a class="code" href="classmdt_frame_codec_scpi.html#ad2d7b41d0b3413074d770c5f512bee12">00149</a> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> <a class="code" href="classmdt_frame_codec_scpi.html#ad2d7b41d0b3413074d770c5f512bee12" title="Decode a signle value in double floating format.">mdtFrameCodecScpi::decodeSingleValueDouble</a>(<span class="keyword">const</span> QByteArray &amp;data)
+<a name="l00150"></a>00150 {
+<a name="l00151"></a>00151   QVariant value;
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153   <span class="comment">// Store raw data in local QString constainer</span>
+<a name="l00154"></a>00154   pvAsciiData = data;
+<a name="l00155"></a>00155   <span class="comment">// Remove white spaces at begin and end</span>
+<a name="l00156"></a>00156   <a class="code" href="classmdt_frame_codec_ascii.html#a0e8b9664e1451400e1b955c5180c0de8" title="Remove whitespaces at begin and end of data frame.">trim</a>();
+<a name="l00157"></a>00157   <span class="comment">// remove EofSeq</span>
+<a name="l00158"></a>00158   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#ab9aebbbadb6d40b1353634154e6a28c0" title="Remove the End Of Frame Sequence.">removeEofSeq</a>()){
+<a name="l00159"></a>00159     <span class="keywordflow">return</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a>();
+<a name="l00160"></a>00160   }
+<a name="l00161"></a>00161   <span class="comment">// Case of no data</span>
+<a name="l00162"></a>00162   <span class="keywordflow">if</span>(pvAsciiData.size() &lt; 1){
+<a name="l00163"></a>00163     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data&quot;</span> , mdtError::Warning);
+<a name="l00164"></a>00164     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00165"></a>00165     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00166"></a>00166     <span class="keywordflow">return</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a>();
+<a name="l00167"></a>00167   }
+<a name="l00168"></a>00168   <span class="comment">// Convert and check</span>
+<a name="l00169"></a>00169   value = pvAsciiData;
+<a name="l00170"></a>00170   <span class="keywordflow">if</span>(value.canConvert(QVariant::Double)){
+<a name="l00171"></a>00171     <span class="keywordflow">if</span>(value.convert(QVariant::Double)){
+<a name="l00172"></a>00172       <span class="keywordflow">return</span> <a class="code" href="classmdt_frame_codec_scpi.html#a90d550cfe0ed5605c63a064359fc762d" title="Check the validity of a floating value.">checkFloatingValueValidity</a>(value.toDouble());
+<a name="l00173"></a>00173     }
+<a name="l00174"></a>00174   }
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176   <span class="keywordflow">return</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a>();
+<a name="l00177"></a>00177 }
+<a name="l00178"></a>00178 
+<a name="l00195"></a><a class="code" href="classmdt_frame_codec_scpi.html#a90d550cfe0ed5605c63a064359fc762d">00195</a> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> <a class="code" href="classmdt_frame_codec_scpi.html#a90d550cfe0ed5605c63a064359fc762d" title="Check the validity of a floating value.">mdtFrameCodecScpi::checkFloatingValueValidity</a>(<span class="keywordtype">double</span> x)<span class="keyword"> const</span>
+<a name="l00196"></a>00196 <span class="keyword"></span>{
+<a name="l00197"></a>00197   <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> value;
+<a name="l00198"></a>00198   <span class="keywordtype">bool</span> isMinusOl = <span class="keyword">false</span>;
+<a name="l00199"></a>00199   <span class="keywordtype">bool</span> isPlusOl = <span class="keyword">false</span>;
+<a name="l00200"></a>00200 
+<a name="l00201"></a>00201   <span class="comment">// Check about NaN</span>
+<a name="l00202"></a>00202   <span class="keywordflow">if</span>(qAbs(x - pvNan) &lt;= FLT_EPSILON){
+<a name="l00203"></a>00203     <span class="keywordflow">return</span> value;
+<a name="l00204"></a>00204   }
+<a name="l00205"></a>00205   <span class="comment">// Check about -OL</span>
+<a name="l00206"></a>00206   <span class="keywordflow">if</span>(x &lt;= (pvNinfinity+FLT_EPSILON)){
+<a name="l00207"></a>00207     isMinusOl = <span class="keyword">true</span>;
+<a name="l00208"></a>00208   }
+<a name="l00209"></a>00209   <span class="comment">// Check about +OL</span>
+<a name="l00210"></a>00210   <span class="keywordflow">if</span>(x &gt;= (pvInfinity-FLT_EPSILON)){
+<a name="l00211"></a>00211     isPlusOl = <span class="keyword">true</span>;
+<a name="l00212"></a>00212   }
+<a name="l00213"></a>00213   value.<a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521" title="Set value with double format.">setValue</a>(x, isMinusOl, isPlusOl);
+<a name="l00214"></a>00214 
+<a name="l00215"></a>00215   <span class="keywordflow">return</span> value;
+<a name="l00216"></a>00216 }
+<a name="l00217"></a>00217 
+<a name="l00218"></a><a class="code" href="classmdt_frame_codec_scpi.html#ac928eac971706f5c78f36d0ae4dc0c42">00218</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#ac928eac971706f5c78f36d0ae4dc0c42" title="Decode reply of type function/parameter.">mdtFrameCodecScpi::decodeFunctionParameters</a>(<span class="keyword">const</span> QByteArray &amp;data)
+<a name="l00219"></a>00219 {
+<a name="l00220"></a>00220   <span class="keywordtype">int</span> i;
+<a name="l00221"></a>00221   QVariant value;
+<a name="l00222"></a>00222 
+<a name="l00223"></a>00223   <span class="comment">// Clear previous results</span>
+<a name="l00224"></a>00224   pvValues.clear();
+<a name="l00225"></a>00225   pvNodes.clear();
+<a name="l00226"></a>00226   <span class="comment">// Store raw data in local QString constainer</span>
+<a name="l00227"></a>00227   pvAsciiData = data;
+<a name="l00228"></a>00228   <span class="comment">// Remove white spaces at begin and end</span>
+<a name="l00229"></a>00229   <a class="code" href="classmdt_frame_codec_ascii.html#a0e8b9664e1451400e1b955c5180c0de8" title="Remove whitespaces at begin and end of data frame.">trim</a>();
+<a name="l00230"></a>00230   <span class="comment">// remove EofSeq</span>
+<a name="l00231"></a>00231   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#ab9aebbbadb6d40b1353634154e6a28c0" title="Remove the End Of Frame Sequence.">removeEofSeq</a>()){
+<a name="l00232"></a>00232     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00233"></a>00233   }
+<a name="l00234"></a>00234   <span class="comment">// Case of no data</span>
+<a name="l00235"></a>00235   <span class="keywordflow">if</span>(pvAsciiData.size() &lt; 1){
+<a name="l00236"></a>00236     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data&quot;</span> , mdtError::Warning);
+<a name="l00237"></a>00237     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00238"></a>00238     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00239"></a>00239     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00240"></a>00240   }
+<a name="l00241"></a>00241   <span class="comment">// Separate &lt;function&gt; &lt;parameters&gt;</span>
+<a name="l00242"></a>00242   pvNodes = pvAsciiData.split(<span class="charliteral">&#39; &#39;</span>, QString::SkipEmptyParts);
+<a name="l00243"></a>00243   <span class="keywordflow">if</span>(pvNodes.size() &lt; 1){
+<a name="l00244"></a>00244     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected min. 1)&quot;</span> , mdtError::Warning);
+<a name="l00245"></a>00245     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00246"></a>00246     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00247"></a>00247     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00248"></a>00248   }
+<a name="l00249"></a>00249   <span class="comment">// Ad function to result</span>
+<a name="l00250"></a>00250   pvValues.append(pvNodes.at(0));
+<a name="l00251"></a>00251   <span class="keywordflow">if</span>(pvValues.at(0).type() != QVariant::String){
+<a name="l00252"></a>00252     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Function is not a string&quot;</span> , mdtError::Warning);
+<a name="l00253"></a>00253     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00254"></a>00254     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00255"></a>00255     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00256"></a>00256   }
+<a name="l00257"></a>00257   <span class="comment">// Separate parameters</span>
+<a name="l00258"></a>00258   <span class="keywordflow">if</span>(pvNodes.size() &gt; 1){
+<a name="l00259"></a>00259     <span class="keywordflow">if</span>(pvNodes.size() != 2){
+<a name="l00260"></a>00260       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected 2)&quot;</span> , mdtError::Warning);
+<a name="l00261"></a>00261       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00262"></a>00262       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00263"></a>00263       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00264"></a>00264     }
+<a name="l00265"></a>00265     pvNodes = pvNodes.at(1).split(<span class="charliteral">&#39;,&#39;</span>, QString::SkipEmptyParts);
+<a name="l00266"></a>00266     <span class="keywordflow">for</span>(i=0; i&lt;pvNodes.size(); i++){
+<a name="l00267"></a>00267       <span class="comment">// Convert node</span>
+<a name="l00268"></a>00268       value = <a class="code" href="classmdt_frame_codec_ascii.html#aca3ccdf0bc617747e99ed1672344b880" title="Convert a string to first matching type.">convertData</a>(pvNodes.at(i));
+<a name="l00269"></a>00269       <span class="comment">// Check limits if type is double</span>
+<a name="l00270"></a>00270       <span class="keywordflow">if</span>(value.type() == QVariant::Double){
+<a name="l00272"></a>00272         value.setValue(<a class="code" href="classmdt_frame_codec_scpi.html#a90d550cfe0ed5605c63a064359fc762d" title="Check the validity of a floating value.">checkFloatingValueValidity</a>(value.toDouble()));
+<a name="l00273"></a>00273       }
+<a name="l00274"></a>00274       <span class="comment">// Add converted value</span>
+<a name="l00275"></a>00275       pvValues.append(value);
+<a name="l00276"></a>00276     }
+<a name="l00277"></a>00277   }
 <a name="l00278"></a>00278 
-<a name="l00279"></a>00279   <span class="comment">// Store raw data in local QString constainer</span>
-<a name="l00280"></a>00280   pvAsciiData = data;
+<a name="l00279"></a>00279   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00280"></a>00280 }
 <a name="l00281"></a>00281 
-<a name="l00282"></a>00282   <span class="comment">// Remove begin/end spaces and EOF</span>
-<a name="l00283"></a>00283   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1" title="Clean frame.">clean</a>()){
-<a name="l00284"></a>00284     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00285"></a>00285   }
+<a name="l00282"></a><a class="code" href="classmdt_frame_codec_scpi.html#a6ddd1b8e23252dc7f03c279a030cb36f">00282</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a6ddd1b8e23252dc7f03c279a030cb36f" title="Decode the IDN answer.">mdtFrameCodecScpi::decodeIdn</a>(<span class="keyword">const</span> QByteArray &amp;data)
+<a name="l00283"></a>00283 {
+<a name="l00284"></a>00284   QVariant value;
+<a name="l00285"></a>00285   <span class="keywordtype">int</span> i;
 <a name="l00286"></a>00286 
-<a name="l00287"></a>00287   <span class="comment">// Build the values list</span>
-<a name="l00288"></a>00288   pvNodes = <a class="code" href="namespacemdt_algorithms.html#a28d7d5eb9578936c950039fa2f86a1bf" title="Split a string reagrding a separator and data protection.">mdtAlgorithms::splitString</a>(pvAsciiData, <span class="stringliteral">&quot;,&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>);
-<a name="l00289"></a>00289   <span class="comment">// Store result in data list</span>
-<a name="l00290"></a>00290   <span class="keywordflow">if</span>(pvNodes.size() != 2){
-<a name="l00291"></a>00291     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;data contains not an error&quot;</span> , mdtError::Warning);
-<a name="l00292"></a>00292     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00293"></a>00293     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00287"></a>00287   <span class="comment">// Clear previous results</span>
+<a name="l00288"></a>00288   pvValues.clear();
+<a name="l00289"></a>00289   pvNodes.clear();
+<a name="l00290"></a>00290   <span class="comment">// Store raw data in local QString constainer</span>
+<a name="l00291"></a>00291   pvAsciiData = data;
+<a name="l00292"></a>00292   <span class="comment">// Remove begin/end spaces and EOF</span>
+<a name="l00293"></a>00293   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1" title="Clean frame.">clean</a>()){
 <a name="l00294"></a>00294     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00295"></a>00295   }
-<a name="l00296"></a>00296   <span class="comment">// Error code</span>
-<a name="l00297"></a>00297   value = pvNodes.at(0);
-<a name="l00298"></a>00298   value = value.toInt(&amp;ok);
-<a name="l00299"></a>00299   <span class="keywordflow">if</span>(!ok){
-<a name="l00300"></a>00300     value.clear();
+<a name="l00296"></a>00296   <span class="comment">// Build the values list</span>
+<a name="l00297"></a>00297   pvNodes = pvAsciiData.split(<span class="stringliteral">&quot;,&quot;</span>);
+<a name="l00298"></a>00298   <span class="comment">// Store result in data list</span>
+<a name="l00299"></a>00299   <span class="keywordflow">for</span>(i=0; i&lt;pvNodes.size(); i++){
+<a name="l00300"></a>00300     pvValues &lt;&lt; pvNodes.at(i);
 <a name="l00301"></a>00301   }
-<a name="l00302"></a>00302   pvValues &lt;&lt; value;
-<a name="l00303"></a>00303   <span class="comment">// Error texts</span>
-<a name="l00304"></a>00304   pvNodes = pvNodes.at(1).split(<span class="stringliteral">&quot;;&quot;</span>);
-<a name="l00305"></a>00305   <span class="keywordflow">for</span>(i=0; i&lt;pvNodes.size(); i++){
-<a name="l00306"></a>00306     pvValues &lt;&lt; pvNodes.at(i);
-<a name="l00307"></a>00307   }
-<a name="l00308"></a>00308 
-<a name="l00309"></a>00309   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00310"></a>00310 }
-<a name="l00311"></a>00311 
-<a name="l00312"></a><a class="code" href="classmdt_frame_codec_scpi.html#a4b07da48ad126c56db050a379700ac2b">00312</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a4b07da48ad126c56db050a379700ac2b" title="Decode a IEEE block.">mdtFrameCodecScpi::decodeIEEEblock</a>(<span class="keyword">const</span> QByteArray &amp;data, <a class="code" href="classmdt_frame_codec_scpi.html#a0562eccf33d8cf62e7a73a748a70c475" title="Format of waveform data.">mdtFrameCodecScpi::waveform_format_t</a> format)
-<a name="l00313"></a>00313 {
-<a name="l00314"></a>00314   <span class="keywordtype">int</span> headerSize;
-<a name="l00315"></a>00315   <span class="keywordtype">int</span> dataSize;
-<a name="l00316"></a>00316   <span class="keywordtype">bool</span> ok = <span class="keyword">false</span>;
-<a name="l00317"></a>00317 
-<a name="l00318"></a>00318   <span class="comment">// Clear previous results</span>
-<a name="l00319"></a>00319   pvValues.clear();
-<a name="l00320"></a>00320   <span class="comment">// If string length is &lt; 3: shure: not an IEEE block</span>
-<a name="l00321"></a>00321   <span class="keywordflow">if</span>(data.size() &lt; 3){
-<a name="l00322"></a>00322     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is not a IEEE block (length &lt; 2)&quot;</span> , mdtError::Warning);
+<a name="l00302"></a>00302 
+<a name="l00303"></a>00303   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00304"></a>00304 }
+<a name="l00305"></a>00305 
+<a name="l00306"></a><a class="code" href="classmdt_frame_codec_scpi.html#a3ae1183cbe26272a7a025e89fc961042">00306</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a3ae1183cbe26272a7a025e89fc961042" title="Decode the SCPI version returned by SYSTem:VERSion? query.">mdtFrameCodecScpi::decodeScpiVersion</a>(<span class="keyword">const</span> QByteArray &amp;data)
+<a name="l00307"></a>00307 {
+<a name="l00308"></a>00308   QVariant value;
+<a name="l00309"></a>00309 
+<a name="l00310"></a>00310   <span class="comment">// Clear previous results</span>
+<a name="l00311"></a>00311   pvValues.clear();
+<a name="l00312"></a>00312   pvNodes.clear();
+<a name="l00313"></a>00313   <span class="comment">// Store raw data in local QString constainer</span>
+<a name="l00314"></a>00314   pvAsciiData = data;
+<a name="l00315"></a>00315   <span class="comment">// Remove begin/end spaces and EOF</span>
+<a name="l00316"></a>00316   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1" title="Clean frame.">clean</a>()){
+<a name="l00317"></a>00317     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00318"></a>00318   }
+<a name="l00319"></a>00319   <span class="comment">// Separate YYYY and V</span>
+<a name="l00320"></a>00320   pvNodes = pvAsciiData.split(<span class="charliteral">&#39;.&#39;</span>, QString::SkipEmptyParts);
+<a name="l00321"></a>00321   <span class="keywordflow">if</span>(pvNodes.size() != 2){
+<a name="l00322"></a>00322     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected 2)&quot;</span> , mdtError::Warning);
 <a name="l00323"></a>00323     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00324"></a>00324     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00325"></a>00325     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00326"></a>00326   }
-<a name="l00327"></a>00327   <span class="comment">// If first char is not a #, we have not a IEEE block</span>
-<a name="l00328"></a>00328   <span class="keywordflow">if</span>(data.at(0) != <span class="charliteral">&#39;#&#39;</span>){
-<a name="l00329"></a>00329     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is not a IEEE block (beginns not with #)&quot;</span> , mdtError::Warning);
-<a name="l00330"></a>00330     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00331"></a>00331     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00332"></a>00332     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00333"></a>00333   }
-<a name="l00334"></a>00334   <span class="comment">// Get the header length</span>
-<a name="l00335"></a>00335   headerSize = data.mid(1, 1).toInt(&amp;ok);
-<a name="l00336"></a>00336   <span class="keywordflow">if</span>(!ok){
-<a name="l00337"></a>00337     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Cannot get header length in IEEE block&quot;</span> , mdtError::Warning);
-<a name="l00338"></a>00338     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00339"></a>00339     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00340"></a>00340     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00341"></a>00341   }
-<a name="l00342"></a>00342   <span class="comment">// Check that enough bytes are available</span>
-<a name="l00343"></a>00343   <span class="keywordflow">if</span>(data.size() &lt; (headerSize+2)){
-<a name="l00344"></a>00344     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data&quot;</span> , mdtError::Warning);
-<a name="l00345"></a>00345     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00346"></a>00346     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00347"></a>00347     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00348"></a>00348   }
-<a name="l00349"></a>00349   <span class="comment">// Get data length</span>
-<a name="l00350"></a>00350   dataSize = data.mid(2, headerSize).toInt(&amp;ok);
-<a name="l00351"></a>00351   <span class="keywordflow">if</span>(!ok){
-<a name="l00352"></a>00352     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Cannot get data length in IEEE block&quot;</span> , mdtError::Warning);
-<a name="l00353"></a>00353     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00354"></a>00354     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00355"></a>00355     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00356"></a>00356   }
-<a name="l00357"></a>00357   <span class="keywordflow">if</span>(dataSize &lt; 1){
-<a name="l00358"></a>00358     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data (info from header)&quot;</span> , mdtError::Warning);
-<a name="l00359"></a>00359     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00360"></a>00360     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00361"></a>00361     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00362"></a>00362   }
-<a name="l00363"></a>00363   <span class="comment">// Calculate real received data size</span>
-<a name="l00364"></a>00364   <span class="keywordflow">if</span>(data.at(data.size()-1) == <span class="charliteral">&#39;\n&#39;</span>){
-<a name="l00365"></a>00365     dataSize = data.size()-headerSize-3;
-<a name="l00366"></a>00366   }<span class="keywordflow">else</span>{
-<a name="l00367"></a>00367     dataSize = data.size()-headerSize-2;
-<a name="l00368"></a>00368   }
-<a name="l00369"></a>00369   <span class="keywordflow">if</span>(dataSize &lt; 1){
-<a name="l00370"></a>00370     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data (info from header)&quot;</span> , mdtError::Warning);
+<a name="l00327"></a>00327   <span class="comment">// Convert and store version</span>
+<a name="l00328"></a>00328   value = pvNodes.at(0);
+<a name="l00329"></a>00329   <span class="keywordflow">if</span>(!value.convert(QVariant::Int)){
+<a name="l00330"></a>00330     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Version has wrong format (expected YYYY.V)&quot;</span> , mdtError::Warning);
+<a name="l00331"></a>00331     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00332"></a>00332     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00333"></a>00333     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00334"></a>00334   }
+<a name="l00335"></a>00335   pvValues.append(value);
+<a name="l00336"></a>00336   value = pvNodes.at(1);
+<a name="l00337"></a>00337   <span class="keywordflow">if</span>(!value.convert(QVariant::Int)){
+<a name="l00338"></a>00338     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Version has wrong format (expected YYYY.V)&quot;</span> , mdtError::Warning);
+<a name="l00339"></a>00339     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00340"></a>00340     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00341"></a>00341     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00342"></a>00342   }
+<a name="l00343"></a>00343   pvValues.append(value);
+<a name="l00344"></a>00344 
+<a name="l00345"></a>00345   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00346"></a>00346 }
+<a name="l00347"></a>00347 
+<a name="l00348"></a><a class="code" href="classmdt_frame_codec_scpi.html#a9e38d8afadc7ff37821620feea6b0899">00348</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a9e38d8afadc7ff37821620feea6b0899" title="Decode error answer.">mdtFrameCodecScpi::decodeError</a>(<span class="keyword">const</span> QByteArray &amp;data)
+<a name="l00349"></a>00349 {
+<a name="l00350"></a>00350   QVariant value;
+<a name="l00351"></a>00351   <span class="keywordtype">bool</span> ok = <span class="keyword">false</span>;
+<a name="l00352"></a>00352   <span class="keywordtype">int</span> i;
+<a name="l00353"></a>00353 
+<a name="l00354"></a>00354   <span class="comment">// Clear previous results</span>
+<a name="l00355"></a>00355   pvValues.clear();
+<a name="l00356"></a>00356   pvNodes.clear();
+<a name="l00357"></a>00357 
+<a name="l00358"></a>00358   <span class="comment">// Store raw data in local QString constainer</span>
+<a name="l00359"></a>00359   pvAsciiData = data;
+<a name="l00360"></a>00360 
+<a name="l00361"></a>00361   <span class="comment">// Remove begin/end spaces and EOF</span>
+<a name="l00362"></a>00362   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1" title="Clean frame.">clean</a>()){
+<a name="l00363"></a>00363     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00364"></a>00364   }
+<a name="l00365"></a>00365 
+<a name="l00366"></a>00366   <span class="comment">// Build the values list</span>
+<a name="l00367"></a>00367   pvNodes = <a class="code" href="namespacemdt_algorithms.html#a28d7d5eb9578936c950039fa2f86a1bf" title="Split a string reagrding a separator and data protection.">mdtAlgorithms::splitString</a>(pvAsciiData, <span class="stringliteral">&quot;,&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>);
+<a name="l00368"></a>00368   <span class="comment">// Store result in data list</span>
+<a name="l00369"></a>00369   <span class="keywordflow">if</span>(pvNodes.size() != 2){
+<a name="l00370"></a>00370     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;data contains not an error&quot;</span> , mdtError::Warning);
 <a name="l00371"></a>00371     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00372"></a>00372     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00373"></a>00373     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00374"></a>00374   }
-<a name="l00375"></a>00375   <span class="comment">// Decode data part</span>
-<a name="l00376"></a>00376   <span class="keywordflow">if</span>(format == <a class="code" href="classmdt_frame_codec_scpi.html#a0562eccf33d8cf62e7a73a748a70c475aad91226f87cea7fab38f5cc7618f424c">BYTE</a>){
-<a name="l00377"></a>00377     <span class="keywordflow">return</span> <a class="code" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345" title="Decode a array of BYTE values.">decodeIEEEdataByte</a>(data.mid(headerSize+2, dataSize));
-<a name="l00378"></a>00378   }
-<a name="l00379"></a>00379   <span class="keywordflow">if</span>(format == <a class="code" href="classmdt_frame_codec_scpi.html#a0562eccf33d8cf62e7a73a748a70c475a957445cd510a5c4e6964e9b79e73af4d">ASCII</a>){
-<a name="l00380"></a>00380     <span class="keywordflow">return</span> <a class="code" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100" title="Decode a array of ASCII values.">decodeIEEEdataAscii</a>(data.mid(headerSize+2, dataSize));
-<a name="l00381"></a>00381   }
-<a name="l00382"></a>00382   <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Data format not implemented yet, sorry&quot;</span> , mdtError::Warning);
-<a name="l00383"></a>00383   MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
-<a name="l00384"></a>00384   e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00385"></a>00385   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00386"></a>00386 }
+<a name="l00375"></a>00375   <span class="comment">// Error code</span>
+<a name="l00376"></a>00376   value = pvNodes.at(0);
+<a name="l00377"></a>00377   value = value.toInt(&amp;ok);
+<a name="l00378"></a>00378   <span class="keywordflow">if</span>(!ok){
+<a name="l00379"></a>00379     value.clear();
+<a name="l00380"></a>00380   }
+<a name="l00381"></a>00381   pvValues &lt;&lt; value;
+<a name="l00382"></a>00382   <span class="comment">// Error texts</span>
+<a name="l00383"></a>00383   pvNodes = pvNodes.at(1).split(<span class="stringliteral">&quot;;&quot;</span>);
+<a name="l00384"></a>00384   <span class="keywordflow">for</span>(i=0; i&lt;pvNodes.size(); i++){
+<a name="l00385"></a>00385     pvValues &lt;&lt; pvNodes.at(i);
+<a name="l00386"></a>00386   }
 <a name="l00387"></a>00387 
-<a name="l00388"></a><a class="code" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100">00388</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100" title="Decode a array of ASCII values.">mdtFrameCodecScpi::decodeIEEEdataAscii</a>(<span class="keyword">const</span> QByteArray &amp;data)
-<a name="l00389"></a>00389 {
-<a name="l00390"></a>00390   QList&lt;QByteArray&gt; items;
-<a name="l00391"></a>00391   <span class="keywordtype">int</span> i;
-<a name="l00392"></a>00392   <span class="keywordtype">bool</span> ok;
-<a name="l00393"></a>00393   QVariant value;
-<a name="l00394"></a>00394 
-<a name="l00395"></a>00395   items = data.split(<span class="charliteral">&#39;,&#39;</span>);
-<a name="l00397"></a>00397   <span class="comment">// Convert each item</span>
-<a name="l00398"></a>00398   <span class="keywordflow">for</span>(i=0; i&lt;items.size(); i++){
-<a name="l00399"></a>00399     value = items.at(i).toDouble(&amp;ok);
-<a name="l00400"></a>00400     <span class="keywordflow">if</span>(!ok){
-<a name="l00401"></a>00401       value.clear();
-<a name="l00402"></a>00402     }
-<a name="l00403"></a>00403     pvValues.append(value);
-<a name="l00404"></a>00404   }
-<a name="l00406"></a>00406 
-<a name="l00407"></a>00407   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00408"></a>00408 }
-<a name="l00409"></a>00409 
-<a name="l00410"></a><a class="code" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345">00410</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345" title="Decode a array of BYTE values.">mdtFrameCodecScpi::decodeIEEEdataByte</a>(<span class="keyword">const</span> QByteArray &amp;data)
-<a name="l00411"></a>00411 {
-<a name="l00412"></a>00412   <span class="keywordtype">int</span> i;
-<a name="l00414"></a>00414 
-<a name="l00415"></a>00415   <span class="comment">// Check data length</span>
-<a name="l00416"></a>00416   <span class="comment">/*</span>
-<a name="l00417"></a>00417 <span class="comment">  if(len &lt; 1){</span>
-<a name="l00418"></a>00418 <span class="comment">    mdtError e(MDT_FRAME_DECODE_ERROR, &quot;IEEE block contains no data&quot; , mdtError::Warning);</span>
-<a name="l00419"></a>00419 <span class="comment">    MDT_ERROR_SET_SRC(e, &quot;mdtFrameCodecScpi&quot;);</span>
-<a name="l00420"></a>00420 <span class="comment">    e.commit();</span>
-<a name="l00421"></a>00421 <span class="comment">    return false;</span>
-<a name="l00422"></a>00422 <span class="comment">  }</span>
-<a name="l00423"></a>00423 <span class="comment">  */</span>
-<a name="l00424"></a>00424   <span class="keywordflow">for</span>(i=0; i&lt;data.size(); i++){
-<a name="l00425"></a>00425     pvValues.append((<span class="keywordtype">int</span>)data.at(i));
+<a name="l00388"></a>00388   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00389"></a>00389 }
+<a name="l00390"></a>00390 
+<a name="l00391"></a><a class="code" href="classmdt_frame_codec_scpi.html#a4b07da48ad126c56db050a379700ac2b">00391</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a4b07da48ad126c56db050a379700ac2b" title="Decode a IEEE block.">mdtFrameCodecScpi::decodeIEEEblock</a>(<span class="keyword">const</span> QByteArray &amp;data, <a class="code" href="classmdt_frame_codec_scpi.html#a0562eccf33d8cf62e7a73a748a70c475" title="Format of waveform data.">mdtFrameCodecScpi::waveform_format_t</a> format)
+<a name="l00392"></a>00392 {
+<a name="l00393"></a>00393   <span class="keywordtype">int</span> headerSize;
+<a name="l00394"></a>00394   <span class="keywordtype">int</span> dataSize;
+<a name="l00395"></a>00395   <span class="keywordtype">bool</span> ok = <span class="keyword">false</span>;
+<a name="l00396"></a>00396 
+<a name="l00397"></a>00397   <span class="comment">// Clear previous results</span>
+<a name="l00398"></a>00398   pvValues.clear();
+<a name="l00399"></a>00399   <span class="comment">// If string length is &lt; 3: shure: not an IEEE block</span>
+<a name="l00400"></a>00400   <span class="keywordflow">if</span>(data.size() &lt; 3){
+<a name="l00401"></a>00401     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is not a IEEE block (length &lt; 2)&quot;</span> , mdtError::Warning);
+<a name="l00402"></a>00402     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00403"></a>00403     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00404"></a>00404     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00405"></a>00405   }
+<a name="l00406"></a>00406   <span class="comment">// If first char is not a #, we have not a IEEE block</span>
+<a name="l00407"></a>00407   <span class="keywordflow">if</span>(data.at(0) != <span class="charliteral">&#39;#&#39;</span>){
+<a name="l00408"></a>00408     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is not a IEEE block (beginns not with #)&quot;</span> , mdtError::Warning);
+<a name="l00409"></a>00409     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00410"></a>00410     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00411"></a>00411     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00412"></a>00412   }
+<a name="l00413"></a>00413   <span class="comment">// Get the header length</span>
+<a name="l00414"></a>00414   headerSize = data.mid(1, 1).toInt(&amp;ok);
+<a name="l00415"></a>00415   <span class="keywordflow">if</span>(!ok){
+<a name="l00416"></a>00416     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Cannot get header length in IEEE block&quot;</span> , mdtError::Warning);
+<a name="l00417"></a>00417     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00418"></a>00418     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00419"></a>00419     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00420"></a>00420   }
+<a name="l00421"></a>00421   <span class="comment">// Check that enough bytes are available</span>
+<a name="l00422"></a>00422   <span class="keywordflow">if</span>(data.size() &lt; (headerSize+2)){
+<a name="l00423"></a>00423     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data&quot;</span> , mdtError::Warning);
+<a name="l00424"></a>00424     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00425"></a>00425     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00426"></a>00426     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00427"></a>00427   }
-<a name="l00428"></a>00428   
-<a name="l00429"></a>00429   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00430"></a>00430 }
+<a name="l00428"></a>00428   <span class="comment">// Get data length</span>
+<a name="l00429"></a>00429   dataSize = data.mid(2, headerSize).toInt(&amp;ok);
+<a name="l00430"></a>00430   <span class="keywordflow">if</span>(!ok){
+<a name="l00431"></a>00431     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Cannot get data length in IEEE block&quot;</span> , mdtError::Warning);
+<a name="l00432"></a>00432     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00433"></a>00433     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00434"></a>00434     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00435"></a>00435   }
+<a name="l00436"></a>00436   <span class="keywordflow">if</span>(dataSize &lt; 1){
+<a name="l00437"></a>00437     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data (info from header)&quot;</span> , mdtError::Warning);
+<a name="l00438"></a>00438     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00439"></a>00439     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00440"></a>00440     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00441"></a>00441   }
+<a name="l00442"></a>00442   <span class="comment">// Calculate real received data size</span>
+<a name="l00443"></a>00443   <span class="keywordflow">if</span>(data.at(data.size()-1) == <span class="charliteral">&#39;\n&#39;</span>){
+<a name="l00444"></a>00444     dataSize = data.size()-headerSize-3;
+<a name="l00445"></a>00445   }<span class="keywordflow">else</span>{
+<a name="l00446"></a>00446     dataSize = data.size()-headerSize-2;
+<a name="l00447"></a>00447   }
+<a name="l00448"></a>00448   <span class="keywordflow">if</span>(dataSize &lt; 1){
+<a name="l00449"></a>00449     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data (info from header)&quot;</span> , mdtError::Warning);
+<a name="l00450"></a>00450     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00451"></a>00451     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00452"></a>00452     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00453"></a>00453   }
+<a name="l00454"></a>00454   <span class="comment">// Decode data part</span>
+<a name="l00455"></a>00455   <span class="keywordflow">if</span>(format == <a class="code" href="classmdt_frame_codec_scpi.html#a0562eccf33d8cf62e7a73a748a70c475aad91226f87cea7fab38f5cc7618f424c">BYTE</a>){
+<a name="l00456"></a>00456     <span class="keywordflow">return</span> <a class="code" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345" title="Decode a array of BYTE values.">decodeIEEEdataByte</a>(data.mid(headerSize+2, dataSize));
+<a name="l00457"></a>00457   }
+<a name="l00458"></a>00458   <span class="keywordflow">if</span>(format == <a class="code" href="classmdt_frame_codec_scpi.html#a0562eccf33d8cf62e7a73a748a70c475a957445cd510a5c4e6964e9b79e73af4d">ASCII</a>){
+<a name="l00459"></a>00459     <span class="keywordflow">return</span> <a class="code" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100" title="Decode a array of ASCII values.">decodeIEEEdataAscii</a>(data.mid(headerSize+2, dataSize));
+<a name="l00460"></a>00460   }
+<a name="l00461"></a>00461   <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Data format not implemented yet, sorry&quot;</span> , mdtError::Warning);
+<a name="l00462"></a>00462   MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
+<a name="l00463"></a>00463   e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00464"></a>00464   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00465"></a>00465 }
+<a name="l00466"></a>00466 
+<a name="l00467"></a><a class="code" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100">00467</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100" title="Decode a array of ASCII values.">mdtFrameCodecScpi::decodeIEEEdataAscii</a>(<span class="keyword">const</span> QByteArray &amp;data)
+<a name="l00468"></a>00468 {
+<a name="l00469"></a>00469   QList&lt;QByteArray&gt; items;
+<a name="l00470"></a>00470   <span class="keywordtype">int</span> i;
+<a name="l00471"></a>00471   <span class="keywordtype">bool</span> ok;
+<a name="l00472"></a>00472   QVariant value;
+<a name="l00473"></a>00473 
+<a name="l00474"></a>00474   items = data.split(<span class="charliteral">&#39;,&#39;</span>);
+<a name="l00476"></a>00476   <span class="comment">// Convert each item</span>
+<a name="l00477"></a>00477   <span class="keywordflow">for</span>(i=0; i&lt;items.size(); i++){
+<a name="l00478"></a>00478     value = items.at(i).toDouble(&amp;ok);
+<a name="l00479"></a>00479     <span class="keywordflow">if</span>(!ok){
+<a name="l00480"></a>00480       value.clear();
+<a name="l00481"></a>00481     }
+<a name="l00482"></a>00482     pvValues.append(value);
+<a name="l00483"></a>00483   }
+<a name="l00485"></a>00485 
+<a name="l00486"></a>00486   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00487"></a>00487 }
+<a name="l00488"></a>00488 
+<a name="l00489"></a><a class="code" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345">00489</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345" title="Decode a array of BYTE values.">mdtFrameCodecScpi::decodeIEEEdataByte</a>(<span class="keyword">const</span> QByteArray &amp;data)
+<a name="l00490"></a>00490 {
+<a name="l00491"></a>00491   <span class="keywordtype">int</span> i;
+<a name="l00493"></a>00493 
+<a name="l00494"></a>00494   <span class="comment">// Check data length</span>
+<a name="l00495"></a>00495   <span class="comment">/*</span>
+<a name="l00496"></a>00496 <span class="comment">  if(len &lt; 1){</span>
+<a name="l00497"></a>00497 <span class="comment">    mdtError e(MDT_FRAME_DECODE_ERROR, &quot;IEEE block contains no data&quot; , mdtError::Warning);</span>
+<a name="l00498"></a>00498 <span class="comment">    MDT_ERROR_SET_SRC(e, &quot;mdtFrameCodecScpi&quot;);</span>
+<a name="l00499"></a>00499 <span class="comment">    e.commit();</span>
+<a name="l00500"></a>00500 <span class="comment">    return false;</span>
+<a name="l00501"></a>00501 <span class="comment">  }</span>
+<a name="l00502"></a>00502 <span class="comment">  */</span>
+<a name="l00503"></a>00503   <span class="keywordflow">for</span>(i=0; i&lt;data.size(); i++){
+<a name="l00504"></a>00504     pvValues.append((<span class="keywordtype">int</span>)data.at(i));
+<a name="l00506"></a>00506   }
+<a name="l00507"></a>00507   
+<a name="l00508"></a>00508   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00509"></a>00509 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -489,7 +518,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

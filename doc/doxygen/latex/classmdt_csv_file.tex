@@ -14,27 +14,38 @@ Read and write CSV file.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_csv_file_a8c9f24190d83f32672f360f0fcc53d2f}{
-\hyperlink{classmdt_csv_file_a8c9f24190d83f32672f360f0fcc53d2f}{mdtCsvFile} (QObject $\ast$parent=0, QByteArray fileEncoding=\char`\"{}UTF-\/8\char`\"{})}
-\label{classmdt_csv_file_a8c9f24190d83f32672f360f0fcc53d2f}
-
+\hyperlink{classmdt_csv_file_aaca142b18a4f436548e17fbef755e2d5}{mdtCsvFile} (QObject $\ast$parent=0, const QByteArray \&fileEncoding=\char`\"{}UTF-\/8\char`\"{})
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_csv_file_ab2d9754e50db179825813081bb129797}{readLines} (QByteArray separator=\char`\"{};\char`\"{}, QByteArray dataProtection=\char`\"{}\char`\"{}, QByteArray comment=\char`\"{}\#\char`\"{})
-\begin{DoxyCompactList}\small\item\em Read the file and store data. \end{DoxyCompactList}\item 
-QStringList \& \hyperlink{classmdt_csv_file_af44de864675351a6f22b176e64a4cecc}{parseLine} (const QByteArray \&line, const QByteArray \&separator, const QByteArray \&dataProtection)
-\begin{DoxyCompactList}\small\item\em Parse a string (considered as a line in a CSV file) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}{
-void \hyperlink{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}{clear} ()}
-\label{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}
+void \hyperlink{classmdt_csv_file_abfe09c325401ac9ca39c9d2329d6bc9c}{close} ()
+\begin{DoxyCompactList}\small\item\em Close. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_csv_file_a0e85f46ffdc4e44c8974c485abcc48b8}{writeLine} (const QStringList \&line, const QString \&separator=\char`\"{};\char`\"{}, const QString \&dataProtection=\char`\"{}\char`\"{}, const QChar \&escapeChar=QChar(), QString eol=\char`\"{}$\backslash$n\char`\"{})
+\begin{DoxyCompactList}\small\item\em Write a line of data. \end{DoxyCompactList}\item 
+QStringList \hyperlink{classmdt_csv_file_a4010d76497d8f5d2a85171025d31f100}{readHeader} (const QString \&separator=\char`\"{};\char`\"{}, const QString \&dataProtection=\char`\"{}\char`\"{}, const QString \&comment=\char`\"{}\#\char`\"{}, const QChar \&escapeChar=QChar(), QByteArray eol=\char`\"{}$\backslash$n\char`\"{})
+\begin{DoxyCompactList}\small\item\em Get CSV file's header. \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_csv_file_aa7d5e7ab9d6d71f7ca1c9fe7bea043a3}{readLine} (const QString \&dataProtection=\char`\"{}\char`\"{}, const QString \&comment=\char`\"{}\#\char`\"{}, const QChar \&escapeChar=QChar(), QByteArray eol=\char`\"{}$\backslash$n\char`\"{})
+\begin{DoxyCompactList}\small\item\em Read a line of data. \end{DoxyCompactList}\item 
+QStringList \hyperlink{classmdt_csv_file_a0c16f0024802eb675872aef129317eb8}{readLine} (const QString \&separator=\char`\"{};\char`\"{}, const QString \&dataProtection=\char`\"{}\char`\"{}, const QString \&comment=\char`\"{}\#\char`\"{}, const QChar \&escapeChar=QChar(), QByteArray eol=\char`\"{}$\backslash$n\char`\"{})
+\begin{DoxyCompactList}\small\item\em Read a line of data. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_csv_file_a56c5d054c044cba2e4d617f5185a13ed}{readLine} (QByteArray \&line, const QString \&dataProtection, const QString \&comment, const QChar \&escapeChar, QByteArray eol)
+\begin{DoxyCompactList}\small\item\em Read a line of data. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_csv_file_a1e8fa47acbbbf4e5fc7715e80e20d59b}{
+bool \hyperlink{classmdt_csv_file_a1e8fa47acbbbf4e5fc7715e80e20d59b}{hasMoreLines} () const }
+\label{classmdt_csv_file_a1e8fa47acbbbf4e5fc7715e80e20d59b}
 
-\begin{DoxyCompactList}\small\item\em Clear readen data. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Check if \hyperlink{classmdt_csv_file_aa7d5e7ab9d6d71f7ca1c9fe7bea043a3}{readLine()} has more lines available. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_csv_file_adeb771789de28feb5c1ec326b179e83b}{readLines} (const QString \&separator=\char`\"{};\char`\"{}, const QString \&dataProtection=\char`\"{}\char`\"{}, const QString \&comment=\char`\"{}\#\char`\"{}, const QChar \&escapeChar=QChar(), QString eol=\char`\"{}$\backslash$n\char`\"{})
+\begin{DoxyCompactList}\small\item\em Read the file and store data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}{clear} ()
+\begin{DoxyCompactList}\small\item\em Parse a string (considered as a line in a CSV file) \end{DoxyCompactList}\item 
 QString \hyperlink{classmdt_csv_file_af2d0917f92dd0d0d8100edccf1d3e4ee}{valueAt} (int line, int column)
 \begin{DoxyCompactList}\small\item\em Get a value. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_csv_file_a089e82f55982a40587f3d9e53c7ff261}{
 QList$<$ QStringList $>$ \& \hyperlink{classmdt_csv_file_a089e82f55982a40587f3d9e53c7ff261}{lines} ()}
 \label{classmdt_csv_file_a089e82f55982a40587f3d9e53c7ff261}
 
-\begin{DoxyCompactList}\small\item\em Get content of entire file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get content of entire file. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_csv_file_a27751812bf6625d6264bdce4bd43167c}{setReadLineBufferSize} (int size)
+\begin{DoxyCompactList}\small\item\em Set the \hyperlink{classmdt_csv_file_aa7d5e7ab9d6d71f7ca1c9fe7bea043a3}{readLine()} method's buffer size. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -42,22 +53,49 @@ Read and write CSV file.
 
 The default file encoding format is assumed UTF-\/8. If another format is to use, give it at constructor. 
 
-Definition at line 35 of file mdtCsvFile.h.
+Definition at line 43 of file mdtCsvFile.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_csv_file_aaca142b18a4f436548e17fbef755e2d5}{
+\index{mdtCsvFile@{mdtCsvFile}!mdtCsvFile@{mdtCsvFile}}
+\index{mdtCsvFile@{mdtCsvFile}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{mdtCsvFile}]{\setlength{\rightskip}{0pt plus 5cm}mdtCsvFile::mdtCsvFile (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{parent = {\ttfamily 0}, }
+\item[{const QByteArray \&}]{fileEncoding = {\ttfamily \char`\"{}UTF-\/8\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_aaca142b18a4f436548e17fbef755e2d5}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fileEncoding} & File encoding format. Note that this does not affect QFile's methods. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+fileEncoding must be supported by the system. 
+\end{DoxyPrecond}
+
+
+Definition at line 28 of file mdtCsvFile.cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_csv_file_af44de864675351a6f22b176e64a4cecc}{
-\index{mdtCsvFile@{mdtCsvFile}!parseLine@{parseLine}}
-\index{parseLine@{parseLine}!mdtCsvFile@{mdtCsvFile}}
-\subsubsection[{parseLine}]{\setlength{\rightskip}{0pt plus 5cm}QStringList \& mdtCsvFile::parseLine (
+\hypertarget{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}{
+\index{mdtCsvFile@{mdtCsvFile}!clear@{clear}}
+\index{clear@{clear}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtCsvFile::clear (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{line, }
-\item[{const QByteArray \&}]{separator, }
-\item[{const QByteArray \&}]{dataProtection}
+{}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_csv_file_af44de864675351a6f22b176e64a4cecc}
+\label{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}
 
 
 Parse a string (considered as a line in a CSV file) 
@@ -73,22 +111,199 @@ Parse a string (considered as a line in a CSV file)
 The list of found fields
 \end{DoxyReturn}
 \begin{Desc}
-\item[\hyperlink{todo__todo000058}{Todo}]Check new function in mdtAlgorithm \end{Desc}
+\item[\hyperlink{todo__todo000049}{Todo}]Check new function in mdtAlgorithm \end{Desc}
+QStringList \&parseLine(const QByteArray \&line, const QByteArray \&separator, const QByteArray \&dataProtection);
+
+Clear readen data 
+
+Definition at line 217 of file mdtCsvFile.cpp.
+
+\hypertarget{classmdt_csv_file_abfe09c325401ac9ca39c9d2329d6bc9c}{
+\index{mdtCsvFile@{mdtCsvFile}!close@{close}}
+\index{close@{close}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void mdtCsvFile::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_abfe09c325401ac9ca39c9d2329d6bc9c}
 
 
-Definition at line 71 of file mdtCsvFile.cpp.
+Close. 
 
-\hypertarget{classmdt_csv_file_ab2d9754e50db179825813081bb129797}{
+Will do some cleanup and call QFile's close method.
+
+Note: readen data are not cleared. Call \hyperlink{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}{clear()} explicitly for this. \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_csv_file_af2d0917f92dd0d0d8100edccf1d3e4ee}{valueAt()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 41 of file mdtCsvFile.cpp.
+
+\hypertarget{classmdt_csv_file_a4010d76497d8f5d2a85171025d31f100}{
+\index{mdtCsvFile@{mdtCsvFile}!readHeader@{readHeader}}
+\index{readHeader@{readHeader}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{readHeader}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtCsvFile::readHeader (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{separator = {\ttfamily \char`\"{};\char`\"{}}, }
+\item[{const QString \&}]{dataProtection = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{const QString \&}]{comment = {\ttfamily \char`\"{}\#\char`\"{}}, }
+\item[{const QChar \&}]{escapeChar = {\ttfamily QChar()}, }
+\item[{QByteArray}]{eol = {\ttfamily \char`\"{}$\backslash$n\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_a4010d76497d8f5d2a85171025d31f100}
+
+
+Get CSV file's header. 
+
+Will read the first line and get it's fields. After this call, \hyperlink{classmdt_csv_file_aa7d5e7ab9d6d71f7ca1c9fe7bea043a3}{readLine()} methods will begin at next line.
+
+
+\begin{DoxyParams}{Parameters}
+{\em separator} & Separator to use (typical: ; ) \\
+\hline
+{\em dataProtection} & Data protection (typical: " ) Note: current version does not support protected EOL. \\
+\hline
+{\em escapeChar} & Escape char (typical: $\backslash$ ). Note: has only effect to escape dataProtection. \\
+\hline
+{\em comment} & Comment (typical: \# ) \\
+\hline
+{\em eol} & End of line sequence. Usefull if given file was not written from running platform. Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A list containing the headers. 
+\end{DoxyReturn}
+
+
+Definition at line 89 of file mdtCsvFile.cpp.
+
+\hypertarget{classmdt_csv_file_aa7d5e7ab9d6d71f7ca1c9fe7bea043a3}{
+\index{mdtCsvFile@{mdtCsvFile}!readLine@{readLine}}
+\index{readLine@{readLine}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{readLine}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtCsvFile::readLine (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{dataProtection = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{const QString \&}]{comment = {\ttfamily \char`\"{}\#\char`\"{}}, }
+\item[{const QChar \&}]{escapeChar = {\ttfamily QChar()}, }
+\item[{QByteArray}]{eol = {\ttfamily \char`\"{}$\backslash$n\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_aa7d5e7ab9d6d71f7ca1c9fe7bea043a3}
+
+
+Read a line of data. 
+
+Note: do not use atEnd() to check if data are available anymore, but \hyperlink{classmdt_csv_file_a1e8fa47acbbbf4e5fc7715e80e20d59b}{hasMoreLines()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dataProtection} & Data protection (typical: " ). \\
+\hline
+{\em comment} & Comment (typical: \# ). Each line that beginns with comment is ignored. \\
+\hline
+{\em escapeChar} & Escape char (typical: $\backslash$ ). Note: has only effect to escape dataProtection. \\
+\hline
+{\em eol} & End of line sequence. Usefull if given file was not written from running platform. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Line of data. 
+\end{DoxyReturn}
+
+
+Definition at line 94 of file mdtCsvFile.cpp.
+
+\hypertarget{classmdt_csv_file_a0c16f0024802eb675872aef129317eb8}{
+\index{mdtCsvFile@{mdtCsvFile}!readLine@{readLine}}
+\index{readLine@{readLine}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{readLine}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtCsvFile::readLine (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{separator = {\ttfamily \char`\"{};\char`\"{}}, }
+\item[{const QString \&}]{dataProtection = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{const QString \&}]{comment = {\ttfamily \char`\"{}\#\char`\"{}}, }
+\item[{const QChar \&}]{escapeChar = {\ttfamily QChar()}, }
+\item[{QByteArray}]{eol = {\ttfamily \char`\"{}$\backslash$n\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_a0c16f0024802eb675872aef129317eb8}
+
+
+Read a line of data. 
+
+Note: do not use atEnd() to check if data are available anymore, but \hyperlink{classmdt_csv_file_a1e8fa47acbbbf4e5fc7715e80e20d59b}{hasMoreLines()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dataProtection} & Data protection (typical: " ). \\
+\hline
+{\em comment} & Comment (typical: \# ). Each line that beginns with comment is ignored. \\
+\hline
+{\em escapeChar} & Escape char (typical: $\backslash$ ). Note: has only effect to escape dataProtection. \\
+\hline
+{\em eol} & End of line sequence. Usefull if given file was not written from running platform. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Line of data. 
+\end{DoxyReturn}
+
+
+Definition at line 105 of file mdtCsvFile.cpp.
+
+\hypertarget{classmdt_csv_file_a56c5d054c044cba2e4d617f5185a13ed}{
+\index{mdtCsvFile@{mdtCsvFile}!readLine@{readLine}}
+\index{readLine@{readLine}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{readLine}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtCsvFile::readLine (
+\begin{DoxyParamCaption}
+\item[{QByteArray \&}]{line, }
+\item[{const QString \&}]{dataProtection, }
+\item[{const QString \&}]{comment, }
+\item[{const QChar \&}]{escapeChar, }
+\item[{QByteArray}]{eol}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_a56c5d054c044cba2e4d617f5185a13ed}
+
+
+Read a line of data. 
+
+Note: do not use atEnd() to check if data are available anymore, but \hyperlink{classmdt_csv_file_a1e8fa47acbbbf4e5fc7715e80e20d59b}{hasMoreLines()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & Line data will be put into this array. \\
+\hline
+{\em dataProtection} & Data protection (typical: " ). \\
+\hline
+{\em comment} & Comment (typical: \# ). Each line that beginns with comment is ignored. \\
+\hline
+{\em escapeChar} & Escape char (typical: $\backslash$ ). Note: has only effect to escape dataProtection. \\
+\hline
+{\em eol} & End of line sequence. Usefull if given file was not written from running platform. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success. 
+\end{DoxyReturn}
+
+
+Definition at line 117 of file mdtCsvFile.cpp.
+
+\hypertarget{classmdt_csv_file_adeb771789de28feb5c1ec326b179e83b}{
 \index{mdtCsvFile@{mdtCsvFile}!readLines@{readLines}}
 \index{readLines@{readLines}!mdtCsvFile@{mdtCsvFile}}
 \subsubsection[{readLines}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtCsvFile::readLines (
 \begin{DoxyParamCaption}
-\item[{QByteArray}]{separator = {\ttfamily \char`\"{};\char`\"{}}, }
-\item[{QByteArray}]{dataProtection = {\ttfamily \char`\"{}\char`\"{}}, }
-\item[{QByteArray}]{comment = {\ttfamily \char`\"{}\#\char`\"{}}}
+\item[{const QString \&}]{separator = {\ttfamily \char`\"{};\char`\"{}}, }
+\item[{const QString \&}]{dataProtection = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{const QString \&}]{comment = {\ttfamily \char`\"{}\#\char`\"{}}, }
+\item[{const QChar \&}]{escapeChar = {\ttfamily QChar()}, }
+\item[{QString}]{eol = {\ttfamily \char`\"{}$\backslash$n\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_csv_file_ab2d9754e50db179825813081bb129797}
+\label{classmdt_csv_file_adeb771789de28feb5c1ec326b179e83b}
 
 
 Read the file and store data. 
@@ -97,20 +312,41 @@ Read the file and store data.
 \begin{DoxyParams}{Parameters}
 {\em separator} & Separator to use (typical: ; ) \\
 \hline
-{\em protection} & Data protection (typical: " ) \\
+{\em dataProtection} & Data protection (typical: " ) \\
+\hline
+{\em escapeChar} & Escape char (typical: $\backslash$ ). Note: has only effect to escape dataProtection. \\
 \hline
 {\em comment} & Comment (typical: \# ) \\
 \hline
+{\em eol} & End of line sequence. Usefull if given file was not written from running platform. Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details). \\
+\hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success, false else (see errorString() to know what happened in this case) 
+True on success 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 separator, dataProtection and comment must not be the same 
 \end{DoxyPrecond}
 
 
-Definition at line 37 of file mdtCsvFile.cpp.
+Definition at line 180 of file mdtCsvFile.cpp.
+
+\hypertarget{classmdt_csv_file_a27751812bf6625d6264bdce4bd43167c}{
+\index{mdtCsvFile@{mdtCsvFile}!setReadLineBufferSize@{setReadLineBufferSize}}
+\index{setReadLineBufferSize@{setReadLineBufferSize}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{setReadLineBufferSize}]{\setlength{\rightskip}{0pt plus 5cm}void mdtCsvFile::setReadLineBufferSize (
+\begin{DoxyParamCaption}
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_a27751812bf6625d6264bdce4bd43167c}
+
+
+Set the \hyperlink{classmdt_csv_file_aa7d5e7ab9d6d71f7ca1c9fe7bea043a3}{readLine()} method's buffer size. 
+
+Used by unit testing. A value $<$ 1 means default value (8192). 
+
+Definition at line 244 of file mdtCsvFile.cpp.
 
 \hypertarget{classmdt_csv_file_af2d0917f92dd0d0d8100edccf1d3e4ee}{
 \index{mdtCsvFile@{mdtCsvFile}!valueAt@{valueAt}}
@@ -126,9 +362,46 @@ Definition at line 37 of file mdtCsvFile.cpp.
 
 Get a value. 
 
-No value is available before \hyperlink{classmdt_csv_file_ab2d9754e50db179825813081bb129797}{readLines()} was called. If requested index (line, column) is empty, or does not exists, a empty string is returned. The index check is done internally. 
+No value is available before \hyperlink{classmdt_csv_file_adeb771789de28feb5c1ec326b179e83b}{readLines()} was called. If requested index (line, column) is empty, or does not exists, a empty string is returned. The index check is done internally. 
 
-Definition at line 160 of file mdtCsvFile.cpp.
+Definition at line 222 of file mdtCsvFile.cpp.
+
+\hypertarget{classmdt_csv_file_a0e85f46ffdc4e44c8974c485abcc48b8}{
+\index{mdtCsvFile@{mdtCsvFile}!writeLine@{writeLine}}
+\index{writeLine@{writeLine}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{writeLine}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtCsvFile::writeLine (
+\begin{DoxyParamCaption}
+\item[{const QStringList \&}]{line, }
+\item[{const QString \&}]{separator = {\ttfamily \char`\"{};\char`\"{}}, }
+\item[{const QString \&}]{dataProtection = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{const QChar \&}]{escapeChar = {\ttfamily QChar()}, }
+\item[{QString}]{eol = {\ttfamily \char`\"{}$\backslash$n\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_a0e85f46ffdc4e44c8974c485abcc48b8}
+
+
+Write a line of data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & List of strings containing line data. \\
+\hline
+{\em separator} & Separator to use (typical: ; ) \\
+\hline
+{\em dataProtection} & Data protection (typical: " ). Note: current version does not support protected EOL. \\
+\hline
+{\em escapeChar} & Escape char (typical: $\backslash$ ). If not empty, if a line item contains a same sequence than dataProtection will be prefixed with escapeChar. Note: separator is not escaped. \\
+\hline
+{\em eol} & End of line sequence. Usefull if given file is not supposed to be readen from running platform. Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success 
+\end{DoxyReturn}
+
+
+Definition at line 47 of file mdtCsvFile.cpp.
 
 
 

@@ -1,0 +1,90 @@
+\hypertarget{classmdt_items_selector_dialog}{
+\section{mdtItemsSelectorDialog Class Reference}
+\label{classmdt_items_selector_dialog}\index{mdtItemsSelectorDialog@{mdtItemsSelectorDialog}}
+}
+
+
+Provide the user a dialog in witch he can choose items.  
+
+
+
+
+{\ttfamily \#include $<$mdtItemsSelectorDialog.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_items_selector_dialog_abfe9a59eba04870635aff550e16a1e5b}{mdtItemsSelectorDialog} (QWidget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_items_selector_dialog_a88d371fd132aaa5c67896ffc5c208d57}{
+\hyperlink{classmdt_items_selector_dialog_a88d371fd132aaa5c67896ffc5c208d57}{$\sim$mdtItemsSelectorDialog} ()}
+\label{classmdt_items_selector_dialog_a88d371fd132aaa5c67896ffc5c208d57}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_items_selector_dialog_a831eda8f00130744ac60d324d61f3687}{
+void \hyperlink{classmdt_items_selector_dialog_a831eda8f00130744ac60d324d61f3687}{setSortOptionEnabled} (bool enabled)}
+\label{classmdt_items_selector_dialog_a831eda8f00130744ac60d324d61f3687}
+
+\begin{DoxyCompactList}\small\item\em Enable/diseable sort option. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_items_selector_dialog_a05cf055e72c2d86a2cc7eb92afdcddbb}{
+void \hyperlink{classmdt_items_selector_dialog_a05cf055e72c2d86a2cc7eb92afdcddbb}{setAvailableItemsLabelText} (const QString \&text)}
+\label{classmdt_items_selector_dialog_a05cf055e72c2d86a2cc7eb92afdcddbb}
+
+\begin{DoxyCompactList}\small\item\em Set the Available items label text. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_items_selector_dialog_a2d5184d36f2b0e7cfbea39b055b2e19d}{
+void \hyperlink{classmdt_items_selector_dialog_a2d5184d36f2b0e7cfbea39b055b2e19d}{setAvailableItems} (const QStringList \&items)}
+\label{classmdt_items_selector_dialog_a2d5184d36f2b0e7cfbea39b055b2e19d}
+
+\begin{DoxyCompactList}\small\item\em Set the Available items. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_items_selector_dialog_a09e9df0c7cac2de513846916f47aa420}{
+void \hyperlink{classmdt_items_selector_dialog_a09e9df0c7cac2de513846916f47aa420}{setSelectedItemsLabelText} (const QString \&text)}
+\label{classmdt_items_selector_dialog_a09e9df0c7cac2de513846916f47aa420}
+
+\begin{DoxyCompactList}\small\item\em Set the selected items label text. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_items_selector_dialog_a8d6642276892d9366704ccf07067020b}{
+void \hyperlink{classmdt_items_selector_dialog_a8d6642276892d9366704ccf07067020b}{setSelectedItems} (const QStringList \&items)}
+\label{classmdt_items_selector_dialog_a8d6642276892d9366704ccf07067020b}
+
+\begin{DoxyCompactList}\small\item\em Set the selected items. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_items_selector_dialog_af6a5f0a0f046391287d3beec91b205d6}{
+QStringList \hyperlink{classmdt_items_selector_dialog_af6a5f0a0f046391287d3beec91b205d6}{selectedItems} () const }
+\label{classmdt_items_selector_dialog_af6a5f0a0f046391287d3beec91b205d6}
+
+\begin{DoxyCompactList}\small\item\em Get list of selected items. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Provide the user a dialog in witch he can choose items. 
+
+Definition at line 37 of file mdtItemsSelectorDialog.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_items_selector_dialog_abfe9a59eba04870635aff550e16a1e5b}{
+\index{mdtItemsSelectorDialog@{mdtItemsSelectorDialog}!mdtItemsSelectorDialog@{mdtItemsSelectorDialog}}
+\index{mdtItemsSelectorDialog@{mdtItemsSelectorDialog}!mdtItemsSelectorDialog@{mdtItemsSelectorDialog}}
+\subsubsection[{mdtItemsSelectorDialog}]{\setlength{\rightskip}{0pt plus 5cm}mdtItemsSelectorDialog::mdtItemsSelectorDialog (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_items_selector_dialog_abfe9a59eba04870635aff550e16a1e5b}
+
+
+Constructor. 
+
+
+
+connect(lwSelectedItems-\/$>$selectionModel(), SIGNAL(currentChanged(const QModelIndex\&, const QModelIndex\&)),$\backslash$ this, SLOT(updateCbSortOrderBySelectedItem(const QModelIndex\&, const QModelIndex\&))); 
+
+
+
+Definition at line 29 of file mdtItemsSelectorDialog.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtItemsSelectorDialog.h\item 
+src/mdtutilsgui/mdtItemsSelectorDialog.cpp\end{DoxyCompactItemize}

@@ -83,101 +83,105 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00021"></a>00021 <span class="preprocessor">#include &quot;mdtPortInfo.h&quot;</span>
 <a name="l00022"></a>00022 <span class="preprocessor">#include &quot;mdtDeviceInfo.h&quot;</span>
 <a name="l00023"></a>00023 
-<a name="l00024"></a>00024 mdtPortInfo::mdtPortInfo()
-<a name="l00025"></a>00025 {
-<a name="l00026"></a>00026 }
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 mdtPortInfo::mdtPortInfo(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
-<a name="l00029"></a>00029 {
-<a name="l00030"></a>00030   <span class="keywordtype">int</span> i;
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032   pvPortName = other.pvPortName;
-<a name="l00033"></a>00033   pvDisplayText = other.pvDisplayText;
-<a name="l00034"></a>00034   <span class="comment">// Copy devices list</span>
-<a name="l00035"></a>00035   <span class="keywordflow">for</span>(i=0; i&lt;other.pvDeviceInfoList.size(); ++i){
-<a name="l00036"></a>00036     pvDeviceInfoList.append(<span class="keyword">new</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>(*other.pvDeviceInfoList.at(i)));
-<a name="l00037"></a>00037   }
-<a name="l00038"></a>00038 }
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 mdtPortInfo::~mdtPortInfo()
-<a name="l00041"></a>00041 {
-<a name="l00042"></a>00042   qDeleteAll(pvDeviceInfoList);
-<a name="l00043"></a>00043 }
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33">00045</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33" title="Set the port name.">mdtPortInfo::setPortName</a>(<span class="keyword">const</span> QString &amp;name)
-<a name="l00046"></a>00046 {
-<a name="l00047"></a>00047   pvPortName = name;
-<a name="l00048"></a>00048 }
-<a name="l00049"></a>00049 
-<a name="l00050"></a><a class="code" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0">00050</a> QString <a class="code" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0" title="Get the port name.">mdtPortInfo::portName</a>()<span class="keyword"> const</span>
-<a name="l00051"></a>00051 <span class="keyword"></span>{
-<a name="l00052"></a>00052   <span class="keywordflow">return</span> pvPortName;
-<a name="l00053"></a>00053 }
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="classmdt_port_info.html#a2a8d6603b7e134ffd9e11900ece88a61">00055</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#a2a8d6603b7e134ffd9e11900ece88a61" title="Add a device.">mdtPortInfo::addDevice</a>(<a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> *device)
-<a name="l00056"></a>00056 {
-<a name="l00057"></a>00057   pvDeviceInfoList.append(device);
-<a name="l00058"></a>00058 }
-<a name="l00059"></a>00059 
-<a name="l00060"></a><a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80">00060</a> QList&lt;mdtDeviceInfo*&gt; &amp;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">mdtPortInfo::deviceInfoList</a>()
-<a name="l00061"></a>00061 {
-<a name="l00062"></a>00062   <span class="keywordflow">return</span> pvDeviceInfoList;
-<a name="l00063"></a>00063 }
-<a name="l00064"></a>00064 
-<a name="l00065"></a><a class="code" href="classmdt_port_info.html#aad09e261bafcdc72ef6b2479ec37fbe8">00065</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#aad09e261bafcdc72ef6b2479ec37fbe8" title="Set the display text.">mdtPortInfo::setDisplayText</a>(<span class="keyword">const</span> QString &amp;text)
-<a name="l00066"></a>00066 {
-<a name="l00067"></a>00067   pvDisplayText = text;
-<a name="l00068"></a>00068 }
-<a name="l00069"></a>00069 
-<a name="l00070"></a><a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211">00070</a> QString <a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">mdtPortInfo::displayText</a>()<span class="keyword"> const</span>
-<a name="l00071"></a>00071 <span class="keyword"></span>{
-<a name="l00072"></a>00072   <span class="keywordflow">return</span> pvDisplayText;
-<a name="l00073"></a>00073 }
-<a name="l00074"></a>00074 
-<a name="l00075"></a><a class="code" href="classmdt_port_info.html#a88bab5da09191b1ecfbb0b11f001ad24">00075</a> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;<a class="code" href="classmdt_port_info.html#a88bab5da09191b1ecfbb0b11f001ad24" title="Copy operator.">mdtPortInfo::operator=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
-<a name="l00076"></a>00076 {
-<a name="l00077"></a>00077   <span class="keywordtype">int</span> i;
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   <span class="keywordflow">if</span>(<span class="keyword">this</span> != &amp;other){
-<a name="l00080"></a>00080     pvPortName = other.pvPortName;
-<a name="l00081"></a>00081     pvDisplayText = other.pvDisplayText;
-<a name="l00082"></a>00082     <span class="comment">// Copy devices list</span>
-<a name="l00083"></a>00083     qDeleteAll(pvDeviceInfoList);
-<a name="l00084"></a>00084     pvDeviceInfoList.clear();
-<a name="l00085"></a>00085     <span class="keywordflow">for</span>(i=0; i&lt;other.pvDeviceInfoList.size(); ++i){
-<a name="l00086"></a>00086       pvDeviceInfoList.append(<span class="keyword">new</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>(*other.pvDeviceInfoList.at(i)));
-<a name="l00087"></a>00087     }
-<a name="l00088"></a>00088   }
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090   <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00091"></a>00091 }
-<a name="l00092"></a>00092 
-<a name="l00093"></a><a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4">00093</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4" title="Comparaison operator.">mdtPortInfo::operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
-<a name="l00094"></a>00094 {
-<a name="l00095"></a>00095   <span class="keywordtype">int</span> i;
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097   <span class="keywordflow">if</span>(pvPortName != other.pvPortName){
-<a name="l00098"></a>00098     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00099"></a>00099   }
-<a name="l00100"></a>00100   <span class="comment">// Check device info list</span>
-<a name="l00101"></a>00101   <span class="keywordflow">if</span>(pvDeviceInfoList.size() != other.pvDeviceInfoList.size()){
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QDebug&gt;</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 mdtPortInfo::mdtPortInfo()
+<a name="l00027"></a>00027 {
+<a name="l00028"></a>00028 }
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030 mdtPortInfo::mdtPortInfo(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
+<a name="l00031"></a>00031 {
+<a name="l00032"></a>00032   <span class="keywordtype">int</span> i;
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034   pvPortName = other.pvPortName;
+<a name="l00035"></a>00035   pvDisplayText = other.pvDisplayText;
+<a name="l00036"></a>00036   <span class="comment">// Copy devices list</span>
+<a name="l00037"></a>00037   <span class="keywordflow">for</span>(i=0; i&lt;other.pvDeviceInfoList.size(); ++i){
+<a name="l00038"></a>00038     pvDeviceInfoList.append(<span class="keyword">new</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>(*other.pvDeviceInfoList.at(i)));
+<a name="l00039"></a>00039   }
+<a name="l00040"></a>00040 }
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042 mdtPortInfo::~mdtPortInfo()
+<a name="l00043"></a>00043 {
+<a name="l00044"></a>00044   qDeleteAll(pvDeviceInfoList);
+<a name="l00045"></a>00045 }
+<a name="l00046"></a>00046 
+<a name="l00047"></a><a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33">00047</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33" title="Set the port name.">mdtPortInfo::setPortName</a>(<span class="keyword">const</span> QString &amp;name)
+<a name="l00048"></a>00048 {
+<a name="l00049"></a>00049   pvPortName = name;
+<a name="l00050"></a>00050 }
+<a name="l00051"></a>00051 
+<a name="l00052"></a><a class="code" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0">00052</a> QString <a class="code" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0" title="Get the port name.">mdtPortInfo::portName</a>()<span class="keyword"> const</span>
+<a name="l00053"></a>00053 <span class="keyword"></span>{
+<a name="l00054"></a>00054   <span class="keywordflow">return</span> pvPortName;
+<a name="l00055"></a>00055 }
+<a name="l00056"></a>00056 
+<a name="l00057"></a><a class="code" href="classmdt_port_info.html#a2a8d6603b7e134ffd9e11900ece88a61">00057</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#a2a8d6603b7e134ffd9e11900ece88a61" title="Add a device.">mdtPortInfo::addDevice</a>(<a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> *device)
+<a name="l00058"></a>00058 {
+<a name="l00059"></a>00059   pvDeviceInfoList.append(device);
+<a name="l00060"></a>00060 }
+<a name="l00061"></a>00061 
+<a name="l00062"></a><a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80">00062</a> QList&lt;mdtDeviceInfo*&gt; &amp;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">mdtPortInfo::deviceInfoList</a>()
+<a name="l00063"></a>00063 {
+<a name="l00064"></a>00064   <span class="keywordflow">return</span> pvDeviceInfoList;
+<a name="l00065"></a>00065 }
+<a name="l00066"></a>00066 
+<a name="l00067"></a><a class="code" href="classmdt_port_info.html#aad09e261bafcdc72ef6b2479ec37fbe8">00067</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#aad09e261bafcdc72ef6b2479ec37fbe8" title="Set the display text.">mdtPortInfo::setDisplayText</a>(<span class="keyword">const</span> QString &amp;text)
+<a name="l00068"></a>00068 {
+<a name="l00069"></a>00069   pvDisplayText = text;
+<a name="l00070"></a>00070 }
+<a name="l00071"></a>00071 
+<a name="l00072"></a><a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211">00072</a> QString <a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">mdtPortInfo::displayText</a>()<span class="keyword"> const</span>
+<a name="l00073"></a>00073 <span class="keyword"></span>{
+<a name="l00074"></a>00074   <span class="keywordflow">return</span> pvDisplayText;
+<a name="l00075"></a>00075 }
+<a name="l00076"></a>00076 
+<a name="l00077"></a><a class="code" href="classmdt_port_info.html#a88bab5da09191b1ecfbb0b11f001ad24">00077</a> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;<a class="code" href="classmdt_port_info.html#a88bab5da09191b1ecfbb0b11f001ad24" title="Copy operator.">mdtPortInfo::operator=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
+<a name="l00078"></a>00078 {
+<a name="l00079"></a>00079   <span class="keywordtype">int</span> i;
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081   <span class="keywordflow">if</span>(<span class="keyword">this</span> != &amp;other){
+<a name="l00082"></a>00082     pvPortName = other.pvPortName;
+<a name="l00083"></a>00083     pvDisplayText = other.pvDisplayText;
+<a name="l00084"></a>00084     <span class="comment">// Copy devices list</span>
+<a name="l00085"></a>00085     qDeleteAll(pvDeviceInfoList);
+<a name="l00086"></a>00086     pvDeviceInfoList.clear();
+<a name="l00087"></a>00087     <span class="keywordflow">for</span>(i=0; i&lt;other.pvDeviceInfoList.size(); ++i){
+<a name="l00088"></a>00088       pvDeviceInfoList.append(<span class="keyword">new</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>(*other.pvDeviceInfoList.at(i)));
+<a name="l00089"></a>00089     }
+<a name="l00090"></a>00090   }
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092   <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00093"></a>00093 }
+<a name="l00094"></a>00094 
+<a name="l00095"></a><a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4">00095</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4" title="Comparaison operator.">mdtPortInfo::operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
+<a name="l00096"></a>00096 {
+<a name="l00097"></a>00097   <span class="keywordtype">int</span> i;
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortInfo::operator==(): port name: &quot;</span> &lt;&lt; pvPortName &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; other.pvPortName;
+<a name="l00100"></a>00100   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortInfo::operator==(): dev info list size: &quot;</span> &lt;&lt; pvDeviceInfoList.size() &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; other.pvDeviceInfoList.size();
+<a name="l00101"></a>00101   <span class="keywordflow">if</span>(pvPortName != other.pvPortName){
 <a name="l00102"></a>00102     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00103"></a>00103   }
-<a name="l00104"></a>00104   <span class="keywordflow">for</span>(i=0; i&lt;pvDeviceInfoList.size(); ++i){
-<a name="l00105"></a>00105     Q_ASSERT(pvDeviceInfoList.at(i) != 0);
-<a name="l00106"></a>00106     Q_ASSERT(other.pvDeviceInfoList.at(i) != 0);
-<a name="l00107"></a>00107     <span class="keywordflow">if</span>((*pvDeviceInfoList.at(i)) != (*other.pvDeviceInfoList.at(i))){
-<a name="l00108"></a>00108       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00109"></a>00109     }
-<a name="l00110"></a>00110   }
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00113"></a>00113 }
-<a name="l00114"></a>00114 
-<a name="l00115"></a><a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e">00115</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e" title="Comparaison operator.">mdtPortInfo::operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
-<a name="l00116"></a>00116 {
-<a name="l00117"></a>00117   <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);
-<a name="l00118"></a>00118 }
+<a name="l00104"></a>00104   <span class="comment">// Check device info list</span>
+<a name="l00105"></a>00105   <span class="keywordflow">if</span>(pvDeviceInfoList.size() != other.pvDeviceInfoList.size()){
+<a name="l00106"></a>00106     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00107"></a>00107   }
+<a name="l00108"></a>00108   <span class="keywordflow">for</span>(i=0; i&lt;pvDeviceInfoList.size(); ++i){
+<a name="l00109"></a>00109     Q_ASSERT(pvDeviceInfoList.at(i) != 0);
+<a name="l00110"></a>00110     Q_ASSERT(other.pvDeviceInfoList.at(i) != 0);
+<a name="l00111"></a>00111     <span class="keywordflow">if</span>((*pvDeviceInfoList.at(i)) != (*other.pvDeviceInfoList.at(i))){
+<a name="l00112"></a>00112       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00113"></a>00113     }
+<a name="l00114"></a>00114   }
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00117"></a>00117 }
+<a name="l00118"></a>00118 
+<a name="l00119"></a><a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e">00119</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e" title="Comparaison operator.">mdtPortInfo::operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
+<a name="l00120"></a>00120 {
+<a name="l00121"></a>00121   <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);
+<a name="l00122"></a>00122 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -194,7 +198,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

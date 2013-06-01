@@ -9,8 +9,10 @@ project (multidiagtools)
 set (HEADER_FILES 
           # Port I/O
           mdtAbstractPort.h
-          # mdtUsbPort.h
           mdtPortThread.h
+          mdtPortThreadHelper.h
+          mdtPortThreadHelperSocket.h
+          #mdtPortThreadHelperPort.h
           mdtPortReadThread.h
           mdtPortWriteThread.h
           mdtTcpSocket.h
@@ -40,6 +42,9 @@ set (SOURCES_FILES
           mdtAbstractPort.cpp
           mdtUsbPort.cpp
           mdtUsbPortThread.cpp
+          mdtPortThreadHelper.cpp
+          mdtPortThreadHelperPort.cpp
+          mdtPortThreadHelperSocket.cpp
           mdtUsbtmcPortThread.cpp
           mdtUsbDeviceDescriptor.cpp
           mdtUsbConfigDescriptor.cpp
@@ -133,6 +138,7 @@ endforeach(FRMFILE)
 # Headers to install
 file(GLOB INSTALL_HEADERS *.h)
 install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtport" COMPONENT dev)
+install(FILES ${UIC_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtport" COMPONENT dev)
 
 # Destinations
 install(TARGETS "mdtport${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)

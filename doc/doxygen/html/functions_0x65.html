@@ -78,6 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_0x67.html#index_g"><span>g</span></a></li>
       <li><a href="functions_0x68.html#index_h"><span>h</span></a></li>
       <li><a href="functions_0x69.html#index_i"><span>i</span></a></li>
+      <li><a href="functions_0x6b.html#index_k"><span>k</span></a></li>
       <li><a href="functions_0x6c.html#index_l"><span>l</span></a></li>
       <li><a href="functions_0x6d.html#index_m"><span>m</span></a></li>
       <li><a href="functions_0x6e.html#index_n"><span>n</span></a></li>
@@ -104,19 +105,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>elapsedSec()
 : <a class="el" href="classmdt_time.html#aabd78c0447eea8a95a9fd88adc4cb6a0">mdtTime</a>
 </li>
+<li>enableProgressDialog()
+: <a class="el" href="classmdt_data_table_manager.html#a139611cc21836438053226b1d7576201">mdtDataTableManager</a>
+</li>
 <li>enableTranslations()
 : <a class="el" href="classmdt_device_window.html#a8b884e389fa27f85742642193d18b8f9">mdtDeviceWindow</a>
 </li>
 <li>enableTxRxLeds()
-: <a class="el" href="classmdt_device_status_widget.html#a056af69761b82cd24ab653158beafa22">mdtDeviceStatusWidget</a>
+: <a class="el" href="classmdt_port_status_widget.html#a8e87596be48b5cfda6703c42655b2f25">mdtPortStatusWidget</a>
 </li>
 <li>encode()
-: <a class="el" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4">mdtFrameModbusTcp</a>
+: <a class="el" href="classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77">mdtFrameUsbTmc</a>
+, <a class="el" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4">mdtFrameModbusTcp</a>
 , <a class="el" href="classmdt_frame_usb_control.html#af60cb9e9fd8cb55fc44d696fce0331c0">mdtFrameUsbControl</a>
-, <a class="el" href="classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77">mdtFrameUsbTmc</a>
 </li>
 <li>encodeReadCoils()
 : <a class="el" href="classmdt_frame_codec_modbus.html#adf0a4d583aeff7b818dda94514c594f0">mdtFrameCodecModbus</a>
+</li>
+<li>encodeReadDeviceIdentification()
+: <a class="el" href="classmdt_frame_codec_modbus.html#a54ac76dc91ee6f885aa1536fb9f8531c">mdtFrameCodecModbus</a>
 </li>
 <li>encodeReadDiscreteInputs()
 : <a class="el" href="classmdt_frame_codec_modbus.html#ad14a2d6c124cca157670595978e06150">mdtFrameCodecModbus</a>
@@ -157,24 +164,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>endpoints()
 : <a class="el" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487">mdtUsbInterfaceDescriptor</a>
 </li>
-<li>enqueueTransactionDone()
-: <a class="el" href="classmdt_port_manager.html#ad024a2db17ae2e6459da0adad3d7c3c8">mdtPortManager</a>
-</li>
-<li>enqueueTransactionRx()
-: <a class="el" href="classmdt_port_manager.html#ab30fc99951b2b6a566422c7525106ddf">mdtPortManager</a>
-</li>
 <li>eofSeqLen()
 : <a class="el" href="classmdt_frame_ascii.html#a9694c60a807fd2e80e293a66c193baaa">mdtFrameAscii</a>
 , <a class="el" href="classmdt_frame.html#a0e0dcfb9d284ac0dae550db33f0fbece">mdtFrame</a>
 </li>
+<li>Error
+: <a class="el" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa687598301ad573e51cafaa209da72718">mdtPortManager</a>
+</li>
 <li>error_t
 : <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort</a>
+</li>
+<li>ErrorHandled
+: <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d">mdtAbstractPort</a>
 </li>
 <li>errorOccured()
 : <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">mdtPortThread</a>
 </li>
 <li>errorStateChanged()
-: <a class="el" href="classmdt_port_manager.html#a053ba62f090eced0cf635c9be5c6b052">mdtPortManager</a>
+: <a class="el" href="classmdt_port_manager.html#a7f9437d084e136d8d265dace7431395f">mdtPortManager</a>
+</li>
+<li>exportToCsvFile()
+: <a class="el" href="classmdt_data_table_manager.html#ac2da29f8f8920eed8cca78aa6cc0d8da">mdtDataTableManager</a>
 </li>
 <li>mdtError()
 : <a class="el" href="classmdt_error.html#a377c175cc8e1aeae543cae2ecc5ca87b">mdtError</a>
@@ -195,7 +205,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:25 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

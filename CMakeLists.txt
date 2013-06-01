@@ -33,8 +33,8 @@ endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
-set(MDTLIB_VERSION_MINOR 2)
-set(MDTLIB_VERSION_MICRO 8)
+set(MDTLIB_VERSION_MINOR 3)
+set(MDTLIB_VERSION_MICRO 0)
 
 # Library version suffix:
 #  Since version 0.2.8, naming convension has changed.
@@ -76,6 +76,7 @@ set(QT_USE_QTTEST TRUE)
 set(QT_USE_QTSQL TRUE)
 set(QT_USE_QTNETWORK TRUE)
 find_package(Qt4 REQUIRED)
+#find_package(Qt REQUIRED)
 include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 
@@ -112,10 +113,12 @@ endif(UNIX)
 # Libraries and headers install directories
 if(WIN32)
   set(LIB_DEST_DIR "bin")
-  set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
+  #set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
+  set(HEADERS_DEST_DIR "include/mdt/mdt${MDTLIB_VERSION_SUFFIX}")
 else(WIN32)
   set(LIB_DEST_DIR "lib/${CMAKE_LIBRARY_ARCHITECTURE}")
-  set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
+  #set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
+  set(HEADERS_DEST_DIR "include/mdt/mdt${MDTLIB_VERSION_SUFFIX}")
 endif(WIN32)
 
 # * QtSolutions *
@@ -187,8 +190,6 @@ add_test (mdtFrameTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtframetest)
 add_test (mdtFrameCodecTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtframecodectest)
 # mdtUicNumberTest
 add_test (mdtUicNumberTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtuicnumbertest)
-# mdtDatabaseTest
-add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtdatabasetest)
 # mdtFileTest
 add_test (mdtFileTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtfiletest)
 # mdtIoTest
@@ -201,6 +202,9 @@ add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowid
 
 # mdtDataTableTest
 add_test (mdtDataTableTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatatabletest)
+
+# mdtDatabaseTest
+add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatabasetest)
 
 # NOTE: Support Windows pas terminé
 if(UNIX)

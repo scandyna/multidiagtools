@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtPortReadThread.h"
+#include "mdtPortThreadHelperPort.h"
 #include "mdtError.h"
 #include "mdtAbstractPort.h"
 #include <QApplication>
@@ -37,14 +38,21 @@ bool mdtPortReadThread::isReader() const
   return true;
 }
 
+bool mdtPortReadThread::handlesTimeout() const
+{
+  return false;
+}
+
 void mdtPortReadThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  mdtFrame *frame;
   mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int n;
   bool useReadTimeoutProtocol = false;
+  mdtPortThreadHelperPort threadHelper;
+  threadHelper.setPort(pvPort);
+  threadHelper.setThread(this);
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
@@ -57,11 +65,20 @@ void mdtPortReadThread::run()
   if((pvMinPoolSizeBeforeReadSuspend < 1)&&(pvPort->config().readQueueSize() > 0)){
     pvMinPoolSizeBeforeReadSuspend = 1;
   }
+  /*
+   * Check read timeout:
+   *  - For this thread, read timeout has only sense for read timeout protocol
+   *  - For other protocol, port manager must handle read timeout itself if needed (query/reply)
+   * So, if useReadTimeoutProtocol is not set, we set port's readTimeout to infinite.
+   * Port manager will use config's readTimeout, so we not change it here.
+   */
+  if((!useReadTimeoutProtocol)&&(pvPort->config().readTimeout() > -1)){
+    pvPort->setReadTimeout(-1);
+  }
   // Set the running flag and get a read frame
   pvRunning = true;
   // Get frame
-  frame = getNewFrameRead();
-  if(frame == 0){
+  if(!threadHelper.getNewFrameRead()){
     return;
   }
   // Notify that we are ready
@@ -73,7 +90,7 @@ void mdtPortReadThread::run()
     if(!pvRunning){
       break;
     }
-    Q_ASSERT(frame != 0);
+    Q_ASSERT(threadHelper.currentReadFrame() != 0);
     // Wait on Read event
     portError = pvPort->waitForReadyRead();
     if(portError != mdtAbstractPort::NoError){
@@ -83,18 +100,16 @@ void mdtPortReadThread::run()
       }
       if((useReadTimeoutProtocol)&&(portError == mdtAbstractPort::ReadTimeout)){
         // In timeout protocol, the current frame is considered complete
-        if(!frame->isEmpty()){
-          frame->setComplete();
-          pvPort->readenFrames().enqueue(frame);
-          // emit a Readen frame signal
-          emit newFrameReaden();
-          frame = getNewFrameRead();
-          if(frame == 0){
+        if(!threadHelper.currentReadFrame()->isEmpty()){
+          threadHelper.currentReadFrame()->setComplete();
+          // Submit frame and notify newFrameReaden
+          threadHelper.submitCurrentReadFrame(true);
+          if(!threadHelper.getNewFrameRead()){
             break;
           }
         }
       }else{
-        portError = handleCommonReadErrors(portError, &frame);
+        portError = threadHelper.handleCommonReadErrors(portError);
         if(portError != mdtAbstractPort::ErrorHandled){
           // Unhandled error, stop
           break;
@@ -104,31 +119,25 @@ void mdtPortReadThread::run()
     // Check about flush request
     if(pvPort->flushInRequestPending()){
       // Put current frame back to pool, get new one and return idle
-      pvPort->readFramesPool().enqueue(frame);
-      frame = getNewFrameRead();
-      if(frame == 0){
+      threadHelper.restoreCurrentReadFrameToPool();
+      if(!threadHelper.getNewFrameRead()){
         break;
       }
       continue;
     }
     // Read
-    n = readFromPort(&frame);
+    n = threadHelper.readFromPort(true);
     if(n < 0){
       // Check about stopping
       if(!pvRunning){
         break;
       }
-      portError = handleCommonReadErrors((mdtAbstractPort::error_t)n, &frame);
+      portError = threadHelper.handleCommonReadErrors((mdtAbstractPort::error_t)n);
       if(portError != mdtAbstractPort::ErrorHandled){
         // Unhandled error, stop
         break;
       }
     }
-  }
-
-  // Put current frame into pool
-  if(frame != 0){
-    pvPort->readFramesPool().enqueue(frame);
   }
 
   if(portError == mdtAbstractPort::NoError){

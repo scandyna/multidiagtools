@@ -35,7 +35,6 @@
 #include <QLineEdit>
 #include <QSpinBox>
 
-///#include <QVariant>
 //#include <QDebug>
 
 mdtModbusTcpPortSetupDialog::mdtModbusTcpPortSetupDialog(QWidget *parent)
@@ -54,6 +53,7 @@ mdtModbusTcpPortSetupDialog::mdtModbusTcpPortSetupDialog(QWidget *parent)
   sbPort = new QSpinBox;
   sbPort->setMinimum(500);
   sbPort->setMaximum(50000);
+  sbPort->setValue(502);
   QWidget *wHeader = new QWidget;
   QGridLayout *layout = new QGridLayout;
   layout->addWidget(pbRescan, 0, 0);
@@ -65,16 +65,11 @@ mdtModbusTcpPortSetupDialog::mdtModbusTcpPortSetupDialog(QWidget *parent)
   layout->addWidget(leHost, 1, 3, 1, 2);
   layout->addWidget(lbPort, 1, 5);
   layout->addWidget(sbPort, 1, 6);
-  
-  ///layout->addWidget(new QLabel(tr("Interface")), 1, 0);
-  ///layout->addWidget(cbInterface, 1, 1, 1, 5);
   layout->setColumnStretch(3, 1);
-  ///layout->setColumnStretch(8, 2);
   wHeader->setLayout(layout);
   setHeaderWidget(wHeader);
   connect(pbDisconnect, SIGNAL(clicked()), this, SLOT(closePort()));
   connect(pbRescan, SIGNAL(clicked()), this, SLOT(rescan()));
-  ///connect(pbOpen, SIGNAL(clicked()), this, SLOT(openPort()));
   connect(pbConnect, SIGNAL(clicked()), this, SLOT(openPort()));
   connect(cbDevices, SIGNAL(currentIndexChanged(int)), this, SLOT(displayHostPort(int)));
   pbAbort->setEnabled(false);
@@ -109,15 +104,17 @@ mdtModbusTcpPortSetupDialog::~mdtModbusTcpPortSetupDialog()
 void mdtModbusTcpPortSetupDialog::displayConfig()
 {
   int index;
+  mdtPortInfo portInfo;
 
   // Set current port in devices list
   if(!portManager()->portName().isEmpty()){
-    index = cbDevices->findData(portManager()->portName());
+    index = pvPortInfoCbHandler.indexOfPortInfo(portManager()->portInfo());
     if(index < 0){
-      cbDevices->addItem(portManager()->portInfo().displayText(), portManager()->portName());
-      index = cbDevices->findData(portManager()->portName());
+      pvPortInfoCbHandler.addPortInfo(portManager()->portInfo());
+      index = pvPortInfoCbHandler.indexOfPortInfo(portManager()->portInfo());
     }
     cbDevices->setCurrentIndex(index);
+    displayHostPort(index);
   }
   // If port manager is running, we can try to get device informations
   if(portManager()->isRunning()){
@@ -138,7 +135,7 @@ void mdtModbusTcpPortSetupDialog::displayHostPort(int cbDevicesIndex)
     sbPort->setValue(502);
     return;
   }
-  portName = cbDevices->itemData(cbDevicesIndex).toString();
+  portName = pvPortInfoCbHandler.portInfoAt(cbDevicesIndex).portName();
   portNameItems = portName.split(":");
   if(portNameItems.size() == 2){
     leHost->setText(portNameItems.at(0));
@@ -163,8 +160,6 @@ void mdtModbusTcpPortSetupDialog::closePort()
 
 void mdtModbusTcpPortSetupDialog::rescan()
 {
-  int index;
-
   Q_ASSERT(pvModbusTcpPortManager != 0);
 
   if(pvModbusTcpPortManager->isRunning()){
@@ -180,11 +175,8 @@ void mdtModbusTcpPortSetupDialog::rescan()
   leHost->setEnabled(false);
   sbPort->setEnabled(false);
   pvPortInfoCbHandler.fillComboBoxes(pvModbusTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100));
-  // Display current port
-  index = cbDevices->findData(portManager()->portInfo().portName());
-  if(index >= 0){
-    cbDevices->setCurrentIndex(index);
-  }
+  // Display selected host and port (if one exists)
+  displayHostPort(cbDevices->currentIndex());
   pbAbort->setEnabled(false);
   pbRescan->setEnabled(true);
   pbConnect->setEnabled(true);
@@ -309,7 +301,6 @@ bool mdtModbusTcpPortSetupDialog::applySetup()
   portManager()->closePort();
   // Apply current configuration
   updateConfig();
-  ///portManager()->setPortInfo(pvPortInfoCbHandler.currentPortInfo());
   portManager()->setPortInfo(portInfo);
   // Try to open port and start port manager
   showStatusMessage(tr("Trying to connect ..."));

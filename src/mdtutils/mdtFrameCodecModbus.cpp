@@ -404,8 +404,8 @@ bool mdtFrameCodecModbus::decodeReadCoils()
     return false;
   }
   // Get the values
-  for(i=2; i<pvPdu.size(); i++){
-    qDebug() << "RD coils, PDU[" << i << "]: 0x" << hex << (int)pvPdu.at(i);
+  for(i=2; i<pvPdu.size(); ++i){
+    ///qDebug() << "RD coils, PDU[" << i << "]: 0x" << hex << (int)pvPdu.at(i);
     appendValuesBitsFromByte(pvPdu.at(i));
   }
 
@@ -428,12 +428,13 @@ bool mdtFrameCodecModbus::decodeReadDiscreteInputs()
   }
   // Get bytes count and check it's validity
   bytesCount = pvPdu.at(1);
-  if(bytesCount != (pvPdu.size() -2)){
+  if(bytesCount != (pvPdu.size()-2)){
     mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
   }
+  ///qDebug() << "PDU[1] (BytesCount): 0x" << hex << (int)pvPdu.at(1);
   // Get the values
   for(i=2; i<pvPdu.size(); i++){
     ///qDebug() << "PDU[" << i << "]: 0x" << hex << (int)pvPdu.at(i);
@@ -513,9 +514,9 @@ bool mdtFrameCodecModbus::decodeReadInputRegisters()
     return false;
   }
   // Get the values
-  for(i=2; i<pvPdu.size(); i++){
+  for(i=2; i<pvPdu.size(); ++i){
     value = (quint8)pvPdu.at(i) << 8;
-    i++;
+    ++i;
     value |= (quint8)pvPdu.at(i);
     pvValues.append(value);
   }

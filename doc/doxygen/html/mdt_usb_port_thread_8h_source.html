@@ -105,26 +105,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00047"></a>00047 
 <a name="l00050"></a>00050   <span class="keywordtype">bool</span> <a class="code" href="classmdt_usb_port_thread.html#a74258f300967b5dea1fbfa9a0ccab38a" title="Returns true.">isWriter</a>() <span class="keyword">const</span>;
 <a name="l00051"></a>00051 
-<a name="l00052"></a>00052  signals:
-<a name="l00053"></a>00053 
-<a name="l00056"></a>00056   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#ab8ac3a6e1b571215be86f9dfd8c48b2b" title="Emited when a new control response was readen.">controlResponseReaden</a>();
+<a name="l00054"></a>00054   <span class="keywordtype">bool</span> <a class="code" href="classmdt_usb_port_thread.html#aeaa2dabc53e57f6b7cf7077d113c7f40" title="Retunrs true.">handlesTimeout</a>() <span class="keyword">const</span>;
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056  signals:
 <a name="l00057"></a>00057 
-<a name="l00060"></a>00060   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#a850204a909f0bbe41c5e995ebe3670d8" title="Emited when a message IN was readen (from additionnal interrupt IN endpoint)">messageInReaden</a>();
+<a name="l00060"></a>00060   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#ab8ac3a6e1b571215be86f9dfd8c48b2b" title="Emited when a new control response was readen.">controlResponseReaden</a>();
 <a name="l00061"></a>00061 
-<a name="l00064"></a>00064   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#a54e65bed60200cd2150b5a7b063c723e" title="Emitted when the read until a short packet process is finished.">readUntilShortPacketReceivedFinished</a>();
+<a name="l00064"></a>00064   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#a850204a909f0bbe41c5e995ebe3670d8" title="Emited when a message IN was readen (from additionnal interrupt IN endpoint)">messageInReaden</a>();
 <a name="l00065"></a>00065 
-<a name="l00066"></a>00066  <span class="keyword">protected</span>:
-<a name="l00067"></a>00067 
-<a name="l00077"></a>00077   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_usb_port_thread.html#acca2af9704cc6894ec5b2058ca102af1" title="Read until a short frame is received.">readUntilShortPacketReceived</a>(<span class="keywordtype">int</span> maxReadTransfers);
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079  <span class="keyword">private</span>:
-<a name="l00080"></a>00080 
-<a name="l00083"></a>00083   <span class="keywordtype">void</span> run();
+<a name="l00068"></a>00068   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#a54e65bed60200cd2150b5a7b063c723e" title="Emitted when the read until a short packet process is finished.">readUntilShortPacketReceivedFinished</a>();
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070  <span class="keyword">protected</span>:
+<a name="l00071"></a>00071 
+<a name="l00081"></a>00081   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_usb_port_thread.html#acca2af9704cc6894ec5b2058ca102af1" title="Read until a short frame is received.">readUntilShortPacketReceived</a>(<span class="keywordtype">int</span> maxReadTransfers);
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083  <span class="keyword">private</span>:
 <a name="l00084"></a>00084 
-<a name="l00085"></a>00085   Q_DISABLE_COPY(<a class="code" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>);
-<a name="l00086"></a>00086 };
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088 <span class="preprocessor">#endif  // #ifndef MDT_USB_PORT_THREAD_H</span>
+<a name="l00087"></a>00087   <span class="keywordtype">void</span> run();
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089   Q_DISABLE_COPY(<a class="code" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>);
+<a name="l00090"></a>00090 };
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092 <span class="preprocessor">#endif  // #ifndef MDT_USB_PORT_THREAD_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -141,7 +143,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

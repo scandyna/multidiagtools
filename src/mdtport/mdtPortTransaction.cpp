@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,7 +35,7 @@ void mdtPortTransaction::clear()
   pvAnalogIo = 0;
   pvDigitalIo = 0;
   pvType = 0;
-  pvForMultipleIos = false;
+  pvIoCount = 0;
   pvIsInput = false;
   pvIsOutput = false;
   pvData.clear();
@@ -69,6 +69,7 @@ void mdtPortTransaction::setIo(mdtAnalogIo *io, bool isInput)
   pvDigitalIo = 0;
   pvIsInput = isInput;
   pvIsOutput = !isInput;
+  pvIoCount = 1;
 }
 
 void mdtPortTransaction::setIo(mdtDigitalIo *io, bool isInput)
@@ -77,6 +78,7 @@ void mdtPortTransaction::setIo(mdtDigitalIo *io, bool isInput)
   pvAnalogIo = 0;
   pvIsInput = isInput;
   pvIsOutput = !isInput;
+  pvIoCount = 1;
 }
 
 mdtAnalogIo *mdtPortTransaction::analogIo()
@@ -87,16 +89,6 @@ mdtAnalogIo *mdtPortTransaction::analogIo()
 mdtDigitalIo *mdtPortTransaction::digitalIo()
 {
   return pvDigitalIo;
-}
-
-void mdtPortTransaction::setForMultipleIos(bool forMultipleIos)
-{
-  pvForMultipleIos = forMultipleIos;
-}
-
-bool mdtPortTransaction::forMultipleIos() const
-{
-  return pvForMultipleIos;
 }
 
 void mdtPortTransaction::setIsInput(bool isInput)
@@ -144,4 +136,14 @@ void mdtPortTransaction::setAddress(int address)
 int mdtPortTransaction::address() const
 {
   return pvAddress;
+}
+
+void mdtPortTransaction::setIoCount(int n)
+{
+  pvIoCount = n;
+}
+
+int mdtPortTransaction::ioCount() const
+{
+  return pvIoCount;
 }

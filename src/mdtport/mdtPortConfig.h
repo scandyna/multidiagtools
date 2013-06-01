@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -42,8 +42,9 @@ class mdtPortConfig
    *  - Write timout: -1 (infinite)
    *  - Frame type: RAW
    *  - En of frame sequence: LF (ASCII 0x0A)
-   *  - Byte per byte write: Off
    *  - Write interframe time: 0 [ms]
+   *  - Byte per byte write: Off
+   *  - Write interbyte time: 0 [ms]
    *  - Connect timeout: 5000 [ms]
    *  - Connect max try: 10
    */
@@ -82,6 +83,7 @@ class mdtPortConfig
    * 
    * An example of read timeout protocol is MODBUS (over serial lines) RTU mode
    * The mdtPortReadThread will use this parameter.
+   *
    * \param use If true, read timeout protocol will be used.
    */
   void setUseReadTimeoutProtocol(bool use);
@@ -104,27 +106,6 @@ class mdtPortConfig
    */
   int readTimeout() const;
 
-  /*! \brief Set the minimal time to wait before try to write
-   *
-   * Internally, the event system is used for write calls.<br>
-   * It can be usefull (or important) to delay the write call.
-   * In this case, set a minWaitTime > 0
-   *
-   * \param minWaitTime Wait time before write [ms]
-   * \sa mdtDeviceFileWriteThread
-   *
-   * \note used ??
-   */
-  void setWriteMinWaitTime(int minWaitTime);
-
-  /*! \brief Get the minimal time to wait before try to write
-   *
-   * \sa setWriteMinWaitTime()
-   *
-   * \note used ??
-   */
-  int writeMinWaitTime() const;
-
   /*! \brief Set the write interframe time
    *
    * If this time is > 0 , the mdtPortWriteThread will
@@ -142,13 +123,13 @@ class mdtPortConfig
   int writeInterframeTime() const;
 
   /*! \brief Set the write timeout
-   * 
+   *
    * \param timeout Write timout [ms]
    */
   void setWriteTimeout(int timeout);
 
   /*! \brief Get write timeout
-   * 
+   *
    * \returns Write timout [ms]
    */
   int writeTimeout() const;
@@ -174,6 +155,7 @@ class mdtPortConfig
    * A queue contain several frames.
    * This parameter gives a limit of the number
    * of frame that can be enqueued to serial port output.
+   *
    * \pre size must be a positive value
    */
   void setWriteQueueSize(int size);
@@ -235,6 +217,12 @@ class mdtPortConfig
    */
   bool bytePerByteWrite() const;
 
+  /*! \brief Get the write time between bytes [ms]
+   *
+   * \sa setBytePerByteWrite()
+   */
+  int writeInterbyteTime() const;
+
   /*! \brief Set the connection timeout
    *
    * \param timeout [ms]
@@ -275,7 +263,7 @@ class mdtPortConfig
   int pvReadTimeout;              // Maximum time before reading data [ms]
   int pvWriteFrameSize;           // Maximum data length to store before a frame is considered invalid
   int pvWriteQueueSize;           // Maximum number of frames that can be stored
-  int pvWriteMinWaitTime;         // Minimum time to wait before write call
+  int pvWriteInterbyteTime;       // Minimum time  to wait before write call
   int pvWriteInterframeTime;      // Time between each sended frame [ms]
   int pvWriteTimeout;             // Maximum time before port must be ready for writing data [ms]
   mdtFrame::type_t pvFrameType;

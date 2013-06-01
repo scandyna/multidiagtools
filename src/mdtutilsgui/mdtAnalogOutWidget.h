@@ -22,6 +22,7 @@
 #define MDT_ANALOG_OUT_WIDGET_H
 
 #include "mdtAbstractIoWidget.h"
+#include "mdtValue.h"
 #include <QString>
 
 class QDoubleSpinBox;
@@ -62,8 +63,13 @@ class mdtAnalogOutWidget : public mdtAbstractIoWidget
   // Used to update GUI from mdtAnalogIo object.
   void setUnit(const QString &unit);
   void setRange(double min, double max);
-  void setValue(double value);
   void setEnabled(bool enabled);
+
+  /*! \brief Update displayed value
+   *
+   * \pre If value is valid, it must contain double value.
+   */
+  void setValue(const mdtValue &value);
 
  private:
 

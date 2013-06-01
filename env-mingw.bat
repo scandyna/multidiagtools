@@ -15,7 +15,7 @@ if exist "C:\MinGW32\" (
 if exist "C:\MinGW\" (
   set MINGW_DIR=C:\MinGW
 )
-set MINGW_BIN=%MINGW_DIR%\bin
+REM set MINGW_BIN=%MINGW_DIR%\bin
 
 REM MinGW install dir
 REM set MINGW_DIR=C:\MinGW32
@@ -59,19 +59,28 @@ if exist "C:\Qt\4.8.3\" (
 if exist "C:\Qt\4.8.4\" (
   set QTDIR=C:\Qt\4.8.4
 )
-if exist "C:\Qt\5.0.0\" (
-  set QTDIR=C:\Qt\5.0.0
-)
-if exist "C:\Qt\5.0.1\" (
-  set QTDIR=C:\Qt\5.0.1
-)
+REM ===============================================================================
+REM    Try to find Qt5
+REM    If found, we use MingGW priveided
+REM ===============================================================================
+echo Searching Qt5...
+
 if exist "C:\Qt\5.0.2\" (
-  set QTDIR=C:\Qt\5.0.2
+  set QTDIR=C:\Qt\5.0.2\5.0.2\mingw47_32
 )
+if exist "C:\Qt\5.0.2\Tools\MinGW" (
+  set MINGW_DIR=C:\Qt\5.0.2\Tools\MinGW
+)
+
+if exist "C:\Qt\Qt5.0.2\" (
+  set QTDIR=C:\Qt\Qt5.0.2\5.0.2\mingw47_32
+)
+if exist "C:\Qt\Qt5.0.2\Tools\MinGW" (
+  set MINGW_DIR=C:\Qt\Qt5.0.2\Tools\MinGW
+)
+
 set QMAKESPEC=win32-g++
 
-REM Qt4 config
-REM set QTDIR=C:\Qt\2010.05\qt
 
 REM ===============================================================================
 REM    Try to find Qwt
@@ -98,6 +107,7 @@ REM ============================================================================
 REM    Build PATH
 REM ===============================================================================
 
+set MINGW_BIN=%MINGW_DIR%\bin
 echo Adding %MINGW_BIN% to PATH
 set PATH=%MINGW_BIN%
 

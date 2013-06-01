@@ -1,4 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/>
-<area shape="rect" id="node3" href="$classmdt_serial_port_config.html" title="mdtSerialPortConfig" alt="" coords="160,5,299,35"/>
+<area shape="rect" id="node1" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="7,59,124,88"/>
+<area shape="rect" id="node3" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="183,5,329,35"/>
+<area shape="rect" id="node9" href="$classmdt_frame_codec_k8055.html" title="Frame codec for Velleman k8055 board." alt="" coords="179,59,333,88"/>
+<area shape="rect" id="node11" href="$classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?" alt="" coords="173,112,339,141"/>
+<area shape="rect" id="node5" href="$classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;" alt="" coords="388,5,532,35"/>
+<area shape="rect" id="node7" href="$classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data." alt="" coords="581,5,773,35"/>
 </map>

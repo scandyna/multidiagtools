@@ -76,7 +76,7 @@ Collaboration diagram for mdtPortTransaction:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_transaction__coll__graph.png" border="0" usemap="#mdt_port_transaction_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_transaction_coll__map" id="mdt_port_transaction_coll__map">
-<area shape="rect" id="node2" href="classmdt_digital_io.html" title="Representation of a digital I/O." alt="" coords="5,85,96,115"/><area shape="rect" id="node4" href="classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI." alt="" coords="67,5,171,35"/><area shape="rect" id="node6" href="classmdt_analog_io.html" title="Representation of a analog I/O." alt="" coords="120,85,213,115"/></map>
+<area shape="rect" id="node2" href="classmdt_digital_io.html" title="Representation of a digital I/O." alt="" coords="5,181,96,211"/><area shape="rect" id="node4" href="classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI." alt="" coords="35,101,139,131"/><area shape="rect" id="node8" href="classmdt_analog_io.html" title="Representation of a analog I/O." alt="" coords="120,181,213,211"/><area shape="rect" id="node6" href="classmdt_value.html" title="Conatins a value with some attributes." alt="" coords="48,5,125,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_transaction-members.html">List of all members.</a></p>
@@ -106,10 +106,6 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the concerned analog I/O.  <a href="#a59409e826441bcff560ea3e44b885d64"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_transaction.html#a0515e5ded32eb76047586fdb6274d3eb">digitalIo</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the concerned digital I/O.  <a href="#a0515e5ded32eb76047586fdb6274d3eb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_transaction.html#ad375898319b7118ab485070314da238d">setForMultipleIos</a> (bool forMultipleIos)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set if the transaction concerns multiple I/O's.  <a href="#ad375898319b7118ab485070314da238d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_transaction.html#a89245c851c75c612dba96548b15da51e">forMultipleIos</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the transaction concerns multiple I/O's.  <a href="#a89245c851c75c612dba96548b15da51e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad49afb93f44aca47ded0e03018f8266f"></a><!-- doxytag: member="mdtPortTransaction::setIsInput" ref="ad49afb93f44aca47ded0e03018f8266f" args="(bool isInput)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_transaction.html#ad49afb93f44aca47ded0e03018f8266f">setIsInput</a> (bool isInput)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the isInput flag. <br/></td></tr>
@@ -135,6 +131,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c454829c2d1c2ea1b8bcc9797b2d46b"></a><!-- doxytag: member="mdtPortTransaction::address" ref="a0c454829c2d1c2ea1b8bcc9797b2d46b" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_transaction.html#a0c454829c2d1c2ea1b8bcc9797b2d46b">address</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get address. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d68527258d24907b7fe113aa364c1a3"></a><!-- doxytag: member="mdtPortTransaction::setIoCount" ref="a1d68527258d24907b7fe113aa364c1a3" args="(int n)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_transaction.html#a1d68527258d24907b7fe113aa364c1a3">setIoCount</a> (int n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of I/Os concerned by transaction. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac51fba329cc3467ebd6b8eaf913a1413"></a><!-- doxytag: member="mdtPortTransaction::ioCount" ref="ac51fba329cc3467ebd6b8eaf913a1413" args="() const " -->
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_transaction.html#ac51fba329cc3467ebd6b8eaf913a1413">ioCount</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of I/Os concerned by transaction. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Store port transaction identifications data. </p>
@@ -183,7 +185,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Get the concerned analog I/O. </p>
 <p>See setIo(mdtAnalogIo*) for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00082">82</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00084">84</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
 
 </div>
 </div>
@@ -208,7 +210,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <li>type: 0</li>
 <li>analogIo: Null</li>
 <li>digitalIo: Null</li>
-<li>forMultipleIos: false</li>
+<li>ioCount: 0</li>
 <li>isInput: false</li>
 <li>isOutput: false</li>
 <li>data: empty</li>
@@ -237,28 +239,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Set the concerned digital I/O. </p>
 <p>See setIo(mdtDigitalIo*) for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00087">87</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a89245c851c75c612dba96548b15da51e"></a><!-- doxytag: member="mdtPortTransaction::forMultipleIos" ref="a89245c851c75c612dba96548b15da51e" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPortTransaction::forMultipleIos </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Check if the transaction concerns multiple I/O's. </p>
-<p>See <a class="el" href="classmdt_port_transaction.html#ad375898319b7118ab485070314da238d" title="Set if the transaction concerns multiple I/O&#39;s.">setForMultipleIos()</a> for details. </p>
-
-<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00089">89</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
 
 </div>
 </div>
@@ -300,29 +281,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Get the query/reply mode flag. </p>
 <p>See <a class="el" href="classmdt_port_transaction.html#a6bd68a89059c790f475b8ff78c943656" title="Set query/reply mode.">setQueryReplyMode()</a> for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00134">134</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad375898319b7118ab485070314da238d"></a><!-- doxytag: member="mdtPortTransaction::setForMultipleIos" ref="ad375898319b7118ab485070314da238d" args="(bool forMultipleIos)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPortTransaction::setForMultipleIos </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>forMultipleIos</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set if the transaction concerns multiple I/O's. </p>
-<p>A example using this member is MODBUS. See <a class="el" href="classmdt_device_modbus.html" title="Represent a MODBUS device.">mdtDeviceModbus</a> for details. </p>
-
-<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00126">126</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
 
 </div>
 </div>
@@ -345,38 +304,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Depending used protocol, id can be a transaction ID as defined in MODBUS/TCP, a bTag used in USBTMC or what else. </p>
 
 <p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4062fb0e9a1d5fea0ec934bff54cd519"></a><!-- doxytag: member="mdtPortTransaction::setIo" ref="a4062fb0e9a1d5fea0ec934bff54cd519" args="(mdtDigitalIo *io, bool isInput)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPortTransaction::setIo </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td>
-          <td class="paramname"><em>io</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isInput</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the concerned digital I/O. </p>
-<p>If a query concerns a specific I/O, it's possible to reference the I/O object here. </p>
-
-<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
 
 </div>
 </div>
@@ -412,6 +339,38 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 
 </div>
 </div>
+<a class="anchor" id="a4062fb0e9a1d5fea0ec934bff54cd519"></a><!-- doxytag: member="mdtPortTransaction::setIo" ref="a4062fb0e9a1d5fea0ec934bff54cd519" args="(mdtDigitalIo *io, bool isInput)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortTransaction::setIo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td>
+          <td class="paramname"><em>io</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isInput</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the concerned digital I/O. </p>
+<p>If a query concerns a specific I/O, it's possible to reference the I/O object here. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a6bd68a89059c790f475b8ff78c943656"></a><!-- doxytag: member="mdtPortTransaction::setQueryReplyMode" ref="a6bd68a89059c790f475b8ff78c943656" args="(bool mode)" -->
 <div class="memitem">
 <div class="memproto">
@@ -431,7 +390,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>In query/reply mode, port manager will not remove frame from done transactions queue just after signal was emited, but keep it until a read was made.</p>
 <p>See <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00129">129</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">121</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
 
 </div>
 </div>
@@ -451,7 +410,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <div class="memdoc">
 
 <p>Set type. </p>
-<p>A typical usage is SCPI query/request type. See <a class="el" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a> for details. </p>
+<p>A typical usage is SCPI query/request type. See <a class="el" href="classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;">mdtFrameCodecScpi</a> for details. </p>
 
 <p>Definition at line <a class="el" href="mdt_port_transaction_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_port_transaction_8cpp_source.html">mdtPortTransaction.cpp</a>.</p>
 
@@ -497,7 +456,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:27 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

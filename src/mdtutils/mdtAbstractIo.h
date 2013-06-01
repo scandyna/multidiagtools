@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,8 +21,12 @@
 #ifndef MDT_ABSTRACT_IO_H
 #define MDT_ABSTRACT_IO_H
 
+#include "mdtValue.h"
 #include <QObject>
 #include <QString>
+
+class mdtAnalogIo;
+class mdtDigitalIo;
 
 /*! \brief Base class for I/O handling on (G)UI
  *
@@ -36,31 +40,59 @@ class mdtAbstractIo : public QObject
 
  public:
 
-  /*! \brief I/O type
+  /*! \brief Construct a empty I/O
+   *
+   * A empty I/O has address 0 and no valid data.
    */
-//   enum type_t {
-//                 UNKNOWN,      /*!< Undefined I/O type */
-//                 ANALOG_IN,    /*!< Analog input */
-//                 ANALOG_OUT,   /*!< Analog output */
-//                 DIGITAL_IN,   /*!< Digital input */
-//                 DIGITAL_OUT   /*!< Digital output */
-//               };
-
   mdtAbstractIo(QObject *parent = 0);
 
   virtual  ~mdtAbstractIo();
 
-  /*! \brief Get I/O type
-   */
-  ///type_t type() const;
-
   /*! \brief Set the I/O address
+   *
+   * Note: will set both addressRead and addressWrite
+   *  to given address.
    */
   void setAddress(int address);
 
   /*! \brief Get the I/O address
+   *
+   * Note: if addressRead and addressWrite are not the same,
+   *   addressRead is returned.
    */
   int address() const;
+
+  /*! \brief Set the I/O address for read
+   *
+   * For some devices, accessing a I/O to set (write)
+   *  or get (read) its value can be done by another
+   *  address. Typical examples are some MODBUS fieldbuses
+   *  (like Wago 750 or Beckhoff BK 90xx).
+   *  For such case, you can use this method to set the read access address.
+   */
+  void setAddressRead(int address);
+
+  /*! \brief Get the I/O address for read
+   *
+   * See setAddressRead() for details.
+   */
+  int addressRead() const;
+
+  /*! \brief Set the I/O address for write
+   *
+   * For some devices, accessing a I/O to set (write)
+   *  or get (read) its value can be done by another
+   *  address. Typical examples are some MODBUS fieldbuses
+   *  (like Wago 750 or Beckhoff BK 90xx).
+   *  For such case, you can use this method to set the read access address.
+   */
+  void setAddressWrite(int address);
+
+  /*! \brief Get the I/O address for write
+   *
+   * See setAddressWrite() for details.
+   */
+  int addressWrite() const;
 
   /*! \brief Set the short I/O label
    *
@@ -100,6 +132,27 @@ class mdtAbstractIo : public QObject
    */
   void setEnabled(bool enabled);
 
+  /*! \brief Get current value
+   */
+  const mdtValue &value() const;
+
+ public slots:
+
+  /*! \brief Set the value to update display
+   *
+   * Store the value and emit valueChanged() if
+   *  new value is different from current.
+   *
+   * \param value The value to store
+   * \param emitValueChanged If true, valueChanged(const mdtValue&) will be emitted.
+   *
+   * Note: this default implementation does nothing.
+   *
+   * Note for UI developpers:
+   *  - The signal valueChangedForUi() is emited
+   */
+  virtual void setValue(const mdtValue &value, bool emitValueChanged = false);
+
  signals:
 
   /*
@@ -107,26 +160,38 @@ class mdtAbstractIo : public QObject
    *  a member is set with a setter method.
    * Usefull to update the UI (should not be used for other purpose)
    */
-  void addressChangedForUi(int adr);
+  void addressChangedForUi(int addressRead, int addressWrite);
   void labelShortChangedForUi(const QString &text);
   void labelChangedForUi(const QString &text);
   void detailsChangedForUi(const QString &text);
   void enabledStateChangedForUi(bool enabled);
 
+  /*! \brief This signal is emitted whenever the value is changed
+   */
+  void valueChanged(const mdtValue &value);
+
+  /*! \brief This signal is emitted whenever the value is changed
+   */
+  void valueChanged(mdtAnalogIo *io);
+  void valueChanged(mdtDigitalIo *io);
+
+  /*! \brief This signal is emitted whenever the value is changed
+   *
+   * Use it only for (G-)UI update
+   */
+  void valueChangedForUi(const mdtValue &value);
+
  protected:
 
-  /*! \brief Set I/O type
-   */
-  ///void setType(type_t type);
-
-  int pvAddress;
-  bool pvHasValidData;
+  mdtValue pvValue;
+  bool pvNotifyUi;
 
  private:
 
   Q_DISABLE_COPY(mdtAbstractIo);
 
-  ///type_t pvType;
+  int pvAddressRead;
+  int pvAddressWrite;
   QString pvLabelShort;
   QString pvLabel;
   QString pvDetails;

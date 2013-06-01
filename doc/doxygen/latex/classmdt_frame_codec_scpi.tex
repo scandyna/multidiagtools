@@ -4,7 +4,7 @@
 }
 
 
-Decode SCPI data.  
+\#include $<$QVariant$>$  
 
 
 
@@ -52,9 +52,9 @@ enum \hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}{wav
 \item 
 bool \hyperlink{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}{decodeValues} (const QByteArray \&data, QString sep=\char`\"{}:\char`\"{})
 \begin{DoxyCompactList}\small\item\em Decode SCPI value(s) \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_frame_codec_scpi_afb2fe212cf3f99262e91e238c72e9e63}{decodeSingleValueDouble} (const QByteArray \&data)
+\hyperlink{classmdt_value}{mdtValue} \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{decodeSingleValueDouble} (const QByteArray \&data)
 \begin{DoxyCompactList}\small\item\em Decode a signle value in double floating format. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_frame_codec_scpi_a15e824b3d02798c49a750b69f597ad7c}{checkFloatingValueValidity} (double x) const 
+\hyperlink{classmdt_value}{mdtValue} \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{checkFloatingValueValidity} (double x) const 
 \begin{DoxyCompactList}\small\item\em Check the validity of a floating value. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_frame_codec_scpi_ac928eac971706f5c78f36d0ae4dc0c42}{decodeFunctionParameters} (const QByteArray \&data)
 \begin{DoxyCompactList}\small\item\em Decode reply of type function/parameter. \end{DoxyCompactList}\item 
@@ -76,11 +76,11 @@ bool \hyperlink{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{dec
 
 
 \subsection{Detailed Description}
-Decode SCPI data. 
+\#include $<$QVariant$>$ 
 
-\#define MDT\_\-FC\_\-SCPI\_\-UNKNOW 0 \#define MDT\_\-FC\_\-SCPI\_\-VALUE 1 \#define MDT\_\-FC\_\-SCPI\_\-IDN 2 \#define MDT\_\-FC\_\-SCPI\_\-ERR 3 \#define MDT\_\-FC\_\-SCPI\_\-LAST\_\-TYPE 127 
+Decode SCPI data 
 
-Definition at line 58 of file mdtFrameCodecScpi.h.
+Definition at line 30 of file mdtFrameCodecScpi.h.
 
 
 
@@ -126,7 +126,7 @@ QT\_\-CONF}
 
 
 
-Definition at line 64 of file mdtFrameCodecScpi.h.
+Definition at line 36 of file mdtFrameCodecScpi.h.
 
 \hypertarget{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!waveform\_\-format\_\-t@{waveform\_\-format\_\-t}}
@@ -157,20 +157,20 @@ ASCII}
 
 
 
-Definition at line 75 of file mdtFrameCodecScpi.h.
+Definition at line 47 of file mdtFrameCodecScpi.h.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_frame_codec_scpi_a15e824b3d02798c49a750b69f597ad7c}{
+\hypertarget{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!checkFloatingValueValidity@{checkFloatingValueValidity}}
 \index{checkFloatingValueValidity@{checkFloatingValueValidity}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{checkFloatingValueValidity}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtFrameCodecScpi::checkFloatingValueValidity (
+\subsubsection[{checkFloatingValueValidity}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtValue} mdtFrameCodecScpi::checkFloatingValueValidity (
 \begin{DoxyParamCaption}
 \item[{double}]{x}
 \end{DoxyParamCaption}
 ) const}}
-\label{classmdt_frame_codec_scpi_a15e824b3d02798c49a750b69f597ad7c}
+\label{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}
 
 
 Check the validity of a floating value. 
@@ -178,11 +178,13 @@ Check the validity of a floating value.
 Check validity regarding SCPI-\/99, sections 7.2.1.4 (-\/infinity, +infinity) and 7.2.1.5 (NaN).
 
 \begin{DoxyReturn}{Returns}
-A valid QVariant of type double if Ok, else a invalid QVariant. 
+A \hyperlink{classmdt_value}{mdtValue} that contains data of type Double. If x is NaN, a invalid \hyperlink{classmdt_value}{mdtValue} is returned.QVariant \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{checkFloatingValueValidity(double x) const};
 \end{DoxyReturn}
+QVariant \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{mdtFrameCodecScpi::checkFloatingValueValidity(double x) const} \{ Check about NaN if(qAbs(x -\/ pvNan) $<$= FLT\_\-EPSILON)\{ return QVariant(); \} Check about -\/OL and OL if((x $<$= (pvNinfinity+FLT\_\-EPSILON))$|$$|$(x $>$= (pvInfinity-\/FLT\_\-EPSILON)))\{ return QVariant(); \}
 
+return x; \} 
 
-Definition at line 126 of file mdtFrameCodecScpi.cpp.
+Definition at line 195 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_a9e38d8afadc7ff37821620feea6b0899}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeError@{decodeError}}
@@ -197,14 +199,14 @@ Definition at line 126 of file mdtFrameCodecScpi.cpp.
 
 Decode error answer. 
 
-When decode was done successfully, error is available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()}:
+When decode was done successfully, error is available with \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()}:
 \begin{DoxyItemize}
 \item Item 0 is the error number
 \item Item 1 is the error message string
 \item After item 1 are device's specific messages (if exists) 
 \end{DoxyItemize}
 
-Definition at line 269 of file mdtFrameCodecScpi.cpp.
+Definition at line 348 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_ac928eac971706f5c78f36d0ae4dc0c42}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeFunctionParameters@{decodeFunctionParameters}}
@@ -221,13 +223,17 @@ Decode reply of type function/parameter.
 
 Typical query that returns $<$function$>$ $<$parameters$>$ form is CONFigure?. See SCPI-\/99 , chap. 3.
 
-After successfull decode, \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()} contains:
+After successfull decode, \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()} contains:
 \begin{DoxyItemize}
 \item Index 0: Function as string
 \item Index $>$1 (if available): parameters in converted form (double, int, ...). Note: if a parameter is a floating value, it's possible that it is invalid (+/-\/inf, Nan). 
 \end{DoxyItemize}
 
-Definition at line 140 of file mdtFrameCodecScpi.cpp.
+value = checkFloatingValueValidity(value.toDouble()); 
+
+
+
+Definition at line 218 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIdn@{decodeIdn}}
@@ -242,9 +248,9 @@ Definition at line 140 of file mdtFrameCodecScpi.cpp.
 
 Decode the IDN answer. 
 
-When decode was done, the values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()} 
+When decode was done, the values are available with \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()} 
 
-Definition at line 203 of file mdtFrameCodecScpi.cpp.
+Definition at line 282 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_a4b07da48ad126c56db050a379700ac2b}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIEEEblock@{decodeIEEEblock}}
@@ -262,7 +268,7 @@ Decode a IEEE block.
 
 NOTE: not implemented yet ! 
 
-Definition at line 312 of file mdtFrameCodecScpi.cpp.
+Definition at line 391 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIEEEdataAscii@{decodeIEEEdataAscii}}
@@ -278,7 +284,7 @@ Definition at line 312 of file mdtFrameCodecScpi.cpp.
 Decode a array of ASCII values. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000060}{Todo}]Not implemented yet \end{Desc}
+\item[\hyperlink{todo__todo000052}{Todo}]Not implemented yet \end{Desc}
 
 
 qDebug() $<$$<$ \char`\"{}Data: \char`\"{} $<$$<$ items;
@@ -287,7 +293,7 @@ qDebug() $<$$<$ \char`\"{}Values: \char`\"{} $<$$<$ pvValues;
 
 
 
-Definition at line 388 of file mdtFrameCodecScpi.cpp.
+Definition at line 467 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIEEEdataByte@{decodeIEEEdataByte}}
@@ -303,7 +309,7 @@ Definition at line 388 of file mdtFrameCodecScpi.cpp.
 Decode a array of BYTE values. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000061}{Todo}]Not implemented yet \end{Desc}
+\item[\hyperlink{todo__todo000053}{Todo}]Not implemented yet \end{Desc}
 
 
 int len = data.size()-\/1; // Last item is the term char
@@ -312,7 +318,7 @@ qDebug() $<$$<$ \char`\"{}data\mbox{[}\char`\"{} $<$$<$ i $<$$<$ \char`\"{}\mbox
 
 
 
-Definition at line 410 of file mdtFrameCodecScpi.cpp.
+Definition at line 489 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_a3ae1183cbe26272a7a025e89fc961042}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeScpiVersion@{decodeScpiVersion}}
@@ -333,17 +339,17 @@ After successfull decode, values will be stored as follow:
 \item Index 1: SCPI revision 
 \end{DoxyItemize}
 
-Definition at line 227 of file mdtFrameCodecScpi.cpp.
+Definition at line 306 of file mdtFrameCodecScpi.cpp.
 
-\hypertarget{classmdt_frame_codec_scpi_afb2fe212cf3f99262e91e238c72e9e63}{
+\hypertarget{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeSingleValueDouble@{decodeSingleValueDouble}}
 \index{decodeSingleValueDouble@{decodeSingleValueDouble}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeSingleValueDouble}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtFrameCodecScpi::decodeSingleValueDouble (
+\subsubsection[{decodeSingleValueDouble}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtValue} mdtFrameCodecScpi::decodeSingleValueDouble (
 \begin{DoxyParamCaption}
 \item[{const QByteArray \&}]{data}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_frame_codec_scpi_afb2fe212cf3f99262e91e238c72e9e63}
+\label{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}
 
 
 Decode a signle value in double floating format. 
@@ -351,11 +357,15 @@ Decode a signle value in double floating format.
 This method returns a QVariant. QVariant's internal data is converted to double. If value is not valid, the QVariant is cleared, so it is possible to check this with QVariant::isValid().
 
 \begin{DoxyReturn}{Returns}
-A Qvariant of type Double if decode and conversion to double could be done, else a invalid QVariant. 
+A \hyperlink{classmdt_value}{mdtValue} that contains data of type Double if decode and conversion to double could be done, else a invalid mdtValue.QVariant \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{decodeSingleValueDouble(const QByteArray \&data)};
 \end{DoxyReturn}
+QVariant \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray \&data)} \{ QVariant value;
 
+Store raw data in local QString constainer pvAsciiData = data; Remove white spaces at begin and end \hyperlink{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{trim()}; remove EofSeq if(!removeEofSeq())\{ return value; \} Case of no data if(pvAsciiData.size() $<$ 1)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-FRAME\_\-DECODE\_\-ERROR, \char`\"{}Frame contains no data\char`\"{} , mdtError::Warning); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtFrameCodecScpi\char`\"{}); e.commit(); return value; \} Convert and check value = pvAsciiData; if(value.canConvert(QVariant::Double))\{ if(value.convert(QVariant::Double))\{ value.setValue(checkFloatingValueValidity(value.toDouble())); return value; /return checkFloatingValueValidity(value.toDouble()); \} \}
 
-Definition at line 96 of file mdtFrameCodecScpi.cpp.
+return QVariant(); \} 
+
+Definition at line 149 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeValues@{decodeValues}}
@@ -371,9 +381,9 @@ Definition at line 96 of file mdtFrameCodecScpi.cpp.
 
 Decode SCPI value(s) 
 
-After decode is done, values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()}.
+After decode is done, values are available with \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()}.
 
-Internally, \hyperlink{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{mdtFrameCodecAscii::convertData()} is used for conversion. Additionnaly, if decoded type is double, the validity is checked with \hyperlink{classmdt_frame_codec_scpi_a15e824b3d02798c49a750b69f597ad7c}{checkFloatingValueValidity()}.
+Internally, \hyperlink{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{mdtFrameCodecAscii::convertData()} is used for conversion. Additionnaly, if decoded type is double, the validity is checked with \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{checkFloatingValueValidity()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -390,6 +400,8 @@ Errors are logged with the \hyperlink{classmdt_error}{mdtError} system.
 double fltValue;
 
 fltValue = value.toDouble(); Check about Nan if(qAbs(fltValue -\/ pvNan) $<$= FLT\_\-EPSILON)\{ value.clear(); \}else\{ Check about -\/OL and OL if((fltValue $<$= (pvNinfinity+FLT\_\-EPSILON))$|$$|$(fltValue $>$= (pvInfinity-\/FLT\_\-EPSILON)))\{ value.clear(); \} \}
+
+value = checkFloatingValueValidity(value.toDouble()); value.setValue(checkFloatingValueValidity(value.toDouble())); 
 
 
 

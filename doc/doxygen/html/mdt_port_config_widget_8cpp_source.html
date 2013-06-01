@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -83,115 +83,132 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00021"></a>00021 <span class="preprocessor">#include &quot;mdtPortConfigWidget.h&quot;</span>
 <a name="l00022"></a>00022 <span class="preprocessor">#include &quot;mdtFrame.h&quot;</span>
 <a name="l00023"></a>00023 <span class="preprocessor">#include &lt;QVariant&gt;</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QDebug&gt;</span>
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 mdtPortConfigWidget::mdtPortConfigWidget(QWidget *parent)
-<a name="l00028"></a>00028  : QWidget(parent)
-<a name="l00029"></a>00029 {
-<a name="l00030"></a>00030   setupUi(<span class="keyword">this</span>);
-<a name="l00031"></a>00031 }
-<a name="l00032"></a>00032 
-<a name="l00033"></a><a class="code" href="classmdt_port_config_widget.html#a44c1690242f5f8680fb4f32a5771534f">00033</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_config_widget.html#a44c1690242f5f8680fb4f32a5771534f" title="Read the config instance and update GUI.">mdtPortConfigWidget::displayConfig</a>(<a class="code" href="classmdt_port_config.html">mdtPortConfig</a> &amp;config)
-<a name="l00034"></a>00034 {
-<a name="l00035"></a>00035   <span class="keywordtype">int</span> index;
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037   <span class="comment">// Frame type</span>
-<a name="l00038"></a>00038   <span class="keywordflow">if</span>(cbFrameType-&gt;count() &lt; 1){
-<a name="l00039"></a>00039     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;Binary raw&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f">mdtFrame::FT_RAW</a>);
-<a name="l00040"></a>00040     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;Binary timeout protocol&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96">mdtFrame::FT_RAW_TOP</a>);
-<a name="l00041"></a>00041     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;ASCII&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>);
-<a name="l00042"></a>00042     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;Modbus TCP&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a">mdtFrame::FT_MODBUS_TCP</a>);
-<a name="l00043"></a>00043     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;USBTMC&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17aca438ff6b553a819f22090facc562c86">mdtFrame::FT_USBTMC</a>);
-<a name="l00044"></a>00044   }
-<a name="l00045"></a>00045   index = cbFrameType-&gt;findData(config.<a class="code" href="classmdt_port_config.html#af9c95090820c449412298832582a0fab" title="Get frame type.">frameType</a>());
-<a name="l00046"></a>00046   <span class="keywordflow">if</span>(index &gt;= 0){
-<a name="l00047"></a>00047     cbFrameType-&gt;setCurrentIndex(index);
-<a name="l00048"></a>00048   }
-<a name="l00049"></a>00049   <span class="comment">// End of frame sequence</span>
-<a name="l00050"></a>00050   <span class="keywordflow">if</span>(cbEndOfFrameSeq-&gt;count() &lt; 1){
-<a name="l00051"></a>00051     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;&quot;</span>);
-<a name="l00052"></a>00052     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;*&quot;</span>);
-<a name="l00053"></a>00053     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;$&quot;</span>);
-<a name="l00054"></a>00054   }
-<a name="l00055"></a>00055   index = cbEndOfFrameSeq-&gt;findText(config.<a class="code" href="classmdt_port_config.html#a9ac77f89ee4a0baadc4814a9a95701b6" title="Get the end of frame sequence.">endOfFrameSeq</a>());
-<a name="l00056"></a>00056   <span class="keywordflow">if</span>(index &gt;= 0){
-<a name="l00057"></a>00057     cbEndOfFrameSeq-&gt;setCurrentIndex(index);
-<a name="l00058"></a>00058   }
-<a name="l00059"></a>00059   <span class="comment">// Read options</span>
-<a name="l00060"></a>00060   sbReadFrameSize-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#ad315f8f97723abe161792c9d9a1375ec" title="Get the read frame size.">readFrameSize</a>());
-<a name="l00061"></a>00061   sbReadQueueSize-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#aff0260f72ca05715efe3f70850e7a151" title="Get the read Queue size.">readQueueSize</a>());
-<a name="l00062"></a>00062   sbReadTimeout-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#ab18c2ec1628cb480a70033387e7c3333" title="Get read timeout.">readTimeout</a>());
-<a name="l00063"></a>00063   cbUseReadTimeoutProtocol-&gt;setChecked(config.<a class="code" href="classmdt_port_config.html#ad90a88b06f0efebd1ee9f6d4370dec33" title="Know if read timeout protocol must be used.">useReadTimeoutProtocol</a>());
-<a name="l00064"></a>00064   <span class="comment">// Write options</span>
-<a name="l00065"></a>00065   sbWriteFrameSize-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a19bda9f9ce29657179994e02c6da11b9" title="Get the read frame size.">writeFrameSize</a>());
-<a name="l00066"></a>00066   sbWriteQueueSize-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a93d72b1ea53f188d7a35bc044394b959" title="Get the write Queue size.">writeQueueSize</a>());
-<a name="l00067"></a>00067   sbWriteTimeout-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a3009e07cd66f4c4bfc1c7fdabbc9f93c" title="Get write timeout.">writeTimeout</a>());
-<a name="l00068"></a>00068   sbWriteMinWaitTime-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a38d6957cc1103ecf348a76fd3eb97d53" title="Get the minimal time to wait before try to write.">writeMinWaitTime</a>());
-<a name="l00069"></a>00069   cbBytePerByteWrite-&gt;setChecked(config.<a class="code" href="classmdt_port_config.html#a9b5041ba740a5918e5e1323e61d3bbdc" title="Get byte per byte write flag (On/Off)">bytePerByteWrite</a>());
-<a name="l00070"></a>00070   sbWriteInterframeTime-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a745f5111436fc143b75440bf90a1a4e6" title="Get the write interframe time [ms].">writeInterframeTime</a>());
-<a name="l00071"></a>00071 }
-<a name="l00072"></a>00072 
-<a name="l00073"></a><a class="code" href="classmdt_port_config_widget.html#a23fba4fe5aa0c07b95a9b85218456456">00073</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_config_widget.html#a23fba4fe5aa0c07b95a9b85218456456" title="Get GUI&#39;s selected options and update config.">mdtPortConfigWidget::updateConfig</a>(<a class="code" href="classmdt_port_config.html">mdtPortConfig</a> &amp;config)
-<a name="l00074"></a>00074 {
-<a name="l00075"></a>00075   <span class="keywordtype">int</span> index;
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077   <span class="comment">// Frame type</span>
-<a name="l00078"></a>00078   index = cbFrameType-&gt;currentIndex();
-<a name="l00079"></a>00079   <span class="keywordflow">if</span>(index &gt;= 0){
-<a name="l00080"></a>00080     <span class="keywordflow">switch</span>(cbFrameType-&gt;itemData(index).toInt()){
-<a name="l00081"></a>00081       <span class="keywordflow">case</span> <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f">mdtFrame::FT_RAW</a>:
-<a name="l00082"></a>00082         config.<a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f">mdtFrame::FT_RAW</a>);
-<a name="l00083"></a>00083         <span class="keywordflow">break</span>;
-<a name="l00084"></a>00084       <span class="keywordflow">case</span> <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96">mdtFrame::FT_RAW_TOP</a>:
-<a name="l00085"></a>00085         config.<a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96">mdtFrame::FT_RAW_TOP</a>);
-<a name="l00086"></a>00086         <span class="keywordflow">break</span>;
-<a name="l00087"></a>00087       <span class="keywordflow">case</span> <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>:
-<a name="l00088"></a>00088         config.<a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>);
-<a name="l00089"></a>00089         <span class="keywordflow">break</span>;
-<a name="l00090"></a>00090       <span class="keywordflow">case</span> <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a">mdtFrame::FT_MODBUS_TCP</a>:
-<a name="l00091"></a>00091         config.<a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a">mdtFrame::FT_MODBUS_TCP</a>);
-<a name="l00092"></a>00092         <span class="keywordflow">break</span>;
-<a name="l00093"></a>00093     }
-<a name="l00094"></a>00094   }
-<a name="l00095"></a>00095   <span class="comment">// End of frame sequence - Only for ASCII frame type</span>
-<a name="l00096"></a>00096   <span class="keywordflow">if</span>(config.<a class="code" href="classmdt_port_config.html#af9c95090820c449412298832582a0fab" title="Get frame type.">frameType</a>() == <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>){
-<a name="l00097"></a>00097     config.<a class="code" href="classmdt_port_config.html#a3c5e1c444a18da7d68430bd1c14030f4" title="Set the end of frame sequence (applies on ASCII frames)">setEndOfFrameSeq</a>(cbEndOfFrameSeq-&gt;currentText().toAscii());
-<a name="l00098"></a>00098   }<span class="keywordflow">else</span>{
-<a name="l00099"></a>00099     config.<a class="code" href="classmdt_port_config.html#a3c5e1c444a18da7d68430bd1c14030f4" title="Set the end of frame sequence (applies on ASCII frames)">setEndOfFrameSeq</a>(<span class="stringliteral">&quot;&quot;</span>);
-<a name="l00100"></a>00100   }
-<a name="l00101"></a>00101   <span class="comment">// Read options</span>
-<a name="l00102"></a>00102   config.<a class="code" href="classmdt_port_config.html#a02f3c9744b0d7a61853ab58467278bbc" title="Set the read frame size.">setReadFrameSize</a>(sbReadFrameSize-&gt;value());
-<a name="l00103"></a>00103   config.<a class="code" href="classmdt_port_config.html#a04d8e81844deaff20a890ea24e2f9634" title="Set the read Queue size.">setReadQueueSize</a>(sbReadQueueSize-&gt;value());
-<a name="l00104"></a>00104   config.<a class="code" href="classmdt_port_config.html#a1028f6c9d7073a6591fa59fc907f0585" title="Set the read timeout.">setReadTimeout</a>(sbReadTimeout-&gt;value());
-<a name="l00105"></a>00105   config.<a class="code" href="classmdt_port_config.html#a5e7857a56ab2baff4bd0a77290b3c742" title="Use the read timeout protocol.">setUseReadTimeoutProtocol</a>(cbUseReadTimeoutProtocol-&gt;isChecked());
-<a name="l00106"></a>00106   <span class="comment">// Write options</span>
-<a name="l00107"></a>00107   config.<a class="code" href="classmdt_port_config.html#a9539cef9e33d564c7c70902a6380be04" title="Set the write frame size.">setWriteFrameSize</a>(sbWriteFrameSize-&gt;value());
-<a name="l00108"></a>00108   config.<a class="code" href="classmdt_port_config.html#a8a99771f7acfeb546d1d89d3671407e5" title="Set the read Queue size.">setWriteQueueSize</a>(sbWriteQueueSize-&gt;value());
-<a name="l00109"></a>00109   config.<a class="code" href="classmdt_port_config.html#ac117f7cd1f23de163a7fe84f69c2164c" title="Set the write timeout.">setWriteTimeout</a>(sbWriteTimeout-&gt;value());
-<a name="l00110"></a>00110   config.<a class="code" href="classmdt_port_config.html#a1d7515af56919b95f060cad4f83c6ef3" title="Set the minimal time to wait before try to write.">setWriteMinWaitTime</a>(sbWriteMinWaitTime-&gt;value());
-<a name="l00111"></a>00111   config.<a class="code" href="classmdt_port_config.html#ac6cb3d8fbefad9a832335c3f2023832c" title="Set the byte per byte write On/Off.">setBytePerByteWrite</a>(cbBytePerByteWrite-&gt;isChecked(), sbWriteMinWaitTime-&gt;value());
-<a name="l00112"></a>00112   config.<a class="code" href="classmdt_port_config.html#a7113f6d96e93978cc3915589c14b16b6" title="Set the write interframe time.">setWriteInterframeTime</a>(sbWriteInterframeTime-&gt;value());
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114   <span class="comment">// Display real applied setup</span>
-<a name="l00115"></a>00115   <a class="code" href="classmdt_port_config_widget.html#a44c1690242f5f8680fb4f32a5771534f" title="Read the config instance and update GUI.">displayConfig</a>(config);
-<a name="l00116"></a>00116 }
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118 <span class="keywordtype">void</span> mdtPortConfigWidget::on_cbFrameType_currentIndexChanged(<span class="keywordtype">int</span> index)
-<a name="l00119"></a>00119 {
-<a name="l00120"></a>00120   <span class="comment">// Make the end of frame sequence selection coherant to frame type</span>
-<a name="l00121"></a>00121   <span class="keywordflow">if</span>(cbFrameType-&gt;itemData(index) != <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>){
-<a name="l00122"></a>00122     cbEndOfFrameSeq-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00123"></a>00123   }<span class="keywordflow">else</span>{
-<a name="l00124"></a>00124     cbEndOfFrameSeq-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00125"></a>00125   }
-<a name="l00126"></a>00126   <span class="comment">// If frame type is binary timeout protocol, activate timeout protocl</span>
-<a name="l00127"></a>00127   <span class="keywordflow">if</span>(cbFrameType-&gt;itemData(index) == <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96">mdtFrame::FT_RAW_TOP</a>){
-<a name="l00128"></a>00128     cbUseReadTimeoutProtocol-&gt;setChecked(<span class="keyword">true</span>);
-<a name="l00129"></a>00129   }<span class="keywordflow">else</span>{
-<a name="l00130"></a>00130     cbUseReadTimeoutProtocol-&gt;setChecked(<span class="keyword">false</span>);
-<a name="l00131"></a>00131   }
-<a name="l00132"></a>00132 }
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QByteArray&gt;</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="comment">//#include &lt;QDebug&gt;</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 mdtPortConfigWidget::mdtPortConfigWidget(QWidget *parent)
+<a name="l00029"></a>00029  : QWidget(parent)
+<a name="l00030"></a>00030 {
+<a name="l00031"></a>00031   setupUi(<span class="keyword">this</span>);
+<a name="l00032"></a>00032 }
+<a name="l00033"></a>00033 
+<a name="l00034"></a><a class="code" href="classmdt_port_config_widget.html#a44c1690242f5f8680fb4f32a5771534f">00034</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_config_widget.html#a44c1690242f5f8680fb4f32a5771534f" title="Read the config instance and update GUI.">mdtPortConfigWidget::displayConfig</a>(<a class="code" href="classmdt_port_config.html">mdtPortConfig</a> &amp;config)
+<a name="l00035"></a>00035 {
+<a name="l00036"></a>00036   <span class="keywordtype">int</span> index;
+<a name="l00037"></a>00037   QByteArray ba;
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039   <span class="comment">// Frame type</span>
+<a name="l00040"></a>00040   <span class="keywordflow">if</span>(cbFrameType-&gt;count() &lt; 1){
+<a name="l00041"></a>00041     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;Binary raw&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f">mdtFrame::FT_RAW</a>);
+<a name="l00042"></a>00042     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;Binary timeout protocol&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96">mdtFrame::FT_RAW_TOP</a>);
+<a name="l00043"></a>00043     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;ASCII&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>);
+<a name="l00044"></a>00044     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;Modbus TCP&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a">mdtFrame::FT_MODBUS_TCP</a>);
+<a name="l00045"></a>00045     cbFrameType-&gt;addItem(tr(<span class="stringliteral">&quot;USBTMC&quot;</span>) , <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17aca438ff6b553a819f22090facc562c86">mdtFrame::FT_USBTMC</a>);
+<a name="l00046"></a>00046   }
+<a name="l00047"></a>00047   index = cbFrameType-&gt;findData(config.<a class="code" href="classmdt_port_config.html#af9c95090820c449412298832582a0fab" title="Get frame type.">frameType</a>());
+<a name="l00048"></a>00048   <span class="keywordflow">if</span>(index &gt;= 0){
+<a name="l00049"></a>00049     cbFrameType-&gt;setCurrentIndex(index);
+<a name="l00050"></a>00050   }
+<a name="l00051"></a>00051   <span class="comment">// End of frame sequence</span>
+<a name="l00052"></a>00052   <span class="keywordflow">if</span>(cbEndOfFrameSeq-&gt;count() &lt; 1){
+<a name="l00053"></a>00053     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;&quot;</span>, QByteArray());
+<a name="l00054"></a>00054     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;*&quot;</span>, QByteArray(<span class="stringliteral">&quot;*&quot;</span>));
+<a name="l00055"></a>00055     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;$&quot;</span>, QByteArray(<span class="stringliteral">&quot;$&quot;</span>));
+<a name="l00056"></a>00056     ba.clear();
+<a name="l00057"></a>00057     ba.append((<span class="keywordtype">char</span>)0x04);
+<a name="l00058"></a>00058     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;EOT (0x04)&quot;</span>, ba);
+<a name="l00059"></a>00059     ba.clear();
+<a name="l00060"></a>00060     ba.append((<span class="keywordtype">char</span>)0x0A);
+<a name="l00061"></a>00061     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;LF (0x0A, \\n)&quot;</span>, ba);
+<a name="l00062"></a>00062     ba.clear();
+<a name="l00063"></a>00063     ba.append((<span class="keywordtype">char</span>)0x0D);
+<a name="l00064"></a>00064     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;CR (0x0D, \\r)&quot;</span>, ba);
+<a name="l00065"></a>00065     ba.clear();
+<a name="l00066"></a>00066     ba.append((<span class="keywordtype">char</span>)0x17);
+<a name="l00067"></a>00067     cbEndOfFrameSeq-&gt;addItem(<span class="stringliteral">&quot;ETB (0x17)&quot;</span>, ba);
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069   }
+<a name="l00070"></a>00070   index = cbEndOfFrameSeq-&gt;findData(config.<a class="code" href="classmdt_port_config.html#a9ac77f89ee4a0baadc4814a9a95701b6" title="Get the end of frame sequence.">endOfFrameSeq</a>());
+<a name="l00071"></a>00071   <span class="keywordflow">if</span>(index &gt;= 0){
+<a name="l00072"></a>00072     cbEndOfFrameSeq-&gt;setCurrentIndex(index);
+<a name="l00073"></a>00073   }
+<a name="l00074"></a>00074   <span class="comment">// Read options</span>
+<a name="l00075"></a>00075   sbReadFrameSize-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#ad315f8f97723abe161792c9d9a1375ec" title="Get the read frame size.">readFrameSize</a>());
+<a name="l00076"></a>00076   sbReadQueueSize-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#aff0260f72ca05715efe3f70850e7a151" title="Get the read Queue size.">readQueueSize</a>());
+<a name="l00077"></a>00077   sbReadTimeout-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#ab18c2ec1628cb480a70033387e7c3333" title="Get read timeout.">readTimeout</a>());
+<a name="l00078"></a>00078   cbUseReadTimeoutProtocol-&gt;setChecked(config.<a class="code" href="classmdt_port_config.html#ad90a88b06f0efebd1ee9f6d4370dec33" title="Know if read timeout protocol must be used.">useReadTimeoutProtocol</a>());
+<a name="l00079"></a>00079   <span class="comment">// Write options</span>
+<a name="l00080"></a>00080   sbWriteFrameSize-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a19bda9f9ce29657179994e02c6da11b9" title="Get the read frame size.">writeFrameSize</a>());
+<a name="l00081"></a>00081   sbWriteQueueSize-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a93d72b1ea53f188d7a35bc044394b959" title="Get the write Queue size.">writeQueueSize</a>());
+<a name="l00082"></a>00082   sbWriteTimeout-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a3009e07cd66f4c4bfc1c7fdabbc9f93c" title="Get write timeout.">writeTimeout</a>());
+<a name="l00083"></a>00083   sbWriteInterbyteWaitTime-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a76cc4a35cfd2c762d1f9dacb87203627" title="Get the write time between bytes [ms].">writeInterbyteTime</a>());
+<a name="l00084"></a>00084   cbBytePerByteWrite-&gt;setChecked(config.<a class="code" href="classmdt_port_config.html#a9b5041ba740a5918e5e1323e61d3bbdc" title="Get byte per byte write flag (On/Off)">bytePerByteWrite</a>());
+<a name="l00085"></a>00085   sbWriteInterframeTime-&gt;setValue(config.<a class="code" href="classmdt_port_config.html#a745f5111436fc143b75440bf90a1a4e6" title="Get the write interframe time [ms].">writeInterframeTime</a>());
+<a name="l00086"></a>00086 }
+<a name="l00087"></a>00087 
+<a name="l00088"></a><a class="code" href="classmdt_port_config_widget.html#a23fba4fe5aa0c07b95a9b85218456456">00088</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_config_widget.html#a23fba4fe5aa0c07b95a9b85218456456" title="Get GUI&#39;s selected options and update config.">mdtPortConfigWidget::updateConfig</a>(<a class="code" href="classmdt_port_config.html">mdtPortConfig</a> &amp;config)
+<a name="l00089"></a>00089 {
+<a name="l00090"></a>00090   <span class="keywordtype">int</span> index;
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092   <span class="comment">// Frame type</span>
+<a name="l00093"></a>00093   index = cbFrameType-&gt;currentIndex();
+<a name="l00094"></a>00094   <span class="keywordflow">if</span>(index &gt;= 0){
+<a name="l00095"></a>00095     <span class="keywordflow">switch</span>(cbFrameType-&gt;itemData(index).toInt()){
+<a name="l00096"></a>00096       <span class="keywordflow">case</span> <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f">mdtFrame::FT_RAW</a>:
+<a name="l00097"></a>00097         config.<a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f">mdtFrame::FT_RAW</a>);
+<a name="l00098"></a>00098         <span class="keywordflow">break</span>;
+<a name="l00099"></a>00099       <span class="keywordflow">case</span> <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96">mdtFrame::FT_RAW_TOP</a>:
+<a name="l00100"></a>00100         config.<a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96">mdtFrame::FT_RAW_TOP</a>);
+<a name="l00101"></a>00101         <span class="keywordflow">break</span>;
+<a name="l00102"></a>00102       <span class="keywordflow">case</span> <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>:
+<a name="l00103"></a>00103         config.<a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>);
+<a name="l00104"></a>00104         <span class="keywordflow">break</span>;
+<a name="l00105"></a>00105       <span class="keywordflow">case</span> <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a">mdtFrame::FT_MODBUS_TCP</a>:
+<a name="l00106"></a>00106         config.<a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a">mdtFrame::FT_MODBUS_TCP</a>);
+<a name="l00107"></a>00107         <span class="keywordflow">break</span>;
+<a name="l00108"></a>00108     }
+<a name="l00109"></a>00109   }
+<a name="l00110"></a>00110   <span class="comment">// End of frame sequence - Only for ASCII frame type</span>
+<a name="l00111"></a>00111   <span class="keywordflow">if</span>(config.<a class="code" href="classmdt_port_config.html#af9c95090820c449412298832582a0fab" title="Get frame type.">frameType</a>() == <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>){
+<a name="l00112"></a>00112     index = cbEndOfFrameSeq-&gt;currentIndex();
+<a name="l00113"></a>00113     <span class="keywordflow">if</span>(index &gt; -1){
+<a name="l00114"></a>00114       config.<a class="code" href="classmdt_port_config.html#a3c5e1c444a18da7d68430bd1c14030f4" title="Set the end of frame sequence (applies on ASCII frames)">setEndOfFrameSeq</a>(cbEndOfFrameSeq-&gt;itemData(index).toByteArray());
+<a name="l00115"></a>00115     }
+<a name="l00116"></a>00116   }<span class="keywordflow">else</span>{
+<a name="l00117"></a>00117     config.<a class="code" href="classmdt_port_config.html#a3c5e1c444a18da7d68430bd1c14030f4" title="Set the end of frame sequence (applies on ASCII frames)">setEndOfFrameSeq</a>(<span class="stringliteral">&quot;&quot;</span>);
+<a name="l00118"></a>00118   }
+<a name="l00119"></a>00119   <span class="comment">// Read options</span>
+<a name="l00120"></a>00120   config.<a class="code" href="classmdt_port_config.html#a02f3c9744b0d7a61853ab58467278bbc" title="Set the read frame size.">setReadFrameSize</a>(sbReadFrameSize-&gt;value());
+<a name="l00121"></a>00121   config.<a class="code" href="classmdt_port_config.html#a04d8e81844deaff20a890ea24e2f9634" title="Set the read Queue size.">setReadQueueSize</a>(sbReadQueueSize-&gt;value());
+<a name="l00122"></a>00122   config.<a class="code" href="classmdt_port_config.html#a1028f6c9d7073a6591fa59fc907f0585" title="Set the read timeout.">setReadTimeout</a>(sbReadTimeout-&gt;value());
+<a name="l00123"></a>00123   config.<a class="code" href="classmdt_port_config.html#a5e7857a56ab2baff4bd0a77290b3c742" title="Use the read timeout protocol.">setUseReadTimeoutProtocol</a>(cbUseReadTimeoutProtocol-&gt;isChecked());
+<a name="l00124"></a>00124   <span class="comment">// Write options</span>
+<a name="l00125"></a>00125   config.<a class="code" href="classmdt_port_config.html#a9539cef9e33d564c7c70902a6380be04" title="Set the write frame size.">setWriteFrameSize</a>(sbWriteFrameSize-&gt;value());
+<a name="l00126"></a>00126   config.<a class="code" href="classmdt_port_config.html#a8a99771f7acfeb546d1d89d3671407e5" title="Set the read Queue size.">setWriteQueueSize</a>(sbWriteQueueSize-&gt;value());
+<a name="l00127"></a>00127   config.<a class="code" href="classmdt_port_config.html#ac117f7cd1f23de163a7fe84f69c2164c" title="Set the write timeout.">setWriteTimeout</a>(sbWriteTimeout-&gt;value());
+<a name="l00128"></a>00128   config.<a class="code" href="classmdt_port_config.html#ac6cb3d8fbefad9a832335c3f2023832c" title="Set the byte per byte write On/Off.">setBytePerByteWrite</a>(cbBytePerByteWrite-&gt;isChecked(), sbWriteInterbyteWaitTime-&gt;value());
+<a name="l00129"></a>00129   config.<a class="code" href="classmdt_port_config.html#a7113f6d96e93978cc3915589c14b16b6" title="Set the write interframe time.">setWriteInterframeTime</a>(sbWriteInterframeTime-&gt;value());
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131   <span class="comment">// Display real applied setup</span>
+<a name="l00132"></a>00132   <a class="code" href="classmdt_port_config_widget.html#a44c1690242f5f8680fb4f32a5771534f" title="Read the config instance and update GUI.">displayConfig</a>(config);
+<a name="l00133"></a>00133 }
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135 <span class="keywordtype">void</span> mdtPortConfigWidget::on_cbFrameType_currentIndexChanged(<span class="keywordtype">int</span> index)
+<a name="l00136"></a>00136 {
+<a name="l00137"></a>00137   <span class="comment">// Make the end of frame sequence selection coherant to frame type</span>
+<a name="l00138"></a>00138   <span class="keywordflow">if</span>(cbFrameType-&gt;itemData(index) != <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">mdtFrame::FT_ASCII</a>){
+<a name="l00139"></a>00139     cbEndOfFrameSeq-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00140"></a>00140   }<span class="keywordflow">else</span>{
+<a name="l00141"></a>00141     cbEndOfFrameSeq-&gt;setEnabled(<span class="keyword">true</span>);
+<a name="l00142"></a>00142   }
+<a name="l00143"></a>00143   <span class="comment">// If frame type is binary timeout protocol, activate timeout protocl</span>
+<a name="l00144"></a>00144   <span class="keywordflow">if</span>(cbFrameType-&gt;itemData(index) == <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96">mdtFrame::FT_RAW_TOP</a>){
+<a name="l00145"></a>00145     cbUseReadTimeoutProtocol-&gt;setChecked(<span class="keyword">true</span>);
+<a name="l00146"></a>00146   }<span class="keywordflow">else</span>{
+<a name="l00147"></a>00147     cbUseReadTimeoutProtocol-&gt;setChecked(<span class="keyword">false</span>);
+<a name="l00148"></a>00148   }
+<a name="l00149"></a>00149 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -208,7 +225,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -115,12 +115,12 @@ mdtFrameCodecScpiU3606A::measure_type_t mdtFrameCodecScpiU3606A::measureType() c
   return pvMeasureType;
 }
 
-QVariant mdtFrameCodecScpiU3606A::range() const
+mdtValue mdtFrameCodecScpiU3606A::range() const
 {
   return pvRange;
 }
 
-QVariant mdtFrameCodecScpiU3606A::resolution() const
+mdtValue mdtFrameCodecScpiU3606A::resolution() const
 {
   return pvResolution;
 }

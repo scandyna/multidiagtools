@@ -21,12 +21,11 @@
 #include "mdtPortTerm.h"
 #include "mdtApplication.h"
 #include "mdtPortInfo.h"
+#include "mdtSerialPortManager.h"
+#include "mdtUsbtmcPortManager.h"
 #include "mdtUsbtmcPortSetupDialog.h"
-
-#include "mdtDevice.h"
 #include "mdtPortStatusWidget.h"
 #include "mdtAbstractPort.h"
-
 #include <QHBoxLayout>
 #include <QAction>
 #include <QList>
@@ -63,8 +62,9 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
   pvPortSelectActionGroup->addAction(action_SerialPort);
   pvPortSelectActionGroup->addAction(action_UsbTmcPort);
   connect(pvPortSelectActionGroup, SIGNAL(triggered(QAction*)), this, SLOT(selectPortType(QAction*)));
-  action_SerialPort->setChecked(true);
+  ///action_SerialPort->setChecked(true);
   ///attachToSerialPort();
+  action_UsbTmcPort->setChecked(true);
   attachToUsbtmcPort();
 }
 
@@ -96,20 +96,16 @@ void mdtPortTerm::setAvailableTranslations(const QMap<QString, QString> &avaliab
   }
 }
 
-void mdtPortTerm::appendReadenData(QByteArray data)
+void mdtPortTerm::appendReadenData(mdtPortTransaction *transaction)
 {
-  teTerm->append(data);
-}
+  Q_ASSERT(transaction != 0);
 
-void mdtPortTerm::appendReadenData(mdtPortTransaction transaction)
-{
-  teTerm->append(transaction.data());
+  teTerm->append(transaction->data());
 }
 
 void mdtPortTerm::sendCmd()
 {
   QString cmd;
-  bool cmdIsQuery = false;
 
   if(!pvReady){
     return;
@@ -119,31 +115,17 @@ void mdtPortTerm::sendCmd()
     showStatusMessage(tr("No port manager was set, please choose a port"));
     return;
   }
-  if(leCmd->text().size() < 1){
+  cmd = leCmd->text().trimmed();
+  if(cmd.isEmpty()){
+    leCmd->clear();
     return;
   }
-  cmd = leCmd->text();
-  if(cmd.trimmed().right(1) == "?"){
-    cmdIsQuery = true;
-  }
-  cmd.append(pvCmdTermSequence);
-  // Wait until write is possible and write
-  if(!pvCurrentPortManager->waitOnWriteReady()){
-    showStatusMessage(tr("Cannot send command for the moment"), 1000);
-    return;
-  }
-  if(pvCurrentPortManager->writeData(cmd.toAscii()) < 0){
-    showStatusMessage(tr("Error occured during write process"), 1000);
-    return;
-  }
-  // If we have a query for USBTMC port, send the read request
-  if((pvCurrentPortManager == pvUsbtmcPortManager)&&(cmdIsQuery)){
-    if(!pvCurrentPortManager->waitOnWriteReady()){
-      showStatusMessage(tr("Cannot send command for the moment"), 1000);
+  if(pvCurrentPortManager == pvSerialPortManager){
+    if(!sendCommandToSerialPort(cmd)){
       return;
     }
-    if(pvUsbtmcPortManager->sendReadRequest(false) < 0){
-      showStatusMessage(tr("Error occured while sending read request"), 1000);
+  }else if(pvCurrentPortManager == pvUsbtmcPortManager){
+    if(!sendCommandToUsbtmcPort(cmd)){
       return;
     }
   }
@@ -182,9 +164,10 @@ void mdtPortTerm::attachToSerialPort()
   // Control widget
   pvStatusWidget->addCustomWidget(pvSerialPortCtlWidget);
   pvSerialPortCtlWidget->makeConnections(pvSerialPortManager);
-  // Make connections
+  // Setup port manager and make connections
+  pvSerialPortManager->setKeepTransactionsDone(false);
   connect(pvSerialPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
-  connect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
+  connect(pvSerialPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(appendReadenData(mdtPortTransaction*)));
   // Try to open first port
   ports = pvSerialPortManager->scan();
   if(ports.size() < 1){
@@ -209,7 +192,7 @@ void mdtPortTerm::attachToSerialPort()
 void mdtPortTerm::detachFromSerialPort()
 {
   if(pvSerialPortManager != 0){
-    disconnect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
+    disconnect(pvSerialPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(appendReadenData(mdtPortTransaction*)));
     disconnect(pvSerialPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
     // Ctl widget
     pvStatusWidget->removeCustomWidget();
@@ -234,11 +217,11 @@ void mdtPortTerm::portSetup()
     d.setPortManager(pvSerialPortManager);
     d.exec();
   }else if(pvUsbtmcPortManager != 0){
-    disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
+    disconnect(pvUsbtmcPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(appendReadenData(mdtPortTransaction*)));
     mdtUsbtmcPortSetupDialog d(this);
     d.setPortManager(pvUsbtmcPortManager);
     d.exec();
-    connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
+    connect(pvUsbtmcPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(appendReadenData(mdtPortTransaction*)));
   }else{
     showStatusMessage(tr("Cannot call setup dialog, no port manager defined"), 3000);
     return;
@@ -257,9 +240,10 @@ void mdtPortTerm::attachToUsbtmcPort()
   // Create objects
   pvUsbtmcPortManager = new mdtUsbtmcPortManager;
   pvCurrentPortManager = pvUsbtmcPortManager;
-  // Make connections
+  // Setup port manager and make connections
+  pvUsbtmcPortManager->setKeepTransactionsDone(false);
   connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
-  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
+  connect(pvUsbtmcPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(appendReadenData(mdtPortTransaction*)));
   // Try to open first port
   ports = pvUsbtmcPortManager->scan();
   if(ports.size() < 1){
@@ -284,7 +268,7 @@ void mdtPortTerm::attachToUsbtmcPort()
 void mdtPortTerm::detachFromUsbtmcPort()
 {
   if(pvUsbtmcPortManager != 0){
-    disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
+    disconnect(pvUsbtmcPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(appendReadenData(mdtPortTransaction*)));
     disconnect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
     pvUsbtmcPortManager->closePort();
     delete pvUsbtmcPortManager;
@@ -387,4 +371,46 @@ void mdtPortTerm::showStatusMessage(const QString &message, int timeout)
   Q_ASSERT(pvStatusWidget != 0);
 
   pvStatusWidget->showMessage(message, "", timeout);
+}
+
+bool mdtPortTerm::sendCommandToSerialPort(const QString &command)
+{
+  Q_ASSERT(pvSerialPortManager != 0);
+
+  // Wait until write is possible and write
+  if(!pvSerialPortManager->waitOnWriteReady()){
+    showStatusMessage(tr("Cannot send command for the moment"), 1000);
+    return false;
+  }
+  // 
+  if(pvSerialPortManager->writeData(command.toAscii() + pvCmdTermSequence) < 0){
+    showStatusMessage(tr("Error occured during write process"), 1000);
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtPortTerm::sendCommandToUsbtmcPort(const QString &command)
+{
+  Q_ASSERT(pvUsbtmcPortManager != 0);
+
+  // Send command
+  if(pvUsbtmcPortManager->sendCommand(command.toAscii() + pvCmdTermSequence) < 0){
+    showStatusMessage(tr("Error occured during write process"), 1000);
+    return false;
+  }
+  // If we have a query, send the read request
+  if(command.right(1) == "?"){
+    if(!pvUsbtmcPortManager->waitOnWriteReady()){
+      showStatusMessage(tr("Cannot send read request for the moment"), 1000);
+      return false;
+    }
+    if(pvUsbtmcPortManager->sendReadRequest(false) < 0){
+      showStatusMessage(tr("Error occured while sending read request"), 1000);
+      return false;
+    }
+  }
+
+  return true;
 }

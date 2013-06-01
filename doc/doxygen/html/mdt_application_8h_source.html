@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -108,63 +108,66 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00053"></a>00053   <a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a>(<span class="keywordtype">int</span> &amp;argc, <span class="keywordtype">char</span> **argv, <span class="keywordtype">bool</span> GUIenabled = <span class="keyword">true</span>);
 <a name="l00054"></a>00054   ~<a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a>();
 <a name="l00055"></a>00055 
-<a name="l00069"></a>00069   <span class="keywordtype">bool</span> <a class="code" href="classmdt_application.html#a3b8798416e730f85e419566442adb77b" title="Some initializations.">init</a>(<span class="keywordtype">bool</span> allowMultipleInstances = <span class="keyword">false</span>, <span class="keywordtype">int</span> dialogErrorLevelsMask = 0);
-<a name="l00070"></a>00070 
-<a name="l00075"></a>00075   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a79dbb5f3d889d7cd9b8909a4eb8bcce1" title="Build the application version with numeric values.">setApplicationVersion</a>(<span class="keywordtype">int</span> versionMajor, <span class="keywordtype">int</span> versionMinor, <span class="keywordtype">int</span> versionMicro);
-<a name="l00076"></a>00076 
-<a name="l00081"></a>00081   <span class="keyword">static</span> <a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a> *<a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d" title="Get the instance of mdtApplication.">instance</a>();
-<a name="l00082"></a>00082 
-<a name="l00085"></a>00085   <span class="keyword">static</span> QString <a class="code" href="classmdt_application.html#af17bb16e420c91af3d0ad1970714388c" title="Get data dir path.">systemDataDirPath</a>();
-<a name="l00086"></a>00086 
-<a name="l00089"></a>00089   <span class="keyword">static</span> QString <a class="code" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51" title="Get the multi diag tools library version.">mdtLibVersion</a>();
-<a name="l00090"></a>00090 
-<a name="l00096"></a>00096   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599" title="Add a directory that contains translations files in search paths.">addTranslationsDirectory</a>(<span class="keyword">const</span> QString &amp;directory);
-<a name="l00097"></a>00097 
-<a name="l00104"></a>00104   QMap&lt;QString, QString&gt; &amp;<a class="code" href="classmdt_application.html#a9ce5b5c3ca36a76ad0acc3913ce8f89a" title="Get the list of available translations.">availableTranslations</a>();
-<a name="l00105"></a>00105 
-<a name="l00110"></a>00110   QString &amp;<a class="code" href="classmdt_application.html#a531e64266be58b3a10608b21ae6afedb" title="Get the current translation key.">currentTranslationKey</a>();
-<a name="l00111"></a>00111 
-<a name="l00121"></a>00121   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">installTranslator</a>(QTranslator *translator);
-<a name="l00122"></a>00122 
-<a name="l00128"></a>00128   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#ae83acc410a132b9972d6e961e0c79b0d" title="Remove installed translators.">removeCurrentTranslators</a>();
-<a name="l00129"></a>00129 
-<a name="l00130"></a>00130  <span class="keyword">public</span> slots:
-<a name="l00131"></a>00131 
-<a name="l00143"></a>00143   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">changeLanguage</a>(<span class="keyword">const</span> QLocale &amp;locale = QLocale());
-<a name="l00144"></a>00144 
-<a name="l00151"></a>00151   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">changeLanguage</a>(QAction *action);
-<a name="l00152"></a>00152 
-<a name="l00153"></a>00153  signals:
-<a name="l00154"></a>00154 
-<a name="l00157"></a>00157   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a4200ade3b0b295ea8b0cb5239d967610" title="Emitted when language was changed using changeLanguage()">languageChanged</a>();
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159  <span class="keyword">private</span>:
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161   <span class="comment">// Search the data system directory</span>
-<a name="l00162"></a>00162   <span class="keywordtype">bool</span> searchSystemDataDir();
+<a name="l00070"></a>00070   <span class="keywordtype">bool</span> <a class="code" href="classmdt_application.html#a3b8798416e730f85e419566442adb77b" title="Some initializations.">init</a>(<span class="keywordtype">bool</span> allowMultipleInstances = <span class="keyword">false</span>, <span class="keywordtype">int</span> dialogErrorLevelsMask = 0);
+<a name="l00071"></a>00071 
+<a name="l00076"></a>00076   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a79dbb5f3d889d7cd9b8909a4eb8bcce1" title="Build the application version with numeric values.">setApplicationVersion</a>(<span class="keywordtype">int</span> versionMajor, <span class="keywordtype">int</span> versionMinor, <span class="keywordtype">int</span> versionMicro);
+<a name="l00077"></a>00077 
+<a name="l00082"></a>00082   <span class="keyword">static</span> <a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a> *<a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d" title="Get the instance of mdtApplication.">instance</a>();
+<a name="l00083"></a>00083 
+<a name="l00086"></a>00086   <span class="keyword">static</span> QString <a class="code" href="classmdt_application.html#af17bb16e420c91af3d0ad1970714388c" title="Get data dir path.">systemDataDirPath</a>();
+<a name="l00087"></a>00087 
+<a name="l00090"></a>00090   <span class="keyword">static</span> <span class="keyword">const</span> QDir <a class="code" href="classmdt_application.html#a936beeeb6d56d5d669a478f248d80c7d" title="Get cache directory.">cacheDir</a>();
+<a name="l00091"></a>00091 
+<a name="l00094"></a>00094   <span class="keyword">static</span> QString <a class="code" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51" title="Get the multi diag tools library version.">mdtLibVersion</a>();
+<a name="l00095"></a>00095 
+<a name="l00101"></a>00101   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599" title="Add a directory that contains translations files in search paths.">addTranslationsDirectory</a>(<span class="keyword">const</span> QString &amp;directory);
+<a name="l00102"></a>00102 
+<a name="l00109"></a>00109   QMap&lt;QString, QString&gt; &amp;<a class="code" href="classmdt_application.html#a9ce5b5c3ca36a76ad0acc3913ce8f89a" title="Get the list of available translations.">availableTranslations</a>();
+<a name="l00110"></a>00110 
+<a name="l00115"></a>00115   QString &amp;<a class="code" href="classmdt_application.html#a531e64266be58b3a10608b21ae6afedb" title="Get the current translation key.">currentTranslationKey</a>();
+<a name="l00116"></a>00116 
+<a name="l00126"></a>00126   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">installTranslator</a>(QTranslator *translator);
+<a name="l00127"></a>00127 
+<a name="l00133"></a>00133   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#ae83acc410a132b9972d6e961e0c79b0d" title="Remove installed translators.">removeCurrentTranslators</a>();
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135  <span class="keyword">public</span> slots:
+<a name="l00136"></a>00136 
+<a name="l00148"></a>00148   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">changeLanguage</a>(<span class="keyword">const</span> QLocale &amp;locale = QLocale());
+<a name="l00149"></a>00149 
+<a name="l00156"></a>00156   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">changeLanguage</a>(QAction *action);
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158  signals:
+<a name="l00159"></a>00159 
+<a name="l00162"></a>00162   <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a4200ade3b0b295ea8b0cb5239d967610" title="Emitted when language was changed using changeLanguage()">languageChanged</a>();
 <a name="l00163"></a>00163 
-<a name="l00164"></a>00164   <span class="comment">// Make some checks on given directory, and returns true if it matches to the data directory</span>
-<a name="l00165"></a>00165   <span class="keywordtype">bool</span> isSystemDataDir(QDir &amp;dir);
-<a name="l00166"></a>00166 
-<a name="l00167"></a>00167   <span class="comment">// Create some directories in home</span>
-<a name="l00168"></a>00168   <span class="keywordtype">bool</span> initHomeDir();
-<a name="l00169"></a>00169 
-<a name="l00170"></a>00170   <span class="comment">// Find available .qm files and build the available translations list</span>
-<a name="l00171"></a>00171   <span class="keywordtype">void</span> buildAvailableTranslationsList();
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173   <span class="comment">// Load found translation files according given language</span>
-<a name="l00174"></a>00174   <span class="keywordtype">bool</span> loadTranslationFiles(<span class="keyword">const</span> QString &amp;languageSuffix);
-<a name="l00175"></a>00175 
-<a name="l00176"></a>00176   QString pvSystemDataDirPath;
-<a name="l00177"></a>00177   QString pvLogDirPath;
-<a name="l00178"></a>00178   QStringList pvTranslationsDirectories;  <span class="comment">// Directories that contains .qm translations files</span>
-<a name="l00179"></a>00179   <span class="keyword">static</span> <a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a> *pvInstance;
-<a name="l00180"></a>00180   QList&lt;QTranslator*&gt; pvTranslators;
-<a name="l00181"></a>00181   QMap&lt;QString, QString&gt; pvAvailableTranslations; <span class="comment">// Key: suffix, like en, fr, . Value: English, Français, ..</span>
-<a name="l00182"></a>00182   QString pvCurrentTranslationKey;                <span class="comment">// Current loaded translation keay, like en, de, ...</span>
-<a name="l00183"></a>00183 };
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185 <span class="preprocessor">#endif  // #ifndef MDT_APPLICATION_H</span>
+<a name="l00164"></a>00164  <span class="keyword">private</span>:
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166   <span class="comment">// Search the data system directory</span>
+<a name="l00167"></a>00167   <span class="keywordtype">bool</span> searchSystemDataDir();
+<a name="l00168"></a>00168 
+<a name="l00169"></a>00169   <span class="comment">// Make some checks on given directory, and returns true if it matches to the data directory</span>
+<a name="l00170"></a>00170   <span class="keywordtype">bool</span> isSystemDataDir(QDir &amp;dir);
+<a name="l00171"></a>00171 
+<a name="l00172"></a>00172   <span class="comment">// Create some directories in home</span>
+<a name="l00173"></a>00173   <span class="keywordtype">bool</span> initHomeDir();
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175   <span class="comment">// Find available .qm files and build the available translations list</span>
+<a name="l00176"></a>00176   <span class="keywordtype">void</span> buildAvailableTranslationsList();
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178   <span class="comment">// Load found translation files according given language</span>
+<a name="l00179"></a>00179   <span class="keywordtype">bool</span> loadTranslationFiles(<span class="keyword">const</span> QString &amp;languageSuffix);
+<a name="l00180"></a>00180 
+<a name="l00182"></a>00182   QDir pvSystemDataDir;
+<a name="l00184"></a>00184   QDir pvLogDir;
+<a name="l00185"></a>00185   QDir pvCacheDir;
+<a name="l00186"></a>00186   QStringList pvTranslationsDirectories;  <span class="comment">// Directories that contains .qm translations files</span>
+<a name="l00187"></a>00187   <span class="keyword">static</span> <a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a> *pvInstance;
+<a name="l00188"></a>00188   QList&lt;QTranslator*&gt; pvTranslators;
+<a name="l00189"></a>00189   QMap&lt;QString, QString&gt; pvAvailableTranslations; <span class="comment">// Key: suffix, like en, fr, . Value: English, Français, ..</span>
+<a name="l00190"></a>00190   QString pvCurrentTranslationKey;                <span class="comment">// Current loaded translation keay, like en, de, ...</span>
+<a name="l00191"></a>00191 };
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193 <span class="preprocessor">#endif  // #ifndef MDT_APPLICATION_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -181,7 +184,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,23 @@
 #define MDT_IO_WIDGET_TEST_H
 
 #include "mdtTest.h"
+#include "mdtValue.h"
+#include <qwt_slider.h>
+#include <QWidget>
+
+// We need a slider class wich has a setValue(const mdtValue&) slot
+class mdtTestSlider : public QwtSlider
+{
+ Q_OBJECT
+
+ public:
+
+  mdtTestSlider(QWidget *parent = 0);
+
+ public slots:
+
+  void setValue(const mdtValue &value);
+};
 
 class mdtIoWidgetTest : public mdtTest
 {

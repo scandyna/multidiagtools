@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,19 +22,30 @@
 #define MDT_DATABASE_TEST_H
 
 #include "mdtTest.h"
+#include <QFileInfo>
 
 class mdtDatabaseTest : public mdtTest
 {
  Q_OBJECT
 
-
  private slots:
 
+  // Create database and tables
   void initTestCase();
 
-  void mdtSqlTableModelTest();
+  void relationsTest();
 
+  /*
+   * Some old tests ...
+   */
+  void mdtSqlTableModelTest();
   void mdtDataWidgetMapperTest();
+
+  void cleanupTestCase();
+
+ private:
+
+  QFileInfo pvDbFileInfo;
 };
 
-#endif  // #ifndef MDT_DATABASE_TEST_H
+#endif // #ifndef MDT_DATABASE_TEST_H

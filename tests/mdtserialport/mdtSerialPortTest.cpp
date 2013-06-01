@@ -162,7 +162,7 @@ void mdtSerialPortTest::openCloseTest()
 #ifdef Q_OS_UNIX
   /*
    * It can happen that device file /dev/ttyXXX exists, but that no port
-   *  is really avalable.
+   *  is really available.
    * In that case, library had a bug with lockfiles management.
    */
 
@@ -283,10 +283,8 @@ void mdtSerialPortTest::ctlSignalsTest()
 
   // Setup
 #ifdef Q_OS_UNIX
-  ///QVERIFY(sp.setAttributes("/dev/ttyS0"));
   sp.setPortName("/dev/ttyS0");
 #elif defined Q_OS_WIN
-  ///QVERIFY(sp.setAttributes("COM1"));
   sp.setPortName("COM1");
 #endif
   QVERIFY(sp.open() == mdtAbstractPort::NoError);
@@ -337,7 +335,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   mdtSerialPortCtlThread ctlThd;
   mdtFrame *frame;
   QByteArray portName;
-  QByteArray rxData;
+  ///QByteArray rxData;
+  QString rxData;
 
   // Get data set
   QFETCH(QString, data);
@@ -418,7 +417,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
     sp.readFramesPool().enqueue(frame);
   }
   sp.unlockMutex();
-  QVERIFY(rxData == data);
+  ///QVERIFY(rxData == data);
+  QCOMPARE(rxData, data);
 
   // Stop threads and close port
   rxThd.stop();

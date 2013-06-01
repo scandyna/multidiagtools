@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -128,319 +128,337 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00066"></a>00066   <span class="keywordflow">if</span>(!initHomeDir()){
 <a name="l00067"></a>00067     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00068"></a>00068   }
-<a name="l00069"></a>00069   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtApplication , data dir: &quot;</span> &lt;&lt; pvSystemDataDirPath;
-<a name="l00070"></a>00070   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtApplication , log dir: &quot;</span> &lt;&lt; pvLogDirPath;
-<a name="l00071"></a>00071   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtApplication , lib version: &quot;</span> &lt;&lt; <a class="code" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51" title="Get the multi diag tools library version.">mdtLibVersion</a>();
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073   <span class="comment">// Build log file name</span>
-<a name="l00074"></a>00074   fi.setFile(arguments().at(0));
-<a name="l00075"></a>00075   logFileName = fi.baseName();
-<a name="l00076"></a>00076   <span class="keywordflow">if</span>(logFileName.isEmpty()){
-<a name="l00077"></a>00077     logFileName = <span class="stringliteral">&quot;mdtapplication&quot;</span>;
-<a name="l00078"></a>00078   }
-<a name="l00079"></a>00079   <span class="comment">/*</span>
-<a name="l00080"></a>00080 <span class="comment">   * If multiple instances of application is allowed, </span>
-<a name="l00081"></a>00081 <span class="comment">   * the simple way to avoid conflict during logfile write is</span>
-<a name="l00082"></a>00082 <span class="comment">   * to suffix process id to the logfilename</span>
-<a name="l00083"></a>00083 <span class="comment">   */</span>
-<a name="l00084"></a>00084   <span class="keywordflow">if</span>(allowMultipleInstances){
-<a name="l00085"></a>00085     logFileName += <span class="stringliteral">&quot;-&quot;</span>;
-<a name="l00086"></a>00086     logFileName += QString::number(applicationPid());
-<a name="l00087"></a>00087   }
-<a name="l00088"></a>00088   logFileName += <span class="stringliteral">&quot;.log&quot;</span>;
-<a name="l00089"></a>00089   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtApplication::init(): log file: &quot;</span> &lt;&lt; logFileName;
-<a name="l00090"></a>00090   <span class="comment">// Init error system</span>
-<a name="l00091"></a>00091   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system.">mdtErrorOut::init</a>(pvLogDirPath + <span class="stringliteral">&quot;/&quot;</span> + logFileName)){
-<a name="l00092"></a>00092     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::init(): unable to init the error system&quot;</span> &lt;&lt; std::endl;
-<a name="l00093"></a>00093     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00094"></a>00094   }
-<a name="l00095"></a>00095   <a class="code" href="classmdt_error_out.html#afa76bdf497b750829277566ec07d44d8" title="Set the dialog display levels mask.">mdtErrorOut::setDialogLevelsMask</a>(dialogErrorLevelsMask);
-<a name="l00096"></a>00096   <span class="comment">// Load translations and set the default language</span>
-<a name="l00097"></a>00097   <a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599" title="Add a directory that contains translations files in search paths.">addTranslationsDirectory</a>(pvSystemDataDirPath + <span class="stringliteral">&quot;/i18n&quot;</span>);
-<a name="l00098"></a>00098 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
-<a name="l00099"></a>00099 <span class="preprocessor"></span>  <a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599" title="Add a directory that contains translations files in search paths.">addTranslationsDirectory</a>(<span class="stringliteral">&quot;/usr/share/qt4/translations&quot;</span>);
-<a name="l00100"></a>00100 <span class="preprocessor">#endif</span>
-<a name="l00101"></a>00101 <span class="preprocessor"></span>  buildAvailableTranslationsList();
-<a name="l00102"></a>00102   <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">changeLanguage</a>();
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00105"></a>00105 }
-<a name="l00106"></a>00106 
-<a name="l00107"></a><a class="code" href="classmdt_application.html#a79dbb5f3d889d7cd9b8909a4eb8bcce1">00107</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a79dbb5f3d889d7cd9b8909a4eb8bcce1" title="Build the application version with numeric values.">mdtApplication::setApplicationVersion</a>(<span class="keywordtype">int</span> versionMajor, <span class="keywordtype">int</span> versionMinor, <span class="keywordtype">int</span> versionMicro)
-<a name="l00108"></a>00108 {
-<a name="l00109"></a>00109   QString num, version;
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111   num.setNum(versionMajor);
-<a name="l00112"></a>00112   version = num + <span class="stringliteral">&quot;.&quot;</span>;
-<a name="l00113"></a>00113   num.setNum(versionMinor);
-<a name="l00114"></a>00114   version += num + <span class="stringliteral">&quot;.&quot;</span>;
-<a name="l00115"></a>00115   num.setNum(versionMicro);
-<a name="l00116"></a>00116   version += num;
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118   <a class="code" href="classmdt_application.html#a79dbb5f3d889d7cd9b8909a4eb8bcce1" title="Build the application version with numeric values.">QApplication::setApplicationVersion</a>(version);
-<a name="l00119"></a>00119 }
-<a name="l00120"></a>00120 
-<a name="l00121"></a><a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d">00121</a> <a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a> *<a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d" title="Get the instance of mdtApplication.">mdtApplication::instance</a>()
-<a name="l00122"></a>00122 {
-<a name="l00123"></a>00123   Q_ASSERT(pvInstance != 0);
-<a name="l00124"></a>00124 
-<a name="l00125"></a>00125   <span class="keywordflow">return</span> pvInstance;
-<a name="l00126"></a>00126 }
-<a name="l00127"></a>00127 
-<a name="l00128"></a><a class="code" href="classmdt_application.html#af17bb16e420c91af3d0ad1970714388c">00128</a> QString <a class="code" href="classmdt_application.html#af17bb16e420c91af3d0ad1970714388c" title="Get data dir path.">mdtApplication::systemDataDirPath</a>()
-<a name="l00129"></a>00129 {
-<a name="l00130"></a>00130   <span class="keywordflow">return</span> <a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d" title="Get the instance of mdtApplication.">instance</a>()-&gt;pvSystemDataDirPath;
+<a name="l00070"></a>00070   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtApplication , data dir: &quot;</span> &lt;&lt; pvSystemDataDir.absolutePath();
+<a name="l00072"></a>00072   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtApplication , log dir: &quot;</span> &lt;&lt; pvLogDir.absolutePath();
+<a name="l00073"></a>00073   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtApplication , cache dir: &quot;</span> &lt;&lt; pvCacheDir.absolutePath();
+<a name="l00074"></a>00074   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtApplication , lib version: &quot;</span> &lt;&lt; <a class="code" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51" title="Get the multi diag tools library version.">mdtLibVersion</a>();
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076   <span class="comment">// Build log file name</span>
+<a name="l00077"></a>00077   fi.setFile(arguments().at(0));
+<a name="l00078"></a>00078   logFileName = fi.baseName();
+<a name="l00079"></a>00079   <span class="keywordflow">if</span>(logFileName.isEmpty()){
+<a name="l00080"></a>00080     logFileName = <span class="stringliteral">&quot;mdtapplication&quot;</span>;
+<a name="l00081"></a>00081   }
+<a name="l00082"></a>00082   <span class="comment">/*</span>
+<a name="l00083"></a>00083 <span class="comment">   * If multiple instances of application is allowed, </span>
+<a name="l00084"></a>00084 <span class="comment">   * the simple way to avoid conflict during logfile write is</span>
+<a name="l00085"></a>00085 <span class="comment">   * to suffix process id to the logfilename</span>
+<a name="l00086"></a>00086 <span class="comment">   */</span>
+<a name="l00087"></a>00087   <span class="keywordflow">if</span>(allowMultipleInstances){
+<a name="l00088"></a>00088     logFileName += <span class="stringliteral">&quot;-&quot;</span>;
+<a name="l00089"></a>00089     logFileName += QString::number(applicationPid());
+<a name="l00090"></a>00090   }
+<a name="l00091"></a>00091   logFileName += <span class="stringliteral">&quot;.log&quot;</span>;
+<a name="l00092"></a>00092   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtApplication::init(): log file: &quot;</span> &lt;&lt; logFileName;
+<a name="l00093"></a>00093   <span class="comment">// Init error system</span>
+<a name="l00095"></a>00095 <span class="comment"></span>  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system.">mdtErrorOut::init</a>(pvLogDir.absolutePath() + <span class="stringliteral">&quot;/&quot;</span> + logFileName)){
+<a name="l00096"></a>00096     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::init(): unable to init the error system&quot;</span> &lt;&lt; std::endl;
+<a name="l00097"></a>00097     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00098"></a>00098   }
+<a name="l00099"></a>00099   <a class="code" href="classmdt_error_out.html#afa76bdf497b750829277566ec07d44d8" title="Set the dialog display levels mask.">mdtErrorOut::setDialogLevelsMask</a>(dialogErrorLevelsMask);
+<a name="l00100"></a>00100   <span class="comment">// Load translations and set the default language</span>
+<a name="l00102"></a>00102 <span class="comment"></span>  <a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599" title="Add a directory that contains translations files in search paths.">addTranslationsDirectory</a>(pvSystemDataDir.absolutePath() + <span class="stringliteral">&quot;/i18n&quot;</span>);
+<a name="l00103"></a>00103 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
+<a name="l00104"></a>00104 <span class="preprocessor"></span>  <a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599" title="Add a directory that contains translations files in search paths.">addTranslationsDirectory</a>(<span class="stringliteral">&quot;/usr/share/qt4/translations&quot;</span>);
+<a name="l00105"></a>00105 <span class="preprocessor">#endif</span>
+<a name="l00106"></a>00106 <span class="preprocessor"></span>  buildAvailableTranslationsList();
+<a name="l00107"></a>00107   <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">changeLanguage</a>();
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00110"></a>00110 }
+<a name="l00111"></a>00111 
+<a name="l00112"></a><a class="code" href="classmdt_application.html#a79dbb5f3d889d7cd9b8909a4eb8bcce1">00112</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a79dbb5f3d889d7cd9b8909a4eb8bcce1" title="Build the application version with numeric values.">mdtApplication::setApplicationVersion</a>(<span class="keywordtype">int</span> versionMajor, <span class="keywordtype">int</span> versionMinor, <span class="keywordtype">int</span> versionMicro)
+<a name="l00113"></a>00113 {
+<a name="l00114"></a>00114   QString num, version;
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116   num.setNum(versionMajor);
+<a name="l00117"></a>00117   version = num + <span class="stringliteral">&quot;.&quot;</span>;
+<a name="l00118"></a>00118   num.setNum(versionMinor);
+<a name="l00119"></a>00119   version += num + <span class="stringliteral">&quot;.&quot;</span>;
+<a name="l00120"></a>00120   num.setNum(versionMicro);
+<a name="l00121"></a>00121   version += num;
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123   <a class="code" href="classmdt_application.html#a79dbb5f3d889d7cd9b8909a4eb8bcce1" title="Build the application version with numeric values.">QApplication::setApplicationVersion</a>(version);
+<a name="l00124"></a>00124 }
+<a name="l00125"></a>00125 
+<a name="l00126"></a><a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d">00126</a> <a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a> *<a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d" title="Get the instance of mdtApplication.">mdtApplication::instance</a>()
+<a name="l00127"></a>00127 {
+<a name="l00128"></a>00128   Q_ASSERT(pvInstance != 0);
+<a name="l00129"></a>00129 
+<a name="l00130"></a>00130   <span class="keywordflow">return</span> pvInstance;
 <a name="l00131"></a>00131 }
 <a name="l00132"></a>00132 
-<a name="l00133"></a><a class="code" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51">00133</a> QString <a class="code" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51" title="Get the multi diag tools library version.">mdtApplication::mdtLibVersion</a>()
+<a name="l00133"></a><a class="code" href="classmdt_application.html#af17bb16e420c91af3d0ad1970714388c">00133</a> QString <a class="code" href="classmdt_application.html#af17bb16e420c91af3d0ad1970714388c" title="Get data dir path.">mdtApplication::systemDataDirPath</a>()
 <a name="l00134"></a>00134 {
-<a name="l00135"></a>00135   <span class="keywordflow">return</span> QString(QString::number(MDTLIB_VERSION_MAJOR) + <span class="stringliteral">&quot;.&quot;</span> + QString::number(MDTLIB_VERSION_MINOR) + <span class="stringliteral">&quot;.&quot;</span> + QString::number(MDTLIB_VERSION_MICRO));
-<a name="l00136"></a>00136 }
-<a name="l00137"></a>00137 
-<a name="l00138"></a><a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599">00138</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599" title="Add a directory that contains translations files in search paths.">mdtApplication::addTranslationsDirectory</a>(<span class="keyword">const</span> QString &amp;directory)
-<a name="l00139"></a>00139 {
-<a name="l00140"></a>00140   QDir dir;
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142   <span class="keywordflow">if</span>(dir.cd(directory)){
-<a name="l00143"></a>00143     pvTranslationsDirectories &lt;&lt; directory;
-<a name="l00144"></a>00144   }<span class="keywordflow">else</span>{
-<a name="l00145"></a>00145     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_QM_FILE_LOAD_ERROR, <span class="stringliteral">&quot;Cannot access directory &#39;&quot;</span> + directory +<span class="stringliteral">&quot;&#39;&quot;</span>, mdtError::Warning);
-<a name="l00146"></a>00146     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtApplication&quot;</span>);
-<a name="l00147"></a>00147     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00148"></a>00148   }
-<a name="l00149"></a>00149 }
-<a name="l00150"></a>00150 
-<a name="l00151"></a><a class="code" href="classmdt_application.html#a9ce5b5c3ca36a76ad0acc3913ce8f89a">00151</a> QMap&lt;QString, QString&gt; &amp;<a class="code" href="classmdt_application.html#a9ce5b5c3ca36a76ad0acc3913ce8f89a" title="Get the list of available translations.">mdtApplication::availableTranslations</a>()
-<a name="l00152"></a>00152 {
-<a name="l00153"></a>00153   <span class="keywordflow">return</span> pvAvailableTranslations;
-<a name="l00154"></a>00154 }
-<a name="l00155"></a>00155 
-<a name="l00156"></a><a class="code" href="classmdt_application.html#a531e64266be58b3a10608b21ae6afedb">00156</a> QString &amp;<a class="code" href="classmdt_application.html#a531e64266be58b3a10608b21ae6afedb" title="Get the current translation key.">mdtApplication::currentTranslationKey</a>()
-<a name="l00157"></a>00157 {
-<a name="l00158"></a>00158   <span class="keywordflow">return</span> pvCurrentTranslationKey;
-<a name="l00159"></a>00159 }
-<a name="l00160"></a>00160 
-<a name="l00161"></a><a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42">00161</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">mdtApplication::installTranslator</a>(QTranslator *translator)
-<a name="l00162"></a>00162 {
-<a name="l00163"></a>00163   Q_ASSERT(translator != 0);
-<a name="l00164"></a>00164 
-<a name="l00165"></a>00165   pvTranslators &lt;&lt; translator;
-<a name="l00166"></a>00166   <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">QApplication::installTranslator</a>(translator);
-<a name="l00167"></a>00167 }
-<a name="l00168"></a>00168 
-<a name="l00169"></a><a class="code" href="classmdt_application.html#ae83acc410a132b9972d6e961e0c79b0d">00169</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#ae83acc410a132b9972d6e961e0c79b0d" title="Remove installed translators.">mdtApplication::removeCurrentTranslators</a>()
-<a name="l00170"></a>00170 {
-<a name="l00171"></a>00171   <span class="keywordtype">int</span> i;
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173   <span class="keywordflow">for</span>(i=0; i&lt;pvTranslators.size(); i++){
-<a name="l00174"></a>00174     removeTranslator(pvTranslators.at(i));
-<a name="l00175"></a>00175   }
-<a name="l00176"></a>00176   qDeleteAll(pvTranslators);
-<a name="l00177"></a>00177   pvTranslators.clear();
+<a name="l00136"></a>00136   <span class="keywordflow">return</span> <a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d" title="Get the instance of mdtApplication.">instance</a>()-&gt;pvSystemDataDir.absolutePath();
+<a name="l00137"></a>00137 }
+<a name="l00138"></a>00138 
+<a name="l00139"></a><a class="code" href="classmdt_application.html#a936beeeb6d56d5d669a478f248d80c7d">00139</a> <span class="keyword">const</span> QDir <a class="code" href="classmdt_application.html#a936beeeb6d56d5d669a478f248d80c7d" title="Get cache directory.">mdtApplication::cacheDir</a>()
+<a name="l00140"></a>00140 {
+<a name="l00141"></a>00141   <span class="keywordflow">return</span> <a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d" title="Get the instance of mdtApplication.">instance</a>()-&gt;pvCacheDir;
+<a name="l00142"></a>00142 }
+<a name="l00143"></a>00143 
+<a name="l00144"></a><a class="code" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51">00144</a> QString <a class="code" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51" title="Get the multi diag tools library version.">mdtApplication::mdtLibVersion</a>()
+<a name="l00145"></a>00145 {
+<a name="l00146"></a>00146   <span class="keywordflow">return</span> QString(QString::number(MDTLIB_VERSION_MAJOR) + <span class="stringliteral">&quot;.&quot;</span> + QString::number(MDTLIB_VERSION_MINOR) + <span class="stringliteral">&quot;.&quot;</span> + QString::number(MDTLIB_VERSION_MICRO));
+<a name="l00147"></a>00147 }
+<a name="l00148"></a>00148 
+<a name="l00149"></a><a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599">00149</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#ab5279a8c25923ab4c570670b8a41d599" title="Add a directory that contains translations files in search paths.">mdtApplication::addTranslationsDirectory</a>(<span class="keyword">const</span> QString &amp;directory)
+<a name="l00150"></a>00150 {
+<a name="l00151"></a>00151   QDir dir;
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153   <span class="keywordflow">if</span>(dir.cd(directory)){
+<a name="l00154"></a>00154     pvTranslationsDirectories &lt;&lt; directory;
+<a name="l00155"></a>00155   }<span class="keywordflow">else</span>{
+<a name="l00156"></a>00156     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_QM_FILE_LOAD_ERROR, <span class="stringliteral">&quot;Cannot access directory &#39;&quot;</span> + directory +<span class="stringliteral">&quot;&#39;&quot;</span>, mdtError::Warning);
+<a name="l00157"></a>00157     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtApplication&quot;</span>);
+<a name="l00158"></a>00158     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00159"></a>00159   }
+<a name="l00160"></a>00160 }
+<a name="l00161"></a>00161 
+<a name="l00162"></a><a class="code" href="classmdt_application.html#a9ce5b5c3ca36a76ad0acc3913ce8f89a">00162</a> QMap&lt;QString, QString&gt; &amp;<a class="code" href="classmdt_application.html#a9ce5b5c3ca36a76ad0acc3913ce8f89a" title="Get the list of available translations.">mdtApplication::availableTranslations</a>()
+<a name="l00163"></a>00163 {
+<a name="l00164"></a>00164   <span class="keywordflow">return</span> pvAvailableTranslations;
+<a name="l00165"></a>00165 }
+<a name="l00166"></a>00166 
+<a name="l00167"></a><a class="code" href="classmdt_application.html#a531e64266be58b3a10608b21ae6afedb">00167</a> QString &amp;<a class="code" href="classmdt_application.html#a531e64266be58b3a10608b21ae6afedb" title="Get the current translation key.">mdtApplication::currentTranslationKey</a>()
+<a name="l00168"></a>00168 {
+<a name="l00169"></a>00169   <span class="keywordflow">return</span> pvCurrentTranslationKey;
+<a name="l00170"></a>00170 }
+<a name="l00171"></a>00171 
+<a name="l00172"></a><a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42">00172</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">mdtApplication::installTranslator</a>(QTranslator *translator)
+<a name="l00173"></a>00173 {
+<a name="l00174"></a>00174   Q_ASSERT(translator != 0);
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176   pvTranslators &lt;&lt; translator;
+<a name="l00177"></a>00177   <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">QApplication::installTranslator</a>(translator);
 <a name="l00178"></a>00178 }
 <a name="l00179"></a>00179 
-<a name="l00180"></a><a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d">00180</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">mdtApplication::changeLanguage</a>(<span class="keyword">const</span> QLocale &amp;locale)
+<a name="l00180"></a><a class="code" href="classmdt_application.html#ae83acc410a132b9972d6e961e0c79b0d">00180</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#ae83acc410a132b9972d6e961e0c79b0d" title="Remove installed translators.">mdtApplication::removeCurrentTranslators</a>()
 <a name="l00181"></a>00181 {
-<a name="l00182"></a>00182   QString languageSuffix;
+<a name="l00182"></a>00182   <span class="keywordtype">int</span> i;
 <a name="l00183"></a>00183 
-<a name="l00184"></a>00184   languageSuffix = locale.name().left(2);
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186   <a class="code" href="classmdt_application.html#ae83acc410a132b9972d6e961e0c79b0d" title="Remove installed translators.">removeCurrentTranslators</a>();
-<a name="l00187"></a>00187   pvCurrentTranslationKey = <span class="stringliteral">&quot;en&quot;</span>;
-<a name="l00188"></a>00188   <span class="keywordflow">if</span>(languageSuffix != <span class="stringliteral">&quot;en&quot;</span>){
-<a name="l00189"></a>00189     <span class="keywordflow">if</span>(!loadTranslationFiles(languageSuffix)){
-<a name="l00190"></a>00190       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_QM_FILE_LOAD_ERROR, <span class="stringliteral">&quot;Loading a translation file failed for &quot;</span> + languageSuffix, mdtError::Warning);
-<a name="l00191"></a>00191       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtApplication&quot;</span>);
-<a name="l00192"></a>00192       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00193"></a>00193     }
-<a name="l00194"></a>00194   }
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196   emit(<a class="code" href="classmdt_application.html#a4200ade3b0b295ea8b0cb5239d967610" title="Emitted when language was changed using changeLanguage()">languageChanged</a>());
-<a name="l00197"></a>00197 }
-<a name="l00198"></a>00198 
-<a name="l00199"></a><a class="code" href="classmdt_application.html#a7eec3fbe97863cb4a938fa58a5135b1b">00199</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">mdtApplication::changeLanguage</a>(QAction *action)
-<a name="l00200"></a>00200 {
-<a name="l00201"></a>00201   Q_ASSERT(action != 0);
-<a name="l00202"></a>00202 
-<a name="l00203"></a>00203   <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">changeLanguage</a>(QLocale(action-&gt;data().toString()));
-<a name="l00204"></a>00204 }
-<a name="l00205"></a>00205 
-<a name="l00206"></a>00206 <span class="keywordtype">bool</span> mdtApplication::searchSystemDataDir()
-<a name="l00207"></a>00207 {
-<a name="l00208"></a>00208   QDir dir;
+<a name="l00184"></a>00184   <span class="keywordflow">for</span>(i=0; i&lt;pvTranslators.size(); i++){
+<a name="l00185"></a>00185     removeTranslator(pvTranslators.at(i));
+<a name="l00186"></a>00186   }
+<a name="l00187"></a>00187   qDeleteAll(pvTranslators);
+<a name="l00188"></a>00188   pvTranslators.clear();
+<a name="l00189"></a>00189 }
+<a name="l00190"></a>00190 
+<a name="l00191"></a><a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d">00191</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">mdtApplication::changeLanguage</a>(<span class="keyword">const</span> QLocale &amp;locale)
+<a name="l00192"></a>00192 {
+<a name="l00193"></a>00193   QString languageSuffix;
+<a name="l00194"></a>00194 
+<a name="l00195"></a>00195   languageSuffix = locale.name().left(2);
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197   <a class="code" href="classmdt_application.html#ae83acc410a132b9972d6e961e0c79b0d" title="Remove installed translators.">removeCurrentTranslators</a>();
+<a name="l00198"></a>00198   pvCurrentTranslationKey = <span class="stringliteral">&quot;en&quot;</span>;
+<a name="l00199"></a>00199   <span class="keywordflow">if</span>(languageSuffix != <span class="stringliteral">&quot;en&quot;</span>){
+<a name="l00200"></a>00200     <span class="keywordflow">if</span>(!loadTranslationFiles(languageSuffix)){
+<a name="l00201"></a>00201       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_QM_FILE_LOAD_ERROR, <span class="stringliteral">&quot;Loading a translation file failed for &quot;</span> + languageSuffix, mdtError::Warning);
+<a name="l00202"></a>00202       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtApplication&quot;</span>);
+<a name="l00203"></a>00203       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00204"></a>00204     }
+<a name="l00205"></a>00205   }
+<a name="l00206"></a>00206 
+<a name="l00207"></a>00207   emit(<a class="code" href="classmdt_application.html#a4200ade3b0b295ea8b0cb5239d967610" title="Emitted when language was changed using changeLanguage()">languageChanged</a>());
+<a name="l00208"></a>00208 }
 <a name="l00209"></a>00209 
-<a name="l00210"></a>00210   <span class="comment">// At first, we look in current directory</span>
-<a name="l00211"></a>00211   <span class="keywordflow">if</span>(dir.cd(<span class="stringliteral">&quot;data&quot;</span>)){
-<a name="l00212"></a>00212     <span class="keywordflow">if</span>(isSystemDataDir(dir)){
-<a name="l00213"></a>00213       <span class="comment">// Ok, found.</span>
-<a name="l00214"></a>00214       pvSystemDataDirPath = dir.absolutePath();
-<a name="l00215"></a>00215       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00216"></a>00216     }
-<a name="l00217"></a>00217   }
-<a name="l00218"></a>00218   <span class="comment">// Check in application directory</span>
-<a name="l00219"></a>00219   dir.setPath(applicationDirPath());
-<a name="l00220"></a>00220   <span class="keywordflow">if</span>(!dir.exists()){
-<a name="l00221"></a>00221     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::searchSystemDataDir(): cannot find application directory&quot;</span> &lt;&lt; std::endl;
-<a name="l00222"></a>00222     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00223"></a>00223   }
-<a name="l00224"></a>00224   <span class="keywordflow">if</span>(dir.cd(<span class="stringliteral">&quot;data&quot;</span>)){
-<a name="l00225"></a>00225     <span class="keywordflow">if</span>(isSystemDataDir(dir)){
-<a name="l00226"></a>00226       <span class="comment">// Ok, found.</span>
-<a name="l00227"></a>00227       pvSystemDataDirPath = dir.absolutePath();
-<a name="l00228"></a>00228       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00229"></a>00229     }
-<a name="l00230"></a>00230   }
-<a name="l00231"></a>00231   <span class="comment">// Check in application&#39;s parent directory</span>
-<a name="l00232"></a>00232   <span class="keywordflow">if</span>(dir.cd(<span class="stringliteral">&quot;../data&quot;</span>)){
-<a name="l00233"></a>00233     <span class="keywordflow">if</span>(isSystemDataDir(dir)){
-<a name="l00234"></a>00234       <span class="comment">// Ok, found.</span>
-<a name="l00235"></a>00235       pvSystemDataDirPath = dir.absolutePath();
-<a name="l00236"></a>00236       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00237"></a>00237     }
-<a name="l00238"></a>00238   }
-<a name="l00239"></a>00239   <span class="comment">// On Linux/Unix, data is probably installed in /usr/share/mdt or /usr/local/share</span>
-<a name="l00240"></a>00240 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
-<a name="l00241"></a>00241 <span class="preprocessor"></span>  <span class="keywordflow">if</span>(dir.cd(<span class="stringliteral">&quot;/usr/share/mdt/data&quot;</span>)){
-<a name="l00242"></a>00242     <span class="keywordflow">if</span>(isSystemDataDir(dir)){
-<a name="l00243"></a>00243       <span class="comment">// Ok, found.</span>
-<a name="l00244"></a>00244       pvSystemDataDirPath = dir.absolutePath();
-<a name="l00245"></a>00245       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00246"></a>00246     }
-<a name="l00247"></a>00247   }
-<a name="l00248"></a>00248   <span class="keywordflow">if</span>(dir.cd(<span class="stringliteral">&quot;/usr/local/share/mdt/data&quot;</span>)){
-<a name="l00249"></a>00249     <span class="keywordflow">if</span>(isSystemDataDir(dir)){
-<a name="l00250"></a>00250       <span class="comment">// Ok, found.</span>
-<a name="l00251"></a>00251       pvSystemDataDirPath = dir.absolutePath();
-<a name="l00252"></a>00252       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00253"></a>00253     }
-<a name="l00254"></a>00254   }
-<a name="l00255"></a>00255 <span class="preprocessor">#endif  // #ifdef Q_OS_UNIX</span>
-<a name="l00256"></a>00256 <span class="preprocessor"></span>
-<a name="l00257"></a>00257   <span class="comment">// Data directory not found :-(</span>
-<a name="l00258"></a>00258   std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::searchSystemDataDir(): cannot find system data directory&quot;</span> &lt;&lt; std::endl;
-<a name="l00259"></a>00259 
-<a name="l00260"></a>00260   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00261"></a>00261 }
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263 <span class="keywordtype">bool</span> mdtApplication::isSystemDataDir(QDir &amp;dir)
-<a name="l00264"></a>00264 {
-<a name="l00265"></a>00265   <span class="comment">// Some checks on directories that must be in data</span>
-<a name="l00266"></a>00266   <span class="keywordflow">if</span>(!dir.cd(<span class="stringliteral">&quot;i18n&quot;</span>)){
-<a name="l00267"></a>00267     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::isSystemDataDir(): subdirectory i18n not found in &quot;</span> &lt;&lt; dir.path().toStdString() &lt;&lt; std::endl;
-<a name="l00268"></a>00268     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00269"></a>00269   }
-<a name="l00270"></a>00270   dir.cdUp();
-<a name="l00271"></a>00271   <span class="keywordflow">if</span>(!dir.cd(<span class="stringliteral">&quot;uic&quot;</span>)){
-<a name="l00272"></a>00272     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::isSystemDataDir(): subdirectory uic not found in &quot;</span> &lt;&lt; dir.path().toStdString() &lt;&lt; std::endl;
-<a name="l00273"></a>00273     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00274"></a>00274   }
-<a name="l00275"></a>00275   dir.cdUp();
-<a name="l00276"></a>00276 
-<a name="l00277"></a>00277   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00278"></a>00278 }
-<a name="l00279"></a>00279 
-<a name="l00280"></a>00280 <span class="keywordtype">bool</span> mdtApplication::initHomeDir()
-<a name="l00281"></a>00281 {
-<a name="l00282"></a>00282   QDir dir(QDir::home());
-<a name="l00283"></a>00283 
-<a name="l00284"></a>00284   <span class="comment">// Home directory must exists first..</span>
-<a name="l00285"></a>00285   <span class="keywordflow">if</span>(!dir.exists()){
-<a name="l00286"></a>00286     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot find home directory&quot;</span> &lt;&lt; std::endl;
-<a name="l00287"></a>00287     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00288"></a>00288   }
-<a name="l00289"></a>00289   <span class="comment">// Look about the .mdt directory</span>
-<a name="l00290"></a>00290   <span class="keywordflow">if</span>(!dir.cd(<span class="stringliteral">&quot;.mdt&quot;</span>)){
-<a name="l00291"></a>00291     <span class="comment">// Not found, try to create it</span>
-<a name="l00292"></a>00292     <span class="keywordflow">if</span>(!dir.mkdir(<span class="stringliteral">&quot;.mdt&quot;</span>)){
-<a name="l00293"></a>00293       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot create .mdt in home directory&quot;</span> &lt;&lt; std::endl;
-<a name="l00294"></a>00294       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00295"></a>00295     }
-<a name="l00296"></a>00296     <span class="keywordflow">if</span>(!dir.cd(<span class="stringliteral">&quot;.mdt&quot;</span>)){
-<a name="l00297"></a>00297       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot enter $home/.mdt directory&quot;</span> &lt;&lt; std::endl;
-<a name="l00298"></a>00298       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00299"></a>00299     }
-<a name="l00300"></a>00300   }
-<a name="l00301"></a>00301   <span class="comment">// Log directory</span>
-<a name="l00302"></a>00302   <span class="keywordflow">if</span>(!dir.cd(<span class="stringliteral">&quot;log&quot;</span>)){
-<a name="l00303"></a>00303     <span class="comment">// Not found, try to create it</span>
-<a name="l00304"></a>00304     <span class="keywordflow">if</span>(!dir.mkdir(<span class="stringliteral">&quot;log&quot;</span>)){
-<a name="l00305"></a>00305       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot create log in home directory&quot;</span> &lt;&lt; std::endl;
-<a name="l00306"></a>00306       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00307"></a>00307     }
-<a name="l00308"></a>00308     <span class="keywordflow">if</span>(!dir.cd(<span class="stringliteral">&quot;log&quot;</span>)){
-<a name="l00309"></a>00309       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot enter $home/.mdt/log directory&quot;</span> &lt;&lt; std::endl;
-<a name="l00310"></a>00310       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00311"></a>00311     }
-<a name="l00312"></a>00312   }
-<a name="l00313"></a>00313   pvLogDirPath = dir.absolutePath();
-<a name="l00314"></a>00314 
-<a name="l00315"></a>00315   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00316"></a>00316 }
-<a name="l00317"></a>00317 
-<a name="l00318"></a>00318 <span class="keywordtype">void</span> mdtApplication::buildAvailableTranslationsList()
-<a name="l00319"></a>00319 {
-<a name="l00320"></a>00320   QDir dir;
-<a name="l00321"></a>00321   QFileInfoList filesInfoList;
-<a name="l00322"></a>00322   QTranslator *translator;
-<a name="l00323"></a>00323   <span class="keywordtype">int</span> i;
-<a name="l00324"></a>00324 
-<a name="l00325"></a>00325   pvAvailableTranslations.clear();
-<a name="l00326"></a>00326 
-<a name="l00327"></a>00327   <span class="comment">// Search translations files in known directories</span>
-<a name="l00328"></a>00328   <span class="keywordflow">for</span>(i=0; i&lt;pvTranslationsDirectories.size(); i++){
-<a name="l00329"></a>00329     <span class="keywordflow">if</span>(dir.cd(pvTranslationsDirectories.at(i))){
-<a name="l00330"></a>00330       filesInfoList &lt;&lt; dir.entryInfoList(QStringList(<span class="stringliteral">&quot;mdtutils_*.qm&quot;</span>));
-<a name="l00331"></a>00331     }
+<a name="l00210"></a><a class="code" href="classmdt_application.html#a7eec3fbe97863cb4a938fa58a5135b1b">00210</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">mdtApplication::changeLanguage</a>(QAction *action)
+<a name="l00211"></a>00211 {
+<a name="l00212"></a>00212   Q_ASSERT(action != 0);
+<a name="l00213"></a>00213 
+<a name="l00214"></a>00214   <a class="code" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">changeLanguage</a>(QLocale(action-&gt;data().toString()));
+<a name="l00215"></a>00215 }
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217 <span class="keywordtype">bool</span> mdtApplication::searchSystemDataDir()
+<a name="l00218"></a>00218 {
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221   <span class="comment">// At first, we look in current directory</span>
+<a name="l00222"></a>00222   pvSystemDataDir = QDir::current();
+<a name="l00223"></a>00223   <span class="keywordflow">if</span>(pvSystemDataDir.cd(<span class="stringliteral">&quot;data&quot;</span>)){
+<a name="l00224"></a>00224     <span class="keywordflow">if</span>(isSystemDataDir(pvSystemDataDir)){
+<a name="l00225"></a>00225       <span class="comment">// Ok, found.</span>
+<a name="l00227"></a>00227 <span class="comment"></span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00228"></a>00228     }
+<a name="l00229"></a>00229   }
+<a name="l00230"></a>00230   <span class="comment">// Check in application directory</span>
+<a name="l00231"></a>00231   pvSystemDataDir.setPath(applicationDirPath());
+<a name="l00232"></a>00232   <span class="keywordflow">if</span>(!pvSystemDataDir.exists()){
+<a name="l00233"></a>00233     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::searchSystemDataDir(): cannot find application directory&quot;</span> &lt;&lt; std::endl;
+<a name="l00234"></a>00234     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00235"></a>00235   }
+<a name="l00236"></a>00236   <span class="keywordflow">if</span>(pvSystemDataDir.cd(<span class="stringliteral">&quot;data&quot;</span>)){
+<a name="l00237"></a>00237     <span class="keywordflow">if</span>(isSystemDataDir(pvSystemDataDir)){
+<a name="l00238"></a>00238       <span class="comment">// Ok, found.</span>
+<a name="l00240"></a>00240 <span class="comment"></span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00241"></a>00241     }
+<a name="l00242"></a>00242   }
+<a name="l00243"></a>00243   <span class="comment">// Check in application&#39;s parent directory</span>
+<a name="l00244"></a>00244   <span class="keywordflow">if</span>(pvSystemDataDir.cd(<span class="stringliteral">&quot;../data&quot;</span>)){
+<a name="l00245"></a>00245     <span class="keywordflow">if</span>(isSystemDataDir(pvSystemDataDir)){
+<a name="l00246"></a>00246       <span class="comment">// Ok, found.</span>
+<a name="l00248"></a>00248 <span class="comment"></span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00249"></a>00249     }
+<a name="l00250"></a>00250   }
+<a name="l00251"></a>00251   <span class="comment">// On Linux/Unix, data is probably installed in /usr/share/mdt or /usr/local/share</span>
+<a name="l00252"></a>00252 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
+<a name="l00253"></a>00253 <span class="preprocessor"></span>  <span class="keywordflow">if</span>(pvSystemDataDir.cd(<span class="stringliteral">&quot;/usr/share/mdt/data&quot;</span>)){
+<a name="l00254"></a>00254     <span class="keywordflow">if</span>(isSystemDataDir(pvSystemDataDir)){
+<a name="l00255"></a>00255       <span class="comment">// Ok, found.</span>
+<a name="l00257"></a>00257 <span class="comment"></span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00258"></a>00258     }
+<a name="l00259"></a>00259   }
+<a name="l00260"></a>00260   <span class="keywordflow">if</span>(pvSystemDataDir.cd(<span class="stringliteral">&quot;/usr/local/share/mdt/data&quot;</span>)){
+<a name="l00261"></a>00261     <span class="keywordflow">if</span>(isSystemDataDir(pvSystemDataDir)){
+<a name="l00262"></a>00262       <span class="comment">// Ok, found.</span>
+<a name="l00264"></a>00264 <span class="comment"></span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00265"></a>00265     }
+<a name="l00266"></a>00266   }
+<a name="l00267"></a>00267 <span class="preprocessor">#endif  // #ifdef Q_OS_UNIX</span>
+<a name="l00268"></a>00268 <span class="preprocessor"></span>
+<a name="l00269"></a>00269   <span class="comment">// Data directory not found :-(</span>
+<a name="l00270"></a>00270   std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::searchSystemDataDir(): cannot find system data directory&quot;</span> &lt;&lt; std::endl;
+<a name="l00271"></a>00271 
+<a name="l00272"></a>00272   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00273"></a>00273 }
+<a name="l00274"></a>00274 
+<a name="l00275"></a>00275 <span class="keywordtype">bool</span> mdtApplication::isSystemDataDir(QDir &amp;dir)
+<a name="l00276"></a>00276 {
+<a name="l00277"></a>00277   <span class="comment">// Some checks on directories that must be in data</span>
+<a name="l00278"></a>00278   <span class="keywordflow">if</span>(!dir.cd(<span class="stringliteral">&quot;i18n&quot;</span>)){
+<a name="l00279"></a>00279     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::isSystemDataDir(): subdirectory i18n not found in &quot;</span> &lt;&lt; dir.path().toStdString() &lt;&lt; std::endl;
+<a name="l00280"></a>00280     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00281"></a>00281   }
+<a name="l00282"></a>00282   dir.cdUp();
+<a name="l00283"></a>00283   <span class="keywordflow">if</span>(!dir.cd(<span class="stringliteral">&quot;uic&quot;</span>)){
+<a name="l00284"></a>00284     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::isSystemDataDir(): subdirectory uic not found in &quot;</span> &lt;&lt; dir.path().toStdString() &lt;&lt; std::endl;
+<a name="l00285"></a>00285     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00286"></a>00286   }
+<a name="l00287"></a>00287   dir.cdUp();
+<a name="l00288"></a>00288 
+<a name="l00289"></a>00289   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00290"></a>00290 }
+<a name="l00291"></a>00291 
+<a name="l00292"></a>00292 <span class="keywordtype">bool</span> mdtApplication::initHomeDir()
+<a name="l00293"></a>00293 {
+<a name="l00295"></a>00295 
+<a name="l00296"></a>00296   pvLogDir = QDir::home();
+<a name="l00297"></a>00297 
+<a name="l00298"></a>00298   <span class="comment">// Home directory must exists first..</span>
+<a name="l00299"></a>00299   <span class="keywordflow">if</span>(!pvLogDir.exists()){
+<a name="l00300"></a>00300     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot find home directory&quot;</span> &lt;&lt; std::endl;
+<a name="l00301"></a>00301     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00302"></a>00302   }
+<a name="l00303"></a>00303   <span class="comment">// Look about the .mdt directory</span>
+<a name="l00304"></a>00304   <span class="keywordflow">if</span>(!pvLogDir.cd(<span class="stringliteral">&quot;.mdt&quot;</span>)){
+<a name="l00305"></a>00305     <span class="comment">// Not found, try to create it</span>
+<a name="l00306"></a>00306     <span class="keywordflow">if</span>(!pvLogDir.mkdir(<span class="stringliteral">&quot;.mdt&quot;</span>)){
+<a name="l00307"></a>00307       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot create .mdt in home directory&quot;</span> &lt;&lt; std::endl;
+<a name="l00308"></a>00308       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00309"></a>00309     }
+<a name="l00310"></a>00310     <span class="keywordflow">if</span>(!pvLogDir.cd(<span class="stringliteral">&quot;.mdt&quot;</span>)){
+<a name="l00311"></a>00311       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot enter $home/.mdt directory&quot;</span> &lt;&lt; std::endl;
+<a name="l00312"></a>00312       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00313"></a>00313     }
+<a name="l00314"></a>00314   }
+<a name="l00315"></a>00315   <span class="comment">// Log directory</span>
+<a name="l00316"></a>00316   <span class="keywordflow">if</span>(!pvLogDir.cd(<span class="stringliteral">&quot;log&quot;</span>)){
+<a name="l00317"></a>00317     <span class="comment">// Not found, try to create it</span>
+<a name="l00318"></a>00318     <span class="keywordflow">if</span>(!pvLogDir.mkdir(<span class="stringliteral">&quot;log&quot;</span>)){
+<a name="l00319"></a>00319       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot create log in home directory&quot;</span> &lt;&lt; std::endl;
+<a name="l00320"></a>00320       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00321"></a>00321     }
+<a name="l00322"></a>00322     <span class="keywordflow">if</span>(!pvLogDir.cd(<span class="stringliteral">&quot;log&quot;</span>)){
+<a name="l00323"></a>00323       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot enter $home/.mdt/log directory&quot;</span> &lt;&lt; std::endl;
+<a name="l00324"></a>00324       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00325"></a>00325     }
+<a name="l00326"></a>00326   }
+<a name="l00327"></a>00327   <span class="comment">// Cache directory</span>
+<a name="l00328"></a>00328   pvCacheDir = QDir::home();
+<a name="l00329"></a>00329   <span class="keywordflow">if</span>(!pvCacheDir.cd(<span class="stringliteral">&quot;.mdt&quot;</span>)){
+<a name="l00330"></a>00330     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot enter $home/.mdt/ directory (should allready exists)&quot;</span> &lt;&lt; std::endl;
+<a name="l00331"></a>00331     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00332"></a>00332   }
-<a name="l00333"></a>00333   <span class="comment">// Install found translation files, add language and uninstall translator</span>
-<a name="l00334"></a>00334   pvAvailableTranslations.insert(<span class="stringliteral">&quot;en&quot;</span>, <span class="stringliteral">&quot;English&quot;</span>);
-<a name="l00335"></a>00335   <span class="keywordflow">for</span>(i=0; i&lt;filesInfoList.size(); i++){
-<a name="l00336"></a>00336     translator = <span class="keyword">new</span> QTranslator;
-<a name="l00337"></a>00337     <span class="keywordflow">if</span>(translator-&gt;load(filesInfoList.at(i).absoluteFilePath())){
-<a name="l00338"></a>00338       <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">QApplication::installTranslator</a>(translator);
-<a name="l00339"></a>00339       pvAvailableTranslations.insert(filesInfoList.at(i).baseName().right(2), tr(<span class="stringliteral">&quot;English&quot;</span>));
-<a name="l00340"></a>00340       QApplication::removeTranslator(translator);
-<a name="l00341"></a>00341     }
-<a name="l00342"></a>00342     <span class="keyword">delete</span> translator;
+<a name="l00333"></a>00333   <span class="keywordflow">if</span>(!pvCacheDir.cd(<span class="stringliteral">&quot;cache&quot;</span>)){
+<a name="l00334"></a>00334     <span class="comment">// Not found, try to create it</span>
+<a name="l00335"></a>00335     <span class="keywordflow">if</span>(!pvCacheDir.mkdir(<span class="stringliteral">&quot;cache&quot;</span>)){
+<a name="l00336"></a>00336       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot create cache directory in home directory&quot;</span> &lt;&lt; std::endl;
+<a name="l00337"></a>00337       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00338"></a>00338     }
+<a name="l00339"></a>00339     <span class="keywordflow">if</span>(!pvCacheDir.cd(<span class="stringliteral">&quot;cache&quot;</span>)){
+<a name="l00340"></a>00340       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::initHomeDir(): cannot enter $home/.mdt/cache directory&quot;</span> &lt;&lt; std::endl;
+<a name="l00341"></a>00341       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00342"></a>00342     }
 <a name="l00343"></a>00343   }
-<a name="l00344"></a>00344 }
 <a name="l00345"></a>00345 
-<a name="l00346"></a>00346 <span class="keywordtype">bool</span> mdtApplication::loadTranslationFiles(<span class="keyword">const</span> QString &amp;languageSuffix)
-<a name="l00347"></a>00347 {
-<a name="l00348"></a>00348   QDir dir;
-<a name="l00349"></a>00349   QFileInfoList filesInfoList;
-<a name="l00350"></a>00350   QTranslator *translator;
-<a name="l00351"></a>00351   <span class="keywordtype">int</span> i;
-<a name="l00352"></a>00352 
-<a name="l00353"></a>00353   <span class="comment">// If no language suffix is geven, just return</span>
-<a name="l00354"></a>00354   <span class="keywordflow">if</span>(languageSuffix.isEmpty()){
-<a name="l00355"></a>00355     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00356"></a>00356   }
-<a name="l00357"></a>00357   <span class="comment">// Case of non supported suffix size, error</span>
-<a name="l00358"></a>00358   <span class="keywordflow">if</span>(languageSuffix.size() != 2){
-<a name="l00359"></a>00359     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::loadTranslationFiles(): unknow language suffix: &quot;</span> &lt;&lt; languageSuffix.toStdString() &lt;&lt; std::endl;
-<a name="l00360"></a>00360     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00361"></a>00361   }
-<a name="l00362"></a>00362   <span class="comment">// Search translations files in known directories</span>
-<a name="l00363"></a>00363   <span class="keywordflow">for</span>(i=0; i&lt;pvTranslationsDirectories.size(); i++){
-<a name="l00364"></a>00364     <span class="keywordflow">if</span>(dir.cd(pvTranslationsDirectories.at(i))){
-<a name="l00365"></a>00365       filesInfoList &lt;&lt; dir.entryInfoList(QStringList(<span class="stringliteral">&quot;*_&quot;</span> + languageSuffix + <span class="stringliteral">&quot;.qm&quot;</span>));
-<a name="l00366"></a>00366     }
-<a name="l00367"></a>00367   }
-<a name="l00368"></a>00368   <span class="comment">// Install found translation files</span>
-<a name="l00369"></a>00369   <span class="keywordflow">for</span>(i=0; i&lt;filesInfoList.size(); i++){
-<a name="l00370"></a>00370     translator = <span class="keyword">new</span> QTranslator;
-<a name="l00371"></a>00371     <span class="keywordflow">if</span>(!translator-&gt;load(filesInfoList.at(i).absoluteFilePath())){
-<a name="l00372"></a>00372       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::loadTranslationFiles(): cannot load translation file &quot;</span> &lt;&lt; filesInfoList.at(i).fileName().toStdString() &lt;&lt; std::endl;
-<a name="l00373"></a>00373       <span class="keyword">delete</span> translator;
-<a name="l00374"></a>00374       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00375"></a>00375     }
-<a name="l00376"></a>00376     <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">installTranslator</a>(translator);
-<a name="l00377"></a>00377     pvCurrentTranslationKey = languageSuffix;
-<a name="l00378"></a>00378   }
-<a name="l00379"></a>00379 
-<a name="l00380"></a>00380   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00381"></a>00381 }
+<a name="l00346"></a>00346   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00347"></a>00347 }
+<a name="l00348"></a>00348 
+<a name="l00349"></a>00349 <span class="keywordtype">void</span> mdtApplication::buildAvailableTranslationsList()
+<a name="l00350"></a>00350 {
+<a name="l00351"></a>00351   QDir dir;
+<a name="l00352"></a>00352   QFileInfoList filesInfoList;
+<a name="l00353"></a>00353   QTranslator *translator;
+<a name="l00354"></a>00354   <span class="keywordtype">int</span> i;
+<a name="l00355"></a>00355 
+<a name="l00356"></a>00356   pvAvailableTranslations.clear();
+<a name="l00357"></a>00357 
+<a name="l00358"></a>00358   <span class="comment">// Search translations files in known directories</span>
+<a name="l00359"></a>00359   <span class="keywordflow">for</span>(i=0; i&lt;pvTranslationsDirectories.size(); i++){
+<a name="l00360"></a>00360     <span class="keywordflow">if</span>(dir.cd(pvTranslationsDirectories.at(i))){
+<a name="l00361"></a>00361       filesInfoList &lt;&lt; dir.entryInfoList(QStringList(<span class="stringliteral">&quot;mdtutils_*.qm&quot;</span>));
+<a name="l00362"></a>00362     }
+<a name="l00363"></a>00363   }
+<a name="l00364"></a>00364   <span class="comment">// Install found translation files, add language and uninstall translator</span>
+<a name="l00365"></a>00365   pvAvailableTranslations.insert(<span class="stringliteral">&quot;en&quot;</span>, <span class="stringliteral">&quot;English&quot;</span>);
+<a name="l00366"></a>00366   <span class="keywordflow">for</span>(i=0; i&lt;filesInfoList.size(); i++){
+<a name="l00367"></a>00367     translator = <span class="keyword">new</span> QTranslator;
+<a name="l00368"></a>00368     <span class="keywordflow">if</span>(translator-&gt;load(filesInfoList.at(i).absoluteFilePath())){
+<a name="l00369"></a>00369       <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">QApplication::installTranslator</a>(translator);
+<a name="l00370"></a>00370       pvAvailableTranslations.insert(filesInfoList.at(i).baseName().right(2), tr(<span class="stringliteral">&quot;English&quot;</span>));
+<a name="l00371"></a>00371       QApplication::removeTranslator(translator);
+<a name="l00372"></a>00372     }
+<a name="l00373"></a>00373     <span class="keyword">delete</span> translator;
+<a name="l00374"></a>00374   }
+<a name="l00375"></a>00375 }
+<a name="l00376"></a>00376 
+<a name="l00377"></a>00377 <span class="keywordtype">bool</span> mdtApplication::loadTranslationFiles(<span class="keyword">const</span> QString &amp;languageSuffix)
+<a name="l00378"></a>00378 {
+<a name="l00379"></a>00379   QDir dir;
+<a name="l00380"></a>00380   QFileInfoList filesInfoList;
+<a name="l00381"></a>00381   QTranslator *translator;
+<a name="l00382"></a>00382   <span class="keywordtype">int</span> i;
+<a name="l00383"></a>00383 
+<a name="l00384"></a>00384   <span class="comment">// If no language suffix is geven, just return</span>
+<a name="l00385"></a>00385   <span class="keywordflow">if</span>(languageSuffix.isEmpty()){
+<a name="l00386"></a>00386     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00387"></a>00387   }
+<a name="l00388"></a>00388   <span class="comment">// Case of non supported suffix size, error</span>
+<a name="l00389"></a>00389   <span class="keywordflow">if</span>(languageSuffix.size() != 2){
+<a name="l00390"></a>00390     std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::loadTranslationFiles(): unknow language suffix: &quot;</span> &lt;&lt; languageSuffix.toStdString() &lt;&lt; std::endl;
+<a name="l00391"></a>00391     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00392"></a>00392   }
+<a name="l00393"></a>00393   <span class="comment">// Search translations files in known directories</span>
+<a name="l00394"></a>00394   <span class="keywordflow">for</span>(i=0; i&lt;pvTranslationsDirectories.size(); i++){
+<a name="l00395"></a>00395     <span class="keywordflow">if</span>(dir.cd(pvTranslationsDirectories.at(i))){
+<a name="l00396"></a>00396       filesInfoList &lt;&lt; dir.entryInfoList(QStringList(<span class="stringliteral">&quot;*_&quot;</span> + languageSuffix + <span class="stringliteral">&quot;.qm&quot;</span>));
+<a name="l00397"></a>00397     }
+<a name="l00398"></a>00398   }
+<a name="l00399"></a>00399   <span class="comment">// Install found translation files</span>
+<a name="l00400"></a>00400   <span class="keywordflow">for</span>(i=0; i&lt;filesInfoList.size(); i++){
+<a name="l00401"></a>00401     translator = <span class="keyword">new</span> QTranslator;
+<a name="l00402"></a>00402     <span class="keywordflow">if</span>(!translator-&gt;load(filesInfoList.at(i).absoluteFilePath())){
+<a name="l00403"></a>00403       std::cerr &lt;&lt; <span class="stringliteral">&quot;mdtApplication::loadTranslationFiles(): cannot load translation file &quot;</span> &lt;&lt; filesInfoList.at(i).fileName().toStdString() &lt;&lt; std::endl;
+<a name="l00404"></a>00404       <span class="keyword">delete</span> translator;
+<a name="l00405"></a>00405       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00406"></a>00406     }
+<a name="l00407"></a>00407     <a class="code" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">installTranslator</a>(translator);
+<a name="l00408"></a>00408     pvCurrentTranslationKey = languageSuffix;
+<a name="l00409"></a>00409   }
+<a name="l00410"></a>00410 
+<a name="l00411"></a>00411   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00412"></a>00412 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -457,7 +475,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

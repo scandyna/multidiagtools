@@ -84,8 +84,14 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the comboBox that must display devices.  <a href="#a59fc2180a69119e17cfa24cf84a9c96f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info_cb_handler.html#a82c84a3eb52cd5d941377a64788a28ef">fillComboBoxes</a> (const QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt; &amp;portInfoList)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the comboboxes with a scan result.  <a href="#a82c84a3eb52cd5d941377a64788a28ef"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info_cb_handler.html#ae84e252c9783c204583639212a04aa12">addPortInfo</a> (const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;portInfo)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a single port info.  <a href="#ae84e252c9783c204583639212a04aa12"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_info.html">mdtPortInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info_cb_handler.html#a92a284d227c4f0ce42df9890a9185a97">portInfoAt</a> (int index)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the port info object at given index.  <a href="#a92a284d227c4f0ce42df9890a9185a97"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_info.html">mdtPortInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info_cb_handler.html#a5723df72c4f1eda572c04e377dde9351">currentPortInfo</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the selected port info object.  <a href="#a5723df72c4f1eda572c04e377dde9351"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info_cb_handler.html#ace2f9273d3f508507e496bdb2dc6d5c6">indexOfPortInfo</a> (const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;portInfo) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get index of a given port info.  <a href="#ace2f9273d3f508507e496bdb2dc6d5c6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info_cb_handler.html#a266598f7f403e21730ff5ee50e6a6e5f">currentDeviceInfo</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the selected device info object.  <a href="#a266598f7f403e21730ff5ee50e6a6e5f"></a><br/></td></tr>
 </table>
@@ -97,6 +103,28 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8h_source.html#l00046">46</a> of file <a class="el" href="mdt_port_info_cb_handler_8h_source.html">mdtPortInfoCbHandler.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ae84e252c9783c204583639212a04aa12"></a><!-- doxytag: member="mdtPortInfoCbHandler::addPortInfo" ref="ae84e252c9783c204583639212a04aa12" args="(const mdtPortInfo &amp;portInfo)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortInfoCbHandler::addPortInfo </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>portInfo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add a single port info. </p>
+<p>Will act similary to <a class="el" href="classmdt_port_info_cb_handler.html#a82c84a3eb52cd5d941377a64788a28ef" title="Fill the comboboxes with a scan result.">fillComboBoxes()</a>. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a266598f7f403e21730ff5ee50e6a6e5f"></a><!-- doxytag: member="mdtPortInfoCbHandler::currentDeviceInfo" ref="a266598f7f403e21730ff5ee50e6a6e5f" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -114,7 +142,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the selected device info object. </p>
 <p>Can return a empty object if nothing was set, or nothing valid is selected or device combobox was not set. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00085">85</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00123">123</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -135,7 +163,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the selected port info object. </p>
 <p>Can return a empty object if nothing was set, or nothing valid is selected. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00101">101</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -157,7 +185,51 @@ Public Member Functions</h2></td></tr>
 <p>Fill the comboboxes with a scan result. </p>
 <p>All ports in list ares added to the ports combobox. If the devices combobox was set, it will be updated at each ports combobox index change. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00057">57</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ace2f9273d3f508507e496bdb2dc6d5c6"></a><!-- doxytag: member="mdtPortInfoCbHandler::indexOfPortInfo" ref="ace2f9273d3f508507e496bdb2dc6d5c6" args="(const mdtPortInfo &amp;portInfo) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtPortInfoCbHandler::indexOfPortInfo </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>portInfo</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get index of a given port info. </p>
+<p>Will return the index of first port info that match. If nothing was found, -1 is returned. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00108">108</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a92a284d227c4f0ce42df9890a9185a97"></a><!-- doxytag: member="mdtPortInfoCbHandler::portInfoAt" ref="a92a284d227c4f0ce42df9890a9185a97" args="(int index)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_port_info.html">mdtPortInfo</a> mdtPortInfoCbHandler::portInfoAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the port info object at given index. </p>
+<p>Can return a empty object if nothing was set, or index is out of range. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00084">84</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -182,7 +254,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 Ports combobox must be set before with <a class="el" href="classmdt_port_info_cb_handler.html#a06f9b5e8127e61026911691827f3203a" title="Set the comboBox that must display ports.">setPortsComboBox()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -205,7 +277,7 @@ Ports combobox must be set before with <a class="el" href="classmdt_port_info_cb
 <p>Note that comboBox object will not be deleted by this clas.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>comboBox must be a valid object. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00038">38</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -228,7 +300,7 @@ Ports combobox must be set before with <a class="el" href="classmdt_port_info_cb
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:27 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

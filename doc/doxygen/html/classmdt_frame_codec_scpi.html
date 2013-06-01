@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <!-- doxytag: class="mdtFrameCodecScpi" --><!-- doxytag: inherits="mdtFrameCodecAscii" -->
-<p>Decode SCPI data.  
+<p>#include &lt;QVariant&gt;  
  <a href="classmdt_frame_codec_scpi.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>&gt;</code></p>
@@ -112,10 +112,10 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a37a1703b6daee6f6bf91c6afb46191b3">decodeValues</a> (const QByteArray &amp;data, QString sep=&quot;:&quot;)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode SCPI value(s)  <a href="#a37a1703b6daee6f6bf91c6afb46191b3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#afb2fe212cf3f99262e91e238c72e9e63">decodeSingleValueDouble</a> (const QByteArray &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a signle value in double floating format.  <a href="#afb2fe212cf3f99262e91e238c72e9e63"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a15e824b3d02798c49a750b69f597ad7c">checkFloatingValueValidity</a> (double x) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the validity of a floating value.  <a href="#a15e824b3d02798c49a750b69f597ad7c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#ad2d7b41d0b3413074d770c5f512bee12">decodeSingleValueDouble</a> (const QByteArray &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a signle value in double floating format.  <a href="#ad2d7b41d0b3413074d770c5f512bee12"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a90d550cfe0ed5605c63a064359fc762d">checkFloatingValueValidity</a> (double x) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the validity of a floating value.  <a href="#a90d550cfe0ed5605c63a064359fc762d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#ac928eac971706f5c78f36d0ae4dc0c42">decodeFunctionParameters</a> (const QByteArray &amp;data)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode reply of type function/parameter.  <a href="#ac928eac971706f5c78f36d0ae4dc0c42"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a6ddd1b8e23252dc7f03c279a030cb36f">decodeIdn</a> (const QByteArray &amp;data)</td></tr>
@@ -134,10 +134,10 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a array of BYTE values.  <a href="#ab70c6c3d2d91ddff065952b6c2db8345"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Decode SCPI data. </p>
-<p>#define MDT_FC_SCPI_UNKNOW 0 #define MDT_FC_SCPI_VALUE 1 #define MDT_FC_SCPI_IDN 2 #define MDT_FC_SCPI_ERR 3 #define MDT_FC_SCPI_LAST_TYPE 127 </p>
+<div class="textblock"><p>#include &lt;QVariant&gt; </p>
+<p>Decode SCPI data </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00058">58</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00030">30</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
 <a class="anchor" id="a2dbce7589140e915f3e253c3523b3b9a"></a><!-- doxytag: member="mdtFrameCodecScpi::query_type_t" ref="a2dbce7589140e915f3e253c3523b3b9a" args="" -->
 <div class="memitem">
@@ -174,7 +174,7 @@ Protected Member Functions</h2></td></tr>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00064">64</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00036">36</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
 
 </div>
 </div>
@@ -204,17 +204,17 @@ Protected Member Functions</h2></td></tr>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00075">75</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00047">47</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a15e824b3d02798c49a750b69f597ad7c"></a><!-- doxytag: member="mdtFrameCodecScpi::checkFloatingValueValidity" ref="a15e824b3d02798c49a750b69f597ad7c" args="(double x) const " -->
+<a class="anchor" id="a90d550cfe0ed5605c63a064359fc762d"></a><!-- doxytag: member="mdtFrameCodecScpi::checkFloatingValueValidity" ref="a90d550cfe0ed5605c63a064359fc762d" args="(double x) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QVariant mdtFrameCodecScpi::checkFloatingValueValidity </td>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtFrameCodecScpi::checkFloatingValueValidity </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>x</em></td><td>)</td>
@@ -226,9 +226,11 @@ Protected Member Functions</h2></td></tr>
 
 <p>Check the validity of a floating value. </p>
 <p>Check validity regarding SCPI-99, sections 7.2.1.4 (-infinity, +infinity) and 7.2.1.5 (NaN).</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>A valid QVariant of type double if Ok, else a invalid QVariant. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> that contains data of type Double. If x is NaN, a invalid <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> is returned.QVariant <a class="el" href="classmdt_frame_codec_scpi.html#a90d550cfe0ed5605c63a064359fc762d" title="Check the validity of a floating value.">checkFloatingValueValidity(double x) const</a>;</dd></dl>
+<p>QVariant <a class="el" href="classmdt_frame_codec_scpi.html#a90d550cfe0ed5605c63a064359fc762d" title="Check the validity of a floating value.">mdtFrameCodecScpi::checkFloatingValueValidity(double x) const</a> { Check about NaN if(qAbs(x - pvNan) &lt;= FLT_EPSILON){ return QVariant(); } Check about -OL and OL if((x &lt;= (pvNinfinity+FLT_EPSILON))||(x &gt;= (pvInfinity-FLT_EPSILON))){ return QVariant(); }</p>
+<p>return x; } </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00126">126</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00195">195</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -248,14 +250,14 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode error answer. </p>
-<p>When decode was done successfully, error is available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a>:</p>
+<p>When decode was done successfully, error is available with <a class="el" href="classmdt_frame_codec.html#af3353b74e1ab64ad7cc764dcaf22e7e8" title="Get the decoded values.">values()</a>:</p>
 <ul>
 <li>Item 0 is the error number</li>
 <li>Item 1 is the error message string</li>
 <li>After item 1 are device's specific messages (if exists) </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00269">269</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00348">348</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -276,13 +278,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Decode reply of type function/parameter. </p>
 <p>Typical query that returns &lt;function&gt; &lt;parameters&gt; form is CONFigure?. See SCPI-99 , chap. 3.</p>
-<p>After successfull decode, <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a> contains:</p>
+<p>After successfull decode, <a class="el" href="classmdt_frame_codec.html#af3353b74e1ab64ad7cc764dcaf22e7e8" title="Get the decoded values.">values()</a> contains:</p>
 <ul>
 <li>Index 0: Function as string</li>
 <li>Index &gt;1 (if available): parameters in converted form (double, int, ...). Note: if a parameter is a floating value, it's possible that it is invalid (+/-inf, Nan). </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00140">140</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p><p>value = checkFloatingValueValidity(value.toDouble()); </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00218">218</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -302,9 +307,9 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode the IDN answer. </p>
-<p>When decode was done, the values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a> </p>
+<p>When decode was done, the values are available with <a class="el" href="classmdt_frame_codec.html#af3353b74e1ab64ad7cc764dcaf22e7e8" title="Get the decoded values.">values()</a> </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00203">203</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00282">282</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -336,7 +341,7 @@ Protected Member Functions</h2></td></tr>
 <p>Decode a IEEE block. </p>
 <p>NOTE: not implemented yet ! </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00312">312</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00391">391</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -356,13 +361,13 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode a array of ASCII values. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000060">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000052">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
 
 <p><p>qDebug() &lt;&lt; "Data: " &lt;&lt; items;</p>
 <p>qDebug() &lt;&lt; "Values: " &lt;&lt; pvValues; </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00388">388</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00467">467</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -382,13 +387,13 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode a array of BYTE values. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000061">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000053">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
 
 <p><p>int len = data.size()-1; // Last item is the term char</p>
 <p>qDebug() &lt;&lt; "data[" &lt;&lt; i &lt;&lt; "]: " &lt;&lt; (qint8)data.at(i) &lt;&lt; " ,  0x" &lt;&lt; hex &lt;&lt; (qint8)data.at(i) &lt;&lt; " , flt: " &lt;&lt; (double)data.at(i)/127.0; </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00410">410</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00489">489</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -414,16 +419,16 @@ Protected Member Functions</h2></td></tr>
 <li>Index 1: SCPI revision </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00306">306</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afb2fe212cf3f99262e91e238c72e9e63"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeSingleValueDouble" ref="afb2fe212cf3f99262e91e238c72e9e63" args="(const QByteArray &amp;data)" -->
+<a class="anchor" id="ad2d7b41d0b3413074d770c5f512bee12"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeSingleValueDouble" ref="ad2d7b41d0b3413074d770c5f512bee12" args="(const QByteArray &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QVariant mdtFrameCodecScpi::decodeSingleValueDouble </td>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtFrameCodecScpi::decodeSingleValueDouble </td>
           <td>(</td>
           <td class="paramtype">const QByteArray &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -435,9 +440,12 @@ Protected Member Functions</h2></td></tr>
 
 <p>Decode a signle value in double floating format. </p>
 <p>This method returns a QVariant. QVariant's internal data is converted to double. If value is not valid, the QVariant is cleared, so it is possible to check this with QVariant::isValid().</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>A Qvariant of type Double if decode and conversion to double could be done, else a invalid QVariant. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> that contains data of type Double if decode and conversion to double could be done, else a invalid mdtValue.QVariant <a class="el" href="classmdt_frame_codec_scpi.html#ad2d7b41d0b3413074d770c5f512bee12" title="Decode a signle value in double floating format.">decodeSingleValueDouble(const QByteArray &amp;data)</a>;</dd></dl>
+<p>QVariant <a class="el" href="classmdt_frame_codec_scpi.html#ad2d7b41d0b3413074d770c5f512bee12" title="Decode a signle value in double floating format.">mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray &amp;data)</a> { QVariant value;</p>
+<p>Store raw data in local QString constainer pvAsciiData = data; Remove white spaces at begin and end <a class="el" href="classmdt_frame_codec_ascii.html#a0e8b9664e1451400e1b955c5180c0de8" title="Remove whitespaces at begin and end of data frame.">trim()</a>; remove EofSeq if(!removeEofSeq()){ return value; } Case of no data if(pvAsciiData.size() &lt; 1){ <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning); MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi"); e.commit(); return value; } Convert and check value = pvAsciiData; if(value.canConvert(QVariant::Double)){ if(value.convert(QVariant::Double)){ value.setValue(checkFloatingValueValidity(value.toDouble())); return value; /return checkFloatingValueValidity(value.toDouble()); } }</p>
+<p>return QVariant(); } </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00096">96</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00149">149</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -467,8 +475,8 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode SCPI value(s) </p>
-<p>After decode is done, values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a>.</p>
-<p>Internally, <a class="el" href="classmdt_frame_codec_ascii.html#aca3ccdf0bc617747e99ed1672344b880" title="Convert a string to first matching type.">mdtFrameCodecAscii::convertData()</a> is used for conversion. Additionnaly, if decoded type is double, the validity is checked with <a class="el" href="classmdt_frame_codec_scpi.html#a15e824b3d02798c49a750b69f597ad7c" title="Check the validity of a floating value.">checkFloatingValueValidity()</a>.</p>
+<p>After decode is done, values are available with <a class="el" href="classmdt_frame_codec.html#af3353b74e1ab64ad7cc764dcaf22e7e8" title="Get the decoded values.">values()</a>.</p>
+<p>Internally, <a class="el" href="classmdt_frame_codec_ascii.html#aca3ccdf0bc617747e99ed1672344b880" title="Convert a string to first matching type.">mdtFrameCodecAscii::convertData()</a> is used for conversion. Additionnaly, if decoded type is double, the validity is checked with <a class="el" href="classmdt_frame_codec_scpi.html#a90d550cfe0ed5605c63a064359fc762d" title="Check the validity of a floating value.">checkFloatingValueValidity()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>String that contains one value, or many separated by sep. </td></tr>
@@ -481,6 +489,7 @@ Protected Member Functions</h2></td></tr>
 
 <p><p>double fltValue;</p>
 <p>fltValue = value.toDouble(); Check about Nan if(qAbs(fltValue - pvNan) &lt;= FLT_EPSILON){ value.clear(); }else{ Check about -OL and OL if((fltValue &lt;= (pvNinfinity+FLT_EPSILON))||(fltValue &gt;= (pvInfinity-FLT_EPSILON))){ value.clear(); } }</p>
+<p>value = checkFloatingValueValidity(value.toDouble()); value.setValue(checkFloatingValueValidity(value.toDouble())); </p>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
@@ -506,7 +515,7 @@ Protected Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:26 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -48,10 +48,6 @@ void \hyperlink{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}{set
 \begin{DoxyCompactList}\small\item\em Get the concerned analog I/O. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_port_transaction_a0515e5ded32eb76047586fdb6274d3eb}{digitalIo} ()
 \begin{DoxyCompactList}\small\item\em Set the concerned digital I/O. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_transaction_ad375898319b7118ab485070314da238d}{setForMultipleIos} (bool forMultipleIos)
-\begin{DoxyCompactList}\small\item\em Set if the transaction concerns multiple I/O's. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_transaction_a89245c851c75c612dba96548b15da51e}{forMultipleIos} () const 
-\begin{DoxyCompactList}\small\item\em Check if the transaction concerns multiple I/O's. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_transaction_ad49afb93f44aca47ded0e03018f8266f}{
 void \hyperlink{classmdt_port_transaction_ad49afb93f44aca47ded0e03018f8266f}{setIsInput} (bool isInput)}
 \label{classmdt_port_transaction_ad49afb93f44aca47ded0e03018f8266f}
@@ -90,7 +86,17 @@ void \hyperlink{classmdt_port_transaction_a7f43ee802c0dee3ee77b45188378f86e}{set
 int \hyperlink{classmdt_port_transaction_a0c454829c2d1c2ea1b8bcc9797b2d46b}{address} () const }
 \label{classmdt_port_transaction_a0c454829c2d1c2ea1b8bcc9797b2d46b}
 
-\begin{DoxyCompactList}\small\item\em Get address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get address. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_transaction_a1d68527258d24907b7fe113aa364c1a3}{
+void \hyperlink{classmdt_port_transaction_a1d68527258d24907b7fe113aa364c1a3}{setIoCount} (int n)}
+\label{classmdt_port_transaction_a1d68527258d24907b7fe113aa364c1a3}
+
+\begin{DoxyCompactList}\small\item\em Set the number of I/Os concerned by transaction. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_transaction_ac51fba329cc3467ebd6b8eaf913a1413}{
+int \hyperlink{classmdt_port_transaction_ac51fba329cc3467ebd6b8eaf913a1413}{ioCount} () const }
+\label{classmdt_port_transaction_ac51fba329cc3467ebd6b8eaf913a1413}
+
+\begin{DoxyCompactList}\small\item\em Get the number of I/Os concerned by transaction. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -142,7 +148,7 @@ Get the concerned analog I/O.
 
 See setIo(mdtAnalogIo$\ast$) for details. 
 
-Definition at line 82 of file mdtPortTransaction.cpp.
+Definition at line 84 of file mdtPortTransaction.cpp.
 
 \hypertarget{classmdt_port_transaction_a5f7b04df58291d52e61c5bd1b7f7bb7f}{
 \index{mdtPortTransaction@{mdtPortTransaction}!clear@{clear}}
@@ -163,7 +169,7 @@ A empty transaction has following values:
 \item type: 0
 \item analogIo: Null
 \item digitalIo: Null
-\item forMultipleIos: false
+\item ioCount: 0
 \item isInput: false
 \item isOutput: false
 \item data: empty
@@ -188,24 +194,7 @@ Set the concerned digital I/O.
 
 See setIo(mdtDigitalIo$\ast$) for details. 
 
-Definition at line 87 of file mdtPortTransaction.cpp.
-
-\hypertarget{classmdt_port_transaction_a89245c851c75c612dba96548b15da51e}{
-\index{mdtPortTransaction@{mdtPortTransaction}!forMultipleIos@{forMultipleIos}}
-\index{forMultipleIos@{forMultipleIos}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{forMultipleIos}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortTransaction::forMultipleIos (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const}}
-\label{classmdt_port_transaction_a89245c851c75c612dba96548b15da51e}
-
-
-Check if the transaction concerns multiple I/O's. 
-
-See \hyperlink{classmdt_port_transaction_ad375898319b7118ab485070314da238d}{setForMultipleIos()} for details. 
-
-Definition at line 97 of file mdtPortTransaction.cpp.
+Definition at line 89 of file mdtPortTransaction.cpp.
 
 \hypertarget{classmdt_port_transaction_ae68abafb0501c98f85147adc176d8d83}{
 \index{mdtPortTransaction@{mdtPortTransaction}!id@{id}}
@@ -239,24 +228,7 @@ Get the query/reply mode flag.
 
 See \hyperlink{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}{setQueryReplyMode()} for details. 
 
-Definition at line 134 of file mdtPortTransaction.cpp.
-
-\hypertarget{classmdt_port_transaction_ad375898319b7118ab485070314da238d}{
-\index{mdtPortTransaction@{mdtPortTransaction}!setForMultipleIos@{setForMultipleIos}}
-\index{setForMultipleIos@{setForMultipleIos}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{setForMultipleIos}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTransaction::setForMultipleIos (
-\begin{DoxyParamCaption}
-\item[{bool}]{forMultipleIos}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_ad375898319b7118ab485070314da238d}
-
-
-Set if the transaction concerns multiple I/O's. 
-
-A example using this member is MODBUS. See \hyperlink{classmdt_device_modbus}{mdtDeviceModbus} for details. 
-
-Definition at line 92 of file mdtPortTransaction.cpp.
+Definition at line 126 of file mdtPortTransaction.cpp.
 
 \hypertarget{classmdt_port_transaction_a3f0ff197ba4b58f0dd206e6151109fde}{
 \index{mdtPortTransaction@{mdtPortTransaction}!setId@{setId}}
@@ -274,24 +246,6 @@ Set transaction identifer.
 Depending used protocol, id can be a transaction ID as defined in MODBUS/TCP, a bTag used in USBTMC or what else. 
 
 Definition at line 46 of file mdtPortTransaction.cpp.
-
-\hypertarget{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}{
-\index{mdtPortTransaction@{mdtPortTransaction}!setIo@{setIo}}
-\index{setIo@{setIo}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{setIo}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTransaction::setIo (
-\begin{DoxyParamCaption}
-\item[{{\bf mdtDigitalIo} $\ast$}]{io, }
-\item[{bool}]{isInput}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}
-
-
-Set the concerned digital I/O. 
-
-If a query concerns a specific I/O, it's possible to reference the I/O object here. 
-
-Definition at line 74 of file mdtPortTransaction.cpp.
 
 \hypertarget{classmdt_port_transaction_a122a98e4e93295c9907ed7cd0bde1f19}{
 \index{mdtPortTransaction@{mdtPortTransaction}!setIo@{setIo}}
@@ -311,6 +265,24 @@ If a query concerns a specific I/O, it's possible to reference the I/O object he
 
 Definition at line 66 of file mdtPortTransaction.cpp.
 
+\hypertarget{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}{
+\index{mdtPortTransaction@{mdtPortTransaction}!setIo@{setIo}}
+\index{setIo@{setIo}!mdtPortTransaction@{mdtPortTransaction}}
+\subsubsection[{setIo}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTransaction::setIo (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtDigitalIo} $\ast$}]{io, }
+\item[{bool}]{isInput}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}
+
+
+Set the concerned digital I/O. 
+
+If a query concerns a specific I/O, it's possible to reference the I/O object here. 
+
+Definition at line 75 of file mdtPortTransaction.cpp.
+
 \hypertarget{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}{
 \index{mdtPortTransaction@{mdtPortTransaction}!setQueryReplyMode@{setQueryReplyMode}}
 \index{setQueryReplyMode@{setQueryReplyMode}!mdtPortTransaction@{mdtPortTransaction}}
@@ -328,7 +300,7 @@ In query/reply mode, port manager will not remove frame from done transactions q
 
 See \hyperlink{classmdt_port_manager}{mdtPortManager} for details. 
 
-Definition at line 129 of file mdtPortTransaction.cpp.
+Definition at line 121 of file mdtPortTransaction.cpp.
 
 \hypertarget{classmdt_port_transaction_a4398eb06986d858d3d0a63f6a290f0bf}{
 \index{mdtPortTransaction@{mdtPortTransaction}!setType@{setType}}

@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtFieldMap.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtFieldMap::mdtFieldMap()
 {
@@ -35,17 +35,16 @@ void mdtFieldMap::addItem(mdtFieldMapItem *item)
 {
   Q_ASSERT(item != 0);
 
-  pvItemsByFieldIndex.insert(item->fieldIndex(), item);
-  pvItemsByFieldName.insert(item->fieldName(), item);
-  pvItemsByDisplayText.insert(item->fieldDisplayText(), item);
-  pvItemsBySourceFieldIndex.insert(item->sourceFieldIndex(), item);
-  pvItemsBySourceFieldName.insert(item->sourceFieldName(), item);
+  if(!pvItems.contains(item)){
+    pvItems.append(item);
+  }
+  updateItem(item);
 }
 
 void mdtFieldMap::clear()
 {
-  qDebug() << "clear() , deleting: " << pvItemsByFieldIndex;
-  qDeleteAll(pvItemsByFieldIndex);
+  qDeleteAll(pvItems);
+  pvItems.clear();
   pvItemsByFieldIndex.clear();
   pvItemsByFieldName.clear();
   pvItemsByDisplayText.clear();
@@ -57,8 +56,9 @@ bool mdtFieldMap::updateItem(mdtFieldMapItem *item)
 {
   Q_ASSERT(item != 0);
 
-  QList<mdtFieldMapItem*> items;
   int i;
+  QList<int> keysByIndex;
+  QList<QString> keysByName;
 
   if(item->fieldIndex() > -1){
     pvItemsByFieldIndex.insert(item->fieldIndex(), item);
@@ -70,34 +70,19 @@ bool mdtFieldMap::updateItem(mdtFieldMapItem *item)
     pvItemsByDisplayText.insert(item->fieldDisplayText(), item);
   }
   if(item->sourceFieldIndex() > -1){
-    items = pvItemsBySourceFieldIndex.values(item->sourceFieldIndex());
-    if(items.size() > 0){
-      ///Q_ASSERT(items.at(0) != 0);
-      ///pvItemsBySourceFieldIndex.remove(items.at(0)->sourceFieldIndex());
-      qDebug() << "Edit by SRC FLD IDX, items (0): " << pvItemsBySourceFieldIndex;
-      pvItemsBySourceFieldIndex.remove(item->sourceFieldIndex());
-      for(i=0; i<items.size(); i++){
-        Q_ASSERT(items.at(i) != 0);
-        items.at(i)->setSourceFieldIndex(item->sourceFieldIndex());
-        pvItemsBySourceFieldIndex.insert(item->sourceFieldIndex(), items.at(i));
-      }
-      qDebug() << "Edit by SRC FLD IDX, items (1): " << pvItemsBySourceFieldIndex;
+    // We have a multi hash here, erase all corresponding items first
+    keysByIndex = pvItemsBySourceFieldIndex.keys(item);
+    Q_ASSERT(keysByIndex.size() <= 1);
+    for(i=0; i<keysByIndex.size(); i++){
+      pvItemsBySourceFieldIndex.remove(keysByIndex.at(i));
     }
     pvItemsBySourceFieldIndex.insert(item->sourceFieldIndex(), item);
   }
   if(!item->sourceFieldName().isEmpty()){
-    items = pvItemsBySourceFieldName.values(item->sourceFieldName());
-    if(items.size() > 0){
-      ///Q_ASSERT(items.at(0) != 0);
-      ///pvItemsBySourceFieldName.remove(items.at(0)->sourceFieldName());
-      qDebug() << "Edit by SRC FLD NAME, items (0): " << pvItemsBySourceFieldName;
-      pvItemsBySourceFieldName.remove(item->sourceFieldName());
-      for(i=0; i<items.size(); i++){
-        Q_ASSERT(items.at(i) != 0);
-        items.at(i)->setSourceFieldName(item->sourceFieldName());
-        pvItemsBySourceFieldName.insert(item->sourceFieldName(), items.at(i));
-      }
-      qDebug() << "Edit by SRC FLD NAME, items (1): " << pvItemsBySourceFieldName;
+    keysByName = pvItemsBySourceFieldName.keys(item);
+    Q_ASSERT(keysByName.size() <= 1);
+    for(i=0; i<keysByName.size(); i++){
+      pvItemsBySourceFieldName.remove(keysByName.at(i));
     }
     pvItemsBySourceFieldName.insert(item->sourceFieldName(), item);
   }
@@ -120,6 +105,19 @@ mdtFieldMapItem *mdtFieldMap::itemAtDisplayText(const QString &text)
   return pvItemsByDisplayText.value(text, 0);
 }
 
+QString mdtFieldMap::sourceFieldNameAtFieldIndex(int index) const
+{
+  QString name;
+  mdtFieldMapItem *item;
+
+  item = pvItemsByFieldIndex.value(index, 0);
+  if(item != 0){
+    name = item->sourceFieldName();
+  }
+
+  return name;
+}
+
 QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldIndex(int index)
 {
   return pvItemsBySourceFieldIndex.values(index);
@@ -130,15 +128,15 @@ QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name)
   return pvItemsBySourceFieldName.values(name);
 }
 
-/// \todo add conversion
-QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int fieldIndex)
+QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int fieldIndex) const
 {
-  ///qDebug() << "REQ data for index " << fieldIndex << " , sourceData: " << sourceData;
+  QString src;
+  QVariant data;
+
   mdtFieldMapItem *item = pvItemsByFieldIndex.value(fieldIndex, 0);
   if(item == 0){
     return QVariant();
   }
-  ///qDebug() << "Found item, source index: " << item->sourceFieldIndex();
   if(item->sourceFieldIndex() < 0){
     return QVariant();
   }
@@ -146,21 +144,30 @@ QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int field
     return QVariant();
   }
   if((item->sourceFieldDataStartOffset()<0)&&(item->sourceFieldDataEndOffset()<0)){
-    return sourceData.at(item->sourceFieldIndex());
+    src = sourceData.at(item->sourceFieldIndex());
+    data = src;
+    data.convert(item->dataType());
+    return data;
   }
   if(item->sourceFieldDataStartOffset()<0){
-    QString src = sourceData.at(item->sourceFieldIndex()).left(item->sourceFieldDataEndOffset()+1);
-    return src;
+    src = sourceData.at(item->sourceFieldIndex()).left(item->sourceFieldDataEndOffset()+1);
+    data = src;
+    data.convert(item->dataType());
+    return data;
   }
   if(item->sourceFieldDataEndOffset()<0){
-    QString src = sourceData.at(item->sourceFieldIndex());
+    src = sourceData.at(item->sourceFieldIndex());
     src = src.right(src.size() - item->sourceFieldDataStartOffset());
-    return src;
+    data = src;
+    data.convert(item->dataType());
+    return data;
   }
-  QString src = sourceData.at(item->sourceFieldIndex());
+  src = sourceData.at(item->sourceFieldIndex());
   src = src.mid(item->sourceFieldDataStartOffset(), item->sourceFieldDataEndOffset() - item->sourceFieldDataStartOffset() + 1);
-  ///return src;
-  return QVariant(src).convert(item->dataType());
+  data = src;
+  data.convert(item->dataType());
+
+  return data;
 }
 
 QVariant mdtFieldMap::dataForFieldName(const QStringList &sourceData, const QString &fieldName)
@@ -215,6 +222,21 @@ QString mdtFieldMap::dataForSourceFieldName(const QList<QVariant> &data, const Q
   }
 
   return str;
+}
+
+QHash<QString, QString> mdtFieldMap::displayTextsByFieldNames() const
+{
+  QHash<QString, QString> result;
+  mdtFieldMapItem *item;
+  int i;
+
+  for(i=0; i<pvItems.size(); ++i){
+    item = pvItems.at(i);
+    Q_ASSERT(item != 0);
+    result.insert(item->fieldName(), item->fieldDisplayText());
+  }
+
+  return result;
 }
 
 void mdtFieldMap::insertDataIntoSourceString(QString &str, const QVariant &data, mdtFieldMapItem *item)

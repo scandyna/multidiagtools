@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_DIGITAL_OUT_WIDGET_H
 
 #include "mdtAbstractIoWidget.h"
+#include "mdtValue.h"
 
 class QPushButton;
 class mdtDigitalIo;
@@ -53,8 +54,11 @@ class mdtDigitalOutWidget : public mdtAbstractIoWidget
 
  private slots:
 
-  // Used to update GUI from mdtDigitalIo object.
-  void setOn(bool on);
+  /*! \brief Update displayed value
+   *
+   * \pre If value is valid, it must contain double value.
+   */
+  void setValue(const mdtValue &value);
 
   // if state is != from current state, text will be updated
   void updateText(bool state);

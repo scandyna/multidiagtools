@@ -143,7 +143,11 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    *
    * The values are stored in a QList\<QVariant\> , with format depending of the
    * function code:
-   *  - FC 1 (0x01), ReadCoils reply: digital output states as bool, sorted by ascending addresses.
+   *  - FC 1 (0x01), ReadCoils reply: digital outputs (coils) states as bool, sorted by ascending addresses.
+   *                  Note: the PDU contains the number of bytes returned by device, it's also not possible
+   *                        to know how many coils are concerned.
+   *                        For example, if a request was made for 5 coils, 1 byte is returned from device,
+   *                        values() will also contain 8 items.
    *  - FC 2 (0x02), ReadDiscreteInputs reply: digital input states as bool, sorted by ascending addresses.
    *  - FC 3 (0x03), ReadHoldingRegisters reply: analog output values as quint16, sorted by ascending addresses.
    *  - FC 4 (0x04), ReadInputRegisters reply: analog input values as quint16, sorted by ascending addresses.

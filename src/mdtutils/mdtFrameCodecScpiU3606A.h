@@ -59,17 +59,17 @@ class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi
 
   /*! \brief Get the measure range
    */
-  QVariant range() const;
+  mdtValue range() const;
 
   /*! \brief Get the measure resolution
    */
-  QVariant resolution() const;
+  mdtValue resolution() const;
 
  private:
 
   measure_type_t pvMeasureType;
-  QVariant pvRange;
-  QVariant pvResolution;
+  mdtValue pvRange;
+  mdtValue pvResolution;
 };
 
 #endif  // #ifndef MDT_FRAME_CODEC_SCPI_U3606A_H

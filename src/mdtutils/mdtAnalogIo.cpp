@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,12 +23,11 @@
 #include <cmath>
 #include <float.h>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtAnalogIo::mdtAnalogIo(QObject *parent)
  : mdtAbstractIo(parent)
 {
-  pvValue = 0.0;
   pvMinimum = 0.0;
   pvMaximum = 0.0;
   pvStep = 1.0;
@@ -107,10 +106,13 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
   // Store min and max and signal
   pvMinimum = min;
   pvMaximum = max;
-  pvUpdatingUi = false;
   emit(rangeChangedForUi(min, max));
   // Set value to the minimum
-  setValue(min, false);
+  pvNotifyUi = true;
+  setValueFromDouble(min, false);
+  pvValue.setDefaultValue(pvValue.valueDouble());
+  pvValue.setDefaultValue(pvValue.valueInt());
+  pvValue.clear();
 
   return true;
 }
@@ -165,112 +167,121 @@ double mdtAnalogIo::maximum() const
   return pvMaximum;
 }
 
-double mdtAnalogIo::value() const
-{
-  return pvValue;
-}
-
 void mdtAnalogIo::setValueInt(int value, bool isValid, bool emitValueChanged)
 {
-  double x;
+  mdtValue v;
 
-  if(!isValid){
-    setValue(pvMinimum, false, emitValueChanged);
-    return;
+  if(isValid){
+    v.setValue(value);
   }
-  // Extract bits in correct range
-  value = value >> pvIntValueLsbIndex;
-  value &= pvIntValueMask;
-  // Apply C1 and negate if sign bit is present
-  if(value & pvIntValueSignMask){
-    value = ( (~value) & pvIntValueMask );
-    value = -value;
-  }
-  // Make conversion
-  if(pvIntValueSigned){
-    x = pvStep*(double)value;
+  pvNotifyUi = true;
+  setValueFromInt(v, emitValueChanged);
+}
+
+void mdtAnalogIo::setValue(const mdtValue &value, bool emitValueChanged)
+{
+  pvNotifyUi = true;
+  if(value.hasValueDouble()){
+    setValueFromDouble(value, emitValueChanged);
   }else{
-    x = pvStep*(double)value + pvMinimum;
+    setValueFromInt(value, emitValueChanged);
   }
-
-  setValue(x, true, emitValueChanged);
-}
-
-int mdtAnalogIo::valueInt() const
-{
-  int m;
-
-  // Make conversion
-  if(pvIntValueSigned){
-    m = pvStepInverse * pvValue;
-  }else{
-    m = pvStepInverse * (pvValue - pvMinimum);
-  }
-  // Apply C1 and negate if value < 0
-  if(pvIntValueSigned && (pvValue < 0.0)){
-    m = -m;
-    m = (~m) & pvIntValueMaskEnc;
-  }
-  m &= pvIntValueMaskEnc;
-  m = m << pvIntValueLsbIndexEnc;
-
-  return m;
-}
-
-void mdtAnalogIo::setValue(QVariant value, bool emitValueChanged)
-{
-  if(!value.isValid()){
-    setValue(0.0, false, emitValueChanged);
-    return;
-  }
-  // Check type and update
-  if(value.type() == QVariant::Double){
-    setValue(value.toDouble(), true, emitValueChanged);
-  }else if(value.type() == QVariant::Int){
-    setValueInt(value.toInt(), true, emitValueChanged);
-  }else{
-    setValue(0.0, false, emitValueChanged);
-  }
-}
-
-void mdtAnalogIo::setValue(double value, bool isValid, bool emitValueChanged)
-{
-  pvHasValidData = isValid;
-  if(!pvHasValidData){
-    value = pvMinimum;
-  }
-  if(fabs(value - pvValue) >= pvStep){
-    pvValue = value;
-    if(emitValueChanged){
-      emit(valueChanged(pvAddress));
-      emit(valueChanged(pvValue));
-    }
-    pvUpdatingUi = true;
-    emit(valueChangedForUi(value));
-  }
-}
-
-void mdtAnalogIo::setValue(double value)
-{
-  setValue(value, true);
 }
 
 void mdtAnalogIo::setValueFromUi(double value)
 {
+  mdtValue v;
+
   // If setValue() is called, valueChangedForUi() is emited
   //  and UI will receive the new value. But, because of this update,
   //  it can happen that these same UI emit their signal valueChanged()
   //  and cause finaly the call of this method (with altered precision).
   // We not want this, so check the flag before update.
-  if(pvUpdatingUi){
-    pvUpdatingUi = false;
+  v.setValue(value);
+  pvNotifyUi = false;
+  setValueFromDouble(v, true);
+}
+
+void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChanged)
+{
+  int m;
+  double x = value.valueDouble();
+
+  // Check if new value has changed
+  if((fabs(x - pvValue.valueDouble()) <= pvStep)&&(value.isValid() == pvValue.isValid())){
     return;
   }
-  if(fabs(value - pvValue) >= pvStep){
-    pvValue = value;
-    pvHasValidData = true;
-    emit(valueChanged(pvAddress));
+  // Check validity of new value and process if true
+  if((value.isValid())&&(value.hasValueDouble())){
+    // Make conversion
+    if(pvIntValueSigned){
+      m = pvStepInverse * x;
+    }else{
+      m = pvStepInverse * (x - pvMinimum);
+    }
+    // Apply C1 and negate if value < 0
+    if(pvIntValueSigned && (x < 0.0)){
+      m = -m;
+      m = (~m) & pvIntValueMaskEnc;
+    }
+    m &= pvIntValueMaskEnc;
+    m = m << pvIntValueLsbIndexEnc;
+    // Store value
+    pvValue.setValue(m);
+    pvValue.setValue(x, value.isMinusOl(), value.isPlusOl());
+  }else{
+    pvValue.clear();
+  }
+  // Check if new value has changed
+  // Notify
+  if(pvNotifyUi){
+    emit(valueChangedForUi(pvValue));
+  }
+  if(emitValueChanged){
+    emit(valueChanged(this));
     emit(valueChanged(pvValue));
   }
 }
 
+void mdtAnalogIo::setValueFromInt(const mdtValue &value, bool emitValueChanged)
+{
+  int m = value.valueInt();
+  double x;
+
+  // Check if new value has changed
+  if((m == pvValue.valueInt())&&(value.isValid() == pvValue.isValid())){
+    return;
+  }
+  // Check validity of new value and process if true
+  if((value.isValid())&&(value.hasValueInt())){
+    m = value.valueInt();
+    // Extract bits in correct range
+    m = m >> pvIntValueLsbIndex;
+    m &= pvIntValueMask;
+    // Apply C1 and negate if sign bit is present
+    if(m & pvIntValueSignMask){
+      m = ( (~m) & pvIntValueMask );
+      m = -m;
+    }
+    // Make conversion
+    if(pvIntValueSigned){
+      x = pvStep*(double)m;
+    }else{
+      x = pvStep*(double)m + pvMinimum;
+    }
+    // Store
+    pvValue.setValue(x);
+    pvValue.setValue(m, value.isMinusOl(), value.isPlusOl());
+  }else{
+    pvValue.clear();
+    x = pvValue.valueDouble();
+  }
+  // Notify
+  if(pvNotifyUi){
+    emit(valueChangedForUi(pvValue));
+  }
+  if(emitValueChanged){
+    emit(valueChanged(this));
+    emit(valueChanged(pvValue));
+  }
+}

@@ -149,6 +149,7 @@ void mdtTcpSocketTest::writeReadTest()
 
   // Set TCP server data
   tcpServer.setResponseData(responses);
+  QVERIFY(tcpServer.isListening());
 
   // Send data to server
   s.lockMutex();
@@ -186,6 +187,7 @@ void mdtTcpSocketTest::writeReadTest()
 
   // Set TCP server data
   tcpServer.setResponseData(responses);
+  QVERIFY(tcpServer.isListening());
 
   // Send data to server
   s.lockMutex();

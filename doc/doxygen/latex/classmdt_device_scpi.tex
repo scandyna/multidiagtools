@@ -13,8 +13,7 @@ Base class for SCPI based instruments.
 
 
 
-Inheritance diagram for mdtDeviceScpi:
-\nopagebreak
+Inheritance diagram for mdtDeviceScpi:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,8 +22,7 @@ Inheritance diagram for mdtDeviceScpi:
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceScpi:
-\nopagebreak
+Collaboration diagram for mdtDeviceScpi:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -54,7 +52,7 @@ int \hyperlink{classmdt_device_scpi_a65c6f747ac6c6fe727a7359f78139168}{checkDevi
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_device_scpi_a480697b6b78665bfc59fd2bffcf4b566}{handleDeviceError} (QList$<$ QVariant $>$ \&decodedValues)
+void \hyperlink{classmdt_device_scpi_a16b6b0c77b1078da285f9d8d9ba52181}{handleDeviceError} (const QList$<$ QVariant $>$ \&decodedValues)
 \begin{DoxyCompactList}\small\item\em Handle device error. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_device_scpi_af1cc7d9c99832fa3a7b3c5764588c637}{handleDeviceSpecificError} (int errNum, const QString \&errText, const QList$<$ QString $>$ \&deviceSpecificTexts)
 \begin{DoxyCompactList}\small\item\em Handle device's specific error. \end{DoxyCompactList}\item 
@@ -99,7 +97,7 @@ Construct a SCPI device.
 
 Will create and configure a USBTMC port manager. 
 
-connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(\hyperlink{classmdt_device_a5556423c2e2b3a3adcca5d4efb5af04e}{decodeReadenFrame(mdtPortTransaction)})); 
+connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction))); connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString\&, const QString\&)), this, SLOT(setStateFromPortError(int, const QString\&, const QString\&))); 
 
 
 
@@ -124,7 +122,7 @@ Query device about error.
 Will send the SYST:ERR? and return.
 
 Subclass notes:\par
- The SYST:ERR? query is sent to device. A new transaction is initalized, with type MDT\_\-FC\_\-SCPI\_\-ERR. When subclass receives such transaction type, it should call \hyperlink{classmdt_device_scpi_a480697b6b78665bfc59fd2bffcf4b566}{handleDeviceError()} without decoding frame.
+ The SYST:ERR? query is sent to device. A new transaction is initalized, with type MDT\_\-FC\_\-SCPI\_\-ERR. When subclass receives such transaction type, it should call \hyperlink{classmdt_device_scpi_a16b6b0c77b1078da285f9d8d9ba52181}{handleDeviceError()} without decoding frame.
 
 \begin{DoxyReturn}{Returns}
 0 if query could be sent or a error of type \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} else. Note: returned error is not device's error. 
@@ -135,7 +133,7 @@ transaction-\/$>$setType(MDT\_\-FC\_\-SCPI\_\-ERR);
 
 
 
-Definition at line 164 of file mdtDeviceScpi.cpp.
+Definition at line 165 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!connectToDevice@{connectToDevice}}
@@ -167,7 +165,7 @@ A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa06
 device = devInfo; device.setVendorId(0x0957); device.setProductId(0x4d18);
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000006}{Todo}]Add DeviceNotFound error ? \end{Desc}
+\item[\hyperlink{todo__todo000005}{Todo}]Add DeviceNotFound error ? \end{Desc}
 
 
 
@@ -180,22 +178,22 @@ Reimplemented in \hyperlink{classmdt_device_d_s_o1000_a_a84431cf929750a8a25d5218
 
 
 
-Definition at line 61 of file mdtDeviceScpi.cpp.
+Definition at line 62 of file mdtDeviceScpi.cpp.
 
-\hypertarget{classmdt_device_scpi_a480697b6b78665bfc59fd2bffcf4b566}{
+\hypertarget{classmdt_device_scpi_a16b6b0c77b1078da285f9d8d9ba52181}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!handleDeviceError@{handleDeviceError}}
 \index{handleDeviceError@{handleDeviceError}!mdtDeviceScpi@{mdtDeviceScpi}}
 \subsubsection[{handleDeviceError}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceScpi::handleDeviceError (
 \begin{DoxyParamCaption}
-\item[{QList$<$ QVariant $>$ \&}]{decodedValues}
+\item[{const QList$<$ QVariant $>$ \&}]{decodedValues}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_device_scpi_a480697b6b78665bfc59fd2bffcf4b566}
+\label{classmdt_device_scpi_a16b6b0c77b1078da285f9d8d9ba52181}
 
 
 Handle device error. 
 
-This method is called from subclass's \hyperlink{classmdt_device_a5556423c2e2b3a3adcca5d4efb5af04e}{decodeReadenFrame(mdtPortTransaction)} method when a frame of type MDT\_\-FC\_\-SCPI\_\-ERR was received.
+This method is called from subclass's decodeReadenFrame(mdtPortTransaction) method when a frame of type MDT\_\-FC\_\-SCPI\_\-ERR was received.
 
 Errors $<$= 0 are handled directly. If error is $>$ 0, \hyperlink{classmdt_device_scpi_af1cc7d9c99832fa3a7b3c5764588c637}{handleDeviceSpecificError()} is called.
 
@@ -211,7 +209,7 @@ If internal codec has $<$ 2 values, \hyperlink{classmdt_device_scpi_af1cc7d9c998
 \end{DoxyPostcond}
 
 
-Definition at line 197 of file mdtDeviceScpi.cpp.
+Definition at line 198 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_af1cc7d9c99832fa3a7b3c5764588c637}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!handleDeviceSpecificError@{handleDeviceSpecificError}}
@@ -228,7 +226,7 @@ Definition at line 197 of file mdtDeviceScpi.cpp.
 
 Handle device's specific error. 
 
-This method is called from \hyperlink{classmdt_device_scpi_a480697b6b78665bfc59fd2bffcf4b566}{handleDeviceError()}.
+This method is called from \hyperlink{classmdt_device_scpi_a16b6b0c77b1078da285f9d8d9ba52181}{handleDeviceError()}.
 
 This default implementation simply log the error (with \hyperlink{classmdt_error}{mdtError} system).
 
@@ -246,7 +244,7 @@ Internal codec has at least 2 values.
 \end{DoxyPrecond}
 
 
-Definition at line 247 of file mdtDeviceScpi.cpp.
+Definition at line 248 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_a00d25c16acb20c909210bc5278f713fa}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!logDeviceError@{logDeviceError}}
@@ -275,7 +273,7 @@ Log a device error with \hyperlink{classmdt_error}{mdtError} system.
 \end{DoxyParams}
 
 
-Definition at line 254 of file mdtDeviceScpi.cpp.
+Definition at line 255 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_ad104bd5814390c914e0a527d3e652fd2}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!sendCommand@{sendCommand}}
@@ -305,11 +303,11 @@ This method will not update internal device state. It's recommended to use \hype
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-bTag on success, or a error $<$ 0 (see \hyperlink{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{mdtUsbtmcPortManager::writeData()} for details). 
+bTag on success, or a error $<$ 0 (see \hyperlink{classmdt_usbtmc_port_manager_a58fbe73aad9b42214335187f8d21e3c6}{mdtUsbtmcPortManager::writeData()} for details). 
 \end{DoxyReturn}
 
 
-Definition at line 126 of file mdtDeviceScpi.cpp.
+Definition at line 127 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_a9c15bed2ae92993f0378b59f15644bb2}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!sendQuery@{sendQuery}}
@@ -338,7 +336,7 @@ This method will not update internal device and I/O states. It's recommended to 
 \hline
 \end{DoxyParams}
 \begin{Desc}
-\item[\hyperlink{todo__todo000007}{Todo}]adjust write timeout \end{Desc}
+\item[\hyperlink{todo__todo000006}{Todo}]adjust write timeout \end{Desc}
 
 \begin{DoxyParams}{Parameters}
 {\em writeTimeout} & Write timeout \mbox{[}ms\mbox{]} If 0, internal defined timeout is used (see \hyperlink{classmdt_port_manager_a9d6782be514745a1b1392216d17d41df}{mdtPortManager::adjustedWriteTimeout()} for details). \\
@@ -351,7 +349,7 @@ Result as string (empty string on error) Note that \hyperlink{classmdt_frame_cod
 \end{DoxyReturn}
 
 
-Definition at line 131 of file mdtDeviceScpi.cpp.
+Definition at line 132 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_aefd45e58d01aed9a165bb2c2dd98198c}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!waitOperationComplete@{waitOperationComplete}}
@@ -381,7 +379,7 @@ interval $>$ 0
 \end{DoxyPrecond}
 
 
-Definition at line 136 of file mdtDeviceScpi.cpp.
+Definition at line 137 of file mdtDeviceScpi.cpp.
 
 
 

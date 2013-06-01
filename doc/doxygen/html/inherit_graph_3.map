@@ -1,3 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_buffer.html" title="Stockage d&#39;éléments basé sur le principe du tampon circulaire." alt="" coords="7,5,116,35"/>
+<area shape="rect" id="node1" href="$classmdt_abstract_port_setup_dialog.html" title="Base class to build a port setup dialog." alt="" coords="7,59,193,88"/>
+<area shape="rect" id="node3" href="$classmdt_modbus_tcp_port_setup_dialog.html" title="mdtModbusTcpPortSetupDialog" alt="" coords="244,5,449,35"/>
+<area shape="rect" id="node5" href="$classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port." alt="" coords="261,59,432,88"/>
+<area shape="rect" id="node7" href="$classmdt_usbtmc_port_setup_dialog.html" title="mdtUsbtmcPortSetupDialog" alt="" coords="255,112,439,141"/>
 </map>

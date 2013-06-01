@@ -107,20 +107,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00051"></a>00051 
 <a name="l00061"></a>00061   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios_widget.html#a8fc261333ffc1c3b705ae8609f687159" title="Add all I/O&#39;s as corresponding GUI representation.">setDeviceIos</a>(<a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *ios);
 <a name="l00062"></a>00062 
-<a name="l00063"></a>00063  <span class="keyword">private</span>:
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065   Q_DISABLE_COPY(<a class="code" href="classmdt_device_ios_widget.html" title="Display a set of I/O&#39;s.">mdtDeviceIosWidget</a>);
+<a name="l00065"></a>00065   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f" title="Remove I/O&#39;s widgets.">clearIoWidgets</a>();
 <a name="l00066"></a>00066 
-<a name="l00067"></a>00067   QList&lt;mdtAnalogInWidget*&gt; pvAnalogInputs;
-<a name="l00068"></a>00068   QList&lt;mdtAnalogOutWidget*&gt; pvAnalogOutputs;
-<a name="l00069"></a>00069   QList&lt;mdtDigitalInWidget*&gt; pvDigitalInputs;
-<a name="l00070"></a>00070   QList&lt;mdtDigitalOutWidget*&gt; pvDigitalOutputs;
-<a name="l00071"></a>00071   <span class="keywordtype">int</span> pvMaxColumns;
-<a name="l00072"></a>00072   QGridLayout *pvLayout;
-<a name="l00073"></a>00073   <a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *pvIos;
-<a name="l00074"></a>00074 };
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_IOS_WIDGET_H</span>
+<a name="l00067"></a>00067  <span class="keyword">private</span>:
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069   Q_DISABLE_COPY(<a class="code" href="classmdt_device_ios_widget.html" title="Display a set of I/O&#39;s.">mdtDeviceIosWidget</a>);
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071   QList&lt;mdtAnalogInWidget*&gt; pvAnalogInputs;
+<a name="l00072"></a>00072   QList&lt;mdtAnalogOutWidget*&gt; pvAnalogOutputs;
+<a name="l00073"></a>00073   QList&lt;mdtDigitalInWidget*&gt; pvDigitalInputs;
+<a name="l00074"></a>00074   QList&lt;mdtDigitalOutWidget*&gt; pvDigitalOutputs;
+<a name="l00075"></a>00075   <span class="keywordtype">int</span> pvMaxColumns;
+<a name="l00076"></a>00076   QGridLayout *pvLayout;
+<a name="l00077"></a>00077   <a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *pvIos;
+<a name="l00078"></a>00078 };
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_IOS_WIDGET_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -137,7 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

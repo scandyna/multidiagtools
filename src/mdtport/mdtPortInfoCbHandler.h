@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -77,12 +77,32 @@ class mdtPortInfoCbHandler : public QObject
    */
   void fillComboBoxes(const QList<mdtPortInfo*> &portInfoList);
 
+  /*! \brief Add a single port info.
+   *
+   * Will act similary to fillComboBoxes().
+   */
+  void addPortInfo(const mdtPortInfo &portInfo);
+
+  /*! \brief Get the port info object at given index.
+   *
+   * Can return a empty object if nothing was set,
+   *  or index is out of range.
+   */
+  mdtPortInfo portInfoAt(int index);
+
   /*! \brief Get the selected port info object.
    *
    * Can return a empty object if nothing was set,
    *  or nothing valid is selected.
    */
   mdtPortInfo currentPortInfo();
+
+  /*! \brief Get index of a given port info.
+   *
+   * Will return the index of first port info that match.
+   * If nothing was found, -1 is returned.
+   */
+  int indexOfPortInfo(const mdtPortInfo &portInfo) const;
 
   /*! \brief Get the selected device info object.
    *

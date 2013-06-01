@@ -107,6 +107,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74258f300967b5dea1fbfa9a0ccab38a"></a><!-- doxytag: member="mdtUsbPortThread::isWriter" ref="a74258f300967b5dea1fbfa9a0ccab38a" args="() const " -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#a74258f300967b5dea1fbfa9a0ccab38a">isWriter</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeaa2dabc53e57f6b7cf7077d113c7f40"></a><!-- doxytag: member="mdtUsbPortThread::handlesTimeout" ref="aeaa2dabc53e57f6b7cf7077d113c7f40" args="() const " -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#aeaa2dabc53e57f6b7cf7077d113c7f40">handlesTimeout</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Retunrs true. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#acca2af9704cc6894ec5b2058ca102af1">readUntilShortPacketReceived</a> (int maxReadTransfers)</td></tr>
@@ -141,7 +144,11 @@ Protected Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NoError or a error of type <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>. If maxReadTransfers is reached, ReadTimeout is returned. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2" title="Set the port instance.">setPort()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00043">43</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
+<p><p>qDebug() &lt;&lt; "mdtUsbPortThread::readUntilShortPacketReceived() , readen: " &lt;&lt; readen;</p>
+<p>qDebug() &lt;&lt; "mdtUsbPortThread::readUntilShortPacketReceived() , END , Ok"; </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -164,7 +171,7 @@ Protected Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:28 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

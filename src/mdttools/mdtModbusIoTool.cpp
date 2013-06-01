@@ -24,6 +24,7 @@
 #include "mdtApplication.h"
 #include "mdtDeviceInfo.h"
 #include "mdtPortStatusWidget.h"
+#include "mdtPortManager.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtModbusTcpPortSetupDialog.h"
 #include "mdtPortInfo.h"
@@ -38,14 +39,15 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   pvStatusWidget = new mdtPortStatusWidget;
   statusBar()->addWidget(pvStatusWidget);
 
-  // Setup I/Os widget
-  pvDeviceIos = new mdtDeviceIos(this);
-  pvDeviceIosWidget = new mdtDeviceIosWidget;
-  saIos->setWidget(pvDeviceIosWidget);
   // Setup device
   pvDeviceModbusWago = new mdtDeviceModbusWago(this);
   pvDeviceModbusWago->setName("Wago I/O 750");
-  connect(pvDeviceModbusWago, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
+  // Setup I/Os widget
+  pvDeviceIos = new mdtDeviceIos(pvDeviceModbusWago);
+  pvDeviceIosWidget = new mdtDeviceIosWidget;
+  saIos->setWidget(pvDeviceIosWidget);
+  // Make connections
+  connect(pvDeviceModbusWago, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
   connect(pvDeviceModbusWago, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
 
   // Set some flags
@@ -66,7 +68,9 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   connect(pbDisconnect, SIGNAL(clicked()), this, SLOT(disconnectFromNode()));
   connect(pbAbortScan, SIGNAL(clicked()), pvDeviceModbusWago->modbusTcpPortManager(), SLOT(abortScan()));
   setWindowTitle(tr("MODBUS I/O tool for Wago 750"));
-  setStateFromPortManager(pvDeviceModbusWago->modbusTcpPortManager()->currentState());
+  ///setStateFromPortManager(pvDeviceModbusWago->modbusTcpPortManager()->currentState());
+  setStateDisconnected();
+  showStatusMessage(tr("Disconnected"));
 }
 
 mdtModbusIoTool::~mdtModbusIoTool()
@@ -101,26 +105,26 @@ void mdtModbusIoTool::retranslate()
   retranslateUi(this);
 }
 
-void mdtModbusIoTool::setStateFromPortManager(int state)
+void mdtModbusIoTool::setState(int state)
 {
   pvStatusWidget->setState(state);
   switch(state){
-    case mdtDevice::Disconnected:
+    case mdtPortManager::Disconnected:
       setStateDisconnected();
       break;
-    case mdtDevice::Connecting:
+    case mdtPortManager::Connecting:
       setStateConnecting();
       break;
-    case mdtDevice::Ready:
+    case mdtPortManager::Ready:
       setStateReady();
       break;
-    case mdtDevice::Busy:
+    case mdtPortManager::Busy:
       setStateBusy();
       break;
-    case mdtDevice::Warning:
+    case mdtPortManager::Warning:
       setStateWarning();
       break;
-    case mdtDevice::Error:
+    case mdtPortManager::Error:
       setStateError();
       break;
     default:
@@ -164,8 +168,11 @@ void mdtModbusIoTool::connectToNode()
     showStatusMessage(tr("Please disconnect before reconnect"), 3000);
     return;
   }
+  // Update GUI state
+  pbDisconnect->setEnabled(false);
   pbAbortScan->setEnabled(true);
   pbConnect->setEnabled(false);
+  sbHwNodeId->setEnabled(false);
   // Scan looking in chache file first
   portInfoList = m->scan(m->readScanResult());
   // Try to connect ...
@@ -177,23 +184,25 @@ void mdtModbusIoTool::connectToNode()
     portInfoList = m->scan(QNetworkInterface::allInterfaces(), 502, 100);
     if(pvDeviceModbusWago->connectToDevice(portInfoList, sbHwNodeId->value(), 8) != mdtAbstractPort::NoError){
       showStatusMessage(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
-      pbAbortScan->setEnabled(false);
-      pbConnect->setEnabled(true);
+      ///pbAbortScan->setEnabled(false);
+      ///pbConnect->setEnabled(true);
+      ///setStateWarning();
       return;
     }
     // Ok found, save scan result
     if(!m->saveScanResult(portInfoList)){
       showStatusMessage(tr("Cannot save scan result in cache file"), 3000);
     }
-    // We no lobger need portInfoList
+    // We no longer need portInfoList
     qDeleteAll(portInfoList);
     portInfoList.clear();
   }
   showStatusMessage(tr("I/O detection ..."));
   if(!pvDeviceModbusWago->detectIos(pvDeviceIos)){
     showStatusMessage(tr("I/O detection failed"));
-    pvDeviceModbusWago->portManager()->closePort();
-    pbAbortScan->setEnabled(false);
+    setStateWarning();
+    ///pvDeviceModbusWago->portManager()->closePort();
+    ///pbAbortScan->setEnabled(false);
     ///pbConnect->setEnabled(true);
     return;
   }
@@ -203,6 +212,7 @@ void mdtModbusIoTool::connectToNode()
   showStatusMessage(tr("I/O detection done"), 1000);
   pbAbortScan->setEnabled(false);
   ///pbConnect->setEnabled(true);
+  // GUI state will be updated by portManager when ready
 }
 
 void mdtModbusIoTool::disconnectFromNode()
@@ -227,6 +237,7 @@ void mdtModbusIoTool::showStatusMessage(const QString & message, const QString &
 void mdtModbusIoTool::setStateDisconnected()
 {
   pbDisconnect->setEnabled(false);
+  pbAbortScan->setEnabled(false);
   pbConnect->setEnabled(true);
   sbHwNodeId->setEnabled(true);
 }
@@ -234,6 +245,7 @@ void mdtModbusIoTool::setStateDisconnected()
 void mdtModbusIoTool::setStateConnecting()
 {
   pbDisconnect->setEnabled(false);
+  pbAbortScan->setEnabled(true);
   pbConnect->setEnabled(false);
   sbHwNodeId->setEnabled(false);
 }
@@ -241,6 +253,7 @@ void mdtModbusIoTool::setStateConnecting()
 void mdtModbusIoTool::setStateReady()
 {
   pbDisconnect->setEnabled(true);
+  pbAbortScan->setEnabled(false);
   pbConnect->setEnabled(false);
   sbHwNodeId->setEnabled(false);
 }
@@ -248,6 +261,7 @@ void mdtModbusIoTool::setStateReady()
 void mdtModbusIoTool::setStateBusy()
 {
   pbDisconnect->setEnabled(true);
+  pbAbortScan->setEnabled(false);
   pbConnect->setEnabled(false);
   sbHwNodeId->setEnabled(false);
 }
@@ -255,6 +269,7 @@ void mdtModbusIoTool::setStateBusy()
 void mdtModbusIoTool::setStateWarning()
 {
   pbDisconnect->setEnabled(true);
+  pbAbortScan->setEnabled(false);
   pbConnect->setEnabled(false);
   sbHwNodeId->setEnabled(false);
 }
@@ -262,6 +277,7 @@ void mdtModbusIoTool::setStateWarning()
 void mdtModbusIoTool::setStateError()
 {
   pbDisconnect->setEnabled(true);
+  pbAbortScan->setEnabled(false);
   pbConnect->setEnabled(false);
   sbHwNodeId->setEnabled(false);
 }

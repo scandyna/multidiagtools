@@ -17,13 +17,12 @@ Inheritance diagram for mdtDeviceModbus:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=178pt]{classmdt_device_modbus__inherit__graph}
+\includegraphics[width=204pt]{classmdt_device_modbus__inherit__graph}
 \end{center}
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceModbus:
-\nopagebreak
+Collaboration diagram for mdtDeviceModbus:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -39,7 +38,60 @@ Collaboration diagram for mdtDeviceModbus:
 \hyperlink{classmdt_port_manager}{mdtPortManager} $\ast$ \hyperlink{classmdt_device_modbus_aed892b501f8cbd372ccfda1a4fafa536}{portManager} ()}
 \label{classmdt_device_modbus_aed892b501f8cbd372ccfda1a4fafa536}
 
-\begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_ac547788aa95d46c00ddb1342eb46ef93}{
+\hyperlink{classmdt_modbus_tcp_port_manager}{mdtModbusTcpPortManager} $\ast$ \hyperlink{classmdt_device_modbus_ac547788aa95d46c00ddb1342eb46ef93}{modbusTcpPortManager} ()}
+\label{classmdt_device_modbus_ac547788aa95d46c00ddb1342eb46ef93}
+
+\begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{connectToDevice} (const QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \&scanResult, int hardwareNodeId, int bitsCount, int startFrom=0)
+\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d8e6b3b14}{getRegisterValues} (int address, int n)
+\begin{DoxyCompactList}\small\item\em Helper method for register service. \end{DoxyCompactList}\item 
+const QList$<$ int $>$ \& \hyperlink{classmdt_device_modbus_a83cb2a28111653fbcbbe748f7a1a2e3d}{registerValues} () const 
+\begin{DoxyCompactList}\small\item\em Helper method for register service. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70cd9e}{readAnalogInput} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read one analog input on physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef6f92}{readAnalogInputs} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read all analog inputs on physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849e322}{readAnalogOutput} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read one analog output on physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b62b0b}{readAnalogOutputs} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read all analog outputs on physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_ac63297a31205759622f341525c34251f}{writeAnalogOutput} (int value, \hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Write value on a analog output to physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_a87af02c83cede03d6ee988c678e0fc00}{writeAnalogOutputs} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Write all analog outputs to physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c501f9}{readDigitalInput} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read one digital input on physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62b132}{readDigitalInputs} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read all digital inputs on physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_a13a334ac86135751893f37064d8f548d}{readDigitalOutput} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read one digital output on physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_a8915a036472bff0f356756992c1eae51}{readDigitalOutputs} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read all digital outputs on physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_a6950c10fc521b193fb3c754223879694}{writeDigitalOutput} (bool state, \hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Write state on a digital output to physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_aad3ce85a19307e3056b940da99fe512b}{writeDigitalOutputs} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Write all digital outputs to physical device. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745c285}{queriesSequence} ()
+\begin{DoxyCompactList}\small\item\em Sequence of queries to send periodically. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_device_modbus_a9ecbac63c29b229ab01f5fdb26008c95}{
+\hyperlink{classmdt_modbus_tcp_port_manager}{mdtModbusTcpPortManager} $\ast$ {\bfseries pvTcpPortManager}}
+\label{classmdt_device_modbus_a9ecbac63c29b229ab01f5fdb26008c95}
+
+\item 
+\hypertarget{classmdt_device_modbus_a2171d37ea720d546934f1c841e3c4d26}{
+\hyperlink{classmdt_frame_codec_modbus}{mdtFrameCodecModbus} $\ast$ {\bfseries pvCodec}}
+\label{classmdt_device_modbus_a2171d37ea720d546934f1c841e3c4d26}
+
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -51,7 +103,7 @@ References:
 \item \href{http://www.Modbus-IDA.org}{\tt http://www.Modbus-\/IDA.org} 
 \end{DoxyItemize}
 
-Definition at line 39 of file mdtDeviceModbus.h.
+Definition at line 41 of file mdtDeviceModbus.h.
 
 
 
@@ -67,14 +119,608 @@ Definition at line 39 of file mdtDeviceModbus.h.
 \label{classmdt_device_modbus_ac69cfbe26681342ba05672ab63de2a1f}
 
 
+connect(pvTcpPortManager, SIGNAL(errorStateChanged(int, const QString\&, const QString\&)), this, SLOT(setStateFromPortError(int, const QString\&, const QString\&)));
+
+connect(pvTcpPortManager, SIGNAL(statusMessageChanged(const QString\&, int)), this, SIGNAL(statusMessageChanged(const QString\&, int)));
+
 \begin{DoxyNote}{Note}
-Provisoire !!
+Provisoire !! pvTcpPortManager-\/$>$setPortName(\char`\"{}192.168.1.110:502\char`\"{}); pvTcpPortManager-\/$>$setPortName(\char`\"{}192.168.1.103:502\char`\"{}); connect(this, SIGNAL(\hyperlink{classmdt_device_aecd2d9d2cc3665f2084d0fd20eb3db2d}{stateChanged(int)}), this, SLOT(onStateChanged(int))); pvTcpPortManager-\/$>$openPort(); pvTcpPortManager-\/$>$\hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start()}; setStateReady(); 
 \end{DoxyNote}
-pvTcpPortManager-\/$>$setPortName(\char`\"{}192.168.1.103:502\char`\"{}); 
+
 
 
 
 Definition at line 30 of file mdtDeviceModbus.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!connectToDevice@{connectToDevice}}
+\index{connectToDevice@{connectToDevice}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceModbus::connectToDevice (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtPortInfo} $\ast$ $>$ \&}]{scanResult, }
+\item[{int}]{hardwareNodeId, }
+\item[{int}]{bitsCount, }
+\item[{int}]{startFrom = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}
+
+
+Search and connect to physical device. 
+
+Will try to connect to device listed in scanResult until hardwareNodeId is found.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scanResult} & List of \hyperlink{classmdt_port_info}{mdtPortInfo} containing a port name in format host:port. \\
+\hline
+{\em hardwareNodeId} & See \hyperlink{classmdt_modbus_tcp_port_manager_a4f52a477c264f809984e25abbc856db8}{mdtModbusTcpPortManager::getHardwareNodeAddress()}. \\
+\hline
+{\em bitsCount} & See \hyperlink{classmdt_modbus_tcp_port_manager_a4f52a477c264f809984e25abbc856db8}{mdtModbusTcpPortManager::getHardwareNodeAddress()}. \\
+\hline
+{\em startFrom} & See \hyperlink{classmdt_modbus_tcp_port_manager_a4f52a477c264f809984e25abbc856db8}{mdtModbusTcpPortManager::getHardwareNodeAddress()}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} (NoError on success). 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+scanResult must contain valid pointers. 
+
+Internal port manager not runnig and port must be closed before calling this method. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_wago_a12ad1f1ef34b16be5903d1d6232a7c6d}{mdtDeviceModbusWago}.
+
+
+
+Definition at line 74 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d8e6b3b14}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!getRegisterValues@{getRegisterValues}}
+\index{getRegisterValues@{getRegisterValues}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{getRegisterValues}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbus::getRegisterValues (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d8e6b3b14}
+
+
+Helper method for register service. 
+
+Usefull to get resgister values (f.ex. configurations regsisters, ...).
+
+Note: to get analog I/O values, the \hyperlink{classmdt_device}{mdtDevice} API should be used.
+
+\begin{DoxyReturn}{Returns}
+True on success. Values are the available with \hyperlink{classmdt_device_modbus_a83cb2a28111653fbcbbe748f7a1a2e3d}{registerValues()} 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+address and n must be $>$ 0 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{mdtModbusTcpPortManager::getRegisterValues()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 104 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745c285}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!queriesSequence@{queriesSequence}}
+\index{queriesSequence@{queriesSequence}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{queriesSequence}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbus::queriesSequence (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745c285}
+
+
+Sequence of queries to send periodically. 
+
+This method is called from \hyperlink{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}{runQueries()}.
+
+\begin{DoxyReturn}{Returns}
+true if all queries are sent successfully.
+\end{DoxyReturn}
+Subclass notes:\par
+
+\begin{DoxyItemize}
+\item This default implementation does nothing and allways returns false.
+\item This method can be reimplemented periodic queries must be sent to device. 
+\end{DoxyItemize}
+
+Reimplemented from \hyperlink{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}{mdtDevice}.
+
+
+
+Definition at line 322 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70cd9e}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogInput@{readAnalogInput}}
+\index{readAnalogInput@{readAnalogInput}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{readAnalogInput}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::readAnalogInput (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70cd9e}
+
+
+Read one analog input on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
+
+This method is called from getAnalogInput().
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details). 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_acecf7934ce29b3a957accb0f4c98c746}{mdtDevice}.
+
+
+
+Definition at line 334 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef6f92}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogInputs@{readAnalogInputs}}
+\index{readAnalogInputs@{readAnalogInputs}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{readAnalogInputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::readAnalogInputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef6f92}
+
+
+Read all analog inputs on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_device_a98cba3132db15317daf54eb701388e91}{getAnalogInputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_a40674e7bf0c367bb3edb407d73a5bd8e}{mdtDevice}.
+
+
+
+Definition at line 351 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849e322}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogOutput@{readAnalogOutput}}
+\index{readAnalogOutput@{readAnalogOutput}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{readAnalogOutput}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::readAnalogOutput (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849e322}
+
+
+Read one analog output on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_device_a163ee286d905feafe50b3e4351d4bf41}{getAnalogOutputValue()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_a7934063c3f41a742515f1232c9598c2a}{mdtDevice}.
+
+
+
+Definition at line 368 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b62b0b}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogOutputs@{readAnalogOutputs}}
+\index{readAnalogOutputs@{readAnalogOutputs}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{readAnalogOutputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::readAnalogOutputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b62b0b}
+
+
+Read all analog outputs on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_device_a163ee286d905feafe50b3e4351d4bf41}{getAnalogOutputValue()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_ab0232ac83c38bc93d3bc2aa91d94c291}{mdtDevice}.
+
+
+
+Definition at line 385 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c501f9}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalInput@{readDigitalInput}}
+\index{readDigitalInput@{readDigitalInput}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{readDigitalInput}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::readDigitalInput (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c501f9}
+
+
+Read one digital input on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital inputs, this method should be implemented.
+
+This method is called from getDigitalInputState().
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_af128b606050035abaf8d049bb2227015}{mdtDevice}.
+
+
+
+Definition at line 436 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62b132}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalInputs@{readDigitalInputs}}
+\index{readDigitalInputs@{readDigitalInputs}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{readDigitalInputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::readDigitalInputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62b132}
+
+
+Read all digital inputs on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_device_a6e338b959c86591b6b3401f925c49050}{getDigitalInputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_a150e3abae6db5bf1ad11017bf2b76c14}{mdtDevice}.
+
+
+
+Definition at line 454 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a13a334ac86135751893f37064d8f548d}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalOutput@{readDigitalOutput}}
+\index{readDigitalOutput@{readDigitalOutput}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{readDigitalOutput}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::readDigitalOutput (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_a13a334ac86135751893f37064d8f548d}
+
+
+Read one digital output on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
+
+This method is called from getDigitalOutputState().
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_a1faee6ab31b094731211ea0943544501}{mdtDevice}.
+
+
+
+Definition at line 471 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a8915a036472bff0f356756992c1eae51}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalOutputs@{readDigitalOutputs}}
+\index{readDigitalOutputs@{readDigitalOutputs}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{readDigitalOutputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::readDigitalOutputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_a8915a036472bff0f356756992c1eae51}
+
+
+Read all digital outputs on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_device_ab35b81b8eb68e161ac06ae882be39a25}{getDigitalOutputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_aac038c24c3b91757584bdf0d09fb8b02}{mdtDevice}.
+
+
+
+Definition at line 488 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a83cb2a28111653fbcbbe748f7a1a2e3d}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!registerValues@{registerValues}}
+\index{registerValues@{registerValues}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{registerValues}]{\setlength{\rightskip}{0pt plus 5cm}const QList$<$ int $>$ \& mdtDeviceModbus::registerValues (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_a83cb2a28111653fbcbbe748f7a1a2e3d}
+
+
+Helper method for register service. 
+
+Return result set by \hyperlink{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d8e6b3b14}{getRegisterValues()}. Note that values are keeped until next call of \hyperlink{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d8e6b3b14}{getRegisterValues()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_modbus_tcp_port_manager_a99a13b5250a8523aa63869991581e56a}{mdtModbusTcpPortManager::registerValues()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 109 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_ac63297a31205759622f341525c34251f}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!writeAnalogOutput@{writeAnalogOutput}}
+\index{writeAnalogOutput@{writeAnalogOutput}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{writeAnalogOutput}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::writeAnalogOutput (
+\begin{DoxyParamCaption}
+\item[{int}]{value, }
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_ac63297a31205759622f341525c34251f}
+
+
+Write value on a analog output to physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_device_a766d9adcf8c2274f61f120a4a5c5c6d9}{setAnalogOutputValue()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value encoded regarding device format. \\
+\hline
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_ae764634bba2b321ac2b4731c0353e45f}{mdtDevice}.
+
+
+
+Definition at line 402 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a87af02c83cede03d6ee988c678e0fc00}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!writeAnalogOutputs@{writeAnalogOutputs}}
+\index{writeAnalogOutputs@{writeAnalogOutputs}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{writeAnalogOutputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::writeAnalogOutputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_a87af02c83cede03d6ee988c678e0fc00}
+
+
+Write all analog outputs to physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_device_a57e1cee7e670469035c57e3bd2ff4c9d}{setAnalogOutputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_abc52b797df29945bf0a6358aab1b7245}{mdtDevice}.
+
+
+
+Definition at line 419 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a6950c10fc521b193fb3c754223879694}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!writeDigitalOutput@{writeDigitalOutput}}
+\index{writeDigitalOutput@{writeDigitalOutput}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{writeDigitalOutput}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::writeDigitalOutput (
+\begin{DoxyParamCaption}
+\item[{bool}]{state, }
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_a6950c10fc521b193fb3c754223879694}
+
+
+Write state on a digital output to physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
+
+This method is called from setDigitalOutputState().
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & State (ON/OFF). \\
+\hline
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}{mdtDevice}.
+
+
+
+Definition at line 505 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_aad3ce85a19307e3056b940da99fe512b}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!writeDigitalOutputs@{writeDigitalOutputs}}
+\index{writeDigitalOutputs@{writeDigitalOutputs}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{writeDigitalOutputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::writeDigitalOutputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_aad3ce85a19307e3056b940da99fe512b}
+
+
+Write all digital outputs to physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_device_a7b86a816e55a91f0d62426e1741437c6}{setDigitalOutputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_device_aa9e8ae7b4ff2455b4105d280d8523fc1}{mdtDevice}.
+
+
+
+Definition at line 522 of file mdtDeviceModbus.cpp.
 
 
 

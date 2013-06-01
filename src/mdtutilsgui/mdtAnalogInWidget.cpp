@@ -32,7 +32,6 @@ mdtAnalogInWidget::mdtAnalogInWidget(QWidget *parent)
 {
   QGridLayout *l = new QGridLayout;
 
-  pvIo = 0;
   // Setup GUI
   l->addWidget(lbLabel, 0, 0, 1, 2);
   thValue = new QwtThermo;
@@ -54,13 +53,12 @@ void mdtAnalogInWidget::setIo(mdtAnalogIo *io)
 {
   Q_ASSERT(io != 0);
 
-  pvIo = io;
   // Base Signals/slots connections
   mdtAbstractIoWidget::setIo(io);
   // Signals/slots from io to widget
   connect(io, SIGNAL(unitChangedForUi(const QString&)), this, SLOT(setUnit(const QString&)));
   connect(io, SIGNAL(rangeChangedForUi(double, double)), this, SLOT(setRange(double, double)));
-  connect(io, SIGNAL(valueChangedForUi(double)), this, SLOT(setValue(double)));
+  connect(io, SIGNAL(valueChangedForUi(const mdtValue&)), this, SLOT(setValue(const mdtValue&)));
   connect(io, SIGNAL(enabledStateChangedForUi(bool)), this, SLOT(setEnabled(bool)));
   // Set initial data
   setUnit(io->unit());
@@ -81,19 +79,23 @@ void mdtAnalogInWidget::setRange(double min, double max)
   thValue->setRange(min, max);
 }
 
-void mdtAnalogInWidget::setValue(double value)
+void mdtAnalogInWidget::setValue(const mdtValue &value)
 {
-  Q_ASSERT(pvIo != 0);
-
   QString sValue;
 
-  sValue.setNum(value, 'g', 4);
-  ///sValue = sValue.left(6);
-
-  thValue->setValue(value);
-  if(pvIo->hasValidData()){
-    lbValue->setText(sValue);
+  if(value.isValid()){
+    Q_ASSERT(value.hasValueDouble());
+    thValue->setValue(value.valueDouble());
+    if(value.isMinusOl()){
+      lbValue->setText("-OL");
+    }else if(value.isPlusOl()){
+      lbValue->setText("+OL");
+    }else{
+      sValue.setNum(value.valueDouble(), 'g', 4);
+      lbValue->setText(sValue);
+    }
   }else{
+    thValue->setValue(thValue->minValue());
     lbValue->setText("??");
   }
 }

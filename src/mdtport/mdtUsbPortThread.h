@@ -49,6 +49,10 @@ class mdtUsbPortThread : public mdtPortThread
    */
   bool isWriter() const;
 
+  /*! \brief Retunrs true
+   */
+  bool handlesTimeout() const;
+
  signals:
 
   /*! \brief Emited when a new control response was readen

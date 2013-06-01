@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -50,7 +50,7 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   QString unit() const;
 
-  /*! \brief Specify the range of values and bits decodes parameters
+  /*! \brief Specify the range of values and bits decode parameters
    *
    * Store the new range and set the value to the minimum.
    *  The valueChanged() signal is emitted.
@@ -120,10 +120,6 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   double maximum() const;
 
-  /*! \brief Get value (set with setValue() )
-   */
-  double value() const;
-
   /*! \brief Set the integer value
    *
    * Will calculate the real value depending on resolution and update display.
@@ -138,65 +134,17 @@ class mdtAnalogIo : public mdtAbstractIo
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited
    */
-  void setValueInt(int value, bool isValid, bool emitValueChanged = true);
-
-  /*! \brief Get the integer value
-   *
-   * The integer value depend on value and resolution.
-   *  The resolution is set with setRange() (steps parameter)
-   */
-  int valueInt() const;
-
-  /*! \brief Set the value to update display
-   *
-   * Store the value and emit valueChanged() if
-   *  new value is different from current.
-   *
-   * \param value The value to store.
-   *               If value is of type int, conversion is done. (see setEncodeBitSettings() ).
-   *               If value is invalid, the validity flag is updated.
-   *               See setValue(double, bool, bool) for details.
-   * \param emitValueChanged If true, valueChanged(int, int) and valueChanged(double) will be emitted.
-   *
-   * Note for UI developpers:
-   *  - The signal valueChangedForUi() is emited
-   */
-  void setValue(QVariant value, bool emitValueChanged = true);
+  void setValueInt(int value, bool isValid, bool emitValueChanged);
 
  public slots:
 
   /*! \brief Set the value to update display
    *
-   * Store the value and emit valueChanged() if
-   *  new value is different from current.
-   *
-   * \param value The value to store
-   * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
-   * \param emitValueChanged If true, valueChanged(int, int) and valueChanged(double) will be emitted.
-   *
-   * Note for UI developpers:
-   *  - The signal valueChangedForUi() is emited
+   * \sa mdtAbstractIo::setValue(const mdtValue&, bool)
    */
-  void setValue(double value, bool isValid, bool emitValueChanged = true);
-
-  /*! \brief Set the value to update display
-   *
-   * Overloaded method that calls setValue(double, bool)
-   *  with isValid = true.
-   */
-  void setValue(double value);
+  void setValue(const mdtValue &value, bool emitValueChanged = false);
 
  signals:
-
-  /*! \brief This signal is emitted whenever the value is changed
-   */
-  void valueChanged(double newValue);
-
-  /*! \brief This signal is emitted whenever the value is changed
-   *
-   * This signal is used by mdtDeviceIos to notify mdtDevice.
-   */
-  void valueChanged(int address);
 
   /*
    * These signals are emited every time
@@ -205,7 +153,6 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   void unitChangedForUi(const QString &unit);
   void rangeChangedForUi(double min, double max);
-  void valueChangedForUi(double newValue);
 
  private slots:
 
@@ -215,15 +162,31 @@ class mdtAnalogIo : public mdtAbstractIo
 
  private:
 
+  /*! \brief Store double part, calculate integer part and store it
+   *
+   * If given value is different than stored one:
+   *  - Conversion and storage are done
+   *  - valueChangedForUi() is emitted
+   *  - If emitValueChanged is true, valueChanged() is emitted
+   */
+  void setValueFromDouble(const mdtValue &value, bool emitValueChanged);
+
+  /*! \brief Store integer part, calculate double part and store it
+   *
+   * If given value is different than stored one:
+   *  - Conversion and storage are done
+   *  - valueChangedForUi() is emitted
+   *  - If emitValueChanged is true, valueChanged() is emitted
+   */
+  void setValueFromInt(const mdtValue &value, bool emitValueChanged);
+
   Q_DISABLE_COPY(mdtAnalogIo);
 
   QString pvUnit;
-  double pvValue;
   double pvMinimum;
   double pvMaximum;
   double pvStep;
   double pvStepInverse;
-  bool pvUpdatingUi;
   // Members used for integer <-> float value conversion
   int pvIntValueLsbIndex;     // Index of least significant bit, used in setValueInt()
   int pvIntValueLsbIndexEnc;  // Index of least significant bit, used in valueInt()

@@ -13,8 +13,7 @@ Mini port treminal.
 
 
 
-Collaboration diagram for mdtPortTerm:
-\nopagebreak
+Collaboration diagram for mdtPortTerm:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -24,18 +23,16 @@ Collaboration diagram for mdtPortTerm:
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_port_term_a2372dc6e8f2926f2201b659ddbe3ec8e}{
-void \hyperlink{classmdt_port_term_a2372dc6e8f2926f2201b659ddbe3ec8e}{appendReadenData} (QByteArray data)}
-\label{classmdt_port_term_a2372dc6e8f2926f2201b659ddbe3ec8e}
+\hypertarget{classmdt_port_term_a2c8de2e82437fc94420ccb542cc42bf2}{
+void \hyperlink{classmdt_port_term_a2c8de2e82437fc94420ccb542cc42bf2}{appendReadenData} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)}
+\label{classmdt_port_term_a2c8de2e82437fc94420ccb542cc42bf2}
 
 \begin{DoxyCompactList}\small\item\em Append incomming data to terminal. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_term_a70ab65c029f82063a79734bb91e1fd32}{
-void \hyperlink{classmdt_port_term_a70ab65c029f82063a79734bb91e1fd32}{appendReadenData} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} transaction)}
-\label{classmdt_port_term_a70ab65c029f82063a79734bb91e1fd32}
+\hypertarget{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{
+void \hyperlink{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{sendCmd} ()}
+\label{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}
 
-\begin{DoxyCompactList}\small\item\em Append incomming data to terminal. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{sendCmd} ()
-\begin{DoxyCompactList}\small\item\em Send command to port. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Send command to current port. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_term_a1b232e686b401d7103eb1c682be330a9}{
 void \hyperlink{classmdt_port_term_a1b232e686b401d7103eb1c682be330a9}{on\_\-pbSendCmdAbort\_\-clicked} ()}
 \label{classmdt_port_term_a1b232e686b401d7103eb1c682be330a9}
@@ -51,14 +48,11 @@ void \hyperlink{classmdt_port_term_a542e20f789bcdc5f2ddf2b6e698ceea2}{retranslat
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_port_term_a5e93890f53b5112be80983779a3ab233}{
-{\bfseries mdtPortTerm} (QWidget $\ast$parent=0)}
-\label{classmdt_port_term_a5e93890f53b5112be80983779a3ab233}
-
+\hyperlink{classmdt_port_term_a5e93890f53b5112be80983779a3ab233}{mdtPortTerm} (QWidget $\ast$parent=0)
 \item 
-\hypertarget{classmdt_port_term_a9e2987c96c85189ce118aab7af77fb71}{
-void \hyperlink{classmdt_port_term_a9e2987c96c85189ce118aab7af77fb71}{setAvailableTranslations} (QMap$<$ QString, QString $>$ \&avaliableTranslations, const QString \&currentTranslationKey)}
-\label{classmdt_port_term_a9e2987c96c85189ce118aab7af77fb71}
+\hypertarget{classmdt_port_term_af6f97444089eb87ec5db557a2ccb24db}{
+void \hyperlink{classmdt_port_term_af6f97444089eb87ec5db557a2ccb24db}{setAvailableTranslations} (const QMap$<$ QString, QString $>$ \&avaliableTranslations, const QString \&currentTranslationKey)}
+\label{classmdt_port_term_af6f97444089eb87ec5db557a2ccb24db}
 
 \begin{DoxyCompactList}\small\item\em Build the translations menu. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -66,7 +60,27 @@ void \hyperlink{classmdt_port_term_a9e2987c96c85189ce118aab7af77fb71}{setAvailab
 \subsection{Detailed Description}
 Mini port treminal. 
 
-Definition at line 46 of file mdtPortTerm.h.
+Definition at line 44 of file mdtPortTerm.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_port_term_a5e93890f53b5112be80983779a3ab233}{
+\index{mdtPortTerm@{mdtPortTerm}!mdtPortTerm@{mdtPortTerm}}
+\index{mdtPortTerm@{mdtPortTerm}!mdtPortTerm@{mdtPortTerm}}
+\subsubsection[{mdtPortTerm}]{\setlength{\rightskip}{0pt plus 5cm}mdtPortTerm::mdtPortTerm (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_term_a5e93890f53b5112be80983779a3ab233}
+
+
+action\_\-SerialPort-\/$>$setChecked(true); attachToSerialPort(); 
+
+
+
+Definition at line 36 of file mdtPortTerm.cpp.
 
 
 
@@ -86,30 +100,7 @@ Retranslate.
 
 This slot is called by \hyperlink{classmdt_application}{mdtApplication} when language has changed 
 
-Definition at line 167 of file mdtPortTerm.cpp.
-
-\hypertarget{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{
-\index{mdtPortTerm@{mdtPortTerm}!sendCmd@{sendCmd}}
-\index{sendCmd@{sendCmd}!mdtPortTerm@{mdtPortTerm}}
-\subsubsection[{sendCmd}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTerm::sendCmd (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}
-
-
-Send command to port. 
-
-
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000056}{Todo}]Error handling ! \end{Desc}
-
-
-
-
-Definition at line 109 of file mdtPortTerm.cpp.
+Definition at line 148 of file mdtPortTerm.cpp.
 
 
 

@@ -66,7 +66,6 @@ void mdtPortManagerTest::transactionIdTest()
   QCOMPARE(t.type(), 0);
   QVERIFY(t.analogIo() == 0);
   QVERIFY(t.digitalIo() == 0);
-  QCOMPARE(t.forMultipleIos(), false);
   QCOMPARE(t.isInput(), false);
   QCOMPARE(t.isOutput(), false);
   QVERIFY(t.data().isEmpty());
@@ -100,15 +99,16 @@ void mdtPortManagerTest::transactionIdTest()
   QCOMPARE(t.type(), 0);
   QVERIFY(t.analogIo() == 0);
   QVERIFY(t.digitalIo() == 0);
-  QCOMPARE(t.forMultipleIos(), false);
+  QCOMPARE(t.ioCount(), 0);
   QCOMPARE(t.isInput(), false);
   QCOMPARE(t.isOutput(), false);
   QVERIFY(t.data().isEmpty());
   QVERIFY(!t.isQueryReplyMode());
 
-  // Copy test
+  // Copy test AIO
   // Note: I/O pointers reference the same objects, this is wat we need.
   t.setIo(ai1, true);
+  QCOMPARE(t.ioCount(), 1);
   t.setId(1);
   t.setData("t");
   QVERIFY(t.analogIo() == ai1);
@@ -125,6 +125,27 @@ void mdtPortManagerTest::transactionIdTest()
   QVERIFY(t2.analogIo() == ai1);
   QCOMPARE(t2.id(), 1);
   QCOMPARE(t2.data(), QByteArray("t"));
+  // Copy test DIO
+  // Note: I/O pointers reference the same objects, this is wat we need.
+  t.setIo(di1, true);
+  QCOMPARE(t.ioCount(), 1);
+  t.setId(11);
+  t.setData("tt");
+  QVERIFY(t.digitalIo() == di1);
+  QCOMPARE(t.id(), 11);
+  QCOMPARE(t.data(), QByteArray("tt"));
+  t2 = t;
+  QVERIFY(t2.digitalIo() == di1);
+  QCOMPARE(t2.id(), 11);
+  QCOMPARE(t2.data(), QByteArray("tt"));
+  t.clear();
+  QCOMPARE(t.id(), 0);
+  QVERIFY(t.digitalIo() == 0);
+  QVERIFY(t.data().isEmpty());
+  QVERIFY(t2.digitalIo() == di1);
+  QCOMPARE(t2.id(), 11);
+  QCOMPARE(t2.ioCount(), 1);
+  QCOMPARE(t2.data(), QByteArray("tt"));
 
   // Cleanup
   delete ai1;
@@ -155,7 +176,7 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.readThread() == 0);
   QVERIFY(m.writeThread() == 0);
   m.setPort(port);
-  m.setTransactionsDisabled(true);
+  m.setKeepTransactionsDone(true);
   thread = new mdtPortWriteThread;
   m.addThread(thread);
   QVERIFY(m.writeThread() == thread);
@@ -170,10 +191,10 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.isRunning());
 
   // Check the wait function without available data
-  QVERIFY(!m.waitReadenFrame());
+  QVERIFY(!m.waitOneTransactionDone());
 
   // Send some data
-  QVERIFY(m.writeData("ABCD\nEFGH\n") == 0);
+  QCOMPARE(m.writeData("ABCD\nEFGH\n"), 1);
 
   // We must re-open the file, else nothing will be readen
   QTest::qWait(100);
@@ -181,12 +202,12 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.openPort());
   QVERIFY(m.start());
   // Get readen data
-  QVERIFY(m.waitReadenFrame());
+  QVERIFY(m.waitOneTransactionDone());
   // Try to get a frame by ID (will not work, but must not crash"
-  m.readenFrame(0);
+  ///m.readenFrame(0);
   // Check readen data
   frames = m.readenFrames();
-  QVERIFY(frames.size() == 2);
+  QCOMPARE(frames.size(), 2);
   QCOMPARE(frames.at(0), QByteArray("ABCD"));
   QCOMPARE(frames.at(1), QByteArray("EFGH"));
 
@@ -298,7 +319,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(m.waitOnWriteReady(1000));
   bTag = m.sendReadRequest(true);
   QVERIFY(bTag > 0);
-  QVERIFY(m.waitOnFrame(bTag, 20000));
+  QVERIFY(m.waitTransactionDone(bTag));
   frames = m.readenFrames();
   QVERIFY(frames.size() > 0);
 
@@ -444,26 +465,36 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QVERIFY(transaction != 0);
   transaction->setQueryReplyMode(true);
   ///tId1 = m.writeData(pdu, true);
-  tId1 = m.writeData(pdu, transaction);
+  ///tId1 = m.writeData(pdu, transaction);
+  transaction->setData(pdu);
+  tId1 = m.writeData(transaction);
   QVERIFY(tId1 >= 0);
   // Transaction 2
   transaction = m.getNewTransaction();
   QVERIFY(transaction != 0);
   transaction->setQueryReplyMode(true);
   ///tId2 = m.writeData(pdu, true);
-  tId2 = m.writeData(pdu, transaction);
+  ///tId2 = m.writeData(pdu, transaction);
+  transaction->setData(pdu);
+  tId2 = m.writeData(transaction);
   QVERIFY(tId2 >= 0);
   // Transaction 3
   transaction = m.getNewTransaction();
   QVERIFY(transaction != 0);
   transaction->setQueryReplyMode(true);
   ///tId3 = m.writeData(pdu, true);
-  tId3 = m.writeData(pdu, transaction);
+  ///tId3 = m.writeData(pdu, transaction);
+  transaction->setData(pdu);
+  tId3 = m.writeData(transaction);
   QVERIFY(tId3 >= 0);
-  QVERIFY(m.waitOnFrame(tId1));
+  qDebug() << "TEST, tId1: " << tId1 << " , tId2: " << tId2 << " , tId3: " << tId3;
+  ///QVERIFY(m.waitOnFrame(tId1));
+  QVERIFY(m.waitTransactionDone(tId1));
   QVERIFY(!m.readenFrame(tId1).isEmpty());
-  QVERIFY(m.waitOnFrame(tId2));
-  QVERIFY(m.waitOnFrame(tId3));
+  ///QVERIFY(m.waitOnFrame(tId2));
+  QVERIFY(m.waitTransactionDone(tId2));
+  ///QVERIFY(m.waitOnFrame(tId3));
+  QVERIFY(m.waitTransactionDone(tId3));
   QCOMPARE(m.readenFrames().size(), 2);
 
   // If query/reply mode is diseabled, waitOnFrame() will timeout
@@ -472,8 +503,11 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QVERIFY(transaction != 0);
   transaction->setQueryReplyMode(false);
   ///tId1 = m.writeData(pdu, false);
-  tId1 = m.writeData(pdu, transaction);
-  QVERIFY(!m.waitOnFrame(tId1));
+  ///tId1 = m.writeData(pdu, transaction);
+  transaction->setData(pdu);
+  tId1 = m.writeData(transaction);
+  ///QVERIFY(!m.waitOnFrame(tId1));
+  QVERIFY(!m.waitTransactionDone(tId1));
 
   // All frames must be consumed
   QCOMPARE(m.readenFrames().size(), 0);
@@ -484,9 +518,12 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QVERIFY(transaction != 0);
   transaction->setQueryReplyMode(true);
   ///tId1 = m.writeData(pdu, true);
-  tId1 = m.writeData(pdu, transaction);
+  ///tId1 = m.writeData(pdu, transaction);
+  transaction->setData(pdu);
+  tId1 = m.writeData(transaction);
   QVERIFY(tId1 >= 0);
-  QVERIFY(m.waitOnFrame(tId1));
+  ///QVERIFY(m.waitOnFrame(tId1));
+  QVERIFY(m.waitTransactionDone(tId1));
   QVERIFY(!m.readenFrame(tId1).isEmpty());
   // Some devices not implement this FC, so we cannot check it..
 

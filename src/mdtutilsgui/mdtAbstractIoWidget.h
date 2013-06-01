@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -71,7 +71,7 @@ class mdtAbstractIoWidget : public QWidget
   void showIoInformations();
 
   // Used to update GUI from mdtAbstractIo object.
-  void setAddress(int address);
+  void setAddress(int addressRead, int addressWrite);
   void setLabelShort(const QString & text);
   void setLabel(const QString & text);
   void setDetails(const QString & text);
@@ -80,7 +80,8 @@ class mdtAbstractIoWidget : public QWidget
 
   Q_DISABLE_COPY(mdtAbstractIoWidget);
 
-  int pvAddress;
+  int pvAddressRead;
+  int pvAddressWrite;
   QMessageBox *pvMessageBox;
 };
 

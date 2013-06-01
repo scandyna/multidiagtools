@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -41,7 +41,7 @@ mdtUsbPortManager::mdtUsbPortManager(QObject *parent)
   setPort(port);
   ///pvReadUntilShortPacketReceivedFinished = false;
 
-  // Threads setup is done in openPort()
+  // Threads setup is done in start()
 }
 
 mdtUsbPortManager::~mdtUsbPortManager()
@@ -175,6 +175,7 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
   return portInfoList;
 }
 
+/**
 bool mdtUsbPortManager::openPort()
 {
   mdtUsbPortThread *portThread;
@@ -189,6 +190,22 @@ bool mdtUsbPortManager::openPort()
 
   return mdtPortManager::openPort();
 }
+*/
+
+bool mdtUsbPortManager::start()
+{
+  mdtUsbPortThread *portThread;
+
+  if(pvThreads.size() < 1){
+    portThread = new mdtUsbPortThread;
+    connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
+    ///connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
+    ///connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(fromThreadReadUntilShortPacketReceivedFinished()));
+    addThread(portThread);
+  }
+
+  return mdtPortManager::start();
+}
 
 void mdtUsbPortManager::readUntilShortPacketReceived()
 {
@@ -202,9 +219,9 @@ void mdtUsbPortManager::readUntilShortPacketReceived()
 
   pvReadUntilShortPacketReceivedFinished = false;
   // Send request
-  port->lockMutex();
+  lockPortMutex();
   port->requestReadUntilShortPacketReceived();
-  port->unlockMutex();
+  unlockPortMutex();
   while(!pvReadUntilShortPacketReceivedFinished){
     msleep(50);
     Q_ASSERT(pvPort != 0);
@@ -223,9 +240,9 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
   port = dynamic_cast<mdtUsbPort*>(pvPort);
   Q_ASSERT(port != 0);
   // Get a frame in pool
-  port->lockMutex();
+  lockPortMutex();
   if(port->controlFramesPool().size() < 1){
-    port->unlockMutex();
+    unlockPortMutex();
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in control frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPortManager");
     e.commit();
@@ -244,11 +261,12 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
   frame->setwLength(request.wLength());
   frame->encode();
   port->addControlRequest(frame, setwIndexAsbInterfaceNumber);
-  port->unlockMutex();
+  unlockPortMutex();
 
   return 0;
 }
 
+/// \todo Adapt using internal timeouts + errors system
 bool mdtUsbPortManager::waitReadenControlResponse(int timeout)
 {
   int maxIter;
@@ -261,9 +279,11 @@ bool mdtUsbPortManager::waitReadenControlResponse(int timeout)
   maxIter = timeout / 50;
 
   while(pvReadenControlResponses.size() < 1){
+    /**
     if(readWaitCanceled()){
       return false;
     }
+    */
     if(maxIter <= 0){
       return false;
     }
@@ -285,8 +305,6 @@ QList<mdtFrameUsbControl> mdtUsbPortManager::readenControlResponses()
 
   return frames;
 }
-
-  QQueue<mdtFrameUsbControl> pvReadenControlResponses;  // Copy of received control responses
 
 void mdtUsbPortManager::flushIn(bool flushPortManagerBuffers, bool flushPortBuffers)
 {
@@ -319,7 +337,7 @@ void mdtUsbPortManager::fromThreadControlResponseReaden()
   Q_ASSERT(port != 0);
 
   // Get frames in readen queue
-  port->lockMutex();
+  unlockPortMutex();
   while(port->controlResponseFrames().size() > 0){
     frame = port->controlResponseFrames().dequeue();
     Q_ASSERT(frame != 0);
@@ -329,7 +347,7 @@ void mdtUsbPortManager::fromThreadControlResponseReaden()
     // Restore frame back into pool
     port->controlFramesPool().enqueue(frame);
   };
-  pvPort->unlockMutex();
+  unlockPortMutex();
   // Watch queue size
   qDebug() << " *= mdtUsbPortManager::fromThreadControlResponseReaden(): queue size: " << pvReadenControlResponses.size();
   if(pvReadenControlResponses.size() > 20){
@@ -347,5 +365,25 @@ void mdtUsbPortManager::fromThreadMessageInReaden()
 
 void mdtUsbPortManager::fromThreadReadUntilShortPacketReceivedFinished()
 {
+  qDebug() << " ** mdtUsbPortManager::fromThreadReadUntilShortPacketReceivedFinished()";
   pvReadUntilShortPacketReceivedFinished = true;
+}
+
+void mdtUsbPortManager::onThreadsErrorOccured(int error)
+{
+  qDebug() << "mdtUsbPortManager::onThreadsErrorOccured(): " << (mdtAbstractPort::error_t)error;
+  
+  switch(error){
+    case mdtAbstractPort::ControlCanceled:
+      emit(handledError());
+      break;
+    case mdtAbstractPort::ControlTimeout:
+      emit(busy());
+      break;
+    case mdtAbstractPort::UnhandledError:
+      emit(unhandledError());
+      break;
+    default:
+      mdtPortManager::onThreadsErrorOccured(error);
+  }
 }

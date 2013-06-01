@@ -97,11 +97,11 @@ class mdtDeviceModbus : public mdtDevice
    *
    * \pre I/O's container must be set with setIos()
    */
-  void decodeReadenFrame(mdtPortTransaction transaction);
+  void decodeReadenFrame(mdtPortTransaction *transaction);
 
   /*! \brief Update (G)UI when device's state has changed
    */
-  void onStateChanged(int state);
+  ///void onStateChanged(int state);
 
  protected:
 

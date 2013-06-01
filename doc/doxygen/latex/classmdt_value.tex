@@ -1,0 +1,383 @@
+\hypertarget{classmdt_value}{
+\section{mdtValue Class Reference}
+\label{classmdt_value}\index{mdtValue@{mdtValue}}
+}
+
+
+Conatins a value with some attributes.  
+
+
+
+
+{\ttfamily \#include $<$mdtValue.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_value_a5eaad5ce886d11b6b3484525a8fa7f41}{
+\hyperlink{classmdt_value_a5eaad5ce886d11b6b3484525a8fa7f41}{mdtValue} ()}
+\label{classmdt_value_a5eaad5ce886d11b6b3484525a8fa7f41}
+
+\begin{DoxyCompactList}\small\item\em Construct a invalid value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value_a3aafb3f186d3132a6bd3bf5f9238b04b}{mdtValue} (double value, bool isMinusOl=false, bool isPlusOl=false)
+\begin{DoxyCompactList}\small\item\em Construct a valid value with double format. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value_a023f1f91105ae7ea1040618c5a600b36}{mdtValue} (int value, bool isMinusOl=false, bool isPlusOl=false)
+\begin{DoxyCompactList}\small\item\em Construct a valid value with int format. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value_a0d6a8c5abbb4192f6dbcecc698c53b65}{mdtValue} (bool value)
+\begin{DoxyCompactList}\small\item\em Construct a valid value with bool format. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_a8c4461857e4715e49b2050479d63bfb8}{
+void \hyperlink{classmdt_value_a8c4461857e4715e49b2050479d63bfb8}{clear} ()}
+\label{classmdt_value_a8c4461857e4715e49b2050479d63bfb8}
+
+\begin{DoxyCompactList}\small\item\em Clear values (set default values) and unset validity flag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_value_a51d075b0cc64ff5481533bcfc8d3a7f4}{setDefaultValue} (double value)
+\begin{DoxyCompactList}\small\item\em Set default value for double format. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_value_aad4a2fb80d76fc2924ea1a72ce529167}{setDefaultValue} (int value)
+\begin{DoxyCompactList}\small\item\em Set default value for int format. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_value_a82ecd7744702a5e152404c1b05b1a69d}{setDefaultValue} (bool value)
+\begin{DoxyCompactList}\small\item\em Set default value for bool format. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_value_aa4573c55ea1cc6c55547b09db8c9d521}{setValue} (double value, bool isMinusOl=false, bool isPlusOl=false)
+\begin{DoxyCompactList}\small\item\em Set value with double format. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_a83d56329f2fd051f3cc32fd32f758e24}{
+bool \hyperlink{classmdt_value_a83d56329f2fd051f3cc32fd32f758e24}{hasValueDouble} () const }
+\label{classmdt_value_a83d56329f2fd051f3cc32fd32f758e24}
+
+\begin{DoxyCompactList}\small\item\em Check if value as double format is available. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_aceae9e2ab20910c47272d523735b16e0}{
+double \hyperlink{classmdt_value_aceae9e2ab20910c47272d523735b16e0}{valueDouble} () const }
+\label{classmdt_value_aceae9e2ab20910c47272d523735b16e0}
+
+\begin{DoxyCompactList}\small\item\em Get the value stored in double format. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_value_ae4a84a502223cfd47538474dee897ad0}{setValue} (int value, bool isMinusOl=false, bool isPlusOl=false)
+\begin{DoxyCompactList}\small\item\em Set value with int format. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_a4aeeb92ec5b1f0a625cbd2d944ae761b}{
+bool \hyperlink{classmdt_value_a4aeeb92ec5b1f0a625cbd2d944ae761b}{hasValueInt} () const }
+\label{classmdt_value_a4aeeb92ec5b1f0a625cbd2d944ae761b}
+
+\begin{DoxyCompactList}\small\item\em Check if value as int format is available. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_a421b294b1540ce7c47aada2ea66201a1}{
+int \hyperlink{classmdt_value_a421b294b1540ce7c47aada2ea66201a1}{valueInt} () const }
+\label{classmdt_value_a421b294b1540ce7c47aada2ea66201a1}
+
+\begin{DoxyCompactList}\small\item\em Get the value stored in int format. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_a4de0d0c8a02cdd4c02adace4108db326}{
+bool \hyperlink{classmdt_value_a4de0d0c8a02cdd4c02adace4108db326}{isMinusOl} () const }
+\label{classmdt_value_a4de0d0c8a02cdd4c02adace4108db326}
+
+\begin{DoxyCompactList}\small\item\em Check if value is -\/OL. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_a033ad1d20812dddf38530a5f190033da}{
+bool \hyperlink{classmdt_value_a033ad1d20812dddf38530a5f190033da}{isPlusOl} () const }
+\label{classmdt_value_a033ad1d20812dddf38530a5f190033da}
+
+\begin{DoxyCompactList}\small\item\em Check if value is +OL. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_value_ab526b9b9d04b641394b1679336b59c32}{setValue} (bool value)
+\begin{DoxyCompactList}\small\item\em Set value with bool format. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_a8ec9abcaa40b5ec891ff740913f1aca8}{
+bool \hyperlink{classmdt_value_a8ec9abcaa40b5ec891ff740913f1aca8}{hasValueBool} () const }
+\label{classmdt_value_a8ec9abcaa40b5ec891ff740913f1aca8}
+
+\begin{DoxyCompactList}\small\item\em Check if value as bool format is available. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_acd0d628fdee31ce640f1bc76f3833173}{
+bool \hyperlink{classmdt_value_acd0d628fdee31ce640f1bc76f3833173}{valueBool} () const }
+\label{classmdt_value_acd0d628fdee31ce640f1bc76f3833173}
+
+\begin{DoxyCompactList}\small\item\em Get the value stored in bool format. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_value_a472996d8c32ce70e9332509151d6aed1}{isValid} () const 
+\begin{DoxyCompactList}\small\item\em Get the validity flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_value_acbb1e7472e9b6e105ba5ffe03476f4d4}{operator==} (const \hyperlink{classmdt_value}{mdtValue} \&other) const 
+\begin{DoxyCompactList}\small\item\em Comparaison operator. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_value_a9d01fff18ab97a5f25d5f82655d42810}{
+bool \hyperlink{classmdt_value_a9d01fff18ab97a5f25d5f82655d42810}{operator!=} (const \hyperlink{classmdt_value}{mdtValue} \&other) const }
+\label{classmdt_value_a9d01fff18ab97a5f25d5f82655d42810}
+
+\begin{DoxyCompactList}\small\item\em Comparaison operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Conatins a value with some attributes. 
+
+Most of cases, using standard C++ types are sufficent. If a value must be stored in different way, Qt offers QVariant, witch can convert values between different types, has a validity flag and more.
+
+When dealing with instruments, some other data are needed, for example:
+\begin{DoxyItemize}
+\item +OL, -\/OL
+\item For case of invalid data: is a convertion error occured, a communication error or something else ?
+\item Storing data in many format, typical: double and/or int (see \hyperlink{classmdt_analog_io}{mdtAnalogIo} for details)
+\end{DoxyItemize}
+
+Note that this class does no convertion, but is a simple container.
+
+Note about -\/OL/+OL flags: the last setter ( \hyperlink{classmdt_value_aa4573c55ea1cc6c55547b09db8c9d521}{setValue(double, bool, bool)} or \hyperlink{classmdt_value_ae4a84a502223cfd47538474dee897ad0}{setValue(int, bool, bool)} ) will overwrite this flags. The \hyperlink{classmdt_value_ab526b9b9d04b641394b1679336b59c32}{setValue(bool)} does not affect this flags. 
+
+Definition at line 44 of file mdtValue.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_value_a3aafb3f186d3132a6bd3bf5f9238b04b}{
+\index{mdtValue@{mdtValue}!mdtValue@{mdtValue}}
+\index{mdtValue@{mdtValue}!mdtValue@{mdtValue}}
+\subsubsection[{mdtValue}]{\setlength{\rightskip}{0pt plus 5cm}mdtValue::mdtValue (
+\begin{DoxyParamCaption}
+\item[{double}]{value, }
+\item[{bool}]{isMinusOl = {\ttfamily false}, }
+\item[{bool}]{isPlusOl = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_value_a3aafb3f186d3132a6bd3bf5f9238b04b}
+
+
+Construct a valid value with double format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to store \\
+\hline
+{\em isMinusOl} & -\/OL flag \\
+\hline
+{\em isPlusOl} & +OL flag \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 33 of file mdtValue.cpp.
+
+\hypertarget{classmdt_value_a023f1f91105ae7ea1040618c5a600b36}{
+\index{mdtValue@{mdtValue}!mdtValue@{mdtValue}}
+\index{mdtValue@{mdtValue}!mdtValue@{mdtValue}}
+\subsubsection[{mdtValue}]{\setlength{\rightskip}{0pt plus 5cm}mdtValue::mdtValue (
+\begin{DoxyParamCaption}
+\item[{int}]{value, }
+\item[{bool}]{isMinusOl = {\ttfamily false}, }
+\item[{bool}]{isPlusOl = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_value_a023f1f91105ae7ea1040618c5a600b36}
+
+
+Construct a valid value with int format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to store \\
+\hline
+{\em isMinusOl} & -\/OL flag \\
+\hline
+{\em isPlusOl} & +OL flag \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 42 of file mdtValue.cpp.
+
+\hypertarget{classmdt_value_a0d6a8c5abbb4192f6dbcecc698c53b65}{
+\index{mdtValue@{mdtValue}!mdtValue@{mdtValue}}
+\index{mdtValue@{mdtValue}!mdtValue@{mdtValue}}
+\subsubsection[{mdtValue}]{\setlength{\rightskip}{0pt plus 5cm}mdtValue::mdtValue (
+\begin{DoxyParamCaption}
+\item[{bool}]{value}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_value_a0d6a8c5abbb4192f6dbcecc698c53b65}
+
+
+Construct a valid value with bool format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to store \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 51 of file mdtValue.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_value_a472996d8c32ce70e9332509151d6aed1}{
+\index{mdtValue@{mdtValue}!isValid@{isValid}}
+\index{isValid@{isValid}!mdtValue@{mdtValue}}
+\subsubsection[{isValid}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtValue::isValid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_value_a472996d8c32ce70e9332509151d6aed1}
+
+
+Get the validity flag. 
+
+A \hyperlink{classmdt_value}{mdtValue} is considered valid if one value was set (double, int or bool). After a call of \hyperlink{classmdt_value_a8c4461857e4715e49b2050479d63bfb8}{clear()}, the validity flag becomes false.
+
+Note: if -\/OL or +OL flag is set, the value is considered as valid. 
+
+Definition at line 153 of file mdtValue.cpp.
+
+\hypertarget{classmdt_value_acbb1e7472e9b6e105ba5ffe03476f4d4}{
+\index{mdtValue@{mdtValue}!operator==@{operator==}}
+\index{operator==@{operator==}!mdtValue@{mdtValue}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtValue::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtValue} \&}]{other}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_value_acbb1e7472e9b6e105ba5ffe03476f4d4}
+
+
+Comparaison operator. 
+
+If all members are equal (values and flags), true is returned. 
+
+Definition at line 158 of file mdtValue.cpp.
+
+\hypertarget{classmdt_value_a51d075b0cc64ff5481533bcfc8d3a7f4}{
+\index{mdtValue@{mdtValue}!setDefaultValue@{setDefaultValue}}
+\index{setDefaultValue@{setDefaultValue}!mdtValue@{mdtValue}}
+\subsubsection[{setDefaultValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtValue::setDefaultValue (
+\begin{DoxyParamCaption}
+\item[{double}]{value}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_value_a51d075b0cc64ff5481533bcfc8d3a7f4}
+
+
+Set default value for double format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to store as default \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 73 of file mdtValue.cpp.
+
+\hypertarget{classmdt_value_aad4a2fb80d76fc2924ea1a72ce529167}{
+\index{mdtValue@{mdtValue}!setDefaultValue@{setDefaultValue}}
+\index{setDefaultValue@{setDefaultValue}!mdtValue@{mdtValue}}
+\subsubsection[{setDefaultValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtValue::setDefaultValue (
+\begin{DoxyParamCaption}
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_value_aad4a2fb80d76fc2924ea1a72ce529167}
+
+
+Set default value for int format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to store as default \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 78 of file mdtValue.cpp.
+
+\hypertarget{classmdt_value_a82ecd7744702a5e152404c1b05b1a69d}{
+\index{mdtValue@{mdtValue}!setDefaultValue@{setDefaultValue}}
+\index{setDefaultValue@{setDefaultValue}!mdtValue@{mdtValue}}
+\subsubsection[{setDefaultValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtValue::setDefaultValue (
+\begin{DoxyParamCaption}
+\item[{bool}]{value}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_value_a82ecd7744702a5e152404c1b05b1a69d}
+
+
+Set default value for bool format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to store as default \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 83 of file mdtValue.cpp.
+
+\hypertarget{classmdt_value_aa4573c55ea1cc6c55547b09db8c9d521}{
+\index{mdtValue@{mdtValue}!setValue@{setValue}}
+\index{setValue@{setValue}!mdtValue@{mdtValue}}
+\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtValue::setValue (
+\begin{DoxyParamCaption}
+\item[{double}]{value, }
+\item[{bool}]{isMinusOl = {\ttfamily false}, }
+\item[{bool}]{isPlusOl = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_value_aa4573c55ea1cc6c55547b09db8c9d521}
+
+
+Set value with double format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to store \\
+\hline
+{\em isMinusOl} & -\/OL flag \\
+\hline
+{\em isPlusOl} & +OL flag \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 88 of file mdtValue.cpp.
+
+\hypertarget{classmdt_value_ab526b9b9d04b641394b1679336b59c32}{
+\index{mdtValue@{mdtValue}!setValue@{setValue}}
+\index{setValue@{setValue}!mdtValue@{mdtValue}}
+\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtValue::setValue (
+\begin{DoxyParamCaption}
+\item[{bool}]{value}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_value_ab526b9b9d04b641394b1679336b59c32}
+
+
+Set value with bool format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to store \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 136 of file mdtValue.cpp.
+
+\hypertarget{classmdt_value_ae4a84a502223cfd47538474dee897ad0}{
+\index{mdtValue@{mdtValue}!setValue@{setValue}}
+\index{setValue@{setValue}!mdtValue@{mdtValue}}
+\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtValue::setValue (
+\begin{DoxyParamCaption}
+\item[{int}]{value, }
+\item[{bool}]{isMinusOl = {\ttfamily false}, }
+\item[{bool}]{isPlusOl = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_value_ae4a84a502223cfd47538474dee897ad0}
+
+
+Set value with int format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to store \\
+\hline
+{\em isMinusOl} & -\/OL flag \\
+\hline
+{\em isPlusOl} & +OL flag \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 107 of file mdtValue.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtValue.h\item 
+src/mdtutils/mdtValue.cpp\end{DoxyCompactItemize}

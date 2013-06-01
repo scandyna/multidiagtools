@@ -1,0 +1,216 @@
+\hypertarget{classmdt_sql_relation}{
+\section{mdtSqlRelation Class Reference}
+\label{classmdt_sql_relation}\index{mdtSqlRelation@{mdtSqlRelation}}
+}
+
+
+Handle parent/child relations between 2 QSqlTableModels.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlRelation.h$>$}
+
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{setParentCurrentIndex} (int index)
+\begin{DoxyCompactList}\small\item\em Update child model. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_a4381f7f5bd39337fa5cbccf9b87ff0f6}{setParentCurrentIndex} (const QModelIndex \&index)
+\begin{DoxyCompactList}\small\item\em Update child model. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_a82a90b12bb78a4b0f9751244f134889d}{setParentCurrentIndex} (const QModelIndex \&current, const QModelIndex \&previous)
+\begin{DoxyCompactList}\small\item\em Update child model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_relation_a65d9602a4663c8c356938ba9a217704f}{
+\hyperlink{classmdt_sql_relation_a65d9602a4663c8c356938ba9a217704f}{mdtSqlRelation} (QObject $\ast$parent=0)}
+\label{classmdt_sql_relation_a65d9602a4663c8c356938ba9a217704f}
+
+\begin{DoxyCompactList}\small\item\em Create a empty relation. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_a22c7de1daa71abbde33199a08541310b}{
+\hyperlink{classmdt_sql_relation_a22c7de1daa71abbde33199a08541310b}{$\sim$mdtSqlRelation} ()}
+\label{classmdt_sql_relation_a22c7de1daa71abbde33199a08541310b}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{setParentModel} (QSqlTableModel $\ast$model)
+\begin{DoxyCompactList}\small\item\em Set the parent model. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{setChildModel} (QSqlTableModel $\ast$model)
+\begin{DoxyCompactList}\small\item\em Set the child model. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_relation_aaff5bbdd37b21dd3de4d5d485f7c6a86}{addRelation} (const QString \&parentFieldName, const QString \&childFieldName)
+\begin{DoxyCompactList}\small\item\em Add a relation. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_a01469fb1baf7327ca6ddbcd1595e0d7c}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear relations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handle parent/child relations between 2 QSqlTableModels. 
+
+This is usefull to create data/details forms.
+
+Typical usage:
+\begin{DoxyItemize}
+\item Set the parent and child models, using \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{setParentModel()} and \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{setChildModel()}
+\item Add parent/child tables fields that must match with \hyperlink{classmdt_sql_relation_aaff5bbdd37b21dd3de4d5d485f7c6a86}{addRelation()}
+\item Connect the parent view's currentXyChanged() signal to \hyperlink{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{setParentCurrentIndex()} slot. If you use a QTableView, this signal is in its selectionModel(). For QDataWidgetMapper, the currentIndexChanged() signal is directly available. 
+\end{DoxyItemize}
+
+Definition at line 43 of file mdtSqlRelation.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_relation_aaff5bbdd37b21dd3de4d5d485f7c6a86}{
+\index{mdtSqlRelation@{mdtSqlRelation}!addRelation@{addRelation}}
+\index{addRelation@{addRelation}!mdtSqlRelation@{mdtSqlRelation}}
+\subsubsection[{addRelation}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRelation::addRelation (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{parentFieldName, }
+\item[{const QString \&}]{childFieldName}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_relation_aaff5bbdd37b21dd3de4d5d485f7c6a86}
+
+
+Add a relation. 
+
+The parentFieldName is a field name from the parent table (typically a field from primary key). The childFieldName is a field from child table (typically a field from foreing keys).
+
+Note that this methodwill fetch some information about fields in parent and child model (data type, field index, ...), so parent and child models must be set before.
+
+\begin{DoxyReturn}{Returns}
+True on succes, false if a field could not be found. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Parent model must be set with \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{setParentModel()} before using this method. 
+
+Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{setChildModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 51 of file mdtSqlRelation.cpp.
+
+\hypertarget{classmdt_sql_relation_a01469fb1baf7327ca6ddbcd1595e0d7c}{
+\index{mdtSqlRelation@{mdtSqlRelation}!clear@{clear}}
+\index{clear@{clear}!mdtSqlRelation@{mdtSqlRelation}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelation::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_relation_a01469fb1baf7327ca6ddbcd1595e0d7c}
+
+
+Clear relations. 
+
+Will clear all added relations and references to parent and child models. (will not delete models). 
+
+Definition at line 93 of file mdtSqlRelation.cpp.
+
+\hypertarget{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{
+\index{mdtSqlRelation@{mdtSqlRelation}!setChildModel@{setChildModel}}
+\index{setChildModel@{setChildModel}!mdtSqlRelation@{mdtSqlRelation}}
+\subsubsection[{setChildModel}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelation::setChildModel (
+\begin{DoxyParamCaption}
+\item[{QSqlTableModel $\ast$}]{model}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}
+
+
+Set the child model. 
+
+Will be used internally to get some informations about fields and get values to generate relation filters. 
+
+Definition at line 46 of file mdtSqlRelation.cpp.
+
+\hypertarget{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{
+\index{mdtSqlRelation@{mdtSqlRelation}!setParentCurrentIndex@{setParentCurrentIndex}}
+\index{setParentCurrentIndex@{setParentCurrentIndex}!mdtSqlRelation@{mdtSqlRelation}}
+\subsubsection[{setParentCurrentIndex}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelation::setParentCurrentIndex (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}
+
+
+Update child model. 
+
+\begin{DoxyPrecond}{Precondition}
+Parent model must be set with \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{setParentModel()} before using this method. 
+
+Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{setChildModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 101 of file mdtSqlRelation.cpp.
+
+\hypertarget{classmdt_sql_relation_a82a90b12bb78a4b0f9751244f134889d}{
+\index{mdtSqlRelation@{mdtSqlRelation}!setParentCurrentIndex@{setParentCurrentIndex}}
+\index{setParentCurrentIndex@{setParentCurrentIndex}!mdtSqlRelation@{mdtSqlRelation}}
+\subsubsection[{setParentCurrentIndex}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelation::setParentCurrentIndex (
+\begin{DoxyParamCaption}
+\item[{const QModelIndex \&}]{current, }
+\item[{const QModelIndex \&}]{previous}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_sql_relation_a82a90b12bb78a4b0f9751244f134889d}
+
+
+Update child model. 
+
+\begin{DoxyPrecond}{Precondition}
+Parent model must be set with \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{setParentModel()} before using this method. 
+
+Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{setChildModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 122 of file mdtSqlRelation.cpp.
+
+\hypertarget{classmdt_sql_relation_a4381f7f5bd39337fa5cbccf9b87ff0f6}{
+\index{mdtSqlRelation@{mdtSqlRelation}!setParentCurrentIndex@{setParentCurrentIndex}}
+\index{setParentCurrentIndex@{setParentCurrentIndex}!mdtSqlRelation@{mdtSqlRelation}}
+\subsubsection[{setParentCurrentIndex}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelation::setParentCurrentIndex (
+\begin{DoxyParamCaption}
+\item[{const QModelIndex \&}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_sql_relation_a4381f7f5bd39337fa5cbccf9b87ff0f6}
+
+
+Update child model. 
+
+\begin{DoxyPrecond}{Precondition}
+Parent model must be set with \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{setParentModel()} before using this method. 
+
+Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{setChildModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 112 of file mdtSqlRelation.cpp.
+
+\hypertarget{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{
+\index{mdtSqlRelation@{mdtSqlRelation}!setParentModel@{setParentModel}}
+\index{setParentModel@{setParentModel}!mdtSqlRelation@{mdtSqlRelation}}
+\subsubsection[{setParentModel}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelation::setParentModel (
+\begin{DoxyParamCaption}
+\item[{QSqlTableModel $\ast$}]{model}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}
+
+
+Set the parent model. 
+
+Will be used internally to get some informations about fields and get values to generate relation filters. 
+
+Definition at line 41 of file mdtSqlRelation.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlRelation.h\item 
+src/mdtutilsgui/mdtSqlRelation.cpp\end{DoxyCompactItemize}

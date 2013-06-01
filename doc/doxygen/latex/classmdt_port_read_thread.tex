@@ -38,7 +38,12 @@ Collaboration diagram for mdtPortReadThread:\nopagebreak
 
 \item 
 bool \hyperlink{classmdt_port_read_thread_a0138d613b61056c9f8373331de2d9a84}{isReader} () const 
-\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_read_thread_afa42f86f3fed878b8f44cacb3a2f41af}{
+bool \hyperlink{classmdt_port_read_thread_afa42f86f3fed878b8f44cacb3a2f41af}{handlesTimeout} () const }
+\label{classmdt_port_read_thread_afa42f86f3fed878b8f44cacb3a2f41af}
+
+\begin{DoxyCompactList}\small\item\em Retunrs false. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -50,7 +55,7 @@ It's possible to use the read timeout protocol. An example of this is MODBUS (ov
 \hyperlink{classmdt_port_config}{mdtPortConfig}
 \end{DoxySeeAlso}
 \begin{Desc}
-\item[\hyperlink{todo__todo000029}{Todo}]suspendTransmission() call is no longer in \hyperlink{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{getNewFrameRead()}, must be handled in run() now. \end{Desc}
+\item[\hyperlink{todo__todo000025}{Todo}]suspendTransmission() call is no longer in getNewFrameRead(), must be handled in run() now. \end{Desc}
 
 
 Definition at line 37 of file mdtPortReadThread.h.
@@ -77,7 +82,7 @@ Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc3
 
 
 
-Definition at line 35 of file mdtPortReadThread.cpp.
+Definition at line 36 of file mdtPortReadThread.cpp.
 
 
 

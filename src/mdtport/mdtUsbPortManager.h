@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -82,7 +82,19 @@ class mdtUsbPortManager : public mdtPortManager
    *
    * Internally, mdtPortManager::openPort() is called.
    */
-  bool openPort();
+  ///bool openPort();
+
+  /*! \brief Open the port
+   *
+   * Overloads mdtPortManager::start().
+   *
+   * Will construct the thread if not allready exists.
+   *  This is because mdtUsbtmcPortManager uses a different thread,
+   *  so this task can not be done in constructor.
+   *
+   * Internally, mdtPortManager::start() is called.
+   */
+  bool start();
 
   /*! \brief Request port to read until a short frame is received
    *
@@ -179,6 +191,18 @@ class mdtUsbPortManager : public mdtPortManager
   /*! \brief Called by thread when the read until a short packet process is finished
    */
   void fromThreadReadUntilShortPacketReceivedFinished();
+
+ protected slots:
+
+  /*! \brief Manage errors comming from usb port thread
+   *
+   * This implementation will handle some USB specific errors,
+   *  change the current state emiting transistion signal.
+   *  If state has changed, stateChanged() signal is emited.
+   *
+   * Some errors are handled here. For others, mdtPortManager::onThreadsErrorOccured() is called.
+   */
+  void onThreadsErrorOccured(int error);
 
  private:
 

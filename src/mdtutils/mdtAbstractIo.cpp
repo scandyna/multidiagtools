@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,23 +23,47 @@
 mdtAbstractIo::mdtAbstractIo(QObject *parent)
  : QObject(parent)
 {
-  pvAddress = 0;
-  pvHasValidData = false;
+  pvAddressRead = 0;
+  pvAddressWrite = 0;
+  pvNotifyUi = false;
 }
 
 mdtAbstractIo::~mdtAbstractIo()
 {
 }
 
-void mdtAbstractIo::setAddress(int adr)
+void mdtAbstractIo::setAddress(int address)
 {
-  pvAddress = adr;
-  emit(addressChangedForUi(pvAddress));
+  pvAddressRead = address;
+  pvAddressWrite = address;
+  emit(addressChangedForUi(pvAddressRead, pvAddressWrite));
 }
 
 int mdtAbstractIo::address() const
 {
-  return pvAddress;
+  return pvAddressRead;
+}
+
+void mdtAbstractIo::setAddressRead(int address)
+{
+  pvAddressRead = address;
+  emit(addressChangedForUi(pvAddressRead, pvAddressWrite));
+}
+
+int mdtAbstractIo::addressRead() const
+{
+  return pvAddressRead;
+}
+
+void mdtAbstractIo::setAddressWrite(int address)
+{
+  pvAddressWrite = address;
+  emit(addressChangedForUi(pvAddressRead, pvAddressWrite));
+}
+
+int mdtAbstractIo::addressWrite() const
+{
+  return pvAddressWrite;
 }
 
 void mdtAbstractIo::setLabelShort(const QString &text)
@@ -77,10 +101,19 @@ QString mdtAbstractIo::details() const
 
 bool mdtAbstractIo::hasValidData() const
 {
-  return pvHasValidData;
+  return pvValue.isValid();
 }
 
 void mdtAbstractIo::setEnabled(bool enabled)
 {
   emit(enabledStateChangedForUi(enabled));
+}
+
+const mdtValue &mdtAbstractIo::value() const
+{
+  return pvValue;
+}
+
+void mdtAbstractIo::setValue(const mdtValue &value, bool emitValueChanged)
+{
 }

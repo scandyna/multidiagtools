@@ -29,10 +29,10 @@
 #include <QByteArray>
 #include <QString>
 #include <QChar>
-///#include <QStringList>
 #include <QVariant>
 #include <QDir>
 #include <QList>
+#include <QHash>
 #include <QSqlField>
 #include <QSqlIndex>
 
@@ -155,6 +155,7 @@ class mdtDataTableManager : public QObject
    * \param dir Destination of the database file. If not defined, csvFilePath's directory is used.
    * \param pkFields List of fields to considere as part of primary key.
    *                  If list is empty, one named id_PK will be created.
+   * \pre All given CSV header items to use as part of primary key must exit in CSV file (See pkFields argument).
    */
   bool importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir = QString(), const QStringList &pkFields = QStringList());
 
@@ -201,17 +202,23 @@ class mdtDataTableManager : public QObject
    * During CSV import, internal field name are created,
    *  because some chars are not allowed in a database field name.
    * Use this method to get the headers as readen in CSV file.
-   * The feilds are returned ordered as in the model.
+   * The fields are returned ordered as in the model.
    *
    * Note: will return headers only after importFromCsvFile() was called.
    */
   QStringList csvHeader() const;
 
-  /*! \brief Set CSV headers to model's header data
+  /*! \brief Set the display texts to model's header
    *
-   * \sa csvHeader()
+   * \pre Model must be valid.
    */
-  bool setCsvHeaderToModel();
+  void setDisplayTextsToModelHeader();
+
+  /*! \brief Get display texts referenced by field names
+   *
+   * \return QHash with fieldName as key and displayText as value.
+   */
+  QHash<QString, QString> displayTextsByFieldNames() const;
 
   /*! \brief Get instance of current model
    *
@@ -221,6 +228,14 @@ class mdtDataTableManager : public QObject
    * \return Pointer to current model, or 0 if it was not set.
    */
   mdtDataTableModel *model();
+
+ private slots:
+
+  /*! \brief Set the abort flag
+   *
+   * Abort flag is used by importFromCsvFile() to know if import must be aborted
+   */
+  void setAbortFlag();
 
  private:
 
@@ -243,6 +258,14 @@ class mdtDataTableManager : public QObject
    */
   static bool userChooseToOverwrite(const QDir &dir, const QString &fileName);
 
+  /*! \brief Commit some rows of data to model
+   *
+   * \param rows Rows of data to commit
+   * \return True on success, errors are logged with mdtErrro system.
+   * \pre Model must be valid.
+   */
+  bool commitRowsToModel(const QList<QStringList> &rows);
+
   Q_DISABLE_COPY(mdtDataTableManager);
 
   QString pvDataSetName;
@@ -258,10 +281,9 @@ class mdtDataTableManager : public QObject
   QString pvCsvComment;
   QByteArray pvCsvEol;
   QByteArray pvEncoding;
-  ///QStringList pvCsvHeader;        // Header as the are in CSV file
-  QMap<QString, QString> pvDbAndCsvHeader;  // Key: field name, value: CSV header name
   // Some GUI specific members
   bool pvProgressDialogEnabled;   // If true, some method will show a progress dialog
+  bool pvAbort;
 };
 
 #endif  // #ifndef MDT_DATA_TABLE_MANAGER_H

@@ -26,6 +26,7 @@
 #include "mdtFrameAscii.h"
 #include "mdtPortConfig.h"
 #include <QObject>
+#include <QDebug>
 #include <QString>
 #include <QQueue>
 #include <QMutex>
@@ -598,5 +599,7 @@ class mdtAbstractPort : public QObject
   bool pvFlushInRequestPending;   // See flushInRequestPending()
   bool pvFlushOutRequestPending;  // See flushOutRequestPending()
 };
+
+QDebug operator<<(QDebug dbg, mdtAbstractPort::error_t error);
 
 #endif  // #ifndef MDT_ABSTRACT_PORT_H

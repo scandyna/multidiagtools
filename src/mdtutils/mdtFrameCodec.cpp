@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,7 +31,7 @@ mdtFrameCodec::~mdtFrameCodec()
 {
 }
 
-QList<QVariant> &mdtFrameCodec::values()
+const QList<QVariant> &mdtFrameCodec::values() const
 {
   return pvValues;
 }

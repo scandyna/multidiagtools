@@ -1,0 +1,540 @@
+\hypertarget{classmdt_device_modbus_wago}{
+\section{mdtDeviceModbusWago Class Reference}
+\label{classmdt_device_modbus_wago}\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+}
+
+
+Inheritance diagram for mdtDeviceModbusWago:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{classmdt_device_modbus_wago__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtDeviceModbusWago:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classmdt_device_modbus_wago__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_device_modbus_wago_a31abb03678a8afe2e6bf7c03e5e92726}{mdtDeviceModbusWago} (QObject $\ast$parent=0)
+\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
+\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_modbus_wago_a12ad1f1ef34b16be5903d1d6232a7c6d}{connectToDevice} (const QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \&scanResult, int hardwareNodeId, int bitsCount, int startFrom=0)
+\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_a6f01ba89d90ddfbcaa0cbda1885d22f1}{
+bool \hyperlink{classmdt_device_modbus_wago_a6f01ba89d90ddfbcaa0cbda1885d22f1}{isWago750} ()}
+\label{classmdt_device_modbus_wago_a6f01ba89d90ddfbcaa0cbda1885d22f1}
+
+\begin{DoxyCompactList}\small\item\em Check if device is a Wago 750 series. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_ad812b7ee3a2f2677cddde205da5ec787}{analogOutputsCount} ()
+\begin{DoxyCompactList}\small\item\em Get number of analog outputs. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_a9da56c13404fd9243c5920ff2ef8bd15}{analogInputsCount} ()
+\begin{DoxyCompactList}\small\item\em Get number of analog inputs. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_a6711c4e486c3b103b187102685e091cc}{digitalOutputsCount} ()
+\begin{DoxyCompactList}\small\item\em Get number of digital outputs. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_ad51fd45858e62c597ba8fc2bf3e877bd}{digitalInputsCount} ()
+\begin{DoxyCompactList}\small\item\em Get number of digital inputs. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_modbus_wago_a03b04618bbf1a89e936bc541f6375baf}{detectIos} (\hyperlink{classmdt_device_ios}{mdtDeviceIos} $\ast$ios)
+\begin{DoxyCompactList}\small\item\em Query device about filed bus + I/Os setup. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_device_modbus_wago_ac416f77ab0f21d967adfbd6ca92adc9f}{analogIoModuleValueMin} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Get the min value of a range of a analog I/O module. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_device_modbus_wago_a2a1c3cf2a830a819d906775eea9633c1}{analogIoModuleValueMax} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Get the max value of a range of a analog I/O module. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_a9b991f58c2cffba8c7dcdaf347495655}{analogIoModuleValueBitsCount} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Get the number of bits (including sign bit) used to represent a value of a analog I/O module. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_ad463bb479d6270dc3124a978e30b1231}{analogIoModuleValueLsbIndex} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Get index of the first bit (LSB) that represents the value of a analog I/O module. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_device_modbus_wago_abc8b4190ba582f545a9178fec07d9f75}{analogIoModuleValueSigned} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Check if a analog I/O module returns a signed value or not. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_device_modbus_wago_ae52341831cea60bd89471352b16e9eaa}{analogIoModuleIsInput} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Check if a analog I/O module is a input. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_a0d7cafa60ab353363ccd8127ab8ad084}{analogIoModuleIosCount} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Get number of I/Os for a analog I/O module. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_device_modbus_wago_a7c8333a5f74412a8ff0ad366387df96b}{analogIoModuleUnit} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Get unit of a analog I/O module (V, A, ...) \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_device_modbus_wago_a82c7e7bc27693a077280ed95e523e328}{digitalIoModuleIsInput} (quint16 word) const 
+\begin{DoxyCompactList}\small\item\em Check if a digital I/O module is a input. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_afbe8797aa0f84ca8cb1d5c4245dfb849}{digitalIoModuleIosCount} (quint16 word) const 
+\begin{DoxyCompactList}\small\item\em Get number of I/Os for a digital I/O module. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 32 of file mdtDeviceModbusWago.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_device_modbus_wago_a31abb03678a8afe2e6bf7c03e5e92726}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{mdtDeviceModbusWago}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceModbusWago::mdtDeviceModbusWago (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_a31abb03678a8afe2e6bf7c03e5e92726}
+
+
+setAnalogOutputAddressOffset(0x0200); setDigitalOutputAddressOffset(0x0200); 
+
+
+
+Definition at line 37 of file mdtDeviceModbusWago.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_device_modbus_wago_a9da56c13404fd9243c5920ff2ef8bd15}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogInputsCount@{analogInputsCount}}
+\index{analogInputsCount@{analogInputsCount}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogInputsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWago::analogInputsCount (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_a9da56c13404fd9243c5920ff2ef8bd15}
+
+
+Get number of analog inputs. 
+
+Note: calling this method will query the device
+
+\begin{DoxyReturn}{Returns}
+Number of analog inputs, or $<$ 0 on error 
+\end{DoxyReturn}
+
+
+Definition at line 186 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a0d7cafa60ab353363ccd8127ab8ad084}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleIosCount@{analogIoModuleIosCount}}
+\index{analogIoModuleIosCount@{analogIoModuleIosCount}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogIoModuleIosCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWago::analogIoModuleIosCount (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_a0d7cafa60ab353363ccd8127ab8ad084}
+
+
+Get number of I/Os for a analog I/O module. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of I/O's or -\/1 for unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 466 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_ae52341831cea60bd89471352b16e9eaa}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleIsInput@{analogIoModuleIsInput}}
+\index{analogIoModuleIsInput@{analogIoModuleIsInput}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogIoModuleIsInput}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWago::analogIoModuleIsInput (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_ae52341831cea60bd89471352b16e9eaa}
+
+
+Check if a analog I/O module is a input. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if module is a input, false if module is a output. For a unknown module, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 454 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a7c8333a5f74412a8ff0ad366387df96b}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleUnit@{analogIoModuleUnit}}
+\index{analogIoModuleUnit@{analogIoModuleUnit}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogIoModuleUnit}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtDeviceModbusWago::analogIoModuleUnit (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_a7c8333a5f74412a8ff0ad366387df96b}
+
+
+Get unit of a analog I/O module (V, A, ...) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Unit of module, or a empty string for unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 478 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a9b991f58c2cffba8c7dcdaf347495655}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueBitsCount@{analogIoModuleValueBitsCount}}
+\index{analogIoModuleValueBitsCount@{analogIoModuleValueBitsCount}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogIoModuleValueBitsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWago::analogIoModuleValueBitsCount (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_a9b991f58c2cffba8c7dcdaf347495655}
+
+
+Get the number of bits (including sign bit) used to represent a value of a analog I/O module. 
+
+The resolution of each analog module is not the same. For example, the 750-\/457 has a resolution of 13 bits.
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bits count used for value, or -\/1 for a unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 418 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_ad463bb479d6270dc3124a978e30b1231}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueLsbIndex@{analogIoModuleValueLsbIndex}}
+\index{analogIoModuleValueLsbIndex@{analogIoModuleValueLsbIndex}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogIoModuleValueLsbIndex}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWago::analogIoModuleValueLsbIndex (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_ad463bb479d6270dc3124a978e30b1231}
+
+
+Get index of the first bit (LSB) that represents the value of a analog I/O module. 
+
+Some modules have bits used for other purprose than value. At exemple, for module 750-\/457, the LSB index is 3.
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of LSB of value, or -\/1 for unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 430 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a2a1c3cf2a830a819d906775eea9633c1}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueMax@{analogIoModuleValueMax}}
+\index{analogIoModuleValueMax@{analogIoModuleValueMax}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogIoModuleValueMax}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWago::analogIoModuleValueMax (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_a2a1c3cf2a830a819d906775eea9633c1}
+
+
+Get the max value of a range of a analog I/O module. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The max. value in floating format. If partNumber is unknow, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 406 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_ac416f77ab0f21d967adfbd6ca92adc9f}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueMin@{analogIoModuleValueMin}}
+\index{analogIoModuleValueMin@{analogIoModuleValueMin}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogIoModuleValueMin}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWago::analogIoModuleValueMin (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_ac416f77ab0f21d967adfbd6ca92adc9f}
+
+
+Get the min value of a range of a analog I/O module. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The min. value in floating format. If partNumber is unknow, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 394 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_abc8b4190ba582f545a9178fec07d9f75}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueSigned@{analogIoModuleValueSigned}}
+\index{analogIoModuleValueSigned@{analogIoModuleValueSigned}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogIoModuleValueSigned}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWago::analogIoModuleValueSigned (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_abc8b4190ba582f545a9178fec07d9f75}
+
+
+Check if a analog I/O module returns a signed value or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if module's representation is signed, false if not. For a unknown module, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 442 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_ad812b7ee3a2f2677cddde205da5ec787}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogOutputsCount@{analogOutputsCount}}
+\index{analogOutputsCount@{analogOutputsCount}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{analogOutputsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWago::analogOutputsCount (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_ad812b7ee3a2f2677cddde205da5ec787}
+
+
+Get number of analog outputs. 
+
+Note: calling this method will query the device
+
+\begin{DoxyReturn}{Returns}
+Number of analog outputs, or $<$ 0 on error 
+\end{DoxyReturn}
+
+
+Definition at line 175 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a12ad1f1ef34b16be5903d1d6232a7c6d}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!connectToDevice@{connectToDevice}}
+\index{connectToDevice@{connectToDevice}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceModbusWago::connectToDevice (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtPortInfo} $\ast$ $>$ \&}]{scanResult, }
+\item[{int}]{hardwareNodeId, }
+\item[{int}]{bitsCount, }
+\item[{int}]{startFrom = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_a12ad1f1ef34b16be5903d1d6232a7c6d}
+
+
+Search and connect to physical device. 
+
+Work as \hyperlink{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{mdtDeviceModbus::connectToDevice()} , but checks that device is a Wago 750 fieldbus coupler. 
+
+Q\_\-ASSERT(!pvTcpPortManager-\/$>$isRunning()); 
+
+
+
+Reimplemented from \hyperlink{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{mdtDeviceModbus}.
+
+
+
+Definition at line 113 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!connectToDevice@{connectToDevice}}
+\index{connectToDevice@{connectToDevice}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceModbusWago::connectToDevice (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtDeviceInfo} \&}]{devInfo}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}
+
+
+Search and connect to physical device. 
+
+Will scan available ports and open the first port that has device attached maching request.
+
+Note: in current version, only Wago 750 system is supported.
+
+
+\begin{DoxyParams}{Parameters}
+{\em devInfo} & Requested device's informations (can be empty, no information is used in current version). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} (NoError on success) 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classmdt_device_abab1b6e45af527880ce469ae318474c0}{mdtDevice}.
+
+
+
+Definition at line 48 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a03b04618bbf1a89e936bc541f6375baf}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!detectIos@{detectIos}}
+\index{detectIos@{detectIos}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{detectIos}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbusWago::detectIos (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtDeviceIos} $\ast$}]{ios}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_a03b04618bbf1a89e936bc541f6375baf}
+
+
+Query device about filed bus + I/Os setup. 
+
+The detected I/Os are added to given ios, but not added to internal ios container (use \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()} for this). Goal is to be able to detect setup without alter the internal container, so a check could be made before running really, or something else. 
+
+int modulesCnt;
+
+\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ao;
+
+\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$dout;
+
+bool isInput;
+
+\begin{Desc}
+\item[\hyperlink{bug__bug000001}{Bug}]If number of requested modules is $>$ 62, this hangs up with 750-\/352 filedbus (possibly a bug in mdtLib..) \end{Desc}
+
+
+aio-\/$>$setAddress(i);
+
+dio-\/$>$setAddress(i); 
+
+
+
+Definition at line 219 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_ad51fd45858e62c597ba8fc2bf3e877bd}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalInputsCount@{digitalInputsCount}}
+\index{digitalInputsCount@{digitalInputsCount}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{digitalInputsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWago::digitalInputsCount (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_ad51fd45858e62c597ba8fc2bf3e877bd}
+
+
+Get number of digital inputs. 
+
+Note: calling this method will query the device
+
+\begin{DoxyReturn}{Returns}
+Number of digital inputs, or $<$ 0 on error 
+\end{DoxyReturn}
+
+
+Definition at line 208 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_afbe8797aa0f84ca8cb1d5c4245dfb849}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalIoModuleIosCount@{digitalIoModuleIosCount}}
+\index{digitalIoModuleIosCount@{digitalIoModuleIosCount}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{digitalIoModuleIosCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWago::digitalIoModuleIosCount (
+\begin{DoxyParamCaption}
+\item[{quint16}]{word}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_afbe8797aa0f84ca8cb1d5c4245dfb849}
+
+
+Get number of I/Os for a digital I/O module. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & The identification word (see Wago doc, part of register 0x2030 for details). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of I/O's or -\/1 for unknown description. 
+\end{DoxyReturn}
+
+
+Definition at line 510 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a82c7e7bc27693a077280ed95e523e328}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalIoModuleIsInput@{digitalIoModuleIsInput}}
+\index{digitalIoModuleIsInput@{digitalIoModuleIsInput}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{digitalIoModuleIsInput}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWago::digitalIoModuleIsInput (
+\begin{DoxyParamCaption}
+\item[{quint16}]{word}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_a82c7e7bc27693a077280ed95e523e328}
+
+
+Check if a digital I/O module is a input. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & The identification word (see Wago doc, part of register 0x2030 for details). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if module is a input, false if module is a output. For a unknown or uncoherent description, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 490 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a6711c4e486c3b103b187102685e091cc}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalOutputsCount@{digitalOutputsCount}}
+\index{digitalOutputsCount@{digitalOutputsCount}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{digitalOutputsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWago::digitalOutputsCount (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_a6711c4e486c3b103b187102685e091cc}
+
+
+Get number of digital outputs. 
+
+Note: calling this method will query the device
+
+\begin{DoxyReturn}{Returns}
+Number of digital outputs, or $<$ 0 on error 
+\end{DoxyReturn}
+
+
+Definition at line 197 of file mdtDeviceModbusWago.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtdevice/mdtDeviceModbusWago.h\item 
+src/mdtdevice/mdtDeviceModbusWago.cpp\end{DoxyCompactItemize}

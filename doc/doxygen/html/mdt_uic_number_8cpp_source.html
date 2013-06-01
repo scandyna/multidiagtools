@@ -326,16 +326,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00264"></a>00264     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00265"></a>00265   }
 <a name="l00266"></a>00266   <span class="comment">// Read</span>
-<a name="l00267"></a>00267   <span class="keywordflow">if</span>(!csv.<a class="code" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797" title="Read the file and store data.">readLines</a>(<span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>)){
+<a name="l00267"></a>00267   <span class="keywordflow">if</span>(!csv.<a class="code" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b" title="Read the file and store data.">readLines</a>(<span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>)){
 <a name="l00268"></a>00268     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_PARSE_ERROR, <span class="stringliteral">&quot;Cannot parse CSV file &quot;</span> + dbPath, mdtError::Error);
 <a name="l00269"></a>00269     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(csv.error(), csv.errorString());
 <a name="l00270"></a>00270     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUicNumber&quot;</span>);
 <a name="l00271"></a>00271     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00272"></a>00272     csv.close();
+<a name="l00272"></a>00272     csv.<a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">close</a>();
 <a name="l00273"></a>00273     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00274"></a>00274   }
 <a name="l00275"></a>00275   db = csv.<a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261" title="Get content of entire file.">lines</a>();
-<a name="l00276"></a>00276   csv.close();
+<a name="l00276"></a>00276   csv.<a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">close</a>();
 <a name="l00277"></a>00277   qDeleteAll(pvCountries);
 <a name="l00278"></a>00278   pvCountries.clear();
 <a name="l00279"></a>00279   <span class="keywordflow">for</span>(i=1; i&lt;db.size(); i++){
@@ -391,16 +391,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00329"></a>00329     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00330"></a>00330   }
 <a name="l00331"></a>00331   <span class="comment">// Read</span>
-<a name="l00332"></a>00332   <span class="keywordflow">if</span>(!csv.<a class="code" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797" title="Read the file and store data.">readLines</a>(<span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>)){
+<a name="l00332"></a>00332   <span class="keywordflow">if</span>(!csv.<a class="code" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b" title="Read the file and store data.">readLines</a>(<span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>)){
 <a name="l00333"></a>00333     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_PARSE_ERROR, <span class="stringliteral">&quot;Cannot parse CSV file &quot;</span> + dbPath, mdtError::Error);
 <a name="l00334"></a>00334     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(csv.error(), csv.errorString());
 <a name="l00335"></a>00335     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUicNumber&quot;</span>);
 <a name="l00336"></a>00336     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00337"></a>00337     csv.close();
+<a name="l00337"></a>00337     csv.<a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">close</a>();
 <a name="l00338"></a>00338     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00339"></a>00339   }
 <a name="l00340"></a>00340   db = csv.<a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261" title="Get content of entire file.">lines</a>();
-<a name="l00341"></a>00341   csv.close();
+<a name="l00341"></a>00341   csv.<a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">close</a>();
 <a name="l00342"></a>00342   qDeleteAll(pvUsages);
 <a name="l00343"></a>00343   pvUsages.clear();
 <a name="l00344"></a>00344   <span class="keywordflow">for</span>(i=1; i&lt;db.size(); i++){
@@ -455,16 +455,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00393"></a>00393     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00394"></a>00394   }
 <a name="l00395"></a>00395   <span class="comment">// Read</span>
-<a name="l00396"></a>00396   <span class="keywordflow">if</span>(!csv.<a class="code" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797" title="Read the file and store data.">readLines</a>(<span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>)){
+<a name="l00396"></a>00396   <span class="keywordflow">if</span>(!csv.<a class="code" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b" title="Read the file and store data.">readLines</a>(<span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>)){
 <a name="l00397"></a>00397     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_PARSE_ERROR, <span class="stringliteral">&quot;Cannot parse CSV file &quot;</span> + dbPath, mdtError::Error);
 <a name="l00398"></a>00398     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(csv.error(), csv.errorString());
 <a name="l00399"></a>00399     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUicNumber&quot;</span>);
 <a name="l00400"></a>00400     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00401"></a>00401     csv.close();
+<a name="l00401"></a>00401     csv.<a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">close</a>();
 <a name="l00402"></a>00402     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00403"></a>00403   }
 <a name="l00404"></a>00404   db = csv.<a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261" title="Get content of entire file.">lines</a>();
-<a name="l00405"></a>00405   csv.close();
+<a name="l00405"></a>00405   csv.<a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">close</a>();
 <a name="l00406"></a>00406   qDeleteAll(pvTypes);
 <a name="l00407"></a>00407   pvTypes.clear();
 <a name="l00408"></a>00408   <span class="keywordflow">for</span>(i=1; i&lt;db.size(); i++){
@@ -519,16 +519,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00457"></a>00457     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00458"></a>00458   }
 <a name="l00459"></a>00459   <span class="comment">// Read</span>
-<a name="l00460"></a>00460   <span class="keywordflow">if</span>(!csv.<a class="code" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797" title="Read the file and store data.">readLines</a>(<span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>)){
+<a name="l00460"></a>00460   <span class="keywordflow">if</span>(!csv.<a class="code" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b" title="Read the file and store data.">readLines</a>(<span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>)){
 <a name="l00461"></a>00461     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_PARSE_ERROR, <span class="stringliteral">&quot;Cannot parse CSV file &quot;</span> + dbPath, mdtError::Error);
 <a name="l00462"></a>00462     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(csv.error(), csv.errorString());
 <a name="l00463"></a>00463     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUicNumber&quot;</span>);
 <a name="l00464"></a>00464     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00465"></a>00465     csv.close();
+<a name="l00465"></a>00465     csv.<a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">close</a>();
 <a name="l00466"></a>00466     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00467"></a>00467   }
 <a name="l00468"></a>00468   db = csv.<a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261" title="Get content of entire file.">lines</a>();
-<a name="l00469"></a>00469   csv.close();
+<a name="l00469"></a>00469   csv.<a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">close</a>();
 <a name="l00470"></a>00470   qDeleteAll(pvSpeedAndHeats);
 <a name="l00471"></a>00471   pvSpeedAndHeats.clear();
 <a name="l00472"></a>00472   <span class="keywordflow">for</span>(i=1; i&lt;db.size(); i++){
@@ -760,7 +760,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

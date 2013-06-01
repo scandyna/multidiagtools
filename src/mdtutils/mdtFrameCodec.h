@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,6 +21,7 @@
 #ifndef MDT_FRAME_CODEC_H
 #define MDT_FRAME_CODEC_H
 
+#include "mdtValue.h"
 #include <QByteArray>
 #include <QVariant>
 #include <QList>
@@ -34,7 +35,7 @@ class mdtFrameCodec
 
   /*! \brief Get the decoded values
    */
-  QList<QVariant> &values();
+  const QList<QVariant> &values() const;
 
  protected:
 

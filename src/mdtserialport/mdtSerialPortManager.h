@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -86,12 +86,6 @@ class mdtSerialPortManager : public mdtPortManager
   /*! \brief Get the modem lines thread object
    */
   mdtSerialPortCtlThread *ctlThread();
-
- private slots:
-
-  /*! \brief Manage errors comming from port threads
-   */
-  void onThreadsErrorOccured(int error);
 
  private:
 

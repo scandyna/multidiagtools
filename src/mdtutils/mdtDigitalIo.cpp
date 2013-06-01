@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,63 +25,40 @@
 mdtDigitalIo::mdtDigitalIo(QObject *parent)
  : mdtAbstractIo(parent)
 {
-  pvIsOn = false;
 }
 
 mdtDigitalIo::~mdtDigitalIo()
 {
 }
 
-bool mdtDigitalIo::isOn() const
+void mdtDigitalIo::setValue(const mdtValue &value, bool emitValueChanged)
 {
-  return pvIsOn;
-}
-
-void mdtDigitalIo::setOn(QVariant on, bool emitValueChanged)
-{
-  if((!on.isValid())||(on.type() != QVariant::Bool)){
-    setOn(false, false, emitValueChanged);
+  // Check if state has changed
+  if((pvValue.isValid() == value.isValid())&&(pvValue.valueBool() == value.valueBool())){
+    return;
+  }
+  // Check validity and store
+  if(!value.isValid()){
+    pvValue.clear();
   }else{
-    setOn(on.toBool(), true, emitValueChanged);
+    pvValue.setValue(value.valueBool());
   }
-}
-
-void mdtDigitalIo::setOn(bool on, bool isValid, bool emitValueChanged)
-{
-  bool notifyUi = false;
-
-  // Check if UI must be updated
-  if((on != pvIsOn)||(isValid != pvHasValidData)){
-    notifyUi = true;
+  // Notify
+  emit(valueChangedForUi(pvValue));
+  if(emitValueChanged){
+    emit(valueChanged(this));
+    emit(valueChanged(pvValue));
   }
-  // Check validity
-  pvHasValidData = isValid;
-  if(!pvHasValidData){
-    on = false;
-  }
-  if(pvIsOn != on){
-    pvIsOn = on;
-    if(emitValueChanged){
-      emit(stateChanged(pvIsOn));
-      emit(stateChanged(pvAddress));
-    }
-  }
-  if(notifyUi){
-    emit(stateChangedForUi(pvIsOn));
-  }
-}
-
-void mdtDigitalIo::setOn(bool on)
-{
-  setOn(on, true);
 }
 
 void mdtDigitalIo::setStateFromUi(bool on)
 {
-  if(pvIsOn != on){
-    pvHasValidData = true;
-    pvIsOn = on;
-    emit(stateChanged(pvIsOn));
-    emit(stateChanged(pvAddress));
+  // Check if state has changed
+  if((pvValue.isValid())&&(pvValue.valueBool() == on)){
+    return;
   }
+  // Store and Notify
+  pvValue.setValue(on);
+  emit(valueChanged(this));
+  emit(valueChanged(pvValue));
 }

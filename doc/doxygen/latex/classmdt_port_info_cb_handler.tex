@@ -25,8 +25,14 @@ void \hyperlink{classmdt_port_info_cb_handler_a59fc2180a69119e17cfa24cf84a9c96f}
 \begin{DoxyCompactList}\small\item\em Set the comboBox that must display devices. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_info_cb_handler_a82c84a3eb52cd5d941377a64788a28ef}{fillComboBoxes} (const QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \&portInfoList)
 \begin{DoxyCompactList}\small\item\em Fill the comboboxes with a scan result. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_info_cb_handler_ae84e252c9783c204583639212a04aa12}{addPortInfo} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&portInfo)
+\begin{DoxyCompactList}\small\item\em Add a single port info. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_port_info}{mdtPortInfo} \hyperlink{classmdt_port_info_cb_handler_a92a284d227c4f0ce42df9890a9185a97}{portInfoAt} (int index)
+\begin{DoxyCompactList}\small\item\em Get the port info object at given index. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_port_info}{mdtPortInfo} \hyperlink{classmdt_port_info_cb_handler_a5723df72c4f1eda572c04e377dde9351}{currentPortInfo} ()
 \begin{DoxyCompactList}\small\item\em Get the selected port info object. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_info_cb_handler_ace2f9273d3f508507e496bdb2dc6d5c6}{indexOfPortInfo} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&portInfo) const 
+\begin{DoxyCompactList}\small\item\em Get index of a given port info. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_device_info}{mdtDeviceInfo} \hyperlink{classmdt_port_info_cb_handler_a266598f7f403e21730ff5ee50e6a6e5f}{currentDeviceInfo} ()
 \begin{DoxyCompactList}\small\item\em Get the selected device info object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -45,6 +51,23 @@ Definition at line 46 of file mdtPortInfoCbHandler.h.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_port_info_cb_handler_ae84e252c9783c204583639212a04aa12}{
+\index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!addPortInfo@{addPortInfo}}
+\index{addPortInfo@{addPortInfo}!mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
+\subsubsection[{addPortInfo}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortInfoCbHandler::addPortInfo (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtPortInfo} \&}]{portInfo}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_cb_handler_ae84e252c9783c204583639212a04aa12}
+
+
+Add a single port info. 
+
+Will act similary to \hyperlink{classmdt_port_info_cb_handler_a82c84a3eb52cd5d941377a64788a28ef}{fillComboBoxes()}. 
+
+Definition at line 74 of file mdtPortInfoCbHandler.cpp.
+
 \hypertarget{classmdt_port_info_cb_handler_a266598f7f403e21730ff5ee50e6a6e5f}{
 \index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!currentDeviceInfo@{currentDeviceInfo}}
 \index{currentDeviceInfo@{currentDeviceInfo}!mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
@@ -60,7 +83,7 @@ Get the selected device info object.
 
 Can return a empty object if nothing was set, or nothing valid is selected or device combobox was not set. 
 
-Definition at line 85 of file mdtPortInfoCbHandler.cpp.
+Definition at line 123 of file mdtPortInfoCbHandler.cpp.
 
 \hypertarget{classmdt_port_info_cb_handler_a5723df72c4f1eda572c04e377dde9351}{
 \index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!currentPortInfo@{currentPortInfo}}
@@ -77,7 +100,7 @@ Get the selected port info object.
 
 Can return a empty object if nothing was set, or nothing valid is selected. 
 
-Definition at line 72 of file mdtPortInfoCbHandler.cpp.
+Definition at line 101 of file mdtPortInfoCbHandler.cpp.
 
 \hypertarget{classmdt_port_info_cb_handler_a82c84a3eb52cd5d941377a64788a28ef}{
 \index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!fillComboBoxes@{fillComboBoxes}}
@@ -94,7 +117,41 @@ Fill the comboboxes with a scan result.
 
 All ports in list ares added to the ports combobox. If the devices combobox was set, it will be updated at each ports combobox index change. 
 
-Definition at line 57 of file mdtPortInfoCbHandler.cpp.
+Definition at line 59 of file mdtPortInfoCbHandler.cpp.
+
+\hypertarget{classmdt_port_info_cb_handler_ace2f9273d3f508507e496bdb2dc6d5c6}{
+\index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!indexOfPortInfo@{indexOfPortInfo}}
+\index{indexOfPortInfo@{indexOfPortInfo}!mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
+\subsubsection[{indexOfPortInfo}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortInfoCbHandler::indexOfPortInfo (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtPortInfo} \&}]{portInfo}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_port_info_cb_handler_ace2f9273d3f508507e496bdb2dc6d5c6}
+
+
+Get index of a given port info. 
+
+Will return the index of first port info that match. If nothing was found, -\/1 is returned. 
+
+Definition at line 108 of file mdtPortInfoCbHandler.cpp.
+
+\hypertarget{classmdt_port_info_cb_handler_a92a284d227c4f0ce42df9890a9185a97}{
+\index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!portInfoAt@{portInfoAt}}
+\index{portInfoAt@{portInfoAt}!mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
+\subsubsection[{portInfoAt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortInfo} mdtPortInfoCbHandler::portInfoAt (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_cb_handler_a92a284d227c4f0ce42df9890a9185a97}
+
+
+Get the port info object at given index. 
+
+Can return a empty object if nothing was set, or index is out of range. 
+
+Definition at line 84 of file mdtPortInfoCbHandler.cpp.
 
 \hypertarget{classmdt_port_info_cb_handler_a59fc2180a69119e17cfa24cf84a9c96f}{
 \index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!setDevicesComboBox@{setDevicesComboBox}}
@@ -118,7 +175,7 @@ Ports combobox must be set before with \hyperlink{classmdt_port_info_cb_handler_
 \end{DoxyPrecond}
 
 
-Definition at line 45 of file mdtPortInfoCbHandler.cpp.
+Definition at line 47 of file mdtPortInfoCbHandler.cpp.
 
 \hypertarget{classmdt_port_info_cb_handler_a06f9b5e8127e61026911691827f3203a}{
 \index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!setPortsComboBox@{setPortsComboBox}}
@@ -140,7 +197,7 @@ comboBox must be a valid object.
 \end{DoxyPrecond}
 
 
-Definition at line 38 of file mdtPortInfoCbHandler.cpp.
+Definition at line 40 of file mdtPortInfoCbHandler.cpp.
 
 
 

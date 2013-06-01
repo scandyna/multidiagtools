@@ -62,7 +62,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
-<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtDeviceIos Class Reference</div>  </div>
@@ -78,23 +77,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a82850ee99957ec5a787de71299ad785b">updateAnalogInputValues</a> (const QList&lt; QVariant &gt; &amp;values)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's value for a set of analog inputs.  <a href="#a82850ee99957ec5a787de71299ad785b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a2c40cf4749cff1ade292bdd81bc195e9">updateAnalogOutputValues</a> (const QList&lt; QVariant &gt; &amp;values)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's value for a set of analog outputs.  <a href="#a2c40cf4749cff1ade292bdd81bc195e9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ab1a738a2305998aa0c8966d092db1c40">updateAnalogInputValues</a> (const QList&lt; QVariant &gt; &amp;values, int firstAddress, int n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's value for a set of analog inputs.  <a href="#ab1a738a2305998aa0c8966d092db1c40"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a750075dc8a318e8a6feea2e0720e5586">updateAnalogOutputValues</a> (const QList&lt; QVariant &gt; &amp;values, int firstAddressRead, int n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's value for a set of analog outputs.  <a href="#a750075dc8a318e8a6feea2e0720e5586"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae266924a427fbc896e5f9774890ec91f"></a><!-- doxytag: member="mdtDeviceIos::setAnalogOutputsEnabled" ref="ae266924a427fbc896e5f9774890ec91f" args="(bool enabled)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f">setAnalogOutputsEnabled</a> (bool enabled)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable (G)UI's analog outputs. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a9a7582771eca2b54261ff00212c09146">updateDigitalInputStates</a> (const QList&lt; QVariant &gt; &amp;values)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's state for a set of digital inputs.  <a href="#a9a7582771eca2b54261ff00212c09146"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ae9542163fedce98b11e2d9fd0e2e7d78">updateDigitalOutputStates</a> (const QList&lt; QVariant &gt; &amp;values)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's state for a set of digital outputs.  <a href="#ae9542163fedce98b11e2d9fd0e2e7d78"></a><br/></td></tr>
-<tr><td colspan="2"><h2><a name="signals"></a>
-Signals</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a78918905dc0b04976cdc826c0fd582c1">analogOutputValueChanged</a> (int address)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emited when a analog output value has changed.  <a href="#a78918905dc0b04976cdc826c0fd582c1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a45be7941f710e63a7d54020dee38e2ec">digitalOutputStateChanged</a> (int address)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emited when a digital output state has changed.  <a href="#a45be7941f710e63a7d54020dee38e2ec"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a349253f24f42bdbc012812120405ae06">updateDigitalInputValues</a> (const QList&lt; QVariant &gt; &amp;values, int firstAddress, int n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's state for a set of digital inputs.  <a href="#a349253f24f42bdbc012812120405ae06"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a130769d03889ccdb7649dfcc605730b9">updateDigitalOutputValues</a> (const QList&lt; QVariant &gt; &amp;values, int firstAddressRead, int n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's state for a set of digital outputs.  <a href="#a130769d03889ccdb7649dfcc605730b9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1d98b31f7845c0015ac16728038d2db"></a><!-- doxytag: member="mdtDeviceIos::setDigitalOutputsEnabled" ref="ab1d98b31f7845c0015ac16728038d2db" args="(bool enabled)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db">setDigitalOutputsEnabled</a> (bool enabled)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable (G)UI's digital outputs. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44939a10d66421069bdd4b8717e2798c"></a><!-- doxytag: member="mdtDeviceIos::mdtDeviceIos" ref="a44939a10d66421069bdd4b8717e2798c" args="(QObject *parent=0)" -->
@@ -107,51 +103,86 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a analog input.  <a href="#a0e2683630eff9410003a36ae5af76b52"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a70a3d979ec5d44297e8195e37596d5bc">analogInputAt</a> (int address)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog input at given address.  <a href="#a70a3d979ec5d44297e8195e37596d5bc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8635bcc71baa140b87be9edb41e5e61b"></a><!-- doxytag: member="mdtDeviceIos::analogInputs" ref="a8635bcc71baa140b87be9edb41e5e61b" args="()" -->
-QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a8635bcc71baa140b87be9edb41e5e61b">analogInputs</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list containing all analog inputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ae31753e23d7ab14073f852dca85c2f9e">analogInputWithLabelShort</a> (const QString &amp;labelShort)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog input with a given short label.  <a href="#ae31753e23d7ab14073f852dca85c2f9e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#aab70f76d2107f0a9324a9b9d4db21532">analogInputs</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list containing all analog inputs.  <a href="#aab70f76d2107f0a9324a9b9d4db21532"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42f0f52b4bf81c3ef2f89c6512fbbf89"></a><!-- doxytag: member="mdtDeviceIos::analogInputsFirstAddress" ref="a42f0f52b4bf81c3ef2f89c6512fbbf89" args="() const " -->
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a42f0f52b4bf81c3ef2f89c6512fbbf89">analogInputsFirstAddress</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get address of the first analog input. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a904069e2e641c92291226ea2524eadb3"></a><!-- doxytag: member="mdtDeviceIos::analogInputsCount" ref="a904069e2e641c92291226ea2524eadb3" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a904069e2e641c92291226ea2524eadb3">analogInputsCount</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of analog inputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeaa1a401ec975a67f87c62d4abae65ee"></a><!-- doxytag: member="mdtDeviceIos::setAnalogInputsValue" ref="aeaa1a401ec975a67f87c62d4abae65ee" args="(const mdtValue &amp;value)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee">setAnalogInputsValue</a> (const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a value and validity for all analog inputs. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#aeed1140ed869866a6edc738d3b2a6d0b">addAnalogOutput</a> (<a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *ao)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a analog output.  <a href="#aeed1140ed869866a6edc738d3b2a6d0b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a70eba4430604bc30841ddb72664a0e98">analogOutputAt</a> (int address)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog output at given address.  <a href="#a70eba4430604bc30841ddb72664a0e98"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa53fc12adeac76a039f005e72776362c"></a><!-- doxytag: member="mdtDeviceIos::analogOutputs" ref="aa53fc12adeac76a039f005e72776362c" args="()" -->
-QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#aa53fc12adeac76a039f005e72776362c">analogOutputs</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list containing all analog outputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a74385f332753cedb68ae4133c97384be">analogOutputAtAddressRead</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog output at given address for read access.  <a href="#a74385f332753cedb68ae4133c97384be"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a968999a1021a96504805248e2ce04382">analogOutputAtAddressWrite</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog output at given address for write access.  <a href="#a968999a1021a96504805248e2ce04382"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#aab2b2b1f8c887eb9f439cf495ec95fbd">analogOutputWithLabelShort</a> (const QString &amp;labelShort)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog output with a given short label.  <a href="#aab2b2b1f8c887eb9f439cf495ec95fbd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#aa4ddc48f9e3258adc7222ef3481a518e">analogOutputs</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list containing all analog outputs.  <a href="#aa4ddc48f9e3258adc7222ef3481a518e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48b6a6c583dec30ccb1b782e79d14dbb"></a><!-- doxytag: member="mdtDeviceIos::analogOutputsFirstAddressRead" ref="a48b6a6c583dec30ccb1b782e79d14dbb" args="() const " -->
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a48b6a6c583dec30ccb1b782e79d14dbb">analogOutputsFirstAddressRead</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get address for read access of the first analog output. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5be4b1e87f1392a9d69127371c049ea9"></a><!-- doxytag: member="mdtDeviceIos::analogOutputsFirstAddressWrite" ref="a5be4b1e87f1392a9d69127371c049ea9" args="() const " -->
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a5be4b1e87f1392a9d69127371c049ea9">analogOutputsFirstAddressWrite</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get address for write access of the first analog output. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b9b14c4968e5aaae60ac7f91f77e06c"></a><!-- doxytag: member="mdtDeviceIos::analogOutputsCount" ref="a8b9b14c4968e5aaae60ac7f91f77e06c" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a8b9b14c4968e5aaae60ac7f91f77e06c">analogOutputsCount</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of analog outputs. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acdfa626fdd73783702d4e8a750b9cf84"></a><!-- doxytag: member="mdtDeviceIos::analogOutputsValuesInt" ref="acdfa626fdd73783702d4e8a750b9cf84" args="() const " -->
-const QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#acdfa626fdd73783702d4e8a750b9cf84">analogOutputsValuesInt</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all analog outputs values in device specific format. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f96d87047d0b02a043a60a4fd6d18a2"></a><!-- doxytag: member="mdtDeviceIos::setAnalogOutputsValue" ref="a6f96d87047d0b02a043a60a4fd6d18a2" args="(QVariant value)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a6f96d87047d0b02a043a60a4fd6d18a2">setAnalogOutputsValue</a> (QVariant value)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc343f9733f297ee6359455f15308341"></a><!-- doxytag: member="mdtDeviceIos::analogOutputsValuesIntByAddressWrite" ref="afc343f9733f297ee6359455f15308341" args="() const " -->
+QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#afc343f9733f297ee6359455f15308341">analogOutputsValuesIntByAddressWrite</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all analog outputs values in device specific format sorted by address for write access. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d3edb5c95163dbe88ab5f17b6175f2b"></a><!-- doxytag: member="mdtDeviceIos::setAnalogOutputsValue" ref="a5d3edb5c95163dbe88ab5f17b6175f2b" args="(const mdtValue &amp;value)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b">setAnalogOutputsValue</a> (const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a value and validity for all analog outputs. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a023571f5d77bd0874c08b53890a56381">addDigitalInput</a> (<a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *di)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a digital input.  <a href="#a023571f5d77bd0874c08b53890a56381"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a78f68d0efeac0a23628f133121f28df8">digitalInputAt</a> (int address)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital input at given address.  <a href="#a78f68d0efeac0a23628f133121f28df8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab70374d3ad06739f91388526d4203def"></a><!-- doxytag: member="mdtDeviceIos::digitalInputs" ref="ab70374d3ad06739f91388526d4203def" args="()" -->
-QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ab70374d3ad06739f91388526d4203def">digitalInputs</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list containing all digital inputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#abcde6de5a0ca6d642af04c21250d6555">digitalInputWithLabelShort</a> (const QString &amp;labelShort)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital input with a given short label.  <a href="#abcde6de5a0ca6d642af04c21250d6555"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#adb2cbcd4adcee1e9434634694ee1ae24">digitalInputs</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list containing all digital inputs.  <a href="#adb2cbcd4adcee1e9434634694ee1ae24"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a24e300fab861c054e6c61511fcff76c4"></a><!-- doxytag: member="mdtDeviceIos::digitalInputsFirstAddress" ref="a24e300fab861c054e6c61511fcff76c4" args="() const " -->
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a24e300fab861c054e6c61511fcff76c4">digitalInputsFirstAddress</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get address of the first digital input. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d6306c16a25c82d6d8002020f4dc16a"></a><!-- doxytag: member="mdtDeviceIos::digitalInputsCount" ref="a8d6306c16a25c82d6d8002020f4dc16a" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a8d6306c16a25c82d6d8002020f4dc16a">digitalInputsCount</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of digital inputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a136d4a817fbd14c375ff068c436f3eeb"></a><!-- doxytag: member="mdtDeviceIos::setDigitalInputsValue" ref="a136d4a817fbd14c375ff068c436f3eeb" args="(const mdtValue &amp;value)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb">setDigitalInputsValue</a> (const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a value and validity for all digital inputs. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#af1f41d3c60f1030fb303436820417d14">addDigitalOutput</a> (<a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *dout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a digital output.  <a href="#af1f41d3c60f1030fb303436820417d14"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ac2fed299f5ba1884c01adde195c5b007">digitalOutputAt</a> (int address)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital output at given address.  <a href="#ac2fed299f5ba1884c01adde195c5b007"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a72f1844f794d4b5cb7bfede8bcef99"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputs" ref="a8a72f1844f794d4b5cb7bfede8bcef99" args="()" -->
-QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a8a72f1844f794d4b5cb7bfede8bcef99">digitalOutputs</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list containing all digital outputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a87647e98e2574a1e5f7c8780f9c33b13">digitalOutputAtAddressRead</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital output at given address for read access.  <a href="#a87647e98e2574a1e5f7c8780f9c33b13"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#af50bc664e381265b93b1e8faf7f883b7">digitalOutputAtAddressWrite</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital output at given address for write access.  <a href="#af50bc664e381265b93b1e8faf7f883b7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#acecc7f9abb21613fed90212eef4d4dda">digitalOutputWithLabelShort</a> (const QString &amp;labelShort)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital output with a given short label.  <a href="#acecc7f9abb21613fed90212eef4d4dda"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a74418e6be28a2017140f102484f0df31">digitalOutputs</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list containing all digital outputs.  <a href="#a74418e6be28a2017140f102484f0df31"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5683713bafa419f199ac756b769c9b7"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputsFirstAddressRead" ref="af5683713bafa419f199ac756b769c9b7" args="() const " -->
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#af5683713bafa419f199ac756b769c9b7">digitalOutputsFirstAddressRead</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get address for read access of the first digital output. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1e9a9ae2e49a031b74571c6386c785a"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputsFirstAddressWrite" ref="af1e9a9ae2e49a031b74571c6386c785a" args="() const " -->
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#af1e9a9ae2e49a031b74571c6386c785a">digitalOutputsFirstAddressWrite</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get address for write access of the first digital output. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81041e03a387fdcdc2638527b27a0ff6"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputsCount" ref="a81041e03a387fdcdc2638527b27a0ff6" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a81041e03a387fdcdc2638527b27a0ff6">digitalOutputsCount</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of digital outputs. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13a10727750161e49c3a56917ceb1ffe"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputsStates" ref="a13a10727750161e49c3a56917ceb1ffe" args="() const " -->
-const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a13a10727750161e49c3a56917ceb1ffe">digitalOutputsStates</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all digital outputs states. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5685ba4a6cee6fad1555dc9b51d1d932"></a><!-- doxytag: member="mdtDeviceIos::setDigitalOutputsValue" ref="a5685ba4a6cee6fad1555dc9b51d1d932" args="(const mdtValue &amp;value)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932">setDigitalOutputsValue</a> (const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a value and validity for all digital outputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67388ae8181a19da07f7b74320a516e3"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputsStatesByAddressWrite" ref="a67388ae8181a19da07f7b74320a516e3" args="() const " -->
+QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a67388ae8181a19da07f7b74320a516e3">digitalOutputsStatesByAddressWrite</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all digital outputs states sorted by address for write access. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Container for a set of I/O's. </p>
@@ -168,9 +199,15 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <li>Relative address of a MODBUS query</li>
 <li>Memory address of physical device</li>
 </ul>
-<p>You can choose to use this address as simple index. </p>
+<p>You can choose to use this address as simple index.</p>
+<p>Note: if a address is changed by accessing directly by <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> or <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a>, this will not be reflected, and stored I/O's will become incoherent. The address must allways be set before adding the I/O to this container. Example:</p>
+<ul>
+<li><a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *analogIn = new <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a>;</li>
+<li>analogIn-&gt;setAddress(25);</li>
+<li>ios.addAnalogInput(analogIn); </li>
+</ul>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8h_source.html#l00053">53</a> of file <a class="el" href="mdt_device_ios_8h_source.html">mdtDeviceIos.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8h_source.html#l00062">62</a> of file <a class="el" href="mdt_device_ios_8h_source.html">mdtDeviceIos.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a0e2683630eff9410003a36ae5af76b52"></a><!-- doxytag: member="mdtDeviceIos::addAnalogInput" ref="a0e2683630eff9410003a36ae5af76b52" args="(mdtAnalogIo *ai)" -->
 <div class="memitem">
@@ -190,7 +227,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <p>Add a analog input. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>ai must be a valid pointer </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -212,7 +249,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <p>Add a analog output. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>ao must be a valid pointer </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00078">78</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00133">133</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -234,7 +271,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <p>Add a digital input. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>di must be a valid pointer </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00128">128</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00220">220</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -256,7 +293,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <p>Add a digital output. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>dout must be a valid pointer </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00150">150</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00276">276</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -278,16 +315,59 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <p>Get analog input at given address. </p>
 <p>If no object exists at given address, a null pointer is returned. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00063">63</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00089">89</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a70eba4430604bc30841ddb72664a0e98"></a><!-- doxytag: member="mdtDeviceIos::analogOutputAt" ref="a70eba4430604bc30841ddb72664a0e98" args="(int address)" -->
+<a class="anchor" id="aab70f76d2107f0a9324a9b9d4db21532"></a><!-- doxytag: member="mdtDeviceIos::analogInputs" ref="aab70f76d2107f0a9324a9b9d4db21532" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * mdtDeviceIos::analogOutputAt </td>
+          <td class="memname">const QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt; mdtDeviceIos::analogInputs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list containing all analog inputs. </p>
+<p>Note: the returned list is not sorted </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00108">108</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae31753e23d7ab14073f852dca85c2f9e"></a><!-- doxytag: member="mdtDeviceIos::analogInputWithLabelShort" ref="ae31753e23d7ab14073f852dca85c2f9e" args="(const QString &amp;labelShort)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * mdtDeviceIos::analogInputWithLabelShort </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>labelShort</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get analog input with a given short label. </p>
+<p>If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a74385f332753cedb68ae4133c97384be"></a><!-- doxytag: member="mdtDeviceIos::analogOutputAtAddressRead" ref="a74385f332753cedb68ae4133c97384be" args="(int address)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * mdtDeviceIos::analogOutputAtAddressRead </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>address</em></td><td>)</td>
@@ -297,30 +377,75 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 </div>
 <div class="memdoc">
 
-<p>Get analog output at given address. </p>
+<p>Get analog output at given address for read access. </p>
 <p>If no object exists at given address, a null pointer is returned. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00086">86</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00151">151</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a78918905dc0b04976cdc826c0fd582c1"></a><!-- doxytag: member="mdtDeviceIos::analogOutputValueChanged" ref="a78918905dc0b04976cdc826c0fd582c1" args="(int address)" -->
+<a class="anchor" id="a968999a1021a96504805248e2ce04382"></a><!-- doxytag: member="mdtDeviceIos::analogOutputAtAddressWrite" ref="a968999a1021a96504805248e2ce04382" args="(int address)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDeviceIos::analogOutputValueChanged </td>
+          <td class="memname"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * mdtDeviceIos::analogOutputAtAddressWrite </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>address</em></td><td>)</td>
-          <td><code> [signal]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>This signal is emited when a analog output value has changed. </p>
-<p>This signal is used to notify <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> that a analog output must be set on device. </p>
+<p>Get analog output at given address for write access. </p>
+<p>If no object exists at given address, a null pointer is returned. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa4ddc48f9e3258adc7222ef3481a518e"></a><!-- doxytag: member="mdtDeviceIos::analogOutputs" ref="aa4ddc48f9e3258adc7222ef3481a518e" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt; mdtDeviceIos::analogOutputs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list containing all analog outputs. </p>
+<p>Note: the returned list is not sorted </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aab2b2b1f8c887eb9f439cf495ec95fbd"></a><!-- doxytag: member="mdtDeviceIos::analogOutputWithLabelShort" ref="aab2b2b1f8c887eb9f439cf495ec95fbd" args="(const QString &amp;labelShort)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * mdtDeviceIos::analogOutputWithLabelShort </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>labelShort</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get analog output with a given short label. </p>
+<p>If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -341,7 +466,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <p>Delete all I/O objects. </p>
 <p>Will free all stored I/O objects. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00044">44</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -363,16 +488,59 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <p>Get digital input at given address. </p>
 <p>If no object exists at given address, a null pointer is returned. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00135">135</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00232">232</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac2fed299f5ba1884c01adde195c5b007"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputAt" ref="ac2fed299f5ba1884c01adde195c5b007" args="(int address)" -->
+<a class="anchor" id="adb2cbcd4adcee1e9434634694ee1ae24"></a><!-- doxytag: member="mdtDeviceIos::digitalInputs" ref="adb2cbcd4adcee1e9434634694ee1ae24" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * mdtDeviceIos::digitalOutputAt </td>
+          <td class="memname">const QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt; mdtDeviceIos::digitalInputs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list containing all digital inputs. </p>
+<p>Note: the returned list is not sorted </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00251">251</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abcde6de5a0ca6d642af04c21250d6555"></a><!-- doxytag: member="mdtDeviceIos::digitalInputWithLabelShort" ref="abcde6de5a0ca6d642af04c21250d6555" args="(const QString &amp;labelShort)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * mdtDeviceIos::digitalInputWithLabelShort </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>labelShort</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get digital input with a given short label. </p>
+<p>If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00237">237</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a87647e98e2574a1e5f7c8780f9c33b13"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputAtAddressRead" ref="a87647e98e2574a1e5f7c8780f9c33b13" args="(int address)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * mdtDeviceIos::digitalOutputAtAddressRead </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>address</em></td><td>)</td>
@@ -382,30 +550,75 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 </div>
 <div class="memdoc">
 
-<p>Get digital output at given address. </p>
+<p>Get digital output at given address for read access. </p>
 <p>If no object exists at given address, a null pointer is returned. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00158">158</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00294">294</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a45be7941f710e63a7d54020dee38e2ec"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputStateChanged" ref="a45be7941f710e63a7d54020dee38e2ec" args="(int address)" -->
+<a class="anchor" id="af50bc664e381265b93b1e8faf7f883b7"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputAtAddressWrite" ref="af50bc664e381265b93b1e8faf7f883b7" args="(int address)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDeviceIos::digitalOutputStateChanged </td>
+          <td class="memname"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * mdtDeviceIos::digitalOutputAtAddressWrite </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>address</em></td><td>)</td>
-          <td><code> [signal]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>This signal is emited when a digital output state has changed. </p>
-<p>This signal is used to notify <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> that a digital output must be set on device. </p>
+<p>Get digital output at given address for write access. </p>
+<p>If no object exists at given address, a null pointer is returned. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00299">299</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a74418e6be28a2017140f102484f0df31"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputs" ref="a74418e6be28a2017140f102484f0df31" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt; mdtDeviceIos::digitalOutputs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list containing all digital outputs. </p>
+<p>Note: the returned list is not sorted </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00318">318</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acecc7f9abb21613fed90212eef4d4dda"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputWithLabelShort" ref="acecc7f9abb21613fed90212eef4d4dda" args="(const QString &amp;labelShort)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * mdtDeviceIos::digitalOutputWithLabelShort </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>labelShort</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get digital output with a given short label. </p>
+<p>If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00304">304</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -428,11 +641,11 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <p>If true, all internal I/O's will be deleted when this object is deleted.</p>
 <p>By default, this flag is true. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00039">39</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a82850ee99957ec5a787de71299ad785b"></a><!-- doxytag: member="mdtDeviceIos::updateAnalogInputValues" ref="a82850ee99957ec5a787de71299ad785b" args="(const QList&lt; QVariant &gt; &amp;values)" -->
+<a class="anchor" id="ab1a738a2305998aa0c8966d092db1c40"></a><!-- doxytag: member="mdtDeviceIos::updateAnalogInputValues" ref="ab1a738a2305998aa0c8966d092db1c40" args="(const QList&lt; QVariant &gt; &amp;values, int firstAddress, int n)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -440,27 +653,49 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
           <td class="memname">void mdtDeviceIos::updateAnalogInputValues </td>
           <td>(</td>
           <td class="paramtype">const QList&lt; QVariant &gt; &amp;&#160;</td>
-          <td class="paramname"><em>values</em></td><td>)</td>
-          <td><code> [slot]</code></td>
+          <td class="paramname"><em>values</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>firstAddress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [slot]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Update (G)UI's value for a set of analog inputs. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">values</td><td>The values of inputs, must be sorted by address, ascending. If a value is invalid, concerned input will be set invalid. </td></tr>
+    <tr><td class="paramname">firstAddress</td><td>Address of first inputs to update. If &lt; 0, the internal first address is considered. </td></tr>
+    <tr><td class="paramname">n</td><td>Quantity of inputs to update. If &lt; 0, the internal quantity is considered.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Note:</p>
 <ul>
-<li>Here, it is assumed that values are stored from address 0 to N-1</li>
-<li>If one address not exists, nothing will happen for this address.</li>
 <li>If one value is invalid, concerned input will be set invalid.</li>
-<li>If type value is of type integer, <a class="el" href="classmdt_analog_io.html#a011fba645b655bdb3f7f8740c327e624" title="Set the integer value.">mdtAnalogIo::setValueInt()</a> is used, else <a class="el" href="classmdt_analog_io.html#a3c8a10c66650728d1878415032543e8a" title="Set the value to update display.">mdtAnalogIo::setValue()</a> is used. </li>
+<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a>. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00188">188</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00363">363</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2c40cf4749cff1ade292bdd81bc195e9"></a><!-- doxytag: member="mdtDeviceIos::updateAnalogOutputValues" ref="a2c40cf4749cff1ade292bdd81bc195e9" args="(const QList&lt; QVariant &gt; &amp;values)" -->
+<a class="anchor" id="a750075dc8a318e8a6feea2e0720e5586"></a><!-- doxytag: member="mdtDeviceIos::updateAnalogOutputValues" ref="a750075dc8a318e8a6feea2e0720e5586" args="(const QList&lt; QVariant &gt; &amp;values, int firstAddressRead, int n)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -468,80 +703,135 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
           <td class="memname">void mdtDeviceIos::updateAnalogOutputValues </td>
           <td>(</td>
           <td class="paramtype">const QList&lt; QVariant &gt; &amp;&#160;</td>
-          <td class="paramname"><em>values</em></td><td>)</td>
-          <td><code> [slot]</code></td>
+          <td class="paramname"><em>values</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>firstAddressRead</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [slot]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Update (G)UI's value for a set of analog outputs. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">values</td><td>The values of outputs, must be sorted by address, ascending. If a value is invalid, concerned output will be set invalid. </td></tr>
+    <tr><td class="paramname">firstAddressRead</td><td>Address (for device read access) of first output to update. If &lt; 0, the internal first address is considered. </td></tr>
+    <tr><td class="paramname">n</td><td>Quantity of outputs to update. If &lt; 0, the internal quantity is considered.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Note:</p>
 <ul>
-<li>Here, it is assumed that values are stored from address 0 to N-1</li>
-<li>If one address not exists, nothing will happen for this address.</li>
-<li>If one value is invalid, concerned input will be set invalid.</li>
-<li>If type value is of type integer, <a class="el" href="classmdt_analog_io.html#a011fba645b655bdb3f7f8740c327e624" title="Set the integer value.">mdtAnalogIo::setValueInt()</a> is used, else <a class="el" href="classmdt_analog_io.html#a3c8a10c66650728d1878415032543e8a" title="Set the value to update display.">mdtAnalogIo::setValue()</a> is used. </li>
+<li>If one value is invalid, concerned output will be set invalid.</li>
+<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a>. </li>
 </ul>
 
-<p><p>ao-&gt;setEnabled(true); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00202">202</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00404">404</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9a7582771eca2b54261ff00212c09146"></a><!-- doxytag: member="mdtDeviceIos::updateDigitalInputStates" ref="a9a7582771eca2b54261ff00212c09146" args="(const QList&lt; QVariant &gt; &amp;values)" -->
+<a class="anchor" id="a349253f24f42bdbc012812120405ae06"></a><!-- doxytag: member="mdtDeviceIos::updateDigitalInputValues" ref="a349253f24f42bdbc012812120405ae06" args="(const QList&lt; QVariant &gt; &amp;values, int firstAddress, int n)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDeviceIos::updateDigitalInputStates </td>
+          <td class="memname">void mdtDeviceIos::updateDigitalInputValues </td>
           <td>(</td>
           <td class="paramtype">const QList&lt; QVariant &gt; &amp;&#160;</td>
-          <td class="paramname"><em>values</em></td><td>)</td>
-          <td><code> [slot]</code></td>
+          <td class="paramname"><em>values</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>firstAddress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [slot]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Update (G)UI's state for a set of digital inputs. </p>
-<p>Note:</p>
-<ul>
-<li>Here, it is assumed that values are stored from address 0 to N-1</li>
-<li>If one address not exists, nothing will happen for this address.</li>
-<li>If one value is invalid, concerned input will be set invalid. </li>
-</ul>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">values</td><td>The values of inputs, must be sorted by address, ascending. If a value is invalid, concerned input will be set invalid. </td></tr>
+    <tr><td class="paramname">firstAddress</td><td>Address of first input to update. If &lt; 0, the internal first address is considered. </td></tr>
+    <tr><td class="paramname">n</td><td>Quantity of inputs to update. If &lt; 0, the internal quantity is considered. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00228">228</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00455">455</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae9542163fedce98b11e2d9fd0e2e7d78"></a><!-- doxytag: member="mdtDeviceIos::updateDigitalOutputStates" ref="ae9542163fedce98b11e2d9fd0e2e7d78" args="(const QList&lt; QVariant &gt; &amp;values)" -->
+<a class="anchor" id="a130769d03889ccdb7649dfcc605730b9"></a><!-- doxytag: member="mdtDeviceIos::updateDigitalOutputValues" ref="a130769d03889ccdb7649dfcc605730b9" args="(const QList&lt; QVariant &gt; &amp;values, int firstAddressRead, int n)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDeviceIos::updateDigitalOutputStates </td>
+          <td class="memname">void mdtDeviceIos::updateDigitalOutputValues </td>
           <td>(</td>
           <td class="paramtype">const QList&lt; QVariant &gt; &amp;&#160;</td>
-          <td class="paramname"><em>values</em></td><td>)</td>
-          <td><code> [slot]</code></td>
+          <td class="paramname"><em>values</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>firstAddressRead</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [slot]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Update (G)UI's state for a set of digital outputs. </p>
-<p>Note:</p>
-<ul>
-<li>Here, it is assumed that values are stored from address 0 to N-1</li>
-<li>If one address not exists, nothing will happen for this address.</li>
-<li>If one value is invalid, concerned input will be set invalid. </li>
-</ul>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">values</td><td>The values of outputs, must be sorted by address, ascending. If a value is invalid, concerned output will be set invalid. </td></tr>
+    <tr><td class="paramname">firstAddressRead</td><td>Address (for device read access) of first output to update. If &lt; 0, the internal first address is considered. </td></tr>
+    <tr><td class="paramname">n</td><td>Quantity of outputs to update. If &lt; 0, the internal quantity is considered. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00242">242</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00489">489</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -564,7 +854,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:25 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

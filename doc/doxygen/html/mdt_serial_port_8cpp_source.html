@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -695,659 +695,654 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00633"></a>00633   }
 <a name="l00634"></a>00634   pvMutex.lock();
 <a name="l00635"></a>00635   <span class="keywordflow">if</span>(n == 0){
-<a name="l00636"></a>00636     <a class="code" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState</a>(<span class="keyword">true</span>);
-<a name="l00637"></a>00637     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">ReadTimeout</a>;
-<a name="l00638"></a>00638   }<span class="keywordflow">else</span>{
-<a name="l00639"></a>00639     <a class="code" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState</a>(<span class="keyword">false</span>);
-<a name="l00640"></a>00640     <span class="keywordflow">if</span>(n &lt; 0){
-<a name="l00641"></a>00641       <span class="keywordflow">switch</span>(errno){
-<a name="l00642"></a>00642         <span class="keywordflow">case</span> EINTR:
-<a name="l00643"></a>00643           <span class="comment">// Thread has send the stop signal</span>
-<a name="l00644"></a>00644           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">ReadCanceled</a>;
-<a name="l00645"></a>00645         <span class="keywordflow">default</span>:
-<a name="l00646"></a>00646           <span class="comment">// Unhandled error</span>
-<a name="l00647"></a>00647           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;select() call failed&quot;</span>, mdtError::Error);
-<a name="l00648"></a>00648           e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
-<a name="l00649"></a>00649           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00650"></a>00650           e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00651"></a>00651           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
-<a name="l00652"></a>00652       }
-<a name="l00653"></a>00653     }
-<a name="l00654"></a>00654   }
-<a name="l00655"></a>00655 
-<a name="l00656"></a>00656   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
-<a name="l00657"></a>00657 }
-<a name="l00658"></a>00658 
-<a name="l00659"></a><a class="code" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc">00659</a> qint64 <a class="code" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc" title="Read data from port.">mdtSerialPort::read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize)
-<a name="l00660"></a>00660 {
-<a name="l00661"></a>00661   <span class="keywordtype">int</span> n;
-<a name="l00662"></a>00662   <span class="keywordtype">int</span> err;
-<a name="l00663"></a>00663 
-<a name="l00664"></a>00664   n =<a class="code" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc" title="Read data from port."> ::read</a>(pvFd, data, maxSize);
-<a name="l00665"></a>00665   <span class="keywordflow">if</span>(n &lt; 0){
-<a name="l00666"></a>00666     <span class="comment">// Store errno</span>
-<a name="l00667"></a>00667     err = errno;
-<a name="l00668"></a>00668     <span class="keywordflow">switch</span>(err){
-<a name="l00669"></a>00669       <span class="keywordflow">case</span> EAGAIN:      <span class="comment">// No data available</span>
-<a name="l00670"></a>00670         <span class="keywordflow">return</span> 0;
-<a name="l00671"></a>00671       <span class="keywordflow">case</span> ETIMEDOUT:   <span class="comment">// Read timeout (happens with USBTMC)</span>
-<a name="l00672"></a>00672         <a class="code" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState</a>(<span class="keyword">true</span>);
-<a name="l00673"></a>00673         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">ReadTimeout</a>;
-<a name="l00674"></a>00674       <span class="keywordflow">default</span>:
-<a name="l00675"></a>00675         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;read() call failed&quot;</span>, mdtError::Error);
-<a name="l00676"></a>00676         e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
-<a name="l00677"></a>00677         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00678"></a>00678         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00679"></a>00679         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
-<a name="l00680"></a>00680     }
-<a name="l00681"></a>00681   }
+<a name="l00636"></a>00636     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">ReadTimeout</a>;
+<a name="l00637"></a>00637   }<span class="keywordflow">else</span>{
+<a name="l00638"></a>00638     <span class="keywordflow">if</span>(n &lt; 0){
+<a name="l00639"></a>00639       <span class="keywordflow">switch</span>(errno){
+<a name="l00640"></a>00640         <span class="keywordflow">case</span> EINTR:
+<a name="l00641"></a>00641           <span class="comment">// Thread has send the stop signal</span>
+<a name="l00642"></a>00642           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">ReadCanceled</a>;
+<a name="l00643"></a>00643         <span class="keywordflow">default</span>:
+<a name="l00644"></a>00644           <span class="comment">// Unhandled error</span>
+<a name="l00645"></a>00645           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;select() call failed&quot;</span>, mdtError::Error);
+<a name="l00646"></a>00646           e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
+<a name="l00647"></a>00647           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00648"></a>00648           e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00649"></a>00649           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
+<a name="l00650"></a>00650       }
+<a name="l00651"></a>00651     }
+<a name="l00652"></a>00652   }
+<a name="l00653"></a>00653 
+<a name="l00654"></a>00654   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
+<a name="l00655"></a>00655 }
+<a name="l00656"></a>00656 
+<a name="l00657"></a><a class="code" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc">00657</a> qint64 <a class="code" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc" title="Read data from port.">mdtSerialPort::read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize)
+<a name="l00658"></a>00658 {
+<a name="l00659"></a>00659   <span class="keywordtype">int</span> n;
+<a name="l00660"></a>00660   <span class="keywordtype">int</span> err;
+<a name="l00661"></a>00661 
+<a name="l00662"></a>00662   n =<a class="code" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc" title="Read data from port."> ::read</a>(pvFd, data, maxSize);
+<a name="l00663"></a>00663   <span class="keywordflow">if</span>(n &lt; 0){
+<a name="l00664"></a>00664     <span class="comment">// Store errno</span>
+<a name="l00665"></a>00665     err = errno;
+<a name="l00666"></a>00666     <span class="keywordflow">switch</span>(err){
+<a name="l00667"></a>00667       <span class="keywordflow">case</span> EAGAIN:      <span class="comment">// No data available</span>
+<a name="l00668"></a>00668         <span class="keywordflow">return</span> 0;
+<a name="l00669"></a>00669       <span class="keywordflow">case</span> ETIMEDOUT:   <span class="comment">// Read timeout (happens with USBTMC)</span>
+<a name="l00670"></a>00670         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">ReadTimeout</a>;
+<a name="l00671"></a>00671       <span class="keywordflow">default</span>:
+<a name="l00672"></a>00672         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;read() call failed&quot;</span>, mdtError::Error);
+<a name="l00673"></a>00673         e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
+<a name="l00674"></a>00674         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00675"></a>00675         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00676"></a>00676         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
+<a name="l00677"></a>00677     }
+<a name="l00678"></a>00678   }
+<a name="l00679"></a>00679 
+<a name="l00680"></a>00680   <span class="keywordflow">return</span> n;
+<a name="l00681"></a>00681 }
 <a name="l00682"></a>00682 
-<a name="l00683"></a>00683   <span class="keywordflow">return</span> n;
-<a name="l00684"></a>00684 }
-<a name="l00685"></a>00685 
-<a name="l00686"></a><a class="code" href="classmdt_serial_port.html#a9412faf413eca5ee3516139fdfaaf2fe">00686</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port.html#a9412faf413eca5ee3516139fdfaaf2fe" title="Request to suspend transmission.">mdtSerialPort::suspendTransmission</a>()
-<a name="l00687"></a>00687 {
-<a name="l00688"></a>00688   <span class="keywordtype">int</span> err;
-<a name="l00689"></a>00689 
-<a name="l00690"></a>00690   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a9315ed0c7854a09716a4585efb0094c7" title="Get configured state of RTS/CTS flow control.">flowCtlRtsCtsOn</a>()){
-<a name="l00691"></a>00691     <span class="keywordflow">if</span>(!setRtsOff()){
-<a name="l00692"></a>00692       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00693"></a>00693     }
-<a name="l00694"></a>00694   }
-<a name="l00695"></a>00695   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a8d3e3eb1d2272129b8b97377dff1d5d4" title="Get configured state of Xon/Xoff flow control.">flowCtlXonXoffOn</a>()){
-<a name="l00696"></a>00696     <span class="keywordflow">if</span>(tcflow(pvFd, TCIOFF) &lt; 0){
-<a name="l00697"></a>00697       err = errno;
-<a name="l00698"></a>00698       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflow() call failed&quot;</span>, mdtError::Error);
-<a name="l00699"></a>00699       e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
-<a name="l00700"></a>00700       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00701"></a>00701       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00702"></a>00702       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00703"></a>00703     }
-<a name="l00704"></a>00704   }
+<a name="l00683"></a><a class="code" href="classmdt_serial_port.html#a9412faf413eca5ee3516139fdfaaf2fe">00683</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port.html#a9412faf413eca5ee3516139fdfaaf2fe" title="Request to suspend transmission.">mdtSerialPort::suspendTransmission</a>()
+<a name="l00684"></a>00684 {
+<a name="l00685"></a>00685   <span class="keywordtype">int</span> err;
+<a name="l00686"></a>00686 
+<a name="l00687"></a>00687   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a9315ed0c7854a09716a4585efb0094c7" title="Get configured state of RTS/CTS flow control.">flowCtlRtsCtsOn</a>()){
+<a name="l00688"></a>00688     <span class="keywordflow">if</span>(!setRtsOff()){
+<a name="l00689"></a>00689       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00690"></a>00690     }
+<a name="l00691"></a>00691   }
+<a name="l00692"></a>00692   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a8d3e3eb1d2272129b8b97377dff1d5d4" title="Get configured state of Xon/Xoff flow control.">flowCtlXonXoffOn</a>()){
+<a name="l00693"></a>00693     <span class="keywordflow">if</span>(tcflow(pvFd, TCIOFF) &lt; 0){
+<a name="l00694"></a>00694       err = errno;
+<a name="l00695"></a>00695       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflow() call failed&quot;</span>, mdtError::Error);
+<a name="l00696"></a>00696       e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
+<a name="l00697"></a>00697       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00698"></a>00698       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00699"></a>00699       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00700"></a>00700     }
+<a name="l00701"></a>00701   }
+<a name="l00702"></a>00702 
+<a name="l00703"></a>00703   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00704"></a>00704 }
 <a name="l00705"></a>00705 
-<a name="l00706"></a>00706   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00707"></a>00707 }
-<a name="l00708"></a>00708 
-<a name="l00709"></a><a class="code" href="classmdt_serial_port.html#a02fd5ee74a7f52c3bce0545ec8a659bf">00709</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port.html#a02fd5ee74a7f52c3bce0545ec8a659bf" title="Request to resume transmission.">mdtSerialPort::resumeTransmission</a>()
-<a name="l00710"></a>00710 {
-<a name="l00711"></a>00711   <span class="keywordtype">int</span> err;
-<a name="l00712"></a>00712 
-<a name="l00713"></a>00713   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a9315ed0c7854a09716a4585efb0094c7" title="Get configured state of RTS/CTS flow control.">flowCtlRtsCtsOn</a>()){
-<a name="l00714"></a>00714     <span class="keywordflow">if</span>(!setRtsOn()){
-<a name="l00715"></a>00715       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00716"></a>00716     }
-<a name="l00717"></a>00717   }
-<a name="l00718"></a>00718   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a8d3e3eb1d2272129b8b97377dff1d5d4" title="Get configured state of Xon/Xoff flow control.">flowCtlXonXoffOn</a>()){
-<a name="l00719"></a>00719     <span class="keywordflow">if</span>(tcflow(pvFd, TCION) &lt; 0){
-<a name="l00720"></a>00720       err = errno;
-<a name="l00721"></a>00721       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflow() call failed&quot;</span>, mdtError::Error);
-<a name="l00722"></a>00722       e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
-<a name="l00723"></a>00723       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00724"></a>00724       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00725"></a>00725       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00726"></a>00726     }
-<a name="l00727"></a>00727   }
+<a name="l00706"></a><a class="code" href="classmdt_serial_port.html#a02fd5ee74a7f52c3bce0545ec8a659bf">00706</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port.html#a02fd5ee74a7f52c3bce0545ec8a659bf" title="Request to resume transmission.">mdtSerialPort::resumeTransmission</a>()
+<a name="l00707"></a>00707 {
+<a name="l00708"></a>00708   <span class="keywordtype">int</span> err;
+<a name="l00709"></a>00709 
+<a name="l00710"></a>00710   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a9315ed0c7854a09716a4585efb0094c7" title="Get configured state of RTS/CTS flow control.">flowCtlRtsCtsOn</a>()){
+<a name="l00711"></a>00711     <span class="keywordflow">if</span>(!setRtsOn()){
+<a name="l00712"></a>00712       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00713"></a>00713     }
+<a name="l00714"></a>00714   }
+<a name="l00715"></a>00715   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a8d3e3eb1d2272129b8b97377dff1d5d4" title="Get configured state of Xon/Xoff flow control.">flowCtlXonXoffOn</a>()){
+<a name="l00716"></a>00716     <span class="keywordflow">if</span>(tcflow(pvFd, TCION) &lt; 0){
+<a name="l00717"></a>00717       err = errno;
+<a name="l00718"></a>00718       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflow() call failed&quot;</span>, mdtError::Error);
+<a name="l00719"></a>00719       e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
+<a name="l00720"></a>00720       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00721"></a>00721       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00722"></a>00722       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00723"></a>00723     }
+<a name="l00724"></a>00724   }
+<a name="l00725"></a>00725 
+<a name="l00726"></a>00726   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00727"></a>00727 }
 <a name="l00728"></a>00728 
-<a name="l00729"></a>00729   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00730"></a>00730 }
-<a name="l00731"></a>00731 
-<a name="l00732"></a><a class="code" href="classmdt_serial_port.html#a988825b3ff2ef93a1b43e2df316055bd">00732</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_serial_port.html#a988825b3ff2ef93a1b43e2df316055bd" title="void flushIn();">mdtSerialPort::waitEventWriteReady</a>()
-<a name="l00733"></a>00733 {
-<a name="l00734"></a>00734   fd_set output;
-<a name="l00735"></a>00735   <span class="keywordtype">int</span> n;
-<a name="l00736"></a>00736   <span class="keyword">struct </span>timeval tv = pvWriteTimeout;  <span class="comment">// Create a copy, because select() alter the timeout</span>
-<a name="l00737"></a>00737 
-<a name="l00738"></a>00738   <span class="comment">// Init the select call</span>
-<a name="l00739"></a>00739   FD_ZERO(&amp;output);
-<a name="l00740"></a>00740   FD_SET(pvFd, &amp;output);
-<a name="l00741"></a>00741 
-<a name="l00742"></a>00742   pvMutex.unlock();
-<a name="l00743"></a>00743   <span class="keywordflow">if</span>(tv.tv_sec == -1){
-<a name="l00744"></a>00744     n = select(pvFd+1, 0, &amp;output, 0, 0);
-<a name="l00745"></a>00745   }<span class="keywordflow">else</span>{
-<a name="l00746"></a>00746     n = select(pvFd+1, 0, &amp;output, 0, &amp;tv);
-<a name="l00747"></a>00747   }
-<a name="l00748"></a>00748   pvMutex.lock();
-<a name="l00749"></a>00749   <span class="keywordflow">if</span>(n == 0){
-<a name="l00750"></a>00750     <a class="code" href="classmdt_abstract_port.html#ab51135de1f7bbc4707c3284f924c98dc" title="Update the write timeout state.">updateWriteTimeoutState</a>(<span class="keyword">true</span>);
-<a name="l00751"></a>00751     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac3a5cee51d4fb0b3bfb7c49604059c6a">WriteTimeout</a>;
-<a name="l00752"></a>00752   }<span class="keywordflow">else</span>{
-<a name="l00753"></a>00753     <a class="code" href="classmdt_abstract_port.html#ab51135de1f7bbc4707c3284f924c98dc" title="Update the write timeout state.">updateWriteTimeoutState</a>(<span class="keyword">false</span>);
-<a name="l00754"></a>00754     <span class="keywordflow">if</span>(n &lt; 0){
-<a name="l00755"></a>00755       <span class="keywordflow">switch</span>(errno){
-<a name="l00756"></a>00756         <span class="keywordflow">case</span> EINTR:
-<a name="l00757"></a>00757           <span class="comment">// Thread has send the stop signal</span>
-<a name="l00758"></a>00758           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">WriteCanceled</a>;
-<a name="l00759"></a>00759         <span class="keywordflow">default</span>:
-<a name="l00760"></a>00760           <span class="comment">// Unhandled error</span>
-<a name="l00761"></a>00761           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;select() call failed&quot;</span>, mdtError::Error);
-<a name="l00762"></a>00762           e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
-<a name="l00763"></a>00763           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00764"></a>00764           e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00765"></a>00765           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
-<a name="l00766"></a>00766       }
-<a name="l00767"></a>00767     }
-<a name="l00768"></a>00768   }
-<a name="l00769"></a>00769 
-<a name="l00770"></a>00770   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
-<a name="l00771"></a>00771 }
+<a name="l00729"></a><a class="code" href="classmdt_serial_port.html#a988825b3ff2ef93a1b43e2df316055bd">00729</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_serial_port.html#a988825b3ff2ef93a1b43e2df316055bd" title="void flushIn();">mdtSerialPort::waitEventWriteReady</a>()
+<a name="l00730"></a>00730 {
+<a name="l00731"></a>00731   fd_set output;
+<a name="l00732"></a>00732   <span class="keywordtype">int</span> n;
+<a name="l00733"></a>00733   <span class="keyword">struct </span>timeval tv = pvWriteTimeout;  <span class="comment">// Create a copy, because select() alter the timeout</span>
+<a name="l00734"></a>00734 
+<a name="l00735"></a>00735   <span class="comment">// Init the select call</span>
+<a name="l00736"></a>00736   FD_ZERO(&amp;output);
+<a name="l00737"></a>00737   FD_SET(pvFd, &amp;output);
+<a name="l00738"></a>00738 
+<a name="l00739"></a>00739   pvMutex.unlock();
+<a name="l00740"></a>00740   <span class="keywordflow">if</span>(tv.tv_sec == -1){
+<a name="l00741"></a>00741     n = select(pvFd+1, 0, &amp;output, 0, 0);
+<a name="l00742"></a>00742   }<span class="keywordflow">else</span>{
+<a name="l00743"></a>00743     n = select(pvFd+1, 0, &amp;output, 0, &amp;tv);
+<a name="l00744"></a>00744   }
+<a name="l00745"></a>00745   pvMutex.lock();
+<a name="l00746"></a>00746   <span class="keywordflow">if</span>(n == 0){
+<a name="l00747"></a>00747     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac3a5cee51d4fb0b3bfb7c49604059c6a">WriteTimeout</a>;
+<a name="l00748"></a>00748   }<span class="keywordflow">else</span>{
+<a name="l00749"></a>00749     <span class="keywordflow">if</span>(n &lt; 0){
+<a name="l00750"></a>00750       <span class="keywordflow">switch</span>(errno){
+<a name="l00751"></a>00751         <span class="keywordflow">case</span> EINTR:
+<a name="l00752"></a>00752           <span class="comment">// Thread has send the stop signal</span>
+<a name="l00753"></a>00753           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">WriteCanceled</a>;
+<a name="l00754"></a>00754         <span class="keywordflow">default</span>:
+<a name="l00755"></a>00755           <span class="comment">// Unhandled error</span>
+<a name="l00756"></a>00756           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;select() call failed&quot;</span>, mdtError::Error);
+<a name="l00757"></a>00757           e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
+<a name="l00758"></a>00758           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00759"></a>00759           e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00760"></a>00760           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
+<a name="l00761"></a>00761       }
+<a name="l00762"></a>00762     }
+<a name="l00763"></a>00763   }
+<a name="l00764"></a>00764 
+<a name="l00765"></a>00765   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
+<a name="l00766"></a>00766 }
+<a name="l00767"></a>00767 
+<a name="l00768"></a><a class="code" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597">00768</a> qint64 <a class="code" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597" title="Write data to port.">mdtSerialPort::write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize)
+<a name="l00769"></a>00769 {
+<a name="l00770"></a>00770   <span class="keywordtype">int</span> n;
+<a name="l00771"></a>00771   <span class="keywordtype">int</span> err;
 <a name="l00772"></a>00772 
-<a name="l00773"></a><a class="code" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597">00773</a> qint64 <a class="code" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597" title="Write data to port.">mdtSerialPort::write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize)
-<a name="l00774"></a>00774 {
-<a name="l00775"></a>00775   <span class="keywordtype">int</span> n;
-<a name="l00776"></a>00776   <span class="keywordtype">int</span> err;
-<a name="l00777"></a>00777 
-<a name="l00778"></a>00778   n =<a class="code" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597" title="Write data to port."> ::write</a>(pvFd, data, maxSize);
-<a name="l00779"></a>00779   <span class="keywordflow">if</span>(n &lt; 0){
-<a name="l00780"></a>00780     <span class="comment">// Store error (errno will be reset when readen)</span>
-<a name="l00781"></a>00781     err = errno;
-<a name="l00782"></a>00782     <span class="keywordflow">switch</span>(err){
-<a name="l00783"></a>00783       <span class="keywordflow">case</span> EAGAIN:    <span class="comment">// Can&#39;t write now</span>
-<a name="l00784"></a>00784         <span class="keywordflow">return</span> 0;
-<a name="l00785"></a>00785       <span class="keywordflow">default</span>:
-<a name="l00786"></a>00786         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;write() call failed&quot;</span>, mdtError::Error);
-<a name="l00787"></a>00787         e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
-<a name="l00788"></a>00788         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00789"></a>00789         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00790"></a>00790         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
-<a name="l00791"></a>00791     }
-<a name="l00792"></a>00792   }
-<a name="l00793"></a>00793 
-<a name="l00794"></a>00794   <span class="keywordflow">return</span> n;
-<a name="l00795"></a>00795 }
-<a name="l00796"></a>00796 
-<a name="l00797"></a><a class="code" href="classmdt_serial_port.html#a9d1402c229401343a3bf66eeda4fe9da">00797</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_serial_port.html#a9d1402c229401343a3bf66eeda4fe9da" title="void flushOut();">mdtSerialPort::waitEventCtl</a>()
-<a name="l00798"></a>00798 {
-<a name="l00799"></a>00799   <span class="keywordtype">int</span> retVal;
-<a name="l00800"></a>00800 
-<a name="l00801"></a>00801   <span class="comment">// We wait until a line status change happens</span>
-<a name="l00802"></a>00802   pvMutex.unlock();
-<a name="l00803"></a>00803   retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
-<a name="l00804"></a>00804   pvMutex.lock();
-<a name="l00805"></a>00805   <span class="keywordflow">if</span>(retVal &lt; 0){
-<a name="l00806"></a>00806     <span class="keywordflow">switch</span>(errno){
-<a name="l00807"></a>00807       <span class="keywordflow">case</span> EINTR:
-<a name="l00808"></a>00808         <span class="comment">// Thread has send the stop signal</span>
-<a name="l00809"></a>00809         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea44eaa84d8f888f4f9d5c814291e54079">ControlCanceled</a>;
-<a name="l00810"></a>00810       <span class="keywordflow">default</span>:
-<a name="l00811"></a>00811         <span class="comment">// Unhandled error</span>
-<a name="l00812"></a>00812         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMIWAIT&quot;</span>, mdtError::Error);
-<a name="l00813"></a>00813         e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
-<a name="l00814"></a>00814         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00815"></a>00815         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00816"></a>00816         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
-<a name="l00817"></a>00817     }
-<a name="l00818"></a>00818   }
-<a name="l00819"></a>00819 
-<a name="l00820"></a>00820   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
-<a name="l00821"></a>00821 }
-<a name="l00822"></a>00822 
-<a name="l00823"></a><a class="code" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7">00823</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7" title="NOTE:">mdtSerialPort::getCtlStates</a>()
-<a name="l00824"></a>00824 {
-<a name="l00825"></a>00825   <span class="keywordtype">int</span> states;
-<a name="l00826"></a>00826 
-<a name="l00827"></a>00827   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMGET, &amp;states) &lt; 0){
-<a name="l00828"></a>00828     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMGET&quot;</span>, mdtError::Error);
-<a name="l00829"></a>00829     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
-<a name="l00830"></a>00830     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00831"></a>00831     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00832"></a>00832     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00833"></a>00833   }
-<a name="l00834"></a>00834 
-<a name="l00835"></a>00835   <span class="comment">// See witch signals changed</span>
-<a name="l00836"></a>00836   <span class="keywordflow">if</span>((states &amp; TIOCM_CAR) != pvPreviousCarState){
-<a name="l00837"></a>00837     <span class="comment">// Store new state</span>
-<a name="l00838"></a>00838     pvPreviousCarState = (states &amp; TIOCM_CAR);
-<a name="l00839"></a>00839     <span class="comment">// Determine current state and emit signal</span>
-<a name="l00840"></a>00840     <span class="keywordflow">if</span>(states &amp; TIOCM_CAR){
-<a name="l00841"></a>00841       pvCarIsOn = <span class="keyword">true</span>;
-<a name="l00842"></a>00842     }<span class="keywordflow">else</span>{
-<a name="l00843"></a>00843       pvCarIsOn = <span class="keyword">false</span>;
-<a name="l00844"></a>00844     }
-<a name="l00845"></a>00845     emit <a class="code" href="classmdt_abstract_serial_port.html#a63ddcadf5d8a63c479b0b6a24f89c837" title="Emited whenn CAR (CD) status changed.">carChanged</a>(pvCarIsOn);
-<a name="l00846"></a>00846   }
-<a name="l00847"></a>00847   <span class="keywordflow">if</span>((states &amp; TIOCM_DSR) != pvPreviousDsrState){
-<a name="l00848"></a>00848     <span class="comment">// Store new state</span>
-<a name="l00849"></a>00849     pvPreviousDsrState = (states &amp; TIOCM_DSR);
-<a name="l00850"></a>00850     <span class="comment">// Determine current state and emit signal</span>
-<a name="l00851"></a>00851     <span class="keywordflow">if</span>(states &amp; TIOCM_DSR){
-<a name="l00852"></a>00852       pvDsrIsOn = <span class="keyword">true</span>;
-<a name="l00853"></a>00853     }<span class="keywordflow">else</span>{
-<a name="l00854"></a>00854       pvDsrIsOn = <span class="keyword">false</span>;
-<a name="l00855"></a>00855     }
-<a name="l00856"></a>00856     emit <a class="code" href="classmdt_abstract_serial_port.html#a077d8c39ed12713742f1f2ffa0dca11d" title="Emited whenn DSR status changed.">dsrChanged</a>(pvDsrIsOn);
-<a name="l00857"></a>00857   }
-<a name="l00858"></a>00858   <span class="keywordflow">if</span>((states &amp; TIOCM_CTS) != pvPreviousCtsState){
-<a name="l00859"></a>00859     <span class="comment">// Store new state</span>
-<a name="l00860"></a>00860     pvPreviousCtsState = (states &amp; TIOCM_CTS);
-<a name="l00861"></a>00861     <span class="comment">// Determine current state and emit signal</span>
-<a name="l00862"></a>00862     <span class="keywordflow">if</span>(states &amp; TIOCM_CTS){
-<a name="l00863"></a>00863       pvCtsIsOn = <span class="keyword">true</span>;
-<a name="l00864"></a>00864     }<span class="keywordflow">else</span>{
-<a name="l00865"></a>00865       pvCtsIsOn = <span class="keyword">false</span>;
-<a name="l00866"></a>00866     }
-<a name="l00867"></a>00867     emit <a class="code" href="classmdt_abstract_serial_port.html#adf45a5006218ef5660721ecdf8454b5d" title="Emited whenn CTS status changed.">ctsChanged</a>(pvCtsIsOn);
-<a name="l00868"></a>00868   }
-<a name="l00869"></a>00869   <span class="keywordflow">if</span>((states &amp; TIOCM_RNG) != pvPreviousRngState){
-<a name="l00870"></a>00870     <span class="comment">// Store new state</span>
-<a name="l00871"></a>00871     pvPreviousRngState = (states &amp; TIOCM_RNG);
-<a name="l00872"></a>00872     <span class="comment">// Determine current state and emit signal</span>
-<a name="l00873"></a>00873     <span class="keywordflow">if</span>(states &amp; TIOCM_RNG){
-<a name="l00874"></a>00874       pvRngIsOn = <span class="keyword">true</span>;
-<a name="l00875"></a>00875     }<span class="keywordflow">else</span>{
-<a name="l00876"></a>00876       pvRngIsOn = <span class="keyword">false</span>;
-<a name="l00877"></a>00877     }
-<a name="l00878"></a>00878     emit <a class="code" href="classmdt_abstract_serial_port.html#a47c08ccb99dc6de76ae58ebeefc26857" title="Emited whenn RNG (RI) status changed.">rngChanged</a>(pvRngIsOn);
-<a name="l00879"></a>00879   }
-<a name="l00880"></a>00880 
-<a name="l00881"></a>00881   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00882"></a>00882 }
-<a name="l00883"></a>00883 
-<a name="l00884"></a><a class="code" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb">00884</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb" title="Enable/diseable the RTS (Request To Send) signal.">mdtSerialPort::setRts</a>(<span class="keywordtype">bool</span> on)
-<a name="l00885"></a>00885 {
-<a name="l00886"></a>00886   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>()){
-<a name="l00887"></a>00887     <span class="keywordflow">return</span>;
-<a name="l00888"></a>00888   }
-<a name="l00889"></a>00889   pvMutex.lock();
-<a name="l00890"></a>00890   <span class="keywordflow">if</span>(on){
-<a name="l00891"></a>00891     setRtsOn();
-<a name="l00892"></a>00892   }<span class="keywordflow">else</span>{
-<a name="l00893"></a>00893     setRtsOff();
-<a name="l00894"></a>00894   }
-<a name="l00895"></a>00895   pvMutex.unlock();
-<a name="l00896"></a>00896 }
-<a name="l00897"></a>00897 
-<a name="l00898"></a><a class="code" href="classmdt_serial_port.html#a91ec8a600f09b6844d36902fe1e16592">00898</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port.html#a91ec8a600f09b6844d36902fe1e16592" title="Enable/diseable the DTR (Data Terminal Ready) signal.">mdtSerialPort::setDtr</a>(<span class="keywordtype">bool</span> on)
-<a name="l00899"></a>00899 {
-<a name="l00900"></a>00900   <span class="keywordtype">int</span> states;
-<a name="l00901"></a>00901 
-<a name="l00902"></a>00902   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>()){
-<a name="l00903"></a>00903     <span class="keywordflow">return</span>;
-<a name="l00904"></a>00904   }
-<a name="l00905"></a>00905   pvMutex.lock();
-<a name="l00906"></a>00906   <span class="comment">// Get the current ctl states</span>
-<a name="l00907"></a>00907   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMGET, &amp;states) &lt; 0){
-<a name="l00908"></a>00908     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMGET&quot;</span>, mdtError::Error);
-<a name="l00909"></a>00909     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
-<a name="l00910"></a>00910     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00911"></a>00911     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00912"></a>00912     pvMutex.unlock();
-<a name="l00913"></a>00913     <span class="keywordflow">return</span>;
-<a name="l00914"></a>00914   }
-<a name="l00915"></a>00915   <span class="comment">// Set DTR state</span>
-<a name="l00916"></a>00916   <span class="keywordflow">if</span>(on){
-<a name="l00917"></a>00917     states |= TIOCM_DTR;
-<a name="l00918"></a>00918   }<span class="keywordflow">else</span>{
-<a name="l00919"></a>00919     states &amp;= ~TIOCM_DTR;
-<a name="l00920"></a>00920   }
-<a name="l00921"></a>00921   <span class="comment">// Commit to system</span>
-<a name="l00922"></a>00922   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMSET, &amp;states) &lt; 0){
-<a name="l00923"></a>00923     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMSET&quot;</span>, mdtError::Error);
-<a name="l00924"></a>00924     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
-<a name="l00925"></a>00925     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00926"></a>00926     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00927"></a>00927   }
-<a name="l00928"></a>00928   pvMutex.unlock();
-<a name="l00929"></a>00929 }
-<a name="l00930"></a>00930 
-<a name="l00931"></a>00931 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> mdtSerialPort::pvOpen()
-<a name="l00932"></a>00932 {
-<a name="l00933"></a>00933   Q_ASSERT(!<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
-<a name="l00934"></a>00934 
-<a name="l00935"></a>00935   <span class="keywordtype">int</span> err;
-<a name="l00936"></a>00936 
-<a name="l00937"></a>00937   <span class="comment">// Try to open port locked</span>
-<a name="l00938"></a>00938   <span class="comment">//  O_RDWR : Read/write access</span>
-<a name="l00939"></a>00939   <span class="comment">//  O_NOCTTY: not a terminal</span>
-<a name="l00940"></a>00940   <span class="comment">//  O_NDELAY: ignore DCD signal</span>
-<a name="l00941"></a>00941   pvFd = pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a25e9a2cb8a10069fae75c76b6809c27f" title="Open a port locked.">openLocked</a>(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
-<a name="l00942"></a>00942   <span class="keywordflow">if</span>(pvFd &lt; 0){
-<a name="l00943"></a>00943     err = errno;
-<a name="l00944"></a>00944     <span class="comment">// Check if port was locked by another</span>
-<a name="l00945"></a>00945     <span class="keywordflow">if</span>(pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a739a8cedebb1a32e122c7e451f0cfe98" title="Returns true if port is locked by another instance.">isLockedByAnother</a>()){
-<a name="l00946"></a>00946       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;Port &quot;</span> + pvPortName + <span class="stringliteral">&quot; allready locked, cannot open it&quot;</span>, mdtError::Error);
-<a name="l00947"></a>00947       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00948"></a>00948       e.commit();
-<a name="l00949"></a>00949       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaedd63daf0db75794bb8e8e467da9575c">PortLocked</a>;
-<a name="l00950"></a>00950     }
-<a name="l00951"></a>00951     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;Unable to open port: &quot;</span> + pvPortName, mdtError::Error);
-<a name="l00952"></a>00952     e.setSystemError(err, strerror(err));
-<a name="l00953"></a>00953     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l00954"></a>00954     e.commit();
-<a name="l00955"></a>00955     <span class="comment">// Here me must explicitly unlock the port because we return a error</span>
-<a name="l00956"></a>00956     pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();
-<a name="l00957"></a>00957     <span class="comment">// Check error and return a possibly correct code</span>
-<a name="l00958"></a>00958     <span class="keywordflow">switch</span>(err){
-<a name="l00959"></a>00959       <span class="keywordflow">case</span> EACCES:
-<a name="l00960"></a>00960         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaee5a84e59e9dc5fcf27cac57068bb1f4">PortAccess</a>;
-<a name="l00961"></a>00961       <span class="keywordflow">case</span> ENOENT:
-<a name="l00962"></a>00962         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a>;
-<a name="l00963"></a>00963       <span class="keywordflow">default</span>:
-<a name="l00964"></a>00964         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
-<a name="l00965"></a>00965     }
-<a name="l00966"></a>00966   }
-<a name="l00967"></a>00967   <span class="comment">// Get current config and save it to pvOriginalTermios</span>
-<a name="l00968"></a>00968   <span class="keywordflow">if</span>(tcgetattr(pvFd, &amp;pvOriginalTermios) &lt; 0){
-<a name="l00969"></a>00969     <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close</a>();
-<a name="l00970"></a>00970     <span class="comment">// Here me must explicitly do close because we return a error</span>
-<a name="l00971"></a>00971     pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();<a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port."></a>
-<a name="l00972"></a>00972 <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">    ::close</a>(pvFd);
-<a name="l00973"></a>00973     pvFd = -1;
-<a name="l00974"></a>00974     <span class="comment">// Most of cases, this function fails because the physical port is not attached</span>
-<a name="l00975"></a>00975     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a>;
-<a name="l00976"></a>00976   }
-<a name="l00977"></a>00977   <span class="comment">// Get current system config on &quot;work copy&quot;</span>
-<a name="l00978"></a>00978   <span class="keywordflow">if</span>(tcgetattr(pvFd, &amp;pvTermios) &lt; 0){
-<a name="l00979"></a>00979     <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close</a>();
-<a name="l00980"></a>00980     <span class="comment">// Here me must explicitly do close because we return a error</span>
-<a name="l00981"></a>00981     pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();<a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port."></a>
-<a name="l00982"></a>00982 <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">    ::close</a>(pvFd);
-<a name="l00983"></a>00983     pvFd = -1;
-<a name="l00984"></a>00984     <span class="comment">// Most of cases, this function fails because the physical port is not attached</span>
-<a name="l00985"></a>00985     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a>;
-<a name="l00986"></a>00986   }
-<a name="l00987"></a>00987 
-<a name="l00988"></a>00988   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
-<a name="l00989"></a>00989 }
-<a name="l00990"></a>00990 
-<a name="l00991"></a>00991 <span class="keywordtype">void</span> mdtSerialPort::pvClose()
-<a name="l00992"></a>00992 {
-<a name="l00993"></a>00993   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
-<a name="l00994"></a>00994 
-<a name="l00995"></a>00995   <span class="comment">// Restore original termios struct</span>
-<a name="l00996"></a>00996   <span class="keywordflow">if</span>(tcsetattr(pvFd, TCSANOW, &amp;pvOriginalTermios) &lt; 0){
-<a name="l00997"></a>00997     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcsetattr() call failed&quot;</span>, mdtError::Error);
-<a name="l00998"></a>00998     e.setSystemError(errno, strerror(errno));
-<a name="l00999"></a>00999     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01000"></a>01000     e.commit();
-<a name="l01001"></a>01001   }
-<a name="l01002"></a>01002   <span class="comment">// Close the port</span>
-<a name="l01003"></a>01003   pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();<a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port."></a>
-<a name="l01004"></a>01004 <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">  ::close</a>(pvFd);
-<a name="l01005"></a>01005   pvFd = -1;
-<a name="l01006"></a>01006 }
-<a name="l01007"></a>01007 
-<a name="l01008"></a>01008 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> mdtSerialPort::pvSetup()
-<a name="l01009"></a>01009 {
-<a name="l01010"></a>01010   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
-<a name="l01011"></a>01011 
-<a name="l01012"></a>01012   QString strNum;
-<a name="l01013"></a>01013 
-<a name="l01014"></a>01014   <span class="comment">// Set baud rate</span>
-<a name="l01015"></a>01015   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351" title="Set the baud rate.">setBaudRate</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195" title="Get the baud rate.">baudRate</a>())){
-<a name="l01016"></a>01016     strNum.setNum(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195" title="Get the baud rate.">baudRate</a>());
-<a name="l01017"></a>01017     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported baud rate &#39;&quot;</span> + strNum + <span class="stringliteral">&quot;&#39; for port &quot;</span> + pvPortName, mdtError::Error);
-<a name="l01018"></a>01018     e.setSystemError(errno, strerror(errno));
-<a name="l01019"></a>01019     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01020"></a>01020     e.commit();
-<a name="l01021"></a>01021     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
-<a name="l01022"></a>01022   }
-<a name="l01023"></a>01023   <span class="comment">// Set local mode and enable the receiver</span>
-<a name="l01024"></a>01024   pvTermios.c_cflag |= (CLOCAL | CREAD);
-<a name="l01025"></a>01025   <span class="comment">// Set data bits</span>
-<a name="l01026"></a>01026   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#af39774b2d3c4121623253740660a0389" title="Set number of data bits.">setDataBits</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().dataBitsCount())){
-<a name="l01027"></a>01027     strNum.setNum(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().dataBitsCount());
-<a name="l01028"></a>01028     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported data bits count &#39;&quot;</span> + strNum + <span class="stringliteral">&quot;&#39; for port &quot;</span> + pvPortName, mdtError::Error);
-<a name="l01029"></a>01029     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01030"></a>01030     e.commit();
-<a name="l01031"></a>01031     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
-<a name="l01032"></a>01032   }
-<a name="l01033"></a>01033   <span class="comment">// Set stop bits</span>
-<a name="l01034"></a>01034   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#a9471ebff90de41decee977566dd1571f" title="Set number of stop bits.">setStopBits</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().stopBitsCount())){
-<a name="l01035"></a>01035     strNum.setNum(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().stopBitsCount());
-<a name="l01036"></a>01036     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported stop bits count &#39;&quot;</span> + strNum + <span class="stringliteral">&quot;&#39; for port &quot;</span> + pvPortName, mdtError::Error);
-<a name="l01037"></a>01037     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01038"></a>01038     e.commit();
-<a name="l01039"></a>01039     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
-<a name="l01040"></a>01040   }
-<a name="l01041"></a>01041   <span class="comment">// Set parity</span>
-<a name="l01042"></a>01042   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#ae435f052a87dcd0b1829f1577bb5e58d" title="Set parity check.">setParity</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_serial_port.html#a98938e2c51d1888236b920903f99050a" title="Get configured parity.">parity</a>())){
-<a name="l01043"></a>01043     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported parity requested for port &quot;</span> + pvPortName, mdtError::Error);
-<a name="l01044"></a>01044     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01045"></a>01045     e.commit();
-<a name="l01046"></a>01046     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
-<a name="l01047"></a>01047   }
-<a name="l01048"></a>01048   <span class="comment">// Set flow control</span>
-<a name="l01049"></a>01049   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#a175785be0dfe124254484822b7b8832e" title="Enable/diseable RTS/CTS flow control.">setFlowCtlRtsCts</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().flowCtlRtsCtsEnabled())){
-<a name="l01050"></a>01050     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported flow control for port &quot;</span> + pvPortName, mdtError::Error);
-<a name="l01051"></a>01051     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01052"></a>01052     e.commit();
-<a name="l01053"></a>01053     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
-<a name="l01054"></a>01054   }
-<a name="l01055"></a>01055   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#a34e2ac7b0d3cb7a6fb65756cbca2ce48" title="Enable/diseable Xon/Xoff flow control.">setFlowCtlXonXoff</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().flowCtlXonXoffEnabled(), <a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().xonChar(), <a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().xoffChar())){
-<a name="l01056"></a>01056     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported flow control for port &quot;</span> + pvPortName, mdtError::Error);
-<a name="l01057"></a>01057     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01058"></a>01058     e.commit();
-<a name="l01059"></a>01059     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
-<a name="l01060"></a>01060   }
-<a name="l01061"></a>01061   <span class="comment">// Set raw data mode</span>
-<a name="l01062"></a>01062   pvTermios.c_lflag &amp;= ~(ICANON | ECHO | ECHOE | ISIG);
-<a name="l01063"></a>01063   pvTermios.c_oflag &amp;= ~OPOST;
-<a name="l01064"></a>01064   <span class="keywordflow">if</span>(tcsetattr(pvFd, TCSANOW, &amp;pvTermios) &lt; 0){
-<a name="l01065"></a>01065     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;cannot set raw mode on port &quot;</span> + pvPortName, mdtError::Error);
-<a name="l01066"></a>01066     e.setSystemError(errno, strerror(errno));
-<a name="l01067"></a>01067     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01068"></a>01068     e.commit();
-<a name="l01069"></a>01069     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
-<a name="l01070"></a>01070   }
-<a name="l01071"></a>01071   <span class="comment">// Set the read/write timeouts</span>
-<a name="l01072"></a>01072   <a class="code" href="classmdt_serial_port.html#a9105e5a3a640b56097c1156000ace933" title="Set the read data timeout.">setReadTimeout</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().readTimeout());
-<a name="l01073"></a>01073   <a class="code" href="classmdt_serial_port.html#a036f49d743838013c9a8cbf6a1dd40d1" title="Set the write data timeout.">setWriteTimeout</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().writeTimeout());
-<a name="l01074"></a>01074 
-<a name="l01085"></a>01085   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
-<a name="l01086"></a>01086 }
-<a name="l01087"></a>01087 
-<a name="l01088"></a>01088 <span class="keywordtype">void</span> mdtSerialPort::pvFlushIn()
-<a name="l01089"></a>01089 {
-<a name="l01090"></a>01090   <span class="keywordflow">if</span>(tcflush(pvFd, TCIFLUSH) &lt; 0){
-<a name="l01091"></a>01091     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflush() call failed&quot;</span>, mdtError::Error);
-<a name="l01092"></a>01092     e.setSystemError(errno, strerror(errno));
-<a name="l01093"></a>01093     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01094"></a>01094     e.commit();
-<a name="l01095"></a>01095   }
-<a name="l01096"></a>01096 }
-<a name="l01097"></a>01097 
-<a name="l01098"></a>01098 <span class="keywordtype">void</span> mdtSerialPort::pvFlushOut()
-<a name="l01099"></a>01099 {
-<a name="l01100"></a>01100   <span class="keywordflow">if</span>(tcflush(pvFd, TCOFLUSH) &lt; 0){
-<a name="l01101"></a>01101     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflush() call failed&quot;</span>, mdtError::Error);
-<a name="l01102"></a>01102     e.setSystemError(errno, strerror(errno));
-<a name="l01103"></a>01103     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01104"></a>01104     e.commit();
-<a name="l01105"></a>01105   }
-<a name="l01106"></a>01106 }
-<a name="l01107"></a>01107 
-<a name="l01108"></a>01108 <span class="keywordtype">void</span> mdtSerialPort::mapUartType()
-<a name="l01109"></a>01109 {
-<a name="l01110"></a>01110   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
-<a name="l01111"></a>01111 
-<a name="l01112"></a>01112   <span class="keyword">struct </span>serial_struct serinfo;
-<a name="l01113"></a>01113 
-<a name="l01114"></a>01114   <span class="comment">// Request system&#39;s UART type.</span>
-<a name="l01115"></a>01115   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCGSERIAL, &amp;serinfo) &lt; 0){
-<a name="l01116"></a>01116     pvUartType = UT_UNKNOW;
-<a name="l01117"></a>01117     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() failed for port &quot;</span> + pvPortName, mdtError::Error);
-<a name="l01118"></a>01118     e.setSystemError(errno, strerror(errno));
-<a name="l01119"></a>01119     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01120"></a>01120     <span class="keywordflow">return</span>;
-<a name="l01121"></a>01121   }
-<a name="l01122"></a>01122   <span class="comment">// Map the type</span>
-<a name="l01123"></a>01123   <span class="keywordflow">switch</span>(serinfo.type){
-<a name="l01124"></a>01124     <span class="keywordflow">case</span> PORT_8250:
-<a name="l01125"></a>01125       pvUartType = UT_8250;
-<a name="l01126"></a>01126     <span class="keywordflow">case</span> PORT_16450:
-<a name="l01127"></a>01127       pvUartType = UT_16450;
+<a name="l00773"></a>00773   n =<a class="code" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597" title="Write data to port."> ::write</a>(pvFd, data, maxSize);
+<a name="l00774"></a>00774   <span class="keywordflow">if</span>(n &lt; 0){
+<a name="l00775"></a>00775     <span class="comment">// Store error (errno will be reset when readen)</span>
+<a name="l00776"></a>00776     err = errno;
+<a name="l00777"></a>00777     <span class="keywordflow">switch</span>(err){
+<a name="l00778"></a>00778       <span class="keywordflow">case</span> EAGAIN:    <span class="comment">// Can&#39;t write now</span>
+<a name="l00779"></a>00779         <span class="keywordflow">return</span> 0;
+<a name="l00780"></a>00780       <span class="keywordflow">default</span>:
+<a name="l00781"></a>00781         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;write() call failed&quot;</span>, mdtError::Error);
+<a name="l00782"></a>00782         e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
+<a name="l00783"></a>00783         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00784"></a>00784         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00785"></a>00785         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
+<a name="l00786"></a>00786     }
+<a name="l00787"></a>00787   }
+<a name="l00788"></a>00788 
+<a name="l00789"></a>00789   <span class="keywordflow">return</span> n;
+<a name="l00790"></a>00790 }
+<a name="l00791"></a>00791 
+<a name="l00792"></a><a class="code" href="classmdt_serial_port.html#a9d1402c229401343a3bf66eeda4fe9da">00792</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_serial_port.html#a9d1402c229401343a3bf66eeda4fe9da" title="void flushOut();">mdtSerialPort::waitEventCtl</a>()
+<a name="l00793"></a>00793 {
+<a name="l00794"></a>00794   <span class="keywordtype">int</span> retVal;
+<a name="l00795"></a>00795 
+<a name="l00796"></a>00796   <span class="comment">// We wait until a line status change happens</span>
+<a name="l00797"></a>00797   pvMutex.unlock();
+<a name="l00798"></a>00798   retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
+<a name="l00799"></a>00799   pvMutex.lock();
+<a name="l00800"></a>00800   <span class="keywordflow">if</span>(retVal &lt; 0){
+<a name="l00801"></a>00801     <span class="keywordflow">switch</span>(errno){
+<a name="l00802"></a>00802       <span class="keywordflow">case</span> EINTR:
+<a name="l00803"></a>00803         <span class="comment">// Thread has send the stop signal</span>
+<a name="l00804"></a>00804         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea44eaa84d8f888f4f9d5c814291e54079">ControlCanceled</a>;
+<a name="l00805"></a>00805       <span class="keywordflow">default</span>:
+<a name="l00806"></a>00806         <span class="comment">// Unhandled error</span>
+<a name="l00807"></a>00807         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMIWAIT&quot;</span>, mdtError::Error);
+<a name="l00808"></a>00808         e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
+<a name="l00809"></a>00809         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00810"></a>00810         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00811"></a>00811         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
+<a name="l00812"></a>00812     }
+<a name="l00813"></a>00813   }
+<a name="l00814"></a>00814 
+<a name="l00815"></a>00815   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
+<a name="l00816"></a>00816 }
+<a name="l00817"></a>00817 
+<a name="l00818"></a><a class="code" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7">00818</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7" title="NOTE:">mdtSerialPort::getCtlStates</a>()
+<a name="l00819"></a>00819 {
+<a name="l00820"></a>00820   <span class="keywordtype">int</span> states;
+<a name="l00821"></a>00821 
+<a name="l00822"></a>00822   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMGET, &amp;states) &lt; 0){
+<a name="l00823"></a>00823     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMGET&quot;</span>, mdtError::Error);
+<a name="l00824"></a>00824     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
+<a name="l00825"></a>00825     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00826"></a>00826     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00827"></a>00827     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00828"></a>00828   }
+<a name="l00829"></a>00829 
+<a name="l00830"></a>00830   <span class="comment">// See witch signals changed</span>
+<a name="l00831"></a>00831   <span class="keywordflow">if</span>((states &amp; TIOCM_CAR) != pvPreviousCarState){
+<a name="l00832"></a>00832     <span class="comment">// Store new state</span>
+<a name="l00833"></a>00833     pvPreviousCarState = (states &amp; TIOCM_CAR);
+<a name="l00834"></a>00834     <span class="comment">// Determine current state and emit signal</span>
+<a name="l00835"></a>00835     <span class="keywordflow">if</span>(states &amp; TIOCM_CAR){
+<a name="l00836"></a>00836       pvCarIsOn = <span class="keyword">true</span>;
+<a name="l00837"></a>00837     }<span class="keywordflow">else</span>{
+<a name="l00838"></a>00838       pvCarIsOn = <span class="keyword">false</span>;
+<a name="l00839"></a>00839     }
+<a name="l00840"></a>00840     emit <a class="code" href="classmdt_abstract_serial_port.html#a63ddcadf5d8a63c479b0b6a24f89c837" title="Emited whenn CAR (CD) status changed.">carChanged</a>(pvCarIsOn);
+<a name="l00841"></a>00841   }
+<a name="l00842"></a>00842   <span class="keywordflow">if</span>((states &amp; TIOCM_DSR) != pvPreviousDsrState){
+<a name="l00843"></a>00843     <span class="comment">// Store new state</span>
+<a name="l00844"></a>00844     pvPreviousDsrState = (states &amp; TIOCM_DSR);
+<a name="l00845"></a>00845     <span class="comment">// Determine current state and emit signal</span>
+<a name="l00846"></a>00846     <span class="keywordflow">if</span>(states &amp; TIOCM_DSR){
+<a name="l00847"></a>00847       pvDsrIsOn = <span class="keyword">true</span>;
+<a name="l00848"></a>00848     }<span class="keywordflow">else</span>{
+<a name="l00849"></a>00849       pvDsrIsOn = <span class="keyword">false</span>;
+<a name="l00850"></a>00850     }
+<a name="l00851"></a>00851     emit <a class="code" href="classmdt_abstract_serial_port.html#a077d8c39ed12713742f1f2ffa0dca11d" title="Emited whenn DSR status changed.">dsrChanged</a>(pvDsrIsOn);
+<a name="l00852"></a>00852   }
+<a name="l00853"></a>00853   <span class="keywordflow">if</span>((states &amp; TIOCM_CTS) != pvPreviousCtsState){
+<a name="l00854"></a>00854     <span class="comment">// Store new state</span>
+<a name="l00855"></a>00855     pvPreviousCtsState = (states &amp; TIOCM_CTS);
+<a name="l00856"></a>00856     <span class="comment">// Determine current state and emit signal</span>
+<a name="l00857"></a>00857     <span class="keywordflow">if</span>(states &amp; TIOCM_CTS){
+<a name="l00858"></a>00858       pvCtsIsOn = <span class="keyword">true</span>;
+<a name="l00859"></a>00859     }<span class="keywordflow">else</span>{
+<a name="l00860"></a>00860       pvCtsIsOn = <span class="keyword">false</span>;
+<a name="l00861"></a>00861     }
+<a name="l00862"></a>00862     emit <a class="code" href="classmdt_abstract_serial_port.html#adf45a5006218ef5660721ecdf8454b5d" title="Emited whenn CTS status changed.">ctsChanged</a>(pvCtsIsOn);
+<a name="l00863"></a>00863   }
+<a name="l00864"></a>00864   <span class="keywordflow">if</span>((states &amp; TIOCM_RNG) != pvPreviousRngState){
+<a name="l00865"></a>00865     <span class="comment">// Store new state</span>
+<a name="l00866"></a>00866     pvPreviousRngState = (states &amp; TIOCM_RNG);
+<a name="l00867"></a>00867     <span class="comment">// Determine current state and emit signal</span>
+<a name="l00868"></a>00868     <span class="keywordflow">if</span>(states &amp; TIOCM_RNG){
+<a name="l00869"></a>00869       pvRngIsOn = <span class="keyword">true</span>;
+<a name="l00870"></a>00870     }<span class="keywordflow">else</span>{
+<a name="l00871"></a>00871       pvRngIsOn = <span class="keyword">false</span>;
+<a name="l00872"></a>00872     }
+<a name="l00873"></a>00873     emit <a class="code" href="classmdt_abstract_serial_port.html#a47c08ccb99dc6de76ae58ebeefc26857" title="Emited whenn RNG (RI) status changed.">rngChanged</a>(pvRngIsOn);
+<a name="l00874"></a>00874   }
+<a name="l00875"></a>00875 
+<a name="l00876"></a>00876   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00877"></a>00877 }
+<a name="l00878"></a>00878 
+<a name="l00879"></a><a class="code" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb">00879</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb" title="Enable/diseable the RTS (Request To Send) signal.">mdtSerialPort::setRts</a>(<span class="keywordtype">bool</span> on)
+<a name="l00880"></a>00880 {
+<a name="l00881"></a>00881   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>()){
+<a name="l00882"></a>00882     <span class="keywordflow">return</span>;
+<a name="l00883"></a>00883   }
+<a name="l00884"></a>00884   pvMutex.lock();
+<a name="l00885"></a>00885   <span class="keywordflow">if</span>(on){
+<a name="l00886"></a>00886     setRtsOn();
+<a name="l00887"></a>00887   }<span class="keywordflow">else</span>{
+<a name="l00888"></a>00888     setRtsOff();
+<a name="l00889"></a>00889   }
+<a name="l00890"></a>00890   pvMutex.unlock();
+<a name="l00891"></a>00891 }
+<a name="l00892"></a>00892 
+<a name="l00893"></a><a class="code" href="classmdt_serial_port.html#a91ec8a600f09b6844d36902fe1e16592">00893</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port.html#a91ec8a600f09b6844d36902fe1e16592" title="Enable/diseable the DTR (Data Terminal Ready) signal.">mdtSerialPort::setDtr</a>(<span class="keywordtype">bool</span> on)
+<a name="l00894"></a>00894 {
+<a name="l00895"></a>00895   <span class="keywordtype">int</span> states;
+<a name="l00896"></a>00896 
+<a name="l00897"></a>00897   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>()){
+<a name="l00898"></a>00898     <span class="keywordflow">return</span>;
+<a name="l00899"></a>00899   }
+<a name="l00900"></a>00900   pvMutex.lock();
+<a name="l00901"></a>00901   <span class="comment">// Get the current ctl states</span>
+<a name="l00902"></a>00902   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMGET, &amp;states) &lt; 0){
+<a name="l00903"></a>00903     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMGET&quot;</span>, mdtError::Error);
+<a name="l00904"></a>00904     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
+<a name="l00905"></a>00905     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00906"></a>00906     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00907"></a>00907     pvMutex.unlock();
+<a name="l00908"></a>00908     <span class="keywordflow">return</span>;
+<a name="l00909"></a>00909   }
+<a name="l00910"></a>00910   <span class="comment">// Set DTR state</span>
+<a name="l00911"></a>00911   <span class="keywordflow">if</span>(on){
+<a name="l00912"></a>00912     states |= TIOCM_DTR;
+<a name="l00913"></a>00913   }<span class="keywordflow">else</span>{
+<a name="l00914"></a>00914     states &amp;= ~TIOCM_DTR;
+<a name="l00915"></a>00915   }
+<a name="l00916"></a>00916   <span class="comment">// Commit to system</span>
+<a name="l00917"></a>00917   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMSET, &amp;states) &lt; 0){
+<a name="l00918"></a>00918     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMSET&quot;</span>, mdtError::Error);
+<a name="l00919"></a>00919     e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
+<a name="l00920"></a>00920     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00921"></a>00921     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00922"></a>00922   }
+<a name="l00923"></a>00923   pvMutex.unlock();
+<a name="l00924"></a>00924 }
+<a name="l00925"></a>00925 
+<a name="l00926"></a>00926 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> mdtSerialPort::pvOpen()
+<a name="l00927"></a>00927 {
+<a name="l00928"></a>00928   Q_ASSERT(!<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
+<a name="l00929"></a>00929 
+<a name="l00930"></a>00930   <span class="keywordtype">int</span> err;
+<a name="l00931"></a>00931 
+<a name="l00932"></a>00932   <span class="comment">// Try to open port locked</span>
+<a name="l00933"></a>00933   <span class="comment">//  O_RDWR : Read/write access</span>
+<a name="l00934"></a>00934   <span class="comment">//  O_NOCTTY: not a terminal</span>
+<a name="l00935"></a>00935   <span class="comment">//  O_NDELAY: ignore DCD signal</span>
+<a name="l00936"></a>00936   pvFd = pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a25e9a2cb8a10069fae75c76b6809c27f" title="Open a port locked.">openLocked</a>(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+<a name="l00937"></a>00937   <span class="keywordflow">if</span>(pvFd &lt; 0){
+<a name="l00938"></a>00938     err = errno;
+<a name="l00939"></a>00939     <span class="comment">// Check if port was locked by another</span>
+<a name="l00940"></a>00940     <span class="keywordflow">if</span>(pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a739a8cedebb1a32e122c7e451f0cfe98" title="Returns true if port is locked by another instance.">isLockedByAnother</a>()){
+<a name="l00941"></a>00941       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;Port &quot;</span> + pvPortName + <span class="stringliteral">&quot; allready locked, cannot open it&quot;</span>, mdtError::Error);
+<a name="l00942"></a>00942       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00943"></a>00943       e.commit();
+<a name="l00944"></a>00944       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaedd63daf0db75794bb8e8e467da9575c">PortLocked</a>;
+<a name="l00945"></a>00945     }
+<a name="l00946"></a>00946     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;Unable to open port: &quot;</span> + pvPortName, mdtError::Error);
+<a name="l00947"></a>00947     e.setSystemError(err, strerror(err));
+<a name="l00948"></a>00948     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00949"></a>00949     e.commit();
+<a name="l00950"></a>00950     <span class="comment">// Here me must explicitly unlock the port because we return a error</span>
+<a name="l00951"></a>00951     pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();
+<a name="l00952"></a>00952     <span class="comment">// Check error and return a possibly correct code</span>
+<a name="l00953"></a>00953     <span class="keywordflow">switch</span>(err){
+<a name="l00954"></a>00954       <span class="keywordflow">case</span> EACCES:
+<a name="l00955"></a>00955         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaee5a84e59e9dc5fcf27cac57068bb1f4">PortAccess</a>;
+<a name="l00956"></a>00956       <span class="keywordflow">case</span> ENOENT:
+<a name="l00957"></a>00957         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a>;
+<a name="l00958"></a>00958       <span class="keywordflow">default</span>:
+<a name="l00959"></a>00959         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
+<a name="l00960"></a>00960     }
+<a name="l00961"></a>00961   }
+<a name="l00962"></a>00962   <span class="comment">// Get current config and save it to pvOriginalTermios</span>
+<a name="l00963"></a>00963   <span class="keywordflow">if</span>(tcgetattr(pvFd, &amp;pvOriginalTermios) &lt; 0){
+<a name="l00964"></a>00964     <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close</a>();
+<a name="l00965"></a>00965     <span class="comment">// Here me must explicitly do close because we return a error</span>
+<a name="l00966"></a>00966     pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();<a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port."></a>
+<a name="l00967"></a>00967 <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">    ::close</a>(pvFd);
+<a name="l00968"></a>00968     pvFd = -1;
+<a name="l00969"></a>00969     <span class="comment">// Most of cases, this function fails because the physical port is not attached</span>
+<a name="l00970"></a>00970     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a>;
+<a name="l00971"></a>00971   }
+<a name="l00972"></a>00972   <span class="comment">// Get current system config on &quot;work copy&quot;</span>
+<a name="l00973"></a>00973   <span class="keywordflow">if</span>(tcgetattr(pvFd, &amp;pvTermios) &lt; 0){
+<a name="l00974"></a>00974     <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close</a>();
+<a name="l00975"></a>00975     <span class="comment">// Here me must explicitly do close because we return a error</span>
+<a name="l00976"></a>00976     pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();<a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port."></a>
+<a name="l00977"></a>00977 <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">    ::close</a>(pvFd);
+<a name="l00978"></a>00978     pvFd = -1;
+<a name="l00979"></a>00979     <span class="comment">// Most of cases, this function fails because the physical port is not attached</span>
+<a name="l00980"></a>00980     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a>;
+<a name="l00981"></a>00981   }
+<a name="l00982"></a>00982 
+<a name="l00983"></a>00983   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
+<a name="l00984"></a>00984 }
+<a name="l00985"></a>00985 
+<a name="l00986"></a>00986 <span class="keywordtype">void</span> mdtSerialPort::pvClose()
+<a name="l00987"></a>00987 {
+<a name="l00988"></a>00988   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
+<a name="l00989"></a>00989 
+<a name="l00990"></a>00990   <span class="comment">// Restore original termios struct</span>
+<a name="l00991"></a>00991   <span class="keywordflow">if</span>(tcsetattr(pvFd, TCSANOW, &amp;pvOriginalTermios) &lt; 0){
+<a name="l00992"></a>00992     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcsetattr() call failed&quot;</span>, mdtError::Error);
+<a name="l00993"></a>00993     e.setSystemError(errno, strerror(errno));
+<a name="l00994"></a>00994     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l00995"></a>00995     e.commit();
+<a name="l00996"></a>00996   }
+<a name="l00997"></a>00997   <span class="comment">// Close the port</span>
+<a name="l00998"></a>00998   pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();<a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port."></a>
+<a name="l00999"></a>00999 <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">  ::close</a>(pvFd);
+<a name="l01000"></a>01000   pvFd = -1;
+<a name="l01001"></a>01001 }
+<a name="l01002"></a>01002 
+<a name="l01003"></a>01003 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> mdtSerialPort::pvSetup()
+<a name="l01004"></a>01004 {
+<a name="l01005"></a>01005   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
+<a name="l01006"></a>01006 
+<a name="l01007"></a>01007   QString strNum;
+<a name="l01008"></a>01008 
+<a name="l01009"></a>01009   <span class="comment">// Set baud rate</span>
+<a name="l01010"></a>01010   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351" title="Set the baud rate.">setBaudRate</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195" title="Get the baud rate.">baudRate</a>())){
+<a name="l01011"></a>01011     strNum.setNum(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195" title="Get the baud rate.">baudRate</a>());
+<a name="l01012"></a>01012     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported baud rate &#39;&quot;</span> + strNum + <span class="stringliteral">&quot;&#39; for port &quot;</span> + pvPortName, mdtError::Error);
+<a name="l01013"></a>01013     e.setSystemError(errno, strerror(errno));
+<a name="l01014"></a>01014     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01015"></a>01015     e.commit();
+<a name="l01016"></a>01016     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
+<a name="l01017"></a>01017   }
+<a name="l01018"></a>01018   <span class="comment">// Set local mode and enable the receiver</span>
+<a name="l01019"></a>01019   pvTermios.c_cflag |= (CLOCAL | CREAD);
+<a name="l01020"></a>01020   <span class="comment">// Set data bits</span>
+<a name="l01021"></a>01021   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#af39774b2d3c4121623253740660a0389" title="Set number of data bits.">setDataBits</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().dataBitsCount())){
+<a name="l01022"></a>01022     strNum.setNum(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().dataBitsCount());
+<a name="l01023"></a>01023     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported data bits count &#39;&quot;</span> + strNum + <span class="stringliteral">&quot;&#39; for port &quot;</span> + pvPortName, mdtError::Error);
+<a name="l01024"></a>01024     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01025"></a>01025     e.commit();
+<a name="l01026"></a>01026     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
+<a name="l01027"></a>01027   }
+<a name="l01028"></a>01028   <span class="comment">// Set stop bits</span>
+<a name="l01029"></a>01029   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#a9471ebff90de41decee977566dd1571f" title="Set number of stop bits.">setStopBits</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().stopBitsCount())){
+<a name="l01030"></a>01030     strNum.setNum(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().stopBitsCount());
+<a name="l01031"></a>01031     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported stop bits count &#39;&quot;</span> + strNum + <span class="stringliteral">&quot;&#39; for port &quot;</span> + pvPortName, mdtError::Error);
+<a name="l01032"></a>01032     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01033"></a>01033     e.commit();
+<a name="l01034"></a>01034     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
+<a name="l01035"></a>01035   }
+<a name="l01036"></a>01036   <span class="comment">// Set parity</span>
+<a name="l01037"></a>01037   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#ae435f052a87dcd0b1829f1577bb5e58d" title="Set parity check.">setParity</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_serial_port.html#a98938e2c51d1888236b920903f99050a" title="Get configured parity.">parity</a>())){
+<a name="l01038"></a>01038     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported parity requested for port &quot;</span> + pvPortName, mdtError::Error);
+<a name="l01039"></a>01039     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01040"></a>01040     e.commit();
+<a name="l01041"></a>01041     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
+<a name="l01042"></a>01042   }
+<a name="l01043"></a>01043   <span class="comment">// Set flow control</span>
+<a name="l01044"></a>01044   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#a175785be0dfe124254484822b7b8832e" title="Enable/diseable RTS/CTS flow control.">setFlowCtlRtsCts</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().flowCtlRtsCtsEnabled())){
+<a name="l01045"></a>01045     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported flow control for port &quot;</span> + pvPortName, mdtError::Error);
+<a name="l01046"></a>01046     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01047"></a>01047     e.commit();
+<a name="l01048"></a>01048     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
+<a name="l01049"></a>01049   }
+<a name="l01050"></a>01050   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#a34e2ac7b0d3cb7a6fb65756cbca2ce48" title="Enable/diseable Xon/Xoff flow control.">setFlowCtlXonXoff</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().flowCtlXonXoffEnabled(), <a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().xonChar(), <a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().xoffChar())){
+<a name="l01051"></a>01051     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported flow control for port &quot;</span> + pvPortName, mdtError::Error);
+<a name="l01052"></a>01052     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01053"></a>01053     e.commit();
+<a name="l01054"></a>01054     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
+<a name="l01055"></a>01055   }
+<a name="l01056"></a>01056   <span class="comment">// Set raw data mode</span>
+<a name="l01057"></a>01057   pvTermios.c_lflag &amp;= ~(ICANON | ECHO | ECHOE | ISIG);
+<a name="l01058"></a>01058   pvTermios.c_oflag &amp;= ~OPOST;
+<a name="l01059"></a>01059   <span class="keywordflow">if</span>(tcsetattr(pvFd, TCSANOW, &amp;pvTermios) &lt; 0){
+<a name="l01060"></a>01060     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;cannot set raw mode on port &quot;</span> + pvPortName, mdtError::Error);
+<a name="l01061"></a>01061     e.setSystemError(errno, strerror(errno));
+<a name="l01062"></a>01062     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01063"></a>01063     e.commit();
+<a name="l01064"></a>01064     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
+<a name="l01065"></a>01065   }
+<a name="l01066"></a>01066   <span class="comment">// Set the read/write timeouts</span>
+<a name="l01067"></a>01067   <a class="code" href="classmdt_serial_port.html#a9105e5a3a640b56097c1156000ace933" title="Set the read data timeout.">setReadTimeout</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().readTimeout());
+<a name="l01068"></a>01068   <a class="code" href="classmdt_serial_port.html#a036f49d743838013c9a8cbf6a1dd40d1" title="Set the write data timeout.">setWriteTimeout</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().writeTimeout());
+<a name="l01069"></a>01069 
+<a name="l01070"></a>01070   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
+<a name="l01071"></a>01071 }
+<a name="l01072"></a>01072 
+<a name="l01073"></a>01073 <span class="keywordtype">void</span> mdtSerialPort::pvFlushIn()
+<a name="l01074"></a>01074 {
+<a name="l01075"></a>01075   <span class="keywordflow">if</span>(tcflush(pvFd, TCIFLUSH) &lt; 0){
+<a name="l01076"></a>01076     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflush() call failed&quot;</span>, mdtError::Error);
+<a name="l01077"></a>01077     e.setSystemError(errno, strerror(errno));
+<a name="l01078"></a>01078     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01079"></a>01079     e.commit();
+<a name="l01080"></a>01080   }
+<a name="l01081"></a>01081 }
+<a name="l01082"></a>01082 
+<a name="l01083"></a>01083 <span class="keywordtype">void</span> mdtSerialPort::pvFlushOut()
+<a name="l01084"></a>01084 {
+<a name="l01085"></a>01085   <span class="keywordflow">if</span>(tcflush(pvFd, TCOFLUSH) &lt; 0){
+<a name="l01086"></a>01086     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflush() call failed&quot;</span>, mdtError::Error);
+<a name="l01087"></a>01087     e.setSystemError(errno, strerror(errno));
+<a name="l01088"></a>01088     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01089"></a>01089     e.commit();
+<a name="l01090"></a>01090   }
+<a name="l01091"></a>01091 }
+<a name="l01092"></a>01092 
+<a name="l01093"></a>01093 <span class="keywordtype">void</span> mdtSerialPort::mapUartType()
+<a name="l01094"></a>01094 {
+<a name="l01095"></a>01095   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
+<a name="l01096"></a>01096 
+<a name="l01097"></a>01097   <span class="keyword">struct </span>serial_struct serinfo;
+<a name="l01098"></a>01098 
+<a name="l01099"></a>01099   <span class="comment">// Request system&#39;s UART type.</span>
+<a name="l01100"></a>01100   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCGSERIAL, &amp;serinfo) &lt; 0){
+<a name="l01101"></a>01101     pvUartType = UT_UNKNOW;
+<a name="l01102"></a>01102     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() failed for port &quot;</span> + pvPortName, mdtError::Error);
+<a name="l01103"></a>01103     e.setSystemError(errno, strerror(errno));
+<a name="l01104"></a>01104     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01105"></a>01105     <span class="keywordflow">return</span>;
+<a name="l01106"></a>01106   }
+<a name="l01107"></a>01107   <span class="comment">// Map the type</span>
+<a name="l01108"></a>01108   <span class="keywordflow">switch</span>(serinfo.type){
+<a name="l01109"></a>01109     <span class="keywordflow">case</span> PORT_8250:
+<a name="l01110"></a>01110       pvUartType = UT_8250;
+<a name="l01111"></a>01111     <span class="keywordflow">case</span> PORT_16450:
+<a name="l01112"></a>01112       pvUartType = UT_16450;
+<a name="l01113"></a>01113       <span class="keywordflow">break</span>;
+<a name="l01114"></a>01114     <span class="keywordflow">case</span> PORT_16550:
+<a name="l01115"></a>01115       pvUartType = UT_16550;
+<a name="l01116"></a>01116       <span class="keywordflow">break</span>;
+<a name="l01117"></a>01117     <span class="keywordflow">case</span> PORT_16550A:
+<a name="l01118"></a>01118       pvUartType = UT_16550A;
+<a name="l01119"></a>01119       <span class="keywordflow">break</span>;
+<a name="l01120"></a>01120     <span class="keywordflow">case</span> PORT_CIRRUS:
+<a name="l01121"></a>01121       pvUartType = UT_CIRRUS;
+<a name="l01122"></a>01122       <span class="keywordflow">break</span>;
+<a name="l01123"></a>01123     <span class="keywordflow">case</span> PORT_16650:
+<a name="l01124"></a>01124       pvUartType = UT_16650;
+<a name="l01125"></a>01125       <span class="keywordflow">break</span>;
+<a name="l01126"></a>01126     <span class="keywordflow">case</span> PORT_16650V2:
+<a name="l01127"></a>01127       pvUartType = UT_16650V2;
 <a name="l01128"></a>01128       <span class="keywordflow">break</span>;
-<a name="l01129"></a>01129     <span class="keywordflow">case</span> PORT_16550:
-<a name="l01130"></a>01130       pvUartType = UT_16550;
+<a name="l01129"></a>01129     <span class="keywordflow">case</span> PORT_16750:
+<a name="l01130"></a>01130       pvUartType = UT_16750;
 <a name="l01131"></a>01131       <span class="keywordflow">break</span>;
-<a name="l01132"></a>01132     <span class="keywordflow">case</span> PORT_16550A:
-<a name="l01133"></a>01133       pvUartType = UT_16550A;
+<a name="l01132"></a>01132     <span class="keywordflow">case</span> PORT_STARTECH:
+<a name="l01133"></a>01133       pvUartType = UT_STARTECH;
 <a name="l01134"></a>01134       <span class="keywordflow">break</span>;
-<a name="l01135"></a>01135     <span class="keywordflow">case</span> PORT_CIRRUS:
-<a name="l01136"></a>01136       pvUartType = UT_CIRRUS;
+<a name="l01135"></a>01135     <span class="keywordflow">case</span> PORT_16C950:
+<a name="l01136"></a>01136       pvUartType = UT_16C950;
 <a name="l01137"></a>01137       <span class="keywordflow">break</span>;
-<a name="l01138"></a>01138     <span class="keywordflow">case</span> PORT_16650:
-<a name="l01139"></a>01139       pvUartType = UT_16650;
+<a name="l01138"></a>01138     <span class="keywordflow">case</span> PORT_16654:
+<a name="l01139"></a>01139       pvUartType = UT_16654;
 <a name="l01140"></a>01140       <span class="keywordflow">break</span>;
-<a name="l01141"></a>01141     <span class="keywordflow">case</span> PORT_16650V2:
-<a name="l01142"></a>01142       pvUartType = UT_16650V2;
+<a name="l01141"></a>01141     <span class="keywordflow">case</span> PORT_16850:
+<a name="l01142"></a>01142       pvUartType = UT_16850;
 <a name="l01143"></a>01143       <span class="keywordflow">break</span>;
-<a name="l01144"></a>01144     <span class="keywordflow">case</span> PORT_16750:
-<a name="l01145"></a>01145       pvUartType = UT_16750;
+<a name="l01144"></a>01144     <span class="keywordflow">case</span> PORT_RSA:
+<a name="l01145"></a>01145       pvUartType = UT_RSA;
 <a name="l01146"></a>01146       <span class="keywordflow">break</span>;
-<a name="l01147"></a>01147     <span class="keywordflow">case</span> PORT_STARTECH:
-<a name="l01148"></a>01148       pvUartType = UT_STARTECH;
-<a name="l01149"></a>01149       <span class="keywordflow">break</span>;
-<a name="l01150"></a>01150     <span class="keywordflow">case</span> PORT_16C950:
-<a name="l01151"></a>01151       pvUartType = UT_16C950;
-<a name="l01152"></a>01152       <span class="keywordflow">break</span>;
-<a name="l01153"></a>01153     <span class="keywordflow">case</span> PORT_16654:
-<a name="l01154"></a>01154       pvUartType = UT_16654;
-<a name="l01155"></a>01155       <span class="keywordflow">break</span>;
-<a name="l01156"></a>01156     <span class="keywordflow">case</span> PORT_16850:
-<a name="l01157"></a>01157       pvUartType = UT_16850;
-<a name="l01158"></a>01158       <span class="keywordflow">break</span>;
-<a name="l01159"></a>01159     <span class="keywordflow">case</span> PORT_RSA:
-<a name="l01160"></a>01160       pvUartType = UT_RSA;
-<a name="l01161"></a>01161       <span class="keywordflow">break</span>;
-<a name="l01162"></a>01162     <span class="keywordflow">default</span>:
-<a name="l01163"></a>01163       pvUartType = UT_UNKNOW;
-<a name="l01164"></a>01164   }
-<a name="l01165"></a>01165 }
-<a name="l01166"></a>01166 
-<a name="l01167"></a>01167 <span class="keywordtype">void</span> mdtSerialPort::buildAvailableBaudRates()
-<a name="l01168"></a>01168 {
-<a name="l01169"></a>01169   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
-<a name="l01170"></a>01170 
-<a name="l01171"></a>01171   QList&lt;int&gt; tmpAvailableBaudRates;
-<a name="l01172"></a>01172   <span class="keywordtype">int</span> i;
-<a name="l01173"></a>01173 
-<a name="l01174"></a>01174   <span class="comment">// Build defined baud rates list</span>
-<a name="l01175"></a>01175   tmpAvailableBaudRates &lt;&lt; 50;
-<a name="l01176"></a>01176   tmpAvailableBaudRates &lt;&lt; 75;
-<a name="l01177"></a>01177   tmpAvailableBaudRates &lt;&lt; 110;
-<a name="l01178"></a>01178   tmpAvailableBaudRates &lt;&lt; 134; <span class="comment">// Note: is 134.5</span>
-<a name="l01179"></a>01179   tmpAvailableBaudRates &lt;&lt; 150;
-<a name="l01180"></a>01180   tmpAvailableBaudRates &lt;&lt; 200;
-<a name="l01181"></a>01181   tmpAvailableBaudRates &lt;&lt; 300;
-<a name="l01182"></a>01182   tmpAvailableBaudRates &lt;&lt; 600;
-<a name="l01183"></a>01183   tmpAvailableBaudRates &lt;&lt; 1200;
-<a name="l01184"></a>01184   tmpAvailableBaudRates &lt;&lt; 1800;
-<a name="l01185"></a>01185   tmpAvailableBaudRates &lt;&lt; 2400;
-<a name="l01186"></a>01186   tmpAvailableBaudRates &lt;&lt; 4800;
-<a name="l01187"></a>01187   tmpAvailableBaudRates &lt;&lt; 9600;
-<a name="l01188"></a>01188   tmpAvailableBaudRates &lt;&lt; 19200;
-<a name="l01189"></a>01189   tmpAvailableBaudRates &lt;&lt; 38400;
-<a name="l01190"></a>01190 <span class="preprocessor">#ifdef  B57600</span>
-<a name="l01191"></a>01191 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 57600;
+<a name="l01147"></a>01147     <span class="keywordflow">default</span>:
+<a name="l01148"></a>01148       pvUartType = UT_UNKNOW;
+<a name="l01149"></a>01149   }
+<a name="l01150"></a>01150 }
+<a name="l01151"></a>01151 
+<a name="l01152"></a>01152 <span class="keywordtype">void</span> mdtSerialPort::buildAvailableBaudRates()
+<a name="l01153"></a>01153 {
+<a name="l01154"></a>01154   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
+<a name="l01155"></a>01155 
+<a name="l01156"></a>01156   QList&lt;int&gt; tmpAvailableBaudRates;
+<a name="l01157"></a>01157   <span class="keywordtype">int</span> i;
+<a name="l01158"></a>01158 
+<a name="l01159"></a>01159   <span class="comment">// Build defined baud rates list</span>
+<a name="l01160"></a>01160   tmpAvailableBaudRates &lt;&lt; 50;
+<a name="l01161"></a>01161   tmpAvailableBaudRates &lt;&lt; 75;
+<a name="l01162"></a>01162   tmpAvailableBaudRates &lt;&lt; 110;
+<a name="l01163"></a>01163   tmpAvailableBaudRates &lt;&lt; 134; <span class="comment">// Note: is 134.5</span>
+<a name="l01164"></a>01164   tmpAvailableBaudRates &lt;&lt; 150;
+<a name="l01165"></a>01165   tmpAvailableBaudRates &lt;&lt; 200;
+<a name="l01166"></a>01166   tmpAvailableBaudRates &lt;&lt; 300;
+<a name="l01167"></a>01167   tmpAvailableBaudRates &lt;&lt; 600;
+<a name="l01168"></a>01168   tmpAvailableBaudRates &lt;&lt; 1200;
+<a name="l01169"></a>01169   tmpAvailableBaudRates &lt;&lt; 1800;
+<a name="l01170"></a>01170   tmpAvailableBaudRates &lt;&lt; 2400;
+<a name="l01171"></a>01171   tmpAvailableBaudRates &lt;&lt; 4800;
+<a name="l01172"></a>01172   tmpAvailableBaudRates &lt;&lt; 9600;
+<a name="l01173"></a>01173   tmpAvailableBaudRates &lt;&lt; 19200;
+<a name="l01174"></a>01174   tmpAvailableBaudRates &lt;&lt; 38400;
+<a name="l01175"></a>01175 <span class="preprocessor">#ifdef  B57600</span>
+<a name="l01176"></a>01176 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 57600;
+<a name="l01177"></a>01177 <span class="preprocessor">#endif</span>
+<a name="l01178"></a>01178 <span class="preprocessor"></span><span class="preprocessor">#ifdef B76800</span>
+<a name="l01179"></a>01179 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 76800;
+<a name="l01180"></a>01180 <span class="preprocessor">#endif</span>
+<a name="l01181"></a>01181 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B115200</span>
+<a name="l01182"></a>01182 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 115200;
+<a name="l01183"></a>01183 <span class="preprocessor">#endif</span>
+<a name="l01184"></a>01184 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B230400</span>
+<a name="l01185"></a>01185 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 230400;
+<a name="l01186"></a>01186 <span class="preprocessor">#endif</span>
+<a name="l01187"></a>01187 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B460800</span>
+<a name="l01188"></a>01188 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 460800;
+<a name="l01189"></a>01189 <span class="preprocessor">#endif</span>
+<a name="l01190"></a>01190 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B500000</span>
+<a name="l01191"></a>01191 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 500000;
 <a name="l01192"></a>01192 <span class="preprocessor">#endif</span>
-<a name="l01193"></a>01193 <span class="preprocessor"></span><span class="preprocessor">#ifdef B76800</span>
-<a name="l01194"></a>01194 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 76800;
+<a name="l01193"></a>01193 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B576000</span>
+<a name="l01194"></a>01194 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 576000;
 <a name="l01195"></a>01195 <span class="preprocessor">#endif</span>
-<a name="l01196"></a>01196 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B115200</span>
-<a name="l01197"></a>01197 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 115200;
+<a name="l01196"></a>01196 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B921600</span>
+<a name="l01197"></a>01197 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 921600;
 <a name="l01198"></a>01198 <span class="preprocessor">#endif</span>
-<a name="l01199"></a>01199 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B230400</span>
-<a name="l01200"></a>01200 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 230400;
+<a name="l01199"></a>01199 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B1000000</span>
+<a name="l01200"></a>01200 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 1000000;
 <a name="l01201"></a>01201 <span class="preprocessor">#endif</span>
-<a name="l01202"></a>01202 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B460800</span>
-<a name="l01203"></a>01203 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 460800;
+<a name="l01202"></a>01202 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B1152000</span>
+<a name="l01203"></a>01203 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 1152000;
 <a name="l01204"></a>01204 <span class="preprocessor">#endif</span>
-<a name="l01205"></a>01205 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B500000</span>
-<a name="l01206"></a>01206 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 500000;
+<a name="l01205"></a>01205 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B1500000</span>
+<a name="l01206"></a>01206 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 1500000;
 <a name="l01207"></a>01207 <span class="preprocessor">#endif</span>
-<a name="l01208"></a>01208 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B576000</span>
-<a name="l01209"></a>01209 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 576000;
+<a name="l01208"></a>01208 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B2000000</span>
+<a name="l01209"></a>01209 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 2000000;
 <a name="l01210"></a>01210 <span class="preprocessor">#endif</span>
-<a name="l01211"></a>01211 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B921600</span>
-<a name="l01212"></a>01212 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 921600;
+<a name="l01211"></a>01211 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B2500000</span>
+<a name="l01212"></a>01212 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 2500000;
 <a name="l01213"></a>01213 <span class="preprocessor">#endif</span>
-<a name="l01214"></a>01214 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B1000000</span>
-<a name="l01215"></a>01215 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 1000000;
+<a name="l01214"></a>01214 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B3000000</span>
+<a name="l01215"></a>01215 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 3000000;
 <a name="l01216"></a>01216 <span class="preprocessor">#endif</span>
-<a name="l01217"></a>01217 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B1152000</span>
-<a name="l01218"></a>01218 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 1152000;
+<a name="l01217"></a>01217 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B3500000</span>
+<a name="l01218"></a>01218 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 3500000;
 <a name="l01219"></a>01219 <span class="preprocessor">#endif</span>
-<a name="l01220"></a>01220 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B1500000</span>
-<a name="l01221"></a>01221 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 1500000;
+<a name="l01220"></a>01220 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B4000000</span>
+<a name="l01221"></a>01221 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 4000000;
 <a name="l01222"></a>01222 <span class="preprocessor">#endif</span>
-<a name="l01223"></a>01223 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B2000000</span>
-<a name="l01224"></a>01224 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 2000000;
-<a name="l01225"></a>01225 <span class="preprocessor">#endif</span>
-<a name="l01226"></a>01226 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B2500000</span>
-<a name="l01227"></a>01227 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 2500000;
-<a name="l01228"></a>01228 <span class="preprocessor">#endif</span>
-<a name="l01229"></a>01229 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B3000000</span>
-<a name="l01230"></a>01230 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 3000000;
-<a name="l01231"></a>01231 <span class="preprocessor">#endif</span>
-<a name="l01232"></a>01232 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B3500000</span>
-<a name="l01233"></a>01233 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 3500000;
-<a name="l01234"></a>01234 <span class="preprocessor">#endif</span>
-<a name="l01235"></a>01235 <span class="preprocessor"></span><span class="preprocessor">#ifdef  B4000000</span>
-<a name="l01236"></a>01236 <span class="preprocessor"></span>  tmpAvailableBaudRates &lt;&lt; 4000000;
-<a name="l01237"></a>01237 <span class="preprocessor">#endif</span>
-<a name="l01238"></a>01238 <span class="preprocessor"></span>
-<a name="l01239"></a>01239   <span class="comment">// Check each defined baud rate, try to apply, and store to container if Ok</span>
-<a name="l01240"></a>01240   pvAvailableBaudRates.clear();
-<a name="l01241"></a>01241   <span class="keywordflow">for</span>(i=0; i&lt;tmpAvailableBaudRates.size(); ++i){
-<a name="l01242"></a>01242     <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351" title="Set the baud rate.">setBaudRate</a>(tmpAvailableBaudRates.at(i))){
-<a name="l01243"></a>01243       pvAvailableBaudRates &lt;&lt; tmpAvailableBaudRates.at(i);
-<a name="l01244"></a>01244     }
-<a name="l01245"></a>01245   }
-<a name="l01246"></a>01246 }
-<a name="l01247"></a>01247 
-<a name="l01248"></a>01248 <span class="keywordtype">bool</span> mdtSerialPort::setRtsOn()
-<a name="l01249"></a>01249 {
-<a name="l01250"></a>01250   <span class="keywordtype">int</span> states;
-<a name="l01251"></a>01251 
-<a name="l01252"></a>01252   <span class="comment">// Get the current ctl states</span>
-<a name="l01253"></a>01253   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMGET, &amp;states) &lt; 0){
-<a name="l01254"></a>01254     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMGET&quot;</span>, mdtError::Error);
-<a name="l01255"></a>01255     e.setSystemError(errno, strerror(errno));
-<a name="l01256"></a>01256     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01257"></a>01257     e.commit();
-<a name="l01258"></a>01258     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l01259"></a>01259   }
-<a name="l01260"></a>01260   <span class="comment">// Set RTS state</span>
-<a name="l01261"></a>01261   states |= TIOCM_RTS;
-<a name="l01262"></a>01262   <span class="comment">// Commit to system</span>
-<a name="l01263"></a>01263   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMSET, &amp;states) &lt; 0){
-<a name="l01264"></a>01264     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMSET&quot;</span>, mdtError::Error);
-<a name="l01265"></a>01265     e.setSystemError(errno, strerror(errno));
-<a name="l01266"></a>01266     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01267"></a>01267     e.commit();
-<a name="l01268"></a>01268     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l01269"></a>01269   }
-<a name="l01270"></a>01270 
-<a name="l01271"></a>01271   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l01272"></a>01272 }
-<a name="l01273"></a>01273 
-<a name="l01274"></a>01274 <span class="keywordtype">bool</span> mdtSerialPort::setRtsOff()
-<a name="l01275"></a>01275 {
-<a name="l01276"></a>01276   <span class="keywordtype">int</span> states;
-<a name="l01277"></a>01277 
-<a name="l01278"></a>01278   <span class="comment">// Get the current ctl states</span>
-<a name="l01279"></a>01279   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMGET, &amp;states) &lt; 0){
-<a name="l01280"></a>01280     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMGET&quot;</span>, mdtError::Error);
-<a name="l01281"></a>01281     e.setSystemError(errno, strerror(errno));
-<a name="l01282"></a>01282     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01283"></a>01283     e.commit();
-<a name="l01284"></a>01284     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l01285"></a>01285   }
-<a name="l01286"></a>01286   <span class="comment">// Set RTS state</span>
-<a name="l01287"></a>01287   states &amp;= ~TIOCM_RTS;
-<a name="l01288"></a>01288   <span class="comment">// Commit to system</span>
-<a name="l01289"></a>01289   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMSET, &amp;states) &lt; 0){
-<a name="l01290"></a>01290     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMSET&quot;</span>, mdtError::Error);
-<a name="l01291"></a>01291     e.setSystemError(errno, strerror(errno));
-<a name="l01292"></a>01292     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
-<a name="l01293"></a>01293     e.commit();
-<a name="l01294"></a>01294     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l01295"></a>01295   }
-<a name="l01296"></a>01296 
-<a name="l01297"></a>01297   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l01298"></a>01298 }
+<a name="l01223"></a>01223 <span class="preprocessor"></span>
+<a name="l01224"></a>01224   <span class="comment">// Check each defined baud rate, try to apply, and store to container if Ok</span>
+<a name="l01225"></a>01225   pvAvailableBaudRates.clear();
+<a name="l01226"></a>01226   <span class="keywordflow">for</span>(i=0; i&lt;tmpAvailableBaudRates.size(); ++i){
+<a name="l01227"></a>01227     <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351" title="Set the baud rate.">setBaudRate</a>(tmpAvailableBaudRates.at(i))){
+<a name="l01228"></a>01228       pvAvailableBaudRates &lt;&lt; tmpAvailableBaudRates.at(i);
+<a name="l01229"></a>01229     }
+<a name="l01230"></a>01230   }
+<a name="l01231"></a>01231 }
+<a name="l01232"></a>01232 
+<a name="l01233"></a>01233 <span class="keywordtype">bool</span> mdtSerialPort::setRtsOn()
+<a name="l01234"></a>01234 {
+<a name="l01235"></a>01235   <span class="keywordtype">int</span> states;
+<a name="l01236"></a>01236 
+<a name="l01237"></a>01237   <span class="comment">// Get the current ctl states</span>
+<a name="l01238"></a>01238   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMGET, &amp;states) &lt; 0){
+<a name="l01239"></a>01239     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMGET&quot;</span>, mdtError::Error);
+<a name="l01240"></a>01240     e.setSystemError(errno, strerror(errno));
+<a name="l01241"></a>01241     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01242"></a>01242     e.commit();
+<a name="l01243"></a>01243     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l01244"></a>01244   }
+<a name="l01245"></a>01245   <span class="comment">// Set RTS state</span>
+<a name="l01246"></a>01246   states |= TIOCM_RTS;
+<a name="l01247"></a>01247   <span class="comment">// Commit to system</span>
+<a name="l01248"></a>01248   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMSET, &amp;states) &lt; 0){
+<a name="l01249"></a>01249     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMSET&quot;</span>, mdtError::Error);
+<a name="l01250"></a>01250     e.setSystemError(errno, strerror(errno));
+<a name="l01251"></a>01251     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01252"></a>01252     e.commit();
+<a name="l01253"></a>01253     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l01254"></a>01254   }
+<a name="l01255"></a>01255 
+<a name="l01256"></a>01256   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l01257"></a>01257 }
+<a name="l01258"></a>01258 
+<a name="l01259"></a>01259 <span class="keywordtype">bool</span> mdtSerialPort::setRtsOff()
+<a name="l01260"></a>01260 {
+<a name="l01261"></a>01261   <span class="keywordtype">int</span> states;
+<a name="l01262"></a>01262 
+<a name="l01263"></a>01263   <span class="comment">// Get the current ctl states</span>
+<a name="l01264"></a>01264   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMGET, &amp;states) &lt; 0){
+<a name="l01265"></a>01265     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMGET&quot;</span>, mdtError::Error);
+<a name="l01266"></a>01266     e.setSystemError(errno, strerror(errno));
+<a name="l01267"></a>01267     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01268"></a>01268     e.commit();
+<a name="l01269"></a>01269     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l01270"></a>01270   }
+<a name="l01271"></a>01271   <span class="comment">// Set RTS state</span>
+<a name="l01272"></a>01272   states &amp;= ~TIOCM_RTS;
+<a name="l01273"></a>01273   <span class="comment">// Commit to system</span>
+<a name="l01274"></a>01274   <span class="keywordflow">if</span>(ioctl(pvFd, TIOCMSET, &amp;states) &lt; 0){
+<a name="l01275"></a>01275     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMSET&quot;</span>, mdtError::Error);
+<a name="l01276"></a>01276     e.setSystemError(errno, strerror(errno));
+<a name="l01277"></a>01277     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
+<a name="l01278"></a>01278     e.commit();
+<a name="l01279"></a>01279     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l01280"></a>01280   }
+<a name="l01281"></a>01281 
+<a name="l01282"></a>01282   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l01283"></a>01283 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -1364,7 +1359,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

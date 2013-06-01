@@ -9,7 +9,7 @@
 <area shape="rect" id="node16" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="69,101,187,131"/>
 <area shape="rect" id="node18" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="75,5,181,35"/>
 <area shape="rect" id="node20" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="281,197,372,227"/>
-<area shape="rect" id="node23" href="$classmdt_frame_codec_scpi.html" title="Decode SCPI data." alt="" coords="291,581,435,611"/>
+<area shape="rect" id="node23" href="$classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;" alt="" coords="291,581,435,611"/>
 <area shape="rect" id="node25" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="309,485,456,515"/>
 <area shape="rect" id="node27" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="324,389,441,419"/>
 </map>

@@ -21,8 +21,6 @@
 #include "mdtAbstractPort.h"
 #include "mdtFrameUsbTmc.h"
 
-#include <QDebug>
-
 mdtAbstractPort::mdtAbstractPort(QObject *parent)
  : QObject(parent)
 {
@@ -34,6 +32,7 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
 
 mdtAbstractPort::~mdtAbstractPort()
 {
+  qDebug() << "mdtAbstractPort::~mdtAbstractPort()";
 }
 
 void mdtAbstractPort::setPortName(const QString &portName)
@@ -70,6 +69,7 @@ mdtAbstractPort::error_t mdtAbstractPort::open()
 
 void mdtAbstractPort::close()
 {
+  qDebug() << "mdtAbstractPort::close() ...";
   if(!isOpen()){
     return;
   }
@@ -79,15 +79,20 @@ void mdtAbstractPort::close()
   // Call system close method
   pvClose();
   // Delete queues
+  qDebug() << "mdtAbstractPort::close() deleting read pool queues ...";
   qDeleteAll(pvReadFramesPool);
   pvReadFramesPool.clear();
+  qDebug() << "mdtAbstractPort::close() deleting readen queues ...";
   qDeleteAll(pvReadenFrames);
   pvReadenFrames.clear();
+  qDebug() << "mdtAbstractPort::close() deleting write pool queues ...";
   qDeleteAll(pvWriteFramesPool);
   pvWriteFramesPool.clear();
+  qDebug() << "mdtAbstractPort::close() deleting to write ...";
   qDeleteAll(pvWriteFrames);
   pvWriteFrames.clear();
   pvIsOpen = false;
+  qDebug() << "mdtAbstractPort::close() DONE";
 }
 
 void mdtAbstractPort::setConfig(mdtPortConfig *cfg)
@@ -344,4 +349,49 @@ void mdtAbstractPort::lockMutex()
 void mdtAbstractPort::unlockMutex()
 {
   pvMutex.unlock();
+}
+
+QDebug operator<<(QDebug dbg, mdtAbstractPort::error_t error)
+{
+  switch(error){
+    case mdtAbstractPort::NoError:
+      return dbg.nospace() << "(" << (int)error << ", NoError" << ")";
+    case mdtAbstractPort::PortLocked:
+      return dbg.nospace() << "(" << (int)error << ", PortLocked" << ")";
+    case mdtAbstractPort::PortNotFound:
+      return dbg.nospace() << "(" << (int)error << ", PortNotFound" << ")";
+    case mdtAbstractPort::PortAccess:
+      return dbg.nospace() << "(" << (int)error << ", PortAccess" << ")";
+    case mdtAbstractPort::SetupError:
+      return dbg.nospace() << "(" << (int)error << ", SetupError" << ")";
+    case mdtAbstractPort::WriteCanceled:
+      return dbg.nospace() << "(" << (int)error << ", WriteCanceled" << ")";
+    case mdtAbstractPort::ReadCanceled:
+      return dbg.nospace() << "(" << (int)error << ", ReadCanceled" << ")";
+    case mdtAbstractPort::ControlCanceled:
+      return dbg.nospace() << "(" << (int)error << ", ControlCanceled" << ")";
+    case mdtAbstractPort::ReadTimeout:
+      return dbg.nospace() << "(" << (int)error << ", ReadTimeout" << ")";
+    case mdtAbstractPort::WriteTimeout:
+      return dbg.nospace() << "(" << (int)error << ", WriteTimeout" << ")";
+    case mdtAbstractPort::MessageInTimeout:
+      return dbg.nospace() << "(" << (int)error << ", MessageInTimeout" << ")";
+    case mdtAbstractPort::MessageInCanceled:
+      return dbg.nospace() << "(" << (int)error << ", MessageInCanceled" << ")";
+    case mdtAbstractPort::ControlTimeout:
+      return dbg.nospace() << "(" << (int)error << ", ControlTimeout" << ")";
+    case mdtAbstractPort::Disconnected:
+      return dbg.nospace() << "(" << (int)error << ", Disconnected" << ")";
+    case mdtAbstractPort::Connecting:
+      return dbg.nospace() << "(" << (int)error << ", Connecting" << ")";
+    case mdtAbstractPort::UnhandledError:
+      return dbg.nospace() << "(" << (int)error << ", UnhandledError" << ")";
+    case mdtAbstractPort::ReadPoolEmpty:
+      return dbg.nospace() << "(" << (int)error << ", ReadPoolEmpty" << ")";
+    case mdtAbstractPort::WritePoolEmpty:
+      return dbg.nospace() << "(" << (int)error << ", WritePoolEmpty" << ")";
+    case mdtAbstractPort::ErrorHandled:
+      return dbg.nospace() << "(" << (int)error << ", ErrorHandled" << ")";
+  }
+  return dbg.nospace() << "(" << (int)error << ", ???" << ")";
 }

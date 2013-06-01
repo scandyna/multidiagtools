@@ -23,8 +23,6 @@
 
 #include "ui_mdtPortTerm.h"
 #include "mdtPortManager.h"
-#include "mdtUsbtmcPortManager.h"
-#include "mdtSerialPortManager.h"
 #include "mdtSerialPortSetupDialog.h"
 #include "mdtSerialPortCtlWidget.h"
 #include <QWidget>
@@ -38,6 +36,8 @@
 
 class QLabel;
 class mdtPortStatusWidget;
+class mdtSerialPortManager;
+class mdtUsbtmcPortManager;
 
 /*! \brief Mini port treminal
  */
@@ -58,13 +58,9 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
 
   /*! \brief Append incomming data to terminal
    */
-  void appendReadenData(QByteArray data);
+  void appendReadenData(mdtPortTransaction *transaction);
 
-  /*! \brief Append incomming data to terminal
-   */
-  void appendReadenData(mdtPortTransaction transaction);
-
-  /*! \brief Send command to port
+  /*! \brief Send command to current port
    */
   void sendCmd();
 
@@ -137,6 +133,14 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
    * \param timeout If > 0, message will be cleared after timeout [ms]
    */
   void showStatusMessage(const QString &message, int timeout = 0);
+
+  /*! \brief Send command/query to serial port
+   */
+  bool sendCommandToSerialPort(const QString &command);
+
+  /*! \brief Send command/query to USBTMC port
+   */
+  bool sendCommandToUsbtmcPort(const QString &command);
 
   // Diseable copy
   Q_DISABLE_COPY(mdtPortTerm);

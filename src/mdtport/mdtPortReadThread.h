@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -49,6 +49,10 @@ class mdtPortReadThread : public mdtPortThread
    */
   bool isReader() const;
 
+  /*! \brief Retunrs false
+   */
+  bool handlesTimeout() const;
+
  private:
 
   // Thread implementation
@@ -56,6 +60,8 @@ class mdtPortReadThread : public mdtPortThread
 
   bool pvTransmissionSuspended; // Flag used to remeber if a transmission suspend was request.
   int pvMinPoolSizeBeforeReadSuspend;
+
+  Q_DISABLE_COPY(mdtPortReadThread);
 };
 
 #endif  // #ifndef MDT_PORT_READ_THREAD_H

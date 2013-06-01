@@ -21,6 +21,8 @@
 #include "mdtTcpServer.h"
 #include "mdtTcpServerThread.h"
 
+#include <QDebug>
+
 mdtTcpServer::mdtTcpServer(QObject *parent)
  : QTcpServer(parent)
 {

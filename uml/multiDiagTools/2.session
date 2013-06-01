@@ -1,26 +1,17 @@
-window_sizes 1280 1001 304 970 803 120
+window_sizes 1280 1001 281 993 923 0
 diagrams
-  classdiagram_ref 600962 // mdtDataTableItemDelegate
-    970 803 100 4 0 0
-  classdiagram_ref 607618 // mdtDataTableModel
-    970 803 100 4 0 0
-  classdiagram_ref 614146 // mdtDataTableManager
-    970 803 100 4 0 0
-  active  classdiagram_ref 620674 // mdtFieldMap
-    970 803 100 4 168 0
+  sequencediagram_ref 653314 // TCPsocketStart
+    993 923 100 3 0 0
+  active  sequencediagram_ref 659970 // TCPsocketWrite
+    993 923 100 4 0 0
+  sequencediagram_ref 660098 // TCPsocketStop
+    993 923 100 4 12 0
 end
 show_stereotypes
-selected operation_ref 1207042 // fieldIndex
+selected sequencediagram_ref 659970 // TCPsocketWrite
 open
-  classview_ref 273666 // mdtCsvFile
-  class_ref 612098 // mdtDataTableModel
-  operation_ref 1177986 // createDataSet
-  operation_ref 1185026 // importFromCsvFile
-  operation_ref 1184898 // exportToCsvFile
-  attribute_ref 693890 // pvSourceFieldIndex
-  attribute_ref 693634 // pvSourceFieldName
-  operation_ref 1206786 // clear
-  class_ref 605570 // QStyledItemDelegate
-  class_ref 174210 // QSqlTableModel
+  classview_ref 181634 // mdtFrame
+  classview_ref 451074 // TCPsocketSeq
+  class_ref 672258 // QEventLoop
 end
 end

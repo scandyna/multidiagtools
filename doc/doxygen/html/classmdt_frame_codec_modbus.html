@@ -127,6 +127,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a PDU according the WriteMultipleCoils function (FC 15, 0x0F)  <a href="#a12013e4433f96b2658b464698135e9fa"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_modbus.html#a04092bf1d376c4c630b2311cbc5dd126">encodeWriteMultipleRegisters</a> (quint16 startAddress, const QList&lt; int &gt; &amp;values)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a PDU according the WriteMultipleRegisters function (FC 16, 0x10)  <a href="#a04092bf1d376c4c630b2311cbc5dd126"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_modbus.html#a54ac76dc91ee6f885aa1536fb9f8531c">encodeReadDeviceIdentification</a> (quint8 objectId, bool individualAccess)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a PDU according the ReadDeviceIdentification function (FC 43, 0x2B)  <a href="#a54ac76dc91ee6f885aa1536fb9f8531c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_modbus.html#a426f465363a49d70890a462b40677787">decode</a> (const QByteArray &amp;pdu)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a MODBUS PDU.  <a href="#a426f465363a49d70890a462b40677787"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_frame_codec_modbus.html#a31d8291be7f8636d5d295ce3066d7ac7">modbus_error_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_modbus.html#a21f3102e12f1a1d9c4145c1ce1f8e6b6">lastModbusError</a> ()</td></tr>
@@ -220,10 +222,10 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode a MODBUS PDU. </p>
-<p>This should reconize the function code in PDU, and call the appropriate decode methode (internal). Once decode is done, the values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">mdtFrameCodec::values()</a>. To know what was decoded, the function code is returned.</p>
+<p>This should reconize the function code in PDU, and call the appropriate decode methode (internal). Once decode is done, the values are available with <a class="el" href="classmdt_frame_codec.html#af3353b74e1ab64ad7cc764dcaf22e7e8" title="Get the decoded values.">mdtFrameCodec::values()</a>. To know what was decoded, the function code is returned.</p>
 <p>The values are stored in a QList&lt;QVariant&gt; , with format depending of the function code:</p>
 <ul>
-<li>FC 1 (0x01), ReadCoils reply: digital output states as bool, sorted by ascending addresses.</li>
+<li>FC 1 (0x01), ReadCoils reply: digital outputs (coils) states as bool, sorted by ascending addresses. Note: the PDU contains the number of bytes returned by device, it's also not possible to know how many coils are concerned. For example, if a request was made for 5 coils, 1 byte is returned from device, <a class="el" href="classmdt_frame_codec.html#af3353b74e1ab64ad7cc764dcaf22e7e8" title="Get the decoded values.">values()</a> will also contain 8 items.</li>
 <li>FC 2 (0x02), ReadDiscreteInputs reply: digital input states as bool, sorted by ascending addresses.</li>
 <li>FC 3 (0x03), ReadHoldingRegisters reply: analog output values as quint16, sorted by ascending addresses.</li>
 <li>FC 4 (0x04), ReadInputRegisters reply: analog input values as quint16, sorted by ascending addresses.</li>
@@ -231,6 +233,7 @@ Public Member Functions</h2></td></tr>
 <li>FC 6 (0x06), WriteSingleRegister reply: analog output address and value, as quint16.</li>
 <li>FC 15 (0x0F), WriteMultipleCoils reply: first value is starting address as quint16, second value is the number of output as quint16.</li>
 <li>FC 16 (0x10), WriteMultipleRegisters reply: first value is starting address as quint16, second value is the number of output as quint16.</li>
+<li>FC 43 (0x2B), ReadDeviceIdentification reply: first: more follows (bool), second: next Object Id (int), then couples of Object ID followed by Object value (f.ex: false, 0, 0, "Vendor Name", 1, "Product code", ...)</li>
 </ul>
 <p>If PDU contains a error code, the list of values will be empty, and this error code will be returned.</p>
 <p>If a MODBUS error code is decoded, this error code is returned as in frame (for. ex: 0x81 for a ReadCoils error) To know whitch MODBUS error was returned, use <a class="el" href="classmdt_frame_codec_modbus.html#a21f3102e12f1a1d9c4145c1ce1f8e6b6" title="Get the last MODBUS error code returned.">lastModbusError()</a></p>
@@ -242,7 +245,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Decoded function code, MODBUS error code or value &lt; 0 on other error. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00257">257</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00283">283</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -276,6 +279,39 @@ Public Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A QByteArray containing the PDU, or a empty QByteArray on error. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a54ac76dc91ee6f885aa1536fb9f8531c"></a><!-- doxytag: member="mdtFrameCodecModbus::encodeReadDeviceIdentification" ref="a54ac76dc91ee6f885aa1536fb9f8531c" args="(quint8 objectId, bool individualAccess)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QByteArray mdtFrameCodecModbus::encodeReadDeviceIdentification </td>
+          <td>(</td>
+          <td class="paramtype">quint8&#160;</td>
+          <td class="paramname"><em>objectId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>individualAccess</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Encode a PDU according the ReadDeviceIdentification function (FC 43, 0x2B) </p>
+<p>Please take a look at MODBUS specifications for more details.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A QByteArray containing the PDU, or a empty QByteArray on error. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00256">256</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -407,7 +443,7 @@ Public Member Functions</h2></td></tr>
 <p>Please take a look at MODBUS specifications for more details.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A QByteArray containing the PDU, or a empty QByteArray on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00169">169</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00168">168</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -438,9 +474,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Encode a PDU according the WriteMultipleRegisters function (FC 16, 0x10) </p>
 <p>Please take a look at MODBUS specifications for more details.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>A QByteArray containing the PDU, or a empty QByteArray on error.QByteArray encodeWriteMultipleRegisters(quint16 startAddress, const QList&lt;quint16&gt; &amp;values); </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A QByteArray containing the PDU, or a empty QByteArray on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00223">223</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00222">222</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -472,9 +508,6 @@ Public Member Functions</h2></td></tr>
 <p>Encode a PDU according the WriteSingleCoil function (FC 5, 0x05) </p>
 <p>Please take a look at MODBUS specifications for more details.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A QByteArray containing the PDU, or a empty QByteArray on error. </dd></dl>
-
-<p><p>qDebug() &lt;&lt; "mdtFrameCodecModbus::encodeWriteSingleCoil(): address " &lt;&lt; address &lt;&lt; " , state: " &lt;&lt; state; </p>
-</p>
 
 <p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
 
@@ -509,7 +542,7 @@ Public Member Functions</h2></td></tr>
 <p>Please take a look at MODBUS specifications for more details.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A QByteArray containing the PDU, or a empty QByteArray on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00153">153</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00152">152</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -531,7 +564,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns the error code according to the specification, part function/error codes (same value). </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_frame_codec_modbus.html#a426f465363a49d70890a462b40677787" title="Decode a MODBUS PDU.">decode()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00349">349</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00381">381</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -554,7 +587,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:26 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

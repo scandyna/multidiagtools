@@ -37,8 +37,8 @@
 mdtDeviceModbusWago::mdtDeviceModbusWago(QObject *parent)
  : mdtDeviceModbus(parent)
 {
-  setAnalogOutputAddressOffset(0x0200);
-  setDigitalOutputAddressOffset(0x0200);
+  ///setAnalogOutputAddressOffset(0x0200);
+  ///setDigitalOutputAddressOffset(0x0200);
 }
 
 mdtDeviceModbusWago::~mdtDeviceModbusWago()
@@ -112,10 +112,15 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
 
 mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
 {
-  Q_ASSERT(!pvTcpPortManager->isRunning());
+  ///Q_ASSERT(!pvTcpPortManager->isRunning());
 
   int i;
 
+  // Check that port manager is not running
+  if(pvTcpPortManager->isRunning()){
+    qDebug() << "mdtDeviceModbusWago::connectToDevice() : stopping ...";
+    pvTcpPortManager->stop();
+  }
   for(i=0; i<scanResult.size(); i++){
     Q_ASSERT(scanResult.at(i) != 0);
     // Try to connect
@@ -350,7 +355,7 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
     return false;
   }
   // Add I/Os to container
-  for(i=0; i<analogInputs.size(); i++){
+  for(i=0; i<analogInputs.size(); ++i){
     aio = analogInputs.at(i);
     Q_ASSERT(aio != 0);
     aio->setAddress(i);
@@ -360,7 +365,9 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   for(i=0; i<analogOutputs.size(); i++){
     aio = analogOutputs.at(i);
     Q_ASSERT(aio != 0);
-    aio->setAddress(i);
+    ///aio->setAddress(i);
+    aio->setAddressRead(i+0x0200);
+    aio->setAddressWrite(i);
     aio->setLabelShort("AO" + QString::number(i+1));
     ios->addAnalogOutput(aio);
   }
@@ -374,7 +381,9 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   for(i=0; i<digitalOutputs.size(); i++){
     dio = digitalOutputs.at(i);
     Q_ASSERT(dio != 0);
-    dio->setAddress(i);
+    ///dio->setAddress(i);
+    dio->setAddressRead(i+0x0200);
+    dio->setAddressWrite(i);
     dio->setLabelShort("DO" + QString::number(i+1));
     ios->addDigitalOutput(dio);
   }

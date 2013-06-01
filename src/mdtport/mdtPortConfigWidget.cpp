@@ -21,8 +21,9 @@
 #include "mdtPortConfigWidget.h"
 #include "mdtFrame.h"
 #include <QVariant>
+#include <QByteArray>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtPortConfigWidget::mdtPortConfigWidget(QWidget *parent)
  : QWidget(parent)
@@ -33,6 +34,7 @@ mdtPortConfigWidget::mdtPortConfigWidget(QWidget *parent)
 void mdtPortConfigWidget::displayConfig(mdtPortConfig &config)
 {
   int index;
+  QByteArray ba;
 
   // Frame type
   if(cbFrameType->count() < 1){
@@ -48,11 +50,24 @@ void mdtPortConfigWidget::displayConfig(mdtPortConfig &config)
   }
   // End of frame sequence
   if(cbEndOfFrameSeq->count() < 1){
-    cbEndOfFrameSeq->addItem("");
-    cbEndOfFrameSeq->addItem("*");
-    cbEndOfFrameSeq->addItem("$");
+    cbEndOfFrameSeq->addItem("", QByteArray());
+    cbEndOfFrameSeq->addItem("*", QByteArray("*"));
+    cbEndOfFrameSeq->addItem("$", QByteArray("$"));
+    ba.clear();
+    ba.append((char)0x04);
+    cbEndOfFrameSeq->addItem("EOT (0x04)", ba);
+    ba.clear();
+    ba.append((char)0x0A);
+    cbEndOfFrameSeq->addItem("LF (0x0A, \\n)", ba);
+    ba.clear();
+    ba.append((char)0x0D);
+    cbEndOfFrameSeq->addItem("CR (0x0D, \\r)", ba);
+    ba.clear();
+    ba.append((char)0x17);
+    cbEndOfFrameSeq->addItem("ETB (0x17)", ba);
+
   }
-  index = cbEndOfFrameSeq->findText(config.endOfFrameSeq());
+  index = cbEndOfFrameSeq->findData(config.endOfFrameSeq());
   if(index >= 0){
     cbEndOfFrameSeq->setCurrentIndex(index);
   }
@@ -65,7 +80,7 @@ void mdtPortConfigWidget::displayConfig(mdtPortConfig &config)
   sbWriteFrameSize->setValue(config.writeFrameSize());
   sbWriteQueueSize->setValue(config.writeQueueSize());
   sbWriteTimeout->setValue(config.writeTimeout());
-  sbWriteMinWaitTime->setValue(config.writeMinWaitTime());
+  sbWriteInterbyteWaitTime->setValue(config.writeInterbyteTime());
   cbBytePerByteWrite->setChecked(config.bytePerByteWrite());
   sbWriteInterframeTime->setValue(config.writeInterframeTime());
 }
@@ -94,7 +109,10 @@ void mdtPortConfigWidget::updateConfig(mdtPortConfig &config)
   }
   // End of frame sequence - Only for ASCII frame type
   if(config.frameType() == mdtFrame::FT_ASCII){
-    config.setEndOfFrameSeq(cbEndOfFrameSeq->currentText().toAscii());
+    index = cbEndOfFrameSeq->currentIndex();
+    if(index > -1){
+      config.setEndOfFrameSeq(cbEndOfFrameSeq->itemData(index).toByteArray());
+    }
   }else{
     config.setEndOfFrameSeq("");
   }
@@ -107,8 +125,7 @@ void mdtPortConfigWidget::updateConfig(mdtPortConfig &config)
   config.setWriteFrameSize(sbWriteFrameSize->value());
   config.setWriteQueueSize(sbWriteQueueSize->value());
   config.setWriteTimeout(sbWriteTimeout->value());
-  config.setWriteMinWaitTime(sbWriteMinWaitTime->value());
-  config.setBytePerByteWrite(cbBytePerByteWrite->isChecked(), sbWriteMinWaitTime->value());
+  config.setBytePerByteWrite(cbBytePerByteWrite->isChecked(), sbWriteInterbyteWaitTime->value());
   config.setWriteInterframeTime(sbWriteInterframeTime->value());
 
   // Display real applied setup

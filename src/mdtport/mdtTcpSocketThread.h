@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,12 +22,7 @@
 #define MDT_TCP_SOCKET_THREAD_H
 
 #include <QObject>
-#include <QTcpSocket>
-#include <QQueue>
-#include <QWaitCondition>
-#include <QMutex>
 #include "mdtPortThread.h"
-#include "mdtFrame.h"
 
 class mdtTcpSocketThread : public mdtPortThread
 {
@@ -51,11 +46,15 @@ class mdtTcpSocketThread : public mdtPortThread
    */
   bool isWriter() const;
 
+  /*! \brief Returns true
+   *
+   * mdtPortManager uses this flag to know how to deal with timeouts.
+   */
+  bool handlesTimeout() const;
+
  private:
 
   void run();
-
-  QTcpSocket *pvSocket;
 };
 
 #endif  // #ifndef MDT_TCP_SOCKET_THREAD_H

@@ -22,8 +22,7 @@ Inheritance diagram for mdtUsbPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtUsbPortManager:
-\nopagebreak
+Collaboration diagram for mdtUsbPortManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -56,7 +55,7 @@ virtual QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperli
 \begin{DoxyCompactList}\small\item\em Get a list of attached USB devices. \end{DoxyCompactList}\item 
 QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_usb_port_manager_ab28253c46c80bb12cbbd116b05c4bcd3}{scan} (int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol)
 \begin{DoxyCompactList}\small\item\em Get a list of attached USB devices. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_usb_port_manager_a7e7e6a29c2cf8d1d6bee23dd3f69d829}{openPort} ()
+bool \hyperlink{classmdt_usb_port_manager_ac656805c6de08c9c6a2487291cf3f347}{start} ()
 \begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_usb_port_manager_adff8a1f8ed2b0e68229e2016c75e04a6}{readUntilShortPacketReceived} ()
 \begin{DoxyCompactList}\small\item\em Request port to read until a short frame is received. \end{DoxyCompactList}\item 
@@ -70,6 +69,11 @@ void \hyperlink{classmdt_usb_port_manager_a982256ed17db155e1c95d544683a6dba}{flu
 \begin{DoxyCompactList}\small\item\em Flush input buffers. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_usb_port_manager_ab723086376175c40635df44adf358985}{flushOut} (bool flushPortManagerBuffers, bool flushPortBuffers)
 \begin{DoxyCompactList}\small\item\em Flush output buffers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_usb_port_manager_ad6cbef2c218efe73fdad6d5f598f743f}{onThreadsErrorOccured} (int error)
+\begin{DoxyCompactList}\small\item\em Manage errors comming from usb port thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -95,7 +99,7 @@ Definition at line 33 of file mdtUsbPortManager.h.
 
 Contruct a USB port manager. 
 
-Will create \hyperlink{classmdt_usb_port}{mdtUsbPort} and setup. Thread will be created at first call of \hyperlink{classmdt_usb_port_manager_a7e7e6a29c2cf8d1d6bee23dd3f69d829}{openPort()}. 
+Will create \hyperlink{classmdt_usb_port}{mdtUsbPort} and setup. Thread will be created at first call of \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{openPort()}. 
 
 pvReadUntilShortPacketReceivedFinished = false; 
 
@@ -153,7 +157,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_ac0844a5cd4043a95a479d458ac7
 
 
 
-Definition at line 291 of file mdtUsbPortManager.cpp.
+Definition at line 309 of file mdtUsbPortManager.cpp.
 
 \hypertarget{classmdt_usb_port_manager_ab723086376175c40635df44adf358985}{
 \index{mdtUsbPortManager@{mdtUsbPortManager}!flushOut@{flushOut}}
@@ -185,7 +189,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a3f0c2722a41c49de2bea9013bcc
 
 
 
-Definition at line 302 of file mdtUsbPortManager.cpp.
+Definition at line 320 of file mdtUsbPortManager.cpp.
 
 \hypertarget{classmdt_usb_port_manager_af043c75c74665b23d13f3cb73150935c}{
 \index{mdtUsbPortManager@{mdtUsbPortManager}!fromThreadControlResponseReaden@{fromThreadControlResponseReaden}}
@@ -202,36 +206,30 @@ Called from USB thread when a control reply was received.
 
 Will add a copy of received control responses to internal queue and restore frame back to port's pool. 
 
-Definition at line 309 of file mdtUsbPortManager.cpp.
+Definition at line 327 of file mdtUsbPortManager.cpp.
 
-\hypertarget{classmdt_usb_port_manager_a7e7e6a29c2cf8d1d6bee23dd3f69d829}{
-\index{mdtUsbPortManager@{mdtUsbPortManager}!openPort@{openPort}}
-\index{openPort@{openPort}!mdtUsbPortManager@{mdtUsbPortManager}}
-\subsubsection[{openPort}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbPortManager::openPort (
+\hypertarget{classmdt_usb_port_manager_ad6cbef2c218efe73fdad6d5f598f743f}{
+\index{mdtUsbPortManager@{mdtUsbPortManager}!onThreadsErrorOccured@{onThreadsErrorOccured}}
+\index{onThreadsErrorOccured@{onThreadsErrorOccured}!mdtUsbPortManager@{mdtUsbPortManager}}
+\subsubsection[{onThreadsErrorOccured}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbPortManager::onThreadsErrorOccured (
 \begin{DoxyParamCaption}
-{}
+\item[{int}]{error}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_usb_port_manager_a7e7e6a29c2cf8d1d6bee23dd3f69d829}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual, slot\mbox{]}}}}
+\label{classmdt_usb_port_manager_ad6cbef2c218efe73fdad6d5f598f743f}
 
 
-Open the port. 
+Manage errors comming from usb port thread. 
 
-Overloads \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtPortManager::openPort()}.
+This implementation will handle some USB specific errors, change the current state emiting transistion signal. If state has changed, \hyperlink{classmdt_port_manager_a1c9e1848373831962b7ec83fd4fe5d35}{stateChanged()} signal is emited.
 
-Will construct the thread if not allready exists. This is because \hyperlink{classmdt_usbtmc_port_manager}{mdtUsbtmcPortManager} uses a different thread, so this task can not be done in constructor.
+Some errors are handled here. For others, \hyperlink{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}{mdtPortManager::onThreadsErrorOccured()} is called. 
 
-Internally, \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtPortManager::openPort()} is called. 
-
-connect(portThread, SIGNAL(messageInReaden()), this, SLOT(\hyperlink{classmdt_usb_port_manager_a9b7154590a4eb267aff4e11ba53dd7aa}{fromThreadMessageInReaden()})); connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(\hyperlink{classmdt_usb_port_manager_a8f53dc5445b7f8f4a077f3cc25880b5d}{fromThreadReadUntilShortPacketReceivedFinished()})); 
-
-
-
-Reimplemented from \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtPortManager}.
+Reimplemented from \hyperlink{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}{mdtPortManager}.
 
 
 
-Definition at line 178 of file mdtUsbPortManager.cpp.
+Definition at line 372 of file mdtUsbPortManager.cpp.
 
 \hypertarget{classmdt_usb_port_manager_a84c26fee7dfb26290659aa002e0842c6}{
 \index{mdtUsbPortManager@{mdtUsbPortManager}!readenControlResponses@{readenControlResponses}}
@@ -248,7 +246,7 @@ Get all readen control responses.
 
 Note that calling this methode will clear the internal queue. (A second call will return a empty list). 
 
-Definition at line 279 of file mdtUsbPortManager.cpp.
+Definition at line 299 of file mdtUsbPortManager.cpp.
 
 \hypertarget{classmdt_usb_port_manager_adff8a1f8ed2b0e68229e2016c75e04a6}{
 \index{mdtUsbPortManager@{mdtUsbPortManager}!readUntilShortPacketReceived@{readUntilShortPacketReceived}}
@@ -272,7 +270,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 193 of file mdtUsbPortManager.cpp.
+Definition at line 210 of file mdtUsbPortManager.cpp.
 
 \hypertarget{classmdt_usb_port_manager_ab28253c46c80bb12cbbd116b05c4bcd3}{
 \index{mdtUsbPortManager@{mdtUsbPortManager}!scan@{scan}}
@@ -369,7 +367,50 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 Subclass notes:\par
  This method can be reimplemented in subclass if needed. Typically usefull if a frame ID must be generated for each request (f.ex. bTag on USBTMC). A frame must be taken from port's request frames pool with mdtAbstractPort::controlFramesPool() dequeue() method (see Qt's QQueue documentation for more details on dequeue() ), then added to port's request queue with mdtAbstractPort::addControlRequest() . If protocol supports frame identification (like USBTMC's bTag), it should be returned here and incremented. 
 
-Definition at line 215 of file mdtUsbPortManager.cpp.
+Definition at line 232 of file mdtUsbPortManager.cpp.
+
+\hypertarget{classmdt_usb_port_manager_ac656805c6de08c9c6a2487291cf3f347}{
+\index{mdtUsbPortManager@{mdtUsbPortManager}!start@{start}}
+\index{start@{start}!mdtUsbPortManager@{mdtUsbPortManager}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbPortManager::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_usb_port_manager_ac656805c6de08c9c6a2487291cf3f347}
+
+
+Open the port. 
+
+Overloads \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtPortManager::openPort()}.
+
+Will construct the thread if not allready exists. This is because \hyperlink{classmdt_usbtmc_port_manager}{mdtUsbtmcPortManager} uses a different thread, so this task can not be done in constructor.
+
+Internally, \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtPortManager::openPort()} is called.bool \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{openPort()};
+
+Open the port
+
+Overloads \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{mdtPortManager::start()}.
+
+Will construct the thread if not allready exists. This is because \hyperlink{classmdt_usbtmc_port_manager}{mdtUsbtmcPortManager} uses a different thread, so this task can not be done in constructor.
+
+Internally, \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{mdtPortManager::start()} is called.
+
+bool \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtUsbPortManager::openPort()} \{ \hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread} $\ast$portThread;
+
+if(pvThreads.size() $<$ 0)\{ portThread = new \hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread}; connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(\hyperlink{classmdt_usb_port_manager_af043c75c74665b23d13f3cb73150935c}{fromThreadControlResponseReaden()})); /connect(portThread, SIGNAL(messageInReaden()), this, SLOT(\hyperlink{classmdt_usb_port_manager_a9b7154590a4eb267aff4e11ba53dd7aa}{fromThreadMessageInReaden()})); /connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(\hyperlink{classmdt_usb_port_manager_a8f53dc5445b7f8f4a077f3cc25880b5d}{fromThreadReadUntilShortPacketReceivedFinished()})); addThread(portThread); \}
+
+return \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtPortManager::openPort()}; \} 
+
+connect(portThread, SIGNAL(messageInReaden()), this, SLOT(\hyperlink{classmdt_usb_port_manager_a9b7154590a4eb267aff4e11ba53dd7aa}{fromThreadMessageInReaden()})); connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(\hyperlink{classmdt_usb_port_manager_a8f53dc5445b7f8f4a077f3cc25880b5d}{fromThreadReadUntilShortPacketReceivedFinished()})); 
+
+
+
+Reimplemented from \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{mdtPortManager}.
+
+
+
+Definition at line 195 of file mdtUsbPortManager.cpp.
 
 \hypertarget{classmdt_usb_port_manager_ad91c432e85737f2224bbae651fb65a8d}{
 \index{mdtUsbPortManager@{mdtUsbPortManager}!waitReadenControlResponse@{waitReadenControlResponse}}
@@ -396,11 +437,17 @@ This method can return if timeout occurs, or for other reason depending on speci
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True if Ok, false on timeout 
+True if Ok, false on timeout
 \end{DoxyReturn}
+\begin{Desc}
+\item[\hyperlink{todo__todo000036}{Todo}]Adapt using internal timeouts + errors system \end{Desc}
 
 
-Definition at line 252 of file mdtUsbPortManager.cpp.
+if(readWaitCanceled())\{ return false; \}
+
+
+
+Definition at line 270 of file mdtUsbPortManager.cpp.
 
 
 
