@@ -149,6 +149,7 @@ void mdtModbusIoTool::setup()
     }
     pvDeviceModbusWago->setIos(pvDeviceIos, true);
     pvDeviceIosWidget->setDeviceIos(pvDeviceIos);
+    pvDeviceModbusWago->getDigitalOutputs(0);
     showStatusMessage(tr("I/O detection done"), 1000);
   }
 }
@@ -198,6 +199,7 @@ void mdtModbusIoTool::connectToNode()
   }
   pvDeviceModbusWago->setIos(pvDeviceIos, true);
   pvDeviceIosWidget->setDeviceIos(pvDeviceIos);
+  pvDeviceModbusWago->getDigitalOutputs(0);
   showStatusMessage(tr("I/O detection done"), 1000);
   pbAbortScan->setEnabled(false);
   ///pbConnect->setEnabled(true);

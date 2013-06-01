@@ -641,7 +641,7 @@ int mdtDevice::setDigitalOutputState(int address, bool state, int timeout)
   transaction->setIo(dout, false);
   transaction->setAddress(address);
   // Disable output - subclass must enable it again wehen data comes in
-  dout->setEnabled(false);
+  ///dout->setEnabled(false);
   // Send query and wait if requested
   if(timeout == 0){
     transaction->setQueryReplyMode(false);
