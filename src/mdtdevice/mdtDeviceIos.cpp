@@ -40,9 +40,11 @@ mdtDeviceIos::mdtDeviceIos(QObject *parent)
 mdtDeviceIos::~mdtDeviceIos()
 {
   // Delete I/O objects
+  qDebug() << "mdtDeviceIos::~mdtDeviceIos() ...";
   if(pvAutoDeleteIos){
     deleteIos();
   }
+  qDebug() << "mdtDeviceIos::~mdtDeviceIos() DONE";
 }
 
 void mdtDeviceIos::setAutoDeleteIos(bool autoDelete)
@@ -52,6 +54,7 @@ void mdtDeviceIos::setAutoDeleteIos(bool autoDelete)
 
 void mdtDeviceIos::deleteIos()
 {
+  qDebug() << "delete I/Os ...";
   qDeleteAll(pvAnalogInputs);
   pvAnalogInputs.clear();
   pvAnalogInputsByAddressRead.clear();
@@ -72,6 +75,7 @@ void mdtDeviceIos::deleteIos()
   pvDigitalOutputsByAddressWrite.clear();
   pvDigitalOutputsFirstAddressRead = 0;
   pvDigitalOutputsFirstAddressWrite = 0;
+  qDebug() << "delete I/Os DONE";
 }
 
 void mdtDeviceIos::addAnalogInput(mdtAnalogIo *ai)
@@ -124,6 +128,8 @@ void mdtDeviceIos::setAnalogInputsValue(const mdtValue &value)
 {
   int i;
 
+  qDebug() << "setAnalogInputsValue() ...";
+  qDebug() << "-> pvAnalogInputs: " << pvAnalogInputs;
   for(i=0; i<pvAnalogInputs.size(); ++i){
     Q_ASSERT(pvAnalogInputs.at(i) != 0);
     pvAnalogInputs.at(i)->setValue(value);

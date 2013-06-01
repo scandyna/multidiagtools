@@ -31,6 +31,7 @@
 #include "mdtDeviceWindow.h"
 #include "mdtPortInfo.h"
 #include "mdtPortManager.h"
+#include "mdtPortConfig.h"
 
 #include "mdtFrameCodecScpi.h"
 
@@ -506,6 +507,7 @@ void mdtDeviceTest::modbusWagoTest()
   d.setIos(&ios, false);
   ///d.setAnalogOutputAddressOffset(0x0200);
   ///d.setDigitalOutputAddressOffset(0x0200);
+  ///d.portManager()->config().setReadTimeout(30000);  // We set a long timeout in case we use valgrind
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
   dw.show();

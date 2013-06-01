@@ -39,13 +39,14 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   pvStatusWidget = new mdtPortStatusWidget;
   statusBar()->addWidget(pvStatusWidget);
 
-  // Setup I/Os widget
-  pvDeviceIos = new mdtDeviceIos(this);
-  pvDeviceIosWidget = new mdtDeviceIosWidget;
-  saIos->setWidget(pvDeviceIosWidget);
   // Setup device
   pvDeviceModbusWago = new mdtDeviceModbusWago(this);
   pvDeviceModbusWago->setName("Wago I/O 750");
+  // Setup I/Os widget
+  pvDeviceIos = new mdtDeviceIos(pvDeviceModbusWago);
+  pvDeviceIosWidget = new mdtDeviceIosWidget;
+  saIos->setWidget(pvDeviceIosWidget);
+  // Make connections
   connect(pvDeviceModbusWago, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
   connect(pvDeviceModbusWago, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
 

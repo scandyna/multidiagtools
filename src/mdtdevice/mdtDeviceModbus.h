@@ -101,7 +101,7 @@ class mdtDeviceModbus : public mdtDevice
 
   /*! \brief Update (G)UI when device's state has changed
    */
-  void onStateChanged(int state);
+  ///void onStateChanged(int state);
 
  protected:
 

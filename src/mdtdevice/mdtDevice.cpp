@@ -38,6 +38,7 @@ mdtDevice::mdtDevice(QObject *parent)
   setName(tr("Unknown"));
   pvAutoQueryEnabled = false;
   pvQueryTimer = new QTimer(this);
+  pvCurrentState = mdtPortManager::Disconnected;
   setStateDisconnected();
   ///connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SLOT(setStateReady()));
   ///connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SIGNAL(deviceReady()));

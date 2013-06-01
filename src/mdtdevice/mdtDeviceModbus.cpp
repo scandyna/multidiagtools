@@ -57,8 +57,10 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
 
 mdtDeviceModbus::~mdtDeviceModbus()
 {
+  qDebug() << "mdtDeviceModbus::~mdtDeviceModbus() ...";
   delete pvTcpPortManager;
   delete pvCodec;
+  qDebug() << "mdtDeviceModbus::~mdtDeviceModbus() DONE";
 }
 
 mdtPortManager *mdtDeviceModbus::portManager()
@@ -296,11 +298,13 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
   }
 }
 
+/**
 void mdtDeviceModbus::onStateChanged(int state)
 {
   if(pvIos == 0){
     return;
   }
+  */
   /**
   if(state == Ready){
     if(getAnalogInputs(500) < 0){
@@ -317,7 +321,7 @@ void mdtDeviceModbus::onStateChanged(int state)
     }
   }
   */
-}
+///}
 
 bool mdtDeviceModbus::queriesSequence()
 {
@@ -442,7 +446,6 @@ int mdtDeviceModbus::readDigitalInput(mdtPortTransaction *transaction)
 
   // Setup MODBUS PDU
   pdu = pvCodec->encodeReadDiscreteInputs(transaction->address(), 1);
-  qDebug() << "mdtDeviceModbus::readDigitalInput() adr: " << transaction->address();
   if(pdu.isEmpty()){
     return -1;
   }
