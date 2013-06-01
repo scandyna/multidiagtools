@@ -23,10 +23,10 @@
 
 #include "mdtAbstractPort.h"
 #include <QObject>
-#include <QMutex>
-#include <QWaitCondition>
-#include <QTcpSocket>
-#include <QQueue>
+///#include <QMutex>
+///#include <QWaitCondition>
+///#include <QTcpSocket>
+///#include <QQueue>
 
 class mdtTcpSocketThread;
 
@@ -50,7 +50,7 @@ class mdtTcpSocket : public mdtAbstractPort
    *          in wich case the thread will retry (until max retry).
    *          A UnhandledError can be returned.
    */
-  error_t reconnect(int timeout);
+  ///error_t reconnect(int timeout);
 
   /*! \brief Get peer host or IP
    *
@@ -83,7 +83,7 @@ class mdtTcpSocket : public mdtAbstractPort
    * \pre thread must be a valid pointer
    * \sa mdtTcpSocketThread
    */
-  void setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thread);
+  ///void setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thread);
 
   /*! \brief Set the read data timeout
    *
@@ -125,23 +125,23 @@ class mdtTcpSocket : public mdtAbstractPort
    *
    * Default is true.
    */
-  void setUnknownReadSize(bool unknown);
+  ///void setUnknownReadSize(bool unknown);
  
   /*! \brief Get the unknown frame size flag
    *
    * For details, see setUnknownReadSize()
    */
-  bool unknownReadSize() const;
+  ///bool unknownReadSize() const;
 
-  /*! \brief Wait until data is available on port.
+  /*! \brief Just to be compatible with mdtAbstractPort API
    *
-   * This method is called from mdtPortReadThread , and should not be used directly.
-   *
-   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   * \return UnhandledError
    */
   error_t waitForReadyRead();
 
-  /*! \brief Read data from port
+  /*! \brief Just to be compatible with mdtAbstractPort API
+   *
+   * \return UnhandledError
    *
    * This method is called from mdtPortReadThread , and should not be used directly.
    *
@@ -151,14 +151,18 @@ class mdtTcpSocket : public mdtAbstractPort
    */
   qint64 read(char *data, qint64 maxSize);
 
-  /*! \brief Wait until data can be written to port.
+  /*! \brief Just to be compatible with mdtAbstractPort API
+   *
+   * \return UnhandledError
    *
    * This method is called from mdtPortWriteThread , and should not be used directly.<br>
    * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    */
   error_t waitEventWriteReady();
 
-  /*! \brief Write data to port
+  /*! \brief Just to be compatible with mdtAbstractPort API
+   *
+   * \return UnhandledError
    *
    * This method is called from mdtPortWriteThread , and should not be used directly.
    *
@@ -192,7 +196,11 @@ class mdtTcpSocket : public mdtAbstractPort
 
   /*! \brief Open the port given by setPortName()
    *
-   * If port can be open successfull, NoError code is returned.
+   * Will just extract host and port number in portName.
+   *  Returns SetupError if portName has wrong format.
+   *  (Expected format is host:port).
+   *
+   * The real connection is made in mdtTcpSocketThread.
    *
    * The mutex is not handled by this method.
    *
@@ -254,15 +262,15 @@ class mdtTcpSocket : public mdtAbstractPort
    * \param error Error returned by QTcpSocket
    * \param byRead Error occured during waitForReadyRead or read, else during waitEventWriteReady or write
    */
-  error_t mapSocketError(QAbstractSocket::SocketError error, bool byRead);
+  ///error_t mapSocketError(QAbstractSocket::SocketError error, bool byRead);
 
-  int pvReadTimeout;
-  int pvWriteTimeout;
-  QTcpSocket *pvSocket;             // QTcpSocket object passed from thread
-  mdtTcpSocketThread *pvThread;
+  ///int pvReadTimeout;
+  ///int pvWriteTimeout;
+  ///QTcpSocket *pvSocket;             // QTcpSocket object passed from thread
+  ///mdtTcpSocketThread *pvThread;
   QString pvPeerName;               // Host name or IP
   quint16 pvPeerPort;               // Host port
-  bool pvUnknownReadSize;           // If false, read will end after one frame is complete (see mdtTcpSocketThread::run() ).
+  ///bool pvUnknownReadSize;           // If false, read will end after one frame is complete (see mdtTcpSocketThread::run() ).
 };
 
 #endif  // #ifndef MDT_TCP_SOCKET_H

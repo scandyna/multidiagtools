@@ -68,7 +68,6 @@ void mdtPortThreadHelperSocket::setSocket(QTcpSocket *socket)
   pvHost = p->peerName();
   pvPortNumber = p->peerPort();
   pvConnectMaxTry = p->config().connectMaxTry();
-  ///pvConnectTryLeft = pvConnectMaxTry;
   // Store socket pointer and make connections
   pvSocket = socket;
   connect(socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
@@ -138,7 +137,6 @@ void mdtPortThreadHelperSocket::onSocketDisconnected()
       pvConnectMaxTry--;
       pvSocket->connectToHost(pvHost, pvPortNumber);
       pvConnectionTimeoutTimer->start();
-      qDebug() << "*** Connecting ... , try left: " << pvConnectMaxTry;
     }
   }
   pvPort->unlockMutex();
@@ -146,15 +144,6 @@ void mdtPortThreadHelperSocket::onSocketDisconnected()
 
 void mdtPortThreadHelperSocket::onSocketClosing()
 {
-  qDebug() << "*** onSocketClosing() ...";
-  /// Essai
-  qint64 readen;
-  char buffer[1024];
-  do{
-    readen = pvSocket->read(buffer, 1024);
-    qDebug() << "** flush " << readen << " bytes..";
-  }while(readen > 0);
-
   restoreCurrentWriteFrameToPool();
   restoreCurrentReadFrameToPool();
 }
@@ -180,7 +169,6 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
       onSocketDisconnected();
       break;
     case QAbstractSocket::RemoteHostClosedError:
-      qDebug() << "* Host closed connection";
       // Will call onSocketDisconnected()
       break;
     case QAbstractSocket::HostNotFoundError:
@@ -397,7 +385,6 @@ void mdtPortThreadHelperSocket::onConnectionTimeout()
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  qDebug() << "*** Connection timeout";
   pvConnectionTimeoutTimer->stop();
   // We abort the socket and reconnect
   pvSocket->abort();
@@ -410,22 +397,12 @@ void mdtPortThreadHelperSocket::onReadTimeout()
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  qDebug() << "*** Read timeout";
-  
   pvReadTimeoutTimer->stop();
   pvPort->lockMutex();
   if(currentReadFrame() != 0){
     currentReadFrame()->clear();
     currentReadFrame()->clearSub();
   }
-  /// Essai
-  qint64 readen;
-  char buffer[1024];
-  do{
-    readen = pvSocket->read(buffer, 1024);
-    qDebug() << "** flush " << readen << " bytes..";
-  }while(readen > 0);
-  
   notifyError(mdtAbstractPort::ReadTimeout);
   pvPort->unlockMutex();
   // We use timeout to detect network disconnection (because normal way can be very long)
@@ -439,8 +416,6 @@ void mdtPortThreadHelperSocket::onWriteTimeout()
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  qDebug() << "*** Write timeout";
-  
   pvWriteTimeoutTimer->stop();
   pvPort->lockMutex();
   restoreCurrentWriteFrameToPool();
@@ -457,9 +432,7 @@ void mdtPortThreadHelperSocket::requestWrite()
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  ///qDebug() << "* requestWrite() ... thread: " << thread();
   if(pvSocket->state() != QAbstractSocket::ConnectedState){
-    qDebug() << "* requestWrite() Cancel";
     restoreCurrentWriteFrameToPool();
     // We flush port's write queues - Will lock the mutex
     pvPort->flushOut();
@@ -468,14 +441,10 @@ void mdtPortThreadHelperSocket::requestWrite()
     notifyError(mdtAbstractPort::WriteCanceled);
     return;
   }
-  qDebug() << "* requestWrite() locking mutex ...";
   pvPort->lockMutex();
-  qDebug() << "* requestWrite() mutex locked";
   // Errors are handled/notified in onSocketError() and onWriteTimeout()
   writeToSocket();
   pvPort->unlockMutex();
-  qDebug() << "* requestWrite() mutex unlocked";
-  qDebug() << "* requestWrite() DONE";
 }
 
 mdtAbstractPort::error_t mdtPortThreadHelperSocket::readFromSocket()
@@ -509,14 +478,12 @@ mdtAbstractPort::error_t mdtPortThreadHelperSocket::readFromSocket()
   }
   // Read data from port
   readen = pvSocket->read(pvReadBuffer, pvReadBufferSize);
-  qDebug() << "** readen: " << readen;
   if(readen < 0){
     portError = mapSocketError(pvSocket->error(), true);
     return portError;
   }
   // Store to frames
   submittedFrames = submitReadenData(pvReadBuffer, readen, true);
-  qDebug() << "** submittedFrames: " << submittedFrames;
   if(submittedFrames < 0){
     return (mdtAbstractPort::error_t)submittedFrames;
   }

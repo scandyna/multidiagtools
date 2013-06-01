@@ -176,8 +176,7 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
 
   QString pvHost;
   quint16 pvPortNumber;
-  int pvConnectMaxTry;  /// \todo Check if implemented
-  ///int pvConnectTryLeft;
+  int pvConnectMaxTry;
   char *pvReadBuffer;
   int pvReadBufferSize;
   QTimer *pvConnectionTimeoutTimer;

@@ -61,7 +61,7 @@ class mdtTcpSocketThread : public mdtPortThread
 
   void run();
 
-  QTcpSocket *pvSocket;
+  ///QTcpSocket *pvSocket;
 };
 
 #endif  // #ifndef MDT_TCP_SOCKET_THREAD_H

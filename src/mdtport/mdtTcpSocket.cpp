@@ -36,9 +36,9 @@
 mdtTcpSocket::mdtTcpSocket(QObject *parent)
  : mdtAbstractPort(parent)
 {
-  pvSocket = 0;
+  ///pvSocket = 0;
   pvPeerPort = 0;
-  pvUnknownReadSize = true;
+  /// pvUnknownReadSize = true;
 }
 
 mdtTcpSocket::~mdtTcpSocket()
@@ -46,6 +46,7 @@ mdtTcpSocket::~mdtTcpSocket()
   close();
 }
 
+/**
 mdtAbstractPort::error_t mdtTcpSocket::reconnect(int timeout)
 {
   Q_ASSERT(pvSocket != 0);
@@ -93,6 +94,7 @@ mdtAbstractPort::error_t mdtTcpSocket::reconnect(int timeout)
 
   return Disconnected;
 }
+*/
 
 QString mdtTcpSocket::peerName() const
 {
@@ -104,37 +106,44 @@ quint16 mdtTcpSocket::peerPort() const
   return pvPeerPort;
 }
 
+/**
 void mdtTcpSocket::setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thread)
 {
   Q_ASSERT(socket != 0);
   Q_ASSERT(thread != 0);
 
-  pvSocket = socket;
-  pvThread = thread;
+  ///pvSocket = socket;
+  ///pvThread = thread;
 }
+*/
 
 void mdtTcpSocket::setReadTimeout(int timeout)
 {
-  pvReadTimeout = timeout;
+  ///pvReadTimeout = timeout;
 }
 
 void mdtTcpSocket::setWriteTimeout(int timeout)
 {
-  pvWriteTimeout = timeout;
+  ///pvWriteTimeout = timeout;
 }
 
+/**
 void mdtTcpSocket::setUnknownReadSize(bool unknown)
 {
   pvUnknownReadSize = unknown;
 }
-
+*/
+/**
 bool mdtTcpSocket::unknownReadSize() const
 {
   return pvUnknownReadSize;
 }
+*/
 
 mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
 {
+  return mdtAbstractPort::UnhandledError;
+  /**
   Q_ASSERT(pvSocket != 0);
 
   bool ok;
@@ -152,10 +161,13 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
   }
 
   return NoError;
+  */
 }
 
 qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
 {
+  return mdtAbstractPort::UnhandledError;
+  /**
   Q_ASSERT(pvSocket != 0);
 
   qint64 n;
@@ -171,10 +183,13 @@ qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
   }
 
   return n;
+  */
 }
 
 mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
 {
+  return mdtAbstractPort::UnhandledError;
+  /**
   Q_ASSERT(pvSocket != 0);
 
   bool ok;
@@ -192,10 +207,13 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   }
 
   return NoError;
+  */
 }
 
 qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
 {
+  return mdtAbstractPort::UnhandledError;
+  /**
   Q_ASSERT(pvSocket != 0);
 
   qint64 n;
@@ -206,6 +224,7 @@ qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
   }
 
   return n;
+  */
 }
 
 void mdtTcpSocket::addFrameToWrite(mdtFrame *frame)
@@ -222,9 +241,9 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
 
   QStringList items;
   bool ok;
-  QTcpSocket socket;
-  int timeout = 5000; /// \todo Get a valid connection timeout
-  int maxIter;
+  ///QTcpSocket socket;
+  ///int timeout = 5000; /// \todo Get a valid connection timeout
+  ///int maxIter;
 
   // Extract host name and port number from port name
   items = pvPortName.split(":");
@@ -242,6 +261,10 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
     e.commit();
     return SetupError;
   }
+
+  return NoError;
+
+  /**
   // Try to connect
   socket.connectToHost(pvPeerName, pvPeerPort);
   maxIter = timeout / 50;
@@ -276,14 +299,15 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
   // and thread will get the peer name + port, and really connect.
 
   return NoError;
+  */
 }
 
 void mdtTcpSocket::pvClose()
 {
   Q_ASSERT(isOpen());
 
-  pvThread = 0;
-  pvSocket = 0;
+  ///pvThread = 0;
+  ///pvSocket = 0;
 }
 
 mdtAbstractPort::error_t mdtTcpSocket::pvSetup()
@@ -305,6 +329,7 @@ void mdtTcpSocket::pvFlushOut()
 {
 }
 
+/**
 mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketError error, bool byRead)
 {
   Q_ASSERT(pvSocket != 0);
@@ -334,3 +359,4 @@ mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketErr
       return UnhandledError;
   }
 }
+*/

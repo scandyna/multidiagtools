@@ -48,7 +48,6 @@ mdtModbusTcpPortManager::mdtModbusTcpPortManager(QObject *parent)
   config->setWriteQueueSize(3);
   mdtTcpSocket *port = new mdtTcpSocket;
   port->setConfig(config);
-  port->setUnknownReadSize(false);
   setPort(port);
 
   // Threads setup
@@ -422,15 +421,9 @@ int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
 
   mdtFrameModbusTcp *frame;
 
-  ///qDebug() << "mdtModbusTcpPortManager::writeData() ... thread: " << thread();
-  qDebug() << "mdtModbusTcpPortManager::writeData() lockMutex ...";
-  
   // Get a frame in pool
-  ///pvPort->lockMutex();
   lockPortMutex();
-  qDebug() << "mdtModbusTcpPortManager::writeData() mutex locked";
   if(pvPort->writeFramesPool().size() < 1){
-    ///pvPort->unlockMutex();
     unlockPortMutex();
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
@@ -446,7 +439,7 @@ int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
   // Store data and add frame to write queue
   incrementCurrentTransactionId(0, 65535);
   frame->setTransactionId(currentTransactionId());
-  frame->setUnitId(0);    /// \todo Handle this ?
+  frame->setUnitId(0xFF);    /// \todo Handle this ?
   frame->setPdu(transaction->data());
   frame->encode();
   // We enable waitAnAnswer , used by mdtTcpSocketThread for timeout detection
@@ -454,10 +447,7 @@ int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
   pvPort->addFrameToWrite(frame);
   transaction->setId(currentTransactionId());
   addTransactionPending(transaction);
-  ///pvPort->unlockMutex();
   unlockPortMutex();
-  qDebug() << "mdtModbusTcpPortManager::writeData() mutex unlocked";
-  qDebug() << "mdtModbusTcpPortManager::writeData() transaction ID " << transaction->id();
 
   return transaction->id();
 }
@@ -481,7 +471,6 @@ void mdtModbusTcpPortManager::abortScan()
   pvAbortScan = true;
 }
 
-/// \todo On incomplete/inexpected frame, cancel the waitTransactionDone()
 void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
 {
   Q_ASSERT(pvPort != 0);
@@ -491,12 +480,10 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
   int framesCount = 0;
 
   // Get frames in readen queue
-  ///pvPort->lockMutex();
   lockPortMutex();
   while(pvPort->readenFrames().size() > 0){
     frame = dynamic_cast<mdtFrameModbusTcp*> (pvPort->readenFrames().dequeue());
     Q_ASSERT(frame != 0);
-    qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() , ID: " << frame->transactionId();
     // Check if frame is complete
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
@@ -506,7 +493,6 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
         mdtError e(MDT_TCP_IO_ERROR, "Received a frame with unexpected transaction ID", mdtError::Warning);
         MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
         e.commit();
-        qDebug() << "-*-> Frame transaction ID: " << frame->transactionId();
       }else{
         /// \todo check about transaction ID ? Should be a assertion ?
         transaction->setId(frame->transactionId());
@@ -519,12 +505,9 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
-  ///pvPort->unlockMutex();
   unlockPortMutex();
   // Commit
   if(framesCount > 0){
-    qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() commit frames (count: " << framesCount << ")";
     commitFrames();
   }
-  qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() DONE";
 }
