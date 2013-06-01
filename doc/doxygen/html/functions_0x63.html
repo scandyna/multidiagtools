@@ -114,9 +114,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>cancelReadTransfer()
 : <a class="el" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881">mdtUsbPort</a>
 </li>
-<li>cancelReadWait()
-: <a class="el" href="classmdt_port_manager.html#a016996e823cc729eb1f595307f3dd1cf">mdtPortManager</a>
-</li>
 <li>cancelTransfers()
 : <a class="el" href="classmdt_usb_port.html#afe5b473e1df8b828c17f83a45a3902fb">mdtUsbPort</a>
 </li>
@@ -169,10 +166,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f">mdtDeviceIosWidget</a>
 </li>
 <li>clearSub()
-: <a class="el" href="classmdt_frame_usb_tmc.html#afb0b0e071e328b55ce8e2c73359153d6">mdtFrameUsbTmc</a>
-, <a class="el" href="classmdt_frame.html#aecc64d3846dee0049ee7b10b73a402f4">mdtFrame</a>
+: <a class="el" href="classmdt_frame.html#aecc64d3846dee0049ee7b10b73a402f4">mdtFrame</a>
 , <a class="el" href="classmdt_frame_modbus_tcp.html#ab1545b25b4c8864056d900c8ddce2719">mdtFrameModbusTcp</a>
 , <a class="el" href="classmdt_frame_usb_control.html#a04aab4a1e3efd99d805dffd8171e78de">mdtFrameUsbControl</a>
+, <a class="el" href="classmdt_frame_usb_tmc.html#afb0b0e071e328b55ce8e2c73359153d6">mdtFrameUsbTmc</a>
 </li>
 <li>close()
 : <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>
@@ -213,8 +210,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02">mdtUsbDeviceDescriptor</a>
 </li>
 <li>Connecting
-: <a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">mdtDevice</a>
-, <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93">mdtAbstractPort</a>
+: <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93">mdtAbstractPort</a>
 , <a class="el" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa89e805c9c75c39ecc8371d5f38131227">mdtPortManager</a>
 </li>
 <li>connecting()
@@ -227,12 +223,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classmdt_port_config.html#a1e47b397318c6b4911d40dbbc5c317e7">mdtPortConfig</a>
 </li>
 <li>connectToDevice()
-: <a class="el" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">mdtDeviceModbusWago</a>
-, <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>
-, <a class="el" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">mdtDeviceDSO1000A</a>
-, <a class="el" href="classmdt_device_modbus.html#a323b16687f448a4e45eb0b313635b77f">mdtDeviceModbus</a>
-, <a class="el" href="classmdt_device_modbus_wago.html#a12ad1f1ef34b16be5903d1d6232a7c6d">mdtDeviceModbusWago</a>
+: <a class="el" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">mdtDeviceDSO1000A</a>
 , <a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">mdtDeviceScpi</a>
+, <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>
+, <a class="el" href="classmdt_device_modbus.html#a323b16687f448a4e45eb0b313635b77f">mdtDeviceModbus</a>
+, <a class="el" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">mdtDeviceModbusWago</a>
 , <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A</a>
 </li>
 <li>ControlCanceled
@@ -298,11 +293,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>currentDeviceInfo()
 : <a class="el" href="classmdt_port_info_cb_handler.html#a266598f7f403e21730ff5ee50e6a6e5f">mdtPortInfoCbHandler</a>
 </li>
+<li>currentError()
+: <a class="el" href="classmdt_port_thread.html#adbc2d86162c23401e75184407b8c9428">mdtPortThread</a>
+</li>
 <li>currentPortInfo()
 : <a class="el" href="classmdt_port_info_cb_handler.html#a5723df72c4f1eda572c04e377dde9351">mdtPortInfoCbHandler</a>
 </li>
 <li>currentReadEndpointAddress()
 : <a class="el" href="classmdt_usb_port.html#a860e89069ba433e6174c032a28d0eae2">mdtUsbPort</a>
+</li>
+<li>currentReadFrame()
+: <a class="el" href="classmdt_port_thread_helper.html#a36445798b093f4e7463c353677d816d5">mdtPortThreadHelper</a>
 </li>
 <li>currentState()
 : <a class="el" href="classmdt_port_manager.html#a59241d9e6b6ee71e6c1aeb3e6c0ca81a">mdtPortManager</a>
@@ -315,6 +316,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>currentWriteEndpointAddress()
 : <a class="el" href="classmdt_usb_port.html#ae2319ee6ff5a2f4399410175fbac6a44">mdtUsbPort</a>
+</li>
+<li>currentWriteFrame()
+: <a class="el" href="classmdt_port_thread_helper.html#a7b7f97c9add6cc0344cb674804ac584d">mdtPortThreadHelper</a>
 </li>
 <li>mdtCsvFile()
 : <a class="el" href="classmdt_csv_file.html#aaca142b18a4f436548e17fbef755e2d5">mdtCsvFile</a>
@@ -335,7 +339,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun May 12 2013 19:04:30 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:25 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

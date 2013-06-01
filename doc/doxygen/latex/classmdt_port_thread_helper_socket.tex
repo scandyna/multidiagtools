@@ -1,0 +1,119 @@
+\hypertarget{classmdt_port_thread_helper_socket}{
+\section{mdtPortThreadHelperSocket Class Reference}
+\label{classmdt_port_thread_helper_socket}\index{mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}}
+}
+
+
+Help the usage of QTcpSocket's asynchrone API.  
+
+
+
+
+{\ttfamily \#include $<$mdtPortThreadHelperSocket.h$>$}
+
+
+
+Inheritance diagram for mdtPortThreadHelperSocket:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{classmdt_port_thread_helper_socket__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtPortThreadHelperSocket:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{classmdt_port_thread_helper_socket__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_port_thread_helper_socket_aa77afb8d26e4863bd437e0d59efae7a7}{mdtPortThreadHelperSocket} (QObject $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_thread_helper_socket_a7fee8df32e619eb76bf365785a8b95b4}{
+\hyperlink{classmdt_port_thread_helper_socket_a7fee8df32e619eb76bf365785a8b95b4}{$\sim$mdtPortThreadHelperSocket} ()}
+\label{classmdt_port_thread_helper_socket_a7fee8df32e619eb76bf365785a8b95b4}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_thread_helper_socket_ab8d22e337e1cc2e043683da8b8a034e5}{setSocket} (QTcpSocket $\ast$socket)
+\begin{DoxyCompactList}\small\item\em Set socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Help the usage of QTcpSocket's asynchrone API. 
+
+Definition at line 32 of file mdtPortThreadHelperSocket.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_port_thread_helper_socket_aa77afb8d26e4863bd437e0d59efae7a7}{
+\index{mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}!mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}}
+\index{mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}!mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}}
+\subsubsection[{mdtPortThreadHelperSocket}]{\setlength{\rightskip}{0pt plus 5cm}mdtPortThreadHelperSocket::mdtPortThreadHelperSocket (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_thread_helper_socket_aa77afb8d26e4863bd437e0d59efae7a7}
+
+
+Constructor. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000029}{Todo}]Implement socket options (think also about \hyperlink{classmdt_port_config}{mdtPortConfig}) \end{Desc}
+
+
+Definition at line 33 of file mdtPortThreadHelperSocket.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_port_thread_helper_socket_ab8d22e337e1cc2e043683da8b8a034e5}{
+\index{mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}!setSocket@{setSocket}}
+\index{setSocket@{setSocket}!mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}}
+\subsubsection[{setSocket}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortThreadHelperSocket::setSocket (
+\begin{DoxyParamCaption}
+\item[{QTcpSocket $\ast$}]{socket}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_thread_helper_socket_ab8d22e337e1cc2e043683da8b8a034e5}
+
+
+Set socket. 
+
+Take some parameters in port and port's config and make all needed signal/slot connections.
+
+Parameters that are used by port's config are:
+\begin{DoxyItemize}
+\item connectTimeout
+\item connectMaxTry
+\item readTimeout
+\item writeTimeout
+\end{DoxyItemize}
+
+See \hyperlink{classmdt_port_config}{mdtPortConfig} for details.
+
+Port's mutex is not handled by this method, it should be locked before call.
+
+\begin{DoxyPrecond}{Precondition}
+socket must be a valid pointer. 
+
+port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdtPortThreadHelper::setPort()}. 
+\end{DoxyPrecond}
+
+
+Definition at line 58 of file mdtPortThreadHelperSocket.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/mdtPortThreadHelperSocket.h\item 
+src/mdtport/mdtPortThreadHelperSocket.cpp\end{DoxyCompactItemize}

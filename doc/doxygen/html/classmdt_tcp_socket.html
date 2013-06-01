@@ -61,12 +61,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtTcpSocket Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtTcpSocket" --><!-- doxytag: inherits="mdtAbstractPort" --><div class="dynheader">
+<!-- doxytag: class="mdtTcpSocket" --><!-- doxytag: inherits="mdtAbstractPort" -->
+<p>Wrapper class between QTcpSocket and <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>.  
+ <a href="classmdt_tcp_socket.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="mdt_tcp_socket_8h_source.html">mdtTcpSocket.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for mdtTcpSocket:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_tcp_socket__inherit__graph.png" border="0" usemap="#mdt_tcp_socket_inherit__map" alt="Inheritance graph"/></div>
@@ -78,40 +84,132 @@ Collaboration diagram for mdtTcpSocket:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_tcp_socket__coll__graph.png" border="0" usemap="#mdt_tcp_socket_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_tcp_socket_coll__map" id="mdt_tcp_socket_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node8" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="89,197,196,227"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/><area shape="rect" id="node6" href="classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="80,277,227,307"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_tcp_socket-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="signals"></a>
+Signals</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#ad8646d441b33bdfb8ddc902ebb136999">newFrameToWrite</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a new frame is available to write.  <a href="#ad8646d441b33bdfb8ddc902ebb136999"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeed1a50725a8e61f86de2bf67a92feb8"></a><!-- doxytag: member="mdtTcpSocket::mdtTcpSocket" ref="aeed1a50725a8e61f86de2bf67a92feb8" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtTcpSocket</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a6a9990696ea459601b17ddbffe5b0703">reconnect</a> (int timeout)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconnect to peer.  <a href="#a6a9990696ea459601b17ddbffe5b0703"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a8a57e4b49f56c301c5f8d7a9ec191e87">setThreadObjects</a> (QTcpSocket *socket, <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> *thread)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the socket.  <a href="#a8a57e4b49f56c301c5f8d7a9ec191e87"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a1ce96231767c56f8108a8e977987e10f">peerName</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get peer host or IP.  <a href="#a1ce96231767c56f8108a8e977987e10f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a2a6c3e034ca51a2f45ec136b864ba9a3">peerPort</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get peer port number.  <a href="#a2a6c3e034ca51a2f45ec136b864ba9a3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#aae23057f2e0ee326d0fee78ffe3f00f9">setReadTimeout</a> (int timeout)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout.  <a href="#aae23057f2e0ee326d0fee78ffe3f00f9"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API.  <a href="#aae23057f2e0ee326d0fee78ffe3f00f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#ac59d2dfdf405b5382f0f20d5b9f75fd0">setWriteTimeout</a> (int timeout)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout.  <a href="#ac59d2dfdf405b5382f0f20d5b9f75fd0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a3fd73142279a256c984141cb16acf49e">setUnknownReadSize</a> (bool unknown)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unknown read size flag.  <a href="#a3fd73142279a256c984141cb16acf49e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a0a131c24527c76dbbc0acfb8cbd6f336">unknownReadSize</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the unknown frame size flag.  <a href="#a0a131c24527c76dbbc0acfb8cbd6f336"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API.  <a href="#ac59d2dfdf405b5382f0f20d5b9f75fd0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#adb09186cdacdac15291523c59f156cd4">waitForReadyRead</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#adb09186cdacdac15291523c59f156cd4"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API.  <a href="#adb09186cdacdac15291523c59f156cd4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a78842bc5ddcac2d96fb368ee575214cd">read</a> (char *data, qint64 maxSize)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a78842bc5ddcac2d96fb368ee575214cd"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API.  <a href="#a78842bc5ddcac2d96fb368ee575214cd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a33385bcde41b8065ea7eff65c754b0cb">waitEventWriteReady</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a33385bcde41b8065ea7eff65c754b0cb"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API.  <a href="#a33385bcde41b8065ea7eff65c754b0cb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#adbf2db44b291127a499d9f8720beb632">write</a> (const char *data, qint64 maxSize)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#adbf2db44b291127a499d9f8720beb632"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API.  <a href="#adbf2db44b291127a499d9f8720beb632"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#ade57b2659836d004a1c5618f9e482b4a">addFrameToWrite</a> (<a class="el" href="classmdt_frame.html">mdtFrame</a> *frame)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a frame to write.  <a href="#ade57b2659836d004a1c5618f9e482b4a"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8h_source.html#l00033">33</a> of file <a class="el" href="mdt_tcp_socket_8h_source.html">mdtTcpSocket.h</a>.</p>
+<div class="textblock"><p>Wrapper class between QTcpSocket and <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>. </p>
+
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8h_source.html#l00031">31</a> of file <a class="el" href="mdt_tcp_socket_8h_source.html">mdtTcpSocket.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ade57b2659836d004a1c5618f9e482b4a"></a><!-- doxytag: member="mdtTcpSocket::addFrameToWrite" ref="ade57b2659836d004a1c5618f9e482b4a" args="(mdtFrame *frame)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtTcpSocket::addFrameToWrite </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_frame.html">mdtFrame</a> *&#160;</td>
+          <td class="paramname"><em>frame</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add a frame to write. </p>
+<p>Once the frame is added to the write queue, <a class="el" href="classmdt_tcp_socket.html#ad8646d441b33bdfb8ddc902ebb136999" title="Emitted when a new frame is available to write.">newFrameToWrite()</a> is emitted.</p>
+<p>The mutex must be locked before calling this method, and still locked inside.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>frame must be a valid pointer. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d">mdtAbstractPort</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad8646d441b33bdfb8ddc902ebb136999"></a><!-- doxytag: member="mdtTcpSocket::newFrameToWrite" ref="ad8646d441b33bdfb8ddc902ebb136999" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtTcpSocket::newFrameToWrite </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Emitted when a new frame is available to write. </p>
+<p>See <a class="el" href="classmdt_tcp_socket.html#ade57b2659836d004a1c5618f9e482b4a" title="Add a frame to write.">addFrameToWrite()</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1ce96231767c56f8108a8e977987e10f"></a><!-- doxytag: member="mdtTcpSocket::peerName" ref="a1ce96231767c56f8108a8e977987e10f" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString mdtTcpSocket::peerName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get peer host or IP. </p>
+<p>Returns the host part set by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a></p>
+<p>Mutex is not handled by this method, it should be locked before calling this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2a6c3e034ca51a2f45ec136b864ba9a3"></a><!-- doxytag: member="mdtTcpSocket::peerPort" ref="a2a6c3e034ca51a2f45ec136b864ba9a3" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">quint16 mdtTcpSocket::peerPort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get peer port number. </p>
+<p>Returns the port part set by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a></p>
+<p>Mutex is not handled by this method, it should be locked before calling this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a78842bc5ddcac2d96fb368ee575214cd"></a><!-- doxytag: member="mdtTcpSocket::read" ref="a78842bc5ddcac2d96fb368ee575214cd" args="(char *data, qint64 maxSize)" -->
 <div class="memitem">
 <div class="memproto">
@@ -137,45 +235,12 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Read data from port. </p>
-<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.</p>
-<p>Mutex is not handled by this method.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 (one of the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>) </dd></dl>
+<p>Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>UnhandledError </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00147">147</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6a9990696ea459601b17ddbffe5b0703"></a><!-- doxytag: member="mdtTcpSocket::reconnect" ref="a6a9990696ea459601b17ddbffe5b0703" args="(int timeout)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtTcpSocket::reconnect </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Reconnect to peer. </p>
-<p>If one of the method returns a Disconnected error, the thread will call this method to try to reconnect.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>NoError if connection could be done. Disconnected if connection could not be done, in wich case the thread will retry (until max retry). A UnhandledError can be returned. </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#aec74b2db1a629d98a95d8f042ea96653">mdtAbstractPort</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
 
 </div>
 </div>
@@ -194,92 +259,12 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Set the read data timeout. </p>
-<p>The mutex is not handled by this method.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timeout</td><td>Timeout [ms]. A value of -1 means a infinite timeout. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API. </p>
+<p>Does nothing </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00106">106</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8a57e4b49f56c301c5f8d7a9ec191e87"></a><!-- doxytag: member="mdtTcpSocket::setThreadObjects" ref="a8a57e4b49f56c301c5f8d7a9ec191e87" args="(QTcpSocket *socket, mdtTcpSocketThread *thread)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtTcpSocket::setThreadObjects </td>
-          <td>(</td>
-          <td class="paramtype">QTcpSocket *&#160;</td>
-          <td class="paramname"><em>socket</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> *&#160;</td>
-          <td class="paramname"><em>thread</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the socket. </p>
-<p>QTcpSocket must be created from thread on witch it will be used. In this case, the <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> create the instance.</p>
-<p>This method will be called to store this instance and an instance of the thread itself.</p>
-<p>Note: should not be used directly.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>socket must be a valid pointer </dd>
-<dd>
-thread must be a valid pointer </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3fd73142279a256c984141cb16acf49e"></a><!-- doxytag: member="mdtTcpSocket::setUnknownReadSize" ref="a3fd73142279a256c984141cb16acf49e" args="(bool unknown)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtTcpSocket::setUnknownReadSize </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>unknown</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set unknown read size flag. </p>
-<p>The write/read processes are done in one thread. First, the thread waits a write event from application, then data is sent. After this, thread still blocked until data are available or timeout (set with <a class="el" href="classmdt_tcp_socket.html#aae23057f2e0ee326d0fee78ffe3f00f9" title="Set the read data timeout.">setReadTimeout()</a> ). After this, data are readen until one frame is completely received, then thread goes back idle.</p>
-<p>The problem is that more data can be sent from peer, and these data are lost, or stored in frames after next transaction (write/read process), and application will probably becomes uncoherent.</p>
-<p>The solution for this was implemented so:</p>
-<ul>
-<li>Request is sent to host</li>
-<li>Data comes back, and is store into current frame until it is complete (or timeout).</li>
-<li>If the unknown read size flag is set, a loop begins with a couple of wait/read with short timeout begins (50ms) until no more data comes in.</li>
-</ul>
-<p>This flag should be set as follow:</p>
-<ul>
-<li>For RAW frames: true</li>
-<li>For ASCII frames: true</li>
-<li>For MODBUS/TCP: false</li>
-</ul>
-<p>Default is true. </p>
-
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00116">116</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
 
 </div>
 </div>
@@ -298,39 +283,12 @@ thread must be a valid pointer </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Set the write data timeout. </p>
-<p>The mutex is not handled by this method.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timeout</td><td>Timeout [ms]. A value of -1 means a infinite timeout. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API. </p>
+<p>Does nothing </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0a131c24527c76dbbc0acfb8cbd6f336"></a><!-- doxytag: member="mdtTcpSocket::unknownReadSize" ref="a0a131c24527c76dbbc0acfb8cbd6f336" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtTcpSocket::unknownReadSize </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get the unknown frame size flag. </p>
-<p>For details, see <a class="el" href="classmdt_tcp_socket.html#a3fd73142279a256c984141cb16acf49e" title="Set unknown read size flag.">setUnknownReadSize()</a> </p>
-
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00121">121</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00050">50</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
 
 </div>
 </div>
@@ -348,13 +306,12 @@ thread must be a valid pointer </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Wait until data can be written to port. </p>
-<p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
- Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
+<p>Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>UnhandledError </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00166">166</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
 
 </div>
 </div>
@@ -372,13 +329,12 @@ thread must be a valid pointer </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Wait until data is available on port. </p>
-<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.</p>
-<p>Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
+<p>Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>UnhandledError </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00126">126</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00054">54</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
 
 </div>
 </div>
@@ -407,14 +363,12 @@ thread must be a valid pointer </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Write data to port. </p>
-<p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.</p>
-<p>Mutex is not handled by this method.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or a error &lt; 0 (one of the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>) </dd></dl>
+<p>Just to be compatible with <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> API. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>UnhandledError </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00187">187</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00069">69</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
 
 </div>
 </div>
@@ -437,7 +391,7 @@ thread must be a valid pointer </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun May 12 2013 19:04:31 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:27 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

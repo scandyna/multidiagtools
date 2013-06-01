@@ -66,7 +66,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 This is the complete list of members for <a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a>, including all inherited members.<table>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ae67c815f68317c70e398eaa86622af6b">abortFrameToWriteWait</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d">addFrameToWrite</a>(mdtFrame *frame)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#ade57b2659836d004a1c5618f9e482b4a">addFrameToWrite</a>(mdtFrame *frame)</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">close</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481">config</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93">Connecting</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
@@ -88,8 +88,11 @@ This is the complete list of members for <a class="el" href="classmdt_tcp_socket
   <tr bgcolor="#f0f0f0"><td><b>mdtTcpSocket</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a>)</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea421ccee58528bbdba8a3b32da3ceca97">MessageInCanceled</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea9611d47cf51e23aff74a6d2f41ceae2e">MessageInTimeout</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#ad8646d441b33bdfb8ddc902ebb136999">newFrameToWrite</a>()</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde">open</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#a1ce96231767c56f8108a8e977987e10f">peerName</a>() const </td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#a2a6c3e034ca51a2f45ec136b864ba9a3">peerPort</a>() const </td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaee5a84e59e9dc5fcf27cac57068bb1f4">PortAccess</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaedd63daf0db75794bb8e8e467da9575c">PortLocked</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615">portName</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
@@ -108,19 +111,16 @@ This is the complete list of members for <a class="el" href="classmdt_tcp_socket
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274">readFramesPool</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984">ReadPoolEmpty</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">ReadTimeout</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#a6a9990696ea459601b17ddbffe5b0703">reconnect</a>(int timeout)</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aec74b2db1a629d98a95d8f042ea96653">reconnect</a>(int timeout)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7">resumeTransmission</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f">setConfig</a>(mdtPortConfig *cfg)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932">setPortName</a>(const QString &amp;portName)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#aae23057f2e0ee326d0fee78ffe3f00f9">setReadTimeout</a>(int timeout)</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td><code> [virtual]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#a8a57e4b49f56c301c5f8d7a9ec191e87">setThreadObjects</a>(QTcpSocket *socket, mdtTcpSocketThread *thread)</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#a3fd73142279a256c984141cb16acf49e">setUnknownReadSize</a>(bool unknown)</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#abc9f1154ac71c4e31ac3e7a3ff4c5182">setup</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#ac59d2dfdf405b5382f0f20d5b9f75fd0">setWriteTimeout</a>(int timeout)</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aff3d79248baf96e670eba6d2fef700b9">suspendTransmission</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#a0a131c24527c76dbbc0acfb8cbd6f336">unknownReadSize</a>() const </td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84">unlockMutex</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#a33385bcde41b8065ea7eff65c754b0cb">waitEventWriteReady</a>()</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket.html#adb09186cdacdac15291523c59f156cd4">waitForReadyRead</a>()</td><td><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td><code> [virtual]</code></td></tr>
@@ -148,7 +148,7 @@ This is the complete list of members for <a class="el" href="classmdt_tcp_socket
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun May 12 2013 19:04:31 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:27 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

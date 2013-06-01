@@ -29,19 +29,6 @@ Collaboration diagram for mdtDevice:\nopagebreak
 \includegraphics[width=156pt]{classmdt_device__coll__graph}
 \end{center}
 \end{figure}
-\subsection*{Public Types}
-\begin{DoxyCompactItemize}
-\item 
-enum \hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1e}{state\_\-t} \{ \par
-\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69}{Ready} =  0, 
-\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947}{Disconnected}, 
-\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1}{Connecting}, 
-\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a}{Busy}, 
-\par
-\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea2f51ec62521e93aad70fe1071e32fa92}{Warning}, 
-\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea68b5596661e1489134e11545e92274de}{Error}
- \}
-\begin{DoxyCompactList}\small\item\em State of device. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
@@ -50,11 +37,7 @@ void \hyperlink{classmdt_device_a83cdf442f4cec7261742ca5939e390a1}{setAnalogOutp
 void \hyperlink{classmdt_device_a93abbc706a1e6601ce947eee5e50fba6}{setDigitalOutputValue} (\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$digitalOutput)
 \begin{DoxyCompactList}\small\item\em Set value on a digital output on physical device. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}{runQueries} ()
-\begin{DoxyCompactList}\small\item\em Queries to send periodically. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_aef41742272cbf069890ea95605f41d44}{showStatusMessage} (const QString \&message, int timeout=0)
-\begin{DoxyCompactList}\small\item\em Used to show a message in status bar. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_a52a13e5692fccb5aea1f7c3c991823f3}{showStatusMessage} (const QString \&message, const QString \&details, int timeout=0)
-\begin{DoxyCompactList}\small\item\em Used to show a message and details in status bar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Queries to send periodically. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
@@ -178,9 +161,9 @@ int {\bfseries setDigitalOutputValue} (const QString \&labelShort, const \hyperl
 \item 
 int \hyperlink{classmdt_device_a7b86a816e55a91f0d62426e1741437c6}{setDigitalOutputs} (bool waitOnReply)
 \begin{DoxyCompactList}\small\item\em Write all digital outputs to physical device and update (G)UI representation. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_afde11f7cb1d6a932db3824011f7ccccc}{
-\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1e}{state\_\-t} \hyperlink{classmdt_device_afde11f7cb1d6a932db3824011f7ccccc}{state} () const }
-\label{classmdt_device_afde11f7cb1d6a932db3824011f7ccccc}
+\hypertarget{classmdt_device_ae0c760cc40523e1116bb5716b077dc1e}{
+\hyperlink{classmdt_port_manager_a9448339d7f08ca5e18b904df25b382da}{mdtPortManager::state\_\-t} \hyperlink{classmdt_device_ae0c760cc40523e1116bb5716b077dc1e}{state} () const }
+\label{classmdt_device_ae0c760cc40523e1116bb5716b077dc1e}
 
 \begin{DoxyCompactList}\small\item\em Get device state. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Slots}
@@ -221,7 +204,7 @@ virtual bool \hyperlink{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}{queri
 \begin{DoxyCompactList}\small\item\em Get a new transaction. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_a4619d8be240cafe48865a89f7424de92}{restoreTransaction} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
 \begin{DoxyCompactList}\small\item\em Restore a transaction into pool. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone} (int id, int timeout=0, int granularity=50)
+bool \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone} (int id)
 \begin{DoxyCompactList}\small\item\em Wait until a transaction is done without break the GUI's event loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
@@ -242,7 +225,7 @@ Some queries (f.ex. read a input value or state) give a result after query. In s
 
 At basis, all query methods are not blocking by default. The normal way is to connect \hyperlink{classmdt_port_manager_a416a24db1048e9f66aef27ea810954d2}{mdtPortManager::newTransactionDone()} to \hyperlink{classmdt_device_ad211ba3be781c3db0397d5bf91f796d1}{decodeReadenFrame()} slot (must be done in subclass). This way, a query will be sent to device and method returns. When device returns a result, \hyperlink{classmdt_port_manager}{mdtPortManager} will send the newTransactionDone() signal, and decoding will be processed in \hyperlink{classmdt_device_ad211ba3be781c3db0397d5bf91f796d1}{decodeReadenFrame()} and I/O's are updated.
 
-Because the blocking behaviour is sometimes needed, the concept of transaction was implemented in \hyperlink{classmdt_port_manager}{mdtPortManager}. At first, we tell the query method (for example \hyperlink{classmdt_device_ab828764660ba53ffce1995901ddf5a0a}{getAnalogInputValue()} ) that we will wait on a reply by setting the waitOnReply flag. Then, the query is sent to device and a transaction ID is added to a list (see \hyperlink{classmdt_port_manager}{mdtPortManager} for details). At next, \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} is called, and finally result is returned. Note that \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} will not breack the Qt's event loop because it uses the \hyperlink{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}{mdtPortManager::wait()} method (see documentation of \hyperlink{classmdt_port_manager}{mdtPortManager} for details).
+Because the blocking behaviour is sometimes needed, the concept of transaction was implemented in \hyperlink{classmdt_port_manager}{mdtPortManager}. At first, we tell the query method (for example \hyperlink{classmdt_device_ab828764660ba53ffce1995901ddf5a0a}{getAnalogInputValue()} ) that we will wait on a reply by setting the waitOnReply flag. Then, the query is sent to device and a transaction ID is added to a list (see \hyperlink{classmdt_port_manager}{mdtPortManager} for details). At next, \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} is called, and finally result is returned. Note that \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} will not breack the Qt's event loop because it uses the \hyperlink{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}{mdtPortManager::wait()} method (see documentation of \hyperlink{classmdt_port_manager}{mdtPortManager} for details).
 
 If it is needed to continiusly update the representation of device's inputs (digital/analog I/O, voltage, temperature, ...), two things can happen:
 \begin{DoxyItemize}
@@ -256,57 +239,9 @@ A device can accept one or many request before results must be read. This depend
 
 It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application). For this, \hyperlink{classmdt_device_abab1b6e45af527880ce469ae318474c0}{connectToDevice()} was introduced.
 
-A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep consistency, this states are updated in this class using \hyperlink{classmdt_port_manager}{mdtPortManager} 's a state machine. This state machine is based on QStateMachine. 
+A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep consistency, this states are updated in this class using \hyperlink{classmdt_port_manager}{mdtPortManager} 's state machine. This state machine is based on QStateMachine. 
 
 Definition at line 89 of file mdtDevice.h.
-
-
-
-\subsection{Member Enumeration Documentation}
-\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1e}{
-\index{mdtDevice@{mdtDevice}!state\_\-t@{state\_\-t}}
-\index{state\_\-t@{state\_\-t}!mdtDevice@{mdtDevice}}
-\subsubsection[{state\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtDevice::state\_\-t}}}
-\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1e}
-
-
-State of device. 
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000003}{Todo}]Check if possible to obselete this, \hyperlink{classmdt_port_manager}{mdtPortManager} has the same enum ! \end{Desc}
-\begin{Desc}
-\item[Enumerator: ]\par
-\begin{description}
-\index{Ready@{Ready}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Ready@{Ready}}\item[{\em 
-\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69}{
-Ready}
-\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69}
-}]Device is connected and ready to receive queries \index{Disconnected@{Disconnected}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Disconnected@{Disconnected}}\item[{\em 
-\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947}{
-Disconnected}
-\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947}
-}]Device is not connected \index{Connecting@{Connecting}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Connecting@{Connecting}}\item[{\em 
-\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1}{
-Connecting}
-\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1}
-}]Trying to connect to device \index{Busy@{Busy}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Busy@{Busy}}\item[{\em 
-\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a}{
-Busy}
-\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a}
-}]Device is connected but cannot accept requests for the moment \index{Warning@{Warning}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Warning@{Warning}}\item[{\em 
-\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea2f51ec62521e93aad70fe1071e32fa92}{
-Warning}
-\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea2f51ec62521e93aad70fe1071e32fa92}
-}]Device or port communication handled error occured \index{Error@{Error}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Error@{Error}}\item[{\em 
-\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea68b5596661e1489134e11545e92274de}{
-Error}
-\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea68b5596661e1489134e11545e92274de}
-}]Device or port communication unhandled error occured \end{description}
-\end{Desc}
-
-
-
-Definition at line 99 of file mdtDevice.h.
 
 
 
@@ -404,7 +339,7 @@ Subclass notes:
 \item Once decoding was done, the concerned I/O(s) sould be updated with new value, or set to invalid value on error (see \hyperlink{classmdt_value}{mdtValue} class). Doing so will keep (G)UI consistency. 
 \end{DoxyItemize}
 
-Definition at line 904 of file mdtDevice.cpp.
+Definition at line 894 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a98cba3132db15317daf54eb701388e91}{
 \index{mdtDevice@{mdtDevice}!getAnalogInputs@{getAnalogInputs}}
@@ -427,7 +362,7 @@ Once results are available or error occured, the internal analog inputs are upda
 
 
 \begin{DoxyParams}{Parameters}
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -460,7 +395,7 @@ Get device or internal analog value. Internal value is updated if queryDevice is
 \hline
 {\em queryDevice} & If true, value is readen from device by calling \hyperlink{classmdt_device_acecf7934ce29b3a957accb0f4c98c746}{readAnalogInput()}, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_acecf7934ce29b3a957accb0f4c98c746}{readAnalogInput()} for details). \\
 \hline
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -508,7 +443,7 @@ Once results are available or error occured, the internal analog outputs are upd
 
 
 \begin{DoxyParams}{Parameters}
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -541,7 +476,7 @@ Get device or internal analog value. Internal value is updated if queryDevice is
 \hline
 {\em queryDevice} & If true, value is readen from device by calling \hyperlink{classmdt_device_a7934063c3f41a742515f1232c9598c2a}{readAnalogOutput()}, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_a7934063c3f41a742515f1232c9598c2a}{readAnalogOutput()} for details). \\
 \hline
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -589,7 +524,7 @@ Once results are available, the internal digital inputs are updated. (See \hyper
 
 
 \begin{DoxyParams}{Parameters}
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -622,7 +557,7 @@ Get device or internal digital value. Internal value is updated if queryDevice i
 \hline
 {\em queryDevice} & If true, value is readen from device by calling \hyperlink{classmdt_device_af128b606050035abaf8d049bb2227015}{readDigitalInput()}, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_af128b606050035abaf8d049bb2227015}{readDigitalInput()} for details). \\
 \hline
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -670,7 +605,7 @@ Once results are available, the internal digital outputs are updated. (See \hype
 
 
 \begin{DoxyParams}{Parameters}
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -701,7 +636,7 @@ Get digital output value.
 \hline
 {\em queryDevice} & If true, value is readen from device by calling \hyperlink{classmdt_device_a1faee6ab31b094731211ea0943544501}{readDigitalOutput()}, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_a1faee6ab31b094731211ea0943544501}{readDigitalOutput()} for details). \\
 \hline
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -749,7 +684,7 @@ portManager must be set before calling this method
 \end{DoxyPrecond}
 
 
-Definition at line 969 of file mdtDevice.cpp.
+Definition at line 959 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a06d9178b4133fd7b23084e712af20976}{
 \index{mdtDevice@{mdtDevice}!portManager@{portManager}}
@@ -839,7 +774,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70
 
 
 
-Definition at line 908 of file mdtDevice.cpp.
+Definition at line 898 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a40674e7bf0c367bb3edb407d73a5bd8e}{
 \index{mdtDevice@{mdtDevice}!readAnalogInputs@{readAnalogInputs}}
@@ -882,7 +817,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef
 
 
 
-Definition at line 913 of file mdtDevice.cpp.
+Definition at line 903 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a7934063c3f41a742515f1232c9598c2a}{
 \index{mdtDevice@{mdtDevice}!readAnalogOutput@{readAnalogOutput}}
@@ -920,7 +855,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849
 
 
 
-Definition at line 918 of file mdtDevice.cpp.
+Definition at line 908 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_ab0232ac83c38bc93d3bc2aa91d94c291}{
 \index{mdtDevice@{mdtDevice}!readAnalogOutputs@{readAnalogOutputs}}
@@ -963,7 +898,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b6
 
 
 
-Definition at line 923 of file mdtDevice.cpp.
+Definition at line 913 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_af128b606050035abaf8d049bb2227015}{
 \index{mdtDevice@{mdtDevice}!readDigitalInput@{readDigitalInput}}
@@ -1006,7 +941,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c5
 
 
 
-Definition at line 938 of file mdtDevice.cpp.
+Definition at line 928 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a150e3abae6db5bf1ad11017bf2b76c14}{
 \index{mdtDevice@{mdtDevice}!readDigitalInputs@{readDigitalInputs}}
@@ -1049,7 +984,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62
 
 
 
-Definition at line 943 of file mdtDevice.cpp.
+Definition at line 933 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a1faee6ab31b094731211ea0943544501}{
 \index{mdtDevice@{mdtDevice}!readDigitalOutput@{readDigitalOutput}}
@@ -1087,7 +1022,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a13a334ac86135751893f37064d8f
 
 
 
-Definition at line 948 of file mdtDevice.cpp.
+Definition at line 938 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_aac038c24c3b91757584bdf0d09fb8b02}{
 \index{mdtDevice@{mdtDevice}!readDigitalOutputs@{readDigitalOutputs}}
@@ -1130,7 +1065,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a8915a036472bff0f356756992c1e
 
 
 
-Definition at line 953 of file mdtDevice.cpp.
+Definition at line 943 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a4619d8be240cafe48865a89f7424de92}{
 \index{mdtDevice@{mdtDevice}!restoreTransaction@{restoreTransaction}}
@@ -1153,7 +1088,7 @@ portManager must be set before calling this method
 \end{DoxyPrecond}
 
 
-Definition at line 976 of file mdtDevice.cpp.
+Definition at line 966 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}{
 \index{mdtDevice@{mdtDevice}!runQueries@{runQueries}}
@@ -1195,7 +1130,7 @@ Once results are available or on error, the internal analog outputs are updated.
 
 
 \begin{DoxyParams}{Parameters}
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -1231,7 +1166,7 @@ Set device or internal analog value. Internal value is updated if queryDevice is
 \hline
 {\em sendToDevice} & If true, value is sent device by calling \hyperlink{classmdt_device_ae764634bba2b321ac2b4731c0353e45f}{writeAnalogOutput()}, else value is only cached. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_ae764634bba2b321ac2b4731c0353e45f}{writeAnalogOutput()} for details). \\
 \hline
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -1332,7 +1267,7 @@ Once results are available, the internal digital outputs are updated. (See \hype
 
 
 \begin{DoxyParams}{Parameters}
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -1389,7 +1324,7 @@ Set device or internal digital value. Internal value is updated if queryDevice i
 \hline
 {\em sendToDevice} & If true, value is sent device by calling \hyperlink{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}{writeDigitalOutput()}, else value is only cached. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}{writeDigitalOutput()} for details). \\
 \hline
-{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
+{\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{waitTransactionDone()} ), else it will return immediately after the query was sent. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -1444,59 +1379,6 @@ ios must be a valid pointer
 
 Definition at line 69 of file mdtDevice.cpp.
 
-\hypertarget{classmdt_device_a52a13e5692fccb5aea1f7c3c991823f3}{
-\index{mdtDevice@{mdtDevice}!showStatusMessage@{showStatusMessage}}
-\index{showStatusMessage@{showStatusMessage}!mdtDevice@{mdtDevice}}
-\subsubsection[{showStatusMessage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::showStatusMessage (
-\begin{DoxyParamCaption}
-\item[{const QString \&}]{message, }
-\item[{const QString \&}]{details, }
-\item[{int}]{timeout = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_device_a52a13e5692fccb5aea1f7c3c991823f3}
-
-
-Used to show a message and details in status bar. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em message} & Message to show \\
-\hline
-{\em details} & Details to show \\
-\hline
-{\em timeout} & If $>$ 0, message will be cleared after timeout \mbox{[}ms\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 899 of file mdtDevice.cpp.
-
-\hypertarget{classmdt_device_aef41742272cbf069890ea95605f41d44}{
-\index{mdtDevice@{mdtDevice}!showStatusMessage@{showStatusMessage}}
-\index{showStatusMessage@{showStatusMessage}!mdtDevice@{mdtDevice}}
-\subsubsection[{showStatusMessage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::showStatusMessage (
-\begin{DoxyParamCaption}
-\item[{const QString \&}]{message, }
-\item[{int}]{timeout = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_device_aef41742272cbf069890ea95605f41d44}
-
-
-Used to show a message in status bar. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em message} & Message to show \\
-\hline
-{\em timeout} & If $>$ 0, message will be cleared after timeout \mbox{[}ms\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 894 of file mdtDevice.cpp.
-
 \hypertarget{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{
 \index{mdtDevice@{mdtDevice}!start@{start}}
 \index{start@{start}!mdtDevice@{mdtDevice}}
@@ -1534,7 +1416,9 @@ Definition at line 120 of file mdtDevice.cpp.
 
 Emitted when state has changed. 
 
-Typically used with mdtDeviceStatusWidget \hypertarget{classmdt_device_a3fbc6e71241e2e9daa2d8557f870c03c}{
+See setStateFromPortManager() for some details.
+
+This signal should be used by application developpers, and not directly \hyperlink{classmdt_port_manager_a1c9e1848373831962b7ec83fd4fe5d35}{mdtPortManager::stateChanged()}. \hypertarget{classmdt_device_a3fbc6e71241e2e9daa2d8557f870c03c}{
 \index{mdtDevice@{mdtDevice}!statusMessageChanged@{statusMessageChanged}}
 \index{statusMessageChanged@{statusMessageChanged}!mdtDevice@{mdtDevice}}
 \subsubsection[{statusMessageChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::statusMessageChanged (
@@ -1549,37 +1433,30 @@ Typically used with mdtDeviceStatusWidget \hypertarget{classmdt_device_a3fbc6e71
 
 Emitted when a new status message is to display. 
 
-Typically used with mdtDeviceStatusWidget \hypertarget{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{
+Typically used with mdtDeviceStatusWidget \hypertarget{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{
 \index{mdtDevice@{mdtDevice}!waitTransactionDone@{waitTransactionDone}}
 \index{waitTransactionDone@{waitTransactionDone}!mdtDevice@{mdtDevice}}
 \subsubsection[{waitTransactionDone}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDevice::waitTransactionDone (
 \begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{int}]{timeout = {\ttfamily 0}, }
-\item[{int}]{granularity = {\ttfamily 50}}
+\item[{int}]{id}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}
+\label{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}
 
 
 Wait until a transaction is done without break the GUI's event loop. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000004}{Todo}]Adapt, comment\end{Desc}
+\item[\hyperlink{todo__todo000003}{Todo}]Adapt, comment\end{Desc}
 
 
 This is a helper method that provide a blocking wait. Internally, a couple of sleep and event processing is done, avoiding freezing the GUI.
 
-Internally, \hyperlink{classmdt_port_manager_aaa8845faa91904dba625fe7f1d23bc51}{mdtPortManager::waitTransactionDone()} is called.
+Internally, \hyperlink{classmdt_port_manager_a5551802de2c08632078f2cc0e2607913}{mdtPortManager::waitTransactionDone()} is called.
 
 
 \begin{DoxyParams}{Parameters}
 {\em id} & Id returned by query method \\
-\hline
-{\em timeout} & Timeout \mbox{[}ms\mbox{]} If 0, device's defined read timeout is used (see \hyperlink{classmdt_port_manager_aaa8845faa91904dba625fe7f1d23bc51}{mdtPortManager::waitTransactionDone(int, int, int)} for details). \\
-\hline
-{\em granularity} & Sleep time between each call of event processing \mbox{[}ms\mbox{]}\par
- A little value needs more CPU and big value can freeze the GUI. Should be between 50 and 100, and must be $>$ 0. Note that msecs must be a multiple of granularity. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -1590,7 +1467,7 @@ granularity must be $>$ 0.
 \end{DoxyPrecond}
 
 
-Definition at line 984 of file mdtDevice.cpp.
+Definition at line 974 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_ae764634bba2b321ac2b4731c0353e45f}{
 \index{mdtDevice@{mdtDevice}!writeAnalogOutput@{writeAnalogOutput}}
@@ -1631,7 +1508,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_ac63297a31205759622f341525c34
 
 
 
-Definition at line 928 of file mdtDevice.cpp.
+Definition at line 918 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_abc52b797df29945bf0a6358aab1b7245}{
 \index{mdtDevice@{mdtDevice}!writeAnalogOutputs@{writeAnalogOutputs}}
@@ -1674,7 +1551,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a87af02c83cede03d6ee988c678e0
 
 
 
-Definition at line 933 of file mdtDevice.cpp.
+Definition at line 923 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}{
 \index{mdtDevice@{mdtDevice}!writeDigitalOutput@{writeDigitalOutput}}
@@ -1715,7 +1592,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a6950c10fc521b193fb3c75422387
 
 
 
-Definition at line 958 of file mdtDevice.cpp.
+Definition at line 948 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_aa9e8ae7b4ff2455b4105d280d8523fc1}{
 \index{mdtDevice@{mdtDevice}!writeDigitalOutputs@{writeDigitalOutputs}}
@@ -1758,7 +1635,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_aad3ce85a19307e3056b940da99fe
 
 
 
-Definition at line 963 of file mdtDevice.cpp.
+Definition at line 953 of file mdtDevice.cpp.
 
 
 
