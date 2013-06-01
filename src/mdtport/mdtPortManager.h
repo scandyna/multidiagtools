@@ -243,6 +243,23 @@ class mdtPortManager : public QThread
    */
   virtual void setPort(mdtAbstractPort *port);
 
+  /*! \brief Lock the port's mutex
+   *
+   * This method will check a internal flag before locking port's mutex.
+   *  If the flag syas that mutex is allready locked,
+   *  a warning is logged with mdtError system.
+   *  Then, this method reurns without locking the port mutex again.
+   *
+   * \pre Port must be set with setPort before using this method
+   */
+  void lockPortMutex();
+
+  /*! \brief Unlock port's mutex
+   *
+   * \pre Port must be set with setPort before using this method
+   */
+  void unlockPortMutex();
+
   /*! \brief Detach port
    *
    * Will detach port from each thread and from port manager.
@@ -634,10 +651,6 @@ class mdtPortManager : public QThread
    */
   virtual void abort();
 
-  /*! \brief Try to 
-   * 
-   */
-
  signals:
 
   /*! \brief Emitted each time a transaction is done.
@@ -767,20 +780,6 @@ class mdtPortManager : public QThread
    */
   void commitFrames();
 
-  /*! \brief Set the wait cancel flag
-   *
-   * If flag is set, waitOnFrame(), waitReadenFrame() will return.
-   *
-   * Note: this will not cancel anything in port or port threads.
-   */
-  ///void cancelReadWait();
-
-  /*! \brief Get the wait cancel flag
-   *
-   * After a call, the flag will be reset.
-   */
-  ///bool readWaitCanceled();
-
  protected slots:
 
   /*! \brief Called by the read thread whenn a complete frame was readen
@@ -881,17 +880,6 @@ class mdtPortManager : public QThread
 
  protected:
 
-  /*! \brief Will cancel waitTransactionDone()
-   *
-   * This method is used by onThreadsErrorOccured().
-   *  To avaoid coherence problems with port thread,
-   *  this method should not be used for other purpose.
-   *
-   * To breack the waitOneTransactionDone() after
-   *  a timeout, see options available in mdtPortConfig.
-   */
-  void cancelWaitTransactionDone();
-
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
 
@@ -905,19 +893,17 @@ class mdtPortManager : public QThread
   bool waitOnReadyState();
 
   mdtPortInfo pvPortInfo;
+  bool pvPortMutexLocked;                               // Used by lockPortMutex()
 
   // Transactions members
   int pvCurrentTransactionId;
-  bool pvCancelWaitTransactionDone;
-  bool pvWaitingTransactionDone;                        // Used by waitTransactionDone() and cancelWaitTransactionDone()
   bool pvKeepTransactionsDone;                          // This flag overwrites the transaction's queryReplyMode flag
   QQueue<mdtPortTransaction*> pvTransactionsPool;
   int pvTransactionsAllocatedCount;                     // Used to watch how many transactions are allocated (memory leack watcher)
   QMap<int, mdtPortTransaction*> pvTransactionsPending; // Used for query that are sent to device
   QQueue<mdtPortTransaction*> pvTransactionsDone;       // Transactions for data that are received from device
-
-  ///bool pvCancelReadWait;
-  bool pvThreadHandlesReadTimeout;  // Used by waitOneTransactionDone()
+  bool pvThreadHandlesReadTimeout;                      // Used by waitOneTransactionDone()
+  int pvMaxTransactionsPending;                         // Limit before going to busy state
   // Instance of reader and writer thread
   mdtPortThread *pvReadThread;
   mdtPortThread *pvWriteThread;

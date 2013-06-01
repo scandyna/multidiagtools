@@ -457,7 +457,7 @@ void mdtPortThreadHelperSocket::requestWrite()
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  qDebug() << "* requestWrite() ...";
+  ///qDebug() << "* requestWrite() ... thread: " << thread();
   if(pvSocket->state() != QAbstractSocket::ConnectedState){
     qDebug() << "* requestWrite() Cancel";
     restoreCurrentWriteFrameToPool();
@@ -468,10 +468,13 @@ void mdtPortThreadHelperSocket::requestWrite()
     notifyError(mdtAbstractPort::WriteCanceled);
     return;
   }
+  qDebug() << "* requestWrite() locking mutex ...";
   pvPort->lockMutex();
+  qDebug() << "* requestWrite() mutex locked";
   // Errors are handled/notified in onSocketError() and onWriteTimeout()
   writeToSocket();
   pvPort->unlockMutex();
+  qDebug() << "* requestWrite() mutex unlocked";
   qDebug() << "* requestWrite() DONE";
 }
 

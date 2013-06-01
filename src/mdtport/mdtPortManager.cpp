@@ -39,6 +39,7 @@ mdtPortManager::mdtPortManager(QObject *parent)
   pvThreadHandlesReadTimeout = false;
   pvCurrentState = Error;
   pvTransactionsAllocatedCount = 0;
+  pvPortMutexLocked = false;
   // As default, we not keep all incoming frames
   setKeepTransactionsDone(false);
   // Setup state machine
@@ -73,6 +74,28 @@ void mdtPortManager::setPort(mdtAbstractPort *port)
   Q_ASSERT(!isRunning());
 
   pvPort = port;
+}
+
+void mdtPortManager::lockPortMutex()
+{
+  Q_ASSERT(pvPort != 0);
+
+  if(pvPortMutexLocked){
+    mdtError e(MDT_PORT_IO_ERROR, "Trying to lock port mutex from main thread while it is allready locked (from main thread)", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtPortManager");
+    e.commit();
+    return;
+  }
+  pvPortMutexLocked = true;
+  pvPort->lockMutex();
+}
+
+void mdtPortManager::unlockPortMutex()
+{
+  Q_ASSERT(pvPort != 0);
+
+  pvPort->unlockMutex();
+  pvPortMutexLocked = false;
 }
 
 void mdtPortManager::detachPort(bool deletePort, bool deleteThreads)
@@ -255,10 +278,8 @@ bool mdtPortManager::openPort()
     return false;
   }
   // Initialize flags
-  ///pvCancelReadWait = false;
-  pvCancelWaitTransactionDone = false;
-  pvWaitingTransactionDone = false;
   setCurrentTransactionId(0);
+  pvMaxTransactionsPending = config().writeQueueSize();
 
   return true;
 }
@@ -272,7 +293,6 @@ void mdtPortManager::closePort()
   stop();
   // Close the port
   pvPort->close();
-  /// \todo check about flush I/O
   // Remove pending and done transactions
   flushTransactionsPending();
   flushTransactionsDone();
@@ -301,7 +321,6 @@ mdtPortTransaction *mdtPortManager::getNewTransaction()
       MDT_ERROR_SET_SRC(e, "mdtPortManager");
       e.commit();
     }
-    qDebug() << "mdtPortManager::getNewTransaction(): create new transaction. DELTA: " << (pvTransactionsAllocatedCount - pvTransactionsPool.size() - pvTransactionsPending.size() - pvTransactionsDone.size() - 1);
   }else{
     transaction = pvTransactionsPool.dequeue();
   }
@@ -319,6 +338,7 @@ void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
   pvTransactionsPool.enqueue(transaction);
 }
 
+/// \todo Remove timeout parameter
 bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
 {
   Q_ASSERT(granularity > 0);
@@ -338,12 +358,15 @@ bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
       // Check state first
       if(pvCurrentState == Ready){
         // Check if a frame is available
-        pvPort->lockMutex();
+        lockPortMutex();
+        ///pvPort->lockMutex();
         if(pvPort->writeFramesPool().size() > 0){
-          pvPort->unlockMutex();
+          ///pvPort->unlockMutex();
+          unlockPortMutex();
           return true;
         }
-        pvPort->unlockMutex();
+        ///pvPort->unlockMutex();
+        unlockPortMutex();
       }
       msleep(granularity);
       qApp->processEvents();
@@ -354,12 +377,15 @@ bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
       // Check state first
       if(pvCurrentState == Ready){
         // Check if a frame is available
-        pvPort->lockMutex();
+        ///pvPort->lockMutex();
+        lockPortMutex();
         if(pvPort->writeFramesPool().size() > 0){
-          pvPort->unlockMutex();
+          ///pvPort->unlockMutex();
+          unlockPortMutex();
           return true;
         }
-        pvPort->unlockMutex();
+        ///pvPort->unlockMutex();
+        unlockPortMutex();
       }
       msleep(granularity);
       qApp->processEvents();
@@ -380,9 +406,11 @@ int mdtPortManager::writeData(mdtPortTransaction *transaction)
   mdtFrame *frame;
 
   // Get a frame in pool
-  pvPort->lockMutex();
+  ///pvPort->lockMutex();
+  lockPortMutex();
   if(pvPort->writeFramesPool().size() < 1){
-    pvPort->unlockMutex();
+    ///pvPort->unlockMutex();
+    unlockPortMutex();
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortManager");
     e.commit();
@@ -398,7 +426,8 @@ int mdtPortManager::writeData(mdtPortTransaction *transaction)
   frame->append(transaction->data());
   pvPort->addFrameToWrite(frame);
   addTransactionPending(transaction);
-  pvPort->unlockMutex();
+  ///pvPort->unlockMutex();
+  unlockPortMutex();
 
   return transaction->id();
 }
@@ -419,7 +448,6 @@ int mdtPortManager::writeData(const QByteArray &data, bool queryReplyMode)
   return writeData(transaction);
 }
 
-/**
 bool mdtPortManager::waitTransactionDone(int id)
 {
   Q_ASSERT(pvPort != 0);
@@ -435,83 +463,6 @@ bool mdtPortManager::waitTransactionDone(int id)
     emit(unhandledError());
     return false;
   }
-  // Try until success or timeout/error
-  pvWaitingTransactionDone = true;
-  if(pvThreadHandlesReadTimeout){
-    // Thread handles timeout itself
-    while(!transactionsDoneContains(id)){
-      qDebug() << "mdtPortManager::waitTransactionDone() ... ID: " << id;
-      // Check about wait cancel
-      if(pvCancelWaitTransactionDone){
-        pvCancelWaitTransactionDone = false;
-        pvWaitingTransactionDone = false;
-        // Transactions are restored by onThreadsErrorOccured()
-        /// \bug Not true here
-        return false;
-      }
-      // Check about timeout or other error
-      if((pvCurrentState != Ready)&&(pvCurrentState != Busy)){
-        pvWaitingTransactionDone = false;
-        // Transactions are restored by onThreadsErrorOccured()
-        return false;
-      }
-      // Wait
-      qApp->processEvents();
-      msleep(50);
-    }
-  }else{
-    // Thread does not handle timeout itself
-    maxIter = config().readTimeout() / 50;
-    while(!transactionsDoneContains(id)){
-      // Check about wait cancel
-      if(pvCancelWaitTransactionDone){
-        pvCancelWaitTransactionDone = false;
-        pvWaitingTransactionDone = false;
-        // Transactions are restored by onThreadsErrorOccured()
-        /// \bug Not true here
-        return false;
-      }
-      // Check about error
-      if((pvCurrentState != Ready)&&(pvCurrentState != Busy)){
-        pvWaitingTransactionDone = false;
-        // Transactions are restored by onThreadsErrorOccured()
-        return false;
-      }
-      // Check about timeout
-      if(maxIter <= 0){
-        flushTransactionsPending();
-        flushTransactionsDone();
-        pvWaitingTransactionDone = false;
-        return false;
-      }
-      // Wait
-      qApp->processEvents();
-      msleep(50);
-      maxIter--;
-    }
-  }
-  pvWaitingTransactionDone = false;
-
-  return true;
-}
-*/
-
-bool mdtPortManager::waitTransactionDone(int id)
-{
-  Q_ASSERT(pvPort != 0);
-
-  int maxIter;
-
-  // Check if transaction exists in pending queue
-  // Note: we check also done queue, because it's possible that transaction was done
-  if((!pvTransactionsPending.contains(id))&&(!transactionsDoneContains(id))){
-    mdtError e(MDT_PORT_IO_ERROR, "Wait on a frame that was never added to pending queue, id: " + QString::number(id), mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortManager");
-    e.commit();
-    emit(unhandledError());
-    return false;
-  }
-  ///pvWaitingTransactionDone = true;
   /*
    * If thread handles timeout/disconnection:
    *  In normal way, the thread notifies the error, the state becomes != Ready and this method returns false
@@ -531,8 +482,8 @@ bool mdtPortManager::waitTransactionDone(int id)
   // Try until success or timeout/error
   while(!transactionsDoneContains(id)){
     // Check about timeout or other error
-    if(pvCurrentState != Ready){
-      ///pvWaitingTransactionDone = false;
+    //  Note: on busy state, we continue waiting (f.ex. ReadPoolEmpty error)
+    if((pvCurrentState != Ready)&&(pvCurrentState != Busy)){
       // Transactions are restored by onThreadsErrorOccured()
       return false;
     }
@@ -540,11 +491,9 @@ bool mdtPortManager::waitTransactionDone(int id)
     if(maxIter <= 0){
       flushTransactionsPending();
       flushTransactionsDone();
-      ///pvWaitingTransactionDone = false;
       return false;
     }
     maxIter--;
-    qDebug() << "mdtPortManager::waitTransactionDone() ... ID: " << id;
     // Wait
     qApp->processEvents();
     msleep(50);
@@ -554,6 +503,7 @@ bool mdtPortManager::waitTransactionDone(int id)
 }
 
 /// \todo Implement as waitTransactionDone()
+/**
 bool mdtPortManager::waitOneTransactionDone()
 {
   Q_ASSERT(pvPort != 0);
@@ -593,6 +543,52 @@ bool mdtPortManager::waitOneTransactionDone()
       msleep(50);
       maxIter--;
     }
+  }
+
+  return true;
+}
+*/
+
+bool mdtPortManager::waitOneTransactionDone()
+{
+  Q_ASSERT(pvPort != 0);
+
+  int maxIter;
+
+  /*
+   * If thread handles timeout/disconnection:
+   *  In normal way, the thread notifies the error, the state becomes != Ready and this method returns false
+   *  But, if many errors are notified, state changes often,
+   *   and it happens that we are waiting, in Ready state, until a transaction is done, and this for a eternity.
+   *   (Keep in mind that we let event loop running, and this way new transactions can be initalized, etc...)
+   *  To avoid this problem, and keep coherence with port thread,
+   *   we add a offset to wait timeout, and return if this time was elapsed.
+   * If thread does not handle timeout:
+   *  We simply return after timeout
+   */
+  if(pvThreadHandlesReadTimeout){
+    maxIter = (config().readTimeout() + 200) / 50;
+  }else{
+    maxIter = config().readTimeout() / 50;
+  }
+  // Try until success or timeout/error
+  while(pvTransactionsDone.isEmpty()){
+    // Check about timeout or other error
+    //  Note: on busy state, we continue waiting (f.ex. ReadPoolEmpty error)
+    if((pvCurrentState != Ready)&&(pvCurrentState != Busy)){
+      // Transactions are restored by onThreadsErrorOccured()
+      return false;
+    }
+    // Check about timeout
+    if(maxIter <= 0){
+      flushTransactionsPending();
+      flushTransactionsDone();
+      return false;
+    }
+    maxIter--;
+    // Wait
+    qApp->processEvents();
+    msleep(50);
   }
 
   return true;
@@ -788,9 +784,13 @@ void mdtPortManager::addTransactionPending(mdtPortTransaction *transaction)
   Q_ASSERT(!pvTransactionsPending.contains(transaction->id()));
 
   pvTransactionsPending.insert(transaction->id(), transaction);
+  // If we have more transactions pending than write queue size, we go to busy state
+  if(pvTransactionsPending.size() > pvMaxTransactionsPending){
+    emit busy();
+  }
   // Watch transactions size
-  if(pvTransactionsPending.size() > 20){
-    mdtError e(MDT_PORT_IO_ERROR, "Pending transactions queue has more than 20 items, will clear it (this is a bug)", mdtError::Error);
+  if(pvTransactionsPending.size() > (pvMaxTransactionsPending +20)){
+    mdtError e(MDT_PORT_IO_ERROR, "Pending transactions queue has more than 20 items over maximum authorized, will clear it (this is a bug)", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortManager");
     e.commit();
     qDeleteAll(pvTransactionsPending);
@@ -901,7 +901,8 @@ void mdtPortManager::fromThreadNewFrameReaden()
   int framesCount = 0;
 
   // Get frames in readen queue
-  pvPort->lockMutex();
+  ///pvPort->lockMutex();
+  lockPortMutex();
   while(pvPort->readenFrames().size() > 0){
     frame = pvPort->readenFrames().dequeue();
     Q_ASSERT(frame != 0);
@@ -927,7 +928,8 @@ void mdtPortManager::fromThreadNewFrameReaden()
     // Restore frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
-  pvPort->unlockMutex();
+  ///pvPort->unlockMutex();
+  unlockPortMutex();
   // Commit
   if(framesCount > 0){
     commitFrames();
@@ -1031,12 +1033,15 @@ void mdtPortManager::setStateReady()
     if(pvThreads.size() > 1){
       for(i=0; i<pvThreads.size(); i++){
         qDebug() << "mdtPortManager: checking thread[" << i << "] state ...";
-        pvPort->lockMutex();
+        ///pvPort->lockMutex();
+        lockPortMutex();
         if(pvThreads.at(i)->currentError() != mdtAbstractPort::NoError){
-          pvPort->unlockMutex();
+          ///pvPort->unlockMutex();
+          unlockPortMutex();
           emit connecting();
         }
-        pvPort->unlockMutex();
+        ///pvPort->unlockMutex();
+        unlockPortMutex();
       }
     }
     pvCurrentState = Ready;
@@ -1069,14 +1074,6 @@ void mdtPortManager::setStateError()
     pvCurrentState = Error;
     qDebug() << "mdtPortManager: new state is Error";
     emit(stateChanged(pvCurrentState));
-  }
-}
-
-void mdtPortManager::cancelWaitTransactionDone()
-{
-  // We only set the flag if we are really waiting
-  if(pvWaitingTransactionDone){
-    pvCancelWaitTransactionDone = true;
   }
 }
 
