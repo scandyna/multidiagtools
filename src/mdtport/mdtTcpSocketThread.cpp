@@ -45,6 +45,11 @@ bool mdtTcpSocketThread::isWriter() const
   return true;
 }
 
+bool mdtTcpSocketThread::handlesTimeout() const
+{
+  return true;
+}
+
 void mdtTcpSocketThread::run()
 {
   Q_ASSERT(pvPort != 0);

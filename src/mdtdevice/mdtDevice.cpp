@@ -1001,7 +1001,8 @@ void mdtDevice::setStateFromPortManager(int portManagerState)
       setStateConnecting();
       break;
     case mdtPortManager::Ready:
-      setStateReady();
+      QTimer::singleShot(50, this, SLOT(setStateReady()));
+///      setStateReady();
       break;
     case mdtPortManager::Busy:
       setStateBusy();
@@ -1071,6 +1072,7 @@ void mdtDevice::setStateReady()
   if(pvCurrentState == mdtPortManager::Ready){
     return;
   }
+  qDebug() << "mdtDevice::setStateReady() ...";
   // Check if we have to restart query timer
   if(pvAutoQueryEnabled){
     pvQueryTimer->start();

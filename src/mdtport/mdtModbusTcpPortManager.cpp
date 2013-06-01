@@ -449,6 +449,7 @@ int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
   transaction->setId(currentTransactionId());
   addTransactionPending(transaction);
   pvPort->unlockMutex();
+  qDebug() << "mdtModbusTcpPortManager::writeData() transaction ID " << transaction->id();
 
   return transaction->id();
 }
@@ -472,6 +473,7 @@ void mdtModbusTcpPortManager::abortScan()
   pvAbortScan = true;
 }
 
+/// \todo On incomplete/inexpected frame, cancel the waitTransactionDone()
 void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
 {
   Q_ASSERT(pvPort != 0);
@@ -485,6 +487,7 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
   while(pvPort->readenFrames().size() > 0){
     frame = dynamic_cast<mdtFrameModbusTcp*> (pvPort->readenFrames().dequeue());
     Q_ASSERT(frame != 0);
+    qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() , ID: " << frame->transactionId();
     // Check if frame is complete
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
@@ -494,6 +497,17 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
         mdtError e(MDT_TCP_IO_ERROR, "Received a frame with unexpected transaction ID", mdtError::Warning);
         MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
         e.commit();
+        ///qDebug() << "-> Current TID: " << currentTransactionId();
+        qDebug() << "-*-> Frame transaction ID: " << frame->transactionId();
+        /*
+         * It's possible that application is waiting a specific transaction ID
+         * with waitTransactionDone(). Here, thread handles read timeout, but
+         * no real timeout has occured. So, we must cancel the wait, else it will
+         * be eternal.
+         * This was a bug seen at 20130531.
+         */
+        /// \bug But, now, a older transaction will be keeped in pending transactions queue :-(
+        cancelWaitTransactionDone();
       }else{
         /// \todo check about transaction ID ? Should be a assertion ?
         transaction->setId(frame->transactionId());
@@ -509,6 +523,8 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
   pvPort->unlockMutex();
   // Commit
   if(framesCount > 0){
+    qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() commit frames (count: " << framesCount << ")";
     commitFrames();
   }
+  qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() DONE";
 }

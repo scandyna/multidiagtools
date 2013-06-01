@@ -217,6 +217,7 @@ void mdtPortThread::notifyError(mdtAbstractPort::error_t error, bool renotifySam
 
 mdtAbstractPort::error_t mdtPortThread::currentError() const
 {
+  qDebug() << "mdtPortThread::currentError(): " << pvCurrentError;
   return pvCurrentError;
 }
 

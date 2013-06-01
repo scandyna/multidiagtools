@@ -407,7 +407,7 @@ class mdtPortManager : public QThread
 
   /*! \brief Wait until data can be written
    *
-   * Wait until a frame is available in write frames pool.
+   * Wait until state is ready and that a frame is available in write frames pool.
    *  The wait will not breack Qt's event loop, so this method
    *  can be called from GUI Thread. (See wait() for details).
    *
@@ -490,6 +490,8 @@ class mdtPortManager : public QThread
    * \return True if Ok, false on timeout or other error. If id was not found in transactions pending lists,
    *           a warning will be generated in mdtError system, and false will be returned.
    *           On failure, transaction is restored to pool (see onThreadsErrorOccured() for details).
+   * 
+   * \todo Check about infinit read timeout, if this has sense.
    */
   bool waitTransactionDone(int id);
 
@@ -879,6 +881,17 @@ class mdtPortManager : public QThread
 
  protected:
 
+  /*! \brief Will cancel waitTransactionDone()
+   *
+   * This method is used by onThreadsErrorOccured().
+   *  To avaoid coherence problems with port thread,
+   *  this method should not be used for other purpose.
+   *
+   * To breack the waitOneTransactionDone() after
+   *  a timeout, see options available in mdtPortConfig.
+   */
+  void cancelWaitTransactionDone();
+
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
 
@@ -895,6 +908,8 @@ class mdtPortManager : public QThread
 
   // Transactions members
   int pvCurrentTransactionId;
+  bool pvCancelWaitTransactionDone;
+  bool pvWaitingTransactionDone;                        // Used by waitTransactionDone() and cancelWaitTransactionDone()
   bool pvKeepTransactionsDone;                          // This flag overwrites the transaction's queryReplyMode flag
   QQueue<mdtPortTransaction*> pvTransactionsPool;
   int pvTransactionsAllocatedCount;                     // Used to watch how many transactions are allocated (memory leack watcher)

@@ -78,11 +78,11 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
    */
   void onSocketDisconnected();
 
-  /*! \brief Utile ??????
+  /*! \brief Restore current frames to pools
    */
   void onSocketClosing();
 
-  /*! \brief Map socket error to mdtAbstractPort error and notify it
+  /*! \brief Handle and/or notify errors reported by QTcpSocket
    *
    * \pre Port must be set with mdtPortThreadHelper::setPort().
    * \pre Thread must be set with mdtPortThreadHelper::setThread().
@@ -90,34 +90,30 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
    */
   void onSocketError(QAbstractSocket::SocketError socketError);
 
-  /*! \brief  Utile ??
-   */
-  void onSocketHostFound();
-
   /*! \brief Some states are mapped to mdtAbstractPort error and notified
    *
-   * We try to not interfer with onSocketError(),
+   * We try to not interfer with onSocketError(), onSocketConnected(), ... , 
    *  so only a few QAbstractSocket states are notified.
    */
   void onSocketStateChanged(QAbstractSocket::SocketState socketState);
 
-  /*! \brief
+  /*! \brief Read from socket and store into frame (using readFromSocket() ).
    */
   void onSocketReadyRead();
 
-  /*! \brief
+  /*! \brief Write current write frame to socket.
    */
   void onSocketBytesWritten(qint64 bytes);
 
-  /*! \brief
+  /*! \brief Handle timeout reported by QTcpSocket
    */
   void onConnectionTimeout();
 
-  /*! \brief Handle read timeout
+  /*! \brief Handle read timeout (Uses internal timer)
    */
   void onReadTimeout();
 
-  /*! \brief Handle write timeout
+  /*! \brief Handle write timeout (Uses internal timer)
    */
   void onWriteTimeout();
 
@@ -168,22 +164,6 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
    */
   mdtAbstractPort::error_t writeToSocket();
 
-  /*! \brief Try to (re-)connect to host
-   *
-   * Each time this method is called,
-   *  the internal connections counter will be decremented.
-   *  On success, it is reset to initial value (set by setSocket() ).
-   *  If a counter reaches 0, UnhandledError will be returned and
-   *  a message is logged with mdtError system.
-   *
-   * \param notify If true, errors are notified (using mdtPortThreadHelper::notifyError() ).
-   *
-   * \pre port must be set with mdtPortThreadHelper::setPort().
-   * \pre thread must be set with mdtPortThreadHelper::setThread().
-   * \pre socket must be set with setSocket().
-   */
-  ///mdtAbstractPort::error_t reconnect(bool notify);
-
   /*! \brief Map error returned by QTcpSocket to mdtAbstractPort error.
    *
    * Unhandled error is reported with mdtError and UnhandledError is returned.
@@ -196,19 +176,14 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
 
   QString pvHost;
   quint16 pvPortNumber;
-  ///int pvConnectionTimeout;
-  int pvConnectMaxTry;
-  int pvConnectTryLeft;
+  int pvConnectMaxTry;  /// \todo Check if implemented
+  ///int pvConnectTryLeft;
   char *pvReadBuffer;
   int pvReadBufferSize;
-
   QTimer *pvConnectionTimeoutTimer;
-  ///int pvReadTimeout;
   QTimer *pvReadTimeoutTimer;
-  ///int pvWriteTimeout;
   QTimer *pvWriteTimeoutTimer;
   QTcpSocket * pvSocket;
-  bool pvConnected;
 
   Q_DISABLE_COPY(mdtPortThreadHelperSocket);
 };

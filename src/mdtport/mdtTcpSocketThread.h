@@ -51,6 +51,12 @@ class mdtTcpSocketThread : public mdtPortThread
    */
   bool isWriter() const;
 
+  /*! \brief Returns true
+   *
+   * mdtPortManager uses this flag to know how to deal with timeouts.
+   */
+  bool handlesTimeout() const;
+
  private:
 
   void run();

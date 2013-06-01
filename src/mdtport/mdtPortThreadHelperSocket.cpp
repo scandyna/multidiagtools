@@ -26,19 +26,9 @@
 #include <QTimer>
 #include <QCoreApplication>
 
-#include <QDebug>
+/// \todo Implement socket options (think also about mdtPortConfig)
 
-/// \todo Ne pas oublier Mutex du port
-/// \todo WriteTimeout: chaque write, relancer timer. Si frmae->waitAnAnswer, lancer readtimeoutimer
-
-// We need a sleep function
-#ifdef Q_OS_UNIX
- #define msleep(t) usleep(1000*t)
-#endif
-#ifdef Q_OS_WIN
- #include <windows.h>
- #define msleep(t) Sleep(t)
-#endif
+//#include <QDebug>
 
 mdtPortThreadHelperSocket::mdtPortThreadHelperSocket(QObject *parent)
  : mdtPortThreadHelper(parent)
@@ -46,13 +36,9 @@ mdtPortThreadHelperSocket::mdtPortThreadHelperSocket(QObject *parent)
   pvPortNumber = 0;
   pvSocket = 0;
   pvConnectMaxTry = 0;
-  ///pvConnectionTimeout = 0;
-  ///pvReadTimeout = 0;
-  ///pvWriteTimeout = 0;
   pvReadBuffer = 0;
   pvReadBufferSize = 0;
 
-    
   // Setup connection timeout timer
   pvConnectionTimeoutTimer =  new QTimer(this);
   pvConnectionTimeoutTimer->setSingleShot(true);
@@ -60,12 +46,8 @@ mdtPortThreadHelperSocket::mdtPortThreadHelperSocket(QObject *parent)
   pvWriteTimeoutTimer = new QTimer(this);
   pvWriteTimeoutTimer->setSingleShot(true);
   // Setup read timeout
-  ///pvReadTimeout = p->config().readTimeout();
   pvReadTimeoutTimer = new QTimer(this);
   pvReadTimeoutTimer->setSingleShot(true);
-
-  
-  ///bool pvConnected;
 }
 
 mdtPortThreadHelperSocket::~mdtPortThreadHelperSocket()
@@ -83,31 +65,20 @@ void mdtPortThreadHelperSocket::setSocket(QTcpSocket *socket)
   Q_ASSERT(p != 0);
 
   // Get needed parameters
-  ///p->lockMutex();
   pvHost = p->peerName();
   pvPortNumber = p->peerPort();
-  ///pvConnectionTimeout = p->config().connectTimeout();
   pvConnectMaxTry = p->config().connectMaxTry();
-  pvConnectTryLeft = pvConnectMaxTry;
-  ///pvWriteTimeout = p->config().writeTimeout();
-  ///p->unlockMutex();
+  ///pvConnectTryLeft = pvConnectMaxTry;
   // Store socket pointer and make connections
   pvSocket = socket;
   connect(socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
   connect(socket, SIGNAL(disconnected()), this, SLOT(onSocketDisconnected()));
+  connect(socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onSocketStateChanged(QAbstractSocket::SocketState)));
   connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onSocketError(QAbstractSocket::SocketError)));
   connect(p, SIGNAL(newFrameToWrite()), this, SLOT(requestWrite()));
-  connect(socket, SIGNAL(readyRead()), this, SLOT(onSocketReadyRead()));
-  
-  /// provisoire
   connect(socket, SIGNAL(bytesWritten(qint64)), this, SLOT(onSocketBytesWritten(qint64)));
-  
-  connect(socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onSocketStateChanged(QAbstractSocket::SocketState)));
-  /**
-  connect(socket, SIGNAL(), this, SLOT());
-  connect(socket, SIGNAL(), this, SLOT());
-  connect(socket, SIGNAL(), this, SLOT());
-  */
+  connect(socket, SIGNAL(readyRead()), this, SLOT(onSocketReadyRead()));
+  connect(socket, SIGNAL(aboutToClose()), this, SLOT(onSocketClosing()));
   // Setup connection timeout
   if(p->config().connectTimeout() < 0){
     pvConnectionTimeoutTimer->setInterval(1000*60*10);
@@ -129,11 +100,7 @@ void mdtPortThreadHelperSocket::setSocket(QTcpSocket *socket)
     pvReadTimeoutTimer->setInterval(p->config().readTimeout());
   }
   connect(pvReadTimeoutTimer, SIGNAL(timeout()), this, SLOT(onReadTimeout()));
-  
-  qDebug() << "--> Connection timeout: " << pvConnectionTimeoutTimer->interval();
-  qDebug() << "--> Write timeout: " << pvWriteTimeoutTimer->interval();
-  qDebug() << "--> Read timeout: " << pvReadTimeoutTimer->interval();
-  
+  // Connect
   pvSocket->connectToHost(pvHost, pvPortNumber);
   pvConnectionTimeoutTimer->start();
 }
@@ -148,6 +115,7 @@ void mdtPortThreadHelperSocket::onSocketConnected()
   // We set the thread's running flag, so mdtPortThread::start() will return
   pvPort->lockMutex();
   pvThread->setRunningFlag(true);
+  pvConnectMaxTry++;
   notifyError(mdtAbstractPort::NoError);
   pvPort->unlockMutex();
 }
@@ -160,18 +128,33 @@ void mdtPortThreadHelperSocket::onSocketDisconnected()
 
   pvPort->lockMutex();
   notifyError(mdtAbstractPort::Disconnected);
-  if(pvThread->runningFlagSet()){
-    pvSocket->connectToHost(pvHost, pvPortNumber);
-  } /**else{
-    pvThread->exit(0);
+  if(pvConnectMaxTry < 1){
+    mdtError e(MDT_TCP_IO_ERROR, "Connection failed after max try", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+    e.commit();
+    pvSocket->close();
+  }else{
+    if(pvThread->runningFlagSet()){
+      pvConnectMaxTry--;
+      pvSocket->connectToHost(pvHost, pvPortNumber);
+      pvConnectionTimeoutTimer->start();
+      qDebug() << "*** Connecting ... , try left: " << pvConnectMaxTry;
+    }
   }
-  */
   pvPort->unlockMutex();
 }
 
-/// \todo Utile ??
 void mdtPortThreadHelperSocket::onSocketClosing()
 {
+  qDebug() << "*** onSocketClosing() ...";
+  /// Essai
+  qint64 readen;
+  char buffer[1024];
+  do{
+    readen = pvSocket->read(buffer, 1024);
+    qDebug() << "** flush " << readen << " bytes..";
+  }while(readen > 0);
+
   restoreCurrentWriteFrameToPool();
   restoreCurrentReadFrameToPool();
 }
@@ -182,15 +165,6 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  mdtAbstractPort::error_t portError;
-
-  qDebug() << "mdtPortThreadHelperSocket::onSocketError(): " << socketError;
-  /**
-  if(!pvThread->runningFlagSet()){
-    pvThread->exit(0);
-    return;
-  }
-  */
   switch(socketError){
     case QAbstractSocket::ConnectionRefusedError:
       {
@@ -199,13 +173,15 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         message += QString::number(pvPortNumber);
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Reconnect
       onSocketDisconnected();
       break;
     case QAbstractSocket::RemoteHostClosedError:
-      // Will call onSocketClosing()
+      qDebug() << "* Host closed connection";
+      // Will call onSocketDisconnected()
       break;
     case QAbstractSocket::HostNotFoundError:
       {
@@ -214,6 +190,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         message += QString::number(pvPortNumber);
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Reconnect
@@ -224,6 +201,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket access error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify
@@ -234,6 +212,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket resource error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -245,6 +224,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Timeout reported by QTcpSocket";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // This should only occur if long timeouts are set in port config.
@@ -257,6 +237,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket datagram too large";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -268,6 +249,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Network error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // We abort the socket, witch will call the disconnect/reconnect process.
@@ -278,6 +260,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket unsupported operation error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -289,6 +272,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket proxy authentification error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -303,6 +287,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket proxy denied error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -314,6 +299,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket proxy connection closed error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -325,6 +311,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket proxy connection timeout error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -336,6 +323,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket proxy not found";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -347,6 +335,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket proxy protocol error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -358,6 +347,7 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Socket unknown error";
         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
         e.setSystemError(socketError, pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
         e.commit();
       }
       // Notify and stop
@@ -365,38 +355,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
       exit(mdtAbstractPort::UnhandledError);
       break;
   }
-  
-  return;
-  
-  /*
-   * QTcpSocket does not differentiate read and write timeout.
-   * We will check current read/write frame and react on it,
-   * in the hope that this is reliable enough.
-   */
-  pvPort->lockMutex();
-  qDebug() << "-> Port's readenFrames (A): " << pvPort->readenFrames();
-  if(currentReadFrame() != 0){
-    portError = mapSocketError(socketError, true);
-    portError = handleCommonReadErrors(portError);
-  }
-  if(currentWriteFrame() != 0){
-    portError = mapSocketError(socketError, false);
-    portError = handleCommonWriteErrors(portError);
-  }
-  qDebug() << "-> Port's readenFrames (B): " << pvPort->readenFrames();
-  pvPort->unlockMutex();
-}
-
-/// \todo Utile ?
-void mdtPortThreadHelperSocket::onSocketHostFound()
-{
 }
 
 void mdtPortThreadHelperSocket::onSocketStateChanged(QAbstractSocket::SocketState socketState)
 {
-  
-  qDebug() << "mdtPortThreadHelperSocket::onSocketStateChanged(): " << socketState;
-  
   switch(socketState){
     case QAbstractSocket::HostLookupState:
       notifyError(mdtAbstractPort::Connecting);
@@ -413,32 +375,10 @@ void mdtPortThreadHelperSocket::onSocketReadyRead()
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  ///mdtAbstractPort::error_t portError;
-
-  qDebug() << "mdtPortThreadHelperSocket::onSocketReadyRead() ...";
-  
   pvPort->lockMutex();
-  ///portError = readFromSocket();
   // Errors are handled in onSocketError() or onReadTimeout()
   readFromSocket();
-  ///pvPort->unlockMutex();
-  // We handle only timeout (that are reported from QTcpSocket) here
-  /**
-  if(portError == mdtAbstractPort::ReadTimeout){
-    if(currentReadFrame() != 0){
-      currentReadFrame()->clear();
-      currentReadFrame()->clearSub();
-    }
-    notifyError(mdtAbstractPort::ReadTimeout);
-  }
-  */
   pvPort->unlockMutex();
-  /**
-  if(portError != mdtAbstractPort::NoError){
-    notifyError(portError); /// \todo check if not redoundant with onSocketError()
-  }
-  */
-  qDebug() << "mdtPortThreadHelperSocket::onSocketReadyRead() DONE";
 }
 
 void mdtPortThreadHelperSocket::onSocketBytesWritten(qint64 bytes)
@@ -447,7 +387,6 @@ void mdtPortThreadHelperSocket::onSocketBytesWritten(qint64 bytes)
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  qDebug() << "mdtPortThreadHelperSocket::onSocketBytesWritten(), n: " << bytes;
   // We stop the write timeout timer
   pvWriteTimeoutTimer->stop();
 }
@@ -458,17 +397,11 @@ void mdtPortThreadHelperSocket::onConnectionTimeout()
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  // We abort the socket, witch will call the disconnect/reconnect process.
+  qDebug() << "*** Connection timeout";
+  pvConnectionTimeoutTimer->stop();
+  // We abort the socket and reconnect
   pvSocket->abort();
-
-  /**
-  pvPort->lockMutex();
-  notifyError(mdtAbstractPort::Disconnected);
-  if(pvThread->runningFlagSet()){
-    pvSocket->connectToHost(pvHost, pvPortNumber);
-  }
-  pvPort->unlockMutex();
-  */
+  onSocketDisconnected();
 }
 
 void mdtPortThreadHelperSocket::onReadTimeout()
@@ -477,13 +410,22 @@ void mdtPortThreadHelperSocket::onReadTimeout()
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  qDebug() << "-**-> Read timeout";
+  qDebug() << "*** Read timeout";
   
+  pvReadTimeoutTimer->stop();
   pvPort->lockMutex();
   if(currentReadFrame() != 0){
     currentReadFrame()->clear();
     currentReadFrame()->clearSub();
   }
+  /// Essai
+  qint64 readen;
+  char buffer[1024];
+  do{
+    readen = pvSocket->read(buffer, 1024);
+    qDebug() << "** flush " << readen << " bytes..";
+  }while(readen > 0);
+  
   notifyError(mdtAbstractPort::ReadTimeout);
   pvPort->unlockMutex();
   // We use timeout to detect network disconnection (because normal way can be very long)
@@ -497,8 +439,9 @@ void mdtPortThreadHelperSocket::onWriteTimeout()
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  qDebug() << "-**-> Write timeout";
+  qDebug() << "*** Write timeout";
   
+  pvWriteTimeoutTimer->stop();
   pvPort->lockMutex();
   restoreCurrentWriteFrameToPool();
   notifyError(mdtAbstractPort::WriteTimeout);
@@ -508,28 +451,28 @@ void mdtPortThreadHelperSocket::onWriteTimeout()
   pvSocket->abort();
 }
 
-/// \todo handle timeouts
 void mdtPortThreadHelperSocket::requestWrite()
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(pvThread != 0);
   Q_ASSERT(pvSocket != 0);
 
-  ///mdtAbstractPort::error_t portError;
-
-  qDebug() << "mdtPortThreadHelperSocket::requestWrite() ...";
-  
+  qDebug() << "* requestWrite() ...";
+  if(pvSocket->state() != QAbstractSocket::ConnectedState){
+    qDebug() << "* requestWrite() Cancel";
+    restoreCurrentWriteFrameToPool();
+    // We flush port's write queues - Will lock the mutex
+    pvPort->flushOut();
+    // Cancel the flush request flag
+    pvPort->flushOutRequestPending();
+    notifyError(mdtAbstractPort::WriteCanceled);
+    return;
+  }
   pvPort->lockMutex();
-  ///portError = writeToSocket();
-  // Errors are handled in onSocketError() and onWriteTimeout()
+  // Errors are handled/notified in onSocketError() and onWriteTimeout()
   writeToSocket();
   pvPort->unlockMutex();
-  /**
-  if(portError != mdtAbstractPort::NoError){
-    notifyError(portError); /// \todo check if not redoundant with onSocketError()
-  }
-  */
-  qDebug() << "mdtPortThreadHelperSocket::requestWrite() DONE";
+  qDebug() << "* requestWrite() DONE";
 }
 
 mdtAbstractPort::error_t mdtPortThreadHelperSocket::readFromSocket()
@@ -542,8 +485,6 @@ mdtAbstractPort::error_t mdtPortThreadHelperSocket::readFromSocket()
   mdtAbstractPort::error_t portError;
   int submittedFrames;
 
-  qDebug() << "-> Socket's bytesAvailable (A): " << pvSocket->bytesAvailable();
-  
   // Check if a new frame is needed
   if(currentReadFrame() == 0){
     if(!getNewFrameRead()){
@@ -565,16 +506,14 @@ mdtAbstractPort::error_t mdtPortThreadHelperSocket::readFromSocket()
   }
   // Read data from port
   readen = pvSocket->read(pvReadBuffer, pvReadBufferSize);
+  qDebug() << "** readen: " << readen;
   if(readen < 0){
     portError = mapSocketError(pvSocket->error(), true);
-    ///return handleCommonReadErrors(portError);
     return portError;
   }
   // Store to frames
   submittedFrames = submitReadenData(pvReadBuffer, readen, true);
-  qDebug() << "mdtPortThreadHelperSocket::readFromSocket() , submitted " << submittedFrames << " frames";
-  qDebug() << "-> Port's readen frames: " << pvPort->readenFrames();
-  qDebug() << "-> Socket's bytesAvailable (B): " << pvSocket->bytesAvailable();
+  qDebug() << "** submittedFrames: " << submittedFrames;
   if(submittedFrames < 0){
     return (mdtAbstractPort::error_t)submittedFrames;
   }
@@ -608,7 +547,6 @@ mdtAbstractPort::error_t mdtPortThreadHelperSocket::writeToSocket()
   pvWriteTimeoutTimer->start();
   // If waitAnAnswer flag is set, we start the read timeout timer
   if(frame->waitAnAnswer()){
-    qDebug() << "-*-> Wait an answer true, starting read timeout timer";
     pvReadTimeoutTimer->start();
   }
   // Write the frame to socket
@@ -628,7 +566,6 @@ mdtAbstractPort::error_t mdtPortThreadHelperSocket::writeToSocket()
         return mdtAbstractPort::ErrorHandled;
       }
       portError = mapSocketError(pvSocket->error(), false);
-      ///return handleCommonWriteErrors(portError);
       return portError;
     }
     frame->take(written);
@@ -639,160 +576,6 @@ mdtAbstractPort::error_t mdtPortThreadHelperSocket::writeToSocket()
 
   return mdtAbstractPort::NoError;
 }
-
-/**
-mdtAbstractPort::error_t mdtPortThreadHelperSocket::reconnect(bool notify)
-{
-  Q_ASSERT(pvPort != 0);
-  Q_ASSERT(pvThread != 0);
-  Q_ASSERT(pvSocket != 0);
-
-  return mdtAbstractPort::NoError;
-  
-  int maxConnectTimeoutIter = 0; ///pvConnectionTimeout / 50;
-
-  qDebug() << "mdtPortThreadHelperSocket::reconnect() ...";
-  
-  // If we are connected, return simply
-  if(pvSocket->state() == QAbstractSocket::ConnectedState){
-    qDebug() << "mdtPortThreadHelperSocket::reconnect() OK (1)";
-    return mdtAbstractPort::NoError;
-  }
-  // Check max try
-  if(pvConnectTryLeft <= 0){
-    mdtError e(MDT_TCP_IO_ERROR, "Unable to connect to host " + pvHost + " afetr max try (" + QString::number(pvConnectMaxTry) + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-    e.commit();
-    if(notify){
-      notifyError(mdtAbstractPort::UnhandledError);
-    }
-    return mdtAbstractPort::UnhandledError;
-  }
-  pvConnectTryLeft--;
-  // If a connection is about to be established, wait and return
-  if((pvSocket->state() == QAbstractSocket::HostLookupState)||(pvSocket->state() == QAbstractSocket::ConnectingState)){
-    while(pvSocket->state() != QAbstractSocket::ConnectedState){
-      /// \todo check about port's mutex handling
-      // Check about running flag
-      if(!pvThread->runningFlagSet()){
-        pvSocket->abort();
-        if(notify){
-          notifyError(mdtAbstractPort::Disconnected);
-        }
-        qDebug() << "mdtPortThreadHelperSocket::reconnect() running flag false, Abort (1)";
-        return mdtAbstractPort::Disconnected;
-      }
-      // Check about timeout
-      if(maxConnectTimeoutIter <= 0){
-        pvSocket->abort();
-        if(notify){
-          notifyError(mdtAbstractPort::Disconnected);
-        }
-        qDebug() << "mdtPortThreadHelperSocket::reconnect() timeout, Abort (1)";
-        return mdtAbstractPort::Disconnected;
-      }
-      // Wait
-      msleep(50);
-      QCoreApplication::processEvents();
-    }
-    ///unlockMutex();
-    
-    if(!pvSocket->waitForConnected(timeout)){
-      lockMutex();
-      mdtError e(MDT_TCP_IO_ERROR, "Unable to reconnect to host", mdtError::Error);
-      e.setSystemError(pvSocket->error(), pvSocket->errorString());
-      MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-      e.commit();
-      return UnhandledError;
-    }
-    
-    ///lockMutex();
-    pvConnectTryLeft = pvConnectMaxTry;
-    qDebug() << "mdtPortThreadHelperSocket::reconnect() OK (2)";
-    return mdtAbstractPort::NoError;
-  }
-  // Here, we can be disconnecting or disconnected , wait to be shure
-  if(pvSocket->state() != QAbstractSocket::UnconnectedState){
-    while(pvSocket->state() != QAbstractSocket::UnconnectedState){
-      /// \todo check about port's mutex handling
-      // Check about running flag
-      if(!pvThread->runningFlagSet()){
-        pvSocket->abort();
-        if(notify){
-          notifyError(mdtAbstractPort::Disconnected);
-        }
-        qDebug() << "mdtPortThreadHelperSocket::reconnect() running flag false, Abort (2)";
-        return mdtAbstractPort::Disconnected;
-      }
-      // Check about timeout
-      if(maxConnectTimeoutIter <= 0){
-        pvSocket->abort();
-        if(notify){
-          notifyError(mdtAbstractPort::Disconnected);
-        }
-        qDebug() << "mdtPortThreadHelperSocket::reconnect() timeout, Abort (2)";
-        return mdtAbstractPort::Disconnected;
-      }
-      // Wait
-      msleep(50);
-      QCoreApplication::processEvents();
-    }
-    ///unlockMutex();
-    
-    if(!pvSocket->waitForDisconnected(timeout)){
-      ///lockMutex();
-      mdtError e(MDT_TCP_IO_ERROR, "waitForDisconnected() failed", mdtError::Error);
-      e.setSystemError(pvSocket->error(), pvSocket->errorString());
-      MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-      e.commit();
-      return UnhandledError;
-    }
-    
-    ///lockMutex();
-    qDebug() << "mdtPortThreadHelperSocket::reconnect() ???? , Abort (1)";
-    return mdtAbstractPort::Disconnected;
-  }
-  // Try to reconnect
-  pvSocket->connectToHost(pvHost, pvPortNumber);
-  while(pvSocket->state() != QAbstractSocket::ConnectedState){
-    /// \todo check about port's mutex handling
-    // Check about running flag
-    if(!pvThread->runningFlagSet()){
-      pvSocket->abort();
-      if(notify){
-        notifyError(mdtAbstractPort::Disconnected);
-      }
-      qDebug() << "mdtPortThreadHelperSocket::reconnect() running flag false, Abort (3)";
-      return mdtAbstractPort::Disconnected;
-    }
-    // Check about timeout
-    if(maxConnectTimeoutIter <= 0){
-      pvSocket->abort();
-      if(notify){
-        notifyError(mdtAbstractPort::Disconnected);
-      }
-      qDebug() << "mdtPortThreadHelperSocket::reconnect() timeout, Abort (3)";
-      return mdtAbstractPort::Disconnected;
-    }
-    // Wait
-    msleep(50);
-    QCoreApplication::processEvents();
-  }
-
-  ///unlockMutex();
-  
-  if(pvSocket->waitForConnected(timeout)){
-    ///lockMutex();
-    return NoError;
-  }
-  
-  ///lockMutex();
-
-  qDebug() << "mdtPortThreadHelperSocket::reconnect() OK (3)";
-  return mdtAbstractPort::NoError;
-
-}
-*/
 
 mdtAbstractPort::error_t mdtPortThreadHelperSocket::mapSocketError(QAbstractSocket::SocketError error, bool byRead)
 {
@@ -823,4 +606,3 @@ mdtAbstractPort::error_t mdtPortThreadHelperSocket::mapSocketError(QAbstractSock
       return mdtAbstractPort::UnhandledError;
   }
 }
-
