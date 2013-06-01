@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,13 +23,11 @@
 
 #include "mdtAbstractPort.h"
 #include <QObject>
-///#include <QMutex>
-///#include <QWaitCondition>
-///#include <QTcpSocket>
-///#include <QQueue>
 
 class mdtTcpSocketThread;
 
+/*! \brief Wrapper class between QTcpSocket and mdtAbstractPort
+ */
 class mdtTcpSocket : public mdtAbstractPort
 {
  Q_OBJECT
@@ -38,19 +36,6 @@ class mdtTcpSocket : public mdtAbstractPort
 
   mdtTcpSocket(QObject *parent = 0);
   ~mdtTcpSocket();
-
-  /*! \brief Reconnect to peer
-   *
-   * If one of the method returns a Disconnected error,
-   *  the thread will call this method to try to reconnect.
-   *
-   * \param timeout Timeout [ms]
-   * \return NoError if connection could be done.
-   *          Disconnected if connection could not be done,
-   *          in wich case the thread will retry (until max retry).
-   *          A UnhandledError can be returned.
-   */
-  ///error_t reconnect(int timeout);
 
   /*! \brief Get peer host or IP
    *
@@ -70,68 +55,17 @@ class mdtTcpSocket : public mdtAbstractPort
    */
   quint16 peerPort() const;
 
-  /*! \brief Set the socket
+  /*! \brief Just to be compatible with mdtAbstractPort API
    *
-   * QTcpSocket must be created from thread on witch it will be used.
-   * In this case, the mdtTcpSocketThread create the instance.
-   *
-   * This method will be called to store this instance and an instance of the thread itself.
-   *
-   * Note: should not be used directly.
-   *
-   * \pre socket must be a valid pointer
-   * \pre thread must be a valid pointer
-   * \sa mdtTcpSocketThread
-   */
-  ///void setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thread);
-
-  /*! \brief Set the read data timeout
-   *
-   * The mutex is not handled by this method.
-   *
-   * \param timeout Timeout [ms]. A value of -1 means a infinite timeout.
+   * Does nothing
    */
   void setReadTimeout(int timeout);
 
-  /*! \brief Set the write data timeout
+  /*! \brief Just to be compatible with mdtAbstractPort API
    *
-   * The mutex is not handled by this method.
-   *
-   * \param timeout Timeout [ms]. A value of -1 means a infinite timeout.
+   * Does nothing
    */
   void setWriteTimeout(int timeout);
-
-  /*! \brief Set unknown read size flag
-   *
-   * The write/read processes are done in one thread.
-   *  First, the thread waits a write event from application,
-   *  then data is sent. After this, thread still blocked
-   *  until data are available or timeout (set with setReadTimeout() ).
-   *  After this, data are readen until one frame is completely received, then thread goes back idle.
-   *
-   * The problem is that more data can be sent from peer, and these data are lost, or stored in
-   *  frames after next transaction (write/read process), and application will probably becomes uncoherent.
-   *
-   * The solution for this was implemented so:
-   *  - Request is sent to host
-   *  - Data comes back, and is store into current frame until it is complete (or timeout).
-   *  - If the unknown read size flag is set, a loop begins with a couple of wait/read with short
-   *     timeout begins (50ms) until no more data comes in.
-   *
-   * This flag should be set as follow:
-   *  - For RAW frames: true
-   *  - For ASCII frames: true
-   *  - For MODBUS/TCP: false
-   *
-   * Default is true.
-   */
-  ///void setUnknownReadSize(bool unknown);
- 
-  /*! \brief Get the unknown frame size flag
-   *
-   * For details, see setUnknownReadSize()
-   */
-  ///bool unknownReadSize() const;
 
   /*! \brief Just to be compatible with mdtAbstractPort API
    *
@@ -142,33 +76,18 @@ class mdtTcpSocket : public mdtAbstractPort
   /*! \brief Just to be compatible with mdtAbstractPort API
    *
    * \return UnhandledError
-   *
-   * This method is called from mdtPortReadThread , and should not be used directly.
-   *
-   * Mutex is not handled by this method.
-   *
-   * \return Number of bytes readen, or a error < 0 (one of the mdtAbstractPort::error_t)
    */
   qint64 read(char *data, qint64 maxSize);
 
   /*! \brief Just to be compatible with mdtAbstractPort API
    *
    * \return UnhandledError
-   *
-   * This method is called from mdtPortWriteThread , and should not be used directly.<br>
-   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    */
   error_t waitEventWriteReady();
 
   /*! \brief Just to be compatible with mdtAbstractPort API
    *
    * \return UnhandledError
-   *
-   * This method is called from mdtPortWriteThread , and should not be used directly.
-   *
-   * Mutex is not handled by this method.
-   *
-   * \return Number of bytes written, or a error < 0 (one of the mdtAbstractPort::error_t)
    */
   qint64 write(const char *data, qint64 maxSize);
 
@@ -255,22 +174,8 @@ class mdtTcpSocket : public mdtAbstractPort
    */
   void pvFlushOut();
 
-  /*! \brief Map error returned by QTcpSocket to mdtAbstractPort error.
-   *
-   * Unhandled error is reported with mdtError and UnhandledError is returned.
-   *
-   * \param error Error returned by QTcpSocket
-   * \param byRead Error occured during waitForReadyRead or read, else during waitEventWriteReady or write
-   */
-  ///error_t mapSocketError(QAbstractSocket::SocketError error, bool byRead);
-
-  ///int pvReadTimeout;
-  ///int pvWriteTimeout;
-  ///QTcpSocket *pvSocket;             // QTcpSocket object passed from thread
-  ///mdtTcpSocketThread *pvThread;
   QString pvPeerName;               // Host name or IP
   quint16 pvPeerPort;               // Host port
-  ///bool pvUnknownReadSize;           // If false, read will end after one frame is complete (see mdtTcpSocketThread::run() ).
 };
 
 #endif  // #ifndef MDT_TCP_SOCKET_H

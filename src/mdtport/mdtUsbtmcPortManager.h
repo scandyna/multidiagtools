@@ -179,9 +179,15 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
  private slots:
 
-  /*! \brief Manage errors comming from port threads
+  /*! \brief Manage errors comming from usb port thread
+   *
+   * This implementation will handle some USB specific errors,
+   *  change the current state emiting transistion signal.
+   *  If state has changed, stateChanged() signal is emited.
+   *
+   * Some errors are handled here. For others, mdtUsbPortManager::onThreadsErrorOccured() is called.
    */
-  ///void onThreadsErrorOccured(int error);
+  void onThreadsErrorOccured(int error);
 
  private:
 

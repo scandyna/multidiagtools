@@ -32,7 +32,6 @@
 mdtTcpSocketThread::mdtTcpSocketThread(QObject *parent)
  : mdtPortThread(parent)
 {
-  ///pvSocket = 0;
 }
 
 bool mdtTcpSocketThread::isReader() const
@@ -54,7 +53,6 @@ void mdtTcpSocketThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  mdtTcpSocket *port = 0;
   QTcpSocket *socket;
   mdtPortThreadHelperSocket threadHelper;
 
@@ -64,25 +62,17 @@ void mdtTcpSocketThread::run()
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
   // Create a Tcp socket
-  socket = new QTcpSocket;  /// \todo Check about delete !
+  socket = new QTcpSocket;
   Q_ASSERT(socket != 0);
-  // We must pass this socket object to pvPort
-  // pvPort must be a instance of mdtTcpSocket
-  port = dynamic_cast<mdtTcpSocket*>(pvPort);
-  Q_ASSERT(port != 0);
-  ///port->setThreadObjects(socket, this);
-
+  // Setup thread helper
   threadHelper.setPort(pvPort);
   threadHelper.setThread(this);
   threadHelper.setSocket(socket);
 
-  qDebug() << "TCPTHD: starting ...";
   pvPort->unlockMutex();
   // Run...
   exec();
-  /// \todo Cleanup
   notifyError(mdtAbstractPort::Disconnected);
   // Cleanup
   delete socket;
-  qDebug() << "TCPTHD: exec() END";
 }

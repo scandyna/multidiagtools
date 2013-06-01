@@ -192,6 +192,18 @@ class mdtUsbPortManager : public mdtPortManager
    */
   void fromThreadReadUntilShortPacketReceivedFinished();
 
+ protected slots:
+
+  /*! \brief Manage errors comming from usb port thread
+   *
+   * This implementation will handle some USB specific errors,
+   *  change the current state emiting transistion signal.
+   *  If state has changed, stateChanged() signal is emited.
+   *
+   * Some errors are handled here. For others, mdtPortManager::onThreadsErrorOccured() is called.
+   */
+  void onThreadsErrorOccured(int error);
+
  private:
 
   Q_DISABLE_COPY(mdtUsbPortManager);

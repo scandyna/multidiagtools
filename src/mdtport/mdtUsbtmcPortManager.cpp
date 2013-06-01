@@ -143,9 +143,9 @@ int mdtUsbtmcPortManager::writeData(const QByteArray &data)
   mdtFrameUsbTmc *frame;
 
   // Get a frame in pool
-  pvPort->lockMutex();
+  lockPortMutex();
   if(pvPort->writeFramesPool().size() < 1){
-    pvPort->unlockMutex();
+    unlockPortMutex();
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
     e.commit();
@@ -166,7 +166,7 @@ int mdtUsbtmcPortManager::writeData(const QByteArray &data)
   frame->setEOM(true);
   frame->encode();
   pvPort->addFrameToWrite(frame);
-  pvPort->unlockMutex();
+  unlockPortMutex();
 
   return currentTransactionId();
 }
@@ -180,9 +180,9 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   mdtFrameUsbTmc *frame;
 
   // Get a frame in pool
-  pvPort->lockMutex();
+  lockPortMutex();
   if(pvPort->writeFramesPool().size() < 1){
-    pvPort->unlockMutex();
+    unlockPortMutex();
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
     e.commit();
@@ -206,7 +206,7 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   // Add transaction
   transaction->setId(currentTransactionId());
   addTransactionPending(transaction);
-  pvPort->unlockMutex();
+  unlockPortMutex();
 
   return currentTransactionId();
 }
@@ -368,9 +368,9 @@ int mdtUsbtmcPortManager::sendInitiateAbortBulkOutRequest(quint8 bTag)
   frame.setRequestRecipient(mdtFrameUsbControl::RR_ENDPOINT);
   frame.setbRequest(1);   // INITIATE_ABORT_BULK_OUT
   frame.setwValue(bTag);  // D7..D0: bTag
-  port->lockMutex();
+  lockPortMutex();
   frame.setwIndex(port->currentWriteEndpointAddress());   // Endpoint OUT
-  port->unlockMutex();
+  unlockPortMutex();
   frame.setwLength(0x02);
   frame.encode();
   retVal = sendControlRequest(frame);
@@ -399,9 +399,9 @@ int mdtUsbtmcPortManager::sendCheckAbortBulkOutStatusRequest(quint8 bTag)
   frame.setRequestRecipient(mdtFrameUsbControl::RR_ENDPOINT);
   frame.setbRequest(2);   // CHECK_ABORT_BULK_OUT_STATUS
   frame.setwValue(0);
-  port->lockMutex();
+  lockPortMutex();
   frame.setwIndex(port->currentWriteEndpointAddress());   // Endpoint OUT
-  port->unlockMutex();
+  unlockPortMutex();
   frame.setwLength(0x05);
   frame.encode();
   retVal = sendControlRequest(frame);
@@ -422,7 +422,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
   int framesCount = 0;
 
   // Get frames in readen queue
-  pvPort->lockMutex();
+  lockPortMutex();
   while(pvPort->readenFrames().size() > 0){
     frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->readenFrames().dequeue());
     Q_ASSERT(frame != 0);
@@ -466,69 +466,18 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
     addTransactionDone(transaction);
     ++framesCount;
   }
-  pvPort->unlockMutex();
+  unlockPortMutex();
   // Commit
   if(framesCount > 0){
     commitFrames();
   }
 }
 
-/// \todo Move to USB port manager for control and message IN error handling
-/**
 void mdtUsbtmcPortManager::onThreadsErrorOccured(int error)
 {
   qDebug() << "mdtUsbtmcPortManager::onThreadsErrorOccured() , code: " << (mdtAbstractPort::error_t)error;
 
   switch(error){
-    case mdtAbstractPort::NoError:
-      qDebug() << " -> PortManager: emit ready";
-      emit(ready());
-      break;
-    case mdtAbstractPort::Disconnected:
-      qDebug() << " -> PortManager: emit disconnected";
-      emit(disconnected());
-      break;
-    case mdtAbstractPort::Connecting:
-      qDebug() << " -> PortManager: emit connecting";
-      emit(connecting());
-      break;
-    case mdtAbstractPort::ReadPoolEmpty:
-      emit(busy());
-      qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::WritePoolEmpty:
-      emit(busy());
-      qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::WriteCanceled:
-      emit(handledError());
-      qDebug() << " -> PortManager: emit handledError";
-      break;
-    case mdtAbstractPort::ReadCanceled:
-      cancelReadWait();
-      emit(handledError());
-      qDebug() << " -> PortManager: emit handledError";
-      break;
-    case mdtAbstractPort::ControlCanceled:
-      emit(handledError());
-      qDebug() << " -> PortManager: emit handledError";
-      break;
-    case mdtAbstractPort::ReadTimeout:
-      emit(busy());
-      qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::WriteTimeout:
-      emit(busy());
-      qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::ControlTimeout:
-      emit(busy());
-      qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::UnhandledError:
-      emit(unhandledError());
-      qDebug() << " -> PortManager: emit unhandledError";
-      break;
     case mdtAbstractPort::MessageInTimeout:
       // Not implemented yet
       break;
@@ -536,8 +485,6 @@ void mdtUsbtmcPortManager::onThreadsErrorOccured(int error)
       // Not implemented yet
       break;
     default:
-      emit(unhandledError());
-      qDebug() << " -> PortManager: emit unhandledError";
+      mdtUsbPortManager::onThreadsErrorOccured(error);
   }
 }
-*/

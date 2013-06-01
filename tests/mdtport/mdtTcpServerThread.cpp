@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -38,20 +38,14 @@ void mdtTcpServerThread::run()
 
   QVERIFY(socket.setSocketDescriptor(pvSocketDescriptor));
 
-  qDebug() << "*SRV mdtTcpServerThread::run(): start ...";
-  
   // Send the data
   for(i=0; i<pvResponses.size(); i++){
     socket.write(pvResponses.at(i).toAscii());
     if(!socket.waitForBytesWritten()){
-      qDebug() << "*SRV mdtTcpServerThread::run(): waitForBytesWritten() failed";
       qDebug() << "*SRV mdtTcpServerThread::run(): system returned: " << socket.errorString();
       break;
     }
-    qDebug() << "*SRV mdtTcpServerThread::run(): bytes written";
-    ///QVERIFY2(socket.waitForBytesWritten() , "Note: it's possible that host (client) has closed the connection");
   }
   pvResponses.clear();
   socket.disconnectFromHost();
-  qDebug() << "*SRV mdtTcpServerThread::run(): END (disconnected)";
 }
