@@ -25,6 +25,8 @@
 #include <QSqlDatabase>
 #include <QObject>
 
+/// \todo Check if not obselete ?
+
 /*! \brief Sql table model
  */
 class mdtSqlTableModel : public QSqlTableModel

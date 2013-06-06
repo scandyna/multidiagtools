@@ -1,17 +1,17 @@
 window_sizes 1280 1001 281 993 923 0
 diagrams
-  sequencediagram_ref 653314 // TCPsocketStart
-    993 923 100 3 0 0
-  active  sequencediagram_ref 659970 // TCPsocketWrite
+  classdiagram_ref 666754 // mdtSqlFieldHandler
+    794 738 100 4 1 0
+  active  classdiagram_ref 673538 // mdtSqlView
     993 923 100 4 0 0
-  sequencediagram_ref 660098 // TCPsocketStop
-    993 923 100 4 12 0
 end
 show_stereotypes
-selected sequencediagram_ref 659970 // TCPsocketWrite
+selected 
+  package_ref 129 // multiDiagTools
 open
-  classview_ref 181634 // mdtFrame
-  classview_ref 451074 // TCPsocketSeq
-  class_ref 672258 // QEventLoop
+  operation_ref 1282690 // mapFormWidgets
+  class_ref 686338 // mdtAbstractSqlWidget
+  operation_ref 1282434 // setModel
+  class_ref 686594 // mdtSqlTableWidget
 end
 end

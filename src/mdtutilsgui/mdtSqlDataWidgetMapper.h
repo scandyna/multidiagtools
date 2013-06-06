@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,18 +24,29 @@
 #include <QDataWidgetMapper>
 #include <QObject>
 
-#include "mdtSqlTableModel.h"
+class QSqlTableModel;
+
+///#include "mdtSqlTableModel.h"
 
 /*! \brief DataWidget mapper
  */
-class mdtDataWidgetMapper : public QDataWidgetMapper
+class mdtSqlDataWidgetMapper : public QDataWidgetMapper
 {
  Q_OBJECT
 
  public:
 
-  mdtDataWidgetMapper(QObject *parent = 0);
-  ~mdtDataWidgetMapper();
+  mdtSqlDataWidgetMapper(QObject *parent = 0);
+  ~mdtSqlDataWidgetMapper();
+
+  /*! \brief Set the model
+   * 
+   * Note that a QSqlTableModel instance is requierd, because database fields
+   *  attributes are used internally.
+   *
+   * \pre model must be a pointer to a valid instance.
+   */
+  void setModel(QSqlTableModel *model);
 
   /*! \brief Set the model
    * 
@@ -43,11 +54,15 @@ class mdtDataWidgetMapper : public QDataWidgetMapper
    * attributes are used internally.
    * \pre model must be a pointer to a valid instance.
    */
-  void setModel(mdtSqlTableModel *model);
+  ///void setModel(mdtSqlTableModel *model);
 
   /*! \brief Get the model instance
    */
-  mdtSqlTableModel *model();
+  ///mdtSqlTableModel *model();
+
+  /*! \brief Get the model instance
+   */
+  QSqlTableModel *model();
 
   /*! \brief Adds a mapping between a widget and a section from the model.
    * 
@@ -72,9 +87,11 @@ class mdtDataWidgetMapper : public QDataWidgetMapper
   void setModel(QAbstractItemModel *model);
 
   // Set widget's attributes - Used by addMapping()
-  void setWidgetAttributes(QWidget *widget, int section);
+  ///void setWidgetAttributes(QWidget *widget, int section);
 
-  mdtSqlTableModel *pvSqlTableModel;
+  ///mdtSqlTableModel *pvSqlTableModel;
+  
+  Q_DISABLE_COPY(mdtSqlDataWidgetMapper);
 };
 
 #endif  // #ifndef MDT_DATA_WIDGET_MAPPER_H

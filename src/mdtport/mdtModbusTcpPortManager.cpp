@@ -44,6 +44,7 @@ mdtModbusTcpPortManager::mdtModbusTcpPortManager(QObject *parent)
   mdtPortConfig *config = new mdtPortConfig;
   config->setFrameType(mdtFrame::FT_MODBUS_TCP);
   config->setReadFrameSize(260);
+  config->setReadTimeout(3000);
   config->setWriteFrameSize(260);
   config->setWriteQueueSize(3);
   mdtTcpSocket *port = new mdtTcpSocket;

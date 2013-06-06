@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,12 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlTableModel.h"
+#include "mdtAbstractSqlWidget.h"
 
-/// \todo Check if not obselete ?
+mdtAbstractSqlWidget::mdtAbstractSqlWidget(QWidget *parent)
+ : QWidget(parent)
+{
+}
 
-mdtSqlTableModel::mdtSqlTableModel(QObject *parent, QSqlDatabase db)
- : QSqlTableModel(parent)
+mdtAbstractSqlWidget::~mdtAbstractSqlWidget()
 {
 }
 

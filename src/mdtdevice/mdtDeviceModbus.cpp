@@ -40,7 +40,6 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
   
   ///connect(pvTcpPortManager, SIGNAL(statusMessageChanged(const QString&, int)), this, SIGNAL(statusMessageChanged(const QString&, int)));
   connect(pvTcpPortManager, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SIGNAL(statusMessageChanged(const QString&, const QString&, int)));
-  pvTcpPortManager->config().setReadTimeout(10000);
   timeout = pvTcpPortManager->config().readTimeout();
   if(pvTcpPortManager->config().writeTimeout() > timeout){
     timeout = pvTcpPortManager->config().writeTimeout();

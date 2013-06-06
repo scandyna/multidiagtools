@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,53 +18,69 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtDataWidgetMapper.h"
+#include "mdtSqlDataWidgetMapper.h"
 #include <QSqlRecord>
 #include <QSqlField>
+#include <QSqlTableModel>
 
 #include <QDebug>
 
-mdtDataWidgetMapper::mdtDataWidgetMapper(QObject *parent)
+mdtSqlDataWidgetMapper::mdtSqlDataWidgetMapper(QObject *parent)
  : QDataWidgetMapper(parent)
 {
-  pvSqlTableModel = 0;
+  ///pvSqlTableModel = 0;
 }
 
-mdtDataWidgetMapper::~mdtDataWidgetMapper()
+mdtSqlDataWidgetMapper::~mdtSqlDataWidgetMapper()
 {
 }
 
-void mdtDataWidgetMapper::setModel(mdtSqlTableModel *model)
+void mdtSqlDataWidgetMapper::setModel(QSqlTableModel *model)
+{
+  Q_ASSERT(model != 0);
+
+  QDataWidgetMapper::setModel(model);
+}
+
+/**
+void mdtSqlDataWidgetMapper::setModel(mdtSqlTableModel *model)
 {
   Q_ASSERT(model != 0);
 
   pvSqlTableModel = model;
   QDataWidgetMapper::setModel(model);
 }
+*/
 
-mdtSqlTableModel *mdtDataWidgetMapper::model()
+QSqlTableModel *mdtSqlDataWidgetMapper::model()
 {
-  return pvSqlTableModel;
+  /*
+   * Because setModel(QAbstractItemModel*) is private,
+   *  it's not possible to set something other than QSqlTableModel.
+   *  So we not have to check returned pointer
+   */
+  return static_cast<QSqlTableModel*>(QDataWidgetMapper::model());
 }
 
-void mdtDataWidgetMapper::addMapping(QWidget *widget, int section)
+void mdtSqlDataWidgetMapper::addMapping(QWidget *widget, int section)
 {
   Q_ASSERT(widget != 0);
   
-  setWidgetAttributes(widget, section);
+  ///setWidgetAttributes(widget, section);
   QDataWidgetMapper::addMapping(widget, section);
 }
 
-void mdtDataWidgetMapper::addMapping(QWidget *widget, int section, const QByteArray &propertyName)
+void mdtSqlDataWidgetMapper::addMapping(QWidget *widget, int section, const QByteArray &propertyName)
 {
   Q_ASSERT(widget != 0);
 }
 
-void mdtDataWidgetMapper::setModel(QAbstractItemModel *model)
+void mdtSqlDataWidgetMapper::setModel(QAbstractItemModel *model)
 {
 }
 
-void mdtDataWidgetMapper::setWidgetAttributes(QWidget *widget, int section)
+/**
+void mdtSqlDataWidgetMapper::setWidgetAttributes(QWidget *widget, int section)
 {
   Q_ASSERT(widget != 0);
   Q_ASSERT(pvSqlTableModel != 0);
@@ -73,5 +89,6 @@ void mdtDataWidgetMapper::setWidgetAttributes(QWidget *widget, int section)
 
   ///field = pvSqlTableModel->record().field(section);
   field = pvSqlTableModel->database().record(pvSqlTableModel->tableName()).field(section);
-  qDebug() << "mdtDataWidgetMapper::setWidgetAttributes() , field: " << field;
+  qDebug() << "mdtSqlDataWidgetMapper::setWidgetAttributes() , field: " << field;
 }
+*/

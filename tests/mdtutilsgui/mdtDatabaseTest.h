@@ -35,11 +35,18 @@ class mdtDatabaseTest : public mdtTest
 
   void relationsTest();
 
+  void sqlFieldHandlerTest();
+
+  void sqlFormWidgetTest();
+
+  // Will Accept/reject the application's modal widget if not null
+  void acceptModalDialog();
+
   /*
    * Some old tests ...
    */
   void mdtSqlTableModelTest();
-  void mdtDataWidgetMapperTest();
+  void mdtSqlDataWidgetMapperTest();
 
   void cleanupTestCase();
 
