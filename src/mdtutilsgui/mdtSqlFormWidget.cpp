@@ -42,7 +42,9 @@ mdtSqlFormWidget::mdtSqlFormWidget(QWidget *parent)
 
 mdtSqlFormWidget::~mdtSqlFormWidget()
 {
+  qDebug() << "mdtSqlFormWidget::~mdtSqlFormWidget() ...";
   qDeleteAll(pvFieldHandlers);
+  qDebug() << "mdtSqlFormWidget::~mdtSqlFormWidget() DONE";
 }
 
 void mdtSqlFormWidget::setModel(QSqlTableModel *model)
@@ -214,6 +216,26 @@ void mdtSqlFormWidget::remove()
 
 }
 
+void mdtSqlFormWidget::toFirst()
+{
+  pvWidgetMapper->toFirst();
+}
+
+void mdtSqlFormWidget::toLast()
+{
+  pvWidgetMapper->toLast();
+}
+
+void mdtSqlFormWidget::toPrevious()
+{
+  pvWidgetMapper->toPrevious();
+}
+
+void mdtSqlFormWidget::toNext()
+{
+  pvWidgetMapper->toNext();
+}
+
 void mdtSqlFormWidget::clearWidgets()
 {
   int i;
@@ -228,13 +250,21 @@ bool mdtSqlFormWidget::checkBeforeSubmit()
 {
   int i;
   bool allOk = true;
+  QWidget *firstNokWidget = 0;
 
   // We call checkBeforeSubmit() for all items
   for(i=0; i<pvFieldHandlers.size(); ++i){
     Q_ASSERT(pvFieldHandlers.at(i) != 0);
     if(!pvFieldHandlers.at(i)->checkBeforeSubmit()){
       allOk = false;
+      if(firstNokWidget == 0){
+        firstNokWidget = pvFieldHandlers.at(i)->dataWidget();
+      }
     }
+  }
+  // We set the focus on first Nok widget
+  if(firstNokWidget != 0){
+    firstNokWidget->setFocus();
   }
 
   return allOk;

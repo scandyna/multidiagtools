@@ -120,6 +120,13 @@ class mdtSqlFieldHandler : public QObject
    */
   void setDataWidget(QSpinBox *widget);
 
+  /*! \brief Get data widget
+   * Get current edit/view widget
+   *
+   * \return A QWidget of current edit/view, or 0 if none was set.
+   */
+  QWidget *dataWidget();
+
   /*! \brief Clear
    *
    * Will unref (set to null) all internall widget pointers

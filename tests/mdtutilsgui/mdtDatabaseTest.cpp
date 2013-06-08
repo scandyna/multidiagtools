@@ -27,6 +27,7 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlFieldHandler.h"
 #include "mdtSqlFormWidget.h"
+#include "mdtSqlWindow.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
 #include <QSqlDatabase>
 #include <QTemporaryFile>
@@ -279,7 +280,8 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
 
 void mdtDatabaseTest::sqlFormWidgetTest()
 {
-  mdtSqlFormWidget sqlFormWidget;
+  mdtSqlFormWidget *sqlFormWidget;
+  mdtSqlWindow window;
   Ui::mdtSqlFormWidgetTestForm form;
   QSqlTableModel model;
   QLineEdit *leFirstName = 0;
@@ -292,14 +294,19 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   // Setup model + form view
   model.setTable("Client");
   model.select();
-  sqlFormWidget.setModel(&model);
-  form.setupUi(&sqlFormWidget);
-  sqlFormWidget.mapFormWidgets();
+  sqlFormWidget = new mdtSqlFormWidget;
+  sqlFormWidget->setModel(&model);
+  form.setupUi(sqlFormWidget);
+  sqlFormWidget->mapFormWidgets();
+  // Setup window
+  window.setSqlWidget(sqlFormWidget);
+  window.enableNavigation();
+  window.enableEdition();
   // We need access to form's line edits
-  QVERIFY(sqlFormWidget.layout() != 0);
-  for(int i=0; i<sqlFormWidget.layout()->count(); i++){
-    QVERIFY(sqlFormWidget.layout()->itemAt(i) != 0);
-    w = sqlFormWidget.layout()->itemAt(i)->widget();
+  QVERIFY(sqlFormWidget->layout() != 0);
+  for(int i=0; i<sqlFormWidget->layout()->count(); i++){
+    QVERIFY(sqlFormWidget->layout()->itemAt(i) != 0);
+    w = sqlFormWidget->layout()->itemAt(i)->widget();
     QVERIFY(w != 0);
     if(w->objectName() == "fld_first_name"){
       leFirstName = dynamic_cast<QLineEdit*>(w);
@@ -310,7 +317,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QVERIFY(leFirstName != 0);
   QVERIFY(leRemarks != 0);
   
-  sqlFormWidget.show();
+  window.show();
   
   /*
    * Check insertion
@@ -321,7 +328,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   rowCount = model.rowCount();
   // Insert a record
   ///QTest::qWait(1000);
-  sqlFormWidget.insert();
+  sqlFormWidget->insert();
   ///QTest::qWait(1000);
   QVERIFY(leFirstName->isEnabled());
   QVERIFY(leFirstName->text().isEmpty());
@@ -330,43 +337,43 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   leFirstName->setText("New name 1");
   leRemarks->setText("New remark 1");
   ///QTest::qWait(1000);
-  sqlFormWidget.submit();
+  sqlFormWidget->submit();
   // Check that model was updated
   QVERIFY(model.rowCount() > rowCount);
   rowCount = model.rowCount();
-  row = sqlFormWidget.currentRow();
+  row = sqlFormWidget->currentRow();
   data = model.data(model.index(row, model.fieldIndex("first_name")));
   QCOMPARE(data.toString(), QString("New name 1"));
   data = model.data(model.index(row, model.fieldIndex("remarks")));
   QCOMPARE(data.toString(), QString("New remark 1"));
   // Insert a record
-  sqlFormWidget.insert();
+  sqlFormWidget->insert();
   QVERIFY(leFirstName->isEnabled());
   QVERIFY(leFirstName->text().isEmpty());
   QVERIFY(leRemarks->isEnabled());
   QVERIFY(leRemarks->text().isEmpty());
   leFirstName->setText("New name 2");
   leRemarks->setText("New remark 2");
-  sqlFormWidget.submit();
+  sqlFormWidget->submit();
   // Check that model was updated
   QVERIFY(model.rowCount() > rowCount);
   rowCount = model.rowCount();
-  row = sqlFormWidget.currentRow();
+  row = sqlFormWidget->currentRow();
   data = model.data(model.index(row, model.fieldIndex("first_name")));
   QCOMPARE(data.toString(), QString("New name 2"));
   data = model.data(model.index(row, model.fieldIndex("remarks")));
   QCOMPARE(data.toString(), QString("New remark 2"));
   // Try to insert a record with no name - must fail
-  sqlFormWidget.insert();
+  sqlFormWidget->insert();
   leRemarks->setText("New remark 2");
   // Catch and accept the message box that will pop-up
   QTimer::singleShot(50, this, SLOT(acceptModalDialog()));
-  sqlFormWidget.submit();
+  sqlFormWidget->submit();
   /*
    * We cannot check now, beacuse new row was inserted
    * We will revert, then check that new inserted row is suppressed
    */
-  sqlFormWidget.revert();
+  sqlFormWidget->revert();
   QVERIFY(model.rowCount() == rowCount);
   
   
@@ -376,7 +383,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   /*
    * Play
    */
-  while(sqlFormWidget.isVisible()){
+  while(window.isVisible()){
     QTest::qWait(1000);
   }
 }

@@ -1,0 +1,88 @@
+format 76
+
+statecanvas 128002 state_ref 149762 // Inserting
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 79 381 2000 85 39
+end
+statecanvas 128130 state_ref 149890 // Editing
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 733 386 2000 89 39
+end
+statecanvas 128258 state_ref 150018 // Visualizing
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 359 380 2000 111 39
+end
+statecanvas 128386 state_ref 150146 // Error
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 639 806 2000 57 39
+end
+pseudostatecanvas 128514 pseudostate_ref 154754 // initial
+   xyz 296 355 2000
+end
+pseudostatecanvas 128642 pseudostate_ref 154882 // final
+   xyz 758 813 2000
+end
+statecanvas 129794 state_ref 150274 // Submitting
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 364 526 2000 99 39
+end
+statecanvas 129922 state_ref 150402 // Reverting
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 370 249 2000 91 39
+end
+statecanvas 131202 state_ref 150530 // Deleting
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 397 749 2000 81 39
+end
+transitioncanvas 128770 transition_ref 160130 // <transition>
+  
+  from ref 128514 z 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 128898 transition_ref 160258 // <transition>
+  decenter_begin 537
+  decenter_end 384
+  
+  from ref 128258 z 2001 label "mdtSqlFieldHandler.dataEdited" xyz 497 381 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130050 transition_ref 160642 // <transition>
+  geometry HVr
+  
+  from ref 128130 z 2001 label "submitTriggered" xyz 722 476 3000 to point 775 542
+  line 130562 z 2001 to ref 129794
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130178 transition_ref 160770 // <transition>
+  geometry HVr
+  
+  from ref 128130 z 2001 label "revertTriggered" xyz 726 318 3000 to point 775 266
+  line 130818 z 2001 to ref 129922
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130306 transition_ref 160898 // <transition>
+  
+  from ref 129794 z 2001 label "errorOccured" xyz 552 464 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130690 transition_ref 161026 // <transition>
+  
+  from ref 129794 z 2001 label "operationSucceed" xyz 354 463 3000 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130946 transition_ref 161154 // <transition>
+  
+  from ref 129922 z 2001 label "errorOccured" xyz 552.5 328.5 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131074 transition_ref 161282 // <transition>
+  
+  from ref 129922 z 2001 label "operationSucceed" xyz 354.5 325 3000 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131330 transition_ref 161410 // <transition>
+  
+  from ref 128258 z 2001 label "insert" xyz 232 383.5 3000 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+end

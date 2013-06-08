@@ -56,6 +56,7 @@ set (HEADER_FILES
           mdtSqlFieldHandler.h
           mdtAbstractSqlWidget.h
           mdtSqlFormWidget.h
+          mdtSqlWindow.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -87,6 +88,7 @@ set (SOURCES_FILES
           mdtSqlFieldHandler.cpp
           mdtAbstractSqlWidget.cpp
           mdtSqlFormWidget.cpp
+          mdtSqlWindow.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
@@ -95,6 +97,7 @@ set (SOURCES_FILES
 # Liste des fichiers ui
 set (FORM_FILES
           mdtSqlQueryWidget.ui
+          mdtSqlWindow.ui
           mdtItemsSelectorDialog.ui
     )
 

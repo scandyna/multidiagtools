@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 25
+  revision 27
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1373,7 +1373,6 @@ ${inlines}
 	    classrelation_ref 840578 // pvSqlTableModel (<unidirectional association>)
 	  b parent class_ref 174210 // QSqlTableModel
       end
-
     end
 
     classdiagram 408706 "mdtSqlTableModel"
@@ -1404,6 +1403,206 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 840706 // <generalisation>
 	  b parent class_ref 552450 // QMainWindow
+      end
+
+      classrelation 862850 // <generalisation>
+	relation 853634 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 862850 // <generalisation>
+	  b parent class_ref 693122 // Ui::mdtSqlWindow
+      end
+
+      operation 1289218 "mdtSqlWindow"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	  param in name "flags" explicit_type "Qt::WindowFlags"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1289346 "~mdtSqlWindow"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 862978 // pvSqlWidget (<unidirectional association>)
+	relation 853762 --->
+	  a role_name "pvSqlWidget" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 862978 // pvSqlWidget (<unidirectional association>)
+	  b parent class_ref 686338 // mdtAbstractSqlWidget
+      end
+
+      operation 1289474 "setSqlWidget"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "sqlWidget" type class_ref 686338 // mdtAbstractSqlWidget
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 747010 "actSubmit"
+	private type class_ref 693250 // QAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 747138 "actRevert"
+	private type class_ref 693250 // QAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 746882 "actInsert"
+	private type class_ref 693250 // QAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 747266 "actRemove"
+	private type class_ref 693250 // QAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 747394 "actNavToFirst"
+	private type class_ref 693250 // QAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 747522 "actNavToLast"
+	private type class_ref 693250 // QAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 747650 "actNavToPrevious"
+	private type class_ref 693250 // QAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 747778 "actNavToNext"
+	private type class_ref 693250 // QAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 1289858 "enableNavigation"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1289986 "disableNavigation"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1290114 "enableEdition"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1290242 "disableEdition"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -1810,7 +2009,7 @@ ${inlines}
       end
     end
 
-    classdiagram 673538 "mdtSqlView"
+    classdiagram 673538 "mdtSqlWidget"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
@@ -1879,7 +2078,7 @@ ${inlines}
 
       operation 1281154 "submit"
 	stereotype "slot"
-	abstract cpp_virtual public explicit_return_type "void"
+	cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1891,7 +2090,7 @@ ${inlines}
 
       operation 1281282 "revert"
 	stereotype "slot"
-	abstract cpp_virtual public explicit_return_type "void"
+	cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1918,6 +2117,166 @@ ${inlines}
 	abstract cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1290370 "toFirst"
+	stereotype "slot"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1290498 "toLast"
+	stereotype "slot"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1290626 "toPrevious"
+	stereotype "slot"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1290754 "toNext"
+	stereotype "slot"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1297794 "submitTriggered"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1298178 "revertTriggered"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1297922 "doSubmit"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1298306 "doRevert"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1298050 "setStateSubmitting"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1298434 "setStateReverting"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1298562 "errorOccured"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1298690 "operationSucceed"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -2068,6 +2427,54 @@ ${inlines}
 	    classrelation_ref 856322 // pvFieldHandlers (<directional composition>)
 	  b parent class_ref 679042 // mdtSqlFieldHandler
       end
+
+      operation 1290882 "toFirst"
+	stereotype "slot"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1291010 "toLast"
+	stereotype "slot"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1291138 "toPrevious"
+	stereotype "slot"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1291266 "toNext"
+	stereotype "slot"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
     end
 
     class 686594 "mdtSqlTableWidget"
@@ -2127,6 +2534,104 @@ ${inlines}
 "
 	    classrelation_ref 849666 // pvTableView (<unidirectional association>)
 	  b parent class_ref 638338 // QTableView
+      end
+    end
+
+    class 693122 "Ui::mdtSqlWindow"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    state 149634 "mdtAbstractSqlWidgetStateMachine"
+      stereotype "machine"
+      statediagram 686594 "mdtAbstractSqlWidgetStateMachine"
+	package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition yes draw_all_relations no shadow default
+	show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      state 149762 "Inserting"
+      end
+
+      state 149890 "Editing"
+	transition 160642 "<transition>"
+	  on state_ref 150274 // Submitting
+	    uml_trigger "submitTriggered"
+	  external 
+	end
+
+	transition 160770 "<transition>"
+	  on state_ref 150402 // Reverting
+	    uml_trigger "revertTriggered"
+	  external 
+	end
+      end
+
+      state 150018 "Visualizing"
+	transition 160258 "<transition>"
+	  on state_ref 149890 // Editing
+	    uml_trigger "mdtSqlFieldHandler.dataEdited"
+	  external 
+	end
+
+	transition 161410 "<transition>"
+	  on state_ref 149762 // Inserting
+	    uml_trigger "insert"
+	  external 
+	end
+      end
+
+      state 150146 "Error"
+      end
+
+      pseudostate 154754 initial 
+	transition 160130 "<transition>"
+	  on state_ref 150018 // Visualizing
+	  external 
+	end
+      end
+
+      pseudostate 154882 final 
+      end
+
+      state 150274 "Submitting"
+	transition 160898 "<transition>"
+	  on state_ref 149890 // Editing
+	    uml_trigger "errorOccured"
+	  external 
+	end
+
+	transition 161026 "<transition>"
+	  on state_ref 150018 // Visualizing
+	    uml_trigger "operationSucceed"
+	  external 
+	end
+      end
+
+      state 150402 "Reverting"
+	transition 161154 "<transition>"
+	  on state_ref 149890 // Editing
+	    uml_trigger "errorOccured"
+	  external 
+	end
+
+	transition 161282 "<transition>"
+	  on state_ref 150018 // Visualizing
+	    uml_trigger "operationSucceed"
+	  external 
+	end
+      end
+
+      state 150530 "Deleting"
       end
     end
   end
@@ -5293,6 +5798,29 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 686466 // mdtSqlFormWidget
+      end
+    end
+
+    artifact 407554 "mdtSqlWindow"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 678914 // mdtSqlWindow
       end
     end
   end

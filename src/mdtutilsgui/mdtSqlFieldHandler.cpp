@@ -109,6 +109,29 @@ void mdtSqlFieldHandler::setDataWidget(QSpinBox *widget)
   Q_ASSERT(widget != 0);
 }
 
+QWidget *mdtSqlFieldHandler::dataWidget()
+{
+  if(pvLineEdit != 0){
+    return pvLineEdit;
+  }
+  if(pvAbstractButton != 0){
+    return pvAbstractButton;
+  }
+  if(pvDateTimeEdit != 0){
+    return pvDateTimeEdit;
+  }
+  if(pvDoubleSpinBox != 0){
+    return pvDoubleSpinBox;
+  }
+  if(pvSpinBox != 0){
+    return pvSpinBox;
+  }
+  if(pvComboBox != 0){
+    return pvComboBox;
+  }
+  return 0;
+}
+
 void mdtSqlFieldHandler::clear()
 {
   pvLineEdit = 0;

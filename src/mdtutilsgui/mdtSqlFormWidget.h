@@ -118,6 +118,21 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
 
   void remove();
 
+  /*! \brief Set first record as current record
+   */
+  void toFirst();
+
+  /*! \brief Set last record as current record
+   */
+  void toLast();
+
+  /*! \brief Set previous record as current record
+   */
+  void toPrevious();
+
+  /*! \brief Set next record as current record
+   */
+  void toNext();
 
  private:
 

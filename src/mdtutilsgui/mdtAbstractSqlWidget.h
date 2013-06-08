@@ -98,6 +98,33 @@ class mdtAbstractSqlWidget : public QWidget
    */
   virtual void remove() = 0;
 
+  /*! \brief Set first record as current record
+   *
+   * Subclass must implement this method.
+   *  Errors and user interactions must be handled by subclass.
+   */
+  virtual void toFirst() = 0;
+
+  /*! \brief Set last record as current record
+   *
+   * Subclass must implement this method.
+   *  Errors and user interactions must be handled by subclass.
+   */
+  virtual void toLast() = 0;
+
+  /*! \brief Set previous record as current record
+   *
+   * Subclass must implement this method.
+   *  Errors and user interactions must be handled by subclass.
+   */
+  virtual void toPrevious() = 0;
+
+  /*! \brief Set next record as current record
+   *
+   * Subclass must implement this method.
+   *  Errors and user interactions must be handled by subclass.
+   */
+  virtual void toNext() = 0;
 };
 
 #endif  // #ifndef MDT_ABSTRACT_SQL_WIDGET_H
