@@ -73,15 +73,6 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   ~mdtSqlFormWidget();
 
-  /*! \brief Set model
-   *
-   * Set the model that handle database.
-   *  (See Qt's QSqlTableModel documentation for details).
-   *
-   * \pre model must be a valid pointer.
-   */
-  void setModel(QSqlTableModel *model);
-
   /*! \brief Map widgets to matching database fields
    *
    * Will parse all child widgets found in layout,
@@ -106,18 +97,6 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
 
  public slots:
 
-  void submit();
-
-  void revert();
-
-  /*! \brief Add a new row
-   *
-   * \pre Model must be set with setModel() before using this method.
-   */
-  void insert();
-
-  void remove();
-
   /*! \brief Set first record as current record
    */
   void toFirst();
@@ -135,6 +114,51 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
   void toNext();
 
  private:
+
+  /*! \brief Set model
+   *
+   * Set the model that handle database.
+   *  (See Qt's QSqlTableModel documentation for details).
+   *
+   * \pre model must be a valid pointer.
+   */
+  void doSetModel(QSqlTableModel *model);
+
+  /*! \brief Submit current row to model
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  bool doSubmit();
+
+  /*! \brief Revert current row from model
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  bool doRevert();
+
+  /*! \brief Insert a row row to model
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  bool doInsert();
+
+  /*! \brief Submit new row to model
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  bool doSubmitNewRow();
+
+  /*! \brief Revert new row
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  bool doRevertNewRow();
+
+  /*! \brief Remove current row from model
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  bool doRemove();
 
   /*! \brief Clear content of all edit/view widgets
    */

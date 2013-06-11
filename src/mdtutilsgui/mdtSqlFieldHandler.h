@@ -51,7 +51,7 @@ class mdtSqlFieldHandler : public QObject
 {
  Q_OBJECT
 
-  public:
+ public:
 
   /*! \brief Construct a null field handler
    *
@@ -169,7 +169,23 @@ class mdtSqlFieldHandler : public QObject
    *
    * Connect the QDataWidgetMapper::currentIndexChanged() signal to this slot.
    */
-  void onCurrentIndexChanged(int index);
+  ///void onCurrentIndexChanged(int index);
+
+  /*! \brief Clear data edited flags
+   *
+   * See dataEdited() for details.
+   */
+  ///void clearDataEditedFlags();
+
+  /*! \brief Update some internal flags
+   *
+   * Some flags, like Null flag,
+   *  or data edited flag are 
+   *  updated here.
+   *
+   * QDataWidgetMapper::currentIndexChanged() signal should be connected to this slot.
+   */
+  void updateFlags();
 
  private slots:
 
@@ -220,7 +236,7 @@ class mdtSqlFieldHandler : public QObject
   bool pvIsNull;
   bool pvIsReadOnly;
   bool pvDataEdited;
-  bool pvUpdatingDataFromModel;
+  ///bool pvUpdatingDataFromModel;
   QPalette pvDataWidgetOriginalPalette;
 
 Q_DISABLE_COPY(mdtSqlFieldHandler);

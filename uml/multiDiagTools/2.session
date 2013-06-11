@@ -1,17 +1,22 @@
 window_sizes 1280 1001 356 918 923 0
 diagrams
   active  statediagram_ref 686594 // mdtAbstractSqlWidgetStateMachine
-    918 923 100 4 96 0
+    918 923 100 18 0 0
   classdiagram_ref 666754 // mdtSqlFieldHandler
-    794 738 100 4 0 0
-  classdiagram_ref 673538 // mdtSqlWidget
     794 738 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1298690 // operationSucceed
+selected operation_ref 1306498 // onStateRemovingEntered
 open
-  operation_ref 1298178 // revertTriggered
-  operation_ref 1298306 // doRevert
-  state_ref 149762 // Inserting
+  operation_ref 1305218 // insertTriggered
+  operation_ref 1306370 // removeTriggered
+  operation_ref 1298562 // errorOccured
+  operation_ref 1305346 // doInsert
+  operation_ref 1306114 // doSubmitNewRow
+  operation_ref 1306242 // doRevertNewRow
+  operation_ref 1306626 // doRemove
+  operation_ref 1306498 // onStateRemovingEntered
+  class_ref 686466 // mdtSqlFormWidget
+  state_ref 149762 // EditingNewRow
 end
 end

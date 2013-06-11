@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 27
+  revision 29
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2102,7 +2102,7 @@ ${inlines}
 
       operation 1281410 "insert"
 	stereotype "slot"
-	abstract cpp_virtual public explicit_return_type "void"
+	cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2114,7 +2114,7 @@ ${inlines}
 
       operation 1281538 "remove"
 	stereotype "slot"
-	abstract cpp_virtual public explicit_return_type "void"
+	cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2202,31 +2202,9 @@ ${inlines}
 	
       end
 
-      operation 1297922 "doSubmit"
-	abstract cpp_virtual protected explicit_return_type "bool"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1298306 "doRevert"
-	abstract cpp_virtual protected explicit_return_type "bool"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1298050 "setStateSubmitting"
-	stereotype "slot"
-	private explicit_return_type "void"
+      operation 1305218 "insertTriggered"
+	stereotype "signal"
+	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2239,9 +2217,9 @@ ${inlines}
 	
       end
 
-      operation 1298434 "setStateReverting"
-	stereotype "slot"
-	private explicit_return_type "void"
+      operation 1306370 "removeTriggered"
+	stereotype "signal"
+	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2272,6 +2250,207 @@ ${inlines}
       operation 1298690 "operationSucceed"
 	stereotype "signal"
 	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1307522 "dataEdited"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1297922 "doSubmit"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1298306 "doRevert"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1305346 "doInsert"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1306114 "doSubmitNewRow"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1306242 "doRevertNewRow"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1306626 "doRemove"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1305730 "onStateVisualizingEntered"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1305602 "onStateEditingEntered"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1298050 "onStateSubmittingEntered"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1298434 "onStateRevertingEntered"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1305474 "onStateInsertingEntered"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1305858 "onStateSubmittingNewRowEntered"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1305986 "onStateRevertingNewRowEntered"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1306498 "onStateRemovingEntered"
+	stereotype "slot"
+	private explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2350,66 +2529,6 @@ ${inlines}
 	
       end
 
-      operation 1281794 "submit"
-	stereotype "slot"
-	cpp_virtual public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1281922 "revert"
-	stereotype "slot"
-	cpp_virtual public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1282050 "insert"
-	stereotype "slot"
-	cpp_virtual public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1282178 "remove"
-	stereotype "slot"
-	cpp_virtual public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       classrelation 849538 // pvWidgetMapper (<directional composition>)
 	relation 840322 *-->
 	  a role_name "pvWidgetMapper" multiplicity "1" private
@@ -2467,6 +2586,72 @@ ${inlines}
       operation 1291266 "toNext"
 	stereotype "slot"
 	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1306754 "doSubmit"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1306882 "doRevert"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1307010 "doInsert"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1307138 "doSubmitNewRow"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1307266 "doRevertNewRow"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1307394 "doRemove"
+	cpp_virtual private explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2556,10 +2741,21 @@ ${inlines}
       statediagram 686594 "mdtAbstractSqlWidgetStateMachine"
 	package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition yes draw_all_relations no shadow default
 	show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-	size A4
+	size A4-Landscape
       end
 
-      state 149762 "Inserting"
+      state 149762 "EditingNewRow"
+	transition 167938 "<transition>"
+	  on state_ref 157058 // SubmittingNewRow
+	    uml_trigger "submitTriggered"
+	  external 
+	end
+
+	transition 168322 "<transition>"
+	  on state_ref 157186 // RevertingNewRow
+	    uml_trigger "revertTriggered"
+	  external 
+	end
       end
 
       state 149890 "Editing"
@@ -2579,18 +2775,26 @@ ${inlines}
       state 150018 "Visualizing"
 	transition 160258 "<transition>"
 	  on state_ref 149890 // Editing
-	    uml_trigger "mdtSqlFieldHandler.dataEdited"
+	    uml_trigger "dataEdited"
 	  external 
 	end
 
-	transition 161410 "<transition>"
-	  on state_ref 149762 // Inserting
-	    uml_trigger "insert"
+	transition 168706 "<transition>"
+	  on state_ref 150530 // Removing
+	    uml_trigger "removeTriggered"
 	  external 
 	end
-      end
 
-      state 150146 "Error"
+	transition 168962 "<transition>"
+	  on pseudostate_ref 154882 // final
+	  external 
+	end
+
+	transition 175490 "<transition>"
+	  on state_ref 163714 // Inserting
+	    uml_trigger "insertTriggered"
+	  external 
+	end
       end
 
       pseudostate 154754 initial 
@@ -2631,7 +2835,54 @@ ${inlines}
 	end
       end
 
-      state 150530 "Deleting"
+      state 150530 "Removing"
+	transition 168834 "<transition>"
+	  on state_ref 150018 // Visualizing
+	    uml_trigger "operationSucceed"
+	  external 
+	end
+      end
+
+      state 157058 "SubmittingNewRow"
+	transition 168066 "<transition>"
+	  on state_ref 150018 // Visualizing
+	    uml_trigger "operationSucceed"
+	  external 
+	end
+
+	transition 168194 "<transition>"
+	  on state_ref 149762 // EditingNewRow
+	    uml_trigger "errorOccured"
+	  external 
+	end
+      end
+
+      state 157186 "RevertingNewRow"
+	transition 168450 "<transition>"
+	  on state_ref 150018 // Visualizing
+	    uml_trigger "operationSucceed"
+	  external 
+	end
+
+	transition 168578 "<transition>"
+	  on state_ref 149762 // EditingNewRow
+	    uml_trigger "errorOccured"
+	  external 
+	end
+      end
+
+      state 163714 "Inserting"
+	transition 175618 "<transition>"
+	  on state_ref 149762 // EditingNewRow
+	    uml_trigger "operationSucceed"
+	  external 
+	end
+
+	transition 175746 "<transition>"
+	  on state_ref 150018 // Visualizing
+	    uml_trigger "errorOccured"
+	  external 
+	end
       end
     end
   end

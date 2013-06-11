@@ -196,22 +196,31 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   QVERIFY(le.text().isEmpty());
   QVERIFY(!le.isReadOnly());
   // User edit ...
-  le.setText("ABCD");
+  ///le.setText("ABCD");
+  QTest::keyClicks(&le, "ABCD");
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QVERIFY(fh.dataWasEdited());
   // User edit ...
-  le.setText("");
+  ///le.setText("");
+  ///le.clear();
+  QTest::keyClick(&le, Qt::Key_Backspace);
+  QTest::keyClick(&le, Qt::Key_Backspace);
+  QTest::keyClick(&le, Qt::Key_Backspace);
+  QTest::keyClick(&le, Qt::Key_Backspace);
   // Check field handler flags
   QVERIFY(fh.isNull());
   QVERIFY(fh.dataWasEdited());
   // User edit ...
-  le.setText("123");
+  ///le.setText("123");
+  QTest::keyClicks(&le, "123");
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QVERIFY(fh.dataWasEdited());
   // User edit ...
-  le.setText(" ");
+  ///le.setText(" ");
+  le.clear();
+  QTest::keyClicks(&le, " ");
   // Check field handler flags
   QVERIFY(fh.isNull());
   QVERIFY(fh.dataWasEdited());
@@ -220,14 +229,18 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   // Line edit must be empty now
   QVERIFY(le.text().isEmpty());
   // User edit ...
-  le.setText("ZA");
+  ///le.setText("ZA");
+  le.clear();
+  QTest::keyClicks(&le, "ZA");
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QVERIFY(fh.dataWasEdited());
   // Check must be OK now
   QVERIFY(fh.checkBeforeSubmit());
   // User edit to much
-  le.setText("123456789ABC");
+  ///le.setText("123456789ABC");
+  le.clear();
+  QTest::keyClicks(&le, "123456789ABC");
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QCOMPARE(le.text(), QString("123456789A"));
@@ -240,16 +253,32 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   QVERIFY(!fh.isReadOnly());
   QVERIFY(!le.isReadOnly());
   // Now we change the row
-  fh.onCurrentIndexChanged(2);
+  ///fh.onCurrentIndexChanged(2);
+  ///fh.clearDataEditedFlags();
   le.setText("Row 2 from DB");
+  fh.updateFlags();
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QVERIFY(!fh.dataWasEdited());
   // User edit ...
-  le.setText(" ");
+  ///le.setText(" ");
+  le.clear();
+  QTest::keyClicks(&le, " ");
   // Check field handler flags
   QVERIFY(fh.isNull());
   QVERIFY(fh.dataWasEdited());
+  // We change the row
+  le.setText("Row 3 from DB");
+  fh.updateFlags();
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // We change the row
+  le.setText("");
+  fh.updateFlags();
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
 
   
   // Setup field as read only
@@ -295,6 +324,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   model.setTable("Client");
   model.select();
   sqlFormWidget = new mdtSqlFormWidget;
+  QTest::qWait(50);
   sqlFormWidget->setModel(&model);
   form.setupUi(sqlFormWidget);
   sqlFormWidget->mapFormWidgets();
@@ -323,21 +353,29 @@ void mdtDatabaseTest::sqlFormWidgetTest()
    * Check insertion
    *  - Insert 2 records
    *  - Check in model
-   *  - Check in form navigation Problème: tri !!!!!
+   *  - Check in form
+   *
+   * Note:
+   *  Because of mdtSqlFormWidget's internall state machine,
+   *  witch runs asynchronousliy, we must wait between each action.
    */
   rowCount = model.rowCount();
   // Insert a record
-  ///QTest::qWait(1000);
+  QTest::qWait(50);
   sqlFormWidget->insert();
-  ///QTest::qWait(1000);
+  QTest::qWait(50);
   QVERIFY(leFirstName->isEnabled());
   QVERIFY(leFirstName->text().isEmpty());
   QVERIFY(leRemarks->isEnabled());
   QVERIFY(leRemarks->text().isEmpty());
-  leFirstName->setText("New name 1");
-  leRemarks->setText("New remark 1");
-  ///QTest::qWait(1000);
+  ///leFirstName->setText("New name 1");
+  leFirstName->clear();
+  QTest::keyClicks(leFirstName, "New name 1");
+  ///leRemarks->setText("New remark 1");
+  leRemarks->clear();
+  QTest::keyClicks(leRemarks, "New remark 1");
   sqlFormWidget->submit();
+  QTest::qWait(50);
   // Check that model was updated
   QVERIFY(model.rowCount() > rowCount);
   rowCount = model.rowCount();
@@ -346,15 +384,24 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QCOMPARE(data.toString(), QString("New name 1"));
   data = model.data(model.index(row, model.fieldIndex("remarks")));
   QCOMPARE(data.toString(), QString("New remark 1"));
+  // Check that widget displays the correct row
+  QCOMPARE(leFirstName->text(), QString("New name 1"));
+  QCOMPARE(leRemarks->text(), QString("New remark 1"));
   // Insert a record
   sqlFormWidget->insert();
+  QTest::qWait(50);
   QVERIFY(leFirstName->isEnabled());
   QVERIFY(leFirstName->text().isEmpty());
   QVERIFY(leRemarks->isEnabled());
   QVERIFY(leRemarks->text().isEmpty());
-  leFirstName->setText("New name 2");
-  leRemarks->setText("New remark 2");
+  ///leFirstName->setText("New name 2");
+  leFirstName->clear();
+  QTest::keyClicks(leFirstName, "New name 2");
+  ///leRemarks->setText("New remark 2");
+  leRemarks->clear();
+  QTest::keyClicks(leRemarks, "New remark 2");
   sqlFormWidget->submit();
+  QTest::qWait(50);
   // Check that model was updated
   QVERIFY(model.rowCount() > rowCount);
   rowCount = model.rowCount();
@@ -363,20 +410,56 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QCOMPARE(data.toString(), QString("New name 2"));
   data = model.data(model.index(row, model.fieldIndex("remarks")));
   QCOMPARE(data.toString(), QString("New remark 2"));
+  // Check that widget displays the correct row
+  QCOMPARE(leFirstName->text(), QString("New name 2"));
+  QCOMPARE(leRemarks->text(), QString("New remark 2"));
   // Try to insert a record with no name - must fail
+  qDebug() << "TEST: insert ...";
   sqlFormWidget->insert();
-  leRemarks->setText("New remark 2");
+  QTest::qWait(50);
+  QCOMPARE(leFirstName->text(), QString(""));
+  QCOMPARE(leRemarks->text(), QString(""));
+  ///leRemarks->setText("New remark ...");
+  leRemarks->clear();
+  QTest::keyClicks(leRemarks, "New remark ...");
   // Catch and accept the message box that will pop-up
   QTimer::singleShot(50, this, SLOT(acceptModalDialog()));
   sqlFormWidget->submit();
+  QTest::qWait(100);
   /*
-   * We cannot check now, beacuse new row was inserted
+   * We cannot check now, beacuse new row was inserted in model
    * We will revert, then check that new inserted row is suppressed
    */
+  qDebug() << "TEST: revert ...";
   sqlFormWidget->revert();
+  QTest::qWait(50);
   QVERIFY(model.rowCount() == rowCount);
-  
-  
+  /*
+   * Check edition
+   *  - Edit current row
+   *  - Check in model
+   *  - Check in form
+   */
+  // Edit in form
+  ///leFirstName->setText("Edit name A");
+  leFirstName->clear();
+  QTest::keyClicks(leFirstName, "Edit name A");
+  ///leRemarks->setText("Edit remark A");
+  leRemarks->clear();
+  QTest::keyClicks(leRemarks, "Edit remark A");
+  sqlFormWidget->submit();
+  QTest::qWait(50);
+  // Check that model was updated
+  QVERIFY(model.rowCount() == rowCount);
+  row = sqlFormWidget->currentRow();
+  data = model.data(model.index(row, model.fieldIndex("first_name")));
+  QCOMPARE(data.toString(), QString("Edit name A"));
+  data = model.data(model.index(row, model.fieldIndex("remarks")));
+  QCOMPARE(data.toString(), QString("Edit remark A"));
+  // Check that widget displays the correct row
+  QCOMPARE(leFirstName->text(), QString("Edit name A"));
+  QCOMPARE(leRemarks->text(), QString("Edit remark A"));
+
 
   
 
