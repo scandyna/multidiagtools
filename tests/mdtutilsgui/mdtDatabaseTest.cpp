@@ -48,6 +48,7 @@
 #include <QFile>
 #include <QVariant>
 #include <QTimer>
+#include <QAbstractButton>
 
 #include <QTableView>
 #include <QItemSelectionModel>
@@ -196,14 +197,11 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   QVERIFY(le.text().isEmpty());
   QVERIFY(!le.isReadOnly());
   // User edit ...
-  ///le.setText("ABCD");
   QTest::keyClicks(&le, "ABCD");
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QVERIFY(fh.dataWasEdited());
   // User edit ...
-  ///le.setText("");
-  ///le.clear();
   QTest::keyClick(&le, Qt::Key_Backspace);
   QTest::keyClick(&le, Qt::Key_Backspace);
   QTest::keyClick(&le, Qt::Key_Backspace);
@@ -212,13 +210,11 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   QVERIFY(fh.isNull());
   QVERIFY(fh.dataWasEdited());
   // User edit ...
-  ///le.setText("123");
   QTest::keyClicks(&le, "123");
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QVERIFY(fh.dataWasEdited());
   // User edit ...
-  ///le.setText(" ");
   le.clear();
   QTest::keyClicks(&le, " ");
   // Check field handler flags
@@ -229,7 +225,6 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   // Line edit must be empty now
   QVERIFY(le.text().isEmpty());
   // User edit ...
-  ///le.setText("ZA");
   le.clear();
   QTest::keyClicks(&le, "ZA");
   // Check field handler flags
@@ -238,7 +233,6 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   // Check must be OK now
   QVERIFY(fh.checkBeforeSubmit());
   // User edit to much
-  ///le.setText("123456789ABC");
   le.clear();
   QTest::keyClicks(&le, "123456789ABC");
   // Check field handler flags
@@ -253,15 +247,12 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   QVERIFY(!fh.isReadOnly());
   QVERIFY(!le.isReadOnly());
   // Now we change the row
-  ///fh.onCurrentIndexChanged(2);
-  ///fh.clearDataEditedFlags();
   le.setText("Row 2 from DB");
   fh.updateFlags();
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QVERIFY(!fh.dataWasEdited());
   // User edit ...
-  ///le.setText(" ");
   le.clear();
   QTest::keyClicks(&le, " ");
   // Check field handler flags
@@ -368,10 +359,8 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QVERIFY(leFirstName->text().isEmpty());
   QVERIFY(leRemarks->isEnabled());
   QVERIFY(leRemarks->text().isEmpty());
-  ///leFirstName->setText("New name 1");
   leFirstName->clear();
   QTest::keyClicks(leFirstName, "New name 1");
-  ///leRemarks->setText("New remark 1");
   leRemarks->clear();
   QTest::keyClicks(leRemarks, "New remark 1");
   sqlFormWidget->submit();
@@ -394,10 +383,8 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QVERIFY(leFirstName->text().isEmpty());
   QVERIFY(leRemarks->isEnabled());
   QVERIFY(leRemarks->text().isEmpty());
-  ///leFirstName->setText("New name 2");
   leFirstName->clear();
   QTest::keyClicks(leFirstName, "New name 2");
-  ///leRemarks->setText("New remark 2");
   leRemarks->clear();
   QTest::keyClicks(leRemarks, "New remark 2");
   sqlFormWidget->submit();
@@ -414,12 +401,10 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QCOMPARE(leFirstName->text(), QString("New name 2"));
   QCOMPARE(leRemarks->text(), QString("New remark 2"));
   // Try to insert a record with no name - must fail
-  qDebug() << "TEST: insert ...";
   sqlFormWidget->insert();
   QTest::qWait(50);
   QCOMPARE(leFirstName->text(), QString(""));
   QCOMPARE(leRemarks->text(), QString(""));
-  ///leRemarks->setText("New remark ...");
   leRemarks->clear();
   QTest::keyClicks(leRemarks, "New remark ...");
   // Catch and accept the message box that will pop-up
@@ -430,7 +415,6 @@ void mdtDatabaseTest::sqlFormWidgetTest()
    * We cannot check now, beacuse new row was inserted in model
    * We will revert, then check that new inserted row is suppressed
    */
-  qDebug() << "TEST: revert ...";
   sqlFormWidget->revert();
   QTest::qWait(50);
   QVERIFY(model.rowCount() == rowCount);
@@ -440,11 +424,9 @@ void mdtDatabaseTest::sqlFormWidgetTest()
    *  - Check in model
    *  - Check in form
    */
-  // Edit in form
-  ///leFirstName->setText("Edit name A");
+  // Edit in form and submit
   leFirstName->clear();
   QTest::keyClicks(leFirstName, "Edit name A");
-  ///leRemarks->setText("Edit remark A");
   leRemarks->clear();
   QTest::keyClicks(leRemarks, "Edit remark A");
   sqlFormWidget->submit();
@@ -459,8 +441,57 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   // Check that widget displays the correct row
   QCOMPARE(leFirstName->text(), QString("Edit name A"));
   QCOMPARE(leRemarks->text(), QString("Edit remark A"));
+  /*
+   * Check delete:
+   *  - One time on accepting warning message box
+   *  - One time rejecting warning message box
+   */
+  // Catch the message box that will pop-up and click No button
+  QTimer::singleShot(50, this, SLOT(clickMessageBoxButtonNo()));
+  sqlFormWidget->remove();
+  QTest::qWait(100);
+  // Check that nothing was removed and that index did not change
+  QVERIFY(model.rowCount() == rowCount);
+  row = sqlFormWidget->currentRow();
+  data = model.data(model.index(row, model.fieldIndex("first_name")));
+  QCOMPARE(data.toString(), QString("Edit name A"));
+  data = model.data(model.index(row, model.fieldIndex("remarks")));
+  QCOMPARE(data.toString(), QString("Edit remark A"));
+  // Check that widget displays the correct row
+  QCOMPARE(leFirstName->text(), QString("Edit name A"));
+  QCOMPARE(leRemarks->text(), QString("Edit remark A"));
+  // Catch the message box that will pop-up and click Yes button
+  QTimer::singleShot(50, this, SLOT(clickMessageBoxButtonYes()));
+  sqlFormWidget->remove();
+  QTest::qWait(100);
+  // Check that one row was removed and that widget displays something different than before
+  QCOMPARE(model.rowCount(), (rowCount-1));
+  rowCount = model.rowCount();
+  QVERIFY(leFirstName->text() != QString("Edit name A"));
+  QVERIFY(leRemarks->text() != QString("Edit remark A"));
+  /*
+   * Remove first row
+   */
+  sqlFormWidget->toFirst();
+  QTest::qWait(50);
+  row = sqlFormWidget->currentRow();
+  QCOMPARE(row, 0);
+  data = model.data(model.index(row, model.fieldIndex("first_name")));
+  // Catch the message box that will pop-up and click Yes button
+  QTimer::singleShot(50, this, SLOT(clickMessageBoxButtonYes()));
+  sqlFormWidget->remove();
+  QTest::qWait(100);
+  // Check that one row was removed and that widget displays something different than before
+  QCOMPARE(model.rowCount(), (rowCount-1));
+  rowCount = model.rowCount();
+  QVERIFY(leFirstName->text() != data.toString());
+  /*
+   * Check index changing on unsaved data
+   *  - One time on accepting warning message box (-> submit, ok, ...)
+   *  - One time rejecting warning message box
+   */
 
-
+  
   
 
   /*
@@ -469,6 +500,39 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   while(window.isVisible()){
     QTest::qWait(1000);
   }
+}
+
+void mdtDatabaseTest::clickMessageBoxButton(QMessageBox::StandardButton button)
+{
+  QMessageBox *mdgBox;
+  QAbstractButton *btn;
+
+  if(QApplication::activeModalWidget() != 0){
+    mdgBox = dynamic_cast<QMessageBox*>(QApplication::activeModalWidget());
+    if(mdgBox != 0){
+      qDebug() << "Found a message box, name: " << mdgBox->objectName();
+      // Get requested button
+      btn = mdgBox->button(button);
+      if(btn != 0){
+        btn->click();
+      }
+    }
+  }
+}
+
+void mdtDatabaseTest::clickMessageBoxButtonYes()
+{
+  clickMessageBoxButton(QMessageBox::Yes);
+}
+
+void mdtDatabaseTest::clickMessageBoxButtonNo()
+{
+  clickMessageBoxButton(QMessageBox::No);
+}
+
+void mdtDatabaseTest::clickMessageBoxButtonCancel()
+{
+  clickMessageBoxButton(QMessageBox::Cancel);
 }
 
 void mdtDatabaseTest::acceptModalDialog()
@@ -480,6 +544,19 @@ void mdtDatabaseTest::acceptModalDialog()
     if(dlg != 0){
       qDebug() << "Found a dilaog, name: " << dlg->objectName();
       dlg->accept();
+    }
+  }
+}
+
+void mdtDatabaseTest::rejectModalDialog()
+{
+  QDialog *dlg;
+
+  if(QApplication::activeModalWidget() != 0){
+    dlg = dynamic_cast<QDialog*>(QApplication::activeModalWidget());
+    if(dlg != 0){
+      qDebug() << "Found a dilaog, name: " << dlg->objectName();
+      dlg->reject ();
     }
   }
 }

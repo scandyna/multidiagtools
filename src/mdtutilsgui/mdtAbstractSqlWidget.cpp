@@ -21,6 +21,7 @@
 #include "mdtAbstractSqlWidget.h"
 #include <QState>
 #include <QStateMachine>
+#include <QMessageBox>
 
 #include <QDebug>
 
@@ -138,6 +139,25 @@ void mdtAbstractSqlWidget::onStateRevertingNewRowEntered()
 void mdtAbstractSqlWidget::onStateRemovingEntered()
 {
   qDebug() << __FUNCTION__;
+
+  int ret;
+  QMessageBox msgBox;
+
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to delete some data."));
+  msgBox.setInformativeText(tr("Do you really want to delete current record ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  ret = msgBox.exec();
+  switch(ret){
+    case QMessageBox::Yes:
+      if(doRemove()){
+        emit operationSucceed();
+      }
+    default:
+      emit operationSucceed();
+  }
 }
 
 void mdtAbstractSqlWidget::buildStateMachine()

@@ -164,6 +164,10 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void clearWidgets();
 
+  /*! \brief Set all edit/view widgets enabled/desabled
+   */
+  void setWidgetsEnabled(bool enabled);
+
   /*! \brief Call mdtSqlFieldHandler::checkBeforeSubmit() for each mapped widgets
    */
   bool checkBeforeSubmit();

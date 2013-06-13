@@ -165,18 +165,6 @@ class mdtSqlFieldHandler : public QObject
 
  public slots:
 
-  /*! \brief Do a flag reset when index changes
-   *
-   * Connect the QDataWidgetMapper::currentIndexChanged() signal to this slot.
-   */
-  ///void onCurrentIndexChanged(int index);
-
-  /*! \brief Clear data edited flags
-   *
-   * See dataEdited() for details.
-   */
-  ///void clearDataEditedFlags();
-
   /*! \brief Update some internal flags
    *
    * Some flags, like Null flag,
@@ -236,10 +224,9 @@ class mdtSqlFieldHandler : public QObject
   bool pvIsNull;
   bool pvIsReadOnly;
   bool pvDataEdited;
-  ///bool pvUpdatingDataFromModel;
   QPalette pvDataWidgetOriginalPalette;
 
-Q_DISABLE_COPY(mdtSqlFieldHandler);
+  Q_DISABLE_COPY(mdtSqlFieldHandler);
 };
 
 #endif  // #ifndef MDT_SQL_FIELD_HANDLER_H

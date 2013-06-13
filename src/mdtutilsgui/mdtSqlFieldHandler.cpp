@@ -45,8 +45,6 @@ mdtSqlFieldHandler::~mdtSqlFieldHandler()
 
 void mdtSqlFieldHandler::setField(const QSqlField &field)
 {
-  qDebug() << "mdtSqlFieldHandler::setField(): " << field;
-  qDebug() << "-> requiredStatus(): " << field.requiredStatus();
   pvSqlField = field;
   setDataWidgetAttributes();
 }
@@ -86,7 +84,6 @@ void mdtSqlFieldHandler::setDataWidget(QLineEdit *widget)
   clear();
   pvLineEdit = widget;
   setDataWidgetAttributes();
-  ///connect(widget, SIGNAL(textChanged(const QString&)), this, SLOT(onDataEdited(const QString&)));
   connect(widget, SIGNAL(textEdited(const QString&)), this, SLOT(onDataEdited(const QString&)));
 }
 
@@ -145,7 +142,6 @@ void mdtSqlFieldHandler::clear()
   pvIsNull = true;
   pvIsReadOnly = false;
   pvDataEdited = false;
-  ///pvUpdatingDataFromModel = false;
 }
 
 void mdtSqlFieldHandler::clearWidgetData()
@@ -177,8 +173,6 @@ bool mdtSqlFieldHandler::dataWasEdited() const
 
 bool mdtSqlFieldHandler::checkBeforeSubmit()
 {
-  qDebug() << "mdtSqlFieldHandler::checkBeforeSubmit() ...";
-  qDebug() << "-> field: " << pvSqlField.name() << " , Null: " << pvIsNull;
   // If Null flag is set, we clear widget
   if(pvIsNull){
     clearDataWidget();
@@ -186,28 +180,11 @@ bool mdtSqlFieldHandler::checkBeforeSubmit()
   // Check the requiered state
   if((pvSqlField.requiredStatus() == QSqlField::Required)&&(pvIsNull)){
     setDataWidgetNotOk(tr("This field is requiered"));
-    qDebug() << "-> ERR: Null on requiered field";
     return false;
   }
 
-  qDebug() << "-> Ok";
   return true;
 }
-
-/**
-void mdtSqlFieldHandler::onCurrentIndexChanged(int index)
-{
-  ///pvUpdatingDataFromModel = true;
-}
-*/
-
-/**
-void mdtSqlFieldHandler::clearDataEditedFlags()
-{
-  qDebug() << "mdtSqlFieldHandler::clearDataEditedFlags() ...";
-  pvDataEdited = false;
-}
-*/
 
 void mdtSqlFieldHandler::updateFlags()
 {
@@ -224,8 +201,6 @@ void mdtSqlFieldHandler::updateFlags()
 
 void mdtSqlFieldHandler::onDataEdited(const QString &text)
 {
-  qDebug() << "mdtSqlFieldHandler::onDataEdited() ...";
-  qDebug() << "-> data: " << text;
   // Set the null flag
   if(text.trimmed().isEmpty()){
     pvIsNull = true;
@@ -233,21 +208,11 @@ void mdtSqlFieldHandler::onDataEdited(const QString &text)
     pvIsNull = false;
   }
   // Set the data edited flag
-  ///if(!pvIsNull){
-    /**
-  if(pvUpdatingDataFromModel){
-    pvDataEdited = false;
-    pvUpdatingDataFromModel = false;
-  }else{
-    */
-    if(!pvDataEdited){
-      pvDataEdited = true;
-      qDebug() << "mdtSqlFieldHandler: emit dataEdited()";
-      emit dataEdited();
-    }
-  ///}
+  if(!pvDataEdited){
+    pvDataEdited = true;
+    emit dataEdited();
+  }
   setDataWidgetOk();
-  ///}
 }
 
 void mdtSqlFieldHandler::onDataEdited(bool state)
@@ -269,8 +234,6 @@ void mdtSqlFieldHandler::clearDataWidget()
 
 void mdtSqlFieldHandler::setDataWidgetAttributes()
 {
-  qDebug() << "mdtSqlFieldHandler::setDataWidgetAttributes() field: " << pvSqlField;
-  qDebug() << "-> RequiredStatus: " << pvSqlField.requiredStatus();
   // Setup line edit (if not null)
   if(pvLineEdit != 0){
     // Max length

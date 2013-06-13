@@ -42,9 +42,7 @@ mdtSqlFormWidget::mdtSqlFormWidget(QWidget *parent)
 
 mdtSqlFormWidget::~mdtSqlFormWidget()
 {
-  qDebug() << "mdtSqlFormWidget::~mdtSqlFormWidget() ...";
   qDeleteAll(pvFieldHandlers);
-  qDebug() << "mdtSqlFormWidget::~mdtSqlFormWidget() DONE";
 }
 
 void mdtSqlFormWidget::mapFormWidgets()
@@ -142,7 +140,7 @@ bool mdtSqlFormWidget::doSubmit()
 
   // Remember current row (will be lost during submit)
   row = pvWidgetMapper->currentIndex();
-  qDebug() << "SAV: mapper current row (A): " << pvWidgetMapper->currentIndex();
+  qDebug() << "SAVE - row: " << row;
 
   // Do some check before real submit
   if(!checkBeforeSubmit()){
@@ -153,7 +151,6 @@ bool mdtSqlFormWidget::doSubmit()
   }
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper->submit()){
-    qDebug() << "mdtSqlFormWidget::submit(): Error handling not implemented !!!!!!!!!!!!!!!!!!!!";
     return false;
   }
   /*
@@ -166,32 +163,14 @@ bool mdtSqlFormWidget::doSubmit()
     qDebug() << "-> Error: " << pvWidgetMapper->model()->lastError();
     return false;
   }
-  ///pvInsertionPending = false;
   // Go back to current row
   pvWidgetMapper->setCurrentIndex(row);
-  qDebug() << "SAV: current row (B): " << pvWidgetMapper->currentIndex();
 
   return true;
 }
 
 bool mdtSqlFormWidget::doRevert()
 {
-  /*
-   * We have 2 cases of revert:
-   *  - A insertion is pending (currently not submitted to model)
-   *  - We are editing a row
-   *
-   * If a insertion is pending, we must delete new inserted row.
-   * For editing, we call widget mapper's revert() method,
-   *  wich will repopulate widgets with model's data
-   */
-  /**
-  if(pvInsertionPending){
-    remove();
-  }else{
-    pvWidgetMapper->revert();
-  }
-  */
   pvWidgetMapper->revert();
 
   return true;
@@ -208,7 +187,6 @@ bool mdtSqlFormWidget::doInsert()
   pvWidgetMapper->model()->insertRow(row);
   pvWidgetMapper->setCurrentIndex(row);
   clearWidgets();
-  ///pvInsertionPending = true;
 
   return true;
 }
@@ -227,8 +205,6 @@ bool mdtSqlFormWidget::doRevertNewRow()
 
   int row;
 
-  qDebug() << "mdtSqlFormWidget::doRevertNewRow() , rowCount (A): " << pvWidgetMapper->model()->rowCount();
-  
   // Remeber current row and remove it
   row = pvWidgetMapper->currentIndex();
   if(!pvWidgetMapper->model()->removeRow(row)){
@@ -237,10 +213,8 @@ bool mdtSqlFormWidget::doRevertNewRow()
   }
   // Data was never submit to model, we simply go to last row
   clearWidgets();
-  pvWidgetMapper->setCurrentIndex(qMin(row, pvWidgetMapper->model()->rowCount()) - 1);
+  pvWidgetMapper->setCurrentIndex(qMin(row, pvWidgetMapper->model()->rowCount()-1));
 
-  qDebug() << "mdtSqlFormWidget::doRevertNewRow() , rowCount (B): " << pvWidgetMapper->model()->rowCount();
-  
   return true;
 }
 
@@ -252,19 +226,11 @@ bool mdtSqlFormWidget::doRemove()
 
   // Remeber current row (will be lost during submit)
   row = pvWidgetMapper->currentIndex();
+  qDebug() << "DEL - Current row: " << row;
   if(!pvWidgetMapper->model()->removeRow(row)){
     qDebug() << "mdtSqlFormWidget::doRemove(): removeRow() failed Error handling not implemented !!!!!!!!!!!!!!!!!!!!";
     return false;
   }
-  // If a insertion is pending, it was never submitted, so we are finished here
-  /**
-  if(pvInsertionPending){
-    pvInsertionPending = false;
-    clearWidgets();
-    pvWidgetMapper->setCurrentIndex(qMin(row, pvWidgetMapper->model()->rowCount()) - 1);
-    return;
-  }
-  */
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper->submit()){
     qDebug() << "mdtSqlFormWidget::doRemove(): submit() failed Error handling not implemented !!!!!!!!!!!!!!!!!!!!";
@@ -280,9 +246,16 @@ bool mdtSqlFormWidget::doRemove()
     qDebug() << "-> Error: " << pvWidgetMapper->model()->lastError();
     return false;
   }
-  ///pvInsertionPending = false;
   // Go back to current row
-  pvWidgetMapper->setCurrentIndex(qMin(row, pvWidgetMapper->model()->rowCount()) - 1);
+  row = qMin(row, pvWidgetMapper->model()->rowCount()-1);
+  if(row < 0){
+    clearWidgets();
+    setWidgetsEnabled(false);
+  }else{
+    pvWidgetMapper->setCurrentIndex(row);
+  }
+  qDebug() << "DEL done - Current row: " << row;
+  
 
   return true;
 }
@@ -295,6 +268,20 @@ void mdtSqlFormWidget::clearWidgets()
   for(i=0; i<pvFieldHandlers.size(); ++i){
     Q_ASSERT(pvFieldHandlers.at(i) != 0);
     pvFieldHandlers.at(i)->clearWidgetData();
+  }
+}
+
+void mdtSqlFormWidget::setWidgetsEnabled(bool enabled)
+{
+  int i;
+  QWidget *w;
+
+  for(i=0; i<pvFieldHandlers.size(); ++i){
+    Q_ASSERT(pvFieldHandlers.at(i) != 0);
+    w = pvFieldHandlers.at(i)->dataWidget();
+    if(w != 0){
+      w->setEnabled(enabled);
+    }
   }
 }
 

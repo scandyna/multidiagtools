@@ -23,6 +23,7 @@
 
 #include "mdtTest.h"
 #include <QFileInfo>
+#include <QMessageBox>
 
 class mdtDatabaseTest : public mdtTest
 {
@@ -41,6 +42,12 @@ class mdtDatabaseTest : public mdtTest
 
   // Will Accept/reject the application's modal widget if not null
   void acceptModalDialog();
+  void rejectModalDialog();
+  // Simulate the user clicking on a button in a QMessageBox
+  void clickMessageBoxButton(QMessageBox::StandardButton button);
+  void clickMessageBoxButtonYes();
+  void clickMessageBoxButtonNo();
+  void clickMessageBoxButtonCancel();
 
   /*
    * Some old tests ...
