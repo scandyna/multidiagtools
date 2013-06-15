@@ -21,6 +21,8 @@
 #include "mdtSqlWindow.h"
 #include "mdtAbstractSqlWidget.h"
 #include <QAction>
+#include <QCloseEvent>
+#include <QMessageBox>
 
 mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
  : QMainWindow(parent, flags)
@@ -60,6 +62,12 @@ void mdtSqlWindow::enableNavigation()
   actNavToPrevious = new QAction("<", this);
   actNavToNext = new QAction(">", this);
   actNavToLast = new QAction(">>|", this);
+  // Connect actions enable/disable
+  connect(sqlWidget, SIGNAL(toFirstEnabledStateChanged(bool)), actNavToFirst, SLOT(setEnabled(bool)));
+  connect(sqlWidget, SIGNAL(toPreviousEnabledStateChanged(bool)), actNavToPrevious, SLOT(setEnabled(bool)));
+  connect(sqlWidget, SIGNAL(toNextEnabledStateChanged(bool)), actNavToNext, SLOT(setEnabled(bool)));
+  connect(sqlWidget, SIGNAL(toLastEnabledStateChanged(bool)), actNavToLast, SLOT(setEnabled(bool)));
+  // Connect actions triggers
   connect(actNavToFirst, SIGNAL(triggered()), sqlWidget, SLOT(toFirst()));
   connect(actNavToPrevious, SIGNAL(triggered()), sqlWidget, SLOT(toPrevious()));
   connect(actNavToNext, SIGNAL(triggered()), sqlWidget, SLOT(toNext()));
@@ -94,6 +102,12 @@ void mdtSqlWindow::enableEdition()
   actSubmit = new QAction(tr("Save"), this);
   actRevert = new QAction(tr("Cancel"), this);
   actRemove = new QAction(tr("Delete"), this);
+  // Connect actions enable/disable
+  connect(sqlWidget, SIGNAL(insertEnabledStateChanged(bool)), actInsert, SLOT(setEnabled(bool)));
+  connect(sqlWidget, SIGNAL(submitEnabledStateChanged(bool)), actSubmit, SLOT(setEnabled(bool)));
+  connect(sqlWidget, SIGNAL(revertEnabledStateChanged(bool)), actRevert, SLOT(setEnabled(bool)));
+  connect(sqlWidget, SIGNAL(removeEnabledStateChanged(bool)), actRemove, SLOT(setEnabled(bool)));
+  // Connect actions triggers
   connect(actInsert, SIGNAL(triggered()), sqlWidget, SLOT(insert()));
   connect(actSubmit, SIGNAL(triggered()), sqlWidget, SLOT(submit()));
   connect(actRevert, SIGNAL(triggered()), sqlWidget, SLOT(revert()));
@@ -113,3 +127,31 @@ void mdtSqlWindow::disableEdition()
 {
 }
 
+void mdtSqlWindow::closeEvent(QCloseEvent *event)
+{
+  Q_ASSERT(event != 0);
+
+  if(centralWidget() == 0){
+    event->accept();
+    return;
+  }
+  // Get SQL widget
+  mdtAbstractSqlWidget *sqlWidget;
+  sqlWidget = dynamic_cast<mdtAbstractSqlWidget*>(centralWidget());
+  if(sqlWidget == 0){
+    event->accept();
+    return;
+  }
+  // Warn the user if something is to save/revert
+  if(sqlWidget->currentState() != mdtAbstractSqlWidget::Visualizing){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Current record was modified."));
+    msgBox.setInformativeText(tr("Please save or cancel your modifications before closing the edition window."));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.exec();
+    event->ignore();
+  }else{
+    event->accept();
+  }
+}

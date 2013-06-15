@@ -318,7 +318,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QTest::qWait(50);
   sqlFormWidget->setModel(&model);
   form.setupUi(sqlFormWidget);
-  sqlFormWidget->mapFormWidgets();
+  sqlFormWidget->mapFormWidgets("fld_first_name");
   // Setup window
   window.setSqlWidget(sqlFormWidget);
   window.enableNavigation();
@@ -415,8 +415,10 @@ void mdtDatabaseTest::sqlFormWidgetTest()
    * We cannot check now, beacuse new row was inserted in model
    * We will revert, then check that new inserted row is suppressed
    */
+  // Catch the message box that will pop-up and click Yes button
+  QTimer::singleShot(50, this, SLOT(clickMessageBoxButtonYes()));
   sqlFormWidget->revert();
-  QTest::qWait(50);
+  QTest::qWait(100);
   QVERIFY(model.rowCount() == rowCount);
   /*
    * Check edition
@@ -485,11 +487,73 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QCOMPARE(model.rowCount(), (rowCount-1));
   rowCount = model.rowCount();
   QVERIFY(leFirstName->text() != data.toString());
+  // Remove all rows - prepare for next tests
+  while(model.rowCount() > 0){
+    // Catch the message box that will pop-up and click Yes button
+    QTimer::singleShot(50, this, SLOT(clickMessageBoxButtonYes()));
+    sqlFormWidget->remove();
+    QTest::qWait(100);
+  }
+  // Check that widgets are empty and disabled
+  QVERIFY(leFirstName->text().isEmpty());
+  QVERIFY(!leFirstName->isEnabled());
+  QVERIFY(leRemarks->text().isEmpty());
+  QVERIFY(!leRemarks->isEnabled());
   /*
    * Check index changing on unsaved data
    *  - One time on accepting warning message box (-> submit, ok, ...)
    *  - One time rejecting warning message box
    */
+  // Insert a record
+  QTest::qWait(50);
+  sqlFormWidget->insert();
+  QTest::qWait(50);
+  QVERIFY(leFirstName->isEnabled());
+  QVERIFY(leFirstName->text().isEmpty());
+  QVERIFY(leRemarks->isEnabled());
+  QVERIFY(leRemarks->text().isEmpty());
+  leFirstName->clear();
+  QTest::keyClicks(leFirstName, "ABCD");
+  leRemarks->clear();
+  QTest::keyClicks(leRemarks, "1234");
+  sqlFormWidget->submit();
+  QTest::qWait(50);
+  // Insert a record
+  QTest::qWait(50);
+  sqlFormWidget->insert();
+  QTest::qWait(50);
+  QVERIFY(leFirstName->isEnabled());
+  QVERIFY(leFirstName->text().isEmpty());
+  QVERIFY(leRemarks->isEnabled());
+  QVERIFY(leRemarks->text().isEmpty());
+  leFirstName->clear();
+  QTest::keyClicks(leFirstName, "EFGH");
+  leRemarks->clear();
+  QTest::keyClicks(leRemarks, "5678");
+  // Try to go to previous row - Catch message box and click Ok
+  QTimer::singleShot(50, this, SLOT(clickMessageBoxButtonOk()));
+  sqlFormWidget->toPrevious();
+  QTest::qWait(100);
+  // Check that we are allways in second row and save data
+  QCOMPARE(leFirstName->text(), QString("EFGH"));
+  QCOMPARE(leRemarks->text(), QString("5678"));
+  sqlFormWidget->submit();
+  QTest::qWait(50);
+  // Go back and check that we are back to first row
+  sqlFormWidget->toPrevious();
+  QTest::qWait(50);
+  QCOMPARE(leFirstName->text(), QString("ABCD"));
+  QCOMPARE(leRemarks->text(), QString("1234"));
+  // Go forward and check that second row was saved
+  sqlFormWidget->toNext();
+  QTest::qWait(50);
+  QCOMPARE(leFirstName->text(), QString("EFGH"));
+  QCOMPARE(leRemarks->text(), QString("5678"));
+
+
+  
+  sqlFormWidget->submit();
+  QTest::qWait(50);
 
   
   
@@ -533,6 +597,11 @@ void mdtDatabaseTest::clickMessageBoxButtonNo()
 void mdtDatabaseTest::clickMessageBoxButtonCancel()
 {
   clickMessageBoxButton(QMessageBox::Cancel);
+}
+
+void mdtDatabaseTest::clickMessageBoxButtonOk()
+{
+  clickMessageBoxButton(QMessageBox::Ok);
 }
 
 void mdtDatabaseTest::acceptModalDialog()

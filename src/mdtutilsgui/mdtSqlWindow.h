@@ -27,6 +27,7 @@
 
 class mdtAbstractSqlWidget;
 class QAction;
+class QCloseEvent;
 
 /*! \brief Main window for a database table view/editor
  *
@@ -93,6 +94,10 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
   void disableEdition();
 
  private:
+
+  /*! \brief Give a chance to the user to save data before close
+   */
+  void closeEvent(QCloseEvent *event);
 
   QAction *actSubmit;
   QAction *actRevert;

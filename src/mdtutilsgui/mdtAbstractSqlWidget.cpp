@@ -22,12 +22,14 @@
 #include <QState>
 #include <QStateMachine>
 #include <QMessageBox>
+#include <QSqlTableModel>
 
 #include <QDebug>
 
 mdtAbstractSqlWidget::mdtAbstractSqlWidget(QWidget *parent)
  : QWidget(parent)
 {
+  pvModel = 0;
   buildStateMachine();
 }
 
@@ -41,7 +43,26 @@ void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
   Q_ASSERT(!pvStateMachine->isRunning());
 
   doSetModel(model);
+  pvModel = model;
   pvStateMachine->start();
+}
+
+QSqlTableModel *mdtAbstractSqlWidget::model()
+{
+  return pvModel;
+}
+
+int mdtAbstractSqlWidget::rowCount() const
+{
+  Q_ASSERT(pvModel != 0);
+
+  return pvModel->rowCount();
+}
+
+mdtAbstractSqlWidget::state_t mdtAbstractSqlWidget::currentState() const
+{
+  qDebug() << "Current state: " << pvCurrentState;
+  return pvCurrentState;
 }
 
 void mdtAbstractSqlWidget::submit()
@@ -67,16 +88,38 @@ void mdtAbstractSqlWidget::remove()
 
 void mdtAbstractSqlWidget::onStateVisualizingEntered()
 {
+  pvCurrentState = Visualizing;
   qDebug() << __FUNCTION__;
+  emit insertEnabledStateChanged(true);
+  emit removeEnabledStateChanged(true);
+}
+
+void mdtAbstractSqlWidget::onStateVisualizingExited()
+{
+  qDebug() << __FUNCTION__;
+  emit insertEnabledStateChanged(false);
+  emit removeEnabledStateChanged(false);
 }
 
 void mdtAbstractSqlWidget::onStateEditingEntered()
 {
   qDebug() << __FUNCTION__;
+  pvCurrentState = Editing;
+  emit submitEnabledStateChanged(true);
+  emit revertEnabledStateChanged(true);
+}
+
+void mdtAbstractSqlWidget::onStateEditingExited()
+{
+  qDebug() << __FUNCTION__;
+  emit submitEnabledStateChanged(false);
+  emit revertEnabledStateChanged(false);
+  emit stateEditingExited();
 }
 
 void mdtAbstractSqlWidget::onStateSubmittingEntered()
 {
+  pvCurrentState = Submitting;
   qDebug() << __FUNCTION__;
 
   if(doSubmit()){
@@ -88,17 +131,35 @@ void mdtAbstractSqlWidget::onStateSubmittingEntered()
 
 void mdtAbstractSqlWidget::onStateRevertingEntered()
 {
+  int ret;
+  QMessageBox msgBox;
+
+  pvCurrentState = Reverting;
   qDebug() << __FUNCTION__;
 
-  if(doRevert()){
-    emit operationSucceed();
-  }else{
-    emit errorOccured();
+  // We ask confirmation to the user
+  msgBox.setText(tr("You choosed to not save modification. This will restore data from database."));
+  msgBox.setInformativeText(tr("Do you really want to loose your modification ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  ret = msgBox.exec();
+  switch(ret){
+    case QMessageBox::Yes:
+      if(doRevert()){
+        emit operationSucceed();
+      }else{
+        emit errorOccured();
+      }
+      break;
+    default:
+      emit errorOccured();
   }
 }
 
 void mdtAbstractSqlWidget::onStateInsertingEntered()
 {
+  pvCurrentState = Inserting;
   qDebug() << __FUNCTION__;
 
   if(doInsert()){
@@ -111,11 +172,23 @@ void mdtAbstractSqlWidget::onStateInsertingEntered()
 
 void mdtAbstractSqlWidget::onStateEditingNewRowEntered()
 {
+  pvCurrentState = EditingNewRow;
   qDebug() << __FUNCTION__;
+  emit submitEnabledStateChanged(true);
+  emit revertEnabledStateChanged(true);
+}
+
+void mdtAbstractSqlWidget::onStateEditingNewRowExited()
+{
+  qDebug() << __FUNCTION__;
+  emit submitEnabledStateChanged(false);
+  emit revertEnabledStateChanged(false);
+  emit stateEditingNewRowExited();
 }
 
 void mdtAbstractSqlWidget::onStateSubmittingNewRowEntered()
 {
+  pvCurrentState = SubmittingNewRow;
   qDebug() << __FUNCTION__;
 
   if(doSubmitNewRow()){
@@ -127,22 +200,47 @@ void mdtAbstractSqlWidget::onStateSubmittingNewRowEntered()
 
 void mdtAbstractSqlWidget::onStateRevertingNewRowEntered()
 {
+  int ret;
+  QMessageBox msgBox;
+
+  pvCurrentState = RevertingNewRow;
   qDebug() << __FUNCTION__;
 
-  if(doRevertNewRow()){
-    emit operationSucceed();
-  }else{
-    emit errorOccured();
+  // We ask confirmation to the user
+  msgBox.setText(tr("You choosed to not save data."));
+  msgBox.setInformativeText(tr("Do you really want to loose new record ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  ret = msgBox.exec();
+  switch(ret){
+    case QMessageBox::Yes:
+      if(doRevertNewRow()){
+        emit operationSucceed();
+      }else{
+        emit errorOccured();
+      }
+      break;
+    default:
+      emit errorOccured();
   }
 }
 
 void mdtAbstractSqlWidget::onStateRemovingEntered()
 {
+  Q_ASSERT(pvModel != 0);
+
   qDebug() << __FUNCTION__;
 
   int ret;
   QMessageBox msgBox;
 
+  pvCurrentState = Removing;
+  // If no row exists, we do nothing
+  if(rowCount() < 1){
+    emit operationSucceed();
+    return;
+  }
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to delete some data."));
   msgBox.setInformativeText(tr("Do you really want to delete current record ?"));
@@ -155,6 +253,7 @@ void mdtAbstractSqlWidget::onStateRemovingEntered()
       if(doRemove()){
         emit operationSucceed();
       }
+      break;
     default:
       emit operationSucceed();
   }
@@ -175,6 +274,7 @@ void mdtAbstractSqlWidget::buildStateMachine()
   pvStateRemoving = new QState;
   // Setup transitions
   connect(pvStateVisualizing, SIGNAL(entered()), this, SLOT(onStateVisualizingEntered()));
+  connect(pvStateVisualizing, SIGNAL(exited()), this, SLOT(onStateVisualizingExited()));
   pvStateVisualizing->addTransition(this, SIGNAL(dataEdited()), pvStateEditing);
   pvStateVisualizing->addTransition(this, SIGNAL(insertTriggered()), pvStateInserting);
   pvStateVisualizing->addTransition(this, SIGNAL(removeTriggered()), pvStateRemoving);
@@ -182,7 +282,7 @@ void mdtAbstractSqlWidget::buildStateMachine()
   pvStateReverting->addTransition(this, SIGNAL(operationSucceed()), pvStateVisualizing);
   pvStateReverting->addTransition(this, SIGNAL(errorOccured()), pvStateEditing);
   connect(pvStateEditing, SIGNAL(entered()), this, SLOT(onStateEditingEntered()));
-  connect(pvStateEditing, SIGNAL(exited()), this, SIGNAL(onStateEditingExited()));
+  connect(pvStateEditing, SIGNAL(exited()), this, SLOT(onStateEditingExited()));
   pvStateEditing->addTransition(this, SIGNAL(revertTriggered()), pvStateReverting);
   pvStateEditing->addTransition(this, SIGNAL(submitTriggered()), pvStateSubmitting);
   connect(pvStateSubmitting, SIGNAL(entered()), this, SLOT(onStateSubmittingEntered()));
@@ -196,7 +296,7 @@ void mdtAbstractSqlWidget::buildStateMachine()
   ///pvStateInserting->addTransition(this, SIGNAL(submitTriggered()), pvStateSubmittingNewRow);
 
   connect(pvStateEditingNewRow, SIGNAL(entered()), this, SLOT(onStateEditingNewRowEntered()));
-  connect(pvStateEditingNewRow, SIGNAL(exited()), this, SIGNAL(onStateEditingNewRowExited()));
+  connect(pvStateEditingNewRow, SIGNAL(exited()), this, SLOT(onStateEditingNewRowExited()));
   pvStateEditingNewRow->addTransition(this, SIGNAL(revertTriggered()), pvStateRevertingNewRow);
   pvStateEditingNewRow->addTransition(this, SIGNAL(submitTriggered()), pvStateSubmittingNewRow);
 
@@ -224,5 +324,14 @@ void mdtAbstractSqlWidget::buildStateMachine()
   pvStateMachine->addState(pvStateSubmittingNewRow);
   pvStateMachine->addState(pvStateRemoving);
   pvStateMachine->setInitialState(pvStateVisualizing);
+  pvCurrentState = Visualizing;
+  emit submitEnabledStateChanged(false);
+  emit revertEnabledStateChanged(false);
+  emit insertEnabledStateChanged(false);
+  emit removeEnabledStateChanged(false);
+  emit toFirstEnabledStateChanged(false);
+  emit toLastEnabledStateChanged(false);
+  emit toNextEnabledStateChanged(false);
+  emit toPreviousEnabledStateChanged(false);
   ///pvStateMachine->start();
 }

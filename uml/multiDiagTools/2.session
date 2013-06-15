@@ -1,7 +1,7 @@
 window_sizes 1280 1001 356 918 923 0
 diagrams
   active  statediagram_ref 686594 // mdtAbstractSqlWidgetStateMachine
-    918 923 100 18 0 0
+    918 923 100 18 0 43
   classdiagram_ref 666754 // mdtSqlFieldHandler
     794 738 100 4 0 0
 end

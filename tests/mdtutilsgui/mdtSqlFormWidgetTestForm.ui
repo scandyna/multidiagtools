@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>325</width>
-    <height>65</height>
+    <width>330</width>
+    <height>67</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,6 +36,10 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>fld_first_name</tabstop>
+  <tabstop>fld_remarks</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

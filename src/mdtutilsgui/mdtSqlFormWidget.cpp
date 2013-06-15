@@ -38,6 +38,7 @@ mdtSqlFormWidget::mdtSqlFormWidget(QWidget *parent)
 {
   pvWidgetMapper = new mdtSqlDataWidgetMapper(this);
   pvWidgetMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+  pvFirstDataWidget = 0;
 }
 
 mdtSqlFormWidget::~mdtSqlFormWidget()
@@ -45,7 +46,7 @@ mdtSqlFormWidget::~mdtSqlFormWidget()
   qDeleteAll(pvFieldHandlers);
 }
 
-void mdtSqlFormWidget::mapFormWidgets()
+void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
 {
   Q_ASSERT(layout() != 0);
   Q_ASSERT(pvWidgetMapper->model() != 0);
@@ -57,9 +58,11 @@ void mdtSqlFormWidget::mapFormWidgets()
   QSqlRecord record;
 
   // Clear previous mapping
+  disconnect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
   qDeleteAll(pvFieldHandlers);
   pvFieldHandlers.clear();
   pvWidgetMapper->clearMapping();
+  pvFirstDataWidget = 0;
   // Search widgets in layout's childs
   for(i=0; i<layout()->count(); ++i){
     w = layout()->itemAt(i)->widget();
@@ -78,14 +81,21 @@ void mdtSqlFormWidget::mapFormWidgets()
           fieldHandler->setField(record.field(fieldIndex));
           fieldHandler->setDataWidget(w);
           ///connect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), fieldHandler, SLOT(onCurrentIndexChanged(int)));
-          connect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), fieldHandler, SLOT(updateFlags()));
+          ///connect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), fieldHandler, SLOT(updateFlags()));
           connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
           /*
            * When we go out from Editing state, we must update flags
            */
-          connect(this, SIGNAL(onStateEditingExited()), fieldHandler, SLOT(updateFlags()));
-          connect(this, SIGNAL(onStateEditingNewRowExited()), fieldHandler, SLOT(updateFlags()));
+          /// \todo Check redoundances with onCurrentIndexChanged()
+          connect(this, SIGNAL(stateEditingExited()), fieldHandler, SLOT(updateFlags()));
+          connect(this, SIGNAL(stateEditingNewRowExited()), fieldHandler, SLOT(updateFlags()));
           pvFieldHandlers.append(fieldHandler);
+          // If this widget is the first in focus chain, ref it
+          qDebug() << "Mapping widget " << w->objectName() << " ...";
+          if(w->objectName() == firstWidgetInTabOrder){
+            qDebug() << "-> First widget : " << w->objectName();
+            pvFirstDataWidget = w;
+          }
         }else{
           w->setEnabled(false);
           mdtError e(MDT_DATABASE_ERROR, "Cannot find field for widget " + w->objectName(), mdtError::Warning);
@@ -95,6 +105,7 @@ void mdtSqlFormWidget::mapFormWidgets()
       }
     }
   }
+  connect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
   pvWidgetMapper->toFirst();
 }
 
@@ -105,21 +116,37 @@ int mdtSqlFormWidget::currentRow() const
 
 void mdtSqlFormWidget::toFirst()
 {
+  if(currentState() != Visualizing){
+    warnUserAboutUnsavedRow();
+    return;
+  }
   pvWidgetMapper->toFirst();
 }
 
 void mdtSqlFormWidget::toLast()
 {
+  if(currentState() != Visualizing){
+    warnUserAboutUnsavedRow();
+    return;
+  }
   pvWidgetMapper->toLast();
 }
 
 void mdtSqlFormWidget::toPrevious()
 {
+  if(currentState() != Visualizing){
+    warnUserAboutUnsavedRow();
+    return;
+  }
   pvWidgetMapper->toPrevious();
 }
 
 void mdtSqlFormWidget::toNext()
 {
+  if(currentState() != Visualizing){
+    warnUserAboutUnsavedRow();
+    return;
+  }
   pvWidgetMapper->toNext();
 }
 
@@ -130,6 +157,50 @@ void mdtSqlFormWidget::doSetModel(QSqlTableModel *model)
   model->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvWidgetMapper->setModel(model);
   pvInsertionPending = false;
+}
+
+void mdtSqlFormWidget::onCurrentIndexChanged(int row)
+{
+  Q_ASSERT(pvWidgetMapper->model() != 0);
+
+  bool widgetsEnabled;
+  mdtSqlFieldHandler *fieldHandler;
+  int i;
+
+  // Check if we have to enable/disable widgets regarding current row
+  if(row < 0){
+    widgetsEnabled = false;
+  }else{
+    widgetsEnabled = true;
+  }
+  qDebug() << "ROW changed, row: " << row << " , will enable widgets: " << widgetsEnabled;
+  // Update widgets
+  for(i=0; i<pvFieldHandlers.size(); ++i){
+    fieldHandler = pvFieldHandlers.at(i);
+    Q_ASSERT(fieldHandler != 0);
+    if(fieldHandler->dataWidget() != 0){
+      fieldHandler->dataWidget()->setEnabled(widgetsEnabled);
+      if(!widgetsEnabled){
+        fieldHandler->clearWidgetData();
+      }
+      fieldHandler->updateFlags();
+    }
+  }
+  // Update navigation states
+  if(row < 1){
+    emit toFirstEnabledStateChanged(false);
+    emit toPreviousEnabledStateChanged(false);
+  }else{
+    emit toFirstEnabledStateChanged(true);
+    emit toPreviousEnabledStateChanged(true);
+  }
+  if(row < (pvWidgetMapper->model()->rowCount()-1)){
+    emit toLastEnabledStateChanged(true);
+    emit toNextEnabledStateChanged(true);
+  }else{
+    emit toLastEnabledStateChanged(false);
+    emit toNextEnabledStateChanged(false);
+  }
 }
 
 bool mdtSqlFormWidget::doSubmit()
@@ -145,9 +216,12 @@ bool mdtSqlFormWidget::doSubmit()
   // Do some check before real submit
   if(!checkBeforeSubmit()){
     QMessageBox msgBox;
-    msgBox.setText("Test");
-    msgBox.exec();
-    return false;
+    msgBox.setText(tr("There are some errors in edited data."));
+    msgBox.setInformativeText( \
+      tr("Fields that are not correct should be highlighted.\nMoving cursor over field with error should display the reason\nPlease correct errors, or cancel modifications, and try again."));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.exec();    return false;
   }
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper->submit()){
@@ -182,11 +256,16 @@ bool mdtSqlFormWidget::doInsert()
 
   int row;
 
+  if(currentState() != Inserting){
+    warnUserAboutUnsavedRow();
+    return false;
+  }
   // Insert new row at end
   row = pvWidgetMapper->model()->rowCount();
   pvWidgetMapper->model()->insertRow(row);
   pvWidgetMapper->setCurrentIndex(row);
   clearWidgets();
+  setFocusOnFirstDataWidget();
 
   return true;
 }
@@ -249,11 +328,18 @@ bool mdtSqlFormWidget::doRemove()
   // Go back to current row
   row = qMin(row, pvWidgetMapper->model()->rowCount()-1);
   if(row < 0){
+    onCurrentIndexChanged(-1);
+  }else{
+    pvWidgetMapper->setCurrentIndex(row);
+  }
+  /**
+  if(row < 0){
     clearWidgets();
     setWidgetsEnabled(false);
   }else{
     pvWidgetMapper->setCurrentIndex(row);
   }
+  */
   qDebug() << "DEL done - Current row: " << row;
   
 
@@ -268,6 +354,14 @@ void mdtSqlFormWidget::clearWidgets()
   for(i=0; i<pvFieldHandlers.size(); ++i){
     Q_ASSERT(pvFieldHandlers.at(i) != 0);
     pvFieldHandlers.at(i)->clearWidgetData();
+  }
+}
+
+void mdtSqlFormWidget::setFocusOnFirstDataWidget()
+{
+  if(pvFirstDataWidget != 0){
+    qDebug() << "Set focus to " << pvFirstDataWidget->objectName();
+    pvFirstDataWidget->setFocus();
   }
 }
 
@@ -307,4 +401,15 @@ bool mdtSqlFormWidget::checkBeforeSubmit()
   }
 
   return allOk;
+}
+
+void mdtSqlFormWidget::warnUserAboutUnsavedRow()
+{
+  QMessageBox msgBox;
+
+  msgBox.setText(tr("Current record was modified."));
+  msgBox.setInformativeText(tr("Please save or cancel your modifications and try again."));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Ok);
+  msgBox.exec();
 }

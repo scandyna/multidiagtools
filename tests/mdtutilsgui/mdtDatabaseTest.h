@@ -48,6 +48,7 @@ class mdtDatabaseTest : public mdtTest
   void clickMessageBoxButtonYes();
   void clickMessageBoxButtonNo();
   void clickMessageBoxButtonCancel();
+  void clickMessageBoxButtonOk();
 
   /*
    * Some old tests ...

@@ -24,6 +24,7 @@
 #include "mdtAbstractSqlWidget.h"
 #include <QWidget>
 #include <QList>
+#include <QString>
 
 class mdtSqlDataWidgetMapper;
 class mdtSqlFieldHandler;
@@ -79,12 +80,15 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    *  extract widgets that have a fld_ prefix as object name.
    *  For each of them, corresponding field will be searched in model (database).
    *
+   * \param firstWidgetInTabOrder It's possible to specify the object name of the first widget in tab order.
+   *                               This is then used by insertion to give this widget the focus.
+   *
    * \pre The custom form's setupUi() must be called on this object before using this method.
    *       Once setupUi() is done, mdtSqlFormWidget object (this) will contain a layout
    *       with all widgets (QLineEdit, QSpinBox, ...).
    * \pre Model must be set with setModel() before using this method.
    */
-  void mapFormWidgets();
+  void mapFormWidgets(const QString &firstWidgetInTabOrder = QString());
 
   /*! \brief Get the current row
    *
@@ -112,6 +116,14 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
   /*! \brief Set next record as current record
    */
   void toNext();
+
+ private slots:
+
+  /*! \brief Does some tasks when entering new row
+   *
+   * Used with widget mapper currentIndexChanged() signal
+   */
+  void onCurrentIndexChanged(int row);
 
  private:
 
@@ -164,6 +176,10 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void clearWidgets();
 
+  /*! \brief Set the focus to first data widget in focus chain (if exists)
+   */
+  void setFocusOnFirstDataWidget();
+
   /*! \brief Set all edit/view widgets enabled/desabled
    */
   void setWidgetsEnabled(bool enabled);
@@ -172,11 +188,16 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   bool checkBeforeSubmit();
 
+  /*! \brief Show a message box to the user to warn him that it should save/revert data
+   */
+  void warnUserAboutUnsavedRow();
+
   Q_DISABLE_COPY(mdtSqlFormWidget);
 
   mdtSqlDataWidgetMapper *pvWidgetMapper;
   QList<mdtSqlFieldHandler*> pvFieldHandlers;
   bool pvInsertionPending;  // Used by insert() , remove() and revert()
+  QWidget *pvFirstDataWidget;  // Keep trace of first data edit/view widget in focus chain
 };
 
 #endif  // #ifndef MDT_SQL_FORM_WIDGET_H

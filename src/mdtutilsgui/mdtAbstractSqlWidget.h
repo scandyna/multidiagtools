@@ -26,6 +26,7 @@
 class QSqlTableModel;
 class QState;
 class QStateMachine;
+class QSqlTableModel;
 
 /*! \brief Base class to create database table GUI
  *
@@ -48,6 +49,7 @@ class mdtAbstractSqlWidget : public QWidget
                 Editing,          /*!< Editing state */
                 Submitting,       /*!< Submitting state */
                 Inserting,        /*!< Inserting state */
+                EditingNewRow,    /*!< Editing a new row */
                 RevertingNewRow,  /*!< RevertingNewRow state */
                 SubmittingNewRow, /*!< SubmittingNewRow state */
                 Removing          /*!< Removing state */
@@ -72,6 +74,12 @@ class mdtAbstractSqlWidget : public QWidget
    */
   void setModel(QSqlTableModel *model);
 
+  /*! \brief Get current model
+   *
+   * Can return a null pointer if model was not set.
+   */
+  QSqlTableModel *model();
+
   /*! \brief Get the current row
    *
    * Current row can be the currently selected row
@@ -81,6 +89,16 @@ class mdtAbstractSqlWidget : public QWidget
    * Subclass must implement this method.
    */
   virtual int currentRow() const = 0;
+
+  /*! \brief Get row count
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  int rowCount() const;
+
+  /*! \brief Get current state
+   */
+  state_t currentState() const;
 
  public slots:
 
@@ -208,6 +226,62 @@ class mdtAbstractSqlWidget : public QWidget
 
  signals:
 
+  /*! \brief Emitted when toFirst() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void toFirstEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when toLast() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void toLastEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when toNext() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void toNextEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when toPrevious() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void toPreviousEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when submit() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void submitEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when revert() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void revertEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when insert() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void insertEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when remove() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void removeEnabledStateChanged(bool enabled);
+
   /*! \brief Emitted when submit() was called
    */
   void submitTriggered();
@@ -238,11 +312,11 @@ class mdtAbstractSqlWidget : public QWidget
 
   /*! \brief Emitted when Editing state was exited
    */
-  void onStateEditingExited();
+  void stateEditingExited();
 
   /*! \brief Emitted when Editing state was exited
    */
-  void onStateEditingNewRowExited();
+  void stateEditingNewRowExited();
 
  private slots:
 
@@ -253,12 +327,26 @@ class mdtAbstractSqlWidget : public QWidget
    */
   void onStateVisualizingEntered();
 
+  /*! \brief Activity after Visualizing state entered
+   *
+   * This slot is called from internal state machine
+   *  and should not be used directly.
+   */
+  void onStateVisualizingExited();
+
   /*! \brief Activity after Editing state entered
    *
    * This slot is called from internal state machine
    *  and should not be used directly.
    */
   void onStateEditingEntered();
+
+  /*! \brief Activity after Editing state exited
+   *
+   * This slot is called from internal state machine
+   *  and should not be used directly.
+   */
+  void onStateEditingExited();
 
   /*! \brief Activity after Submitting state entered
    *
@@ -294,6 +382,13 @@ class mdtAbstractSqlWidget : public QWidget
    */
   void onStateEditingNewRowEntered();
 
+  /*! \brief Activity after Editing state exited
+   *
+   * This slot is called from internal state machine
+   *  and should not be used directly.
+   */
+  void onStateEditingNewRowExited();
+
   /*! \brief Activity after SubmittingNewRow state entered
    *
    * Will call doSubmitNewRow().
@@ -327,19 +422,19 @@ class mdtAbstractSqlWidget : public QWidget
    */
   void buildStateMachine();
 
+  QSqlTableModel *pvModel;
   // State machine members
   QState *pvStateVisualizing;
   QState *pvStateReverting;
   QState *pvStateEditing;
   QState *pvStateSubmitting;
   QState *pvStateInserting;
-  
   QState *pvStateEditingNewRow;
-  
   QState *pvStateRevertingNewRow;
   QState *pvStateSubmittingNewRow;
   QState *pvStateRemoving;
   QStateMachine *pvStateMachine;
+  state_t pvCurrentState;
 
   Q_DISABLE_COPY(mdtAbstractSqlWidget);
 };
