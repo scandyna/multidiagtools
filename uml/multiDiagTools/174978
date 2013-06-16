@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 29
+  revision 30
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2712,13 +2712,91 @@ ${inlines}
 	
       end
 
-      classrelation 849666 // pvTableView (<unidirectional association>)
-	relation 840450 --->
+      classrelation 849666 // pvTableView (<directional composition>)
+	relation 840450 *-->
 	  a role_name "pvTableView" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-	    classrelation_ref 849666 // pvTableView (<unidirectional association>)
+	    classrelation_ref 849666 // pvTableView (<directional composition>)
 	  b parent class_ref 638338 // QTableView
+      end
+
+      operation 1314050 "doSetModel"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 174210 // QSqlTableModel
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1314178 "doSubmit"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1314306 "doRevert"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1314434 "doInsert"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1314562 "doSubmitNewRow"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1314690 "doRevertNewRow"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1314818 "doRemove"
+	cpp_virtual private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
       end
     end
 
@@ -6072,6 +6150,29 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 678914 // mdtSqlWindow
+      end
+    end
+
+    artifact 414082 "mdtSqlTableWidget"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 686594 // mdtSqlTableWidget
       end
     end
   end

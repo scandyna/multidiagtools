@@ -26,8 +26,6 @@
 
 class QSqlTableModel;
 
-///#include "mdtSqlTableModel.h"
-
 /*! \brief DataWidget mapper
  */
 class mdtSqlDataWidgetMapper : public QDataWidgetMapper
@@ -48,49 +46,15 @@ class mdtSqlDataWidgetMapper : public QDataWidgetMapper
    */
   void setModel(QSqlTableModel *model);
 
-  /*! \brief Set the model
-   * 
-   * Note that a mdtSqlTableModel instance is requierd, because database fields
-   * attributes are used internally.
-   * \pre model must be a pointer to a valid instance.
-   */
-  ///void setModel(mdtSqlTableModel *model);
-
-  /*! \brief Get the model instance
-   */
-  ///mdtSqlTableModel *model();
-
   /*! \brief Get the model instance
    */
   QSqlTableModel *model();
-
-  /*! \brief Adds a mapping between a widget and a section from the model.
-   * 
-   * This method uses the widget name (objectName), and tries to find
-   * the field (in database) that has the same name.<br>
-   * If field is found, some attributes are set (f.ex: read only, mandatory field, ...).
-   * At last step, QDataWidgetMapper::addMapping() is called.
-   * \pre A valid model must be set with setModel()
-   * \pre widget must be a valid pointer
-   */
-  void addMapping(QWidget *widget, int section);
-
-  /*! \brief Adds a mapping between a widget and a section from the model.
-   * 
-   * \sa addMapping()
-   */
-  void addMapping(QWidget *widget, int section, const QByteArray &propertyName);
 
  private:
 
   // Diseable setModel() with QAbstractItemModel
   void setModel(QAbstractItemModel *model);
 
-  // Set widget's attributes - Used by addMapping()
-  ///void setWidgetAttributes(QWidget *widget, int section);
-
-  ///mdtSqlTableModel *pvSqlTableModel;
-  
   Q_DISABLE_COPY(mdtSqlDataWidgetMapper);
 };
 

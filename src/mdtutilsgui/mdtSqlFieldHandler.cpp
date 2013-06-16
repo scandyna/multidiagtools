@@ -29,7 +29,7 @@
 #include <QString>
 #include <QColor>
 
-#include <QDebug>
+//#include <QDebug>
 
 /// \todo Implement other data editors (now only QLineEdit is implemented)
 

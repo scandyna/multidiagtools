@@ -19,10 +19,12 @@
  **
  ****************************************************************************/
 #include "mdtAbstractSqlWidget.h"
+#include "mdtError.h"
 #include <QState>
 #include <QStateMachine>
 #include <QMessageBox>
 #include <QSqlTableModel>
+#include <QSqlDatabase>
 
 #include <QDebug>
 
@@ -61,7 +63,6 @@ int mdtAbstractSqlWidget::rowCount() const
 
 mdtAbstractSqlWidget::state_t mdtAbstractSqlWidget::currentState() const
 {
-  qDebug() << "Current state: " << pvCurrentState;
   return pvCurrentState;
 }
 
@@ -77,13 +78,86 @@ void mdtAbstractSqlWidget::revert()
 
 void mdtAbstractSqlWidget::insert()
 {
-  qDebug() << __FUNCTION__ << " emit insertTriggered() ...";
   emit insertTriggered();
 }
 
 void mdtAbstractSqlWidget::remove()
 {
   emit removeTriggered();
+}
+
+void mdtAbstractSqlWidget::displayDatabaseError(QSqlError error)
+{
+  Q_ASSERT(pvModel != 0);
+
+  QMessageBox msgBox;
+  QString baseText;
+  QString infoText;
+  QString systemText;
+
+  // Fill base text
+  baseText = tr("A database error occured.");
+  // Fill system text
+  systemText = "Error number: " + QString::number(error.number()) + "\n ";
+  systemText += "DB text: " + error.databaseText() + "\n ";
+  systemText += "Driver text: " + error.driverText();
+  // Fill info text
+  if(pvModel->database().driverName() == "QSQLITE"){
+    infoText = getUserReadableTextFromSqliteError(error);
+  }else if(pvModel->database().driverName() == "QMYSQL"){
+    infoText = getUserReadableTextFromMysqlError(error);
+  }else{
+    infoText = error.text();
+  }
+
+  // Register error
+  mdtError e(MDT_DATABASE_ERROR, baseText + " Table: " + pvModel->tableName(), mdtError::Error);
+  e.setSystemError(error.number(), systemText);
+  MDT_ERROR_SET_SRC(e, "mdtAbstractSqlWidget");
+  e.commit();
+  // Display error
+  msgBox.setText(baseText + "                      ");
+  msgBox.setInformativeText(infoText);
+  msgBox.setDetailedText(systemText);
+  msgBox.setIcon(QMessageBox::Critical);
+  msgBox.setStandardButtons(QMessageBox::Ok);
+  msgBox.exec();
+}
+
+QString mdtAbstractSqlWidget::getUserReadableTextFromSqliteError(const QSqlError &error)
+{
+  QString text;
+
+  switch(error.number()){
+    case 10:  // Disk I/O error
+      text = tr("Cannot update database file.") + "\n";
+      text += tr("If you are working on a removable device (USB key, USB hard drive, ...), please check that it is inserted and try again.") + "\n";
+      text += tr("If your database file is on a remote server, please check network connection and try again.");
+      break;
+    case 19:  // Primary key duplication
+      text = tr("Primary key allready exists (must be unique for the table).") + "\n";
+      break;
+    case 20:  // Data type error
+      text = tr("A field contains invalid data type.") + "\n";
+      text += tr("For example, check that you not typed a char in a numeric field.");
+      break;
+    default:
+      text = error.text();
+  }
+
+  return text;
+}
+
+QString mdtAbstractSqlWidget::getUserReadableTextFromMysqlError(const QSqlError &error)
+{
+  QString text;
+
+  switch(error.number()){
+    default:
+      text = error.text();
+  }
+
+  return text;
 }
 
 void mdtAbstractSqlWidget::onStateVisualizingEntered()
@@ -243,7 +317,7 @@ void mdtAbstractSqlWidget::onStateRemovingEntered()
   }
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to delete some data."));
-  msgBox.setInformativeText(tr("Do you really want to delete current record ?"));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
   msgBox.setIcon(QMessageBox::Warning);
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
   msgBox.setDefaultButton(QMessageBox::No);
@@ -288,29 +362,19 @@ void mdtAbstractSqlWidget::buildStateMachine()
   connect(pvStateSubmitting, SIGNAL(entered()), this, SLOT(onStateSubmittingEntered()));
   pvStateSubmitting->addTransition(this, SIGNAL(operationSucceed()), pvStateVisualizing);
   pvStateSubmitting->addTransition(this, SIGNAL(errorOccured()), pvStateEditing);
-
   connect(pvStateInserting, SIGNAL(entered()), this, SLOT(onStateInsertingEntered()));
   pvStateInserting->addTransition(this, SIGNAL(operationSucceed()), pvStateEditingNewRow);
   pvStateInserting->addTransition(this, SIGNAL(errorOccured()), pvStateVisualizing);
-  ///pvStateInserting->addTransition(this, SIGNAL(revertTriggered()), pvStateRevertingNewRow);
-  ///pvStateInserting->addTransition(this, SIGNAL(submitTriggered()), pvStateSubmittingNewRow);
-
   connect(pvStateEditingNewRow, SIGNAL(entered()), this, SLOT(onStateEditingNewRowEntered()));
   connect(pvStateEditingNewRow, SIGNAL(exited()), this, SLOT(onStateEditingNewRowExited()));
   pvStateEditingNewRow->addTransition(this, SIGNAL(revertTriggered()), pvStateRevertingNewRow);
   pvStateEditingNewRow->addTransition(this, SIGNAL(submitTriggered()), pvStateSubmittingNewRow);
-
   connect(pvStateRevertingNewRow, SIGNAL(entered()), this, SLOT(onStateRevertingNewRowEntered()));
   pvStateRevertingNewRow->addTransition(this, SIGNAL(operationSucceed()), pvStateVisualizing);
-  ///pvStateRevertingNewRow->addTransition(this, SIGNAL(errorOccured()), pvStateInserting);
   pvStateRevertingNewRow->addTransition(this, SIGNAL(errorOccured()), pvStateEditingNewRow);
-  
   connect(pvStateSubmittingNewRow, SIGNAL(entered()), this, SLOT(onStateSubmittingNewRowEntered()));
   pvStateSubmittingNewRow->addTransition(this, SIGNAL(operationSucceed()), pvStateVisualizing);
-  ///pvStateSubmittingNewRow->addTransition(this, SIGNAL(errorOccured()), pvStateInserting);
   pvStateSubmittingNewRow->addTransition(this, SIGNAL(errorOccured()), pvStateEditingNewRow);
-  
-  
   connect(pvStateRemoving, SIGNAL(entered()), this, SLOT(onStateRemovingEntered()));
   pvStateRemoving->addTransition(this, SIGNAL(operationSucceed()), pvStateVisualizing);
   // Add states to state machine and start
@@ -325,6 +389,7 @@ void mdtAbstractSqlWidget::buildStateMachine()
   pvStateMachine->addState(pvStateRemoving);
   pvStateMachine->setInitialState(pvStateVisualizing);
   pvCurrentState = Visualizing;
+  /**
   emit submitEnabledStateChanged(false);
   emit revertEnabledStateChanged(false);
   emit insertEnabledStateChanged(false);
@@ -333,5 +398,5 @@ void mdtAbstractSqlWidget::buildStateMachine()
   emit toLastEnabledStateChanged(false);
   emit toNextEnabledStateChanged(false);
   emit toPreviousEnabledStateChanged(false);
-  ///pvStateMachine->start();
+  */
 }

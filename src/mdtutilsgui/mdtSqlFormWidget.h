@@ -25,6 +25,7 @@
 #include <QWidget>
 #include <QList>
 #include <QString>
+#include <QSqlError>
 
 class mdtSqlDataWidgetMapper;
 class mdtSqlFieldHandler;
@@ -34,7 +35,7 @@ class QSqlTableModel;
  *
  * To create a database table form, Qt offers several classes.
  *  But, if we have to create many forms, we have to deal with
- *  common problems (insertion, feild mapping, etc..).
+ *  common problems (insertion, field mapping, etc..).
  *
  * It's possible to create a form, for example with Qt Designer,
  *  and add needed Widgets (QLineEdit, QSpinBox, ...).
@@ -59,6 +60,8 @@ class QSqlTableModel;
  * Internally, mdtSqlDataWidgetMapper is used together with
  *  mdtSqlFieldHandler.
  *  Errors and user interactions are handled by this class.
+ *
+ * \sa mdtSqlWindow
  */
 class mdtSqlFormWidget : public mdtAbstractSqlWidget
 {
@@ -96,8 +99,6 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    *  in the form view.
    */
   int currentRow() const;
-
-  ///void setForm(QWidget *form);
 
  public slots:
 
@@ -192,11 +193,18 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void warnUserAboutUnsavedRow();
 
+  /*! \brief Display fatal error
+   *
+   * Will display a message box to the user and log error with mdtError system.
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  void displayModelFatalError(QSqlError error);
+
   Q_DISABLE_COPY(mdtSqlFormWidget);
 
   mdtSqlDataWidgetMapper *pvWidgetMapper;
   QList<mdtSqlFieldHandler*> pvFieldHandlers;
-  bool pvInsertionPending;  // Used by insert() , remove() and revert()
   QWidget *pvFirstDataWidget;  // Keep trace of first data edit/view widget in focus chain
 };
 

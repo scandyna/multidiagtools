@@ -40,6 +40,8 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlFormWidgetTest();
 
+  void sqlTableWidgetTest();
+
   // Will Accept/reject the application's modal widget if not null
   void acceptModalDialog();
   void rejectModalDialog();

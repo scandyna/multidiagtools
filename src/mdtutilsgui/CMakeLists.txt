@@ -56,6 +56,7 @@ set (HEADER_FILES
           mdtSqlFieldHandler.h
           mdtAbstractSqlWidget.h
           mdtSqlFormWidget.h
+          mdtSqlTableWidget.h
           mdtSqlWindow.h
           # Essais
           mdtParentChildTableModel.h
@@ -88,6 +89,7 @@ set (SOURCES_FILES
           mdtSqlFieldHandler.cpp
           mdtAbstractSqlWidget.cpp
           mdtSqlFormWidget.cpp
+          mdtSqlTableWidget.cpp
           mdtSqlWindow.cpp
           # Essais
           mdtParentChildTableModel.cpp

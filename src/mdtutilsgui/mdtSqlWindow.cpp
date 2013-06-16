@@ -102,6 +102,11 @@ void mdtSqlWindow::enableEdition()
   actSubmit = new QAction(tr("Save"), this);
   actRevert = new QAction(tr("Cancel"), this);
   actRemove = new QAction(tr("Delete"), this);
+  // As default, functions are disabled
+  actInsert->setEnabled(false);
+  actSubmit->setEnabled(false);
+  actRevert->setEnabled(false);
+  actRemove->setEnabled(false);
   // Connect actions enable/disable
   connect(sqlWidget, SIGNAL(insertEnabledStateChanged(bool)), actInsert, SLOT(setEnabled(bool)));
   connect(sqlWidget, SIGNAL(submitEnabledStateChanged(bool)), actSubmit, SLOT(setEnabled(bool)));

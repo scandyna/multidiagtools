@@ -22,6 +22,8 @@
 #define MDT_ABSTRACT_SQL_WIDGET_H
 
 #include <QWidget>
+#include <QSqlError>
+#include <QString>
 
 class QSqlTableModel;
 class QState;
@@ -223,6 +225,22 @@ class mdtAbstractSqlWidget : public QWidget
    *  what goes wrong to the user and return false.
    */
   virtual bool doRemove() = 0;
+
+  /*! \brief Display a message to the user regarding error
+   *
+   * Internally, error will be logged with mdtError system.
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  void displayDatabaseError(QSqlError error);
+
+  /*! \brief Get message for the user regarding SQLite error number
+   */
+  QString getUserReadableTextFromSqliteError(const QSqlError &error);
+
+  /*! \brief Get message for the user regarding MySql error number
+   */
+  QString getUserReadableTextFromMysqlError(const QSqlError &error);
 
  signals:
 

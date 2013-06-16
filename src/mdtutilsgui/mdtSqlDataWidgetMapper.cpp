@@ -23,12 +23,11 @@
 #include <QSqlField>
 #include <QSqlTableModel>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlDataWidgetMapper::mdtSqlDataWidgetMapper(QObject *parent)
  : QDataWidgetMapper(parent)
 {
-  ///pvSqlTableModel = 0;
 }
 
 mdtSqlDataWidgetMapper::~mdtSqlDataWidgetMapper()
@@ -42,16 +41,6 @@ void mdtSqlDataWidgetMapper::setModel(QSqlTableModel *model)
   QDataWidgetMapper::setModel(model);
 }
 
-/**
-void mdtSqlDataWidgetMapper::setModel(mdtSqlTableModel *model)
-{
-  Q_ASSERT(model != 0);
-
-  pvSqlTableModel = model;
-  QDataWidgetMapper::setModel(model);
-}
-*/
-
 QSqlTableModel *mdtSqlDataWidgetMapper::model()
 {
   /*
@@ -62,33 +51,6 @@ QSqlTableModel *mdtSqlDataWidgetMapper::model()
   return static_cast<QSqlTableModel*>(QDataWidgetMapper::model());
 }
 
-void mdtSqlDataWidgetMapper::addMapping(QWidget *widget, int section)
-{
-  Q_ASSERT(widget != 0);
-  
-  ///setWidgetAttributes(widget, section);
-  QDataWidgetMapper::addMapping(widget, section);
-}
-
-void mdtSqlDataWidgetMapper::addMapping(QWidget *widget, int section, const QByteArray &propertyName)
-{
-  Q_ASSERT(widget != 0);
-}
-
 void mdtSqlDataWidgetMapper::setModel(QAbstractItemModel *model)
 {
 }
-
-/**
-void mdtSqlDataWidgetMapper::setWidgetAttributes(QWidget *widget, int section)
-{
-  Q_ASSERT(widget != 0);
-  Q_ASSERT(pvSqlTableModel != 0);
-
-  QSqlField field;
-
-  ///field = pvSqlTableModel->record().field(section);
-  field = pvSqlTableModel->database().record(pvSqlTableModel->tableName()).field(section);
-  qDebug() << "mdtSqlDataWidgetMapper::setWidgetAttributes() , field: " << field;
-}
-*/

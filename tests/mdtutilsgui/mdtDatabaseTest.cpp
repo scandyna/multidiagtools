@@ -27,6 +27,7 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlFieldHandler.h"
 #include "mdtSqlFormWidget.h"
+#include "mdtSqlTableWidget.h"
 #include "mdtSqlWindow.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
 #include <QSqlDatabase>
@@ -550,13 +551,36 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QCOMPARE(leFirstName->text(), QString("EFGH"));
   QCOMPARE(leRemarks->text(), QString("5678"));
 
+  /*
+   * Play
+   */
+  while(window.isVisible()){
+    QTest::qWait(1000);
+  }
+}
 
-  
-  sqlFormWidget->submit();
+void mdtDatabaseTest::sqlTableWidgetTest()
+{
+  mdtSqlTableWidget *sqlTableWidget;
+  mdtSqlWindow window;
+  QSqlTableModel model;
+  ///QWidget *w;
+  int rowCount;
+  int row;
+  QVariant data;
+
+  // Setup model + form view
+  model.setTable("Client");
+  model.select();
+  sqlTableWidget = new mdtSqlTableWidget;
   QTest::qWait(50);
+  sqlTableWidget->setModel(&model);
+  // Setup window
+  window.setSqlWidget(sqlTableWidget);
+  window.enableNavigation();
+  window.enableEdition();
 
-  
-  
+  window.show();
 
   /*
    * Play
