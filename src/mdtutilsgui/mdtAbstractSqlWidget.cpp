@@ -66,6 +66,14 @@ mdtAbstractSqlWidget::state_t mdtAbstractSqlWidget::currentState() const
   return pvCurrentState;
 }
 
+void mdtAbstractSqlWidget::enableLocalNavigation()
+{
+}
+
+void mdtAbstractSqlWidget::enableLocalEdition()
+{
+}
+
 void mdtAbstractSqlWidget::submit()
 {
   emit submitTriggered();
@@ -306,30 +314,15 @@ void mdtAbstractSqlWidget::onStateRemovingEntered()
 
   qDebug() << __FUNCTION__;
 
-  int ret;
-  QMessageBox msgBox;
-
   pvCurrentState = Removing;
   // If no row exists, we do nothing
   if(rowCount() < 1){
     emit operationSucceed();
     return;
   }
-  // We ask confirmation to the user
-  msgBox.setText(tr("You are about to delete some data."));
-  msgBox.setInformativeText(tr("Do you want to continue ?"));
-  msgBox.setIcon(QMessageBox::Warning);
-  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-  msgBox.setDefaultButton(QMessageBox::No);
-  ret = msgBox.exec();
-  switch(ret){
-    case QMessageBox::Yes:
-      if(doRemove()){
-        emit operationSucceed();
-      }
-      break;
-    default:
-      emit operationSucceed();
+  // Remove
+  if(doRemove()){
+    emit operationSucceed();
   }
 }
 

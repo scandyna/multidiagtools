@@ -26,6 +26,8 @@
 #include <QModelIndex>
 
 class QTableView;
+class QHBoxLayout;
+class QPushButton;
 
 /*! \brief Table view based SQL widget
  *
@@ -51,11 +53,40 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   int currentRow() const;
 
+  /*! \brief Enable local navigation
+   *
+   * Will build a navigation bar
+   *  with |<< < > >>| buttons.
+   *
+   * In normal way, when using mdtSqlWindow,
+   *  local navigation is not needed.
+   *  In master/detail forms, if this widget
+   *  is a details (child) widget and navigation
+   *  is needed, then call this method.
+   */
+  void enableLocalNavigation();
+
+  /*! \brief Enable local edition
+   *
+   * Will add insert/revert/save/delete buttons.
+   *
+   * In normal way, when using mdtSqlWindow,
+   *  local navigation is not needed.
+   *  In master/detail forms, if this widget
+   *  is a details (child) widget and edition
+   *  is needed, then call this method.
+   */
+  void enableLocalEdition();
+
  private slots:
 
   /*! \brief Emit dataEdited()
    */
   void onDataChanged(const QModelIndex &, const QModelIndex &);
+
+  /*! \brief Does some tasks when entering new row
+   */
+  void onCurrentRowChanged(const QModelIndex & current, const QModelIndex & previous);
 
  private:
 
@@ -99,8 +130,17 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
   Q_DISABLE_COPY(mdtSqlTableWidget);
 
   QTableView *pvTableView;
-  ///QSqlTableModel *pvModel;
-
+  QHBoxLayout *pvNavigationLayout;
+  // Navigation buttons
+  QPushButton *pbNavToFirst;
+  QPushButton *pbNavToPrevious;
+  QPushButton *pbNavToNext;
+  QPushButton *pbNavToLast;
+  // Edition buttons
+  QPushButton *pbInsert;
+  QPushButton *pbSubmit;
+  QPushButton *pbRevert;
+  QPushButton *pbRemove;
 };
 
 #endif  // #ifndef MDT_SQL_TABLE_WIDGET_H

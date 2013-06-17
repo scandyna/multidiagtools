@@ -102,6 +102,35 @@ class mdtAbstractSqlWidget : public QWidget
    */
   state_t currentState() const;
 
+  /*! \brief Enable local navigation
+   *
+   * Will build a navigation bar
+   *  with |<< < > >>| buttons.
+   *
+   * In normal way, when using mdtSqlWindow,
+   *  local navigation is not needed.
+   *  In master/detail forms, if this widget
+   *  is a details (child) widget and navigation
+   *  is needed, then call this method.
+   *
+   * This default implementation does nothing.
+   */
+  virtual void enableLocalNavigation();
+
+  /*! \brief Enable local edition
+   *
+   * Will add insert/revert/save/delete buttons.
+   *
+   * In normal way, when using mdtSqlWindow,
+   *  local navigation is not needed.
+   *  In master/detail forms, if this widget
+   *  is a details (child) widget and edition
+   *  is needed, then call this method.
+   *
+   * This default implementation does nothing.
+   */
+  virtual void enableLocalEdition();
+
  public slots:
 
   /*! \brief Submit current record to model
@@ -335,6 +364,17 @@ class mdtAbstractSqlWidget : public QWidget
   /*! \brief Emitted when Editing state was exited
    */
   void stateEditingNewRowExited();
+
+  /*! \brief Emitted when current row has changed
+   *
+   * This is usefull, for example,
+   *  in master/detail forms, to update
+   *  child models filter.
+   *
+   * Subclass must emit this signal
+   *  each time the user selects a new row.
+   */
+  void currentRowChanged(int row);
 
  private slots:
 

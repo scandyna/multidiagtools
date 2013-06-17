@@ -1,6 +1,6 @@
 format 76
 "Qt4" // Qt4
-  revision 50
+  revision 51
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2026,18 +2026,6 @@ ${inlines}
 	    classrelation_ref 491394 // <association>
       end
 
-      classrelation 491522 // <association>
-	relation 491138 ----
-	  a role_name "" multiplicity "0..*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
-"
-	    classrelation_ref 491522 // <association>
-	  b role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 491650 // <association>
-      end
-
       operation 795138 "setModel"
 	public explicit_return_type "void"
 	nparams 1
@@ -2907,9 +2895,6 @@ ${inlines}
 	
       end
 
-      classrelation 491650 // <association>
-	relation_ref 491138 // <association>
-      end
     end
 
     classdiagram 375042 "QDialog"

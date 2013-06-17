@@ -27,7 +27,8 @@
 #include <QString>
 #include <QSqlError>
 
-class mdtSqlDataWidgetMapper;
+///class mdtSqlDataWidgetMapper;
+class QDataWidgetMapper;
 class mdtSqlFieldHandler;
 class QSqlTableModel;
 
@@ -193,17 +194,10 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void warnUserAboutUnsavedRow();
 
-  /*! \brief Display fatal error
-   *
-   * Will display a message box to the user and log error with mdtError system.
-   *
-   * \pre Model must be set with setModel() before using this method.
-   */
-  void displayModelFatalError(QSqlError error);
-
   Q_DISABLE_COPY(mdtSqlFormWidget);
 
-  mdtSqlDataWidgetMapper *pvWidgetMapper;
+  ///mdtSqlDataWidgetMapper *pvWidgetMapper;
+  QDataWidgetMapper *pvWidgetMapper;
   QList<mdtSqlFieldHandler*> pvFieldHandlers;
   QWidget *pvFirstDataWidget;  // Keep trace of first data edit/view widget in focus chain
 };

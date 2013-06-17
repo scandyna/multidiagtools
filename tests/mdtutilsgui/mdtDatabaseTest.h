@@ -56,7 +56,7 @@ class mdtDatabaseTest : public mdtTest
    * Some old tests ...
    */
   void mdtSqlTableModelTest();
-  void mdtSqlDataWidgetMapperTest();
+  ///void mdtSqlDataWidgetMapperTest();
 
   void cleanupTestCase();
 

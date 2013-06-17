@@ -26,6 +26,7 @@
 
 class QSqlTableModel;
 
+/// \note Obselete ?
 /*! \brief DataWidget mapper
  */
 class mdtSqlDataWidgetMapper : public QDataWidgetMapper

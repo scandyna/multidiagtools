@@ -22,7 +22,7 @@
 #include "mdtApplication.h"
 
 #include "mdtSqlTableModel.h"
-#include "mdtSqlDataWidgetMapper.h"
+///#include "mdtSqlDataWidgetMapper.h"
 #include "mdtApplication.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlFieldHandler.h"
@@ -30,6 +30,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlWindow.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
+#include "mdtSqlParentChildWidget.h"
 #include <QSqlDatabase>
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -129,11 +130,17 @@ void mdtDatabaseTest::initTestCase()
 }
 
 /// \todo Make data checks - Nothing is finished !!
+/// \todo Check about ' bugs
 void mdtDatabaseTest::relationsTest()
 {
   QSqlTableModel parentModel;
   QSqlTableModel childModel;
-  mdtSqlRelation relation;
+  mdtSqlRelation *relation;
+  mdtSqlFormWidget *clientWidget;
+  mdtSqlTableWidget *addressWidget;
+  Ui::mdtSqlFormWidgetTestForm form;
+  mdtSqlParentChildWidget *parentChildWidget;
+  mdtSqlWindow window;
 
   // Setup parent model
   parentModel.setTable("Client");
@@ -142,26 +149,38 @@ void mdtDatabaseTest::relationsTest()
   childModel.setTable("Address");
   childModel.select();
   // Setup relation
-  relation.setParentModel(&parentModel);
-  relation.setChildModel(&childModel);
-  QVERIFY(relation.addRelation("id_PK", "id_client_FK"));
+  relation = new mdtSqlRelation;
+  relation->setParentModel(&parentModel);
+  relation->setChildModel(&childModel);
+  QVERIFY(relation->addRelation("id_PK", "id_client_FK"));
 
   // Check data of each model
   
-  // Setup parent view
-  QTableView pv;
-  pv.setModel(&parentModel);
-  QVERIFY(pv.selectionModel() != 0);
-  QObject::connect(pv.selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)), \
-                    &relation, SLOT(setParentCurrentIndex(const QModelIndex&, const QModelIndex&)));
-  // Setup child view
-  QTableView cv;
-  cv.setModel(&childModel);
 
+  // Setup parent form widget
+  clientWidget = new mdtSqlFormWidget;
+  clientWidget->setModel(&parentModel);
+  form.setupUi(clientWidget);
+  clientWidget->mapFormWidgets("fld_first_name");
+  // Setup child table widget
+  addressWidget = new mdtSqlTableWidget;
+  addressWidget->setModel(&childModel);
+
+  // Setup parent/child widget
+  parentChildWidget = new mdtSqlParentChildWidget;
+  parentChildWidget->setParentWidget(clientWidget);
+  parentChildWidget->addChildWidget(addressWidget, relation, "Addresses");
+  ///w.show();
+  // Setup window and add parent/child widget
+  // Setup window
+  window.setSqlWidget(parentChildWidget);
+  window.enableNavigation();
+  window.enableEdition();
+  window.show();
+
+  
   // Play...
-  pv.show();
-  cv.show();
-  while(pv.isVisible()){
+  while(window.isVisible()){
     QTest::qWait(1000);
   }
 }
@@ -573,7 +592,7 @@ void mdtDatabaseTest::sqlTableWidgetTest()
   model.setTable("Client");
   model.select();
   sqlTableWidget = new mdtSqlTableWidget;
-  QTest::qWait(50);
+  ///QTest::qWait(50);
   sqlTableWidget->setModel(&model);
   // Setup window
   window.setSqlWidget(sqlTableWidget);
@@ -658,6 +677,7 @@ void mdtDatabaseTest::mdtSqlTableModelTest()
 {
 }
 
+/**
 void mdtDatabaseTest::mdtSqlDataWidgetMapperTest()
 {
   mdtSqlDataWidgetMapper mapper;
@@ -679,7 +699,7 @@ void mdtDatabaseTest::mdtSqlDataWidgetMapperTest()
   QVERIFY(!id.text().isEmpty());
   QVERIFY(!first_name.text().isEmpty());
 }
-
+*/
 
 
 void mdtDatabaseTest::cleanupTestCase()

@@ -46,7 +46,7 @@ set (HEADER_FILES
           mdtDigitalOutWidget.h
           # Database
           mdtSqlTableModel.h
-          mdtSqlDataWidgetMapper.h
+          #mdtSqlDataWidgetMapper.h
           mdtDataTableItemDelegate.h
           mdtDataTableManager.h
           mdtDataTableModel.h
@@ -57,6 +57,7 @@ set (HEADER_FILES
           mdtAbstractSqlWidget.h
           mdtSqlFormWidget.h
           mdtSqlTableWidget.h
+          mdtSqlParentChildWidget.h
           mdtSqlWindow.h
           # Essais
           mdtParentChildTableModel.h
@@ -76,7 +77,7 @@ set (SOURCES_FILES
           mdtDigitalOutWidget.cpp
           # Database
           mdtSqlTableModel.cpp
-          mdtSqlDataWidgetMapper.cpp
+          #mdtSqlDataWidgetMapper.cpp
           mdtDataTableItemDelegate.cpp
           mdtDataTableManager.cpp
           mdtDataTableModel.cpp
@@ -90,6 +91,7 @@ set (SOURCES_FILES
           mdtAbstractSqlWidget.cpp
           mdtSqlFormWidget.cpp
           mdtSqlTableWidget.cpp
+          mdtSqlParentChildWidget.cpp
           mdtSqlWindow.cpp
           # Essais
           mdtParentChildTableModel.cpp

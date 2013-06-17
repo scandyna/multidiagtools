@@ -1,0 +1,66 @@
+format 76
+
+classcanvas 128002 class_ref 699778 // mdtSqlParentChildWidget
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 12 330 2000
+end
+classcanvas 128130 class_ref 686338 // mdtAbstractSqlWidget
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 636 317 2005
+end
+classcanvas 128258 class_ref 316162 // QWidget
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 91 153 2011
+end
+classcanvas 129154 class_ref 652418 // mdtSqlRelation
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 274 555 2000
+end
+classcanvas 129282 class_ref 174210 // QSqlTableModel
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 274 693 2000
+end
+relationcanvas 128386 relation_ref 839938 // <generalisation>
+  from ref 128130 z 2012 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 866946 // <generalisation>
+  from ref 128002 z 2012 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 867074 // <unidirectional association>
+  decenter_begin 123
+  decenter_end 218
+  from ref 128002 z 2006 to ref 128130
+  role_a_pos 521 299 3000 no_role_b
+  multiplicity_a_pos 601 329 3000 no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 867202 // <unidirectional association>
+  decenter_begin 875
+  decenter_end 779
+  from ref 128002 z 2006 to ref 128130
+  role_a_pos 662 332 3000 no_role_b
+  multiplicity_a_pos 741 362 3000 no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 867330 // <unidirectional association>
+  decenter_begin 170
+  decenter_end 64
+  from ref 129154 z 2001 to ref 129282
+  role_a_pos 245 642 3000 no_role_b
+  multiplicity_a_pos 249 670 3000 no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 867458 // <unidirectional association>
+  decenter_begin 861
+  decenter_end 930
+  from ref 129154 z 2001 to ref 129282
+  role_a_pos 369 649 3000 no_role_b
+  multiplicity_a_pos 358 670 3000 no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 867586 // <unidirectional association>
+  from ref 128002 z 2001 to ref 129154
+  role_a_pos 340 532 3000 no_role_b
+  multiplicity_a_pos 297 532 3000 no_multiplicity_b
+end
+end

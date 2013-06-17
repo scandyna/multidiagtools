@@ -20,9 +20,11 @@
  ****************************************************************************/
 #include "mdtSqlWindow.h"
 #include "mdtAbstractSqlWidget.h"
+#include "mdtSqlParentChildWidget.h"
 #include <QAction>
 #include <QCloseEvent>
 #include <QMessageBox>
+#include <QKeySequence>
 
 mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
  : QMainWindow(parent, flags)
@@ -49,12 +51,25 @@ void mdtSqlWindow::setSqlWidget(mdtAbstractSqlWidget *sqlWidget)
   setCentralWidget(sqlWidget);
 }
 
+void mdtSqlWindow::setSqlWidget(mdtSqlParentChildWidget *sqlWidget)
+{
+  Q_ASSERT(sqlWidget != 0);
+
+  setCentralWidget(sqlWidget);
+}
+
 void mdtSqlWindow::enableNavigation()
 {
   Q_ASSERT(centralWidget() != 0);
 
   // We need a mdtAbstractSqlWidget pointer
   mdtAbstractSqlWidget *sqlWidget = dynamic_cast<mdtAbstractSqlWidget*>(centralWidget());
+  if(sqlWidget == 0){
+    mdtSqlParentChildWidget *pcw = dynamic_cast<mdtSqlParentChildWidget*>(centralWidget());
+    Q_ASSERT(pcw != 0);
+    Q_ASSERT(pcw->parentWidget() != 0);
+    sqlWidget = pcw->parentWidget();
+  }
   Q_ASSERT(sqlWidget != 0);
 
   // Create actions
@@ -95,6 +110,12 @@ void mdtSqlWindow::enableEdition()
 
   // We need a mdtAbstractSqlWidget pointer
   mdtAbstractSqlWidget *sqlWidget = dynamic_cast<mdtAbstractSqlWidget*>(centralWidget());
+  if(sqlWidget == 0){
+    mdtSqlParentChildWidget *pcw = dynamic_cast<mdtSqlParentChildWidget*>(centralWidget());
+    Q_ASSERT(pcw != 0);
+    Q_ASSERT(pcw->parentWidget() != 0);
+    sqlWidget = pcw->parentWidget();
+  }
   Q_ASSERT(sqlWidget != 0);
 
   // Create actions
@@ -102,6 +123,11 @@ void mdtSqlWindow::enableEdition()
   actSubmit = new QAction(tr("Save"), this);
   actRevert = new QAction(tr("Cancel"), this);
   actRemove = new QAction(tr("Delete"), this);
+  // Setup shortcuts
+  actInsert->setShortcut(QKeySequence::New);
+  actSubmit->setShortcut(QKeySequence::Save);
+  ///actRevert->setShortcut(QKeySequence::Undo);
+  actRemove->setShortcut(QKeySequence::Delete);
   // As default, functions are disabled
   actInsert->setEnabled(false);
   actSubmit->setEnabled(false);

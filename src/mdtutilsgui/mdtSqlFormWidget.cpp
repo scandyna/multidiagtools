@@ -19,9 +19,10 @@
  **
  ****************************************************************************/
 #include "mdtSqlFormWidget.h"
-#include "mdtSqlDataWidgetMapper.h"
+///#include "mdtSqlDataWidgetMapper.h"
 #include "mdtSqlFieldHandler.h"
 #include "mdtError.h"
+#include <QDataWidgetMapper>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 #include <QString>
@@ -35,7 +36,8 @@
 mdtSqlFormWidget::mdtSqlFormWidget(QWidget *parent)
  : mdtAbstractSqlWidget(parent)
 {
-  pvWidgetMapper = new mdtSqlDataWidgetMapper(this);
+  ///pvWidgetMapper = new mdtSqlDataWidgetMapper(this);
+  pvWidgetMapper = new QDataWidgetMapper(this);
   pvWidgetMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
   pvFirstDataWidget = 0;
 }
@@ -48,7 +50,7 @@ mdtSqlFormWidget::~mdtSqlFormWidget()
 void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
 {
   Q_ASSERT(layout() != 0);
-  Q_ASSERT(pvWidgetMapper->model() != 0);
+  Q_ASSERT(model() != 0);
 
   int i, fieldIndex;
   QString fieldName;
@@ -70,13 +72,13 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
       // If name begins with fld_ , search matching field in model
       if(fieldName.left(4) == "fld_"){
         fieldName = fieldName.right(fieldName.length()-4);
-        fieldIndex = pvWidgetMapper->model()->record().indexOf(fieldName);
+        fieldIndex = model()->record().indexOf(fieldName);
         // If field was found, map it
         if(fieldIndex >= 0){
           pvWidgetMapper->addMapping(w, fieldIndex);
           fieldHandler = new mdtSqlFieldHandler;
           // If we want informations about fields, we must get record from database instance
-          record = pvWidgetMapper->model()->database().record(pvWidgetMapper->model()->tableName());
+          record = model()->database().record(model()->tableName());
           fieldHandler->setField(record.field(fieldIndex));
           fieldHandler->setDataWidget(w);
           connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
@@ -155,7 +157,7 @@ void mdtSqlFormWidget::doSetModel(QSqlTableModel *model)
 
 void mdtSqlFormWidget::onCurrentIndexChanged(int row)
 {
-  Q_ASSERT(pvWidgetMapper->model() != 0);
+  Q_ASSERT(model() != 0);
 
   bool widgetsEnabled;
   mdtSqlFieldHandler *fieldHandler;
@@ -187,18 +189,20 @@ void mdtSqlFormWidget::onCurrentIndexChanged(int row)
     emit toFirstEnabledStateChanged(true);
     emit toPreviousEnabledStateChanged(true);
   }
-  if(row < (pvWidgetMapper->model()->rowCount()-1)){
+  if(row < (model()->rowCount()-1)){
     emit toLastEnabledStateChanged(true);
     emit toNextEnabledStateChanged(true);
   }else{
     emit toLastEnabledStateChanged(false);
     emit toNextEnabledStateChanged(false);
   }
+  // emit mdtAbstractSqlWidget's signal
+  emit currentRowChanged(row);
 }
 
 bool mdtSqlFormWidget::doSubmit()
 {
-  Q_ASSERT(pvWidgetMapper->model() != 0);
+  Q_ASSERT(model() != 0);
 
   int row;
 
@@ -217,7 +221,7 @@ bool mdtSqlFormWidget::doSubmit()
   }
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper->submit()){
-    displayModelFatalError(pvWidgetMapper->model()->lastError());
+    displayDatabaseError(model()->lastError());
     return false;
   }
   /*
@@ -225,8 +229,8 @@ bool mdtSqlFormWidget::doSubmit()
    * Widget mapper calls submit() on model, but this has no effect with OnManualSubmit edit strategy,
    * so we have to call submitAll() on model.
    */
-  if(!pvWidgetMapper->model()->submitAll()){
-    displayModelFatalError(pvWidgetMapper->model()->lastError());
+  if(!model()->submitAll()){
+    displayDatabaseError(model()->lastError());
     return false;
   }
   // Go back to current row
@@ -244,7 +248,7 @@ bool mdtSqlFormWidget::doRevert()
 
 bool mdtSqlFormWidget::doInsert()
 {
-  Q_ASSERT(pvWidgetMapper->model() != 0);
+  Q_ASSERT(model() != 0);
 
   int row;
 
@@ -253,8 +257,8 @@ bool mdtSqlFormWidget::doInsert()
     return false;
   }
   // Insert new row at end
-  row = pvWidgetMapper->model()->rowCount();
-  pvWidgetMapper->model()->insertRow(row);
+  row = model()->rowCount();
+  model()->insertRow(row);
   pvWidgetMapper->setCurrentIndex(row);
   clearWidgets();
   setFocusOnFirstDataWidget();
@@ -264,45 +268,62 @@ bool mdtSqlFormWidget::doInsert()
 
 bool mdtSqlFormWidget::doSubmitNewRow()
 {
-  Q_ASSERT(pvWidgetMapper->model() != 0);
+  Q_ASSERT(model() != 0);
 
   return doSubmit();
 }
 
 bool mdtSqlFormWidget::doRevertNewRow()
 {
-  Q_ASSERT(pvWidgetMapper->model() != 0);
+  Q_ASSERT(model() != 0);
 
   int row;
 
   // Remeber current row and remove it
   row = pvWidgetMapper->currentIndex();
-  if(!pvWidgetMapper->model()->removeRow(row)){
-    displayModelFatalError(pvWidgetMapper->model()->lastError());
+  if(!model()->removeRow(row)){
+    displayDatabaseError(model()->lastError());
     return false;
   }
   // Data was never submit to model, we simply go to last row
   clearWidgets();
-  pvWidgetMapper->setCurrentIndex(qMin(row, pvWidgetMapper->model()->rowCount()-1));
+  pvWidgetMapper->setCurrentIndex(qMin(row, model()->rowCount()-1));
 
   return true;
 }
 
 bool mdtSqlFormWidget::doRemove()
 {
-  Q_ASSERT(pvWidgetMapper->model() != 0);
+  Q_ASSERT(model() != 0);
 
   int row;
+  int ret;
+  QMessageBox msgBox;
 
   // Remeber current row (will be lost during submit)
   row = pvWidgetMapper->currentIndex();
-  if(!pvWidgetMapper->model()->removeRow(row)){
-    displayModelFatalError(pvWidgetMapper->model()->lastError());
+  // If we are not on a row, we do nothing
+  if(row < 0){
+    return true;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to delete some data."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  ret = msgBox.exec();
+  if(ret != QMessageBox::Yes){
+    return true;
+  }
+  // Remove current row
+  if(!model()->removeRow(row)){
+    displayDatabaseError(model()->lastError());
     return false;
   }
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper->submit()){
-    displayModelFatalError(pvWidgetMapper->model()->lastError());
+    displayDatabaseError(model()->lastError());
     return false;
   }
   /*
@@ -310,12 +331,12 @@ bool mdtSqlFormWidget::doRemove()
    * Widget mapper calls submit() on model, but this has no effect with OnManualSubmit edit strategy,
    * so we have to call submitAll() on model.
    */
-  if(!pvWidgetMapper->model()->submitAll()){
-    displayModelFatalError(pvWidgetMapper->model()->lastError());
+  if(!model()->submitAll()){
+    displayDatabaseError(model()->lastError());
     return false;
   }
   // Go back to current row
-  row = qMin(row, pvWidgetMapper->model()->rowCount()-1);
+  row = qMin(row, model()->rowCount()-1);
   if(row < 0){
     onCurrentIndexChanged(-1);
   }else{
@@ -387,27 +408,6 @@ void mdtSqlFormWidget::warnUserAboutUnsavedRow()
   msgBox.setText(tr("Current record was modified."));
   msgBox.setInformativeText(tr("Please save or cancel your modifications and try again."));
   msgBox.setIcon(QMessageBox::Warning);
-  msgBox.setStandardButtons(QMessageBox::Ok);
-  msgBox.exec();
-}
-
-void mdtSqlFormWidget::displayModelFatalError(QSqlError error)
-{
-  Q_ASSERT(pvWidgetMapper->model() != 0);
-
-  QMessageBox msgBox;
-
-  // Register error
-  mdtError e(MDT_DATABASE_ERROR, "Unhandled error occured on database table " + pvWidgetMapper->model()->tableName(), mdtError::Error);
-  e.setSystemError(error.number(), error.text());
-  MDT_ERROR_SET_SRC(e, "mdtSqlFormWidget");
-  e.commit();
-  // Display error
-  msgBox.setText(tr("Unhandled error occured"));
-  msgBox.setInformativeText( \
-    tr("This can happen if a network connection is broken, or storage device is not attached, or right acces, ...\nYou should try again."));
-  msgBox.setDetailedText(error.text());
-  msgBox.setIcon(QMessageBox::Critical);
   msgBox.setStandardButtons(QMessageBox::Ok);
   msgBox.exec();
 }
