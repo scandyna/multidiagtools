@@ -26,7 +26,6 @@
 #include "ui_mdtSqlWindow.h"
 
 class mdtAbstractSqlWidget;
-class mdtSqlParentChildWidget;
 class QAction;
 class QCloseEvent;
 class QTabWidget;
@@ -75,16 +74,6 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    * \pre widget must be a valid pointer
    */
   void addChildWidget(mdtAbstractSqlWidget *sqlWidget, const QString &label);
-
-  /*! \brief Set master/detail widget
-   *
-   * Will make some signal/slot connection,
-   *  then place sqlWidget as QMainWindow's central widget.
-   *
-   * \pre sqlWidget must be a valid pointer.
-   * \pre sqlWidget's parent widget must be set before using this method.
-   */
-  void setSqlWidget(mdtSqlParentChildWidget *sqlWidget);
 
   /*! \brief Enable navigation
    *

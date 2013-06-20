@@ -30,7 +30,6 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlWindow.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
-///#include "mdtSqlParentChildWidget.h"
 #include <QSqlDatabase>
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -139,7 +138,6 @@ void mdtDatabaseTest::relationsTest()
   mdtSqlFormWidget *clientWidget;
   mdtSqlTableWidget *addressWidget;
   Ui::mdtSqlFormWidgetTestForm form;
-  ///mdtSqlParentChildWidget *parentChildWidget;
   mdtSqlWindow window;
 
   // Setup parent model
@@ -168,13 +166,7 @@ void mdtDatabaseTest::relationsTest()
   // Add addressWidget as child of clientWidget
   clientWidget->addChildWidget(addressWidget, relation);
 
-  // Setup parent/child widget
-  ///parentChildWidget = new mdtSqlParentChildWidget;
-  ///parentChildWidget->setParentWidget(clientWidget);
-  ///parentChildWidget->addChildWidget(addressWidget, relation, "Addresses");
-  ///w.show();
   // Setup window
-  ///window.setSqlWidget(parentChildWidget);
   window.setSqlWidget(clientWidget);
   window.addChildWidget(addressWidget, "Addresses");
   window.enableNavigation();

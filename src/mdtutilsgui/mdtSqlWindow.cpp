@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtSqlWindow.h"
 #include "mdtAbstractSqlWidget.h"
-#include "mdtSqlParentChildWidget.h"
 #include <QAction>
 #include <QCloseEvent>
 #include <QMessageBox>
@@ -73,12 +72,14 @@ void mdtSqlWindow::addChildWidget(mdtAbstractSqlWidget *sqlWidget, const QString
   pvChildsTabWidget->addTab(sqlWidget, label);
 }
 
+/**
 void mdtSqlWindow::setSqlWidget(mdtSqlParentChildWidget *sqlWidget)
 {
   Q_ASSERT(sqlWidget != 0);
 
   setCentralWidget(sqlWidget);
 }
+*/
 
 void mdtSqlWindow::enableNavigation()
 {

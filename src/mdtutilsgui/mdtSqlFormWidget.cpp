@@ -113,6 +113,9 @@ int mdtSqlFormWidget::currentRow() const
 
 void mdtSqlFormWidget::toFirst()
 {
+  if(!childWidgetsAreInVisaluzingState()){
+    return;
+  }
   if(currentState() != Visualizing){
     warnUserAboutUnsavedRow();
     return;
@@ -122,6 +125,9 @@ void mdtSqlFormWidget::toFirst()
 
 void mdtSqlFormWidget::toLast()
 {
+  if(!childWidgetsAreInVisaluzingState()){
+    return;
+  }
   if(currentState() != Visualizing){
     warnUserAboutUnsavedRow();
     return;
@@ -131,6 +137,9 @@ void mdtSqlFormWidget::toLast()
 
 void mdtSqlFormWidget::toPrevious()
 {
+  if(!childWidgetsAreInVisaluzingState()){
+    return;
+  }
   if(currentState() != Visualizing){
     warnUserAboutUnsavedRow();
     return;
@@ -140,6 +149,9 @@ void mdtSqlFormWidget::toPrevious()
 
 void mdtSqlFormWidget::toNext()
 {
+  if(!childWidgetsAreInVisaluzingState()){
+    return;
+  }
   if(currentState() != Visualizing){
     warnUserAboutUnsavedRow();
     return;

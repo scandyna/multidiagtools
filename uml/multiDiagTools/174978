@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 34
+  revision 35
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1472,7 +1472,7 @@ ${inlines}
       operation 1322114 "setSqlWidget"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "sqlWidget" type class_ref 699778 // mdtSqlParentChildWidget
+	  param in name "sqlWidget" explicit_type "mdtSqlParentChildWidget"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
@@ -3027,96 +3027,6 @@ ${inlines}
 	  external 
 	end
       end
-    end
-
-    classdiagram 693122 "mdtSqlParentChildWidget"
-      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-      size A4
-    end
-
-    class 699778 "mdtSqlParentChildWidget"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      classrelation 876162 // <generalisation>
-	relation 866946 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 876162 // <generalisation>
-	  b parent class_ref 316162 // QWidget
-      end
-
-      operation 1321346 "mdtSqlParentChildWidget"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "parent" type class_ref 316162 // QWidget
-	    defaultvalue "0"
-	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1321474 "~mdtSqlParentChildWidget"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 876290 // pvParentWidget (<unidirectional association>)
-	relation 867074 --->
-	  a role_name "pvParentWidget" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 876290 // pvParentWidget (<unidirectional association>)
-	  b parent class_ref 686338 // mdtAbstractSqlWidget
-      end
-
-      classrelation 876418 // pvChildWidgets (<unidirectional association>)
-	relation 867202 --->
-	  a role_name "pvChildWidgets" multiplicity "0..*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
-"
-	    classrelation_ref 876418 // pvChildWidgets (<unidirectional association>)
-	  b parent class_ref 686338 // mdtAbstractSqlWidget
-      end
-
-      operation 1322370 "setParentWidget"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "widget" type class_ref 686338 // mdtAbstractSqlWidget
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
     end
 
     classdiagram 640258 "mdtSqlRelation"
@@ -6330,7 +6240,6 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 699778 // mdtSqlParentChildWidget
       end
     end
   end

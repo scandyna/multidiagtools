@@ -144,8 +144,12 @@ void mdtSqlTableWidget::onDataChanged(const QModelIndex &, const QModelIndex &)
   emit dataEdited();
 }
 
-void mdtSqlTableWidget::onCurrentRowChanged(const QModelIndex &current, const QModelIndex &/*previous*/)
+void mdtSqlTableWidget::onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
+  if(!childWidgetsAreInVisaluzingState()){
+    pvTableView->setCurrentIndex(previous);
+    return;
+  }
   if(current.isValid()){
     emit currentRowChanged(current.row());
   }else{

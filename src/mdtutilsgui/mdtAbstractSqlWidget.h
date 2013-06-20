@@ -84,6 +84,15 @@ class mdtAbstractSqlWidget : public QWidget
    */
   QSqlTableModel *model();
 
+  /*! \brief Get the user friendly table name
+   *
+   * If the user friendly table name was not set,
+   *  the database table name is returned
+   *
+   * \pre (Parent) model must be set with setModel() before using this method.
+   */
+  QString userFriendlyTableName() const;
+
   /*! \brief Add a child (details) widget and relation
    *
    * Needed signal/slot connection between widget
@@ -285,6 +294,18 @@ class mdtAbstractSqlWidget : public QWidget
   /*! \brief Get message for the user regarding MySql error number
    */
   QString getUserReadableTextFromMysqlError(const QSqlError &error);
+
+  /*! \brief Check that child widgtes have no pending data
+   *
+   * Subclass must call this method before a row change to prevent
+   *  incoherent state of models and data loss.
+   *  If false is returned, the currentRowChanged() must not be emitted.
+   */
+  bool childWidgetsAreInVisaluzingState();
+
+  /*! \brief Show a message box to the user to warn him that it should save/revert data
+   */
+  void warnUserAboutUnsavedRow(const QString &tableName);
 
  signals:
 
@@ -519,6 +540,8 @@ class mdtAbstractSqlWidget : public QWidget
   // Memebrs for child widgets support
   QList<mdtSqlRelation*> pvRelations;
   QList<mdtAbstractSqlWidget*> pvChildWidgets;
+  // Other mebers
+  QString pvUserFriendlyTableName;
 
   Q_DISABLE_COPY(mdtAbstractSqlWidget);
 };

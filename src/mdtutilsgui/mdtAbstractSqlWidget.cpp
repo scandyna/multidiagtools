@@ -55,6 +55,16 @@ QSqlTableModel *mdtAbstractSqlWidget::model()
   return pvModel;
 }
 
+QString mdtAbstractSqlWidget::userFriendlyTableName() const
+{
+  Q_ASSERT(pvModel != 0);
+
+  if(!pvUserFriendlyTableName.isEmpty()){
+    return pvUserFriendlyTableName;
+  }
+  return pvModel->tableName();
+}
+
 void mdtAbstractSqlWidget::addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRelation *relation)
 {
   Q_ASSERT(pvModel != 0);
@@ -188,6 +198,34 @@ QString mdtAbstractSqlWidget::getUserReadableTextFromMysqlError(const QSqlError 
   return text;
 }
 
+bool mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()
+{
+  int i;
+  mdtAbstractSqlWidget *w;
+
+  for(i=0; i<pvChildWidgets.size(); ++i){
+    w = pvChildWidgets.at(i);
+    Q_ASSERT(w != 0);
+    if(w->currentState() != Visualizing){
+      warnUserAboutUnsavedRow(w->userFriendlyTableName());
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void mdtAbstractSqlWidget::warnUserAboutUnsavedRow(const QString &tableName)
+{
+  QMessageBox msgBox;
+
+  msgBox.setText(tr("Some data are not saved in table '") + tableName + "'");
+  msgBox.setInformativeText(tr("Please save or cancel your modifications and try again."));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Ok);
+  msgBox.exec();
+}
+
 void mdtAbstractSqlWidget::onStateVisualizingEntered()
 {
   pvCurrentState = Visualizing;
@@ -266,6 +304,10 @@ void mdtAbstractSqlWidget::onStateInsertingEntered()
   pvCurrentState = Inserting;
   qDebug() << __FUNCTION__;
 
+  if(!childWidgetsAreInVisaluzingState()){
+    emit errorOccured();
+    return;
+  }
   if(doInsert()){
     emit operationSucceed();
   }else{
