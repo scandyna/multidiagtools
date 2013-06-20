@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtAbstractSqlWidget.h"
 #include "mdtError.h"
+#include "mdtSqlRelation.h"
 #include <QState>
 #include <QStateMachine>
 #include <QMessageBox>
@@ -52,6 +53,24 @@ void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
 QSqlTableModel *mdtAbstractSqlWidget::model()
 {
   return pvModel;
+}
+
+void mdtAbstractSqlWidget::addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRelation *relation)
+{
+  Q_ASSERT(pvModel != 0);
+  Q_ASSERT(widget != 0);
+  Q_ASSERT(relation != 0);
+
+  // Add child to lists
+  pvChildWidgets.append(widget);
+  pvRelations.append(relation);
+  // We reparent relation, so it will be deleted at the right moment by Qt
+  relation->setParent(this);
+  widget->enableLocalEdition();
+  // Make needed connections
+  connect(this, SIGNAL(currentRowChanged(int)), relation, SLOT(setParentCurrentIndex(int)));
+  // Force a update of relations
+  relation->setParentCurrentIndex(currentRow());
 }
 
 int mdtAbstractSqlWidget::rowCount() const
@@ -142,8 +161,9 @@ QString mdtAbstractSqlWidget::getUserReadableTextFromSqliteError(const QSqlError
       text += tr("If you are working on a removable device (USB key, USB hard drive, ...), please check that it is inserted and try again.") + "\n";
       text += tr("If your database file is on a remote server, please check network connection and try again.");
       break;
-    case 19:  // Primary key duplication
-      text = tr("Primary key allready exists (must be unique for the table).") + "\n";
+    case 19:  // Constraint violation
+      text = tr("Please check that all required fields are entered and that you don't have a duplicated primary key.") + "\n";
+      text += tr("For more precision, please see details to know what the system returned.");
       break;
     case 20:  // Data type error
       text = tr("A field contains invalid data type.") + "\n";
@@ -174,6 +194,7 @@ void mdtAbstractSqlWidget::onStateVisualizingEntered()
   qDebug() << __FUNCTION__;
   emit insertEnabledStateChanged(true);
   emit removeEnabledStateChanged(true);
+  emit stateVisualizingEntered();
 }
 
 void mdtAbstractSqlWidget::onStateVisualizingExited()
@@ -181,6 +202,7 @@ void mdtAbstractSqlWidget::onStateVisualizingExited()
   qDebug() << __FUNCTION__;
   emit insertEnabledStateChanged(false);
   emit removeEnabledStateChanged(false);
+  emit stateVisualizingExited();
 }
 
 void mdtAbstractSqlWidget::onStateEditingEntered()

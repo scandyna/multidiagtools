@@ -26,6 +26,7 @@
 #include <QModelIndex>
 #include <QString>
 #include <QList>
+#include <QSqlRecord>
 
 class mdtSqlRelationItem;
 
@@ -58,6 +59,8 @@ class mdtSqlRelation : public QObject
    *
    * Will be used internally to get some informations about
    *  fields and get values to generate relation filters.
+   *
+   * \pre model must be a valid pointer.
    */
   void setParentModel(QSqlTableModel *model);
 
@@ -65,6 +68,8 @@ class mdtSqlRelation : public QObject
    *
    * Will be used internally to get some informations about
    *  fields and get values to generate relation filters.
+   *
+   * \pre model must be a valid pointer.
    */
   void setChildModel(QSqlTableModel *model);
 
@@ -112,6 +117,18 @@ class mdtSqlRelation : public QObject
    */
   void setParentCurrentIndex(const QModelIndex &current, const QModelIndex &previous);
 
+ private slots:
+
+  /*! \brief Copy the parent primary key's values to related foreing key in child model
+   *
+   * When adding a new row to child model, we have to copy
+   *  the parent primary key's data to related foreing key's fields
+   *  in child model.
+   *
+   * \pre Parent model must be set with setParentModel() and child model with setChildModel() before using this method.
+   */
+  void setChildForeingKeyValues(QSqlRecord &childRecord);
+
  private:
 
   /*! \brief Generate filter for relation
@@ -130,6 +147,7 @@ class mdtSqlRelation : public QObject
   QString pvChildModelUserFilter;
   QString pvChildModelRelationFilter;
   QString pvChildModelFilter;
+  int pvCurrentRow;
 };
 
 #endif  // #ifndef MDT_SQL_RELATION_H

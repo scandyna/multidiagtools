@@ -28,7 +28,14 @@ relationcanvas 128514 relation_ref 853634 // <generalisation>
 end
 relationcanvas 128770 relation_ref 853762 // <unidirectional association>
   from ref 128002 z 2001 to ref 128642
-  role_a_pos 469 600 3000 no_role_b
-  multiplicity_a_pos 425 600 3000 no_multiplicity_b
+  role_a_pos 505 600 3000 no_role_b
+  multiplicity_a_pos 461 600 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 874242 // <unidirectional association>
+  from ref 128642 z 2001 to point 393 623
+  line 129026 z 2001 to point 393 653
+  line 129154 z 2001 to ref 128642
+  role_a_pos 310 667 3000 no_role_b
+  multiplicity_a_pos 389 697 3000 no_multiplicity_b
 end
 end

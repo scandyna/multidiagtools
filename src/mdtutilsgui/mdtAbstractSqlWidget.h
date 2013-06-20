@@ -24,11 +24,13 @@
 #include <QWidget>
 #include <QSqlError>
 #include <QString>
+#include <QList>
 
 class QSqlTableModel;
 class QState;
 class QStateMachine;
 class QSqlTableModel;
+class mdtSqlRelation;
 
 /*! \brief Base class to create database table GUI
  *
@@ -81,6 +83,19 @@ class mdtAbstractSqlWidget : public QWidget
    * Can return a null pointer if model was not set.
    */
   QSqlTableModel *model();
+
+  /*! \brief Add a child (details) widget and relation
+   *
+   * Needed signal/slot connection between widget
+   *  and relation is done internally.
+   *
+   * \pre (Parent) model must be set with setModel() before using this method.
+   * \pre widget must be a valid pointer
+   * \pre relation must be a valid pointer.
+   *       Note: relation will be reparented, so it will be deleted automatically
+   *             by Qt.
+   */
+  void addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRelation *relation);
 
   /*! \brief Get the current row
    *
@@ -357,6 +372,14 @@ class mdtAbstractSqlWidget : public QWidget
    */
   void dataEdited();
 
+  /*! \brief Emitted when Visualizing state was entered
+   */
+  void stateVisualizingEntered();
+
+  /*! \brief Emitted when Visualizing state was exited
+   */
+  void stateVisualizingExited();
+
   /*! \brief Emitted when Editing state was exited
    */
   void stateEditingExited();
@@ -493,6 +516,9 @@ class mdtAbstractSqlWidget : public QWidget
   QState *pvStateRemoving;
   QStateMachine *pvStateMachine;
   state_t pvCurrentState;
+  // Memebrs for child widgets support
+  QList<mdtSqlRelation*> pvRelations;
+  QList<mdtAbstractSqlWidget*> pvChildWidgets;
 
   Q_DISABLE_COPY(mdtAbstractSqlWidget);
 };

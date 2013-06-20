@@ -21,7 +21,6 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlRelationItem.h"
 #include "mdtError.h"
-#include <QSqlRecord>
 #include <QSqlField>
 
 #include <QDebug>
@@ -31,6 +30,7 @@ mdtSqlRelation::mdtSqlRelation(QObject *parent)
 {
   pvParentModel = 0;
   pvChildModel = 0;
+  pvCurrentRow = -1;
 }
 
 mdtSqlRelation::~mdtSqlRelation()
@@ -40,12 +40,17 @@ mdtSqlRelation::~mdtSqlRelation()
 
 void mdtSqlRelation::setParentModel(QSqlTableModel *model)
 {
+  Q_ASSERT(model != 0);
+
   pvParentModel = model;
 }
 
 void mdtSqlRelation::setChildModel(QSqlTableModel *model)
 {
+  Q_ASSERT(model != 0);
+
   pvChildModel = model;
+  connect(pvChildModel, SIGNAL(beforeInsert(QSqlRecord&)), this, SLOT(setChildForeingKeyValues(QSqlRecord&)));
 }
 
 bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &childFieldName)
@@ -103,10 +108,13 @@ void mdtSqlRelation::setParentCurrentIndex(int index)
   Q_ASSERT(pvParentModel != 0);
   Q_ASSERT(pvChildModel != 0);
 
+  pvCurrentRow = index;
   if(index < 0){
     return;
   }
   generateChildModelRelationFilter(index);
+  
+  qDebug() << "Current parent row: " << index << " , child rowCount: " << pvChildModel->rowCount();
 }
 
 void mdtSqlRelation::setParentCurrentIndex(const QModelIndex &index)
@@ -116,6 +124,8 @@ void mdtSqlRelation::setParentCurrentIndex(const QModelIndex &index)
 
   if(index.isValid()){
     setParentCurrentIndex(index.row());
+  }else{
+    setParentCurrentIndex(-1);
   }
 }
 
@@ -125,6 +135,39 @@ void mdtSqlRelation::setParentCurrentIndex(const QModelIndex &current, const QMo
   Q_ASSERT(pvChildModel != 0);
 
   setParentCurrentIndex(current);
+}
+
+void mdtSqlRelation::setChildForeingKeyValues(QSqlRecord &childRecord)
+{
+  Q_ASSERT(pvParentModel != 0);
+  Q_ASSERT(pvChildModel != 0);
+
+  int i;
+  mdtSqlRelationItem *item;
+  QSqlRecord parentRecord;
+  QVariant data;
+
+  // On invalid index, we do nothing
+  if(pvCurrentRow < 0){
+    return;
+  }
+  // Get data record of the parent model
+  parentRecord = pvParentModel->record(pvCurrentRow);
+  // Copy parent PK -> child FK
+  for(i=0; i<pvRelations.size(); ++i){
+    item = pvRelations.at(i);
+    Q_ASSERT(item != 0);
+    // Get parent model's data
+    data = parentRecord.value(item->parentFieldIndex());
+    if(!data.isValid()){
+      mdtError e(MDT_DATABASE_ERROR, "Could not get data for field '" + item->parentFieldName() + "' not found in parent table", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtSqlRelation");
+      e.commit();
+      return;
+    }
+    // Pust to child's field
+    childRecord.setValue(item->childFieldIndex(), data);
+  }
 }
 
 void mdtSqlRelation::generateChildModelRelationFilter(int row)
@@ -147,17 +190,15 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
     Q_ASSERT(item != 0);
     // Get parent model's data
     data = record.value(item->parentFieldIndex());
-    if(!data.isValid()){
-      mdtError e(MDT_DATABASE_ERROR, "Could not get data for field '" + item->parentFieldName() + "' not found in parent table", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtSqlRelation");
-      e.commit();
-      return;
-    }
     if(i>0){
       pvChildModelRelationFilter += " AND";
     }
     pvChildModelRelationFilter += " \"" + pvChildModel->tableName() + "\".\"" + item->childFieldName() + "\"=";
-    pvChildModelRelationFilter += item->dataProtection() + data.toString() + item->dataProtection();
+    if(data.isValid()){
+      pvChildModelRelationFilter += item->dataProtection() + data.toString() + item->dataProtection();
+    }else{
+      pvChildModelRelationFilter += item->dataProtection() + item->valueForNoDataFilter().toString() + item->dataProtection();
+    }
   }
   // Apply filter
   generateChildModelFilter();

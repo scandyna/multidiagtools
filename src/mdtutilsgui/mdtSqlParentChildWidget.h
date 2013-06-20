@@ -82,6 +82,29 @@ class mdtSqlParentChildWidget : public QWidget
    */
   void addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRelation *relation, const QString &label);
 
+
+ public slots:
+
+  /*! \brief Save data (if required) in child widgets and disable it
+   *
+   * When editing data in parent table,
+   *  it can happen that data becomes currupted,
+   *  or simply that we let related child tables in a unsaved
+   *  state.
+   *
+   * This method will check child widgets state.
+   *  If a child is not in Visualizing state,
+   *  a warning is displayed to the user,
+   *  and fromChildWidgetErrorOccured() signal is emitted.
+   */
+  ///void checkAndDisableChildWidgets();
+
+  /*! \brief Set child widget enabled
+   *
+   * Typically used after parent widget insertion
+   */
+  ///void enableChildWidgets();
+
  private:
 
   Q_DISABLE_COPY(mdtSqlParentChildWidget);

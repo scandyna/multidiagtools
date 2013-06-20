@@ -29,6 +29,7 @@ class mdtAbstractSqlWidget;
 class mdtSqlParentChildWidget;
 class QAction;
 class QCloseEvent;
+class QTabWidget;
 
 /*! \brief Main window for a database table view/editor
  *
@@ -64,6 +65,16 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    * \pre sqlWidget must be a valid pointer.
    */
   void setSqlWidget(mdtAbstractSqlWidget *sqlWidget);
+
+  /*! \brief Add a child (details) widget
+   *
+   * \param widget Will be added to the childs tab
+   * \param label Will be displayed in tab of tab widget
+   *
+   * \pre Parent widget must be set with setSqlWidget() before using this method
+   * \pre widget must be a valid pointer
+   */
+  void addChildWidget(mdtAbstractSqlWidget *sqlWidget, const QString &label);
 
   /*! \brief Set master/detail widget
    *
@@ -118,6 +129,8 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
   QAction *actNavToLast;
   QAction *actNavToPrevious;
   QAction *actNavToNext;
+  QTabWidget *pvChildsTabWidget;
+  mdtAbstractSqlWidget *pvMainSqlWidget;
 
 /**
   private:

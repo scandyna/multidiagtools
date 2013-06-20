@@ -2,11 +2,13 @@ window_sizes 1280 1001 356 918 923 0
 diagrams
   classdiagram_ref 666626 // mdtSqlWindow
     918 923 100 4 12 0
-  active  classdiagram_ref 693122 // mdtSqlParentChildWidget
+  classdiagram_ref 693122 // mdtSqlParentChildWidget
+    918 923 100 4 12 0
+  active  classdiagram_ref 673538 // mdtSqlWidget
     918 923 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1322498 // addChildWidget
+selected classdiagram_ref 673538 // mdtSqlWidget
 open
   class_ref 699778 // mdtSqlParentChildWidget
 end

@@ -83,6 +83,14 @@ class mdtSqlRelationItem
    */
   QVariant::Type dataType() const;
 
+  /*! \brief Get value for a filter that gives no data
+   *
+   * Typical values are:
+   *  - empty string
+   *  - -1 for numeric field
+   */
+  QVariant valueForNoDataFilter() const;
+
  private:
 
   Q_DISABLE_COPY(mdtSqlRelationItem);
@@ -92,6 +100,7 @@ class mdtSqlRelationItem
   QSqlField pvChildField;
   int pvChildFieldIndex;
   QString pvDataProtection;
+  QVariant pvValueForNoDataFilter;
 };
 
 #endif  // #ifndef MDT_SQL_RELATION_ITEM_H

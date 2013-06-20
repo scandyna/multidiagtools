@@ -25,6 +25,7 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <QKeySequence>
+#include <QVBoxLayout>
 
 mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
  : QMainWindow(parent, flags)
@@ -38,6 +39,13 @@ mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
   actNavToPrevious = 0;
   actNavToNext = 0;
   setupUi(this);
+  pvChildsTabWidget = 0;
+  pvMainSqlWidget = 0;
+  // Setup central widget, on witch we cann put perent widget and childs widgets tab widget.
+  QWidget *widget = new QWidget;
+  QVBoxLayout *layout = new QVBoxLayout;
+  widget->setLayout(layout);
+  setCentralWidget(widget);
 }
 
 mdtSqlWindow::~mdtSqlWindow()
@@ -48,7 +56,21 @@ void mdtSqlWindow::setSqlWidget(mdtAbstractSqlWidget *sqlWidget)
 {
   Q_ASSERT(sqlWidget != 0);
 
-  setCentralWidget(sqlWidget);
+  pvMainSqlWidget = sqlWidget;
+  centralWidget()->layout()->addWidget(pvMainSqlWidget);
+}
+
+void mdtSqlWindow::addChildWidget(mdtAbstractSqlWidget *sqlWidget, const QString &label)
+{
+  Q_ASSERT(sqlWidget != 0);
+
+  // Setup tab widget if needed
+  if(pvChildsTabWidget == 0){
+    pvChildsTabWidget = new QTabWidget;
+    centralWidget()->layout()->addWidget(pvChildsTabWidget);
+  }
+  Q_ASSERT(pvChildsTabWidget != 0);
+  pvChildsTabWidget->addTab(sqlWidget, label);
 }
 
 void mdtSqlWindow::setSqlWidget(mdtSqlParentChildWidget *sqlWidget)
@@ -60,6 +82,7 @@ void mdtSqlWindow::setSqlWidget(mdtSqlParentChildWidget *sqlWidget)
 
 void mdtSqlWindow::enableNavigation()
 {
+  /**
   Q_ASSERT(centralWidget() != 0);
 
   // We need a mdtAbstractSqlWidget pointer
@@ -71,6 +94,8 @@ void mdtSqlWindow::enableNavigation()
     sqlWidget = pcw->parentWidget();
   }
   Q_ASSERT(sqlWidget != 0);
+  */
+  Q_ASSERT(pvMainSqlWidget != 0);
 
   // Create actions
   actNavToFirst = new QAction("|<<", this);
@@ -78,15 +103,15 @@ void mdtSqlWindow::enableNavigation()
   actNavToNext = new QAction(">", this);
   actNavToLast = new QAction(">>|", this);
   // Connect actions enable/disable
-  connect(sqlWidget, SIGNAL(toFirstEnabledStateChanged(bool)), actNavToFirst, SLOT(setEnabled(bool)));
-  connect(sqlWidget, SIGNAL(toPreviousEnabledStateChanged(bool)), actNavToPrevious, SLOT(setEnabled(bool)));
-  connect(sqlWidget, SIGNAL(toNextEnabledStateChanged(bool)), actNavToNext, SLOT(setEnabled(bool)));
-  connect(sqlWidget, SIGNAL(toLastEnabledStateChanged(bool)), actNavToLast, SLOT(setEnabled(bool)));
+  connect(pvMainSqlWidget, SIGNAL(toFirstEnabledStateChanged(bool)), actNavToFirst, SLOT(setEnabled(bool)));
+  connect(pvMainSqlWidget, SIGNAL(toPreviousEnabledStateChanged(bool)), actNavToPrevious, SLOT(setEnabled(bool)));
+  connect(pvMainSqlWidget, SIGNAL(toNextEnabledStateChanged(bool)), actNavToNext, SLOT(setEnabled(bool)));
+  connect(pvMainSqlWidget, SIGNAL(toLastEnabledStateChanged(bool)), actNavToLast, SLOT(setEnabled(bool)));
   // Connect actions triggers
-  connect(actNavToFirst, SIGNAL(triggered()), sqlWidget, SLOT(toFirst()));
-  connect(actNavToPrevious, SIGNAL(triggered()), sqlWidget, SLOT(toPrevious()));
-  connect(actNavToNext, SIGNAL(triggered()), sqlWidget, SLOT(toNext()));
-  connect(actNavToLast, SIGNAL(triggered()), sqlWidget, SLOT(toLast()));
+  connect(actNavToFirst, SIGNAL(triggered()), pvMainSqlWidget, SLOT(toFirst()));
+  connect(actNavToPrevious, SIGNAL(triggered()), pvMainSqlWidget, SLOT(toPrevious()));
+  connect(actNavToNext, SIGNAL(triggered()), pvMainSqlWidget, SLOT(toNext()));
+  connect(actNavToLast, SIGNAL(triggered()), pvMainSqlWidget, SLOT(toLast()));
   // Add a separator if edition is allready on toolbar
   if(actRemove != 0){
     tlbMain->addSeparator();
@@ -106,6 +131,7 @@ void mdtSqlWindow::disableNavigation()
 
 void mdtSqlWindow::enableEdition()
 {
+  /**
   Q_ASSERT(centralWidget() != 0);
 
   // We need a mdtAbstractSqlWidget pointer
@@ -117,6 +143,8 @@ void mdtSqlWindow::enableEdition()
     sqlWidget = pcw->parentWidget();
   }
   Q_ASSERT(sqlWidget != 0);
+  */
+  Q_ASSERT(pvMainSqlWidget != 0);
 
   // Create actions
   actInsert = new QAction(tr("New"), this);
@@ -134,15 +162,15 @@ void mdtSqlWindow::enableEdition()
   actRevert->setEnabled(false);
   actRemove->setEnabled(false);
   // Connect actions enable/disable
-  connect(sqlWidget, SIGNAL(insertEnabledStateChanged(bool)), actInsert, SLOT(setEnabled(bool)));
-  connect(sqlWidget, SIGNAL(submitEnabledStateChanged(bool)), actSubmit, SLOT(setEnabled(bool)));
-  connect(sqlWidget, SIGNAL(revertEnabledStateChanged(bool)), actRevert, SLOT(setEnabled(bool)));
-  connect(sqlWidget, SIGNAL(removeEnabledStateChanged(bool)), actRemove, SLOT(setEnabled(bool)));
+  connect(pvMainSqlWidget, SIGNAL(insertEnabledStateChanged(bool)), actInsert, SLOT(setEnabled(bool)));
+  connect(pvMainSqlWidget, SIGNAL(submitEnabledStateChanged(bool)), actSubmit, SLOT(setEnabled(bool)));
+  connect(pvMainSqlWidget, SIGNAL(revertEnabledStateChanged(bool)), actRevert, SLOT(setEnabled(bool)));
+  connect(pvMainSqlWidget, SIGNAL(removeEnabledStateChanged(bool)), actRemove, SLOT(setEnabled(bool)));
   // Connect actions triggers
-  connect(actInsert, SIGNAL(triggered()), sqlWidget, SLOT(insert()));
-  connect(actSubmit, SIGNAL(triggered()), sqlWidget, SLOT(submit()));
-  connect(actRevert, SIGNAL(triggered()), sqlWidget, SLOT(revert()));
-  connect(actRemove, SIGNAL(triggered()), sqlWidget, SLOT(remove()));
+  connect(actInsert, SIGNAL(triggered()), pvMainSqlWidget, SLOT(insert()));
+  connect(actSubmit, SIGNAL(triggered()), pvMainSqlWidget, SLOT(submit()));
+  connect(actRevert, SIGNAL(triggered()), pvMainSqlWidget, SLOT(revert()));
+  connect(actRemove, SIGNAL(triggered()), pvMainSqlWidget, SLOT(remove()));
   // Add a separator if navigation is allready on toolbar
   if(actNavToLast != 0){
     tlbMain->addSeparator();

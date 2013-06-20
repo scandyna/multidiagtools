@@ -30,7 +30,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlWindow.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
-#include "mdtSqlParentChildWidget.h"
+///#include "mdtSqlParentChildWidget.h"
 #include <QSqlDatabase>
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -139,7 +139,7 @@ void mdtDatabaseTest::relationsTest()
   mdtSqlFormWidget *clientWidget;
   mdtSqlTableWidget *addressWidget;
   Ui::mdtSqlFormWidgetTestForm form;
-  mdtSqlParentChildWidget *parentChildWidget;
+  ///mdtSqlParentChildWidget *parentChildWidget;
   mdtSqlWindow window;
 
   // Setup parent model
@@ -165,15 +165,18 @@ void mdtDatabaseTest::relationsTest()
   // Setup child table widget
   addressWidget = new mdtSqlTableWidget;
   addressWidget->setModel(&childModel);
+  // Add addressWidget as child of clientWidget
+  clientWidget->addChildWidget(addressWidget, relation);
 
   // Setup parent/child widget
-  parentChildWidget = new mdtSqlParentChildWidget;
-  parentChildWidget->setParentWidget(clientWidget);
-  parentChildWidget->addChildWidget(addressWidget, relation, "Addresses");
+  ///parentChildWidget = new mdtSqlParentChildWidget;
+  ///parentChildWidget->setParentWidget(clientWidget);
+  ///parentChildWidget->addChildWidget(addressWidget, relation, "Addresses");
   ///w.show();
-  // Setup window and add parent/child widget
   // Setup window
-  window.setSqlWidget(parentChildWidget);
+  ///window.setSqlWidget(parentChildWidget);
+  window.setSqlWidget(clientWidget);
+  window.addChildWidget(addressWidget, "Addresses");
   window.enableNavigation();
   window.enableEdition();
   window.show();

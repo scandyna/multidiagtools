@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 32
+  revision 34
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2091,6 +2091,22 @@ ${inlines}
 	
       end
 
+      operation 1322498 "addChildWidget"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "widget" type class_ref 686338 // mdtAbstractSqlWidget
+	  param in name "relation" type class_ref 652418 // mdtSqlRelation
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 1281154 "submit"
 	stereotype "slot"
 	cpp_virtual public explicit_return_type "void"
@@ -2492,6 +2508,24 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 883330 // pvRelations (<unidirectional association>)
+	relation 874114 --->
+	  a role_name "pvRelations" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 883330 // pvRelations (<unidirectional association>)
+	  b parent class_ref 652418 // mdtSqlRelation
+      end
+
+      classrelation 883458 // pvChildWidgets (<unidirectional association>)
+	relation 874242 --->
+	  a role_name "pvChildWidgets" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 883458 // pvChildWidgets (<unidirectional association>)
+	  b parent class_ref 686338 // mdtAbstractSqlWidget
       end
     end
 
@@ -3083,30 +3117,6 @@ ${inlines}
 	
       end
 
-      classrelation 876802 // pvRelations (<unidirectional association>)
-	relation 867586 --->
-	  a role_name "pvRelations" multiplicity "0..*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
-"
-	    classrelation_ref 876802 // pvRelations (<unidirectional association>)
-	  b parent class_ref 652418 // mdtSqlRelation
-      end
-
-      operation 1322498 "addChildWidget"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "widget" type class_ref 686338 // mdtAbstractSqlWidget
-	  param in name "relation" type class_ref 652418 // mdtSqlRelation
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
 
     classdiagram 640258 "mdtSqlRelation"

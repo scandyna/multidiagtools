@@ -34,14 +34,19 @@ mdtSqlRelationItem::~mdtSqlRelationItem()
 void mdtSqlRelationItem::setParentField(const QSqlField &field)
 {
   pvParentField = field;
-  // Setup data protection regarding type
+  // Setup data protection + value for no data filter regarding type
   switch(pvParentField.type()){
     case QVariant::Char:
       pvDataProtection = "'";
+      pvValueForNoDataFilter = "";
       break;
     case QVariant::String:
       pvDataProtection = "'";
+      pvValueForNoDataFilter = "";
       break;
+    case QVariant::Int:
+      pvDataProtection = "";
+      pvValueForNoDataFilter = -1;
     default:
       pvDataProtection = "";
   }
@@ -90,4 +95,9 @@ QString mdtSqlRelationItem::dataProtection() const
 QVariant::Type mdtSqlRelationItem::dataType() const
 {
   return pvParentField.type();
+}
+
+QVariant mdtSqlRelationItem::valueForNoDataFilter() const
+{
+  return pvValueForNoDataFilter;
 }

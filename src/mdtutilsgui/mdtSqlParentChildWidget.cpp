@@ -60,6 +60,8 @@ void mdtSqlParentChildWidget::addChildWidget(mdtAbstractSqlWidget *widget, mdtSq
   Q_ASSERT(relation != 0);
   Q_ASSERT(layout() != 0);
 
+  // Add widget to list
+  pvChildWidgets.append(widget);
   // We reparent relation, so it will be deleted at the right moment by Qt
   relation->setParent(this);
   // Setup tab widget if needed
@@ -73,7 +75,30 @@ void mdtSqlParentChildWidget::addChildWidget(mdtAbstractSqlWidget *widget, mdtSq
   widget->enableLocalEdition();
   // Make needed connections
   connect(pvParentWidget, SIGNAL(currentRowChanged(int)), relation, SLOT(setParentCurrentIndex(int)));
+  connect(pvParentWidget, SIGNAL(stateVisualizingExited()), this, SLOT(setChiledWidgetsDisabled()));
+  connect(pvParentWidget, SIGNAL(stateVisualizingEntered()), this, SLOT(setChiledWidgetsEnabled()));
   // Force a update of relations
   relation->setParentCurrentIndex(pvParentWidget->currentRow());
 }
 
+/**
+void mdtSqlParentChildWidget::setChiledWidgetsDisabled()
+{
+  int i;
+
+  for(i=0; i<pvChildWidgets.size(); ++i){
+    Q_ASSERT(pvChildWidgets.at(i) != 0);
+    pvChildWidgets.at(i)->setEnabled(false);
+  }
+}
+
+void mdtSqlParentChildWidget::setChiledWidgetsEnabled()
+{
+  int i;
+
+  for(i=0; i<pvChildWidgets.size(); ++i){
+    Q_ASSERT(pvChildWidgets.at(i) != 0);
+    pvChildWidgets.at(i)->setEnabled(true);
+  }
+}
+*/
