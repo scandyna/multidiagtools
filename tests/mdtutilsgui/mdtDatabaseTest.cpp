@@ -78,6 +78,12 @@ void mdtDatabaseTest::initTestCase()
   QSqlQuery q;
 
   /*
+   * Enable foreing keys support
+   */
+  sql = "PRAGMA foreign_keys = ON";
+  QVERIFY(q.exec(sql));
+
+  /*
    * Create Client table
    */
   sql = "CREATE TABLE 'Client' (";
@@ -105,7 +111,9 @@ void mdtDatabaseTest::initTestCase()
   sql += "'id_PK' INTEGER PRIMARY KEY AUTOINCREMENT, ";
   sql += "'street_name' VARCHAR(50) NOT NULL, ";
   sql += "'street_number' INTEGER NOT NULL, ";
-  sql += "'id_client_FK' INTEGER NOT NULL)";
+  sql += "'id_client_FK' INTEGER NOT NULL, ";
+  sql += "FOREIGN KEY(id_client_FK) REFERENCES Client(id_PK) ON UPDATE CASCADE ";
+  sql += ");";
   QVERIFY(q.exec(sql));
   // Verify some attributes
   fld = db.record("Address").field("id_PK");

@@ -94,6 +94,14 @@ class mdtSqlRelation : public QObject
    */
   void clear();
 
+  /*! \brief Copy the parent primary key's values to related foreing key in child model
+   *
+   * Will call setChildForeingKeyValues() for all child rows related to current parent row.
+   *
+   * \pre Parent model must be set with setParentModel() and child model with setChildModel() before using this method.
+   */
+  bool updateChildForeingKeyValues();
+
  public slots:
 
   /*! \brief Update child model
@@ -119,17 +127,29 @@ class mdtSqlRelation : public QObject
 
  private slots:
 
-  /*! \brief Copy the parent primary key's values to related foreing key in child model
+  /*! \brief Tasks to be done before updating parent record in database
    *
-   * When adding a new row to child model, we have to copy
-   *  the parent primary key's data to related foreing key's fields
-   *  in child model.
+   * This will call setChildForeingKeyValues() for each related record in child model.
    *
    * \pre Parent model must be set with setParentModel() and child model with setChildModel() before using this method.
    */
-  void setChildForeingKeyValues(QSqlRecord &childRecord);
+  ///void onParentBeforeUpdate(int row, QSqlRecord &parentRecord);
+
+  /*! \brief Tasks to be done before inserting child record into database
+   *
+   * This will call setChildForeingKeyValues().
+   *
+   * \pre Parent model must be set with setParentModel() and child model with setChildModel() before using this method.
+   */
+  void onChildBeforeInsert(QSqlRecord &childRecord);
 
  private:
+
+  /*! \brief Copy the parent primary key's values to related foreing key in child model
+   *
+   * \pre Parent model must be set with setParentModel() and child model with setChildModel() before using this method.
+   */
+  void setChildForeingKeyValues(QSqlRecord &parentRecord, QSqlRecord &childRecord);
 
   /*! \brief Generate filter for relation
    */
@@ -138,6 +158,12 @@ class mdtSqlRelation : public QObject
   /*! \brief Generate filter with relation and user filetr
    */
   void generateChildModelFilter();
+
+  /*! \brief Get relation item for given parent index
+   *
+   * Returns false if parentIndex was not found in relation.
+   */
+  mdtSqlRelationItem *relationItemOfParentIndex(const QModelIndex &parentIndex);
 
   Q_DISABLE_COPY(mdtSqlRelation);
 

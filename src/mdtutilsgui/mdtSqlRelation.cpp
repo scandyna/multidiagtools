@@ -43,6 +43,8 @@ void mdtSqlRelation::setParentModel(QSqlTableModel *model)
   Q_ASSERT(model != 0);
 
   pvParentModel = model;
+  ///connect(pvParentModel, SIGNAL(beforeUpdate(int, QSqlRecord&)), this, SLOT(onParentBeforeUpdate(int, QSqlRecord&)));
+  ///connect(pvParentModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(onParentDataChanged(const QModelIndex&, const QModelIndex&)));
 }
 
 void mdtSqlRelation::setChildModel(QSqlTableModel *model)
@@ -50,7 +52,7 @@ void mdtSqlRelation::setChildModel(QSqlTableModel *model)
   Q_ASSERT(model != 0);
 
   pvChildModel = model;
-  connect(pvChildModel, SIGNAL(beforeInsert(QSqlRecord&)), this, SLOT(setChildForeingKeyValues(QSqlRecord&)));
+  connect(pvChildModel, SIGNAL(beforeInsert(QSqlRecord&)), this, SLOT(onChildBeforeInsert(QSqlRecord&)));
 }
 
 bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &childFieldName)
@@ -103,6 +105,39 @@ void mdtSqlRelation::clear()
   pvChildModel = 0;
 }
 
+bool mdtSqlRelation::updateChildForeingKeyValues()
+{
+  Q_ASSERT(pvParentModel != 0);
+  Q_ASSERT(pvChildModel != 0);
+
+  int childRow;
+  QSqlRecord parentRecord;
+  QSqlRecord childRecord;
+
+  // If current parent row is not valid, we do nothing
+  if(pvCurrentRow < 0){
+    return true;
+  }
+  // Get current parent record and update childs
+  parentRecord = pvParentModel->record(pvCurrentRow);
+  for(childRow = 0; childRow < pvChildModel->rowCount(); ++childRow){
+    // Get child record and edit it's foreing key
+    childRecord = pvChildModel->record(childRow);
+    setChildForeingKeyValues(parentRecord, childRecord);
+    // Update in model
+    if(!pvChildModel->setRecord(childRow, childRecord)){
+      qDebug() << "-> ERR during child model setRecord()";
+      return false;
+    }
+    if(!pvChildModel->submit()){
+      qDebug() << "updateChildForeingKeyValues(): submit() failed";
+      return false;
+    }
+  }
+
+  return true;
+}
+
 void mdtSqlRelation::setParentCurrentIndex(int index)
 {
   Q_ASSERT(pvParentModel != 0);
@@ -137,15 +172,46 @@ void mdtSqlRelation::setParentCurrentIndex(const QModelIndex &current, const QMo
   setParentCurrentIndex(current);
 }
 
-void mdtSqlRelation::setChildForeingKeyValues(QSqlRecord &childRecord)
+/**
+void mdtSqlRelation::onParentBeforeUpdate(int row, QSqlRecord &parentRecord)
 {
   Q_ASSERT(pvParentModel != 0);
   Q_ASSERT(pvChildModel != 0);
 
-  int i;
-  mdtSqlRelationItem *item;
+  int childRow;
+  QSqlRecord childRecord;
+
+  for(childRow=0; childRow<pvChildModel->rowCount(); ++childRow){
+    childRecord = pvChildModel->record(childRow);
+    setChildForeingKeyValues(parentRecord, childRecord);
+    // Here, we make the assertion that child model was clean before this method was called.
+    if(!pvChildModel->setRecord(childRow, childRecord)){
+      qDebug() << "-> ERR during child model setRecord()";
+      return;
+    }
+    if(!pvChildModel->submit()){
+      qDebug() << "-> ERR during child model submit()";
+      return;
+    }
+    qDebug() << "-> FK done (rec: " << childRecord.value(3) << ") for parent PK " << parentRecord.value(0);
+    qDebug() << "-> FK done (data: " << pvChildModel->data(pvChildModel->index(childRow, 3)) << ") for parent PK " << parentRecord.value(0);
+  }
+  if(!pvChildModel->submitAll()){
+    qDebug() << "-> ERR during child model submitAll()";
+  }
+
+  for(childRow=0; childRow<pvChildModel->rowCount(); ++childRow){
+    qDebug() << "-> FK done (data: " << pvChildModel->data(pvChildModel->index(childRow, 3)) << ") for parent PK " << parentRecord.value(0);
+  }
+}
+*/
+
+void mdtSqlRelation::onChildBeforeInsert(QSqlRecord &childRecord)
+{
+  Q_ASSERT(pvParentModel != 0);
+  Q_ASSERT(pvChildModel != 0);
+
   QSqlRecord parentRecord;
-  QVariant data;
 
   // On invalid index, we do nothing
   if(pvCurrentRow < 0){
@@ -153,18 +219,42 @@ void mdtSqlRelation::setChildForeingKeyValues(QSqlRecord &childRecord)
   }
   // Get data record of the parent model
   parentRecord = pvParentModel->record(pvCurrentRow);
+  // Update childs
+  setChildForeingKeyValues(parentRecord, childRecord);
+}
+
+void mdtSqlRelation::setChildForeingKeyValues(QSqlRecord &parentRecord, QSqlRecord &childRecord)
+{
+  Q_ASSERT(pvParentModel != 0);
+  Q_ASSERT(pvChildModel != 0);
+
+  int i;
+  mdtSqlRelationItem *item;
+  ///QSqlRecord parentRecord;
+  QVariant data;
+
+  // On invalid index, we do nothing
+  /**
+  if(pvCurrentRow < 0){
+    return;
+  }
+  */
+  // Get data record of the parent model
+  ///parentRecord = pvParentModel->record(pvCurrentRow);
   // Copy parent PK -> child FK
   for(i=0; i<pvRelations.size(); ++i){
     item = pvRelations.at(i);
     Q_ASSERT(item != 0);
     // Get parent model's data
     data = parentRecord.value(item->parentFieldIndex());
+    /**
     if(!data.isValid()){
       mdtError e(MDT_DATABASE_ERROR, "Could not get data for field '" + item->parentFieldName() + "' not found in parent table", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtSqlRelation");
       e.commit();
-      return;
+      return false;
     }
+    */
     // Pust to child's field
     childRecord.setValue(item->childFieldIndex(), data);
   }
@@ -208,4 +298,20 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
 void mdtSqlRelation::generateChildModelFilter()
 {
   pvChildModelFilter = pvChildModelRelationFilter;
+}
+
+mdtSqlRelationItem *mdtSqlRelation::relationItemOfParentIndex(const QModelIndex &parentIndex)
+{
+  int i;
+  mdtSqlRelationItem *item;
+
+  for(i=0; i<pvRelations.size(); ++i){
+    item = pvRelations.at(i);
+    Q_ASSERT(item != 0);
+    if(item->parentFieldIndex() == parentIndex.column()){
+      return item;
+    }
+  }
+
+  return 0;
 }

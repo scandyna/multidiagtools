@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
-    <height>67</height>
+    <width>338</width>
+    <height>101</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,23 +15,37 @@
   </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
+    <widget class="QLabel" name="lb_id_PK">
+     <property name="text">
+      <string>ID</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="fld_id_PK">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
     <widget class="QLabel" name="lb_first_name">
      <property name="text">
       <string>First name</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="1" column="1">
     <widget class="QLineEdit" name="fld_first_name"/>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QLabel" name="lb_remarks">
      <property name="text">
       <string>Remarks</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="2" column="1">
     <widget class="QLineEdit" name="fld_remarks"/>
    </item>
   </layout>

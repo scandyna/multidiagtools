@@ -25,6 +25,7 @@
 #include <QSqlError>
 #include <QString>
 #include <QList>
+#include <QSqlRecord>
 
 class QSqlTableModel;
 class QState;
@@ -215,6 +216,19 @@ class mdtAbstractSqlWidget : public QWidget
    */
   virtual void toNext() = 0;
 
+ protected slots:
+
+  /*! \brief Wait until all child widgets are back to Visualizing state
+   *
+   * Internally, wait is done with a QTimer,
+   *  so Qt's event loop is not breacked.
+   */
+  void waitUntilChildWidgetsAreInVisaluzingState();
+
+  /*! \brief Save data in child widgets
+   */
+  void callChildWidgetsSubmit();
+
  protected:
 
   /*! \brief Set the table model
@@ -303,9 +317,32 @@ class mdtAbstractSqlWidget : public QWidget
    */
   bool childWidgetsAreInVisaluzingState();
 
+  /*! \brief Update all child widgets foreing keys
+   */
+  bool updateChildWidgetsForeingKeys();
+
   /*! \brief Show a message box to the user to warn him that it should save/revert data
    */
   void warnUserAboutUnsavedRow(const QString &tableName);
+
+  /*! \brief Wait some time
+   *
+   * Internally, wait is done with a couple of QApplication::processEvents() and little sleep,
+   *  so Qt's event loop is not broken.
+   *
+   * \param ms Time to wait [ms]
+   *   Note: ms must be a multiple of 50
+   */
+  void wait(int ms);
+
+  /*! \brief Restore primary key data to (parent) model
+   *
+   * \param previousRecord Record that contains data in witch
+   *                        primary key data will be token, and sotred
+   *                        again into model if they differ.
+   * \pre (Parent) model must be set with setModel() before calling this method.
+   */
+  bool restorePrimaryKeyDataToModel(const QSqlRecord &previousRecord);
 
  signals:
 
@@ -518,6 +555,14 @@ class mdtAbstractSqlWidget : public QWidget
    */
   void onStateRemovingEntered();
 
+  /*! \brief Disable child widgets
+   */
+  void disableChildWidgets();
+
+  /*! \brief Enable child widgets
+   */
+  void enableChildWidgets();
+
  private:
 
   /*! \brief Build the state machine
@@ -540,7 +585,7 @@ class mdtAbstractSqlWidget : public QWidget
   // Memebrs for child widgets support
   QList<mdtSqlRelation*> pvRelations;
   QList<mdtAbstractSqlWidget*> pvChildWidgets;
-  // Other mebers
+  // Other members
   QString pvUserFriendlyTableName;
 
   Q_DISABLE_COPY(mdtAbstractSqlWidget);

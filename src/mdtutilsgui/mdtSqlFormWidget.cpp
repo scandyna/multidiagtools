@@ -29,9 +29,10 @@
 #include <QLayout>
 #include <QSqlRecord>
 #include <QSqlField>
+#include <QSqlIndex>
 #include <QMessageBox>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtSqlFormWidget::mdtSqlFormWidget(QWidget *parent)
  : mdtAbstractSqlWidget(parent)
@@ -103,6 +104,7 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
     }
   }
   connect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
+  
   pvWidgetMapper->toFirst();
 }
 
@@ -221,6 +223,11 @@ bool mdtSqlFormWidget::doSubmit()
   // Remember current row (will be lost during submit)
   row = pvWidgetMapper->currentIndex();
 
+  QSqlRecord initialRecord = model()->record(row);
+  
+  ///qDebug() << "PK: " << model()->primaryKey();
+  qDebug() << "doSubmit(): data[" << row << "]: " << model()->data(model()->index(row, 0));
+  
   // Do some check before real submit
   if(!checkBeforeSubmit()){
     QMessageBox msgBox;
@@ -229,22 +236,48 @@ bool mdtSqlFormWidget::doSubmit()
       tr("Fields that are not correct should be highlighted.\nMoving cursor over field with error should display the reason\nPlease correct errors, or cancel modifications, and try again."));
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.exec();    return false;
+    msgBox.exec();
+    return false;
   }
+  
+  
   // Call widget mapper submit() (will commit data from widgets to model)
+  qDebug() << "doSubmit(): mapper->submit() ...";
   if(!pvWidgetMapper->submit()){
     displayDatabaseError(model()->lastError());
     return false;
   }
+  qDebug() << "doSubmit(): data[" << row << "]: " << model()->data(model()->index(row, 0));
+  
+  // Set childs , ..............
+  /**
+  if(!updateChildWidgetsForeingKeys()){
+    return false;
+  }
+  callChildWidgetsSubmit();
+  wait(100);
+  if(!childWidgetsAreInVisaluzingState()){
+    return false;
+  }
+  */
+  
   /*
    * We use QDataWidgetMapper::ManualSubmit submit policy and QSqlTableModel::OnManualSubmit edit strategy.
    * Widget mapper calls submit() on model, but this has no effect with OnManualSubmit edit strategy,
    * so we have to call submitAll() on model.
    */
+  qDebug() << "doSubmit(): mapper->submitAll() ...";
   if(!model()->submitAll()){
+    if(!restorePrimaryKeyDataToModel(initialRecord)){
+      qDebug() << "Cannot restore PK !!";
+      return false;
+    }
     displayDatabaseError(model()->lastError());
     return false;
   }
+  
+  
+  qDebug() << "doSubmit(): data[" << row << "]: " << model()->data(model()->index(row, 0));
   // Go back to current row
   pvWidgetMapper->setCurrentIndex(row);
 

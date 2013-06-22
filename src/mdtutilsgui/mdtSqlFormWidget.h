@@ -27,6 +27,8 @@
 #include <QString>
 #include <QSqlError>
 
+#include <QSqlRecord>
+
 ///class mdtSqlDataWidgetMapper;
 class QDataWidgetMapper;
 class mdtSqlFieldHandler;
@@ -127,6 +129,7 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void onCurrentIndexChanged(int row);
 
+  
  private:
 
   /*! \brief Set model

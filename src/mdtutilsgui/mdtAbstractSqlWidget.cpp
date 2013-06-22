@@ -26,8 +26,29 @@
 #include <QMessageBox>
 #include <QSqlTableModel>
 #include <QSqlDatabase>
+#include <QSqlIndex>
+
+#include <QApplication>
+#include <QTimer>
+#include <QThread>
 
 #include <QDebug>
+
+/*
+ * We need a wait method,
+ *  so create a little class
+ *  to have a portable msleed()
+ */
+class mdtAbstractSqlWidgetSleep : QThread
+{
+ public:
+  static void msleep(unsigned long msecs);
+};
+void mdtAbstractSqlWidgetSleep::msleep(unsigned long msecs)
+{
+  QThread::msleep(msecs);
+}
+
 
 mdtAbstractSqlWidget::mdtAbstractSqlWidget(QWidget *parent)
  : QWidget(parent)
@@ -123,6 +144,23 @@ void mdtAbstractSqlWidget::remove()
   emit removeTriggered();
 }
 
+void mdtAbstractSqlWidget::waitUntilChildWidgetsAreInVisaluzingState()
+{
+  while(!childWidgetsAreInVisaluzingState()){
+    QTimer::singleShot(100, this, SLOT(waitUntilChildWidgetsAreInVisaluzingState()));
+  }
+}
+
+void mdtAbstractSqlWidget::callChildWidgetsSubmit()
+{
+  int i;
+
+  for(i=0; i<pvChildWidgets.size(); ++i){
+    Q_ASSERT(pvChildWidgets.at(i) != 0);
+    pvChildWidgets.at(i)->submit();
+  }
+}
+
 void mdtAbstractSqlWidget::displayDatabaseError(QSqlError error)
 {
   Q_ASSERT(pvModel != 0);
@@ -215,6 +253,20 @@ bool mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()
   return true;
 }
 
+bool mdtAbstractSqlWidget::updateChildWidgetsForeingKeys()
+{
+  int i;
+
+  for(i=0; i<pvRelations.size(); ++i){
+    Q_ASSERT(pvRelations.at(i) != 0);
+    if(!pvRelations.at(i)->updateChildForeingKeyValues()){
+      return false;
+    }
+  }
+
+  return true;
+}
+
 void mdtAbstractSqlWidget::warnUserAboutUnsavedRow(const QString &tableName)
 {
   QMessageBox msgBox;
@@ -226,10 +278,51 @@ void mdtAbstractSqlWidget::warnUserAboutUnsavedRow(const QString &tableName)
   msgBox.exec();
 }
 
+void mdtAbstractSqlWidget::wait(int ms)
+{
+  int i;
+  int maxIter = ms / 50;
+
+  for(i=0; i<maxIter; ++i){
+    mdtAbstractSqlWidgetSleep::msleep(50);
+    qApp->processEvents();
+  }
+}
+
+bool mdtAbstractSqlWidget::restorePrimaryKeyDataToModel(const QSqlRecord &previousRecord)
+{
+  Q_ASSERT(pvModel != 0);
+
+  QSqlIndex primaryKey;
+  int pkIndex;
+  int indexInRecord;
+  QSqlRecord currentRecord;
+  bool pkUpdated = false;
+
+  currentRecord = pvModel->record(currentRow());
+  primaryKey = pvModel->primaryKey();
+  for(pkIndex = 0; pkIndex < primaryKey.count(); ++pkIndex){
+    indexInRecord = previousRecord.indexOf(primaryKey.fieldName(pkIndex));
+    if(currentRecord.value(indexInRecord) != previousRecord.value(indexInRecord)){
+      pkUpdated = true;
+      currentRecord.setValue(indexInRecord, previousRecord.value(indexInRecord));
+    }
+  }
+  if(pkUpdated){
+    if(!pvModel->setRecord(currentRow(), currentRecord)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
 void mdtAbstractSqlWidget::onStateVisualizingEntered()
 {
   pvCurrentState = Visualizing;
   qDebug() << __FUNCTION__;
+  
+  enableChildWidgets();
   emit insertEnabledStateChanged(true);
   emit removeEnabledStateChanged(true);
   emit stateVisualizingEntered();
@@ -238,6 +331,9 @@ void mdtAbstractSqlWidget::onStateVisualizingEntered()
 void mdtAbstractSqlWidget::onStateVisualizingExited()
 {
   qDebug() << __FUNCTION__;
+  
+  disableChildWidgets();
+  
   emit insertEnabledStateChanged(false);
   emit removeEnabledStateChanged(false);
   emit stateVisualizingExited();
@@ -384,9 +480,28 @@ void mdtAbstractSqlWidget::onStateRemovingEntered()
     emit operationSucceed();
     return;
   }
-  // Remove
-  if(doRemove()){
-    emit operationSucceed();
+  // Remove - Note: we ignore return value, because we return allways to Visualizing state
+  doRemove();
+  emit operationSucceed();
+}
+
+void mdtAbstractSqlWidget::disableChildWidgets()
+{
+  int i;
+
+  for(i=0; i<pvChildWidgets.size(); ++i){
+    Q_ASSERT(pvChildWidgets.at(i) != 0);
+    pvChildWidgets.at(i)->setEnabled(false);
+  }
+}
+
+void mdtAbstractSqlWidget::enableChildWidgets()
+{
+  int i;
+
+  for(i=0; i<pvChildWidgets.size(); ++i){
+    Q_ASSERT(pvChildWidgets.at(i) != 0);
+    pvChildWidgets.at(i)->setEnabled(true);
   }
 }
 
