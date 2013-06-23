@@ -33,14 +33,121 @@
 
 /// \todo Implement other data editors (now only QLineEdit is implemented)
 
-mdtSqlFieldHandler::mdtSqlFieldHandler(QObject *parent)
- : QObject(parent)
+/*
+ * mdtSqlFieldHandler has to deal with several widgets type
+ * (QLineEdit, QSpinBox, ...)
+ * To avoid storing several pointer, and each time searchin
+ *  wich one was set, we create a abstract class
+ *  with common used methods, and specialized subclass for each widget type
+ */
+
+class mdtSqlFieldHandlerAbstractDataWidget
 {
+ public:
+  virtual void setData(const QVariant &data) = 0;
+  virtual QVariant data() const = 0;
+  virtual bool isNull() const = 0;
+  virtual void clear() = 0;
+  virtual QWidget *widget() = 0;
+  virtual void setReadOnly(bool readOnly) = 0;
+  virtual void setMaxLength(int maxLength) {};
+  virtual void setRange(qreal min, qreal max) {};
+};
+
+/*
+ * QLineEdit specialisation
+ */
+class mdtSqlFieldHandlerLineEdit : public mdtSqlFieldHandlerAbstractDataWidget
+{
+ public:
+  mdtSqlFieldHandlerLineEdit();
+  void setLineEdit(QLineEdit *le);
+  void setData(const QVariant &data);
+  QVariant data() const;
+  bool isNull() const;
+  void clear();
+  QWidget *widget();
+  void setReadOnly(bool readOnly);
+  void setMaxLength(int maxLength);
+ private:
+  QLineEdit *pvLineEdit;
+};
+
+mdtSqlFieldHandlerLineEdit::mdtSqlFieldHandlerLineEdit()
+{
+  pvLineEdit = 0;
+}
+
+void mdtSqlFieldHandlerLineEdit::setLineEdit(QLineEdit *le)
+{
+  Q_ASSERT(le != 0);
+
+  pvLineEdit = le;
+}
+
+void mdtSqlFieldHandlerLineEdit::setData(const QVariant &data)
+{
+  Q_ASSERT(pvLineEdit != 0);
+
+  pvLineEdit->setText(data.toString());
+}
+
+QVariant mdtSqlFieldHandlerLineEdit::data() const
+{
+  Q_ASSERT(pvLineEdit != 0);
+
+  if(pvLineEdit->text().trimmed().isEmpty()){
+    return QVariant();
+  }
+  return pvLineEdit->text();
+}
+
+bool mdtSqlFieldHandlerLineEdit::isNull() const
+{
+  return data().isNull();
+}
+
+void mdtSqlFieldHandlerLineEdit::clear()
+{
+  Q_ASSERT(pvLineEdit != 0);
+
+  pvLineEdit->clear();
+}
+
+QWidget *mdtSqlFieldHandlerLineEdit::widget()
+{
+  return pvLineEdit;
+}
+
+void mdtSqlFieldHandlerLineEdit::setReadOnly(bool readOnly)
+{
+  Q_ASSERT(pvLineEdit != 0);
+
+  pvLineEdit->setReadOnly(readOnly);
+}
+
+void mdtSqlFieldHandlerLineEdit::setMaxLength(int maxLength)
+{
+  Q_ASSERT(pvLineEdit != 0);
+
+  pvLineEdit->setMaxLength(maxLength);
+}
+
+/*
+ * ==== mdtSqlFieldHandler implementation  ====
+ */
+
+mdtSqlFieldHandler::mdtSqlFieldHandler(QWidget *parent)
+ : QWidget(parent)
+{
+  pvDataWidget = 0;
   clear();
 }
 
+
 mdtSqlFieldHandler::~mdtSqlFieldHandler()
 {
+  delete pvDataWidget;
 }
 
 void mdtSqlFieldHandler::setField(const QSqlField &field)
@@ -81,8 +188,11 @@ void mdtSqlFieldHandler::setDataWidget(QLineEdit *widget)
 {
   Q_ASSERT(widget != 0);
 
+  mdtSqlFieldHandlerLineEdit *w;
   clear();
-  pvLineEdit = widget;
+  w = new mdtSqlFieldHandlerLineEdit;
+  w->setLineEdit(widget);
+  pvDataWidget = w;
   setDataWidgetAttributes();
   connect(widget, SIGNAL(textEdited(const QString&)), this, SLOT(onDataEdited(const QString&)));
 }
@@ -109,9 +219,12 @@ void mdtSqlFieldHandler::setDataWidget(QSpinBox *widget)
 
 QWidget *mdtSqlFieldHandler::dataWidget()
 {
-  if(pvLineEdit != 0){
-    return pvLineEdit;
+  if(pvDataWidget == 0){
+    return 0;
   }
+  return pvDataWidget->widget();
+
+  /// \todo Below becomes obselète
   if(pvAbstractButton != 0){
     return pvAbstractButton;
   }
@@ -132,23 +245,27 @@ QWidget *mdtSqlFieldHandler::dataWidget()
 
 void mdtSqlFieldHandler::clear()
 {
-  pvLineEdit = 0;
+  delete pvDataWidget;
+  pvDataWidget = 0;
   pvAbstractButton = 0;
   pvDateTimeEdit = 0;
   pvDoubleSpinBox = 0;
   pvSpinBox = 0;
   pvComboBox = 0;
   // Flags
-  pvIsNull = true;
   pvIsReadOnly = false;
   pvDataEdited = false;
 }
 
 void mdtSqlFieldHandler::clearWidgetData()
 {
-  if(pvLineEdit != 0){
-    pvLineEdit->clear();
-  }else if(pvAbstractButton != 0){
+  Q_ASSERT(pvDataWidget != 0);
+
+  pvDataWidget->clear();
+
+  return;
+  /// \todo Below becomes obselète
+  if(pvAbstractButton != 0){
     pvAbstractButton->setChecked(false);
   }else if(pvDateTimeEdit != 0){
     pvDateTimeEdit->clear();
@@ -163,7 +280,10 @@ void mdtSqlFieldHandler::clearWidgetData()
 
 bool mdtSqlFieldHandler::isNull() const
 {
-  return pvIsNull;
+  if(pvDataWidget == 0){
+    return true;
+  }
+  return pvDataWidget->isNull();
 }
 
 bool mdtSqlFieldHandler::dataWasEdited() const
@@ -174,11 +294,11 @@ bool mdtSqlFieldHandler::dataWasEdited() const
 bool mdtSqlFieldHandler::checkBeforeSubmit()
 {
   // If Null flag is set, we clear widget
-  if(pvIsNull){
+  if(isNull()){
     clearDataWidget();
   }
   // Check the requiered state
-  if((pvSqlField.requiredStatus() == QSqlField::Required)&&(pvIsNull)){
+  if((pvSqlField.requiredStatus() == QSqlField::Required)&&(isNull())){
     setDataWidgetNotOk(tr("This field is requiered"));
     return false;
   }
@@ -186,27 +306,45 @@ bool mdtSqlFieldHandler::checkBeforeSubmit()
   return true;
 }
 
+void mdtSqlFieldHandler::setData(const QVariant &data)
+{
+  Q_ASSERT(pvDataWidget != 0);
+
+  pvDataWidget->setData(data);
+}
+
+QVariant mdtSqlFieldHandler::data() const
+{
+  Q_ASSERT(pvDataWidget != 0);
+
+  QVariant data = pvDataWidget->data();
+  if((data.isValid())&&(!data.isNull())){
+    return data;
+  }
+  // If data is null, we must return a empty string for fields that are strings,
+  //  and that accept null values, else mapper will revert data
+  switch(pvSqlField.type()){
+    case QVariant::String:
+      if(pvSqlField.requiredStatus() != QSqlField::Required){
+        return "";
+      }
+      break;
+    default:
+      return data;
+  }
+
+  return data;
+}
+
 void mdtSqlFieldHandler::updateFlags()
 {
   // We reset data edited flag, so that it is re-emitted once user changes something.
   pvDataEdited = false;
-  // Set the null flag
-  if((pvLineEdit != 0)&&(!pvLineEdit->text().trimmed().isEmpty())){
-    pvIsNull = false;
-  }else{
-    pvIsNull = true;
-  }
   setDataWidgetOk();
 }
 
 void mdtSqlFieldHandler::onDataEdited(const QString &text)
 {
-  // Set the null flag
-  if(text.trimmed().isEmpty()){
-    pvIsNull = true;
-  }else{
-    pvIsNull = false;
-  }
   // Set the data edited flag
   if(!pvDataEdited){
     pvDataEdited = true;
@@ -225,54 +363,51 @@ void mdtSqlFieldHandler::onDataEdited(const QDateTime & datetime)
 
 void mdtSqlFieldHandler::clearDataWidget()
 {
+  Q_ASSERT(pvDataWidget != 0);
+
   setDataWidgetOk();
-  if(pvLineEdit != 0){
-    pvLineEdit->setText("");
-    return;
-  }
+  pvDataWidget->clear();
 }
 
 void mdtSqlFieldHandler::setDataWidgetAttributes()
 {
-  // Setup line edit (if not null)
-  if(pvLineEdit != 0){
-    // Max length
-    if(pvSqlField.length() > -1){
-      pvLineEdit->setMaxLength(pvSqlField.length());
-    }
-    // Read only
-    if(pvIsReadOnly){
-      pvLineEdit->setReadOnly(true);
-    }else{
-      pvLineEdit->setReadOnly(pvSqlField.isReadOnly());
-    }
-    // Original palette
-    pvDataWidgetOriginalPalette = pvLineEdit->palette();
+  if(pvDataWidget == 0){
     return;
   }
+  Q_ASSERT(pvDataWidget->widget() != 0);
+
+  // Max length
+  if(pvSqlField.length() > -1){
+    pvDataWidget->setMaxLength(pvSqlField.length());
+  }
+  // Read only
+  if(pvIsReadOnly){
+    pvDataWidget->setReadOnly(true);
+  }else{
+    pvDataWidget->setReadOnly(pvSqlField.isReadOnly());
+  }
+  // Original palette
+  pvDataWidgetOriginalPalette = pvDataWidget->widget()->palette();
 }
 
 void mdtSqlFieldHandler::setDataWidgetNotOk(const QString &toolTip)
 {
+  Q_ASSERT(pvDataWidget != 0);
+  Q_ASSERT(pvDataWidget->widget() != 0);
+
   QPalette palette;
 
   palette.setColor(QPalette::Base, QColor(255, 190, 180));
 
-  // Change line edit (if not null)
-  if(pvLineEdit != 0){
-    pvLineEdit->setPalette(palette);
-    pvLineEdit->setToolTip(toolTip);
-    return;
-  }
-
+  pvDataWidget->widget()->setPalette(palette);
+  pvDataWidget->widget()->setToolTip(toolTip);
 }
 
 void mdtSqlFieldHandler::setDataWidgetOk()
 {
-  // Restore line edit (if not null)
-  if(pvLineEdit != 0){
-    pvLineEdit->setPalette(pvDataWidgetOriginalPalette);
-    pvLineEdit->setToolTip("");
-    return;
-  }
+  Q_ASSERT(pvDataWidget != 0);
+  Q_ASSERT(pvDataWidget->widget() != 0);
+
+  pvDataWidget->widget()->setPalette(pvDataWidgetOriginalPalette);
+  pvDataWidget->widget()->setToolTip("");
 }

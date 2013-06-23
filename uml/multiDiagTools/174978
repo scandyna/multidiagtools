@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 35
+  revision 36
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -73,7 +73,7 @@ ${inlines}
 	public explicit_return_type ""
 	nparams 2
 	  param in name "strings" type class_ref 160770 // QStringList
-	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "parent" type class_ref 138626 // QWidget
 	    defaultvalue "0"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1220,7 +1220,7 @@ ${inlines}
       operation 795394 "mdtSqlDataWidgetMapper"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "parent" type class_ref 138626 // QWidget
 	    defaultvalue "0"
 	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
 "
@@ -1643,7 +1643,7 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 840834 // <generalisation>
-	  b parent class_ref 138626 // QObject
+	  b parent class_ref 138626 // QWidget
       end
 
       classrelation 840962 // pvSqlField (<unidirectional association>)
@@ -1678,7 +1678,7 @@ ${inlines}
       operation 1270658 "mdtSqlFieldHandler"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "parent" type class_ref 138626 // QWidget
 	    defaultvalue "0"
 	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
 "
@@ -1959,15 +1959,6 @@ ${inlines}
 	
       end
 
-      classrelation 841986 // pvLineEdit (<unidirectional association>)
-	relation 832770 --->
-	  a role_name "pvLineEdit" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 841986 // pvLineEdit (<unidirectional association>)
-	  b parent class_ref 679170 // QLineEdit
-      end
-
       classrelation 842114 // pvAbstractButton (<unidirectional association>)
 	relation 832898 --->
 	  a role_name "pvAbstractButton" multiplicity "0..1" private
@@ -2021,6 +2012,15 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+
+      classrelation 890242 // pvDataWidget (<directional composition>)
+	relation 881026 *-->
+	  a role_name "pvDataWidget" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 890242 // pvDataWidget (<directional composition>)
+	  b parent class_ref 699778 // mdtSqlFieldHandlerAbstractDataWidget
       end
     end
 
@@ -3051,13 +3051,13 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 805890 // <generalisation>
-	  b parent class_ref 138626 // QObject
+	  b parent class_ref 138626 // QWidget
       end
 
       operation 1222402 "mdtSqlRelation"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "parent" type class_ref 138626 // QWidget
 	    defaultvalue "0"
 	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
 "
@@ -3497,6 +3497,206 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    class 699778 "mdtSqlFieldHandlerAbstractDataWidget"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 1329026 "setData"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "data" type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1329154 "data"
+	abstract cpp_virtual public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1329666 "clear"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1329922 "setMaxLength"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "maxLength" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1330434 "setRange"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "min" explicit_type "qReal"
+	  param in name "max" explicit_type "qreal"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1330178 "widget"
+	abstract cpp_virtual public return_type class_ref 138626 // QWidget
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 699906 "mdtSqlFieldHandlerLineEdit"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 889986 // <generalisation>
+	relation 880770 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 889986 // <generalisation>
+	  b parent class_ref 699778 // mdtSqlFieldHandlerAbstractDataWidget
+      end
+
+      operation 1329282 "setLineEdit"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "le" type class_ref 679170 // QLineEdit
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1329410 "setData"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "data" type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1329538 "data"
+	cpp_virtual public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1329794 "clear"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1330050 "setMaxLength"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "maxLength" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1330306 "widget"
+	cpp_virtual public return_type class_ref 138626 // QWidget
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 890114 // pvLineEdit (<unidirectional association>)
+	relation 880898 --->
+	  a role_name "pvLineEdit" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 890114 // pvLineEdit (<unidirectional association>)
+	  b parent class_ref 679170 // QLineEdit
       end
     end
   end
@@ -4213,7 +4413,7 @@ ${inlines}
       operation 1170690 "mdtDataTableItemDelegate"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "parent" type class_ref 138626 // QWidget
 	    defaultvalue "0"
 	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
 "
@@ -4302,7 +4502,7 @@ ${inlines}
       operation 1177602 "mdtDataTableModel"
 	public explicit_return_type ""
 	nparams 2
-	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "parent" type class_ref 138626 // QWidget
 	    defaultvalue "0"
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	    defaultvalue "QSqlDatabase()"
@@ -4433,13 +4633,13 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 778114 // <generalisation>
-	  b parent class_ref 138626 // QObject
+	  b parent class_ref 138626 // QWidget
       end
 
       operation 1191554 "mdtDataTableManager"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "parent" type class_ref 138626 // QWidget
 	    defaultvalue "0"
 	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
 "

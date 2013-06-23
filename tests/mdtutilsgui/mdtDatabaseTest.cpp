@@ -112,7 +112,9 @@ void mdtDatabaseTest::initTestCase()
   sql += "'street_name' VARCHAR(50) NOT NULL, ";
   sql += "'street_number' INTEGER NOT NULL, ";
   sql += "'id_client_FK' INTEGER NOT NULL, ";
-  sql += "FOREIGN KEY(id_client_FK) REFERENCES Client(id_PK) ON UPDATE CASCADE ";
+  sql += "FOREIGN KEY(id_client_FK) REFERENCES Client(id_PK) ";
+  sql += "ON UPDATE RESTRICT ";
+  sql += "ON DELETE RESTRICT ";
   sql += ");";
   QVERIFY(q.exec(sql));
   // Verify some attributes
@@ -179,6 +181,7 @@ void mdtDatabaseTest::relationsTest()
   window.addChildWidget(addressWidget, "Addresses");
   window.enableNavigation();
   window.enableEdition();
+  window.resize(700, 400);
   window.show();
 
   
@@ -333,6 +336,12 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   int rowCount;
   int row;
   QVariant data;
+  QString sql;
+  QSqlQuery q;
+
+  // For this test, we wont foreign_keys support
+  sql = "PRAGMA foreign_keys = OFF";
+  QVERIFY(q.exec(sql));
 
   // Setup model + form view
   model.setTable("Client");
@@ -573,12 +582,19 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QCOMPARE(leFirstName->text(), QString("EFGH"));
   QCOMPARE(leRemarks->text(), QString("5678"));
 
+  // Re-enable foreign_keys support
+  // For this test, we wont foreign_keys support
+  sql = "PRAGMA foreign_keys = ON";
+  QVERIFY(q.exec(sql));
+
   /*
    * Play
    */
+  /*
   while(window.isVisible()){
     QTest::qWait(1000);
   }
+  */
 }
 
 void mdtDatabaseTest::sqlTableWidgetTest()

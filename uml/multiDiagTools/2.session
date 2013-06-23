@@ -1,11 +1,13 @@
-window_sizes 1280 1001 356 918 923 0
+window_sizes 1024 718 356 662 640 0
 diagrams
-  active  statediagram_ref 686594 // mdtAbstractSqlWidgetStateMachine
-    918 923 100 18 0 50
+  active  classdiagram_ref 666754 // mdtSqlFieldHandler
+    662 640 100 4 532 0
 end
 show_stereotypes
-selected statediagram_ref 686594 // mdtAbstractSqlWidgetStateMachine
+selected operation_ref 1330434 // setRange
 open
   state_ref 149634 // mdtAbstractSqlWidgetStateMachine
+  operation_ref 1330434 // setRange
+  class_ref 699906 // mdtSqlFieldHandlerLineEdit
 end
 end

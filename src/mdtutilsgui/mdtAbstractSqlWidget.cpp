@@ -144,23 +144,6 @@ void mdtAbstractSqlWidget::remove()
   emit removeTriggered();
 }
 
-void mdtAbstractSqlWidget::waitUntilChildWidgetsAreInVisaluzingState()
-{
-  while(!childWidgetsAreInVisaluzingState()){
-    QTimer::singleShot(100, this, SLOT(waitUntilChildWidgetsAreInVisaluzingState()));
-  }
-}
-
-void mdtAbstractSqlWidget::callChildWidgetsSubmit()
-{
-  int i;
-
-  for(i=0; i<pvChildWidgets.size(); ++i){
-    Q_ASSERT(pvChildWidgets.at(i) != 0);
-    pvChildWidgets.at(i)->submit();
-  }
-}
-
 void mdtAbstractSqlWidget::displayDatabaseError(QSqlError error)
 {
   Q_ASSERT(pvModel != 0);
@@ -171,7 +154,8 @@ void mdtAbstractSqlWidget::displayDatabaseError(QSqlError error)
   QString systemText;
 
   // Fill base text
-  baseText = tr("A database error occured.");
+  baseText = tr("A database error occured on table ");
+  baseText += "'" + userFriendlyTableName() + "'";
   // Fill system text
   systemText = "Error number: " + QString::number(error.number()) + "\n ";
   systemText += "DB text: " + error.databaseText() + "\n ";
@@ -246,20 +230,6 @@ bool mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()
     Q_ASSERT(w != 0);
     if(w->currentState() != Visualizing){
       warnUserAboutUnsavedRow(w->userFriendlyTableName());
-      return false;
-    }
-  }
-
-  return true;
-}
-
-bool mdtAbstractSqlWidget::updateChildWidgetsForeingKeys()
-{
-  int i;
-
-  for(i=0; i<pvRelations.size(); ++i){
-    Q_ASSERT(pvRelations.at(i) != 0);
-    if(!pvRelations.at(i)->updateChildForeingKeyValues()){
       return false;
     }
   }

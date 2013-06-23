@@ -216,19 +216,6 @@ class mdtAbstractSqlWidget : public QWidget
    */
   virtual void toNext() = 0;
 
- protected slots:
-
-  /*! \brief Wait until all child widgets are back to Visualizing state
-   *
-   * Internally, wait is done with a QTimer,
-   *  so Qt's event loop is not breacked.
-   */
-  void waitUntilChildWidgetsAreInVisaluzingState();
-
-  /*! \brief Save data in child widgets
-   */
-  void callChildWidgetsSubmit();
-
  protected:
 
   /*! \brief Set the table model
@@ -310,16 +297,8 @@ class mdtAbstractSqlWidget : public QWidget
   QString getUserReadableTextFromMysqlError(const QSqlError &error);
 
   /*! \brief Check that child widgtes have no pending data
-   *
-   * Subclass must call this method before a row change to prevent
-   *  incoherent state of models and data loss.
-   *  If false is returned, the currentRowChanged() must not be emitted.
    */
   bool childWidgetsAreInVisaluzingState();
-
-  /*! \brief Update all child widgets foreing keys
-   */
-  bool updateChildWidgetsForeingKeys();
 
   /*! \brief Show a message box to the user to warn him that it should save/revert data
    */

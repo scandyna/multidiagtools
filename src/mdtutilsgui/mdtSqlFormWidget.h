@@ -27,9 +27,6 @@
 #include <QString>
 #include <QSqlError>
 
-#include <QSqlRecord>
-
-///class mdtSqlDataWidgetMapper;
 class QDataWidgetMapper;
 class mdtSqlFieldHandler;
 class QSqlTableModel;
@@ -129,7 +126,6 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void onCurrentIndexChanged(int row);
 
-  
  private:
 
   /*! \brief Set model
@@ -199,7 +195,6 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
 
   Q_DISABLE_COPY(mdtSqlFormWidget);
 
-  ///mdtSqlDataWidgetMapper *pvWidgetMapper;
   QDataWidgetMapper *pvWidgetMapper;
   QList<mdtSqlFieldHandler*> pvFieldHandlers;
   QWidget *pvFirstDataWidget;  // Keep trace of first data edit/view widget in focus chain

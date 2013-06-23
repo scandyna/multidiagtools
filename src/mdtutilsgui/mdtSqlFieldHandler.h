@@ -21,10 +21,13 @@
 #ifndef MDT_SQL_FIELD_HANDLER_H
 #define MDT_SQL_FIELD_HANDLER_H
 
-#include <QObject>
 #include <QSqlField>
 #include <QDateTime>
 #include <QPalette>
+#include <QVariant>
+#include <QWidget>
+
+class mdtSqlFieldHandlerAbstractDataWidget;
 
 class QLineEdit;
 class QSpinBox;
@@ -47,9 +50,10 @@ class QComboBox;
  * If field must be read only (independent of field access set in QSqlField),
  *  use setReaOnly().
  */
-class mdtSqlFieldHandler : public QObject
+class mdtSqlFieldHandler : public QWidget
 {
  Q_OBJECT
+ Q_PROPERTY(QVariant data READ data WRITE setData USER true)
 
  public:
 
@@ -57,7 +61,7 @@ class mdtSqlFieldHandler : public QObject
    *
    * See clear() for default flags.
    */
-  mdtSqlFieldHandler(QObject *parent = 0);
+  mdtSqlFieldHandler(QWidget *parent = 0);
 
   /*! \brief Destructor
    */
@@ -157,6 +161,14 @@ class mdtSqlFieldHandler : public QObject
    */
   bool checkBeforeSubmit();
 
+  /*! \brief Set data widget's data
+   */
+  void setData(const QVariant &data);
+
+  /*! \brief Get data widget's data
+   */
+  QVariant data() const;
+
  signals:
 
   /*! \brief Emitted the first time the user has edited data.
@@ -213,7 +225,9 @@ class mdtSqlFieldHandler : public QObject
   void setDataWidgetOk();
 
   // Edition/view widgets (only one will be used)
-  QLineEdit *pvLineEdit;
+
+  mdtSqlFieldHandlerAbstractDataWidget *pvDataWidget;
+
   QAbstractButton *pvAbstractButton;
   QDateTimeEdit *pvDateTimeEdit;
   QDoubleSpinBox *pvDoubleSpinBox;
@@ -221,7 +235,6 @@ class mdtSqlFieldHandler : public QObject
   QComboBox *pvComboBox;
   QSqlField pvSqlField;
   // Flags
-  bool pvIsNull;
   bool pvIsReadOnly;
   bool pvDataEdited;
   QPalette pvDataWidgetOriginalPalette;

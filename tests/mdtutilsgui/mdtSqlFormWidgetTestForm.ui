@@ -22,11 +22,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="fld_id_PK">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-    </widget>
+    <widget class="QLineEdit" name="fld_id_PK"/>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="lb_first_name">
