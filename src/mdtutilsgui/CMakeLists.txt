@@ -58,6 +58,7 @@ set (HEADER_FILES
           mdtSqlFormWidget.h
           mdtSqlTableWidget.h
           mdtSqlWindow.h
+          mdtSqlSelectionDialog.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -91,12 +92,13 @@ set (SOURCES_FILES
           mdtSqlFormWidget.cpp
           mdtSqlTableWidget.cpp
           mdtSqlWindow.cpp
+          mdtSqlSelectionDialog.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
     )
 
-# Liste des fichiers ui
+# Qt ui files
 set (FORM_FILES
           mdtSqlQueryWidget.ui
           mdtSqlWindow.ui

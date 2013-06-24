@@ -87,6 +87,11 @@ int mdtSqlRelationItem::childFieldIndex() const
   return pvChildFieldIndex;
 }
 
+QString mdtSqlRelationItem::nameProtection() const
+{
+  return "`";
+}
+
 QString mdtSqlRelationItem::dataProtection() const
 {
   return pvDataProtection;

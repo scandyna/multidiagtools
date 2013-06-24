@@ -1,13 +1,14 @@
-window_sizes 1024 718 356 662 640 0
+window_sizes 1280 1001 356 918 923 0
 diagrams
-  active  classdiagram_ref 666754 // mdtSqlFieldHandler
-    662 640 100 4 532 0
+  classdiagram_ref 627202 // mdtSqlQueryWidget
+    734 738 100 4 0 0
+  active  classdiagram_ref 699650 // mdtSqlSelectionDialog
+    918 923 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1330434 // setRange
+selected operation_ref 1344898 // reject
 open
-  state_ref 149634 // mdtAbstractSqlWidgetStateMachine
-  operation_ref 1330434 // setRange
-  class_ref 699906 // mdtSqlFieldHandlerLineEdit
+  class_ref 713090 // mdtSqlSelectionDialog
+  classview_ref 424962 // mdtSqlQueryWidget
 end
 end

@@ -16,3 +16,6 @@ endif(UNIX)
 
 # * MODBUS I/O Tool *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtmodbusiotool")
+
+# * Cable list Tool *
+add_subdirectory("${PROJECT_SOURCE_DIR}/mdtcablelist")

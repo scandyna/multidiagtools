@@ -71,6 +71,12 @@ class mdtSqlRelationItem
    */
   int childFieldIndex() const;
 
+  /*! \brief Get table/field protection
+   *
+   * Typical name protection is `
+   */
+  QString nameProtection() const;
+
   /*! \brief Get data protection
    *
    * Typical data protections are:
@@ -99,6 +105,7 @@ class mdtSqlRelationItem
   int pvParentFieldIndex;
   QSqlField pvChildField;
   int pvChildFieldIndex;
+  QString pvNameProtection;
   QString pvDataProtection;
   QVariant pvValueForNoDataFilter;
 };

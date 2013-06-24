@@ -195,7 +195,7 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
     if(i>0){
       pvChildModelRelationFilter += " AND";
     }
-    pvChildModelRelationFilter += " \"" + pvChildModel->tableName() + "\".\"" + item->childFieldName() + "\"=";
+    pvChildModelRelationFilter += item->nameProtection() + pvChildModel->tableName() + item->nameProtection() + "." + item->nameProtection() + item->childFieldName() + item->nameProtection() + "=";
     if(data.isValid()){
       pvChildModelRelationFilter += item->dataProtection() + data.toString() + item->dataProtection();
     }else{

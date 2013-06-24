@@ -54,6 +54,7 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
 
   int i, fieldIndex;
   QString fieldName;
+  QObjectList objectList;
   QWidget *w;
   mdtSqlFieldHandler *fieldHandler;
   QSqlRecord record;
@@ -64,9 +65,11 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
   pvFieldHandlers.clear();
   pvWidgetMapper->clearMapping();
   pvFirstDataWidget = 0;
-  // Search widgets in layout's childs
-  for(i=0; i<layout()->count(); ++i){
-    w = layout()->itemAt(i)->widget();
+
+  // Search widgets in childs
+  objectList = children();
+  for(i = 0; i < objectList.size(); ++i){
+    w = qobject_cast<QWidget*>(objectList.at(i));
     if(w != 0){
       fieldName = w->objectName();
       // If name begins with fld_ , search matching field in model
