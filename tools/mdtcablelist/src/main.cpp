@@ -41,7 +41,8 @@ int main(int argc, char **argv)
   QString password;
   bool ok;
   mdtSqlWindow window;
-  mdtClUnitEditor unitEditor;
+  mdtClUnitEditor *unitEditor;
+  int retVal;
 
   // Init app, we allow multiple instances
   if(!app.init()){
@@ -67,31 +68,18 @@ int main(int argc, char **argv)
     QMessageBox::warning(0, "DB connection error", "Cannot connect to database");
     return 1;
   }
-  
-  /// Essais
-  QStringList columns;
-  
-  mdtSqlSelectionDialog selectionDialog;
-  QSqlTableModel *model = new QSqlTableModel;
-  model->setTable("VehicleType_tbl");
-  model->select();
-  selectionDialog.setMessage("Please select a vehicle");
-  selectionDialog.setModel(model);
-  ///selectionDialog.setColumnHidden("Id_PK", true);
-  columns << "SeriesNumber_PK" << "Type_PK";
-  selectionDialog.setSelectionResultColumns(columns);
-  selectionDialog.exec();
-  qDebug() << "Selection: " << selectionDialog.selectionResult();
-  
-  return app.exec();
-  
-  if(!unitEditor.setupTables(true)){
+
+  unitEditor = new mdtClUnitEditor(0, db);
+  if(!unitEditor->setupTables(true)){
     QMessageBox::warning(0, "DB setup error", "Cannot setup tables for unit editor");
     return 1;
   }
-  unitEditor.setupUi(&window);
+  unitEditor->setupUi(&window);
   window.show();
 
-  
-  return app.exec();
+  retVal = app.exec();
+  db.close();
+  delete unitEditor;
+
+  return retVal;
 }

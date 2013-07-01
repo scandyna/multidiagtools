@@ -109,6 +109,39 @@ void mdtAlgorithmsTest::sortStringListWithNumericEndTest_data()
                          << QString("/dev/ttyMXUSB0;/dev/ttyMXUSB1;/dev/ttyMXUSB2;/dev/ttyMXUSB10;/dev/ttyS0;/dev/ttyS10;/dev/ttyS15").split(";");
 }
 
+void mdtAlgorithmsTest::naturalCompareLessThanTest()
+{
+  QFETCH(QString, input1);
+  QFETCH(QString, input2);
+  QFETCH(bool, refOutput);
+
+  QCOMPARE(naturalCompareLessThan(input1, input2, Qt::CaseSensitive), refOutput);
+  QCOMPARE(naturalCompareLessThan(input1, input2, Qt::CaseInsensitive), refOutput);
+}
+
+void mdtAlgorithmsTest::naturalCompareLessThanTest_data()
+{
+  QTest::addColumn<QString>("input1");
+  QTest::addColumn<QString>("input2");
+  QTest::addColumn<bool>("refOutput");
+
+  QTest::newRow("Empty strings") << "" << "" << false;
+  QTest::newRow("Empty strings") << "" << "1" << true;
+  QTest::newRow("Empty strings") << "1" << "" << false;
+  QTest::newRow("Numbers (1<2)") << "1" << "2" << true;
+  QTest::newRow("Numbers (1<1)") << "1" << "1" << false;
+  QTest::newRow("Numbers (2<1)") << "2" << "1" << false;
+  QTest::newRow("Numbers (1<10)") << "1" << "10" << true;
+  QTest::newRow("Numbers (2<10)") << "2" << "10" << true;
+  QTest::newRow("Numbers (001<2)") << "001" << "2" << true;
+  QTest::newRow("Chars (a<b)") << "a" << "b" << true;
+  QTest::newRow("Chars (d<c)") << "d" << "c" << false;
+  QTest::newRow("Strings (ab<cd)") << "ab" << "cd" << true;
+  QTest::newRow("Strings (z<abcd)") << "z" << "abcd" << false;
+  QTest::newRow("Alphanum (F1<F2)") << "F1" << "F2" << true;
+  QTest::newRow("Alphanum (F2<F10)") << "F2" << "F10" << true;
+}
+
 void mdtAlgorithmsTest::hexStringByteArrayTest()
 {
   QString hexString;

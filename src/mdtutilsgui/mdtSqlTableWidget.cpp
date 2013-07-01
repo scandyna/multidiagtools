@@ -30,6 +30,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QPushButton>
+#include <QList>
 
 #include <QDebug>
 
@@ -37,6 +38,8 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
  : mdtAbstractSqlWidget(parent)
 {
   pvTableView = new QTableView;
+  ///pvTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+  pvTableView->setSelectionBehavior(QAbstractItemView::SelectItems);
   QVBoxLayout *layout = new QVBoxLayout;
 
   layout->addWidget(pvTableView);
@@ -62,40 +65,13 @@ int mdtSqlTableWidget::currentRow() const
   return pvTableView->currentIndex().row();
 }
 
-void mdtSqlTableWidget::enableLocalNavigation()
+void mdtSqlTableWidget::setEditionEnabled(bool enable)
 {
-  Q_ASSERT(layout() != 0);
-
-  QBoxLayout *boxLayout;
-
-  // Create actions
-  pbNavToFirst = new QPushButton("|<<");
-  pbNavToPrevious = new QPushButton("<");
-  pbNavToNext = new QPushButton(">");
-  pbNavToLast = new QPushButton(">>|");
-  // Connect actions enable/disable
-  connect(this, SIGNAL(toFirstEnabledStateChanged(bool)), pbNavToFirst, SLOT(setEnabled(bool)));
-  connect(this, SIGNAL(toPreviousEnabledStateChanged(bool)), pbNavToPrevious, SLOT(setEnabled(bool)));
-  connect(this, SIGNAL(toNextEnabledStateChanged(bool)), pbNavToNext, SLOT(setEnabled(bool)));
-  connect(this, SIGNAL(toLastEnabledStateChanged(bool)), pbNavToLast, SLOT(setEnabled(bool)));
-  // Connect actions triggers
-  connect(pbNavToFirst, SIGNAL(clicked()), this, SLOT(toFirst()));
-  connect(pbNavToPrevious, SIGNAL(clicked()), this, SLOT(toPrevious()));
-  connect(pbNavToNext, SIGNAL(clicked()), this, SLOT(toNext()));
-  connect(pbNavToLast, SIGNAL(clicked()), this, SLOT(toLast()));
-  // Add to layout
-  if(pvNavigationLayout == 0){
-    pvNavigationLayout = new QHBoxLayout;
-    pvNavigationLayout->addStretch();
-    boxLayout = dynamic_cast<QBoxLayout*>(layout());
-    Q_ASSERT(boxLayout != 0);
-    boxLayout->addLayout(pvNavigationLayout);
+  if(enable){
+    pvTableView->setEditTriggers(QAbstractItemView::AllEditTriggers);
+  }else{
+    pvTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
   }
-  Q_ASSERT(pvNavigationLayout != 0);
-  pvNavigationLayout->addWidget(pbNavToFirst);
-  pvNavigationLayout->addWidget(pbNavToPrevious);
-  pvNavigationLayout->addWidget(pbNavToNext);
-  pvNavigationLayout->addWidget(pbNavToLast);
 }
 
 void mdtSqlTableWidget::enableLocalEdition()
@@ -127,7 +103,7 @@ void mdtSqlTableWidget::enableLocalEdition()
   // Add to layout
   if(pvNavigationLayout == 0){
     pvNavigationLayout = new QHBoxLayout;
-    pvNavigationLayout->addStretch();
+    ///pvNavigationLayout->addStretch();
     boxLayout = dynamic_cast<QBoxLayout*>(layout());
     Q_ASSERT(boxLayout != 0);
     boxLayout->addLayout(pvNavigationLayout);
@@ -137,6 +113,47 @@ void mdtSqlTableWidget::enableLocalEdition()
   pvNavigationLayout->addWidget(pbSubmit);
   pvNavigationLayout->addWidget(pbRevert);
   pvNavigationLayout->addWidget(pbRemove);
+  pvNavigationLayout->addStretch();
+}
+
+void mdtSqlTableWidget::addWidgetToLocalBar(QWidget *widget)
+{
+  Q_ASSERT(widget != 0);
+  Q_ASSERT(layout() != 0);
+
+  QBoxLayout *boxLayout;
+
+  // Add to layout
+  if(pvNavigationLayout == 0){
+    pvNavigationLayout = new QHBoxLayout;
+    boxLayout = dynamic_cast<QBoxLayout*>(layout());
+    Q_ASSERT(boxLayout != 0);
+    boxLayout->addLayout(pvNavigationLayout);
+  }
+  Q_ASSERT(pvNavigationLayout != 0);
+  pvNavigationLayout->addWidget(widget);
+}
+
+void mdtSqlTableWidget::addStretchToLocalBar()
+{
+  Q_ASSERT(layout() != 0);
+
+  QBoxLayout *boxLayout;
+
+  // Add to layout
+  if(pvNavigationLayout == 0){
+    pvNavigationLayout = new QHBoxLayout;
+    boxLayout = dynamic_cast<QBoxLayout*>(layout());
+    Q_ASSERT(boxLayout != 0);
+    boxLayout->addLayout(pvNavigationLayout);
+  }
+  Q_ASSERT(pvNavigationLayout != 0);
+  pvNavigationLayout->addStretch();
+}
+
+QItemSelectionModel *mdtSqlTableWidget::selectionModel()
+{
+  return pvTableView->selectionModel();
 }
 
 void mdtSqlTableWidget::onDataChanged(const QModelIndex &, const QModelIndex &)
@@ -239,8 +256,10 @@ bool mdtSqlTableWidget::doRemove()
 
   int i;
   int ret;
+  int row;
+  QList<int> rows;
   QMessageBox msgBox;
-  QModelIndexList indexes = pvTableView->selectionModel()->selectedIndexes();
+  QModelIndexList indexes = pvTableView->selectionModel()->selectedIndexes(); /// \todo Check if should not be selected rows ??
 
   // If nothing was selected, we do nothing
   if(indexes.size() < 1){
@@ -256,15 +275,23 @@ bool mdtSqlTableWidget::doRemove()
   if(ret != QMessageBox::Yes){
     return true;
   }
+  // Build rows list
+  for(i = 0; i < indexes.size(); ++i){
+    row = indexes.at(i).row();
+    if(!rows.contains(row)){
+      rows.append(row);
+    }
+  }
   // Delete selected rows
-  for(i=0; i<indexes.size(); ++i){
-    if(!model()->removeRow(indexes.at(i).row())){
+  for(i = 0; i < rows.size(); ++i){
+    if(!model()->removeRow(rows.at(i))){
       displayDatabaseError(model()->lastError());
       model()->revertAll();
       return false;
     }
   }
   if(!model()->submitAll()){
+    model()->revert();
     displayDatabaseError(model()->lastError());
     return false;
   }

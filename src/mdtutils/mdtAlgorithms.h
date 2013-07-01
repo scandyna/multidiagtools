@@ -61,6 +61,25 @@ namespace mdtAlgorithms
    */
   bool stringWithNumericEndLessThan(QString str1, QString str2);
 
+  /*! \brief Compare 2 strings using natural sort
+   *
+   * This method chops the input str1 and str2 into pieces of digits and non-digits
+   *  (a1.05 becomes |a|1|.|05) and compare these pieces of str1 and str2 to each other
+   *  (first with first, second with second, ...).
+   *
+   * This function is based on KDE KStringHandler::naturalCompare():
+   *  http://api.kde.org/4.10-api/kdelibs-apidocs/kdecore/html/kstringhandler_8cpp_source.html
+   *
+   * KStringHandler itself is based on the natural sort order code from Martin Pool:
+   *  http://sourcefrog.net/projects/natsort/
+   *
+   * Please note that this version is not the original one.
+   *  Unexpected behaviours cannot be due to KDE or Martin Pool.
+   *
+   * \return True if str1 < str2.
+   */
+  bool naturalCompareLessThan(const QString &str1, const QString &str2, Qt::CaseSensitivity caseSensitivity);
+
   /*! \brief Convert a hexadecimal formated string to numerical bytes array
    * 
    * Hexadecimal string is, for example, 2C 12 5F ,

@@ -38,6 +38,10 @@ class mdtAlgorithmsTest : public mdtTest
   void sortStringListWithNumericEndTest();
   void sortStringListWithNumericEndTest_data();
 
+  // Check natural sort
+  void naturalCompareLessThanTest();
+  void naturalCompareLessThanTest_data();
+
   // Test hex string <-> byte array conversions
   void hexStringByteArrayTest();
 

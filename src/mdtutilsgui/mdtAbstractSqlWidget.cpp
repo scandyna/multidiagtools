@@ -97,7 +97,7 @@ void mdtAbstractSqlWidget::addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRe
   pvRelations.append(relation);
   // We reparent relation, so it will be deleted at the right moment by Qt
   relation->setParent(this);
-  widget->enableLocalEdition();
+  ///widget->enableLocalEdition();
   // Make needed connections
   connect(this, SIGNAL(currentRowChanged(int)), relation, SLOT(setParentCurrentIndex(int)));
   // Force a update of relations

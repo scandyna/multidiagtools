@@ -9,7 +9,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # Header files containing Qt Q_OBJECT macro
 set (HEADER_FILES 
-
+          src/mdtClUnitEditor.h
     )
 
 # Source files

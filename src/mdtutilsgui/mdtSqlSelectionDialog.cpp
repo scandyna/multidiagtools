@@ -118,6 +118,17 @@ void mdtSqlSelectionDialog::setSelectionResultColumns(const QStringList &fields)
   }
 }
 
+void mdtSqlSelectionDialog::addSelectionResultColumn(const QString &field)
+{
+  Q_ASSERT(pvModel != 0);
+  int column;
+
+  column = pvModel->record().indexOf(field);
+  if(column >= 0){
+    pvSelectionResultColumns.append(column);
+  }
+}
+
 QList<QVariant> mdtSqlSelectionDialog::selectionResult()
 {
   Q_ASSERT(pvModel != 0);

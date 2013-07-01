@@ -80,6 +80,14 @@ class mdtSqlSelectionDialog : public QDialog
    */
   void setSelectionResultColumns(const QStringList &fields);
 
+  /*! \brief Add a column to the list of column that will contain the selected data
+   *
+   * Note: if a given field not exists, it will be simply ignored.
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  void addSelectionResultColumn(const QString &field);
+
   /*! \brief Return data that user has selected
    *
    * The data are these that was specified with setSelectionResultColumns() ,

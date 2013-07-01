@@ -22,22 +22,26 @@
 #define MDT_CL_UNIT_EDITOR_H
 
 #include <QSqlDatabase>
+#include <QObject>
 
 class mdtSqlWindow;
 class mdtSqlFormWidget;
 class mdtSqlTableWidget;
 class mdtSqlRelation;
 class QSqlTableModel;
+class QPushButton;
 
 /*! \brief Cable list's device editor
  */
-class mdtClUnitEditor
+class mdtClUnitEditor : public QObject
 {
+ Q_OBJECT
+
  public:
 
   /*! \brief Contruct a cable editor
    */
-  mdtClUnitEditor(QSqlDatabase db = QSqlDatabase());
+  mdtClUnitEditor(QObject *parent = 0, QSqlDatabase db = QSqlDatabase());
 
   /*! \brief Destructor
    */
@@ -57,7 +61,36 @@ class mdtClUnitEditor
    */
   void setupUi(mdtSqlWindow *window);
 
+ private slots:
+
+  /*! \brief Assign a vehicle to current unit
+   */
+  void assignVehicle();
+
+  /*! \brief Remove a assigned vehicle to current unit
+   */
+  void removeVehicleAssignation();
+
  private:
+
+  /*! \brief Get current Unit ID
+   *
+   * Will return current ID from Unit table.
+   *  Returns a value < 0 on error (no row, ...)
+   */
+  int currentUnitId();
+
+  /*! \brief Setup Unit table and widget
+   */
+  bool setupUnitTable();
+
+  /*! \brief Setup Connection table and widget
+   */
+  bool setupConnectionTable();
+
+  /*! \brief Setup VehicleUnit table and widget
+   */
+  bool setupUnitVehicleTable();
 
   Q_DISABLE_COPY(mdtClUnitEditor);
 
@@ -65,9 +98,12 @@ class mdtClUnitEditor
   QSqlDatabase pvDatabase;
   mdtSqlFormWidget *pvUnitWidget;
   mdtSqlTableWidget *pvConnectionWidget;
+  mdtSqlTableWidget *pvVehicleTypeUnitWidget;
   QSqlTableModel *pvUnitModel;
   QSqlTableModel *pvConnectionModel;
-  mdtSqlRelation *pvRelation;
+  QSqlTableModel *pvVehicleTypeUnitModel;
+  mdtSqlRelation *pvUnitConnectionRelation;
+  mdtSqlRelation *pvUnitVehicleTypeRelarion;
 };
 
 #endif  // #ifndef

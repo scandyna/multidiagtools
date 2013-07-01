@@ -28,6 +28,7 @@
 class QTableView;
 class QHBoxLayout;
 class QPushButton;
+class QItemSelectionModel;
 
 /*! \brief Table view based SQL widget
  *
@@ -53,18 +54,9 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   int currentRow() const;
 
-  /*! \brief Enable local navigation
-   *
-   * Will build a navigation bar
-   *  with |<< < > >>| buttons.
-   *
-   * In normal way, when using mdtSqlWindow,
-   *  local navigation is not needed.
-   *  In master/detail forms, if this widget
-   *  is a details (child) widget and navigation
-   *  is needed, then call this method.
+  /*! \brief Set edition enabled/disabled
    */
-  void enableLocalNavigation();
+  void setEditionEnabled(bool enable);
 
   /*! \brief Enable local edition
    *
@@ -77,6 +69,26 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    *  is needed, then call this method.
    */
   void enableLocalEdition();
+
+  /*! \brief Add a custom widget to local bar
+   *
+   * Typical usage can be to add a QPushButton
+   *  for custom usage (edit, select, ...)
+   *
+   * Note: widget will be parented to layout,
+   *  so Qt will delete it itself.
+   *
+   * \pre widget must be a valid pointer.
+   */
+  void addWidgetToLocalBar(QWidget *widget);
+
+  /*! \brief Add a strech to local bar
+   */
+  void addStretchToLocalBar();
+
+  /*! \brief Get internal table view's selection model
+   */
+  QItemSelectionModel *selectionModel();
 
  private slots:
 

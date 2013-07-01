@@ -20,8 +20,9 @@
  ****************************************************************************/
 #include "mdtAlgorithms.h"
 #include <QChar>
+#include <QStringRef>
 
-//#include <QDebug>
+#include <QDebug>
 
 QStringList mdtAlgorithms::sortStringListWithNumericEnd(QStringList &list)
 {
@@ -111,6 +112,168 @@ bool mdtAlgorithms::stringWithNumericEndLessThan(QString str1, QString str2)
   }
   // Result
   return (num1 < num2);
+}
+
+bool mdtAlgorithms::naturalCompareLessThan(const QString &str1, const QString &str2, Qt::CaseSensitivity caseSensitivity)
+{
+  QString a;
+  QString b;
+  const QChar *currA;
+  const QChar *currB;
+  const QChar *begSeqA;
+  const QChar *begSeqB;
+  int cmp;
+  bool isFirstRun;
+  int weight;
+
+  if(caseSensitivity == Qt::CaseSensitive){
+    a = str1;
+    b = str2;
+  }else{
+    a = str1.toLower();
+    b = str2.toLower();
+  }
+  qDebug() << "Compare " << a << " < " << b << " ? ...";
+  // Get iterators over a and b
+  currA = a.unicode();
+  currB = b.unicode();
+  // If str1 (a) and str2 (b) are the same string, we have no difference
+  if(currA == currB){
+    return false;
+  }
+
+  while((!currA->isNull()) && (!currB->isNull())){
+    // Remember beginning of sequences
+    begSeqA = currA;
+    begSeqB = currB;
+    // Check about special characters
+    if(currA->unicode() == QChar::ObjectReplacementCharacter){
+      return false;
+    }
+    if(currB->unicode() == QChar::ObjectReplacementCharacter){
+      return true;
+    }
+    if(currA->unicode() == QChar::ReplacementCharacter){
+      return false;
+    }
+    if(currB->unicode() == QChar::ReplacementCharacter){
+      return true;
+    }
+    // find sequence of characters ending at the first non-character
+    while((!currA->isNull()) && (!currA->isDigit()) && (!currA->isPunct()) && (!currA->isSpace())){
+      ++currA;
+    }
+    while((!currB->isNull()) && (!currB->isDigit()) && (!currB->isPunct()) && (!currB->isSpace())){
+      ++currB;
+    }
+    // compare these sequences
+    const QStringRef &subA(a.midRef(begSeqA - a.unicode(), currA - begSeqA));
+    const QStringRef &subB(b.midRef(begSeqB - b.unicode(), currB - begSeqB));
+    qDebug() << "subA: " << subA << " , subB: " << subB;
+    cmp = QStringRef::localeAwareCompare(subA, subB);
+    if(cmp < 0){
+      qDebug() << "localeAwareCompare: return true";
+      return true;
+    }else if(cmp > 0){
+      qDebug() << "localeAwareCompare: return false";
+      return false;
+    }
+    if(currA->isNull() || currB->isNull()){
+      break;
+    }
+    // find sequence of characters ending at the first non-character
+    while((currA->isPunct() || currA->isSpace()) && (currB->isPunct() || currB->isSpace())){
+      if(*currA < *currB){
+        return true;
+      }else if(*currA > *currB){
+        return false;
+      }
+      ++currA;
+      ++currB;
+      if(currA->isNull() || currB->isNull()){
+        break;
+      }
+    }
+    // now some digits follow...
+    qDebug() << "Compare " << *currA << " <-> " << *currB << " ...";
+    if((*currA == QChar('0')) || (*currB == QChar('0'))){
+      // one digit-sequence starts with 0 -> assume we are in a fraction part
+      // do left aligned comparison (numbers are considered left aligned)
+      while(1){
+        qDebug() << "currA: " << *currA << " ...";
+        qDebug() << "currB: " << *currB << " ...";
+        if((!currA->isDigit()) && (!currB->isDigit())){
+          break;
+        }else if(!currA->isDigit()){
+          return false;
+        }else if(!currB->isDigit()){
+          return true;
+        }else if(*currA < *currB){
+          return true;
+        }else if(*currA > *currB){
+          return false;
+        }
+        ++currA;
+        ++currB;
+      }
+    }else{
+      // no digit-sequence starts with 0, assume we are looking at some integer
+      // do right aligned comparison
+      // The longest run of digits wins. That aside, the gratest value wins,
+      // but we can't know that it will until we have scanned both numbers
+      // to know that they have the same magnitude
+      isFirstRun = true;
+      weight = 0;
+      while(1){
+        qDebug() << "currA: " << *currA << " ...";
+        qDebug() << "currB: " << *currB << " ...";
+        qDebug() << "weight: " << weight << " ...";
+        qDebug() << "isFirstRun: " << isFirstRun << " ...";
+        if((!currA->isDigit()) && (!currB->isDigit())){
+          if(weight < 0){
+            return true;
+          }else if(weight > 0){
+            return false;
+          }
+          break;
+        }else if(!currA->isDigit()){
+          if(isFirstRun){
+            if(*currA < *currB){
+              return true;
+            }else{
+              return false;
+            }
+          }else{
+            return true;
+          }
+        }else if(!currB->isDigit()){
+          if(isFirstRun){
+            if(*currA < *currB){
+              return true;
+            }else{
+              return false;
+            }
+          }else{
+            return false;
+          }
+        }else if((*currA < *currB) && (weight == 0)){
+          weight = -1;
+        }else if((*currA > *currB) && (weight == 0)){
+          weight = +1;
+        }
+        ++currA;
+        ++currB;
+        isFirstRun = false;
+      }
+    }
+  }
+  if(currA->isNull() && currB->isNull()){
+    return false;
+  }
+  if(currA->isNull()){
+    return true;
+  }
+  return false;
 }
 
 QByteArray mdtAlgorithms::hexStringToByteArray(const QString &hexStr)
