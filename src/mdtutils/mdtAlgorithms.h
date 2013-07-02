@@ -33,25 +33,22 @@ namespace mdtAlgorithms
 {
   /*! \brief Sort a string list, for witch each string ends with a number
    *
-   * Usefull for directory entry list. By default, QDir sorts the entris
+   * Usefull for directory entry list. By default, QDir sorts the entries
    * at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 ,
    * the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ...
    * With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ...
-   * Note that this function is not efficient. For 100 entries it ok, but for bigger
-   * data set, it's recommanded to take a look at Qt's Model/View framework,
-   * and the QSortFilterProxyModel
    *
    * \param list The list that will be sorted (will be altered)
    * \return The sorted list
    */
-  QStringList sortStringListWithNumericEnd(QStringList &list);
+  ///QStringList sortStringListWithNumericEnd(QStringList &list);
 
   /*! \brief Extract the numeric part at end of string
    *
    * \param str The string in witch the numeric part must be extracted
    * \return The numeric part, or empty string on problem
    */
-  QString extractNumericPartAtEnd(const QString &str);
+  ///QString extractNumericPartAtEnd(const QString &str);
 
   /*! \brief Compare the numeric end of 2 strings
    *
@@ -59,7 +56,19 @@ namespace mdtAlgorithms
    *
    * \return True if str1 < str2
    */
-  bool stringWithNumericEndLessThan(QString str1, QString str2);
+  ///bool stringWithNumericEndLessThan(QString str1, QString str2);
+
+  /*! \brief Sort a string list using natural sort
+   *
+   * Usefull for directory entry list. By default, QDir sorts the entries
+   * at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 ,
+   * the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ...
+   * With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ...
+   *
+   * \param list The list that will be sorted (will be altered)
+   * \return The sorted list
+   */
+  QStringList naturalSort(QStringList &list, Qt::CaseSensitivity caseSensitivity);
 
   /*! \brief Compare 2 strings using natural sort
    *
@@ -79,6 +88,14 @@ namespace mdtAlgorithms
    * \return True if str1 < str2.
    */
   bool naturalCompareLessThan(const QString &str1, const QString &str2, Qt::CaseSensitivity caseSensitivity);
+
+  /*! \brief Compare 2 strings using natural sort - case sensitive version
+   */
+  bool naturalCompareLessThanCaseSensitive(const QString &str1, const QString &str2);
+
+  /*! \brief Compare 2 strings using natural sort - case insensitive version
+   */
+  bool naturalCompareLessThanCaseInsensitive(const QString &str1, const QString &str2);
 
   /*! \brief Convert a hexadecimal formated string to numerical bytes array
    * 

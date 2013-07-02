@@ -22,15 +22,18 @@
 #include <QChar>
 #include <QStringRef>
 
-#include <QDebug>
+//#include <QDebug>
 
+/**
 QStringList mdtAlgorithms::sortStringListWithNumericEnd(QStringList &list)
 {
   qSort(list.begin(), list.end(), stringWithNumericEndLessThan);
 
   return list;
 }
+*/
 
+/**
 QString mdtAlgorithms::extractNumericPartAtEnd(const QString &str)
 {
   QString num;
@@ -50,7 +53,9 @@ QString mdtAlgorithms::extractNumericPartAtEnd(const QString &str)
 
   return num;
 }
+*/
 
+/**
 bool mdtAlgorithms::stringWithNumericEndLessThan(QString str1, QString str2)
 {
   // Empty string
@@ -113,6 +118,18 @@ bool mdtAlgorithms::stringWithNumericEndLessThan(QString str1, QString str2)
   // Result
   return (num1 < num2);
 }
+*/
+
+QStringList mdtAlgorithms::naturalSort(QStringList &list, Qt::CaseSensitivity caseSensitivity)
+{
+  if(caseSensitivity == Qt::CaseSensitive){
+    qSort(list.begin(), list.end(), naturalCompareLessThanCaseSensitive);
+  }else{
+    qSort(list.begin(), list.end(), naturalCompareLessThanCaseInsensitive);
+  }
+
+  return list;
+}
 
 bool mdtAlgorithms::naturalCompareLessThan(const QString &str1, const QString &str2, Qt::CaseSensitivity caseSensitivity)
 {
@@ -133,7 +150,6 @@ bool mdtAlgorithms::naturalCompareLessThan(const QString &str1, const QString &s
     a = str1.toLower();
     b = str2.toLower();
   }
-  qDebug() << "Compare " << a << " < " << b << " ? ...";
   // Get iterators over a and b
   currA = a.unicode();
   currB = b.unicode();
@@ -169,13 +185,10 @@ bool mdtAlgorithms::naturalCompareLessThan(const QString &str1, const QString &s
     // compare these sequences
     const QStringRef &subA(a.midRef(begSeqA - a.unicode(), currA - begSeqA));
     const QStringRef &subB(b.midRef(begSeqB - b.unicode(), currB - begSeqB));
-    qDebug() << "subA: " << subA << " , subB: " << subB;
     cmp = QStringRef::localeAwareCompare(subA, subB);
     if(cmp < 0){
-      qDebug() << "localeAwareCompare: return true";
       return true;
     }else if(cmp > 0){
-      qDebug() << "localeAwareCompare: return false";
       return false;
     }
     if(currA->isNull() || currB->isNull()){
@@ -195,13 +208,10 @@ bool mdtAlgorithms::naturalCompareLessThan(const QString &str1, const QString &s
       }
     }
     // now some digits follow...
-    qDebug() << "Compare " << *currA << " <-> " << *currB << " ...";
     if((*currA == QChar('0')) || (*currB == QChar('0'))){
       // one digit-sequence starts with 0 -> assume we are in a fraction part
       // do left aligned comparison (numbers are considered left aligned)
       while(1){
-        qDebug() << "currA: " << *currA << " ...";
-        qDebug() << "currB: " << *currB << " ...";
         if((!currA->isDigit()) && (!currB->isDigit())){
           break;
         }else if(!currA->isDigit()){
@@ -225,10 +235,6 @@ bool mdtAlgorithms::naturalCompareLessThan(const QString &str1, const QString &s
       isFirstRun = true;
       weight = 0;
       while(1){
-        qDebug() << "currA: " << *currA << " ...";
-        qDebug() << "currB: " << *currB << " ...";
-        qDebug() << "weight: " << weight << " ...";
-        qDebug() << "isFirstRun: " << isFirstRun << " ...";
         if((!currA->isDigit()) && (!currB->isDigit())){
           if(weight < 0){
             return true;
@@ -274,6 +280,16 @@ bool mdtAlgorithms::naturalCompareLessThan(const QString &str1, const QString &s
     return true;
   }
   return false;
+}
+
+bool mdtAlgorithms::naturalCompareLessThanCaseSensitive(const QString &str1, const QString &str2)
+{
+  return naturalCompareLessThan(str1, str2, Qt::CaseSensitive);
+}
+
+bool mdtAlgorithms::naturalCompareLessThanCaseInsensitive(const QString &str1, const QString &str2)
+{
+  return naturalCompareLessThan(str1, str2, Qt::CaseInsensitive);
 }
 
 QByteArray mdtAlgorithms::hexStringToByteArray(const QString &hexStr)

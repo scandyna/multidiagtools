@@ -96,7 +96,7 @@ QList<mdtPortInfo*> mdtSerialPortManager::scan()
     portNames << filesInfo.at(i).absoluteFilePath();
   }
   // Sort the list
-  portNames = mdtAlgorithms::sortStringListWithNumericEnd(portNames);
+  portNames = mdtAlgorithms::naturalSort(portNames, Qt::CaseInsensitive);
 #endif  // #ifdef Q_OS_UNIX
 
 #ifdef Q_OS_WIN

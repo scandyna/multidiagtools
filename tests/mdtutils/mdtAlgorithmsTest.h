@@ -29,18 +29,20 @@ class mdtAlgorithmsTest : public mdtTest
  
  private slots:
 
-  void extractNumericPartAtEndTest();
-  void extractNumericPartAtEndTest_data();
+  ///void extractNumericPartAtEndTest();
+  ///void extractNumericPartAtEndTest_data();
 
-  void stringWithNumericEndLessThanTest();
-  void stringWithNumericEndLessThanTest_data();
+  ///void stringWithNumericEndLessThanTest();
+  ///void stringWithNumericEndLessThanTest_data();
 
-  void sortStringListWithNumericEndTest();
-  void sortStringListWithNumericEndTest_data();
+  ///void sortStringListWithNumericEndTest();
+  ///void sortStringListWithNumericEndTest_data();
 
   // Check natural sort
   void naturalCompareLessThanTest();
   void naturalCompareLessThanTest_data();
+  void naturalSortTest();
+  void naturalSortTest_data();
 
   // Test hex string <-> byte array conversions
   void hexStringByteArrayTest();

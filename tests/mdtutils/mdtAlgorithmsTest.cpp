@@ -29,6 +29,7 @@
 
 using namespace mdtAlgorithms;
 
+/**
 void mdtAlgorithmsTest::extractNumericPartAtEndTest()
 {
   QFETCH(QString, input);
@@ -54,7 +55,9 @@ void mdtAlgorithmsTest::extractNumericPartAtEndTest_data()
   QTest::newRow("Combinaisons") << "abc5def52" << "52";
   QTest::newRow("Paths") << "/dev/ttyS0" << "0";
 }
+*/
 
+/**
 void mdtAlgorithmsTest::stringWithNumericEndLessThanTest()
 {
   QFETCH(QString, input1);
@@ -81,33 +84,7 @@ void mdtAlgorithmsTest::stringWithNumericEndLessThanTest_data()
   // Some other values
   QTest::newRow("Numbers") << "1" << "10254" << true;
 }
-
-void mdtAlgorithmsTest::sortStringListWithNumericEndTest()
-{
-  QFETCH(QStringList, input);
-  QFETCH(QStringList, refOutput);
-  
-  QCOMPARE(sortStringListWithNumericEnd(input), refOutput);
-}
-
-void mdtAlgorithmsTest::sortStringListWithNumericEndTest_data()
-{
-  QTest::addColumn<QStringList>("input");
-  QTest::addColumn<QStringList>("refOutput");
-
-  QTest::newRow("Empty strings") << QStringList("") << QStringList("");
-  QTest::newRow("Alpha strings") << QStringList("a") << QStringList("a");
-  QTest::newRow("Alpha strings") << QString("a;b").split(";") << QString("a;b").split(";");
-  QTest::newRow("Alpha strings") << QString("b;a").split(";") << QString("a;b").split(";");
-  QTest::newRow("AlphaNum strings") << QString("a1;b1").split(";") << QString("a1;b1").split(";");
-  QTest::newRow("AlphaNum strings") << QString("b1;a1").split(";") << QString("a1;b1").split(";");
-  QTest::newRow("AlphaNum strings") << QString("a2;a10;a1").split(";") << QString("a1;a2;a10").split(";");
-  QTest::newRow("AlphaNum strings") << QString("a5s2;a5s10;a5s1").split(";") << QString("a5s1;a5s2;a5s10").split(";");
-  QTest::newRow("Paths") << QString("/dev/ttyS0;/dev/ttyS15;/dev/ttyS10;/dev/ttyS5").split(";") << QString("/dev/ttyS0;/dev/ttyS5;/dev/ttyS10;/dev/ttyS15").split(";");
-  // Found bug whenn, f.ex. ttyS0, ttyMXUSB0, ... connected
-  QTest::newRow("Paths") << QString("/dev/ttyS0;/dev/ttyS15;/dev/ttyMXUSB1;/dev/ttyS10;/dev/ttyMXUSB10;/dev/ttyMXUSB0;/dev/ttyMXUSB2").split(";") \
-                         << QString("/dev/ttyMXUSB0;/dev/ttyMXUSB1;/dev/ttyMXUSB2;/dev/ttyMXUSB10;/dev/ttyS0;/dev/ttyS10;/dev/ttyS15").split(";");
-}
+*/
 
 void mdtAlgorithmsTest::naturalCompareLessThanTest()
 {
@@ -140,6 +117,34 @@ void mdtAlgorithmsTest::naturalCompareLessThanTest_data()
   QTest::newRow("Strings (z<abcd)") << "z" << "abcd" << false;
   QTest::newRow("Alphanum (F1<F2)") << "F1" << "F2" << true;
   QTest::newRow("Alphanum (F2<F10)") << "F2" << "F10" << true;
+}
+
+void mdtAlgorithmsTest::naturalSortTest()
+{
+  QFETCH(QStringList, input);
+  QFETCH(QStringList, refOutput);
+
+  QCOMPARE(naturalSort(input, Qt::CaseSensitive), refOutput);
+  QCOMPARE(naturalSort(input, Qt::CaseInsensitive), refOutput);
+}
+
+void mdtAlgorithmsTest::naturalSortTest_data()
+{
+  QTest::addColumn<QStringList>("input");
+  QTest::addColumn<QStringList>("refOutput");
+
+  QTest::newRow("Empty strings") << QStringList("") << QStringList("");
+  QTest::newRow("Alpha strings") << QStringList("a") << QStringList("a");
+  QTest::newRow("Alpha strings") << QString("a;b").split(";") << QString("a;b").split(";");
+  QTest::newRow("Alpha strings") << QString("b;a").split(";") << QString("a;b").split(";");
+  QTest::newRow("AlphaNum strings") << QString("a1;b1").split(";") << QString("a1;b1").split(";");
+  QTest::newRow("AlphaNum strings") << QString("b1;a1").split(";") << QString("a1;b1").split(";");
+  QTest::newRow("AlphaNum strings") << QString("a2;a10;a1").split(";") << QString("a1;a2;a10").split(";");
+  QTest::newRow("AlphaNum strings") << QString("a5s2;a5s10;a5s1").split(";") << QString("a5s1;a5s2;a5s10").split(";");
+  QTest::newRow("Paths") << QString("/dev/ttyS0;/dev/ttyS15;/dev/ttyS10;/dev/ttyS5").split(";") << QString("/dev/ttyS0;/dev/ttyS5;/dev/ttyS10;/dev/ttyS15").split(";");
+  // Found bug whenn, f.ex. ttyS0, ttyMXUSB0, ... connected
+  QTest::newRow("Paths") << QString("/dev/ttyS0;/dev/ttyS15;/dev/ttyMXUSB1;/dev/ttyS10;/dev/ttyMXUSB10;/dev/ttyMXUSB0;/dev/ttyMXUSB2").split(";") \
+                         << QString("/dev/ttyMXUSB0;/dev/ttyMXUSB1;/dev/ttyMXUSB2;/dev/ttyMXUSB10;/dev/ttyS0;/dev/ttyS10;/dev/ttyS15").split(";");
 }
 
 void mdtAlgorithmsTest::hexStringByteArrayTest()
