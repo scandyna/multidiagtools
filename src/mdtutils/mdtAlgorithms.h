@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,33 +31,6 @@
  */
 namespace mdtAlgorithms
 {
-  /*! \brief Sort a string list, for witch each string ends with a number
-   *
-   * Usefull for directory entry list. By default, QDir sorts the entries
-   * at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 ,
-   * the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ...
-   * With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ...
-   *
-   * \param list The list that will be sorted (will be altered)
-   * \return The sorted list
-   */
-  ///QStringList sortStringListWithNumericEnd(QStringList &list);
-
-  /*! \brief Extract the numeric part at end of string
-   *
-   * \param str The string in witch the numeric part must be extracted
-   * \return The numeric part, or empty string on problem
-   */
-  ///QString extractNumericPartAtEnd(const QString &str);
-
-  /*! \brief Compare the numeric end of 2 strings
-   *
-   * This is a helper function for sortStringListWithNumericEnd().
-   *
-   * \return True if str1 < str2
-   */
-  ///bool stringWithNumericEndLessThan(QString str1, QString str2);
-
   /*! \brief Sort a string list using natural sort
    *
    * Usefull for directory entry list. By default, QDir sorts the entries

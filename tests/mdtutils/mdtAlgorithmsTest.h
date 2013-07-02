@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,17 +26,8 @@
 class mdtAlgorithmsTest : public mdtTest
 {
  Q_OBJECT
- 
+
  private slots:
-
-  ///void extractNumericPartAtEndTest();
-  ///void extractNumericPartAtEndTest_data();
-
-  ///void stringWithNumericEndLessThanTest();
-  ///void stringWithNumericEndLessThanTest_data();
-
-  ///void sortStringListWithNumericEndTest();
-  ///void sortStringListWithNumericEndTest_data();
 
   // Check natural sort
   void naturalCompareLessThanTest();

@@ -28,6 +28,7 @@
 #include "mdtSqlFieldHandler.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
+#include "mdtSortFilterProxyModel.h"
 #include "mdtSqlWindow.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
 #include <QSqlDatabase>
@@ -50,6 +51,7 @@
 #include <QVariant>
 #include <QTimer>
 #include <QAbstractButton>
+#include <QModelIndex>
 
 #include <QTableView>
 #include <QItemSelectionModel>
@@ -626,6 +628,104 @@ void mdtDatabaseTest::sqlTableWidgetTest()
   while(window.isVisible()){
     QTest::qWait(1000);
   }
+}
+
+void mdtDatabaseTest::sortFilterProxyModelTest()
+{
+  QSqlTableModel model;
+  mdtSortFilterProxyModel proxy;
+  QTableView view;
+  QSqlQuery q;
+  QString sql;
+  QModelIndex index;
+
+  // Create a table
+    /*
+   * Create Addresses table
+   */
+  sql = "CREATE TABLE 'somedata' (";
+  sql += "'id_PK' INTEGER PRIMARY KEY AUTOINCREMENT, ";
+  sql += "'name' VARCHAR(50) , ";
+  sql += "'remarks' VARCHAR(50) );";
+  QVERIFY(q.exec(sql));
+
+  // Insert some data in DB
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Andy', 'REM 1')"));
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Bety', 'REM 3')"));
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Andy', 'REM 10')"));
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Andy', 'REM 2')"));
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Bety', 'REM 1')"));
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Andy', 'REM 3')"));
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Andy', 'REM 15')"));
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Bety', 'REM 10')"));
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Bety', 'REM 2')"));
+  QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Bety', 'REM 15')"));
+
+  // Setup model and proxy
+  model.setTable("somedata");
+  proxy.setSourceModel(&model);
+  proxy.addColumnToSortOrder(1);
+  proxy.addColumnToSortOrder("remarks");
+  view.setModel(&proxy);
+  model.select();
+
+  view.sortByColumn(0);
+  view.show();
+
+  // Check sorting
+  QCOMPARE(proxy.rowCount(), 10);
+  index = proxy.index(0, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Andy"));
+  index = proxy.index(1, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Andy"));
+  index = proxy.index(2, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Andy"));
+  index = proxy.index(3, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Andy"));
+  index = proxy.index(4, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Andy"));
+  index = proxy.index(0, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 1"));
+  index = proxy.index(1, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 2"));
+  index = proxy.index(2, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 3"));
+  index = proxy.index(3, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 10"));
+  index = proxy.index(4, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 15"));
+  index = proxy.index(5, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Bety"));
+  index = proxy.index(6, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Bety"));
+  index = proxy.index(7, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Bety"));
+  index = proxy.index(8, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Bety"));
+  index = proxy.index(9, 1);
+  QCOMPARE(proxy.data(index).toString(), QString("Bety"));
+  index = proxy.index(5, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 1"));
+  index = proxy.index(6, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 2"));
+  index = proxy.index(7, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 3"));
+  index = proxy.index(8, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 10"));
+  index = proxy.index(9, 2);
+  QCOMPARE(proxy.data(index).toString(), QString("REM 15"));
+
+  // delete created table
+  QVERIFY(q.exec("DROP TABLE 'somedata'"));
+
+  /*
+   * Play
+   */
+  /*
+  while(view.isVisible()){
+    QTest::qWait(1000);
+  }
+  */
 }
 
 void mdtDatabaseTest::clickMessageBoxButton(QMessageBox::StandardButton button)

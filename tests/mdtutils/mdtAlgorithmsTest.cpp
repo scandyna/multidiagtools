@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,63 +28,6 @@
 #include "mdtApplication.h"
 
 using namespace mdtAlgorithms;
-
-/**
-void mdtAlgorithmsTest::extractNumericPartAtEndTest()
-{
-  QFETCH(QString, input);
-  QFETCH(QString, refOutput);
-
-  QCOMPARE(extractNumericPartAtEnd(input), refOutput);
-}
-
-void mdtAlgorithmsTest::extractNumericPartAtEndTest_data()
-{
-  QTest::addColumn<QString>("input");
-  QTest::addColumn<QString>("refOutput");
-
-  QTest::newRow("Empty string") << "" << "";
-  QTest::newRow("Space") << " " << "";
-  QTest::newRow("One char") << "a" << "";
-  QTest::newRow("One char and num") << "a1" << "1";
-  QTest::newRow("Space at end") << "a1 " << "1";
-  QTest::newRow("Spaces at end") << "a1  " << "1";
-  QTest::newRow("Combinaisons") << "a 1" << "1";
-  QTest::newRow("Combinaisons") << "adkkjsj1" << "1";
-  QTest::newRow("Combinaisons") << "adkkjsj12" << "12";
-  QTest::newRow("Combinaisons") << "abc5def52" << "52";
-  QTest::newRow("Paths") << "/dev/ttyS0" << "0";
-}
-*/
-
-/**
-void mdtAlgorithmsTest::stringWithNumericEndLessThanTest()
-{
-  QFETCH(QString, input1);
-  QFETCH(QString, input2);
-  QFETCH(bool, refOutput);
-
-  QCOMPARE(stringWithNumericEndLessThan(input1, input2), refOutput);
-}
-
-void mdtAlgorithmsTest::stringWithNumericEndLessThanTest_data()
-{
-  QTest::addColumn<QString>("input1");
-  QTest::addColumn<QString>("input2");
-  QTest::addColumn<bool>("refOutput");
-
-  QTest::newRow("Empty strings") << "" << "" << false;
-  QTest::newRow("Empty strings") << "" << "1" << true;
-  QTest::newRow("Empty strings") << "1" << "" << false;
-  QTest::newRow("Numbers") << "1" << "2" << true;
-  QTest::newRow("Numbers") << "1" << "1" << false;
-  QTest::newRow("Numbers") << "2" << "1" << false;
-  //QTest::newRow("Numbers") << "a" << "1" << false;
-  //QTest::newRow("Numbers") << "1" << "a" << true;
-  // Some other values
-  QTest::newRow("Numbers") << "1" << "10254" << true;
-}
-*/
 
 void mdtAlgorithmsTest::naturalCompareLessThanTest()
 {

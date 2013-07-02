@@ -2,13 +2,20 @@ window_sizes 1280 1001 356 918 923 0
 diagrams
   classdiagram_ref 627202 // mdtSqlQueryWidget
     734 738 100 4 0 0
-  active  classdiagram_ref 699650 // mdtSqlSelectionDialog
+  classdiagram_ref 699650 // mdtSqlSelectionDialog
+    918 923 100 4 0 0
+  classdiagram_ref 706178 // QAbstractProxyModel
+    734 738 100 4 0 0
+  classdiagram_ref 706306 // QSortFilterProxyModel
+    734 738 100 4 0 0
+  active  classdiagram_ref 706434 // mdtSortFilterProxyModel
     918 923 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1344898 // reject
+selected operation_ref 1352322 // lessThan
 open
-  class_ref 713090 // mdtSqlSelectionDialog
+  class_ref 720002 // mdtSortFilterProxyModel
   classview_ref 424962 // mdtSqlQueryWidget
+  classview_ref 141698 // ModelView
 end
 end
