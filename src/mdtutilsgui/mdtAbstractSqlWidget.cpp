@@ -291,7 +291,7 @@ void mdtAbstractSqlWidget::onStateVisualizingEntered()
 {
   pvCurrentState = Visualizing;
   qDebug() << __FUNCTION__;
-  
+
   enableChildWidgets();
   emit insertEnabledStateChanged(true);
   emit removeEnabledStateChanged(true);

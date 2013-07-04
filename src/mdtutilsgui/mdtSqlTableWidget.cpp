@@ -31,16 +31,79 @@
 #include <QPushButton>
 #include <QPushButton>
 #include <QList>
+#include <QKeyEvent>
+#include <QObject>
+#include <QWidget>
 
 #include <QDebug>
+
+/*
+ * mdtSqlTableWidgetKeyEventFilter implementation
+ */
+
+mdtSqlTableWidgetKeyEventFilter::mdtSqlTableWidgetKeyEventFilter(QObject *parent)
+ : QObject(parent)
+{
+}
+
+bool mdtSqlTableWidgetKeyEventFilter::eventFilter(QObject *obj, QEvent *event)
+{
+  Q_ASSERT(obj != 0);
+  Q_ASSERT(event != 0);
+
+  if(event->type() == QEvent::KeyPress){
+    QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+    // emit signal if we have a known key
+    switch(keyEvent->key()){
+      case Qt::Key_Enter:
+      case Qt::Key_Return:
+      case Qt::Key_Delete:
+      case Qt::Key_Down:
+        qDebug() << "eventFilter() , obj dump: ";
+        obj->dumpObjectInfo();
+        emit knownKeyPressed(keyEvent->key());
+        return true;
+      default:
+        return false;
+    }
+  }else{
+    return QObject::eventFilter(obj, event);
+  }
+}
+
+/*
+ * mdtSqlTableWidgetItemDelegate implementation
+ */
+
+mdtSqlTableWidgetItemDelegate::mdtSqlTableWidgetItemDelegate(QObject *parent)
+ : QStyledItemDelegate(parent)
+{
+}
+
+QWidget *mdtSqlTableWidgetItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const
+{
+  emit dataEditionBegins();
+  return QStyledItemDelegate::createEditor(parent, option, index);
+}
+
+/*
+ * mdtSqlTableWidget implementation
+ */
 
 mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
  : mdtAbstractSqlWidget(parent)
 {
   pvTableView = new QTableView;
-  ///pvTableView->setSelectionMode(QAbstractItemView::SingleSelection);
   pvTableView->setSelectionBehavior(QAbstractItemView::SelectItems);
   QVBoxLayout *layout = new QVBoxLayout;
+  // Install event filter on table view to catch some key events
+  mdtSqlTableWidgetKeyEventFilter *keyEventFilter = new mdtSqlTableWidgetKeyEventFilter(this);
+  pvTableView->installEventFilter(keyEventFilter);
+  connect(keyEventFilter, SIGNAL(knownKeyPressed(int)), this, SLOT(onTableViewKnownKeyPressed(int)));
+  // Set our custom item delegate
+  mdtSqlTableWidgetItemDelegate *delegate = new mdtSqlTableWidgetItemDelegate(this);
+  pvTableView->setItemDelegate(delegate);
+  connect(delegate, SIGNAL(dataEditionBegins()), this, SLOT(onDataEditionBegins()));
 
   layout->addWidget(pvTableView);
   setLayout(layout);
@@ -54,6 +117,7 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   pbSubmit = 0;
   pbRevert = 0;
   pbRemove = 0;
+  pvDelegateIsEditingData = false;
 }
 
 mdtSqlTableWidget::~mdtSqlTableWidget()
@@ -156,9 +220,15 @@ QItemSelectionModel *mdtSqlTableWidget::selectionModel()
   return pvTableView->selectionModel();
 }
 
+void mdtSqlTableWidget::onDataEditionBegins()
+{
+  pvDelegateIsEditingData = true;
+  emit dataEdited();
+}
+
 void mdtSqlTableWidget::onDataChanged(const QModelIndex &, const QModelIndex &)
 {
-  emit dataEdited();
+  pvDelegateIsEditingData = false;
 }
 
 void mdtSqlTableWidget::onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -174,6 +244,49 @@ void mdtSqlTableWidget::onCurrentRowChanged(const QModelIndex &current, const QM
   }
 }
 
+void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
+{
+  Q_ASSERT(pvTableView->selectionModel() != 0);
+  Q_ASSERT(model() != 0);
+
+  QModelIndex index;
+
+  qDebug() << "Key pressed: " << key;
+  switch(key){
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+      /*
+       * We want to save data if we are in Editing or EditingNewRow state.
+       * But, we must be shure that no editor is open in delegate to prevent data loss.
+       * (If we call submit()/submitAll() on model, it will reciev invalid data
+       *  for index that has a opened editor, and silently revert its data)
+       */
+      // Save data if we are in Editing state
+      if((currentState() == Editing) || (currentState() == EditingNewRow)){
+        if(!pvDelegateIsEditingData){
+          submit();
+        }
+      }
+      break;
+    case Qt::Key_Down:
+      // If we are at last row, we insert on - Only in visualizing state
+      index = pvTableView->selectionModel()->currentIndex();
+      qDebug() << "Current IDX: " << index;
+      if((index.row() == (model()->rowCount() - 1)) && (currentState() == Visualizing) && (pvTableView->editTriggers() != QAbstractItemView::NoEditTriggers)){
+        // Insert new row and select it
+        insert();
+      }/*else{
+        index = model()->index(index.row()+1, index.column());
+        pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+      }*/
+      // Select new current index
+      index = model()->index(index.row()+1, index.column());
+      if(index.isValid()){
+        pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+      }
+  }
+}
+
 void mdtSqlTableWidget::doSetModel(QSqlTableModel *model)
 {
   Q_ASSERT(model != 0);
@@ -184,6 +297,7 @@ void mdtSqlTableWidget::doSetModel(QSqlTableModel *model)
   // A selection model is created after setModel() by view itself
   Q_ASSERT(pvTableView->selectionModel() != 0);
   connect(pvTableView->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(onCurrentRowChanged(const QModelIndex&, const QModelIndex&)));
+  pvDelegateIsEditingData = false;
 }
 
 bool mdtSqlTableWidget::doSubmit()

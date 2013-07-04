@@ -24,11 +24,51 @@
 #include "mdtAbstractSqlWidget.h"
 
 #include <QModelIndex>
+#include <QStyledItemDelegate>
 
 class QTableView;
 class QHBoxLayout;
 class QPushButton;
 class QItemSelectionModel;
+class QWidget;
+
+/*
+ * We use on manual submit edit strategy,so we can handle errors
+ *  (display message to the user and let him the choice to revert, correct, wait, ...).
+ * But, this way the user must allways click on save and insert button,
+ *  which is not a fast solution for table based editor.
+ * This class helps to catch key press events, and permits saving and inserting rows as expected.
+ */
+class mdtSqlTableWidgetKeyEventFilter : public QObject
+{
+ Q_OBJECT
+
+ public:
+  mdtSqlTableWidgetKeyEventFilter(QObject *parent);
+
+ signals:
+  void knownKeyPressed(int key);
+
+ protected:
+  bool eventFilter(QObject *obj, QEvent *event);
+};
+
+/*
+ * To handle internal state machine correctly
+ *  we need a signal that indicates that user begins to edit a item.
+ *  We create a custom delegate that provide this signal.
+ */
+class mdtSqlTableWidgetItemDelegate : public QStyledItemDelegate
+{
+ Q_OBJECT
+
+ public:
+  mdtSqlTableWidgetItemDelegate(QObject *parent);
+  QWidget *createEditor(QWidget * parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+
+ signals:
+  void dataEditionBegins() const;
+};
 
 /*! \brief Table view based SQL widget
  *
@@ -92,13 +132,28 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
 
  private slots:
 
-  /*! \brief Emit dataEdited()
+  /*! \internal Set internal delegateIsEditingData flag
+   *
+   * This slot is called by mdtSqlTableWidgetItemDelegate when editor was created.
+   *  See remark in onTableViewKnownKeyPressed()
+   *
+   * This slot will emit dataEdited()
+   */
+  void onDataEditionBegins();
+
+  /*! \internal Reset internal delegateIsEditingData
+   *
+   * See remark in onTableViewKnownKeyPressed()
    */
   void onDataChanged(const QModelIndex &, const QModelIndex &);
 
   /*! \brief Does some tasks when entering new row
    */
   void onCurrentRowChanged(const QModelIndex & current, const QModelIndex & previous);
+
+  /*! \brief Execute a action after a known key was pressed in table view
+   */
+  void onTableViewKnownKeyPressed(int key);
 
  private:
 
@@ -153,6 +208,8 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
   QPushButton *pbSubmit;
   QPushButton *pbRevert;
   QPushButton *pbRemove;
+  // Flags
+  bool pvDelegateIsEditingData;   // See remark in onTableViewKnownKeyPressed()
 };
 
 #endif  // #ifndef MDT_SQL_TABLE_WIDGET_H
