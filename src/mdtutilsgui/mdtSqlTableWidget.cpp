@@ -220,6 +220,37 @@ QItemSelectionModel *mdtSqlTableWidget::selectionModel()
   return pvTableView->selectionModel();
 }
 
+void mdtSqlTableWidget::setHeaderData(const QString &fieldName, const QString &data)
+{
+  Q_ASSERT(model() != 0);
+
+  int column;
+
+  column = model()->record().indexOf(fieldName);
+  if(column < 0){
+    return;
+  }
+  model()->setHeaderData(column, Qt::Horizontal, data);
+}
+
+void mdtSqlTableWidget::setColumnHidden(int column, bool hide)
+{
+  pvTableView->setColumnHidden(column, hide);
+}
+
+void mdtSqlTableWidget::setColumnHidden(const QString &fieldName, bool hide)
+{
+  Q_ASSERT(model() != 0);
+
+  int column;
+
+  column = model()->record().indexOf(fieldName);
+  if(column < 0){
+    return;
+  }
+  setColumnHidden(column, hide);
+}
+
 void mdtSqlTableWidget::onDataEditionBegins()
 {
   pvDelegateIsEditingData = true;
@@ -251,7 +282,6 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
 
   QModelIndex index;
 
-  qDebug() << "Key pressed: " << key;
   switch(key){
     case Qt::Key_Enter:
     case Qt::Key_Return:
@@ -259,7 +289,7 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
        * We want to save data if we are in Editing or EditingNewRow state.
        * But, we must be shure that no editor is open in delegate to prevent data loss.
        * (If we call submit()/submitAll() on model, it will reciev invalid data
-       *  for index that has a opened editor, and silently revert its data)
+       *  for index that has a opened editor, and silently revert these data)
        */
       // Save data if we are in Editing state
       if((currentState() == Editing) || (currentState() == EditingNewRow)){
@@ -271,14 +301,10 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
     case Qt::Key_Down:
       // If we are at last row, we insert on - Only in visualizing state
       index = pvTableView->selectionModel()->currentIndex();
-      qDebug() << "Current IDX: " << index;
       if((index.row() == (model()->rowCount() - 1)) && (currentState() == Visualizing) && (pvTableView->editTriggers() != QAbstractItemView::NoEditTriggers)){
         // Insert new row and select it
         insert();
-      }/*else{
-        index = model()->index(index.row()+1, index.column());
-        pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
-      }*/
+      }
       // Select new current index
       index = model()->index(index.row()+1, index.column());
       if(index.isValid()){
@@ -373,7 +399,7 @@ bool mdtSqlTableWidget::doRemove()
   int row;
   QList<int> rows;
   QMessageBox msgBox;
-  QModelIndexList indexes = pvTableView->selectionModel()->selectedIndexes(); /// \todo Check if should not be selected rows ??
+  QModelIndexList indexes = pvTableView->selectionModel()->selectedIndexes();
 
   // If nothing was selected, we do nothing
   if(indexes.size() < 1){

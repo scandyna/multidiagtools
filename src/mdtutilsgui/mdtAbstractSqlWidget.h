@@ -156,6 +156,20 @@ class mdtAbstractSqlWidget : public QWidget
    */
   virtual void enableLocalEdition();
 
+  /*! \brief Check if all data are saved
+   *
+   * This will check state of main SQL widget (this widget)
+   *  and state of all assigned child widgets.
+   *  If one of them is not in Visualizing state,
+   *  some data are not saved. In this case,
+   *  a message box is displayed to the user.
+   *
+   * This is used by mdtSqlWindow to check if it can close the window.
+   *
+   * \return true if all data are saved, false if a SQL widget has pending data.
+   */
+  bool allDataAreSaved();
+
  public slots:
 
   /*! \brief Submit current record to model
@@ -303,16 +317,6 @@ class mdtAbstractSqlWidget : public QWidget
   /*! \brief Show a message box to the user to warn him that it should save/revert data
    */
   void warnUserAboutUnsavedRow(const QString &tableName);
-
-  /*! \brief Wait some time
-   *
-   * Internally, wait is done with a couple of QApplication::processEvents() and little sleep,
-   *  so Qt's event loop is not broken.
-   *
-   * \param ms Time to wait [ms]
-   *   Note: ms must be a multiple of 50
-   */
-  void wait(int ms);
 
   /*! \brief Restore primary key data to (parent) model
    *

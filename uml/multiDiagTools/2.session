@@ -1,21 +1,15 @@
-window_sizes 1280 1001 356 918 923 0
+window_sizes 1024 718 356 662 640 0
 diagrams
-  classdiagram_ref 627202 // mdtSqlQueryWidget
-    734 738 100 4 0 0
-  classdiagram_ref 699650 // mdtSqlSelectionDialog
-    918 923 100 4 0 0
-  classdiagram_ref 706178 // QAbstractProxyModel
-    734 738 100 4 0 0
-  classdiagram_ref 706306 // QSortFilterProxyModel
-    734 738 100 4 0 0
-  active  classdiagram_ref 706434 // mdtSortFilterProxyModel
-    918 923 100 4 0 0
+  active  classdiagram_ref 633730 // DatabaseModel
+    662 640 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 1352322 // lessThan
 open
-  class_ref 720002 // mdtSortFilterProxyModel
-  classview_ref 424962 // mdtSqlQueryWidget
-  classview_ref 141698 // ModelView
+  attribute_ref 755714 // ArticleConnection_Id_FK
+  class_ref 645634 // Unit_tbl
+  class_ref 726530 // Article_tbl
+  attribute_ref 755970 // IoType
+  attribute_ref 756354 // VehicleType_Id_FK
+  deploymentview_ref 376450 // mdtCableList
 end
 end

@@ -121,11 +121,6 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
   QTabWidget *pvChildsTabWidget;
   mdtAbstractSqlWidget *pvMainSqlWidget;
 
-/**
-  private:
-    mdtAbstractSqlWidget * pvSqlWidget;
-*/
-
   Q_DISABLE_COPY(mdtSqlWindow);
 };
 

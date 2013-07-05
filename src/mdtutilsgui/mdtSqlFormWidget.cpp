@@ -107,7 +107,11 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
     }
   }
   connect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
-  pvWidgetMapper->toFirst();
+  if(model()->rowCount() < 1){
+    onCurrentIndexChanged(-1);
+  }else{
+    pvWidgetMapper->toFirst();
+  }
 }
 
 int mdtSqlFormWidget::currentRow() const
@@ -179,6 +183,7 @@ void mdtSqlFormWidget::onCurrentIndexChanged(int row)
   mdtSqlFieldHandler *fieldHandler;
   int i;
 
+  qDebug() << "onCurrentIndexChanged(" << row << ")";
   // Check if we have to enable/disable widgets regarding current row
   if(row < 0){
     widgetsEnabled = false;

@@ -24,7 +24,9 @@
 #include <QLocale>
 #include <QSqlDatabase>
 #include "mdtSqlWindow.h"
+#include "mdtClVehicleTypeEditor.h"
 #include "mdtClUnitEditor.h"
+#include "mdtClArticleEditor.h"
 #include "mdtSqlSelectionDialog.h"
 
 #include <QInputDialog>
@@ -40,7 +42,11 @@ int main(int argc, char **argv)
   QSqlDatabase db;
   QString password;
   bool ok;
-  mdtSqlWindow window;
+  mdtSqlWindow vehicleTypeEditorWindow;
+  mdtSqlWindow articleEditorWindow;
+  mdtSqlWindow unitEditorWindow;
+  mdtClVehicleTypeEditor *vehicleTypeEditor;
+  mdtClArticleEditor *articleEditor;
   mdtClUnitEditor *unitEditor;
   int retVal;
 
@@ -68,18 +74,41 @@ int main(int argc, char **argv)
     QMessageBox::warning(0, "DB connection error", "Cannot connect to database");
     return 1;
   }
-
+  // Setup vehicle type editor
+  /**
+  vehicleTypeEditor = new mdtClVehicleTypeEditor(0, db);
+  if(!vehicleTypeEditor->setupTables(true)){
+    QMessageBox::warning(0, "DB setup error", "Cannot setup tables for vehicle type editor");
+    return 1;
+  }
+  vehicleTypeEditor->setupUi(&vehicleTypeEditorWindow);
+  vehicleTypeEditorWindow.setWindowTitle(QObject::tr("Vehicle type edition"));
+  vehicleTypeEditorWindow.show();
+  */
+  // Setup article editor
+  articleEditor = new mdtClArticleEditor(0, db);
+  if(!articleEditor->setupTables(true)){
+    QMessageBox::warning(0, "DB setup error", "Cannot setup tables for article editor");
+    return 1;
+  }
+  articleEditor->setupUi(&articleEditorWindow);
+  articleEditorWindow.setWindowTitle(QObject::tr("Article edition"));
+  articleEditorWindow.show();
+  // Setup Unit editor
   unitEditor = new mdtClUnitEditor(0, db);
   if(!unitEditor->setupTables(true)){
     QMessageBox::warning(0, "DB setup error", "Cannot setup tables for unit editor");
     return 1;
   }
-  unitEditor->setupUi(&window);
-  window.show();
+  unitEditor->setupUi(&unitEditorWindow);
+  unitEditorWindow.setWindowTitle(QObject::tr("Unit edition"));
+  unitEditorWindow.show();
 
   retVal = app.exec();
   db.close();
   delete unitEditor;
+  delete articleEditor;
+  delete vehicleTypeEditor;
 
   return retVal;
 }

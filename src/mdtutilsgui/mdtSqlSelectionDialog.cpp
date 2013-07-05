@@ -80,6 +80,19 @@ void mdtSqlSelectionDialog::setModel(QSqlQueryModel *model)
   pvTableView->resizeRowsToContents();
 }
 
+void mdtSqlSelectionDialog::setHeaderData(const QString &fieldName, const QString &data)
+{
+  Q_ASSERT(pvModel != 0);
+
+  int column;
+
+  column = pvModel->record().indexOf(fieldName);
+  if(column < 0){
+    return;
+  }
+  pvModel->setHeaderData(column, Qt::Horizontal, data);
+}
+
 void mdtSqlSelectionDialog::setColumnHidden(int column, bool hide)
 {
   pvTableView->setColumnHidden(column, hide);

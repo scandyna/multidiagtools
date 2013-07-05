@@ -8,7 +8,9 @@ include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # Header files containing Qt Q_OBJECT macro
-set (HEADER_FILES 
+set (HEADER_FILES
+          src/mdtClVehicleTypeEditor.h
+          src/mdtClArticleEditor.h
           src/mdtClUnitEditor.h
     )
 
@@ -16,11 +18,15 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           # Main
           src/main.cpp
+          src/mdtClVehicleTypeEditor.cpp
+          src/mdtClArticleEditor.cpp
           src/mdtClUnitEditor.cpp
     )
 
 # Qt ui files
 set (FORM_FILES
+          src/mdtClVehicleTypeEditor.ui
+          src/mdtClArticleEditor.ui
           src/mdtClUnitEditor.ui
     )
 

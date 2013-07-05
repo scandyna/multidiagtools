@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_UNIT_EDITOR_H
-#define MDT_CL_UNIT_EDITOR_H
+#ifndef MDT_CL_ARTICLE_EDITOR_H
+#define MDT_CL_ARTICLE_EDITOR_H
 
 #include <QSqlDatabase>
 #include <QObject>
@@ -31,25 +31,25 @@ class mdtSqlRelation;
 class QSqlTableModel;
 class QPushButton;
 
-/*! \brief Cable list's device editor
+/*! \brief Cable list's article editor
  */
-class mdtClUnitEditor : public QObject
+class mdtClArticleEditor : public QObject
 {
  Q_OBJECT
 
  public:
 
-  /*! \brief Contruct a cable editor
+  /*! \brief Contruct a article editor
    */
-  mdtClUnitEditor(QObject *parent = 0, QSqlDatabase db = QSqlDatabase());
+  mdtClArticleEditor(QObject *parent = 0, QSqlDatabase db = QSqlDatabase());
 
   /*! \brief Destructor
    */
-  ~mdtClUnitEditor();
+  ~mdtClArticleEditor();
 
   /*! \brief Setup tables
    *
-   * \param includeConnections If true, connection_tbl will be added as child widget.
+   * \param includeConnections If true, ArticleConnection_tbl will be added as child widget.
    */
   bool setupTables(bool includeConnections);
 
@@ -61,48 +61,31 @@ class mdtClUnitEditor : public QObject
    */
   void setupUi(mdtSqlWindow *window);
 
- private slots:
-
-  /*! \brief Assign a vehicle to current unit
-   */
-  void assignVehicle();
-
-  /*! \brief Remove a assigned vehicle to current unit
-   */
-  void removeVehicleAssignation();
-
  private:
 
-  /*! \brief Get current Unit ID
+  /*! \brief Get current Article ID
    *
    * Will return current ID from Unit table.
    *  Returns a value < 0 on error (no row, ...)
    */
-  int currentUnitId();
+  int currentArticleId();
 
-  /*! \brief Setup Unit table and widget
+  /*! \brief Setup Article table and widget
    */
-  bool setupUnitTable();
+  bool setupArticleTable();
 
-  /*! \brief Setup Connection table and widget
+  /*! \brief Setup Article-Connection table and widget
    */
-  bool setupUnitConnectionTable();
+  bool setupArticleConnectionTable();
 
-  /*! \brief Setup VehicleUnit table and widget
-   */
-  bool setupVehicleTable();
-
-  Q_DISABLE_COPY(mdtClUnitEditor);
+  Q_DISABLE_COPY(mdtClArticleEditor);
 
   QSqlDatabase pvDatabase;
-  mdtSqlFormWidget *pvUnitWidget;
-  mdtSqlTableWidget *pvUnitConnectionWidget;
-  mdtSqlTableWidget *pvVehicleTypeWidget;
-  QSqlTableModel *pvUnitModel;
-  QSqlTableModel *pvUnitConnectionModel;
-  QSqlTableModel *pvVehicleTypeModel;
-  mdtSqlRelation *pvUnitConnectionRelation;
-  mdtSqlRelation *pvVehicleTypeRelation;
+  mdtSqlFormWidget *pvArticleWidget;
+  mdtSqlTableWidget *pvArticleConnectionWidget;
+  QSqlTableModel *pvArticleModel;
+  QSqlTableModel *pvArticleConnectionModel;
+  mdtSqlRelation *pvArticleConnectionRelation;
 };
 
-#endif  // #ifndef
+#endif  // #ifndef MDT_CL_ARTICLE_EDITOR_H

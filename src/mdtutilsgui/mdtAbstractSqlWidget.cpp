@@ -28,27 +28,7 @@
 #include <QSqlDatabase>
 #include <QSqlIndex>
 
-#include <QApplication>
-#include <QTimer>
-#include <QThread>
-
 #include <QDebug>
-
-/*
- * We need a wait method,
- *  so create a little class
- *  to have a portable msleed()
- */
-class mdtAbstractSqlWidgetSleep : QThread
-{
- public:
-  static void msleep(unsigned long msecs);
-};
-void mdtAbstractSqlWidgetSleep::msleep(unsigned long msecs)
-{
-  QThread::msleep(msecs);
-}
-
 
 mdtAbstractSqlWidget::mdtAbstractSqlWidget(QWidget *parent)
  : QWidget(parent)
@@ -97,7 +77,6 @@ void mdtAbstractSqlWidget::addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRe
   pvRelations.append(relation);
   // We reparent relation, so it will be deleted at the right moment by Qt
   relation->setParent(this);
-  ///widget->enableLocalEdition();
   // Make needed connections
   connect(this, SIGNAL(currentRowChanged(int)), relation, SLOT(setParentCurrentIndex(int)));
   // Force a update of relations
@@ -122,6 +101,22 @@ void mdtAbstractSqlWidget::enableLocalNavigation()
 
 void mdtAbstractSqlWidget::enableLocalEdition()
 {
+}
+
+bool mdtAbstractSqlWidget::allDataAreSaved()
+{
+  // Check main SQL widget state
+  if(currentState() != mdtAbstractSqlWidget::Visualizing){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Current record was modified in table '") + userFriendlyTableName() + "'");
+    msgBox.setInformativeText(tr("Please save or cancel your modifications before closing the edition window."));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.exec();
+    return false;
+  }
+  // Check child SQL widgets
+  return childWidgetsAreInVisaluzingState();
 }
 
 void mdtAbstractSqlWidget::submit()
@@ -246,17 +241,6 @@ void mdtAbstractSqlWidget::warnUserAboutUnsavedRow(const QString &tableName)
   msgBox.setIcon(QMessageBox::Warning);
   msgBox.setStandardButtons(QMessageBox::Ok);
   msgBox.exec();
-}
-
-void mdtAbstractSqlWidget::wait(int ms)
-{
-  int i;
-  int maxIter = ms / 50;
-
-  for(i=0; i<maxIter; ++i){
-    mdtAbstractSqlWidgetSleep::msleep(50);
-    qApp->processEvents();
-  }
 }
 
 bool mdtAbstractSqlWidget::restorePrimaryKeyDataToModel(const QSqlRecord &previousRecord)

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtClUnitEditor</class>
- <widget class="QWidget" name="mdtClUnitEditor">
+ <class>mdtClVehicleTypeEditor</class>
+ <widget class="QWidget" name="mdtClVehicleTypeEditor">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>259</width>
+    <width>257</width>
     <height>91</height>
    </rect>
   </property>
@@ -15,57 +15,57 @@
   </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
-    <widget class="QLabel" name="lb_SchemaPosition">
+    <widget class="QLabel" name="lb_Type">
      <property name="text">
-      <string>Schema pos.</string>
+      <string>Type</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="fld_SchemaPosition">
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>0</height>
-      </size>
-     </property>
+    <widget class="QLineEdit" name="fld_Type">
      <property name="maximumSize">
       <size>
-       <width>150</width>
+       <width>200</width>
        <height>16777215</height>
       </size>
      </property>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="lb_Coordinate">
+    <widget class="QLabel" name="lb_SubType">
      <property name="text">
-      <string>Coordinate</string>
+      <string>Variant</string>
      </property>
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="fld_Coordinate">
+    <widget class="QLineEdit" name="fld_SubType">
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>150</width>
+       <width>200</width>
        <height>16777215</height>
       </size>
      </property>
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QLabel" name="lb_Cabinet">
+    <widget class="QLabel" name="lb_SeriesNumber">
      <property name="text">
-      <string>Cabinet</string>
+      <string>Serie</string>
      </property>
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QLineEdit" name="fld_Cabinet">
+    <widget class="QLineEdit" name="fld_SeriesNumber">
      <property name="maximumSize">
       <size>
-       <width>150</width>
+       <width>200</width>
        <height>16777215</height>
       </size>
      </property>

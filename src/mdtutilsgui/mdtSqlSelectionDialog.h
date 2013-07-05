@@ -56,11 +56,19 @@ class mdtSqlSelectionDialog : public QDialog
    */
   void setModel(QSqlQueryModel *model);
 
+  /*! \brief Set a user friendly name for a column
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  void setHeaderData(const QString &fieldName, const QString &data);
+
   /*! \brief Set a coulumn as hidden
    */
   void setColumnHidden(int column, bool hide);
 
   /*! \brief Set a coulumn as hidden
+   *
+   * \pre Model must be set with setModel() before using this method.
    */
   void setColumnHidden(const QString &fieldName, bool hide);
 
