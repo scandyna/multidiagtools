@@ -1,0 +1,160 @@
+\hypertarget{classmdt_sql_form_widget}{
+\section{mdtSqlFormWidget Class Reference}
+\label{classmdt_sql_form_widget}\index{mdtSqlFormWidget@{mdtSqlFormWidget}}
+}
+
+
+Widget that accept a user designed form and helps dealing with table model.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlFormWidget.h$>$}
+
+
+
+Inheritance diagram for mdtSqlFormWidget:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=194pt]{classmdt_sql_form_widget__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtSqlFormWidget:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=194pt]{classmdt_sql_form_widget__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_form_widget_a4bb7ddf419e845de2d1a7c1ef95e48a8}{
+void \hyperlink{classmdt_sql_form_widget_a4bb7ddf419e845de2d1a7c1ef95e48a8}{toFirst} ()}
+\label{classmdt_sql_form_widget_a4bb7ddf419e845de2d1a7c1ef95e48a8}
+
+\begin{DoxyCompactList}\small\item\em Set first record as current record. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_form_widget_aefbaa029ac6141ab3d12da2a27d30dda}{
+void \hyperlink{classmdt_sql_form_widget_aefbaa029ac6141ab3d12da2a27d30dda}{toLast} ()}
+\label{classmdt_sql_form_widget_aefbaa029ac6141ab3d12da2a27d30dda}
+
+\begin{DoxyCompactList}\small\item\em Set last record as current record. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_form_widget_a7dc4bc0b63b10d420f7ab04a43e4f371}{
+void \hyperlink{classmdt_sql_form_widget_a7dc4bc0b63b10d420f7ab04a43e4f371}{toPrevious} ()}
+\label{classmdt_sql_form_widget_a7dc4bc0b63b10d420f7ab04a43e4f371}
+
+\begin{DoxyCompactList}\small\item\em Set previous record as current record. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_form_widget_a49496a848e015ed8335a2bfd33906000}{
+void \hyperlink{classmdt_sql_form_widget_a49496a848e015ed8335a2bfd33906000}{toNext} ()}
+\label{classmdt_sql_form_widget_a49496a848e015ed8335a2bfd33906000}
+
+\begin{DoxyCompactList}\small\item\em Set next record as current record. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_form_widget_a53570f49eac1a7fa490546497c88ad13}{
+\hyperlink{classmdt_sql_form_widget_a53570f49eac1a7fa490546497c88ad13}{mdtSqlFormWidget} (QWidget $\ast$parent=0)}
+\label{classmdt_sql_form_widget_a53570f49eac1a7fa490546497c88ad13}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_form_widget_a38df8efea5c216ea2b6f047e3280aac5}{
+\hyperlink{classmdt_sql_form_widget_a38df8efea5c216ea2b6f047e3280aac5}{$\sim$mdtSqlFormWidget} ()}
+\label{classmdt_sql_form_widget_a38df8efea5c216ea2b6f047e3280aac5}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_form_widget_ace4f7fad749a4efe1233b61d071b3926}{mapFormWidgets} (const QString \&firstWidgetInTabOrder=QString())
+\begin{DoxyCompactList}\small\item\em Map widgets to matching database fields. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_sql_form_widget_a9588fdc58b30440077b8dcfa3a2fb3c0}{currentRow} () const 
+\begin{DoxyCompactList}\small\item\em Get the current row. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Widget that accept a user designed form and helps dealing with table model. 
+
+To create a database table form, Qt offers several classes. But, if we have to create many forms, we have to deal with common problems (insertion, field mapping, etc..).
+
+It's possible to create a form, for example with Qt Designer, and add needed Widgets (QLineEdit, QSpinBox, ...). It's important to respect a convention here: For each Widget that must display/edit data from database (i.e. model), set the name of the field with fld\_\- prefix. For example, if we have a field called name, create a QLineEdit with fld\_\-name as object name.
+
+Once your form was created, call his setupUi() method passing \hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} object as parameter. setupUi() will also create layouts and widgets with \hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} object as parent. As result, \hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} object will have a layout with all widgets. Finally, use \hyperlink{classmdt_sql_form_widget_ace4f7fad749a4efe1233b61d071b3926}{mapFormWidgets()} to do the mapping between widgets and fields in database.
+
+To use the resulting form, set it, f.ex. as central widget of a QMainWindow. See the list of slots to know how to use integrated actions (navigation, insertion, ...).
+
+Internally, \hyperlink{classmdt_sql_data_widget_mapper}{mdtSqlDataWidgetMapper} is used together with \hyperlink{classmdt_sql_field_handler}{mdtSqlFieldHandler}. Errors and user interactions are handled by this class.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_sql_window}{mdtSqlWindow} 
+\end{DoxySeeAlso}
+
+
+Definition at line 66 of file mdtSqlFormWidget.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_form_widget_a9588fdc58b30440077b8dcfa3a2fb3c0}{
+\index{mdtSqlFormWidget@{mdtSqlFormWidget}!currentRow@{currentRow}}
+\index{currentRow@{currentRow}!mdtSqlFormWidget@{mdtSqlFormWidget}}
+\subsubsection[{currentRow}]{\setlength{\rightskip}{0pt plus 5cm}int mdtSqlFormWidget::currentRow (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_sql_form_widget_a9588fdc58b30440077b8dcfa3a2fb3c0}
+
+
+Get the current row. 
+
+Current row is the row that is displayed in the form view. 
+
+Implements \hyperlink{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}{mdtAbstractSqlWidget}.
+
+
+
+Definition at line 117 of file mdtSqlFormWidget.cpp.
+
+\hypertarget{classmdt_sql_form_widget_ace4f7fad749a4efe1233b61d071b3926}{
+\index{mdtSqlFormWidget@{mdtSqlFormWidget}!mapFormWidgets@{mapFormWidgets}}
+\index{mapFormWidgets@{mapFormWidgets}!mdtSqlFormWidget@{mdtSqlFormWidget}}
+\subsubsection[{mapFormWidgets}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFormWidget::mapFormWidgets (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{firstWidgetInTabOrder = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_form_widget_ace4f7fad749a4efe1233b61d071b3926}
+
+
+Map widgets to matching database fields. 
+
+Will parse all child widgets found in layout, extract widgets that have a fld\_\- prefix as object name. For each of them, corresponding field will be searched in model (database).
+
+
+\begin{DoxyParams}{Parameters}
+{\em firstWidgetInTabOrder} & It's possible to specify the object name of the first widget in tab order. This is then used by insertion to give this widget the focus.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+The custom form's setupUi() must be called on this object before using this method. Once setupUi() is done, \hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} object (this) will contain a layout with all widgets (QLineEdit, QSpinBox, ...). 
+
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000062}{Todo}]Check redoundances with onCurrentIndexChanged() \end{Desc}
+
+
+
+
+Definition at line 50 of file mdtSqlFormWidget.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlFormWidget.h\item 
+src/mdtutilsgui/mdtSqlFormWidget.cpp\end{DoxyCompactItemize}

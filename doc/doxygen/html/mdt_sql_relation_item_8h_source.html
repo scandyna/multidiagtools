@@ -111,22 +111,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00069"></a>00069 
 <a name="l00072"></a>00072   <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_relation_item.html#a89f5e403c31df53c56ddfc4448d8b91d" title="Get child field index.">childFieldIndex</a>() <span class="keyword">const</span>;
 <a name="l00073"></a>00073 
-<a name="l00080"></a>00080   QString <a class="code" href="classmdt_sql_relation_item.html#a46f16fdee2f8fba86ed82e7f7194751b" title="Get data protection.">dataProtection</a>() <span class="keyword">const</span>;
-<a name="l00081"></a>00081 
-<a name="l00084"></a>00084   QVariant::Type <a class="code" href="classmdt_sql_relation_item.html#a8df1470c61b71ade740266b528f7b9a3" title="Get data type.">dataType</a>() <span class="keyword">const</span>;
-<a name="l00085"></a>00085 
-<a name="l00086"></a>00086  <span class="keyword">private</span>:
+<a name="l00078"></a>00078   QString <a class="code" href="classmdt_sql_relation_item.html#a2aa445cebd77d6ce707b318f25cc709c" title="Get table/field protection.">nameProtection</a>() <span class="keyword">const</span>;
+<a name="l00079"></a>00079 
+<a name="l00086"></a>00086   QString <a class="code" href="classmdt_sql_relation_item.html#a46f16fdee2f8fba86ed82e7f7194751b" title="Get data protection.">dataProtection</a>() <span class="keyword">const</span>;
 <a name="l00087"></a>00087 
-<a name="l00088"></a>00088   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_relation_item.html" title="Keep informations about a parent/child SQL relation.">mdtSqlRelationItem</a>);
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090   QSqlField pvParentField;
-<a name="l00091"></a>00091   <span class="keywordtype">int</span> pvParentFieldIndex;
-<a name="l00092"></a>00092   QSqlField pvChildField;
-<a name="l00093"></a>00093   <span class="keywordtype">int</span> pvChildFieldIndex;
-<a name="l00094"></a>00094   QString pvDataProtection;
-<a name="l00095"></a>00095 };
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097 <span class="preprocessor">#endif  // #ifndef MDT_SQL_RELATION_ITEM_H</span>
+<a name="l00090"></a>00090   QVariant::Type <a class="code" href="classmdt_sql_relation_item.html#a8df1470c61b71ade740266b528f7b9a3" title="Get data type.">dataType</a>() <span class="keyword">const</span>;
+<a name="l00091"></a>00091 
+<a name="l00098"></a>00098   QVariant <a class="code" href="classmdt_sql_relation_item.html#a3d2e24b35c88b246dac2a825019f037b" title="Get value for a filter that gives no data.">valueForNoDataFilter</a>() <span class="keyword">const</span>;
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100  <span class="keyword">private</span>:
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_relation_item.html" title="Keep informations about a parent/child SQL relation.">mdtSqlRelationItem</a>);
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104   QSqlField pvParentField;
+<a name="l00105"></a>00105   <span class="keywordtype">int</span> pvParentFieldIndex;
+<a name="l00106"></a>00106   QSqlField pvChildField;
+<a name="l00107"></a>00107   <span class="keywordtype">int</span> pvChildFieldIndex;
+<a name="l00108"></a>00108   QString pvNameProtection;
+<a name="l00109"></a>00109   QString pvDataProtection;
+<a name="l00110"></a>00110   QVariant pvValueForNoDataFilter;
+<a name="l00111"></a>00111 };
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113 <span class="preprocessor">#endif  // #ifndef MDT_SQL_RELATION_ITEM_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -143,7 +149,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:16 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -1,0 +1,190 @@
+\hypertarget{classmdt_sql_table_widget}{
+\section{mdtSqlTableWidget Class Reference}
+\label{classmdt_sql_table_widget}\index{mdtSqlTableWidget@{mdtSqlTableWidget}}
+}
+
+
+Table view based SQL widget.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlTableWidget.h$>$}
+
+
+
+Inheritance diagram for mdtSqlTableWidget:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=194pt]{classmdt_sql_table_widget__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtSqlTableWidget:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=194pt]{classmdt_sql_table_widget__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}{
+\hyperlink{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}{mdtSqlTableWidget} (QWidget $\ast$parent=0)}
+\label{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_ab5db8a20c64340bba4841a1b1c928d7f}{
+\hyperlink{classmdt_sql_table_widget_ab5db8a20c64340bba4841a1b1c928d7f}{$\sim$mdtSqlTableWidget} ()}
+\label{classmdt_sql_table_widget_ab5db8a20c64340bba4841a1b1c928d7f}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}{
+int \hyperlink{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}{currentRow} () const }
+\label{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}
+
+\begin{DoxyCompactList}\small\item\em Get the current row. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{
+void \hyperlink{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{setEditionEnabled} (bool enable)}
+\label{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}
+
+\begin{DoxyCompactList}\small\item\em Set edition enabled/disabled. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}{enableLocalEdition} ()
+\begin{DoxyCompactList}\small\item\em Enable local edition. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a9c0ae7b87d1840f2fdcee6de763fe31a}{addWidgetToLocalBar} (QWidget $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Add a custom widget to local bar. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_a6cf9f08b98dd3df16d36c29db7175633}{
+void \hyperlink{classmdt_sql_table_widget_a6cf9f08b98dd3df16d36c29db7175633}{addStretchToLocalBar} ()}
+\label{classmdt_sql_table_widget_a6cf9f08b98dd3df16d36c29db7175633}
+
+\begin{DoxyCompactList}\small\item\em Add a strech to local bar. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_a47fc691f2cd9cc40749c987ce2bbea6d}{
+QItemSelectionModel $\ast$ \hyperlink{classmdt_sql_table_widget_a47fc691f2cd9cc40749c987ce2bbea6d}{selectionModel} ()}
+\label{classmdt_sql_table_widget_a47fc691f2cd9cc40749c987ce2bbea6d}
+
+\begin{DoxyCompactList}\small\item\em Get internal table view's selection model. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a591461ee19f22008a5c310609461081e}{setHeaderData} (const QString \&fieldName, const QString \&data)
+\begin{DoxyCompactList}\small\item\em Set a user friendly name for a column. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_a466ff75bee2a0efd99c62994f65a5d18}{
+void \hyperlink{classmdt_sql_table_widget_a466ff75bee2a0efd99c62994f65a5d18}{setColumnHidden} (int column, bool hide)}
+\label{classmdt_sql_table_widget_a466ff75bee2a0efd99c62994f65a5d18}
+
+\begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_ae1eefd42d91ea36fa4244d7f265d7222}{setColumnHidden} (const QString \&fieldName, bool hide)
+\begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Table view based SQL widget. 
+
+Internally, QTableView is used. This class add some common needed methods, like insertion, removing, ... 
+
+Definition at line 80 of file mdtSqlTableWidget.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_table_widget_a9c0ae7b87d1840f2fdcee6de763fe31a}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!addWidgetToLocalBar@{addWidgetToLocalBar}}
+\index{addWidgetToLocalBar@{addWidgetToLocalBar}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{addWidgetToLocalBar}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlTableWidget::addWidgetToLocalBar (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_a9c0ae7b87d1840f2fdcee6de763fe31a}
+
+
+Add a custom widget to local bar. 
+
+Typical usage can be to add a QPushButton for custom usage (edit, select, ...)
+
+Note: widget will be parented to layout, so Qt will delete it itself.
+
+\begin{DoxyPrecond}{Precondition}
+widget must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 183 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!enableLocalEdition@{enableLocalEdition}}
+\index{enableLocalEdition@{enableLocalEdition}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{enableLocalEdition}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlTableWidget::enableLocalEdition (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}
+
+
+Enable local edition. 
+
+Will add insert/revert/save/delete buttons.
+
+In normal way, when using \hyperlink{classmdt_sql_window}{mdtSqlWindow}, local navigation is not needed. In master/detail forms, if this widget is a details (child) widget and edition is needed, then call this method. 
+
+pvNavigationLayout-\/$>$addStretch(); 
+
+
+
+Reimplemented from \hyperlink{classmdt_abstract_sql_widget_a4ad94a530c77292d122d38eb041da6e9}{mdtAbstractSqlWidget}.
+
+
+
+Definition at line 141 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_ae1eefd42d91ea36fa4244d7f265d7222}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!setColumnHidden@{setColumnHidden}}
+\index{setColumnHidden@{setColumnHidden}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{setColumnHidden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlTableWidget::setColumnHidden (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fieldName, }
+\item[{bool}]{hide}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_ae1eefd42d91ea36fa4244d7f265d7222}
+
+
+Set a coulumn as hidden. 
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 241 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_a591461ee19f22008a5c310609461081e}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!setHeaderData@{setHeaderData}}
+\index{setHeaderData@{setHeaderData}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{setHeaderData}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlTableWidget::setHeaderData (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fieldName, }
+\item[{const QString \&}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_a591461ee19f22008a5c310609461081e}
+
+
+Set a user friendly name for a column. 
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 223 of file mdtSqlTableWidget.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlTableWidget.h\item 
+src/mdtutilsgui/mdtSqlTableWidget.cpp\end{DoxyCompactItemize}

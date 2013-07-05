@@ -1,0 +1,232 @@
+\hypertarget{classmdt_sql_window}{
+\section{mdtSqlWindow Class Reference}
+\label{classmdt_sql_window}\index{mdtSqlWindow@{mdtSqlWindow}}
+}
+
+
+Main window for a database table view/editor.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlWindow.h$>$}
+
+
+
+Collaboration diagram for mdtSqlWindow:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classmdt_sql_window__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_sql_window_a8624cc7a7a454e759c753c2faddd46e6}{mdtSqlWindow} (QWidget $\ast$parent=0, Qt::WindowFlags flags=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_window_a050588d255a48722438421b754b808f3}{
+\hyperlink{classmdt_sql_window_a050588d255a48722438421b754b808f3}{$\sim$mdtSqlWindow} ()}
+\label{classmdt_sql_window_a050588d255a48722438421b754b808f3}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_window_ac9246abfa0ccb7c721ee233d5928230d}{setSqlWidget} (\hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} $\ast$sqlWidget)
+\begin{DoxyCompactList}\small\item\em Set form/table view/editor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_window_a0a013aa6050823325c309c7241f0c4fe}{addChildWidget} (\hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} $\ast$sqlWidget, const QString \&label)
+\begin{DoxyCompactList}\small\item\em Add a child (details) widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_window_a6d4d853c8c64a99ff2e396b99ea63a87}{enableNavigation} ()
+\begin{DoxyCompactList}\small\item\em Enable navigation. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_window_a961d587d63b0997a10db6728773a108f}{disableNavigation} ()
+\begin{DoxyCompactList}\small\item\em Disable navigation. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_window_a42d1283a05eddd2a48af74cf764ef240}{enableEdition} ()
+\begin{DoxyCompactList}\small\item\em Enable edition. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_window_a629fa57fcdde0e4db0fc93efd84c9123}{disableEdition} ()
+\begin{DoxyCompactList}\small\item\em Disable edition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Main window for a database table view/editor. 
+
+This class offers some functionnality for the GUI part. Based on QMainWindow, it displays a menu, toolbar and a status bar.
+
+It was designed to work with a subclass of \hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget}. 
+
+Definition at line 40 of file mdtSqlWindow.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_window_a8624cc7a7a454e759c753c2faddd46e6}{
+\index{mdtSqlWindow@{mdtSqlWindow}!mdtSqlWindow@{mdtSqlWindow}}
+\index{mdtSqlWindow@{mdtSqlWindow}!mdtSqlWindow@{mdtSqlWindow}}
+\subsubsection[{mdtSqlWindow}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlWindow::mdtSqlWindow (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{parent = {\ttfamily 0}, }
+\item[{Qt::WindowFlags}]{flags = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_window_a8624cc7a7a454e759c753c2faddd46e6}
+
+
+Constructor. 
+
+Will construct a empty window. Use \hyperlink{classmdt_sql_window_ac9246abfa0ccb7c721ee233d5928230d}{setSqlWidget()} to set central widget, \hyperlink{classmdt_sql_window_a6d4d853c8c64a99ff2e396b99ea63a87}{enableNavigation()} to build navigaton bar and \hyperlink{classmdt_sql_window_a42d1283a05eddd2a48af74cf764ef240}{enableEdition()} to add edition buttons. 
+
+Definition at line 31 of file mdtSqlWindow.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_window_a0a013aa6050823325c309c7241f0c4fe}{
+\index{mdtSqlWindow@{mdtSqlWindow}!addChildWidget@{addChildWidget}}
+\index{addChildWidget@{addChildWidget}!mdtSqlWindow@{mdtSqlWindow}}
+\subsubsection[{addChildWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlWindow::addChildWidget (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtAbstractSqlWidget} $\ast$}]{sqlWidget, }
+\item[{const QString \&}]{label}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_window_a0a013aa6050823325c309c7241f0c4fe}
+
+
+Add a child (details) widget. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em widget} & Will be added to the childs tab \\
+\hline
+{\em label} & Will be displayed in tab of tab widget\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Parent widget must be set with \hyperlink{classmdt_sql_window_ac9246abfa0ccb7c721ee233d5928230d}{setSqlWidget()} before using this method 
+
+widget must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 64 of file mdtSqlWindow.cpp.
+
+\hypertarget{classmdt_sql_window_a629fa57fcdde0e4db0fc93efd84c9123}{
+\index{mdtSqlWindow@{mdtSqlWindow}!disableEdition@{disableEdition}}
+\index{disableEdition@{disableEdition}!mdtSqlWindow@{mdtSqlWindow}}
+\subsubsection[{disableEdition}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlWindow::disableEdition (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_window_a629fa57fcdde0e4db0fc93efd84c9123}
+
+
+Disable edition. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_sql_window_a42d1283a05eddd2a48af74cf764ef240}{enableEdition()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 153 of file mdtSqlWindow.cpp.
+
+\hypertarget{classmdt_sql_window_a961d587d63b0997a10db6728773a108f}{
+\index{mdtSqlWindow@{mdtSqlWindow}!disableNavigation@{disableNavigation}}
+\index{disableNavigation@{disableNavigation}!mdtSqlWindow@{mdtSqlWindow}}
+\subsubsection[{disableNavigation}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlWindow::disableNavigation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_window_a961d587d63b0997a10db6728773a108f}
+
+
+Disable navigation. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_sql_window_a6d4d853c8c64a99ff2e396b99ea63a87}{enableNavigation()} 
+\end{DoxySeeAlso}
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000066}{Todo}]Possible ? \end{Desc}
+
+
+
+
+Definition at line 107 of file mdtSqlWindow.cpp.
+
+\hypertarget{classmdt_sql_window_a42d1283a05eddd2a48af74cf764ef240}{
+\index{mdtSqlWindow@{mdtSqlWindow}!enableEdition@{enableEdition}}
+\index{enableEdition@{enableEdition}!mdtSqlWindow@{mdtSqlWindow}}
+\subsubsection[{enableEdition}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlWindow::enableEdition (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_window_a42d1283a05eddd2a48af74cf764ef240}
+
+
+Enable edition. 
+
+Will add insert/revert/save/delete buttons.
+
+\begin{DoxyPrecond}{Precondition}
+sqlWidget must be set with \hyperlink{classmdt_sql_window_ac9246abfa0ccb7c721ee233d5928230d}{setSqlWidget()} before call this method. 
+\end{DoxyPrecond}
+
+
+actRevert-\/$>$setShortcut(QKeySequence::Undo); actRemove-\/$>$setShortcut(QKeySequence::Delete); 
+
+
+
+Definition at line 113 of file mdtSqlWindow.cpp.
+
+\hypertarget{classmdt_sql_window_a6d4d853c8c64a99ff2e396b99ea63a87}{
+\index{mdtSqlWindow@{mdtSqlWindow}!enableNavigation@{enableNavigation}}
+\index{enableNavigation@{enableNavigation}!mdtSqlWindow@{mdtSqlWindow}}
+\subsubsection[{enableNavigation}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlWindow::enableNavigation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_window_a6d4d853c8c64a99ff2e396b99ea63a87}
+
+
+Enable navigation. 
+
+Will build a navigation bar with $|$$<$$<$ $<$ $>$ $>$$>$$|$ buttons.
+
+\begin{DoxyPrecond}{Precondition}
+sqlWidget must be set with \hyperlink{classmdt_sql_window_ac9246abfa0ccb7c721ee233d5928230d}{setSqlWidget()} before call this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 77 of file mdtSqlWindow.cpp.
+
+\hypertarget{classmdt_sql_window_ac9246abfa0ccb7c721ee233d5928230d}{
+\index{mdtSqlWindow@{mdtSqlWindow}!setSqlWidget@{setSqlWidget}}
+\index{setSqlWidget@{setSqlWidget}!mdtSqlWindow@{mdtSqlWindow}}
+\subsubsection[{setSqlWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlWindow::setSqlWidget (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtAbstractSqlWidget} $\ast$}]{sqlWidget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_window_ac9246abfa0ccb7c721ee233d5928230d}
+
+
+Set form/table view/editor. 
+
+Will make some signal/slot connection, then place sqlWidget as QMainWindow's central widget.
+
+\begin{DoxyPrecond}{Precondition}
+sqlWidget must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 56 of file mdtSqlWindow.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlWindow.h\item 
+src/mdtutilsgui/mdtSqlWindow.cpp\end{DoxyCompactItemize}

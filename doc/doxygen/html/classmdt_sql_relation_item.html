@@ -106,11 +106,15 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89f5e403c31df53c56ddfc4448d8b91d"></a><!-- doxytag: member="mdtSqlRelationItem::childFieldIndex" ref="a89f5e403c31df53c56ddfc4448d8b91d" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation_item.html#a89f5e403c31df53c56ddfc4448d8b91d">childFieldIndex</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get child field index. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation_item.html#a2aa445cebd77d6ce707b318f25cc709c">nameProtection</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get table/field protection.  <a href="#a2aa445cebd77d6ce707b318f25cc709c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation_item.html#a46f16fdee2f8fba86ed82e7f7194751b">dataProtection</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data protection.  <a href="#a46f16fdee2f8fba86ed82e7f7194751b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8df1470c61b71ade740266b528f7b9a3"></a><!-- doxytag: member="mdtSqlRelationItem::dataType" ref="a8df1470c61b71ade740266b528f7b9a3" args="() const " -->
 QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation_item.html#a8df1470c61b71ade740266b528f7b9a3">dataType</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data type. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation_item.html#a3d2e24b35c88b246dac2a825019f037b">valueForNoDataFilter</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value for a filter that gives no data.  <a href="#a3d2e24b35c88b246dac2a825019f037b"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Keep informations about a parent/child SQL relation. </p>
@@ -138,7 +142,53 @@ QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <li>nothing for numeric type </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00085">85</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00095">95</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2aa445cebd77d6ce707b318f25cc709c"></a><!-- doxytag: member="mdtSqlRelationItem::nameProtection" ref="a2aa445cebd77d6ce707b318f25cc709c" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString mdtSqlRelationItem::nameProtection </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get table/field protection. </p>
+<p>Typical name protection is ` </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00090">90</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3d2e24b35c88b246dac2a825019f037b"></a><!-- doxytag: member="mdtSqlRelationItem::valueForNoDataFilter" ref="a3d2e24b35c88b246dac2a825019f037b" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVariant mdtSqlRelationItem::valueForNoDataFilter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get value for a filter that gives no data. </p>
+<p>Typical values are:</p>
+<ul>
+<li>empty string</li>
+<li>-1 for numeric field </li>
+</ul>
+
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
 
 </div>
 </div>
@@ -161,7 +211,7 @@ QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:27 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:20 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

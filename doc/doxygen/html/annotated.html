@@ -70,6 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr><td class="indexkey"><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td class="indexvalue">Base class for port I/O </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_abstract_port_setup_dialog.html">mdtAbstractPortSetupDialog</a></td><td class="indexvalue">Base class to build a port setup dialog </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td class="indexvalue">NOTE: </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_abstract_sql_widget.html">mdtAbstractSqlWidget</a></td><td class="indexvalue">Base class to create database table GUI </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_analog_in_widget.html">mdtAnalogInWidget</a></td><td class="indexvalue">Representation of a analog input </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a></td><td class="indexvalue">Representation of a analog I/O </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_analog_out_widget.html">mdtAnalogOutWidget</a></td><td class="indexvalue">Representation of a analog output </td></tr>
@@ -80,7 +81,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr><td class="indexkey"><a class="el" href="classmdt_data_table_item_delegate.html">mdtDataTableItemDelegate</a></td><td class="indexvalue">Delegate to display table items in custom way </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_data_table_manager.html">mdtDataTableManager</a></td><td class="indexvalue">Create/manage data sets </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_data_table_model.html">mdtDataTableModel</a></td><td class="indexvalue"></td></tr>
-  <tr><td class="indexkey"><a class="el" href="classmdt_data_widget_mapper.html">mdtDataWidgetMapper</a></td><td class="indexvalue">DataWidget mapper </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_device.html">mdtDevice</a></td><td class="indexvalue">Base class for a device connected to a port </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_device_d_s_o1000_a.html">mdtDeviceDSO1000A</a></td><td class="indexvalue"></td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a></td><td class="indexvalue">Contains informations about a device (attached to a port) </td></tr>
@@ -145,10 +145,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr><td class="indexkey"><a class="el" href="classmdt_serial_port_ctl_widget.html">mdtSerialPortCtlWidget</a></td><td class="indexvalue"></td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td class="indexvalue">Serial port manager class </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_serial_port_setup_dialog.html">mdtSerialPortSetupDialog</a></td><td class="indexvalue">Setup dialog for serial port </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sort_filter_proxy_model.html">mdtSortFilterProxyModel</a></td><td class="indexvalue">Provide natural sort for Qt model/view </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_data_widget_mapper.html">mdtSqlDataWidgetMapper</a></td><td class="indexvalue">DataWidget mapper </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_field_handler.html">mdtSqlFieldHandler</a></td><td class="indexvalue">Handle events between a SQL field and a edition widget </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html">mdtSqlFieldHandlerAbstractDataWidget</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_field_handler_line_edit.html">mdtSqlFieldHandlerLineEdit</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_form_widget.html">mdtSqlFormWidget</a></td><td class="indexvalue">Widget that accept a user designed form and helps dealing with table model </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_query_widget.html">mdtSqlQueryWidget</a></td><td class="indexvalue">Widget for data queriyng </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="indexvalue">Handle parent/child relations between 2 QSqlTableModels </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_relation_item.html">mdtSqlRelationItem</a></td><td class="indexvalue">Keep informations about a parent/child SQL relation </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_selection_dialog.html">mdtSqlSelectionDialog</a></td><td class="indexvalue">Provide a way for the user to select a row in a set of data </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_table_model.html">mdtSqlTableModel</a></td><td class="indexvalue">Sql table model </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_table_widget.html">mdtSqlTableWidget</a></td><td class="indexvalue">Table view based SQL widget </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_table_widget_item_delegate.html">mdtSqlTableWidgetItemDelegate</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_table_widget_key_event_filter.html">mdtSqlTableWidgetKeyEventFilter</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_window.html">mdtSqlWindow</a></td><td class="indexvalue">Main window for a database table view/editor </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_tcp_socket.html">mdtTcpSocket</a></td><td class="indexvalue">Wrapper class between QTcpSocket and <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td class="indexvalue"></td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_time.html">mdtTime</a></td><td class="indexvalue">Help class based on QTime </td></tr>
@@ -187,7 +198,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:17 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

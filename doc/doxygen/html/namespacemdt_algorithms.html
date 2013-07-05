@@ -70,12 +70,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a1a3e54a0c5c508c2ea531c7c6200588e">sortStringListWithNumericEnd</a> (QStringList &amp;list)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sort a string list, for witch each string ends with a number.  <a href="#a1a3e54a0c5c508c2ea531c7c6200588e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#adfeb44a0a2a440a6b200ad19db73ac45">extractNumericPartAtEnd</a> (const QString &amp;str)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the numeric part at end of string.  <a href="#adfeb44a0a2a440a6b200ad19db73ac45"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a11d5a1ebe9a68710e6e78f768ac9203c">stringWithNumericEndLessThan</a> (QString str1, QString str2)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare the numeric end of 2 strings.  <a href="#a11d5a1ebe9a68710e6e78f768ac9203c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a32a09ec3855b605b6e455ea418502aeb">naturalSort</a> (QStringList &amp;list, Qt::CaseSensitivity caseSensitivity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sort a string list using natural sort.  <a href="#a32a09ec3855b605b6e455ea418502aeb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#af22a54e83499afe31d22fac9bc521c54">naturalCompareLessThan</a> (const QString &amp;str1, const QString &amp;str2, Qt::CaseSensitivity caseSensitivity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare 2 strings using natural sort.  <a href="#af22a54e83499afe31d22fac9bc521c54"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5af30feb9cfecb2971d6ae90c9c5fdf"></a><!-- doxytag: member="mdtAlgorithms::naturalCompareLessThanCaseSensitive" ref="aa5af30feb9cfecb2971d6ae90c9c5fdf" args="(const QString &amp;str1, const QString &amp;str2)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#aa5af30feb9cfecb2971d6ae90c9c5fdf">naturalCompareLessThanCaseSensitive</a> (const QString &amp;str1, const QString &amp;str2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare 2 strings using natural sort - case sensitive version. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3cdc3655f7adfbc5ce03fd39e8d1e986"></a><!-- doxytag: member="mdtAlgorithms::naturalCompareLessThanCaseInsensitive" ref="a3cdc3655f7adfbc5ce03fd39e8d1e986" args="(const QString &amp;str1, const QString &amp;str2)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a3cdc3655f7adfbc5ce03fd39e8d1e986">naturalCompareLessThanCaseInsensitive</a> (const QString &amp;str1, const QString &amp;str2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare 2 strings using natural sort - case insensitive version. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a5094251abb1557b9b4717b3a0f1a8535">hexStringToByteArray</a> (const QString &amp;hexStr)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a hexadecimal formated string to numerical bytes array.  <a href="#a5094251abb1557b9b4717b3a0f1a8535"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a29977b36180db7518a7ee2317265d26b">byteArrayToHexString</a> (const QByteArray &amp;byteArray)</td></tr>
@@ -106,35 +110,7 @@ Functions</h2></td></tr>
 <p>Convert a byte array to a hexadecimal string. </p>
 <p>For example, byte array with 44,18,95 numerical values will generate a string with "2C 12 5F". </p>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00141">141</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="adfeb44a0a2a440a6b200ad19db73ac45"></a><!-- doxytag: member="mdtAlgorithms::extractNumericPartAtEnd" ref="adfeb44a0a2a440a6b200ad19db73ac45" args="(const QString &amp;str)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QString mdtAlgorithms::extractNumericPartAtEnd </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Extract the numeric part at end of string. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>The string in witch the numeric part must be extracted </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The numeric part, or empty string on problem </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00033">33</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00224">224</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
 </div>
 </div>
@@ -159,27 +135,79 @@ Functions</h2></td></tr>
 <dd>
 hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00116">116</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00199">199</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1a3e54a0c5c508c2ea531c7c6200588e"></a><!-- doxytag: member="mdtAlgorithms::sortStringListWithNumericEnd" ref="a1a3e54a0c5c508c2ea531c7c6200588e" args="(QStringList &amp;list)" -->
+<a class="anchor" id="af22a54e83499afe31d22fac9bc521c54"></a><!-- doxytag: member="mdtAlgorithms::naturalCompareLessThan" ref="af22a54e83499afe31d22fac9bc521c54" args="(const QString &amp;str1, const QString &amp;str2, Qt::CaseSensitivity caseSensitivity)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QStringList mdtAlgorithms::sortStringListWithNumericEnd </td>
+          <td class="memname">bool mdtAlgorithms::naturalCompareLessThan </td>
           <td>(</td>
-          <td class="paramtype">QStringList &amp;&#160;</td>
-          <td class="paramname"><em>list</em></td><td>)</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>str1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>str2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Qt::CaseSensitivity&#160;</td>
+          <td class="paramname"><em>caseSensitivity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Sort a string list, for witch each string ends with a number. </p>
-<p>Usefull for directory entry list. By default, QDir sorts the entris at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 , the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ... With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ... Note that this function is not efficient. For 100 entries it ok, but for bigger data set, it's recommanded to take a look at Qt's Model/View framework, and the QSortFilterProxyModel</p>
+<p>Compare 2 strings using natural sort. </p>
+<p>This method chops the input str1 and str2 into pieces of digits and non-digits (a1.05 becomes |a|1|.|05) and compare these pieces of str1 and str2 to each other (first with first, second with second, ...).</p>
+<p>This function is based on KDE KStringHandler::naturalCompare(): <a href="http://api.kde.org/4.10-api/kdelibs-apidocs/kdecore/html/kstringhandler_8cpp_source.html">http://api.kde.org/4.10-api/kdelibs-apidocs/kdecore/html/kstringhandler_8cpp_source.html</a></p>
+<p>KStringHandler itself is based on the natural sort order code from Martin Pool: <a href="http://sourcefrog.net/projects/natsort/">http://sourcefrog.net/projects/natsort/</a></p>
+<p>Please note that this version is not the original one. Unexpected behaviours cannot be due to KDE or Martin Pool.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if str1 &lt; str2. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00038">38</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a32a09ec3855b605b6e455ea418502aeb"></a><!-- doxytag: member="mdtAlgorithms::naturalSort" ref="a32a09ec3855b605b6e455ea418502aeb" args="(QStringList &amp;list, Qt::CaseSensitivity caseSensitivity)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QStringList mdtAlgorithms::naturalSort </td>
+          <td>(</td>
+          <td class="paramtype">QStringList &amp;&#160;</td>
+          <td class="paramname"><em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Qt::CaseSensitivity&#160;</td>
+          <td class="paramname"><em>caseSensitivity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Sort a string list using natural sort. </p>
+<p>Usefull for directory entry list. By default, QDir sorts the entries at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 , the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ... With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ...</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">list</td><td>The list that will be sorted (will be altered) </td></tr>
@@ -188,7 +216,7 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The sorted list </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00026">26</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00027">27</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
 </div>
 </div>
@@ -247,40 +275,7 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The list of found fields </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00242">242</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a11d5a1ebe9a68710e6e78f768ac9203c"></a><!-- doxytag: member="mdtAlgorithms::stringWithNumericEndLessThan" ref="a11d5a1ebe9a68710e6e78f768ac9203c" args="(QString str1, QString str2)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtAlgorithms::stringWithNumericEndLessThan </td>
-          <td>(</td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>str1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>str2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Compare the numeric end of 2 strings. </p>
-<p>This is a helper function for <a class="el" href="namespacemdt_algorithms.html#a1a3e54a0c5c508c2ea531c7c6200588e" title="Sort a string list, for witch each string ends with a number.">sortStringListWithNumericEnd()</a>.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True if str1 &lt; str2 </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00325">325</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
 </div>
 </div>
@@ -346,7 +341,7 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00163">163</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00246">246</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
 </div>
 </div>
@@ -365,7 +360,7 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:29 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:21 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

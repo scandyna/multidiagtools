@@ -55,7 +55,7 @@ Typical usage:
 \item Connect the parent view's currentXyChanged() signal to \hyperlink{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{setParentCurrentIndex()} slot. If you use a QTableView, this signal is in its selectionModel(). For QDataWidgetMapper, the currentIndexChanged() signal is directly available. 
 \end{DoxyItemize}
 
-Definition at line 43 of file mdtSqlRelation.h.
+Definition at line 44 of file mdtSqlRelation.h.
 
 
 
@@ -88,7 +88,7 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 51 of file mdtSqlRelation.cpp.
+Definition at line 56 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_a01469fb1baf7327ca6ddbcd1595e0d7c}{
 \index{mdtSqlRelation@{mdtSqlRelation}!clear@{clear}}
@@ -105,7 +105,7 @@ Clear relations.
 
 Will clear all added relations and references to parent and child models. (will not delete models). 
 
-Definition at line 93 of file mdtSqlRelation.cpp.
+Definition at line 98 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{
 \index{mdtSqlRelation@{mdtSqlRelation}!setChildModel@{setChildModel}}
@@ -120,9 +120,14 @@ Definition at line 93 of file mdtSqlRelation.cpp.
 
 Set the child model. 
 
-Will be used internally to get some informations about fields and get values to generate relation filters. 
+Will be used internally to get some informations about fields and get values to generate relation filters.
 
-Definition at line 46 of file mdtSqlRelation.cpp.
+\begin{DoxyPrecond}{Precondition}
+model must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 48 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{
 \index{mdtSqlRelation@{mdtSqlRelation}!setParentCurrentIndex@{setParentCurrentIndex}}
@@ -144,7 +149,7 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 101 of file mdtSqlRelation.cpp.
+Definition at line 106 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_a82a90b12bb78a4b0f9751244f134889d}{
 \index{mdtSqlRelation@{mdtSqlRelation}!setParentCurrentIndex@{setParentCurrentIndex}}
@@ -167,7 +172,7 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 122 of file mdtSqlRelation.cpp.
+Definition at line 130 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_a4381f7f5bd39337fa5cbccf9b87ff0f6}{
 \index{mdtSqlRelation@{mdtSqlRelation}!setParentCurrentIndex@{setParentCurrentIndex}}
@@ -189,7 +194,7 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 112 of file mdtSqlRelation.cpp.
+Definition at line 118 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{
 \index{mdtSqlRelation@{mdtSqlRelation}!setParentModel@{setParentModel}}
@@ -204,7 +209,12 @@ Definition at line 112 of file mdtSqlRelation.cpp.
 
 Set the parent model. 
 
-Will be used internally to get some informations about fields and get values to generate relation filters. 
+Will be used internally to get some informations about fields and get values to generate relation filters.
+
+\begin{DoxyPrecond}{Precondition}
+model must be a valid pointer. 
+\end{DoxyPrecond}
+
 
 Definition at line 41 of file mdtSqlRelation.cpp.
 

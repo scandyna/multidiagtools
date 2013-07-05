@@ -108,7 +108,7 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#aa2a024793ae2a5e81c7e92260a70cd9e">readAnalogInput</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one analog input on physical device.  <a href="#aa2a024793ae2a5e81c7e92260a70cd9e"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI when device's state has changed.  <a href="#aa2a024793ae2a5e81c7e92260a70cd9e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#a846af6dbf80bbf747f3f966420ef6f92">readAnalogInputs</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all analog inputs on physical device.  <a href="#a846af6dbf80bbf747f3f966420ef6f92"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#a30c815cbe5e603e8114dcbc09849e322">readAnalogOutput</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
@@ -132,7 +132,7 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#aad3ce85a19307e3056b940da99fe512b">writeDigitalOutputs</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write all digital outputs to physical device.  <a href="#aad3ce85a19307e3056b940da99fe512b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#a3b83b926ed1f9c3bdf7024de2745c285">queriesSequence</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence of queries to send periodically.  <a href="#a3b83b926ed1f9c3bdf7024de2745c285"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">}  <a href="#a3b83b926ed1f9c3bdf7024de2745c285"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ecbac63c29b229ab01f5fdb26008c95"></a><!-- doxytag: member="mdtDeviceModbus::pvTcpPortManager" ref="a9ecbac63c29b229ab01f5fdb26008c95" args="" -->
@@ -230,7 +230,7 @@ Internal port manager not runnig and port must be closed before calling this met
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus_wago.html#a12ad1f1ef34b16be5903d1d6232a7c6d">mdtDeviceModbusWago</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -266,7 +266,7 @@ Internal port manager not runnig and port must be closed before calling this met
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>address and n must be &gt; 0 </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_modbus_tcp_port_manager.html#ab5e780409492b5f56326a870bc4262ec" title="Helper method for register service.">mdtModbusTcpPortManager::getRegisterValues()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00104">104</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -284,19 +284,12 @@ Internal port manager not runnig and port must be closed before calling this met
 </div>
 <div class="memdoc">
 
-<p>Sequence of queries to send periodically. </p>
-<p>This method is called from <a class="el" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05" title="Queries to send periodically.">runQueries()</a>.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>true if all queries are sent successfully.</dd></dl>
-<p>Subclass notes:<br/>
-</p>
-<ul>
-<li>This default implementation does nothing and allways returns false.</li>
-<li>This method can be reimplemented periodic queries must be sent to device. </li>
-</ul>
+<p>} </p>
+<p>void mdtDeviceModbus::onStateChanged(int state) { if(pvIos == 0){ return; } if(state == Ready){ if(getAnalogInputs(500) &lt; 0){ return; } if(getAnalogOutputs(500) &lt; 0){ return; } if(getDigitalInputs(500) &lt; 0){ return; } if(getDigitalOutputs(500) &lt; 0){ return; } } </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00322">322</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00325">325</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -315,7 +308,9 @@ Internal port manager not runnig and port must be closed before calling this met
 </div>
 <div class="memdoc">
 
-<p>Read one analog input on physical device. </p>
+<p>Update (G)UI when device's state has changed. </p>
+<p>void onStateChanged(int state);</p>
+<p>Read one analog input on physical device</p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.</p>
 <p>This method is called from getAnalogInput().</p>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -331,7 +326,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00334">334</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00337">337</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -366,7 +361,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00351">351</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00354">354</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -401,7 +396,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00368">368</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00371">371</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -434,7 +429,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00385">385</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00388">388</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -469,7 +464,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#af128b606050035abaf8d049bb2227015">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00436">436</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00439">439</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -504,7 +499,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00454">454</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00456">456</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -539,7 +534,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00471">471</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00473">473</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -574,7 +569,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00488">488</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00490">490</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -596,7 +591,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Return result set by <a class="el" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues()</a>. Note that values are keeped until next call of <a class="el" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues()</a>.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_modbus_tcp_port_manager.html#a99a13b5250a8523aa63869991581e56a" title="Helper method for register service.">mdtModbusTcpPortManager::registerValues()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00109">109</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00110">110</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -640,7 +635,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00402">402</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00405">405</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -675,7 +670,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00419">419</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00422">422</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -721,7 +716,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00505">505</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00507">507</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -756,7 +751,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00522">522</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00524">524</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -779,7 +774,7 @@ transaction must be a valid pointer. </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:26 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:18 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

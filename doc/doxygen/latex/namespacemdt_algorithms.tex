@@ -10,12 +10,20 @@ Some usefull little (unefficient) algoritms.
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-QStringList \hyperlink{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{sortStringListWithNumericEnd} (QStringList \&list)
-\begin{DoxyCompactList}\small\item\em Sort a string list, for witch each string ends with a number. \end{DoxyCompactList}\item 
-QString \hyperlink{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}{extractNumericPartAtEnd} (const QString \&str)
-\begin{DoxyCompactList}\small\item\em Extract the numeric part at end of string. \end{DoxyCompactList}\item 
-bool \hyperlink{namespacemdt_algorithms_a11d5a1ebe9a68710e6e78f768ac9203c}{stringWithNumericEndLessThan} (QString str1, QString str2)
-\begin{DoxyCompactList}\small\item\em Compare the numeric end of 2 strings. \end{DoxyCompactList}\item 
+QStringList \hyperlink{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}{naturalSort} (QStringList \&list, Qt::CaseSensitivity caseSensitivity)
+\begin{DoxyCompactList}\small\item\em Sort a string list using natural sort. \end{DoxyCompactList}\item 
+bool \hyperlink{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}{naturalCompareLessThan} (const QString \&str1, const QString \&str2, Qt::CaseSensitivity caseSensitivity)
+\begin{DoxyCompactList}\small\item\em Compare 2 strings using natural sort. \end{DoxyCompactList}\item 
+\hypertarget{namespacemdt_algorithms_aa5af30feb9cfecb2971d6ae90c9c5fdf}{
+bool \hyperlink{namespacemdt_algorithms_aa5af30feb9cfecb2971d6ae90c9c5fdf}{naturalCompareLessThanCaseSensitive} (const QString \&str1, const QString \&str2)}
+\label{namespacemdt_algorithms_aa5af30feb9cfecb2971d6ae90c9c5fdf}
+
+\begin{DoxyCompactList}\small\item\em Compare 2 strings using natural sort -\/ case sensitive version. \end{DoxyCompactList}\item 
+\hypertarget{namespacemdt_algorithms_a3cdc3655f7adfbc5ce03fd39e8d1e986}{
+bool \hyperlink{namespacemdt_algorithms_a3cdc3655f7adfbc5ce03fd39e8d1e986}{naturalCompareLessThanCaseInsensitive} (const QString \&str1, const QString \&str2)}
+\label{namespacemdt_algorithms_a3cdc3655f7adfbc5ce03fd39e8d1e986}
+
+\begin{DoxyCompactList}\small\item\em Compare 2 strings using natural sort -\/ case insensitive version. \end{DoxyCompactList}\item 
 QByteArray \hyperlink{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{hexStringToByteArray} (const QString \&hexStr)
 \begin{DoxyCompactList}\small\item\em Convert a hexadecimal formated string to numerical bytes array. \end{DoxyCompactList}\item 
 QString \hyperlink{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}{byteArrayToHexString} (const QByteArray \&byteArray)
@@ -45,32 +53,7 @@ Convert a byte array to a hexadecimal string.
 
 For example, byte array with 44,18,95 numerical values will generate a string with \char`\"{}2C 12 5F\char`\"{}. 
 
-Definition at line 141 of file mdtAlgorithms.cpp.
-
-\hypertarget{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}{
-\index{mdtAlgorithms@{mdtAlgorithms}!extractNumericPartAtEnd@{extractNumericPartAtEnd}}
-\index{extractNumericPartAtEnd@{extractNumericPartAtEnd}!mdtAlgorithms@{mdtAlgorithms}}
-\subsubsection[{extractNumericPartAtEnd}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtAlgorithms::extractNumericPartAtEnd (
-\begin{DoxyParamCaption}
-\item[{const QString \&}]{str}
-\end{DoxyParamCaption}
-)}}
-\label{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}
-
-
-Extract the numeric part at end of string. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em str} & The string in witch the numeric part must be extracted \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The numeric part, or empty string on problem 
-\end{DoxyReturn}
-
-
-Definition at line 33 of file mdtAlgorithms.cpp.
+Definition at line 224 of file mdtAlgorithms.cpp.
 
 \hypertarget{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{
 \index{mdtAlgorithms@{mdtAlgorithms}!hexStringToByteArray@{hexStringToByteArray}}
@@ -94,22 +77,53 @@ hexStr must contain valid chars (0-\/9 , a-\/f, A-\/F). F.ex: 2Z is not valid.
 \end{DoxyPrecond}
 
 
-Definition at line 116 of file mdtAlgorithms.cpp.
+Definition at line 199 of file mdtAlgorithms.cpp.
 
-\hypertarget{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{
-\index{mdtAlgorithms@{mdtAlgorithms}!sortStringListWithNumericEnd@{sortStringListWithNumericEnd}}
-\index{sortStringListWithNumericEnd@{sortStringListWithNumericEnd}!mdtAlgorithms@{mdtAlgorithms}}
-\subsubsection[{sortStringListWithNumericEnd}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtAlgorithms::sortStringListWithNumericEnd (
+\hypertarget{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}{
+\index{mdtAlgorithms@{mdtAlgorithms}!naturalCompareLessThan@{naturalCompareLessThan}}
+\index{naturalCompareLessThan@{naturalCompareLessThan}!mdtAlgorithms@{mdtAlgorithms}}
+\subsubsection[{naturalCompareLessThan}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAlgorithms::naturalCompareLessThan (
 \begin{DoxyParamCaption}
-\item[{QStringList \&}]{list}
+\item[{const QString \&}]{str1, }
+\item[{const QString \&}]{str2, }
+\item[{Qt::CaseSensitivity}]{caseSensitivity}
 \end{DoxyParamCaption}
 )}}
-\label{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}
+\label{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}
 
 
-Sort a string list, for witch each string ends with a number. 
+Compare 2 strings using natural sort. 
 
-Usefull for directory entry list. By default, QDir sorts the entris at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 , the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ... With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ... Note that this function is not efficient. For 100 entries it ok, but for bigger data set, it's recommanded to take a look at Qt's Model/View framework, and the QSortFilterProxyModel
+This method chops the input str1 and str2 into pieces of digits and non-\/digits (a1.05 becomes $|$a$|$1$|$.$|$05) and compare these pieces of str1 and str2 to each other (first with first, second with second, ...).
+
+This function is based on KDE KStringHandler::naturalCompare(): \href{http://api.kde.org/4.10-api/kdelibs-apidocs/kdecore/html/kstringhandler_8cpp_source.html}{\tt http://api.kde.org/4.10-\/api/kdelibs-\/apidocs/kdecore/html/kstringhandler\_\-8cpp\_\-source.html}
+
+KStringHandler itself is based on the natural sort order code from Martin Pool: \href{http://sourcefrog.net/projects/natsort/}{\tt http://sourcefrog.net/projects/natsort/}
+
+Please note that this version is not the original one. Unexpected behaviours cannot be due to KDE or Martin Pool.
+
+\begin{DoxyReturn}{Returns}
+True if str1 $<$ str2. 
+\end{DoxyReturn}
+
+
+Definition at line 38 of file mdtAlgorithms.cpp.
+
+\hypertarget{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}{
+\index{mdtAlgorithms@{mdtAlgorithms}!naturalSort@{naturalSort}}
+\index{naturalSort@{naturalSort}!mdtAlgorithms@{mdtAlgorithms}}
+\subsubsection[{naturalSort}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtAlgorithms::naturalSort (
+\begin{DoxyParamCaption}
+\item[{QStringList \&}]{list, }
+\item[{Qt::CaseSensitivity}]{caseSensitivity}
+\end{DoxyParamCaption}
+)}}
+\label{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}
+
+
+Sort a string list using natural sort. 
+
+Usefull for directory entry list. By default, QDir sorts the entries at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 , the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ... With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ...
 
 
 \begin{DoxyParams}{Parameters}
@@ -121,7 +135,7 @@ The sorted list
 \end{DoxyReturn}
 
 
-Definition at line 26 of file mdtAlgorithms.cpp.
+Definition at line 27 of file mdtAlgorithms.cpp.
 
 \hypertarget{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{
 \index{mdtAlgorithms@{mdtAlgorithms}!splitString@{splitString}}
@@ -163,30 +177,7 @@ The list of found fields
 \end{DoxyReturn}
 
 
-Definition at line 242 of file mdtAlgorithms.cpp.
-
-\hypertarget{namespacemdt_algorithms_a11d5a1ebe9a68710e6e78f768ac9203c}{
-\index{mdtAlgorithms@{mdtAlgorithms}!stringWithNumericEndLessThan@{stringWithNumericEndLessThan}}
-\index{stringWithNumericEndLessThan@{stringWithNumericEndLessThan}!mdtAlgorithms@{mdtAlgorithms}}
-\subsubsection[{stringWithNumericEndLessThan}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAlgorithms::stringWithNumericEndLessThan (
-\begin{DoxyParamCaption}
-\item[{QString}]{str1, }
-\item[{QString}]{str2}
-\end{DoxyParamCaption}
-)}}
-\label{namespacemdt_algorithms_a11d5a1ebe9a68710e6e78f768ac9203c}
-
-
-Compare the numeric end of 2 strings. 
-
-This is a helper function for \hyperlink{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{sortStringListWithNumericEnd()}.
-
-\begin{DoxyReturn}{Returns}
-True if str1 $<$ str2 
-\end{DoxyReturn}
-
-
-Definition at line 53 of file mdtAlgorithms.cpp.
+Definition at line 325 of file mdtAlgorithms.cpp.
 
 \hypertarget{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}{
 \index{mdtAlgorithms@{mdtAlgorithms}!unprotectedString@{unprotectedString}}
@@ -229,5 +220,5 @@ For example, if data protection is \char`\"{} and escape char is $\backslash$ ,
 \end{DoxyParams}
 
 
-Definition at line 163 of file mdtAlgorithms.cpp.
+Definition at line 246 of file mdtAlgorithms.cpp.
 

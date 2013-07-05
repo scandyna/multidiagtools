@@ -1,0 +1,398 @@
+\hypertarget{classmdt_sql_field_handler}{
+\section{mdtSqlFieldHandler Class Reference}
+\label{classmdt_sql_field_handler}\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+}
+
+
+Handle events between a SQL field and a edition widget.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlFieldHandler.h$>$}
+
+
+
+Collaboration diagram for mdtSqlFieldHandler:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=270pt]{classmdt_sql_field_handler__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_sql_field_handler_a7bb4e75ab209bdd2609cf458b5ce8868}{updateFlags} ()
+\begin{DoxyCompactList}\small\item\em Update some internal flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_field_handler_a111eebc8905151a5938950e23e61ff90}{
+void \hyperlink{classmdt_sql_field_handler_a111eebc8905151a5938950e23e61ff90}{dataEdited} ()}
+\label{classmdt_sql_field_handler_a111eebc8905151a5938950e23e61ff90}
+
+\begin{DoxyCompactList}\small\item\em Emitted the first time the user has edited data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_sql_field_handler_a5318b5d67a26163f85ec584fdb1a00bb}{mdtSqlFieldHandler} (QWidget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Construct a null field handler. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_field_handler_a66e6e5c64033362b70e11745752797e6}{
+\hyperlink{classmdt_sql_field_handler_a66e6e5c64033362b70e11745752797e6}{$\sim$mdtSqlFieldHandler} ()}
+\label{classmdt_sql_field_handler_a66e6e5c64033362b70e11745752797e6}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_a5c0b3077cf5f2622dd107b892ddde76c}{setField} (const QSqlField \&field)
+\begin{DoxyCompactList}\small\item\em Set SQL field. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_a0fc937dec713baad88f6def5b7088565}{setReadOnly} (bool readOnly)
+\begin{DoxyCompactList}\small\item\em Set the readOnly flag. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_field_handler_ae5554c5cab22d0400a206197d66b02c6}{
+bool \hyperlink{classmdt_sql_field_handler_ae5554c5cab22d0400a206197d66b02c6}{isReadOnly} () const }
+\label{classmdt_sql_field_handler_ae5554c5cab22d0400a206197d66b02c6}
+
+\begin{DoxyCompactList}\small\item\em Get the readOnly flag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_ad337249c9e123d31c53ed199384825d0}{setDataWidget} (QWidget $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Set the edit/view widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_ac326e3d22f67b1c6f76bb859e01dc486}{setDataWidget} (QLineEdit $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Set the edit/view widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_aa9a60be66471371ff52eb2a95989feba}{setDataWidget} (QAbstractButton $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Set the edit/view widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_abb528a4e0245d12308870556eefc934a}{setDataWidget} (QDateTimeEdit $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Set the edit/view widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_a080380d84da12132783a8de9ad9fdf4c}{setDataWidget} (QDoubleSpinBox $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Set the edit/view widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_a13a1e634bdb0d5c85ab1198aa09a64e2}{setDataWidget} (QSpinBox $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Set the edit/view widget. \end{DoxyCompactList}\item 
+QWidget $\ast$ \hyperlink{classmdt_sql_field_handler_a91ab8160d5015b6030e7169ab7108d33}{dataWidget} ()
+\begin{DoxyCompactList}\small\item\em Get data widget Get current edit/view widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_a10467d49304f7bc0c75e280098e3e0bc}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_field_handler_ad482be9d476c3310373078a6cd949714}{clearWidgetData} ()
+\begin{DoxyCompactList}\small\item\em Clear widget's data. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_field_handler_a32c52fa21b4a0e2165e1fbbb8f7fe3b7}{
+bool \hyperlink{classmdt_sql_field_handler_a32c52fa21b4a0e2165e1fbbb8f7fe3b7}{isNull} () const }
+\label{classmdt_sql_field_handler_a32c52fa21b4a0e2165e1fbbb8f7fe3b7}
+
+\begin{DoxyCompactList}\small\item\em Get the null flag. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_field_handler_a08ed5d8dde1447a5bc42af003551641f}{
+bool \hyperlink{classmdt_sql_field_handler_a08ed5d8dde1447a5bc42af003551641f}{dataWasEdited} () const }
+\label{classmdt_sql_field_handler_a08ed5d8dde1447a5bc42af003551641f}
+
+\begin{DoxyCompactList}\small\item\em Get the dataWasEdited flag. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_field_handler_abb37a65b248a02a126676b45ee90789a}{
+bool \hyperlink{classmdt_sql_field_handler_abb37a65b248a02a126676b45ee90789a}{checkBeforeSubmit} ()}
+\label{classmdt_sql_field_handler_abb37a65b248a02a126676b45ee90789a}
+
+\begin{DoxyCompactList}\small\item\em Make some checks before submit data. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_field_handler_a14478a0cd018cf2803dd41061c901aad}{
+void \hyperlink{classmdt_sql_field_handler_a14478a0cd018cf2803dd41061c901aad}{setData} (const QVariant \&data)}
+\label{classmdt_sql_field_handler_a14478a0cd018cf2803dd41061c901aad}
+
+\begin{DoxyCompactList}\small\item\em Set data widget's data. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_field_handler_a1ca9ec373a844a3dcf5f46807259171f}{
+QVariant \hyperlink{classmdt_sql_field_handler_a1ca9ec373a844a3dcf5f46807259171f}{data} () const }
+\label{classmdt_sql_field_handler_a1ca9ec373a844a3dcf5f46807259171f}
+
+\begin{DoxyCompactList}\small\item\em Get data widget's data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_field_handler_a87e0184853f31ac3236a6b05179192c8}{
+QVariant {\bfseries data}}
+\label{classmdt_sql_field_handler_a87e0184853f31ac3236a6b05179192c8}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handle events between a SQL field and a edition widget. 
+
+When writing a GUI for a SQL database, Qt offers several classes. For example, QSqlTableModel, QDataWidgetMapper, QLineEdit, ...
+
+\hyperlink{classmdt_sql_field_handler}{mdtSqlFieldHandler} add some functions that will help keeping the GUI more coherent with the underlaying database.
+
+To use this class, first set the field with \hyperlink{classmdt_sql_field_handler_a5c0b3077cf5f2622dd107b892ddde76c}{setField()}, then add your edition/view widget with \hyperlink{classmdt_sql_field_handler_ad337249c9e123d31c53ed199384825d0}{setDataWidget()}.
+
+If field must be read only (independent of field access set in QSqlField), use setReaOnly(). 
+
+Definition at line 53 of file mdtSqlFieldHandler.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_field_handler_a5318b5d67a26163f85ec584fdb1a00bb}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{mdtSqlFieldHandler}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlFieldHandler::mdtSqlFieldHandler (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_a5318b5d67a26163f85ec584fdb1a00bb}
+
+
+Construct a null field handler. 
+
+See \hyperlink{classmdt_sql_field_handler_a10467d49304f7bc0c75e280098e3e0bc}{clear()} for default flags. 
+
+Definition at line 140 of file mdtSqlFieldHandler.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_field_handler_a10467d49304f7bc0c75e280098e3e0bc}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!clear@{clear}}
+\index{clear@{clear}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_a10467d49304f7bc0c75e280098e3e0bc}
+
+
+Clear. 
+
+Will unref (set to null) all internall widget pointers and set default flags.
+
+Default flags are:
+\begin{DoxyItemize}
+\item isReadOnly: false
+\item isNull: true
+\item dataWasEdited: false 
+\end{DoxyItemize}
+
+Definition at line 246 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_ad482be9d476c3310373078a6cd949714}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!clearWidgetData@{clearWidgetData}}
+\index{clearWidgetData@{clearWidgetData}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{clearWidgetData}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::clearWidgetData (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_ad482be9d476c3310373078a6cd949714}
+
+
+Clear widget's data. 
+
+Will only clear the widget's content. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000061}{Todo}]Below becomes obselète \end{Desc}
+
+
+
+
+Definition at line 260 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_a91ab8160d5015b6030e7169ab7108d33}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!dataWidget@{dataWidget}}
+\index{dataWidget@{dataWidget}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{dataWidget}]{\setlength{\rightskip}{0pt plus 5cm}QWidget $\ast$ mdtSqlFieldHandler::dataWidget (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_a91ab8160d5015b6030e7169ab7108d33}
+
+
+Get data widget Get current edit/view widget. 
+
+\begin{DoxyReturn}{Returns}
+A QWidget of current edit/view, or 0 if none was set. 
+\end{DoxyReturn}
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000060}{Todo}]Below becomes obselète \end{Desc}
+
+
+
+
+Definition at line 220 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_ac326e3d22f67b1c6f76bb859e01dc486}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!setDataWidget@{setDataWidget}}
+\index{setDataWidget@{setDataWidget}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{setDataWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::setDataWidget (
+\begin{DoxyParamCaption}
+\item[{QLineEdit $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_ac326e3d22f67b1c6f76bb859e01dc486}
+
+
+Set the edit/view widget. 
+
+\begin{DoxyPrecond}{Precondition}
+widget must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 187 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_ad337249c9e123d31c53ed199384825d0}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!setDataWidget@{setDataWidget}}
+\index{setDataWidget@{setDataWidget}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{setDataWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::setDataWidget (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_ad337249c9e123d31c53ed199384825d0}
+
+
+Set the edit/view widget. 
+
+Will search what type given widget is, cast it and store if found.
+
+\begin{DoxyPrecond}{Precondition}
+widget must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 170 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_a080380d84da12132783a8de9ad9fdf4c}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!setDataWidget@{setDataWidget}}
+\index{setDataWidget@{setDataWidget}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{setDataWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::setDataWidget (
+\begin{DoxyParamCaption}
+\item[{QDoubleSpinBox $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_a080380d84da12132783a8de9ad9fdf4c}
+
+
+Set the edit/view widget. 
+
+\begin{DoxyPrecond}{Precondition}
+widget must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 210 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_a13a1e634bdb0d5c85ab1198aa09a64e2}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!setDataWidget@{setDataWidget}}
+\index{setDataWidget@{setDataWidget}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{setDataWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::setDataWidget (
+\begin{DoxyParamCaption}
+\item[{QSpinBox $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_a13a1e634bdb0d5c85ab1198aa09a64e2}
+
+
+Set the edit/view widget. 
+
+\begin{DoxyPrecond}{Precondition}
+widget must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 215 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_abb528a4e0245d12308870556eefc934a}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!setDataWidget@{setDataWidget}}
+\index{setDataWidget@{setDataWidget}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{setDataWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::setDataWidget (
+\begin{DoxyParamCaption}
+\item[{QDateTimeEdit $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_abb528a4e0245d12308870556eefc934a}
+
+
+Set the edit/view widget. 
+
+\begin{DoxyPrecond}{Precondition}
+widget must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 205 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_aa9a60be66471371ff52eb2a95989feba}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!setDataWidget@{setDataWidget}}
+\index{setDataWidget@{setDataWidget}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{setDataWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::setDataWidget (
+\begin{DoxyParamCaption}
+\item[{QAbstractButton $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_aa9a60be66471371ff52eb2a95989feba}
+
+
+Set the edit/view widget. 
+
+\begin{DoxyPrecond}{Precondition}
+widget must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 200 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_a5c0b3077cf5f2622dd107b892ddde76c}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!setField@{setField}}
+\index{setField@{setField}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{setField}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::setField (
+\begin{DoxyParamCaption}
+\item[{const QSqlField \&}]{field}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_a5c0b3077cf5f2622dd107b892ddde76c}
+
+
+Set SQL field. 
+
+Store the sql field. Some field's attributes will be used to handle edit/view widget. 
+
+Definition at line 153 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_a0fc937dec713baad88f6def5b7088565}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!setReadOnly@{setReadOnly}}
+\index{setReadOnly@{setReadOnly}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{setReadOnly}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::setReadOnly (
+\begin{DoxyParamCaption}
+\item[{bool}]{readOnly}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_field_handler_a0fc937dec713baad88f6def5b7088565}
+
+
+Set the readOnly flag. 
+
+If set, readOnly flag will force the edit/view widget to be not editable. 
+
+Definition at line 159 of file mdtSqlFieldHandler.cpp.
+
+\hypertarget{classmdt_sql_field_handler_a7bb4e75ab209bdd2609cf458b5ce8868}{
+\index{mdtSqlFieldHandler@{mdtSqlFieldHandler}!updateFlags@{updateFlags}}
+\index{updateFlags@{updateFlags}!mdtSqlFieldHandler@{mdtSqlFieldHandler}}
+\subsubsection[{updateFlags}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlFieldHandler::updateFlags (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_sql_field_handler_a7bb4e75ab209bdd2609cf458b5ce8868}
+
+
+Update some internal flags. 
+
+Some flags, like Null flag, or data edited flag are updated here.
+
+QDataWidgetMapper::currentIndexChanged() signal should be connected to this slot. 
+
+Definition at line 339 of file mdtSqlFieldHandler.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlFieldHandler.h\item 
+src/mdtutilsgui/mdtSqlFieldHandler.cpp\end{DoxyCompactItemize}

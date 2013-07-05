@@ -64,13 +64,17 @@ int \hyperlink{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}{chi
 \label{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}
 
 \begin{DoxyCompactList}\small\item\em Get child field index. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}{nameProtection} () const 
+\begin{DoxyCompactList}\small\item\em Get table/field protection. \end{DoxyCompactList}\item 
 QString \hyperlink{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}{dataProtection} () const 
 \begin{DoxyCompactList}\small\item\em Get data protection. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}{
 QVariant::Type \hyperlink{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}{dataType} () const }
 \label{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}
 
-\begin{DoxyCompactList}\small\item\em Get data type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get data type. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}{valueForNoDataFilter} () const 
+\begin{DoxyCompactList}\small\item\em Get value for a filter that gives no data. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -100,7 +104,45 @@ Typical data protections are:
 \item nothing for numeric type 
 \end{DoxyItemize}
 
-Definition at line 85 of file mdtSqlRelationItem.cpp.
+Definition at line 95 of file mdtSqlRelationItem.cpp.
+
+\hypertarget{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}{
+\index{mdtSqlRelationItem@{mdtSqlRelationItem}!nameProtection@{nameProtection}}
+\index{nameProtection@{nameProtection}!mdtSqlRelationItem@{mdtSqlRelationItem}}
+\subsubsection[{nameProtection}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtSqlRelationItem::nameProtection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}
+
+
+Get table/field protection. 
+
+Typical name protection is ` 
+
+Definition at line 90 of file mdtSqlRelationItem.cpp.
+
+\hypertarget{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}{
+\index{mdtSqlRelationItem@{mdtSqlRelationItem}!valueForNoDataFilter@{valueForNoDataFilter}}
+\index{valueForNoDataFilter@{valueForNoDataFilter}!mdtSqlRelationItem@{mdtSqlRelationItem}}
+\subsubsection[{valueForNoDataFilter}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtSqlRelationItem::valueForNoDataFilter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}
+
+
+Get value for a filter that gives no data. 
+
+Typical values are:
+\begin{DoxyItemize}
+\item empty string
+\item -\/1 for numeric field 
+\end{DoxyItemize}
+
+Definition at line 105 of file mdtSqlRelationItem.cpp.
 
 
 

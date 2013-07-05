@@ -96,63 +96,78 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00034"></a><a class="code" href="classmdt_sql_relation_item.html#a235cd2088688f36330938e6fdbd2ed18">00034</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_item.html#a235cd2088688f36330938e6fdbd2ed18" title="Set parent field.">mdtSqlRelationItem::setParentField</a>(<span class="keyword">const</span> QSqlField &amp;field)
 <a name="l00035"></a>00035 {
 <a name="l00036"></a>00036   pvParentField = field;
-<a name="l00037"></a>00037   <span class="comment">// Setup data protection regarding type</span>
+<a name="l00037"></a>00037   <span class="comment">// Setup data protection + value for no data filter regarding type</span>
 <a name="l00038"></a>00038   <span class="keywordflow">switch</span>(pvParentField.type()){
 <a name="l00039"></a>00039     <span class="keywordflow">case</span> QVariant::Char:
 <a name="l00040"></a>00040       pvDataProtection = <span class="stringliteral">&quot;&#39;&quot;</span>;
-<a name="l00041"></a>00041       <span class="keywordflow">break</span>;
-<a name="l00042"></a>00042     <span class="keywordflow">case</span> QVariant::String:
-<a name="l00043"></a>00043       pvDataProtection = <span class="stringliteral">&quot;&#39;&quot;</span>;
-<a name="l00044"></a>00044       <span class="keywordflow">break</span>;
-<a name="l00045"></a>00045     <span class="keywordflow">default</span>:
-<a name="l00046"></a>00046       pvDataProtection = <span class="stringliteral">&quot;&quot;</span>;
-<a name="l00047"></a>00047   }
-<a name="l00048"></a>00048 }
-<a name="l00049"></a>00049 
-<a name="l00050"></a><a class="code" href="classmdt_sql_relation_item.html#a63328f85e0b70aa1e588071f071a69b5">00050</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_item.html#a63328f85e0b70aa1e588071f071a69b5" title="Set parent field index.">mdtSqlRelationItem::setParentFieldIndex</a>(<span class="keywordtype">int</span> index)
-<a name="l00051"></a>00051 {
-<a name="l00052"></a>00052   pvParentFieldIndex = index;
+<a name="l00041"></a>00041       pvValueForNoDataFilter = <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00042"></a>00042       <span class="keywordflow">break</span>;
+<a name="l00043"></a>00043     <span class="keywordflow">case</span> QVariant::String:
+<a name="l00044"></a>00044       pvDataProtection = <span class="stringliteral">&quot;&#39;&quot;</span>;
+<a name="l00045"></a>00045       pvValueForNoDataFilter = <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00046"></a>00046       <span class="keywordflow">break</span>;
+<a name="l00047"></a>00047     <span class="keywordflow">case</span> QVariant::Int:
+<a name="l00048"></a>00048       pvDataProtection = <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00049"></a>00049       pvValueForNoDataFilter = -1;
+<a name="l00050"></a>00050     <span class="keywordflow">default</span>:
+<a name="l00051"></a>00051       pvDataProtection = <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00052"></a>00052   }
 <a name="l00053"></a>00053 }
 <a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="classmdt_sql_relation_item.html#a9a2ad2ee2590c1dea371e6b64c026a73">00055</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_item.html#a9a2ad2ee2590c1dea371e6b64c026a73" title="Set child field.">mdtSqlRelationItem::setChildField</a>(<span class="keyword">const</span> QSqlField &amp; field)
+<a name="l00055"></a><a class="code" href="classmdt_sql_relation_item.html#a63328f85e0b70aa1e588071f071a69b5">00055</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_item.html#a63328f85e0b70aa1e588071f071a69b5" title="Set parent field index.">mdtSqlRelationItem::setParentFieldIndex</a>(<span class="keywordtype">int</span> index)
 <a name="l00056"></a>00056 {
-<a name="l00057"></a>00057   pvChildField = field;
+<a name="l00057"></a>00057   pvParentFieldIndex = index;
 <a name="l00058"></a>00058 }
 <a name="l00059"></a>00059 
-<a name="l00060"></a><a class="code" href="classmdt_sql_relation_item.html#a870cfae68f4913225e0ae48554c3163f">00060</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_item.html#a870cfae68f4913225e0ae48554c3163f" title="Set child field index.">mdtSqlRelationItem::setChildFieldIndex</a>(<span class="keywordtype">int</span> index)
+<a name="l00060"></a><a class="code" href="classmdt_sql_relation_item.html#a9a2ad2ee2590c1dea371e6b64c026a73">00060</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_item.html#a9a2ad2ee2590c1dea371e6b64c026a73" title="Set child field.">mdtSqlRelationItem::setChildField</a>(<span class="keyword">const</span> QSqlField &amp; field)
 <a name="l00061"></a>00061 {
-<a name="l00062"></a>00062   pvChildFieldIndex = index;
+<a name="l00062"></a>00062   pvChildField = field;
 <a name="l00063"></a>00063 }
 <a name="l00064"></a>00064 
-<a name="l00065"></a><a class="code" href="classmdt_sql_relation_item.html#aa660ce6575b4ce9ad9d551d0b284e528">00065</a> QString <a class="code" href="classmdt_sql_relation_item.html#aa660ce6575b4ce9ad9d551d0b284e528" title="Get parent field name.">mdtSqlRelationItem::parentFieldName</a>()<span class="keyword"> const</span>
-<a name="l00066"></a>00066 <span class="keyword"></span>{
-<a name="l00067"></a>00067   <span class="keywordflow">return</span> pvParentField.name();
+<a name="l00065"></a><a class="code" href="classmdt_sql_relation_item.html#a870cfae68f4913225e0ae48554c3163f">00065</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_item.html#a870cfae68f4913225e0ae48554c3163f" title="Set child field index.">mdtSqlRelationItem::setChildFieldIndex</a>(<span class="keywordtype">int</span> index)
+<a name="l00066"></a>00066 {
+<a name="l00067"></a>00067   pvChildFieldIndex = index;
 <a name="l00068"></a>00068 }
 <a name="l00069"></a>00069 
-<a name="l00070"></a><a class="code" href="classmdt_sql_relation_item.html#a18d078e5e784de2d0e14cbb6238155f9">00070</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_relation_item.html#a18d078e5e784de2d0e14cbb6238155f9" title="Get parent field index.">mdtSqlRelationItem::parentFieldIndex</a>()<span class="keyword"> const</span>
+<a name="l00070"></a><a class="code" href="classmdt_sql_relation_item.html#aa660ce6575b4ce9ad9d551d0b284e528">00070</a> QString <a class="code" href="classmdt_sql_relation_item.html#aa660ce6575b4ce9ad9d551d0b284e528" title="Get parent field name.">mdtSqlRelationItem::parentFieldName</a>()<span class="keyword"> const</span>
 <a name="l00071"></a>00071 <span class="keyword"></span>{
-<a name="l00072"></a>00072   <span class="keywordflow">return</span> pvParentFieldIndex;
+<a name="l00072"></a>00072   <span class="keywordflow">return</span> pvParentField.name();
 <a name="l00073"></a>00073 }
 <a name="l00074"></a>00074 
-<a name="l00075"></a><a class="code" href="classmdt_sql_relation_item.html#a8cd667086a4ace612b009b0eb7494a1c">00075</a> QString <a class="code" href="classmdt_sql_relation_item.html#a8cd667086a4ace612b009b0eb7494a1c" title="Get child field name.">mdtSqlRelationItem::childFieldName</a>()<span class="keyword"> const</span>
+<a name="l00075"></a><a class="code" href="classmdt_sql_relation_item.html#a18d078e5e784de2d0e14cbb6238155f9">00075</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_relation_item.html#a18d078e5e784de2d0e14cbb6238155f9" title="Get parent field index.">mdtSqlRelationItem::parentFieldIndex</a>()<span class="keyword"> const</span>
 <a name="l00076"></a>00076 <span class="keyword"></span>{
-<a name="l00077"></a>00077   <span class="keywordflow">return</span> pvChildField.name();
+<a name="l00077"></a>00077   <span class="keywordflow">return</span> pvParentFieldIndex;
 <a name="l00078"></a>00078 }
 <a name="l00079"></a>00079 
-<a name="l00080"></a><a class="code" href="classmdt_sql_relation_item.html#a89f5e403c31df53c56ddfc4448d8b91d">00080</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_relation_item.html#a89f5e403c31df53c56ddfc4448d8b91d" title="Get child field index.">mdtSqlRelationItem::childFieldIndex</a>()<span class="keyword"> const</span>
+<a name="l00080"></a><a class="code" href="classmdt_sql_relation_item.html#a8cd667086a4ace612b009b0eb7494a1c">00080</a> QString <a class="code" href="classmdt_sql_relation_item.html#a8cd667086a4ace612b009b0eb7494a1c" title="Get child field name.">mdtSqlRelationItem::childFieldName</a>()<span class="keyword"> const</span>
 <a name="l00081"></a>00081 <span class="keyword"></span>{
-<a name="l00082"></a>00082   <span class="keywordflow">return</span> pvChildFieldIndex;
+<a name="l00082"></a>00082   <span class="keywordflow">return</span> pvChildField.name();
 <a name="l00083"></a>00083 }
 <a name="l00084"></a>00084 
-<a name="l00085"></a><a class="code" href="classmdt_sql_relation_item.html#a46f16fdee2f8fba86ed82e7f7194751b">00085</a> QString <a class="code" href="classmdt_sql_relation_item.html#a46f16fdee2f8fba86ed82e7f7194751b" title="Get data protection.">mdtSqlRelationItem::dataProtection</a>()<span class="keyword"> const</span>
+<a name="l00085"></a><a class="code" href="classmdt_sql_relation_item.html#a89f5e403c31df53c56ddfc4448d8b91d">00085</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_relation_item.html#a89f5e403c31df53c56ddfc4448d8b91d" title="Get child field index.">mdtSqlRelationItem::childFieldIndex</a>()<span class="keyword"> const</span>
 <a name="l00086"></a>00086 <span class="keyword"></span>{
-<a name="l00087"></a>00087   <span class="keywordflow">return</span> pvDataProtection;
+<a name="l00087"></a>00087   <span class="keywordflow">return</span> pvChildFieldIndex;
 <a name="l00088"></a>00088 }
 <a name="l00089"></a>00089 
-<a name="l00090"></a><a class="code" href="classmdt_sql_relation_item.html#a8df1470c61b71ade740266b528f7b9a3">00090</a> QVariant::Type <a class="code" href="classmdt_sql_relation_item.html#a8df1470c61b71ade740266b528f7b9a3" title="Get data type.">mdtSqlRelationItem::dataType</a>()<span class="keyword"> const</span>
+<a name="l00090"></a><a class="code" href="classmdt_sql_relation_item.html#a2aa445cebd77d6ce707b318f25cc709c">00090</a> QString <a class="code" href="classmdt_sql_relation_item.html#a2aa445cebd77d6ce707b318f25cc709c" title="Get table/field protection.">mdtSqlRelationItem::nameProtection</a>()<span class="keyword"> const</span>
 <a name="l00091"></a>00091 <span class="keyword"></span>{
-<a name="l00092"></a>00092   <span class="keywordflow">return</span> pvParentField.type();
+<a name="l00092"></a>00092   <span class="keywordflow">return</span> <span class="stringliteral">&quot;`&quot;</span>;
 <a name="l00093"></a>00093 }
+<a name="l00094"></a>00094 
+<a name="l00095"></a><a class="code" href="classmdt_sql_relation_item.html#a46f16fdee2f8fba86ed82e7f7194751b">00095</a> QString <a class="code" href="classmdt_sql_relation_item.html#a46f16fdee2f8fba86ed82e7f7194751b" title="Get data protection.">mdtSqlRelationItem::dataProtection</a>()<span class="keyword"> const</span>
+<a name="l00096"></a>00096 <span class="keyword"></span>{
+<a name="l00097"></a>00097   <span class="keywordflow">return</span> pvDataProtection;
+<a name="l00098"></a>00098 }
+<a name="l00099"></a>00099 
+<a name="l00100"></a><a class="code" href="classmdt_sql_relation_item.html#a8df1470c61b71ade740266b528f7b9a3">00100</a> QVariant::Type <a class="code" href="classmdt_sql_relation_item.html#a8df1470c61b71ade740266b528f7b9a3" title="Get data type.">mdtSqlRelationItem::dataType</a>()<span class="keyword"> const</span>
+<a name="l00101"></a>00101 <span class="keyword"></span>{
+<a name="l00102"></a>00102   <span class="keywordflow">return</span> pvParentField.type();
+<a name="l00103"></a>00103 }
+<a name="l00104"></a>00104 
+<a name="l00105"></a><a class="code" href="classmdt_sql_relation_item.html#a3d2e24b35c88b246dac2a825019f037b">00105</a> QVariant <a class="code" href="classmdt_sql_relation_item.html#a3d2e24b35c88b246dac2a825019f037b" title="Get value for a filter that gives no data.">mdtSqlRelationItem::valueForNoDataFilter</a>()<span class="keyword"> const</span>
+<a name="l00106"></a>00106 <span class="keyword"></span>{
+<a name="l00107"></a>00107   <span class="keywordflow">return</span> pvValueForNoDataFilter;
+<a name="l00108"></a>00108 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -169,7 +184,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jun 1 2013 16:20:24 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:16 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

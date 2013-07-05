@@ -5,6 +5,7 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classmdt_abstract_port}{mdtAbstractPort} (Base class for port I/O )}{\pageref{classmdt_abstract_port}}{}
 \item\contentsline{section}{\hyperlink{classmdt_abstract_port_setup_dialog}{mdtAbstractPortSetupDialog} (Base class to build a port setup dialog )}{\pageref{classmdt_abstract_port_setup_dialog}}{}
 \item\contentsline{section}{\hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} (NOTE: )}{\pageref{classmdt_abstract_serial_port}}{}
+\item\contentsline{section}{\hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} (Base class to create database table GUI )}{\pageref{classmdt_abstract_sql_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_analog_in_widget}{mdtAnalogInWidget} (Representation of a analog input )}{\pageref{classmdt_analog_in_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_analog_io}{mdtAnalogIo} (Representation of a analog I/O )}{\pageref{classmdt_analog_io}}{}
 \item\contentsline{section}{\hyperlink{classmdt_analog_out_widget}{mdtAnalogOutWidget} (Representation of a analog output )}{\pageref{classmdt_analog_out_widget}}{}
@@ -15,7 +16,6 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classmdt_data_table_item_delegate}{mdtDataTableItemDelegate} (Delegate to display table items in custom way )}{\pageref{classmdt_data_table_item_delegate}}{}
 \item\contentsline{section}{\hyperlink{classmdt_data_table_manager}{mdtDataTableManager} (Create/manage data sets )}{\pageref{classmdt_data_table_manager}}{}
 \item\contentsline{section}{\hyperlink{classmdt_data_table_model}{mdtDataTableModel} }{\pageref{classmdt_data_table_model}}{}
-\item\contentsline{section}{\hyperlink{classmdt_data_widget_mapper}{mdtDataWidgetMapper} (DataWidget mapper )}{\pageref{classmdt_data_widget_mapper}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device}{mdtDevice} (Base class for a device connected to a port )}{\pageref{classmdt_device}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device_d_s_o1000_a}{mdtDeviceDSO1000A} }{\pageref{classmdt_device_d_s_o1000_a}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device_info}{mdtDeviceInfo} (Contains informations about a device (attached to a port) )}{\pageref{classmdt_device_info}}{}
@@ -80,10 +80,21 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classmdt_serial_port_ctl_widget}{mdtSerialPortCtlWidget} }{\pageref{classmdt_serial_port_ctl_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_serial_port_manager}{mdtSerialPortManager} (Serial port manager class )}{\pageref{classmdt_serial_port_manager}}{}
 \item\contentsline{section}{\hyperlink{classmdt_serial_port_setup_dialog}{mdtSerialPortSetupDialog} (Setup dialog for serial port )}{\pageref{classmdt_serial_port_setup_dialog}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sort_filter_proxy_model}{mdtSortFilterProxyModel} (Provide natural sort for Qt model/view )}{\pageref{classmdt_sort_filter_proxy_model}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_data_widget_mapper}{mdtSqlDataWidgetMapper} (DataWidget mapper )}{\pageref{classmdt_sql_data_widget_mapper}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_field_handler}{mdtSqlFieldHandler} (Handle events between a SQL field and a edition widget )}{\pageref{classmdt_sql_field_handler}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_field_handler_abstract_data_widget}{mdtSqlFieldHandlerAbstractDataWidget} }{\pageref{classmdt_sql_field_handler_abstract_data_widget}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_field_handler_line_edit}{mdtSqlFieldHandlerLineEdit} }{\pageref{classmdt_sql_field_handler_line_edit}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} (Widget that accept a user designed form and helps dealing with table model )}{\pageref{classmdt_sql_form_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_sql_query_widget}{mdtSqlQueryWidget} (Widget for data queriyng )}{\pageref{classmdt_sql_query_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_sql_relation}{mdtSqlRelation} (Handle parent/child relations between 2 QSqlTableModels )}{\pageref{classmdt_sql_relation}}{}
 \item\contentsline{section}{\hyperlink{classmdt_sql_relation_item}{mdtSqlRelationItem} (Keep informations about a parent/child SQL relation )}{\pageref{classmdt_sql_relation_item}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_selection_dialog}{mdtSqlSelectionDialog} (Provide a way for the user to select a row in a set of data )}{\pageref{classmdt_sql_selection_dialog}}{}
 \item\contentsline{section}{\hyperlink{classmdt_sql_table_model}{mdtSqlTableModel} (Sql table model )}{\pageref{classmdt_sql_table_model}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_table_widget}{mdtSqlTableWidget} (Table view based SQL widget )}{\pageref{classmdt_sql_table_widget}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_table_widget_item_delegate}{mdtSqlTableWidgetItemDelegate} }{\pageref{classmdt_sql_table_widget_item_delegate}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_table_widget_key_event_filter}{mdtSqlTableWidgetKeyEventFilter} }{\pageref{classmdt_sql_table_widget_key_event_filter}}{}
+\item\contentsline{section}{\hyperlink{classmdt_sql_window}{mdtSqlWindow} (Main window for a database table view/editor )}{\pageref{classmdt_sql_window}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tcp_socket}{mdtTcpSocket} (Wrapper class between QTcpSocket and \hyperlink{classmdt_abstract_port}{mdtAbstractPort} )}{\pageref{classmdt_tcp_socket}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} }{\pageref{classmdt_tcp_socket_thread}}{}
 \item\contentsline{section}{\hyperlink{classmdt_time}{mdtTime} (Help class based on QTime )}{\pageref{classmdt_time}}{}
