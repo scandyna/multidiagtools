@@ -118,6 +118,10 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void toNext();
 
+  /*! \brief Set row as current record
+   */
+  void setCurrentIndex(int row);
+
  private slots:
 
   /*! \brief Does some tasks when entering new row

@@ -28,6 +28,7 @@ set (FORM_FILES
           src/mdtClVehicleTypeEditor.ui
           src/mdtClArticleEditor.ui
           src/mdtClUnitEditor.ui
+          src/mdtClUnitConnectionEditor.ui
     )
 
 # Fichiers à traiter par le compilateur moc

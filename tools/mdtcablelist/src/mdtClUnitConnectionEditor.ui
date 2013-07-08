@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mdtClUnitConnectionEditor</class>
+ <widget class="QWidget" name="mdtClUnitConnectionEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>343</width>
+    <height>174</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lbSchemaPage">
+     <property name="text">
+      <string>Schema page</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="fld_SchemaPage"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lbFunctionEN">
+     <property name="text">
+      <string>Function EN</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="fld_FunctionEN"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lbSignalName">
+     <property name="text">
+      <string>Signal name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="fld_SignalName"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lbSwAddress">
+     <property name="text">
+      <string>SW address</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="fld_SwAddress"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="lbIsATestPoint">
+     <property name="text">
+      <string>Is A test point</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="fld_IsATestPoint"/>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="QCheckBox" name="fld_IsATestPoint222">
+     <property name="text">
+      <string>Not implemented yet ...</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtClUnitEditor.h"
 #include "ui_mdtClUnitEditor.h"
+#include "ui_mdtClUnitConnectionEditor.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
@@ -50,25 +51,35 @@ mdtClUnitEditor::mdtClUnitEditor(QObject *parent, const QSqlDatabase db)
   Ui::mdtClUnitEditor *e = new Ui::mdtClUnitEditor;
   e->setupUi(pvUnitWidget);
   pvUnitModel = new QSqlTableModel(this, pvDatabase);
-  // Setup connection
-  pvUnitConnectionWidget = new mdtSqlTableWidget;
-  pvUnitConnectionModel = new QSqlTableModel(this, pvDatabase);
+  // Setup unit connection view
+  pvUnitConnectionViewWidget = new mdtSqlTableWidget;
+  pvUnitConnectionViewModel = new QSqlTableModel(this, pvDatabase);
+  pvUnitConnectionViewRelation = new mdtSqlRelation;
+  // Setup unit connect editor
+  pvUnitConnectionEditWidget = new mdtSqlFormWidget;
+  Ui::mdtClUnitConnectionEditor *uce = new Ui::mdtClUnitConnectionEditor;
+  uce->setupUi(pvUnitConnectionEditWidget);
+  pvUnitConnectionEditModel = new QSqlTableModel(this, pvDatabase);
+  pvUnitConnectionEditRelation = new mdtSqlRelation;
   // Setup VehicleType_Unit
   pvVehicleTypeWidget = new mdtSqlTableWidget;
   pvVehicleTypeModel = new QSqlTableModel(this, pvDatabase);
-
-  pvUnitConnectionRelation = new mdtSqlRelation;
   pvVehicleTypeRelation = new mdtSqlRelation;
+  // Setup base article
+  pvArticleWidget = new mdtSqlTableWidget;
+  pvArticleModel = new QSqlTableModel(this, pvDatabase);
+  pvArticleRelation = new mdtSqlRelation;
 }
 
 mdtClUnitEditor::~mdtClUnitEditor()
 {
   ///delete pvUnitWidget;
-  ///delete pvUnitConnectionWidget;
-  delete pvUnitConnectionRelation;
+  ///delete pvUnitConnectionViewWidget;
+  delete pvUnitConnectionViewRelation;
   delete pvVehicleTypeRelation;
+  delete pvArticleRelation;
   ///delete pvUnitModel;
-  ///delete pvUnitConnectionModel;
+  ///delete pvUnitConnectionViewModel;
   ///delete pvVehicleTypeModel;
 }
 
@@ -80,12 +91,20 @@ bool mdtClUnitEditor::setupTables(bool includeConnections)
   if(!setupUnitTable()){
     return false;
   }
-  // Setup connection table
-  if(!setupUnitConnectionTable()){
+  // Setup connection view table
+  if(!setupUnitConnectionViewTable()){
+    return false;
+  }
+  // Setup connection edit table
+  if(!setupUnitConnectionEditTable()){
     return false;
   }
   // Setup VehicleType_Unit
   if(!setupVehicleTable()){
+    return false;
+  }
+  // Setup Article
+  if(!setupArticleTable()){
     return false;
   }
 
@@ -97,8 +116,9 @@ void mdtClUnitEditor::setupUi(mdtSqlWindow *window)
   Q_ASSERT(window != 0);
 
   window->setSqlWidget(pvUnitWidget);
-  window->addChildWidget(pvUnitConnectionWidget, "Connections");
+  window->addChildWidget(pvUnitConnectionViewWidget, "Connections");
   window->addChildWidget(pvVehicleTypeWidget, "Vehicles");
+  window->addChildWidget(pvArticleWidget, "Base article");
   window->enableNavigation();
   window->enableEdition();
   window->resize(700, 500);
@@ -250,6 +270,149 @@ void mdtClUnitEditor::removeVehicleAssignation()
   pvVehicleTypeModel->select();
 }
 
+void mdtClUnitEditor::setBaseArticle()
+{
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlQueryModel model;
+  QString sql;
+  QList<QVariant> selectedItem;
+  QSqlError sqlError;
+  int articleIdFkColumn;
+  int currentRow;
+  QModelIndex index;
+
+  /// \todo Check that we are not editing anythig now ...
+  
+  // We must remeber current row (will be lost during submitting)
+  currentRow = pvUnitWidget->currentRow();
+  if(currentRow < 0){
+    return;
+  }
+  // Get column of Article FK
+  articleIdFkColumn = pvUnitModel->record().indexOf("Article_Id_FK");
+  if(articleIdFkColumn < 0){
+    return;
+  }
+  // Set SQL query
+  sql = "SELECT * FROM Article_tbl;";
+  model.setQuery(sql, pvDatabase);
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select a article");
+  selectionDialog.setModel(&model);
+  ///selectionDialog.setColumnHidden("Id_PK", true);
+  ///selectionDialog.setHeaderData("SubType", tr("Variant"));
+  ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
+  selectionDialog.addSelectionResultColumn("Id_PK");
+  selectionDialog.resize(500, 300);
+  selectionDialog.exec();
+  selectedItem = selectionDialog.selectionResult();
+  if(selectedItem.size() != 1){
+    return;
+  }
+  if(!selectedItem.at(0).isValid()){
+    return;
+  }
+  index = pvUnitModel->index(currentRow, articleIdFkColumn);
+  Q_ASSERT(index.isValid());
+  if(!pvUnitModel->setData(index, selectedItem.at(0))){
+    qDebug() << "ERR set data ...";
+    return;
+  }
+  if(!pvUnitModel->submitAll()){
+    qDebug() << "ERR set submitAll ...";
+    return;
+  }
+  // Return to current row
+  pvUnitWidget->setCurrentIndex(currentRow);
+}
+
+void mdtClUnitEditor::addConnection()
+{
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlQueryModel model;
+  QString sql;
+  QList<QVariant> selectedItem;
+  int articleIdFkColumn;
+  int articleIdFk;
+  int unitId;
+  int articleConnectionId;
+  QSqlError sqlError;
+  QModelIndex index;
+
+  // Get current unit ID
+  unitId = currentUnitId();
+  if(unitId < 0){
+    return;
+  }
+  // Get column of Article FK
+  articleIdFkColumn = pvUnitModel->record().indexOf("Article_Id_FK");
+  if(articleIdFkColumn < 0){
+    return;
+  }
+  // Get current article ID
+  index = pvUnitModel->index(pvUnitWidget->currentRow(), articleIdFkColumn);
+  if(!index.isValid()){
+    return;
+  }
+  articleIdFk = pvUnitModel->data(index).toInt();
+  
+  // SQL query to get the list of article connections that are not allready used
+  sql = "SELECT * "\
+        "FROM ArticleConnection_tbl "\
+        "WHERE Article_Id_FK = " + QString::number(articleIdFk) + " "\
+        "AND Id_PK NOT IN ( "\
+        " SELECT ArticleConnection_Id_FK "\
+        " FROM UnitConnection_tbl "\
+        " WHERE Unit_Id_FK = " + QString::number(unitId) + "); ";
+  /**
+        "WHERE Id_PK NOT IN ( "\
+        " SELECT VehicleType_Id_FK "\
+        " FROM VehicleType_Unit_tbl "\
+        " WHERE Unit_Id_FK = " + QString::number(unitId) + " ) "\
+        "ORDER BY Type ASC, SubType ASC, SeriesNumber ASC;";
+        */
+  model.setQuery(sql, pvDatabase);
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select a connection");
+  selectionDialog.setModel(&model);
+  ///selectionDialog.setColumnHidden("Id_PK", true);
+  ///selectionDialog.setHeaderData("SubType", tr("Variant"));
+  ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
+  selectionDialog.addSelectionResultColumn("Id_PK");
+  selectionDialog.resize(500, 300);
+  selectionDialog.exec();
+  selectedItem = selectionDialog.selectionResult();
+  if(selectedItem.size() != 1){
+    return;
+  }
+  if(!selectedItem.at(0).isValid()){
+    return;
+  }
+
+  
+  articleConnectionId = selectedItem.at(0).toInt();
+  if(articleConnectionId < 0){
+    return;
+  }
+  // Insert selected article connection into UnitConnection_tbl
+  QSqlQuery query(pvDatabase);
+  sql = "INSERT INTO UnitConnection_tbl "\
+        "(Unit_Id_FK, ArticleConnection_Id_FK) "\
+        "VALUES (" + QString::number(unitId) + ", " + QString::number(articleConnectionId) + ")";
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    qDebug() << "ERR insert: " << sqlError;
+    QMessageBox msgBox;
+    msgBox.setText(tr("Could not add connection"));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  pvUnitConnectionViewModel->select();
+}
+
 int mdtClUnitEditor::currentUnitId()
 {
   int unitIdColumn;
@@ -289,36 +452,80 @@ bool mdtClUnitEditor::setupUnitTable()
   return true;
 }
 
-bool mdtClUnitEditor::setupUnitConnectionTable()
+bool mdtClUnitEditor::setupUnitConnectionViewTable()
+{
+  QSqlError sqlError;
+  QPushButton *pbAddConnection;
+
+  pvUnitConnectionViewModel->setTable("UnitConnection_view");
+  if(!pvUnitConnectionViewModel->select()){
+    sqlError = pvUnitConnectionViewModel->lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table 'UnitConnection_view'", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnitEditor");
+    e.commit();
+    return false;
+  }
+  pvUnitConnectionViewWidget->setModel(pvUnitConnectionViewModel);
+  // Add the Add button
+  pbAddConnection = new QPushButton(tr("Add"));
+  connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
+  pvUnitConnectionViewWidget->addWidgetToLocalBar(pbAddConnection);
+  ///pvUnitConnectionViewWidget->enableLocalEdition();
+  pvUnitConnectionViewWidget->setEditionEnabled(false);
+  // Hide relation fields and PK
+  pvUnitConnectionViewWidget->setColumnHidden("Id_PK", true);
+  pvUnitConnectionViewWidget->setColumnHidden("Unit_Id_FK", true);
+  // Give fields a user friendly name
+  ///pvUnitConnectionViewWidget->setHeaderData("ConnectorName", tr("Connector"));
+  ///pvUnitConnectionViewWidget->setHeaderData("ContactName", tr("Contact"));
+  ///pvUnitConnectionViewWidget->setHeaderData("SchemaPage", tr("Schema page"));
+  ///pvUnitConnectionViewWidget->setHeaderData("IoType", tr("I/O type"));
+  // Setup Unit <-> Connection relation
+  pvUnitConnectionViewRelation->setParentModel(pvUnitModel);
+  pvUnitConnectionViewRelation->setChildModel(pvUnitConnectionViewModel);
+  if(!pvUnitConnectionViewRelation->addRelation("Id_PK", "Unit_Id_FK")){
+    return false;
+  }
+  pvUnitWidget->addChildWidget(pvUnitConnectionViewWidget, pvUnitConnectionViewRelation);
+
+  return true;
+}
+
+bool mdtClUnitEditor::setupUnitConnectionEditTable()
 {
   QSqlError sqlError;
 
-  pvUnitConnectionModel->setTable("UnitConnection_tbl");
-  if(!pvUnitConnectionModel->select()){
-    sqlError = pvUnitConnectionModel->lastError();
+  pvUnitConnectionEditModel->setTable("UnitConnection_tbl");
+  if(!pvUnitConnectionEditModel->select()){
+    sqlError = pvUnitConnectionEditModel->lastError();
     mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table 'UnitConnection_tbl'", mdtError::Error);
     e.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(e, "mdtClUnitEditor");
     e.commit();
     return false;
   }
-  pvUnitConnectionWidget->setModel(pvUnitConnectionModel);
-  pvUnitConnectionWidget->enableLocalEdition();
-  // Hide relation fields and PK
-  pvUnitConnectionWidget->setColumnHidden("Id_PK", true);
-  pvUnitConnectionWidget->setColumnHidden("Unit_Id_FK", true);
-  // Give fields a user friendly name
-  ///pvUnitConnectionWidget->setHeaderData("ConnectorName", tr("Connector"));
-  ///pvUnitConnectionWidget->setHeaderData("ContactName", tr("Contact"));
-  ///pvUnitConnectionWidget->setHeaderData("SchemaPage", tr("Schema page"));
-  ///pvUnitConnectionWidget->setHeaderData("IoType", tr("I/O type"));
-  // Setup Unit <-> Connection relation
-  pvUnitConnectionRelation->setParentModel(pvUnitModel);
-  pvUnitConnectionRelation->setChildModel(pvUnitConnectionModel);
-  if(!pvUnitConnectionRelation->addRelation("Id_PK", "Unit_Id_FK")){
+  pvUnitConnectionEditWidget->setModel(pvUnitConnectionEditModel);
+  pvUnitConnectionEditWidget->mapFormWidgets();
+  // Setup relation
+  pvUnitConnectionEditRelation->setParentModel(pvUnitConnectionViewModel);
+  pvUnitConnectionEditRelation->setChildModel(pvUnitConnectionEditModel);
+  if(!pvUnitConnectionEditRelation->addRelation("ArticleConnection_Id_FK", "ArticleConnection_Id_FK")){
     return false;
   }
-  pvUnitWidget->addChildWidget(pvUnitConnectionWidget, pvUnitConnectionRelation);
+  if(!pvUnitConnectionEditRelation->addRelation("Unit_Id_FK", "Unit_Id_FK")){
+    return false;
+  }
+  connect(pvUnitConnectionViewWidget, SIGNAL(currentRowChanged(int)), pvUnitConnectionEditRelation, SLOT(setParentCurrentIndex(int)));
+  // Force a update of relations
+  pvUnitConnectionEditRelation->setParentCurrentIndex(pvUnitConnectionViewWidget->currentRow());
+
+  /// \todo provisoire
+  mdtSqlWindow *w = new mdtSqlWindow;
+  w->setSqlWidget(pvUnitConnectionEditWidget);
+  w->enableNavigation();
+  w->enableEdition();
+  w->show();
 
   return true;
 }
@@ -363,6 +570,44 @@ bool mdtClUnitEditor::setupVehicleTable()
   pvVehicleTypeWidget->addWidgetToLocalBar(pbRemoveVehicle);
   connect(pbRemoveVehicle, SIGNAL(clicked()), this, SLOT(removeVehicleAssignation()));
   pvVehicleTypeWidget->addStretchToLocalBar();
+
+  return true;
+}
+
+bool mdtClUnitEditor::setupArticleTable()
+{
+  QSqlError sqlError;
+  QPushButton *pbSetBaseArticle;
+
+  pvArticleModel->setTable("Article_tbl");
+  if(!pvArticleModel->select()){
+    sqlError = pvArticleModel->lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table 'Article_tbl'", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnitEditor");
+    e.commit();
+    return false;
+  }
+  pvArticleWidget->setEditionEnabled(false);
+  pvArticleWidget->setModel(pvArticleModel);
+  /*
+   * Setup Unit <-> Article relation
+   * Here we make it reversed,
+   *  because the parent table is the Article table,
+   *  but we need to display the article on witch
+   *  current Uint is based
+   */
+  pvArticleRelation->setParentModel(pvUnitModel);
+  pvArticleRelation->setChildModel(pvArticleModel);
+  if(!pvArticleRelation->addRelation("Article_Id_FK", "Id_PK")){
+    return false;
+  }
+  pvUnitWidget->addChildWidget(pvArticleWidget, pvArticleRelation);
+  // Add base article assignation button
+  pbSetBaseArticle = new QPushButton(tr("Set base article"));
+  pvArticleWidget->addWidgetToLocalBar(pbSetBaseArticle);
+  pvArticleWidget->addStretchToLocalBar();
+  connect(pbSetBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
 
   return true;
 }

@@ -60,6 +60,8 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
   QSqlRecord record;
 
   // Clear previous mapping
+  disconnect(model(), SIGNAL(rowsInserted(const QModelIndex, int, int)), pvWidgetMapper, SLOT(toFirst()));
+  disconnect(model(), SIGNAL(rowsRemoved(const QModelIndex, int, int)), pvWidgetMapper, SLOT(toFirst()));
   disconnect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
   qDeleteAll(pvFieldHandlers);
   pvFieldHandlers.clear();
@@ -107,6 +109,14 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
     }
   }
   connect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
+  /*
+   * When calling select() , setQuery() , setFilter() or something similar on model,
+   * Widget mapper will not update. This problem is not in QTableView
+   *  (witch connects model's rowsInserted() , rowsRemoved(), etc signals to internal slots to handle this, I think).
+   * As workaround, we will connect some model's signal to Widget mapper.
+   */
+  connect(model(), SIGNAL(rowsInserted(const QModelIndex, int, int)), pvWidgetMapper, SLOT(toFirst()));
+  connect(model(), SIGNAL(rowsRemoved(const QModelIndex, int, int)), pvWidgetMapper, SLOT(toFirst()));
   if(model()->rowCount() < 1){
     onCurrentIndexChanged(-1);
   }else{
@@ -165,6 +175,18 @@ void mdtSqlFormWidget::toNext()
     return;
   }
   pvWidgetMapper->toNext();
+}
+
+void mdtSqlFormWidget::setCurrentIndex(int row)
+{
+  if(!childWidgetsAreInVisaluzingState()){
+    return;
+  }
+  if(currentState() != Visualizing){
+    warnUserAboutUnsavedRow();
+    return;
+  }
+  pvWidgetMapper->setCurrentIndex(row);
 }
 
 void mdtSqlFormWidget::doSetModel(QSqlTableModel *model)

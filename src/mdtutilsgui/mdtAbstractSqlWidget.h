@@ -230,6 +230,13 @@ class mdtAbstractSqlWidget : public QWidget
    */
   virtual void toNext() = 0;
 
+  /*! \brief Set row as current record
+   *
+   * Subclass must implement this method.
+   *  Errors and user interactions must be handled by subclass.
+   */
+  virtual void setCurrentIndex(int row) = 0;
+
  protected:
 
   /*! \brief Set the table model

@@ -251,6 +251,20 @@ void mdtSqlTableWidget::setColumnHidden(const QString &fieldName, bool hide)
   setColumnHidden(column, hide);
 }
 
+void mdtSqlTableWidget::setCurrentIndex(int row)
+{
+  Q_ASSERT(pvTableView->selectionModel() != 0);
+  Q_ASSERT(model() != 0);
+
+  QModelIndex index;
+
+  index = pvTableView->selectionModel()->currentIndex();
+  if(row >= 0){
+    index = model()->index(row, index.column());
+  }
+  pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+}
+
 void mdtSqlTableWidget::onDataEditionBegins()
 {
   pvDelegateIsEditingData = true;

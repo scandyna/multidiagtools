@@ -147,6 +147,12 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   void setColumnHidden(const QString &fieldName, bool hide);
 
+ public slots:
+
+  /*! \brief Set row as current record
+   */
+  void setCurrentIndex(int row);
+
  private slots:
 
   /*! \internal Set internal delegateIsEditingData flag

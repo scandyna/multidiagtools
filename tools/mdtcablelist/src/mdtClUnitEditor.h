@@ -71,6 +71,14 @@ class mdtClUnitEditor : public QObject
    */
   void removeVehicleAssignation();
 
+  /*! \brief Set the base article of current unit
+   */
+  void setBaseArticle();
+
+  /*! \brief Add a connection to unit connection table
+   */
+  void addConnection();
+
  private:
 
   /*! \brief Get current Unit ID
@@ -84,25 +92,44 @@ class mdtClUnitEditor : public QObject
    */
   bool setupUnitTable();
 
-  /*! \brief Setup Connection table and widget
+  /*! \brief Setup unit connection view table and widget
    */
-  bool setupUnitConnectionTable();
+  bool setupUnitConnectionViewTable();
+
+  /*! \brief Setup unit connection editor table and widget
+   */
+  bool setupUnitConnectionEditTable();
 
   /*! \brief Setup VehicleUnit table and widget
    */
   bool setupVehicleTable();
 
+  /*! \brief Setup base Article table and widget
+   */
+  bool setupArticleTable();
+
   Q_DISABLE_COPY(mdtClUnitEditor);
 
   QSqlDatabase pvDatabase;
+  // Unit objects
   mdtSqlFormWidget *pvUnitWidget;
-  mdtSqlTableWidget *pvUnitConnectionWidget;
-  mdtSqlTableWidget *pvVehicleTypeWidget;
   QSqlTableModel *pvUnitModel;
-  QSqlTableModel *pvUnitConnectionModel;
+  // Unit connection view objects
+  mdtSqlTableWidget *pvUnitConnectionViewWidget;
+  QSqlTableModel *pvUnitConnectionViewModel;
+  mdtSqlRelation *pvUnitConnectionViewRelation;
+  // Unit connection edit objects
+  mdtSqlFormWidget *pvUnitConnectionEditWidget;
+  QSqlTableModel *pvUnitConnectionEditModel;
+  mdtSqlRelation *pvUnitConnectionEditRelation;
+  // Vehicle objects
+  mdtSqlTableWidget *pvVehicleTypeWidget;
   QSqlTableModel *pvVehicleTypeModel;
-  mdtSqlRelation *pvUnitConnectionRelation;
   mdtSqlRelation *pvVehicleTypeRelation;
+  // Base article objects
+  mdtSqlTableWidget *pvArticleWidget;
+  QSqlTableModel *pvArticleModel;
+  mdtSqlRelation *pvArticleRelation;
 };
 
 #endif  // #ifndef
