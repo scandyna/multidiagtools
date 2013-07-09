@@ -27,6 +27,8 @@
 #include <QList>
 #include <QSqlRecord>
 
+#include <QModelIndex>
+
 class QSqlTableModel;
 class QState;
 class QStateMachine;
@@ -446,6 +448,15 @@ class mdtAbstractSqlWidget : public QWidget
    *  each time the user selects a new row.
    */
   void currentRowChanged(int row);
+
+  /*! \brief Emitted when select() or setQuery() was called on (parent) model
+   *
+   * Notes: QSqlTableModel does not provide such signal.
+   *  Here, the rowsRemoved() and rowsInserted() signal are used.
+   *  It's also possible that this signal is emitted two times
+   *  when model is updated with select(), setQuery() or setFilter().
+   */
+  void modelSelected();
 
  private slots:
 

@@ -73,7 +73,8 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    * \pre Parent widget must be set with setSqlWidget() before using this method
    * \pre widget must be a valid pointer
    */
-  void addChildWidget(mdtAbstractSqlWidget *sqlWidget, const QString &label);
+  ///void addChildWidget(mdtAbstractSqlWidget *sqlWidget, const QString &label);
+  void addChildWidget(QWidget *widget, const QString &label);
 
   /*! \brief Enable navigation
    *

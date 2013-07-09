@@ -79,6 +79,16 @@ class mdtClUnitEditor : public QObject
    */
   void addConnection();
 
+  /*! \brief Remove connection from unit connection table
+   */
+  void removeConnection();
+
+ signals:
+
+  /*! \brief Used to tell unit widget that we have edited some data
+   */
+  void unitEdited();
+
  private:
 
   /*! \brief Get current Unit ID

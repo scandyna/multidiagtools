@@ -178,6 +178,17 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   void onTableViewKnownKeyPressed(int key);
 
+  /*! \brief Select first row in table view
+   *
+   * When select() or similar method is called on model,
+   *  QTableView's selection is loosed.
+   *  If a child widget is attached, it is also not updated.
+   * If model has data after select() was called, currentRowChanged() signal
+   *  is emitted using table view's selection model,
+   *  else this method will emit it with a invalid row (-1).
+   */
+  void onModelSelected();
+
  private:
 
   /*! \brief Set model

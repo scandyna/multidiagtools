@@ -46,8 +46,14 @@ void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
   Q_ASSERT(model != 0);
   Q_ASSERT(!pvStateMachine->isRunning());
 
+  if(pvModel != 0){
+    disconnect(pvModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
+    disconnect(pvModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
+  }
   doSetModel(model);
   pvModel = model;
+  connect(pvModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
+  connect(pvModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
   pvStateMachine->start();
 }
 
@@ -223,10 +229,15 @@ bool mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()
   for(i=0; i<pvChildWidgets.size(); ++i){
     w = pvChildWidgets.at(i);
     Q_ASSERT(w != 0);
+    if(!w->allDataAreSaved()){
+      return false;
+    }
+    /**
     if(w->currentState() != Visualizing){
       warnUserAboutUnsavedRow(w->userFriendlyTableName());
       return false;
     }
+    */
   }
 
   return true;

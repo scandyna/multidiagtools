@@ -130,6 +130,15 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void onCurrentIndexChanged(int row);
 
+  /*! \brief Update widget mapper
+   *
+   * When select() or similar method is called on model,
+   *  QDataWidgetMapper not repopulate mapped widgets.
+   * If model has rows, widget mapper's toFirst() method is called,
+   *  else it will b set to a invalid index (-1).
+   */
+  void onModelSelected();
+
  private:
 
   /*! \brief Set model

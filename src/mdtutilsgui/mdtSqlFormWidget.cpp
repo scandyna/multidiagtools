@@ -60,8 +60,8 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
   QSqlRecord record;
 
   // Clear previous mapping
-  disconnect(model(), SIGNAL(rowsInserted(const QModelIndex, int, int)), pvWidgetMapper, SLOT(toFirst()));
-  disconnect(model(), SIGNAL(rowsRemoved(const QModelIndex, int, int)), pvWidgetMapper, SLOT(toFirst()));
+  ///disconnect(this, SIGNAL(modelSelected()), pvWidgetMapper, SLOT(toFirst()));
+  disconnect(this, SIGNAL(modelSelected()), this, SLOT(onModelSelected()));
   disconnect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
   qDeleteAll(pvFieldHandlers);
   pvFieldHandlers.clear();
@@ -113,10 +113,10 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
    * When calling select() , setQuery() , setFilter() or something similar on model,
    * Widget mapper will not update. This problem is not in QTableView
    *  (witch connects model's rowsInserted() , rowsRemoved(), etc signals to internal slots to handle this, I think).
-   * As workaround, we will connect some model's signal to Widget mapper.
+   * As workaround, we will connect a signal signal to Widget mapper.
    */
-  connect(model(), SIGNAL(rowsInserted(const QModelIndex, int, int)), pvWidgetMapper, SLOT(toFirst()));
-  connect(model(), SIGNAL(rowsRemoved(const QModelIndex, int, int)), pvWidgetMapper, SLOT(toFirst()));
+  ///connect(this, SIGNAL(modelSelected()), pvWidgetMapper, SLOT(toFirst()));
+  connect(this, SIGNAL(modelSelected()), this, SLOT(onModelSelected()));
   if(model()->rowCount() < 1){
     onCurrentIndexChanged(-1);
   }else{
@@ -205,7 +205,6 @@ void mdtSqlFormWidget::onCurrentIndexChanged(int row)
   mdtSqlFieldHandler *fieldHandler;
   int i;
 
-  qDebug() << "onCurrentIndexChanged(" << row << ")";
   // Check if we have to enable/disable widgets regarding current row
   if(row < 0){
     widgetsEnabled = false;
@@ -241,6 +240,18 @@ void mdtSqlFormWidget::onCurrentIndexChanged(int row)
   }
   // emit mdtAbstractSqlWidget's signal
   emit currentRowChanged(row);
+}
+
+void mdtSqlFormWidget::onModelSelected()
+{
+  if(model() == 0){
+    return;
+  }
+  if(model()->rowCount() > 0){
+    pvWidgetMapper->toFirst();
+  }else{
+    onCurrentIndexChanged(-1);
+  }
 }
 
 bool mdtSqlFormWidget::doSubmit()
@@ -374,7 +385,6 @@ bool mdtSqlFormWidget::doRemove()
   }
   // Remove current row
   if(!model()->removeRow(row)){
-    qDebug() << "removeRow() ...";
     displayDatabaseError(model()->lastError());
     return false;
   }

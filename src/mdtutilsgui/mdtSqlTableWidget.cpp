@@ -95,6 +95,7 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
 {
   pvTableView = new QTableView;
   pvTableView->setSelectionBehavior(QAbstractItemView::SelectItems);
+  connect(this, SIGNAL(modelSelected()), this, SLOT(onModelSelected()));
   QVBoxLayout *layout = new QVBoxLayout;
   // Install event filter on table view to catch some key events
   mdtSqlTableWidgetKeyEventFilter *keyEventFilter = new mdtSqlTableWidgetKeyEventFilter(this);
@@ -279,7 +280,7 @@ void mdtSqlTableWidget::onDataChanged(const QModelIndex &, const QModelIndex &)
 void mdtSqlTableWidget::onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
   if(!childWidgetsAreInVisaluzingState()){
-    pvTableView->setCurrentIndex(previous);
+    ///pvTableView->setCurrentIndex(previous);
     return;
   }
   if(current.isValid()){
@@ -324,6 +325,23 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
       if(index.isValid()){
         pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
       }
+  }
+}
+
+void mdtSqlTableWidget::onModelSelected()
+{
+  Q_ASSERT(pvTableView->selectionModel() != 0);
+
+  QModelIndex index;
+
+  if(model() == 0){
+    return;
+  }
+  if(model()->rowCount() > 0){
+    index = model()->index(0, 0);
+    pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear);
+  }else{
+    onCurrentRowChanged(index, index);
   }
 }
 

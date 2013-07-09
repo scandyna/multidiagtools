@@ -109,9 +109,11 @@ void mdtSqlRelation::setParentCurrentIndex(int index)
   Q_ASSERT(pvChildModel != 0);
 
   pvCurrentRow = index;
+  /**
   if(index < 0){
     return;
   }
+  */
   generateChildModelRelationFilter(index);
 }
 
@@ -176,7 +178,7 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
 {
   Q_ASSERT(pvParentModel != 0);
   Q_ASSERT(pvChildModel != 0);
-  Q_ASSERT(row >= 0);
+  ///Q_ASSERT(row >= 0);
 
   int i;
   mdtSqlRelationItem *item;
