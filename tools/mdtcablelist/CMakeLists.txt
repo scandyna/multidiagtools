@@ -12,6 +12,7 @@ set (HEADER_FILES
           src/mdtClVehicleTypeEditor.h
           src/mdtClArticleEditor.h
           src/mdtClUnitEditor.h
+          src/mdtClLinkEditor.h
     )
 
 # Source files
@@ -21,6 +22,7 @@ set (SOURCES_FILES
           src/mdtClVehicleTypeEditor.cpp
           src/mdtClArticleEditor.cpp
           src/mdtClUnitEditor.cpp
+          src/mdtClLinkEditor.cpp
     )
 
 # Qt ui files
@@ -29,6 +31,7 @@ set (FORM_FILES
           src/mdtClArticleEditor.ui
           src/mdtClUnitEditor.ui
           src/mdtClUnitConnectionEditor.ui
+          src/mdtClLinkEditor.ui
     )
 
 # Fichiers à traiter par le compilateur moc

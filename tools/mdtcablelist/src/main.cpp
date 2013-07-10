@@ -27,7 +27,7 @@
 #include "mdtClVehicleTypeEditor.h"
 #include "mdtClUnitEditor.h"
 #include "mdtClArticleEditor.h"
-#include "mdtSqlSelectionDialog.h"
+#include "mdtClLinkEditor.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -42,13 +42,16 @@ int main(int argc, char **argv)
   QSqlDatabase db;
   QString password;
   bool ok;
+  int retVal;
   mdtSqlWindow vehicleTypeEditorWindow;
   mdtSqlWindow articleEditorWindow;
   mdtSqlWindow unitEditorWindow;
   mdtClVehicleTypeEditor *vehicleTypeEditor;
   mdtClArticleEditor *articleEditor;
   mdtClUnitEditor *unitEditor;
-  int retVal;
+  // Link editor
+  mdtClLinkEditor *linkEditor;
+  mdtSqlWindow linkEditorWindow;
 
   // Init app, we allow multiple instances
   if(!app.init()){
@@ -103,12 +106,22 @@ int main(int argc, char **argv)
   unitEditor->setupUi(&unitEditorWindow);
   unitEditorWindow.setWindowTitle(QObject::tr("Unit edition"));
   unitEditorWindow.show();
+  // Setup link editor
+  linkEditor = new mdtClLinkEditor(0, db);
+  if(!linkEditor->setupTables()){
+    QMessageBox::warning(0, "DB setup error", "Cannot setup tables for link editor");
+    return 1;
+  }
+  linkEditor->setupUi(&linkEditorWindow);
+  linkEditorWindow.setWindowTitle("Link edition");
+  linkEditorWindow.show();
 
   retVal = app.exec();
   db.close();
   delete unitEditor;
   delete articleEditor;
   delete vehicleTypeEditor;
+  delete linkEditor;
 
   return retVal;
 }

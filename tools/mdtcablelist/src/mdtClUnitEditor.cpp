@@ -95,8 +95,6 @@ mdtClUnitEditor::~mdtClUnitEditor()
 
 bool mdtClUnitEditor::setupTables(bool includeConnections)
 {
-  QSqlError sqlError;
-
   // Setup Unit table
   if(!setupUnitTable()){
     return false;
@@ -437,10 +435,17 @@ void mdtClUnitEditor::addConnection()
   QSqlQuery query(pvDatabase);
   sql = "INSERT INTO UnitConnection_tbl "\
         "(Unit_Id_FK, ArticleConnection_Id_FK, ConnectorName, ContactName, FunctionEN) "\
-        "VALUES ("\
+        "VALUES (:Unit_Id_FK, :ArticleConnection_Id_FK, :ConnectorName, :ContactName, :FunctionEN)";
+        ///"VALUES ("\
           + QString::number(unitId) + ", " + QString::number(articleConnectionId)\
           + ", '" + selectedItem.at(1).toString() + "', '" + selectedItem.at(2).toString() + "', '" + selectedItem.at(3).toString() + "')";
-  if(!query.exec(sql)){
+  query.prepare(sql);
+  query.bindValue(":Unit_Id_FK", unitId);
+  query.bindValue(":ArticleConnection_Id_FK", articleConnectionId);
+  query.bindValue(":ConnectorName", selectedItem.at(1));
+  query.bindValue(":ContactName", selectedItem.at(2));
+  query.bindValue(":FunctionEN", selectedItem.at(3));
+  if(!query.exec()){
     sqlError = query.lastError();
     qDebug() << "ERR insert: " << sqlError;
     QMessageBox msgBox;
@@ -720,7 +725,7 @@ bool mdtClUnitEditor::setupArticleTable()
    * Here we make it reversed,
    *  because the parent table is the Article table,
    *  but we need to display the article on witch
-   *  current Uint is based
+   *  current Unit is based
    */
   pvArticleRelation->setParentModel(pvUnitModel);
   pvArticleRelation->setChildModel(pvArticleModel);
