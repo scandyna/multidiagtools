@@ -145,6 +145,36 @@ void mdtAbstractSqlWidget::remove()
   emit removeTriggered();
 }
 
+bool mdtAbstractSqlWidget::setCurrentRecord(const QString &fieldName, const QVariant &value)
+{
+  int columnIndex;
+  int row;
+  int rowCount;
+  QModelIndex index;
+
+  if(model() == 0){
+    return false;
+  }
+  // Get columnIndex of given fieldName
+  columnIndex = model()->fieldIndex(fieldName);
+  if(columnIndex < 0){
+    return false;
+  }
+  // Search ...
+  rowCount = model()->rowCount();
+  for(row = 0; row < rowCount; ++row){
+    index = model()->index(row, columnIndex);
+    if(index.isValid()){
+      if(model()->data(index) == value){
+        setCurrentIndex(row);
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
 void mdtAbstractSqlWidget::displayDatabaseError(QSqlError error)
 {
   Q_ASSERT(pvModel != 0);

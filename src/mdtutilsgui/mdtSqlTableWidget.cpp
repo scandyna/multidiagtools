@@ -59,8 +59,6 @@ bool mdtSqlTableWidgetKeyEventFilter::eventFilter(QObject *obj, QEvent *event)
       case Qt::Key_Return:
       case Qt::Key_Delete:
       case Qt::Key_Down:
-        qDebug() << "eventFilter() , obj dump: ";
-        obj->dumpObjectInfo();
         emit knownKeyPressed(keyEvent->key());
         return true;
       default:
@@ -119,6 +117,7 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   pbRevert = 0;
   pbRemove = 0;
   pvDelegateIsEditingData = false;
+  pvDefaultColumnToSelect = 0;
 }
 
 mdtSqlTableWidget::~mdtSqlTableWidget()
@@ -257,6 +256,24 @@ void mdtSqlTableWidget::setColumnHidden(const QString &fieldName, bool hide)
   setColumnHidden(column, hide);
 }
 
+void mdtSqlTableWidget::setDefaultColumnToSelect(int column)
+{
+  Q_ASSERT(model() != 0);
+
+  if((column < 0)||(column >= model()->columnCount())){
+    pvDefaultColumnToSelect = 0;
+  }else{
+    pvDefaultColumnToSelect = column;
+  }
+}
+
+void mdtSqlTableWidget::setDefaultColumnToSelect(const QString &fieldName)
+{
+  Q_ASSERT(model() != 0);
+
+  setDefaultColumnToSelect(model()->fieldIndex(fieldName));
+}
+
 void mdtSqlTableWidget::setCurrentIndex(int row)
 {
   Q_ASSERT(pvTableView->selectionModel() != 0);
@@ -264,9 +281,9 @@ void mdtSqlTableWidget::setCurrentIndex(int row)
 
   QModelIndex index;
 
-  index = pvTableView->selectionModel()->currentIndex();
+  ///index = pvTableView->selectionModel()->currentIndex();
   if(row >= 0){
-    index = model()->index(row, index.column());
+    index = model()->index(row, pvDefaultColumnToSelect);
   }
   pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
 }
@@ -328,7 +345,9 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
       // Select new current index
       index = model()->index(index.row()+1, index.column());
       if(index.isValid()){
-        pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+        ///pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+        /// \todo Get table view flags and adapt selection flags
+        pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
       }
   }
 }

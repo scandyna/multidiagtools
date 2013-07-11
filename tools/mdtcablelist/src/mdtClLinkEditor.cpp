@@ -26,6 +26,7 @@
 #include "mdtError.h"
 #include <QSqlTableModel>
 #include <QSqlError>
+#include <QSqlQuery>
 #include <QPushButton>
 #include <QString>
 #include <QVariant>
@@ -179,7 +180,133 @@ void mdtClLinkEditor::connectLink()
     msgBox.exec();
     return;
   }
+  ///pvListModel->select();
+  emit linkEdited();
+}
+
+void mdtClLinkEditor::updateUnitConnectionSelections(int linkRow)
+{
+  QVariant startUnitId;
+  QVariant startConnectionId;
+  QVariant endUnitId;
+  QVariant endConnectionId;
+  QVariant currentLinkId;
+  QModelIndex index;
+  QSqlQuery query(pvDatabase);
+  QSqlError sqlError;
+
+  // Get current Link ID
+  if(linkRow < 0){
+    pvStartUnitWidget->setCurrentIndex(-1);
+    pvStartUnitConnectionWidget->setCurrentIndex(-1);
+    pvEndUnitWidget->setCurrentIndex(-1);
+    pvEndUnitConnectionWidget->setCurrentIndex(-1);
+    return;
+  }
+  index = pvLinkModel->index(linkRow, pvLinkModel->fieldIndex("Id_PK"));
+  if(!index.isValid()){
+    pvStartUnitWidget->setCurrentIndex(-1);
+    pvStartUnitConnectionWidget->setCurrentIndex(-1);
+    pvEndUnitWidget->setCurrentIndex(-1);
+    pvEndUnitConnectionWidget->setCurrentIndex(-1);
+    return;
+  }
+  currentLinkId = pvLinkModel->data(index);
+  if(!currentLinkId.isValid()){
+    pvStartUnitWidget->setCurrentIndex(-1);
+    pvStartUnitConnectionWidget->setCurrentIndex(-1);
+    pvEndUnitWidget->setCurrentIndex(-1);
+    pvEndUnitConnectionWidget->setCurrentIndex(-1);
+    return;
+  }
+  // Get start Unit ID
+  if(!query.exec("SELECT UnitStart_Id_PK FROM LinkList_view WHERE Link_Id_PK = " + currentLinkId.toString())){
+    sqlError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Unable to get UnitStart_Id_PK in table 'LinkList_view'", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
+    e.commit();
+    pvStartUnitWidget->setCurrentIndex(-1);
+    return;
+  }
+  if(query.next()){
+    startUnitId = query.value(0);
+  }
+  // Get start Connection ID
+  if(!query.exec("SELECT UnitConnectionStart_Id_FK FROM LinkList_view WHERE Link_Id_PK = " + currentLinkId.toString())){
+    sqlError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Unable to get UnitStart_Id_PK in table 'LinkList_view'", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
+    e.commit();
+    pvStartUnitConnectionWidget->setCurrentIndex(-1);
+    return;
+  }
+  if(query.next()){
+    startConnectionId = query.value(0);
+  }
+  // Get end Unit ID
+  if(!query.exec("SELECT UnitEnd_Id_PK FROM LinkList_view WHERE Link_Id_PK = " + currentLinkId.toString())){
+    sqlError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Unable to get UnitStart_Id_PK in table 'LinkList_view'", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
+    e.commit();
+    pvEndUnitWidget->setCurrentIndex(-1);
+    return;
+  }
+  if(query.next()){
+    endUnitId = query.value(0);
+  }
+  // Get end Connection ID
+  if(!query.exec("SELECT UnitConnectionEnd_Id_FK FROM LinkList_view WHERE Link_Id_PK = " + currentLinkId.toString())){
+    sqlError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Unable to get UnitStart_Id_PK in table 'LinkList_view'", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
+    e.commit();
+    pvEndUnitConnectionWidget->setCurrentIndex(-1);
+    return;
+  }
+  if(query.next()){
+    endConnectionId = query.value(0);
+  }
+  // Set Unit and connect current
+  if(startUnitId.isValid() && startConnectionId.isValid()){
+    pvStartUnitWidget->setCurrentRecord("Unit_Id_FK", startUnitId);
+    pvStartUnitConnectionWidget->setCurrentRecord("Id_PK", startConnectionId);
+  }
+  if((endUnitId.isValid()) && (endConnectionId.isValid())){
+    pvEndUnitWidget->setCurrentRecord("Unit_Id_FK", endUnitId);
+    pvEndUnitConnectionWidget->setCurrentRecord("Id_PK", endConnectionId);
+  }
+}
+
+void mdtClLinkEditor::updateListView()
+{
   pvListModel->select();
+}
+
+void mdtClLinkEditor::setCurrentRowByList(int listRow)
+{
+  QVariant linkId;
+  QModelIndex index;
+
+  // If we are saving current Link, we do nothing
+  if(pvLinkWidget->currentState() != mdtAbstractSqlWidget::Visualizing){
+    return;
+  }
+  // Get ID of current row in List
+  index = pvListModel->index(listRow, pvListModel->fieldIndex("Link_Id_PK"));
+  if(!index.isValid()){
+    return;
+  }
+  linkId = pvListModel->data(index);
+  if(!linkId.isValid()){
+    return;
+  }
+  // Set current index
+  pvLinkWidget->setCurrentRecord("Id_PK", linkId);
 }
 
 bool mdtClLinkEditor::setupLinkTable()
@@ -197,6 +324,8 @@ bool mdtClLinkEditor::setupLinkTable()
   }
   pvLinkWidget->setModel(pvLinkModel);
   pvLinkWidget->mapFormWidgets();
+  connect(pvLinkWidget, SIGNAL(currentRowChanged(int)), this, SLOT(updateUnitConnectionSelections(int)));
+  connect(this, SIGNAL(linkEdited()), pvLinkWidget, SIGNAL(dataEdited()));
 
   return true;
 }
@@ -267,6 +396,7 @@ bool mdtClLinkEditor::setupStartUnitTables()
   pvStartUnitWidget->tableView()->setSelectionMode(QAbstractItemView::SingleSelection);
   pvStartUnitWidget->setColumnHidden("VehicleType_Id_FK", true);
   pvStartUnitWidget->setColumnHidden("Unit_Id_FK", true);
+  pvStartUnitWidget->setDefaultColumnToSelect("SchemaPosition");
   vLayout->addWidget(pvStartUnitWidget);
   // Setup Unit Connection model
   pvStartUnitConnectionModel->setTable("UnitConnection_tbl");
@@ -289,6 +419,7 @@ bool mdtClLinkEditor::setupStartUnitTables()
   pvStartUnitConnectionWidget->setColumnHidden("Id_PK", true);
   pvStartUnitConnectionWidget->setColumnHidden("Unit_Id_FK", true);
   pvStartUnitConnectionWidget->setColumnHidden("ArticleConnection_Id_FK", true);
+  pvStartUnitConnectionWidget->setDefaultColumnToSelect("ConnectorName");
   vLayout->addWidget(pvStartUnitConnectionWidget);
   pvLinkUiWidget->gbStart->setLayout(vLayout);
   // Setup Unit <-> Connection relation
@@ -334,6 +465,7 @@ bool mdtClLinkEditor::setupEndUnitTables()
   pvEndUnitWidget->tableView()->setSelectionMode(QAbstractItemView::SingleSelection);
   pvEndUnitWidget->setColumnHidden("VehicleType_Id_FK", true);
   pvEndUnitWidget->setColumnHidden("Unit_Id_FK", true);
+  pvEndUnitWidget->setDefaultColumnToSelect("SchemaPosition");
   vLayout->addWidget(pvEndUnitWidget);
   // Setup Unit Connection model
   pvEndUnitConnectionModel->setTable("UnitConnection_tbl");
@@ -356,6 +488,7 @@ bool mdtClLinkEditor::setupEndUnitTables()
   pvEndUnitConnectionWidget->setColumnHidden("Id_PK", true);
   pvEndUnitConnectionWidget->setColumnHidden("Unit_Id_FK", true);
   pvEndUnitConnectionWidget->setColumnHidden("ArticleConnection_Id_FK", true);
+  pvEndUnitConnectionWidget->setDefaultColumnToSelect("ConnectorName");
   vLayout->addWidget(pvEndUnitConnectionWidget);
   ///vLayout->addLayout(hLayout);
   pvLinkUiWidget->gbEnd->setLayout(vLayout);
@@ -389,6 +522,26 @@ bool mdtClLinkEditor::setupListTable()
   }
   pvListWidget->setModel(pvListModel);
   pvListWidget->setEditionEnabled(false);
+  pvListWidget->setColumnHidden("Link_Id_PK", true);
+  pvListWidget->setColumnHidden("UnitStart_Id_PK", true);
+  pvListWidget->setColumnHidden("UnitEnd_Id_PK", true);
+  pvListWidget->setColumnHidden("UnitConnectionStart_Id_FK", true);
+  pvListWidget->setColumnHidden("UnitConnectionEnd_Id_FK", true);
+  pvListWidget->setHeaderData("VehicleType", "Vehicle");
+  pvListWidget->setHeaderData("VehicleSubType", "Variant");
+  pvListWidget->setHeaderData("VehicleSerie", "Serie");
+  pvListWidget->setHeaderData("StartSchemaPosition", "Start\nSch. pos.");
+  pvListWidget->setHeaderData("StartCabinet", "Start\nCabinet");
+  pvListWidget->setHeaderData("StartCoordinate", "Start\nCoordiante");
+  pvListWidget->setHeaderData("StartConnectorName", "Start\nConnector");
+  pvListWidget->setHeaderData("StartContactName", "Start\nContact");
+  pvListWidget->setHeaderData("EndSchemaPosition", "End\nSch. pos.");
+  pvListWidget->setHeaderData("EndCabinet", "End\nCabinet");
+  pvListWidget->setHeaderData("EndCoordinate", "End\nCoordiante");
+  pvListWidget->setHeaderData("EndConnectorName", "End\nConnector");
+  pvListWidget->setHeaderData("EndContactName", "End\nContact");
+  connect(pvListWidget, SIGNAL(currentRowChanged(int)), this, SLOT(setCurrentRowByList(int)));
+  connect(pvLinkWidget, SIGNAL(modelSelected()), this, SLOT(updateListView()));
   vLayout->addWidget(pvListWidget);
 
   return true;

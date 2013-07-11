@@ -151,6 +151,23 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   void setColumnHidden(const QString &fieldName, bool hide);
 
+  /*! \brief Set default column to select
+   *
+   * Some methods have to update selection in table view.
+   *  Here it's possible to define witch column must be selected
+   *  in such case.
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  void setDefaultColumnToSelect(int column);
+
+  /*! \brief Set default column to select
+   *
+   * \overload setDefaultColumnToSelect(int)
+   * \pre Model must be set with setModel() before using this method.
+   */
+  void setDefaultColumnToSelect(const QString &fieldName);
+
  public slots:
 
   /*! \brief Set row as current record
@@ -248,6 +265,7 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
   QPushButton *pbRemove;
   // Flags
   bool pvDelegateIsEditingData;   // See remark in onTableViewKnownKeyPressed()
+  int pvDefaultColumnToSelect;    // Used by setCurrentIndex()
 };
 
 #endif  // #ifndef MDT_SQL_TABLE_WIDGET_H

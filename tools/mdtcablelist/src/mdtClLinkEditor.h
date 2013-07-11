@@ -68,6 +68,24 @@ class mdtClLinkEditor : public QObject
    */
   void connectLink();
 
+  /*! \brief Select start and stop unit + connection matching current Link
+   */
+  void updateUnitConnectionSelections(int linkRow);
+
+  /*! \brief Update List view
+   */
+  void updateListView();
+
+  /*! \brief Update current row (Link widget) regarding selected row in List widget
+   */
+  void setCurrentRowByList(int listRow);
+
+ signals:
+
+  /*! \brief Used to tell Link widget that we have edited some data
+   */
+  void linkEdited();
+
  private:
 
   /*! \brief Setup Link table

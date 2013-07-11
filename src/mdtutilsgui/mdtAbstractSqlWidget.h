@@ -25,6 +25,8 @@
 #include <QSqlError>
 #include <QString>
 #include <QList>
+#include <QPair>
+#include <QVariant>
 #include <QSqlRecord>
 
 #include <QModelIndex>
@@ -238,6 +240,16 @@ class mdtAbstractSqlWidget : public QWidget
    *  Errors and user interactions must be handled by subclass.
    */
   virtual void setCurrentIndex(int row) = 0;
+
+  /*! \brief Set the first record that matches given criteria as current record (index).
+   *
+   * \param fieldName Field that must contain searched value
+   * \param value Value that must matche
+   * \return True if matching record was found
+   *          (in this case, setCurrentIndex() is called to update currentRow),
+   *          false else.
+   */
+  bool setCurrentRecord(const QString &fieldName, const QVariant &value);
 
  protected:
 
