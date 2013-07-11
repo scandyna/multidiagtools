@@ -221,6 +221,11 @@ QItemSelectionModel *mdtSqlTableWidget::selectionModel()
   return pvTableView->selectionModel();
 }
 
+QTableView *mdtSqlTableWidget::tableView()
+{
+  return pvTableView;
+}
+
 void mdtSqlTableWidget::setHeaderData(const QString &fieldName, const QString &data)
 {
   Q_ASSERT(model() != 0);

@@ -62,6 +62,12 @@ class mdtClLinkEditor : public QObject
    */
   void setupUi(mdtSqlWindow *window);
 
+ private slots:
+
+  /*! \brief Connect current link between 2 unit connections
+   */
+  void connectLink();
+
  private:
 
   /*! \brief Setup Link table
@@ -95,7 +101,21 @@ class mdtClLinkEditor : public QObject
   QDataWidgetMapper *pvArticleWidgetMapper;
   QSqlTableModel *pvArticleModel;
   mdtSqlRelation *pvArticleLinkRelation;
-
+  // Start Unit members
+  mdtSqlTableWidget *pvStartUnitWidget;
+  mdtSqlTableWidget *pvStartUnitConnectionWidget;
+  QSqlTableModel *pvStartUnitModel;
+  QSqlTableModel *pvStartUnitConnectionModel;
+  mdtSqlRelation *pvStartUnitConnectionRelation;
+  // End Unit members
+  mdtSqlTableWidget *pvEndUnitWidget;
+  mdtSqlTableWidget *pvEndUnitConnectionWidget;
+  QSqlTableModel *pvEndUnitModel;
+  QSqlTableModel *pvEndUnitConnectionModel;
+  mdtSqlRelation *pvEndUnitConnectionRelation;
+  // List members
+  mdtSqlTableWidget *pvListWidget;
+  QSqlTableModel *pvListModel;
 };
 
 #endif // #ifndef MDT_CL_LINK_EDITOR_H

@@ -131,6 +131,10 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   QItemSelectionModel *selectionModel();
 
+  /*! \brief Get internal table view
+   */
+  QTableView *tableView();
+
   /*! \brief Set a user friendly name for a column
    *
    * \pre Model must be set with setModel() before using this method.

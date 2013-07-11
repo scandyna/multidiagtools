@@ -96,7 +96,7 @@
      <item>
       <widget class="QGroupBox" name="gbStart">
        <property name="title">
-        <string>Start</string>
+        <string>Selection of start unit and connection</string>
        </property>
       </widget>
      </item>
@@ -147,7 +147,7 @@
      <item>
       <widget class="QGroupBox" name="gbEnd">
        <property name="title">
-        <string>End</string>
+        <string>Selection of end unit and connection</string>
        </property>
       </widget>
      </item>
