@@ -13,6 +13,7 @@ set (HEADER_FILES
           src/mdtClArticleEditor.h
           src/mdtClUnitEditor.h
           src/mdtClLinkEditor.h
+          src/mdtClUnitConnectionSelectionDialog.h
     )
 
 # Source files
@@ -23,6 +24,7 @@ set (SOURCES_FILES
           src/mdtClArticleEditor.cpp
           src/mdtClUnitEditor.cpp
           src/mdtClLinkEditor.cpp
+          src/mdtClUnitConnectionSelectionDialog.cpp
     )
 
 # Qt ui files

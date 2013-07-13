@@ -419,7 +419,7 @@ bool mdtClLinkEditor::setupStartUnitTables()
   pvStartUnitConnectionWidget->setColumnHidden("Id_PK", true);
   pvStartUnitConnectionWidget->setColumnHidden("Unit_Id_FK", true);
   pvStartUnitConnectionWidget->setColumnHidden("ArticleConnection_Id_FK", true);
-  pvStartUnitConnectionWidget->setDefaultColumnToSelect("ConnectorName");
+  pvStartUnitConnectionWidget->setDefaultColumnToSelect("ContactName");
   vLayout->addWidget(pvStartUnitConnectionWidget);
   pvLinkUiWidget->gbStart->setLayout(vLayout);
   // Setup Unit <-> Connection relation
@@ -488,7 +488,7 @@ bool mdtClLinkEditor::setupEndUnitTables()
   pvEndUnitConnectionWidget->setColumnHidden("Id_PK", true);
   pvEndUnitConnectionWidget->setColumnHidden("Unit_Id_FK", true);
   pvEndUnitConnectionWidget->setColumnHidden("ArticleConnection_Id_FK", true);
-  pvEndUnitConnectionWidget->setDefaultColumnToSelect("ConnectorName");
+  pvEndUnitConnectionWidget->setDefaultColumnToSelect("ContactName");
   vLayout->addWidget(pvEndUnitConnectionWidget);
   ///vLayout->addLayout(hLayout);
   pvLinkUiWidget->gbEnd->setLayout(vLayout);
@@ -527,14 +527,18 @@ bool mdtClLinkEditor::setupListTable()
   pvListWidget->setColumnHidden("UnitEnd_Id_PK", true);
   pvListWidget->setColumnHidden("UnitConnectionStart_Id_FK", true);
   pvListWidget->setColumnHidden("UnitConnectionEnd_Id_FK", true);
-  pvListWidget->setHeaderData("VehicleType", "Vehicle");
-  pvListWidget->setHeaderData("VehicleSubType", "Variant");
-  pvListWidget->setHeaderData("VehicleSerie", "Serie");
+  pvListWidget->setHeaderData("StartVehicleType", "Start\nVehicle");
+  pvListWidget->setHeaderData("StartVehicleSubType", "Start\nVariant");
+  pvListWidget->setHeaderData("StartVehicleSerie", "Start\nSerie");
+  pvListWidget->setHeaderData("Identification_FK", "Identification");
   pvListWidget->setHeaderData("StartSchemaPosition", "Start\nSch. pos.");
   pvListWidget->setHeaderData("StartCabinet", "Start\nCabinet");
   pvListWidget->setHeaderData("StartCoordinate", "Start\nCoordiante");
   pvListWidget->setHeaderData("StartConnectorName", "Start\nConnector");
   pvListWidget->setHeaderData("StartContactName", "Start\nContact");
+  pvListWidget->setHeaderData("EndVehicleType", "End\nVehicle");
+  pvListWidget->setHeaderData("EndVehicleSubType", "End\nVariant");
+  pvListWidget->setHeaderData("EndVehicleSerie", "End\nSerie");
   pvListWidget->setHeaderData("EndSchemaPosition", "End\nSch. pos.");
   pvListWidget->setHeaderData("EndCabinet", "End\nCabinet");
   pvListWidget->setHeaderData("EndCoordinate", "End\nCoordiante");
