@@ -23,6 +23,7 @@
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
+#include "mdtClUnitConnectionSelectionDialog.h"
 #include "mdtError.h"
 #include <QSqlTableModel>
 #include <QSqlError>
@@ -39,6 +40,7 @@
 #include <QLabel>
 #include <QDataWidgetMapper>
 #include <QTableView>
+#include <QLineEdit>
 
 #include <QDebug>
 
@@ -56,19 +58,18 @@ mdtClLinkEditor::mdtClLinkEditor(QObject *parent, QSqlDatabase db)
   pvArticleModel = new QSqlTableModel(this, pvDatabase);
   pvArticleLinkRelation = new mdtSqlRelation;
   // Setup Start Unit
-  pvStartUnitWidget = new mdtSqlTableWidget;
-  pvStartUnitConnectionWidget = new mdtSqlTableWidget;
   pvStartUnitModel = new QSqlTableModel(this, pvDatabase);
+  pvStartUnitWidgetMapper = new QDataWidgetMapper(this);
   pvStartUnitConnectionModel = new QSqlTableModel(this, pvDatabase);
-  pvStartUnitConnectionRelation = new mdtSqlRelation;
+  pvStartUnitConnectionWidgetMapper = new QDataWidgetMapper(this);
   // Setup End Unit
-  pvEndUnitWidget = new mdtSqlTableWidget;
-  pvEndUnitConnectionWidget = new mdtSqlTableWidget;
   pvEndUnitModel = new QSqlTableModel(this, pvDatabase);
+  pvEndUnitWidgetMapper = new QDataWidgetMapper(this);
   pvEndUnitConnectionModel = new QSqlTableModel(this, pvDatabase);
-  pvEndUnitConnectionRelation = new mdtSqlRelation;
+  pvEndUnitConnectionWidgetMapper = new QDataWidgetMapper(this);
   // Setup connection buttons
-  connect(pvLinkUiWidget->pbConnect, SIGNAL(clicked()), this, SLOT(connectLink()));
+  connect(pvLinkUiWidget->pbSelectStartConnection, SIGNAL(clicked()), this, SLOT(selectStartConnection()));
+  connect(pvLinkUiWidget->pbSelectEndConnection, SIGNAL(clicked()), this, SLOT(selectEndConnection()));
   // Setup List
   pvListWidget = new mdtSqlTableWidget;
   pvListModel = new QSqlTableModel(this, pvDatabase);
@@ -78,8 +79,6 @@ mdtClLinkEditor::mdtClLinkEditor(QObject *parent, QSqlDatabase db)
 mdtClLinkEditor::~mdtClLinkEditor()
 {
   delete pvArticleLinkRelation;
-  delete pvStartUnitConnectionRelation;
-  delete pvEndUnitConnectionRelation;
 }
 
 bool mdtClLinkEditor::setupTables()
@@ -113,6 +112,7 @@ void mdtClLinkEditor::setupUi(mdtSqlWindow *window)
   window->resize(950, 700);
 }
 
+/**
 void mdtClLinkEditor::connectLink()
 {
   Q_ASSERT(pvStartUnitConnectionWidget->selectionModel() != 0);
@@ -180,11 +180,127 @@ void mdtClLinkEditor::connectLink()
     msgBox.exec();
     return;
   }
-  ///pvListModel->select();
+  emit linkEdited();
+}
+*/
+
+void mdtClLinkEditor::selectStartConnection()
+{
+  QVariant selectedConnectionId;
+  QModelIndex index;
+  QSqlError sqlError;
+  mdtClUnitConnectionSelectionDialog dialog;
+  QWidget *w;
+  QLineEdit *le;
+
+  // Show selection dialog to user
+  
+  dialog.exec();
+  selectedConnectionId = dialog.selectedConnectionId();
+  if(!selectedConnectionId.isValid()){
+    return;
+  }
+  // Set start ID in Link table
+  index = pvLinkModel->index(pvLinkWidget->currentRow(), pvLinkModel->fieldIndex("UnitConnectionStart_Id_FK"));
+  if(!pvLinkModel->setData(index, selectedConnectionId)){
+    sqlError = pvLinkModel->lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Unable to set start connect ID in table 'Link_tbl'", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
+    e.commit();
+    QMessageBox msgBox;
+    msgBox.setText("A error occured when trying to set Start connection.");
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  // Update widgets
+  w = pvStartUnitWidgetMapper->mappedWidgetAt(pvStartUnitModel->fieldIndex("SchemaPosition"));
+  if(w != 0){
+    le = dynamic_cast<QLineEdit*>(w);
+    if(le != 0){
+      le->setText(dialog.selectedSchemaPosition().toString());
+    }
+  }
+
+  w = pvStartUnitConnectionWidgetMapper->mappedWidgetAt(pvStartUnitConnectionModel->fieldIndex("ConnectorName"));
+  if(w != 0){
+    le = dynamic_cast<QLineEdit*>(w);
+    if(le != 0){
+      le->setText(dialog.selectedConnectorName().toString());
+    }
+  }
+  w = pvStartUnitConnectionWidgetMapper->mappedWidgetAt(pvStartUnitConnectionModel->fieldIndex("ContactName"));
+  if(w != 0){
+    le = dynamic_cast<QLineEdit*>(w);
+    if(le != 0){
+      le->setText(dialog.selectedContactName().toString());
+    }
+  }
+
   emit linkEdited();
 }
 
-void mdtClLinkEditor::updateUnitConnectionSelections(int linkRow)
+void mdtClLinkEditor::selectEndConnection()
+{
+  QVariant selectedConnectionId;
+  QModelIndex index;
+  QSqlError sqlError;
+  mdtClUnitConnectionSelectionDialog dialog;
+  QWidget *w;
+  QLineEdit *le;
+
+  // Show selection dialog to user
+  
+  dialog.exec();
+  selectedConnectionId = dialog.selectedConnectionId();
+  if(!selectedConnectionId.isValid()){
+    return;
+  }
+  // Set end ID in Link table
+  index = pvLinkModel->index(pvLinkWidget->currentRow(), pvLinkModel->fieldIndex("UnitConnectionEnd_Id_FK"));
+  if(!pvLinkModel->setData(index, selectedConnectionId)){
+    sqlError = pvLinkModel->lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Unable to set end connect ID in table 'Link_tbl'", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
+    e.commit();
+    QMessageBox msgBox;
+    msgBox.setText("A error occured when trying to set End connection.");
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  // Update widgets
+  w = pvEndUnitWidgetMapper->mappedWidgetAt(pvEndUnitModel->fieldIndex("SchemaPosition"));
+  if(w != 0){
+    le = dynamic_cast<QLineEdit*>(w);
+    if(le != 0){
+      le->setText(dialog.selectedSchemaPosition().toString());
+    }
+  }
+
+  w = pvEndUnitConnectionWidgetMapper->mappedWidgetAt(pvEndUnitConnectionModel->fieldIndex("ConnectorName"));
+  if(w != 0){
+    le = dynamic_cast<QLineEdit*>(w);
+    if(le != 0){
+      le->setText(dialog.selectedConnectorName().toString());
+    }
+  }
+  w = pvEndUnitConnectionWidgetMapper->mappedWidgetAt(pvEndUnitConnectionModel->fieldIndex("ContactName"));
+  if(w != 0){
+    le = dynamic_cast<QLineEdit*>(w);
+    if(le != 0){
+      le->setText(dialog.selectedContactName().toString());
+    }
+  }
+
+  emit linkEdited();
+}
+
+void mdtClLinkEditor::updateUnitConnectionCurrent(int linkRow)
 {
   QVariant startUnitId;
   QVariant startConnectionId;
@@ -194,29 +310,19 @@ void mdtClLinkEditor::updateUnitConnectionSelections(int linkRow)
   QModelIndex index;
   QSqlQuery query(pvDatabase);
   QSqlError sqlError;
+  int row;
 
   // Get current Link ID
-  if(linkRow < 0){
-    pvStartUnitWidget->setCurrentIndex(-1);
-    pvStartUnitConnectionWidget->setCurrentIndex(-1);
-    pvEndUnitWidget->setCurrentIndex(-1);
-    pvEndUnitConnectionWidget->setCurrentIndex(-1);
-    return;
-  }
   index = pvLinkModel->index(linkRow, pvLinkModel->fieldIndex("Id_PK"));
-  if(!index.isValid()){
-    pvStartUnitWidget->setCurrentIndex(-1);
-    pvStartUnitConnectionWidget->setCurrentIndex(-1);
-    pvEndUnitWidget->setCurrentIndex(-1);
-    pvEndUnitConnectionWidget->setCurrentIndex(-1);
-    return;
+  if(index.isValid()){
+    currentLinkId = pvLinkModel->data(index);
   }
-  currentLinkId = pvLinkModel->data(index);
+  ///currentLinkId = pvLinkModel->data(index);
   if(!currentLinkId.isValid()){
-    pvStartUnitWidget->setCurrentIndex(-1);
-    pvStartUnitConnectionWidget->setCurrentIndex(-1);
-    pvEndUnitWidget->setCurrentIndex(-1);
-    pvEndUnitConnectionWidget->setCurrentIndex(-1);
+    clearWidgetContents(pvStartUnitWidgetMapper);
+    clearWidgetContents(pvStartUnitConnectionWidgetMapper);
+    clearWidgetContents(pvEndUnitWidgetMapper);
+    clearWidgetContents(pvEndUnitConnectionWidgetMapper);
     return;
   }
   // Get start Unit ID
@@ -226,7 +332,7 @@ void mdtClLinkEditor::updateUnitConnectionSelections(int linkRow)
     e.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
     e.commit();
-    pvStartUnitWidget->setCurrentIndex(-1);
+    clearWidgetContents(pvStartUnitWidgetMapper);
     return;
   }
   if(query.next()){
@@ -239,11 +345,24 @@ void mdtClLinkEditor::updateUnitConnectionSelections(int linkRow)
     e.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
     e.commit();
-    pvStartUnitConnectionWidget->setCurrentIndex(-1);
+    clearWidgetContents(pvStartUnitConnectionWidgetMapper);
     return;
   }
   if(query.next()){
     startConnectionId = query.value(0);
+  }
+  // Update Start Unit and connections widgets
+  row = modelIndexRowForValue(pvStartUnitModel, "Unit_Id_FK", startUnitId);
+  if(row < 0){
+    clearWidgetContents(pvStartUnitWidgetMapper);
+  }else{
+    pvStartUnitWidgetMapper->setCurrentIndex(row);
+  }
+  row = modelIndexRowForValue(pvStartUnitConnectionModel, "Id_PK", startConnectionId);
+  if(row < 0){
+    clearWidgetContents(pvStartUnitConnectionWidgetMapper);
+  }else{
+    pvStartUnitConnectionWidgetMapper->setCurrentIndex(row);
   }
   // Get end Unit ID
   if(!query.exec("SELECT UnitEnd_Id_PK FROM LinkList_view WHERE Link_Id_PK = " + currentLinkId.toString())){
@@ -252,7 +371,7 @@ void mdtClLinkEditor::updateUnitConnectionSelections(int linkRow)
     e.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
     e.commit();
-    pvEndUnitWidget->setCurrentIndex(-1);
+    clearWidgetContents(pvEndUnitWidgetMapper);
     return;
   }
   if(query.next()){
@@ -265,20 +384,24 @@ void mdtClLinkEditor::updateUnitConnectionSelections(int linkRow)
     e.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(e, "mdtClLinkEditor");
     e.commit();
-    pvEndUnitConnectionWidget->setCurrentIndex(-1);
+    clearWidgetContents(pvEndUnitConnectionWidgetMapper);
     return;
   }
   if(query.next()){
     endConnectionId = query.value(0);
   }
-  // Set Unit and connect current
-  if(startUnitId.isValid() && startConnectionId.isValid()){
-    pvStartUnitWidget->setCurrentRecord("Unit_Id_FK", startUnitId);
-    pvStartUnitConnectionWidget->setCurrentRecord("Id_PK", startConnectionId);
+  // Update End Unit and connections widgets
+  row = modelIndexRowForValue(pvEndUnitModel, "Unit_Id_FK", endUnitId);
+  if(row < 0){
+    clearWidgetContents(pvEndUnitWidgetMapper);
+  }else{
+    pvEndUnitWidgetMapper->setCurrentIndex(row);
   }
-  if((endUnitId.isValid()) && (endConnectionId.isValid())){
-    pvEndUnitWidget->setCurrentRecord("Unit_Id_FK", endUnitId);
-    pvEndUnitConnectionWidget->setCurrentRecord("Id_PK", endConnectionId);
+  row = modelIndexRowForValue(pvEndUnitConnectionModel, "Id_PK", endConnectionId);
+  if(row < 0){
+    clearWidgetContents(pvEndUnitConnectionWidgetMapper);
+  }else{
+    pvEndUnitConnectionWidgetMapper->setCurrentIndex(row);
   }
 }
 
@@ -324,7 +447,7 @@ bool mdtClLinkEditor::setupLinkTable()
   }
   pvLinkWidget->setModel(pvLinkModel);
   pvLinkWidget->mapFormWidgets();
-  connect(pvLinkWidget, SIGNAL(currentRowChanged(int)), this, SLOT(updateUnitConnectionSelections(int)));
+  connect(pvLinkWidget, SIGNAL(currentRowChanged(int)), this, SLOT(updateUnitConnectionCurrent(int)));
   connect(this, SIGNAL(linkEdited()), pvLinkWidget, SIGNAL(dataEdited()));
 
   return true;
@@ -371,11 +494,7 @@ bool mdtClLinkEditor::setupArticleTable()
 bool mdtClLinkEditor::setupStartUnitTables()
 {
   QSqlError sqlError;
-  QVBoxLayout *vLayout;
-  QLabel *lb;
 
-  // Setup labels
-  vLayout = new QVBoxLayout;
   // Setup Unit model
   pvStartUnitModel->setTable("VehicleType_Unit_view");
   if(!pvStartUnitModel->select()){
@@ -386,18 +505,9 @@ bool mdtClLinkEditor::setupStartUnitTables()
     e.commit();
     return false;
   }
-  // Setup Unit widget
-  lb = new QLabel(tr("Units"));
-  vLayout->addWidget(lb);
-  pvStartUnitWidget->setModel(pvStartUnitModel);
-  pvStartUnitWidget->setEditionEnabled(false);
-  Q_ASSERT(pvStartUnitWidget->tableView() != 0);
-  pvStartUnitWidget->tableView()->setSelectionBehavior(QAbstractItemView::SelectRows);
-  pvStartUnitWidget->tableView()->setSelectionMode(QAbstractItemView::SingleSelection);
-  pvStartUnitWidget->setColumnHidden("VehicleType_Id_FK", true);
-  pvStartUnitWidget->setColumnHidden("Unit_Id_FK", true);
-  pvStartUnitWidget->setDefaultColumnToSelect("SchemaPosition");
-  vLayout->addWidget(pvStartUnitWidget);
+  // Setup Unit widgets mapping
+  pvStartUnitWidgetMapper->setModel(pvStartUnitModel);
+  pvStartUnitWidgetMapper->addMapping(pvLinkUiWidget->fldStartUnitSchemaPosition, pvStartUnitModel->fieldIndex("SchemaPosition"));
   // Setup Unit Connection model
   pvStartUnitConnectionModel->setTable("UnitConnection_tbl");
   if(!pvStartUnitConnectionModel->select()){
@@ -409,26 +519,9 @@ bool mdtClLinkEditor::setupStartUnitTables()
     return false;
   }
   // Setup Unit Connection widget
-  lb = new QLabel(tr("Connections"));
-  vLayout->addWidget(lb);
-  pvStartUnitConnectionWidget->setModel(pvStartUnitConnectionModel);
-  pvStartUnitConnectionWidget->setEditionEnabled(false);
-  Q_ASSERT(pvStartUnitConnectionWidget->tableView() != 0);
-  pvStartUnitConnectionWidget->tableView()->setSelectionBehavior(QAbstractItemView::SelectRows);
-  pvStartUnitConnectionWidget->tableView()->setSelectionMode(QAbstractItemView::SingleSelection);
-  pvStartUnitConnectionWidget->setColumnHidden("Id_PK", true);
-  pvStartUnitConnectionWidget->setColumnHidden("Unit_Id_FK", true);
-  pvStartUnitConnectionWidget->setColumnHidden("ArticleConnection_Id_FK", true);
-  pvStartUnitConnectionWidget->setDefaultColumnToSelect("ContactName");
-  vLayout->addWidget(pvStartUnitConnectionWidget);
-  pvLinkUiWidget->gbStart->setLayout(vLayout);
-  // Setup Unit <-> Connection relation
-  pvStartUnitConnectionRelation->setParentModel(pvStartUnitModel);
-  pvStartUnitConnectionRelation->setChildModel(pvStartUnitConnectionModel);
-  if(!pvStartUnitConnectionRelation->addRelation("Unit_Id_FK", "Unit_Id_FK")){
-    return false;
-  }
-  pvStartUnitWidget->addChildWidget(pvStartUnitConnectionWidget, pvStartUnitConnectionRelation);
+  pvStartUnitConnectionWidgetMapper->setModel(pvStartUnitConnectionModel);
+  pvStartUnitConnectionWidgetMapper->addMapping(pvLinkUiWidget->fldStartConnectorName, pvStartUnitConnectionModel->fieldIndex("ConnectorName"));
+  pvStartUnitConnectionWidgetMapper->addMapping(pvLinkUiWidget->fldStartContactName, pvStartUnitConnectionModel->fieldIndex("ContactName"));
 
   return true;
 }
@@ -436,15 +529,7 @@ bool mdtClLinkEditor::setupStartUnitTables()
 bool mdtClLinkEditor::setupEndUnitTables()
 {
   QSqlError sqlError;
-  ///QHBoxLayout *hLayout;
-  QVBoxLayout *vLayout;
-  QLabel *lb;
 
-  // Setup labels
-  vLayout = new QVBoxLayout;
-  ///hLayout = new QHBoxLayout;
-  ///vLayout->addLayout(hLayout);
-  ///hLayout = new QHBoxLayout;
   // Setup Unit model
   pvEndUnitModel->setTable("VehicleType_Unit_view");
   if(!pvEndUnitModel->select()){
@@ -455,18 +540,9 @@ bool mdtClLinkEditor::setupEndUnitTables()
     e.commit();
     return false;
   }
-  // Setup Unit widget
-  lb = new QLabel(tr("Unit"));
-  vLayout->addWidget(lb);
-  pvEndUnitWidget->setModel(pvEndUnitModel);
-  pvEndUnitWidget->setEditionEnabled(false);
-  Q_ASSERT(pvEndUnitWidget->tableView() != 0);
-  pvEndUnitWidget->tableView()->setSelectionBehavior(QAbstractItemView::SelectRows);
-  pvEndUnitWidget->tableView()->setSelectionMode(QAbstractItemView::SingleSelection);
-  pvEndUnitWidget->setColumnHidden("VehicleType_Id_FK", true);
-  pvEndUnitWidget->setColumnHidden("Unit_Id_FK", true);
-  pvEndUnitWidget->setDefaultColumnToSelect("SchemaPosition");
-  vLayout->addWidget(pvEndUnitWidget);
+  // Setup Unit widgets mapping
+  pvEndUnitWidgetMapper->setModel(pvEndUnitModel);
+  pvEndUnitWidgetMapper->addMapping(pvLinkUiWidget->fldEndUnitSchemaPosition, pvEndUnitModel->fieldIndex("SchemaPosition"));
   // Setup Unit Connection model
   pvEndUnitConnectionModel->setTable("UnitConnection_tbl");
   if(!pvEndUnitConnectionModel->select()){
@@ -478,30 +554,13 @@ bool mdtClLinkEditor::setupEndUnitTables()
     return false;
   }
   // Setup Unit Connection widget
-  lb = new QLabel(tr("Connections"));
-  vLayout->addWidget(lb);
-  pvEndUnitConnectionWidget->setModel(pvEndUnitConnectionModel);
-  pvEndUnitConnectionWidget->setEditionEnabled(false);
-  Q_ASSERT(pvEndUnitConnectionWidget->tableView() != 0);
-  pvEndUnitConnectionWidget->tableView()->setSelectionBehavior(QAbstractItemView::SelectRows);
-  pvEndUnitConnectionWidget->tableView()->setSelectionMode(QAbstractItemView::SingleSelection);
-  pvEndUnitConnectionWidget->setColumnHidden("Id_PK", true);
-  pvEndUnitConnectionWidget->setColumnHidden("Unit_Id_FK", true);
-  pvEndUnitConnectionWidget->setColumnHidden("ArticleConnection_Id_FK", true);
-  pvEndUnitConnectionWidget->setDefaultColumnToSelect("ContactName");
-  vLayout->addWidget(pvEndUnitConnectionWidget);
-  ///vLayout->addLayout(hLayout);
-  pvLinkUiWidget->gbEnd->setLayout(vLayout);
-  // Setup Unit <-> Connection relation
-  pvEndUnitConnectionRelation->setParentModel(pvEndUnitModel);
-  pvEndUnitConnectionRelation->setChildModel(pvEndUnitConnectionModel);
-  if(!pvEndUnitConnectionRelation->addRelation("Unit_Id_FK", "Unit_Id_FK")){
-    return false;
-  }
-  pvEndUnitWidget->addChildWidget(pvEndUnitConnectionWidget, pvEndUnitConnectionRelation);
+  pvEndUnitConnectionWidgetMapper->setModel(pvEndUnitConnectionModel);
+  pvEndUnitConnectionWidgetMapper->addMapping(pvLinkUiWidget->fldEndConnectorName, pvEndUnitConnectionModel->fieldIndex("ConnectorName"));
+  pvEndUnitConnectionWidgetMapper->addMapping(pvLinkUiWidget->fldEndContactName, pvEndUnitConnectionModel->fieldIndex("ContactName"));
 
   return true;
 }
+
 
 bool mdtClLinkEditor::setupListTable()
 {
@@ -549,4 +608,57 @@ bool mdtClLinkEditor::setupListTable()
   vLayout->addWidget(pvListWidget);
 
   return true;
+}
+
+int mdtClLinkEditor::modelIndexRowForValue(QSqlTableModel *model, const QString &fieldName, const QVariant &value)
+{
+  Q_ASSERT(model != 0);
+
+  int columnIndex;
+  int row;
+  int rowCount;
+  QModelIndex index;
+
+  if(!value.isValid()){
+    return -1;
+  }
+  // Get columnIndex of given fieldName
+  columnIndex = model->fieldIndex(fieldName);
+  if(columnIndex < 0){
+    return -1;
+  }
+  // Search ...
+  rowCount = model->rowCount();
+  for(row = 0; row < rowCount; ++row){
+    index = model->index(row, columnIndex);
+    if(index.isValid()){
+      if(model->data(index) == value){
+        return row;
+      }
+    }
+  }
+
+  return -1;
+}
+
+void mdtClLinkEditor::clearWidgetContents(QDataWidgetMapper *mapper)
+{
+  Q_ASSERT(mapper != 0);
+  Q_ASSERT(mapper->model() != 0);
+
+  int column;
+  int columnCount;
+  QWidget *w;
+  QLineEdit *le;
+
+  columnCount = mapper->model()->columnCount();
+  for(column = 0; column < columnCount; ++column){
+    w = mapper->mappedWidgetAt(column);
+    if(w != 0){
+      le = dynamic_cast<QLineEdit*>(w);
+      if(le != 0){
+        le->clear();
+      }
+    }
+  }
 }

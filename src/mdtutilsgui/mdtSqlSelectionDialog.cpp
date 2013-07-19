@@ -177,4 +177,3 @@ void mdtSqlSelectionDialog::reject()
   pvDialogRejected = true;
   QDialog::reject();
 }
-

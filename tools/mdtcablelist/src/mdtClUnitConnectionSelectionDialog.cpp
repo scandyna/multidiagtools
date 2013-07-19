@@ -27,7 +27,6 @@
 #include <QSqlQuery>
 #include <QPushButton>
 #include <QString>
-#include <QVariant>
 #include <QModelIndex>
 #include <QItemSelectionModel>
 #include <QMessageBox>
@@ -36,6 +35,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QTableView>
+#include <QDialogButtonBox>
 
 #include <QDebug>
 
@@ -45,6 +45,7 @@ mdtClUnitConnectionSelectionDialog::mdtClUnitConnectionSelectionDialog(QWidget *
   QSqlError sqlError;
   QVBoxLayout *vLayout;
   QLabel *lb;
+  QPushButton *pb;
 
   pvDatabase = db;
   vLayout = new QVBoxLayout;
@@ -96,14 +97,82 @@ mdtClUnitConnectionSelectionDialog::mdtClUnitConnectionSelectionDialog(QWidget *
   pvUnitConnectionWidget->setDefaultColumnToSelect("ContactName");
   vLayout->addWidget(pvUnitConnectionWidget);
   // Setup Unit <-> Connection relation
+  pvUnitConnectionRelation = new mdtSqlRelation;
   pvUnitConnectionRelation->setParentModel(pvUnitModel);
   pvUnitConnectionRelation->setChildModel(pvUnitConnectionModel);
   pvUnitConnectionRelation->addRelation("Unit_Id_FK", "Unit_Id_FK");
   pvUnitWidget->addChildWidget(pvUnitConnectionWidget, pvUnitConnectionRelation);
+  // Setup buttons
+  pvButtons = new QDialogButtonBox(this);
+  pb = pvButtons->addButton(QDialogButtonBox::Ok);
+  connect(pb, SIGNAL(clicked()), this, SLOT(accept()));
+  pb = pvButtons->addButton(QDialogButtonBox::Cancel);
+  connect(pb, SIGNAL(clicked()), this, SLOT(reject()));
 
+  vLayout->addWidget(pvButtons);
+  resize(850, 500);
+  setWindowTitle(tr("Unit connection selection"));
   setLayout(vLayout);
 }
 
 mdtClUnitConnectionSelectionDialog::~mdtClUnitConnectionSelectionDialog()
 {
+  delete pvUnitConnectionRelation;
+}
+
+QVariant mdtClUnitConnectionSelectionDialog::selectedConnectionId() const
+{
+  return pvSelectedConnectionId;
+}
+
+QVariant mdtClUnitConnectionSelectionDialog::selectedConnectorName() const
+{
+  return pvSelectedConnectorName;
+}
+
+QVariant mdtClUnitConnectionSelectionDialog::selectedContactName() const
+{
+  return pvSelectedContactName;
+}
+
+QVariant mdtClUnitConnectionSelectionDialog::selectedSchemaPosition() const
+{
+  return pvSelectedShemaPosition;
+}
+
+void mdtClUnitConnectionSelectionDialog::accept()
+{
+  Q_ASSERT(pvUnitConnectionWidget->selectionModel() != 0);
+
+  QModelIndexList selectedIndexes;
+  QModelIndex index;
+  QSqlError sqlError;
+
+  selectedIndexes = pvUnitConnectionWidget->selectionModel()->selectedRows();
+  if(selectedIndexes.size() != 1){
+    return;
+  }
+  // Store Connection ID
+  index = pvUnitConnectionModel->index(selectedIndexes.at(0).row(), pvUnitConnectionModel->fieldIndex("Id_PK"));
+  pvSelectedConnectionId = pvUnitConnectionModel->data(index);
+  // Store connector name
+  index = pvUnitConnectionModel->index(selectedIndexes.at(0).row(), pvUnitConnectionModel->fieldIndex("ConnectorName"));
+  pvSelectedConnectorName = pvUnitConnectionModel->data(index);
+  // Store contact name
+  index = pvUnitConnectionModel->index(selectedIndexes.at(0).row(), pvUnitConnectionModel->fieldIndex("ContactName"));
+  pvSelectedContactName = pvUnitConnectionModel->data(index);
+  // Store schema position
+  selectedIndexes = pvUnitWidget->selectionModel()->selectedRows();
+  if(selectedIndexes.size() == 1){
+    index = pvUnitModel->index(selectedIndexes.at(0).row(), pvUnitModel->fieldIndex("SchemaPosition"));
+    pvSelectedShemaPosition = pvUnitModel->data(index);
+  }
+
+  QDialog::accept();
+}
+
+void mdtClUnitConnectionSelectionDialog::reject()
+{
+  pvSelectedConnectionId.clear();
+  QDialog::reject();
 }

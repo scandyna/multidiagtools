@@ -50,7 +50,7 @@ set (RESOURCE_FILES
 
 # Unix (Posix) specific files
 if(UNIX)
-  message("${PROJECT_SOURCE_DIR}/linux")
+  #message("${PROJECT_SOURCE_DIR}/linux")
   set (SOURCES_FILES ${SOURCES_FILES} 
 #    linux/mdtDeviceU3606AWidget.cpp
   )

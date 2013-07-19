@@ -1,5 +1,5 @@
 # CMake project file for Multi Diag Tools
-# Tool: mdtterm
+# Tool: mdtcablelist
 
 # Project
 project (multidiagtools)
@@ -57,3 +57,11 @@ target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 
 # Install targets
 install (TARGETS "mdtcablelist${MDTLIB_VERSION_SUFFIX}" RUNTIME DESTINATION bin COMPONENT tools)
+
+#################################################################################################################################################
+# *** Unit tests section ***
+#################################################################################################################################################
+
+# ** Unit tests compilation **
+add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
+

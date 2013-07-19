@@ -1,15 +1,13 @@
-window_sizes 1024 718 356 662 640 0
+window_sizes 1280 1001 356 918 923 0
 diagrams
-  active  classdiagram_ref 633730 // DatabaseModel
-    662 640 100 18 0 0
+  active  classdiagram_ref 719618 // mdtGraph
+    918 923 100 4 0 0
 end
 show_stereotypes
+selected operation_ref 1366658 // data
 open
-  attribute_ref 755714 // ArticleConnection_Id_FK
-  class_ref 645634 // Unit_tbl
-  class_ref 726530 // Article_tbl
-  attribute_ref 755970 // IoType
-  attribute_ref 756354 // VehicleType_Id_FK
-  deploymentview_ref 376450 // mdtCableList
+  class_ref 733570 // mdtGraph
+  class_ref 733698 // mdtGraphVertex
+  class_ref 733826 // mdtGraphVertexData
 end
 end

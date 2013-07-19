@@ -24,12 +24,14 @@
 #include <QDialog>
 #include <QSqlDatabase>
 #include <QObject>
+#include <QVariant>
 
 class QWidget;
 class mdtSqlTableWidget;
 class mdtSqlRelation;
 class QSqlTableModel;
 class QPushButton;
+class QDialogButtonBox;
 
 /*! \brief Display units and their connections and let the user choose
  */
@@ -47,6 +49,32 @@ class mdtClUnitConnectionSelectionDialog : public QDialog
    */
   ~mdtClUnitConnectionSelectionDialog();
 
+  /*! \brief Get the selected connection ID
+   */
+  QVariant selectedConnectionId() const;
+
+  /*! \brief Get the selected connector name
+   */
+  QVariant selectedConnectorName() const;
+
+  /*! \brief Get the selected contact name
+   */
+  QVariant selectedContactName() const;
+
+  /*! \brief Get the selected schema position
+   */
+  QVariant selectedSchemaPosition() const;
+
+ public slots:
+
+  /*! \brief Overloads QDialog to store result
+   */
+  void accept();
+
+  /*! \brief Overloads QDialog to tell selectionResult() that it must return a empty result
+   */
+  void reject();
+
  private:
 
   Q_DISABLE_COPY(mdtClUnitConnectionSelectionDialog);
@@ -57,6 +85,11 @@ class mdtClUnitConnectionSelectionDialog : public QDialog
   QSqlTableModel *pvUnitModel;
   QSqlTableModel *pvUnitConnectionModel;
   mdtSqlRelation *pvUnitConnectionRelation;
+  QDialogButtonBox *pvButtons;
+  QVariant pvSelectedConnectionId;
+  QVariant pvSelectedConnectorName;
+  QVariant pvSelectedContactName;
+  QVariant pvSelectedShemaPosition;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_SELECTION_DIALOG_H

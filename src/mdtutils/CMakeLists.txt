@@ -59,6 +59,8 @@ set (SOURCES_FILES
           mdtDigitalIo.cpp
           # Value
           mdtValue.cpp
+          # mdtGraph
+          mdtGraphVertexData.cpp
           # Main application
           mdtApplication.cpp
     )

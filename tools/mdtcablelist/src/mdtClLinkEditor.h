@@ -24,6 +24,7 @@
 #include "ui_mdtClLinkEditor.h"
 #include <QSqlDatabase>
 #include <QObject>
+#include <QVariant>
 
 class mdtSqlWindow;
 class mdtSqlFormWidget;
@@ -66,11 +67,19 @@ class mdtClLinkEditor : public QObject
 
   /*! \brief Connect current link between 2 unit connections
    */
-  void connectLink();
+  ///void connectLink();
 
-  /*! \brief Select start and stop unit + connection matching current Link
+  /*! \brief Select the Start connection
    */
-  void updateUnitConnectionSelections(int linkRow);
+  void selectStartConnection();
+
+  /*! \brief Select the End connection
+   */
+  void selectEndConnection();
+
+  /*! \brief Update widgets that display Start and End unit and connections
+   */
+  void updateUnitConnectionCurrent(int linkRow);
 
   /*! \brief Update List view
    */
@@ -108,6 +117,14 @@ class mdtClLinkEditor : public QObject
    */
   bool setupListTable();
 
+  /*! \brief Get model index row for given value that must match in given field
+   */
+  int modelIndexRowForValue(QSqlTableModel *model, const QString &fieldName, const QVariant &value);
+
+  /*! \brief Clear content of mapped widget
+   */
+  void clearWidgetContents(QDataWidgetMapper *mapper);
+
   Q_DISABLE_COPY(mdtClLinkEditor);
 
   QSqlDatabase pvDatabase;
@@ -120,17 +137,15 @@ class mdtClLinkEditor : public QObject
   QSqlTableModel *pvArticleModel;
   mdtSqlRelation *pvArticleLinkRelation;
   // Start Unit members
-  mdtSqlTableWidget *pvStartUnitWidget;
-  mdtSqlTableWidget *pvStartUnitConnectionWidget;
   QSqlTableModel *pvStartUnitModel;
+  QDataWidgetMapper *pvStartUnitWidgetMapper;
   QSqlTableModel *pvStartUnitConnectionModel;
-  mdtSqlRelation *pvStartUnitConnectionRelation;
+  QDataWidgetMapper *pvStartUnitConnectionWidgetMapper;
   // End Unit members
-  mdtSqlTableWidget *pvEndUnitWidget;
-  mdtSqlTableWidget *pvEndUnitConnectionWidget;
   QSqlTableModel *pvEndUnitModel;
+  QDataWidgetMapper *pvEndUnitWidgetMapper;
   QSqlTableModel *pvEndUnitConnectionModel;
-  mdtSqlRelation *pvEndUnitConnectionRelation;
+  QDataWidgetMapper *pvEndUnitConnectionWidgetMapper;
   // List members
   mdtSqlTableWidget *pvListWidget;
   QSqlTableModel *pvListModel;

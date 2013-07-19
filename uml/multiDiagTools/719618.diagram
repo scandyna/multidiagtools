@@ -1,0 +1,38 @@
+format 76
+
+classcanvas 128002 class_ref 733570 // mdtGraph
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 9 32 2000
+end
+classcanvas 128130 class_ref 733698 // mdtGraphVertex
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 391 320 2000
+end
+classcanvas 128770 class_ref 733826 // mdtGraphVertexData
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 131 629 2000
+end
+relationcanvas 128258 relation_ref 917378 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  role_a_pos 338 305 3000 no_role_b
+  multiplicity_a_pos 397 335 3000 no_multiplicity_b
+end
+relationcanvas 128386 relation_ref 917506 // <directional composition>
+  decenter_begin 237
+  from ref 128130 z 2001 to point 756 369
+  line 128514 z 2001 to point 756 423
+  line 128642 z 2001 to ref 128130
+  role_a_pos 725 403 3000 no_role_b
+  multiplicity_a_pos 725 433 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 917634 // <dependency>
+  from ref 128002 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 917762 // <unidirectional association>
+  from ref 128130 z 2001 to ref 128770
+  role_a_pos 408 606 3000 no_role_b
+  multiplicity_a_pos 364 606 3000 no_multiplicity_b
+end
+end

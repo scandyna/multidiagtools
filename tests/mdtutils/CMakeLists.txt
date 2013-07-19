@@ -52,3 +52,11 @@ QT4_WRAP_CPP(MDT_IO_TEST_MOC "mdtIoTest.h")
 add_executable(mdtiotest "mdtIoTest.cpp" ${MDT_IO_TEST_MOC})
 target_link_libraries(mdtiotest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtiotest "mdttest")
+
+# * mdtGraphTest executable *
+QT4_WRAP_CPP(MDT_GRAPH_TEST_MOC "mdtGraphTest.h")
+add_executable(mdtgraphtest "mdtGraphTest.cpp" ${MDT_GRAPH_TEST_MOC})
+target_link_libraries(mdtgraphtest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtgraphtest "mdttest")
+
+
