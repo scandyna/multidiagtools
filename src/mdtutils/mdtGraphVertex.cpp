@@ -1,0 +1,114 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+#include "mdtGraphVertex.h"
+
+mdtGraphVertex::mdtGraphVertex()
+{
+  pvColor = White;
+  pvData = 0;
+}
+
+mdtGraphVertex::~mdtGraphVertex()
+{
+}
+
+void mdtGraphVertex::setData(mdtGraphVertexData *data)
+{
+  Q_ASSERT(data != 0);
+
+  pvData = data;
+}
+
+mdtGraphVertexData *mdtGraphVertex::data()
+{
+  return pvData;
+}
+
+QVariant mdtGraphVertex::key() const
+{
+  if(pvData == 0){
+    return QVariant();
+  }
+  return pvData->key();
+}
+
+bool mdtGraphVertex::addAdjacent(mdtGraphVertex *v)
+{
+  Q_ASSERT(v != 0);
+
+  if(containsAdjacent(v->key())){
+    return false;
+  }
+  pvAdjacencyList.append(v);
+
+  return true;
+}
+
+bool mdtGraphVertex::removeAdjacent(const QVariant &key)
+{
+  int i;
+
+  // Search vertex that contains key in adjacency list
+  for(i = 0; i < pvAdjacencyList.size(); ++i){
+    Q_ASSERT(pvAdjacencyList.at(i) != 0);
+    if(pvAdjacencyList.at(i)->key() == key){
+      pvAdjacencyList.removeAt(i);
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool mdtGraphVertex::containsAdjacent(const QVariant &key)
+{
+  int i;
+
+  // Search vertex that contains key in adjacency list
+  for(i = 0; i < pvAdjacencyList.size(); ++i){
+    Q_ASSERT(pvAdjacencyList.at(i) != 0);
+    if(pvAdjacencyList.at(i)->key() == key){
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool mdtGraphVertex::hasAdjacent() const
+{
+  return (!pvAdjacencyList.isEmpty());
+}
+
+int mdtGraphVertex::adjacentCount() const
+{
+  return pvAdjacencyList.size();
+}
+
+const QList<mdtGraphVertex*> mdtGraphVertex::adjacencyList() const
+{
+  return pvAdjacencyList;
+}
+
+mdtGraphVertex::color_t mdtGraphVertex::currentColor() const
+{
+  return pvColor;
+}

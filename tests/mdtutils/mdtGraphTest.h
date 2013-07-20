@@ -30,6 +30,8 @@ class mdtGraphTest : public mdtTest
  private slots:
 
   void vertexDataTest();
+  void vertexTest();
+  void graphTest();
 };
 
 #endif // #ifndef MDT_GRAPH_TEST_H

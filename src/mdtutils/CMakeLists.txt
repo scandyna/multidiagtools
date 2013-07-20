@@ -61,6 +61,8 @@ set (SOURCES_FILES
           mdtValue.cpp
           # mdtGraph
           mdtGraphVertexData.cpp
+          mdtGraph.cpp
+          mdtGraphVertex.cpp
           # Main application
           mdtApplication.cpp
     )
