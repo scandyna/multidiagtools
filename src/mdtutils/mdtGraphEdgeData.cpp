@@ -18,22 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_GRAPH_TEST_H
-#define MDT_GRAPH_TEST_H
+#include "mdtGraphEdgeData.h"
 
-#include "mdtTest.h"
-
-class mdtGraphTest : public mdtTest
+mdtGraphEdgeData::mdtGraphEdgeData()
 {
- Q_OBJECT
+}
 
- private slots:
+mdtGraphEdgeData::~mdtGraphEdgeData()
+{
+}
 
-  void vertexDataTest();
-  void edgeDataTest();
-  void vertexTest();
-  void graphTest();
-  void bfsTest();
-};
+void mdtGraphEdgeData::setData(const QVariant &data, const QString &field)
+{
+  pvData.insert(field, data);
+}
 
-#endif // #ifndef MDT_GRAPH_TEST_H
+QVariant mdtGraphEdgeData::data(const QString &field)
+{
+  return pvData.value(field);
+}
+

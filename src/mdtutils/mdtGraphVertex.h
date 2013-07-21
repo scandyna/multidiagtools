@@ -24,6 +24,8 @@
 #include "mdtGraphVertexData.h"
 #include <QList>
 
+class mdtGraphVertexAdjacent;
+
 /*! \brief Vertex of mdtGraph
  *
  * This class is used by mdtGraph to store
@@ -103,6 +105,10 @@ class mdtGraphVertex
   /*! \brief Get adjacency list
    */
   const QList<mdtGraphVertex*> adjacencyList() const;
+
+  /*! \brief Set current color
+   */
+  void setColor(color_t color);
 
   /*! \brief Get current color
    */

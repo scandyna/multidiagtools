@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtGraph.h"
 #include "mdtGraphVertex.h"
+#include <QQueue>
 
 mdtGraph::mdtGraph(bool autoDeleteData)
 {
@@ -274,6 +275,63 @@ int mdtGraph::vertexCount() const
 int mdtGraph::edgeCount() const
 {
   return pvEdgeCount;
+}
+
+QList<mdtGraphVertexData*> mdtGraph::bfs(const QVariant &keyStart)
+{
+  QQueue<mdtGraphVertex*> fifo;
+  QList<mdtGraphVertex*> adjList;
+  mdtGraphVertex *v, *av;
+  QList<mdtGraphVertexData*> result;
+  int i;
+
+  // Init all vertices
+  for(i = 0; i < pvVertexList.size(); ++i){
+    v = pvVertexList.at(i);
+    Q_ASSERT(v != 0);
+    if(v->key() == keyStart){
+      // We have the start vertex. Set it Gray and put it to fifo
+      v->setColor(mdtGraphVertex::Gray);
+      fifo.enqueue(v);
+    }else{
+      v->setColor(mdtGraphVertex::White);
+    }
+  }
+  // Search ...
+  while(!fifo.isEmpty()){
+    v = fifo.dequeue();
+    Q_ASSERT(v != 0);
+    // Travel all adjacent vertices to current vertex
+    adjList = v->adjacencyList();
+    for(i = 0; i < adjList.size(); ++i){
+      av = adjList.at(i);
+      Q_ASSERT(av != 0);
+      // If adjacent vertex is white, we enqueue it and set it gray
+      if(av->currentColor() == mdtGraphVertex::White){
+        av->setColor(mdtGraphVertex::Gray);
+        fifo.enqueue(av);
+      }
+    }
+    // We explored all adjacent vertices of current vertex, set it black
+    v->setColor(mdtGraphVertex::Black);
+    Q_ASSERT(v->data() != 0);
+    result.append(v->data());
+  }
+
+  return result;
+}
+
+QString mdtGraph::dataListDump(const QList<mdtGraphVertexData*> list) const
+{
+  QString s = "\n";
+  int i;
+
+  for(i = 0; i < list.size(); ++i){
+    Q_ASSERT(list.at(i) != 0);
+    s += "(" + list.at(i)->key().toString() + ")-";
+  }
+
+  return s;
 }
 
 QString mdtGraph::graphDump() const

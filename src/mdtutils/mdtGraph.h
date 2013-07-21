@@ -166,7 +166,7 @@ class mdtGraph
    *
    * Complexity is O(S+A) , where S is the number of vertices in the graph, and A the number of edges.
    */
-  const QList<mdtGraphVertexData*> adjacencyDataList(const QVariant & key) const;
+  const QList<mdtGraphVertexData*> adjacencyDataList(const QVariant &key) const;
 
   /*! \brief Get number of vertices that graph contains
    *
@@ -179,6 +179,12 @@ class mdtGraph
    * Complexity is O(1)
    */
   int edgeCount() const;
+
+  /*! \brief
+   */
+  QList<mdtGraphVertexData*> bfs(const QVariant &keyStart);
+
+  QString dataListDump(const QList<mdtGraphVertexData*> list) const;
 
   /*! \brief Get a string that contains all vertices and theire adjacents
    *

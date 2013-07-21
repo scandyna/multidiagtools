@@ -18,22 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_GRAPH_TEST_H
-#define MDT_GRAPH_TEST_H
+#include "mdtGraphVertexAdjacent.h"
+#include "mdtGraphVertex.h"
+#include "mdtGraphEdgeData.h"
 
-#include "mdtTest.h"
-
-class mdtGraphTest : public mdtTest
+mdtGraphVertexAdjacent::mdtGraphVertexAdjacent(mdtGraphVertex *vertex, mdtGraphEdgeData *data)
 {
- Q_OBJECT
+  Q_ASSERT(vertex != 0);
+  Q_ASSERT(data != 0);
 
- private slots:
+  pvVertex = vertex;
+  pvData = data;
+}
 
-  void vertexDataTest();
-  void edgeDataTest();
-  void vertexTest();
-  void graphTest();
-  void bfsTest();
-};
+mdtGraphVertexAdjacent::~mdtGraphVertexAdjacent()
+{
+}
 
-#endif // #ifndef MDT_GRAPH_TEST_H
+mdtGraphVertex *mdtGraphVertexAdjacent::vertex()
+{
+  return pvVertex;
+}
+
+mdtGraphEdgeData *mdtGraphVertexAdjacent::edgeData()
+{
+  return pvData;
+}
+

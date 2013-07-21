@@ -22,9 +22,11 @@
 #include "mdtGraph.h"
 #include "mdtGraphVertex.h"
 #include "mdtGraphVertexData.h"
+#include "mdtGraphEdgeData.h"
 #include "mdtApplication.h"
 #include <QVariant>
 #include <QString>
+#include <QList>
 
 void mdtGraphTest::vertexDataTest()
 {
@@ -32,6 +34,28 @@ void mdtGraphTest::vertexDataTest()
 
   // Check defaults
   QCOMPARE(d.key(), QVariant());
+  QCOMPARE(d.data(), QVariant());
+  // Check simple data access
+  d.setData("Data 01");
+  QCOMPARE(d.data(), QVariant("Data 01"));
+  d.setData("Data 02");
+  QCOMPARE(d.data(), QVariant("Data 02"));
+  // Check multiple data access
+  d.setData("Data A", "FldA");
+  QCOMPARE(d.data("FldA"), QVariant("Data A"));
+  d.setData("Data B", "FldB");
+  QCOMPARE(d.data("FldA"), QVariant("Data A"));
+  QCOMPARE(d.data("FldB"), QVariant("Data B"));
+  QCOMPARE(d.data(), QVariant("Data 02"));
+  // Unavailable field
+  QCOMPARE(d.data("UnknownFld"), QVariant());
+}
+
+void mdtGraphTest::edgeDataTest ()
+{
+  mdtGraphEdgeData d;
+
+  // Check defaults
   QCOMPARE(d.data(), QVariant());
   // Check simple data access
   d.setData("Data 01");
@@ -173,6 +197,26 @@ void mdtGraphTest::graphTest()
   // Display graph
   qDebug() << g.graphDump();
 
+}
+
+void mdtGraphTest::bfsTest()
+{
+  mdtGraph g;
+  QList<mdtGraphVertexData*> l;
+
+  // Insert vertices
+  QVERIFY(g.insertVertex("K1", "D1"));
+  QVERIFY(g.insertVertex("K2", "D2"));
+  QVERIFY(g.insertVertex("K3", "D3"));
+  QVERIFY(g.insertVertex("K4", "D4"));
+  QVERIFY(g.insertVertex("K5", "D5"));
+  
+  QVERIFY(g.insertEdge("K1", "K3"));
+  QVERIFY(g.insertEdge("K3", "K2"));
+  QVERIFY(g.insertEdge("K3", "K5"));
+  l = g.bfs("K1");
+  qDebug() << g.dataListDump(l);
+  
 }
 
 int main(int argc, char **argv)

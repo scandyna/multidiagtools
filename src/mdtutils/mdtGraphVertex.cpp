@@ -108,6 +108,11 @@ const QList<mdtGraphVertex*> mdtGraphVertex::adjacencyList() const
   return pvAdjacencyList;
 }
 
+void mdtGraphVertex::setColor(mdtGraphVertex::color_t color)
+{
+  pvColor = color;
+}
+
 mdtGraphVertex::color_t mdtGraphVertex::currentColor() const
 {
   return pvColor;

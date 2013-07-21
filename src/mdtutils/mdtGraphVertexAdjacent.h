@@ -18,22 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_GRAPH_TEST_H
-#define MDT_GRAPH_TEST_H
+#ifndef MDT_GRAPH_VERTEX_ADJACENT_H
+#define MDT_GRAPH_VERTEX_ADJACENT_H
 
-#include "mdtTest.h"
+class mdtGraphVertex;
+class mdtGraphEdgeData;
 
-class mdtGraphTest : public mdtTest
+/*! \brief Storage class vor vertex adjacent
+ *
+ * This class was made to be able to store edge specific data
+ */
+class mdtGraphVertexAdjacent
 {
- Q_OBJECT
+ public:
 
- private slots:
+  /*! \brief Construct a new adjacent
+   *
+   * New created object will be adjacent to vertex (this is handled by mdtGraphVertex).
+   *
+   * \pre vertex and data must be valid.
+   */
+  mdtGraphVertexAdjacent(mdtGraphVertex *vertex, mdtGraphEdgeData *data);
 
-  void vertexDataTest();
-  void edgeDataTest();
-  void vertexTest();
-  void graphTest();
-  void bfsTest();
+  /*! \brief Destructor
+   */
+  ~mdtGraphVertexAdjacent();
+
+  /*! \brief Get vertex on witch current object is adjacent
+   */
+  mdtGraphVertex *vertex();
+
+  /*! \brief Get edge data
+   */
+  mdtGraphEdgeData *edgeData();
+
+ private:
+
+  mdtGraphVertex *pvVertex;
+  mdtGraphEdgeData *pvData;
 };
 
-#endif // #ifndef MDT_GRAPH_TEST_H
+#endif  // #ifndef MDT_GRAPH_VERTEX_ADJACENT_H

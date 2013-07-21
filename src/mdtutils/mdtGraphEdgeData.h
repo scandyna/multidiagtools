@@ -18,18 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_GRAPH_VERTEX_DATA_H
-#define MDT_GRAPH_VERTEX_DATA_H
+#ifndef MDT_GRAPH_EDGE_DATA_H
+#define MDT_GRAPH_EDGE_DATA_H
 
 #include <QVariant>
 #include <QString>
 #include <QMap>
 
-/*! \brief Provide data storage for mdtGraph
+/*! \brief Provide data storage for mdtGraph edge
  *
- * mdtGraph uses this class to store data in a flexible
+ * mdtGraph uses this class to store edge data in a flexible
  *  and simple to use way.
- *  key is used to locate a vertex in the graph.
  *
  * Use setData() to set/add data and data() to get them.
  *  Internally, data are stored in a QMap,
@@ -37,25 +36,17 @@
  * setData() and data() provides a default field (empty string),
  *  so that it can be used simplier for single data storage.
  */
-class mdtGraphVertexData
+class mdtGraphEdgeData
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtGraphVertexData();
+  mdtGraphEdgeData();
 
   /*! \brief Destructor
    */
-  ~mdtGraphVertexData();
-
-  /*! \brief Set key
-   */
-  void setKey(const QVariant &key);
-
-  /*! \brief Get key
-   */
-  QVariant key();
+  ~mdtGraphEdgeData();
 
   /*! \brief Set data
    */
@@ -69,8 +60,7 @@ class mdtGraphVertexData
 
  private:
 
-  QVariant pvKey;
   QMap<QString, QVariant> pvData;
 };
 
-#endif  // #ifndef MDT_GRAPH_VERTEX_DATA_H
+#endif  // #ifndef MDT_GRAPH_EDGE_DATA_H
