@@ -19,15 +19,28 @@
  **
  ****************************************************************************/
 #include "mdtGraphVertex.h"
+#include "mdtGraphVertexAdjacent.h"
+#include "mdtGraphEdgeData.h"
 
-mdtGraphVertex::mdtGraphVertex()
+mdtGraphVertex::mdtGraphVertex(bool autoDeleteEdgeData)
 {
   pvColor = White;
   pvData = 0;
+  pvAutoDeleteEdgeData = autoDeleteEdgeData;
 }
 
 mdtGraphVertex::~mdtGraphVertex()
 {
+  int i;
+
+  if(pvAutoDeleteEdgeData){
+    for(i = 0; i < pvAdjacencyList.size(); ++i){
+      Q_ASSERT(pvAdjacencyList.at(i) != 0);
+      Q_ASSERT(pvAdjacencyList.at(i)->edgeData() != 0);
+      delete pvAdjacencyList.at(i)->edgeData();
+    }
+  }
+  qDeleteAll(pvAdjacencyList);
 }
 
 void mdtGraphVertex::setData(mdtGraphVertexData *data)
@@ -50,14 +63,15 @@ QVariant mdtGraphVertex::key() const
   return pvData->key();
 }
 
-bool mdtGraphVertex::addAdjacent(mdtGraphVertex *v)
+bool mdtGraphVertex::addAdjacent(mdtGraphVertex *v, mdtGraphEdgeData *d)
 {
   Q_ASSERT(v != 0);
+  Q_ASSERT(d != 0);
 
   if(containsAdjacent(v->key())){
     return false;
   }
-  pvAdjacencyList.append(v);
+  pvAdjacencyList.append(new mdtGraphVertexAdjacent(v, d));
 
   return true;
 }
@@ -69,7 +83,13 @@ bool mdtGraphVertex::removeAdjacent(const QVariant &key)
   // Search vertex that contains key in adjacency list
   for(i = 0; i < pvAdjacencyList.size(); ++i){
     Q_ASSERT(pvAdjacencyList.at(i) != 0);
-    if(pvAdjacencyList.at(i)->key() == key){
+    Q_ASSERT(pvAdjacencyList.at(i)->vertex() != 0);
+    if(pvAdjacencyList.at(i)->vertex()->key() == key){
+      Q_ASSERT(pvAdjacencyList.at(i)->edgeData() != 0);
+      if(pvAutoDeleteEdgeData){
+        delete pvAdjacencyList.at(i)->edgeData();
+      }
+      delete pvAdjacencyList.at(i);
       pvAdjacencyList.removeAt(i);
       return true;
     }
@@ -85,7 +105,8 @@ bool mdtGraphVertex::containsAdjacent(const QVariant &key)
   // Search vertex that contains key in adjacency list
   for(i = 0; i < pvAdjacencyList.size(); ++i){
     Q_ASSERT(pvAdjacencyList.at(i) != 0);
-    if(pvAdjacencyList.at(i)->key() == key){
+    Q_ASSERT(pvAdjacencyList.at(i)->vertex() != 0);
+    if(pvAdjacencyList.at(i)->vertex()->key() == key){
       return true;
     }
   }
@@ -103,7 +124,7 @@ int mdtGraphVertex::adjacentCount() const
   return pvAdjacencyList.size();
 }
 
-const QList<mdtGraphVertex*> mdtGraphVertex::adjacencyList() const
+const QList<mdtGraphVertexAdjacent*> mdtGraphVertex::adjacencyList() const
 {
   return pvAdjacencyList;
 }

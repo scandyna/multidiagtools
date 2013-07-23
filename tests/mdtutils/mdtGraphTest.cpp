@@ -75,8 +75,9 @@ void mdtGraphTest::edgeDataTest ()
 
 void mdtGraphTest::vertexTest()
 {
-  mdtGraphVertex v, v2;
+  mdtGraphVertex v(true), v2(true);
   mdtGraphVertexData *data1, *data2;
+  mdtGraphEdgeData *ed;
 
   // Defaults
   QCOMPARE(v.key(), QVariant());
@@ -99,11 +100,14 @@ void mdtGraphTest::vertexTest()
   data2->setKey("K2");
   data2->setData("D2");
   v2.setData(data2);
-  QVERIFY(v.addAdjacent(&v2));
+  QVERIFY(v.addAdjacent(&v2, new mdtGraphEdgeData));
   QVERIFY(v.hasAdjacent());
   QVERIFY(v.containsAdjacent("K2"));
   QCOMPARE(v.adjacentCount(), 1);
-  QVERIFY(!v.addAdjacent(&v2));
+  ed = new mdtGraphEdgeData;
+  QVERIFY(ed != 0);
+  QVERIFY(!v.addAdjacent(&v2, ed));
+  delete ed;
   QVERIFY(v.hasAdjacent());
   QVERIFY(v.containsAdjacent("K2"));
   QCOMPARE(v.adjacentCount(), 1);
@@ -176,13 +180,13 @@ void mdtGraphTest::graphTest()
   QVERIFY(g.containsVertex("K3"));
   QCOMPARE(g.edgeCount(), 0);
   // Insert edge K2->K3
-  QVERIFY(g.insertEdge("K2", "K3"));
+  QVERIFY(g.insertEdge("K2", "K3", "K2->K3"));
   QCOMPARE(g.vertexCount(), 2);
   QCOMPARE(g.edgeCount(), 1);
   QVERIFY(!g.insertEdge("K2", "K3"));
   QCOMPARE(g.edgeCount(), 1);
   // Insert edge K3->K2
-  QVERIFY(g.insertEdge("K3", "K2"));
+  QVERIFY(g.insertEdge("K3", "K2", "K3->K2"));
   QCOMPARE(g.edgeCount(), 2);
   QVERIFY(!g.insertEdge("K3", "K2"));
   QCOMPARE(g.edgeCount(), 2);

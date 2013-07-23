@@ -28,6 +28,7 @@
 #include "mdtClUnitEditor.h"
 #include "mdtClArticleEditor.h"
 #include "mdtClLinkEditor.h"
+#include "mdtClTerminalBlockEditor.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -49,6 +50,9 @@ int main(int argc, char **argv)
   mdtClVehicleTypeEditor *vehicleTypeEditor;
   mdtClArticleEditor *articleEditor;
   mdtClUnitEditor *unitEditor;
+  // Terminal block editor
+  mdtSqlWindow terminalBlockEditorWindow;
+  mdtClTerminalBlockEditor *terminalBlockEditor;
   // Link editor
   mdtClLinkEditor *linkEditor;
   mdtSqlWindow linkEditorWindow;
@@ -96,7 +100,7 @@ int main(int argc, char **argv)
   }
   articleEditor->setupUi(&articleEditorWindow);
   articleEditorWindow.setWindowTitle(QObject::tr("Article edition"));
-  articleEditorWindow.show();
+  ///articleEditorWindow.show();
   // Setup Unit editor
   unitEditor = new mdtClUnitEditor(0, db);
   if(!unitEditor->setupTables(true)){
@@ -105,7 +109,7 @@ int main(int argc, char **argv)
   }
   unitEditor->setupUi(&unitEditorWindow);
   unitEditorWindow.setWindowTitle(QObject::tr("Unit edition"));
-  unitEditorWindow.show();
+  ///unitEditorWindow.show();
   // Setup link editor
   linkEditor = new mdtClLinkEditor(0, db);
   if(!linkEditor->setupTables()){
@@ -114,7 +118,16 @@ int main(int argc, char **argv)
   }
   linkEditor->setupUi(&linkEditorWindow);
   linkEditorWindow.setWindowTitle("Link edition");
-  linkEditorWindow.show();
+  ///linkEditorWindow.show();
+  // Setup terminal block editor
+  terminalBlockEditor = new mdtClTerminalBlockEditor(0, db);
+  if(!terminalBlockEditor->setupTables()){
+    QMessageBox::warning(0, "DB setup error", "Cannot setup tables for terminal block editor");
+    return 1;
+  }
+  terminalBlockEditor->setupUi(&terminalBlockEditorWindow);
+  terminalBlockEditorWindow.setWindowTitle(QObject::tr("Terminal block edition"));
+  terminalBlockEditorWindow.show();
 
   retVal = app.exec();
   db.close();
@@ -122,6 +135,7 @@ int main(int argc, char **argv)
   delete articleEditor;
   delete vehicleTypeEditor;
   delete linkEditor;
+  delete terminalBlockEditor;
 
   return retVal;
 }

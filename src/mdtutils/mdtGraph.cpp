@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtGraph.h"
 #include "mdtGraphVertex.h"
+#include "mdtGraphVertexAdjacent.h"
 #include <QQueue>
 
 mdtGraph::mdtGraph(bool autoDeleteData)
@@ -34,11 +35,6 @@ mdtGraph::~mdtGraph()
     deleteData();
   }
   qDeleteAll(pvVertexList);
-}
-
-void mdtGraph::setAutoDeleteData(bool autoDelete)
-{
-  pvAutoDeleteData = autoDelete;
 }
 
 bool mdtGraph::autoDeleteData() const
@@ -68,7 +64,7 @@ bool mdtGraph::insertVertex(mdtGraphVertexData *vertexData)
     return false;
   }
   // Create a new vertex, set his data and isert it to graph
-  v = new mdtGraphVertex;
+  v = new mdtGraphVertex(pvAutoDeleteData);
   if(v == 0){
     return false;
   }
@@ -95,7 +91,7 @@ bool mdtGraph::insertVertex(const QVariant &key, const QVariant &data)
   d->setKey(key);
   d->setData(data);
   // Create a new vertex, set his data and isert it to graph
-  v = new mdtGraphVertex;
+  v = new mdtGraphVertex(pvAutoDeleteData);
   if(v == 0){
     delete d;
     return false;
@@ -134,7 +130,6 @@ bool mdtGraph::removeVertex(const QVariant &key)
   if(vToRemoveIndex < 0){
     return false;
   }
-  // Suppression du sommet
   // Remove vertex
   v = pvVertexList.at(vToRemoveIndex);
   pvVertexList.removeAt(vToRemoveIndex);
@@ -146,8 +141,10 @@ bool mdtGraph::removeVertex(const QVariant &key)
   return true;
 }
 
-bool mdtGraph::insertEdge(const QVariant &keyFrom, const QVariant &keyTo)
+bool mdtGraph::insertEdge(const QVariant &keyFrom, const QVariant &keyTo, mdtGraphEdgeData *edgeData, bool deleteEdgeDataOnFailure)
 {
+  Q_ASSERT(edgeData != 0);
+
   int i;
   mdtGraphVertex *vFrom, *vTo;
   bool found;
@@ -164,6 +161,9 @@ bool mdtGraph::insertEdge(const QVariant &keyFrom, const QVariant &keyTo)
     }
   }
   if(!found){
+    if(deleteEdgeDataOnFailure){
+      delete edgeData;
+    }
     return false;
   }
   found = false;
@@ -177,18 +177,37 @@ bool mdtGraph::insertEdge(const QVariant &keyFrom, const QVariant &keyTo)
     }
   }
   if(!found){
+    if(deleteEdgeDataOnFailure){
+      delete edgeData;
+    }
     return false;
   }
   Q_ASSERT(vFrom != 0);
   Q_ASSERT(vTo != 0);
   // Insert vertex referenced by keyTo into adjacency list of vertex referenced by keyFrom
-  if(!vFrom->addAdjacent(vTo)){
+  if(!vFrom->addAdjacent(vTo, edgeData)){
+    if(deleteEdgeDataOnFailure){
+      delete edgeData;
+    }
     return false;
   }
   // Update edge count
   pvEdgeCount++;
 
   return true;
+}
+
+bool mdtGraph::insertEdge(const QVariant &keyFrom, const QVariant &keyTo, const QVariant &edgeData)
+{
+  mdtGraphEdgeData *d;
+
+  d = new mdtGraphEdgeData;
+  if(d == 0){
+    return false;
+  }
+  d->setData(edgeData);
+
+  return insertEdge(keyFrom, keyTo, d, true);
 }
 
 bool mdtGraph::removeEdge(const QVariant &keyFrom, const QVariant &keyTo)
@@ -243,30 +262,6 @@ mdtGraphVertexData *mdtGraph::vertexData(const QVariant & key)
   return 0;
 }
 
-const QList<mdtGraphVertexData*> mdtGraph::adjacencyDataList(const QVariant & key) const
-{
-  int i, j;
-  mdtGraphVertex *v, *va;
-  QList<mdtGraphVertex*> adjList;
-  QList<mdtGraphVertexData*> list;
-
-  for(i = 0; i < pvVertexList.size(); ++i){
-    v = pvVertexList.at(i);
-    Q_ASSERT(v != 0);
-    if(v->key() == key){
-      adjList = v->adjacencyList();
-      for(j = 0; j < adjList.size(); ++j){
-        va = adjList.at(j);
-        Q_ASSERT(va != 0);
-        Q_ASSERT(va->data() != 0);
-        list.append(va->data());
-      }
-    }
-  }
-
-  return list;
-}
-
 int mdtGraph::vertexCount() const
 {
   return pvVertexList.size();
@@ -280,7 +275,7 @@ int mdtGraph::edgeCount() const
 QList<mdtGraphVertexData*> mdtGraph::bfs(const QVariant &keyStart)
 {
   QQueue<mdtGraphVertex*> fifo;
-  QList<mdtGraphVertex*> adjList;
+  QList<mdtGraphVertexAdjacent*> adjList;
   mdtGraphVertex *v, *av;
   QList<mdtGraphVertexData*> result;
   int i;
@@ -304,7 +299,8 @@ QList<mdtGraphVertexData*> mdtGraph::bfs(const QVariant &keyStart)
     // Travel all adjacent vertices to current vertex
     adjList = v->adjacencyList();
     for(i = 0; i < adjList.size(); ++i){
-      av = adjList.at(i);
+      Q_ASSERT(adjList.at(i) != 0);
+      av = adjList.at(i)->vertex();
       Q_ASSERT(av != 0);
       // If adjacent vertex is white, we enqueue it and set it gray
       if(av->currentColor() == mdtGraphVertex::White){
@@ -339,7 +335,8 @@ QString mdtGraph::graphDump() const
   QString s = "\n";
   int i, j;
   mdtGraphVertex *v, *av;
-  QList<mdtGraphVertex*> adjList;
+  QList<mdtGraphVertexAdjacent*> adjList;
+  mdtGraphVertexAdjacent *a;
 
   for(i = 0; i < pvVertexList.size(); ++i){
     v = pvVertexList.at(i);
@@ -347,8 +344,11 @@ QString mdtGraph::graphDump() const
     s += "(" + v->key().toString() + ")\n Adjacent vertices: ";
     adjList = v->adjacencyList();
     for(j = 0; j < adjList.size(); ++j){
-      av = adjList.at(j);
-      s += "(" + av->key().toString() + ") ";
+      a = adjList.at(j);
+      Q_ASSERT(a != 0);
+      av = a->vertex();
+      Q_ASSERT(av != 0);
+      s += "(" + av->key().toString() + ")-|" + a->edgeData()->data().toString() + "|- ";
     }
     s += "\n";
   }

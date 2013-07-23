@@ -14,6 +14,7 @@ set (HEADER_FILES
           src/mdtClUnitEditor.h
           src/mdtClLinkEditor.h
           src/mdtClUnitConnectionSelectionDialog.h
+          src/mdtClTerminalBlockEditor.h
     )
 
 # Source files
@@ -25,6 +26,7 @@ set (SOURCES_FILES
           src/mdtClUnitEditor.cpp
           src/mdtClLinkEditor.cpp
           src/mdtClUnitConnectionSelectionDialog.cpp
+          src/mdtClTerminalBlockEditor.cpp
     )
 
 # Qt ui files
@@ -34,6 +36,7 @@ set (FORM_FILES
           src/mdtClUnitEditor.ui
           src/mdtClUnitConnectionEditor.ui
           src/mdtClLinkEditor.ui
+          src/mdtClTerminalBlockEditor.ui
     )
 
 # Fichiers à traiter par le compilateur moc

@@ -22,6 +22,7 @@
 #define MDT_GRAPH_H
 
 #include "mdtGraphVertexData.h"
+#include "mdtGraphEdgeData.h"
 #include <QList>
 
 class mdtGraphVertex;
@@ -48,7 +49,7 @@ class mdtGraphVertex;
  * Memory management:
  *  When a mdtGraph object is destroyed, each vertex is destroyed, but it's possible to choose
  *   if data ( mdtGraphVertexData objects ) must be destroyed or not.
- *   Behaviour is stored in autoDeleteData flag. See setAutoDeleteData() and autoDeleteData() .
+ *   Behaviour is stored in autoDeleteData flag. See autoDeleteData() .
  *
  * To build a graph, it exists 2 possible ways:
  *  - Create a mdtGraphVertexData object and add it with insertVertex(mdtGraphVertexData*).
@@ -71,10 +72,6 @@ class mdtGraph
    *  data objects are deleted.
    */
   ~mdtGraph();
-
-  /*! \brief set/unset autoDeleteData flag
-   */
-  void setAutoDeleteData(bool autoDelete);
 
   /*! \brief Get autoDeleteData flag
    */
@@ -109,7 +106,7 @@ class mdtGraph
    *
    * If autoDeleteData flag is set, data object will be destroyed.
    *
-   * Complexity is O(S+A) , where S is the number of vertices in the graph, and A the number of edges.
+   * Complexity is O(S) , where S is the number of vertices in the graph.
    *
    * \return true if vertex could be removed,
    *         false if:
@@ -128,20 +125,35 @@ class mdtGraph
    * Note: for undirected graph, call also the method a second time
    *  with keyFrom and keyTo reversed.
    *
-   * Complexity is O(S+A) , where S is the number of vertices in the graph, and A the number of edges.
+   * This method needs a valid mdtGraphEdgeData object. If no edge data is needed,
+   *  the overloaded insertEdge(const QVariant&, const QVariant&, const QVariant&)
+   *  can be used.
+   *
+   * Complexity is O(S) , where S is the number of vertices in the graph.
    *
    * \return true if edge could be inserted,
    *         false if:
    *          - One of the vertex (referenced by keyFrom or keyTo) was not found
    *          - The edge allready exists
+   * \pre edgeData must be valid.
    */
-  bool insertEdge(const QVariant &keyFrom, const QVariant &keyTo);
+  bool insertEdge(const QVariant &keyFrom, const QVariant &keyTo, mdtGraphEdgeData *edgeData, bool deleteEdgeDataOnFailure = false);
+
+  /*! \brief Insert a edge from vertex referenced by keyFrom to vertex referenced by keyTo
+   *
+   * \overload insertEdge(const QVariant&, const QVariant&, mdtGraphEdgeData*)
+   *
+   * Internally, the mdtGraphEdgeData object is created, and data given by edgeData stored in it.
+   *
+   * For mor details, see insertEdge(const QVariant&, const QVariant&, mdtGraphEdgeData*) .
+   */
+  bool insertEdge(const QVariant &keyFrom, const QVariant &keyTo, const QVariant &edgeData = QVariant());
 
   /*! \brief Remove edge from vertex referenced by keyFrom to vertex referenced by keyTo
    *
    * For keyFrom and keyTo, please have a look at insertEdge().
    *
-   * Complexity is O(S+A) , where S is the number of vertices in the graph, and A the number of edges.
+   * Complexity is O(S) , where S is the number of vertices in the graph.
    *
    * \return true if edge was removed,
    *         false if it was not found in graph.
@@ -161,12 +173,6 @@ class mdtGraph
    * Complexity is O(S) , where S is the number of vertices in the graph.
    */
   mdtGraphVertexData *vertexData(const QVariant &key);
-
-  /*! \brief Get data of each vertex that is adjacent to vertex referenced by key
-   *
-   * Complexity is O(S+A) , where S is the number of vertices in the graph, and A the number of edges.
-   */
-  const QList<mdtGraphVertexData*> adjacencyDataList(const QVariant &key) const;
 
   /*! \brief Get number of vertices that graph contains
    *

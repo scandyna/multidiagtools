@@ -25,6 +25,7 @@
 #include <QList>
 
 class mdtGraphVertexAdjacent;
+class mdtGraphEdgeData;
 
 /*! \brief Vertex of mdtGraph
  *
@@ -51,7 +52,7 @@ class mdtGraphVertex
    *
    * Vertex color will be set to White.
    */
-  mdtGraphVertex();
+  mdtGraphVertex(bool autoDeleteEdgeData);
 
   /*! \brief Destructor
    *
@@ -79,9 +80,9 @@ class mdtGraphVertex
 
   /*! \brief Add v to the adjacency list
    *
-   * \pre v must be valid
+   * \pre v and d must be valid
    */
-  bool addAdjacent(mdtGraphVertex *v);
+  bool addAdjacent(mdtGraphVertex *v, mdtGraphEdgeData *d);
 
   /*! \brief Remove adjacent vertex that has given key
    *
@@ -104,7 +105,7 @@ class mdtGraphVertex
 
   /*! \brief Get adjacency list
    */
-  const QList<mdtGraphVertex*> adjacencyList() const;
+  const QList<mdtGraphVertexAdjacent*> adjacencyList() const;
 
   /*! \brief Set current color
    */
@@ -119,8 +120,10 @@ class mdtGraphVertex
   Q_DISABLE_COPY(mdtGraphVertex);
 
   color_t pvColor;
-  QList<mdtGraphVertex*> pvAdjacencyList;
+  ///QList<mdtGraphVertex*> pvAdjacencyList;
+  QList<mdtGraphVertexAdjacent*> pvAdjacencyList;
   mdtGraphVertexData * pvData;
+  bool pvAutoDeleteEdgeData;
 };
 
 #endif  // #ifndef MDT_GRAPH_VERTEX_H

@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 119
+  revision 120
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -6925,6 +6925,40 @@ ${inlines}
 	
       end
 
+      operation 1382658 "insertEdge"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "keyFrom" type class_ref 161154 // QVariant
+	  param in name "keyTo" type class_ref 161154 // QVariant
+	  param in name "data" type class_ref 740482 // mdtGraphEdgeData
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1382786 "insertEdge"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "keyFrom" type class_ref 161154 // QVariant
+	  param in name "keyTo" type class_ref 161154 // QVariant
+	  param in name "data" type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 1368450 "removeEdge"
 	public explicit_return_type "bool"
 	nparams 2
@@ -7052,11 +7086,12 @@ ${inlines}
 
       operation 1367170 "addAdjacent"
 	public explicit_return_type "void"
-	nparams 1
+	nparams 2
 	  param in name "v" type class_ref 733698 // mdtGraphVertex
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "d" type class_ref 740482 // mdtGraphEdgeData
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -7067,11 +7102,12 @@ ${inlines}
 
       operation 1367298 "removeAdjacent"
 	public explicit_return_type "bool"
-	nparams 1
+	nparams 2
 	  param in name "key" type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "deleteEdgeData" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
