@@ -23,6 +23,7 @@
 
 #include <QSqlDatabase>
 #include <QObject>
+#include <QSqlError>
 
 class mdtSqlWindow;
 class mdtSqlFormWidget;
@@ -77,6 +78,14 @@ class mdtClTerminalBlockEditor : public QObject
    */
   void removeConnection();
 
+  /*! \brief Add a terminal to unit connection table
+   */
+  void addTerminal();
+
+  /*! \brief Remove terminal from unit connection table
+   */
+  void removeTerminal();
+
  signals:
 
   /*! \brief Used to tell unit widget that we have edited some data
@@ -104,13 +113,16 @@ class mdtClTerminalBlockEditor : public QObject
    */
   bool setupVehicleTable();
 
+  /*! \brief Display error to the user
+   */
+  void displayError(const QString &title, const QString &text, const QSqlError &error, bool log);
+
   Q_DISABLE_COPY(mdtClTerminalBlockEditor);
 
   QSqlDatabase pvDatabase;
   // Unit objects
   mdtSqlFormWidget *pvUnitWidget;
   QSqlTableModel *pvUnitModel;
-  // Unit connection view objects
   // Terminal ( = Unit connection) view objects
   mdtSqlTableWidget *pvTerminalEditWidget;
   QSqlTableModel *pvTerminalEditModel;

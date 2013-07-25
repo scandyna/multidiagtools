@@ -15,6 +15,7 @@ set (HEADER_FILES
           src/mdtClLinkEditor.h
           src/mdtClUnitConnectionSelectionDialog.h
           src/mdtClTerminalBlockEditor.h
+          src/mdtClTerminalEditorDialog.h
     )
 
 # Source files
@@ -27,6 +28,7 @@ set (SOURCES_FILES
           src/mdtClLinkEditor.cpp
           src/mdtClUnitConnectionSelectionDialog.cpp
           src/mdtClTerminalBlockEditor.cpp
+          src/mdtClTerminalEditorDialog.cpp
     )
 
 # Qt ui files

@@ -407,6 +407,9 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QCOMPARE(data.toString(), QString("New name 1"));
   data = model.data(model.index(row, model.fieldIndex("remarks")));
   QCOMPARE(data.toString(), QString("New remark 1"));
+  // Check that currentValue() works
+  QCOMPARE(sqlFormWidget->currentValue("first_name"), QVariant("New name 1"));
+  QCOMPARE(sqlFormWidget->currentValue("remarks"), QVariant("New remark 1"));
   // Check that widget displays the correct row
   QCOMPARE(leFirstName->text(), QString("New name 1"));
   QCOMPARE(leRemarks->text(), QString("New remark 1"));

@@ -89,6 +89,37 @@ void mdtAbstractSqlWidget::addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRe
   relation->setParentCurrentIndex(currentRow());
 }
 
+QVariant mdtAbstractSqlWidget::currentValue(const QString &fieldName) const
+{
+  Q_ASSERT(pvModel != 0);
+
+  int column;
+  int row;
+  QModelIndex index;
+
+  row = currentRow();
+  if(row < 0){
+    return QVariant();
+  }
+  column = pvModel->record().indexOf(fieldName);
+  if(column < 0){
+    mdtError e(MDT_DATABASE_ERROR, "Requested field name '" + fieldName + "' was not found in table '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtAbstractSqlWidget");
+    e.commit();
+    return QVariant();
+  }
+  index = pvModel->index(row, column);
+  if(!index.isValid()){
+    mdtError e(MDT_DATABASE_ERROR, "Index with row " + QString::number(row)\
+               + ", and column " + QString::number(column) + " is invalid, table: '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtAbstractSqlWidget");
+    e.commit();
+    return QVariant();
+  }
+
+  return pvModel->data(index);
+}
+
 int mdtAbstractSqlWidget::rowCount() const
 {
   Q_ASSERT(pvModel != 0);

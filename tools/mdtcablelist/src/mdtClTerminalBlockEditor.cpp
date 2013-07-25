@@ -25,6 +25,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtClTerminalEditorDialog.h"
 #include "mdtError.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
@@ -428,8 +429,145 @@ void mdtClTerminalBlockEditor::removeConnection()
   pvTerminalEditModel->select();
 }
 
+
+void mdtClTerminalBlockEditor::addTerminal()
+{
+  Q_ASSERT(pvTerminalEditModel);
+
+  mdtClTerminalEditorDialog d;
+  int ret;
+  QModelIndex index;
+  int row;
+  int column;
+
+  // setup terminal edition dialog and show it to user
+  d.setTerminalBlockName(pvUnitWidget->currentValue("SchemaPosition").toString());
+  d.setWindowTitle(tr("Terminal edition"));
+  ret = d.exec();
+  if(ret != QDialog::Accepted){
+    return;
+  }
+  // Add treminal to model
+  row = pvTerminalEditModel->rowCount();
+  if(!pvTerminalEditModel->insertRow(row)){
+    displayError(tr("Database error"), tr("Insertion of new terminal failed"), pvTerminalEditModel->lastError(), true);
+    return;
+  }
+  column = pvTerminalEditModel->fieldIndex("ConnectorName");
+  index = pvTerminalEditModel->index(row, column);
+  if(!index.isValid()){
+    displayError(tr("Database error"), tr("Insertion of new terminal failed due to a invalid index for 'ConnectorName'"), pvTerminalEditModel->lastError(), true);
+    return;
+  }
+  if(!pvTerminalEditModel->setData(index, d.connectorName())){
+    displayError(tr("Database error"), tr("Insertion of new terminal failed"), pvTerminalEditModel->lastError(), true);
+    return;
+  }
+  column = pvTerminalEditModel->fieldIndex("ContactName");
+  index = pvTerminalEditModel->index(row, column);
+  if(!index.isValid()){
+    displayError(tr("Database error"), tr("Insertion of new terminal failed due to a invalid index for 'ContactName'"), pvTerminalEditModel->lastError(), true);
+    qDebug() << "Invalid index: " << index;
+    return;
+  }
+  if(!pvTerminalEditModel->setData(index, d.contactName())){
+    displayError(tr("Database error"), tr("Insertion of new terminal failed"), pvTerminalEditModel->lastError(), true);
+    return;
+  }
+  if(!pvTerminalEditModel->submitAll()){
+    displayError(tr("Database error"), tr("Insertion of new terminal failed"), pvTerminalEditModel->lastError(), true);
+    return;
+  }
+  /// \todo Links...
+
+}
+
+void mdtClTerminalBlockEditor::removeTerminal()
+{
+  Q_ASSERT(pvTerminalEditWidget->selectionModel() != 0);
+
+  int i;
+  int ret;
+  int row;
+  int unitConnectionIdColumn;
+  QVariant id;
+  QList<int> rows;
+  QList<int> unitConnectionIds;
+  QMessageBox msgBox;
+  QModelIndex index;
+  QModelIndexList indexes = pvTerminalEditWidget->selectionModel()->selectedIndexes();
+
+  // If nothing was selected, we do nothing
+  if(indexes.size() < 1){
+    return;
+  }
+  // Get column of unit connecion ID (PK) in view
+  unitConnectionIdColumn = pvTerminalEditModel->record().indexOf("Id_PK");
+  if(unitConnectionIdColumn < 0){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to delete selected terminals for current terminal block."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  ret = msgBox.exec();
+  if(ret != QMessageBox::Yes){
+    return;
+  }
+  // Build rows list
+  for(i = 0; i < indexes.size(); ++i){
+    row = indexes.at(i).row();
+    if(!rows.contains(row)){
+      rows.append(row);
+    }
+  }
+  // Build list of terminals to remove
+  for(i = 0; i < rows.size(); ++i){
+    index = pvTerminalEditModel->index(rows.at(i), unitConnectionIdColumn);
+    if(index.isValid()){
+      id = pvTerminalEditModel->data(index);
+      if(id.isValid()){
+        unitConnectionIds.append(id.toInt());
+      }
+    }
+  }
+  // Remove
+  for(i = 0; i < unitConnectionIds.size(); ++i){
+    QString sql;
+    QSqlQuery query(pvDatabase);
+    sql = "DELETE FROM UnitConnection_tbl WHERE Id_PK = " + QString::number(unitConnectionIds.at(i));
+    if(!query.exec(sql)){
+      QSqlError sqlError = query.lastError();
+      mdtError e(MDT_DATABASE_ERROR, "Removing connections from table 'UnitConnection_tbl' failed for Id_PK " + QString::number(unitConnectionIds.at(i)) , mdtError::Error);
+      e.setSystemError(sqlError.number(), sqlError.text());
+      e.commit();
+      QMessageBox msgBox;
+      msgBox.setText(tr("Error occured while removing connecions."));
+      msgBox.setInformativeText(tr("Please see details."));
+      msgBox.setDetailedText(sqlError.text());
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.exec();
+      return;
+    }
+  }
+  // Refresh connecions view
+  pvTerminalEditModel->select();
+}
+
 int mdtClTerminalBlockEditor::currentUnitId()
 {
+  QVariant id;
+
+  id = pvUnitWidget->currentValue("Id_PK");
+  if(!id.isValid()){
+    return -1;
+  }
+
+  return id.toInt();
+
+  /**
   int unitIdColumn;
   QModelIndex index;
 
@@ -446,6 +584,7 @@ int mdtClTerminalBlockEditor::currentUnitId()
   }
 
   return pvUnitModel->data(index).toInt();
+  */
 }
 
 bool mdtClTerminalBlockEditor::setupUnitTable()
@@ -470,8 +609,8 @@ bool mdtClTerminalBlockEditor::setupUnitTable()
 bool mdtClTerminalBlockEditor::setupTerminalEditTable()
 {
   QSqlError sqlError;
-  QPushButton *pbAddConnection;
-  QPushButton *pbRemoveConnection;
+  QPushButton *pbAddTerminal;
+  QPushButton *pbRemoveTerminal;
 
   pvTerminalEditModel->setTable("UnitConnection_tbl");
   if(!pvTerminalEditModel->select()){
@@ -484,15 +623,13 @@ bool mdtClTerminalBlockEditor::setupTerminalEditTable()
   }
   pvTerminalEditWidget->setModel(pvTerminalEditModel);
   // Add the Add and remove buttons
-  /**
-  pbAddConnection = new QPushButton(tr("Add"));
-  pbRemoveConnection = new QPushButton(tr("Remove"));
-  connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
-  connect(pbRemoveConnection, SIGNAL(clicked()), this, SLOT(removeConnection()));
-  pvTerminalEditWidget->addWidgetToLocalBar(pbAddConnection);
-  pvTerminalEditWidget->addWidgetToLocalBar(pbRemoveConnection);
+  pbAddTerminal = new QPushButton(tr("Add..."));
+  pbRemoveTerminal = new QPushButton(tr("Remove"));
+  connect(pbAddTerminal, SIGNAL(clicked()), this, SLOT(addTerminal()));
+  connect(pbRemoveTerminal, SIGNAL(clicked()), this, SLOT(removeTerminal()));
+  pvTerminalEditWidget->addWidgetToLocalBar(pbAddTerminal);
+  pvTerminalEditWidget->addWidgetToLocalBar(pbRemoveTerminal);
   pvTerminalEditWidget->addStretchToLocalBar();
-  */
   ///pvTerminalEditWidget->enableLocalEdition();
   pvTerminalEditWidget->setEditionEnabled(false);
   // Hide relation fields and PK
@@ -563,4 +700,26 @@ bool mdtClTerminalBlockEditor::setupVehicleTable()
   pvVehicleTypeWidget->addStretchToLocalBar();
 
   return true;
+}
+
+void mdtClTerminalBlockEditor::displayError(const QString &title, const QString &text, const QSqlError &error, bool log)
+{
+  QMessageBox msgBox;
+
+  if(log){
+    mdtError e(MDT_DATABASE_ERROR, text, mdtError::Error);
+    if(error.isValid()){
+      e.setSystemError(error.number(), error.text());
+    }
+    MDT_ERROR_SET_SRC(e, "mdtClTerminalBlockEditor");
+    e.commit();
+  }
+  msgBox.setWindowTitle(title);
+  msgBox.setText(text);
+  if(error.isValid()){
+    msgBox.setDetailedText(error.text());
+  }
+  msgBox.setIcon(QMessageBox::Critical);
+  msgBox.exec();
+  
 }
