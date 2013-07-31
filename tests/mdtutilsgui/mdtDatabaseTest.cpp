@@ -638,11 +638,11 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   /*
    * Play
    */
-  
+  /*
   while(window.isVisible()){
     QTest::qWait(1000);
   }
-  
+  */
 }
 
 void mdtDatabaseTest::sqlTableWidgetTest()
@@ -671,9 +671,11 @@ void mdtDatabaseTest::sqlTableWidgetTest()
   /*
    * Play
    */
+  /*
   while(window.isVisible()){
     QTest::qWait(1000);
   }
+  */
 }
 
 void mdtDatabaseTest::sortFilterProxyModelTest()

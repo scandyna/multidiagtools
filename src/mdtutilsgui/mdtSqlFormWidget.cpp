@@ -270,19 +270,6 @@ bool mdtSqlFormWidget::doSubmit()
   // Remember current record - will help on primary key errors
   initialRecord = model()->record(row);
 
-  // Do some check before real submit
-  /**
-  if(!checkBeforeSubmit()){
-    QMessageBox msgBox;
-    msgBox.setText(tr("There are some errors in edited data."));
-    msgBox.setInformativeText( \
-      tr("Fields that are not correct should be highlighted.\nMoving cursor over field with error should display the reason\nPlease correct errors, or cancel modifications, and try again."));
-    msgBox.setIcon(QMessageBox::Warning);
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.exec();
-    return false;
-  }
-  */
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper->submit()){
     displayDatabaseError(model()->lastError());
@@ -444,33 +431,6 @@ void mdtSqlFormWidget::setWidgetsEnabled(bool enabled)
     }
   }
 }
-
-/// \todo Update
-/**
-bool mdtSqlFormWidget::checkBeforeSubmit()
-{
-  int i;
-  bool allOk = true;
-  QWidget *firstNokWidget = 0;
-
-  // We call checkBeforeSubmit() for all items
-  for(i=0; i<pvFieldHandlers.size(); ++i){
-    Q_ASSERT(pvFieldHandlers.at(i) != 0);
-    if(!pvFieldHandlers.at(i)->checkBeforeSubmit()){
-      allOk = false;
-      if(firstNokWidget == 0){
-        firstNokWidget = pvFieldHandlers.at(i)->dataWidget();
-      }
-    }
-  }
-  // We set the focus on first Nok widget
-  if(firstNokWidget != 0){
-    firstNokWidget->setFocus();
-  }
-
-  return allOk;
-}
-*/
 
 void mdtSqlFormWidget::warnUserAboutUnsavedRow()
 {

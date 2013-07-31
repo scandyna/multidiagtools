@@ -73,13 +73,25 @@ class mdtSqlDataValidator : public QObject
    */
   virtual bool checkBeforeSubmit();
 
-  /*! \brief
+  /*! \brief Display a warning to the user
+   *
+   * text and informativeText text are the same meaning as Qt's QMessageBox.
+   * Warning will be logged with mdtError system.
+   *
+   * If sqlError is valid, it will be added in the detailed text of QMessageBox,
+   *  and as system error in mdtError log.
    */
-  void displayWarning(const QString & text, const QString & informativeText, const QSqlError & sqlError = QSqlError());
+  void displayWarning(const QString &text, const QString &informativeText, const QSqlError &sqlError = QSqlError());
 
-  /*! \brief
+  /*! \brief Display a error to the user
+   *
+   * text and informativeText text are the same meaning as Qt's QMessageBox.
+   * Error will be logged with mdtError system.
+   *
+   * If sqlError is valid, it will be added in the detailed text of QMessageBox,
+   *  and as system error in mdtError log.
    */
-  void displayError(const QString & text, const QString & informativeText, const QSqlError & sqlError = QSqlError());
+  void displayError(const QString &text, const QString &informativeText, const QSqlError &sqlError = QSqlError());
 
  private:
 

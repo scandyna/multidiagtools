@@ -22,8 +22,6 @@
 #include "mdtSqlFieldHandler.h"
 #include <QWidget>
 
-#include <QDebug>
-
 mdtSqlFormWidgetDataValidator::mdtSqlFormWidgetDataValidator(QSqlTableModel *model, QObject *parent, const QList<mdtSqlFieldHandler*> &fieldHandlers)
  : mdtSqlDataValidator(model, parent)
 {

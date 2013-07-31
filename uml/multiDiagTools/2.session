@@ -2,18 +2,12 @@ window_sizes 1280 1001 356 918 923 0
 diagrams
   classdiagram_ref 693122 // mdtClUnitEditor
     734 738 100 4 36 0
-  classdiagram_ref 673538 // mdtSqlWidget
-    734 738 100 4 80 0
-  classdiagram_ref 746114 // mdtSqlForm
-    734 738 100 4 0 0
-  active  classdiagram_ref 746498 // mdtSqlDataValidator
-    918 923 100 4 156 0
+  active  classdiagram_ref 746114 // mdtSqlForm
+    918 923 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 746498 // mdtSqlDataValidator
+selected classdiagram_ref 746114 // mdtSqlForm
 open
   classdiagram_ref 746370 // mdtSqlFormWindow
-  operation_ref 1403394 // model
-  class_ref 771970 // mdtSqlFormWidgetDataValidator
 end
 end
