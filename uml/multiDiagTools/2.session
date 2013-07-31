@@ -13,5 +13,7 @@ show_stereotypes
 selected classdiagram_ref 746498 // mdtSqlDataValidator
 open
   classdiagram_ref 746370 // mdtSqlFormWindow
+  operation_ref 1403394 // model
+  class_ref 771970 // mdtSqlFormWidgetDataValidator
 end
 end

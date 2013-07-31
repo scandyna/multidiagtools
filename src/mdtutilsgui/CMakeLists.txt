@@ -60,6 +60,8 @@ set (HEADER_FILES
           mdtSqlWindow.h
           mdtSqlSelectionDialog.h
           mdtSortFilterProxyModel.h
+          mdtSqlDataValidator.h
+          mdtSqlFormWidgetDataValidator.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -95,6 +97,8 @@ set (SOURCES_FILES
           mdtSqlWindow.cpp
           mdtSqlSelectionDialog.cpp
           mdtSortFilterProxyModel.cpp
+          mdtSqlDataValidator.cpp
+          mdtSqlFormWidgetDataValidator.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

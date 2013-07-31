@@ -36,6 +36,7 @@ class QState;
 class QStateMachine;
 class QSqlTableModel;
 class mdtSqlRelation;
+class mdtSqlDataValidator;
 
 /*! \brief Base class to create database table GUI
  *
@@ -88,6 +89,19 @@ class mdtAbstractSqlWidget : public QWidget
    * Can return a null pointer if model was not set.
    */
   QSqlTableModel *model();
+
+  /*! \brief Add a data validator
+   *
+   * \param validator A instance of mdtSqlDataValidator or subclass.
+   * \param putAtTopPriority If true, validator will be called before allready stored ones.
+   *                          (validators are put into a queue).
+   *
+   * Note: validator will be reparented, so it will be destroyed automatically when this class is destroyed.
+   *
+   * \pre (Parent) model must be set with setModel() before using this method.
+   * \pre validator must be a valid pointer.
+   */
+  void addDataValidator(mdtSqlDataValidator *validator, bool putAtTopPriority = false);
 
   /*! \brief Get the user friendly table name
    *
@@ -508,7 +522,7 @@ class mdtAbstractSqlWidget : public QWidget
 
   /*! \brief Activity after Submitting state entered
    *
-   * Will call doSubmit().
+   * Will call checkBeforeSubmit() and, on success, doSubmit().
    *
    * This slot is called from internal state machine
    *  and should not be used directly.
@@ -549,7 +563,7 @@ class mdtAbstractSqlWidget : public QWidget
 
   /*! \brief Activity after SubmittingNewRow state entered
    *
-   * Will call doSubmitNewRow().
+   * Will call checkBeforeSubmit() and, on success, doSubmitNewRow().
    *
    * This slot is called from internal state machine
    *  and should not be used directly.
@@ -588,6 +602,12 @@ class mdtAbstractSqlWidget : public QWidget
    */
   void buildStateMachine();
 
+  /*! \brief Call checkBeforeSubmit() for each installed validators
+   *
+   * \sa addDataValidator()
+   */
+  bool checkBeforeSubmit();
+
   QSqlTableModel *pvModel;
   // State machine members
   QState *pvStateVisualizing;
@@ -606,6 +626,7 @@ class mdtAbstractSqlWidget : public QWidget
   QList<mdtAbstractSqlWidget*> pvChildWidgets;
   // Other members
   QString pvUserFriendlyTableName;
+  QList<mdtSqlDataValidator*> pvDataValidators;
 
   Q_DISABLE_COPY(mdtAbstractSqlWidget);
 };

@@ -638,11 +638,11 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   /*
    * Play
    */
-  /*
+  
   while(window.isVisible()){
     QTest::qWait(1000);
   }
-  */
+  
 }
 
 void mdtDatabaseTest::sqlTableWidgetTest()
@@ -776,15 +776,15 @@ void mdtDatabaseTest::sortFilterProxyModelTest()
 
 void mdtDatabaseTest::clickMessageBoxButton(QMessageBox::StandardButton button)
 {
-  QMessageBox *mdgBox;
+  QMessageBox *mdsBox;
   QAbstractButton *btn;
 
   if(QApplication::activeModalWidget() != 0){
-    mdgBox = dynamic_cast<QMessageBox*>(QApplication::activeModalWidget());
-    if(mdgBox != 0){
-      qDebug() << "Found a message box, name: " << mdgBox->objectName();
+    mdsBox = dynamic_cast<QMessageBox*>(QApplication::activeModalWidget());
+    if(mdsBox != 0){
+      qDebug() << "Found a message box, name: " << mdsBox->objectName();
       // Get requested button
-      btn = mdgBox->button(button);
+      btn = mdsBox->button(button);
       if(btn != 0){
         btn->click();
       }

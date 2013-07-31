@@ -73,7 +73,7 @@ relationcanvas 130562 relation_ref 874242 // <unidirectional association>
   from ref 128002 z 2001 to point 772 204
   line 130690 z 2001 to point 772 303
   line 130818 z 2001 to ref 128002
-  role_a_pos 703 289 3000 no_role_b
-  multiplicity_a_pos 703 319 3000 no_multiplicity_b
+  role_a_pos 703 288 3000 no_role_b
+  multiplicity_a_pos 703 318 3000 no_multiplicity_b
 end
 end

@@ -21,6 +21,7 @@
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlFieldHandler.h"
 #include "mdtError.h"
+#include "mdtSqlFormWidgetDataValidator.h"
 #include <QDataWidgetMapper>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
@@ -122,6 +123,8 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
   }else{
     pvWidgetMapper->toFirst();
   }
+  // Add data validator
+  addDataValidator(new mdtSqlFormWidgetDataValidator(model(), 0, pvFieldHandlers));
 }
 
 int mdtSqlFormWidget::currentRow() const
@@ -268,6 +271,7 @@ bool mdtSqlFormWidget::doSubmit()
   initialRecord = model()->record(row);
 
   // Do some check before real submit
+  /**
   if(!checkBeforeSubmit()){
     QMessageBox msgBox;
     msgBox.setText(tr("There are some errors in edited data."));
@@ -278,6 +282,7 @@ bool mdtSqlFormWidget::doSubmit()
     msgBox.exec();
     return false;
   }
+  */
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper->submit()){
     displayDatabaseError(model()->lastError());
@@ -440,6 +445,8 @@ void mdtSqlFormWidget::setWidgetsEnabled(bool enabled)
   }
 }
 
+/// \todo Update
+/**
 bool mdtSqlFormWidget::checkBeforeSubmit()
 {
   int i;
@@ -463,6 +470,7 @@ bool mdtSqlFormWidget::checkBeforeSubmit()
 
   return allOk;
 }
+*/
 
 void mdtSqlFormWidget::warnUserAboutUnsavedRow()
 {

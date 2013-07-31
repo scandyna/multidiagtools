@@ -200,7 +200,7 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
 
   /*! \brief Call mdtSqlFieldHandler::checkBeforeSubmit() for each mapped widgets
    */
-  bool checkBeforeSubmit();
+  ///bool checkBeforeSubmit();
 
   /*! \brief Show a message box to the user to warn him that it should save/revert data
    */

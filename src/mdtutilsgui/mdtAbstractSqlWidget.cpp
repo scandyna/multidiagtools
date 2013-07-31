@@ -21,6 +21,7 @@
 #include "mdtAbstractSqlWidget.h"
 #include "mdtError.h"
 #include "mdtSqlRelation.h"
+#include "mdtSqlDataValidator.h"
 #include <QState>
 #include <QStateMachine>
 #include <QMessageBox>
@@ -50,8 +51,9 @@ void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
     disconnect(pvModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
     disconnect(pvModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
   }
-  doSetModel(model);
   pvModel = model;
+  doSetModel(model);
+  Q_ASSERT(pvModel == model);
   connect(pvModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
   connect(pvModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
   pvStateMachine->start();
@@ -60,6 +62,19 @@ void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
 QSqlTableModel *mdtAbstractSqlWidget::model()
 {
   return pvModel;
+}
+
+void mdtAbstractSqlWidget::addDataValidator(mdtSqlDataValidator *validator, bool putAtTopPriority)
+{
+  Q_ASSERT(pvModel != 0);
+  Q_ASSERT(validator != 0);
+
+  validator->setParent(this);
+  if(putAtTopPriority){
+    pvDataValidators.prepend(validator);
+  }else{
+    pvDataValidators.append(validator);
+  }
 }
 
 QString mdtAbstractSqlWidget::userFriendlyTableName() const
@@ -386,6 +401,10 @@ void mdtAbstractSqlWidget::onStateSubmittingEntered()
   pvCurrentState = Submitting;
   qDebug() << __FUNCTION__;
 
+  if(!checkBeforeSubmit()){
+    emit errorOccured();
+    return;
+  }
   if(doSubmit()){
     emit operationSucceed();
   }else{
@@ -459,6 +478,10 @@ void mdtAbstractSqlWidget::onStateSubmittingNewRowEntered()
   pvCurrentState = SubmittingNewRow;
   qDebug() << __FUNCTION__;
 
+  if(!checkBeforeSubmit()){
+    emit errorOccured();
+    return;
+  }
   if(doSubmitNewRow()){
     emit operationSucceed();
   }else{
@@ -597,4 +620,18 @@ void mdtAbstractSqlWidget::buildStateMachine()
   emit toNextEnabledStateChanged(false);
   emit toPreviousEnabledStateChanged(false);
   */
+}
+
+bool mdtAbstractSqlWidget::checkBeforeSubmit()
+{
+  int i;
+
+  for(i = 0; i < pvDataValidators.size(); ++i){
+    Q_ASSERT(pvDataValidators.at(i) != 0);
+    if(!pvDataValidators.at(i)->checkBeforeSubmit()){
+      return false;
+    }
+  }
+
+  return true;
 }
