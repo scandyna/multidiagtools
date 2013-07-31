@@ -41,13 +41,13 @@ classcanvas 131842 class_ref 726914 // mdtClArticleEditor
   xyz 225 720 2005
 end
 relationcanvas 128770 relation_ref 867330 // <unidirectional association>
-  decenter_end 778
+  decenter_end 777
   from ref 128386 z 3006 to ref 128642
   role_a_pos 667 88 3000 no_role_b
   multiplicity_a_pos 623 88 3000 no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 867458 // <unidirectional association>
-  decenter_end 217
+  decenter_end 216
   from ref 128386 z 3006 to ref 128642
   role_a_pos 597 88 3000 no_role_b
   multiplicity_a_pos 553 88 3000 no_multiplicity_b

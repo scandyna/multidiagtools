@@ -1,0 +1,64 @@
+format 76
+
+classcanvas 128130 class_ref 174210 // QSqlTableModel
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 697 220 2000
+end
+classcanvas 128258 class_ref 771842 // mdtSqlDataValidator
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 119 361 2000
+end
+classcanvas 128514 class_ref 771970 // mdtSqlFormWidgetDataValidator
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 11 675 2000
+end
+classcanvas 128770 class_ref 686338 // mdtAbstractSqlWidget
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 125 220 3005
+end
+classcanvas 129282 class_ref 138626 // QObject
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 324 156 3012
+end
+classcanvas 129666 class_ref 679042 // mdtSqlFieldHandler
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 696 590 3018
+end
+relationcanvas 128386 relation_ref 957314 // <unidirectional association>
+  from ref 128258 z 2001 to ref 128130
+  role_a_pos 655 233 3000 no_role_b
+  multiplicity_a_pos 702 263 3000 no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 957442 // <generalisation>
+  from ref 128514 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 874242 // <unidirectional association>
+  from ref 128770 z 3006 to point 95 220
+  line 129026 z 3006 to point 95 250
+  line 129154 z 3006 to ref 128770
+  role_a_pos 12 226 3000 no_role_b
+  multiplicity_a_pos 91 256 3000 no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 963970 // <generalisation>
+  from ref 128258 z 3013 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 964098 // <unidirectional association>
+  from ref 128770 z 3006 to ref 128258
+  role_a_pos 229 346 3000 no_role_b
+  multiplicity_a_pos 319 376 3000 no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 831618 // <generalisation>
+  from ref 129666 z 3019 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 964226 // <unidirectional association>
+  from ref 128514 z 3019 to ref 129666
+  role_a_pos 588 605 3000 no_role_b
+  multiplicity_a_pos 686 635 3000 no_multiplicity_b
+end
+end

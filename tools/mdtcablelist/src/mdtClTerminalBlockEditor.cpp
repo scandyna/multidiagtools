@@ -59,6 +59,10 @@ mdtClTerminalBlockEditor::mdtClTerminalBlockEditor(QObject *parent, const QSqlDa
   pvTerminalEditWidget = new mdtSqlTableWidget;
   pvTerminalEditModel = new QSqlTableModel(this, pvDatabase);
   pvTerminalEditRelation = new mdtSqlRelation;
+  // Setup terminal link view
+  pvTerminalLinkEditWidget = new mdtSqlTableWidget;
+  pvTerminalLinkEditModel = new QSqlTableModel(this, pvDatabase);
+  pvTerminalLinkEditRelation = new mdtSqlRelation;
   // Setup VehicleType_Unit
   pvVehicleTypeWidget = new mdtSqlTableWidget;
   pvVehicleTypeModel = new QSqlTableModel(this, pvDatabase);
@@ -68,6 +72,7 @@ mdtClTerminalBlockEditor::mdtClTerminalBlockEditor(QObject *parent, const QSqlDa
 mdtClTerminalBlockEditor::~mdtClTerminalBlockEditor()
 {
   delete pvTerminalEditRelation;
+  delete pvTerminalLinkEditRelation;
   delete pvVehicleTypeRelation;
 }
 
@@ -79,6 +84,10 @@ bool mdtClTerminalBlockEditor::setupTables()
   }
   // Setup terminal edit table
   if(!setupTerminalEditTable()){
+    return false;
+  }
+  // Setup terminal link edit table
+  if(!setupTerminalLinkEditTable()){
     return false;
   }
   // Setup VehicleType_Unit
@@ -93,17 +102,10 @@ void mdtClTerminalBlockEditor::setupUi(mdtSqlWindow *window)
 {
   Q_ASSERT(window != 0);
 
-  QWidget *unitConnectionEditionWidget;
-  QHBoxLayout *unitConnectionEditionLayout;
-
   window->setSqlWidget(pvUnitWidget);
-  // setup and add unit connect edition widget
-  unitConnectionEditionWidget = new QWidget;
-  unitConnectionEditionLayout = new QHBoxLayout;
-  unitConnectionEditionLayout->addWidget(pvTerminalEditWidget);
-  unitConnectionEditionWidget->setLayout(unitConnectionEditionLayout);
   // Add child widgets
-  window->addChildWidget(unitConnectionEditionWidget, tr("Terminals"));
+  window->addChildWidget(pvTerminalEditWidget, tr("Terminals"));
+  window->addChildWidget(pvTerminalLinkEditWidget, tr("Terminal links"));
   window->addChildWidget(pvVehicleTypeWidget, tr("Vehicles"));
 
   window->enableNavigation();
@@ -257,179 +259,6 @@ void mdtClTerminalBlockEditor::removeVehicleAssignation()
   pvVehicleTypeModel->select();
 }
 
-void mdtClTerminalBlockEditor::addConnection()
-{
-  mdtSqlSelectionDialog selectionDialog;
-  QSqlQueryModel model;
-  QString sql;
-  QList<QVariant> selectedItem;
-  int articleIdFkColumn;
-  int articleIdFk;
-  int unitId;
-  int articleConnectionId;
-  QSqlError sqlError;
-  QModelIndex index;
-
-  // Get current unit ID
-  unitId = currentUnitId();
-  if(unitId < 0){
-    return;
-  }
-  // Get column of Article FK
-  articleIdFkColumn = pvUnitModel->record().indexOf("Article_Id_FK");
-  if(articleIdFkColumn < 0){
-    return;
-  }
-  // Get current article ID
-  index = pvUnitModel->index(pvUnitWidget->currentRow(), articleIdFkColumn);
-  if(!index.isValid()){
-    return;
-  }
-  articleIdFk = pvUnitModel->data(index).toInt();
-  
-  // SQL query to get the list of article connections that are not allready used
-  sql = "SELECT * "\
-        "FROM ArticleConnection_tbl "\
-        "WHERE Article_Id_FK = " + QString::number(articleIdFk) + " "\
-        "AND Id_PK NOT IN ( "\
-        " SELECT ArticleConnection_Id_FK "\
-        " FROM UnitConnection_tbl "\
-        " WHERE Unit_Id_FK = " + QString::number(unitId) + "); ";
-  /**
-        "WHERE Id_PK NOT IN ( "\
-        " SELECT VehicleType_Id_FK "\
-        " FROM VehicleType_Unit_tbl "\
-        " WHERE Unit_Id_FK = " + QString::number(unitId) + " ) "\
-        "ORDER BY Type ASC, SubType ASC, SeriesNumber ASC;";
-        */
-  model.setQuery(sql, pvDatabase);
-  // Setup and show dialog
-  selectionDialog.setMessage("Please select a connection");
-  selectionDialog.setModel(&model);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setColumnHidden("Article_Id_FK", true);
-  selectionDialog.setHeaderData("ConnectorName", tr("Connector"));
-  selectionDialog.setHeaderData("ContactName", tr("Contact"));
-  selectionDialog.setHeaderData("IoType", tr("I/O type"));
-  selectionDialog.setHeaderData("FunctionEN", tr("Function ENG"));
-  selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.addSelectionResultColumn("ConnectorName");
-  selectionDialog.addSelectionResultColumn("ContactName");
-  selectionDialog.addSelectionResultColumn("FunctionEN");
-  selectionDialog.resize(600, 300);
-  selectionDialog.exec();
-  selectedItem = selectionDialog.selectionResult();
-  qDebug() << "Selected: " << selectedItem;
-  if(selectedItem.size() != 4){
-    return;
-  }
-  if(!selectedItem.at(0).isValid()){
-    return;
-  }
-  articleConnectionId = selectedItem.at(0).toInt();
-  if(articleConnectionId < 0){
-    return;
-  }
-  // Insert selected article connection into UnitConnection_tbl
-  QSqlQuery query(pvDatabase);
-  sql = "INSERT INTO UnitConnection_tbl "\
-        "(Unit_Id_FK, ArticleConnection_Id_FK, ConnectorName, ContactName, FunctionEN) "\
-        "VALUES (:Unit_Id_FK, :ArticleConnection_Id_FK, :ConnectorName, :ContactName, :FunctionEN)";
-  query.prepare(sql);
-  query.bindValue(":Unit_Id_FK", unitId);
-  query.bindValue(":ArticleConnection_Id_FK", articleConnectionId);
-  query.bindValue(":ConnectorName", selectedItem.at(1));
-  query.bindValue(":ContactName", selectedItem.at(2));
-  query.bindValue(":FunctionEN", selectedItem.at(3));
-  if(!query.exec()){
-    sqlError = query.lastError();
-    qDebug() << "ERR insert: " << sqlError;
-    QMessageBox msgBox;
-    msgBox.setText(tr("Could not add connection"));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
-    return;
-  }
-  pvTerminalEditModel->select();
-}
-
-void mdtClTerminalBlockEditor::removeConnection()
-{
-  Q_ASSERT(pvTerminalEditWidget->selectionModel() != 0);
-
-  int i;
-  int ret;
-  int row;
-  int unitConnectionIdColumn;
-  QVariant id;
-  QList<int> rows;
-  QList<int> unitConnectionIds;
-  QMessageBox msgBox;
-  QModelIndex index;
-  QModelIndexList indexes = pvTerminalEditWidget->selectionModel()->selectedIndexes();
-
-  // If nothing was selected, we do nothing
-  if(indexes.size() < 1){
-    return;
-  }
-  // Get column of unit connecion ID (PK) in view
-  unitConnectionIdColumn = pvTerminalEditModel->record().indexOf("UnitConnection_Id_PK");
-  if(unitConnectionIdColumn < 0){
-    return;
-  }
-  // We ask confirmation to the user
-  msgBox.setText(tr("You are about to delete selected connections for current unit."));
-  msgBox.setInformativeText(tr("Do you want to continue ?"));
-  msgBox.setIcon(QMessageBox::Warning);
-  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-  msgBox.setDefaultButton(QMessageBox::No);
-  ret = msgBox.exec();
-  if(ret != QMessageBox::Yes){
-    return;
-  }
-  // Build rows list
-  for(i = 0; i < indexes.size(); ++i){
-    row = indexes.at(i).row();
-    if(!rows.contains(row)){
-      rows.append(row);
-    }
-  }
-  // Build list of unit connections to remove
-  for(i = 0; i < rows.size(); ++i){
-    index = pvTerminalEditModel->index(rows.at(i), unitConnectionIdColumn);
-    if(index.isValid()){
-      id = pvTerminalEditModel->data(index);
-      if(id.isValid()){
-        unitConnectionIds.append(id.toInt());
-      }
-    }
-  }
-  // Remove
-  for(i = 0; i < unitConnectionIds.size(); ++i){
-    QString sql;
-    QSqlQuery query(pvDatabase);
-    sql = "DELETE FROM UnitConnection_tbl WHERE Id_PK = " + QString::number(unitConnectionIds.at(i));
-    if(!query.exec(sql)){
-      QSqlError sqlError = query.lastError();
-      mdtError e(MDT_DATABASE_ERROR, "Removing connections from table 'UnitConnection_tbl' failed for Id_PK " + QString::number(unitConnectionIds.at(i)) , mdtError::Error);
-      e.setSystemError(sqlError.number(), sqlError.text());
-      e.commit();
-      QMessageBox msgBox;
-      msgBox.setText(tr("Error occured while removing connecions."));
-      msgBox.setInformativeText(tr("Please see details."));
-      msgBox.setDetailedText(sqlError.text());
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      return;
-    }
-  }
-  // Refresh connecions view
-  pvTerminalEditModel->select();
-}
-
-
 void mdtClTerminalBlockEditor::addTerminal()
 {
   Q_ASSERT(pvTerminalEditModel);
@@ -439,9 +268,12 @@ void mdtClTerminalBlockEditor::addTerminal()
   QModelIndex index;
   int row;
   int column;
+  QString terminalBlockName;
 
   // setup terminal edition dialog and show it to user
-  d.setTerminalBlockName(pvUnitWidget->currentValue("SchemaPosition").toString());
+  terminalBlockName = pvUnitWidget->currentValue("SchemaPosition").toString();
+  d.setTerminalBlockName(terminalBlockName);
+  d.setConnectorName(terminalBlockName);
   d.setWindowTitle(tr("Terminal edition"));
   ret = d.exec();
   if(ret != QDialog::Accepted){
@@ -482,6 +314,7 @@ void mdtClTerminalBlockEditor::addTerminal()
 
 }
 
+/// \todo Links...
 void mdtClTerminalBlockEditor::removeTerminal()
 {
   Q_ASSERT(pvTerminalEditWidget->selectionModel() != 0);
@@ -566,25 +399,6 @@ int mdtClTerminalBlockEditor::currentUnitId()
   }
 
   return id.toInt();
-
-  /**
-  int unitIdColumn;
-  QModelIndex index;
-
-  if(pvUnitWidget->currentRow() < 0){
-    return -1;
-  }
-  unitIdColumn = pvUnitModel->record().indexOf("Id_PK");
-  if(unitIdColumn < 0){
-    return -1;
-  }
-  index = pvUnitModel->index(pvUnitWidget->currentRow(), unitIdColumn);
-  if(!index.isValid()){
-    return -1;
-  }
-
-  return pvUnitModel->data(index).toInt();
-  */
 }
 
 bool mdtClTerminalBlockEditor::setupUnitTable()
@@ -654,6 +468,39 @@ bool mdtClTerminalBlockEditor::setupTerminalEditTable()
     return false;
   }
   pvUnitWidget->addChildWidget(pvTerminalEditWidget, pvTerminalEditRelation);
+
+  return true;
+}
+
+bool mdtClTerminalBlockEditor::setupTerminalLinkEditTable()
+{
+  QSqlError sqlError;
+
+  pvTerminalLinkEditModel->setTable("TerminalBlockLink_view");
+  if(!pvTerminalLinkEditModel->select()){
+    sqlError = pvTerminalLinkEditModel->lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table 'TerminalBlockLink_view'", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClTerminalBlockEditor");
+    e.commit();
+    return false;
+  }
+  pvTerminalLinkEditWidget->setModel(pvTerminalLinkEditModel);
+  pvTerminalLinkEditWidget->setEditionEnabled(false);
+  // Hide relation fields and PK
+  
+  // Give fields a user friendly name
+  
+  // Setup Unit <-> Terminal links relation
+  pvTerminalLinkEditRelation->setParentModel(pvUnitModel);
+  pvTerminalLinkEditRelation->setChildModel(pvTerminalLinkEditModel);
+  if(!pvTerminalLinkEditRelation->addRelation("Id_PK", "UnitStart_Id_PK")){
+    return false;
+  }
+  if(!pvTerminalLinkEditRelation->addRelation("Id_PK", "UnitEnd_Id_PK")){
+    return false;
+  }
+  pvUnitWidget->addChildWidget(pvTerminalLinkEditWidget, pvTerminalLinkEditRelation);
 
   return true;
 }

@@ -1,0 +1,57 @@
+format 76
+
+classcanvas 128002 class_ref 764418 // Article
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 68 140 2000
+end
+classcanvas 128130 class_ref 764546 // Unit
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyzwh 440 107 2000 187 119
+end
+classcanvas 128898 class_ref 764930 // ArticleConnection
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 67 389 2000
+end
+classcanvas 129154 class_ref 765186 // UnitConnection
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 430 390 2000
+end
+note 129538 "Adding a UnitConnection:
+ 1) UnitConnection is totally free:
+    - No reference is made to ArticleConnection
+ 2) UnitConnection is based on a ArticleConnection:
+    A) Show a list of ArticleConnections related to Article on witch Unit is based
+    B) Unit is NOT based on a article: show error, or simply a empty list"
+  xyzwh 73 526 2000 631 155
+relationcanvas 128386 relation_ref 949762 // <association>
+  decenter_begin 100
+  decenter_end 836
+  from ref 128130 z 2001 to point 720 116
+  line 128514 z 2001 to point 720 204
+  line 128642 z 2001 to ref 128130
+  role_a_pos 636 184 3000 role_b_pos 636 96 3000
+  multiplicity_a_pos 636 214 3000 multiplicity_b_pos 636 126 3000
+end
+relationcanvas 128770 relation_ref 950018 // <association>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 406 174 3000 multiplicity_b_pos 296 174 3000
+end
+relationcanvas 129026 relation_ref 950146 // <composition>
+  from ref 128002 z 2001 to ref 128898
+  no_role_a no_role_b
+  multiplicity_a_pos 144 366 3000 multiplicity_b_pos 159 202 3000
+end
+relationcanvas 129282 relation_ref 950402 // <composition>
+  from ref 128130 z 2001 to ref 129154
+  no_role_a no_role_b
+  multiplicity_a_pos 500 367 3000 multiplicity_b_pos 515 233 3000
+end
+relationcanvas 129410 relation_ref 950658 // <association>
+  from ref 128898 z 2001 to ref 129154
+  no_role_a no_role_b
+  multiplicity_a_pos 396 433 3000 multiplicity_b_pos 299 433 3000
+end
+line 129666 -_-_
+  from ref 129538 z 2001 to ref 129154
+end

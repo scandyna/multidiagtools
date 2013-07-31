@@ -24,6 +24,7 @@
 #include "mdtTest.h"
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QSqlDatabase>
 
 class mdtDatabaseTest : public mdtTest
 {
@@ -65,6 +66,7 @@ class mdtDatabaseTest : public mdtTest
  private:
 
   QFileInfo pvDbFileInfo;
+  QSqlDatabase pvDb;
 };
 
 #endif // #ifndef MDT_DATABASE_TEST_H

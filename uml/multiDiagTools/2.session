@@ -1,16 +1,17 @@
 window_sizes 1280 1001 356 918 923 0
 diagrams
-  active  classdiagram_ref 719618 // mdtGraph
-    918 923 100 4 0 0
+  classdiagram_ref 693122 // mdtClUnitEditor
+    734 738 100 4 36 0
+  classdiagram_ref 673538 // mdtSqlWidget
+    734 738 100 4 80 0
+  classdiagram_ref 746114 // mdtSqlForm
+    734 738 100 4 0 0
+  active  classdiagram_ref 746498 // mdtSqlDataValidator
+    918 923 100 4 156 0
 end
 show_stereotypes
-selected operation_ref 1367298 // removeAdjacent
+selected classdiagram_ref 746498 // mdtSqlDataValidator
 open
-  class_ref 733570 // mdtGraph
-  class_ref 733698 // mdtGraphVertex
-  class_ref 733826 // mdtGraphVertexData
-  class_ref 740354 // mdtGraphVertexAdjacent
-  operation_ref 1375746 // setData
-  operation_ref 1375874 // data
+  classdiagram_ref 746370 // mdtSqlFormWindow
 end
 end

@@ -1,6 +1,6 @@
 format 76
 "CableList" // mdttools::CableList
-  revision 1
+  revision 4
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -903,7 +903,6 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
-
     end
 
     class 726658 "ArticleConnection_tbl"
@@ -1054,4 +1053,12 @@ ${inlines}
       end
     end
   end
+
+  package_ref 194562 // CableList_DomainModel2
+
+  package_ref 201090 // CableList_DomainModel3
+
+  package_ref 201218 // CableList_DomainModel4
+
+  package_ref 207746 // Sandbox
 end

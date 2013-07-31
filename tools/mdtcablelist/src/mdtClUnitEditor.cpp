@@ -637,7 +637,7 @@ bool mdtClUnitEditor::setupUnitConnectionEditTable()
   // Setup relation
   pvUnitConnectionEditRelation->setParentModel(pvUnitConnectionViewModel);
   pvUnitConnectionEditRelation->setChildModel(pvUnitConnectionEditModel);
-  if(!pvUnitConnectionEditRelation->addRelation("ArticleConnection_Id_FK", "ArticleConnection_Id_FK")){
+  if(!pvUnitConnectionEditRelation->addRelation("ArticleConnection_Id_PK", "ArticleConnection_Id_FK")){
     return false;
   }
   if(!pvUnitConnectionEditRelation->addRelation("Unit_Id_FK", "Unit_Id_FK")){

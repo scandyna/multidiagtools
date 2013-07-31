@@ -86,9 +86,11 @@ bool mdtClLinkEditor::setupTables()
   if(!setupLinkTable()){
     return false;
   }
+  /**
   if(!setupArticleTable()){
     return false;
   }
+  */
   if(!setupStartUnitTables()){
     return false;
   }

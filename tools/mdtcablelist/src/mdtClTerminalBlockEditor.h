@@ -70,14 +70,6 @@ class mdtClTerminalBlockEditor : public QObject
    */
   void removeVehicleAssignation();
 
-  /*! \brief Add a connection to unit connection table
-   */
-  void addConnection();
-
-  /*! \brief Remove connection from unit connection table
-   */
-  void removeConnection();
-
   /*! \brief Add a terminal to unit connection table
    */
   void addTerminal();
@@ -109,6 +101,10 @@ class mdtClTerminalBlockEditor : public QObject
    */
   bool setupTerminalEditTable();
 
+  /*! \brief Setup terminal link edit table and widget
+   */
+  bool setupTerminalLinkEditTable();
+
   /*! \brief Setup VehicleUnit table and widget
    */
   bool setupVehicleTable();
@@ -127,6 +123,10 @@ class mdtClTerminalBlockEditor : public QObject
   mdtSqlTableWidget *pvTerminalEditWidget;
   QSqlTableModel *pvTerminalEditModel;
   mdtSqlRelation *pvTerminalEditRelation;
+  // Terminal links
+  mdtSqlTableWidget *pvTerminalLinkEditWidget;
+  QSqlTableModel *pvTerminalLinkEditModel;
+  mdtSqlRelation *pvTerminalLinkEditRelation;
   // Vehicle objects
   mdtSqlTableWidget *pvVehicleTypeWidget;
   QSqlTableModel *pvVehicleTypeModel;

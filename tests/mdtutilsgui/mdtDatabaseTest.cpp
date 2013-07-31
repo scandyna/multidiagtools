@@ -31,7 +31,6 @@
 #include "mdtSortFilterProxyModel.h"
 #include "mdtSqlWindow.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
-#include <QSqlDatabase>
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -61,7 +60,7 @@
 void mdtDatabaseTest::initTestCase()
 {
   QTemporaryFile tempFile;
-  QSqlDatabase db;
+  ///QSqlDatabase db;
   QSqlField fld;
   QString sql;
 
@@ -72,12 +71,12 @@ void mdtDatabaseTest::initTestCase()
   qDebug() << "Init, DB file: " << pvDbFileInfo.filePath();
 
   // Open database
-  db = QSqlDatabase::addDatabase("QSQLITE");
-  db.setDatabaseName(pvDbFileInfo.filePath());
-  QVERIFY(db.open());
+  pvDb = QSqlDatabase::addDatabase("QSQLITE");
+  pvDb.setDatabaseName(pvDbFileInfo.filePath());
+  QVERIFY(pvDb.open());
 
   // QSqlQuery must be created after db.open() was called.
-  QSqlQuery q;
+  QSqlQuery q(pvDb);
 
   /*
    * Enable foreing keys support
@@ -94,9 +93,9 @@ void mdtDatabaseTest::initTestCase()
   sql += "'remarks' VARCHAR(500) )";
   QVERIFY(q.exec(sql));
   // Verify some attributes
-  fld = db.record("Client").field("id_PK");
+  fld = pvDb.record("Client").field("id_PK");
   QVERIFY(fld.isAutoValue());
-  fld = db.record("Client").field("first_name");
+  fld = pvDb.record("Client").field("first_name");
   QVERIFY(fld.requiredStatus() == QSqlField::Required);
   // Inert some data
   QVERIFY(q.exec("INSERT INTO 'Client' ('first_name') VALUES('Andy')"));
@@ -120,13 +119,13 @@ void mdtDatabaseTest::initTestCase()
   sql += ");";
   QVERIFY(q.exec(sql));
   // Verify some attributes
-  fld = db.record("Address").field("id_PK");
+  fld = pvDb.record("Address").field("id_PK");
   QVERIFY(fld.isAutoValue());
-  fld = db.record("Address").field("street_name");
+  fld = pvDb.record("Address").field("street_name");
   QVERIFY(fld.requiredStatus() == QSqlField::Required);
-  fld = db.record("Address").field("street_number");
+  fld = pvDb.record("Address").field("street_number");
   QVERIFY(fld.requiredStatus() == QSqlField::Required);
-  fld = db.record("Address").field("id_client_FK");
+  fld = pvDb.record("Address").field("id_client_FK");
   QVERIFY(fld.requiredStatus() == QSqlField::Required);
 
   // Inert some data
@@ -146,12 +145,17 @@ void mdtDatabaseTest::relationsTest()
 {
   QSqlTableModel parentModel;
   QSqlTableModel childModel;
+  QModelIndex index;
   mdtSqlRelation *relation;
   mdtSqlFormWidget *clientWidget;
   mdtSqlTableWidget *addressWidget;
   Ui::mdtSqlFormWidgetTestForm form;
   mdtSqlWindow window;
+  QSqlQuery q(pvDb);
 
+  // We start with a empty table
+  QVERIFY(q.exec("DELETE FROM 'Address'"));
+  QVERIFY(q.exec("DELETE FROM 'Client'"));
   // Setup parent model
   parentModel.setTable("Client");
   parentModel.select();
@@ -186,11 +190,50 @@ void mdtDatabaseTest::relationsTest()
   window.resize(700, 400);
   window.show();
 
-  
+  // Add a row into client table
+  QVERIFY(q.exec("INSERT INTO 'Client' ('id_PK', 'first_name') VALUES(1, 'Client 01')"));
+  QVERIFY(parentModel.select());
+  QCOMPARE(parentModel.rowCount(), 1);
+  index = parentModel.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(parentModel.data(index), QVariant("Client 01"));
+  QCOMPARE(childModel.rowCount(), 0);
+  // Add a address related to client
+  QVERIFY(q.exec("INSERT INTO 'Address' ('street_name', 'street_number', 'id_client_FK') VALUES('Street of client 01', 1, 1)"));
+  QVERIFY(parentModel.select());
+  QCOMPARE(childModel.rowCount(), 1);
+  index = childModel.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(childModel.data(index), QVariant("Street of client 01"));
+  index = childModel.index(0, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(childModel.data(index), QVariant(1));
+  // Add a row into client table
+  QVERIFY(q.exec("INSERT INTO 'Client' ('id_PK', 'first_name') VALUES(2, 'Client 02')"));
+  QVERIFY(parentModel.select());
+  relation->setParentCurrentIndex(1);
+  QCOMPARE(parentModel.rowCount(), 2);
+  index = parentModel.index(1, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(parentModel.data(index), QVariant("Client 02"));
+  QCOMPARE(childModel.rowCount(), 0);
+  // Add a address related to client
+  QVERIFY(q.exec("INSERT INTO 'Address' ('street_name', 'street_number', 'id_client_FK') VALUES('Street of client 02', 1, 2)"));
+  relation->setParentCurrentIndex(1);
+  QCOMPARE(childModel.rowCount(), 1);
+  index = childModel.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(childModel.data(index), QVariant("Street of client 02"));
+  index = childModel.index(0, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(childModel.data(index), QVariant(1));
+
   // Play...
+  /**
   while(window.isVisible()){
     QTest::qWait(1000);
   }
+  */
 }
 
 void mdtDatabaseTest::sqlFieldHandlerTest()

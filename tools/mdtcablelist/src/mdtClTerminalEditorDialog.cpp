@@ -86,6 +86,13 @@ void mdtClTerminalEditorDialog::setTerminalBlockName(const QString &name)
   leTerminalBlock->setText(name);
 }
 
+void mdtClTerminalEditorDialog::setConnectorName(const QString &name)
+{
+  Q_ASSERT(leConnectorName != 0);
+
+  leConnectorName->setText(name);
+}
+
 QVariant mdtClTerminalEditorDialog::connectorName() const
 {
   return pvConnectorName;

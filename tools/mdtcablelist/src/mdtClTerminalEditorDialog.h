@@ -52,6 +52,10 @@ class mdtClTerminalEditorDialog : public QDialog
    */
   void setTerminalBlockName(const QString &name);
 
+  /*! \brief Set the terminal connector name
+   */
+  void setConnectorName(const QString &name);
+
   /*! \brief Get connector name
    *
    * \return Connector name or invalid QVariant if dialog was rejected.

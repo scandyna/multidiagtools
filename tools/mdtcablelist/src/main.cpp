@@ -109,7 +109,7 @@ int main(int argc, char **argv)
   }
   unitEditor->setupUi(&unitEditorWindow);
   unitEditorWindow.setWindowTitle(QObject::tr("Unit edition"));
-  ///unitEditorWindow.show();
+  unitEditorWindow.show();
   // Setup link editor
   linkEditor = new mdtClLinkEditor(0, db);
   if(!linkEditor->setupTables()){
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
   }
   linkEditor->setupUi(&linkEditorWindow);
   linkEditorWindow.setWindowTitle("Link edition");
-  ///linkEditorWindow.show();
+  linkEditorWindow.show();
   // Setup terminal block editor
   terminalBlockEditor = new mdtClTerminalBlockEditor(0, db);
   if(!terminalBlockEditor->setupTables()){

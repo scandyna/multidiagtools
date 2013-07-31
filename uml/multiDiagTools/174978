@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 40
+  revision 42
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2091,6 +2091,23 @@ ${inlines}
 	
       end
 
+      operation 1396226 "addDataValidator"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "validator" type class_ref 771842 // mdtSqlDataValidator
+	  param in name "putAsTopPriority" explicit_type "bool"
+	    defaultvalue "false"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 1322498 "addChildWidget"
 	public explicit_return_type "void"
 	nparams 2
@@ -2526,6 +2543,15 @@ ${inlines}
 "
 	    classrelation_ref 883458 // pvChildWidgets (<unidirectional association>)
 	  b parent class_ref 686338 // mdtAbstractSqlWidget
+      end
+
+      classrelation 974338 // pvDataValidators (<unidirectional association>)
+	relation 964098 --->
+	  a role_name "pvDataValidators" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 974338 // pvDataValidators (<unidirectional association>)
+	  b parent class_ref 771842 // mdtSqlDataValidator
       end
     end
 
@@ -3949,6 +3975,204 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    classdiagram 746114 "mdtSqlForm"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    classdiagram 746370 "mdtSqlFormWindow"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    classdiagram 746242 "mdtSqlFormDialog"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    classdiagram 746498 "mdtSqlDataValidator"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 771842 "mdtSqlDataValidator"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 967554 // pvModel (<unidirectional association>)
+	relation 957314 --->
+	  a role_name "pvModel" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 967554 // pvModel (<unidirectional association>)
+	  b parent class_ref 174210 // QSqlTableModel
+      end
+
+      operation 1389570 "mdtSqlDataValidator"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "model" type class_ref 174210 // QSqlTableModel
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1389698 "~mdtSqlDataValidator"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 1389314 "checkBeforeSubmit"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 974210 // <generalisation>
+	relation 963970 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 974210 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 1396354 "displayWarning"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "text" type class_ref 161026 // QString
+	  param in name "informativeText" type class_ref 161026 // QString
+	  param in name "sqlError" explicit_type "QSqlError"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1396482 "displayError"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "text" type class_ref 161026 // QString
+	  param in name "informativeText" type class_ref 161026 // QString
+	  param in name "sqlError" explicit_type "QSqlError"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 771970 "mdtSqlFormWidgetDataValidator"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 1396738 "mdtSqlFormWidgetDataValidator"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "model" type class_ref 174210 // QSqlTableModel
+	  param in name "fieldHandler" type class_ref 679042 // mdtSqlFieldHandler
+	multiplicity "*"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1396866 "~mdtSqlFormWidgetDataValidator"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 967682 // <generalisation>
+	relation 957442 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 967682 // <generalisation>
+	  b parent class_ref 771842 // mdtSqlDataValidator
+      end
+
+      operation 1389442 "checkBeforeSubmit"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 974466 // pvFieldHandlers (<unidirectional association>)
+	relation 964226 --->
+	  a role_name "pvFieldHandlers" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 974466 // pvFieldHandlers (<unidirectional association>)
+	  b parent class_ref 679042 // mdtSqlFieldHandler
       end
     end
   end
@@ -6205,6 +6429,52 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 720002 // mdtSortFilterProxyModel
+      end
+    end
+
+    artifact 460162 "mdtSqlDataValidator"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 771842 // mdtSqlDataValidator
+      end
+    end
+
+    artifact 460290 "mdtSqlFormWidgetDataValidator"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 771970 // mdtSqlFormWidgetDataValidator
       end
     end
   end
