@@ -103,12 +103,15 @@ class mdtAbstractSqlWidget : public QWidget
    */
   void addDataValidator(mdtSqlDataValidator *validator, bool putAtTopPriority = false);
 
+  /*! \brief Set the user friendly table name
+   */
+  void setUserFriendlyTableName(const QString &name);
+
   /*! \brief Get the user friendly table name
    *
    * If the user friendly table name was not set,
-   *  the database table name is returned
-   *
-   * \pre (Parent) model must be set with setModel() before using this method.
+   *  the database table name is returned.
+   * If model was not set, a empty string is returned.
    */
   QString userFriendlyTableName() const;
 
@@ -124,6 +127,13 @@ class mdtAbstractSqlWidget : public QWidget
    *             by Qt.
    */
   void addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRelation *relation);
+
+  /*! \brief Get a list of all SQL widgets
+   *
+   * Returned list will contain the parent SQL widget
+   *  and all child SQL widgets
+   */
+  QList<mdtAbstractSqlWidget*> sqlWidgets();
 
   /*! \brief Get the current row
    *

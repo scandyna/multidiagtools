@@ -45,6 +45,8 @@ class mdtDatabaseTest : public mdtTest
 
   void sortFilterProxyModelTest();
 
+  void sqlFormWindowTest();
+
   // Will Accept/reject the application's modal widget if not null
   void acceptModalDialog();
   void rejectModalDialog();

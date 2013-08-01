@@ -31,6 +31,8 @@
 #include "mdtSortFilterProxyModel.h"
 #include "mdtSqlWindow.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
+#include "mdtSqlForm.h"
+#include "mdtSqlFormWindow.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -774,6 +776,30 @@ void mdtDatabaseTest::sortFilterProxyModelTest()
     QTest::qWait(1000);
   }
   */
+}
+
+void mdtDatabaseTest::sqlFormWindowTest()
+{
+  mdtSqlFormWindow fw;
+  Ui::mdtSqlFormWidgetTestForm *uif = new Ui::mdtSqlFormWidgetTestForm;
+
+  uif->setupUi(fw.mainSqlWidget());
+  QVERIFY(fw.setTable("Client"));
+  fw.sqlWindow()->enableEdition();
+  fw.sqlWindow()->enableNavigation();
+  QVERIFY(fw.addChildTable("Address", tr("Client's addresses")));
+  QVERIFY(fw.addRelation("id_PK", "Address", "id_client_FK"));
+
+  fw.show();
+  
+  /*
+   * Play
+   */
+  while(fw.sqlWindow()->isVisible()){
+    QTest::qWait(1000);
+  }
+
+  delete uif;
 }
 
 void mdtDatabaseTest::clickMessageBoxButton(QMessageBox::StandardButton button)

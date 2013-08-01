@@ -37,6 +37,7 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QCryptographicHash>
+#include <QLineEdit>
 #include <QDebug>
 
 /*
@@ -73,6 +74,7 @@ int main(int argc, char **argv)
   QMessageBox msgbox;
   QProgressDialog pd;
   QCryptographicHash hash(QCryptographicHash::Sha1);
+  QLineEdit lineEdit;
 
   // Basic containers usage
   lst << 1 << 2 << 3;
@@ -99,7 +101,9 @@ int main(int argc, char **argv)
   // We just want to run for a short time, but app.exec() blocks until
   //  event loop is ended with quit. So, we use a timer to send this event.
   QObject::connect(&timer, SIGNAL(timeout()), qApp, SLOT(quit()));
-  timer.start(500);
+  timer.start(2000);
+  
+  lineEdit.show();
   
   // Thread
   thd.wait();

@@ -53,6 +53,7 @@ void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
   }
   pvModel = model;
   doSetModel(model);
+  pvUserFriendlyTableName.clear();
   Q_ASSERT(pvModel == model);
   connect(pvModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
   connect(pvModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
@@ -77,13 +78,20 @@ void mdtAbstractSqlWidget::addDataValidator(mdtSqlDataValidator *validator, bool
   }
 }
 
+void mdtAbstractSqlWidget::setUserFriendlyTableName(const QString &name)
+{
+  pvUserFriendlyTableName = name;
+}
+
 QString mdtAbstractSqlWidget::userFriendlyTableName() const
 {
-  Q_ASSERT(pvModel != 0);
-
+  if(pvModel == 0){
+    return QString();
+  }
   if(!pvUserFriendlyTableName.isEmpty()){
     return pvUserFriendlyTableName;
   }
+  Q_ASSERT(pvModel != 0);
   return pvModel->tableName();
 }
 
@@ -102,6 +110,20 @@ void mdtAbstractSqlWidget::addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRe
   connect(this, SIGNAL(currentRowChanged(int)), relation, SLOT(setParentCurrentIndex(int)));
   // Force a update of relations
   relation->setParentCurrentIndex(currentRow());
+}
+
+QList<mdtAbstractSqlWidget*> mdtAbstractSqlWidget::sqlWidgets()
+{
+  QList<mdtAbstractSqlWidget*> list;
+  int i;
+
+  list.append(this);
+  for(i = 0; i < pvChildWidgets.size(); ++i){
+    Q_ASSERT(pvChildWidgets.at(i) != 0);
+    list.append(pvChildWidgets.at(i));
+  }
+
+  return list;
 }
 
 QVariant mdtAbstractSqlWidget::currentValue(const QString &fieldName) const

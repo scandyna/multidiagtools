@@ -62,6 +62,8 @@ set (HEADER_FILES
           mdtSortFilterProxyModel.h
           mdtSqlDataValidator.h
           mdtSqlFormWidgetDataValidator.h
+          mdtSqlForm.h
+          mdtSqlFormWindow.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -99,6 +101,8 @@ set (SOURCES_FILES
           mdtSortFilterProxyModel.cpp
           mdtSqlDataValidator.cpp
           mdtSqlFormWidgetDataValidator.cpp
+          mdtSqlForm.cpp
+          mdtSqlFormWindow.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

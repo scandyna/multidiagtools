@@ -118,6 +118,8 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   pbRemove = 0;
   pvDelegateIsEditingData = false;
   pvDefaultColumnToSelect = 0;
+
+  setEditionEnabled(false);
 }
 
 mdtSqlTableWidget::~mdtSqlTableWidget()

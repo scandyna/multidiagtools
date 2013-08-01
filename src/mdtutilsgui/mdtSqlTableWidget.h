@@ -84,6 +84,9 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
  public:
 
   /*! \brief Constructor
+   *
+   * Setup a QTableView and init some other things.
+   * The table view will not be editable, use setEditionEnabled() to alter this.
    */
   mdtSqlTableWidget(QWidget *parent = 0);
 

@@ -110,6 +110,7 @@ int main(int argc, char **argv)
   unitEditor->setupUi(&unitEditorWindow);
   unitEditorWindow.setWindowTitle(QObject::tr("Unit edition"));
   unitEditorWindow.show();
+  qDebug() << "unitEditorWindow's childrens: " << unitEditorWindow.children();
   // Setup link editor
   linkEditor = new mdtClLinkEditor(0, db);
   if(!linkEditor->setupTables()){

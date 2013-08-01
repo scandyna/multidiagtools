@@ -1,6 +1,6 @@
 format 76
 "Qt4" // Qt4
-  revision 54
+  revision 55
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3237,6 +3237,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 981634 // <generalisation>
+	relation 971394 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 981634 // <generalisation>
+	  b parent class_ref 316162 // QWidget
       end
     end
 
