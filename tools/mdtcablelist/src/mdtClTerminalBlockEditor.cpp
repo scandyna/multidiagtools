@@ -271,7 +271,7 @@ void mdtClTerminalBlockEditor::addTerminal()
   QString terminalBlockName;
 
   // setup terminal edition dialog and show it to user
-  terminalBlockName = pvUnitWidget->currentValue("SchemaPosition").toString();
+  terminalBlockName = pvUnitWidget->currentData("SchemaPosition").toString();
   d.setTerminalBlockName(terminalBlockName);
   d.setConnectorName(terminalBlockName);
   d.setWindowTitle(tr("Terminal edition"));
@@ -393,7 +393,7 @@ int mdtClTerminalBlockEditor::currentUnitId()
 {
   QVariant id;
 
-  id = pvUnitWidget->currentValue("Id_PK");
+  id = pvUnitWidget->currentData("Id_PK");
   if(!id.isValid()){
     return -1;
   }

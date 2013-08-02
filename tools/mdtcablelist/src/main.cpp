@@ -46,7 +46,6 @@ int main(int argc, char **argv)
   int retVal;
   mdtSqlWindow vehicleTypeEditorWindow;
   mdtSqlWindow articleEditorWindow;
-  mdtSqlWindow unitEditorWindow;
   mdtClVehicleTypeEditor *vehicleTypeEditor;
   mdtClArticleEditor *articleEditor;
   mdtClUnitEditor *unitEditor;
@@ -107,10 +106,7 @@ int main(int argc, char **argv)
     QMessageBox::warning(0, "DB setup error", "Cannot setup tables for unit editor");
     return 1;
   }
-  unitEditor->setupUi(&unitEditorWindow);
-  unitEditorWindow.setWindowTitle(QObject::tr("Unit edition"));
-  unitEditorWindow.show();
-  qDebug() << "unitEditorWindow's childrens: " << unitEditorWindow.children();
+  unitEditor->form()->show();
   // Setup link editor
   linkEditor = new mdtClLinkEditor(0, db);
   if(!linkEditor->setupTables()){

@@ -27,6 +27,7 @@
 #include <QSqlTableModel>
 #include <QSqlError>
 #include <QList>
+#include <QVariant>
 
 mdtSqlForm::mdtSqlForm(QObject *parent)
  : QObject(parent)
@@ -69,6 +70,8 @@ bool mdtSqlForm::setTable(const QString &tableName, const QString &userFriendlyT
     pvMainSqlWidget->setUserFriendlyTableName(userFriendlyTableName);
   }
   pvMainSqlWidget->mapFormWidgets();
+
+  return true;
 }
 
 bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db)
@@ -139,28 +142,101 @@ bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &chil
 
 mdtAbstractSqlWidget *mdtSqlForm::sqlWidget(const QString &tableName)
 {
-}
-
-mdtSqlFormWidget *mdtSqlForm::sqlFormWidget(const QString & tableName)
-{
-}
-
-mdtSqlTableWidget *mdtSqlForm::sqlTableWidget(const QString & tableName)
-{
-}
-
-QSqlTableModel *mdtSqlForm::model(const QString &tableName)
-{
   QList<mdtAbstractSqlWidget*> sqlWidgets;
   int i;
 
   sqlWidgets = pvMainSqlWidget->sqlWidgets();
   for(i = 0; i < sqlWidgets.size(); ++i){
     Q_ASSERT(sqlWidgets.at(i) != 0);
+    Q_ASSERT(sqlWidgets.at(i)->model() != 0);
     if(sqlWidgets.at(i)->model()->tableName() == tableName){
-      return sqlWidgets.at(i)->model();
+      return sqlWidgets.at(i);
     }
   }
 
   return 0;
+}
+
+mdtSqlFormWidget *mdtSqlForm::sqlFormWidget(const QString &tableName)
+{
+  mdtAbstractSqlWidget *w;
+
+  w = sqlWidget(tableName);
+  if(w == 0){
+    return 0;
+  }
+
+  return dynamic_cast<mdtSqlFormWidget*>(w);
+}
+
+mdtSqlTableWidget *mdtSqlForm::sqlTableWidget(const QString &tableName)
+{
+  mdtAbstractSqlWidget *w;
+
+  w = sqlWidget(tableName);
+  if(w == 0){
+    return 0;
+  }
+
+  return dynamic_cast<mdtSqlTableWidget*>(w);
+}
+
+QSqlTableModel *mdtSqlForm::model(const QString &tableName)
+{
+  mdtAbstractSqlWidget *w;
+
+  w = sqlWidget(tableName);
+  if(w == 0){
+    return 0;
+  }
+
+  return w->model();
+}
+
+int mdtSqlForm::currentRow(const QString &tableName)
+{
+  mdtAbstractSqlWidget *w;
+
+  // Find SQL widget
+  w = sqlWidget(tableName);
+  if(w == 0){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
+    e.commit();
+    return -1;
+  }
+
+  return w->currentRow();
+}
+
+QVariant mdtSqlForm::currentData(const QString &tableName, const QString &fieldName)
+{
+  mdtAbstractSqlWidget *w;
+
+  // Find SQL widget
+  w = sqlWidget(tableName);
+  if(w == 0){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
+    e.commit();
+    return QVariant();
+  }
+
+  return w->currentData(fieldName);
+}
+
+QVariant mdtSqlForm::data(const QString &tableName, int row, const QString &fieldName)
+{
+  mdtAbstractSqlWidget *w;
+
+  // Find SQL widget
+  w = sqlWidget(tableName);
+  if(w == 0){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
+    e.commit();
+    return QVariant();
+  }
+
+  return w->data(row, fieldName);
 }

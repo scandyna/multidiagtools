@@ -145,11 +145,17 @@ class mdtAbstractSqlWidget : public QWidget
    */
   virtual int currentRow() const = 0;
 
-  /*! \brief Get current value for given field name
+  /*! \brief Get current data for given field name
    *
    * \pre (Parent) model must be set with setModel() before using this method.
    */
-  QVariant currentValue(const QString &fieldName) const;
+  QVariant currentData(const QString &fieldName) const;
+
+  /*! \brief Get data for given row and field name
+   *
+   * \pre (Parent) model must be set with setModel() before using this method.
+   */
+  QVariant data(int row, const QString &fieldName) const;
 
   /*! \brief Get row count
    *

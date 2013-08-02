@@ -119,19 +119,54 @@ class mdtSqlForm : public QObject
    */
   mdtSqlTableWidget *sqlTableWidget(const QString &tableName);
 
+  /*! \brief Get model that acts on given table name
+   *
+   * \return QSqlTableModel object or a null pointer if table was not found.
+   */
+  QSqlTableModel *model(const QString &tableName);
+
+  /*! \brief Get the current row of given table name
+   *
+   * Current row can be the currently selected row
+   *  (case of a table view),
+   *  or simply the current row that is displayed in a form view.
+   *
+   * Note that SQL widget related to given tableName is searched
+   *  at each request. If several access to currentRow is needed,
+   *  it can be better to get a pointer to related widget with sqlWidget() ,
+   *  and call his currentRow() method.
+   *
+   * \return Current row, or value < 0 on error (f.ex. table not found).
+   */
+  int currentRow(const QString &tableName);
+
+  /*! \brief Get current data for given table and field name
+   *
+   * Note that SQL widget related to given tableName is searched
+   *  at each request. If several access to currentData is needed,
+   *  it can be better to get a pointer to related widget with sqlWidget() ,
+   *  and call his currentData() method.
+   *
+   * \return Current value, or a invalid QVariant on error (f.ex. table or field not found).
+   */
+  QVariant currentData(const QString &tableName, const QString &fieldName);
+
+  /*! \brief Get data for given table , row and field name
+   *
+   * Note that SQL widget related to given tableName is searched
+   *  at each request. If several access to data is needed,
+   *  it can be better to get a pointer to related widget with sqlWidget() ,
+   *  and call his data() method.
+   *
+   * \return Current value, or a invalid QVariant on error (f.ex. table, row or field not found).
+   */
+  QVariant data(const QString &tableName, int row, const QString &fieldName);
+
  protected:
 
   /*! \brief Add given child widget
    */
   virtual void addChildWidget(mdtAbstractSqlWidget *widget) = 0;
-
-  /*! \brief Get model for a given tableName
-   *
-   * Will search in all existing SQL widgets for a model that has requested tableName.
-   *
-   * \return QSqlTableModel object or a null pointer if not found.
-   */
-  QSqlTableModel *model(const QString &tableName);
 
  private:
 

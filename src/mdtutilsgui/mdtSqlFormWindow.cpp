@@ -21,13 +21,11 @@
 #include "mdtSqlFormWindow.h"
 #include "mdtAbstractSqlWidget.h"
 #include "mdtSqlFormWidget.h"
-#include "mdtSqlTableWidget.h"
 #include "mdtSqlWindow.h"
 
 mdtSqlFormWindow::mdtSqlFormWindow(QObject *parent)
  : mdtSqlForm(parent)
 {
-  ///pvMainSqlWidget = new mdtSqlFormWidget;
   pvSqlWindow = new mdtSqlWindow;
   pvSqlWindow->setSqlWidget(mainSqlWidget());
 }
@@ -36,15 +34,6 @@ mdtSqlFormWindow::~mdtSqlFormWindow()
 {
   delete pvSqlWindow;
 }
-
-/**
-mdtSqlFormWidget *mdtSqlFormWindow::mainSqlWidget()
-{
-  Q_ASSERT(pvMainSqlWidget != 0);
-
-  return pvMainSqlWidget;
-}
-*/
 
 mdtSqlWindow *mdtSqlFormWindow::sqlWindow()
 {
@@ -55,6 +44,7 @@ mdtSqlWindow *mdtSqlFormWindow::sqlWindow()
 
 void mdtSqlFormWindow::show()
 {
+  pvSqlWindow->setWindowTitle(mainSqlWidget()->userFriendlyTableName());
   pvSqlWindow->show();
 }
 
@@ -64,15 +54,3 @@ void mdtSqlFormWindow::addChildWidget(mdtAbstractSqlWidget *widget)
 
   pvSqlWindow->addChildWidget(widget, widget->userFriendlyTableName());
 }
-
-/**
-bool mdtSqlFormWindow::setTable(const QString &tableName, QSqlDatabase, const QString &uiWidgetClass)
-{
-}
-*/
-
-/**
-bool mdtSqlFormWindow::addChildTable(const QString &tableName, QSqlDatabase db)
-{
-}
-*/

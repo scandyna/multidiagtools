@@ -452,9 +452,9 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QCOMPARE(data.toString(), QString("New name 1"));
   data = model.data(model.index(row, model.fieldIndex("remarks")));
   QCOMPARE(data.toString(), QString("New remark 1"));
-  // Check that currentValue() works
-  QCOMPARE(sqlFormWidget->currentValue("first_name"), QVariant("New name 1"));
-  QCOMPARE(sqlFormWidget->currentValue("remarks"), QVariant("New remark 1"));
+  // Check that currentData() works
+  QCOMPARE(sqlFormWidget->currentData("first_name"), QVariant("New name 1"));
+  QCOMPARE(sqlFormWidget->currentData("remarks"), QVariant("New remark 1"));
   // Check that widget displays the correct row
   QCOMPARE(leFirstName->text(), QString("New name 1"));
   QCOMPARE(leRemarks->text(), QString("New remark 1"));
@@ -783,21 +783,46 @@ void mdtDatabaseTest::sqlFormWindowTest()
   mdtSqlFormWindow fw;
   Ui::mdtSqlFormWidgetTestForm *uif = new Ui::mdtSqlFormWidgetTestForm;
 
+  // Setup Ui
   uif->setupUi(fw.mainSqlWidget());
+  // Try some errors
+  QVERIFY(!fw.setTable("ABCD"));
+  QVERIFY(!fw.addChildTable("1234"));
+  // Setup form
   QVERIFY(fw.setTable("Client"));
-  fw.sqlWindow()->enableEdition();
-  fw.sqlWindow()->enableNavigation();
   QVERIFY(fw.addChildTable("Address", tr("Client's addresses")));
   QVERIFY(fw.addRelation("id_PK", "Address", "id_client_FK"));
-
+  fw.sqlWindow()->enableEdition();
+  fw.sqlWindow()->enableNavigation();
   fw.show();
-  
+  // Check that widgets can be found
+  QVERIFY(fw.sqlWidget("HuHbzg") == 0);
+  QVERIFY(fw.sqlWidget("Client") != 0);
+  QVERIFY(fw.sqlWidget("Address") != 0);
+  QVERIFY(fw.sqlFormWidget("Client") != 0);
+  QVERIFY(fw.sqlTableWidget("Client") == 0);
+  QVERIFY(fw.sqlFormWidget("Address") == 0);
+  QVERIFY(fw.sqlTableWidget("Address") != 0);
+  // Check that models can be found
+  QVERIFY(fw.model("JKh k") == 0);
+  QVERIFY(fw.model("Client") != 0);
+  QVERIFY(fw.model("Address") != 0);
+  // Check currentRow
+  QCOMPARE(fw.currentRow("Client"), 0);
+  QVERIFY(fw.currentRow("jhjkh") < 0);
+  // Check currentValue
+  QVERIFY(fw.currentData("Client", "id_PK").isValid());
+  QVERIFY(!fw.currentData("AA", "id_PK").isValid());
+  QVERIFY(!fw.currentData("Client", "JJ").isValid());
+
   /*
    * Play
    */
+  /*
   while(fw.sqlWindow()->isVisible()){
     QTest::qWait(1000);
   }
+  */
 
   delete uif;
 }

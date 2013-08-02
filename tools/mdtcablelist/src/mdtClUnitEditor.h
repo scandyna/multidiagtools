@@ -23,6 +23,7 @@
 
 #include <QSqlDatabase>
 #include <QObject>
+#include "mdtSqlFormWindow.h"
 
 class mdtSqlWindow;
 class mdtSqlFormWidget;
@@ -30,6 +31,8 @@ class mdtSqlTableWidget;
 class mdtSqlRelation;
 class QSqlTableModel;
 class QPushButton;
+
+class mdtSqlFormWindow;
 
 /*! \brief Cable list's device editor
  */
@@ -52,6 +55,10 @@ class mdtClUnitEditor : public QObject
    * \param includeConnections If true, connection_tbl will be added as child widget.
    */
   bool setupTables(bool includeConnections);
+
+  /*! \brief Get form object
+   */
+  mdtSqlFormWindow *form();
 
   /*! \brief Setup GUI
    *
@@ -122,24 +129,29 @@ class mdtClUnitEditor : public QObject
 
   QSqlDatabase pvDatabase;
   // Unit objects
-  mdtSqlFormWidget *pvUnitWidget;
-  QSqlTableModel *pvUnitModel;
+  ///mdtSqlFormWidget *pvUnitWidget;
+  ///QSqlTableModel *pvUnitModel;
   // Unit connection view objects
-  mdtSqlTableWidget *pvUnitConnectionViewWidget;
-  QSqlTableModel *pvUnitConnectionViewModel;
-  mdtSqlRelation *pvUnitConnectionViewRelation;
+  ///mdtSqlTableWidget *pvUnitConnectionViewWidget;
+  ///QSqlTableModel *pvUnitConnectionViewModel;
+  ///mdtSqlRelation *pvUnitConnectionViewRelation;
   // Unit connection edit objects
-  mdtSqlFormWidget *pvUnitConnectionEditWidget;
-  QSqlTableModel *pvUnitConnectionEditModel;
-  mdtSqlRelation *pvUnitConnectionEditRelation;
+  ///mdtSqlFormWidget *pvUnitConnectionEditWidget;
+  ///QSqlTableModel *pvUnitConnectionEditModel;
+  ///mdtSqlRelation *pvUnitConnectionEditRelation;
   // Vehicle objects
-  mdtSqlTableWidget *pvVehicleTypeWidget;
-  QSqlTableModel *pvVehicleTypeModel;
-  mdtSqlRelation *pvVehicleTypeRelation;
+  ///mdtSqlTableWidget *pvVehicleTypeWidget;
+  ///QSqlTableModel *pvVehicleTypeModel;
+  ///mdtSqlRelation *pvVehicleTypeRelation;
+  
+  // Form object
+  mdtSqlFormWindow *pvForm;
   // Base article objects
+  /**
   mdtSqlTableWidget *pvArticleWidget;
   QSqlTableModel *pvArticleModel;
   mdtSqlRelation *pvArticleRelation;
+  */
 };
 
 #endif  // #ifndef

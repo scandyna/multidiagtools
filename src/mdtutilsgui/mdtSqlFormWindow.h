@@ -25,9 +25,6 @@
 #include <QString>
 #include <QSqlDatabase>
 
-class mdtSqlForm;
-class mdtSqlFormWidget;
-class mdtSqlTableWidget;
 class mdtSqlWindow;
 
 /*! \brief SQL form window
@@ -58,15 +55,6 @@ class mdtSqlFormWindow : public mdtSqlForm
    */
   ~mdtSqlFormWindow();
 
-  /*! \brief Get the main SQL widget
-   *
-   * Use this method to get the widget to give
-   *  as argument to setupUi() method of your Ui widget.
-   *
-   * \post Returns a valid object.
-   */
-  ///mdtSqlFormWidget *mainSqlWidget();
-
   /*! \brief Access SQL window instance
    *
    * \post Returns a valid object.
@@ -85,7 +73,6 @@ class mdtSqlFormWindow : public mdtSqlForm
 
   Q_DISABLE_COPY(mdtSqlFormWindow);
 
-  ///mdtSqlFormWidget *pvMainSqlWidget;
   mdtSqlWindow *pvSqlWindow;
 };
 

@@ -61,10 +61,8 @@ void mdtSqlWindow::setSqlWidget(mdtAbstractSqlWidget *sqlWidget)
   centralWidget()->layout()->addWidget(pvMainSqlWidget);
 }
 
-///void mdtSqlWindow::addChildWidget(mdtAbstractSqlWidget *sqlWidget, const QString &label)
 void mdtSqlWindow::addChildWidget(QWidget *widget, const QString &label)
 {
-  ///Q_ASSERT(sqlWidget != 0);
   Q_ASSERT(widget != 0);
 
   // Setup tab widget if needed
@@ -73,7 +71,6 @@ void mdtSqlWindow::addChildWidget(QWidget *widget, const QString &label)
     centralWidget()->layout()->addWidget(pvChildsTabWidget);
   }
   Q_ASSERT(pvChildsTabWidget != 0);
-  ///pvChildsTabWidget->addTab(sqlWidget, label);
   pvChildsTabWidget->addTab(widget, label);
 }
 

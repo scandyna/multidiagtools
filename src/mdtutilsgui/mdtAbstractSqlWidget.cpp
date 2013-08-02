@@ -126,15 +126,20 @@ QList<mdtAbstractSqlWidget*> mdtAbstractSqlWidget::sqlWidgets()
   return list;
 }
 
-QVariant mdtAbstractSqlWidget::currentValue(const QString &fieldName) const
+QVariant mdtAbstractSqlWidget::currentData(const QString &fieldName) const
+{
+  Q_ASSERT(pvModel != 0);
+
+  return data(currentRow(), fieldName);
+}
+
+QVariant mdtAbstractSqlWidget::data(int row, const QString &fieldName) const
 {
   Q_ASSERT(pvModel != 0);
 
   int column;
-  int row;
   QModelIndex index;
 
-  row = currentRow();
   if(row < 0){
     return QVariant();
   }
