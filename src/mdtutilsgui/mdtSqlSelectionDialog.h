@@ -25,12 +25,13 @@
 #include <QList>
 #include <QString>
 #include <QStringList>
+#include <QModelIndex>
 
 class QTableView;
 class QSqlQueryModel;
 class QLabel;
 
-/*! \brief Provide a way for the user to select a row in a set of data
+/*! \brief Provide a way for the user to select row in a set of data
  */
 class mdtSqlSelectionDialog : public QDialog
 {
@@ -54,7 +55,7 @@ class mdtSqlSelectionDialog : public QDialog
    *
    * \pre model must be a valid pointer.
    */
-  void setModel(QSqlQueryModel *model);
+  void setModel(QSqlQueryModel *model, bool allowMultiSelection = false);
 
   /*! \brief Set a user friendly name for a column
    *
@@ -102,16 +103,35 @@ class mdtSqlSelectionDialog : public QDialog
    *  in the same order.
    *
    * If the user reject the dialog, a empty list is returned.
+   *
+   * This method works only for single row selection.
    */
   QList<QVariant> selectionResult();
 
+  /*! \brief Return data that user has selected
+   *
+   * The index list only contains columns that where set with
+   *  setSelectionResultColumns() or addSelectionResultColumn() .
+   *
+   * This method alos works for multiple rows selection.
+   */
+  QModelIndexList selectionResults();
+
  public slots:
+
+  /*! \brief Overloads QDialog to to build selection results
+   */
+  void accept();
 
   /*! \brief Overloads QDialog to tell selectionResult() that it must return a empty result
    */
   void reject();
 
  private:
+
+  /*! \brief Build the election results
+   */
+  void buildSelectionResults();
 
   Q_DISABLE_COPY(mdtSqlSelectionDialog);
 
@@ -120,6 +140,7 @@ class mdtSqlSelectionDialog : public QDialog
   QSqlQueryModel *pvModel;
   QList<int> pvSelectionResultColumns;
   bool pvDialogRejected;
+  QModelIndexList pvSelectionResults;
 };
 
 #endif  // #ifndef MDT_SQL_SELECTION_DIALOG_H

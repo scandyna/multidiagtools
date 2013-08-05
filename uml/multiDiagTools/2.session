@@ -1,21 +1,20 @@
-window_sizes 1280 1001 331 943 923 0
+window_sizes 1280 1001 356 918 923 0
 diagrams
-  classdiagram_ref 693122 // mdtClUnitEditor
-    734 738 100 4 36 0
-  active  classdiagram_ref 746114 // mdtSqlForm
-    943 923 100 18 0 0
-  classdiagram_ref 746370 // mdtSqlFormWindow
-    754 738 100 18 0 0
-  classdiagram_ref 666626 // mdtSqlWindow
-    754 738 100 4 24 0
-  classdiagram_ref 746242 // mdtSqlFormDialog
-    754 738 100 4 0 0
+  classdiagram_ref 739330 // Conceptual
+    918 923 80 3 0 0
+  active  classdiagram_ref 753154 // mdtClUnitVehicle
+    918 923 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1411074 // mdtSqlFormWindow
+selected operation_ref 1431682 // lastError
 open
-  operation_ref 1410946 // addRelation
-  class_ref 778626 // mdtSqlFormWindow
-  classrelation_ref 974466 // pvFieldHandlers (<unidirectional association>)
+  classview_ref 457602 // mdtCableList
+  classview_ref 483842 // Conceptual
+  
+  package_ref 208002 // DatabaseLogical
+  classdiagram_ref 753026 // mdtClUnitComponent
+  operation_ref 1425026 // mdtClUnitVehicleType
+  operation_ref 1425154 // ~mdtClUnitVehicleType
+  classview_ref 267138 // mdtPortTerm
 end
 end

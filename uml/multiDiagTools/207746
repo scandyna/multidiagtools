@@ -1,6 +1,6 @@
 format 76
 "Sandbox" // mdttools::CableList::Sandbox
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -26,7 +26,9 @@ format 76
   package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
   show_infonote default drawing_language default show_stereotype_properties default
   
-  package_ref 207874 // Conceptual
+  package_ref 207874 // DatabaseConceptual
 
-  package_ref 208002 // Logical
+  package_ref 208002 // DatabaseLogical
+
+  package_ref 214530 // Program
 end

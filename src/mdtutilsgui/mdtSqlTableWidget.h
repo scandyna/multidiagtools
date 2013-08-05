@@ -26,6 +26,7 @@
 #include <QModelIndex>
 #include <QStyledItemDelegate>
 #include <QString>
+#include <QStringList>
 
 class QTableView;
 class QHBoxLayout;
@@ -170,6 +171,34 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    * \pre Model must be set with setModel() before using this method.
    */
   void setDefaultColumnToSelect(const QString &fieldName);
+
+  /*! \brief Get a list of currently selected indexes
+   *
+   * Will return a list of indexes that contains only coulumns
+   *  specified by columnList.
+   * This alos works for multiple rows selection.
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  QModelIndexList indexListOfSelectedRows(const QList<int> &columnList);
+
+  /*! \brief Get a list of currently selected indexes
+   *
+   * Will return a list of indexes that contains only fields
+   *  specified by fieldList.
+   * This alos works for multiple rows selection.
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  QModelIndexList indexListOfSelectedRows(const QStringList &fieldList);
+
+  /*! \brief Get a list of currently selected indexes
+   *
+   * \overload indexListOfSelectedRows(const QStringList &)
+   *
+   * This is a variant for single column.
+   */
+  QModelIndexList indexListOfSelectedRows(const QString &field);
 
  public slots:
 

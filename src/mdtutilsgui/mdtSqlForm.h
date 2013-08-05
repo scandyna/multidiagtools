@@ -25,12 +25,14 @@
 #include <QString>
 #include <QSqlDatabase>
 #include <QHash>
+#include <QSqlError>
 
 class mdtAbstractSqlWidget;
 class mdtSqlFormWidget;
 class mdtSqlTableWidget;
 class mdtSqlRelation;
 class QSqlTableModel;
+
 
 /*! \brief Base class for high level SQL widgets API
  *
@@ -124,6 +126,19 @@ class mdtSqlForm : public QObject
    * \return QSqlTableModel object or a null pointer if table was not found.
    */
   QSqlTableModel *model(const QString &tableName);
+
+  /*! \brief Call select on model that acts on given table name
+   *
+   * \return True on success, false if tableName was not found or other error.
+   *          On failure, the last error is avaliable with lastError()
+   */
+  bool select(const QString &tableName);
+
+  /*! \brief Get last error of model that acts on tableName
+   *
+   * \return A valid QSqlError if table was found and a error occured.
+   */
+  QSqlError lastError(const QString &tableName);
 
   /*! \brief Get the current row of given table name
    *

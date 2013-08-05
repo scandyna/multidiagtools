@@ -25,7 +25,6 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QSqlRecord>
-#include <QModelIndex>
 #include <QItemSelectionModel>
 #include <QLabel>
 
@@ -48,7 +47,6 @@ mdtSqlSelectionDialog::mdtSqlSelectionDialog(QWidget *parent)
   pvTableView = new QTableView;
   pvTableView->setSortingEnabled(true);
   pvTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-  pvTableView->setSelectionMode(QAbstractItemView::SingleSelection);
   pvTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
   layout->addWidget(pvTableView);
   // Setup buttons
@@ -70,7 +68,7 @@ void mdtSqlSelectionDialog::setMessage(const QString &message)
   pvMessageLabel->setText(message);
 }
 
-void mdtSqlSelectionDialog::setModel(QSqlQueryModel *model)
+void mdtSqlSelectionDialog::setModel(QSqlQueryModel *model, bool allowMultiSelection)
 {
   Q_ASSERT(model != 0);
 
@@ -78,6 +76,11 @@ void mdtSqlSelectionDialog::setModel(QSqlQueryModel *model)
   pvTableView->setModel(model);
   pvTableView->resizeColumnsToContents();
   pvTableView->resizeRowsToContents();
+  if(allowMultiSelection){
+    pvTableView->setSelectionMode(QAbstractItemView::MultiSelection);
+  }else{
+    pvTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+  }
 }
 
 void mdtSqlSelectionDialog::setHeaderData(const QString &fieldName, const QString &data)
@@ -152,6 +155,7 @@ QList<QVariant> mdtSqlSelectionDialog::selectionResult()
   QModelIndex index;
   QModelIndexList selectedRows;
 
+  /**
   if(pvDialogRejected){
     return result;
   }
@@ -168,12 +172,60 @@ QList<QVariant> mdtSqlSelectionDialog::selectionResult()
     index = pvModel->index(row, pvSelectionResultColumns.at(i));
     result.append(pvModel->data(index));
   }
+  */
+  if(pvSelectionResults.isEmpty()){
+    return result;
+  }
+  // We take only first row of selection results
+  index = pvSelectionResults.at(0);
+  if(!index.isValid()){
+    return result;
+  }
+  row = index.row();
+  for(i = 0; i < pvSelectionResultColumns.size(); ++i){
+    index = pvModel->index(row, pvSelectionResultColumns.at(i));
+    result.append(pvModel->data(index));
+  }
 
   return result;
+}
+
+QModelIndexList mdtSqlSelectionDialog::selectionResults()
+{
+  return pvSelectionResults;
 }
 
 void mdtSqlSelectionDialog::reject()
 {
   pvDialogRejected = true;
   QDialog::reject();
+}
+
+void mdtSqlSelectionDialog::accept()
+{
+  buildSelectionResults();
+  if(pvSelectionResults.isEmpty()){
+    return;
+  }
+  pvDialogRejected = false;
+  QDialog::accept();
+}
+
+void mdtSqlSelectionDialog::buildSelectionResults()
+{
+  Q_ASSERT(pvModel != 0);
+  Q_ASSERT(pvTableView->selectionModel() != 0);
+
+  int i;
+  QModelIndex index;
+  QModelIndexList selectedIndexes;
+
+  pvSelectionResults.clear();
+  selectedIndexes = pvTableView->selectionModel()->selectedRows();
+  for(i = 0; i < selectedIndexes.size(); ++i){
+    index = pvModel->index(selectedIndexes.at(i).row(), selectedIndexes.at(i).column());
+    if((index.isValid()) && (pvSelectionResultColumns.contains(index.column()))){
+      pvSelectionResults.append(index);
+    }
+  }
 }

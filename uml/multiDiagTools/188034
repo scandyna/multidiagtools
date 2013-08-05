@@ -1,6 +1,6 @@
 format 76
 "CableList" // mdttools::CableList
-  revision 5
+  revision 6
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -43,7 +43,7 @@ format 76
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
     associated_deployment_view deploymentview_ref 376450 // mdtCableList
-    classdiagram 693122 "mdtClUnitEditor"
+    classdiagram 693122 "mdtClArticleEditor"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
@@ -69,24 +69,6 @@ ${inlines}
 	  b parent class_ref 706562 // Ui::mdtClUnitEditor
       end
 
-      classrelation 897026 // pvUintWidget (<directional composition>)
-	relation 887810 *-->
-	  a role_name "pvUintWidget" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 897026 // pvUintWidget (<directional composition>)
-	  b parent class_ref 686466 // mdtSqlFormWidget
-      end
-
-      classrelation 897154 // pvConnectionWidget (<directional composition>)
-	relation 887938 *-->
-	  a role_name "pvConnectionWidget" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 897154 // pvConnectionWidget (<directional composition>)
-	  b parent class_ref 686594 // mdtSqlTableWidget
-      end
-
       classrelation 897282 // pvRelation (<directional composition>)
 	relation 888066 *-->
 	  a role_name "pvRelation" multiplicity "1" private
@@ -94,14 +76,6 @@ ${inlines}
 "
 	    classrelation_ref 897282 // pvRelation (<directional composition>)
 	  b parent class_ref 652418 // mdtSqlRelation
-      end
-
-      classrelation 897538 // <dependency>
-	relation 888322 -_->
-	  a default
-	    cpp default "#include in source"
-	    classrelation_ref 897538 // <dependency>
-	  b parent class_ref 678914 // mdtSqlWindow
       end
 
       operation 1336962 "mdtClUnitEditor"
@@ -171,6 +145,23 @@ ${inlines}
 	    classrelation_ref 897666 // pvDatabase (<unidirectional association>)
 	  b parent class_ref 405122 // QSqlDatabase
       end
+
+      classrelation 988546 // pvForm (<directional composition>)
+	relation 978306 *-->
+	  a role_name "pvForm" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 988546 // pvForm (<directional composition>)
+	  b parent class_ref 778626 // mdtSqlFormWindow
+      end
+
+      classrelation 988674 // <generalisation>
+	relation 978434 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 988674 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
     end
 
     class 706562 "Ui::mdtClUnitEditor"
@@ -194,7 +185,7 @@ ${inlines}
       end
     end
 
-    classdiagram 713090 "mdtClArticleEditor"
+    classdiagram 713090 "mdtClUnitEditor"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end

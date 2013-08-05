@@ -44,7 +44,7 @@ mdtSqlWindow *mdtSqlFormWindow::sqlWindow()
 
 void mdtSqlFormWindow::show()
 {
-  pvSqlWindow->setWindowTitle(mainSqlWidget()->userFriendlyTableName());
+  ///pvSqlWindow->setWindowTitle(mainSqlWidget()->userFriendlyTableName());
   pvSqlWindow->show();
 }
 

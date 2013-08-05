@@ -193,6 +193,36 @@ QSqlTableModel *mdtSqlForm::model(const QString &tableName)
   return w->model();
 }
 
+bool mdtSqlForm::select(const QString &tableName)
+{
+  QSqlTableModel *m;
+
+  m = model(tableName);
+  if(m == 0){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
+    e.commit();
+    return false;
+  }
+
+  return m->select();
+}
+
+QSqlError mdtSqlForm::lastError(const QString &tableName)
+{
+  QSqlTableModel *m;
+
+  m = model(tableName);
+  if(m == 0){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
+    e.commit();
+    return QSqlError();
+  }
+
+  return m->lastError();
+}
+
 int mdtSqlForm::currentRow(const QString &tableName)
 {
   mdtAbstractSqlWidget *w;

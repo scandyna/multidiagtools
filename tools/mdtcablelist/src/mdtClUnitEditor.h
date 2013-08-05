@@ -60,14 +60,6 @@ class mdtClUnitEditor : public QObject
    */
   mdtSqlFormWindow *form();
 
-  /*! \brief Setup GUI
-   *
-   * Will dispose internal widgets into window
-   *
-   * \pre window must be a valid pointer
-   */
-  void setupUi(mdtSqlWindow *window);
-
  private slots:
 
   /*! \brief Assign a vehicle to current unit
@@ -128,22 +120,6 @@ class mdtClUnitEditor : public QObject
   Q_DISABLE_COPY(mdtClUnitEditor);
 
   QSqlDatabase pvDatabase;
-  // Unit objects
-  ///mdtSqlFormWidget *pvUnitWidget;
-  ///QSqlTableModel *pvUnitModel;
-  // Unit connection view objects
-  ///mdtSqlTableWidget *pvUnitConnectionViewWidget;
-  ///QSqlTableModel *pvUnitConnectionViewModel;
-  ///mdtSqlRelation *pvUnitConnectionViewRelation;
-  // Unit connection edit objects
-  ///mdtSqlFormWidget *pvUnitConnectionEditWidget;
-  ///QSqlTableModel *pvUnitConnectionEditModel;
-  ///mdtSqlRelation *pvUnitConnectionEditRelation;
-  // Vehicle objects
-  ///mdtSqlTableWidget *pvVehicleTypeWidget;
-  ///QSqlTableModel *pvVehicleTypeModel;
-  ///mdtSqlRelation *pvVehicleTypeRelation;
-  
   // Form object
   mdtSqlFormWindow *pvForm;
   // Base article objects

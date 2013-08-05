@@ -1,6 +1,6 @@
 format 76
-"Conceptual" // mdttools::CableList::Sandbox::Conceptual
-  revision 1
+"DatabaseConceptual" // mdttools::CableList::Sandbox::DatabaseConceptual
+  revision 3
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -44,10 +44,10 @@ format 76
     show_infonote default drawing_language default show_stereotype_properties default
     classdiagram 739330 "Conceptual"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-      size A4
+      size A3
     end
 
-    class 764418 "Article"
+    class 764418 "Article_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -59,8 +59,8 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 784642 "articleCode"
-	private explicit_type "string"
+      attribute 784642 "Id_PK"
+	private explicit_type "int"
 	stereotype "PK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -95,7 +95,7 @@ ${inlines}
       end
     end
 
-    class 764546 "Unit"
+    class 764546 "Unit_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -107,7 +107,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 785154 "Id"
+      attribute 785154 "Id_PK"
 	private explicit_type "int"
 	stereotype "PK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -118,7 +118,7 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 784770 "schemaPosition"
+      attribute 784770 "SchemaPosition"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -159,9 +159,13 @@ ${inlines}
 "
 	    classrelation_ref 960514 // <composition>
       end
+
+      classrelation 996866 // <association>
+	relation_ref 985730 // <association>
+      end
     end
 
-    class 764930 "ArticleConnection"
+    class 764930 "ArticleConnection_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -173,7 +177,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 785666 "Id"
+      attribute 785666 "Id_PK"
 	private explicit_type "int"
 	stereotype "PK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -184,7 +188,7 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 785538 "articleConnectorName"
+      attribute 785538 "ArticleConnectorName"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -209,9 +213,31 @@ ${inlines}
 "
 	    classrelation_ref 960898 // <association>
       end
+
+      attribute 793346 "ArticleContactName"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 989314 // <association>
+	relation 978818 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 989314 // <association>
+	  b role_name "" multiplicity "2" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${multiplicity}${value};
+"
+	    classrelation_ref 989442 // <association>
+      end
     end
 
-    class 765186 "UnitConnection"
+    class 765186 "UnitConnection_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -223,7 +249,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 786178 "Id"
+      attribute 786178 "Id_PK"
 	private explicit_type "int"
 	stereotype "PK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -238,7 +264,7 @@ ${inlines}
 	relation_ref 950402 // <composition>
       end
 
-      attribute 786306 "unitConnectorName"
+      attribute 786306 "UnitConnectorName"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -250,6 +276,192 @@ ${inlines}
 
       classrelation 960898 // <association>
 	relation_ref 950658 // <association>
+      end
+
+      attribute 793474 "UnitContactName"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 989058 // <association>
+	relation 978690 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 989058 // <association>
+	  b role_name "" multiplicity "2" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${multiplicity}${value};
+"
+	    classrelation_ref 989186 // <association>
+      end
+
+      classrelation 989570 // Range (<association>)
+	relation 978946 ----
+	  a role_name "Range" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 989570 // Range (<association>)
+	  b role_name "Connection" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 989698 // Connection (<association>)
+      end
+
+      classrelation 989698 // Connection (<association>)
+	relation_ref 978946 // <association>
+      end
+    end
+
+    class 785282 "Link_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 793730 "Id_PK"
+	private explicit_type "int"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 989186 // <association>
+	relation_ref 978690 // <association>
+      end
+
+      classrelation 989442 // <association>
+	relation_ref 978818 // <association>
+      end
+
+      classrelation 989954 // <association>
+	relation_ref 979074 // <association>
+      end
+
+      classrelation 990210 // <association>
+	relation_ref 979202 // <association>
+      end
+    end
+
+    class 785410 "LinkType_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 793858 "Code_PK"
+	private explicit_type "string"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 989826 // <association>
+	relation 979074 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 989826 // <association>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 989954 // <association>
+      end
+    end
+
+    class 785538 "LinkDirection_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 793986 "Code_PK"
+	private explicit_type "string"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 990082 // <association>
+	relation 979202 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 990082 // <association>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 990210 // <association>
+      end
+    end
+
+    class 792066 "VehicleType_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 800514 "Id_PK"
+	private explicit_type "int"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 996738 // <association>
+	relation 985730 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 996738 // <association>
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 996866 // <association>
       end
     end
   end
