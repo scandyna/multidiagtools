@@ -25,15 +25,6 @@
 #include <QObject>
 #include "mdtSqlFormWindow.h"
 
-class mdtSqlWindow;
-class mdtSqlFormWidget;
-class mdtSqlTableWidget;
-class mdtSqlRelation;
-class QSqlTableModel;
-class QPushButton;
-
-class mdtSqlFormWindow;
-
 /*! \brief Cable list's device editor
  */
 class mdtClUnitEditor : public QObject
@@ -122,12 +113,6 @@ class mdtClUnitEditor : public QObject
   QSqlDatabase pvDatabase;
   // Form object
   mdtSqlFormWindow *pvForm;
-  // Base article objects
-  /**
-  mdtSqlTableWidget *pvArticleWidget;
-  QSqlTableModel *pvArticleModel;
-  mdtSqlRelation *pvArticleRelation;
-  */
 };
 
 #endif  // #ifndef

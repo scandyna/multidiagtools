@@ -111,31 +111,16 @@ mdtSqlFormWindow *mdtClUnitEditor::form()
 void mdtClUnitEditor::assignVehicle()
 {
   mdtSqlSelectionDialog selectionDialog;
-  ///QSqlQueryModel model;
-  ///QString sql;
-  ///QList<QVariant> selectedItem;
-  ///int vehicleId;
   int unitId;
   QSqlError sqlError;
   QModelIndexList selectedVehicles;
   mdtClUnitVehicleType uvt(pvDatabase);
-  
+
   // Get current unit ID
   unitId = currentUnitId();
   if(unitId < 0){
     return;
   }
-  // SQL query to get the list of vehicles that are not allready assigned
-  /**
-  sql = "SELECT Id_PK, Type , SubType , SeriesNumber "\
-        "FROM VehicleType_tbl "\
-        "WHERE Id_PK NOT IN ( "\
-        " SELECT VehicleType_Id_FK "\
-        " FROM VehicleType_Unit_tbl "\
-        " WHERE Unit_Id_FK = " + QString::number(unitId) + " ) "\
-        "ORDER BY Type ASC, SubType ASC, SeriesNumber ASC;";
-  model.setQuery(sql, pvDatabase);
-  */
   // Setup and show dialog
   selectionDialog.setMessage("Please select a vehicle");
   selectionDialog.setModel(&uvt.vehicleTypeNotAssignedToUnitModel(unitId), true);
@@ -159,112 +144,28 @@ void mdtClUnitEditor::assignVehicle()
     msgBox.exec();
     return;
   }
-  
-  /**
-  selectedItem = selectionDialog.selectionResult();
-  if(selectedItem.size() != 1){
-    return;
-  }
-  if(!selectedItem.at(0).isValid()){
-    return;
-  }
-  vehicleId = selectedItem.at(0).toInt();
-  if(vehicleId < 0){
-    return;
-  }
-  // Insert selected vehicle into VehicleType_Unit_tbl
-  QSqlQuery query(pvDatabase);
-  sql = "INSERT INTO VehicleType_Unit_tbl "\
-        "(Unit_Id_FK, VehicleType_Id_FK) "\
-        "VALUES (" + QString::number(unitId) + ", " + QString::number(vehicleId) + ")";
-  if(!query.exec(sql)){
-    sqlError = query.lastError();
-    qDebug() << "ERR insert: " << sqlError;
-    QMessageBox msgBox;
-    msgBox.setText(tr("Could not assign vehicle"));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
-    return;
-  }
-  */
-  Q_ASSERT(pvForm->model("Unit_VehicleType_view") != 0);
-  pvForm->model("Unit_VehicleType_view")->select();
-  ///pvVehicleTypeModel->select();
+  pvForm->select("Unit_VehicleType_view");
 }
 
 void mdtClUnitEditor::removeVehicleAssignation()
 {
-  ///QString sql;
   int unitId;
   QSqlError sqlError;
-  ///int i;
   int ret;
-  ///int row;
-  ///QList<int> rows;
   QMessageBox msgBox;
-  ///QModelIndex index;
-  ///int vehicleIdColumn;
-  ///QVariant vehicleId;
-  ///QSqlTableModel *vehicleTypeModel;
   mdtSqlTableWidget *vehicleTypeWidget;
   QModelIndexList indexes;
   mdtClUnitVehicleType uvt(pvDatabase);
 
-  // Get vehicle model and widget
-  /**
-  vehicleTypeModel = pvForm->model("Unit_VehicleType_view");
-  Q_ASSERT(vehicleTypeModel != 0);
-  */
   // Get vehicle widget
   vehicleTypeWidget = pvForm->sqlTableWidget("Unit_VehicleType_view");
   Q_ASSERT(vehicleTypeWidget != 0);
   Q_ASSERT(vehicleTypeWidget->selectionModel() != 0);
-  // Get selected indexes
-  ///indexes = vehicleTypeWidget->selectionModel()->selectedIndexes();
-  // If nothing was selected, we do nothing
-  /**
-  if(indexes.size() < 1){
-    return;
-  }
-  */
   // Get current unit ID
   unitId = currentUnitId();
   if(unitId < 0){
     return;
   }
-  // Get VehicleType_Id_FK column
-  /**
-  vehicleIdColumn = vehicleTypeModel->record().indexOf("VehicleType_Id_FK");
-  if(vehicleIdColumn < 0){
-    return;
-  }
-  */
-  // We ask confirmation to the user
-  /**
-  msgBox.setText(tr("You are about to remove assignations between selected vehicles and current unit."));
-  msgBox.setInformativeText(tr("Do you want to continue ?"));
-  msgBox.setIcon(QMessageBox::Warning);
-  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-  msgBox.setDefaultButton(QMessageBox::No);
-  ret = msgBox.exec();
-  if(ret != QMessageBox::Yes){
-    return;
-  }
-  */
-  // Build list of selected rows
-  /**
-  for(i = 0; i < indexes.size(); ++i){
-    row = indexes.at(i).row();
-    Q_ASSERT(row >= 0);
-    if(!rows.contains(row)){
-      rows.append(row);
-    }
-  }
-  */
-  ///qDebug() << "DEL, seleced indexes: " << vehicleTypeWidget->indexListOfSelectedRows("VehicleType_Id_FK");
-
   // Get selected rows
   indexes = vehicleTypeWidget->indexListOfSelectedRows("VehicleType_Id_FK");
   if(indexes.size() < 1){
@@ -292,40 +193,6 @@ void mdtClUnitEditor::removeVehicleAssignation()
     return;
   }
   pvForm->select("Unit_VehicleType_view");
-
-  /**
-  row = -1;
-  sql = "DELETE FROM VehicleType_Unit_tbl "\
-        "WHERE Unit_Id_FK = " + QString::number(unitId);
-  for(i = 0; i < rows.size(); ++i){
-    if(i == 0){
-      sql += " AND ( ";
-    }else{
-      sql += " OR ";
-    }
-    // Get vehicle ID for current row
-    index = vehicleTypeModel->index(rows.at(i), vehicleIdColumn);
-    Q_ASSERT(index.isValid());
-    vehicleId = vehicleTypeModel->data(index);
-    if(vehicleId.isValid()){
-      sql += "VehicleType_Id_FK = " + QString::number(vehicleId.toInt());
-    }
-  }
-  sql += " ) ";
-  // Submit query
-  QSqlQuery query(pvDatabase);
-  if(!query.exec(sql)){
-    sqlError = query.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Assignation removing failed."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
-    return;
-  }
-  */
-  ///vehicleTypeModel->select();
 }
 
 void mdtClUnitEditor::setBaseArticle()

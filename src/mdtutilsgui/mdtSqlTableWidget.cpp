@@ -134,7 +134,8 @@ int mdtSqlTableWidget::currentRow() const
 void mdtSqlTableWidget::setEditionEnabled(bool enable)
 {
   if(enable){
-    pvTableView->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    ///pvTableView->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    pvTableView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed | QAbstractItemView::AnyKeyPressed);
   }else{
     pvTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
   }
@@ -180,6 +181,7 @@ void mdtSqlTableWidget::enableLocalEdition()
   pvNavigationLayout->addWidget(pbRevert);
   pvNavigationLayout->addWidget(pbRemove);
   pvNavigationLayout->addStretch();
+  setEditionEnabled(true);
 }
 
 void mdtSqlTableWidget::addWidgetToLocalBar(QWidget *widget)
@@ -389,7 +391,7 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
       /*
        * We want to save data if we are in Editing or EditingNewRow state.
        * But, we must be shure that no editor is open in delegate to prevent data loss.
-       * (If we call submit()/submitAll() on model, it will reciev invalid data
+       * (If we call submit()/submitAll() on model, it will recieve invalid data
        *  for index that has a opened editor, and silently revert these data)
        */
       // Save data if we are in Editing state

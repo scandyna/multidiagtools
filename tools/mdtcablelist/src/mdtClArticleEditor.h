@@ -23,6 +23,7 @@
 
 #include <QSqlDatabase>
 #include <QObject>
+#include "mdtSqlFormWindow.h"
 
 class mdtSqlWindow;
 class mdtSqlFormWidget;
@@ -53,13 +54,17 @@ class mdtClArticleEditor : public QObject
    */
   bool setupTables(bool includeConnections);
 
+  /*! \brief Get form object
+   */
+  mdtSqlFormWindow *form();
+
   /*! \brief Setup GUI
    *
    * Will dispose internal widgets into window
    *
    * \pre window must be a valid pointer
    */
-  void setupUi(mdtSqlWindow *window);
+  ///void setupUi(mdtSqlWindow *window);
 
  private:
 
@@ -81,11 +86,12 @@ class mdtClArticleEditor : public QObject
   Q_DISABLE_COPY(mdtClArticleEditor);
 
   QSqlDatabase pvDatabase;
-  mdtSqlFormWidget *pvArticleWidget;
-  mdtSqlTableWidget *pvArticleConnectionWidget;
-  QSqlTableModel *pvArticleModel;
-  QSqlTableModel *pvArticleConnectionModel;
-  mdtSqlRelation *pvArticleConnectionRelation;
+  mdtSqlFormWindow *pvForm;
+  ///mdtSqlFormWidget *pvArticleWidget;
+  ///mdtSqlTableWidget *pvArticleConnectionWidget;
+  ///QSqlTableModel *pvArticleModel;
+  ///QSqlTableModel *pvArticleConnectionModel;
+  ///mdtSqlRelation *pvArticleConnectionRelation;
 };
 
 #endif  // #ifndef MDT_CL_ARTICLE_EDITOR_H

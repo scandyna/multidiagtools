@@ -70,7 +70,6 @@ class mdtClUnitVehicleType
 
   QSqlQueryModel pvVehicleTypeNotAssignedToUnitModel;
   QSqlDatabase pvDatabase;
-  QSqlQueryModel pvUnitVehicleTypeModel;
   QSqlError pvLastError;
 };
 

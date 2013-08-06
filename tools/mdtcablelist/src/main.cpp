@@ -97,8 +97,9 @@ int main(int argc, char **argv)
     QMessageBox::warning(0, "DB setup error", "Cannot setup tables for article editor");
     return 1;
   }
-  articleEditor->setupUi(&articleEditorWindow);
-  articleEditorWindow.setWindowTitle(QObject::tr("Article edition"));
+  articleEditor->form()->show();
+  ///articleEditor->setupUi(&articleEditorWindow);
+  ///articleEditorWindow.setWindowTitle(QObject::tr("Article edition"));
   ///articleEditorWindow.show();
   // Setup Unit editor
   unitEditor = new mdtClUnitEditor(0, db);
@@ -115,7 +116,7 @@ int main(int argc, char **argv)
   }
   linkEditor->setupUi(&linkEditorWindow);
   linkEditorWindow.setWindowTitle("Link edition");
-  linkEditorWindow.show();
+  ///linkEditorWindow.show();
   // Setup terminal block editor
   terminalBlockEditor = new mdtClTerminalBlockEditor(0, db);
   if(!terminalBlockEditor->setupTables()){
@@ -124,7 +125,7 @@ int main(int argc, char **argv)
   }
   terminalBlockEditor->setupUi(&terminalBlockEditorWindow);
   terminalBlockEditorWindow.setWindowTitle(QObject::tr("Terminal block edition"));
-  terminalBlockEditorWindow.show();
+  ///terminalBlockEditorWindow.show();
 
   retVal = app.exec();
   db.close();
