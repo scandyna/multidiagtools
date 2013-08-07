@@ -23,14 +23,8 @@
 
 #include <QSqlDatabase>
 #include <QObject>
+#include <QVariant>
 #include "mdtSqlFormWindow.h"
-
-class mdtSqlWindow;
-class mdtSqlFormWidget;
-class mdtSqlTableWidget;
-class mdtSqlRelation;
-class QSqlTableModel;
-class QPushButton;
 
 /*! \brief Cable list's article editor
  */
@@ -58,40 +52,36 @@ class mdtClArticleEditor : public QObject
    */
   mdtSqlFormWindow *form();
 
-  /*! \brief Setup GUI
-   *
-   * Will dispose internal widgets into window
-   *
-   * \pre window must be a valid pointer
+ private slots:
+
+  /*! \brief Add link
    */
-  ///void setupUi(mdtSqlWindow *window);
+  void addLink();
 
  private:
 
   /*! \brief Get current Article ID
    *
-   * Will return current ID from Unit table.
-   *  Returns a value < 0 on error (no row, ...)
+   * Will return current ID from Article table.
    */
-  int currentArticleId();
+  QVariant currentArticleId();
 
-  /*! \brief Setup Article table and widget
+  /*! \brief Setup Article table
    */
   bool setupArticleTable();
 
-  /*! \brief Setup Article-Connection table and widget
+  /*! \brief Setup Article-Connection table
    */
   bool setupArticleConnectionTable();
+
+  /*! \brief Setup Article-Link table
+   */
+  bool setupArticleLinkTable();
 
   Q_DISABLE_COPY(mdtClArticleEditor);
 
   QSqlDatabase pvDatabase;
   mdtSqlFormWindow *pvForm;
-  ///mdtSqlFormWidget *pvArticleWidget;
-  ///mdtSqlTableWidget *pvArticleConnectionWidget;
-  ///QSqlTableModel *pvArticleModel;
-  ///QSqlTableModel *pvArticleConnectionModel;
-  ///mdtSqlRelation *pvArticleConnectionRelation;
 };
 
 #endif  // #ifndef MDT_CL_ARTICLE_EDITOR_H

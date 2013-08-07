@@ -45,7 +45,6 @@ int main(int argc, char **argv)
   bool ok;
   int retVal;
   mdtSqlWindow vehicleTypeEditorWindow;
-  mdtSqlWindow articleEditorWindow;
   mdtClVehicleTypeEditor *vehicleTypeEditor;
   mdtClArticleEditor *articleEditor;
   mdtClUnitEditor *unitEditor;
@@ -98,9 +97,6 @@ int main(int argc, char **argv)
     return 1;
   }
   articleEditor->form()->show();
-  ///articleEditor->setupUi(&articleEditorWindow);
-  ///articleEditorWindow.setWindowTitle(QObject::tr("Article edition"));
-  ///articleEditorWindow.show();
   // Setup Unit editor
   unitEditor = new mdtClUnitEditor(0, db);
   if(!unitEditor->setupTables(true)){

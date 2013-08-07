@@ -26,6 +26,7 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
+#include "mdtClArticleLinkDialog.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -34,10 +35,10 @@
 #include <QStringList>
 #include <QString>
 #include <QList>
-#include <QVariant>
 #include <QModelIndex>
 #include <QItemSelectionModel>
 #include <QMessageBox>
+#include <QTableView>
 
 #include <QDebug>
 
@@ -46,29 +47,11 @@ mdtClArticleEditor::mdtClArticleEditor(QObject *parent, const QSqlDatabase db)
 {
   pvDatabase = db;
   pvForm = new mdtSqlFormWindow;
-  // Setup Article form
-  /**
-  pvArticleWidget = new mdtSqlFormWidget;
-  Ui::mdtClArticleEditor *e = new Ui::mdtClArticleEditor;
-  e->setupUi(pvArticleWidget);
-  pvArticleModel = new QSqlTableModel(this, pvDatabase);
-  */
-  // Setup connection
-  ///pvArticleConnectionWidget = new mdtSqlTableWidget;
-  ///pvArticleConnectionModel = new QSqlTableModel(this, pvDatabase);
-
-  ///pvArticleConnectionRelation = new mdtSqlRelation;
 }
 
 mdtClArticleEditor::~mdtClArticleEditor()
 {
   delete pvForm;
-  ///delete pvArticleWidget;
-  ///delete pvArticleConnectionWidget;
-  ///delete pvArticleConnectionRelation;
-  ///delete pvArticleModel;
-  ///delete pvArticleConnectionModel;
-  ///delete pvVehicleTypeUnitModel;
 }
 
 bool mdtClArticleEditor::setupTables(bool includeConnections)
@@ -83,6 +66,10 @@ bool mdtClArticleEditor::setupTables(bool includeConnections)
   if(!setupArticleConnectionTable()){
     return false;
   }
+  // Setup link table
+  if(!setupArticleLinkTable()){
+    return false;
+  }
 
   return true;
 }
@@ -94,39 +81,16 @@ mdtSqlFormWindow *mdtClArticleEditor::form()
   return pvForm;
 }
 
-/**
-void mdtClArticleEditor::setupUi(mdtSqlWindow *window)
+void mdtClArticleEditor::addLink()
 {
-  Q_ASSERT(window != 0);
+  mdtClArticleLinkDialog dialog(0, pvDatabase);
 
-  window->setSqlWidget(pvArticleWidget);
-  window->addChildWidget(pvArticleConnectionWidget, "Connections");
-  window->enableNavigation();
-  window->enableEdition();
-  window->resize(700, 500);
+  dialog.exec();
 }
-*/
 
-int mdtClArticleEditor::currentArticleId()
+QVariant mdtClArticleEditor::currentArticleId()
 {
-  /**
-  int articleIdColumn;
-  QModelIndex index;
-
-  if(pvArticleWidget->currentRow() < 0){
-    return -1;
-  }
-  articleIdColumn = pvArticleModel->record().indexOf("Id_PK");
-  if(articleIdColumn < 0){
-    return -1;
-  }
-  index = pvArticleModel->index(pvArticleWidget->currentRow(), articleIdColumn);
-  if(!index.isValid()){
-    return -1;
-  }
-
-  return pvArticleModel->data(index).toInt();
-  */
+  return pvForm->currentData("Article_tbl", "Id_PK");
 }
 
 bool mdtClArticleEditor::setupArticleTable()
@@ -147,31 +111,10 @@ bool mdtClArticleEditor::setupArticleTable()
   pvForm->sqlWindow()->setWindowTitle(tr("Article edition"));
 
   return true;
-  
-  
-  /**
-  QSqlError sqlError;
-
-  pvArticleModel->setTable("Article_tbl");
-  if(!pvArticleModel->select()){
-    sqlError = pvArticleModel->lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table 'Article_tbl'", mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticleEditor");
-    e.commit();
-    return false;
-  }
-  pvArticleWidget->setModel(pvArticleModel);
-  pvArticleWidget->mapFormWidgets();
-
-  return true;
-  */
 }
 
 bool mdtClArticleEditor::setupArticleConnectionTable()
 {
-  ///QPushButton *pbAddConnection;
-  ///QPushButton *pbRemoveConnection;
   mdtSqlTableWidget *widget;
 
   if(!pvForm->addChildTable("ArticleConnection_tbl", tr("Connections"), pvDatabase)){
@@ -193,45 +136,49 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   widget->setHeaderData("FunctionEN", tr("Function EN"));
 
   return true;
+}
 
-  // Add the Add and remove buttons
-  /**
-  pbAddConnection = new QPushButton(tr("Add"));
-  pbRemoveConnection = new QPushButton(tr("Remove"));
-  connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
-  connect(pbRemoveConnection, SIGNAL(clicked()), this, SLOT(removeConnection()));
-  */
-  
-  
-  /**
-  QSqlError sqlError;
+bool mdtClArticleEditor::setupArticleLinkTable()
+{
+  mdtSqlTableWidget *widget;
+  QPushButton *pbAddLink;
 
-  pvArticleConnectionModel->setTable("ArticleConnection_tbl");
-  if(!pvArticleConnectionModel->select()){
-    sqlError = pvArticleConnectionModel->lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table 'ArticleConnection_tbl'", mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticleEditor");
-    e.commit();
+  if(!pvForm->addChildTable("ArticleLink_view", tr("Links"), pvDatabase)){
     return false;
   }
-  pvArticleConnectionWidget->setModel(pvArticleConnectionModel);
-  pvArticleConnectionWidget->enableLocalEdition();
-  // Hide relation fields and PK
-  pvArticleConnectionWidget->setColumnHidden("Id_PK", true);
-  pvArticleConnectionWidget->setColumnHidden("Article_Id_FK", true);
-  // Give fields a user friendly name
-  pvArticleConnectionWidget->setHeaderData("ConnectorName", tr("Connector"));
-  pvArticleConnectionWidget->setHeaderData("ContactName", tr("Contact"));
-  pvArticleConnectionWidget->setHeaderData("IoType", tr("I/O type"));
-  // Setup Article <-> Connection relation
-  pvArticleConnectionRelation->setParentModel(pvArticleModel);
-  pvArticleConnectionRelation->setChildModel(pvArticleConnectionModel);
-  if(!pvArticleConnectionRelation->addRelation("Id_PK", "Article_Id_FK")){
+  if(!pvForm->addRelation("Id_PK", "ArticleLink_view", "StartArticle_Id_FK")){
     return false;
   }
-  pvArticleWidget->addChildWidget(pvArticleConnectionWidget, pvArticleConnectionRelation);
+  if(!pvForm->addRelation("Id_PK", "ArticleLink_view", "EndArticle_Id_FK")){
+    return false;
+  }
+  widget = pvForm->sqlTableWidget("ArticleLink_view");
+  Q_ASSERT(widget != 0);
+  Q_ASSERT(widget->tableView() != 0);
+  // Hide technical fields
+  widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("StartArticle_Id_FK", true);
+  widget->setColumnHidden("EndArticle_Id_FK", true);
+  // Set fields a user friendly name
+  widget->setHeaderData("SinceVersion", tr("Since\nversion"));
+  widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
+  widget->setHeaderData("ValueUnit", tr("Unit"));
+  widget->setHeaderData("StartArticleConnectorName", tr("Start\nconnector"));
+  widget->setHeaderData("StartArticleContactName", tr("Start\ncontact"));
+  widget->setHeaderData("StartIoType", tr("Start\nI/O type"));
+  widget->setHeaderData("StartFunctionEN", tr("Start\nFunction"));
+  widget->setHeaderData("LinkDirectionPictureAscii", tr("Direction"));
+  widget->setHeaderData("EndArticleConnectorName", tr("End\nconnector"));
+  widget->setHeaderData("EndArticleContactName", tr("End\ncontact"));
+  widget->setHeaderData("EndIoType", tr("End\nI/O type"));
+  widget->setHeaderData("EndFunctionEN", tr("End\nFunction"));
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
+  // Add edition buttons
+  pbAddLink = new QPushButton(tr("Add link ..."));
+  connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
+  widget->addWidgetToLocalBar(pbAddLink);
+  widget->addStretchToLocalBar();
 
   return true;
-  */
 }
