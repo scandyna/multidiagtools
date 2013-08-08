@@ -105,6 +105,7 @@ int main(int argc, char **argv)
   }
   unitEditor->form()->show();
   // Setup link editor
+  /**
   linkEditor = new mdtClLinkEditor(0, db);
   if(!linkEditor->setupTables()){
     QMessageBox::warning(0, "DB setup error", "Cannot setup tables for link editor");
@@ -112,6 +113,7 @@ int main(int argc, char **argv)
   }
   linkEditor->setupUi(&linkEditorWindow);
   linkEditorWindow.setWindowTitle("Link edition");
+  */
   ///linkEditorWindow.show();
   // Setup terminal block editor
   terminalBlockEditor = new mdtClTerminalBlockEditor(0, db);
@@ -128,7 +130,7 @@ int main(int argc, char **argv)
   delete unitEditor;
   delete articleEditor;
   delete vehicleTypeEditor;
-  delete linkEditor;
+  ///delete linkEditor;
   delete terminalBlockEditor;
 
   return retVal;

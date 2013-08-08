@@ -50,10 +50,10 @@ mdtClTerminalBlockEditor::mdtClTerminalBlockEditor(QObject *parent, const QSqlDa
   pvDatabase = db;
   // Setup unit
   pvUnitWidget = new mdtSqlFormWidget;
-  Ui::mdtClTerminalBlockEditor *ue = new Ui::mdtClTerminalBlockEditor;
-  ue->setupUi(pvUnitWidget);
+  Ui::mdtClTerminalBlockEditor ue;
+  ue.setupUi(pvUnitWidget);
   pvUnitModel = new QSqlTableModel(this, pvDatabase);
-  ///connect(ue->pbSetBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
+  ///connect(ue.pbSetBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
   connect(this, SIGNAL(unitEdited()), pvUnitWidget, SIGNAL(dataEdited()));
   // Setup terminal ( = unit connection) view
   pvTerminalEditWidget = new mdtSqlTableWidget;

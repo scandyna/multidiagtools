@@ -223,6 +223,21 @@ QSqlError mdtSqlForm::lastError(const QString &tableName)
   return m->lastError();
 }
 
+int mdtSqlForm::rowCount(const QString &tableName)
+{
+  QSqlTableModel *m;
+
+  m = model(tableName);
+  if(m == 0){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
+    e.commit();
+    return -1;
+  }
+
+  return m->rowCount();
+}
+
 int mdtSqlForm::currentRow(const QString &tableName)
 {
   mdtAbstractSqlWidget *w;

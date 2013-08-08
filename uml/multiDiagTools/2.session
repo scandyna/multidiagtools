@@ -4,13 +4,13 @@ diagrams
     859 923 80 3 48 0
   classdiagram_ref 753154 // mdtClUnitVehicle
     734 738 100 4 0 0
-  classdiagram_ref 759810 // mdtClArticle
-    859 923 80 18 0 0
-  active  classdiagram_ref 766338 // mdtClArticleDialog
-    859 923 100 4 168 0
+  classdiagram_ref 766338 // mdtClArticleDialog
+    859 923 100 4 252 0
+  active  classdiagram_ref 759810 // mdtClArticle
+    859 923 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 1454850 // mdtClArticleLinkDialog
+selected classdiagram_ref 759810 // mdtClArticle
 open
   classview_ref 457602 // mdtCableList
   class_ref 764418 // Article_tbl

@@ -2,6 +2,8 @@ DROP VIEW IF EXISTS ArticleLink_view;
 CREATE VIEW ArticleLink_view AS
 SELECT
  Link_tbl.Id_PK ,
+ Link_tbl.LinkType_Code_FK ,
+ Link_tbl.LinkDirection_Code_FK ,
  Link_tbl.SinceVersion ,
  Link_tbl.Modification ,
  LinkType_tbl.NameEN AS LinkTypeNameEN ,

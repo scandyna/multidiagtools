@@ -474,12 +474,11 @@ int mdtClUnitEditor::currentUnitId()
 
 bool mdtClUnitEditor::setupUnitTable()
 {
-  Ui::mdtClUnitEditor *ue;
+  Ui::mdtClUnitEditor ue;
 
   // Setup main form widget
-  ue = new Ui::mdtClUnitEditor;
-  ue->setupUi(pvForm->mainSqlWidget());
-  connect(ue->pbSetBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
+  ue.setupUi(pvForm->mainSqlWidget());
+  connect(ue.pbSetBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
   connect(this, SIGNAL(unitEdited()), pvForm->mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
   if(!pvForm->setTable("Unit_tbl", "Units", pvDatabase)){
@@ -505,10 +504,12 @@ bool mdtClUnitEditor::setupUnitConnectionViewTable()
     return false;
   }
   // Add the Add and remove buttons
+  /**
   pbAddConnection = new QPushButton(tr("Add"));
   pbRemoveConnection = new QPushButton(tr("Remove"));
   connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
   connect(pbRemoveConnection, SIGNAL(clicked()), this, SLOT(removeConnection()));
+  */
   /**
   pvUnitConnectionViewWidget->addWidgetToLocalBar(pbAddConnection);
   pvUnitConnectionViewWidget->addWidgetToLocalBar(pbRemoveConnection);

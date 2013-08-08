@@ -21,15 +21,46 @@
 #include "mdtClArticleLinkDialog.h"
 #include "mdtSqlSelectionDialog.h"
 #include <QSqlQueryModel>
+#include <QSqlRecord>
+#include <QSqlField>
+#include <QModelIndex>
+#include <QVariant>
+#include <QString>
+#include <QList>
 
-mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db)
+#include <QDebug>
+
+mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db, QVariant articleId)
  : QDialog(parent)
 {
-  pvDatabase = db;;
-  pvLinkTypeModel = new QSqlQueryModel(this);
-  pvLinkDirectionModel = new QSqlQueryModel(this);
-  pvArticleConnectionModel = new QSqlQueryModel(this);
+  pvDatabase = db;
+  // Setup UI
   setupUi(this);
+  setWindowTitle(tr("Article link edition"));
+  connect(pbStartConnection, SIGNAL(clicked()), this, SLOT(selectStartConnection()));
+  connect(pbEndConnection, SIGNAL(clicked()), this, SLOT(selectEndConnection()));
+  // Setup link type
+  pvLinkTypeModel = new QSqlQueryModel(this);
+  pvLinkTypeModel->setQuery("SELECT Code_PK, NameEN, ValueUnit FROM LinkType_tbl ORDER BY NameEN", pvDatabase);
+  cbLinkType->setModel(pvLinkTypeModel);
+  cbLinkType->setModelColumn(1);
+  cbLinkType->setCurrentIndex(-1);
+  connect(cbLinkType, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkTypeCurrentIndexChanged(int)));
+  // Setup link direction
+  pvLinkDirectionModel = new QSqlQueryModel(this);
+  pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN FROM LinkDirection_tbl", pvDatabase);
+  cbLinkDirection->setModel(pvLinkDirectionModel);
+  cbLinkDirection->setModelColumn(1);
+  connect(cbLinkDirection, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkDirectionCurrentIndexChanged(int)));
+  cbLinkDirection->setCurrentIndex(-1);
+  // Setup connections
+  pvArticleConnectionModel = new QSqlQueryModel(this);
+  pvArticleConnectionModel->setQuery("SELECT Id_PK, ArticleConnectorName, ArticleContactName, IoType, FunctionEN \
+                                     FROM ArticleConnection_tbl WHERE Article_Id_FK = " + articleId.toString(), pvDatabase);
+  lbStartConnectorName->clear();
+  lbStartContactName->clear();
+  lbEndConnectorName->clear();
+  lbEndContactName->clear();
 }
 
 mdtClArticleLinkDialog::~mdtClArticleLinkDialog()
@@ -86,18 +117,119 @@ QVariant mdtClArticleLinkDialog::endConnectionId() const
   return pvEndConnectionId;
 }
 
-void mdtClArticleLinkDialog::onCbLinkTypeCurrentIndexChanged(int index)
+void mdtClArticleLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
 {
+  QModelIndex index;
+  QVariant code;
+
+  if(row < 0){
+    return;
+  }
+  // We must update available directions regarding link type
+  index = pvLinkTypeModel->index(row, 0);
+  code = pvLinkTypeModel->data(index);
+  if(code == QVariant("DIODE")){
+    pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK <> 'BID'", pvDatabase);
+    cbLinkDirection->setEnabled(true);
+    sbValue->setValue(0.7);
+  }else{
+    pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK = 'BID'", pvDatabase);
+    cbLinkDirection->setEnabled(false);
+    sbValue->setValue(0.0);
+  }
 }
 
-void mdtClArticleLinkDialog::onCbLinkDirectionCurrentIndexChanged(int index)
+void mdtClArticleLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
 {
+  QModelIndex index;
+  QVariant data;
+
+  if(row < 0){
+    lbLinkDirectionAsciiPicture->setText("");
+    return;
+  }
+  // Update the ASCII picture
+  index = pvLinkDirectionModel->index(row, 2);
+  data = pvLinkDirectionModel->data(index);
+  lbLinkDirectionAsciiPicture->setText(data.toString());
 }
 
 void mdtClArticleLinkDialog::selectStartConnection()
 {
+  mdtSqlSelectionDialog dialog(this);
+  QModelIndex index;
+  QVariant data;
+  int row;
+
+  // Setup and show dialog
+  dialog.setMessage(tr("Please select the start connection"));
+  dialog.setModel(pvArticleConnectionModel, false);
+  dialog.setColumnHidden("Id_PK", true);
+  dialog.setHeaderData("ArticleConnectorName", "Connector");
+  dialog.setHeaderData("ArticleContactName", "Contact");
+  dialog.setHeaderData("IoType", "I/O type");
+  dialog.setHeaderData("FunctionEN", "Function");
+  dialog.addSelectionResultColumn("Id_PK");
+  dialog.resize(600, 400);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Store result
+  Q_ASSERT(dialog.selectionResult().size() == 1);
+  pvStartConnectionId = dialog.selectionResult().at(0);
+  // Update GUI
+  for(row = 0; row < pvArticleConnectionModel->rowCount(); ++row){
+    index = pvArticleConnectionModel->index(row, 0);
+    data = pvArticleConnectionModel->data(index);
+    if(data == pvStartConnectionId){
+      // Set connector name
+      index = pvArticleConnectionModel->index(row, 1);
+      data = pvArticleConnectionModel->data(index);
+      lbStartConnectorName->setText(data.toString());
+      // Set contact name
+      index = pvArticleConnectionModel->index(row, 2);
+      data = pvArticleConnectionModel->data(index);
+      lbStartContactName->setText(data.toString());
+    }
+  }
 }
 
 void mdtClArticleLinkDialog::selectEndConnection()
 {
+  mdtSqlSelectionDialog dialog(this);
+  QModelIndex index;
+  QVariant data;
+  int row;
+
+  // Setup and show dialog
+  dialog.setMessage(tr("Please select the end connection"));
+  dialog.setModel(pvArticleConnectionModel, false);
+  dialog.setColumnHidden("Id_PK", true);
+  dialog.setHeaderData("ArticleConnectorName", "Connector");
+  dialog.setHeaderData("ArticleContactName", "Contact");
+  dialog.setHeaderData("IoType", "I/O type");
+  dialog.setHeaderData("FunctionEN", "Function");
+  dialog.addSelectionResultColumn("Id_PK");
+  dialog.resize(600, 400);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Store result
+  Q_ASSERT(dialog.selectionResult().size() == 1);
+  pvEndConnectionId = dialog.selectionResult().at(0);
+  // Update GUI
+  for(row = 0; row < pvArticleConnectionModel->rowCount(); ++row){
+    index = pvArticleConnectionModel->index(row, 0);
+    data = pvArticleConnectionModel->data(index);
+    if(data == pvEndConnectionId){
+      // Set connector name
+      index = pvArticleConnectionModel->index(row, 1);
+      data = pvArticleConnectionModel->data(index);
+      lbEndConnectorName->setText(data.toString());
+      // Set contact name
+      index = pvArticleConnectionModel->index(row, 2);
+      data = pvArticleConnectionModel->data(index);
+      lbEndContactName->setText(data.toString());
+    }
+  }
 }

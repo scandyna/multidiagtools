@@ -1,3 +1,5 @@
 --memcheck:leak-check=full
+--memcheck:show-reachable=no
+--memcheck:show-possibly-lost=no
 --memcheck:suppressions=tests/mdttest/valgrind_suppressions_qt4.7.4_glib-2.0.supp
 --memcheck:db-attach=no

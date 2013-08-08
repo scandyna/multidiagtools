@@ -94,6 +94,7 @@ void mdtSqlSelectionDialog::setHeaderData(const QString &fieldName, const QStrin
     return;
   }
   pvModel->setHeaderData(column, Qt::Horizontal, data);
+  pvTableView->resizeColumnToContents(column);
 }
 
 void mdtSqlSelectionDialog::setColumnHidden(int column, bool hide)

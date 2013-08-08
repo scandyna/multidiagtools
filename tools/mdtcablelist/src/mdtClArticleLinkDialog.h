@@ -29,7 +29,7 @@
 class QSqlQueryModel;
 class QComboBox;
 
-/*! \brief
+/*! \brief Dialog that let the user edit a article link
  */
 class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 {
@@ -37,11 +37,11 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
  public:
 
-  /*! \brief
+  /*! \brief Constructor
    */
-  mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db);
+  mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db, QVariant articleId);
 
-  /*! \brief
+  /*! \brief Destructor
    */
   ~mdtClArticleLinkDialog();
 
@@ -89,11 +89,11 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   /*! \brief
    */
-  void onCbLinkTypeCurrentIndexChanged(int index);
+  void onCbLinkTypeCurrentIndexChanged(int row);
 
   /*! \brief
    */
-  void onCbLinkDirectionCurrentIndexChanged(int index);
+  void onCbLinkDirectionCurrentIndexChanged(int row);
 
   /*! \brief
    */

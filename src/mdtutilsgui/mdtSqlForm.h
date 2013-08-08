@@ -140,6 +140,17 @@ class mdtSqlForm : public QObject
    */
   QSqlError lastError(const QString &tableName);
 
+  /*! \brief Get the row count for given table name
+   *
+   * Note that SQL widget related to given tableName is searched
+   *  at each request. If several access to rowCount is needed,
+   *  it can be better to get a pointer to related model with model() ,
+   *  and call his rowCount() method.
+   *
+   * \return Row count, or value < 0 on error (f.ex. table not found).
+   */
+  int rowCount(const QString &tableName);
+
   /*! \brief Get the current row of given table name
    *
    * Current row can be the currently selected row

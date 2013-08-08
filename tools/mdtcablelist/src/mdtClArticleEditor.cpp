@@ -23,6 +23,7 @@
 #include "mdtSqlWindow.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
+#include "mdtAbstractSqlWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
@@ -83,9 +84,41 @@ mdtSqlFormWindow *mdtClArticleEditor::form()
 
 void mdtClArticleEditor::addLink()
 {
-  mdtClArticleLinkDialog dialog(0, pvDatabase);
+  mdtClArticleLinkDialog dialog(0, pvDatabase, currentArticleId());
 
-  dialog.exec();
+  // Check if some connection exists
+  if(pvForm->rowCount("ArticleConnection_tbl") < 1){
+    QMessageBox msgBox;
+    msgBox.setText(tr("There is no connection available for current article"));
+    msgBox.setInformativeText(tr("You must add connections before to be able to link them"));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.exec();
+    return;
+  }
+  // Setup and show dialog
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+}
+
+void mdtClArticleEditor::editLink()
+{
+  mdtClArticleLinkDialog dialog(0, pvDatabase, currentArticleId());
+  int row;
+  mdtAbstractSqlWidget *widget;
+
+  widget = pvForm->sqlWidget("ArticleLink_view");
+  Q_ASSERT(widget != 0);
+  // Check that a link is selected
+  row = widget->rowCount();
+  if(row < 0){
+    return;
+  }
+  // Setup and show dialog
+  dialog.setLinkTypeCode(widget->currentData("LinkType_Code_FK"));
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
 }
 
 QVariant mdtClArticleEditor::currentArticleId()
@@ -95,11 +128,10 @@ QVariant mdtClArticleEditor::currentArticleId()
 
 bool mdtClArticleEditor::setupArticleTable()
 {
-  Ui::mdtClArticleEditor *ae;
+  Ui::mdtClArticleEditor ae;
 
   // Setup main form widget
-  ae = new Ui::mdtClArticleEditor;
-  ae->setupUi(pvForm->mainSqlWidget());
+  ae.setupUi(pvForm->mainSqlWidget());
   ///connect(this, SIGNAL(unitEdited()), pvForm->mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
   if(!pvForm->setTable("Article_tbl", "Article", pvDatabase)){
@@ -142,6 +174,7 @@ bool mdtClArticleEditor::setupArticleLinkTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddLink;
+  QPushButton *pbEditLink;
 
   if(!pvForm->addChildTable("ArticleLink_view", tr("Links"), pvDatabase)){
     return false;
@@ -178,6 +211,9 @@ bool mdtClArticleEditor::setupArticleLinkTable()
   pbAddLink = new QPushButton(tr("Add link ..."));
   connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
   widget->addWidgetToLocalBar(pbAddLink);
+  pbEditLink = new QPushButton(tr("Edit link ..."));
+  connect(pbEditLink, SIGNAL(clicked()), this, SLOT(editLink()));
+  widget->addWidgetToLocalBar(pbEditLink);
   widget->addStretchToLocalBar();
 
   return true;

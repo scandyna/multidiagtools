@@ -58,6 +58,10 @@ class mdtClArticleEditor : public QObject
    */
   void addLink();
 
+  /*! \brief Edit link
+   */
+  void editLink();
+
  private:
 
   /*! \brief Get current Article ID
