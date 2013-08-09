@@ -26,7 +26,9 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QString>
+#include <QStringList>
 #include <QList>
+#include <QMessageBox>
 
 #include <QDebug>
 
@@ -61,6 +63,7 @@ mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db,
   lbStartContactName->clear();
   lbEndConnectorName->clear();
   lbEndContactName->clear();
+  pvValue = 0.0;
 }
 
 mdtClArticleLinkDialog::~mdtClArticleLinkDialog()
@@ -69,7 +72,19 @@ mdtClArticleLinkDialog::~mdtClArticleLinkDialog()
 
 void mdtClArticleLinkDialog::setLinkTypeCode(const QVariant & code)
 {
+  QModelIndex index;
+  int row;
+  QVariant data;
+
   pvLinkTypeCode = code;
+  for(row = 0; row < pvLinkTypeModel->rowCount(); ++row){
+    index = pvLinkTypeModel->index(row, 0);
+    data = pvLinkTypeModel->data(index);
+    if(data == code){
+      cbLinkType->setCurrentIndex(row);
+      return;
+    }
+  }
 }
 
 QVariant mdtClArticleLinkDialog::linkTypeCode() const
@@ -79,7 +94,19 @@ QVariant mdtClArticleLinkDialog::linkTypeCode() const
 
 void mdtClArticleLinkDialog::setLinkDirectionCode(const QVariant & code)
 {
+  QModelIndex index;
+  int row;
+  QVariant data;
+
   pvLinkDirectionCode = code;
+  for(row = 0; row < pvLinkDirectionModel->rowCount(); ++row){
+    index = pvLinkDirectionModel->index(row, 0);
+    data = pvLinkDirectionModel->data(index);
+    if(data == code){
+      cbLinkType->setCurrentIndex(row);
+      return;
+    }
+  }
 }
 
 QVariant mdtClArticleLinkDialog::linkDirectionCode() const
@@ -90,6 +117,7 @@ QVariant mdtClArticleLinkDialog::linkDirectionCode() const
 void mdtClArticleLinkDialog::setValue(const QVariant & value)
 {
   pvValue = value.toDouble();
+  sbValue->setValue(pvValue);
 }
 
 QVariant mdtClArticleLinkDialog::value() const
@@ -232,4 +260,85 @@ void mdtClArticleLinkDialog::selectEndConnection()
       lbEndContactName->setText(data.toString());
     }
   }
+}
+
+void mdtClArticleLinkDialog::accept()
+{
+  QStringList errorList;
+  QString infoText;
+  int i;
+
+  // Store and check link type
+  storeCurrentSelectedLinkType();
+  if(pvLinkTypeCode.isNull()){
+    errorList << tr("Link type is not set");
+  }
+  // Store and check link direction
+  storeCurrentSelectedLinkDirection();
+  if(pvLinkDirectionCode.isNull()){
+    errorList << tr("Direction is not set");
+  }
+  // Store value
+  pvValue = sbValue->value();
+  // Start and end connections are allready set afetr selection by user
+  if(pvStartConnectionId.isNull()){
+    errorList << tr("Start connection is not set");
+  }
+  if(pvEndConnectionId.isNull()){
+    errorList << tr("End connection is not set");
+  }
+  // If something is missing, display a message to the user
+  if(!errorList.isEmpty()){
+    infoText = tr("Please check following points and try again:\n");
+    for(i = 0; i < errorList.size(); ++i){
+      infoText += "- " + errorList.at(i) + "\n";
+    }
+    QMessageBox msgBox;
+    msgBox.setText(tr("Some informations are missing"));
+    msgBox.setInformativeText(infoText);
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setWindowTitle(tr("Article link warning"));
+    msgBox.exec();
+    return;
+  }
+  // Here, all is ok, accept dialog
+  QDialog::accept();
+}
+
+void mdtClArticleLinkDialog::reject()
+{
+  pvLinkTypeCode.clear();
+  pvLinkDirectionCode.clear();
+  pvValue = 0.0;
+  pvStartConnectionId.clear();
+  pvEndConnectionId.clear();
+  QDialog::reject();
+}
+
+void mdtClArticleLinkDialog::storeCurrentSelectedLinkType()
+{
+  QModelIndex index;
+  int row;
+
+  row = cbLinkType->currentIndex();
+  if(row < 0){
+    pvLinkTypeCode.clear();
+    return;
+  }
+  index = pvLinkTypeModel->index(row, 0);
+  pvLinkTypeCode = pvLinkTypeModel->data(index);
+}
+
+void mdtClArticleLinkDialog::storeCurrentSelectedLinkDirection()
+{
+  QModelIndex index;
+  int row;
+
+  row = cbLinkDirection->currentIndex();
+  if(row < 0){
+    pvLinkDirectionCode.clear();
+    return;
+  }
+  index = pvLinkDirectionModel->index(row, 0);
+  pvLinkDirectionCode = pvLinkDirectionModel->data(index);
 }

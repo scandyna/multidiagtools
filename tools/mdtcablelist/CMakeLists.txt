@@ -32,6 +32,7 @@ set (SOURCES_FILES
           src/mdtClTerminalEditorDialog.cpp
           src/mdtClUnitVehicleType.cpp
           src/mdtClArticleLinkDialog.cpp
+          src/mdtClArticle.cpp
     )
 
 # Qt ui files

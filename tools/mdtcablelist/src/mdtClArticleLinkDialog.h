@@ -45,27 +45,27 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   ~mdtClArticleLinkDialog();
 
-  /*! \brief
+  /*! \brief Display link type in combobox
    */
   void setLinkTypeCode(const QVariant & code);
 
-  /*! \brief
+  /*! \brief Get selected link type code
    */
   QVariant linkTypeCode() const;
 
-  /*! \brief
+  /*! \brief Display link direction in combobox
    */
   void setLinkDirectionCode(const QVariant & code);
 
-  /*! \brief
+  /*! \brief Get selected link direction code
    */
   QVariant linkDirectionCode() const;
 
-  /*! \brief
+  /*! \brief Display value
    */
   void setValue(const QVariant & value);
 
-  /*! \brief
+  /*! \brief Get value
    */
   QVariant value() const;
 
@@ -73,7 +73,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   void setStartConnectionId(const QVariant & id);
 
-  /*! \brief
+  /*! \brief Get start connection ID
    */
   QVariant startConnectionId() const;
 
@@ -81,29 +81,45 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   void setEndConnectionId(const QVariant & id);
 
-  /*! \brief
+  /*! \brief Get end connection ID
    */
   QVariant endConnectionId() const;
 
  private slots:
 
-  /*! \brief
+  /*! \brief Update some things when link type combobox index changed
    */
   void onCbLinkTypeCurrentIndexChanged(int row);
 
-  /*! \brief
+  /*! \brief Update some things when link direction combobox index changed
    */
   void onCbLinkDirectionCurrentIndexChanged(int row);
 
-  /*! \brief
+  /*! \brief Call selection dialog for start connection
    */
   void selectStartConnection();
 
-  /*! \brief
+  /*! \brief Call selection dialog for end connection
    */
   void selectEndConnection();
 
+  /*! \brief Do some check, store values and accept dialog if Ok
+   */
+  void accept();
+
+  /*! \brief Clear values and reject dialog
+   */
+  void reject();
+
  private:
+
+  /*! \brief Store code of current selected link type
+   */
+  void storeCurrentSelectedLinkType();
+
+  /*! \brief Store code of current selected link direction
+   */
+  void storeCurrentSelectedLinkDirection();
 
   Q_DISABLE_COPY(mdtClArticleLinkDialog);
 

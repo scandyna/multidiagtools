@@ -28,6 +28,7 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
 #include "mdtClArticleLinkDialog.h"
+#include "mdtClArticle.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -85,12 +86,13 @@ mdtSqlFormWindow *mdtClArticleEditor::form()
 void mdtClArticleEditor::addLink()
 {
   mdtClArticleLinkDialog dialog(0, pvDatabase, currentArticleId());
+  mdtClArticle art(pvDatabase);
 
   // Check if some connection exists
   if(pvForm->rowCount("ArticleConnection_tbl") < 1){
     QMessageBox msgBox;
     msgBox.setText(tr("There is no connection available for current article"));
-    msgBox.setInformativeText(tr("You must add connections before to be able to link them"));
+    msgBox.setInformativeText(tr("You must add connections to be able to link them"));
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.exec();
     return;
@@ -99,6 +101,18 @@ void mdtClArticleEditor::addLink()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  // Add link
+  if(!art.addLink(dialog.startConnectionId(), dialog.endConnectionId(), dialog.value().toDouble(), dialog.linkDirectionCode(), dialog.linkTypeCode())){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Link insertion failed"));
+    msgBox.setInformativeText(tr("Please see details for more informations"));
+    msgBox.setDetailedText(art.lastError().text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  // Update link table
+  pvForm->select("ArticleLink_view");
 }
 
 void mdtClArticleEditor::editLink()
@@ -116,6 +130,9 @@ void mdtClArticleEditor::editLink()
   }
   // Setup and show dialog
   dialog.setLinkTypeCode(widget->currentData("LinkType_Code_FK"));
+  dialog.setLinkDirectionCode(widget->currentData("LinkDirection_Code_FK"));
+  dialog.setValue(widget->currentData("Value"));
+  
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
@@ -192,6 +209,8 @@ bool mdtClArticleEditor::setupArticleLinkTable()
   widget->setColumnHidden("Id_PK", true);
   widget->setColumnHidden("StartArticle_Id_FK", true);
   widget->setColumnHidden("EndArticle_Id_FK", true);
+  widget->setColumnHidden("LinkType_Code_FK", true);
+  widget->setColumnHidden("LinkDirection_Code_FK", true);
   // Set fields a user friendly name
   widget->setHeaderData("SinceVersion", tr("Since\nversion"));
   widget->setHeaderData("LinkTypeNameEN", tr("Link type"));

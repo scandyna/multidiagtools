@@ -13,7 +13,7 @@ classcanvas 128386 class_ref 405122 // QSqlDatabase
   xyz 136 613 2000
 end
 relationcanvas 128258 relation_ref 992258 // <directional composition>
-  decenter_begin 617
+  decenter_begin 616
   decenter_end 435
   from ref 128002 z 2001 to ref 128130
   role_a_pos 535 613 3000 no_role_b

@@ -10,7 +10,7 @@ classcanvas 128130 class_ref 405122 // QSqlDatabase
 end
 relationcanvas 128258 relation_ref 999042 // <directional composition>
   from ref 128002 z 2001 to ref 128130
-  role_a_pos 335 436 3000 no_role_b
-  multiplicity_a_pos 307 436 3000 no_multiplicity_b
+  role_a_pos 342 436 3000 no_role_b
+  multiplicity_a_pos 314 436 3000 no_multiplicity_b
 end
 end
