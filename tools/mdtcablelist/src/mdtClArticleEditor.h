@@ -62,6 +62,10 @@ class mdtClArticleEditor : public QObject
    */
   void editLink();
 
+  /*! \brief Remove links
+   */
+  void removeLinks();
+
  private:
 
   /*! \brief Get current Article ID

@@ -1,6 +1,6 @@
 format 76
 "DatabaseConceptual" // mdttools::CableList::Sandbox::DatabaseConceptual
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -183,6 +183,26 @@ ${inlines}
       classrelation 996866 // <association>
 	relation_ref 985730 // <association>
       end
+
+      attribute 830594 "Coordinate"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 830722 "Cabinet"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
     end
 
     class 764930 "ArticleConnection_tbl"
@@ -354,6 +374,36 @@ ${inlines}
 
       classrelation 989698 // Connection (<association>)
 	relation_ref 978946 // <association>
+      end
+
+      attribute 830850 "SchemaPage"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 830978 "SignalName"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 831106 "FunctionEN"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
     end
 

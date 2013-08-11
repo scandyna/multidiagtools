@@ -120,6 +120,7 @@ void mdtClArticleEditor::editLink()
   mdtClArticleLinkDialog dialog(0, pvDatabase, currentArticleId());
   int row;
   mdtAbstractSqlWidget *widget;
+  mdtClArticle art(pvDatabase);
 
   widget = pvForm->sqlWidget("ArticleLink_view");
   Q_ASSERT(widget != 0);
@@ -132,10 +133,64 @@ void mdtClArticleEditor::editLink()
   dialog.setLinkTypeCode(widget->currentData("LinkType_Code_FK"));
   dialog.setLinkDirectionCode(widget->currentData("LinkDirection_Code_FK"));
   dialog.setValue(widget->currentData("Value"));
-  
+  dialog.setStartConnectionId(widget->currentData("ArticleConnectionStart_Id_FK"));
+  dialog.setEndConnectionId(widget->currentData("ArticleConnectionEnd_Id_FK"));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  // Edit link
+  if(!art.editLink(widget->currentData("Id_PK") ,dialog.startConnectionId(), dialog.endConnectionId(), dialog.value().toDouble(), dialog.linkDirectionCode(), dialog.linkTypeCode())){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Link insertion failed"));
+    msgBox.setInformativeText(tr("Please see details for more informations"));
+    msgBox.setDetailedText(art.lastError().text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  // Update link table
+  pvForm->select("ArticleLink_view");
+}
+
+void mdtClArticleEditor::removeLinks()
+{
+  mdtSqlTableWidget *widget;
+  mdtClArticle art(pvDatabase);
+  QMessageBox msgBox;
+  QModelIndexList indexes;
+  QSqlError sqlError;
+  int ret;
+
+  widget = pvForm->sqlTableWidget("ArticleLink_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  indexes = widget->indexListOfSelectedRows("Id_PK");
+  if(indexes.size() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove links for current article."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  ret = msgBox.exec();
+  if(ret != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!art.removeLinks(indexes)){
+    sqlError = art.lastError();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Links removing failed."));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  // Update link table
+  pvForm->select("ArticleLink_view");
 }
 
 QVariant mdtClArticleEditor::currentArticleId()
@@ -192,6 +247,7 @@ bool mdtClArticleEditor::setupArticleLinkTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddLink;
   QPushButton *pbEditLink;
+  QPushButton *pbRemoveLinks;
 
   if(!pvForm->addChildTable("ArticleLink_view", tr("Links"), pvDatabase)){
     return false;
@@ -211,6 +267,10 @@ bool mdtClArticleEditor::setupArticleLinkTable()
   widget->setColumnHidden("EndArticle_Id_FK", true);
   widget->setColumnHidden("LinkType_Code_FK", true);
   widget->setColumnHidden("LinkDirection_Code_FK", true);
+  widget->setColumnHidden("ArticleConnectionStart_Id_FK", true);
+  widget->setColumnHidden("ArticleConnectionEnd_Id_FK", true);
+  widget->setColumnHidden("UnitConnectionStart_Id_FK", true);
+  widget->setColumnHidden("UnitConnectionEnd_Id_FK", true);
   // Set fields a user friendly name
   widget->setHeaderData("SinceVersion", tr("Since\nversion"));
   widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
@@ -233,6 +293,9 @@ bool mdtClArticleEditor::setupArticleLinkTable()
   pbEditLink = new QPushButton(tr("Edit link ..."));
   connect(pbEditLink, SIGNAL(clicked()), this, SLOT(editLink()));
   widget->addWidgetToLocalBar(pbEditLink);
+  pbRemoveLinks = new QPushButton(tr("Remove links"));
+  connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
+  widget->addWidgetToLocalBar(pbRemoveLinks);
   widget->addStretchToLocalBar();
 
   return true;

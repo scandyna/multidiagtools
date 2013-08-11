@@ -1,23 +1,24 @@
-window_sizes 1280 1001 181 1093 923 0
+window_sizes 1280 1001 350 924 923 0
 diagrams
   classdiagram_ref 739330 // Conceptual
-    859 923 80 3 48 0
-  classdiagram_ref 766338 // mdtClArticleDialog
-    859 923 100 4 252 0
-  active  classdiagram_ref 759810 // mdtClArticle
-    1093 923 100 18 0 99
+    859 923 80 3 96 0
+  active  classdiagram_ref 759682 // mdtClUnit
+    924 923 90 3 132 0
 end
 show_stereotypes
+selected classdiagram_ref 759682 // mdtClUnit
 open
   classview_ref 457602 // mdtCableList
   class_ref 764418 // Article_tbl
+  class_ref 764546 // Unit_tbl
   class_ref 764930 // ArticleConnection_tbl
+  class_ref 765186 // UnitConnection_tbl
   class_ref 785282 // Link_tbl
   class_ref 785410 // LinkType_tbl
   
   package_ref 208002 // DatabaseLogical
-  operation_ref 1461378 // removeLinks
-  operation_ref 1461506 // removeLinks
+  classview_ref 497026 // Article
+  class_ref 819074 // mdtClUnitConnectionDialog
   classview_ref 267138 // mdtPortTerm
 end
 end

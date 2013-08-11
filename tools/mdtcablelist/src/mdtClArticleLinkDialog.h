@@ -69,7 +69,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   QVariant value() const;
 
-  /*! \brief
+  /*! \brief Store id as current selected start connection and display it
    */
   void setStartConnectionId(const QVariant & id);
 
@@ -77,7 +77,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   QVariant startConnectionId() const;
 
-  /*! \brief
+  /*! \brief Store id as current selected end connection and display it
    */
   void setEndConnectionId(const QVariant & id);
 
@@ -120,6 +120,14 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
   /*! \brief Store code of current selected link direction
    */
   void storeCurrentSelectedLinkDirection();
+
+  /*! \brief Display current selected start connection
+   */
+  void displayCurrentSelectedStartConnection();
+
+  /*! \brief Display current selected end connection
+   */
+  void displayCurrentSelectedEndConnection();
 
   Q_DISABLE_COPY(mdtClArticleLinkDialog);
 

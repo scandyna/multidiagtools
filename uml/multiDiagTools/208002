@@ -1,6 +1,6 @@
 format 76
 "DatabaseLogical" // mdttools::CableList::Sandbox::DatabaseLogical
-  revision 3
+  revision 4
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -187,9 +187,20 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 785282 "Id"
+      attribute 785282 "Id_PK"
 	private explicit_type "int"
 	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 832898 "Composite_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -207,7 +218,18 @@ ${inlines}
 	  b parent class_ref 764674 // Article
       end
 
-      attribute 785410 "schemaPosition"
+      attribute 785026 "Article_Id_FK"
+	private explicit_type "string"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 785410 "SchemaPosition"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -217,9 +239,27 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 785026 "articleCode"
+      classrelation 1031810 // <unidirectional association>
+	relation 1020674 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1031810 // <unidirectional association>
+	  b parent class_ref 764802 // Unit
+      end
+
+      attribute 833026 "Coordinate"
 	private explicit_type "string"
-	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 833154 "Cabinet"
+	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -241,7 +281,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 786434 "Id"
+      attribute 786434 "Id_PK"
 	private explicit_type "int"
 	stereotype "PK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -252,7 +292,7 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 786562 "Unit_Id"
+      attribute 833282 "UnitConnection_Id_FK"
 	private explicit_type "int"
 	stereotype "PK, FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -263,7 +303,29 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 786690 "unitConnectorName"
+      attribute 786562 "Unit_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 786818 "ArticleConnection_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 786690 "UnitConnectorName"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -282,9 +344,17 @@ ${inlines}
 	  b parent class_ref 764802 // Unit
       end
 
-      attribute 786818 "ArticleConnection_Id"
-	private explicit_type "int"
-	stereotype "FK"
+      classrelation 961026 // <unidirectional association>
+	relation 950786 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 961026 // <unidirectional association>
+	  b parent class_ref 765058 // ArticleConnection
+      end
+
+      attribute 830466 "UnitContactName"
+	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -293,13 +363,83 @@ ${inlines}
 	idl_decl ""
       end
 
-      classrelation 961026 // <unidirectional association>
-	relation 950786 --->
+      classrelation 1031938 // <unidirectional association>
+	relation 1020802 --->
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 961026 // <unidirectional association>
-	  b parent class_ref 765058 // ArticleConnection
+	    classrelation_ref 1031938 // <unidirectional association>
+	  b parent class_ref 765314 // UnitConnection
+      end
+
+      attribute 833410 "SchemaPage"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 833538 "SignalName"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 833666 "SwAddress"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 833794 "FunctionEN"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 833922 "FunctionFR"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 834050 "FunctionDE"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 834178 "FunctionIT"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
     end
 

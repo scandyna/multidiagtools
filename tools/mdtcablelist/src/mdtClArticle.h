@@ -25,6 +25,7 @@
 #include <QSqlError>
 #include <QVariant>
 #include <QModelIndex>
+#include <QList>
 
 /*! \brief Helper class for Article and related tables edition
  */
@@ -51,27 +52,6 @@ class mdtClArticle
    */
   bool addLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value, const QVariant & directionCode, const QVariant & typeCode);
 
-  /*! \brief 
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  bool removeLink(const QVariant & linkId);
-
-  /*! \brief 
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  bool removeLinks(const QVariant & linkIdList);
-
-  /*! \brief 
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  bool removeLinks(const QModelIndexList & indexListOfSelectedRows);
-
   /*! \brief Add a link of type resistor
    *
    * \return True on success, false else.
@@ -89,6 +69,36 @@ class mdtClArticle
    *          To get reason of failure, use lastError() .
    */
   bool addBridge(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
+
+  /*! \brief Edit a record in Link table
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool editLink(const QVariant &linkId, const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value, const QVariant & directionCode, const QVariant & typeCode);
+
+  /*! \brief Remove a signle link
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeLink(const QVariant & linkId);
+
+  /*! \brief Remove each link that is contained in linkIdList
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeLinks(const QList<QVariant> &linkIdList);
+
+  /*! \brief Remove each link that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeLinks(const QModelIndexList & indexListOfSelectedRows);
 
  private:
 

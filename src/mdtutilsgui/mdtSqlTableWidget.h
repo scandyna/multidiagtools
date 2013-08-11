@@ -242,6 +242,10 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   void onModelSelected();
 
+  /*! \brief Get column index of first visible column
+   */
+  int firstVisibleColumnIndex();
+
  private:
 
   /*! \brief Set model

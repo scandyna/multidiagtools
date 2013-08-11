@@ -245,6 +245,9 @@ void mdtSqlTableWidget::setHeaderData(const QString &fieldName, const QString &d
 void mdtSqlTableWidget::setColumnHidden(int column, bool hide)
 {
   pvTableView->setColumnHidden(column, hide);
+  if(model() != 0){
+    setDefaultColumnToSelect(firstVisibleColumnIndex());
+  }
 }
 
 void mdtSqlTableWidget::setColumnHidden(const QString &fieldName, bool hide)
@@ -324,7 +327,6 @@ QModelIndexList mdtSqlTableWidget::indexListOfSelectedRows(const QStringList &fi
   QList<int> columns;
   int i;
 
-  
   for(i = 0; i < fieldList.size(); ++i){
     columns.append(model()->fieldIndex(fieldList.at(i)));
   }
@@ -402,7 +404,7 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
       }
       break;
     case Qt::Key_Down:
-      // If we are at last row, we insert on - Only in visualizing state
+      // If we are at last row, we insert one - Only in visualizing state
       index = pvTableView->selectionModel()->currentIndex();
       if((index.row() == (model()->rowCount() - 1)) && (currentState() == Visualizing) && (pvTableView->editTriggers() != QAbstractItemView::NoEditTriggers)){
         // Insert new row and select it
@@ -411,9 +413,17 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
       // Select new current index
       index = model()->index(index.row()+1, index.column());
       if(index.isValid()){
-        ///pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
-        /// \todo Get table view flags and adapt selection flags
-        pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        switch(pvTableView->selectionBehavior()){
+          case QAbstractItemView::SelectItems:
+            pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear | QItemSelectionModel::Select);
+            break;
+          case QAbstractItemView::SelectRows:
+            pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
+            break;
+          case QAbstractItemView::SelectColumns:
+            pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Columns);
+            break;
+        }
       }
   }
 }
@@ -428,8 +438,9 @@ void mdtSqlTableWidget::onModelSelected()
     return;
   }
   if(model()->rowCount() > 0){
-    index = model()->index(0, 0);
-    pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear);
+    index = model()->index(0, pvDefaultColumnToSelect);
+    pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
+    qDebug() << "onModelSelected() , selected index: " << index;
   }else{
     onCurrentRowChanged(index, index);
   }
@@ -481,8 +492,9 @@ bool mdtSqlTableWidget::doInsert()
   // Insert new row at end
   row = model()->rowCount();
   model()->insertRow(row);
-  index = model()->index(row, 0);
-  pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear);
+  index = model()->index(row, pvDefaultColumnToSelect);
+  pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
+  qDebug() << "doInsert, selected index: " << index;
 
   return true;
 }
@@ -528,7 +540,7 @@ bool mdtSqlTableWidget::doRemove()
     return true;
   }
   // We ask confirmation to the user
-  msgBox.setText(tr("You are about to delete selected rows."));
+  msgBox.setText(tr("You are about to delete selected rows in table ") + userFriendlyTableName());
   msgBox.setInformativeText(tr("Do you want to continue ?"));
   msgBox.setIcon(QMessageBox::Warning);
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
@@ -570,7 +582,7 @@ void mdtSqlTableWidget::toFirst()
   if(pvTableView->model() == 0){
     return;
   }
-  index = pvTableView->model()->index(0, 0);
+  index = pvTableView->model()->index(0, pvDefaultColumnToSelect);
   pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear);
 }
 
@@ -587,7 +599,7 @@ void mdtSqlTableWidget::toLast()
   index = pvTableView->selectionModel()->currentIndex();
   row = pvTableView->model()->rowCount()-1;
   if(index.row() < row){
-    index = pvTableView->model()->index(row, 0);
+    index = pvTableView->model()->index(row, pvDefaultColumnToSelect);
     pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear);
   }
 }
@@ -606,7 +618,7 @@ void mdtSqlTableWidget::toPrevious()
   index = pvTableView->selectionModel()->currentIndex();
   if(index.row() > 0){
     row = index.row()-1;
-    index = pvTableView->model()->index(row, 0);
+    index = pvTableView->model()->index(row, pvDefaultColumnToSelect);
     pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear);
   }
 }
@@ -625,7 +637,23 @@ void mdtSqlTableWidget::toNext()
   index = pvTableView->selectionModel()->currentIndex();
   if(index.row() < (pvTableView->model()->rowCount())-1){
     row = index.row()+1;
-    index = pvTableView->model()->index(row, 0);
+    index = pvTableView->model()->index(row, pvDefaultColumnToSelect);
     pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Clear);
   }
+}
+
+int mdtSqlTableWidget::firstVisibleColumnIndex()
+{
+  Q_ASSERT(model() != 0);
+
+  int col;
+
+  for(col = 0; col < model()->columnCount(); ++col){
+    if(!pvTableView->isColumnHidden(col)){
+      qDebug() << "firstVisibleColumnIndex(): " << col;
+      return col;
+    }
+  }
+
+  return -1;
 }

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mdtClUnitConnectionDialog</class>
+ <widget class="QDialog" name="mdtClUnitConnectionDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>664</width>
+    <height>407</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="lbArticleIoTypeLabel">
+       <property name="text">
+        <string>Article I/O type :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="lbArticleIoType">
+       <property name="text">
+        <string>Article io type</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lbSchemaPage">
+       <property name="text">
+        <string>Schema page :</string>
+       </property>
+       <property name="buddy">
+        <cstring>leSchemaPage</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QLineEdit" name="leSchemaPage"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lbFunctionEN">
+       <property name="text">
+        <string>Function EN :</string>
+       </property>
+       <property name="buddy">
+        <cstring>leFunctionEN</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLineEdit" name="leFunctionEN"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbCopyFunctionEN">
+         <property name="text">
+          <string>&lt;--</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbArticleFunctionEN">
+         <property name="text">
+          <string>Article function EN</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lbFunctionFR">
+       <property name="text">
+        <string>Function FR :</string>
+       </property>
+       <property name="buddy">
+        <cstring>leFunctionFR</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLineEdit" name="leFunctionFR"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbCopyFunctionFR">
+         <property name="text">
+          <string>&lt;--</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbArticleFunctionFR">
+         <property name="text">
+          <string>Article function FR</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="lbFunctionDE">
+       <property name="text">
+        <string>Function DE :</string>
+       </property>
+       <property name="buddy">
+        <cstring>leFunctionDE</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QLineEdit" name="leFunctionDE"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbCopyFunctionDE">
+         <property name="text">
+          <string>&lt;--</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbArticleFunctionDE">
+         <property name="text">
+          <string>Article function DE</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="lbFunctionIT">
+       <property name="text">
+        <string>Function IT :</string>
+       </property>
+       <property name="buddy">
+        <cstring>leFunctionIT</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QLineEdit" name="leFunctionIT"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbCopyFunctionIT">
+         <property name="text">
+          <string>&lt;--</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbArticleFunctionIT">
+         <property name="text">
+          <string>Article function IT</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="lbSignalName">
+       <property name="text">
+        <string>Signal name :</string>
+       </property>
+       <property name="buddy">
+        <cstring>leSignalName</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLineEdit" name="leSignalName"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="lbSwAddress">
+       <property name="text">
+        <string>SW address :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QSpinBox" name="sbSwAddress">
+         <property name="maximum">
+          <number>65000</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="10" column="0">
+      <widget class="QLabel" name="lbUnitConnectorName">
+       <property name="text">
+        <string>Connector :</string>
+       </property>
+       <property name="buddy">
+        <cstring>leUnitConnectorName</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLineEdit" name="leUnitConnectorName"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbCopyConnectorName">
+         <property name="text">
+          <string>&lt;--</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbArticleConnectorName">
+         <property name="text">
+          <string>Article connector name</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="11" column="0">
+      <widget class="QLabel" name="lbUnitContactName">
+       <property name="text">
+        <string>Contact :</string>
+       </property>
+       <property name="buddy">
+        <cstring>leUnitContactName</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLineEdit" name="leUnitContactName"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbCopyContactName">
+         <property name="text">
+          <string>&lt;--</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbArticleContactName">
+         <property name="text">
+          <string>Article contact name</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_10">
+     <item>
+      <widget class="QGroupBox" name="gbRanges">
+       <property name="title">
+        <string>Terminal ranges</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>mdtClUnitConnectionDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>mdtClUnitConnectionDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

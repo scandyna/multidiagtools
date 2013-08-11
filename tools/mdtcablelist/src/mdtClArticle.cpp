@@ -71,15 +71,6 @@ bool mdtClArticle::addLink(const QVariant & articleConnectionStartId, const QVar
   return true;
 }
 
-bool mdtClArticle::removeLink(const QVariant & linkId) {
-}
-
-bool mdtClArticle::removeLinks(const QVariant & linkIdList) {
-}
-
-bool mdtClArticle::removeLinks(const QModelIndexList & indexListOfSelectedRows) {
-}
-
 bool mdtClArticle::addResistor(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value)
 {
   return addLink(articleConnectionStartId, articleConnectionEndId, value, "BID", "RESISTOR");
@@ -95,3 +86,96 @@ bool mdtClArticle::addBridge(const QVariant & articleConnectionStartId, const QV
   return addLink(articleConnectionStartId, articleConnectionEndId, 0.0, "BID", "ARTBRIDGE");
 }
 
+bool mdtClArticle::editLink(const QVariant &linkId, const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value, const QVariant & directionCode, const QVariant & typeCode)
+{
+  QString sql;
+  QSqlQuery query(pvDatabase);
+
+  // Prepare query for edition
+  sql = "UPDATE Link_tbl \
+         SET ArticleConnectionStart_Id_FK = :ArticleConnectionStart_Id_FK ,\
+             ArticleConnectionEnd_Id_FK = :ArticleConnectionEnd_Id_FK ,\
+             Value = :Value ,\
+             LinkDirection_Code_FK = :LinkDirection_Code_FK ,\
+             LinkType_Code_FK = :LinkType_Code_FK\
+         WHERE Id_PK = " + linkId.toString();
+  if(!query.prepare(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for link edition", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClArticle");
+    e.commit();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":ArticleConnectionStart_Id_FK", articleConnectionStartId);
+  query.bindValue(":ArticleConnectionEnd_Id_FK", articleConnectionEndId);
+  query.bindValue(":Value", value);
+  query.bindValue(":LinkDirection_Code_FK", directionCode);
+  query.bindValue(":LinkType_Code_FK", typeCode);
+  if(!query.exec()){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for link edition", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClArticle");
+    e.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClArticle::removeLink(const QVariant & linkId)
+{
+  QList<QVariant> idList;
+
+  idList.append(linkId);
+
+  return removeLinks(idList);
+}
+
+bool mdtClArticle::removeLinks(const QList<QVariant> &linkIdList)
+{
+  int i;
+  QString sql;
+
+  if(linkIdList.size() < 1){
+    return true;
+  }
+  // Generate SQL
+  sql = "DELETE FROM Link_tbl ";
+  for(i = 0; i < linkIdList.size(); ++i){
+    if(i == 0){
+      sql += " WHERE ( ";
+    }else{
+      sql += " OR ";
+    }
+    sql += "Id_PK = " + linkIdList.at(i).toString();
+  }
+  sql += " ) ";
+  // Submit query
+  QSqlQuery query(pvDatabase);
+  if(!query.exec(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for link deletion", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClArticle");
+    e.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClArticle::removeLinks(const QModelIndexList & indexListOfSelectedRows)
+{
+  int i;
+  QString sql;
+  QList<QVariant> idList;
+
+  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
+    idList.append(indexListOfSelectedRows.at(i).data());
+  }
+
+  return removeLinks(idList);
+}
