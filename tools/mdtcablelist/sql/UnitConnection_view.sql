@@ -15,5 +15,5 @@ SELECT
  ArticleConnection_tbl.IoType ,
  ArticleConnection_tbl.FunctionEN AS ArticleFunctionEn
 FROM UnitConnection_tbl
- JOIN ArticleConnection_tbl
+ LEFT JOIN ArticleConnection_tbl
   ON UnitConnection_tbl.ArticleConnection_Id_FK = ArticleConnection_tbl.Id_PK ;

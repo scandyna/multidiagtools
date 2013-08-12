@@ -1,6 +1,6 @@
 format 76
 "Program" // mdttools::CableList::Sandbox::Program
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -824,8 +824,8 @@ ${inlines}
 	
       end
 
-      operation 1468674 "toUnitConnectionRelatedArticleConnectionCount"
-	public explicit_return_type "int"
+      operation 1468674 "unitConnectionIsRelatedToArticleConnection"
+	public explicit_return_type "bool"
 	nparams 1
 	  param in name "unitConnectionId" type class_ref 161154 // QVariant
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
@@ -839,13 +839,14 @@ ${inlines}
 	
       end
 
-      operation 1468802 "toUnitConnectionRelatedArticleConnectionIds"
-	public explicit_return_type "QList<QVarian>"
-	nparams 1
-	  param in name "unitId" type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+      operation 1468802 "toUnitConnectionRelatedArticleConnectionData"
+	public return_type class_ref 161154 // QVariant
+	nparams 2
+	  param in name "unitConnectionId" type class_ref 161154 // QVariant
+	  param in name "field" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -1525,12 +1526,12 @@ ${inlines}
 
       operation 1473154 "mdtClUnitConnectionDialog"
 	public explicit_return_type ""
-	nparams 1
+	nparams 2
 	  param in name "parent" type class_ref 316162 // QWidget
-	    defaultvalue "0"
-	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+	  param in name "unit" type class_ref 818818 // mdtClUnit
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
 "
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} {
   ${body}}
 "
 	
@@ -1559,15 +1560,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 1032066 // <generalisation>
 	  b parent class_ref 819202 // Ui::mdtClUnitConnectionDialog
-      end
-
-      classrelation 1032194 // <directional composition>
-	relation 1021058 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1032194 // <directional composition>
-	  b parent class_ref 174338 // QSqlQueryModel
       end
 
       operation 1473666 "setUnitConnectionData"
@@ -1599,26 +1591,19 @@ ${inlines}
 	
       end
 
-      operation 1474050 "setArticleConnectorData"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "connectorName" type class_ref 161154 // QVariant
-	  param in name "contactName" type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+      classrelation 1038722 // pvUnit (<unidirectional association>)
+	relation 1027586 --->
+	  a role_name "pvUnit" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
+	    classrelation_ref 1038722 // pvUnit (<unidirectional association>)
+	  b parent class_ref 818818 // mdtClUnit
       end
 
-      operation 1474178 "setArticleConnectionIoType"
+      operation 1480962 "setRelatedArticleConnection"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "type" type class_ref 161154 // QVariant
+	  param in name "articleConnectionId" type class_ref 161154 // QVariant
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
@@ -1630,16 +1615,12 @@ ${inlines}
 	
       end
 
-      operation 1474306 "setArticleConnectionFunction"
+      operation 1480834 "enableRangeEdition"
 	public explicit_return_type "void"
-	nparams 4
-	  param in name "functionEN" type class_ref 161154 // QVariant
-	  param in name "functionFR" type class_ref 161154 // QVariant
-	  param in name "functionDE" type class_ref 161154 // QVariant
-	  param in name "functionIT" type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${abstract};
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -1688,6 +1669,52 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 792194 // mdtClUnitVehicleType
+      end
+    end
+
+    artifact 493058 "mdtClUnitConnectionData"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 818946 // mdtClUnitConnectionData
+      end
+    end
+
+    artifact 493186 "mdtClUnit"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 818818 // mdtClUnit
       end
     end
   end

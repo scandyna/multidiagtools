@@ -19,6 +19,9 @@
  **
  ****************************************************************************/
 #include "mdtClUnitEditor.h"
+
+#include "mdtClUnit.h"
+
 #include "ui_mdtClUnitEditor.h"
 #include "ui_mdtClUnitConnectionEditor.h"
 #include "mdtSqlWindow.h"
@@ -48,7 +51,7 @@
 
 #include <QDebug>
 
-mdtClUnitEditor::mdtClUnitEditor(QObject *parent, const QSqlDatabase db)
+mdtClUnitEditor::mdtClUnitEditor(QObject *parent, QSqlDatabase db)
  : QObject(parent)
 {
   pvDatabase = db;
@@ -197,9 +200,61 @@ void mdtClUnitEditor::removeVehicleAssignation()
 
 void mdtClUnitEditor::setBaseArticle()
 {
+  mdtClUnit unit(pvDatabase);
   mdtSqlSelectionDialog selectionDialog;
   QSqlQueryModel model;
+  int ret;
   QString sql;
+
+  // Check if some unit connections are related to article connecions
+  //  If yes, we cannot change the base article
+  ret = unit.toUnitRelatedArticleConnectionCount(currentUnitId());
+  if(ret < 0){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot check if current unit has connections based on current article."));
+    msgBox.setDetailedText(unit.lastError().text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  if(ret > 0){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot change base article because some connections are based on it."));
+    msgBox.setInformativeText(tr("Please remove used connections that are related to base article and try again."));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.exec();
+    return;
+  }
+  // Setup article selection dialog and show it to user
+  sql = "SELECT * FROM Article_tbl;";
+  model.setQuery(sql, pvDatabase);
+  selectionDialog.setMessage("Please select a article");
+  selectionDialog.setModel(&model);
+  ///selectionDialog.setColumnHidden("Id_PK", true);
+  ///selectionDialog.setHeaderData("SubType", tr("Variant"));
+  ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
+  selectionDialog.addSelectionResultColumn("Id_PK");
+  selectionDialog.resize(500, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  /**
+  selectedItem = selectionDialog.selectionResult();
+  if(selectedItem.size() != 1){
+    return;
+  }
+  if(!selectedItem.at(0).isValid()){
+    return;
+  }
+  */
+
+  
+  
+  return;
+  
+  
+  
+  
   QList<QVariant> selectedItem;
   QSqlError sqlError;
   int articleIdFkColumn;
@@ -237,24 +292,6 @@ void mdtClUnitEditor::setBaseArticle()
     return;
   }
   // Set SQL query
-  sql = "SELECT * FROM Article_tbl;";
-  model.setQuery(sql, pvDatabase);
-  // Setup and show dialog
-  selectionDialog.setMessage("Please select a article");
-  selectionDialog.setModel(&model);
-  ///selectionDialog.setColumnHidden("Id_PK", true);
-  ///selectionDialog.setHeaderData("SubType", tr("Variant"));
-  ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
-  selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(500, 300);
-  selectionDialog.exec();
-  selectedItem = selectionDialog.selectionResult();
-  if(selectedItem.size() != 1){
-    return;
-  }
-  if(!selectedItem.at(0).isValid()){
-    return;
-  }
   index = unitModel->index(currentRow, articleIdFkColumn);
   Q_ASSERT(index.isValid());
   if(!unitModel->setData(index, selectedItem.at(0))){
@@ -446,6 +483,7 @@ void mdtClUnitEditor::removeConnection()
       QSqlError sqlError = query.lastError();
       mdtError e(MDT_DATABASE_ERROR, "Removing connections from table 'UnitConnection_tbl' failed for Id_PK " + QString::number(unitConnectionIds.at(i)) , mdtError::Error);
       e.setSystemError(sqlError.number(), sqlError.text());
+      MDT_ERROR_SET_SRC(e, "mdtClUnitEditor");
       e.commit();
       QMessageBox msgBox;
       msgBox.setText(tr("Error occured while removing connecions."));

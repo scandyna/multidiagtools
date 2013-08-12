@@ -25,7 +25,9 @@ set (SOURCES_FILES
           src/main.cpp
           src/mdtClVehicleTypeEditor.cpp
           src/mdtClArticleEditor.cpp
+          src/mdtClUnit.cpp
           src/mdtClUnitEditor.cpp
+          src/mdtClUnitConnectionData.cpp
           src/mdtClLinkEditor.cpp
           src/mdtClUnitConnectionSelectionDialog.cpp
           src/mdtClTerminalBlockEditor.cpp
