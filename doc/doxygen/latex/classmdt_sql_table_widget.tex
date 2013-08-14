@@ -13,8 +13,7 @@ Table view based SQL widget.
 
 
 
-Inheritance diagram for mdtSqlTableWidget:
-\nopagebreak
+Inheritance diagram for mdtSqlTableWidget:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,21 +22,22 @@ Inheritance diagram for mdtSqlTableWidget:
 \end{figure}
 
 
-Collaboration diagram for mdtSqlTableWidget:
-\nopagebreak
+Collaboration diagram for mdtSqlTableWidget:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=194pt]{classmdt_sql_table_widget__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_sql_table_widget_ae4945234973dcfcb8f2e20830e571fd4}{setCurrentIndex} (int row)
+\begin{DoxyCompactList}\small\item\em Set row as current record. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}{
-\hyperlink{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}{mdtSqlTableWidget} (QWidget $\ast$parent=0)}
-\label{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}
-
+\hyperlink{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}{mdtSqlTableWidget} (QWidget $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_sql_table_widget_ab5db8a20c64340bba4841a1b1c928d7f}{
 \hyperlink{classmdt_sql_table_widget_ab5db8a20c64340bba4841a1b1c928d7f}{$\sim$mdtSqlTableWidget} ()}
@@ -49,10 +49,7 @@ int \hyperlink{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}{curr
 \label{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}
 
 \begin{DoxyCompactList}\small\item\em Get the current row. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{
-void \hyperlink{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{setEditionEnabled} (bool enable)}
-\label{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}
-
+void \hyperlink{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{setEditionEnabled} (bool enable)
 \begin{DoxyCompactList}\small\item\em Set edition enabled/disabled. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}{enableLocalEdition} ()
 \begin{DoxyCompactList}\small\item\em Enable local edition. \end{DoxyCompactList}\item 
@@ -68,6 +65,11 @@ QItemSelectionModel $\ast$ \hyperlink{classmdt_sql_table_widget_a47fc691f2cd9cc4
 \label{classmdt_sql_table_widget_a47fc691f2cd9cc40749c987ce2bbea6d}
 
 \begin{DoxyCompactList}\small\item\em Get internal table view's selection model. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_af40eeb001ec262830daba6b311927ede}{
+QTableView $\ast$ \hyperlink{classmdt_sql_table_widget_af40eeb001ec262830daba6b311927ede}{tableView} ()}
+\label{classmdt_sql_table_widget_af40eeb001ec262830daba6b311927ede}
+
+\begin{DoxyCompactList}\small\item\em Get internal table view. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_a591461ee19f22008a5c310609461081e}{setHeaderData} (const QString \&fieldName, const QString \&data)
 \begin{DoxyCompactList}\small\item\em Set a user friendly name for a column. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_sql_table_widget_a466ff75bee2a0efd99c62994f65a5d18}{
@@ -76,7 +78,23 @@ void \hyperlink{classmdt_sql_table_widget_a466ff75bee2a0efd99c62994f65a5d18}{set
 
 \begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_ae1eefd42d91ea36fa4244d7f265d7222}{setColumnHidden} (const QString \&fieldName, bool hide)
-\begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a3b3d79485206f7f3468e125e38bd24f9}{setDefaultColumnToSelect} (int column)
+\begin{DoxyCompactList}\small\item\em Set default column to select. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_a17d60fda061030fdfe15be5445eadc76}{
+void {\bfseries setDefaultColumnToSelect} (const QString \&fieldName)}
+\label{classmdt_sql_table_widget_a17d60fda061030fdfe15be5445eadc76}
+
+\item 
+QModelIndexList \hyperlink{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}{indexListOfSelectedRows} (const QList$<$ int $>$ \&columnList)
+\begin{DoxyCompactList}\small\item\em Get a list of currently selected indexes. \end{DoxyCompactList}\item 
+QModelIndexList \hyperlink{classmdt_sql_table_widget_abe241fe0b24552b5403cb15593e18cdd}{indexListOfSelectedRows} (const QStringList \&fieldList)
+\begin{DoxyCompactList}\small\item\em Get a list of currently selected indexes. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_a9616d390c25a3b1e863e855e00172e42}{
+QModelIndexList {\bfseries indexListOfSelectedRows} (const QString \&field)}
+\label{classmdt_sql_table_widget_a9616d390c25a3b1e863e855e00172e42}
+
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -84,7 +102,27 @@ Table view based SQL widget.
 
 Internally, QTableView is used. This class add some common needed methods, like insertion, removing, ... 
 
-Definition at line 80 of file mdtSqlTableWidget.h.
+Definition at line 81 of file mdtSqlTableWidget.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{mdtSqlTableWidget}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlTableWidget::mdtSqlTableWidget (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}
+
+
+Constructor. 
+
+Setup a QTableView and init some other things. The table view will not be editable, use \hyperlink{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{setEditionEnabled()} to alter this. 
+
+Definition at line 91 of file mdtSqlTableWidget.cpp.
 
 
 
@@ -111,7 +149,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 183 of file mdtSqlTableWidget.cpp.
+Definition at line 187 of file mdtSqlTableWidget.cpp.
 
 \hypertarget{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}{
 \index{mdtSqlTableWidget@{mdtSqlTableWidget}!enableLocalEdition@{enableLocalEdition}}
@@ -138,7 +176,53 @@ Reimplemented from \hyperlink{classmdt_abstract_sql_widget_a4ad94a530c77292d122d
 
 
 
-Definition at line 141 of file mdtSqlTableWidget.cpp.
+Definition at line 144 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!indexListOfSelectedRows@{indexListOfSelectedRows}}
+\index{indexListOfSelectedRows@{indexListOfSelectedRows}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{indexListOfSelectedRows}]{\setlength{\rightskip}{0pt plus 5cm}QModelIndexList mdtSqlTableWidget::indexListOfSelectedRows (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ int $>$ \&}]{columnList}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}
+
+
+Get a list of currently selected indexes. 
+
+Will return a list of indexes that contains only coulumns specified by columnList. This alos works for multiple rows selection.
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 284 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_abe241fe0b24552b5403cb15593e18cdd}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!indexListOfSelectedRows@{indexListOfSelectedRows}}
+\index{indexListOfSelectedRows@{indexListOfSelectedRows}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{indexListOfSelectedRows}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlTableWidget::indexListOfSelectedRows (
+\begin{DoxyParamCaption}
+\item[{const QStringList \&}]{fieldList}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_abe241fe0b24552b5403cb15593e18cdd}
+
+
+Get a list of currently selected indexes. 
+
+Will return a list of indexes that contains only fields specified by fieldList. This alos works for multiple rows selection.
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method.
+\end{DoxyPrecond}
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+This is a variant for single column. 
+
+Definition at line 322 of file mdtSqlTableWidget.cpp.
 
 \hypertarget{classmdt_sql_table_widget_ae1eefd42d91ea36fa4244d7f265d7222}{
 \index{mdtSqlTableWidget@{mdtSqlTableWidget}!setColumnHidden@{setColumnHidden}}
@@ -159,7 +243,80 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 241 of file mdtSqlTableWidget.cpp.
+Definition at line 253 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_ae4945234973dcfcb8f2e20830e571fd4}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!setCurrentIndex@{setCurrentIndex}}
+\index{setCurrentIndex@{setCurrentIndex}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{setCurrentIndex}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlTableWidget::setCurrentIndex (
+\begin{DoxyParamCaption}
+\item[{int}]{row}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
+\label{classmdt_sql_table_widget_ae4945234973dcfcb8f2e20830e571fd4}
+
+
+Set row as current record. 
+
+
+
+index = pvTableView-\/$>$\hyperlink{classmdt_sql_table_widget_a47fc691f2cd9cc40749c987ce2bbea6d}{selectionModel()}-\/$>$currentIndex(); 
+
+
+
+Implements \hyperlink{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{mdtAbstractSqlWidget}.
+
+
+
+Definition at line 345 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_a3b3d79485206f7f3468e125e38bd24f9}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!setDefaultColumnToSelect@{setDefaultColumnToSelect}}
+\index{setDefaultColumnToSelect@{setDefaultColumnToSelect}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{setDefaultColumnToSelect}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlTableWidget::setDefaultColumnToSelect (
+\begin{DoxyParamCaption}
+\item[{int}]{column}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_a3b3d79485206f7f3468e125e38bd24f9}
+
+
+Set default column to select. 
+
+Some methods have to update selection in table view. Here it's possible to define witch column must be selected in such case.
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method.
+\end{DoxyPrecond}
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 266 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!setEditionEnabled@{setEditionEnabled}}
+\index{setEditionEnabled@{setEditionEnabled}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{setEditionEnabled}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlTableWidget::setEditionEnabled (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}
+
+
+Set edition enabled/disabled. 
+
+
+
+pvTableView-\/$>$setEditTriggers(QAbstractItemView::AllEditTriggers); 
+
+
+
+Definition at line 134 of file mdtSqlTableWidget.cpp.
 
 \hypertarget{classmdt_sql_table_widget_a591461ee19f22008a5c310609461081e}{
 \index{mdtSqlTableWidget@{mdtSqlTableWidget}!setHeaderData@{setHeaderData}}
@@ -180,7 +337,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 223 of file mdtSqlTableWidget.cpp.
+Definition at line 232 of file mdtSqlTableWidget.cpp.
 
 
 

@@ -114,6 +114,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr><td class="indexkey"><a class="el" href="classmdt_frame_modbus_tcp.html">mdtFrameModbusTcp</a></td><td class="indexvalue">MODBUS/TCP Frame </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a></td><td class="indexvalue">USB Control frame </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_frame_usb_tmc.html">mdtFrameUsbTmc</a></td><td class="indexvalue">USBTMC frame </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_graph.html">mdtGraph</a></td><td class="indexvalue">Simple implementation of a graph </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_graph_edge_data.html">mdtGraphEdgeData</a></td><td class="indexvalue">Provide data storage for <a class="el" href="classmdt_graph.html" title="Simple implementation of a graph.">mdtGraph</a> edge </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_graph_vertex.html">mdtGraphVertex</a></td><td class="indexvalue">Vertex of <a class="el" href="classmdt_graph.html" title="Simple implementation of a graph.">mdtGraph</a> </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_graph_vertex_adjacent.html">mdtGraphVertexAdjacent</a></td><td class="indexvalue">Storage class vor vertex adjacent </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_graph_vertex_data.html">mdtGraphVertexData</a></td><td class="indexvalue">Provide data storage for <a class="el" href="classmdt_graph.html" title="Simple implementation of a graph.">mdtGraph</a> </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_items_selector_dialog.html">mdtItemsSelectorDialog</a></td><td class="indexvalue">Provide the user a dialog in witch he can choose items </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_led.html">mdtLed</a></td><td class="indexvalue">MdtLED is a widget witch displays a LED </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_modbus_io_tool.html">mdtModbusIoTool</a></td><td class="indexvalue">Minimal tool for MODBUS I/O </td></tr>
@@ -146,15 +151,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr><td class="indexkey"><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td class="indexvalue">Serial port manager class </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_serial_port_setup_dialog.html">mdtSerialPortSetupDialog</a></td><td class="indexvalue">Setup dialog for serial port </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sort_filter_proxy_model.html">mdtSortFilterProxyModel</a></td><td class="indexvalue">Provide natural sort for Qt model/view </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_data_validator.html">mdtSqlDataValidator</a></td><td class="indexvalue">Helper class for data validation </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_data_widget_mapper.html">mdtSqlDataWidgetMapper</a></td><td class="indexvalue">DataWidget mapper </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_field_handler.html">mdtSqlFieldHandler</a></td><td class="indexvalue">Handle events between a SQL field and a edition widget </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html">mdtSqlFieldHandlerAbstractDataWidget</a></td><td class="indexvalue"></td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_field_handler_line_edit.html">mdtSqlFieldHandlerLineEdit</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_form.html">mdtSqlForm</a></td><td class="indexvalue">Base class for high level SQL widgets API </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_form_widget.html">mdtSqlFormWidget</a></td><td class="indexvalue">Widget that accept a user designed form and helps dealing with table model </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_form_widget_data_validator.html">mdtSqlFormWidgetDataValidator</a></td><td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_form_window.html">mdtSqlFormWindow</a></td><td class="indexvalue">SQL form window </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_query_widget.html">mdtSqlQueryWidget</a></td><td class="indexvalue">Widget for data queriyng </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="indexvalue">Handle parent/child relations between 2 QSqlTableModels </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_relation_item.html">mdtSqlRelationItem</a></td><td class="indexvalue">Keep informations about a parent/child SQL relation </td></tr>
-  <tr><td class="indexkey"><a class="el" href="classmdt_sql_selection_dialog.html">mdtSqlSelectionDialog</a></td><td class="indexvalue">Provide a way for the user to select a row in a set of data </td></tr>
+  <tr><td class="indexkey"><a class="el" href="classmdt_sql_selection_dialog.html">mdtSqlSelectionDialog</a></td><td class="indexvalue">Provide a way for the user to select row in a set of data </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_table_model.html">mdtSqlTableModel</a></td><td class="indexvalue">Sql table model </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_table_widget.html">mdtSqlTableWidget</a></td><td class="indexvalue">Table view based SQL widget </td></tr>
   <tr><td class="indexkey"><a class="el" href="classmdt_sql_table_widget_item_delegate.html">mdtSqlTableWidgetItemDelegate</a></td><td class="indexvalue"></td></tr>
@@ -198,7 +207,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:17 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 14 2013 19:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

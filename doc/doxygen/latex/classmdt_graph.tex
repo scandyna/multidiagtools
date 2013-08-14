@@ -1,0 +1,352 @@
+\hypertarget{classmdt_graph}{
+\section{mdtGraph Class Reference}
+\label{classmdt_graph}\index{mdtGraph@{mdtGraph}}
+}
+
+
+Simple implementation of a graph.  
+
+
+
+
+{\ttfamily \#include $<$mdtGraph.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_graph_a2e796f52cd0bd4b834238aefe3ea8dd7}{
+\hyperlink{classmdt_graph_a2e796f52cd0bd4b834238aefe3ea8dd7}{mdtGraph} (bool autoDeleteData=true)}
+\label{classmdt_graph_a2e796f52cd0bd4b834238aefe3ea8dd7}
+
+\begin{DoxyCompactList}\small\item\em Build a empty graph. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_graph_af8ada447a57790709947943e3fcc3dea}{$\sim$mdtGraph} ()
+\begin{DoxyCompactList}\small\item\em Delete a graph. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_graph_aeddbd0dd4e6c090eafe9923ca1bc1b60}{
+bool \hyperlink{classmdt_graph_aeddbd0dd4e6c090eafe9923ca1bc1b60}{autoDeleteData} () const }
+\label{classmdt_graph_aeddbd0dd4e6c090eafe9923ca1bc1b60}
+
+\begin{DoxyCompactList}\small\item\em Get autoDeleteData flag. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_graph_a360d9e7076104aff9ea26d5fcfe4228b}{
+void \hyperlink{classmdt_graph_a360d9e7076104aff9ea26d5fcfe4228b}{deleteData} ()}
+\label{classmdt_graph_a360d9e7076104aff9ea26d5fcfe4228b}
+
+\begin{DoxyCompactList}\small\item\em Delete all data objects contained in the graph. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_graph_a9f89cb73ae73446fe422cbd7e4dfebe8}{insertVertex} (\hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} $\ast$vertexData)
+\begin{DoxyCompactList}\small\item\em Insert a new vertex in the graph. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_graph_ad4e3eb699e8bed5e638662b26c55f3f5}{insertVertex} (const QVariant \&key, const QVariant \&data)
+\begin{DoxyCompactList}\small\item\em Create a new \hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} object and insert it into graph. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_graph_a39765644965163865e29adcd55091758}{removeVertex} (const QVariant \&key)
+\begin{DoxyCompactList}\small\item\em Remove vertex referenced by key from graph. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_graph_a120f9aac9d98e512d51249758d8eae8c}{insertEdge} (const QVariant \&keyFrom, const QVariant \&keyTo, \hyperlink{classmdt_graph_edge_data}{mdtGraphEdgeData} $\ast$edgeData, bool deleteEdgeDataOnFailure=false)
+\begin{DoxyCompactList}\small\item\em Insert a edge from vertex referenced by keyFrom to vertex referenced by keyTo. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_graph_a1268b743339d0e2c412d738397085d08}{
+bool {\bfseries insertEdge} (const QVariant \&keyFrom, const QVariant \&keyTo, const QVariant \&edgeData=QVariant())}
+\label{classmdt_graph_a1268b743339d0e2c412d738397085d08}
+
+\item 
+bool \hyperlink{classmdt_graph_a7d74a6367016cf6f3a340eb0a661c60b}{removeEdge} (const QVariant \&keyFrom, const QVariant \&keyTo)
+\begin{DoxyCompactList}\small\item\em Remove edge from vertex referenced by keyFrom to vertex referenced by keyTo. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_graph_a0a280c806f1e83152c96524c78b0ea79}{containsVertex} (const QVariant \&key) const 
+\begin{DoxyCompactList}\small\item\em Check if vertex that has key exists in the graph. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} $\ast$ \hyperlink{classmdt_graph_a237dc328d01edc5fae81dd8b63af656d}{vertexData} (const QVariant \&key)
+\begin{DoxyCompactList}\small\item\em Get data object of vertex referenced by key. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_graph_a4329c45223eb1bc8274aa8c1fc1292c0}{vertexCount} () const 
+\begin{DoxyCompactList}\small\item\em Get number of vertices that graph contains. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_graph_a7782f9730b637e7bac70c124761a9bc0}{edgeCount} () const 
+\begin{DoxyCompactList}\small\item\em Get number of edges that graph contains. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_graph_a5808d5538e67902eb1da5292af8a0c87}{
+QList$<$ \hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} $\ast$ $>$ {\bfseries bfs} (const QVariant \&keyStart)}
+\label{classmdt_graph_a5808d5538e67902eb1da5292af8a0c87}
+
+\item 
+\hypertarget{classmdt_graph_a1143421d4846e76b800482ad29959570}{
+QString {\bfseries dataListDump} (const QList$<$ \hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} $\ast$ $>$ list) const }
+\label{classmdt_graph_a1143421d4846e76b800482ad29959570}
+
+\item 
+QString \hyperlink{classmdt_graph_ac01bc5099ebe581fe961c90de04f87b2}{graphDump} () const 
+\begin{DoxyCompactList}\small\item\em Get a string that contains all vertices and theire adjacents. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simple implementation of a graph. 
+
+This class was created for some basic graph needs. It does not claim to be a efficient implementation, and has some restrictions. Goal was to have a simple to use graph class. For more flexible and effective graph implementation, please take a look at other existing libraries, like Boost.
+
+It was choosen to implement the graph by list of adjacency lists. 3 classes are used to handle a graph:
+\begin{DoxyItemize}
+\item \hyperlink{classmdt_graph}{mdtGraph} : this class, handles the vertices and edges between this vertices.
+\item \hyperlink{classmdt_graph_vertex}{mdtGraphVertex} : represent a vertix in the graph. This class is used internally, and is not part of the public API.
+\item \hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} : stores key and data of a vertex.
+\end{DoxyItemize}
+
+Vertices are identified by keys in the graph. Key can be of type int, QString or something else. Please take a look at Qt's QVariant documentation for details. For details about data storage, please take a look at \hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} class.
+
+Memory management: When a \hyperlink{classmdt_graph}{mdtGraph} object is destroyed, each vertex is destroyed, but it's possible to choose if data ( \hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} objects ) must be destroyed or not. Behaviour is stored in autoDeleteData flag. See \hyperlink{classmdt_graph_aeddbd0dd4e6c090eafe9923ca1bc1b60}{autoDeleteData()} .
+
+To build a graph, it exists 2 possible ways:
+\begin{DoxyItemize}
+\item Create a \hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} object and add it with \hyperlink{classmdt_graph_a9f89cb73ae73446fe422cbd7e4dfebe8}{insertVertex(mdtGraphVertexData$\ast$)}. This is a more flexible solution when more than one data field is needed.
+\item Use \hyperlink{classmdt_graph_ad4e3eb699e8bed5e638662b26c55f3f5}{insertVertex(const QVariant\&, const QVariant\&)} witch will create \hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} object internally. This is the easy to use solution, but is limited to one data field. 
+\end{DoxyItemize}
+
+Definition at line 60 of file mdtGraph.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_graph_af8ada447a57790709947943e3fcc3dea}{
+\index{mdtGraph@{mdtGraph}!$\sim$mdtGraph@{$\sim$mdtGraph}}
+\index{$\sim$mdtGraph@{$\sim$mdtGraph}!mdtGraph@{mdtGraph}}
+\subsubsection[{$\sim$mdtGraph}]{\setlength{\rightskip}{0pt plus 5cm}mdtGraph::$\sim$mdtGraph (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_graph_af8ada447a57790709947943e3fcc3dea}
+
+
+Delete a graph. 
+
+Will remove each vertex. If autoDeleteData flag is set, data objects are deleted. 
+
+Definition at line 32 of file mdtGraph.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_graph_a0a280c806f1e83152c96524c78b0ea79}{
+\index{mdtGraph@{mdtGraph}!containsVertex@{containsVertex}}
+\index{containsVertex@{containsVertex}!mdtGraph@{mdtGraph}}
+\subsubsection[{containsVertex}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtGraph::containsVertex (
+\begin{DoxyParamCaption}
+\item[{const QVariant \&}]{key}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_graph_a0a280c806f1e83152c96524c78b0ea79}
+
+
+Check if vertex that has key exists in the graph. 
+
+Complexity is O(S) , where S is the number of vertices in the graph. 
+
+Definition at line 235 of file mdtGraph.cpp.
+
+\hypertarget{classmdt_graph_a7782f9730b637e7bac70c124761a9bc0}{
+\index{mdtGraph@{mdtGraph}!edgeCount@{edgeCount}}
+\index{edgeCount@{edgeCount}!mdtGraph@{mdtGraph}}
+\subsubsection[{edgeCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtGraph::edgeCount (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_graph_a7782f9730b637e7bac70c124761a9bc0}
+
+
+Get number of edges that graph contains. 
+
+Complexity is O(1) 
+
+Definition at line 270 of file mdtGraph.cpp.
+
+\hypertarget{classmdt_graph_ac01bc5099ebe581fe961c90de04f87b2}{
+\index{mdtGraph@{mdtGraph}!graphDump@{graphDump}}
+\index{graphDump@{graphDump}!mdtGraph@{mdtGraph}}
+\subsubsection[{graphDump}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtGraph::graphDump (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_graph_ac01bc5099ebe581fe961c90de04f87b2}
+
+
+Get a string that contains all vertices and theire adjacents. 
+
+Could be usefull for debug 
+
+Definition at line 333 of file mdtGraph.cpp.
+
+\hypertarget{classmdt_graph_a120f9aac9d98e512d51249758d8eae8c}{
+\index{mdtGraph@{mdtGraph}!insertEdge@{insertEdge}}
+\index{insertEdge@{insertEdge}!mdtGraph@{mdtGraph}}
+\subsubsection[{insertEdge}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtGraph::insertEdge (
+\begin{DoxyParamCaption}
+\item[{const QVariant \&}]{keyFrom, }
+\item[{const QVariant \&}]{keyTo, }
+\item[{{\bf mdtGraphEdgeData} $\ast$}]{edgeData, }
+\item[{bool}]{deleteEdgeDataOnFailure = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_graph_a120f9aac9d98e512d51249758d8eae8c}
+
+
+Insert a edge from vertex referenced by keyFrom to vertex referenced by keyTo. 
+
+For example, if we have vertices (A) and (B), and want to link them like this: (A)-\/$>$(B) , we call this method with A as keyFrom and B as keyTo.
+
+Note: for undirected graph, call also the method a second time with keyFrom and keyTo reversed.
+
+This method needs a valid \hyperlink{classmdt_graph_edge_data}{mdtGraphEdgeData} object. If no edge data is needed, the overloaded insertEdge(const QVariant\&, const QVariant\&, const QVariant\&) can be used.
+
+Complexity is O(S) , where S is the number of vertices in the graph.
+
+\begin{DoxyReturn}{Returns}
+true if edge could be inserted, false if:
+\begin{DoxyItemize}
+\item One of the vertex (referenced by keyFrom or keyTo) was not found
+\item The edge allready exists 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+edgeData must be valid. 
+\end{DoxyPrecond}
+
+
+Definition at line 144 of file mdtGraph.cpp.
+
+\hypertarget{classmdt_graph_ad4e3eb699e8bed5e638662b26c55f3f5}{
+\index{mdtGraph@{mdtGraph}!insertVertex@{insertVertex}}
+\index{insertVertex@{insertVertex}!mdtGraph@{mdtGraph}}
+\subsubsection[{insertVertex}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtGraph::insertVertex (
+\begin{DoxyParamCaption}
+\item[{const QVariant \&}]{key, }
+\item[{const QVariant \&}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_graph_ad4e3eb699e8bed5e638662b26c55f3f5}
+
+
+Create a new \hyperlink{classmdt_graph_vertex_data}{mdtGraphVertexData} object and insert it into graph. 
+
+Created data object will contain key and data.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_graph_a9f89cb73ae73446fe422cbd7e4dfebe8}{insertVertex(mdtGraphVertexData$\ast$)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 77 of file mdtGraph.cpp.
+
+\hypertarget{classmdt_graph_a9f89cb73ae73446fe422cbd7e4dfebe8}{
+\index{mdtGraph@{mdtGraph}!insertVertex@{insertVertex}}
+\index{insertVertex@{insertVertex}!mdtGraph@{mdtGraph}}
+\subsubsection[{insertVertex}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtGraph::insertVertex (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtGraphVertexData} $\ast$}]{vertexData}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_graph_a9f89cb73ae73446fe422cbd7e4dfebe8}
+
+
+Insert a new vertex in the graph. 
+
+Data pointed by vertexData will be stored in new created vertex.
+
+Complexity is O(S) , where S is the number of vertices in the graph.
+
+\begin{DoxyReturn}{Returns}
+true if insertion succeed. false if key (contained in vertexData) allready exists in graph, or on failure of a memory allocation. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+vertexData must be valid. 
+\end{DoxyPrecond}
+
+
+Definition at line 56 of file mdtGraph.cpp.
+
+\hypertarget{classmdt_graph_a7d74a6367016cf6f3a340eb0a661c60b}{
+\index{mdtGraph@{mdtGraph}!removeEdge@{removeEdge}}
+\index{removeEdge@{removeEdge}!mdtGraph@{mdtGraph}}
+\subsubsection[{removeEdge}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtGraph::removeEdge (
+\begin{DoxyParamCaption}
+\item[{const QVariant \&}]{keyFrom, }
+\item[{const QVariant \&}]{keyTo}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_graph_a7d74a6367016cf6f3a340eb0a661c60b}
+
+
+Remove edge from vertex referenced by keyFrom to vertex referenced by keyTo. 
+
+For keyFrom and keyTo, please have a look at \hyperlink{classmdt_graph_a120f9aac9d98e512d51249758d8eae8c}{insertEdge()}.
+
+Complexity is O(S) , where S is the number of vertices in the graph.
+
+\begin{DoxyReturn}{Returns}
+true if edge was removed, false if it was not found in graph. 
+\end{DoxyReturn}
+
+
+Definition at line 213 of file mdtGraph.cpp.
+
+\hypertarget{classmdt_graph_a39765644965163865e29adcd55091758}{
+\index{mdtGraph@{mdtGraph}!removeVertex@{removeVertex}}
+\index{removeVertex@{removeVertex}!mdtGraph@{mdtGraph}}
+\subsubsection[{removeVertex}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtGraph::removeVertex (
+\begin{DoxyParamCaption}
+\item[{const QVariant \&}]{key}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_graph_a39765644965163865e29adcd55091758}
+
+
+Remove vertex referenced by key from graph. 
+
+If autoDeleteData flag is set, data object will be destroyed.
+
+Complexity is O(S) , where S is the number of vertices in the graph.
+
+\begin{DoxyReturn}{Returns}
+true if vertex could be removed, false if:
+\begin{DoxyItemize}
+\item The vertex was not found
+\item The vertex contains vertices in his adjacency list
+\item The vertex is referenced in the adjacency list of another vertex 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+Definition at line 105 of file mdtGraph.cpp.
+
+\hypertarget{classmdt_graph_a4329c45223eb1bc8274aa8c1fc1292c0}{
+\index{mdtGraph@{mdtGraph}!vertexCount@{vertexCount}}
+\index{vertexCount@{vertexCount}!mdtGraph@{mdtGraph}}
+\subsubsection[{vertexCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtGraph::vertexCount (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_graph_a4329c45223eb1bc8274aa8c1fc1292c0}
+
+
+Get number of vertices that graph contains. 
+
+Complexity is O(1) 
+
+Definition at line 265 of file mdtGraph.cpp.
+
+\hypertarget{classmdt_graph_a237dc328d01edc5fae81dd8b63af656d}{
+\index{mdtGraph@{mdtGraph}!vertexData@{vertexData}}
+\index{vertexData@{vertexData}!mdtGraph@{mdtGraph}}
+\subsubsection[{vertexData}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtGraphVertexData} $\ast$ mdtGraph::vertexData (
+\begin{DoxyParamCaption}
+\item[{const QVariant \&}]{key}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_graph_a237dc328d01edc5fae81dd8b63af656d}
+
+
+Get data object of vertex referenced by key. 
+
+Can return a Null pointer if vertex was not found.
+
+Complexity is O(S) , where S is the number of vertices in the graph. 
+
+Definition at line 249 of file mdtGraph.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtGraph.h\item 
+src/mdtutils/mdtGraph.cpp\end{DoxyCompactItemize}

@@ -103,6 +103,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49496a848e015ed8335a2bfd33906000"></a><!-- doxytag: member="mdtSqlFormWidget::toNext" ref="a49496a848e015ed8335a2bfd33906000" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_widget.html#a49496a848e015ed8335a2bfd33906000">toNext</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set next record as current record. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a982e8e8347ec4f98bf3df6980997a2db"></a><!-- doxytag: member="mdtSqlFormWidget::setCurrentIndex" ref="a982e8e8347ec4f98bf3df6980997a2db" args="(int row)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_widget.html#a982e8e8347ec4f98bf3df6980997a2db">setCurrentIndex</a> (int row)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set row as current record. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53570f49eac1a7fa490546497c88ad13"></a><!-- doxytag: member="mdtSqlFormWidget::mdtSqlFormWidget" ref="a53570f49eac1a7fa490546497c88ad13" args="(QWidget *parent=0)" -->
@@ -146,7 +149,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">mdtAbstractSqlWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00117">117</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -177,10 +180,12 @@ Public Member Functions</h2></td></tr>
 <dd>
 Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model.">setModel()</a> before using this method. </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000062">Todo:</a></b></dt><dd>Check redoundances with onCurrentIndexChanged() </dd></dl>
+<p><p>disconnect(this, SIGNAL(<a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604" title="Emitted when select() or setQuery() was called on (parent) model.">modelSelected()</a>), pvWidgetMapper, SLOT(<a class="el" href="classmdt_sql_form_widget.html#a4bb7ddf419e845de2d1a7c1ef95e48a8" title="Set first record as current record.">toFirst()</a>));</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000062">Todo:</a></b></dt><dd>Check redoundances with onCurrentIndexChanged() </dd></dl>
+<p>connect(this, SIGNAL(<a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604" title="Emitted when select() or setQuery() was called on (parent) model.">modelSelected()</a>), pvWidgetMapper, SLOT(<a class="el" href="classmdt_sql_form_widget.html#a4bb7ddf419e845de2d1a7c1ef95e48a8" title="Set first record as current record.">toFirst()</a>)); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00050">50</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00051">51</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -203,7 +208,7 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:20 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 14 2013 19:28:01 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

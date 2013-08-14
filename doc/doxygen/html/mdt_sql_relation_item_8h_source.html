@@ -119,20 +119,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00091"></a>00091 
 <a name="l00098"></a>00098   QVariant <a class="code" href="classmdt_sql_relation_item.html#a3d2e24b35c88b246dac2a825019f037b" title="Get value for a filter that gives no data.">valueForNoDataFilter</a>() <span class="keyword">const</span>;
 <a name="l00099"></a>00099 
-<a name="l00100"></a>00100  <span class="keyword">private</span>:
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_relation_item.html" title="Keep informations about a parent/child SQL relation.">mdtSqlRelationItem</a>);
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104   QSqlField pvParentField;
-<a name="l00105"></a>00105   <span class="keywordtype">int</span> pvParentFieldIndex;
-<a name="l00106"></a>00106   QSqlField pvChildField;
-<a name="l00107"></a>00107   <span class="keywordtype">int</span> pvChildFieldIndex;
-<a name="l00108"></a>00108   QString pvNameProtection;
-<a name="l00109"></a>00109   QString pvDataProtection;
-<a name="l00110"></a>00110   QVariant pvValueForNoDataFilter;
-<a name="l00111"></a>00111 };
+<a name="l00111"></a>00111   <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_item.html#aa9826f0e86d7ba7acf046012bbf8a38f" title="Set copyParentToChildOnInsertion flag.">setCopyParentToChildOnInsertion</a>(<span class="keywordtype">bool</span> enable);
 <a name="l00112"></a>00112 
-<a name="l00113"></a>00113 <span class="preprocessor">#endif  // #ifndef MDT_SQL_RELATION_ITEM_H</span>
+<a name="l00116"></a>00116   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_relation_item.html#a959affdf96c2d4882028270f9ae7cf00" title="Set copyParentToChildOnInsertion flag.">copyParentToChildOnInsertion</a>() <span class="keyword">const</span>;
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118  <span class="keyword">private</span>:
+<a name="l00119"></a>00119 
+<a name="l00120"></a>00120   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_relation_item.html" title="Keep informations about a parent/child SQL relation.">mdtSqlRelationItem</a>);
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122   QSqlField pvParentField;
+<a name="l00123"></a>00123   <span class="keywordtype">int</span> pvParentFieldIndex;
+<a name="l00124"></a>00124   QSqlField pvChildField;
+<a name="l00125"></a>00125   <span class="keywordtype">int</span> pvChildFieldIndex;
+<a name="l00126"></a>00126   QString pvNameProtection;
+<a name="l00127"></a>00127   QString pvDataProtection;
+<a name="l00128"></a>00128   QVariant pvValueForNoDataFilter;
+<a name="l00129"></a>00129   <span class="keywordtype">bool</span> pvCopyParentToChildOnInsertion;
+<a name="l00130"></a>00130 };
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132 <span class="preprocessor">#endif  // #ifndef MDT_SQL_RELATION_ITEM_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -149,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:16 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 14 2013 19:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

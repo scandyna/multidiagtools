@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model." alt="" coords="15,85,148,115"/>
+<area shape="rect" id="node4" href="$classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="5,5,157,35"/>
+</map>

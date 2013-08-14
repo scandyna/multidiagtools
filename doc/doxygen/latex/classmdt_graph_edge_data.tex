@@ -1,0 +1,70 @@
+\hypertarget{classmdt_graph_edge_data}{
+\section{mdtGraphEdgeData Class Reference}
+\label{classmdt_graph_edge_data}\index{mdtGraphEdgeData@{mdtGraphEdgeData}}
+}
+
+
+Provide data storage for \hyperlink{classmdt_graph}{mdtGraph} edge.  
+
+
+
+
+{\ttfamily \#include $<$mdtGraphEdgeData.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_graph_edge_data_a4d1dcb97eb4dab7f9668e58280c00712}{
+\hyperlink{classmdt_graph_edge_data_a4d1dcb97eb4dab7f9668e58280c00712}{mdtGraphEdgeData} ()}
+\label{classmdt_graph_edge_data_a4d1dcb97eb4dab7f9668e58280c00712}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_graph_edge_data_a0eec658b9310bab0a624c2498c377ee9}{
+\hyperlink{classmdt_graph_edge_data_a0eec658b9310bab0a624c2498c377ee9}{$\sim$mdtGraphEdgeData} ()}
+\label{classmdt_graph_edge_data_a0eec658b9310bab0a624c2498c377ee9}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_graph_edge_data_a61e4018d882744bebb9b52e01b9ba60d}{
+void \hyperlink{classmdt_graph_edge_data_a61e4018d882744bebb9b52e01b9ba60d}{setData} (const QVariant \&data, const QString \&field=\char`\"{}\char`\"{})}
+\label{classmdt_graph_edge_data_a61e4018d882744bebb9b52e01b9ba60d}
+
+\begin{DoxyCompactList}\small\item\em Set data. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_graph_edge_data_a25173e437047d1fce954637ecaab7b3e}{data} (const QString \&field=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Get data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Provide data storage for \hyperlink{classmdt_graph}{mdtGraph} edge. 
+
+\hyperlink{classmdt_graph}{mdtGraph} uses this class to store edge data in a flexible and simple to use way.
+
+Use \hyperlink{classmdt_graph_edge_data_a61e4018d882744bebb9b52e01b9ba60d}{setData()} to set/add data and \hyperlink{classmdt_graph_edge_data_a25173e437047d1fce954637ecaab7b3e}{data()} to get them. Internally, data are stored in a QMap, with field as key and data as value. \hyperlink{classmdt_graph_edge_data_a61e4018d882744bebb9b52e01b9ba60d}{setData()} and \hyperlink{classmdt_graph_edge_data_a25173e437047d1fce954637ecaab7b3e}{data()} provides a default field (empty string), so that it can be used simplier for single data storage. 
+
+Definition at line 39 of file mdtGraphEdgeData.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_graph_edge_data_a25173e437047d1fce954637ecaab7b3e}{
+\index{mdtGraphEdgeData@{mdtGraphEdgeData}!data@{data}}
+\index{data@{data}!mdtGraphEdgeData@{mdtGraphEdgeData}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtGraphEdgeData::data (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{field = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_graph_edge_data_a25173e437047d1fce954637ecaab7b3e}
+
+
+Get data. 
+
+If field does not exists, a invalid QVariant is returned. 
+
+Definition at line 36 of file mdtGraphEdgeData.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtGraphEdgeData.h\item 
+src/mdtutils/mdtGraphEdgeData.cpp\end{DoxyCompactItemize}

@@ -74,7 +74,11 @@ QVariant::Type \hyperlink{classmdt_sql_relation_item_a8df1470c61b71ade740266b528
 
 \begin{DoxyCompactList}\small\item\em Get data type. \end{DoxyCompactList}\item 
 QVariant \hyperlink{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}{valueForNoDataFilter} () const 
-\begin{DoxyCompactList}\small\item\em Get value for a filter that gives no data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get value for a filter that gives no data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{setCopyParentToChildOnInsertion} (bool enable)
+\begin{DoxyCompactList}\small\item\em Set copyParentToChildOnInsertion flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}{copyParentToChildOnInsertion} () const 
+\begin{DoxyCompactList}\small\item\em Set copyParentToChildOnInsertion flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -85,6 +89,26 @@ Definition at line 30 of file mdtSqlRelationItem.h.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}{
+\index{mdtSqlRelationItem@{mdtSqlRelationItem}!copyParentToChildOnInsertion@{copyParentToChildOnInsertion}}
+\index{copyParentToChildOnInsertion@{copyParentToChildOnInsertion}!mdtSqlRelationItem@{mdtSqlRelationItem}}
+\subsubsection[{copyParentToChildOnInsertion}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRelationItem::copyParentToChildOnInsertion (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}
+
+
+Set copyParentToChildOnInsertion flag. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{setCopyParentToChildOnInsertion()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 116 of file mdtSqlRelationItem.cpp.
+
 \hypertarget{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}{
 \index{mdtSqlRelationItem@{mdtSqlRelationItem}!dataProtection@{dataProtection}}
 \index{dataProtection@{dataProtection}!mdtSqlRelationItem@{mdtSqlRelationItem}}
@@ -104,7 +128,7 @@ Typical data protections are:
 \item nothing for numeric type 
 \end{DoxyItemize}
 
-Definition at line 95 of file mdtSqlRelationItem.cpp.
+Definition at line 96 of file mdtSqlRelationItem.cpp.
 
 \hypertarget{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}{
 \index{mdtSqlRelationItem@{mdtSqlRelationItem}!nameProtection@{nameProtection}}
@@ -121,7 +145,26 @@ Get table/field protection.
 
 Typical name protection is ` 
 
-Definition at line 90 of file mdtSqlRelationItem.cpp.
+Definition at line 91 of file mdtSqlRelationItem.cpp.
+
+\hypertarget{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{
+\index{mdtSqlRelationItem@{mdtSqlRelationItem}!setCopyParentToChildOnInsertion@{setCopyParentToChildOnInsertion}}
+\index{setCopyParentToChildOnInsertion@{setCopyParentToChildOnInsertion}!mdtSqlRelationItem@{mdtSqlRelationItem}}
+\subsubsection[{setCopyParentToChildOnInsertion}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelationItem::setCopyParentToChildOnInsertion (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}
+
+
+Set copyParentToChildOnInsertion flag. 
+
+Usually, a parent/child relation is based on a primary key in parent table and foreing key (that refers to parent PK) in child model. When inserting a new record in child table, parent table's primary key must be copied into foreing key fields in child table. Set this flag to true to enable this behaviour (see \hyperlink{classmdt_sql_relation}{mdtSqlRelation} for more details).
+
+By default, this flag is false. 
+
+Definition at line 111 of file mdtSqlRelationItem.cpp.
 
 \hypertarget{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}{
 \index{mdtSqlRelationItem@{mdtSqlRelationItem}!valueForNoDataFilter@{valueForNoDataFilter}}
@@ -142,7 +185,7 @@ Typical values are:
 \item -\/1 for numeric field 
 \end{DoxyItemize}
 
-Definition at line 105 of file mdtSqlRelationItem.cpp.
+Definition at line 106 of file mdtSqlRelationItem.cpp.
 
 
 

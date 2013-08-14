@@ -62,6 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtSqlRelation Class Reference</div>  </div>
@@ -83,6 +84,12 @@ Public Slots</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update child model.  <a href="#a4381f7f5bd39337fa5cbccf9b87ff0f6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation.html#a82a90b12bb78a4b0f9751244f134889d">setParentCurrentIndex</a> (const QModelIndex &amp;current, const QModelIndex &amp;previous)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update child model.  <a href="#a82a90b12bb78a4b0f9751244f134889d"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="signals"></a>
+Signals</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation.html#a86656619d8156638ebfbde2b334d40e2">childModelFilterApplied</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emitted once setFilter() was called on child model.  <a href="#a86656619d8156638ebfbde2b334d40e2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation.html#ae30eb691c46263cb4021f55b03d0d111">childModelIsEmpty</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emitted after <a class="el" href="classmdt_sql_relation.html#a86656619d8156638ebfbde2b334d40e2" title="This signal is emitted once setFilter() was called on child model.">childModelFilterApplied()</a> if child model becomes empty.  <a href="#ae30eb691c46263cb4021f55b03d0d111"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65d9602a4663c8c356938ba9a217704f"></a><!-- doxytag: member="mdtSqlRelation::mdtSqlRelation" ref="a65d9602a4663c8c356938ba9a217704f" args="(QObject *parent=0)" -->
@@ -95,8 +102,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the parent model.  <a href="#a5ac3a82c5d3e33b5e40b86acfe7e2a03"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation.html#ad74021dcf86c528044bf67220ed36833">setChildModel</a> (QSqlTableModel *model)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the child model.  <a href="#ad74021dcf86c528044bf67220ed36833"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation.html#aaff5bbdd37b21dd3de4d5d485f7c6a86">addRelation</a> (const QString &amp;parentFieldName, const QString &amp;childFieldName)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a relation.  <a href="#aaff5bbdd37b21dd3de4d5d485f7c6a86"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation.html#a58b5bcc41f6d3ecac9287672e96553bc">addRelation</a> (const QString &amp;parentFieldName, const QString &amp;childFieldName, bool copyParentToChildOnInsertion)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a relation.  <a href="#a58b5bcc41f6d3ecac9287672e96553bc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation.html#a01469fb1baf7327ca6ddbcd1595e0d7c">clear</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear relations.  <a href="#a01469fb1baf7327ca6ddbcd1595e0d7c"></a><br/></td></tr>
 </table>
@@ -106,13 +113,14 @@ Public Member Functions</h2></td></tr>
 <p>Typical usage:</p>
 <ul>
 <li>Set the parent and child models, using <a class="el" href="classmdt_sql_relation.html#a5ac3a82c5d3e33b5e40b86acfe7e2a03" title="Set the parent model.">setParentModel()</a> and <a class="el" href="classmdt_sql_relation.html#ad74021dcf86c528044bf67220ed36833" title="Set the child model.">setChildModel()</a></li>
-<li>Add parent/child tables fields that must match with <a class="el" href="classmdt_sql_relation.html#aaff5bbdd37b21dd3de4d5d485f7c6a86" title="Add a relation.">addRelation()</a></li>
-<li>Connect the parent view's currentXyChanged() signal to <a class="el" href="classmdt_sql_relation.html#a39fbecb027a5783277df1cc995485917" title="Update child model.">setParentCurrentIndex()</a> slot. If you use a QTableView, this signal is in its selectionModel(). For QDataWidgetMapper, the currentIndexChanged() signal is directly available. </li>
+<li>Add parent/child tables fields that must match with <a class="el" href="classmdt_sql_relation.html#a58b5bcc41f6d3ecac9287672e96553bc" title="Add a relation.">addRelation()</a></li>
+<li>Connect the parent view's currentXyChanged() signal to <a class="el" href="classmdt_sql_relation.html#a39fbecb027a5783277df1cc995485917" title="Update child model.">setParentCurrentIndex()</a> slot. If you use a QTableView, this signal is in its selectionModel(). For QDataWidgetMapper, the currentIndexChanged() signal is directly available.</li>
+<li>If a QDataWidgetMapper is used directly on a child model, connect <a class="el" href="classmdt_sql_relation.html#a86656619d8156638ebfbde2b334d40e2" title="This signal is emitted once setFilter() was called on child model.">childModelFilterApplied()</a> signal to QDataWidgetMapper's toFirst() slot. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_8h_source.html#l00044">44</a> of file <a class="el" href="mdt_sql_relation_8h_source.html">mdtSqlRelation.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_8h_source.html#l00046">46</a> of file <a class="el" href="mdt_sql_relation_8h_source.html">mdtSqlRelation.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aaff5bbdd37b21dd3de4d5d485f7c6a86"></a><!-- doxytag: member="mdtSqlRelation::addRelation" ref="aaff5bbdd37b21dd3de4d5d485f7c6a86" args="(const QString &amp;parentFieldName, const QString &amp;childFieldName)" -->
+<a class="anchor" id="a58b5bcc41f6d3ecac9287672e96553bc"></a><!-- doxytag: member="mdtSqlRelation::addRelation" ref="a58b5bcc41f6d3ecac9287672e96553bc" args="(const QString &amp;parentFieldName, const QString &amp;childFieldName, bool copyParentToChildOnInsertion)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -126,7 +134,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>childFieldName</em>&#160;</td>
+          <td class="paramname"><em>childFieldName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>copyParentToChildOnInsertion</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -139,13 +153,59 @@ Public Member Functions</h2></td></tr>
 
 <p>Add a relation. </p>
 <p>The parentFieldName is a field name from the parent table (typically a field from primary key). The childFieldName is a field from child table (typically a field from foreing keys).</p>
-<p>Note that this methodwill fetch some information about fields in parent and child model (data type, field index, ...), so parent and child models must be set before.</p>
+<p>Note that this method will fetch some information about fields in parent and child model (data type, field index, ...), so parent and child models must be set before.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parentFieldName</td><td>Field of parent model to use in relation (usually PK) </td></tr>
+    <tr><td class="paramname">childFieldName</td><td>Field of child model to use in relation (usually FK) </td></tr>
+    <tr><td class="paramname">copyParentToChildOnInsertion</td><td>If true, data from parent model will be copied to child model for this fields. (See <a class="el" href="classmdt_sql_relation_item.html" title="Keep informations about a parent/child SQL relation.">mdtSqlRelationItem</a> for details). </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on succes, false if a field could not be found. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Parent model must be set with <a class="el" href="classmdt_sql_relation.html#a5ac3a82c5d3e33b5e40b86acfe7e2a03" title="Set the parent model.">setParentModel()</a> before using this method. </dd>
 <dd>
 Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74021dcf86c528044bf67220ed36833" title="Set the child model.">setChildModel()</a> before using this method. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a86656619d8156638ebfbde2b334d40e2"></a><!-- doxytag: member="mdtSqlRelation::childModelFilterApplied" ref="a86656619d8156638ebfbde2b334d40e2" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSqlRelation::childModelFilterApplied </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>This signal is emitted once setFilter() was called on child model. </p>
+<p>This can be usefull when update must be done after child model was updated. For example, when using a QDataWidgetMapper, connect this signal to QDataWidgetMapper's toFirst() slot. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae30eb691c46263cb4021f55b03d0d111"></a><!-- doxytag: member="mdtSqlRelation::childModelIsEmpty" ref="ae30eb691c46263cb4021f55b03d0d111" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSqlRelation::childModelIsEmpty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>This signal is emitted after <a class="el" href="classmdt_sql_relation.html#a86656619d8156638ebfbde2b334d40e2" title="This signal is emitted once setFilter() was called on child model.">childModelFilterApplied()</a> if child model becomes empty. </p>
+<p>Connect this signal to QDataWidgetMapper's revert() slot. QDataWidgetMapper will not clear widgets if model becomes empty, so using this signal is a workaround.. </p>
 
 </div>
 </div>
@@ -166,7 +226,7 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 <p>Clear relations. </p>
 <p>Will clear all added relations and references to parent and child models. (will not delete models). </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00098">98</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00099">99</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
 
 </div>
 </div>
@@ -190,30 +250,6 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>model must be a valid pointer. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a39fbecb027a5783277df1cc995485917"></a><!-- doxytag: member="mdtSqlRelation::setParentCurrentIndex" ref="a39fbecb027a5783277df1cc995485917" args="(int index)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtSqlRelation::setParentCurrentIndex </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>index</em></td><td>)</td>
-          <td><code> [slot]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Update child model. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Parent model must be set with <a class="el" href="classmdt_sql_relation.html#a5ac3a82c5d3e33b5e40b86acfe7e2a03" title="Set the parent model.">setParentModel()</a> before using this method. </dd>
-<dd>
-Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74021dcf86c528044bf67220ed36833" title="Set the child model.">setChildModel()</a> before using this method. </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00106">106</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
 
 </div>
 </div>
@@ -247,7 +283,7 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 <dd>
 Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74021dcf86c528044bf67220ed36833" title="Set the child model.">setChildModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00133">133</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
 
 </div>
 </div>
@@ -271,7 +307,34 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 <dd>
 Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74021dcf86c528044bf67220ed36833" title="Set the child model.">setChildModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00118">118</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00121">121</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a39fbecb027a5783277df1cc995485917"></a><!-- doxytag: member="mdtSqlRelation::setParentCurrentIndex" ref="a39fbecb027a5783277df1cc995485917" args="(int index)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSqlRelation::setParentCurrentIndex </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Update child model. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Parent model must be set with <a class="el" href="classmdt_sql_relation.html#a5ac3a82c5d3e33b5e40b86acfe7e2a03" title="Set the parent model.">setParentModel()</a> before using this method. </dd>
+<dd>
+Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74021dcf86c528044bf67220ed36833" title="Set the child model.">setChildModel()</a> before using this method. </dd></dl>
+
+<p><p>if(index &lt; 0){ return; }</p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
 
 </div>
 </div>
@@ -317,7 +380,7 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:20 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 14 2013 19:28:01 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

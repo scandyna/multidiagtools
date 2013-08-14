@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <!-- doxytag: class="mdtSqlSelectionDialog" -->
-<p>Provide a way for the user to select a row in a set of data.  
+<p>Provide a way for the user to select row in a set of data.  
  <a href="classmdt_sql_selection_dialog.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mdt_sql_selection_dialog_8h_source.html">mdtSqlSelectionDialog.h</a>&gt;</code></p>
@@ -77,6 +77,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8d08c3192c20d297439afa3a12229c6"></a><!-- doxytag: member="mdtSqlSelectionDialog::accept" ref="af8d08c3192c20d297439afa3a12229c6" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_selection_dialog.html#af8d08c3192c20d297439afa3a12229c6">accept</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Overloads QDialog to to build selection results. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4277a8f432ee3470039311f9dda9c26d"></a><!-- doxytag: member="mdtSqlSelectionDialog::reject" ref="a4277a8f432ee3470039311f9dda9c26d" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_selection_dialog.html#a4277a8f432ee3470039311f9dda9c26d">reject</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Overloads QDialog to tell <a class="el" href="classmdt_sql_selection_dialog.html#a23592c799f3b8945b3f5e72082dc265b" title="Return data that user has selected.">selectionResult()</a> that it must return a empty result. <br/></td></tr>
@@ -91,8 +94,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5ea543ebded60b4354c7c0902ca021f"></a><!-- doxytag: member="mdtSqlSelectionDialog::setMessage" ref="ab5ea543ebded60b4354c7c0902ca021f" args="(const QString &amp;message)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_selection_dialog.html#ab5ea543ebded60b4354c7c0902ca021f">setMessage</a> (const QString &amp;message)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a message that will be displayed to the user. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_selection_dialog.html#a2434a173f02f098cde6b87ce5defa60d">setModel</a> (QSqlQueryModel *model)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set model that contain data to display.  <a href="#a2434a173f02f098cde6b87ce5defa60d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_selection_dialog.html#aabe0554b9ca3f4a8d37a79e812dd8770">setModel</a> (QSqlQueryModel *model, bool allowMultiSelection=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set model that contain data to display.  <a href="#aabe0554b9ca3f4a8d37a79e812dd8770"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_selection_dialog.html#afc29f8965c2d6cc103d021ab54298a84">setHeaderData</a> (const QString &amp;fieldName, const QString &amp;data)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a user friendly name for a column.  <a href="#afc29f8965c2d6cc103d021ab54298a84"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b7f8d24a959533ebe434443f19920c7"></a><!-- doxytag: member="mdtSqlSelectionDialog::setColumnHidden" ref="a8b7f8d24a959533ebe434443f19920c7" args="(int column, bool hide)" -->
@@ -108,11 +111,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a column to the list of column that will contain the selected data.  <a href="#ae5582bd717078a137dd71d5a1b9cc9f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_selection_dialog.html#a23592c799f3b8945b3f5e72082dc265b">selectionResult</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return data that user has selected.  <a href="#a23592c799f3b8945b3f5e72082dc265b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QModelIndexList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_selection_dialog.html#a85b7c1e3e156c141315d0873fa36d4b3">selectionResults</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return data that user has selected.  <a href="#a85b7c1e3e156c141315d0873fa36d4b3"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Provide a way for the user to select a row in a set of data. </p>
+<div class="textblock"><p>Provide a way for the user to select row in a set of data. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_sql_selection_dialog_8h_source.html">mdtSqlSelectionDialog.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8h_source.html#l00036">36</a> of file <a class="el" href="mdt_sql_selection_dialog_8h_source.html">mdtSqlSelectionDialog.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ae5582bd717078a137dd71d5a1b9cc9f9"></a><!-- doxytag: member="mdtSqlSelectionDialog::addSelectionResultColumn" ref="ae5582bd717078a137dd71d5a1b9cc9f9" args="(const QString &amp;field)" -->
 <div class="memitem">
@@ -131,9 +136,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Add a column to the list of column that will contain the selected data. </p>
 <p>Note: if a given field not exists, it will be simply ignored.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#a2434a173f02f098cde6b87ce5defa60d" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#aabe0554b9ca3f4a8d37a79e812dd8770" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00134">134</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
 
 </div>
 </div>
@@ -153,9 +158,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Return data that user has selected. </p>
 <p>The data are these that was specified with <a class="el" href="classmdt_sql_selection_dialog.html#a88311778de191bf78e351ea4370b9a6d" title="Set a list of column that will contain the selected data.">setSelectionResultColumns()</a> , in the same order.</p>
-<p>If the user reject the dialog, a empty list is returned. </p>
+<p>If the user reject the dialog, a empty list is returned.</p>
+<p>This method works only for single row selection. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
+<p><p>if(pvDialogRejected){ return result; } selectedRows = pvTableView-&gt;selectionModel()-&gt;selectedRows(); if(selectedRows.size() != 1){ return result; } index = selectedRows.at(0); if(!index.isValid()){ return result; } row = index.row(); for(i = 0; i &lt; pvSelectionResultColumns.size(); ++i){ index = pvModel-&gt;index(row, pvSelectionResultColumns.at(i)); result.append(pvModel-&gt;data(index)); }</p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00149">149</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a85b7c1e3e156c141315d0873fa36d4b3"></a><!-- doxytag: member="mdtSqlSelectionDialog::selectionResults" ref="a85b7c1e3e156c141315d0873fa36d4b3" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QModelIndexList mdtSqlSelectionDialog::selectionResults </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return data that user has selected. </p>
+<p>The index list only contains columns that where set with <a class="el" href="classmdt_sql_selection_dialog.html#a88311778de191bf78e351ea4370b9a6d" title="Set a list of column that will contain the selected data.">setSelectionResultColumns()</a> or <a class="el" href="classmdt_sql_selection_dialog.html#ae5582bd717078a137dd71d5a1b9cc9f9" title="Add a column to the list of column that will contain the selected data.">addSelectionResultColumn()</a> .</p>
+<p>This method alos works for multiple rows selection. </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00194">194</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
 
 </div>
 </div>
@@ -185,9 +216,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memdoc">
 
 <p>Set a coulumn as hidden. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#a2434a173f02f098cde6b87ce5defa60d" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#aabe0554b9ca3f4a8d37a79e812dd8770" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00101">101</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,13 +248,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memdoc">
 
 <p>Set a user friendly name for a column. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#a2434a173f02f098cde6b87ce5defa60d" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#aabe0554b9ca3f4a8d37a79e812dd8770" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00083">83</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00086">86</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2434a173f02f098cde6b87ce5defa60d"></a><!-- doxytag: member="mdtSqlSelectionDialog::setModel" ref="a2434a173f02f098cde6b87ce5defa60d" args="(QSqlQueryModel *model)" -->
+<a class="anchor" id="aabe0554b9ca3f4a8d37a79e812dd8770"></a><!-- doxytag: member="mdtSqlSelectionDialog::setModel" ref="aabe0554b9ca3f4a8d37a79e812dd8770" args="(QSqlQueryModel *model, bool allowMultiSelection=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -231,8 +262,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname">void mdtSqlSelectionDialog::setModel </td>
           <td>(</td>
           <td class="paramtype">QSqlQueryModel *&#160;</td>
-          <td class="paramname"><em>model</em></td><td>)</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>allowMultiSelection</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -241,7 +282,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Set model that contain data to display. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>model must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00073">73</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00071">71</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
 
 </div>
 </div>
@@ -262,9 +303,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Set a list of column that will contain the selected data. </p>
 <p>Note: if a given field not exists, it will be simply ignored.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#a2434a173f02f098cde6b87ce5defa60d" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#aabe0554b9ca3f4a8d37a79e812dd8770" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00119">119</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00123">123</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
 
 </div>
 </div>
@@ -285,9 +326,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Set a list of column that will contain the selected data. </p>
 <p>Note: if a given column is out of range, it will be simply ignored.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#a2434a173f02f098cde6b87ce5defa60d" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_sql_selection_dialog.html#aabe0554b9ca3f4a8d37a79e812dd8770" title="Set model that contain data to display.">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00114">114</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00118">118</a> of file <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html">mdtSqlSelectionDialog.cpp</a>.</p>
 
 </div>
 </div>
@@ -310,7 +351,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:20 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 14 2013 19:28:01 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

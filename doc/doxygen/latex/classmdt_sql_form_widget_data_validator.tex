@@ -1,0 +1,98 @@
+\hypertarget{classmdt_sql_form_widget_data_validator}{
+\section{mdtSqlFormWidgetDataValidator Class Reference}
+\label{classmdt_sql_form_widget_data_validator}\index{mdtSqlFormWidgetDataValidator@{mdtSqlFormWidgetDataValidator}}
+}
+
+
+Inheritance diagram for mdtSqlFormWidgetDataValidator:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{classmdt_sql_form_widget_data_validator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtSqlFormWidgetDataValidator:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{classmdt_sql_form_widget_data_validator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_sql_form_widget_data_validator_a3477841cdb2ab659c96ce3363efbadbc}{mdtSqlFormWidgetDataValidator} (QSqlTableModel $\ast$model, QObject $\ast$parent, const QList$<$ \hyperlink{classmdt_sql_field_handler}{mdtSqlFieldHandler} $\ast$ $>$ \&fieldHandlers)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_form_widget_data_validator_aec2505ec4b25b1fae3e37cd13f4afe07}{
+\hyperlink{classmdt_sql_form_widget_data_validator_aec2505ec4b25b1fae3e37cd13f4afe07}{$\sim$mdtSqlFormWidgetDataValidator} ()}
+\label{classmdt_sql_form_widget_data_validator_aec2505ec4b25b1fae3e37cd13f4afe07}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_form_widget_data_validator_aa577e4acf4d0f371c45a67c18c59a924}{checkBeforeSubmit} ()
+\begin{DoxyCompactList}\small\item\em Checks to be done before submit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 33 of file mdtSqlFormWidgetDataValidator.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_form_widget_data_validator_a3477841cdb2ab659c96ce3363efbadbc}{
+\index{mdtSqlFormWidgetDataValidator@{mdtSqlFormWidgetDataValidator}!mdtSqlFormWidgetDataValidator@{mdtSqlFormWidgetDataValidator}}
+\index{mdtSqlFormWidgetDataValidator@{mdtSqlFormWidgetDataValidator}!mdtSqlFormWidgetDataValidator@{mdtSqlFormWidgetDataValidator}}
+\subsubsection[{mdtSqlFormWidgetDataValidator}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlFormWidgetDataValidator::mdtSqlFormWidgetDataValidator (
+\begin{DoxyParamCaption}
+\item[{QSqlTableModel $\ast$}]{model, }
+\item[{QObject $\ast$}]{parent, }
+\item[{const QList$<$ {\bf mdtSqlFieldHandler} $\ast$ $>$ \&}]{fieldHandlers}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_form_widget_data_validator_a3477841cdb2ab659c96ce3363efbadbc}
+
+
+Constructor. 
+
+\begin{DoxyPrecond}{Precondition}
+model must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 25 of file mdtSqlFormWidgetDataValidator.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_form_widget_data_validator_aa577e4acf4d0f371c45a67c18c59a924}{
+\index{mdtSqlFormWidgetDataValidator@{mdtSqlFormWidgetDataValidator}!checkBeforeSubmit@{checkBeforeSubmit}}
+\index{checkBeforeSubmit@{checkBeforeSubmit}!mdtSqlFormWidgetDataValidator@{mdtSqlFormWidgetDataValidator}}
+\subsubsection[{checkBeforeSubmit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlFormWidgetDataValidator::checkBeforeSubmit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_sql_form_widget_data_validator_aa577e4acf4d0f371c45a67c18c59a924}
+
+
+Checks to be done before submit. 
+
+Will call \hyperlink{classmdt_sql_form_widget_data_validator_aa577e4acf4d0f371c45a67c18c59a924}{checkBeforeSubmit()} for every field Handlers. 
+
+Reimplemented from \hyperlink{classmdt_sql_data_validator_af291c18e9c8994085ed4664db3fdcb7c}{mdtSqlDataValidator}.
+
+
+
+Definition at line 37 of file mdtSqlFormWidgetDataValidator.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlFormWidgetDataValidator.h\item 
+src/mdtutilsgui/mdtSqlFormWidgetDataValidator.cpp\end{DoxyCompactItemize}

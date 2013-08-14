@@ -87,201 +87,227 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QSqlError&gt;</span>
 <a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QString&gt;</span>
 <a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QList&gt;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QSqlRecord&gt;</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keyword">class </span>QSqlTableModel;
-<a name="l00031"></a>00031 <span class="keyword">class </span>QState;
-<a name="l00032"></a>00032 <span class="keyword">class </span>QStateMachine;
-<a name="l00033"></a>00033 <span class="keyword">class </span>QSqlTableModel;
-<a name="l00034"></a>00034 <span class="keyword">class </span><a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels.">mdtSqlRelation</a>;
-<a name="l00035"></a>00035 
-<a name="l00041"></a><a class="code" href="classmdt_abstract_sql_widget.html">00041</a> <span class="keyword">class </span><a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a> : <span class="keyword">public</span> QWidget
-<a name="l00042"></a>00042 {
-<a name="l00043"></a>00043  Q_OBJECT
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045  <span class="keyword">public</span>:
-<a name="l00046"></a>00046 
-<a name="l00051"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072">00051</a>   <span class="keyword">enum</span> <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072" title="State of edit/view widget.">state_t</a> {
-<a name="l00052"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2">00052</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2">Visualizing</a> = 0,  
-<a name="l00053"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a8be2fce90475c910b73cab2734bbe451">00053</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a8be2fce90475c910b73cab2734bbe451">Reverting</a>,        
-<a name="l00054"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d">00054</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d">Editing</a>,          
-<a name="l00055"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a2e228922d30b9b89056da058a84e5957">00055</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a2e228922d30b9b89056da058a84e5957">Submitting</a>,       
-<a name="l00056"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072af142155e59e6ec8b6575ad69f0386448">00056</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072af142155e59e6ec8b6575ad69f0386448">Inserting</a>,        
-<a name="l00057"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65">00057</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65">EditingNewRow</a>,    
-<a name="l00058"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec">00058</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec">RevertingNewRow</a>,  
-<a name="l00059"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c">00059</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c">SubmittingNewRow</a>, 
-<a name="l00060"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072aa5a44e5bb56cfe1dcd90af9097749697">00060</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072aa5a44e5bb56cfe1dcd90af9097749697">Removing</a>          
-<a name="l00061"></a>00061                };
-<a name="l00062"></a>00062 
-<a name="l00067"></a>00067   <a class="code" href="classmdt_abstract_sql_widget.html#a74ef509a9487c3985fce7a4cbadbe1b3" title="Constructor.">mdtAbstractSqlWidget</a>(QWidget *parent = 0);
-<a name="l00068"></a>00068 
-<a name="l00071"></a>00071   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_sql_widget.html#a46dabe9e76aaea93ff20b28863e6c0ff" title="Destructor.">~mdtAbstractSqlWidget</a>();
-<a name="l00072"></a>00072 
-<a name="l00080"></a>00080   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model.">setModel</a>(QSqlTableModel *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>);
-<a name="l00081"></a>00081 
-<a name="l00086"></a>00086   QSqlTableModel *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>();
-<a name="l00087"></a>00087 
-<a name="l00095"></a>00095   QString <a class="code" href="classmdt_abstract_sql_widget.html#a8207edaf31a7d988db5b86a4099ad4eb" title="Get the user friendly table name.">userFriendlyTableName</a>() <span class="keyword">const</span>;
-<a name="l00096"></a>00096 
-<a name="l00108"></a>00108   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a7225af05f3b10e82db939f0ec0996167" title="Add a child (details) widget and relation.">addChildWidget</a>(<a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a> *widget, <a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels.">mdtSqlRelation</a> *relation);
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QPair&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QVariant&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QSqlRecord&gt;</span>
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;QModelIndex&gt;</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">class </span>QSqlTableModel;
+<a name="l00035"></a>00035 <span class="keyword">class </span>QState;
+<a name="l00036"></a>00036 <span class="keyword">class </span>QStateMachine;
+<a name="l00037"></a>00037 <span class="keyword">class </span>QSqlTableModel;
+<a name="l00038"></a>00038 <span class="keyword">class </span><a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels.">mdtSqlRelation</a>;
+<a name="l00039"></a>00039 <span class="keyword">class </span><a class="code" href="classmdt_sql_data_validator.html" title="Helper class for data validation.">mdtSqlDataValidator</a>;
+<a name="l00040"></a>00040 
+<a name="l00046"></a><a class="code" href="classmdt_abstract_sql_widget.html">00046</a> <span class="keyword">class </span><a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a> : <span class="keyword">public</span> QWidget
+<a name="l00047"></a>00047 {
+<a name="l00048"></a>00048  Q_OBJECT
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050  <span class="keyword">public</span>:
+<a name="l00051"></a>00051 
+<a name="l00056"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072">00056</a>   <span class="keyword">enum</span> <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072" title="State of edit/view widget.">state_t</a> {
+<a name="l00057"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2">00057</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2">Visualizing</a> = 0,  
+<a name="l00058"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a8be2fce90475c910b73cab2734bbe451">00058</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a8be2fce90475c910b73cab2734bbe451">Reverting</a>,        
+<a name="l00059"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d">00059</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d">Editing</a>,          
+<a name="l00060"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a2e228922d30b9b89056da058a84e5957">00060</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a2e228922d30b9b89056da058a84e5957">Submitting</a>,       
+<a name="l00061"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072af142155e59e6ec8b6575ad69f0386448">00061</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072af142155e59e6ec8b6575ad69f0386448">Inserting</a>,        
+<a name="l00062"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65">00062</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65">EditingNewRow</a>,    
+<a name="l00063"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec">00063</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec">RevertingNewRow</a>,  
+<a name="l00064"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c">00064</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c">SubmittingNewRow</a>, 
+<a name="l00065"></a><a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072aa5a44e5bb56cfe1dcd90af9097749697">00065</a>                 <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072aa5a44e5bb56cfe1dcd90af9097749697">Removing</a>          
+<a name="l00066"></a>00066                };
+<a name="l00067"></a>00067 
+<a name="l00072"></a>00072   <a class="code" href="classmdt_abstract_sql_widget.html#a74ef509a9487c3985fce7a4cbadbe1b3" title="Constructor.">mdtAbstractSqlWidget</a>(QWidget *parent = 0);
+<a name="l00073"></a>00073 
+<a name="l00076"></a>00076   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_sql_widget.html#a46dabe9e76aaea93ff20b28863e6c0ff" title="Destructor.">~mdtAbstractSqlWidget</a>();
+<a name="l00077"></a>00077 
+<a name="l00085"></a>00085   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model.">setModel</a>(QSqlTableModel *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>);
+<a name="l00086"></a>00086 
+<a name="l00091"></a>00091   QSqlTableModel *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>();
+<a name="l00092"></a>00092 
+<a name="l00104"></a>00104   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a0ccf93f41b1d7c479bfe0a52df2aac06" title="Add a data validator.">addDataValidator</a>(<a class="code" href="classmdt_sql_data_validator.html" title="Helper class for data validation.">mdtSqlDataValidator</a> *validator, <span class="keywordtype">bool</span> putAtTopPriority = <span class="keyword">false</span>);
+<a name="l00105"></a>00105 
+<a name="l00108"></a>00108   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#ac3fe33cfebb07d461ca06ee838a9b979" title="Set the user friendly table name.">setUserFriendlyTableName</a>(<span class="keyword">const</span> QString &amp;name);
 <a name="l00109"></a>00109 
-<a name="l00118"></a>00118   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770" title="Get the current row.">currentRow</a>() <span class="keyword">const</span> = 0;
-<a name="l00119"></a>00119 
-<a name="l00124"></a>00124   <span class="keywordtype">int</span> <a class="code" href="classmdt_abstract_sql_widget.html#a5e25e4a2e0dc56c06c530c9b543366f2" title="Get row count.">rowCount</a>() <span class="keyword">const</span>;
-<a name="l00125"></a>00125 
-<a name="l00128"></a>00128   <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072" title="State of edit/view widget.">state_t</a> <a class="code" href="classmdt_abstract_sql_widget.html#a786eb7b7b111eef748002419984be7d9" title="Get current state.">currentState</a>() <span class="keyword">const</span>;
-<a name="l00129"></a>00129 
-<a name="l00143"></a>00143   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a586e89097e9b4c27888695796ce945a0" title="Enable local navigation.">enableLocalNavigation</a>();
-<a name="l00144"></a>00144 
-<a name="l00157"></a>00157   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a4ad94a530c77292d122d38eb041da6e9" title="Enable local edition.">enableLocalEdition</a>();
-<a name="l00158"></a>00158 
-<a name="l00171"></a>00171   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#aa5824c5fc3b0a7e118dd9ebb19084d2c" title="Check if all data are saved.">allDataAreSaved</a>();
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173  <span class="keyword">public</span> slots:
-<a name="l00174"></a>00174 
-<a name="l00182"></a>00182   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a6678c45b0d46eb163f5b09d79ed001b5" title="Submit current record to model.">submit</a>();
-<a name="l00183"></a>00183 
-<a name="l00191"></a>00191   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a3108b336f4c832cb0a5b3a830fff9ce0" title="Revert current record from model.">revert</a>();
-<a name="l00192"></a>00192 
-<a name="l00197"></a>00197   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a850df045ea95b8c15ddd95ae771ef785" title="Insert a new row to model.">insert</a>();
-<a name="l00198"></a>00198 
-<a name="l00203"></a>00203   <span class="keywordtype">void</span> <span class="keyword">remove</span>();
+<a name="l00116"></a>00116   QString <a class="code" href="classmdt_abstract_sql_widget.html#a8207edaf31a7d988db5b86a4099ad4eb" title="Get the user friendly table name.">userFriendlyTableName</a>() <span class="keyword">const</span>;
+<a name="l00117"></a>00117 
+<a name="l00129"></a>00129   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a7225af05f3b10e82db939f0ec0996167" title="Add a child (details) widget and relation.">addChildWidget</a>(<a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a> *widget, <a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels.">mdtSqlRelation</a> *relation);
+<a name="l00130"></a>00130 
+<a name="l00136"></a>00136   QList&lt;mdtAbstractSqlWidget*&gt; <a class="code" href="classmdt_abstract_sql_widget.html#aa1b5762e5573c3e50c528bc0232a2b37" title="Get a list of all SQL widgets.">sqlWidgets</a>();
+<a name="l00137"></a>00137 
+<a name="l00146"></a>00146   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770" title="Get the current row.">currentRow</a>() <span class="keyword">const</span> = 0;
+<a name="l00147"></a>00147 
+<a name="l00152"></a>00152   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#add434461de436509b853fa9184c41360" title="Set (update) data of current row (record) for given field name.">setCurrentData</a>(<span class="keyword">const</span> QString &amp;fieldName, <span class="keyword">const</span> QVariant &amp;<a class="code" href="classmdt_abstract_sql_widget.html#a3d362ebfc2d4f4b40b48ca08db287b3c" title="Get data for given row and field name.">data</a>, <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a6678c45b0d46eb163f5b09d79ed001b5" title="Submit current record to model.">submit</a> = <span class="keyword">true</span>);
+<a name="l00153"></a>00153 
+<a name="l00158"></a>00158   QVariant <a class="code" href="classmdt_abstract_sql_widget.html#a10a2d7fff69ec7043db0df05cbbaa63c" title="Get current data for given field name.">currentData</a>(<span class="keyword">const</span> QString &amp;fieldName) <span class="keyword">const</span>;
+<a name="l00159"></a>00159 
+<a name="l00164"></a>00164   QVariant <a class="code" href="classmdt_abstract_sql_widget.html#a3d362ebfc2d4f4b40b48ca08db287b3c" title="Get data for given row and field name.">data</a>(<span class="keywordtype">int</span> row, <span class="keyword">const</span> QString &amp;fieldName) <span class="keyword">const</span>;
+<a name="l00165"></a>00165 
+<a name="l00170"></a>00170   <span class="keywordtype">int</span> <a class="code" href="classmdt_abstract_sql_widget.html#a5e25e4a2e0dc56c06c530c9b543366f2" title="Get row count.">rowCount</a>() <span class="keyword">const</span>;
+<a name="l00171"></a>00171 
+<a name="l00174"></a>00174   <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072" title="State of edit/view widget.">state_t</a> <a class="code" href="classmdt_abstract_sql_widget.html#a786eb7b7b111eef748002419984be7d9" title="Get current state.">currentState</a>() <span class="keyword">const</span>;
+<a name="l00175"></a>00175 
+<a name="l00189"></a>00189   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a586e89097e9b4c27888695796ce945a0" title="Enable local navigation.">enableLocalNavigation</a>();
+<a name="l00190"></a>00190 
+<a name="l00203"></a>00203   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a4ad94a530c77292d122d38eb041da6e9" title="Enable local edition.">enableLocalEdition</a>();
 <a name="l00204"></a>00204 
-<a name="l00210"></a>00210   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#aaa27731864dbb9123ec6765dd21feb7f" title="Set first record as current record.">toFirst</a>() = 0;
-<a name="l00211"></a>00211 
-<a name="l00217"></a>00217   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a681cc6234976eaa2f0e158248569b502" title="Set last record as current record.">toLast</a>() = 0;
+<a name="l00217"></a>00217   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#aa5824c5fc3b0a7e118dd9ebb19084d2c" title="Check if all data are saved.">allDataAreSaved</a>();
 <a name="l00218"></a>00218 
-<a name="l00224"></a>00224   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a342b13a8258536d228f8522dae2b9df7" title="Set previous record as current record.">toPrevious</a>() = 0;
-<a name="l00225"></a>00225 
-<a name="l00231"></a>00231   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a8ed6bb811c992fcc8bba8da9f675cd88" title="Set next record as current record.">toNext</a>() = 0;
-<a name="l00232"></a>00232 
-<a name="l00233"></a>00233  <span class="keyword">protected</span>:
-<a name="l00234"></a>00234 
-<a name="l00241"></a>00241   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#aad8608a92f65790c99ca7897fbd48c30" title="Set the table model.">doSetModel</a>(QSqlTableModel *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>) = 0;
-<a name="l00242"></a>00242 
-<a name="l00252"></a>00252   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a7a97e9c9f3b9c22650e4b55d095543ef" title="Submit current row to model.">doSubmit</a>() = 0;
-<a name="l00253"></a>00253 
-<a name="l00263"></a>00263   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a2c0cbbcd02be19767e68153ecbc2392d" title="Revert current row from model.">doRevert</a>() = 0;
+<a name="l00219"></a>00219  <span class="keyword">public</span> slots:
+<a name="l00220"></a>00220 
+<a name="l00228"></a>00228   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a6678c45b0d46eb163f5b09d79ed001b5" title="Submit current record to model.">submit</a>();
+<a name="l00229"></a>00229 
+<a name="l00237"></a>00237   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a3108b336f4c832cb0a5b3a830fff9ce0" title="Revert current record from model.">revert</a>();
+<a name="l00238"></a>00238 
+<a name="l00243"></a>00243   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a850df045ea95b8c15ddd95ae771ef785" title="Insert a new row to model.">insert</a>();
+<a name="l00244"></a>00244 
+<a name="l00249"></a>00249   <span class="keywordtype">void</span> <span class="keyword">remove</span>();
+<a name="l00250"></a>00250 
+<a name="l00256"></a>00256   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#aaa27731864dbb9123ec6765dd21feb7f" title="Set first record as current record.">toFirst</a>() = 0;
+<a name="l00257"></a>00257 
+<a name="l00263"></a>00263   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a681cc6234976eaa2f0e158248569b502" title="Set last record as current record.">toLast</a>() = 0;
 <a name="l00264"></a>00264 
-<a name="l00271"></a>00271   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#aa79059c092c6bcda569ced7c0621a817" title="Insert a row row to model.">doInsert</a>() = 0;
-<a name="l00272"></a>00272 
-<a name="l00279"></a>00279   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#ac546802e2910fc49c007eda5dbb3b3f7" title="Submit new row to model.">doSubmitNewRow</a>() = 0;
-<a name="l00280"></a>00280 
-<a name="l00287"></a>00287   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a048efd5f89be7c6e74d6988b7e95fc07" title="Revert new row.">doRevertNewRow</a>() = 0;
-<a name="l00288"></a>00288 
-<a name="l00295"></a>00295   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a41c30652fa9775c7b3bc6cb51004d4d5" title="Remove current row from model.">doRemove</a>() = 0;
-<a name="l00296"></a>00296 
-<a name="l00303"></a>00303   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(QSqlError error);
-<a name="l00304"></a>00304 
-<a name="l00307"></a>00307   QString <a class="code" href="classmdt_abstract_sql_widget.html#aeeddeec556cc20c5c9a49559df7898d9" title="Get message for the user regarding SQLite error number.">getUserReadableTextFromSqliteError</a>(<span class="keyword">const</span> QSqlError &amp;error);
-<a name="l00308"></a>00308 
-<a name="l00311"></a>00311   QString <a class="code" href="classmdt_abstract_sql_widget.html#a1081ced9b96f60b3b39c6085bfe305d4" title="Get message for the user regarding MySql error number.">getUserReadableTextFromMysqlError</a>(<span class="keyword">const</span> QSqlError &amp;error);
-<a name="l00312"></a>00312 
-<a name="l00315"></a>00315   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#aebd051866b148eb6f60a10c6ac648efa" title="Check that child widgtes have no pending data.">childWidgetsAreInVisaluzingState</a>();
+<a name="l00270"></a>00270   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a342b13a8258536d228f8522dae2b9df7" title="Set previous record as current record.">toPrevious</a>() = 0;
+<a name="l00271"></a>00271 
+<a name="l00277"></a>00277   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a8ed6bb811c992fcc8bba8da9f675cd88" title="Set next record as current record.">toNext</a>() = 0;
+<a name="l00278"></a>00278 
+<a name="l00284"></a>00284   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a619725b15f305e216ba9ce9dc0ab9e3c" title="Set row as current record.">setCurrentIndex</a>(<span class="keywordtype">int</span> row) = 0;
+<a name="l00285"></a>00285 
+<a name="l00294"></a>00294   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a49624704409e34459084201ccb8e9399" title="Set the first record that matches given criteria as current record (index).">setCurrentRecord</a>(<span class="keyword">const</span> QString &amp;fieldName, <span class="keyword">const</span> QVariant &amp;value);
+<a name="l00295"></a>00295 
+<a name="l00296"></a>00296  <span class="keyword">protected</span>:
+<a name="l00297"></a>00297 
+<a name="l00304"></a>00304   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#aad8608a92f65790c99ca7897fbd48c30" title="Set the table model.">doSetModel</a>(QSqlTableModel *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>) = 0;
+<a name="l00305"></a>00305 
+<a name="l00315"></a>00315   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a7a97e9c9f3b9c22650e4b55d095543ef" title="Submit current row to model.">doSubmit</a>() = 0;
 <a name="l00316"></a>00316 
-<a name="l00319"></a>00319   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#ad20a178299c96790587b53380bb68282" title="Show a message box to the user to warn him that it should save/revert data.">warnUserAboutUnsavedRow</a>(<span class="keyword">const</span> QString &amp;tableName);
-<a name="l00320"></a>00320 
-<a name="l00328"></a>00328   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#ac93226881ba03311a6a95ecd2ddaa003" title="Restore primary key data to (parent) model.">restorePrimaryKeyDataToModel</a>(<span class="keyword">const</span> QSqlRecord &amp;previousRecord);
-<a name="l00329"></a>00329 
-<a name="l00330"></a>00330  signals:
-<a name="l00331"></a>00331 
-<a name="l00337"></a>00337   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#acc3e3e7e848a92a4a117f7147bc1f3c5" title="Emitted when toFirst() function goes enabled/disabled.">toFirstEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
-<a name="l00338"></a>00338 
-<a name="l00344"></a>00344   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a9b7e32907ed336c74746f7a5c6d87d92" title="Emitted when toLast() function goes enabled/disabled.">toLastEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
-<a name="l00345"></a>00345 
-<a name="l00351"></a>00351   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a388c169696cea80ac170b0ee060e4c9f" title="Emitted when toNext() function goes enabled/disabled.">toNextEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
-<a name="l00352"></a>00352 
-<a name="l00358"></a>00358   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#acf241c34dcca6d283c8c1bf297841766" title="Emitted when toPrevious() function goes enabled/disabled.">toPreviousEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00326"></a>00326   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a2c0cbbcd02be19767e68153ecbc2392d" title="Revert current row from model.">doRevert</a>() = 0;
+<a name="l00327"></a>00327 
+<a name="l00334"></a>00334   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#aa79059c092c6bcda569ced7c0621a817" title="Insert a row row to model.">doInsert</a>() = 0;
+<a name="l00335"></a>00335 
+<a name="l00342"></a>00342   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#ac546802e2910fc49c007eda5dbb3b3f7" title="Submit new row to model.">doSubmitNewRow</a>() = 0;
+<a name="l00343"></a>00343 
+<a name="l00350"></a>00350   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a048efd5f89be7c6e74d6988b7e95fc07" title="Revert new row.">doRevertNewRow</a>() = 0;
+<a name="l00351"></a>00351 
+<a name="l00358"></a>00358   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#a41c30652fa9775c7b3bc6cb51004d4d5" title="Remove current row from model.">doRemove</a>() = 0;
 <a name="l00359"></a>00359 
-<a name="l00365"></a>00365   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#acacc59096ae48f733be577a96cd2d14a" title="Emitted when submit() function goes enabled/disabled.">submitEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
-<a name="l00366"></a>00366 
-<a name="l00372"></a>00372   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#ada899f0c3f8388d2d3feac7c0c50884c" title="Emitted when revert() function goes enabled/disabled.">revertEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
-<a name="l00373"></a>00373 
-<a name="l00379"></a>00379   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a909ba5b675f596ee5c5980e159cd2878" title="Emitted when insert() function goes enabled/disabled.">insertEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
-<a name="l00380"></a>00380 
-<a name="l00386"></a>00386   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a9c536f5081b321e8df24316506fc19f3" title="Emitted when remove() function goes enabled/disabled.">removeEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
-<a name="l00387"></a>00387 
-<a name="l00390"></a>00390   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#ab3bee735c32de34c0b097f1a426bafca" title="Emitted when submit() was called.">submitTriggered</a>();
-<a name="l00391"></a>00391 
-<a name="l00394"></a>00394   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a4cd4617364c875c6c777cff1ce0187ae" title="Emitted when revert() was called.">revertTriggered</a>();
-<a name="l00395"></a>00395 
-<a name="l00398"></a>00398   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a87ca4a74a2d8073be3ae92d7215eb538" title="Emitted when insert() was called.">insertTriggered</a>();
-<a name="l00399"></a>00399 
-<a name="l00402"></a>00402   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#aea7a2ee49ce26a4069cbd8f7e0e65654" title="Emitted when remove() was called.">removeTriggered</a>();
-<a name="l00403"></a>00403 
-<a name="l00406"></a>00406   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a27d3a1a75cddf6653f919e5ff3f2e8b4" title="Emitted when a error occured.">errorOccured</a>();
-<a name="l00407"></a>00407 
-<a name="l00410"></a>00410   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#aa514b36fecc323dfdf8eedeec7838dd1" title="Emitted when a operation succeed.">operationSucceed</a>();
-<a name="l00411"></a>00411 
-<a name="l00414"></a>00414   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a8ae6e67e3efb5051dc7a8b74571d4aa1" title="Emitted when data was edited.">dataEdited</a>();
+<a name="l00366"></a>00366   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(QSqlError error);
+<a name="l00367"></a>00367 
+<a name="l00370"></a>00370   QString <a class="code" href="classmdt_abstract_sql_widget.html#aeeddeec556cc20c5c9a49559df7898d9" title="Get message for the user regarding SQLite error number.">getUserReadableTextFromSqliteError</a>(<span class="keyword">const</span> QSqlError &amp;error);
+<a name="l00371"></a>00371 
+<a name="l00374"></a>00374   QString <a class="code" href="classmdt_abstract_sql_widget.html#a1081ced9b96f60b3b39c6085bfe305d4" title="Get message for the user regarding MySql error number.">getUserReadableTextFromMysqlError</a>(<span class="keyword">const</span> QSqlError &amp;error);
+<a name="l00375"></a>00375 
+<a name="l00378"></a>00378   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#aebd051866b148eb6f60a10c6ac648efa" title="Check that child widgtes have no pending data.">childWidgetsAreInVisaluzingState</a>();
+<a name="l00379"></a>00379 
+<a name="l00382"></a>00382   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#ad20a178299c96790587b53380bb68282" title="Show a message box to the user to warn him that it should save/revert data.">warnUserAboutUnsavedRow</a>(<span class="keyword">const</span> QString &amp;tableName);
+<a name="l00383"></a>00383 
+<a name="l00391"></a>00391   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_sql_widget.html#ac93226881ba03311a6a95ecd2ddaa003" title="Restore primary key data to (parent) model.">restorePrimaryKeyDataToModel</a>(<span class="keyword">const</span> QSqlRecord &amp;previousRecord);
+<a name="l00392"></a>00392 
+<a name="l00393"></a>00393  signals:
+<a name="l00394"></a>00394 
+<a name="l00400"></a>00400   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#acc3e3e7e848a92a4a117f7147bc1f3c5" title="Emitted when toFirst() function goes enabled/disabled.">toFirstEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00401"></a>00401 
+<a name="l00407"></a>00407   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a9b7e32907ed336c74746f7a5c6d87d92" title="Emitted when toLast() function goes enabled/disabled.">toLastEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00408"></a>00408 
+<a name="l00414"></a>00414   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a388c169696cea80ac170b0ee060e4c9f" title="Emitted when toNext() function goes enabled/disabled.">toNextEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
 <a name="l00415"></a>00415 
-<a name="l00418"></a>00418   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a4acc0adbe6e002cd559642d3ea8e2d3a" title="Emitted when Visualizing state was entered.">stateVisualizingEntered</a>();
-<a name="l00419"></a>00419 
-<a name="l00422"></a>00422   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a8f2eda6e219e49c972834a1e5c39e8ff" title="Emitted when Visualizing state was exited.">stateVisualizingExited</a>();
-<a name="l00423"></a>00423 
-<a name="l00426"></a>00426   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a925485d7acc131d438f6ea251c9b1fb9" title="Emitted when Editing state was exited.">stateEditingExited</a>();
-<a name="l00427"></a>00427 
-<a name="l00430"></a>00430   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#af4ed2a005f55ffe23ce6382f1ed3f68e" title="Emitted when Editing state was exited.">stateEditingNewRowExited</a>();
-<a name="l00431"></a>00431 
-<a name="l00441"></a>00441   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a182972cd54cf7e00322c0b6973ecbde2" title="Emitted when current row has changed.">currentRowChanged</a>(<span class="keywordtype">int</span> row);
-<a name="l00442"></a>00442 
-<a name="l00443"></a>00443  <span class="keyword">private</span> slots:
-<a name="l00444"></a>00444 
-<a name="l00450"></a>00450   <span class="keywordtype">void</span> onStateVisualizingEntered();
-<a name="l00451"></a>00451 
-<a name="l00457"></a>00457   <span class="keywordtype">void</span> onStateVisualizingExited();
+<a name="l00421"></a>00421   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#acf241c34dcca6d283c8c1bf297841766" title="Emitted when toPrevious() function goes enabled/disabled.">toPreviousEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00422"></a>00422 
+<a name="l00428"></a>00428   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#acacc59096ae48f733be577a96cd2d14a" title="Emitted when submit() function goes enabled/disabled.">submitEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00429"></a>00429 
+<a name="l00435"></a>00435   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#ada899f0c3f8388d2d3feac7c0c50884c" title="Emitted when revert() function goes enabled/disabled.">revertEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00436"></a>00436 
+<a name="l00442"></a>00442   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a909ba5b675f596ee5c5980e159cd2878" title="Emitted when insert() function goes enabled/disabled.">insertEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00443"></a>00443 
+<a name="l00449"></a>00449   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a9c536f5081b321e8df24316506fc19f3" title="Emitted when remove() function goes enabled/disabled.">removeEnabledStateChanged</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00450"></a>00450 
+<a name="l00453"></a>00453   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#ab3bee735c32de34c0b097f1a426bafca" title="Emitted when submit() was called.">submitTriggered</a>();
+<a name="l00454"></a>00454 
+<a name="l00457"></a>00457   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a4cd4617364c875c6c777cff1ce0187ae" title="Emitted when revert() was called.">revertTriggered</a>();
 <a name="l00458"></a>00458 
-<a name="l00464"></a>00464   <span class="keywordtype">void</span> onStateEditingEntered();
-<a name="l00465"></a>00465 
-<a name="l00471"></a>00471   <span class="keywordtype">void</span> onStateEditingExited();
-<a name="l00472"></a>00472 
-<a name="l00480"></a>00480   <span class="keywordtype">void</span> onStateSubmittingEntered();
-<a name="l00481"></a>00481 
-<a name="l00489"></a>00489   <span class="keywordtype">void</span> onStateRevertingEntered();
+<a name="l00461"></a>00461   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a87ca4a74a2d8073be3ae92d7215eb538" title="Emitted when insert() was called.">insertTriggered</a>();
+<a name="l00462"></a>00462 
+<a name="l00465"></a>00465   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#aea7a2ee49ce26a4069cbd8f7e0e65654" title="Emitted when remove() was called.">removeTriggered</a>();
+<a name="l00466"></a>00466 
+<a name="l00469"></a>00469   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a27d3a1a75cddf6653f919e5ff3f2e8b4" title="Emitted when a error occured.">errorOccured</a>();
+<a name="l00470"></a>00470 
+<a name="l00473"></a>00473   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#aa514b36fecc323dfdf8eedeec7838dd1" title="Emitted when a operation succeed.">operationSucceed</a>();
+<a name="l00474"></a>00474 
+<a name="l00477"></a>00477   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a8ae6e67e3efb5051dc7a8b74571d4aa1" title="Emitted when data was edited.">dataEdited</a>();
+<a name="l00478"></a>00478 
+<a name="l00481"></a>00481   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a4acc0adbe6e002cd559642d3ea8e2d3a" title="Emitted when Visualizing state was entered.">stateVisualizingEntered</a>();
+<a name="l00482"></a>00482 
+<a name="l00485"></a>00485   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a8f2eda6e219e49c972834a1e5c39e8ff" title="Emitted when Visualizing state was exited.">stateVisualizingExited</a>();
+<a name="l00486"></a>00486 
+<a name="l00489"></a>00489   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a925485d7acc131d438f6ea251c9b1fb9" title="Emitted when Editing state was exited.">stateEditingExited</a>();
 <a name="l00490"></a>00490 
-<a name="l00498"></a>00498   <span class="keywordtype">void</span> onStateInsertingEntered();
-<a name="l00499"></a>00499 
-<a name="l00505"></a>00505   <span class="keywordtype">void</span> onStateEditingNewRowEntered();
-<a name="l00506"></a>00506 
-<a name="l00512"></a>00512   <span class="keywordtype">void</span> onStateEditingNewRowExited();
-<a name="l00513"></a>00513 
-<a name="l00521"></a>00521   <span class="keywordtype">void</span> onStateSubmittingNewRowEntered();
-<a name="l00522"></a>00522 
-<a name="l00530"></a>00530   <span class="keywordtype">void</span> onStateRevertingNewRowEntered();
-<a name="l00531"></a>00531 
-<a name="l00539"></a>00539   <span class="keywordtype">void</span> onStateRemovingEntered();
-<a name="l00540"></a>00540 
-<a name="l00543"></a>00543   <span class="keywordtype">void</span> disableChildWidgets();
+<a name="l00493"></a>00493   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#af4ed2a005f55ffe23ce6382f1ed3f68e" title="Emitted when Editing state was exited.">stateEditingNewRowExited</a>();
+<a name="l00494"></a>00494 
+<a name="l00504"></a>00504   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a182972cd54cf7e00322c0b6973ecbde2" title="Emitted when current row has changed.">currentRowChanged</a>(<span class="keywordtype">int</span> row);
+<a name="l00505"></a>00505 
+<a name="l00513"></a>00513   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604" title="Emitted when select() or setQuery() was called on (parent) model.">modelSelected</a>();
+<a name="l00514"></a>00514 
+<a name="l00515"></a>00515  <span class="keyword">private</span> slots:
+<a name="l00516"></a>00516 
+<a name="l00522"></a>00522   <span class="keywordtype">void</span> onStateVisualizingEntered();
+<a name="l00523"></a>00523 
+<a name="l00529"></a>00529   <span class="keywordtype">void</span> onStateVisualizingExited();
+<a name="l00530"></a>00530 
+<a name="l00536"></a>00536   <span class="keywordtype">void</span> onStateEditingEntered();
+<a name="l00537"></a>00537 
+<a name="l00543"></a>00543   <span class="keywordtype">void</span> onStateEditingExited();
 <a name="l00544"></a>00544 
-<a name="l00547"></a>00547   <span class="keywordtype">void</span> enableChildWidgets();
-<a name="l00548"></a>00548 
-<a name="l00549"></a>00549  <span class="keyword">private</span>:
-<a name="l00550"></a>00550 
-<a name="l00553"></a>00553   <span class="keywordtype">void</span> buildStateMachine();
-<a name="l00554"></a>00554 
-<a name="l00555"></a>00555   QSqlTableModel *pvModel;
-<a name="l00556"></a>00556   <span class="comment">// State machine members</span>
-<a name="l00557"></a>00557   QState *pvStateVisualizing;
-<a name="l00558"></a>00558   QState *pvStateReverting;
-<a name="l00559"></a>00559   QState *pvStateEditing;
-<a name="l00560"></a>00560   QState *pvStateSubmitting;
-<a name="l00561"></a>00561   QState *pvStateInserting;
-<a name="l00562"></a>00562   QState *pvStateEditingNewRow;
-<a name="l00563"></a>00563   QState *pvStateRevertingNewRow;
-<a name="l00564"></a>00564   QState *pvStateSubmittingNewRow;
-<a name="l00565"></a>00565   QState *pvStateRemoving;
-<a name="l00566"></a>00566   QStateMachine *pvStateMachine;
-<a name="l00567"></a>00567   <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072" title="State of edit/view widget.">state_t</a> pvCurrentState;
-<a name="l00568"></a>00568   <span class="comment">// Memebrs for child widgets support</span>
-<a name="l00569"></a>00569   QList&lt;mdtSqlRelation*&gt; pvRelations;
-<a name="l00570"></a>00570   QList&lt;mdtAbstractSqlWidget*&gt; pvChildWidgets;
-<a name="l00571"></a>00571   <span class="comment">// Other members</span>
-<a name="l00572"></a>00572   QString pvUserFriendlyTableName;
-<a name="l00573"></a>00573 
-<a name="l00574"></a>00574   Q_DISABLE_COPY(<a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a>);
-<a name="l00575"></a>00575 };
-<a name="l00576"></a>00576 
-<a name="l00577"></a>00577 <span class="preprocessor">#endif  // #ifndef MDT_ABSTRACT_SQL_WIDGET_H</span>
+<a name="l00552"></a>00552   <span class="keywordtype">void</span> onStateSubmittingEntered();
+<a name="l00553"></a>00553 
+<a name="l00561"></a>00561   <span class="keywordtype">void</span> onStateRevertingEntered();
+<a name="l00562"></a>00562 
+<a name="l00570"></a>00570   <span class="keywordtype">void</span> onStateInsertingEntered();
+<a name="l00571"></a>00571 
+<a name="l00577"></a>00577   <span class="keywordtype">void</span> onStateEditingNewRowEntered();
+<a name="l00578"></a>00578 
+<a name="l00584"></a>00584   <span class="keywordtype">void</span> onStateEditingNewRowExited();
+<a name="l00585"></a>00585 
+<a name="l00593"></a>00593   <span class="keywordtype">void</span> onStateSubmittingNewRowEntered();
+<a name="l00594"></a>00594 
+<a name="l00602"></a>00602   <span class="keywordtype">void</span> onStateRevertingNewRowEntered();
+<a name="l00603"></a>00603 
+<a name="l00611"></a>00611   <span class="keywordtype">void</span> onStateRemovingEntered();
+<a name="l00612"></a>00612 
+<a name="l00615"></a>00615   <span class="keywordtype">void</span> disableChildWidgets();
+<a name="l00616"></a>00616 
+<a name="l00619"></a>00619   <span class="keywordtype">void</span> enableChildWidgets();
+<a name="l00620"></a>00620 
+<a name="l00621"></a>00621  <span class="keyword">private</span>:
+<a name="l00622"></a>00622 
+<a name="l00625"></a>00625   <span class="keywordtype">void</span> buildStateMachine();
+<a name="l00626"></a>00626 
+<a name="l00631"></a>00631   <span class="keywordtype">bool</span> checkBeforeSubmit();
+<a name="l00632"></a>00632 
+<a name="l00633"></a>00633   QSqlTableModel *pvModel;
+<a name="l00634"></a>00634   <span class="comment">// State machine members</span>
+<a name="l00635"></a>00635   QState *pvStateVisualizing;
+<a name="l00636"></a>00636   QState *pvStateReverting;
+<a name="l00637"></a>00637   QState *pvStateEditing;
+<a name="l00638"></a>00638   QState *pvStateSubmitting;
+<a name="l00639"></a>00639   QState *pvStateInserting;
+<a name="l00640"></a>00640   QState *pvStateEditingNewRow;
+<a name="l00641"></a>00641   QState *pvStateRevertingNewRow;
+<a name="l00642"></a>00642   QState *pvStateSubmittingNewRow;
+<a name="l00643"></a>00643   QState *pvStateRemoving;
+<a name="l00644"></a>00644   QStateMachine *pvStateMachine;
+<a name="l00645"></a>00645   <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072" title="State of edit/view widget.">state_t</a> pvCurrentState;
+<a name="l00646"></a>00646   <span class="comment">// Memebrs for child widgets support</span>
+<a name="l00647"></a>00647   QList&lt;mdtSqlRelation*&gt; pvRelations;
+<a name="l00648"></a>00648   QList&lt;mdtAbstractSqlWidget*&gt; pvChildWidgets;
+<a name="l00649"></a>00649   <span class="comment">// Other members</span>
+<a name="l00650"></a>00650   QString pvUserFriendlyTableName;
+<a name="l00651"></a>00651   QList&lt;mdtSqlDataValidator*&gt; pvDataValidators;
+<a name="l00652"></a>00652 
+<a name="l00653"></a>00653   Q_DISABLE_COPY(<a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a>);
+<a name="l00654"></a>00654 };
+<a name="l00655"></a>00655 
+<a name="l00656"></a>00656 <span class="preprocessor">#endif  // #ifndef MDT_ABSTRACT_SQL_WIDGET_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -298,7 +324,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:16 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 14 2013 19:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

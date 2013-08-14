@@ -1,3 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_sql_table_widget_key_event_filter.html" title="mdtSqlTableWidgetKeyEventFilter" alt="" coords="7,5,228,35"/>
+<area shape="rect" id="node1" href="$classmdt_sql_form.html" title="Base class for high level SQL widgets API." alt="" coords="5,5,99,35"/>
+<area shape="rect" id="node3" href="$classmdt_sql_form_window.html" title="SQL form window." alt="" coords="148,5,287,35"/>
 </map>

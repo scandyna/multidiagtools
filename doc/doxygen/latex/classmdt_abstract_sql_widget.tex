@@ -13,8 +13,7 @@ Base class to create database table GUI.
 
 
 
-Inheritance diagram for mdtAbstractSqlWidget:
-\nopagebreak
+Inheritance diagram for mdtAbstractSqlWidget:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -56,7 +55,11 @@ virtual void \hyperlink{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e1582485
 virtual void \hyperlink{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}{toPrevious} ()=0
 \begin{DoxyCompactList}\small\item\em Set previous record as current record. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}{toNext} ()=0
-\begin{DoxyCompactList}\small\item\em Set next record as current record. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set next record as current record. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{setCurrentIndex} (int row)=0
+\begin{DoxyCompactList}\small\item\em Set row as current record. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}{setCurrentRecord} (const QString \&fieldName, const QVariant \&value)
+\begin{DoxyCompactList}\small\item\em Set the first record that matches given criteria as current record (index). \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
@@ -132,7 +135,9 @@ void \hyperlink{classmdt_abstract_sql_widget_af4ed2a005f55ffe23ce6382f1ed3f68e}{
 
 \begin{DoxyCompactList}\small\item\em Emitted when Editing state was exited. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_widget_a182972cd54cf7e00322c0b6973ecbde2}{currentRowChanged} (int row)
-\begin{DoxyCompactList}\small\item\em Emitted when current row has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Emitted when current row has changed. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}{modelSelected} ()
+\begin{DoxyCompactList}\small\item\em Emitted when select() or setQuery() was called on (parent) model. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -147,12 +152,27 @@ void \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{
 \begin{DoxyCompactList}\small\item\em Set the table model. \end{DoxyCompactList}\item 
 QSqlTableModel $\ast$ \hyperlink{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{model} ()
 \begin{DoxyCompactList}\small\item\em Get current model. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}{addDataValidator} (\hyperlink{classmdt_sql_data_validator}{mdtSqlDataValidator} $\ast$validator, bool putAtTopPriority=false)
+\begin{DoxyCompactList}\small\item\em Add a data validator. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}{
+void \hyperlink{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}{setUserFriendlyTableName} (const QString \&name)}
+\label{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}
+
+\begin{DoxyCompactList}\small\item\em Set the user friendly table name. \end{DoxyCompactList}\item 
 QString \hyperlink{classmdt_abstract_sql_widget_a8207edaf31a7d988db5b86a4099ad4eb}{userFriendlyTableName} () const 
 \begin{DoxyCompactList}\small\item\em Get the user friendly table name. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_widget_a7225af05f3b10e82db939f0ec0996167}{addChildWidget} (\hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} $\ast$widget, \hyperlink{classmdt_sql_relation}{mdtSqlRelation} $\ast$relation)
 \begin{DoxyCompactList}\small\item\em Add a child (details) widget and relation. \end{DoxyCompactList}\item 
+QList$<$ \hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} $\ast$ $>$ \hyperlink{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}{sqlWidgets} ()
+\begin{DoxyCompactList}\small\item\em Get a list of all SQL widgets. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}{currentRow} () const =0
 \begin{DoxyCompactList}\small\item\em Get the current row. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}{setCurrentData} (const QString \&fieldName, const QVariant \&data, bool submit=true)
+\begin{DoxyCompactList}\small\item\em Set (update) data of current row (record) for given field name. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_abstract_sql_widget_a10a2d7fff69ec7043db0df05cbbaa63c}{currentData} (const QString \&fieldName) const 
+\begin{DoxyCompactList}\small\item\em Get current data for given field name. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}{data} (int row, const QString \&fieldName) const 
+\begin{DoxyCompactList}\small\item\em Get data for given row and field name. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_abstract_sql_widget_a5e25e4a2e0dc56c06c530c9b543366f2}{rowCount} () const 
 \begin{DoxyCompactList}\small\item\em Get row count. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}{
@@ -195,10 +215,7 @@ QString \hyperlink{classmdt_abstract_sql_widget_a1081ced9b96f60b3b39c6085bfe305d
 \label{classmdt_abstract_sql_widget_a1081ced9b96f60b3b39c6085bfe305d4}
 
 \begin{DoxyCompactList}\small\item\em Get message for the user regarding MySql error number. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{
-bool \hyperlink{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{childWidgetsAreInVisaluzingState} ()}
-\label{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}
-
+bool \hyperlink{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{childWidgetsAreInVisaluzingState} ()
 \begin{DoxyCompactList}\small\item\em Check that child widgtes have no pending data. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_abstract_sql_widget_ad20a178299c96790587b53380bb68282}{
 void \hyperlink{classmdt_abstract_sql_widget_ad20a178299c96790587b53380bb68282}{warnUserAboutUnsavedRow} (const QString \&tableName)}
@@ -214,7 +231,7 @@ Base class to create database table GUI.
 
 Main goal is to provide a standard way to use GUI object for database table. 
 
-Definition at line 41 of file mdtAbstractSqlWidget.h.
+Definition at line 46 of file mdtAbstractSqlWidget.h.
 
 
 
@@ -272,7 +289,7 @@ Removing}
 
 
 
-Definition at line 51 of file mdtAbstractSqlWidget.h.
+Definition at line 56 of file mdtAbstractSqlWidget.h.
 
 
 
@@ -292,7 +309,7 @@ Constructor.
 
 Will initialize internal state machine. 
 
-Definition at line 33 of file mdtAbstractSqlWidget.cpp.
+Definition at line 35 of file mdtAbstractSqlWidget.cpp.
 
 
 
@@ -322,6 +339,38 @@ relation must be a valid pointer. Note: relation will be reparented, so it will 
 \end{DoxyPrecond}
 
 
+Definition at line 99 of file mdtAbstractSqlWidget.cpp.
+
+\hypertarget{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}{
+\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!addDataValidator@{addDataValidator}}
+\index{addDataValidator@{addDataValidator}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\subsubsection[{addDataValidator}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::addDataValidator (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtSqlDataValidator} $\ast$}]{validator, }
+\item[{bool}]{putAtTopPriority = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}
+
+
+Add a data validator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em validator} & A instance of \hyperlink{classmdt_sql_data_validator}{mdtSqlDataValidator} or subclass. \\
+\hline
+{\em putAtTopPriority} & If true, validator will be called before allready stored ones. (validators are put into a queue).\\
+\hline
+\end{DoxyParams}
+Note: validator will be reparented, so it will be destroyed automatically when this class is destroyed.
+
+\begin{DoxyPrecond}{Precondition}
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+
+validator must be a valid pointer. 
+\end{DoxyPrecond}
+
+
 Definition at line 69 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}{
@@ -346,7 +395,48 @@ true if all data are saved, false if a SQL widget has pending data.
 \end{DoxyReturn}
 
 
-Definition at line 106 of file mdtAbstractSqlWidget.cpp.
+Definition at line 224 of file mdtAbstractSqlWidget.cpp.
+
+\hypertarget{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{
+\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!childWidgetsAreInVisaluzingState@{childWidgetsAreInVisaluzingState}}
+\index{childWidgetsAreInVisaluzingState@{childWidgetsAreInVisaluzingState}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\subsubsection[{childWidgetsAreInVisaluzingState}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}
+
+
+Check that child widgtes have no pending data. 
+
+
+
+if(w-\/$>$\hyperlink{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}{currentState()} != Visualizing)\{ warnUserAboutUnsavedRow(w-\/$>$\hyperlink{classmdt_abstract_sql_widget_a8207edaf31a7d988db5b86a4099ad4eb}{userFriendlyTableName()}); return false; \}
+
+
+
+Definition at line 366 of file mdtAbstractSqlWidget.cpp.
+
+\hypertarget{classmdt_abstract_sql_widget_a10a2d7fff69ec7043db0df05cbbaa63c}{
+\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!currentData@{currentData}}
+\index{currentData@{currentData}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\subsubsection[{currentData}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtAbstractSqlWidget::currentData (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fieldName}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_abstract_sql_widget_a10a2d7fff69ec7043db0df05cbbaa63c}
+
+
+Get current data for given field name. 
+
+\begin{DoxyPrecond}{Precondition}
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 168 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!currentRow@{currentRow}}
@@ -382,7 +472,28 @@ Emitted when current row has changed.
 
 This is usefull, for example, in master/detail forms, to update child models filter.
 
-Subclass must emit this signal each time the user selects a new row. \hypertarget{classmdt_abstract_sql_widget_a3401020fed292da2c3b565a536f0be47}{
+Subclass must emit this signal each time the user selects a new row. \hypertarget{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}{
+\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!data@{data}}
+\index{data@{data}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtAbstractSqlWidget::data (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{const QString \&}]{fieldName}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}
+
+
+Get data for given row and field name. 
+
+\begin{DoxyPrecond}{Precondition}
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 175 of file mdtAbstractSqlWidget.cpp.
+
+\hypertarget{classmdt_abstract_sql_widget_a3401020fed292da2c3b565a536f0be47}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!displayDatabaseError@{displayDatabaseError}}
 \index{displayDatabaseError@{displayDatabaseError}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
 \subsubsection[{displayDatabaseError}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::displayDatabaseError (
@@ -402,7 +513,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 142 of file mdtAbstractSqlWidget.cpp.
+Definition at line 290 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_aa79059c092c6bcda569ced7c0621a817}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!doInsert@{doInsert}}
@@ -527,7 +638,7 @@ Reimplemented in \hyperlink{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bc
 
 
 
-Definition at line 102 of file mdtAbstractSqlWidget.cpp.
+Definition at line 220 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a586e89097e9b4c27888695796ce945a0}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!enableLocalNavigation@{enableLocalNavigation}}
@@ -548,7 +659,7 @@ In normal way, when using \hyperlink{classmdt_sql_window}{mdtSqlWindow}, local n
 
 This default implementation does nothing. 
 
-Definition at line 98 of file mdtAbstractSqlWidget.cpp.
+Definition at line 216 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!insert@{insert}}
@@ -565,7 +676,7 @@ Insert a new row to model.
 
 Internally, \hyperlink{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{insertTriggered()} signal will be emitted. 
 
-Definition at line 132 of file mdtAbstractSqlWidget.cpp.
+Definition at line 250 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a909ba5b675f596ee5c5980e159cd2878}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!insertEnabledStateChanged@{insertEnabledStateChanged}}
@@ -595,9 +706,22 @@ Get current model.
 
 Can return a null pointer if model was not set. 
 
-Definition at line 54 of file mdtAbstractSqlWidget.cpp.
+Definition at line 64 of file mdtAbstractSqlWidget.cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{
+\hypertarget{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}{
+\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!modelSelected@{modelSelected}}
+\index{modelSelected@{modelSelected}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\subsubsection[{modelSelected}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::modelSelected (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}
+
+
+Emitted when select() or setQuery() was called on (parent) model. 
+
+Notes: QSqlTableModel does not provide such signal. Here, the rowsRemoved() and rowsInserted() signal are used. It's also possible that this signal is emitted two times when model is updated with select(), setQuery() or setFilter(). \hypertarget{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!remove@{remove}}
 \index{remove@{remove}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
 \subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::remove (
@@ -612,7 +736,7 @@ Remove a row from model.
 
 Internally, \hyperlink{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{removeTriggered()} signal will be emitted. 
 
-Definition at line 137 of file mdtAbstractSqlWidget.cpp.
+Definition at line 255 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a9c536f5081b321e8df24316506fc19f3}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!removeEnabledStateChanged@{removeEnabledStateChanged}}
@@ -650,7 +774,7 @@ Restore primary key data to (parent) model.
 \end{DoxyPrecond}
 
 
-Definition at line 246 of file mdtAbstractSqlWidget.cpp.
+Definition at line 399 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!revert@{revert}}
@@ -669,7 +793,7 @@ Depending on subclass choosen EditStrategy, this method has potentially no effec
 
 Internally, \hyperlink{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{revertTriggered()} signal will be emitted. 
 
-Definition at line 127 of file mdtAbstractSqlWidget.cpp.
+Definition at line 245 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_ada899f0c3f8388d2d3feac7c0c50884c}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!revertEnabledStateChanged@{revertEnabledStateChanged}}
@@ -702,7 +826,74 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 86 of file mdtAbstractSqlWidget.cpp.
+Definition at line 204 of file mdtAbstractSqlWidget.cpp.
+
+\hypertarget{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}{
+\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!setCurrentData@{setCurrentData}}
+\index{setCurrentData@{setCurrentData}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\subsubsection[{setCurrentData}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSqlWidget::setCurrentData (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fieldName, }
+\item[{const QVariant \&}]{data, }
+\item[{bool}]{submit = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}
+
+
+Set (update) data of current row (record) for given field name. 
+
+\begin{DoxyPrecond}{Precondition}
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 130 of file mdtAbstractSqlWidget.cpp.
+
+\hypertarget{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{
+\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!setCurrentIndex@{setCurrentIndex}}
+\index{setCurrentIndex@{setCurrentIndex}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\subsubsection[{setCurrentIndex}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSqlWidget::setCurrentIndex (
+\begin{DoxyParamCaption}
+\item[{int}]{row}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual, slot\mbox{]}}}}
+\label{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}
+
+
+Set row as current record. 
+
+Subclass must implement this method. Errors and user interactions must be handled by subclass. 
+
+Implemented in \hyperlink{classmdt_sql_form_widget_a982e8e8347ec4f98bf3df6980997a2db}{mdtSqlFormWidget}, and \hyperlink{classmdt_sql_table_widget_ae4945234973dcfcb8f2e20830e571fd4}{mdtSqlTableWidget}.
+
+\hypertarget{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}{
+\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!setCurrentRecord@{setCurrentRecord}}
+\index{setCurrentRecord@{setCurrentRecord}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\subsubsection[{setCurrentRecord}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSqlWidget::setCurrentRecord (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fieldName, }
+\item[{const QVariant \&}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}
+
+
+Set the first record that matches given criteria as current record (index). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fieldName} & Field that must contain searched value \\
+\hline
+{\em value} & Value that must matche \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if matching record was found (in this case, \hyperlink{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{setCurrentIndex()} is called to update currentRow), false else. 
+\end{DoxyReturn}
+
+
+Definition at line 260 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!setModel@{setModel}}
@@ -726,7 +917,24 @@ Internal state machine must not running.
 \end{DoxyPrecond}
 
 
-Definition at line 44 of file mdtAbstractSqlWidget.cpp.
+Definition at line 46 of file mdtAbstractSqlWidget.cpp.
+
+\hypertarget{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}{
+\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!sqlWidgets@{sqlWidgets}}
+\index{sqlWidgets@{sqlWidgets}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\subsubsection[{sqlWidgets}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtAbstractSqlWidget} $\ast$ $>$ mdtAbstractSqlWidget::sqlWidgets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}
+
+
+Get a list of all SQL widgets. 
+
+Returned list will contain the parent SQL widget and all child SQL widgets 
+
+Definition at line 116 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!submit@{submit}}
@@ -745,7 +953,7 @@ Depending on subclass choosen EditStrategy, this method has potentially no effec
 
 Internally, \hyperlink{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{submitTriggered()} signal will be emitted. 
 
-Definition at line 122 of file mdtAbstractSqlWidget.cpp.
+Definition at line 240 of file mdtAbstractSqlWidget.cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}{
 \index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!submitEnabledStateChanged@{submitEnabledStateChanged}}
@@ -893,14 +1101,9 @@ This is usefull to keep GUI control coherent. For example, this is used in \hype
 
 Get the user friendly table name. 
 
-If the user friendly table name was not set, the database table name is returned
+If the user friendly table name was not set, the database table name is returned. If model was not set, a empty string is returned. 
 
-\begin{DoxyPrecond}{Precondition}
-(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
-\end{DoxyPrecond}
-
-
-Definition at line 59 of file mdtAbstractSqlWidget.cpp.
+Definition at line 87 of file mdtAbstractSqlWidget.cpp.
 
 
 

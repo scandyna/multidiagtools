@@ -121,453 +121,600 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00059"></a>00059       <span class="keywordflow">case</span> Qt::Key_Return:
 <a name="l00060"></a>00060       <span class="keywordflow">case</span> Qt::Key_Delete:
 <a name="l00061"></a>00061       <span class="keywordflow">case</span> Qt::Key_Down:
-<a name="l00062"></a>00062         qDebug() &lt;&lt; <span class="stringliteral">&quot;eventFilter() , obj dump: &quot;</span>;
-<a name="l00063"></a>00063         obj-&gt;dumpObjectInfo();
-<a name="l00064"></a>00064         emit knownKeyPressed(keyEvent-&gt;key());
-<a name="l00065"></a>00065         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00066"></a>00066       <span class="keywordflow">default</span>:
-<a name="l00067"></a>00067         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00068"></a>00068     }
-<a name="l00069"></a>00069   }<span class="keywordflow">else</span>{
-<a name="l00070"></a>00070     <span class="keywordflow">return</span> QObject::eventFilter(obj, event);
-<a name="l00071"></a>00071   }
-<a name="l00072"></a>00072 }
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074 <span class="comment">/*</span>
-<a name="l00075"></a>00075 <span class="comment"> * mdtSqlTableWidgetItemDelegate implementation</span>
-<a name="l00076"></a>00076 <span class="comment"> */</span>
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 mdtSqlTableWidgetItemDelegate::mdtSqlTableWidgetItemDelegate(QObject *parent)
-<a name="l00079"></a>00079  : QStyledItemDelegate(parent)
-<a name="l00080"></a>00080 {
-<a name="l00081"></a>00081 }
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083 QWidget *mdtSqlTableWidgetItemDelegate::createEditor(QWidget *parent, <span class="keyword">const</span> QStyleOptionViewItem &amp;option, <span class="keyword">const</span> QModelIndex &amp;index )<span class="keyword"> const</span>
-<a name="l00084"></a>00084 <span class="keyword"></span>{
-<a name="l00085"></a>00085   emit dataEditionBegins();
-<a name="l00086"></a>00086   <span class="keywordflow">return</span> QStyledItemDelegate::createEditor(parent, option, index);
-<a name="l00087"></a>00087 }
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089 <span class="comment">/*</span>
-<a name="l00090"></a>00090 <span class="comment"> * mdtSqlTableWidget implementation</span>
-<a name="l00091"></a>00091 <span class="comment"> */</span>
-<a name="l00092"></a>00092 
-<a name="l00093"></a><a class="code" href="classmdt_sql_table_widget.html#a4cf2b0d69608e88d33996148f612e58d">00093</a> <a class="code" href="classmdt_sql_table_widget.html#a4cf2b0d69608e88d33996148f612e58d" title="Constructor.">mdtSqlTableWidget::mdtSqlTableWidget</a>(QWidget *parent)
-<a name="l00094"></a>00094  : <a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a>(parent)
-<a name="l00095"></a>00095 {
-<a name="l00096"></a>00096   pvTableView = <span class="keyword">new</span> QTableView;
-<a name="l00097"></a>00097   pvTableView-&gt;setSelectionBehavior(QAbstractItemView::SelectItems);
-<a name="l00098"></a>00098   QVBoxLayout *layout = <span class="keyword">new</span> QVBoxLayout;
-<a name="l00099"></a>00099   <span class="comment">// Install event filter on table view to catch some key events</span>
-<a name="l00100"></a>00100   <a class="code" href="classmdt_sql_table_widget_key_event_filter.html">mdtSqlTableWidgetKeyEventFilter</a> *keyEventFilter = <span class="keyword">new</span> <a class="code" href="classmdt_sql_table_widget_key_event_filter.html">mdtSqlTableWidgetKeyEventFilter</a>(<span class="keyword">this</span>);
-<a name="l00101"></a>00101   pvTableView-&gt;installEventFilter(keyEventFilter);
-<a name="l00102"></a>00102   connect(keyEventFilter, SIGNAL(knownKeyPressed(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onTableViewKnownKeyPressed(<span class="keywordtype">int</span>)));
-<a name="l00103"></a>00103   <span class="comment">// Set our custom item delegate</span>
-<a name="l00104"></a>00104   <a class="code" href="classmdt_sql_table_widget_item_delegate.html">mdtSqlTableWidgetItemDelegate</a> *delegate = <span class="keyword">new</span> <a class="code" href="classmdt_sql_table_widget_item_delegate.html">mdtSqlTableWidgetItemDelegate</a>(<span class="keyword">this</span>);
-<a name="l00105"></a>00105   pvTableView-&gt;setItemDelegate(delegate);
-<a name="l00106"></a>00106   connect(delegate, SIGNAL(dataEditionBegins()), <span class="keyword">this</span>, SLOT(onDataEditionBegins()));
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108   layout-&gt;addWidget(pvTableView);
-<a name="l00109"></a>00109   setLayout(layout);
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111   pvNavigationLayout = 0;
-<a name="l00112"></a>00112   pbNavToFirst = 0;
-<a name="l00113"></a>00113   pbNavToPrevious = 0;
-<a name="l00114"></a>00114   pbNavToNext = 0;
-<a name="l00115"></a>00115   pbNavToLast = 0;
-<a name="l00116"></a>00116   pbInsert = 0;
-<a name="l00117"></a>00117   pbSubmit = 0;
-<a name="l00118"></a>00118   pbRevert = 0;
-<a name="l00119"></a>00119   pbRemove = 0;
-<a name="l00120"></a>00120   pvDelegateIsEditingData = <span class="keyword">false</span>;
-<a name="l00121"></a>00121 }
-<a name="l00122"></a>00122 
-<a name="l00123"></a><a class="code" href="classmdt_sql_table_widget.html#ab5db8a20c64340bba4841a1b1c928d7f">00123</a> <a class="code" href="classmdt_sql_table_widget.html#ab5db8a20c64340bba4841a1b1c928d7f" title="Destructor.">mdtSqlTableWidget::~mdtSqlTableWidget</a>()
-<a name="l00124"></a>00124 {
-<a name="l00125"></a>00125 }
-<a name="l00126"></a>00126 
-<a name="l00127"></a><a class="code" href="classmdt_sql_table_widget.html#a7612cf9cb10c69365b7ed820d71e6cb2">00127</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_table_widget.html#a7612cf9cb10c69365b7ed820d71e6cb2" title="Get the current row.">mdtSqlTableWidget::currentRow</a>()<span class="keyword"> const</span>
-<a name="l00128"></a>00128 <span class="keyword"></span>{
-<a name="l00129"></a>00129   <span class="keywordflow">return</span> pvTableView-&gt;currentIndex().row();
-<a name="l00130"></a>00130 }
-<a name="l00131"></a>00131 
-<a name="l00132"></a><a class="code" href="classmdt_sql_table_widget.html#af5ef66b8ebb45a698f99ad455208f3c8">00132</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#af5ef66b8ebb45a698f99ad455208f3c8" title="Set edition enabled/disabled.">mdtSqlTableWidget::setEditionEnabled</a>(<span class="keywordtype">bool</span> enable)
-<a name="l00133"></a>00133 {
-<a name="l00134"></a>00134   <span class="keywordflow">if</span>(enable){
-<a name="l00135"></a>00135     pvTableView-&gt;setEditTriggers(QAbstractItemView::AllEditTriggers);
-<a name="l00136"></a>00136   }<span class="keywordflow">else</span>{
-<a name="l00137"></a>00137     pvTableView-&gt;setEditTriggers(QAbstractItemView::NoEditTriggers);
-<a name="l00138"></a>00138   }
-<a name="l00139"></a>00139 }
-<a name="l00140"></a>00140 
-<a name="l00141"></a><a class="code" href="classmdt_sql_table_widget.html#a39422fb9522ee73513f13d8bcb91a143">00141</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a39422fb9522ee73513f13d8bcb91a143" title="Enable local edition.">mdtSqlTableWidget::enableLocalEdition</a>()
-<a name="l00142"></a>00142 {
-<a name="l00143"></a>00143   Q_ASSERT(layout() != 0);
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145   QBoxLayout *boxLayout;
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147   <span class="comment">// Create actions</span>
-<a name="l00148"></a>00148   pbInsert = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;New&quot;</span>);
-<a name="l00149"></a>00149   pbSubmit = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;Save&quot;</span>);
-<a name="l00150"></a>00150   pbRevert = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;Cancel&quot;</span>);
-<a name="l00151"></a>00151   pbRemove = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;Delete&quot;</span>);
-<a name="l00152"></a>00152   <span class="comment">// As default, functions are disabled</span>
-<a name="l00153"></a>00153   pbInsert-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00154"></a>00154   pbSubmit-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00155"></a>00155   pbRevert-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00156"></a>00156   pbRemove-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00157"></a>00157   <span class="comment">// Connect actions enable/disable</span>
-<a name="l00158"></a>00158   connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#a909ba5b675f596ee5c5980e159cd2878" title="Emitted when insert() function goes enabled/disabled.">insertEnabledStateChanged</a>(<span class="keywordtype">bool</span>)), pbInsert, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
-<a name="l00159"></a>00159   connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#acacc59096ae48f733be577a96cd2d14a" title="Emitted when submit() function goes enabled/disabled.">submitEnabledStateChanged</a>(<span class="keywordtype">bool</span>)), pbSubmit, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
-<a name="l00160"></a>00160   connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#ada899f0c3f8388d2d3feac7c0c50884c" title="Emitted when revert() function goes enabled/disabled.">revertEnabledStateChanged</a>(<span class="keywordtype">bool</span>)), pbRevert, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
-<a name="l00161"></a>00161   connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#a9c536f5081b321e8df24316506fc19f3" title="Emitted when remove() function goes enabled/disabled.">removeEnabledStateChanged</a>(<span class="keywordtype">bool</span>)), pbRemove, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
-<a name="l00162"></a>00162   <span class="comment">// Connect actions triggers</span>
-<a name="l00163"></a>00163   connect(pbInsert, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_abstract_sql_widget.html#a850df045ea95b8c15ddd95ae771ef785" title="Insert a new row to model.">insert</a>()));
-<a name="l00164"></a>00164   connect(pbSubmit, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_abstract_sql_widget.html#a6678c45b0d46eb163f5b09d79ed001b5" title="Submit current record to model.">submit</a>()));
-<a name="l00165"></a>00165   connect(pbRevert, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_abstract_sql_widget.html#a3108b336f4c832cb0a5b3a830fff9ce0" title="Revert current record from model.">revert</a>()));
-<a name="l00166"></a>00166   connect(pbRemove, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<span class="keyword">remove</span>()));
-<a name="l00167"></a>00167   <span class="comment">// Add to layout</span>
-<a name="l00168"></a>00168   <span class="keywordflow">if</span>(pvNavigationLayout == 0){
-<a name="l00169"></a>00169     pvNavigationLayout = <span class="keyword">new</span> QHBoxLayout;
-<a name="l00171"></a>00171     boxLayout = <span class="keyword">dynamic_cast&lt;</span>QBoxLayout*<span class="keyword">&gt;</span>(layout());
-<a name="l00172"></a>00172     Q_ASSERT(boxLayout != 0);
-<a name="l00173"></a>00173     boxLayout-&gt;addLayout(pvNavigationLayout);
-<a name="l00174"></a>00174   }
-<a name="l00175"></a>00175   Q_ASSERT(pvNavigationLayout != 0);
-<a name="l00176"></a>00176   pvNavigationLayout-&gt;addWidget(pbInsert);
-<a name="l00177"></a>00177   pvNavigationLayout-&gt;addWidget(pbSubmit);
-<a name="l00178"></a>00178   pvNavigationLayout-&gt;addWidget(pbRevert);
-<a name="l00179"></a>00179   pvNavigationLayout-&gt;addWidget(pbRemove);
-<a name="l00180"></a>00180   pvNavigationLayout-&gt;addStretch();
-<a name="l00181"></a>00181 }
-<a name="l00182"></a>00182 
-<a name="l00183"></a><a class="code" href="classmdt_sql_table_widget.html#a9c0ae7b87d1840f2fdcee6de763fe31a">00183</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a9c0ae7b87d1840f2fdcee6de763fe31a" title="Add a custom widget to local bar.">mdtSqlTableWidget::addWidgetToLocalBar</a>(QWidget *widget)
-<a name="l00184"></a>00184 {
-<a name="l00185"></a>00185   Q_ASSERT(widget != 0);
-<a name="l00186"></a>00186   Q_ASSERT(layout() != 0);
-<a name="l00187"></a>00187 
-<a name="l00188"></a>00188   QBoxLayout *boxLayout;
-<a name="l00189"></a>00189 
-<a name="l00190"></a>00190   <span class="comment">// Add to layout</span>
-<a name="l00191"></a>00191   <span class="keywordflow">if</span>(pvNavigationLayout == 0){
-<a name="l00192"></a>00192     pvNavigationLayout = <span class="keyword">new</span> QHBoxLayout;
-<a name="l00193"></a>00193     boxLayout = <span class="keyword">dynamic_cast&lt;</span>QBoxLayout*<span class="keyword">&gt;</span>(layout());
-<a name="l00194"></a>00194     Q_ASSERT(boxLayout != 0);
-<a name="l00195"></a>00195     boxLayout-&gt;addLayout(pvNavigationLayout);
-<a name="l00196"></a>00196   }
-<a name="l00197"></a>00197   Q_ASSERT(pvNavigationLayout != 0);
-<a name="l00198"></a>00198   pvNavigationLayout-&gt;addWidget(widget);
-<a name="l00199"></a>00199 }
-<a name="l00200"></a>00200 
-<a name="l00201"></a><a class="code" href="classmdt_sql_table_widget.html#a6cf9f08b98dd3df16d36c29db7175633">00201</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a6cf9f08b98dd3df16d36c29db7175633" title="Add a strech to local bar.">mdtSqlTableWidget::addStretchToLocalBar</a>()
-<a name="l00202"></a>00202 {
-<a name="l00203"></a>00203   Q_ASSERT(layout() != 0);
+<a name="l00062"></a>00062         emit knownKeyPressed(keyEvent-&gt;key());
+<a name="l00063"></a>00063         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00064"></a>00064       <span class="keywordflow">default</span>:
+<a name="l00065"></a>00065         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00066"></a>00066     }
+<a name="l00067"></a>00067   }<span class="keywordflow">else</span>{
+<a name="l00068"></a>00068     <span class="keywordflow">return</span> QObject::eventFilter(obj, event);
+<a name="l00069"></a>00069   }
+<a name="l00070"></a>00070 }
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072 <span class="comment">/*</span>
+<a name="l00073"></a>00073 <span class="comment"> * mdtSqlTableWidgetItemDelegate implementation</span>
+<a name="l00074"></a>00074 <span class="comment"> */</span>
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 mdtSqlTableWidgetItemDelegate::mdtSqlTableWidgetItemDelegate(QObject *parent)
+<a name="l00077"></a>00077  : QStyledItemDelegate(parent)
+<a name="l00078"></a>00078 {
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081 QWidget *mdtSqlTableWidgetItemDelegate::createEditor(QWidget *parent, <span class="keyword">const</span> QStyleOptionViewItem &amp;option, <span class="keyword">const</span> QModelIndex &amp;index )<span class="keyword"> const</span>
+<a name="l00082"></a>00082 <span class="keyword"></span>{
+<a name="l00083"></a>00083   emit dataEditionBegins();
+<a name="l00084"></a>00084   <span class="keywordflow">return</span> QStyledItemDelegate::createEditor(parent, option, index);
+<a name="l00085"></a>00085 }
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087 <span class="comment">/*</span>
+<a name="l00088"></a>00088 <span class="comment"> * mdtSqlTableWidget implementation</span>
+<a name="l00089"></a>00089 <span class="comment"> */</span>
+<a name="l00090"></a>00090 
+<a name="l00091"></a><a class="code" href="classmdt_sql_table_widget.html#a4cf2b0d69608e88d33996148f612e58d">00091</a> <a class="code" href="classmdt_sql_table_widget.html#a4cf2b0d69608e88d33996148f612e58d" title="Constructor.">mdtSqlTableWidget::mdtSqlTableWidget</a>(QWidget *parent)
+<a name="l00092"></a>00092  : <a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a>(parent)
+<a name="l00093"></a>00093 {
+<a name="l00094"></a>00094   pvTableView = <span class="keyword">new</span> QTableView;
+<a name="l00095"></a>00095   pvTableView-&gt;setSelectionBehavior(QAbstractItemView::SelectItems);
+<a name="l00096"></a>00096   connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604" title="Emitted when select() or setQuery() was called on (parent) model.">modelSelected</a>()), <span class="keyword">this</span>, SLOT(onModelSelected()));
+<a name="l00097"></a>00097   QVBoxLayout *layout = <span class="keyword">new</span> QVBoxLayout;
+<a name="l00098"></a>00098   <span class="comment">// Install event filter on table view to catch some key events</span>
+<a name="l00099"></a>00099   <a class="code" href="classmdt_sql_table_widget_key_event_filter.html">mdtSqlTableWidgetKeyEventFilter</a> *keyEventFilter = <span class="keyword">new</span> <a class="code" href="classmdt_sql_table_widget_key_event_filter.html">mdtSqlTableWidgetKeyEventFilter</a>(<span class="keyword">this</span>);
+<a name="l00100"></a>00100   pvTableView-&gt;installEventFilter(keyEventFilter);
+<a name="l00101"></a>00101   connect(keyEventFilter, SIGNAL(knownKeyPressed(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onTableViewKnownKeyPressed(<span class="keywordtype">int</span>)));
+<a name="l00102"></a>00102   <span class="comment">// Set our custom item delegate</span>
+<a name="l00103"></a>00103   <a class="code" href="classmdt_sql_table_widget_item_delegate.html">mdtSqlTableWidgetItemDelegate</a> *delegate = <span class="keyword">new</span> <a class="code" href="classmdt_sql_table_widget_item_delegate.html">mdtSqlTableWidgetItemDelegate</a>(<span class="keyword">this</span>);
+<a name="l00104"></a>00104   pvTableView-&gt;setItemDelegate(delegate);
+<a name="l00105"></a>00105   connect(delegate, SIGNAL(dataEditionBegins()), <span class="keyword">this</span>, SLOT(onDataEditionBegins()));
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107   layout-&gt;addWidget(pvTableView);
+<a name="l00108"></a>00108   setLayout(layout);
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110   pvNavigationLayout = 0;
+<a name="l00111"></a>00111   pbNavToFirst = 0;
+<a name="l00112"></a>00112   pbNavToPrevious = 0;
+<a name="l00113"></a>00113   pbNavToNext = 0;
+<a name="l00114"></a>00114   pbNavToLast = 0;
+<a name="l00115"></a>00115   pbInsert = 0;
+<a name="l00116"></a>00116   pbSubmit = 0;
+<a name="l00117"></a>00117   pbRevert = 0;
+<a name="l00118"></a>00118   pbRemove = 0;
+<a name="l00119"></a>00119   pvDelegateIsEditingData = <span class="keyword">false</span>;
+<a name="l00120"></a>00120   pvDefaultColumnToSelect = 0;
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122   <a class="code" href="classmdt_sql_table_widget.html#af5ef66b8ebb45a698f99ad455208f3c8" title="Set edition enabled/disabled.">setEditionEnabled</a>(<span class="keyword">false</span>);
+<a name="l00123"></a>00123 }
+<a name="l00124"></a>00124 
+<a name="l00125"></a><a class="code" href="classmdt_sql_table_widget.html#ab5db8a20c64340bba4841a1b1c928d7f">00125</a> <a class="code" href="classmdt_sql_table_widget.html#ab5db8a20c64340bba4841a1b1c928d7f" title="Destructor.">mdtSqlTableWidget::~mdtSqlTableWidget</a>()
+<a name="l00126"></a>00126 {
+<a name="l00127"></a>00127 }
+<a name="l00128"></a>00128 
+<a name="l00129"></a><a class="code" href="classmdt_sql_table_widget.html#a7612cf9cb10c69365b7ed820d71e6cb2">00129</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_table_widget.html#a7612cf9cb10c69365b7ed820d71e6cb2" title="Get the current row.">mdtSqlTableWidget::currentRow</a>()<span class="keyword"> const</span>
+<a name="l00130"></a>00130 <span class="keyword"></span>{
+<a name="l00131"></a>00131   <span class="keywordflow">return</span> pvTableView-&gt;currentIndex().row();
+<a name="l00132"></a>00132 }
+<a name="l00133"></a>00133 
+<a name="l00134"></a><a class="code" href="classmdt_sql_table_widget.html#af5ef66b8ebb45a698f99ad455208f3c8">00134</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#af5ef66b8ebb45a698f99ad455208f3c8" title="Set edition enabled/disabled.">mdtSqlTableWidget::setEditionEnabled</a>(<span class="keywordtype">bool</span> enable)
+<a name="l00135"></a>00135 {
+<a name="l00136"></a>00136   <span class="keywordflow">if</span>(enable){
+<a name="l00138"></a>00138     pvTableView-&gt;setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed | QAbstractItemView::AnyKeyPressed);
+<a name="l00139"></a>00139   }<span class="keywordflow">else</span>{
+<a name="l00140"></a>00140     pvTableView-&gt;setEditTriggers(QAbstractItemView::NoEditTriggers);
+<a name="l00141"></a>00141   }
+<a name="l00142"></a>00142 }
+<a name="l00143"></a>00143 
+<a name="l00144"></a><a class="code" href="classmdt_sql_table_widget.html#a39422fb9522ee73513f13d8bcb91a143">00144</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a39422fb9522ee73513f13d8bcb91a143" title="Enable local edition.">mdtSqlTableWidget::enableLocalEdition</a>()
+<a name="l00145"></a>00145 {
+<a name="l00146"></a>00146   Q_ASSERT(layout() != 0);
+<a name="l00147"></a>00147 
+<a name="l00148"></a>00148   QBoxLayout *boxLayout;
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150   <span class="comment">// Create actions</span>
+<a name="l00151"></a>00151   pbInsert = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;New&quot;</span>);
+<a name="l00152"></a>00152   pbSubmit = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;Save&quot;</span>);
+<a name="l00153"></a>00153   pbRevert = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;Cancel&quot;</span>);
+<a name="l00154"></a>00154   pbRemove = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;Delete&quot;</span>);
+<a name="l00155"></a>00155   <span class="comment">// As default, functions are disabled</span>
+<a name="l00156"></a>00156   pbInsert-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00157"></a>00157   pbSubmit-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00158"></a>00158   pbRevert-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00159"></a>00159   pbRemove-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00160"></a>00160   <span class="comment">// Connect actions enable/disable</span>
+<a name="l00161"></a>00161   connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#a909ba5b675f596ee5c5980e159cd2878" title="Emitted when insert() function goes enabled/disabled.">insertEnabledStateChanged</a>(<span class="keywordtype">bool</span>)), pbInsert, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
+<a name="l00162"></a>00162   connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#acacc59096ae48f733be577a96cd2d14a" title="Emitted when submit() function goes enabled/disabled.">submitEnabledStateChanged</a>(<span class="keywordtype">bool</span>)), pbSubmit, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
+<a name="l00163"></a>00163   connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#ada899f0c3f8388d2d3feac7c0c50884c" title="Emitted when revert() function goes enabled/disabled.">revertEnabledStateChanged</a>(<span class="keywordtype">bool</span>)), pbRevert, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
+<a name="l00164"></a>00164   connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#a9c536f5081b321e8df24316506fc19f3" title="Emitted when remove() function goes enabled/disabled.">removeEnabledStateChanged</a>(<span class="keywordtype">bool</span>)), pbRemove, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
+<a name="l00165"></a>00165   <span class="comment">// Connect actions triggers</span>
+<a name="l00166"></a>00166   connect(pbInsert, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_abstract_sql_widget.html#a850df045ea95b8c15ddd95ae771ef785" title="Insert a new row to model.">insert</a>()));
+<a name="l00167"></a>00167   connect(pbSubmit, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_abstract_sql_widget.html#a6678c45b0d46eb163f5b09d79ed001b5" title="Submit current record to model.">submit</a>()));
+<a name="l00168"></a>00168   connect(pbRevert, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_abstract_sql_widget.html#a3108b336f4c832cb0a5b3a830fff9ce0" title="Revert current record from model.">revert</a>()));
+<a name="l00169"></a>00169   connect(pbRemove, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<span class="keyword">remove</span>()));
+<a name="l00170"></a>00170   <span class="comment">// Add to layout</span>
+<a name="l00171"></a>00171   <span class="keywordflow">if</span>(pvNavigationLayout == 0){
+<a name="l00172"></a>00172     pvNavigationLayout = <span class="keyword">new</span> QHBoxLayout;
+<a name="l00174"></a>00174     boxLayout = <span class="keyword">dynamic_cast&lt;</span>QBoxLayout*<span class="keyword">&gt;</span>(layout());
+<a name="l00175"></a>00175     Q_ASSERT(boxLayout != 0);
+<a name="l00176"></a>00176     boxLayout-&gt;addLayout(pvNavigationLayout);
+<a name="l00177"></a>00177   }
+<a name="l00178"></a>00178   Q_ASSERT(pvNavigationLayout != 0);
+<a name="l00179"></a>00179   pvNavigationLayout-&gt;addWidget(pbInsert);
+<a name="l00180"></a>00180   pvNavigationLayout-&gt;addWidget(pbSubmit);
+<a name="l00181"></a>00181   pvNavigationLayout-&gt;addWidget(pbRevert);
+<a name="l00182"></a>00182   pvNavigationLayout-&gt;addWidget(pbRemove);
+<a name="l00183"></a>00183   pvNavigationLayout-&gt;addStretch();
+<a name="l00184"></a>00184   <a class="code" href="classmdt_sql_table_widget.html#af5ef66b8ebb45a698f99ad455208f3c8" title="Set edition enabled/disabled.">setEditionEnabled</a>(<span class="keyword">true</span>);
+<a name="l00185"></a>00185 }
+<a name="l00186"></a>00186 
+<a name="l00187"></a><a class="code" href="classmdt_sql_table_widget.html#a9c0ae7b87d1840f2fdcee6de763fe31a">00187</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a9c0ae7b87d1840f2fdcee6de763fe31a" title="Add a custom widget to local bar.">mdtSqlTableWidget::addWidgetToLocalBar</a>(QWidget *widget)
+<a name="l00188"></a>00188 {
+<a name="l00189"></a>00189   Q_ASSERT(widget != 0);
+<a name="l00190"></a>00190   Q_ASSERT(layout() != 0);
+<a name="l00191"></a>00191 
+<a name="l00192"></a>00192   QBoxLayout *boxLayout;
+<a name="l00193"></a>00193 
+<a name="l00194"></a>00194   <span class="comment">// Add to layout</span>
+<a name="l00195"></a>00195   <span class="keywordflow">if</span>(pvNavigationLayout == 0){
+<a name="l00196"></a>00196     pvNavigationLayout = <span class="keyword">new</span> QHBoxLayout;
+<a name="l00197"></a>00197     boxLayout = <span class="keyword">dynamic_cast&lt;</span>QBoxLayout*<span class="keyword">&gt;</span>(layout());
+<a name="l00198"></a>00198     Q_ASSERT(boxLayout != 0);
+<a name="l00199"></a>00199     boxLayout-&gt;addLayout(pvNavigationLayout);
+<a name="l00200"></a>00200   }
+<a name="l00201"></a>00201   Q_ASSERT(pvNavigationLayout != 0);
+<a name="l00202"></a>00202   pvNavigationLayout-&gt;addWidget(widget);
+<a name="l00203"></a>00203 }
 <a name="l00204"></a>00204 
-<a name="l00205"></a>00205   QBoxLayout *boxLayout;
-<a name="l00206"></a>00206 
-<a name="l00207"></a>00207   <span class="comment">// Add to layout</span>
-<a name="l00208"></a>00208   <span class="keywordflow">if</span>(pvNavigationLayout == 0){
-<a name="l00209"></a>00209     pvNavigationLayout = <span class="keyword">new</span> QHBoxLayout;
-<a name="l00210"></a>00210     boxLayout = <span class="keyword">dynamic_cast&lt;</span>QBoxLayout*<span class="keyword">&gt;</span>(layout());
-<a name="l00211"></a>00211     Q_ASSERT(boxLayout != 0);
-<a name="l00212"></a>00212     boxLayout-&gt;addLayout(pvNavigationLayout);
-<a name="l00213"></a>00213   }
-<a name="l00214"></a>00214   Q_ASSERT(pvNavigationLayout != 0);
-<a name="l00215"></a>00215   pvNavigationLayout-&gt;addStretch();
-<a name="l00216"></a>00216 }
-<a name="l00217"></a>00217 
-<a name="l00218"></a><a class="code" href="classmdt_sql_table_widget.html#a47fc691f2cd9cc40749c987ce2bbea6d">00218</a> QItemSelectionModel *<a class="code" href="classmdt_sql_table_widget.html#a47fc691f2cd9cc40749c987ce2bbea6d" title="Get internal table view&#39;s selection model.">mdtSqlTableWidget::selectionModel</a>()
-<a name="l00219"></a>00219 {
-<a name="l00220"></a>00220   <span class="keywordflow">return</span> pvTableView-&gt;selectionModel();
-<a name="l00221"></a>00221 }
-<a name="l00222"></a>00222 
-<a name="l00223"></a><a class="code" href="classmdt_sql_table_widget.html#a591461ee19f22008a5c310609461081e">00223</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a591461ee19f22008a5c310609461081e" title="Set a user friendly name for a column.">mdtSqlTableWidget::setHeaderData</a>(<span class="keyword">const</span> QString &amp;fieldName, <span class="keyword">const</span> QString &amp;data)
-<a name="l00224"></a>00224 {
-<a name="l00225"></a>00225   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00205"></a><a class="code" href="classmdt_sql_table_widget.html#a6cf9f08b98dd3df16d36c29db7175633">00205</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a6cf9f08b98dd3df16d36c29db7175633" title="Add a strech to local bar.">mdtSqlTableWidget::addStretchToLocalBar</a>()
+<a name="l00206"></a>00206 {
+<a name="l00207"></a>00207   Q_ASSERT(layout() != 0);
+<a name="l00208"></a>00208 
+<a name="l00209"></a>00209   QBoxLayout *boxLayout;
+<a name="l00210"></a>00210 
+<a name="l00211"></a>00211   <span class="comment">// Add to layout</span>
+<a name="l00212"></a>00212   <span class="keywordflow">if</span>(pvNavigationLayout == 0){
+<a name="l00213"></a>00213     pvNavigationLayout = <span class="keyword">new</span> QHBoxLayout;
+<a name="l00214"></a>00214     boxLayout = <span class="keyword">dynamic_cast&lt;</span>QBoxLayout*<span class="keyword">&gt;</span>(layout());
+<a name="l00215"></a>00215     Q_ASSERT(boxLayout != 0);
+<a name="l00216"></a>00216     boxLayout-&gt;addLayout(pvNavigationLayout);
+<a name="l00217"></a>00217   }
+<a name="l00218"></a>00218   Q_ASSERT(pvNavigationLayout != 0);
+<a name="l00219"></a>00219   pvNavigationLayout-&gt;addStretch();
+<a name="l00220"></a>00220 }
+<a name="l00221"></a>00221 
+<a name="l00222"></a><a class="code" href="classmdt_sql_table_widget.html#a47fc691f2cd9cc40749c987ce2bbea6d">00222</a> QItemSelectionModel *<a class="code" href="classmdt_sql_table_widget.html#a47fc691f2cd9cc40749c987ce2bbea6d" title="Get internal table view&#39;s selection model.">mdtSqlTableWidget::selectionModel</a>()
+<a name="l00223"></a>00223 {
+<a name="l00224"></a>00224   <span class="keywordflow">return</span> pvTableView-&gt;selectionModel();
+<a name="l00225"></a>00225 }
 <a name="l00226"></a>00226 
-<a name="l00227"></a>00227   <span class="keywordtype">int</span> column;
-<a name="l00228"></a>00228 
-<a name="l00229"></a>00229   column = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;record().indexOf(fieldName);
-<a name="l00230"></a>00230   <span class="keywordflow">if</span>(column &lt; 0){
-<a name="l00231"></a>00231     <span class="keywordflow">return</span>;
-<a name="l00232"></a>00232   }
-<a name="l00233"></a>00233   <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;setHeaderData(column, Qt::Horizontal, data);
-<a name="l00234"></a>00234 }
+<a name="l00227"></a><a class="code" href="classmdt_sql_table_widget.html#af40eeb001ec262830daba6b311927ede">00227</a> QTableView *<a class="code" href="classmdt_sql_table_widget.html#af40eeb001ec262830daba6b311927ede" title="Get internal table view.">mdtSqlTableWidget::tableView</a>()
+<a name="l00228"></a>00228 {
+<a name="l00229"></a>00229   <span class="keywordflow">return</span> pvTableView;
+<a name="l00230"></a>00230 }
+<a name="l00231"></a>00231 
+<a name="l00232"></a><a class="code" href="classmdt_sql_table_widget.html#a591461ee19f22008a5c310609461081e">00232</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a591461ee19f22008a5c310609461081e" title="Set a user friendly name for a column.">mdtSqlTableWidget::setHeaderData</a>(<span class="keyword">const</span> QString &amp;fieldName, <span class="keyword">const</span> QString &amp;data)
+<a name="l00233"></a>00233 {
+<a name="l00234"></a>00234   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
 <a name="l00235"></a>00235 
-<a name="l00236"></a><a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18">00236</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden.">mdtSqlTableWidget::setColumnHidden</a>(<span class="keywordtype">int</span> column, <span class="keywordtype">bool</span> hide)
-<a name="l00237"></a>00237 {
-<a name="l00238"></a>00238   pvTableView-&gt;setColumnHidden(column, hide);
-<a name="l00239"></a>00239 }
-<a name="l00240"></a>00240 
-<a name="l00241"></a><a class="code" href="classmdt_sql_table_widget.html#ae1eefd42d91ea36fa4244d7f265d7222">00241</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden.">mdtSqlTableWidget::setColumnHidden</a>(<span class="keyword">const</span> QString &amp;fieldName, <span class="keywordtype">bool</span> hide)
-<a name="l00242"></a>00242 {
-<a name="l00243"></a>00243   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00236"></a>00236   <span class="keywordtype">int</span> column;
+<a name="l00237"></a>00237 
+<a name="l00238"></a>00238   column = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;record().indexOf(fieldName);
+<a name="l00239"></a>00239   <span class="keywordflow">if</span>(column &lt; 0){
+<a name="l00240"></a>00240     <span class="keywordflow">return</span>;
+<a name="l00241"></a>00241   }
+<a name="l00242"></a>00242   <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;setHeaderData(column, Qt::Horizontal, data);
+<a name="l00243"></a>00243 }
 <a name="l00244"></a>00244 
-<a name="l00245"></a>00245   <span class="keywordtype">int</span> column;
-<a name="l00246"></a>00246 
-<a name="l00247"></a>00247   column = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;record().indexOf(fieldName);
-<a name="l00248"></a>00248   <span class="keywordflow">if</span>(column &lt; 0){
-<a name="l00249"></a>00249     <span class="keywordflow">return</span>;
+<a name="l00245"></a><a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18">00245</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden.">mdtSqlTableWidget::setColumnHidden</a>(<span class="keywordtype">int</span> column, <span class="keywordtype">bool</span> hide)
+<a name="l00246"></a>00246 {
+<a name="l00247"></a>00247   pvTableView-&gt;setColumnHidden(column, hide);
+<a name="l00248"></a>00248   <span class="keywordflow">if</span>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0){
+<a name="l00249"></a>00249     <a class="code" href="classmdt_sql_table_widget.html#a3b3d79485206f7f3468e125e38bd24f9" title="Set default column to select.">setDefaultColumnToSelect</a>(firstVisibleColumnIndex());
 <a name="l00250"></a>00250   }
-<a name="l00251"></a>00251   <a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden.">setColumnHidden</a>(column, hide);
-<a name="l00252"></a>00252 }
-<a name="l00253"></a>00253 
-<a name="l00254"></a>00254 <span class="keywordtype">void</span> mdtSqlTableWidget::onDataEditionBegins()
-<a name="l00255"></a>00255 {
-<a name="l00256"></a>00256   pvDelegateIsEditingData = <span class="keyword">true</span>;
-<a name="l00257"></a>00257   emit <a class="code" href="classmdt_abstract_sql_widget.html#a8ae6e67e3efb5051dc7a8b74571d4aa1" title="Emitted when data was edited.">dataEdited</a>();
-<a name="l00258"></a>00258 }
-<a name="l00259"></a>00259 
-<a name="l00260"></a>00260 <span class="keywordtype">void</span> mdtSqlTableWidget::onDataChanged(<span class="keyword">const</span> QModelIndex &amp;, <span class="keyword">const</span> QModelIndex &amp;)
-<a name="l00261"></a>00261 {
-<a name="l00262"></a>00262   pvDelegateIsEditingData = <span class="keyword">false</span>;
-<a name="l00263"></a>00263 }
-<a name="l00264"></a>00264 
-<a name="l00265"></a>00265 <span class="keywordtype">void</span> mdtSqlTableWidget::onCurrentRowChanged(<span class="keyword">const</span> QModelIndex &amp;current, <span class="keyword">const</span> QModelIndex &amp;previous)
-<a name="l00266"></a>00266 {
-<a name="l00267"></a>00267   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_sql_widget.html#aebd051866b148eb6f60a10c6ac648efa" title="Check that child widgtes have no pending data.">childWidgetsAreInVisaluzingState</a>()){
-<a name="l00268"></a>00268     pvTableView-&gt;setCurrentIndex(previous);
-<a name="l00269"></a>00269     <span class="keywordflow">return</span>;
-<a name="l00270"></a>00270   }
-<a name="l00271"></a>00271   <span class="keywordflow">if</span>(current.isValid()){
-<a name="l00272"></a>00272     emit <a class="code" href="classmdt_abstract_sql_widget.html#a182972cd54cf7e00322c0b6973ecbde2" title="Emitted when current row has changed.">currentRowChanged</a>(current.row());
-<a name="l00273"></a>00273   }<span class="keywordflow">else</span>{
-<a name="l00274"></a>00274     emit <a class="code" href="classmdt_abstract_sql_widget.html#a182972cd54cf7e00322c0b6973ecbde2" title="Emitted when current row has changed.">currentRowChanged</a>(-1);
-<a name="l00275"></a>00275   }
-<a name="l00276"></a>00276 }
-<a name="l00277"></a>00277 
-<a name="l00278"></a>00278 <span class="keywordtype">void</span> mdtSqlTableWidget::onTableViewKnownKeyPressed(<span class="keywordtype">int</span> key)
-<a name="l00279"></a>00279 {
-<a name="l00280"></a>00280   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00281"></a>00281   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
-<a name="l00282"></a>00282 
-<a name="l00283"></a>00283   QModelIndex index;
-<a name="l00284"></a>00284 
-<a name="l00285"></a>00285   <span class="keywordflow">switch</span>(key){
-<a name="l00286"></a>00286     <span class="keywordflow">case</span> Qt::Key_Enter:
-<a name="l00287"></a>00287     <span class="keywordflow">case</span> Qt::Key_Return:
-<a name="l00288"></a>00288       <span class="comment">/*</span>
-<a name="l00289"></a>00289 <span class="comment">       * We want to save data if we are in Editing or EditingNewRow state.</span>
-<a name="l00290"></a>00290 <span class="comment">       * But, we must be shure that no editor is open in delegate to prevent data loss.</span>
-<a name="l00291"></a>00291 <span class="comment">       * (If we call submit()/submitAll() on model, it will reciev invalid data</span>
-<a name="l00292"></a>00292 <span class="comment">       *  for index that has a opened editor, and silently revert these data)</span>
-<a name="l00293"></a>00293 <span class="comment">       */</span>
-<a name="l00294"></a>00294       <span class="comment">// Save data if we are in Editing state</span>
-<a name="l00295"></a>00295       <span class="keywordflow">if</span>((<a class="code" href="classmdt_abstract_sql_widget.html#a786eb7b7b111eef748002419984be7d9" title="Get current state.">currentState</a>() == <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d">Editing</a>) || (<a class="code" href="classmdt_abstract_sql_widget.html#a786eb7b7b111eef748002419984be7d9" title="Get current state.">currentState</a>() == <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65">EditingNewRow</a>)){
-<a name="l00296"></a>00296         <span class="keywordflow">if</span>(!pvDelegateIsEditingData){
-<a name="l00297"></a>00297           <a class="code" href="classmdt_abstract_sql_widget.html#a6678c45b0d46eb163f5b09d79ed001b5" title="Submit current record to model.">submit</a>();
-<a name="l00298"></a>00298         }
-<a name="l00299"></a>00299       }
-<a name="l00300"></a>00300       <span class="keywordflow">break</span>;
-<a name="l00301"></a>00301     <span class="keywordflow">case</span> Qt::Key_Down:
-<a name="l00302"></a>00302       <span class="comment">// If we are at last row, we insert on - Only in visualizing state</span>
-<a name="l00303"></a>00303       index = pvTableView-&gt;selectionModel()-&gt;currentIndex();
-<a name="l00304"></a>00304       <span class="keywordflow">if</span>((index.row() == (<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;rowCount() - 1)) &amp;&amp; (<a class="code" href="classmdt_abstract_sql_widget.html#a786eb7b7b111eef748002419984be7d9" title="Get current state.">currentState</a>() == <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2">Visualizing</a>) &amp;&amp; (pvTableView-&gt;editTriggers() != QAbstractItemView::NoEditTriggers)){
-<a name="l00305"></a>00305         <span class="comment">// Insert new row and select it</span>
-<a name="l00306"></a>00306         <a class="code" href="classmdt_abstract_sql_widget.html#a850df045ea95b8c15ddd95ae771ef785" title="Insert a new row to model.">insert</a>();
-<a name="l00307"></a>00307       }
-<a name="l00308"></a>00308       <span class="comment">// Select new current index</span>
-<a name="l00309"></a>00309       index = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;index(index.row()+1, index.column());
-<a name="l00310"></a>00310       <span class="keywordflow">if</span>(index.isValid()){
-<a name="l00311"></a>00311         pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
-<a name="l00312"></a>00312       }
-<a name="l00313"></a>00313   }
-<a name="l00314"></a>00314 }
-<a name="l00315"></a>00315 
-<a name="l00316"></a>00316 <span class="keywordtype">void</span> mdtSqlTableWidget::doSetModel(QSqlTableModel *model)
-<a name="l00317"></a>00317 {
-<a name="l00318"></a>00318   Q_ASSERT(model != 0);
-<a name="l00319"></a>00319 
-<a name="l00320"></a>00320   model-&gt;setEditStrategy(QSqlTableModel::OnManualSubmit);
-<a name="l00321"></a>00321   pvTableView-&gt;setModel(model);
-<a name="l00322"></a>00322   connect(model, SIGNAL(dataChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)), <span class="keyword">this</span>, SLOT(onDataChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)));
-<a name="l00323"></a>00323   <span class="comment">// A selection model is created after setModel() by view itself</span>
-<a name="l00324"></a>00324   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00325"></a>00325   connect(pvTableView-&gt;selectionModel(), SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#a182972cd54cf7e00322c0b6973ecbde2" title="Emitted when current row has changed.">currentRowChanged</a>(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)), <span class="keyword">this</span>, SLOT(onCurrentRowChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)));
-<a name="l00326"></a>00326   pvDelegateIsEditingData = <span class="keyword">false</span>;
-<a name="l00327"></a>00327 }
-<a name="l00328"></a>00328 
-<a name="l00329"></a>00329 <span class="keywordtype">bool</span> mdtSqlTableWidget::doSubmit()
-<a name="l00330"></a>00330 {
-<a name="l00331"></a>00331   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00332"></a>00332   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00251"></a>00251 }
+<a name="l00252"></a>00252 
+<a name="l00253"></a><a class="code" href="classmdt_sql_table_widget.html#ae1eefd42d91ea36fa4244d7f265d7222">00253</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden.">mdtSqlTableWidget::setColumnHidden</a>(<span class="keyword">const</span> QString &amp;fieldName, <span class="keywordtype">bool</span> hide)
+<a name="l00254"></a>00254 {
+<a name="l00255"></a>00255   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00256"></a>00256 
+<a name="l00257"></a>00257   <span class="keywordtype">int</span> column;
+<a name="l00258"></a>00258 
+<a name="l00259"></a>00259   column = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;record().indexOf(fieldName);
+<a name="l00260"></a>00260   <span class="keywordflow">if</span>(column &lt; 0){
+<a name="l00261"></a>00261     <span class="keywordflow">return</span>;
+<a name="l00262"></a>00262   }
+<a name="l00263"></a>00263   <a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden.">setColumnHidden</a>(column, hide);
+<a name="l00264"></a>00264 }
+<a name="l00265"></a>00265 
+<a name="l00266"></a><a class="code" href="classmdt_sql_table_widget.html#a3b3d79485206f7f3468e125e38bd24f9">00266</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a3b3d79485206f7f3468e125e38bd24f9" title="Set default column to select.">mdtSqlTableWidget::setDefaultColumnToSelect</a>(<span class="keywordtype">int</span> column)
+<a name="l00267"></a>00267 {
+<a name="l00268"></a>00268   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00269"></a>00269 
+<a name="l00270"></a>00270   <span class="keywordflow">if</span>((column &lt; 0)||(column &gt;= <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;columnCount())){
+<a name="l00271"></a>00271     pvDefaultColumnToSelect = 0;
+<a name="l00272"></a>00272   }<span class="keywordflow">else</span>{
+<a name="l00273"></a>00273     pvDefaultColumnToSelect = column;
+<a name="l00274"></a>00274   }
+<a name="l00275"></a>00275 }
+<a name="l00276"></a>00276 
+<a name="l00277"></a>00277 <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a3b3d79485206f7f3468e125e38bd24f9" title="Set default column to select.">mdtSqlTableWidget::setDefaultColumnToSelect</a>(<span class="keyword">const</span> QString &amp;fieldName)
+<a name="l00278"></a>00278 {
+<a name="l00279"></a>00279   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00280"></a>00280 
+<a name="l00281"></a>00281   <a class="code" href="classmdt_sql_table_widget.html#a3b3d79485206f7f3468e125e38bd24f9" title="Set default column to select.">setDefaultColumnToSelect</a>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;fieldIndex(fieldName));
+<a name="l00282"></a>00282 }
+<a name="l00283"></a>00283 
+<a name="l00284"></a><a class="code" href="classmdt_sql_table_widget.html#a9a43d9a5d2e63189f17d2bce7159e510">00284</a> QModelIndexList <a class="code" href="classmdt_sql_table_widget.html#a9a43d9a5d2e63189f17d2bce7159e510" title="Get a list of currently selected indexes.">mdtSqlTableWidget::indexListOfSelectedRows</a>(<span class="keyword">const</span> QList&lt;int&gt; &amp;columnList)
+<a name="l00285"></a>00285 {
+<a name="l00286"></a>00286   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00287"></a>00287   Q_ASSERT(<a class="code" href="classmdt_sql_table_widget.html#a47fc691f2cd9cc40749c987ce2bbea6d" title="Get internal table view&#39;s selection model.">selectionModel</a>() != 0);
+<a name="l00288"></a>00288 
+<a name="l00289"></a>00289   QModelIndexList indexes;
+<a name="l00290"></a>00290   QModelIndexList result;
+<a name="l00291"></a>00291   QModelIndex index;
+<a name="l00292"></a>00292   QList&lt;int&gt; selectedRows;
+<a name="l00293"></a>00293   <span class="keywordtype">int</span> i, j;
+<a name="l00294"></a>00294   <span class="keywordtype">int</span> row;
+<a name="l00295"></a>00295   <span class="keywordtype">int</span> column;
+<a name="l00296"></a>00296 
+<a name="l00297"></a>00297   <span class="comment">// Get currently selected indexes</span>
+<a name="l00298"></a>00298   indexes = <a class="code" href="classmdt_sql_table_widget.html#a47fc691f2cd9cc40749c987ce2bbea6d" title="Get internal table view&#39;s selection model.">selectionModel</a>()-&gt;selectedIndexes();
+<a name="l00299"></a>00299   <span class="comment">// Build a list of selected rows</span>
+<a name="l00300"></a>00300   <span class="keywordflow">for</span>(i = 0; i &lt; indexes.size(); ++i){
+<a name="l00301"></a>00301     row = indexes.at(i).row();
+<a name="l00302"></a>00302     Q_ASSERT(row &gt;= 0);
+<a name="l00303"></a>00303     <span class="keywordflow">if</span>(!selectedRows.contains(row)){
+<a name="l00304"></a>00304       selectedRows.append(row);
+<a name="l00305"></a>00305     }
+<a name="l00306"></a>00306   }
+<a name="l00307"></a>00307   qSort(selectedRows.begin(), selectedRows.end());
+<a name="l00308"></a>00308   <span class="comment">// Build list with only interresting columns</span>
+<a name="l00309"></a>00309   <span class="keywordflow">for</span>(i = 0; i &lt; selectedRows.size(); ++i){
+<a name="l00310"></a>00310     row = selectedRows.at(i);
+<a name="l00311"></a>00311     <span class="keywordflow">for</span>(j = 0; j &lt; columnList.size(); ++j){
+<a name="l00312"></a>00312       column = columnList.at(j);
+<a name="l00313"></a>00313       index = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;index(row, column);
+<a name="l00314"></a>00314       Q_ASSERT(index.isValid());
+<a name="l00315"></a>00315       result.append(index);
+<a name="l00316"></a>00316     }
+<a name="l00317"></a>00317   }
+<a name="l00318"></a>00318 
+<a name="l00319"></a>00319   <span class="keywordflow">return</span> result;
+<a name="l00320"></a>00320 }
+<a name="l00321"></a>00321 
+<a name="l00322"></a><a class="code" href="classmdt_sql_table_widget.html#abe241fe0b24552b5403cb15593e18cdd">00322</a> QModelIndexList <a class="code" href="classmdt_sql_table_widget.html#a9a43d9a5d2e63189f17d2bce7159e510" title="Get a list of currently selected indexes.">mdtSqlTableWidget::indexListOfSelectedRows</a>(<span class="keyword">const</span> QStringList &amp;fieldList)
+<a name="l00323"></a>00323 {
+<a name="l00324"></a>00324   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00325"></a>00325   Q_ASSERT(<a class="code" href="classmdt_sql_table_widget.html#a47fc691f2cd9cc40749c987ce2bbea6d" title="Get internal table view&#39;s selection model.">selectionModel</a>() != 0);
+<a name="l00326"></a>00326 
+<a name="l00327"></a>00327   QList&lt;int&gt; columns;
+<a name="l00328"></a>00328   <span class="keywordtype">int</span> i;
+<a name="l00329"></a>00329 
+<a name="l00330"></a>00330   <span class="keywordflow">for</span>(i = 0; i &lt; fieldList.size(); ++i){
+<a name="l00331"></a>00331     columns.append(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;fieldIndex(fieldList.at(i)));
+<a name="l00332"></a>00332   }
 <a name="l00333"></a>00333 
-<a name="l00334"></a>00334   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;submitAll()){
-<a name="l00335"></a>00335     <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;lastError());
-<a name="l00336"></a>00336     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00337"></a>00337   }
-<a name="l00338"></a>00338 
-<a name="l00339"></a>00339   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00340"></a>00340 }
+<a name="l00334"></a>00334   <span class="keywordflow">return</span> <a class="code" href="classmdt_sql_table_widget.html#a9a43d9a5d2e63189f17d2bce7159e510" title="Get a list of currently selected indexes.">indexListOfSelectedRows</a>(columns);
+<a name="l00335"></a>00335 }
+<a name="l00336"></a>00336 
+<a name="l00337"></a>00337 QModelIndexList <a class="code" href="classmdt_sql_table_widget.html#a9a43d9a5d2e63189f17d2bce7159e510" title="Get a list of currently selected indexes.">mdtSqlTableWidget::indexListOfSelectedRows</a>(<span class="keyword">const</span> QString &amp;field)
+<a name="l00338"></a>00338 {
+<a name="l00339"></a>00339   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00340"></a>00340   Q_ASSERT(<a class="code" href="classmdt_sql_table_widget.html#a47fc691f2cd9cc40749c987ce2bbea6d" title="Get internal table view&#39;s selection model.">selectionModel</a>() != 0);
 <a name="l00341"></a>00341 
-<a name="l00342"></a>00342 <span class="keywordtype">bool</span> mdtSqlTableWidget::doRevert()
-<a name="l00343"></a>00343 {
-<a name="l00344"></a>00344   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
-<a name="l00345"></a>00345 
-<a name="l00346"></a>00346   <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;revertAll();
-<a name="l00347"></a>00347 
-<a name="l00348"></a>00348   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00349"></a>00349 }
-<a name="l00350"></a>00350 
-<a name="l00351"></a>00351 <span class="keywordtype">bool</span> mdtSqlTableWidget::doInsert()
-<a name="l00352"></a>00352 {
-<a name="l00353"></a>00353   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00354"></a>00354   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
-<a name="l00355"></a>00355 
-<a name="l00356"></a>00356   <span class="keywordtype">int</span> row;
-<a name="l00357"></a>00357   QModelIndex index;
+<a name="l00342"></a>00342   <span class="keywordflow">return</span> <a class="code" href="classmdt_sql_table_widget.html#a9a43d9a5d2e63189f17d2bce7159e510" title="Get a list of currently selected indexes.">indexListOfSelectedRows</a>(QStringList(field));
+<a name="l00343"></a>00343 }
+<a name="l00344"></a>00344 
+<a name="l00345"></a><a class="code" href="classmdt_sql_table_widget.html#ae4945234973dcfcb8f2e20830e571fd4">00345</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#ae4945234973dcfcb8f2e20830e571fd4" title="Set row as current record.">mdtSqlTableWidget::setCurrentIndex</a>(<span class="keywordtype">int</span> row)
+<a name="l00346"></a>00346 {
+<a name="l00347"></a>00347   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00348"></a>00348   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00349"></a>00349 
+<a name="l00350"></a>00350   QModelIndex index;
+<a name="l00351"></a>00351 
+<a name="l00353"></a>00353   <span class="keywordflow">if</span>(row &gt;= 0){
+<a name="l00354"></a>00354     index = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;index(row, pvDefaultColumnToSelect);
+<a name="l00355"></a>00355   }
+<a name="l00356"></a>00356   pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+<a name="l00357"></a>00357 }
 <a name="l00358"></a>00358 
-<a name="l00359"></a>00359   <span class="comment">// Insert new row at end</span>
-<a name="l00360"></a>00360   row = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;rowCount();
-<a name="l00361"></a>00361   <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;insertRow(row);
-<a name="l00362"></a>00362   index = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;index(row, 0);
-<a name="l00363"></a>00363   pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear);
+<a name="l00359"></a>00359 <span class="keywordtype">void</span> mdtSqlTableWidget::onDataEditionBegins()
+<a name="l00360"></a>00360 {
+<a name="l00361"></a>00361   pvDelegateIsEditingData = <span class="keyword">true</span>;
+<a name="l00362"></a>00362   emit <a class="code" href="classmdt_abstract_sql_widget.html#a8ae6e67e3efb5051dc7a8b74571d4aa1" title="Emitted when data was edited.">dataEdited</a>();
+<a name="l00363"></a>00363 }
 <a name="l00364"></a>00364 
-<a name="l00365"></a>00365   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00366"></a>00366 }
-<a name="l00367"></a>00367 
-<a name="l00368"></a>00368 <span class="keywordtype">bool</span> mdtSqlTableWidget::doSubmitNewRow()
-<a name="l00369"></a>00369 {
-<a name="l00370"></a>00370   <span class="keywordflow">return</span> doSubmit();
-<a name="l00371"></a>00371 }
-<a name="l00372"></a>00372 
-<a name="l00373"></a>00373 <span class="keywordtype">bool</span> mdtSqlTableWidget::doRevertNewRow()
-<a name="l00374"></a>00374 {
-<a name="l00375"></a>00375   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00376"></a>00376   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
-<a name="l00377"></a>00377 
-<a name="l00378"></a>00378   <span class="keywordtype">int</span> row;
-<a name="l00379"></a>00379 
-<a name="l00380"></a>00380   <span class="comment">// We simply remove the last row</span>
-<a name="l00381"></a>00381   row = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;rowCount()-1;
-<a name="l00382"></a>00382   <span class="keywordflow">if</span>(row &gt;= 0){
-<a name="l00383"></a>00383     <span class="keywordflow">if</span>(!pvTableView-&gt;model()-&gt;removeRow(row)){
-<a name="l00384"></a>00384       <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;lastError());
-<a name="l00385"></a>00385       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00386"></a>00386     }
-<a name="l00387"></a>00387   }
-<a name="l00388"></a>00388 
-<a name="l00389"></a>00389   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00390"></a>00390 }
-<a name="l00391"></a>00391 
-<a name="l00392"></a>00392 <span class="keywordtype">bool</span> mdtSqlTableWidget::doRemove()
-<a name="l00393"></a>00393 {
-<a name="l00394"></a>00394   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00395"></a>00395   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
-<a name="l00396"></a>00396 
-<a name="l00397"></a>00397   <span class="keywordtype">int</span> i;
-<a name="l00398"></a>00398   <span class="keywordtype">int</span> ret;
-<a name="l00399"></a>00399   <span class="keywordtype">int</span> row;
-<a name="l00400"></a>00400   QList&lt;int&gt; rows;
-<a name="l00401"></a>00401   QMessageBox msgBox;
-<a name="l00402"></a>00402   QModelIndexList indexes = pvTableView-&gt;selectionModel()-&gt;selectedIndexes();
-<a name="l00403"></a>00403 
-<a name="l00404"></a>00404   <span class="comment">// If nothing was selected, we do nothing</span>
-<a name="l00405"></a>00405   <span class="keywordflow">if</span>(indexes.size() &lt; 1){
-<a name="l00406"></a>00406     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00407"></a>00407   }
-<a name="l00408"></a>00408   <span class="comment">// We ask confirmation to the user</span>
-<a name="l00409"></a>00409   msgBox.setText(tr(<span class="stringliteral">&quot;You are about to delete selected rows.&quot;</span>));
-<a name="l00410"></a>00410   msgBox.setInformativeText(tr(<span class="stringliteral">&quot;Do you want to continue ?&quot;</span>));
-<a name="l00411"></a>00411   msgBox.setIcon(QMessageBox::Warning);
-<a name="l00412"></a>00412   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-<a name="l00413"></a>00413   msgBox.setDefaultButton(QMessageBox::No);
-<a name="l00414"></a>00414   ret = msgBox.exec();
-<a name="l00415"></a>00415   <span class="keywordflow">if</span>(ret != QMessageBox::Yes){
-<a name="l00416"></a>00416     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00417"></a>00417   }
-<a name="l00418"></a>00418   <span class="comment">// Build rows list</span>
-<a name="l00419"></a>00419   <span class="keywordflow">for</span>(i = 0; i &lt; indexes.size(); ++i){
-<a name="l00420"></a>00420     row = indexes.at(i).row();
-<a name="l00421"></a>00421     <span class="keywordflow">if</span>(!rows.contains(row)){
-<a name="l00422"></a>00422       rows.append(row);
-<a name="l00423"></a>00423     }
-<a name="l00424"></a>00424   }
-<a name="l00425"></a>00425   <span class="comment">// Delete selected rows</span>
-<a name="l00426"></a>00426   <span class="keywordflow">for</span>(i = 0; i &lt; rows.size(); ++i){
-<a name="l00427"></a>00427     <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;removeRow(rows.at(i))){
-<a name="l00428"></a>00428       <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;lastError());
-<a name="l00429"></a>00429       <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;revertAll();
-<a name="l00430"></a>00430       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00431"></a>00431     }
-<a name="l00432"></a>00432   }
-<a name="l00433"></a>00433   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;submitAll()){
-<a name="l00434"></a>00434     <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;revert();
-<a name="l00435"></a>00435     <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;lastError());
-<a name="l00436"></a>00436     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00437"></a>00437   }
-<a name="l00438"></a>00438 
-<a name="l00439"></a>00439   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00440"></a>00440 }
-<a name="l00441"></a>00441 
-<a name="l00442"></a>00442 <span class="keywordtype">void</span> mdtSqlTableWidget::toFirst()
-<a name="l00443"></a>00443 {
-<a name="l00444"></a>00444   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00445"></a>00445 
-<a name="l00446"></a>00446   QModelIndex index;
-<a name="l00447"></a>00447 
-<a name="l00448"></a>00448   <span class="keywordflow">if</span>(pvTableView-&gt;model() == 0){
-<a name="l00449"></a>00449     <span class="keywordflow">return</span>;
-<a name="l00450"></a>00450   }
-<a name="l00451"></a>00451   index = pvTableView-&gt;model()-&gt;index(0, 0);
-<a name="l00452"></a>00452   pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear);
-<a name="l00453"></a>00453 }
-<a name="l00454"></a>00454 
-<a name="l00455"></a>00455 <span class="keywordtype">void</span> mdtSqlTableWidget::toLast()
-<a name="l00456"></a>00456 {
+<a name="l00365"></a>00365 <span class="keywordtype">void</span> mdtSqlTableWidget::onDataChanged(<span class="keyword">const</span> QModelIndex &amp;, <span class="keyword">const</span> QModelIndex &amp;)
+<a name="l00366"></a>00366 {
+<a name="l00367"></a>00367   pvDelegateIsEditingData = <span class="keyword">false</span>;
+<a name="l00368"></a>00368 }
+<a name="l00369"></a>00369 
+<a name="l00370"></a>00370 <span class="keywordtype">void</span> mdtSqlTableWidget::onCurrentRowChanged(<span class="keyword">const</span> QModelIndex &amp;current, <span class="keyword">const</span> QModelIndex &amp;previous)
+<a name="l00371"></a>00371 {
+<a name="l00372"></a>00372   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_sql_widget.html#aebd051866b148eb6f60a10c6ac648efa" title="Check that child widgtes have no pending data.">childWidgetsAreInVisaluzingState</a>()){
+<a name="l00374"></a>00374     <span class="keywordflow">return</span>;
+<a name="l00375"></a>00375   }
+<a name="l00376"></a>00376   <span class="keywordflow">if</span>(current.isValid()){
+<a name="l00377"></a>00377     emit <a class="code" href="classmdt_abstract_sql_widget.html#a182972cd54cf7e00322c0b6973ecbde2" title="Emitted when current row has changed.">currentRowChanged</a>(current.row());
+<a name="l00378"></a>00378   }<span class="keywordflow">else</span>{
+<a name="l00379"></a>00379     emit <a class="code" href="classmdt_abstract_sql_widget.html#a182972cd54cf7e00322c0b6973ecbde2" title="Emitted when current row has changed.">currentRowChanged</a>(-1);
+<a name="l00380"></a>00380   }
+<a name="l00381"></a>00381 }
+<a name="l00382"></a>00382 
+<a name="l00383"></a>00383 <span class="keywordtype">void</span> mdtSqlTableWidget::onTableViewKnownKeyPressed(<span class="keywordtype">int</span> key)
+<a name="l00384"></a>00384 {
+<a name="l00385"></a>00385   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00386"></a>00386   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00387"></a>00387 
+<a name="l00388"></a>00388   QModelIndex index;
+<a name="l00389"></a>00389 
+<a name="l00390"></a>00390   <span class="keywordflow">switch</span>(key){
+<a name="l00391"></a>00391     <span class="keywordflow">case</span> Qt::Key_Enter:
+<a name="l00392"></a>00392     <span class="keywordflow">case</span> Qt::Key_Return:
+<a name="l00393"></a>00393       <span class="comment">/*</span>
+<a name="l00394"></a>00394 <span class="comment">       * We want to save data if we are in Editing or EditingNewRow state.</span>
+<a name="l00395"></a>00395 <span class="comment">       * But, we must be shure that no editor is open in delegate to prevent data loss.</span>
+<a name="l00396"></a>00396 <span class="comment">       * (If we call submit()/submitAll() on model, it will recieve invalid data</span>
+<a name="l00397"></a>00397 <span class="comment">       *  for index that has a opened editor, and silently revert these data)</span>
+<a name="l00398"></a>00398 <span class="comment">       */</span>
+<a name="l00399"></a>00399       <span class="comment">// Save data if we are in Editing state</span>
+<a name="l00400"></a>00400       <span class="keywordflow">if</span>((<a class="code" href="classmdt_abstract_sql_widget.html#a786eb7b7b111eef748002419984be7d9" title="Get current state.">currentState</a>() == <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d">Editing</a>) || (<a class="code" href="classmdt_abstract_sql_widget.html#a786eb7b7b111eef748002419984be7d9" title="Get current state.">currentState</a>() == <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65">EditingNewRow</a>)){
+<a name="l00401"></a>00401         <span class="keywordflow">if</span>(!pvDelegateIsEditingData){
+<a name="l00402"></a>00402           <a class="code" href="classmdt_abstract_sql_widget.html#a6678c45b0d46eb163f5b09d79ed001b5" title="Submit current record to model.">submit</a>();
+<a name="l00403"></a>00403         }
+<a name="l00404"></a>00404       }
+<a name="l00405"></a>00405       <span class="keywordflow">break</span>;
+<a name="l00406"></a>00406     <span class="keywordflow">case</span> Qt::Key_Down:
+<a name="l00407"></a>00407       <span class="comment">// If we are at last row, we insert one - Only in visualizing state</span>
+<a name="l00408"></a>00408       index = pvTableView-&gt;selectionModel()-&gt;currentIndex();
+<a name="l00409"></a>00409       <span class="keywordflow">if</span>((index.row() == (<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;rowCount() - 1)) &amp;&amp; (<a class="code" href="classmdt_abstract_sql_widget.html#a786eb7b7b111eef748002419984be7d9" title="Get current state.">currentState</a>() == <a class="code" href="classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2">Visualizing</a>) &amp;&amp; (pvTableView-&gt;editTriggers() != QAbstractItemView::NoEditTriggers)){
+<a name="l00410"></a>00410         <span class="comment">// Insert new row and select it</span>
+<a name="l00411"></a>00411         <a class="code" href="classmdt_abstract_sql_widget.html#a850df045ea95b8c15ddd95ae771ef785" title="Insert a new row to model.">insert</a>();
+<a name="l00412"></a>00412       }
+<a name="l00413"></a>00413       <span class="comment">// Select new current index</span>
+<a name="l00414"></a>00414       index = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;index(index.row()+1, index.column());
+<a name="l00415"></a>00415       <span class="keywordflow">if</span>(index.isValid()){
+<a name="l00416"></a>00416         <span class="keywordflow">switch</span>(pvTableView-&gt;selectionBehavior()){
+<a name="l00417"></a>00417           <span class="keywordflow">case</span> QAbstractItemView::SelectItems:
+<a name="l00418"></a>00418             pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear | QItemSelectionModel::Select);
+<a name="l00419"></a>00419             <span class="keywordflow">break</span>;
+<a name="l00420"></a>00420           <span class="keywordflow">case</span> QAbstractItemView::SelectRows:
+<a name="l00421"></a>00421             pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Rows);
+<a name="l00422"></a>00422             <span class="keywordflow">break</span>;
+<a name="l00423"></a>00423           <span class="keywordflow">case</span> QAbstractItemView::SelectColumns:
+<a name="l00424"></a>00424             pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear | QItemSelectionModel::Select | QItemSelectionModel::Columns);
+<a name="l00425"></a>00425             <span class="keywordflow">break</span>;
+<a name="l00426"></a>00426         }
+<a name="l00427"></a>00427       }
+<a name="l00428"></a>00428   }
+<a name="l00429"></a>00429 }
+<a name="l00430"></a>00430 
+<a name="l00431"></a>00431 <span class="keywordtype">void</span> mdtSqlTableWidget::onModelSelected()
+<a name="l00432"></a>00432 {
+<a name="l00433"></a>00433   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00434"></a>00434 
+<a name="l00435"></a>00435   QModelIndex index;
+<a name="l00436"></a>00436 
+<a name="l00437"></a>00437   <span class="keywordflow">if</span>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() == 0){
+<a name="l00438"></a>00438     <span class="keywordflow">return</span>;
+<a name="l00439"></a>00439   }
+<a name="l00440"></a>00440   <span class="keywordflow">if</span>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;rowCount() &gt; 0){
+<a name="l00441"></a>00441     index = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;index(0, pvDefaultColumnToSelect);
+<a name="l00442"></a>00442     pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
+<a name="l00443"></a>00443     qDebug() &lt;&lt; <span class="stringliteral">&quot;onModelSelected() , selected index: &quot;</span> &lt;&lt; index;
+<a name="l00444"></a>00444   }<span class="keywordflow">else</span>{
+<a name="l00445"></a>00445     onCurrentRowChanged(index, index);
+<a name="l00446"></a>00446   }
+<a name="l00447"></a>00447 }
+<a name="l00448"></a>00448 
+<a name="l00449"></a>00449 <span class="keywordtype">void</span> mdtSqlTableWidget::doSetModel(QSqlTableModel *model)
+<a name="l00450"></a>00450 {
+<a name="l00451"></a>00451   Q_ASSERT(model != 0);
+<a name="l00452"></a>00452 
+<a name="l00453"></a>00453   model-&gt;setEditStrategy(QSqlTableModel::OnManualSubmit);
+<a name="l00454"></a>00454   pvTableView-&gt;setModel(model);
+<a name="l00455"></a>00455   connect(model, SIGNAL(dataChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)), <span class="keyword">this</span>, SLOT(onDataChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)));
+<a name="l00456"></a>00456   <span class="comment">// A selection model is created after setModel() by view itself</span>
 <a name="l00457"></a>00457   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00458"></a>00458 
-<a name="l00459"></a>00459   QModelIndex index;
-<a name="l00460"></a>00460   <span class="keywordtype">int</span> row;
+<a name="l00458"></a>00458   connect(pvTableView-&gt;selectionModel(), SIGNAL(<a class="code" href="classmdt_abstract_sql_widget.html#a182972cd54cf7e00322c0b6973ecbde2" title="Emitted when current row has changed.">currentRowChanged</a>(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)), <span class="keyword">this</span>, SLOT(onCurrentRowChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)));
+<a name="l00459"></a>00459   pvDelegateIsEditingData = <span class="keyword">false</span>;
+<a name="l00460"></a>00460 }
 <a name="l00461"></a>00461 
-<a name="l00462"></a>00462   <span class="keywordflow">if</span>(pvTableView-&gt;model() == 0){
-<a name="l00463"></a>00463     <span class="keywordflow">return</span>;
-<a name="l00464"></a>00464   }
-<a name="l00465"></a>00465   index = pvTableView-&gt;selectionModel()-&gt;currentIndex();
-<a name="l00466"></a>00466   row = pvTableView-&gt;model()-&gt;rowCount()-1;
-<a name="l00467"></a>00467   <span class="keywordflow">if</span>(index.row() &lt; row){
-<a name="l00468"></a>00468     index = pvTableView-&gt;model()-&gt;index(row, 0);
-<a name="l00469"></a>00469     pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear);
+<a name="l00462"></a>00462 <span class="keywordtype">bool</span> mdtSqlTableWidget::doSubmit()
+<a name="l00463"></a>00463 {
+<a name="l00464"></a>00464   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00465"></a>00465   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00466"></a>00466 
+<a name="l00467"></a>00467   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;submitAll()){
+<a name="l00468"></a>00468     <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;lastError());
+<a name="l00469"></a>00469     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00470"></a>00470   }
-<a name="l00471"></a>00471 }
-<a name="l00472"></a>00472 
-<a name="l00473"></a>00473 <span class="keywordtype">void</span> mdtSqlTableWidget::toPrevious()
-<a name="l00474"></a>00474 {
-<a name="l00475"></a>00475   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00476"></a>00476 
-<a name="l00477"></a>00477   QModelIndex index;
-<a name="l00478"></a>00478   <span class="keywordtype">int</span> row;
-<a name="l00479"></a>00479 
-<a name="l00480"></a>00480   <span class="keywordflow">if</span>(pvTableView-&gt;model() == 0){
-<a name="l00481"></a>00481     <span class="keywordflow">return</span>;
-<a name="l00482"></a>00482   }
-<a name="l00483"></a>00483   <span class="comment">// Get current index, check that we are not at the begining and move if Ok</span>
-<a name="l00484"></a>00484   index = pvTableView-&gt;selectionModel()-&gt;currentIndex();
-<a name="l00485"></a>00485   <span class="keywordflow">if</span>(index.row() &gt; 0){
-<a name="l00486"></a>00486     row = index.row()-1;
-<a name="l00487"></a>00487     index = pvTableView-&gt;model()-&gt;index(row, 0);
-<a name="l00488"></a>00488     pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear);
-<a name="l00489"></a>00489   }
-<a name="l00490"></a>00490 }
+<a name="l00471"></a>00471 
+<a name="l00472"></a>00472   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00473"></a>00473 }
+<a name="l00474"></a>00474 
+<a name="l00475"></a>00475 <span class="keywordtype">bool</span> mdtSqlTableWidget::doRevert()
+<a name="l00476"></a>00476 {
+<a name="l00477"></a>00477   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00478"></a>00478 
+<a name="l00479"></a>00479   <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;revertAll();
+<a name="l00480"></a>00480 
+<a name="l00481"></a>00481   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00482"></a>00482 }
+<a name="l00483"></a>00483 
+<a name="l00484"></a>00484 <span class="keywordtype">bool</span> mdtSqlTableWidget::doInsert()
+<a name="l00485"></a>00485 {
+<a name="l00486"></a>00486   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00487"></a>00487   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00488"></a>00488 
+<a name="l00489"></a>00489   <span class="keywordtype">int</span> row;
+<a name="l00490"></a>00490   QModelIndex index;
 <a name="l00491"></a>00491 
-<a name="l00492"></a>00492 <span class="keywordtype">void</span> mdtSqlTableWidget::toNext()
-<a name="l00493"></a>00493 {
-<a name="l00494"></a>00494   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
-<a name="l00495"></a>00495 
-<a name="l00496"></a>00496   QModelIndex index;
-<a name="l00497"></a>00497   <span class="keywordtype">int</span> row;
+<a name="l00492"></a>00492   <span class="comment">// Insert new row at end</span>
+<a name="l00493"></a>00493   row = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;rowCount();
+<a name="l00494"></a>00494   <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;insertRow(row);
+<a name="l00495"></a>00495   index = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;index(row, pvDefaultColumnToSelect);
+<a name="l00496"></a>00496   pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
+<a name="l00497"></a>00497   qDebug() &lt;&lt; <span class="stringliteral">&quot;doInsert, selected index: &quot;</span> &lt;&lt; index;
 <a name="l00498"></a>00498 
-<a name="l00499"></a>00499   <span class="keywordflow">if</span>(pvTableView-&gt;model() == 0){
-<a name="l00500"></a>00500     <span class="keywordflow">return</span>;
-<a name="l00501"></a>00501   }
-<a name="l00502"></a>00502   <span class="comment">// Get current index, check that we are not at the end and move if Ok</span>
-<a name="l00503"></a>00503   index = pvTableView-&gt;selectionModel()-&gt;currentIndex();
-<a name="l00504"></a>00504   <span class="keywordflow">if</span>(index.row() &lt; (pvTableView-&gt;model()-&gt;rowCount())-1){
-<a name="l00505"></a>00505     row = index.row()+1;
-<a name="l00506"></a>00506     index = pvTableView-&gt;model()-&gt;index(row, 0);
-<a name="l00507"></a>00507     pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear);
-<a name="l00508"></a>00508   }
-<a name="l00509"></a>00509 }
+<a name="l00499"></a>00499   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00500"></a>00500 }
+<a name="l00501"></a>00501 
+<a name="l00502"></a>00502 <span class="keywordtype">bool</span> mdtSqlTableWidget::doSubmitNewRow()
+<a name="l00503"></a>00503 {
+<a name="l00504"></a>00504   <span class="keywordflow">return</span> doSubmit();
+<a name="l00505"></a>00505 }
+<a name="l00506"></a>00506 
+<a name="l00507"></a>00507 <span class="keywordtype">bool</span> mdtSqlTableWidget::doRevertNewRow()
+<a name="l00508"></a>00508 {
+<a name="l00509"></a>00509   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00510"></a>00510   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00511"></a>00511 
+<a name="l00512"></a>00512   <span class="keywordtype">int</span> row;
+<a name="l00513"></a>00513 
+<a name="l00514"></a>00514   <span class="comment">// We simply remove the last row</span>
+<a name="l00515"></a>00515   row = <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;rowCount()-1;
+<a name="l00516"></a>00516   <span class="keywordflow">if</span>(row &gt;= 0){
+<a name="l00517"></a>00517     <span class="keywordflow">if</span>(!pvTableView-&gt;model()-&gt;removeRow(row)){
+<a name="l00518"></a>00518       <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;lastError());
+<a name="l00519"></a>00519       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00520"></a>00520     }
+<a name="l00521"></a>00521   }
+<a name="l00522"></a>00522 
+<a name="l00523"></a>00523   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00524"></a>00524 }
+<a name="l00525"></a>00525 
+<a name="l00526"></a>00526 <span class="keywordtype">bool</span> mdtSqlTableWidget::doRemove()
+<a name="l00527"></a>00527 {
+<a name="l00528"></a>00528   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00529"></a>00529   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00530"></a>00530 
+<a name="l00531"></a>00531   <span class="keywordtype">int</span> i;
+<a name="l00532"></a>00532   <span class="keywordtype">int</span> ret;
+<a name="l00533"></a>00533   <span class="keywordtype">int</span> row;
+<a name="l00534"></a>00534   QList&lt;int&gt; rows;
+<a name="l00535"></a>00535   QMessageBox msgBox;
+<a name="l00536"></a>00536   QModelIndexList indexes = pvTableView-&gt;selectionModel()-&gt;selectedIndexes();
+<a name="l00537"></a>00537 
+<a name="l00538"></a>00538   <span class="comment">// If nothing was selected, we do nothing</span>
+<a name="l00539"></a>00539   <span class="keywordflow">if</span>(indexes.size() &lt; 1){
+<a name="l00540"></a>00540     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00541"></a>00541   }
+<a name="l00542"></a>00542   <span class="comment">// We ask confirmation to the user</span>
+<a name="l00543"></a>00543   msgBox.setText(tr(<span class="stringliteral">&quot;You are about to delete selected rows in table &quot;</span>) + <a class="code" href="classmdt_abstract_sql_widget.html#a8207edaf31a7d988db5b86a4099ad4eb" title="Get the user friendly table name.">userFriendlyTableName</a>());
+<a name="l00544"></a>00544   msgBox.setInformativeText(tr(<span class="stringliteral">&quot;Do you want to continue ?&quot;</span>));
+<a name="l00545"></a>00545   msgBox.setIcon(QMessageBox::Warning);
+<a name="l00546"></a>00546   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+<a name="l00547"></a>00547   msgBox.setDefaultButton(QMessageBox::No);
+<a name="l00548"></a>00548   ret = msgBox.exec();
+<a name="l00549"></a>00549   <span class="keywordflow">if</span>(ret != QMessageBox::Yes){
+<a name="l00550"></a>00550     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00551"></a>00551   }
+<a name="l00552"></a>00552   <span class="comment">// Build rows list</span>
+<a name="l00553"></a>00553   <span class="keywordflow">for</span>(i = 0; i &lt; indexes.size(); ++i){
+<a name="l00554"></a>00554     row = indexes.at(i).row();
+<a name="l00555"></a>00555     <span class="keywordflow">if</span>(!rows.contains(row)){
+<a name="l00556"></a>00556       rows.append(row);
+<a name="l00557"></a>00557     }
+<a name="l00558"></a>00558   }
+<a name="l00559"></a>00559   <span class="comment">// Delete selected rows</span>
+<a name="l00560"></a>00560   <span class="keywordflow">for</span>(i = 0; i &lt; rows.size(); ++i){
+<a name="l00561"></a>00561     <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;removeRow(rows.at(i))){
+<a name="l00562"></a>00562       <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;lastError());
+<a name="l00563"></a>00563       <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;revertAll();
+<a name="l00564"></a>00564       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00565"></a>00565     }
+<a name="l00566"></a>00566   }
+<a name="l00567"></a>00567   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;submitAll()){
+<a name="l00568"></a>00568     <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;revert();
+<a name="l00569"></a>00569     <a class="code" href="classmdt_abstract_sql_widget.html#a3401020fed292da2c3b565a536f0be47" title="Display a message to the user regarding error.">displayDatabaseError</a>(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;lastError());
+<a name="l00570"></a>00570     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00571"></a>00571   }
+<a name="l00572"></a>00572 
+<a name="l00573"></a>00573   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00574"></a>00574 }
+<a name="l00575"></a>00575 
+<a name="l00576"></a>00576 <span class="keywordtype">void</span> mdtSqlTableWidget::toFirst()
+<a name="l00577"></a>00577 {
+<a name="l00578"></a>00578   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00579"></a>00579 
+<a name="l00580"></a>00580   QModelIndex index;
+<a name="l00581"></a>00581 
+<a name="l00582"></a>00582   <span class="keywordflow">if</span>(pvTableView-&gt;model() == 0){
+<a name="l00583"></a>00583     <span class="keywordflow">return</span>;
+<a name="l00584"></a>00584   }
+<a name="l00585"></a>00585   index = pvTableView-&gt;model()-&gt;index(0, pvDefaultColumnToSelect);
+<a name="l00586"></a>00586   pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear);
+<a name="l00587"></a>00587 }
+<a name="l00588"></a>00588 
+<a name="l00589"></a>00589 <span class="keywordtype">void</span> mdtSqlTableWidget::toLast()
+<a name="l00590"></a>00590 {
+<a name="l00591"></a>00591   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00592"></a>00592 
+<a name="l00593"></a>00593   QModelIndex index;
+<a name="l00594"></a>00594   <span class="keywordtype">int</span> row;
+<a name="l00595"></a>00595 
+<a name="l00596"></a>00596   <span class="keywordflow">if</span>(pvTableView-&gt;model() == 0){
+<a name="l00597"></a>00597     <span class="keywordflow">return</span>;
+<a name="l00598"></a>00598   }
+<a name="l00599"></a>00599   index = pvTableView-&gt;selectionModel()-&gt;currentIndex();
+<a name="l00600"></a>00600   row = pvTableView-&gt;model()-&gt;rowCount()-1;
+<a name="l00601"></a>00601   <span class="keywordflow">if</span>(index.row() &lt; row){
+<a name="l00602"></a>00602     index = pvTableView-&gt;model()-&gt;index(row, pvDefaultColumnToSelect);
+<a name="l00603"></a>00603     pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear);
+<a name="l00604"></a>00604   }
+<a name="l00605"></a>00605 }
+<a name="l00606"></a>00606 
+<a name="l00607"></a>00607 <span class="keywordtype">void</span> mdtSqlTableWidget::toPrevious()
+<a name="l00608"></a>00608 {
+<a name="l00609"></a>00609   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00610"></a>00610 
+<a name="l00611"></a>00611   QModelIndex index;
+<a name="l00612"></a>00612   <span class="keywordtype">int</span> row;
+<a name="l00613"></a>00613 
+<a name="l00614"></a>00614   <span class="keywordflow">if</span>(pvTableView-&gt;model() == 0){
+<a name="l00615"></a>00615     <span class="keywordflow">return</span>;
+<a name="l00616"></a>00616   }
+<a name="l00617"></a>00617   <span class="comment">// Get current index, check that we are not at the begining and move if Ok</span>
+<a name="l00618"></a>00618   index = pvTableView-&gt;selectionModel()-&gt;currentIndex();
+<a name="l00619"></a>00619   <span class="keywordflow">if</span>(index.row() &gt; 0){
+<a name="l00620"></a>00620     row = index.row()-1;
+<a name="l00621"></a>00621     index = pvTableView-&gt;model()-&gt;index(row, pvDefaultColumnToSelect);
+<a name="l00622"></a>00622     pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear);
+<a name="l00623"></a>00623   }
+<a name="l00624"></a>00624 }
+<a name="l00625"></a>00625 
+<a name="l00626"></a>00626 <span class="keywordtype">void</span> mdtSqlTableWidget::toNext()
+<a name="l00627"></a>00627 {
+<a name="l00628"></a>00628   Q_ASSERT(pvTableView-&gt;selectionModel() != 0);
+<a name="l00629"></a>00629 
+<a name="l00630"></a>00630   QModelIndex index;
+<a name="l00631"></a>00631   <span class="keywordtype">int</span> row;
+<a name="l00632"></a>00632 
+<a name="l00633"></a>00633   <span class="keywordflow">if</span>(pvTableView-&gt;model() == 0){
+<a name="l00634"></a>00634     <span class="keywordflow">return</span>;
+<a name="l00635"></a>00635   }
+<a name="l00636"></a>00636   <span class="comment">// Get current index, check that we are not at the end and move if Ok</span>
+<a name="l00637"></a>00637   index = pvTableView-&gt;selectionModel()-&gt;currentIndex();
+<a name="l00638"></a>00638   <span class="keywordflow">if</span>(index.row() &lt; (pvTableView-&gt;model()-&gt;rowCount())-1){
+<a name="l00639"></a>00639     row = index.row()+1;
+<a name="l00640"></a>00640     index = pvTableView-&gt;model()-&gt;index(row, pvDefaultColumnToSelect);
+<a name="l00641"></a>00641     pvTableView-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Clear);
+<a name="l00642"></a>00642   }
+<a name="l00643"></a>00643 }
+<a name="l00644"></a>00644 
+<a name="l00645"></a>00645 <span class="keywordtype">int</span> mdtSqlTableWidget::firstVisibleColumnIndex()
+<a name="l00646"></a>00646 {
+<a name="l00647"></a>00647   Q_ASSERT(<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>() != 0);
+<a name="l00648"></a>00648 
+<a name="l00649"></a>00649   <span class="keywordtype">int</span> col;
+<a name="l00650"></a>00650 
+<a name="l00651"></a>00651   <span class="keywordflow">for</span>(col = 0; col &lt; <a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model.">model</a>()-&gt;columnCount(); ++col){
+<a name="l00652"></a>00652     <span class="keywordflow">if</span>(!pvTableView-&gt;isColumnHidden(col)){
+<a name="l00653"></a>00653       qDebug() &lt;&lt; <span class="stringliteral">&quot;firstVisibleColumnIndex(): &quot;</span> &lt;&lt; col;
+<a name="l00654"></a>00654       <span class="keywordflow">return</span> col;
+<a name="l00655"></a>00655     }
+<a name="l00656"></a>00656   }
+<a name="l00657"></a>00657 
+<a name="l00658"></a>00658   <span class="keywordflow">return</span> -1;
+<a name="l00659"></a>00659 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -584,7 +731,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jul 5 2013 18:26:16 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 14 2013 19:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
