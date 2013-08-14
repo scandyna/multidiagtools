@@ -145,6 +145,12 @@ class mdtAbstractSqlWidget : public QWidget
    */
   virtual int currentRow() const = 0;
 
+  /*! \brief Set (update) data of current row (record) for given field name
+   *
+   * \pre (Parent) model must be set with setModel() before using this method.
+   */
+  bool setCurrentData(const QString &fieldName, const QVariant &data, bool submit = true);
+
   /*! \brief Get current data for given field name
    *
    * \pre (Parent) model must be set with setModel() before using this method.

@@ -53,7 +53,7 @@ void mdtSqlRelation::setChildModel(QSqlTableModel *model)
   connect(pvChildModel, SIGNAL(beforeInsert(QSqlRecord&)), this, SLOT(onChildBeforeInsert(QSqlRecord&)));
 }
 
-bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &childFieldName)
+bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &childFieldName, bool copyParentToChildOnInsertion)
 {
   Q_ASSERT(pvParentModel != 0);
   Q_ASSERT(pvChildModel != 0);
@@ -90,6 +90,7 @@ bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &
   item->setParentFieldIndex(parentFieldIndex);
   item->setChildField(childField);
   item->setChildFieldIndex(childFieldIndex);
+  item->setCopyParentToChildOnInsertion(copyParentToChildOnInsertion);
   pvRelations.append(item);
 
   return true;
@@ -163,14 +164,16 @@ void mdtSqlRelation::setChildForeingKeyValues(QSqlRecord &parentRecord, QSqlReco
   mdtSqlRelationItem *item;
   QVariant data;
 
-  // Copy parent PK -> child FK
+  // Copy parent PK -> child FK if needed
   for(i=0; i<pvRelations.size(); ++i){
     item = pvRelations.at(i);
     Q_ASSERT(item != 0);
-    // Get parent model's data
-    data = parentRecord.value(item->parentFieldIndex());
-    // Pust to child's field
-    childRecord.setValue(item->childFieldIndex(), data);
+    if(item->copyParentToChildOnInsertion()){
+      // Get parent model's data
+      data = parentRecord.value(item->parentFieldIndex());
+      // Pust to child's field
+      childRecord.setValue(item->childFieldIndex(), data);
+    }
   }
 }
 
@@ -192,11 +195,15 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
   for(i=0; i<pvRelations.size(); ++i){
     item = pvRelations.at(i);
     Q_ASSERT(item != 0);
+    qDebug() << "mdtSqlRelation, parent record is NULL: " << record.isNull(item->parentFieldIndex());
     // Get parent model's data
-    data = record.value(item->parentFieldIndex());
+    if(!record.isNull(item->parentFieldIndex())){
+      data = record.value(item->parentFieldIndex());
+    }
     if(i>0){
       pvChildModelRelationFilter += " AND";
     }
+    qDebug() << "mdtSqlRelation, parent data: " << data;
     pvChildModelRelationFilter += item->nameProtection() + pvChildModel->tableName() + item->nameProtection() + "." + item->nameProtection() + item->childFieldName() + item->nameProtection() + "=";
     if(data.isValid()){
       pvChildModelRelationFilter += item->dataProtection() + data.toString() + item->dataProtection();
@@ -207,9 +214,14 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
   // Apply filter
   generateChildModelFilter();
   pvChildModel->setFilter(pvChildModelFilter);
+  emit childModelFilterApplied();
+  if(pvChildModel->rowCount() < 1){
+    emit childModelIsEmpty();
+  }
 }
 
 void mdtSqlRelation::generateChildModelFilter()
 {
   pvChildModelFilter = pvChildModelRelationFilter;
+  qDebug() << "mdtSqlRelation, filter: " << pvChildModelFilter;
 }

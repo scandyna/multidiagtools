@@ -166,6 +166,15 @@ class mdtSqlForm : public QObject
    */
   int currentRow(const QString &tableName);
 
+  /*! \brief Set (update) data of current row (record) for given table and field name
+   *
+   * Note that SQL widget related to given tableName is searched
+   *  at each request. If several access to setCurrentData is needed,
+   *  it can be better to get a pointer to related widget with sqlWidget() ,
+   *  and call his setCurrentData() method.
+   */
+  bool setCurrentData(const QString &tableName, const QString &fieldName, const QVariant &data, bool submit = true);
+
   /*! \brief Get current data for given table and field name
    *
    * Note that SQL widget related to given tableName is searched

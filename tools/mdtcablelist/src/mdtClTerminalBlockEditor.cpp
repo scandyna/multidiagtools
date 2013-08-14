@@ -464,7 +464,7 @@ bool mdtClTerminalBlockEditor::setupTerminalEditTable()
   // Setup Unit <-> Connection relation
   pvTerminalEditRelation->setParentModel(pvUnitModel);
   pvTerminalEditRelation->setChildModel(pvTerminalEditModel);
-  if(!pvTerminalEditRelation->addRelation("Id_PK", "Unit_Id_FK")){
+  if(!pvTerminalEditRelation->addRelation("Id_PK", "Unit_Id_FK", true)){
     return false;
   }
   pvUnitWidget->addChildWidget(pvTerminalEditWidget, pvTerminalEditRelation);
@@ -494,10 +494,10 @@ bool mdtClTerminalBlockEditor::setupTerminalLinkEditTable()
   // Setup Unit <-> Terminal links relation
   pvTerminalLinkEditRelation->setParentModel(pvUnitModel);
   pvTerminalLinkEditRelation->setChildModel(pvTerminalLinkEditModel);
-  if(!pvTerminalLinkEditRelation->addRelation("Id_PK", "UnitStart_Id_PK")){
+  if(!pvTerminalLinkEditRelation->addRelation("Id_PK", "UnitStart_Id_PK", true)){
     return false;
   }
-  if(!pvTerminalLinkEditRelation->addRelation("Id_PK", "UnitEnd_Id_PK")){
+  if(!pvTerminalLinkEditRelation->addRelation("Id_PK", "UnitEnd_Id_PK", true)){
     return false;
   }
   pvUnitWidget->addChildWidget(pvTerminalLinkEditWidget, pvTerminalLinkEditRelation);
@@ -532,7 +532,7 @@ bool mdtClTerminalBlockEditor::setupVehicleTable()
   // Setup Unit <-> VehicleType relation
   pvVehicleTypeRelation->setParentModel(pvUnitModel);
   pvVehicleTypeRelation->setChildModel(pvVehicleTypeModel);
-  if(!pvVehicleTypeRelation->addRelation("Id_PK", "Unit_Id_FK")){
+  if(!pvVehicleTypeRelation->addRelation("Id_PK", "Unit_Id_FK", true)){
     return false;
   }
   pvUnitWidget->addChildWidget(pvVehicleTypeWidget, pvVehicleTypeRelation);

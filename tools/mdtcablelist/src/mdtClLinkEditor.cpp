@@ -477,7 +477,7 @@ bool mdtClLinkEditor::setupArticleTable()
    */
   pvArticleLinkRelation->setParentModel(pvLinkModel);
   pvArticleLinkRelation->setChildModel(pvArticleModel);
-  if(!pvArticleLinkRelation->addRelation("Article_Id_FK", "Id_PK")){
+  if(!pvArticleLinkRelation->addRelation("Article_Id_FK", "Id_PK", false)){
     return false;
   }
   // Setup widget mapper
@@ -486,7 +486,7 @@ bool mdtClLinkEditor::setupArticleTable()
   pvArticleWidgetMapper->addMapping(pvLinkUiWidget->leArticleDesignationEN, pvArticleModel->fieldIndex("DesignationEN"));
   // We must catch link index changed + article model select to update widget mapper
   connect(pvLinkWidget, SIGNAL(currentRowChanged(int)), pvArticleLinkRelation, SLOT(setParentCurrentIndex(int)));
-  connect(pvLinkWidget, SIGNAL(modelSelected()), pvArticleWidgetMapper, SLOT(toFirst()));
+  connect(pvArticleLinkRelation, SIGNAL(childModelFilterApplied()), pvArticleWidgetMapper, SLOT(toFirst()));
   // Force a update of relation
   pvArticleLinkRelation->setParentCurrentIndex(pvLinkWidget->currentRow());
 

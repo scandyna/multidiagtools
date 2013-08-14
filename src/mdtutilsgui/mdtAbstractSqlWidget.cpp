@@ -28,6 +28,7 @@
 #include <QSqlTableModel>
 #include <QSqlDatabase>
 #include <QSqlIndex>
+#include <QSqlRecord>
 
 #include <QDebug>
 
@@ -124,6 +125,44 @@ QList<mdtAbstractSqlWidget*> mdtAbstractSqlWidget::sqlWidgets()
   }
 
   return list;
+}
+
+bool mdtAbstractSqlWidget::setCurrentData(const QString &fieldName, const QVariant &data, bool submit)
+{
+  Q_ASSERT(pvModel != 0);
+
+  int row;
+  QSqlError error;
+  QSqlRecord record;
+
+  row = currentRow();
+  // Set data
+  record = pvModel->record(row);
+  if(data.isNull()){
+    record.setNull(fieldName);
+  }else{
+    record.setValue(fieldName, data);
+  }
+  if(!pvModel->setRecord(row, record)){
+    error = pvModel->lastError();
+    displayDatabaseError(error);
+    return false;
+  }
+  // Submit if requested
+  if(submit){
+    if(!pvModel->submitAll()){
+      error = pvModel->lastError();
+      displayDatabaseError(error);
+      setCurrentIndex(row);
+      return false;
+    }
+    setCurrentIndex(row);
+  }else{
+    // We go to edition mode
+    emit dataEdited();
+  }
+
+  return true;
 }
 
 QVariant mdtAbstractSqlWidget::currentData(const QString &fieldName) const

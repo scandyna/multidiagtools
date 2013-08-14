@@ -131,7 +131,7 @@ bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &chil
     return false;
   }
   // Add relation
-  if(!relation->addRelation(parentFieldName, childFieldName)){
+  if(!relation->addRelation(parentFieldName, childFieldName, true)){
     return false;
   }
   // Force a update a first time
@@ -252,6 +252,22 @@ int mdtSqlForm::currentRow(const QString &tableName)
   }
 
   return w->currentRow();
+}
+
+bool mdtSqlForm::setCurrentData(const QString &tableName, const QString &fieldName, const QVariant &data, bool submit)
+{
+  mdtAbstractSqlWidget *w;
+
+  // Find SQL widget
+  w = sqlWidget(tableName);
+  if(w == 0){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
+    e.commit();
+    return false;
+  }
+
+  return w->setCurrentData(fieldName, data, submit);
 }
 
 QVariant mdtSqlForm::currentData(const QString &tableName, const QString &fieldName)

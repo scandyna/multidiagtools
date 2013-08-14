@@ -158,7 +158,7 @@ bool mdtClVehicleTypeEditor::setupUnitTable()
   // Setup Article <-> Connection relation
   pvUnitRelation->setParentModel(pvVehicleTypeModel);
   pvUnitRelation->setChildModel(pvUnitModel);
-  if(!pvUnitRelation->addRelation("Id_PK", "VehicleType_Id_FK")){
+  if(!pvUnitRelation->addRelation("Id_PK", "VehicleType_Id_FK", true)){
     return false;
   }
   pvVehicleTypeWidget->addChildWidget(pvUnitWidget, pvUnitRelation);

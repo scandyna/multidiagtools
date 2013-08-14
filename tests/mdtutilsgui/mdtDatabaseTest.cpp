@@ -168,7 +168,7 @@ void mdtDatabaseTest::relationsTest()
   relation = new mdtSqlRelation;
   relation->setParentModel(&parentModel);
   relation->setChildModel(&childModel);
-  QVERIFY(relation->addRelation("id_PK", "id_client_FK"));
+  QVERIFY(relation->addRelation("id_PK", "id_client_FK", true));
 
   // Check data of each model
   

@@ -25,6 +25,7 @@ mdtSqlRelationItem::mdtSqlRelationItem()
 {
   pvParentFieldIndex = -1;
   pvChildFieldIndex = -1;
+  pvCopyParentToChildOnInsertion = false;
 }
 
 mdtSqlRelationItem::~mdtSqlRelationItem()
@@ -105,4 +106,14 @@ QVariant::Type mdtSqlRelationItem::dataType() const
 QVariant mdtSqlRelationItem::valueForNoDataFilter() const
 {
   return pvValueForNoDataFilter;
+}
+
+void mdtSqlRelationItem::setCopyParentToChildOnInsertion(bool enable)
+{
+  pvCopyParentToChildOnInsertion = enable;
+}
+
+bool mdtSqlRelationItem::copyParentToChildOnInsertion() const
+{
+  return pvCopyParentToChildOnInsertion;
 }

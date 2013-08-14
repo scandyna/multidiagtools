@@ -48,6 +48,7 @@
 #include <QMessageBox>
 #include <QWidget>
 #include <QHBoxLayout>
+#include <QDataWidgetMapper>
 
 #include <QDebug>
 
@@ -205,6 +206,7 @@ void mdtClUnitEditor::setBaseArticle()
   QSqlQueryModel model;
   int ret;
   QString sql;
+  QList<QVariant> selectedItem;
 
   // Check if some unit connections are related to article connecions
   //  If yes, we cannot change the base article
@@ -225,10 +227,30 @@ void mdtClUnitEditor::setBaseArticle()
     msgBox.exec();
     return;
   }
+  // If a base article  is allready set, we let choose the user between unset it or choose a new one
+  if(pvForm->currentData("Unit_tbl", "Article_Id_FK").toInt() > 0){
+    QMessageBox msgBox;
+    msgBox.setText(tr("A base article allready exist."));
+    msgBox.setInformativeText(tr("Please choose a action."));
+    msgBox.setIcon(QMessageBox::Information);
+    QPushButton *pbUnsetBaseArticle = msgBox.addButton(tr("Unset"), QMessageBox::AcceptRole);
+    QPushButton *pbSetBaseArticle = msgBox.addButton(tr("Set other ..."), QMessageBox::AcceptRole);
+    msgBox.addButton(QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Cancel);
+    msgBox.setWindowTitle(tr("Unit base article affectation"));
+    msgBox.exec();
+    if(msgBox.clickedButton() == pbUnsetBaseArticle){
+      pvForm->setCurrentData("Unit_tbl", "Article_Id_FK", QVariant());
+      return;
+    }
+    if(msgBox.clickedButton() != pbSetBaseArticle){
+      return;
+    }
+  }
   // Setup article selection dialog and show it to user
   sql = "SELECT * FROM Article_tbl;";
   model.setQuery(sql, pvDatabase);
-  selectionDialog.setMessage("Please select a article");
+  selectionDialog.setMessage("Please select article");
   selectionDialog.setModel(&model);
   ///selectionDialog.setColumnHidden("Id_PK", true);
   ///selectionDialog.setHeaderData("SubType", tr("Variant"));
@@ -238,76 +260,13 @@ void mdtClUnitEditor::setBaseArticle()
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
-  /**
   selectedItem = selectionDialog.selectionResult();
   if(selectedItem.size() != 1){
     return;
   }
-  if(!selectedItem.at(0).isValid()){
+  if(!pvForm->setCurrentData("Unit_tbl", "Article_Id_FK", selectedItem.at(0))){
     return;
   }
-  */
-
-  
-  
-  return;
-  
-  
-  
-  
-  QList<QVariant> selectedItem;
-  QSqlError sqlError;
-  int articleIdFkColumn;
-  int currentRow;
-  QModelIndex index;
-  QSqlTableModel *unitModel;
-  QSqlTableModel *unitConnectionModel;
-
-  // Find unitModel
-  unitModel = pvForm->model("Unit_tbl");
-  Q_ASSERT(unitModel != 0);
-  // Find unitConnectionModel
-  unitConnectionModel = pvForm->model("UnitConnection_tbl");
-  Q_ASSERT(unitConnectionModel != 0);
-
-  // Check that no connections exists
-  if(unitConnectionModel->rowCount() > 0){
-    QMessageBox msgBox;
-    msgBox.setText(tr("Cannot change base article."));
-    msgBox.setInformativeText(tr("Please remove used connections and try again."));
-    msgBox.setDetailedText(tr("Unit connections are based on article connection.") + \
-                           tr("If you need to select another base article, you must re-affect connecions") );
-    msgBox.setIcon(QMessageBox::Warning);
-    msgBox.exec();
-    return;
-  }
-  // Remeber current row
-  currentRow = pvForm->mainSqlWidget()->currentRow();
-  if(currentRow < 0){
-    return;
-  }
-  // Get column of Article FK
-  articleIdFkColumn = unitModel->record().indexOf("Article_Id_FK");
-  if(articleIdFkColumn < 0){
-    return;
-  }
-  // Set SQL query
-  index = unitModel->index(currentRow, articleIdFkColumn);
-  Q_ASSERT(index.isValid());
-  if(!unitModel->setData(index, selectedItem.at(0))){
-    qDebug() << "ERR set data ...";
-    return;
-  }
-  emit unitEdited();
-  ///emit pvUnitWidget->dataEdited();
-  /**
-  if(!pvUnitModel->submitAll()){
-    qDebug() << "ERR set submitAll ...";
-    return;
-  }
-  // Return to current row
-  pvUnitWidget->setCurrentIndex(currentRow);
-  */
 }
 
 void mdtClUnitEditor::addConnection()
@@ -513,6 +472,10 @@ int mdtClUnitEditor::currentUnitId()
 bool mdtClUnitEditor::setupUnitTable()
 {
   Ui::mdtClUnitEditor ue;
+  QSqlTableModel *unitModel;
+  QDataWidgetMapper *baseArticleMapper;
+  QSqlTableModel *baseArticleModel;
+  mdtSqlRelation *baseArticleRelation;
 
   // Setup main form widget
   ue.setupUi(pvForm->mainSqlWidget());
@@ -526,6 +489,35 @@ bool mdtClUnitEditor::setupUnitTable()
   pvForm->sqlWindow()->enableEdition();
   pvForm->sqlWindow()->resize(800, 500);
   pvForm->sqlWindow()->setWindowTitle(tr("Unit edition"));
+  /*
+   * Setup base article widget mapping
+   */
+  unitModel = pvForm->model("Unit_tbl");
+  Q_ASSERT(unitModel != 0);
+  // Setup base article model
+  baseArticleModel = new QSqlTableModel(this, pvDatabase);
+  baseArticleModel->setTable("Article_tbl");
+  if(!baseArticleModel->select()){
+    return false;
+  }
+  // Setup base article widget mapper
+  baseArticleMapper = new QDataWidgetMapper(this);
+  baseArticleMapper->setModel(baseArticleModel);
+  baseArticleMapper->addMapping(ue.leArticle_Id_FK, baseArticleModel->fieldIndex("Id_PK"));
+  baseArticleMapper->addMapping(ue.leArticleCode, baseArticleModel->fieldIndex("ArticleCode"));
+  baseArticleMapper->addMapping(ue.leArticleDesignationEN, baseArticleModel->fieldIndex("DesignationEN"));
+  // Setup base article relation
+  baseArticleRelation = new mdtSqlRelation(this);
+  baseArticleRelation->setParentModel(unitModel);
+  baseArticleRelation->setChildModel(baseArticleModel);
+  if(!baseArticleRelation->addRelation("Article_Id_FK", "Id_PK", false)){
+    return false;
+  }
+  connect(pvForm->mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseArticleRelation, SLOT(setParentCurrentIndex(int)));
+  connect(baseArticleRelation, SIGNAL(childModelFilterApplied()), baseArticleMapper, SLOT(toFirst()));
+  connect(baseArticleRelation, SIGNAL(childModelIsEmpty()), baseArticleMapper, SLOT(revert()));
+  // Force a update
+  pvForm->mainSqlWidget()->setCurrentIndex(pvForm->mainSqlWidget()->currentRow());
 
   return true;
 }

@@ -40,6 +40,8 @@ class mdtSqlRelationItem;
  *  - Connect the parent view's currentXyChanged() signal to setParentCurrentIndex() slot.
  *     If you use a QTableView, this signal is in its selectionModel(). For QDataWidgetMapper,
  *     the currentIndexChanged() signal is directly available.
+ *  - If a QDataWidgetMapper is used directly on a child model, connect childModelFilterApplied()
+ *     signal to QDataWidgetMapper's toFirst() slot.
  */
 class mdtSqlRelation : public QObject
 {
@@ -78,14 +80,19 @@ class mdtSqlRelation : public QObject
    * The parentFieldName is a field name from the parent table (typically a field from primary key).
    *  The childFieldName is a field from child table (typically a field from foreing keys).
    *
-   * Note that this methodwill fetch some information about fields in parent and
+   * Note that this method will fetch some information about fields in parent and
    *  child model (data type, field index, ...), so parent and child models must be set before.
    *
+   * \param parentFieldName Field of parent model to use in relation (usually PK)
+   * \param childFieldName Field of child model to use in relation (usually FK)
+   * \param copyParentToChildOnInsertion If true, data from parent model will be copied
+   *                                      to child model for this fields.
+   *                                      (See mdtSqlRelationItem for details).
    * \return True on succes, false if a field could not be found.
    * \pre Parent model must be set with setParentModel() before using this method.
    * \pre Child model must be set with setChildModel() before using this method.
    */
-  bool addRelation(const QString &parentFieldName, const QString &childFieldName);
+  bool addRelation(const QString &parentFieldName, const QString &childFieldName, bool copyParentToChildOnInsertion);
 
   /*! \brief Clear relations
    *
@@ -93,6 +100,24 @@ class mdtSqlRelation : public QObject
    *  (will not delete models).
    */
   void clear();
+
+ signals:
+
+  /*! \brief This signal is emitted once setFilter() was called on child model
+   *
+   * This can be usefull when update must be done after child model was updated.
+   *  For example, when using a QDataWidgetMapper, connect this signal to
+   *  QDataWidgetMapper's toFirst() slot.
+   */
+  void childModelFilterApplied();
+
+  /*! \brief This signal is emitted after childModelFilterApplied() if child model becomes empty
+   *
+   * Connect this signal to QDataWidgetMapper's revert() slot.
+   *  QDataWidgetMapper will not clear widgets if model becomes empty,
+   *  so using this signal is a workaround..
+   */
+  void childModelIsEmpty();
 
  public slots:
 

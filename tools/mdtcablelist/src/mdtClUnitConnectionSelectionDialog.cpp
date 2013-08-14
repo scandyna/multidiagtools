@@ -100,7 +100,7 @@ mdtClUnitConnectionSelectionDialog::mdtClUnitConnectionSelectionDialog(QWidget *
   pvUnitConnectionRelation = new mdtSqlRelation;
   pvUnitConnectionRelation->setParentModel(pvUnitModel);
   pvUnitConnectionRelation->setChildModel(pvUnitConnectionModel);
-  pvUnitConnectionRelation->addRelation("Unit_Id_FK", "Unit_Id_FK");
+  pvUnitConnectionRelation->addRelation("Unit_Id_FK", "Unit_Id_FK", true);
   pvUnitWidget->addChildWidget(pvUnitConnectionWidget, pvUnitConnectionRelation);
   // Setup buttons
   pvButtons = new QDialogButtonBox(this);
