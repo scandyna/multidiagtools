@@ -30,6 +30,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSortFilterProxyModel.h"
 #include "mdtSqlWindow.h"
+#include "mdtSqlDialog.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
 #include "mdtSqlForm.h"
 #include "mdtSqlFormWindow.h"
@@ -773,6 +774,57 @@ void mdtDatabaseTest::sortFilterProxyModelTest()
    */
   /*
   while(view.isVisible()){
+    QTest::qWait(1000);
+  }
+  */
+}
+
+
+
+
+
+void mdtDatabaseTest::sqlDialogTest()
+{
+  mdtSqlDialog dialog;
+  QSqlTableModel parentModel;
+  mdtSqlFormWidget *sqlFormWidget;
+  Ui::mdtSqlFormWidgetTestForm form;
+  QSqlTableModel childModel;
+  mdtSqlRelation *relation;
+  mdtSqlTableWidget *addressWidget;
+
+  // Setup parent model + widget
+  parentModel.setTable("Client");
+  QVERIFY(parentModel.select());
+  sqlFormWidget = new mdtSqlFormWidget;
+  sqlFormWidget->setModel(&parentModel);
+  form.setupUi(sqlFormWidget);
+  sqlFormWidget->mapFormWidgets("fld_first_name");
+  // Setup child model
+  childModel.setTable("Address");
+  childModel.select();
+  // Setup relation
+  relation = new mdtSqlRelation;
+  relation->setParentModel(&parentModel);
+  relation->setChildModel(&childModel);
+  QVERIFY(relation->addRelation("id_PK", "id_client_FK", true));
+  // Setup child table widget
+  addressWidget = new mdtSqlTableWidget;
+  addressWidget->setModel(&childModel);
+  // Add addressWidget as child of sqlFormWidget
+  sqlFormWidget->addChildWidget(addressWidget, relation);
+  // Setup dialog
+  dialog.setSqlWidget(sqlFormWidget);
+  dialog.addChildWidget(addressWidget, "Address");
+  dialog.setCurrentRow(0);
+  dialog.setCurrentRow("Id_PK", 2);
+  dialog.exec();
+
+  /*
+   * Play
+   */
+  /*
+  while(dialog.isVisible()){
     QTest::qWait(1000);
   }
   */

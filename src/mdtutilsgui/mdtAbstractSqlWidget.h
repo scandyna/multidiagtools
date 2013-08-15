@@ -210,7 +210,7 @@ class mdtAbstractSqlWidget : public QWidget
    *  some data are not saved. In this case,
    *  a message box is displayed to the user.
    *
-   * This is used by mdtSqlWindow to check if it can close the window.
+   * This is used by mdtSqlWindow and mdtSqlDialog to check if it can close the window.
    *
    * \return true if all data are saved, false if a SQL widget has pending data.
    */
