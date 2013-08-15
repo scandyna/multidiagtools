@@ -8,20 +8,18 @@ diagrams
     917 923 100 18 0 83
   classdiagram_ref 746114 // mdtSqlForm
     733 738 100 18 0 0
-  classdiagram_ref 746242 // mdtSqlFormDialog
-    733 738 100 4 0 0
+  active  classdiagram_ref 746242 // mdtSqlFormDialog
+    917 923 100 4 24 0
   classdiagram_ref 666626 // mdtSqlWindow
     733 738 100 4 48 0
-  active  classdiagram_ref 779394 // mdtSqlDialog
-    917 923 100 4 68 0
+  classdiagram_ref 779394 // mdtSqlDialog
+    917 923 100 4 152 0
 end
 show_stereotypes
-selected operation_ref 1488130 // setCurrentRow
+selected classdiagram_ref 746242 // mdtSqlFormDialog
 open
-  operation_ref 1290242 // disableEdition
-  operation_ref 1487874 // setSqlWidget
-  operation_ref 1488002 // addChildWidget
-  operation_ref 1489154 // insertRow
+  class_ref 778626 // mdtSqlFormWindow
+  operation_ref 1496450 // addChildWidget
   classview_ref 457602 // mdtCableList
   class_ref 764418 // Article_tbl
   class_ref 764546 // Unit_tbl

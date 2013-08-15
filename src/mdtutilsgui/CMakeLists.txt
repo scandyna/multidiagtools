@@ -65,6 +65,7 @@ set (HEADER_FILES
           mdtSqlFormWidgetDataValidator.h
           mdtSqlForm.h
           mdtSqlFormWindow.h
+          mdtSqlFormDialog.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -105,6 +106,7 @@ set (SOURCES_FILES
           mdtSqlFormWidgetDataValidator.cpp
           mdtSqlForm.cpp
           mdtSqlFormWindow.cpp
+          mdtSqlFormDialog.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

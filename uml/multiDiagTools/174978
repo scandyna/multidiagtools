@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 47
+  revision 48
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -4414,17 +4414,12 @@ ${inlines}
 	  b parent class_ref 678914 // mdtSqlWindow
       end
 
-      operation 1411586 "setTable"
-	public explicit_return_type "bool"
-	nparams 3
-	  param in name "tableName" type class_ref 161026 // QString
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	    defaultvalue "0"
-	  param in name "uiWidget" type class_ref 316162 // QWidget
-	    defaultvalue "0"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+      operation 1496066 "show"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -4433,15 +4428,13 @@ ${inlines}
 	
       end
 
-      operation 1411714 "addChildTable"
-	public explicit_return_type "bool"
-	nparams 2
-	  param in name "tableName" type class_ref 161026 // QString
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	    defaultvalue "0"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+      operation 1496194 "addChildWidget"
+	private explicit_return_type ""
+	nparams 1
+	  param in name "widget" type class_ref 686338 // mdtAbstractSqlWidget
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -4454,6 +4447,109 @@ ${inlines}
     classdiagram 746242 "mdtSqlFormDialog"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
+    end
+
+    class 832258 "mdtSqlFormDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1051906 // <generalisation>
+	relation 1040770 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1051906 // <generalisation>
+	  b parent class_ref 778498 // mdtSqlForm
+      end
+
+      classrelation 1052034 // pvDialog (<directional composition>)
+	relation 1040898 *-->
+	  a role_name "pvDialog" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1052034 // pvDialog (<directional composition>)
+	  b parent class_ref 825730 // mdtSqlDialog
+      end
+
+      operation 1495682 "mdtSqlFormDialog"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1495810 "~mdtSqlFormDialog"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1495938 "sqlDialog"
+	public return_type class_ref 825730 // mdtSqlDialog
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1496322 "show"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1496450 "addChildWidget"
+	private explicit_return_type ""
+	nparams 1
+	  param in name "widget" type class_ref 686338 // mdtAbstractSqlWidget
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 746498 "mdtSqlDataValidator"
@@ -7022,6 +7118,29 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 825730 // mdtSqlDialog
+      end
+    end
+
+    artifact 506242 "mdtSqlFormDialog"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 832258 // mdtSqlFormDialog
       end
     end
   end

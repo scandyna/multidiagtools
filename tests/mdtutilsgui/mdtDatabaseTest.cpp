@@ -34,6 +34,7 @@
 #include "ui_mdtSqlFormWidgetTestForm.h"
 #include "mdtSqlForm.h"
 #include "mdtSqlFormWindow.h"
+#include "mdtSqlFormDialog.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -866,6 +867,54 @@ void mdtDatabaseTest::sqlFormWindowTest()
   QVERIFY(fw.currentData("Client", "id_PK").isValid());
   QVERIFY(!fw.currentData("AA", "id_PK").isValid());
   QVERIFY(!fw.currentData("Client", "JJ").isValid());
+
+  /*
+   * Play
+   */
+  /*
+  while(fw.sqlWindow()->isVisible()){
+    QTest::qWait(1000);
+  }
+  */
+
+  delete uif;
+}
+
+void mdtDatabaseTest::sqlFormDialogTest()
+{
+  mdtSqlFormDialog fd;
+  Ui::mdtSqlFormWidgetTestForm *uif = new Ui::mdtSqlFormWidgetTestForm;
+
+  // Setup Ui
+  uif->setupUi(fd.mainSqlWidget());
+  // Try some errors
+  QVERIFY(!fd.setTable("ABCD"));
+  QVERIFY(!fd.addChildTable("1234"));
+  // Setup form
+  QVERIFY(fd.setTable("Client"));
+  QVERIFY(fd.addChildTable("Address", tr("Client's addresses")));
+  QVERIFY(fd.addRelation("id_PK", "Address", "id_client_FK"));
+  // Check that widgets can be found
+  QVERIFY(fd.sqlWidget("HuHbzg") == 0);
+  QVERIFY(fd.sqlWidget("Client") != 0);
+  QVERIFY(fd.sqlWidget("Address") != 0);
+  QVERIFY(fd.sqlFormWidget("Client") != 0);
+  QVERIFY(fd.sqlTableWidget("Client") == 0);
+  QVERIFY(fd.sqlFormWidget("Address") == 0);
+  QVERIFY(fd.sqlTableWidget("Address") != 0);
+  // Check that models can be found
+  QVERIFY(fd.model("JKh k") == 0);
+  QVERIFY(fd.model("Client") != 0);
+  QVERIFY(fd.model("Address") != 0);
+  // Check currentRow
+  QCOMPARE(fd.currentRow("Client"), 0);
+  QVERIFY(fd.currentRow("jhjkh") < 0);
+  // Check currentValue
+  QVERIFY(fd.currentData("Client", "id_PK").isValid());
+  QVERIFY(!fd.currentData("AA", "id_PK").isValid());
+  QVERIFY(!fd.currentData("Client", "JJ").isValid());
+
+  fd.exec();
 
   /*
    * Play
