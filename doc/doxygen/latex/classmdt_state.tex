@@ -1,0 +1,177 @@
+\hypertarget{classmdt_state}{
+\section{mdtState Class Reference}
+\label{classmdt_state}\index{mdtState@{mdtState}}
+}
+
+
+Representation of a state in \hyperlink{classmdt_state_machine}{mdtStateMachine}.  
+
+
+
+
+{\ttfamily \#include $<$mdtState.h$>$}
+
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_state_af439b403568bc41b3db70e037bfd8456}{entered} (\hyperlink{classmdt_state}{mdtState} $\ast$state)
+\begin{DoxyCompactList}\small\item\em Emited each time state was enterd. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_state_a8a6c3059b9ace83fc20feb0fcc7159df}{mdtState} (int id, QState $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_state_a64560fbb87511491a0247d0c0ec9613a}{
+\hyperlink{classmdt_state_a64560fbb87511491a0247d0c0ec9613a}{$\sim$mdtState} ()}
+\label{classmdt_state_a64560fbb87511491a0247d0c0ec9613a}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_aece398b67e5bd5a6d1bcc83f109a1dff}{setId} (int id)
+\begin{DoxyCompactList}\small\item\em Set state ID. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}{id} () const 
+\begin{DoxyCompactList}\small\item\em Get ID. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_state_a29e0ba7724b674ee25954a89c66544e2}{
+void \hyperlink{classmdt_state_a29e0ba7724b674ee25954a89c66544e2}{setText} (const QString \&text)}
+\label{classmdt_state_a29e0ba7724b674ee25954a89c66544e2}
+
+\begin{DoxyCompactList}\small\item\em Set text of the state. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}{
+QString \hyperlink{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}{text} () const }
+\label{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}
+
+\begin{DoxyCompactList}\small\item\em Get text of the state. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_a366f2dac01b3a4150c8966d355ecfba7}{setNotifyEnteredToUi} (bool notify)
+\begin{DoxyCompactList}\small\item\em Set notifyEnteredToUi flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_state_a8097cd281438cc58b39b9a195076d841}{notifyEnteredToUi} () const 
+\begin{DoxyCompactList}\small\item\em Get notifyEnteredToUi flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Representation of a state in \hyperlink{classmdt_state_machine}{mdtStateMachine}. 
+
+This class is based on QState, and add some properties.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_state_machine}{mdtStateMachine} 
+\end{DoxySeeAlso}
+
+
+Definition at line 33 of file mdtState.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_state_a8a6c3059b9ace83fc20feb0fcc7159df}{
+\index{mdtState@{mdtState}!mdtState@{mdtState}}
+\index{mdtState@{mdtState}!mdtState@{mdtState}}
+\subsubsection[{mdtState}]{\setlength{\rightskip}{0pt plus 5cm}mdtState::mdtState (
+\begin{DoxyParamCaption}
+\item[{int}]{id, }
+\item[{QState $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_state_a8a6c3059b9ace83fc20feb0fcc7159df}
+
+
+Constructor. 
+
+Will set given id, let a empty text and set notifyEnteredToUi flag false. 
+
+Definition at line 23 of file mdtState.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_state_af439b403568bc41b3db70e037bfd8456}{
+\index{mdtState@{mdtState}!entered@{entered}}
+\index{entered@{entered}!mdtState@{mdtState}}
+\subsubsection[{entered}]{\setlength{\rightskip}{0pt plus 5cm}void mdtState::entered (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtState} $\ast$}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_state_af439b403568bc41b3db70e037bfd8456}
+
+
+Emited each time state was enterd. 
+
+Note: this signal is used by \hyperlink{classmdt_state_machine}{mdtStateMachine} and should not be used directly. \hypertarget{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}{
+\index{mdtState@{mdtState}!id@{id}}
+\index{id@{id}!mdtState@{mdtState}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int mdtState::id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}
+
+
+Get ID. 
+
+The id can typically be used with enums (STATE\_\-READY, ...) 
+
+Definition at line 40 of file mdtState.cpp.
+
+\hypertarget{classmdt_state_a8097cd281438cc58b39b9a195076d841}{
+\index{mdtState@{mdtState}!notifyEnteredToUi@{notifyEnteredToUi}}
+\index{notifyEnteredToUi@{notifyEnteredToUi}!mdtState@{mdtState}}
+\subsubsection[{notifyEnteredToUi}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtState::notifyEnteredToUi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_state_a8097cd281438cc58b39b9a195076d841}
+
+
+Get notifyEnteredToUi flag. 
+
+If notifyEnteredToUi is true, \hyperlink{classmdt_state_machine}{mdtStateMachine} will emit stateChangedForUi() signal each time this state was entered. 
+
+Definition at line 60 of file mdtState.cpp.
+
+\hypertarget{classmdt_state_aece398b67e5bd5a6d1bcc83f109a1dff}{
+\index{mdtState@{mdtState}!setId@{setId}}
+\index{setId@{setId}!mdtState@{mdtState}}
+\subsubsection[{setId}]{\setlength{\rightskip}{0pt plus 5cm}void mdtState::setId (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_state_aece398b67e5bd5a6d1bcc83f109a1dff}
+
+
+Set state ID. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}{id()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 35 of file mdtState.cpp.
+
+\hypertarget{classmdt_state_a366f2dac01b3a4150c8966d355ecfba7}{
+\index{mdtState@{mdtState}!setNotifyEnteredToUi@{setNotifyEnteredToUi}}
+\index{setNotifyEnteredToUi@{setNotifyEnteredToUi}!mdtState@{mdtState}}
+\subsubsection[{setNotifyEnteredToUi}]{\setlength{\rightskip}{0pt plus 5cm}void mdtState::setNotifyEnteredToUi (
+\begin{DoxyParamCaption}
+\item[{bool}]{notify}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_state_a366f2dac01b3a4150c8966d355ecfba7}
+
+
+Set notifyEnteredToUi flag. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_state_a8097cd281438cc58b39b9a195076d841}{notifyEnteredToUi()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 55 of file mdtState.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtState.h\item 
+src/mdtutils/mdtState.cpp\end{DoxyCompactItemize}

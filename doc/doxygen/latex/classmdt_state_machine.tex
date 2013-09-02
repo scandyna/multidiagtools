@@ -1,0 +1,156 @@
+\hypertarget{classmdt_state_machine}{
+\section{mdtStateMachine Class Reference}
+\label{classmdt_state_machine}\index{mdtStateMachine@{mdtStateMachine}}
+}
+
+
+Extend Qt's QStateMachine.  
+
+
+
+
+{\ttfamily \#include $<$mdtStateMachine.h$>$}
+
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{
+void \hyperlink{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{stateChanged} (int id)}
+\label{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}
+
+\begin{DoxyCompactList}\small\item\em Emitted each time the state changed. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_machine_ace677654f9ef9d7c1620c1c9f740ae0b}{stateChangedForUi} (int id, const QString \&text)
+\begin{DoxyCompactList}\small\item\em Emitted only if a state that must be notified is entered. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_state_machine_af2b15b9b0bbf48c6adb75a69dd255718}{mdtStateMachine} (QObject $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}{
+virtual \hyperlink{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}{$\sim$mdtStateMachine} ()}
+\label{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_machine_a827fffcccafebfdf0dddb6a65d75b0bf}{addState} (\hyperlink{classmdt_state}{mdtState} $\ast$state)
+\begin{DoxyCompactList}\small\item\em Add a new state to state machine. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{
+int \hyperlink{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{currentState} () const }
+\label{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}
+
+\begin{DoxyCompactList}\small\item\em Get current state. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{waitOnState} (int state, int timeout=-\/1)
+\begin{DoxyCompactList}\small\item\em Wait until a state is reached. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Extend Qt's QStateMachine. 
+
+QStateMachine provides all that is needed to build a state machine. But, for some application, some other things can be usefull:
+\begin{DoxyItemize}
+\item Get current state
+\item Wait until a state was reached
+\item Notify only some states to the (G)UI
+\end{DoxyItemize}
+
+Usually, a system based on a state machine is only event driven, and QStateMachine was build this way. But, for some application, we need to be able to wait until a state is reached, without breaking application's event loop, before we can continue. 
+
+Definition at line 43 of file mdtStateMachine.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_state_machine_af2b15b9b0bbf48c6adb75a69dd255718}{
+\index{mdtStateMachine@{mdtStateMachine}!mdtStateMachine@{mdtStateMachine}}
+\index{mdtStateMachine@{mdtStateMachine}!mdtStateMachine@{mdtStateMachine}}
+\subsubsection[{mdtStateMachine}]{\setlength{\rightskip}{0pt plus 5cm}mdtStateMachine::mdtStateMachine (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_state_machine_af2b15b9b0bbf48c6adb75a69dd255718}
+
+
+Constructor. 
+
+Current state will be set to -\/1 (invalid). 
+
+Definition at line 27 of file mdtStateMachine.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_state_machine_a827fffcccafebfdf0dddb6a65d75b0bf}{
+\index{mdtStateMachine@{mdtStateMachine}!addState@{addState}}
+\index{addState@{addState}!mdtStateMachine@{mdtStateMachine}}
+\subsubsection[{addState}]{\setlength{\rightskip}{0pt plus 5cm}void mdtStateMachine::addState (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtState} $\ast$}]{state}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_state_machine_a827fffcccafebfdf0dddb6a65d75b0bf}
+
+
+Add a new state to state machine. 
+
+Will use QStateMachine's \hyperlink{classmdt_state_machine_a827fffcccafebfdf0dddb6a65d75b0bf}{addState()} internally.
+
+\begin{DoxyPrecond}{Precondition}
+state must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 41 of file mdtStateMachine.cpp.
+
+\hypertarget{classmdt_state_machine_ace677654f9ef9d7c1620c1c9f740ae0b}{
+\index{mdtStateMachine@{mdtStateMachine}!stateChangedForUi@{stateChangedForUi}}
+\index{stateChangedForUi@{stateChangedForUi}!mdtStateMachine@{mdtStateMachine}}
+\subsubsection[{stateChangedForUi}]{\setlength{\rightskip}{0pt plus 5cm}void mdtStateMachine::stateChangedForUi (
+\begin{DoxyParamCaption}
+\item[{int}]{id, }
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_state_machine_ace677654f9ef9d7c1620c1c9f740ae0b}
+
+
+Emitted only if a state that must be notified is entered. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_state_a8097cd281438cc58b39b9a195076d841}{mdtState::notifyEnteredToUi()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{
+\index{mdtStateMachine@{mdtStateMachine}!waitOnState@{waitOnState}}
+\index{waitOnState@{waitOnState}!mdtStateMachine@{mdtStateMachine}}
+\subsubsection[{waitOnState}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtStateMachine::waitOnState (
+\begin{DoxyParamCaption}
+\item[{int}]{state, }
+\item[{int}]{timeout = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}
+
+
+Wait until a state is reached. 
+
+This wait method will let the application's event loop continue working, so it will not freeze GUI.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & ID if state on witch to wait. \\
+\hline
+{\em timeout} & Maximum time to wait \mbox{[}ms\mbox{]}. Value $<$ 0 means a infinite timeout. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success, false on timeout. 
+\end{DoxyReturn}
+
+
+Definition at line 54 of file mdtStateMachine.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtStateMachine.h\item 
+src/mdtutils/mdtStateMachine.cpp\end{DoxyCompactItemize}

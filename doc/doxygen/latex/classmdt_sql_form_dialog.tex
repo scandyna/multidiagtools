@@ -1,0 +1,97 @@
+\hypertarget{classmdt_sql_form_dialog}{
+\section{mdtSqlFormDialog Class Reference}
+\label{classmdt_sql_form_dialog}\index{mdtSqlFormDialog@{mdtSqlFormDialog}}
+}
+
+
+SQL form dialog.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlFormDialog.h$>$}
+
+
+
+Inheritance diagram for mdtSqlFormDialog:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classmdt_sql_form_dialog__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtSqlFormDialog:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{classmdt_sql_form_dialog__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_form_dialog_af60a25c2654f0af7c62df42854af4bb1}{
+\hyperlink{classmdt_sql_form_dialog_af60a25c2654f0af7c62df42854af4bb1}{mdtSqlFormDialog} (QObject $\ast$parent=0)}
+\label{classmdt_sql_form_dialog_af60a25c2654f0af7c62df42854af4bb1}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_form_dialog_ac75cd78f6fc2ccac75a6d6fab6922a5e}{
+\hyperlink{classmdt_sql_form_dialog_ac75cd78f6fc2ccac75a6d6fab6922a5e}{$\sim$mdtSqlFormDialog} ()}
+\label{classmdt_sql_form_dialog_ac75cd78f6fc2ccac75a6d6fab6922a5e}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_sql_dialog}{mdtSqlDialog} $\ast$ \hyperlink{classmdt_sql_form_dialog_a473170aea40ee8264f96c23fa05b60f1}{sqlDialog} ()
+\begin{DoxyCompactList}\small\item\em Access SQL window instance. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_form_dialog_abc0e9db0da2b1e27d7f5853ecc465c1a}{
+int \hyperlink{classmdt_sql_form_dialog_abc0e9db0da2b1e27d7f5853ecc465c1a}{exec} ()}
+\label{classmdt_sql_form_dialog_abc0e9db0da2b1e27d7f5853ecc465c1a}
+
+\begin{DoxyCompactList}\small\item\em Show the dialog. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+SQL form dialog. 
+
+This class is part of the high level SQL GUI API.
+
+The main table's GUI is based on a \hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget}. This widget is created by constructor, and needs a widget that contains the data widgets (see \hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} for details). To attach your Ui (typically created with Qt Designer), call your setupUi() on widget returned by sqlFormWidget() .
+
+Setting up the Ui is the first thing to do.
+
+Once done, use \hyperlink{classmdt_sql_form}{mdtSqlForm} methods to continue setup. 
+
+Definition at line 45 of file mdtSqlFormDialog.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_form_dialog_a473170aea40ee8264f96c23fa05b60f1}{
+\index{mdtSqlFormDialog@{mdtSqlFormDialog}!sqlDialog@{sqlDialog}}
+\index{sqlDialog@{sqlDialog}!mdtSqlFormDialog@{mdtSqlFormDialog}}
+\subsubsection[{sqlDialog}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtSqlDialog} $\ast$ mdtSqlFormDialog::sqlDialog (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_form_dialog_a473170aea40ee8264f96c23fa05b60f1}
+
+
+Access SQL window instance. 
+
+\begin{DoxyPostcond}{Postcondition}
+Returns a valid object. 
+\end{DoxyPostcond}
+
+
+Definition at line 38 of file mdtSqlFormDialog.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlFormDialog.h\item 
+src/mdtutilsgui/mdtSqlFormDialog.cpp\end{DoxyCompactItemize}
