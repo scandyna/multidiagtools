@@ -1,6 +1,6 @@
 format 76
 "Program" // mdttools::CableList::Sandbox::Program
-  revision 12
+  revision 14
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -932,7 +932,16 @@ ${inlines}
 	
       end
 
-      operation 1468930 "relatedRangesModel"
+      classrelation 1031682 // pvDatabase (<directional composition>)
+	relation 1020546 *-->
+	  a role_name "pvDatabase" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1031682 // pvDatabase (<directional composition>)
+	  b parent class_ref 405122 // QSqlDatabase
+      end
+
+      operation 1468930 "unitConnectionRangesModel"
 	public return_type class_ref 174338 // QSqlQueryModel
 	nparams 1
 	  param in name "unitConnectionId" type class_ref 161154 // QVariant
@@ -947,16 +956,7 @@ ${inlines}
 	
       end
 
-      classrelation 1031682 // pvDatabase (<directional composition>)
-	relation 1020546 *-->
-	  a role_name "pvDatabase" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1031682 // pvDatabase (<directional composition>)
-	  b parent class_ref 405122 // QSqlDatabase
-      end
-
-      operation 1473410 "addRange"
+      operation 1473410 "addUnitConnectionRange"
 	public explicit_return_type "bool"
 	nparams 2
 	  param in name "baseUnitConnectionId" type class_ref 161154 // QVariant
@@ -964,6 +964,37 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1504770 "updateUnitConnectionRanges"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "baseUnitConnectionId" type class_ref 161154 // QVariant
+	  param in name "ranges" type class_ref 838786 // QStandardItemModel
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1505026 "removeUnitConnectionRange"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "unitConnectionId" type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -1615,13 +1646,95 @@ ${inlines}
 	
       end
 
-      operation 1480834 "enableRangeEdition"
+      operation 1502978 "setArticleConnectionEnabled"
 	public explicit_return_type "void"
+	nparams 1
+	  param in name "enable" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1480834 "setRangeEditionEnabled"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "enable" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1058690 // pvRangesModel (<directional composition>)
+	relation 1047554 *-->
+	  a role_name "pvRangesModel" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1058690 // pvRangesModel (<directional composition>)
+	  b parent class_ref 838786 // QStandardItemModel
+      end
+
+      operation 1504386 "addRange"
+	stereotype "slot"
+	private explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1504514 "editRange"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1504642 "removeRange"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1504898 "accept"
+	stereotype "slot"
+	cpp_virtual private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	

@@ -76,4 +76,3 @@ install (TARGETS "mdtcablelist${MDTLIB_VERSION_SUFFIX}" RUNTIME DESTINATION bin 
 
 # ** Unit tests compilation **
 add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
-

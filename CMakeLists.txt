@@ -235,6 +235,11 @@ if(UNIX)
   add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtdevicetest)
 endif(UNIX)
 
+# * Tools - mdt cable list *
+
+# mdtClUnitTest
+add_test (mdtClUnitTest ${CMAKE_CURRENT_BINARY_DIR}/tools/mdtcablelist/tests/mdtclunittest)
+
 #################################################################################################################################################
 # * Translations section *
 #################################################################################################################################################

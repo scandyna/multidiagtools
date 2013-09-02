@@ -54,19 +54,26 @@ classcanvas 131842 class_ref 792066 // VehicleType_tbl
 end
 note 132098 "Modification:
 Regarding current project, it's possible to specify if a link is new, to remove, etc.."
-  xyzwh 486.8 870.2 2000 296 96
+  xyzwh 561.8 857.2 2000 296 96
 note 132354 "A Unit can be based on a Article.
 Setting base article is only possible as long as no article connection is used in unit.
 Setting base article is simple: just edit referenced article ID in Unit."
   xyzwh 341.4 28.8 2000 521 99
+note 132738 "Value:
+Voir s'il faut lier a un état (p.ex: relai ON Value = 0.01, relai OFF Value = inf, etc...).
+Note: ou stocker l'état ? dans Unit ?"
+  xyzwh 265 812 2000 261 141
+note 132994 "Attention!
+1->* fonctionne pour plusieurs véhicules ??"
+  xyzwh 887 73 2000 195 97
 relationcanvas 128386 relation_ref 949762 // <association>
   decenter_begin 100
   decenter_end 836
   from ref 128130 z 2001 to point 719 212
   line 128514 z 2001 to point 719 299
   line 128642 z 2001 to ref 128130
-  role_a_pos 648 278 3000 role_b_pos 648 191 3000
-  multiplicity_a_pos 647 309 3000 multiplicity_b_pos 647 222 3000
+  role_a_pos 642 279 3000 role_b_pos 642 191 3000
+  multiplicity_a_pos 642 309 3000 multiplicity_b_pos 642 221 3000
 end
 relationcanvas 128770 relation_ref 950018 // <association>
   from ref 128002 z 2001 to ref 128130
@@ -101,11 +108,11 @@ end
 relationcanvas 130562 relation_ref 978946 // <association>
   decenter_begin 97
   decenter_end 555
-  from ref 129154 z 2001 to point 748.8 389.8
-  line 130690 z 2001 to point 748.8 455.6
+  from ref 129154 z 2001 to point 748 389
+  line 130690 z 2001 to point 748 455
   line 130818 z 2001 to ref 129154
-  role_a_pos 663 434 3000 role_b_pos 663 368 3000
-  multiplicity_a_pos 662 466 3000 multiplicity_b_pos 660 399 3000
+  role_a_pos 649 437 3000 role_b_pos 649 369 3000
+  multiplicity_a_pos 649 467 3000 multiplicity_b_pos 649 399 3000
 end
 relationcanvas 131458 relation_ref 979074 // <association>
   from ref 131330 z 2001 to ref 130050
@@ -131,4 +138,8 @@ line 132226 -_-_
   from ref 132098 z 2001 to ref 130050
 line 132482 -_-_
   from ref 132354 z 2002 to ref 128770
+line 132866 -_-_
+  from ref 130050 z 2001 to ref 132738
+line 133250 -_-_
+  from ref 128386 z 2002 to ref 132994
 end

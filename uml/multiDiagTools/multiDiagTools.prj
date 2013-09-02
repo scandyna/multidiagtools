@@ -1,6 +1,6 @@
 format 76
 "multiDiagTools"
-  revision 12
+  revision 13
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -55,7 +55,7 @@ format 76
 
   package_ref 134786 // Qt4
 
-  package_ref 134658 // src
+  package_ref 134658 // ImportZms
 
   classview 398722 "Protocols"
     //class diagram settings
@@ -78,4 +78,6 @@ format 76
       overlapping_bars size A3
     end
   end
+
+  package_ref 221058 // sandbox
 end

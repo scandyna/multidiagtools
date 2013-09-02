@@ -1,0 +1,61 @@
+format 76
+
+statecanvas 128002 state_ref 170370 // Disconnected
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 77 209 2000 119 39
+end
+statecanvas 128130 state_ref 170498 // PortClosed
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 72 71 2000 139 39
+end
+statecanvas 128258 state_ref 170626 // Ready
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 88 407 2000 67 39
+end
+statecanvas 128386 state_ref 170754 // PortSetup
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 79 142 2000 93 39
+end
+statecanvas 128514 state_ref 170882 // DeviceSetup
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 78 277 2000 113 39
+end
+statecanvas 128642 state_ref 171010 // PortError
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 260 106 2000 87 39
+end
+statecanvas 128770 state_ref 171138 // DeviceError
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 270 379 2000 107 39
+end
+statecanvas 129026 state_ref 171394 // Connecting
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 80 339 2000 103 39
+end
+note 129154 "Events from application:
+ - setupPort
+ - openPort
+ - connectToDevice
+ - abortConnectToDevice
+ - setupDevice
+ - sendData
+ - sendEvent ?
+ - disconnectFromDevice
+ - closePort
+ - abortTransaction
+
+Events from port:
+ - portErrorOccured
+ - timeout
+ - connected
+ - disconnected
+ - portOpen
+ - portClosed
+ - DataRx
+ 
+Events from device:
+ - deviceEventReceived (f.rx. USBTMC Interrupt-IN)
+ - deviceBusy ? <- State !
+ - deviceErrorOccured"
+  xyzwh 467 57 2000 365 523
+end
