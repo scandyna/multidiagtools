@@ -17,6 +17,9 @@ set (HEADER_FILES
           mdtAbstractIo.h
           mdtAnalogIo.h
           mdtDigitalIo.h
+          # State machine
+          mdtState.h
+          mdtStateMachine.h
           # Main application
           mdtApplication.h
     )
@@ -65,6 +68,9 @@ set (SOURCES_FILES
           mdtGraph.cpp
           mdtGraphVertex.cpp
           mdtGraphVertexAdjacent.cpp
+          # State machine
+          mdtState.cpp
+          mdtStateMachine.cpp
           # Main application
           mdtApplication.cpp
     )

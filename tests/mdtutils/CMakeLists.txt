@@ -59,4 +59,9 @@ add_executable(mdtgraphtest "mdtGraphTest.cpp" ${MDT_GRAPH_TEST_MOC})
 target_link_libraries(mdtgraphtest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtgraphtest "mdttest")
 
+# * mdtStateMachineTest executable *
+QT4_WRAP_CPP(MDT_STATE_MACHINE_TEST_MOC "mdtStateMachineTest.h")
+add_executable(mdtstatemachinetest "mdtStateMachineTest.cpp" ${MDT_STATE_MACHINE_TEST_MOC})
+target_link_libraries(mdtstatemachinetest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtstatemachinetest "mdttest")
 

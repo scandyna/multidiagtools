@@ -196,6 +196,8 @@ add_test (mdtFileTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtfiletest)
 add_test (mdtIoTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtiotest)
 # mdtGraphTest
 add_test (mdtGraphTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtgraphtest)
+# mdtStateMachineTest
+add_test (mdtStateMachineTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtstatemachinetest)
 
 # * mdtutilsgui *
 

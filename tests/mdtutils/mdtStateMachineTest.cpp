@@ -1,0 +1,106 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+#include "mdtStateMachineTest.h"
+#include "mdtState.h"
+#include "mdtStateMachine.h"
+#include "mdtApplication.h"
+#include <QTest>
+#include <QString>
+#include <QTimer>
+
+#include <QDebug>
+
+void mdtStateMachineTest::stateTest()
+{
+  mdtState s(1);
+
+  // Check initial values
+  QCOMPARE(s.id(), 1);
+  QCOMPARE(s.text(), QString());
+  QCOMPARE(s.notifyEnteredToUi(), false);
+  // Set/Get
+  s.setId(25);
+  QCOMPARE(s.id(), 25);
+  s.setText("State 1");
+  QCOMPARE(s.text(), QString("State 1"));
+  s.setNotifyEnteredToUi(true);
+  QCOMPARE(s.notifyEnteredToUi(), true);
+}
+
+void mdtStateMachineTest::stateMachineTest()
+{
+  mdtStateMachine sm;
+  mdtState *s1, *s2;
+  QTimer event;
+
+  event.setSingleShot(false);
+
+  // We build a simple ON-OFF-ON-... state machine
+  s1 = new mdtState(1);
+  s2 = new mdtState(2);
+  s1->addTransition(&event, SIGNAL(timeout()), s2);
+  s2->addTransition(&event, SIGNAL(timeout()), s1);
+  sm.addState(s1);
+  sm.addState(s2);
+  sm.setInitialState(s1);
+  // Check initial state
+  QCOMPARE(sm.currentState(), -1);
+  // Start
+  sm.start();
+  QVERIFY(sm.waitOnState(1));
+  QCOMPARE(sm.currentState(), 1);
+  // Check s1->s2 transition
+  event.start(100);
+  QVERIFY(sm.waitOnState(2));
+  QCOMPARE(sm.currentState(), 2);
+  // Check s2->s1 transition
+  event.start(100);
+  QVERIFY(sm.waitOnState(1));
+  QCOMPARE(sm.currentState(), 1);
+  // Check timeout
+  QVERIFY(!sm.waitOnState(55, 100));
+  QVERIFY(sm.waitOnState(1));
+  QCOMPARE(sm.currentState(), 1);
+  QVERIFY(sm.waitOnState(1, 100));
+  QCOMPARE(sm.currentState(), 1);
+  // Check s1->s2 transition with timeout
+  event.start(100);
+  QVERIFY(sm.waitOnState(2, 200));
+  QCOMPARE(sm.currentState(), 2);
+  // Check s2->s1 transition
+  event.start(100);
+  QVERIFY(sm.waitOnState(1, 200));
+  QCOMPARE(sm.currentState(), 1);
+}
+
+/* Main */
+
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  mdtStateMachineTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&test, argc, argv);
+}

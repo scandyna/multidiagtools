@@ -1,11 +1,10 @@
-window_sizes 1280 1001 384 890 923 0
+window_sizes 1024 718 255 763 640 0
 diagrams
   active  classdiagram_ref 799362 // mdtStateMachine
-    890 923 100 4 0 0
+    763 640 100 4 320 97
 end
 show_stereotypes
-selected 
-  package_ref 134786 // Qt4
+selected deploymentview_ref 402562 // mdtStateMachine
 open
   operation_ref 1521666 // setText
   operation_ref 1521794 // text
@@ -17,6 +16,9 @@ open
   operation_ref 1521922 // stateChanged
   operation_ref 1522050 // stateChangedForUi
   attribute_ref 840834 // pvCurrentState
+  
+  package_ref 168322 // mdtport
+  state_ref 170242 // PortManagerStateMachine
   operation_ref 1511554 // canSetupDevice
 end
 end

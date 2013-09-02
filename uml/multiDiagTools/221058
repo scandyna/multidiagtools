@@ -1,6 +1,6 @@
 format 76
 "sandbox" // sandbox
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -76,6 +76,12 @@ format 76
 
       state 171394 "Connecting"
       end
+
+      state 177922 "Busy"
+      end
+
+      state 178050 "AbortingXYZ"
+      end
     end
 
     classdiagram 792706 "mdtAbstractPortManagerStateMachine"
@@ -117,7 +123,5 @@ ${inlines}
 	
       end
     end
-
   end
-
 end

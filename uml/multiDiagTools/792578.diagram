@@ -47,6 +47,8 @@ note 129154 "Events from application:
 Events from port:
  - portErrorOccured
  - timeout
+ - Thread[i] started
+ - Thread[i] stopped
  - connected
  - disconnected
  - portOpen
@@ -58,4 +60,12 @@ Events from device:
  - deviceBusy ? <- State !
  - deviceErrorOccured"
   xyzwh 467 57 2000 365 523
+statecanvas 129282 state_ref 177922 // Busy
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 87 468 2000 57 39
+end
+statecanvas 129410 state_ref 178050 // AbortingXYZ
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 90 537 2000 111 39
+end
 end
