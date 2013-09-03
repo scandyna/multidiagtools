@@ -1,56 +1,44 @@
 format 76
 
-statecanvas 128002 state_ref 170370 // Disconnected
-  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 77 209 2000 119 39
-end
 statecanvas 128130 state_ref 170498 // PortClosed
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 72 71 2000 139 39
-end
-statecanvas 128258 state_ref 170626 // Ready
-  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 88 407 2000 67 39
-end
-statecanvas 128386 state_ref 170754 // PortSetup
-  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 79 142 2000 93 39
-end
-statecanvas 128514 state_ref 170882 // DeviceSetup
-  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 78 277 2000 113 39
+  xyzwh 104.45 78.85 2000 156 74
 end
 statecanvas 128642 state_ref 171010 // PortError
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 260 106 2000 87 39
-end
-statecanvas 128770 state_ref 171138 // DeviceError
-  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 270 379 2000 107 39
-end
-statecanvas 129026 state_ref 171394 // Connecting
-  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 80 339 2000 103 39
+  xyzwh 565.95 294.05 2000 439 74
 end
 note 129154 "Events from application:
- - setupPort
- - openPort
- - connectToDevice
+ - setPort
+ - scan -> Voir appSetupPortEvent
+ - appSetupPortEvent
+ - appSetupPortDoneEvent
+ - appOpenPortEvent
+ - appStopThreadsEvent
+ - appClosePortEvent
+ - appConnectToDeviceEvent
+ - appConnectedEvent
  - abortConnectToDevice
  - setupDevice
  - sendData
  - sendEvent ?
  - disconnectFromDevice
- - closePort
+
  - abortTransaction
+ - abortScan
+ - transactionTimeout ?
 
 Events from port:
- - portErrorOccured
- - timeout
- - Thread[i] started
- - Thread[i] stopped
- - connected
- - disconnected
+ - portThreadUnhandledErrorEvent
+ - portThreadReadTimeoutEvent
+ - portThreadWriteTimeoutEvent
+ - portThreadControlTimeoutEvent
+ - portThreadInterruptTimeoutEvent
+ - portThreadAllThreadsReadyEvent
+ - portThreadAllThreadsStoppedEvent
+ - pmOpenPortErrorEvent
+ - portThreadConnectedEvent
+ - portThreadDisconnectedEvent
  - portOpen
  - portClosed
  - DataRx
@@ -58,14 +46,110 @@ Events from port:
 Events from device:
  - deviceEventReceived (f.rx. USBTMC Interrupt-IN)
  - deviceBusy ? <- State !
- - deviceErrorOccured"
-  xyzwh 467 57 2000 365 523
-statecanvas 129282 state_ref 177922 // Busy
-  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 87 468 2000 57 39
-end
+ - deviceErrorEvent
+ - frame error ?"
+  xyzwh 1131.85 621.45 2000 396 754
 statecanvas 129410 state_ref 178050 // AbortingXYZ
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 90 537 2000 111 39
+  xyzwh 656.35 880.55 2000 111 39
 end
+statecanvas 129538 state_ref 184578 // FatalError ?
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 506.6 885 2000 109 39
+end
+pseudostatecanvas 129666 pseudostate_ref 161410 // initial
+   xyz 23.8 37.9 2000
+end
+statecanvas 129922 state_ref 184834 // Starting
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 45.1 285.5 2000 271 91
+end
+statecanvas 132482 state_ref 191490 // Stopping
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 967.45 461.85 2000 189 73
+end
+statecanvas 132866 state_ref 191618 // Stopped
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 608.55 72.95 2000 349 74
+end
+note 133634 "Port setup, scan,  can be done in several states (mainly when port is closed).  This depend on port type, and is not a interresting state. Application should check current state before doing setup/scan."
+  xyzwh 1044.55 3.3 2000 519 96
+note 143490 "On some error, thread can stop automatically"
+  xyzwh 612.6 203.2 2006 151 74
+note 143874 "Notify error in a dialog"
+  xyzwh 296 137.6 2000 129 59
+statecanvas 144258 state_ref 198658 // PortOpenStateMachine
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 418.6 631.4 2006 205 90
+end
+transitioncanvas 130050 transition_ref 182274 // <transition>
+  
+  from ref 129666 z 2001 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131458 transition_ref 182658 // appOpenPortEvent
+  decenter_begin 56
+  decenter_end 247
+  
+  from ref 128130 z 2001 label "appOpenPortEvent" xyz 49 206 2001 to ref 129922
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132994 transition_ref 184066 // allThreadsStoppedEvent
+  
+  from ref 128642 z 2001 label "allThreadsStoppedEvent" xyz 707.5 178.5 2001 to ref 132866
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133122 transition_ref 184194 // portClosedEvent
+  decenter_end 430
+  
+  from ref 132866 z 2001 label "portClosedEvent" xyz 378.5 93 2001 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133506 transition_ref 184450 // allThreadsStoppedEvent
+  geometry HVr
+  
+  from ref 132482 z 2001 label "allThreadsStoppedEvent" xyz 984 249 2001 to point 1058 107.6
+  line 137986 z 2001 to ref 132866
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 142338 transition_ref 187778 // portThreadUnhandledErrorEvent
+  
+  from ref 129922 z 2001 label "portThreadUnhandledErrorEvent" xyz 334.5 313.5 2001 to ref 128642
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 143362 transition_ref 196098 // pmOpenPortErrorEvent
+  decenter_begin 754
+  decenter_end 943
+  
+  from ref 129922 z 2001 label "pmOpenPortErrorEvent" xyz 176 223 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 143746 transition_ref 196226 // appStopThreadsEvent
+  
+  from ref 128642 z 2001 label "appStopThreadsEvent" xyz 850.5 403.5 3000 to ref 132482
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 144386 transition_ref 196482 // allThreadsReadyEvent
+  geometry VH
+  
+  from ref 129922 z 2007 label "allThreadsReadyEvent" xyz 187.5 638 3000 to point 176 671
+  line 144898 z 2007 to ref 144258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 144514 transition_ref 196610 // portThreadUnhandledErrorEvent
+  
+  from ref 144258 z 2007 label "portThreadUnhandledErrorEvent" xyz 546.5 489.5 3000 to ref 128642
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 144642 transition_ref 196738 // appStopThreadsEvent
+  geometry HV
+  
+  from ref 144258 z 2007 label "appStopThreadsEvent" xyz 769.5 654 3000 to point 1058 671
+  line 145026 z 2007 to ref 132482
+  write_horizontally default show_definition default drawing_language default
+end
+line 143618 -_-_
+  from ref 143490 z 2007 to ref 132994
+line 144002 -_-_
+  from ref 143874 z 2002 to ref 143362
 end

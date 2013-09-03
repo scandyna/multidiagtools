@@ -1,6 +1,6 @@
 format 76
 "sandbox" // sandbox
-  revision 3
+  revision 6
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -45,42 +45,224 @@ format 76
     state 170242 "PortManagerStateMachine"
       stereotype "machine"
       statediagram 792578 "mdtPortManagerStateMachine"
-	package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+	package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations no shadow default
 	show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-	size A4
-      end
-
-      state 170370 "Disconnected"
+	size A3-Landscape
       end
 
       state 170498 "PortClosed"
-      end
-
-      state 170626 "Ready"
-      end
-
-      state 170754 "PortSetup"
-      end
-
-      state 170882 "DeviceSetup"
+	  uml_on_entry "notifyUi"
+	transition 182658 "appOpenPortEvent"
+	  on state_ref 184834 // Starting
+	  external 
+	end
       end
 
       state 171010 "PortError"
-      end
+	  uml_on_entry "notifyErrorToUi , emit appStopThreadsEvent"
+	transition 184066 "allThreadsStoppedEvent"
+	  on state_ref 191618 // Stopped
+	  external 
+	end
 
-      state 171138 "DeviceError"
+	transition 196226 "appStopThreadsEvent"
+	  on state_ref 191490 // Stopping
+	  external 
+	end
       end
 
       state 171266 "DeviceEventRecived"
       end
 
-      state 171394 "Connecting"
-      end
-
-      state 177922 "Busy"
-      end
-
       state 178050 "AbortingXYZ"
+      end
+
+      state 184578 "FatalError ?"
+      end
+
+      pseudostate 161410 initial 
+	transition 182274 "<transition>"
+	  on state_ref 170498 // PortClosed
+	  external 
+	end
+      end
+
+      state 184834 "Starting"
+	  uml_on_entry "openPort, startThreads"
+	transition 187778 "portThreadUnhandledErrorEvent"
+	  on state_ref 171010 // PortError
+	  external 
+	end
+
+	transition 196098 "pmOpenPortErrorEvent"
+	  on state_ref 170498 // PortClosed
+	  external 
+	end
+
+	transition 196482 "allThreadsReadyEvent"
+	  on state_ref 198658 // PortOpenStateMachine
+	  external 
+	end
+      end
+
+      state 191490 "Stopping"
+	  uml_on_entry "stopThreads"
+	transition 184450 "allThreadsStoppedEvent"
+	  on state_ref 191618 // Stopped
+	  external 
+	end
+      end
+
+      state 191618 "Stopped"
+	  uml_on_entry "closePort , emit portClosedEvent"
+	transition 184194 "portClosedEvent"
+	  on state_ref 170498 // PortClosed
+	  external 
+	end
+      end
+
+      state 198658 "PortOpenStateMachine"
+	stereotype "submachine"
+	statediagram 812802 "PortOpenStateMachine"
+	  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+	  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+	  size A4
+	end
+
+	state 170370 "Disconnected"
+	    uml_on_entry "notifyUi"
+	  transition 197122 "connectToDeviceEvent"
+	    on state_ref 171394 // Connecting
+	    external 
+	  end
+	end
+
+	state 171394 "Connecting"
+	    uml_on_entry "notifyUi , connectToDevice ?"
+	  transition 196994 "disconnectedEvent"
+	    on state_ref 170370 // Disconnected
+	    external 
+	  end
+
+	  transition 197250 "connectedEvent"
+	    on state_ref 191746 // ConnectedStateMachine
+	    external 
+	  end
+	end
+
+	state 191746 "ConnectedStateMachine"
+	  stereotype "submachine"
+	  statediagram 806274 "ConnectedStateMachine"
+	    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+	    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+	    size A4
+	  end
+
+	  state 170882 "DeviceSetup"
+	    transition 195202 "deviceSetupDoneEvent"
+	      on state_ref 170626 // Ready
+	      external 
+	    end
+
+	    transition 195458 "busyEvent"
+	      on state_ref 198274 // DeviceSetupBusy
+	      external 
+	    end
+	  end
+
+	  state 171138 "DeviceError"
+	      uml_on_entry "notifyUi"
+	    transition 195842 "deviceErrorGoneEvent"
+	      on state_ref 170626 // Ready
+	      external 
+	    end
+	  end
+
+	  state 177922 "Busy"
+	      uml_on_entry "notifyUi"
+	    transition 194946 "readyEvent"
+	      on state_ref 170626 // Ready
+	      external 
+	    end
+	  end
+
+	  state 170626 "Ready"
+	      uml_on_entry "notifyUi"
+	    transition 194818 "busyEvent"
+	      on state_ref 177922 // Busy
+	      external 
+	    end
+
+	    transition 195074 "appDeviceSetupEvent"
+	      on state_ref 170882 // DeviceSetup
+	      external 
+	    end
+
+	    transition 195330 "deviceErrorEvent"
+	      on state_ref 171138 // DeviceError
+	      external 
+	    end
+
+	    transition 195714 "after( 1s )"
+	      on stateaction_ref 128002
+	      external 
+	    end
+	  end
+
+	  pseudostate 167938 initial 
+	    transition 194690 "<transition>"
+	      on state_ref 170626 // Ready
+	      external 
+	    end
+	  end
+
+	  state 198274 "DeviceSetupBusy"
+	      uml_on_entry "notifyUi"
+	    transition 195586 "readyEvent"
+	      on state_ref 170882 // DeviceSetup
+	      external 
+	    end
+	  end
+
+	  state 198402 "DeviceErrorBusy"
+	      uml_on_entry "notifyUi"
+	  end
+
+	  stateaction 128002
+	    stereotype "send-signal"
+	    uml "notifyWaitingOnDeviceToUi"
+	  end
+
+	  transition 197378 "disconnectedEvent"
+	    on state_ref 170370 // Disconnected
+	    external 
+	  end
+	end
+
+	transition 196610 "portThreadUnhandledErrorEvent"
+	  on state_ref 171010 // PortError
+	  external 
+	end
+
+	transition 196738 "appStopThreadsEvent"
+	  on state_ref 191490 // Stopping
+	  external 
+	end
+
+	state 198786 "PortOpen"
+	    uml_on_entry "notifyUi"
+	  transition 196866 "connectToDeviceEvent"
+	    on state_ref 171394 // Connecting
+	    external 
+	  end
+	end
+
+	pseudostate 168066 initial 
+	  transition 197506 "<transition>"
+	    on state_ref 198786 // PortOpen
+	    external 
+	  end
+	end
       end
     end
 

@@ -1,24 +1,19 @@
-window_sizes 1024 718 255 763 640 0
+window_sizes 1280 1001 420 854 923 0
 diagrams
-  active  classdiagram_ref 799362 // mdtStateMachine
-    763 640 100 4 320 97
+  classdiagram_ref 799362 // mdtStateMachine
+    763 640 100 4 296 0
+  statediagram_ref 792578 // mdtPortManagerStateMachine
+    986 923 80 17 2 89
+  active  statediagram_ref 812802 // PortOpenStateMachine
+    854 923 100 4 96 0
+  statediagram_ref 806274 // ConnectedStateMachine
+    683 738 100 4 0 0
 end
 show_stereotypes
-selected deploymentview_ref 402562 // mdtStateMachine
+selected statediagram_ref 812802 // PortOpenStateMachine
 open
-  operation_ref 1521666 // setText
-  operation_ref 1521794 // text
-  operation_ref 1522178 // setNotifyEnteredToUi
-  operation_ref 1522306 // notifyEnteredToUi
-  attribute_ref 840706 // pvId
-  attribute_ref 840962 // pvText
-  operation_ref 1521538 // currentState
-  operation_ref 1521922 // stateChanged
-  operation_ref 1522050 // stateChangedForUi
-  attribute_ref 840834 // pvCurrentState
-  
-  package_ref 168322 // mdtport
-  state_ref 170242 // PortManagerStateMachine
+  state_ref 171010 // PortError
+  state_ref 171138 // DeviceError
   operation_ref 1511554 // canSetupDevice
 end
 end

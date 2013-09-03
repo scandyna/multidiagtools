@@ -1,0 +1,64 @@
+format 76
+
+statecanvas 128002 state_ref 191746 // ConnectedStateMachine
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 325 597 2000 199 55
+end
+statecanvas 128130 state_ref 170370 // Disconnected
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 555 417 2000 151 73
+end
+statecanvas 128258 state_ref 171394 // Connecting
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 68 419 2000 305 73
+end
+statecanvas 128386 state_ref 198786 // PortOpen
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 146 188 2000 151 73
+end
+note 128898 "connectedEvent/disconnectedEvent can be sent by a thread or by application.
+Examples:
+TCP or USB port can detect that physical device is disconnected, so the thread will be the source of disconnectedEvent.
+When using a device on a serial port, disconnection is not detected, so the application must handle this, and will also be the source of the disconnectedEvent.
+Connection can be aborted, in this case, disconnectedEvent will be sent by thread or application (depending on port type)"
+  xyzwh 28.1 678.2 2000 401 256
+pseudostatecanvas 129282 pseudostate_ref 168066 // initial
+   xyz 47 215 2000
+end
+transitioncanvas 128514 transition_ref 196866 // connectToDeviceEvent
+  
+  from ref 128386 z 2001 label "connectToDeviceEvent" xyz 144.5 330.5 3000 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 128642 transition_ref 196994 // disconnectedEvent
+  decenter_begin 123
+  decenter_end 150
+  
+  from ref 128258 z 2001 label "disconnectedEvent" xyz 401 411.5 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 128770 transition_ref 197122 // connectToDeviceEvent
+  decenter_begin 875
+  decenter_end 848
+  
+  from ref 128130 z 2001 label "connectToDeviceEvent" xyz 388 463.5 3000 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129026 transition_ref 197250 // connectedEvent
+  decenter_begin 555
+  decenter_end 45
+  
+  from ref 128258 z 2001 label "connectedEvent" xyz 232 535.5 3000 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129154 transition_ref 197378 // disconnectedEvent
+  
+  from ref 128002 z 2001 label "disconnectedEvent" xyz 455 534.5 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129410 transition_ref 197506 // <transition>
+  
+  from ref 129282 z 2001 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+end
