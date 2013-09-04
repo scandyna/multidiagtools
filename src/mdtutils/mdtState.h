@@ -66,6 +66,28 @@ class mdtState : public QState
    */
   QString text() const;
 
+  /*! \brief Set LED color ID
+   *
+   * \sa ledColorId()
+   */
+  void setLedColorId(int colorId);
+
+  /*! \brief Get LED color ID
+   *
+   * The color ID can, for example, be used with mdtLed color enum.
+   *  It was choosen store this id in int format,
+   *  because mdtLed is in mdtUtilsGui package (we not want to depend on it).
+   */
+  int ledColorId() const;
+
+  /*! \brief Set LED ON state
+   */
+  void setLedOn(bool on);
+
+  /*! \brief Get LED ON state
+   */
+  bool ledIsOn() const;
+
   /*! \brief Set notifyEnteredToUi flag
    *
    * \sa notifyEnteredToUi()
@@ -100,6 +122,8 @@ class mdtState : public QState
 
   int pvId;
   QString pvText;
+  int pvLedColorId;
+  bool pvLedIsOn;
   bool pvNotifyEnteredToUi;
 };
 

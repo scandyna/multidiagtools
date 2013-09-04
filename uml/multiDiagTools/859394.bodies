@@ -1,0 +1,14 @@
+class PortClosed_State
+!!!1549570.cpp!!!	_completion(inout stm : PortManagerStateMachine) : bool
+  {
+    stm._set_currentState(stm._portmanagerstatemachine_state._starting_state);
+#ifdef VERBOSE_STATE_MACHINE
+    puts("DEBUG : current state is now .PortManagerStateMachine.Starting");
+#endif
+    stm._portmanagerstatemachine_state._starting_state.create(stm);
+    return (bool) 1;
+  }
+!!!1549954.cpp!!!	create(inout stm : PortManagerStateMachine) : void
+	_completion(stm);
+!!!1550082.cpp!!!	_upper(inout stm : PortManagerStateMachine) : PortManagerStateMachine::AnyState
+  return &stm._portmanagerstatemachine_state;

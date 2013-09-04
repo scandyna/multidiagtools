@@ -1,6 +1,6 @@
 format 76
 "multiDiagTools"
-  revision 13
+  revision 14
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -39,6 +39,8 @@ format 76
 
   mark_for_import
   
+  ncouples 1
+  key "html dir" value "/tmp/"
   package_ref 128002 // mdtutils
 
   package_ref 174978 // mdtutilsgui

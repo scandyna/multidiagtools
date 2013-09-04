@@ -179,9 +179,9 @@ void mdtPortStatusWidget::setStateBusyText(const QString &text)
 
 void mdtPortStatusWidget::setDefaultStateColors()
 {
-  pvReadyColor = mdtLed::LED_COLOR_GREEN;
-  pvConnectingColor = mdtLed::LED_COLOR_ORANGE;
-  pvBusyColor = mdtLed::LED_COLOR_ORANGE;
+  pvReadyColor = mdtLed::Green;
+  pvConnectingColor = mdtLed::Orange;
+  pvBusyColor = mdtLed::Orange;
 }
 
 void mdtPortStatusWidget::setStateReadyColor(mdtLed::color_t color)

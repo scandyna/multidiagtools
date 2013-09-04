@@ -1,19 +1,23 @@
-window_sizes 1280 1001 420 854 923 0
+window_sizes 1024 718 254 764 640 0
 diagrams
-  classdiagram_ref 799362 // mdtStateMachine
-    763 640 100 4 296 0
+  statediagram_ref 812802 // Running
+    748 738 100 4 156 0
   statediagram_ref 792578 // mdtPortManagerStateMachine
-    986 923 80 17 2 89
-  active  statediagram_ref 812802 // PortOpenStateMachine
-    854 923 100 4 96 0
-  statediagram_ref 806274 // ConnectedStateMachine
-    683 738 100 4 0 0
+    748 738 80 17 120 227
+  classdiagram_ref 792706 // mdtPortManagerStateMachine
+    748 738 100 4 48 0
+  active  statediagram_ref 806274 // Connected
+    764 640 100 4 0 0
 end
 show_stereotypes
-selected statediagram_ref 812802 // PortOpenStateMachine
+selected statediagram_ref 806274 // Connected
 open
+  
+  package_ref 128002 // mdtutils
   state_ref 171010 // PortError
   state_ref 171138 // DeviceError
-  operation_ref 1511554 // canSetupDevice
+  class_ref 845442 // mdtPortManagerStateMachine
+  
+  package_ref 221058 // sandbox
 end
 end

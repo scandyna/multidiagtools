@@ -21,6 +21,7 @@
 #include "mdtPortManagerTest.h"
 #include "mdtPort.h"
 #include "mdtPortManager.h"
+#include "mdtPortManagerStateMachine.h"
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
 #include "mdtFrameCodecModbus.h"
@@ -152,6 +153,11 @@ void mdtPortManagerTest::transactionIdTest()
   delete ai2;
   delete di1;
   delete di2;
+}
+
+void mdtPortManagerTest::stateMachineTest()
+{
+  mdtPortManagerStateMachine psm;
 }
 
 void mdtPortManagerTest::portTest()

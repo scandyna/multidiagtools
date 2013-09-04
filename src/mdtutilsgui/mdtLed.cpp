@@ -82,12 +82,16 @@ void mdtLed::setRed()
 
 void mdtLed::setColor(mdtLed::color_t color)
 {
-  if(color == LED_COLOR_GREEN){
-    setGreen();
-  }else if(color == LED_COLOR_ORANGE){
-    setOrange();
-  }else{
-    setRed();
+  switch(color){
+    case Green:
+      setGreen();
+      break;
+    case Orange:
+      setOrange();
+      break;
+    case Red:
+      setRed();
+      break;
   }
 }
 

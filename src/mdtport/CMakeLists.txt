@@ -23,6 +23,7 @@ set (HEADER_FILES
           mdtPortInfoCbHandler.h
           # Port manager
           mdtPortManager.h
+          mdtPortManagerStateMachine.h
           mdtUsbPortManager.h
           mdtUsbtmcPortManager.h
           mdtModbusTcpPortManager.h
@@ -62,6 +63,7 @@ set (SOURCES_FILES
           mdtPortInfoCbHandler.cpp
           # Port manager
           mdtPortManager.cpp
+          mdtPortManagerStateMachine.cpp
           mdtUsbPortManager.cpp
           mdtUsbtmcPortManager.cpp
           mdtModbusTcpPortManager.cpp

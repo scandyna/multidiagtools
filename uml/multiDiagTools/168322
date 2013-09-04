@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 37
+  revision 39
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2687,6 +2687,7 @@ ${inlines}
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
+    associated_deployment_view deploymentview_ref 409090 // mdtPortManager
     classdiagram 294658 "mdtPortManager"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
@@ -2780,6 +2781,29 @@ ${inlines}
 	
       end
 
+      operation 506498 "setPortName"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "portName" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 697090 "config"
+	abstract cpp_virtual public return_type class_ref 256386 // mdtPortConfig
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 984578 "detachPort"
 	public explicit_return_type "void"
 	nparams 2
@@ -2862,29 +2886,6 @@ ${inlines}
 	
       end
 
-      operation 506498 "setPortName"
-	abstract cpp_virtual public explicit_return_type "bool"
-	nparams 1
-	  param in name "portName" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 697090 "config"
-	abstract cpp_virtual public return_type class_ref 256386 // mdtPortConfig
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
       operation 720258 "setConfig"
 	public explicit_return_type "void"
 	nparams 1
@@ -2904,20 +2905,6 @@ ${inlines}
 	cpp_virtual public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 514050 "closePort"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
 "
 	
 	
@@ -3114,11 +3101,634 @@ ${inlines}
 	
 	
       end
+
+      classrelation 1072386 // pvStateMachine (<composition>)
+	relation 1061250 *---
+	  a role_name "pvStateMachine" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1072386 // pvStateMachine (<composition>)
+	  b role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1072514 // <composition>
+      end
+
+      operation 1544066 "currentState"
+	public explicit_return_type "state_t"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1544706 "startThreads"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1544962 "stopThreads"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1543554 "pmStartThreadsEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1544194 "pmStopThreadsEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1543682 "pmAllThreadsReadyEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1544450 "pmAllThreadsStoppedEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1543810 "onThreadReady"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "thread" type class_ref 222722 // QThread
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	comment "Add thread to pvReadyThreads list. If all threads are ready (pvReadyThreads.size() == pvThreads.size() ), clear pvReadyThreads and emit pmAllThreadsReadyEvent"
+      end
+
+      attribute 860674 "pvReadyThreads"
+	private explicit_type "QList<QThread>"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 1543938 "pmUnhandledErrorEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1544322 "onStatePortErrorEntered"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 514050 "closePort"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1544834 "pmPortClosedEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1545346 "pmConnectingEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1545474 "pmConnectedEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1545602 "pmDisconnectedEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1545730 "pmBusyEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1545858 "pmReadyEvent"
+	stereotype "signal"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1545986 "isReady"
+	abstract force_body_gen cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 462082 "Interactions"
       draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
+    end
+
+    state 170242 "PortManagerStateMachine"
+      stereotype "machine"
+      statediagram 792578 "mdtPortManagerStateMachine"
+	package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations no shadow default
+	show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+	size A3-Landscape
+      end
+
+      state 170498 "PortClosed"
+	  uml_on_entry "notifyUi"
+	transition 182658 "pmStartThreadsEvent"
+	  on state_ref 184834 // Starting
+	  external 
+	end
+      end
+
+      state 171010 "PortError"
+	  uml_on_entry "notifyErrorToUi , emit pmStopThreadsEvent"
+	transition 184066 "allThreadsStoppedEvent"
+	  on state_ref 191618 // Stopped
+	  external 
+	end
+
+	transition 196226 "pmStopThreadsEvent"
+	  on state_ref 191490 // Stopping
+	  external 
+	end
+      end
+
+      state 171266 "DeviceEventRecived"
+      end
+
+      pseudostate 161410 initial 
+	transition 182274 "<transition>"
+	  on state_ref 170498 // PortClosed
+	  external 
+	end
+      end
+
+      state 184834 "Starting"
+	  uml_on_entry "startThreads"
+	transition 187778 "pmUnhandledErrorEvent"
+	  on state_ref 171010 // PortError
+	  external 
+	end
+
+	transition 196482 "pmAllThreadsReadyEvent"
+	  on state_ref 198658 // Running
+	  external 
+	end
+      end
+
+      state 191490 "Stopping"
+	  uml_on_entry "stopThreads"
+	transition 184450 "pmAllThreadsStoppedEvent"
+	  on state_ref 191618 // Stopped
+	  external 
+	end
+      end
+
+      state 191618 "Stopped"
+	  uml_on_entry "closePort"
+	transition 184194 "pmPortClosedEvent"
+	  on state_ref 170498 // PortClosed
+	  external 
+	end
+      end
+
+      state 198658 "Running"
+	stereotype "submachine"
+	statediagram 812802 "Running"
+	  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+	  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+	  size A4
+	end
+
+	state 170370 "Disconnected"
+	    uml_on_entry "notifyUi"
+	  transition 197122 "pmConnectingEvent"
+	    on state_ref 171394 // Connecting
+	    external 
+	  end
+	end
+
+	state 171394 "Connecting"
+	    uml_on_entry "notifyUi"
+	  transition 196994 "pmDisconnectedEvent"
+	    on state_ref 170370 // Disconnected
+	    external 
+	  end
+
+	  transition 197250 "pmConnectedEvent"
+	    on state_ref 191746 // Connected
+	    external 
+	  end
+	end
+
+	state 191746 "Connected"
+	  stereotype "submachine"
+	  statediagram 806274 "Connected"
+	    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations no shadow default
+	    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+	    size A4
+	  end
+
+	  state 170882 "DeviceSetup"
+	    transition 195202 "deviceSetupDoneEvent"
+	      on state_ref 170626 // Ready
+	      external 
+	    end
+
+	    transition 195458 "pmBusyEvent"
+	      on state_ref 198274 // DeviceSetupBusy
+	      external 
+	    end
+	  end
+
+	  state 171138 "DeviceError"
+	      uml_on_entry "notifyUi"
+	    transition 195842 "deviceErrorGoneEvent"
+	      on state_ref 170626 // Ready
+	      external 
+	    end
+
+	    transition 204290 "pmBusyEvent"
+	      on state_ref 198402 // DeviceErrorBusy
+	      external 
+	    end
+	  end
+
+	  state 177922 "Busy"
+	      uml_on_entry "notifyUi"
+	    transition 194946 "pmReadyEvent"
+	      on state_ref 170626 // Ready
+	      external 
+	    end
+	  end
+
+	  state 170626 "Ready"
+	      uml_on_entry "notifyUi"
+	    transition 194818 "pmBusyEvent"
+	      on state_ref 177922 // Busy
+	      external 
+	    end
+
+	    transition 195074 "appDeviceSetupEvent"
+	      on state_ref 170882 // DeviceSetup
+	      external 
+	    end
+
+	    transition 195330 "deviceErrorEvent"
+	      on state_ref 171138 // DeviceError
+	      external 
+	    end
+
+	  end
+
+	  pseudostate 167938 initial 
+	    transition 194690 "<transition>"
+	      on state_ref 170626 // Ready
+	      external 
+	    end
+	  end
+
+	  state 198274 "DeviceSetupBusy"
+	      uml_on_entry "notifyUi"
+	    transition 195586 "pmReadyEvent"
+	      on state_ref 170882 // DeviceSetup
+	      external 
+	    end
+	  end
+
+	  state 198402 "DeviceErrorBusy"
+	      uml_on_entry "notifyUi"
+	    transition 204418 "pmReadyEvent"
+	      on state_ref 171138 // DeviceError
+	      external 
+	    end
+	  end
+
+	  transition 197378 "pmDisconnectedEvent"
+	    on state_ref 170370 // Disconnected
+	    external 
+	  end
+	end
+
+	transition 196610 "pmUnhandledErrorEvent"
+	  on state_ref 171010 // PortError
+	  external 
+	end
+
+	transition 196738 "pmStopThreadsEvent"
+	  on state_ref 191490 // Stopping
+	  external 
+	end
+
+	state 198786 "PortReady"
+	    uml_on_entry "notifyUi"
+	  transition 196866 "pmConnectingEvent"
+	    on state_ref 171394 // Connecting
+	    external 
+	  end
+	end
+
+	pseudostate 168066 initial 
+	  transition 197506 "<transition>"
+	    on state_ref 198786 // PortReady
+	    external 
+	  end
+	end
+
+	pseudostate 174594 initial 
+	  transition 204034 "pmConnectingEvent"
+	    on state_ref 171394 // Connecting
+	    external 
+	  end
+	end
+
+	pseudostate 174722 initial 
+	  transition 204162 "pmConnectedEvent"
+	    on state_ref 191746 // Connected
+	    external 
+	  end
+	end
+      end
+    end
+
+    classdiagram 792706 "mdtPortManagerStateMachine"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 845442 "mdtPortManagerStateMachine"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1072258 // <generalisation>
+	relation 1061122 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1072258 // <generalisation>
+	  b parent class_ref 852354 // mdtStateMachine
+      end
+
+      classrelation 1072514 // <composition>
+	relation_ref 1061250 // <composition>
+      end
+
+      operation 1543170 "mdtPortManagerStateMachine"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1543298 "~mdtPortManagerStateMachine"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1543426 "buildMainStateMachine"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "portManager" type class_ref 182018 // mdtPortManager
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1545090 "buildRunningSubMachine"
+	force_body_gen protected explicit_return_type "void"
+	nparams 2
+	  param in name "portManager" type class_ref 182018 // mdtPortManager
+	  param in name "parentState" type class_ref 852226 // mdtState
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1545218 "buildConnectedSubMachine"
+	force_body_gen protected explicit_return_type "void"
+	nparams 2
+	  param in name "portManager" type class_ref 182018 // mdtPortManager
+	  param in name "parentState" type class_ref 852226 // mdtState
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 501762 "mdtModbusTcpPortManager"
@@ -3222,133 +3832,1046 @@ ${inlines}
       end
     end
 
-    state 142338 "mdtPortManagerStates"
-      stereotype "machine"
-      statediagram 581378 "mdtPortManagerStates"
-	package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
-	show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-	size A3
-      end
-
-      state 142466 "Ready"
-	  uml_on_entry "setStateReady"
-	transition 151810 "busy"
-	  on state_ref 143106 // Busy
-	  external 
+    class 859010 "PortManagerStateMachine"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      ncouples 1
+      key "STM generated" value ""
+      comment " implement the state machine PortManagerStateMachine"
+      class 859138 "AnyState"
+	abstract visibility protected 
+	cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	ncouples 1
+	key "STM generated" value ""
+	comment " Mother class of all the classes representing states"
+	operation 1546626 "~AnyState"
+	  force_body_gen cpp_virtual public explicit_return_type ""
+	  nparams 0
+	  cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	  cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	  
+	  
+	  
+	  
+	  ncouples 1
+	  key "STM generated" value ""
 	end
 
-	transition 152066 "disconnected"
-	  on state_ref 142594 // Disconnected
-	  external 
+	operation 1546754 "_upper"
+	  abstract force_body_gen cpp_virtual public return_type class_ref 859138 // AnyState
+	  nparams 1
+	    param inout name "stm" type class_ref 859010 // PortManagerStateMachine
+	  cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} &${)}${const}${volatile}${throw}${abstract};
+"
+	  
+	  
+	  
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " return the upper state"
 	end
 
-	transition 152578 "unhandledError"
-	  on state_ref 142850 // Error
-	  external 
+	operation 1546882 "_do"
+	  force_body_gen cpp_virtual public explicit_return_type "void"
+	  nparams 1
+	    param inout name "stm" type class_ref 859010 // PortManagerStateMachine
+	  cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} &${)}${const}${volatile}${throw}${abstract};
+"
+	  cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} &${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	  
+	  
+	  
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " perform the 'do activity'"
 	end
 
-	transition 153090 "handledError"
-	  on state_ref 142978 // Warning
-	  external 
-	end
-      end
-
-      state 142594 "Disconnected"
-	  uml_on_entry "setStateDisconnected"
-	transition 151298 "connecting"
-	  on state_ref 142722 // Connecting
-	  external 
-	end
-
-	transition 153346 "<transition>"
-	  on pseudostate_ref 148098 // final
-	  external 
-	end
-
-	transition 153602 "ready"
-	  on state_ref 142466 // Ready
-	  external 
-	end
-      end
-
-      state 142722 "Connecting"
-	  uml_on_entry "setStateConnecting"
-	transition 151554 "disconnected"
-	  on state_ref 142594 // Disconnected
-	  external 
-	end
-
-	transition 151682 "ready"
-	  on state_ref 142466 // Ready
-	  external 
-	end
-
-	transition 152450 "unhandledError"
-	  on state_ref 142850 // Error
-	  external 
-	end
-      end
-
-      state 142850 "Error"
-	  uml_on_entry "setStateError"
-	transition 153474 "<transition>"
-	  on pseudostate_ref 148226 // final
-	  external 
-	end
-      end
-
-      state 142978 "Warning"
-	  uml_on_entry "setStateWarning"
-	transition 152322 "disconnected"
-	  on state_ref 142594 // Disconnected
-	  external 
-	end
-
-	transition 152834 "unhandledError"
-	  on state_ref 142850 // Error
-	  external 
-	end
-
-	transition 153218 "ready"
-	  on state_ref 142466 // Ready
-	  external 
-	end
-      end
-
-      state 143106 "Busy"
-	  uml_on_entry "setStateBusy"
-	transition 151938 "ready"
-	  on state_ref 142466 // Ready
-	  external 
-	end
-
-	transition 152194 "disconnected"
-	  on state_ref 142594 // Disconnected
-	  external 
-	end
-
-	transition 152706 "unhandledError"
-	  on state_ref 142850 // Error
-	  external 
-	end
-
-	transition 152962 "handledError"
-	  on state_ref 142978 // Warning
-	  external 
+	operation 1549826 "create"
+	  force_body_gen cpp_virtual public explicit_return_type "void"
+	  nparams 1
+	    param inout name "stm" type class_ref 859010 // PortManagerStateMachine
+	  cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} &${)}${const}${volatile}${throw}${abstract};
+"
+	  cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} &${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	  
+	  
+	  
+	  
+	  ncouples 1
+	  key "STM generated" value ""
 	end
       end
 
-      pseudostate 147970 initial 
-	transition 151170 "<transition>"
-	  on state_ref 142594 // Disconnected
-	  external 
+      class 859266 "PortManagerStateMachine_State"
+	visibility protected 
+	cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	java_decl ""
+	php_decl ""
+	python_2_2 python_decl ""
+	idl_decl ""
+	explicit_switch_type ""
+	
+	ncouples 1
+	key "STM generated" value ""
+	comment " implement the state PortManagerStateMachine"
+	class 859394 "PortClosed_State"
+	  visibility public 
+	  cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	  java_decl ""
+	  php_decl ""
+	  python_2_2 python_decl ""
+	  idl_decl ""
+	  explicit_switch_type ""
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " implement the state PortClosed"
+	  operation 1547138 "~PortClosed_State"
+	    force_body_gen cpp_virtual public explicit_return_type ""
+	    nparams 0
+	    cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	    cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	  end
+
+	  classrelation 1072770 // <generalisation>
+	    relation 1061506 ---|>
+	      a public
+		cpp default "${type}"
+		classrelation_ref 1072770 // <generalisation>
+	      b parent class_ref 859138 // AnyState
+	  end
+
+	  operation 1549570 "_completion"
+	    force_body_gen cpp_virtual public explicit_return_type "bool"
+	    nparams 1
+	      param inout name "stm" type class_ref 859010 // PortManagerStateMachine
+	    cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	    cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	  end
+
+	  operation 1549954 "create"
+	    force_body_gen cpp_virtual public explicit_return_type "void"
+	    nparams 1
+	      param inout name "stm" type class_ref 859010 // PortManagerStateMachine
+	    cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	    cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " to manage the event create"
+	  end
+
+	  operation 1550082 "_upper"
+	    force_body_gen cpp_virtual public return_type class_ref 859138 // AnyState
+	    nparams 1
+	      param inout name "stm" type class_ref 859010 // PortManagerStateMachine
+	    cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} * ${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	    cpp_def "${comment}${inline}${type} * ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " returns the state containing the current"
+	  end
+	end
+
+	class 860162 "Running_State"
+	  visibility public 
+	  cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	  java_decl ""
+	  php_decl ""
+	  python_2_2 python_decl ""
+	  idl_decl ""
+	  explicit_switch_type ""
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " implement the state Running"
+	  class 860290 "Disconnected_State"
+	    visibility public 
+	    cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	    java_decl ""
+	    php_decl ""
+	    python_2_2 python_decl ""
+	    idl_decl ""
+	    explicit_switch_type ""
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " implement the state Disconnected"
+	    operation 1548034 "~Disconnected_State"
+	      force_body_gen cpp_virtual public explicit_return_type ""
+	      nparams 0
+	      cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	      cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	      
+	      
+	      
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	    end
+	  end
+
+	  class 861442 "PortReady_State"
+	    visibility public 
+	    cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	    java_decl ""
+	    php_decl ""
+	    python_2_2 python_decl ""
+	    idl_decl ""
+	    explicit_switch_type ""
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " implement the state PortReady"
+	    operation 1549186 "~PortReady_State"
+	      force_body_gen cpp_virtual public explicit_return_type ""
+	      nparams 0
+	      cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	      cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	      
+	      
+	      
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	    end
+	  end
+
+	  class 860546 "Connected_State"
+	    visibility public 
+	    cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	    java_decl ""
+	    php_decl ""
+	    python_2_2 python_decl ""
+	    idl_decl ""
+	    explicit_switch_type ""
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " implement the state Connected"
+	    class 860674 "DeviceSetup_State"
+	      visibility public 
+	      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	      java_decl ""
+	      php_decl ""
+	      python_2_2 python_decl ""
+	      idl_decl ""
+	      explicit_switch_type ""
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " implement the state DeviceSetup"
+	      operation 1548418 "~DeviceSetup_State"
+		force_body_gen cpp_virtual public explicit_return_type ""
+		nparams 0
+		cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+		cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+		
+		
+		
+		
+		ncouples 1
+		key "STM generated" value ""
+	      end
+	    end
+
+	    class 861314 "DeviceErrorBusy_State"
+	      visibility public 
+	      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	      java_decl ""
+	      php_decl ""
+	      python_2_2 python_decl ""
+	      idl_decl ""
+	      explicit_switch_type ""
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " implement the state DeviceErrorBusy"
+	      operation 1549058 "~DeviceErrorBusy_State"
+		force_body_gen cpp_virtual public explicit_return_type ""
+		nparams 0
+		cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+		cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+		
+		
+		
+		
+		ncouples 1
+		key "STM generated" value ""
+	      end
+	    end
+
+	    class 861186 "DeviceSetupBusy_State"
+	      visibility public 
+	      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	      java_decl ""
+	      php_decl ""
+	      python_2_2 python_decl ""
+	      idl_decl ""
+	      explicit_switch_type ""
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " implement the state DeviceSetupBusy"
+	      operation 1548930 "~DeviceSetupBusy_State"
+		force_body_gen cpp_virtual public explicit_return_type ""
+		nparams 0
+		cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+		cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+		
+		
+		
+		
+		ncouples 1
+		key "STM generated" value ""
+	      end
+	    end
+
+	    class 861058 "Ready_State"
+	      visibility public 
+	      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	      java_decl ""
+	      php_decl ""
+	      python_2_2 python_decl ""
+	      idl_decl ""
+	      explicit_switch_type ""
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " implement the state Ready"
+	      operation 1548802 "~Ready_State"
+		force_body_gen cpp_virtual public explicit_return_type ""
+		nparams 0
+		cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+		cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+		
+		
+		
+		
+		ncouples 1
+		key "STM generated" value ""
+	      end
+	    end
+
+	    class 860930 "Busy_State"
+	      visibility public 
+	      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	      java_decl ""
+	      php_decl ""
+	      python_2_2 python_decl ""
+	      idl_decl ""
+	      explicit_switch_type ""
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " implement the state Busy"
+	      operation 1548674 "~Busy_State"
+		force_body_gen cpp_virtual public explicit_return_type ""
+		nparams 0
+		cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+		cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+		
+		
+		
+		
+		ncouples 1
+		key "STM generated" value ""
+	      end
+	    end
+
+	    class 860802 "DeviceError_State"
+	      visibility public 
+	      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	      java_decl ""
+	      php_decl ""
+	      python_2_2 python_decl ""
+	      idl_decl ""
+	      explicit_switch_type ""
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " implement the state DeviceError"
+	      operation 1548546 "~DeviceError_State"
+		force_body_gen cpp_virtual public explicit_return_type ""
+		nparams 0
+		cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+		cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+		
+		
+		
+		
+		ncouples 1
+		key "STM generated" value ""
+	      end
+	    end
+
+	    operation 1548290 "~Connected_State"
+	      force_body_gen cpp_virtual public explicit_return_type ""
+	      nparams 0
+	      cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	      cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	      
+	      
+	      
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	    end
+
+	    attribute 862338 "_devicesetup_state"
+	      public type class_ref 860674 // DeviceSetup_State
+	      cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	      java_decl ""
+	      php_decl ""
+	      python_decl ""
+	      idl_decl ""
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " memorize the instance of the state DeviceSetup, internal"
+	    end
+
+	    attribute 862466 "_deviceerror_state"
+	      public type class_ref 860802 // DeviceError_State
+	      cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	      java_decl ""
+	      php_decl ""
+	      python_decl ""
+	      idl_decl ""
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " memorize the instance of the state DeviceError, internal"
+	    end
+
+	    attribute 862594 "_busy_state"
+	      public type class_ref 860930 // Busy_State
+	      cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	      java_decl ""
+	      php_decl ""
+	      python_decl ""
+	      idl_decl ""
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " memorize the instance of the state Busy, internal"
+	    end
+
+	    attribute 862722 "_ready_state"
+	      public type class_ref 861058 // Ready_State
+	      cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	      java_decl ""
+	      php_decl ""
+	      python_decl ""
+	      idl_decl ""
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " memorize the instance of the state Ready, internal"
+	    end
+
+	    attribute 862850 "_devicesetupbusy_state"
+	      public type class_ref 861186 // DeviceSetupBusy_State
+	      cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	      java_decl ""
+	      php_decl ""
+	      python_decl ""
+	      idl_decl ""
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " memorize the instance of the state DeviceSetupBusy, internal"
+	    end
+
+	    attribute 862978 "_deviceerrorbusy_state"
+	      public type class_ref 861314 // DeviceErrorBusy_State
+	      cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	      java_decl ""
+	      php_decl ""
+	      python_decl ""
+	      idl_decl ""
+	      ncouples 1
+	      key "STM generated" value ""
+	      comment " memorize the instance of the state DeviceErrorBusy, internal"
+	    end
+	  end
+
+	  class 860418 "Connecting_State"
+	    visibility public 
+	    cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	    java_decl ""
+	    php_decl ""
+	    python_2_2 python_decl ""
+	    idl_decl ""
+	    explicit_switch_type ""
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " implement the state Connecting"
+	    operation 1548162 "~Connecting_State"
+	      force_body_gen cpp_virtual public explicit_return_type ""
+	      nparams 0
+	      cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	      cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	      
+	      
+	      
+	      
+	      ncouples 1
+	      key "STM generated" value ""
+	    end
+	  end
+
+	  operation 1547906 "~Running_State"
+	    force_body_gen cpp_virtual public explicit_return_type ""
+	    nparams 0
+	    cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	    cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	  end
+
+	  attribute 861954 "_disconnected_state"
+	    public type class_ref 860290 // Disconnected_State
+	    cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    java_decl ""
+	    php_decl ""
+	    python_decl ""
+	    idl_decl ""
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " memorize the instance of the state Disconnected, internal"
+	  end
+
+	  attribute 862082 "_connecting_state"
+	    public type class_ref 860418 // Connecting_State
+	    cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    java_decl ""
+	    php_decl ""
+	    python_decl ""
+	    idl_decl ""
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " memorize the instance of the state Connecting, internal"
+	  end
+
+	  attribute 862210 "_connected_state"
+	    public type class_ref 860546 // Connected_State
+	    cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    java_decl ""
+	    php_decl ""
+	    python_decl ""
+	    idl_decl ""
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " memorize the instance of the state Connected, internal"
+	  end
+
+	  attribute 863106 "_portready_state"
+	    public type class_ref 861442 // PortReady_State
+	    cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    java_decl ""
+	    php_decl ""
+	    python_decl ""
+	    idl_decl ""
+	    ncouples 1
+	    key "STM generated" value ""
+	    comment " memorize the instance of the state PortReady, internal"
+	  end
+	end
+
+	class 860034 "Stopped_State"
+	  visibility public 
+	  cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	  java_decl ""
+	  php_decl ""
+	  python_2_2 python_decl ""
+	  idl_decl ""
+	  explicit_switch_type ""
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " implement the state Stopped"
+	  operation 1547778 "~Stopped_State"
+	    force_body_gen cpp_virtual public explicit_return_type ""
+	    nparams 0
+	    cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	    cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	  end
+	end
+
+	class 859906 "Stopping_State"
+	  visibility public 
+	  cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	  java_decl ""
+	  php_decl ""
+	  python_2_2 python_decl ""
+	  idl_decl ""
+	  explicit_switch_type ""
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " implement the state Stopping"
+	  operation 1547650 "~Stopping_State"
+	    force_body_gen cpp_virtual public explicit_return_type ""
+	    nparams 0
+	    cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	    cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	  end
+	end
+
+	class 859778 "Starting_State"
+	  visibility public 
+	  cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	  java_decl ""
+	  php_decl ""
+	  python_2_2 python_decl ""
+	  idl_decl ""
+	  explicit_switch_type ""
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " implement the state Starting"
+	  operation 1547522 "~Starting_State"
+	    force_body_gen cpp_virtual public explicit_return_type ""
+	    nparams 0
+	    cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	    cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	  end
+	end
+
+	class 859650 "DeviceEventRecived_State"
+	  visibility public 
+	  cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	  java_decl ""
+	  php_decl ""
+	  python_2_2 python_decl ""
+	  idl_decl ""
+	  explicit_switch_type ""
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " implement the state DeviceEventRecived"
+	  operation 1547394 "~DeviceEventRecived_State"
+	    force_body_gen cpp_virtual public explicit_return_type ""
+	    nparams 0
+	    cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	    cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	  end
+	end
+
+	class 859522 "PortError_State"
+	  visibility public 
+	  cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+	  java_decl ""
+	  php_decl ""
+	  python_2_2 python_decl ""
+	  idl_decl ""
+	  explicit_switch_type ""
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " implement the state PortError"
+	  operation 1547266 "~PortError_State"
+	    force_body_gen cpp_virtual public explicit_return_type ""
+	    nparams 0
+	    cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	    cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	    
+	    
+	    
+	    
+	    ncouples 1
+	    key "STM generated" value ""
+	  end
+
+	  classrelation 1073026 // <generalisation>
+	    relation 1061762 ---|>
+	      a public
+		cpp default "${type}"
+		classrelation_ref 1073026 // <generalisation>
+	      b parent class_ref 859138 // AnyState
+	  end
+	end
+
+	operation 1547010 "~PortManagerStateMachine_State"
+	  force_body_gen cpp_virtual public explicit_return_type ""
+	  nparams 0
+	  cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	  cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	  
+	  
+	  
+	  
+	  ncouples 1
+	  key "STM generated" value ""
+	end
+
+	attribute 861058 "_portclosed_state"
+	  public type class_ref 859394 // PortClosed_State
+	  cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " memorize the instance of the state PortClosed, internal"
+	end
+
+	attribute 861186 "_porterror_state"
+	  public type class_ref 859522 // PortError_State
+	  cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " memorize the instance of the state PortError, internal"
+	end
+
+	attribute 861314 "_deviceeventrecived_state"
+	  public type class_ref 859650 // DeviceEventRecived_State
+	  cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " memorize the instance of the state DeviceEventRecived, internal"
+	end
+
+	attribute 861442 "_starting_state"
+	  public type class_ref 859778 // Starting_State
+	  cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " memorize the instance of the state Starting, internal"
+	end
+
+	attribute 861570 "_stopping_state"
+	  public type class_ref 859906 // Stopping_State
+	  cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " memorize the instance of the state Stopping, internal"
+	end
+
+	attribute 861698 "_stopped_state"
+	  public type class_ref 860034 // Stopped_State
+	  cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " memorize the instance of the state Stopped, internal"
+	end
+
+	attribute 861826 "_running_state"
+	  public type class_ref 860162 // Running_State
+	  cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  ncouples 1
+	  key "STM generated" value ""
+	  comment " memorize the instance of the state Running, internal"
+	end
+
+	classrelation 1072642 // <generalisation>
+	  relation 1061378 ---|>
+	    a public
+	      cpp default "${type}"
+	      classrelation_ref 1072642 // <generalisation>
+	    b parent class_ref 859138 // AnyState
 	end
       end
 
-      pseudostate 148098 final 
+      attribute 860930 "_portmanagerstatemachine_state"
+	protected type class_ref 859266 // PortManagerStateMachine_State
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	ncouples 1
+	key "STM generated" value ""
+	comment " memorize the instance of the state PortManagerStateMachine, internal"
       end
 
-      pseudostate 148226 final 
+      operation 1549314 "PortManagerStateMachine"
+	force_body_gen public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+	ncouples 1
+	key "STM generated" value ""
+      end
+
+      operation 1549442 "~PortManagerStateMachine"
+	force_body_gen cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+	ncouples 1
+	key "STM generated" value ""
+      end
+
+      operation 1549698 "create"
+	force_body_gen public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+	ncouples 1
+	key "STM generated" value ""
+	comment " the operation you call to signal the event create"
+      end
+
+      classrelation 1072898 // <dependency>
+	relation 1061634 -_->
+	  stereotype "friend"
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 1072898 // <dependency>
+	  b parent class_ref 859394 // PortClosed_State
       end
     end
   end
@@ -6010,16 +7533,34 @@ ${inlines}
 	
       end
 
-      operation 1087234 "setState"
+      operation 1546114 "setState"
 	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 3
-	  param in name "state" explicit_type "state_t"
+	  param in name "state" explicit_type "int"
+	  param in name "stateText" explicit_type "int"
+	  param in name "ledColor" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1546242 "showMessage"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 3
 	  param in name "message" type class_ref 161026 // QString
 	  param in name "details" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+	  param in name "timeout" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -7257,6 +8798,34 @@ ${inlines}
     sequencediagram 660098 "TCPsocketStop"
       show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
       overlapping_bars size A4
+    end
+  end
+
+  deploymentview 409090 "mdtPortManager"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 519426 "mdtPortManagerStateMachine"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 845442 // mdtPortManagerStateMachine
+      end
     end
   end
 end

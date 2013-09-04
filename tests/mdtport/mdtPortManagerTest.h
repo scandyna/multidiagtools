@@ -32,6 +32,8 @@ class mdtPortManagerTest : public mdtTest
   // Tranaction id test
   void transactionIdTest();
 
+  void stateMachineTest();
+
   // Test manager for mdtPort
   void portTest();
 

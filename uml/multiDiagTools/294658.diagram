@@ -2,7 +2,7 @@ format 76
 
 classcanvas 128002 class_ref 182018 // mdtPortManager
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 63 190 2000
+  xyz 62 207 2000
 end
 classcanvas 128130 class_ref 256386 // mdtPortConfig
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -35,8 +35,8 @@ relationcanvas 128898 relation_ref 305794 // <unidirectional association>
 end
 relationcanvas 129922 relation_ref 339330 // <unidirectional association>
   from ref 128002 z 2001 to ref 128130
-  role_a_pos 595 420 3000 no_role_b
-  multiplicity_a_pos 629 450 3000 no_multiplicity_b
+  role_a_pos 595 422 3000 no_role_b
+  multiplicity_a_pos 629 452 3000 no_multiplicity_b
 end
 relationcanvas 130178 relation_ref 345858 // <generalisation>
   from ref 128002 z 3011 to ref 130050
@@ -45,20 +45,20 @@ relationcanvas 130178 relation_ref 345858 // <generalisation>
 end
 relationcanvas 130306 relation_ref 386562 // <unidirectional association>
   from ref 128002 z 3006 to ref 128770
-  role_a_pos 602 294 3000 no_role_b
-  multiplicity_a_pos 620 324 3000 no_multiplicity_b
+  role_a_pos 614 293 3000 no_role_b
+  multiplicity_a_pos 632 323 3000 no_multiplicity_b
 end
 relationcanvas 130690 relation_ref 597762 // <directional composition>
   decenter_begin 555
   from ref 128002 z 2001 to ref 130562
-  role_a_pos 602 556 3000 no_role_b
-  multiplicity_a_pos 693 586 3000 no_multiplicity_b
+  role_a_pos 593 555 3000 no_role_b
+  multiplicity_a_pos 684 585 3000 no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 597890 // <directional composition>
   decenter_begin 782
   from ref 128002 z 2001 to ref 130562
-  role_a_pos 557 569 3000 no_role_b
-  multiplicity_a_pos 681 599 3000 no_multiplicity_b
+  role_a_pos 557 574 3000 no_role_b
+  multiplicity_a_pos 681 604 3000 no_multiplicity_b
 end
 relationcanvas 131074 relation_ref 230018 // <generalisation>
   from ref 130946 z 3017 to ref 130050
@@ -72,7 +72,7 @@ relationcanvas 131202 relation_ref 386306 // <unidirectional association>
 end
 relationcanvas 131714 relation_ref 598018 // <unidirectional association>
   from ref 128002 z 3017 to ref 130946
-  role_a_pos 553 207 3000 no_role_b
-  multiplicity_a_pos 598 237 3000 no_multiplicity_b
+  role_a_pos 558 207 3000 no_role_b
+  multiplicity_a_pos 603 237 3000 no_multiplicity_b
 end
 end

@@ -24,6 +24,8 @@ mdtState::mdtState(int id, QState *parent)
  : QState(parent)
 {
   pvId = id;
+  pvLedColorId = 0;
+  pvLedIsOn = false;
   pvNotifyEnteredToUi = false;
   connect(this, SIGNAL(entered()), this, SLOT(onStateEntered()));
 }
@@ -50,6 +52,26 @@ void mdtState::setText(const QString & text)
 QString mdtState::text() const
 {
   return pvText;
+}
+
+void mdtState::setLedColorId(int colorId)
+{
+  pvLedColorId = colorId;
+}
+
+int mdtState::ledColorId() const
+{
+  return pvLedColorId;
+}
+
+void mdtState::setLedOn(bool on)
+{
+  pvLedIsOn = on;
+}
+
+bool mdtState::ledIsOn() const
+{
+  return pvLedIsOn;
 }
 
 void mdtState::setNotifyEnteredToUi(bool notify)

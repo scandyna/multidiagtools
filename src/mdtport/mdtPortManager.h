@@ -199,15 +199,25 @@ class mdtPortManager : public QThread
  public:
 
   /*! \brief State of device
+   *
+   * States are handled by mdtPortManagerStateMachine
    */
   enum state_t {
-                Ready = 0,              /*!< Port is open, setup is done and threads are running.
-                                              Depending on port type, device is connected (USB, TCP). */
-                Disconnected,           /*!< Device is not connected or port is down */
-                Connecting,             /*!< Trying to connect to device */
-                Busy,                   /*!< Port is up and device is connected but cannot accept requests for the moment */
-                Warning,                /*!< Device or port communication handled error occured */
-                Error                   /*!< Device or port communication unhandled error occured */
+                PortClosed = 0 ,  /*!< Port is closed */
+                Stopped ,         /*!< Threads are stopped and port is closing */
+                Starting ,        /*!< Threads are starting */
+                Stopping ,        /*!< Threads are stopping */
+                Running ,         /*!< Global state (sub machine) */
+                PortError ,       /*!< A unhandled error occured - Threads will be stopped and port closed */
+                PortReady ,       /*!< Port is open and threads are running.
+                                        At this point, communication is possible if not connection is required (f.ex. serial port terminal) */
+                Disconnected ,    /*!< Port is ready, but not connected to device */
+                Connecting,       /*!< Trying to connect to device */
+                Connected ,       /*!< Global state (sub machine) */
+                Ready ,           /*!< Port is ready and connection to device was made. Communication is possible */
+                Busy ,            /*!< Port is up and device is connected but cannot accept requests for the moment */
+                Warning,          /*!< \todo Obselete ! - Device or port communication handled error occured */
+                Error             /*!< \todo Obselete ! - Device or port communication unhandled error occured */
                };
 
   /*! \brief Contruct a port manager
