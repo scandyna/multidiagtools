@@ -686,42 +686,49 @@ class mdtPortManager : public QThread
   void statusMessageChanged(const QString &message, const QString &details, int timeout);
 
   /*! \brief Emitted when state has changed
+   * \todo Obselete ?
    */
   void stateChanged(int newState);
 
   /*! \brief Connecting event
    *
    * Used by internal state machine
+   * \todo Obselete
    */
   void connecting();
 
   /*! \brief Disconnected event
    *
    * Used by internal state machine
+   * \todo Obselete
    */
   void disconnected();
 
   /*! \brief Device ready event event
    *
    * Used by internal state machine
+   * \todo Obselete
    */
   void ready();
 
   /*! \brief Device busy event event
    *
    * Used by internal state machine
+   * \todo Obselete
    */
   void busy();
 
   /*! \brief Handled error event
    *
    * Used by internal state machine
+   * \todo Obselete
    */
   void handledError();
 
   /*! \brief Unhandled error event
    *
    * Used by internal state machine
+   * \todo Obselete
    */
   void unhandledError();
 
