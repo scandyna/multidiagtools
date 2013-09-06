@@ -430,7 +430,8 @@ int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
     MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
     e.commit();
     restoreTransaction(transaction);
-    emit busy();
+    ///emit busy();
+    emit pmBusyEvent();
     return mdtAbstractPort::WritePoolEmpty;
   }
   frame = dynamic_cast<mdtFrameModbusTcp*> (pvPort->writeFramesPool().dequeue());

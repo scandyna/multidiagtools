@@ -39,6 +39,8 @@
 #include <QState>
 #include <QStateMachine>
 
+class mdtPortManagerStateMachine;
+
 /*! \brief Port manager base class
  *
  * Manages a port based on mdtAbstractPort an several threads based on mdtPortThread.
@@ -695,42 +697,108 @@ class mdtPortManager : public QThread
    * Used by internal state machine
    * \todo Obselete
    */
-  void connecting();
+  ///void connecting();
 
   /*! \brief Disconnected event
    *
    * Used by internal state machine
    * \todo Obselete
    */
-  void disconnected();
+  ///void disconnected();
 
   /*! \brief Device ready event event
    *
    * Used by internal state machine
    * \todo Obselete
    */
-  void ready();
+  ///void ready();
 
   /*! \brief Device busy event event
    *
    * Used by internal state machine
    * \todo Obselete
    */
-  void busy();
+  ///void busy();
 
   /*! \brief Handled error event
    *
    * Used by internal state machine
    * \todo Obselete
    */
-  void handledError();
+  ///void handledError();
 
   /*! \brief Unhandled error event
    *
    * Used by internal state machine
    * \todo Obselete
    */
-  void unhandledError();
+  ///void unhandledError();
+
+  /*! \brief Sent when port was closed
+   *
+   * Used by state machine
+   */
+  void pmPortClosedEvent();
+
+  /*! \brief Sent when threads must be started
+   *
+   * Used by state machine
+   */
+  void pmStartThreadsEvent();
+
+  /*! \brief Sent when threads must be stopped
+   *
+   * Used by state machine
+   */
+  void pmStopThreadsEvent();
+
+  /*! \brief Sent when all threads are ready
+   *
+   * Used by state machine
+   */
+  void pmAllThreadsReadyEvent();
+
+  /*! \brief Sent when all threads are stopped
+   *
+   * Used by state machine
+   */
+  void pmAllThreadsStoppedEvent();
+
+  /*! \brief Sent when a unhandled error occured
+   *
+   * Used by state machine
+   */
+  void pmUnhandledErrorEvent();
+
+  /*! \brief Sent when connection with device beginns
+   *
+   * Used by state machine
+   */
+  void pmConnectingEvent();
+
+  /*! \brief Sent when connection with device is established
+   *
+   * Used by state machine
+   */
+  void pmConnectedEvent();
+
+  /*! \brief Sent when connection with device was lost/closed
+   *
+   * Used by state machine
+   */
+  void pmDisconnectedEvent();
+
+  /*! \brief Sent when device is busy (or other slow down reason..)
+   *
+   * Used by state machine
+   */
+  void pmBusyEvent();
+
+  /*! \brief Sent when device and communication becomes ready again
+   *
+   * Used by state machine
+   */
+  void pmReadyEvent();
 
  protected:
 
@@ -849,16 +917,18 @@ class mdtPortManager : public QThread
   /*! \brief Set the disconnected state
    *
    * Used by internal state machine.
+   * \todo Obselete
    */
-  void setStateDisconnected();
+  ///void setStateDisconnected();
 
   /*! \brief Set the connecting state
    *
    * Used by internal state machine
    * Emit stateChanged() if current state was not Connecting.
    * Used by internal state machine.
+   * \todo Obselete
    */
-  void setStateConnecting();
+  ///void setStateConnecting();
 
   /*! \brief Set the ready state
    *
@@ -868,42 +938,64 @@ class mdtPortManager : public QThread
    * If more than one thread was set,
    *  port manager enters only to ready state
    *  if all threads are not in error state.
+   * \todo Obselete
    *
    * \pre Port must be set with setPort().
    */
-  void setStateReady();
+  ///void setStateReady();
 
   /*! \brief Set the busy state
    *
    * Busy state can be used when physical device or computer (this software) cannot process more requests.
    * Emit stateChanged() if current state was not Busy.
    * Used by internal state machine.
+   * \todo Obselete
    */
-  void setStateBusy();
+  ///void setStateBusy();
 
   /*! \brief Set the warning state
    *
    * Emit stateChanged() if current state was not Warning.
    * Used by internal state machine.
+   * \todo Obselete
    */
-  void setStateWarning();
+  ///void setStateWarning();
 
   /*! \brief Set the error state
    *
    * Emit stateChanged() if current state was not Error.
    * Used by internal state machine.
+   * \todo Obselete
    */
-  void setStateError();
+  ///void setStateError();
 
  protected:
 
   mdtAbstractPort *pvPort;
-  QList<mdtPortThread*> pvThreads;
+  QList<mdtPortThread*> pvThreads;  /// \todo move to private
+
+ private slots:
+
+  /*! \brief Called by threads when they are ready
+   *
+   * When a thread is started and ready it will emit his ready() signal.
+   *  Given thread will also be added to ready threads list
+   *
+   * If all threads contained in pvThreads have called this method, pmAllThreadsReadyEvent is emitted
+   */
+  void onThreadReady(mdtPortThread *thread);
+
+  /*! \brief Called by threads when they are stopped
+   *
+   * If all threads contained in pvThreads have called this method, pmAllThreadsStoppedEvent is emitted
+   */
+  void onThreadStopped(mdtPortThread *thread);
 
  private:
 
   // Setup state machine
-  void buildStateMachine();
+  /// \todo Obselete
+  ///void buildStateMachine();
 
   /*! \brief Wait until ready state
    */
@@ -921,12 +1013,18 @@ class mdtPortManager : public QThread
   QQueue<mdtPortTransaction*> pvTransactionsDone;       // Transactions for data that are received from device
   bool pvThreadHandlesReadTimeout;                      // Used by waitOneTransactionDone()
   int pvMaxTransactionsPending;                         // Limit before going to busy state
+  // Threads
+  QList<mdtPortThread*> pvThreadsReady;                 // See onThreadReady() and onThreadFinished()
   // Instance of reader and writer thread
   mdtPortThread *pvReadThread;
   mdtPortThread *pvWriteThread;
   // State flag
-  state_t pvCurrentState;
+  /// \todo Obselete
+  ///state_t pvCurrentState;
   // State machine
+  mdtPortManagerStateMachine *pvStateMachine;
+  /// \todo Obselete
+  /**
   QStateMachine *pvStateMachine;
   QState *pvStateDisconnected;
   QState *pvStateConnecting;
@@ -934,6 +1032,7 @@ class mdtPortManager : public QThread
   QState *pvStateBusy;
   QState *pvStateWarning;
   QState *pvStateError;
+  */
   // Diseable copy
   Q_DISABLE_COPY(mdtPortManager);
 };

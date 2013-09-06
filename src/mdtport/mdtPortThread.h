@@ -198,6 +198,14 @@ class mdtPortThread : public QThread
    */
   void errorOccured(int error);
 
+  /*! \brief Emitted when thread is started and ready
+   */
+  void ready(mdtPortThread *thread);
+
+  /*! \brief Emitted when thread has finished executing
+   */
+  void finished(mdtPortThread *thread);
+
  protected:
 
   /*! \brief Try to reconnect to device/peer
@@ -228,6 +236,12 @@ class mdtPortThread : public QThread
   pthread_t pvNativePthreadObject;
   struct sigaction pvSigaction;
 #endif
+
+ private slots:
+
+  /*! \brief Emit the finished(mdtPortThread*) signal with this instance
+   */
+  void onThreadFinished();
 
  private:
 

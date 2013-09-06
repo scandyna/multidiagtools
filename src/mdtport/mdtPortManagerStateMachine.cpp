@@ -116,11 +116,6 @@ void mdtPortManagerStateMachine::buildRunningSubMachine(mdtPortManager *portMana
   pvDisconnected->setText(tr("Disconnected"));
   pvDisconnected->setLedColorId(mdtLed::Green);
   pvDisconnected->setLedOn(false);
-  // Add sates to machine
-  pvStateMachine->addState(pvPortReady);
-  pvStateMachine->addState(pvConnecting);
-  pvStateMachine->addState(pvConnected);
-  pvStateMachine->addState(pvDisconnected);
   // Add pvPortReady transitions ->
   pvPortReady->addTransition(portManager, SIGNAL(pmConnectingEvent()), pvConnecting);
   // Add pvConnecting transitions ->

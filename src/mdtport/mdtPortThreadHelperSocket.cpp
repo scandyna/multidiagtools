@@ -99,6 +99,13 @@ void mdtPortThreadHelperSocket::setSocket(QTcpSocket *socket)
     pvReadTimeoutTimer->setInterval(p->config().readTimeout());
   }
   connect(pvReadTimeoutTimer, SIGNAL(timeout()), this, SLOT(onReadTimeout()));
+}
+
+void mdtPortThreadHelperSocket::connectToHost()
+{
+  Q_ASSERT(pvSocket != 0);
+  Q_ASSERT(pvPort != 0);
+
   // Connect
   pvSocket->connectToHost(pvHost, pvPortNumber);
   pvConnectionTimeoutTimer->start();

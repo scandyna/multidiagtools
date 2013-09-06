@@ -68,11 +68,14 @@ void mdtTcpSocketThread::run()
   threadHelper.setPort(pvPort);
   threadHelper.setThread(this);
   threadHelper.setSocket(socket);
+  // Notify that we are ready and start connecting
+  emit ready(this);
+  threadHelper.connectToHost();
 
   pvPort->unlockMutex();
   // Run...
   exec();
-  notifyError(mdtAbstractPort::Disconnected);
+  ///notifyError(mdtAbstractPort::Disconnected);
   // Cleanup
   delete socket;
 }

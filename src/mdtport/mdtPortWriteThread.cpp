@@ -73,7 +73,8 @@ void mdtPortWriteThread::run()
   // Set the running flag
   pvRunning = true;
   // Notify that we are ready
-  notifyError(mdtAbstractPort::NoError);
+  ///notifyError(mdtAbstractPort::NoError);
+  emit ready(this);
 
   // Run...
   while(1){
@@ -99,9 +100,11 @@ void mdtPortWriteThread::run()
     }
   }
 
+  /**
   if(portError == mdtAbstractPort::NoError){
     notifyError(mdtAbstractPort::Disconnected);
   }
+  */
   pvRunning = false;
   pvPort->unlockMutex();
 }

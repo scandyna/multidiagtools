@@ -64,6 +64,13 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
    */
   void setSocket(QTcpSocket *socket);
 
+  /*! \brief Connect to host set during setSocket()
+   *
+   * \pre port must be set with mdtPortThreadHelper::setPort()
+   * \pre socket must be set with setSocket()
+   */
+  void connectToHost();
+
  private slots:
 
   /*! \brief Notify the connected state

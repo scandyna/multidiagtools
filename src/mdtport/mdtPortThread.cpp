@@ -43,6 +43,7 @@ mdtPortThread::mdtPortThread(QObject *parent)
 #endif
   pvReconnectTimeout = 5000;
   pvReconnectMaxTry = 100;
+  connect(this, SIGNAL(finished()), this, SLOT(onThreadFinished()));
 }
 
 mdtPortThread::~mdtPortThread()
@@ -274,3 +275,8 @@ void mdtPortThread::sigactionHandle(int /* signum */)
 {
 }
 #endif
+
+void mdtPortThread::onThreadFinished()
+{
+  emit finished(this);
+}

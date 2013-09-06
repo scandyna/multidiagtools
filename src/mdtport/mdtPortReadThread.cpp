@@ -82,7 +82,8 @@ void mdtPortReadThread::run()
     return;
   }
   // Notify that we are ready
-  notifyError(mdtAbstractPort::NoError);
+  ///notifyError(mdtAbstractPort::NoError);
+  emit ready(this);
 
   // Run...
   while(1){
@@ -140,9 +141,11 @@ void mdtPortReadThread::run()
     }
   }
 
+  /**
   if(portError == mdtAbstractPort::NoError){
     notifyError(mdtAbstractPort::Disconnected);
   }
+  */
   pvRunning = false;
   pvPort->unlockMutex();
 }

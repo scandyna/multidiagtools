@@ -130,7 +130,8 @@ void mdtUsbPortThread::run()
     return;
   }
   // Notify that we are ready
-  notifyError(mdtAbstractPort::NoError);
+  ///notifyError(mdtAbstractPort::NoError);
+  emit ready(this);
 
   // Run...
   while(1){
@@ -311,9 +312,11 @@ void mdtUsbPortThread::run()
   port->cancelTransfers();
 
   pvRunning = false;
+  /**
   if(portError == mdtAbstractPort::NoError){
     notifyError(mdtAbstractPort::Disconnected);
   }
+  */
   pvPort->unlockMutex();
 }
 

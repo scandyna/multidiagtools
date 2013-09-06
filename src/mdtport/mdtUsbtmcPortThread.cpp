@@ -605,7 +605,8 @@ void mdtUsbtmcPortThread::run()
     notifyError(mdtAbstractPort::Disconnected);
   }
   // Notify that we are ready
-  notifyError(mdtAbstractPort::NoError);
+  ///notifyError(mdtAbstractPort::NoError);
+  emit ready(this);
 
   // Run...
   while(1){
@@ -792,9 +793,11 @@ void mdtUsbtmcPortThread::run()
 
   port->cancelTransfers();
 
+  /**
   if(portError == mdtAbstractPort::NoError){
     notifyError(mdtAbstractPort::Disconnected);
   }
+  */
   pvRunning = false;
   pvPort->unlockMutex();
 }

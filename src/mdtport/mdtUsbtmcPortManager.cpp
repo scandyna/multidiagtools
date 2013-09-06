@@ -149,7 +149,8 @@ int mdtUsbtmcPortManager::writeData(const QByteArray &data)
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
     e.commit();
-    emit(busy());
+    ///emit(busy());
+    emit pmBusyEvent();
     return mdtAbstractPort::WritePoolEmpty;
   }
   frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
@@ -187,7 +188,8 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
     e.commit();
     restoreTransaction(transaction);
-    emit(busy());
+    ///emit(busy());
+    emit pmBusyEvent();
     return mdtAbstractPort::WritePoolEmpty;
   }
   frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());

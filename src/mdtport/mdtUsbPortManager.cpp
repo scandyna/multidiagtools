@@ -375,13 +375,13 @@ void mdtUsbPortManager::onThreadsErrorOccured(int error)
   
   switch(error){
     case mdtAbstractPort::ControlCanceled:
-      emit(handledError());
+      ///emit(handledError());
       break;
     case mdtAbstractPort::ControlTimeout:
-      emit(busy());
+      ///emit(busy());
       break;
     case mdtAbstractPort::UnhandledError:
-      emit(unhandledError());
+      ///emit(unhandledError());
       break;
     default:
       mdtPortManager::onThreadsErrorOccured(error);
