@@ -55,7 +55,7 @@ class mdtUsbPortManager : public mdtPortManager
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
    *
-   * \pre Manager must no running
+   * \pre Port manager must be closed
    */
   virtual QList<mdtPortInfo*> scan();
 
@@ -68,21 +68,9 @@ class mdtUsbPortManager : public mdtPortManager
    * \param bDeviceSubClass If >= 0, only devices with matching bDeviceSubClass are listed
    * \param bDeviceProtocol If >= 0, only devices with matching bDeviceProtocol are listed
    *
-   * \pre Manager must no running
+   * \pre Port manager must be closed
    */
   QList<mdtPortInfo*> scan(int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol);
-
-  /*! \brief Open the port
-   *
-   * Overloads mdtPortManager::openPort().
-   *
-   * Will construct the thread if not allready exists.
-   *  This is because mdtUsbtmcPortManager uses a different thread,
-   *  so this task can not be done in constructor.
-   *
-   * Internally, mdtPortManager::openPort() is called.
-   */
-  ///bool openPort();
 
   /*! \brief Open the port
    *
@@ -95,6 +83,13 @@ class mdtUsbPortManager : public mdtPortManager
    * Internally, mdtPortManager::start() is called.
    */
   bool start();
+
+  /*! \brief Check if port manager is ready
+   *
+   * Because mdtUsbPortManager is a base class,
+   *  it acts like mdtPortManager::isReady() .
+   * A specific subclass (like mdtUsbtmcPortManager will reimplement isReady() ).
+   */
 
   /*! \brief Request port to read until a short frame is received
    *

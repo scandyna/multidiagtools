@@ -226,6 +226,14 @@ class mdtPortThread : public QThread
    */
   void finished(mdtPortThread *thread);
 
+  /*! \brief Emitted when connection with device is done
+   *
+   * Notes:
+   *  - Disconnection, connection, etc... are notified as error
+   *  - Some threads does not send this signal, because device connection is not handled directly by port protocol.
+   */
+  void connected();
+
  protected:
 
   /*! \brief Try to reconnect to device/peer

@@ -90,6 +90,11 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
   return portInfoList;
 }
 
+bool mdtUsbtmcPortManager::isReady() const
+{
+  return (currentState() == Ready);
+}
+
 int mdtUsbtmcPortManager::sendCommand(const QByteArray &command, int timeout)
 {
   // Wait until data can be sent

@@ -1,14 +1,14 @@
 window_sizes 1280 1001 323 951 923 0
 diagrams
-  active  statediagram_ref 792578 // mdtPortManagerStateMachine
-    951 923 100 17 0 219
+  statediagram_ref 792578 // mdtPortManagerStateMachine
+    951 923 100 17 0 114
   statediagram_ref 812802 // Running
     760 738 100 4 156 0
-  statediagram_ref 806274 // Connected
-    760 738 100 4 0 0
+  active  statediagram_ref 806274 // Connected
+    951 923 100 4 0 0
 end
 show_stereotypes
-selected statediagram_ref 792578 // mdtPortManagerStateMachine
+selected statediagram_ref 806274 // Connected
 open
   state_ref 191746 // Connected
 end

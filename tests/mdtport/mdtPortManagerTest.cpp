@@ -263,7 +263,7 @@ void mdtPortManagerTest::usbPortTest()
   // Init port manager
   m.setPortInfo(*portInfoList.at(0));
   ///QVERIFY(m.openPort());
-  // start threads
+  // start port manager
   QVERIFY(m.start());
 
   // We not need the scan result anymore, free memory

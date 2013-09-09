@@ -40,6 +40,8 @@
 class mdtPortManagerStateMachine;
 class QTimer;
 
+/// \todo Port manager has no raison to inherit QThread -> make it inherit QObject
+
 /*! \brief Port manager base class
  *
  * Manages a port based on mdtAbstractPort an several threads based on mdtPortThread.
@@ -319,18 +321,6 @@ class mdtPortManager : public QThread
    */
   virtual bool start();
 
-  /*! \brief Get the running state
-   *
-   * If all threads are running, true is returned.
-   *
-   *  If no thread was set, false is returned.
-   *
-   * If port was not set, it returns false.
-   * 
-   * \todo Obselete
-   */
-  ///bool isRunning();
-
   /*! \brief Stop port manager
    *
    * Will stop threads and close port.
@@ -506,58 +496,6 @@ class mdtPortManager : public QThread
    * \sa sendData(mdtPortTransaction*)
    */
   virtual int sendData(const QByteArray &data, bool queryReplyMode = false);
-
-  /*! \brief Write data to port
-   *
-   * Data contained in transaction will be passed to the mdtPort's write queue by copy.
-   *  This method returns immediatly after enqueue,
-   *  and don't wait until data was written.
-   *
-   * \param transaction Transaction used to send data. Following members are used by this method:
-   *                     - id : transaction will be added to pending transactions with this id,
-   *                            and currentTransactionId will be set with it.
-   *                     - data : will be sent to port.
-   *                     - isQueryReplyMode : if true, the transaction will be keeped in transactions done queue
-   *                                          until readenFrame() or readenFrames() is called.
-   *                                          Note: it's possible to force keeping all incomming data (wich also owerwrite this flag)
-   *                                           by setting the global keepTransactionsDone flag.
-   * \return Transaction ID on success or value < 0 on error. In this implementation,
-   *          the only possible error is mdtAbstractPort::WriteQueueEmpty .
-   *          Some subclass can return a frame ID on success,
-   *          or a other error. See subclass documentation for details.
-   *          Note: on failure, the transaction is restored to pool.
-   * \pre Port must be set with setPort() before use of this method.
-   * \pre transaction must be a valid pointer, and not allready exists in transactions pending or transactions done queue.
-   *
-   * Subclass notes:<br>
-   *  This method can be reimplemented in subclass if needed.
-   *  Typically usefull if some encoding is needed before the
-   *  frame is submitted to port.
-   *  A frame must be taken from port's write frames pool with mdtAbstractPort::writeFramesPool()
-   *  dequeue() method (see Qt's QQueue documentation for more details on dequeue() ),
-   *  then added to port's write queue with mdtAbstractPort::addFrameToWrite() .
-   *  If protocol supports frame identification (like MODBUS's transaction ID or USBTMC's bTag),
-   *   it should be returned here and incremented using incrementCurrentTransactionId().
-   */
-  ///virtual int writeData(mdtPortTransaction *transaction);
-
-  /*! \brief Write data to port
-   *
-   * Will increment the current transaction ID,
-   *  get a new transaction, setup it
-   *  and finally send it with writeData(mdtPortTransaction*).
-   *
-   * \param data Data to write.
-   * \param queryReplyMode If true,
-   *                        reply will be keeped in transactions done queue
-   *                        until readenFrame() or readenFrames() is called.
-   *                       If false, behaviour depends on keepTransactionsDone flag.
-   *
-   * \sa writeData(mdtPortTransaction*)
-   * 
-   * \todo Obselete
-   */
-  ///virtual int writeData(const QByteArray &data, bool queryReplyMode = false);
 
   /*! \brief Wait until a transaction is done
    *

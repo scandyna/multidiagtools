@@ -607,6 +607,7 @@ void mdtUsbtmcPortThread::run()
   // Notify that we are ready
   ///notifyError(mdtAbstractPort::NoError);
   emit ready(this);
+  emit connected();
 
   // Run...
   while(1){

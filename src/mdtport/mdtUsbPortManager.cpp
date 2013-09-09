@@ -48,18 +48,21 @@ mdtUsbPortManager::~mdtUsbPortManager()
 {
   Q_ASSERT(pvPort != 0);
 
+  stop();
   delete &pvPort->config();
   detachPort(true, true);
 }
 
 QList<mdtPortInfo*> mdtUsbPortManager::scan()
 {
+  Q_ASSERT(isClosed());
+
   return scan(-1, -1, -1);
 }
 
 QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol)
 {
-  Q_ASSERT(!isRunning());
+  Q_ASSERT(isClosed());
 
   QList<mdtPortInfo*> portInfoList;
   mdtDeviceInfo *deviceInfo;
@@ -174,23 +177,6 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
 
   return portInfoList;
 }
-
-/**
-bool mdtUsbPortManager::openPort()
-{
-  mdtUsbPortThread *portThread;
-
-  if(pvThreads.size() < 0){
-    portThread = new mdtUsbPortThread;
-    connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
-    ///connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
-    ///connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(fromThreadReadUntilShortPacketReceivedFinished()));
-    addThread(portThread);
-  }
-
-  return mdtPortManager::openPort();
-}
-*/
 
 bool mdtUsbPortManager::start()
 {
@@ -381,7 +367,7 @@ void mdtUsbPortManager::onThreadsErrorOccured(int error)
       ///emit(busy());
       break;
     case mdtAbstractPort::UnhandledError:
-      ///emit(unhandledError());
+      emit pmUnhandledErrorEvent();
       break;
     default:
       mdtPortManager::onThreadsErrorOccured(error);

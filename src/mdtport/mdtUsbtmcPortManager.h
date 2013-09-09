@@ -69,6 +69,13 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    */
   QList<mdtPortInfo*> scan();
 
+  /*! \brief Check if port manager is ready
+   *
+   * Internally, the currentState is used to check if port manager is ready.
+   *  This implementation returns true if currentState is Ready.
+   */
+  bool isReady() const;
+
   /*! \brief Send a command to device
    *
    * Wait until it's possible to write to device,
