@@ -56,14 +56,6 @@ class mdtStateMachine : public QStateMachine
    */
   virtual ~mdtStateMachine();
 
-  /*! \brief Add a new state to state machine
-   *
-   * Will use QStateMachine's addState() internally.
-   *
-   * \pre state must be a valid pointer.
-   */
-  void addState(mdtState *state);
-
   /*! \brief Get current state
    */
   int currentState() const;

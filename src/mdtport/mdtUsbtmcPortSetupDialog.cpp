@@ -92,7 +92,8 @@ void mdtUsbtmcPortSetupDialog::updateConfig()
 
 void mdtUsbtmcPortSetupDialog::closePort()
 {
-  portManager()->closePort();
+  ///portManager()->closePort();
+  portManager()->stop();
 }
 
 void mdtUsbtmcPortSetupDialog::rescan()
@@ -205,11 +206,17 @@ bool mdtUsbtmcPortSetupDialog::applySetup()
 
   /// \todo Check if current port info is empty before
   // We must close the port
-  portManager()->closePort();
+  ///portManager()->closePort();
+  portManager()->stop();
   // Apply current configuration
   updateConfig();
   portManager()->setPortInfo(pvPortInfoCbHandler.currentPortInfo());
   // Try to open port and start port manager
+  if(!portManager()->start()){
+    showStatusMessage(tr("Cannot open port"), 3000);
+    return false;
+  }
+  /**
   if(!portManager()->openPort()){
     showStatusMessage(tr("Cannot open port"), 3000);
     return false;
@@ -218,19 +225,20 @@ bool mdtUsbtmcPortSetupDialog::applySetup()
     showStatusMessage(tr("Cannot start thread"), 3000);
     return false;
   }
+  */
   // Get identification
   usbtmcPortManager = dynamic_cast<mdtUsbtmcPortManager*>(portManager());
   Q_ASSERT(usbtmcPortManager != 0);
   idn = usbtmcPortManager->sendQuery("*IDN?\n");
   if(idn.isEmpty()){
-    usbtmcPortManager->closePort();
+    usbtmcPortManager->stop();
     showStatusMessage(tr("Cannot get device infos (*IDN? query failed)"), 3000);
     return false;
   }
   idn = idn.trimmed();
   idnItems = idn.split(',');
   if(idnItems.size() != 4){
-    usbtmcPortManager->closePort();
+    usbtmcPortManager->stop();
     showStatusMessage(tr("Cannot get device infos (*IDN? query returned unexpected data)"), 3000);
     return false;
   }

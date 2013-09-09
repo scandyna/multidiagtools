@@ -32,6 +32,8 @@ class mdtStateMachineTest : public mdtTest
   void stateTest();
 
   void stateMachineTest();
+
+  void subMachineTest();
 };
 
 #endif // #ifndef MDT_STATE_MACHINE_TEST_H

@@ -51,9 +51,9 @@ void mdtStateMachineTest::stateMachineTest()
   mdtState *s1, *s2;
   QTimer event;
 
-  event.setSingleShot(false);
+  event.setSingleShot(true);
 
-  // We build a simple ON-OFF-ON-... state machine
+  // Build a simple OFF-ON-OFF-... like state machine
   s1 = new mdtState(1);
   s2 = new mdtState(2);
   s1->addTransition(&event, SIGNAL(timeout()), s2);
@@ -90,6 +90,40 @@ void mdtStateMachineTest::stateMachineTest()
   QVERIFY(sm.waitOnState(1, 200));
   QCOMPARE(sm.currentState(), 1);
 }
+
+void mdtStateMachineTest::subMachineTest()
+{
+  mdtStateMachine sm;
+  mdtState *s1, *s11, *s12;
+  QTimer event;
+
+  event.setSingleShot(true);
+
+  // Build state machine with global state s1 und child states
+  s1 = new mdtState(1);
+  s11 = new mdtState(11, s1);
+  s12 = new mdtState(12, s1);
+  s11->addTransition(&event, SIGNAL(timeout()), s12);
+  s12->addTransition(&event, SIGNAL(timeout()), s11);
+  s1->setInitialState(s11);
+  sm.addState(s1);
+  sm.setInitialState(s1);
+  // Check initial state
+  QCOMPARE(sm.currentState(), -1);
+  // Start
+  sm.start();
+  QVERIFY(sm.waitOnState(11));
+  QCOMPARE(sm.currentState(), 11);
+  // Check s11 -> s12 transition
+  event.start(100);
+  QVERIFY(sm.waitOnState(12, 100));
+  QCOMPARE(sm.currentState(), 12);
+  // Check s12 -> s11 transition
+  event.start(100);
+  QVERIFY(sm.waitOnState(11, 100));
+  QCOMPARE(sm.currentState(), 11);
+}
+
 
 /* Main */
 

@@ -81,7 +81,6 @@ class mdtPortManagerStateMachine : public mdtStateMachine
 
   Q_DISABLE_COPY(mdtPortManagerStateMachine);
 
-  mdtStateMachine *pvStateMachine;
   // Main states
   mdtState *pvPortClosed;
   mdtState *pvStarting;

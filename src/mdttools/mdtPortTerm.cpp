@@ -175,11 +175,13 @@ void mdtPortTerm::attachToSerialPort()
     return;
   }
   pvSerialPortManager->setPortInfo(*ports.at(0));
+  /**
   if(!pvSerialPortManager->openPort()){
     showStatusMessage(tr("Cannot open port ") + ports.at(0)->portName());
     qDeleteAll(ports);
     return;
   }
+  */
   if(pvSerialPortManager->start()){
     showStatusMessage(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText(), 5000);
   }
@@ -251,11 +253,13 @@ void mdtPortTerm::attachToUsbtmcPort()
     return;
   }
   pvUsbtmcPortManager->setPortInfo(*ports.at(0));
+  /**
   if(!pvUsbtmcPortManager->openPort()){
     showStatusMessage(tr("Cannot open port ") + ports.at(0)->portName());
     qDeleteAll(ports);
     return;
   }
+  */
   if(pvUsbtmcPortManager->start()){
     showStatusMessage(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText(), 5000);
   }
@@ -270,7 +274,8 @@ void mdtPortTerm::detachFromUsbtmcPort()
   if(pvUsbtmcPortManager != 0){
     disconnect(pvUsbtmcPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(appendReadenData(mdtPortTransaction*)));
     disconnect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
-    pvUsbtmcPortManager->closePort();
+    ///pvUsbtmcPortManager->closePort();
+    pvUsbtmcPortManager->stop();
     delete pvUsbtmcPortManager;
     pvUsbtmcPortManager = 0;
   }
@@ -378,12 +383,13 @@ bool mdtPortTerm::sendCommandToSerialPort(const QString &command)
   Q_ASSERT(pvSerialPortManager != 0);
 
   // Wait until write is possible and write
+  /**
   if(!pvSerialPortManager->waitOnWriteReady()){
     showStatusMessage(tr("Cannot send command for the moment"), 1000);
     return false;
   }
-  // 
-  if(pvSerialPortManager->writeData(command.toAscii() + pvCmdTermSequence) < 0){
+  */
+  if(pvSerialPortManager->sendData(command.toAscii() + pvCmdTermSequence) < 0){
     showStatusMessage(tr("Error occured during write process"), 1000);
     return false;
   }

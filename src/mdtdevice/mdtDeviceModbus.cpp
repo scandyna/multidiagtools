@@ -82,11 +82,13 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInf
     Q_ASSERT(scanResult.at(i) != 0);
     // Try to connect
     pvTcpPortManager->setPortInfo(*scanResult.at(i));
+    /**
     if(!pvTcpPortManager->openPort()){
       continue;
     }
+    */
     if(!pvTcpPortManager->start()){
-      pvTcpPortManager->closePort();
+      ///pvTcpPortManager->closePort();
       continue;
     }
     // We are connected here, get the hardware node ID
@@ -94,7 +96,7 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInf
       return mdtAbstractPort::NoError;
     }else{
       pvTcpPortManager->stop();
-      pvTcpPortManager->closePort();
+      ///pvTcpPortManager->closePort();
       continue;
     }
   }

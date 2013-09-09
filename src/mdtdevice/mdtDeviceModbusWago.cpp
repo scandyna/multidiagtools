@@ -61,11 +61,13 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
     Q_ASSERT(portInfoList.at(i) != 0);
     // Try to connect
     pvTcpPortManager->setPortInfo(*portInfoList.at(i));
+    /**
     if(!pvTcpPortManager->openPort()){
       continue;
     }
+    */
     if(!pvTcpPortManager->start()){
-      pvTcpPortManager->closePort();
+      ///pvTcpPortManager->closePort();
       continue;
     }
     qDebug() << "mdtDeviceModbusWago::connectToDevice() : Running ...";
@@ -75,11 +77,13 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
       qDebug() << "mdtDeviceModbusWago::connectToDevice() : Is a Wago 750";
       return mdtAbstractPort::NoError;
     }
-    pvTcpPortManager->closePort();
+    ///pvTcpPortManager->closePort();
+    pvTcpPortManager->stop();
   }
   qDeleteAll(portInfoList);
   portInfoList.clear();
-  pvTcpPortManager->closePort();
+  ///pvTcpPortManager->closePort();
+  pvTcpPortManager->stop();
   // Scan network
   portInfoList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100);
   for(i=0; i<portInfoList.size(); i++){
@@ -87,11 +91,13 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
     // Try to connect
     qDebug() << "mdtDeviceModbusWago::connectToDevice() : Trying " << portInfoList.at(i)->portName() << " ...";
     pvTcpPortManager->setPortInfo(*portInfoList.at(i));
+    /**
     if(!pvTcpPortManager->openPort()){
       continue;
     }
+    */
     if(!pvTcpPortManager->start()){
-      pvTcpPortManager->closePort();
+      ///pvTcpPortManager->closePort();
       continue;
     }
     qDebug() << "mdtDeviceModbusWago::connectToDevice() : Running ...";
@@ -102,10 +108,12 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
       qDebug() << "mdtDeviceModbusWago::connectToDevice() : Is a Wago 750";
       return mdtAbstractPort::NoError;
     }
-    pvTcpPortManager->closePort();
+    ///pvTcpPortManager->closePort();
+    pvTcpPortManager->stop();
   }
   qDeleteAll(portInfoList);
-  pvTcpPortManager->closePort();
+  ///pvTcpPortManager->closePort();
+  pvTcpPortManager->stop();
 
   return mdtAbstractPort::PortNotFound;
 }
@@ -125,17 +133,19 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPor
     Q_ASSERT(scanResult.at(i) != 0);
     // Try to connect
     pvTcpPortManager->setPortInfo(*scanResult.at(i));
+    /**
     if(!pvTcpPortManager->openPort()){
       continue;
     }
+    */
     if(!pvTcpPortManager->start()){
-      pvTcpPortManager->closePort();
+      ///pvTcpPortManager->closePort();
       continue;
     }
     // We are connected here, check if device is a Wago 750 fieldbus coupler
     if(!isWago750()){
       pvTcpPortManager->stop();
-      pvTcpPortManager->closePort();
+      ///pvTcpPortManager->closePort();
       continue;
     }
     // Get the hardware node ID
@@ -143,7 +153,7 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPor
       return mdtAbstractPort::NoError;
     }else{
       pvTcpPortManager->stop();
-      pvTcpPortManager->closePort();
+      ///pvTcpPortManager->closePort();
       continue;
     }
   }

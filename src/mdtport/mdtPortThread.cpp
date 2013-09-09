@@ -22,7 +22,8 @@
 #include "mdtError.h"
 #include "mdtFrame.h"
 #include <errno.h>
-#include <QApplication>
+#include <QCoreApplication>
+#include <QEventLoop>
 
 #include <QDebug>
 
@@ -71,11 +72,11 @@ void mdtPortThread::detachPort(bool releaseMemory)
   pvPort = 0;
 }
 
-bool mdtPortThread::start()
+void mdtPortThread::start()
 {
   Q_ASSERT(pvPort != 0);
 
-  int i = 0;
+  ///int i = 0;
 
   // Get thread's common setup
   pvReconnectTimeout = pvPort->config().connectTimeout();
@@ -85,6 +86,7 @@ bool mdtPortThread::start()
   QThread::start();
 
   // Wait until the thread started
+  /**
   while(!isRunning()){
     qApp->processEvents();
     msleep(50);
@@ -100,6 +102,7 @@ bool mdtPortThread::start()
   }
 
   return true;
+  */
 }
 
 void mdtPortThread::stop()
@@ -142,11 +145,31 @@ void mdtPortThread::stop()
   // Exit event loop (for subclass that use a event loop)
   exit();
   // Wait the end of the thread
+  /**
   while(!isFinished()){
     qApp->processEvents();
     msleep(50);
   }
-  qDebug() << "mdtPortThread::stop() DONE";
+  */
+  ///qDebug() << "mdtPortThread::stop() DONE";
+}
+
+void mdtPortThread::waitReady()
+{
+  while(!isRunning()){
+    // Several threads have no event loop, we can wait on more event
+    QCoreApplication::processEvents(QEventLoop::AllEvents);
+    msleep(50);
+  }
+}
+
+void mdtPortThread::waitFinished()
+{
+  while(!isFinished()){
+    QCoreApplication::processEvents(QEventLoop::AllEvents);
+    // Several threads have no event loop, we can wait on more event
+    msleep(50);
+  }
 }
 
 bool mdtPortThread::isRunning() const

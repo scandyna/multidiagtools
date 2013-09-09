@@ -38,14 +38,6 @@ mdtStateMachine::~mdtStateMachine()
 {
 }
 
-void mdtStateMachine::addState(mdtState *state)
-{
-  Q_ASSERT(state != 0);
-
-  connect(state, SIGNAL(entered(mdtState*)), this, SLOT(onStateEntered(mdtState*)));
-  QStateMachine::addState(state);
-}
-
 int mdtStateMachine::currentState() const
 {
   return pvCurrentState;

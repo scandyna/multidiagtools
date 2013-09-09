@@ -1,19 +1,15 @@
 window_sizes 1280 1001 323 951 923 0
 diagrams
   active  statediagram_ref 792578 // mdtPortManagerStateMachine
-    951 923 80 17 60 66
-  classdiagram_ref 792706 // mdtPortManagerStateMachine
-    748 738 100 4 48 0
+    951 923 100 17 0 219
+  statediagram_ref 812802 // Running
+    760 738 100 4 156 0
+  statediagram_ref 806274 // Connected
+    760 738 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 294658 // mdtPortManager
+selected statediagram_ref 792578 // mdtPortManagerStateMachine
 open
-  
-package_ref 128002 // mdtutils
-  state_ref 171010 // PortError
-  state_ref 171138 // DeviceError
-  class_ref 845442 // mdtPortManagerStateMachine
-  
-package_ref 221058 // sandbox
+  state_ref 191746 // Connected
 end
 end

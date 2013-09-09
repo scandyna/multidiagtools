@@ -137,33 +137,43 @@ void mdtPortTest::startStopTest()
   QVERIFY(!wrThd.isRunning());
 
   // Start/stop read thread
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
   rdThd.stop();
+  rdThd.waitFinished();
   QVERIFY(!rdThd.isRunning());
   // Start/stop write thread
-  QVERIFY(wrThd.start());
+  wrThd.start();
+  wrThd.waitReady();
   QVERIFY(wrThd.isRunning());
   wrThd.stop();
+  wrThd.waitFinished();
   QVERIFY(!wrThd.isRunning());
 
   // Start threads (sequencial)
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
-  QVERIFY(wrThd.start());
+  wrThd.start();
+  wrThd.waitReady();
   QVERIFY(wrThd.isRunning());
   rdThd.stop();
   QVERIFY(wrThd.isRunning());
   QVERIFY(!rdThd.isRunning());
   wrThd.stop();
+  wrThd.waitFinished();
   QVERIFY(!wrThd.isRunning());
 
   // Start threads (sequencial 2)
-  QVERIFY(wrThd.start());
+  wrThd.start();
+  wrThd.waitReady();
   QVERIFY(wrThd.isRunning());
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
   wrThd.stop();
+  wrThd.waitFinished();
   QVERIFY(!wrThd.isRunning());
   QVERIFY(rdThd.isRunning());
   rdThd.stop();
@@ -172,15 +182,18 @@ void mdtPortTest::startStopTest()
   // Multiple start/stop - seq: rd/wr/rd/wr
   qsrand(QDateTime::currentDateTime ().toTime_t ());
   for(int i=0; i<10; i++){
-    QVERIFY(rdThd.start());
+    rdThd.start();
+  rdThd.waitReady();
     QVERIFY(rdThd.isRunning());
-    QVERIFY(wrThd.start());
+    wrThd.start();
+  wrThd.waitReady();
     QVERIFY(wrThd.isRunning());
     QTest::qWait((100.0*(double)qrand()) / RAND_MAX);
     rdThd.stop();
     QVERIFY(!rdThd.isRunning());
     QVERIFY(wrThd.isRunning());
     wrThd.stop();
+  wrThd.waitFinished();
     QVERIFY(!wrThd.isRunning());
   }
 }
@@ -217,7 +230,8 @@ void mdtPortTest::writeRawTest()
   wrThd.setPort(&port);
 
   // Start
-  QVERIFY(wrThd.start());
+  wrThd.start();
+  wrThd.waitReady();
   QVERIFY(wrThd.isRunning());
 
   // Initial: empty file
@@ -251,6 +265,7 @@ void mdtPortTest::writeRawTest()
 
   // Close port
   wrThd.stop();
+  wrThd.waitFinished();
   port.close();
 
   // Create a empty temporary file
@@ -277,7 +292,8 @@ void mdtPortTest::writeRawTest()
   wrThd.setPort(&port);
 
   // Start
-  QVERIFY(wrThd.start());
+  wrThd.start();
+  wrThd.waitReady();
   QVERIFY(wrThd.isRunning());
 
   // Initial: empty file
@@ -311,6 +327,7 @@ void mdtPortTest::writeRawTest()
 
   // End
   wrThd.stop();
+  wrThd.waitFinished();
 }
 
 void mdtPortTest::writeRawTest_data()
@@ -368,7 +385,8 @@ void mdtPortTest::writeAsciiTest()
   wrThd.setPort(&port);
 
   // Start
-  QVERIFY(wrThd.start());
+  wrThd.start();
+  wrThd.waitReady();
   QVERIFY(wrThd.isRunning());
 
   // Initial: empty file
@@ -402,6 +420,7 @@ void mdtPortTest::writeAsciiTest()
 
   // Close port
   wrThd.stop();
+  wrThd.waitFinished();
   port.close();
 
   // Create a empty temporary file
@@ -428,7 +447,8 @@ void mdtPortTest::writeAsciiTest()
   wrThd.setPort(&port);
 
   // Start
-  QVERIFY(wrThd.start());
+  wrThd.start();
+  wrThd.waitReady();
   QVERIFY(wrThd.isRunning());
 
   // Initial: empty file
@@ -462,6 +482,7 @@ void mdtPortTest::writeAsciiTest()
 
   // End
   wrThd.stop();
+  wrThd.waitFinished();
 }
 
 void mdtPortTest::writeAsciiTest_data()
@@ -518,7 +539,8 @@ void mdtPortTest::readRawTest()
 
   // Start
   qDebug() << "TEST: starting thd...";
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
   qDebug() << "TEST: thd started";
 
@@ -613,7 +635,8 @@ void mdtPortTest::readAsciiTest()
   rdThd.setPort(&port);
 
   // Start
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
 
   // Write data to file and verify that data was written
@@ -723,7 +746,8 @@ void mdtPortTest::readInvalidDataAsciiTest()
 
   // Start
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
 
   // Wait some time and verify that no data are available
@@ -756,7 +780,8 @@ void mdtPortTest::readInvalidDataAsciiTest()
 
   // Start
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
 
   // Wait some time and verify that data are available
@@ -793,7 +818,8 @@ void mdtPortTest::readInvalidDataAsciiTest()
 
   // Start
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
 
   // Wait some time and verify that data are available
@@ -830,7 +856,8 @@ void mdtPortTest::readInvalidDataAsciiTest()
 
   // Start
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
 
   // Wait some time and verify that data are available
@@ -878,7 +905,8 @@ void mdtPortTest::emptyQueueRecoveryTest()
   rdThd.setPort(&port);
 
   // Start
-  QVERIFY(rdThd.start());
+  rdThd.start();
+  rdThd.waitReady();
   QVERIFY(rdThd.isRunning());
 
   // Write data

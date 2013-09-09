@@ -55,24 +55,28 @@ void mdtSerialPortManagerTest::simpleTest()
   m.port().config().setFrameType(mdtFrame::FT_ASCII);
   m.port().config().setEndOfFrameSeq("$");
   m.setPortName(portInfoList.at(0)->portName());
-  QVERIFY(m.openPort());
+  ///QVERIFY(m.openPort());
 
   // Check that available baud rates contains 9600 (very standard, should exists on most device)
+  QVERIFY(m.port().open());
   QVERIFY(m.port().availableBaudRates().size() > 0);
   QVERIFY(m.port().availableBaudRates().contains(9600));
   // Check that the right port is set
   QVERIFY(m.port().portName() == portInfoList.at(0)->portName());
+  m.port().close();
 
   // We not need the scan result anymore, free memory
   qDeleteAll(portInfoList);
   portInfoList.clear();
 
-  // Start threads
+  // Start port manager
   QVERIFY(m.start());
-  QVERIFY(m.isRunning());
+  ///QVERIFY(m.isRunning());
+  QVERIFY(m.isReady());
 
   // Send some data
-  QVERIFY(m.writeData("Test$") >= 0);
+  ///QVERIFY(m.writeData("Test$") >= 0);
+  QVERIFY(m.sendData("Test$") >= 0);
 
   // Wait until a transction is done
   QVERIFY(m.waitOneTransactionDone());
@@ -107,10 +111,12 @@ void mdtSerialPortManagerTest::transferTest()
   }
   m.port().config().setFrameType(mdtFrame::FT_RAW);
   m.setPortName(portInfoList.at(0)->portName());
-  QVERIFY(m.openPort());
+  ///QVERIFY(m.openPort());
   // Check that available baud rates contains 9600 (very standard, should exists on most device)
+  QVERIFY(m.port().open());
   QVERIFY(m.port().availableBaudRates().size() > 0);
   QVERIFY(m.port().availableBaudRates().contains(9600));
+  m.port().close();
   // Default configuration is: 9600 baud, 8 data bits, no parity and 1 stop bit.
   dataTransferRate = (1.0/8.0)*9600.0*8.0/10.0; // [B/s]
   // Set the dataTransferTime, with 10% headroom
@@ -120,16 +126,18 @@ void mdtSerialPortManagerTest::transferTest()
   qDeleteAll(portInfoList);
   portInfoList.clear();
 
-  // Start threads
+  // Start port manager
   QVERIFY(m.start());
-  QVERIFY(m.isRunning());
+  ///QVERIFY(m.isRunning());
+  QVERIFY(m.isReady());
 
   qDebug() << "Data rate: " << dataTransferRate << " [B/s]";
   qDebug() << "data size: " << data.size();
   qDebug() << "Transfer time: " << dataTransferTime << " [ms]";
-  
+
   // Send data
-  QVERIFY(m.writeData(data.toAscii()) >= 0);
+  ///QVERIFY(m.writeData(data.toAscii()) >= 0);
+  QVERIFY(m.sendData(data.toAscii()) >= 0);
 
   // Get incomming data
   while(receivedData.size() < data.size()){
@@ -144,7 +152,8 @@ void mdtSerialPortManagerTest::transferTest()
   // Verify received data
   QVERIFY(receivedData == data);
 
-  m.closePort();
+  ///m.closePort();
+  m.stop();
 }
 
 void mdtSerialPortManagerTest::transferTest_data()

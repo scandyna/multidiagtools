@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -103,6 +103,12 @@ mdtAbstractPort::error_t mdtDeviceScpi::connectToDevice(const mdtDeviceInfo &dev
   // Open port if found
   if(port != 0){
     portManager()->setPortInfo(*port);
+    if(portManager()->start()){
+      retVal = mdtAbstractPort::NoError;
+    }else{
+      retVal = mdtAbstractPort::UnhandledError;
+    }
+    /**
     if(portManager()->openPort()){
       if(portManager()->start()){
         retVal = mdtAbstractPort::NoError;
@@ -112,6 +118,7 @@ mdtAbstractPort::error_t mdtDeviceScpi::connectToDevice(const mdtDeviceInfo &dev
     }else{
       retVal = mdtAbstractPort::UnhandledError;
     }
+    */
   }else{
     // Device not found
     /// \todo Add DeviceNotFound error ?

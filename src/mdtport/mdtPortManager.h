@@ -36,10 +36,9 @@
 #include <QList>
 #include <QQueue>
 #include <QMap>
-#include <QState>
-#include <QStateMachine>
 
 class mdtPortManagerStateMachine;
+class QTimer;
 
 /*! \brief Port manager base class
  *
@@ -68,11 +67,8 @@ class mdtPortManagerStateMachine;
  * m.addThread(mew mdtPortWriteThread);
  * m.addThread(mew mdtPortReadThread);
  * m.setPortName("/dev/xyz"));
- * if(!m.openPort()){
- *  // Handle error
- * }
  *
- * // Start threads
+ * // Start port manager - Will open port, start threads and return once port manager is ready
  * if(!m.start()){
  *  // Handle error
  * }
@@ -92,6 +88,9 @@ class mdtPortManagerStateMachine;
  * for(int i=0; i<responses.size(); i++){
  *  qDebug() << responses.at(i);
  * }
+ *
+ * // Stop port manager
+ * m.stop();
  *
  * // Cleanup - detachPort() will delete port and threads objects
  * m.detachPort(true, true);
@@ -233,6 +232,7 @@ class mdtPortManager : public QThread
    * If a port was set, the manager will stop (if running), and port will be closed (if open).
    *
    * Note that port set by setPort() and threads are not deleted.
+   *  This is because port and threads are set by subclass, or from application.
    */
   virtual ~mdtPortManager();
 
@@ -243,15 +243,13 @@ class mdtPortManager : public QThread
    *
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
-   *
-   * \pre Manager must no running
    */
   virtual QList<mdtPortInfo*> scan();
 
   /*! \brief Set port object
    *
    * \pre port must be a valid pointer to the expected class instance (for ex: mdtSerialPort).
-   * \pre Manager must no running
+   * \pre Port manager must be closed (see isClosed() ).
    */
   virtual void setPort(mdtAbstractPort *port);
 
@@ -288,7 +286,7 @@ class mdtPortManager : public QThread
    *
    * \pre Port must be set with setPort before using this method
    * \pre Manager must no running
-   * \pre thread must be a valid pointer
+   * \pre Port manager must be closed (see isClosed() ).
    */
   void addThread(mdtPortThread *thread);
 
@@ -307,14 +305,17 @@ class mdtPortManager : public QThread
   /*! \brief Detach threads from port and remove threads
    *
    * \param releaseMemory If true, all threads are deleted
-   * \pre Port manager must not running.
+   * \pre Port manager must be closed (see isClosed() ).
    */
   void removeThreads(bool releaseMemory);
 
-  /*! \brief Start threads
+  /*! \brief Start port manager
+   *
+   * Will open port and start threads.
+   *  This method returns once port manager is ready (see isReady() ).
+   *  Note: event loop continues to work during wait of ready state, GUI will also not freeze
    *
    * \pre Port must be set with setPort() before use of this method.
-   * \pre Port must be open with openPort() before using this method
    */
   virtual bool start();
 
@@ -325,11 +326,17 @@ class mdtPortManager : public QThread
    *  If no thread was set, false is returned.
    *
    * If port was not set, it returns false.
-   */
-  bool isRunning();
-
-  /*! \brief Stop threads
    * 
+   * \todo Obselete
+   */
+  ///bool isRunning();
+
+  /*! \brief Stop port manager
+   *
+   * Will stop threads and close port.
+   *  This method returns once port manager is closed ( see isClosed() ).
+   *  Note: event loop continues to work during wait of ready state, GUI will also not freeze
+   *
    * \pre Port must be set with setPort() before use of this method.
    */
   void stop();
@@ -337,21 +344,25 @@ class mdtPortManager : public QThread
   /*! \brief Set port name
    *
    * Set the port name to internally port object.
-   * Does nothing else. To open the port, use openPort().
+   * Does nothing else. To open the port, use start().
    *
    * \pre Port must be set before with setPort()
+   * \pre Port manager must be closed (see isClosed() ).
    * \sa mdtAbstractPort
    */
   void setPortName(const QString &portName);
 
   /*! \brief Set port info
    *
-   * Store given port info, and call setPortName() with
-   *  port info's stored port name (see mdtPortInfo::portName() ).
+   * Store given port info, and set port name to internall port object.
+   *  (see mdtPortInfo::portName() ).
    *
    * Setting a port info can be usefull if other informations are
    *  needed later in application (f.ex. mdtPortInfo::displayText() ).
    * You can get port informations later with portInfo().
+   *
+   * \pre Port must be set before with setPort()
+   * \pre Port manager must be closed (see isClosed() ).
    */
   void setPortInfo(mdtPortInfo info);
 
@@ -378,24 +389,6 @@ class mdtPortManager : public QThread
    * \pre Port must be set with setPort() before use of this method.
    */
   mdtPortConfig &config() const;
-
-  /*! \brief Open the port
-   *
-   * Will try to open port defined with setPortName().
-   *
-   * \return True on success, false else.
-   * \pre Port must be set with setPort() before use of this method.
-   * \todo Should return mdtAbstractPort::error_t
-   */
-  virtual bool openPort();
-
-  /*! \brief Close the port
-   * 
-   * This stops the threads (if exists) and close the port.
-   *
-   * If port was never set (with setPort() ), this method does nothing.
-   */
-  void closePort();
 
   /*! \brief Force transactions done to be keeped
    *
@@ -452,8 +445,67 @@ class mdtPortManager : public QThread
    * \return True if a frame is available before timeout, false else.
    * \pre Granularity must be > 0.
    * \pre Port must be set with setPort() before calling this method.
+   * 
+   * \todo Obselete
    */
   bool waitOnWriteReady(int timeout = 0, int granularity = 50);
+
+  /*! \brief Send data on port
+   *
+   * At first, this method waits until the ready state is set calling isReady() , and a frame is available in port's write frames pool.
+   *  This wait will not break event loop, so no GUI freeze occurs.
+   *  If port manager is stopped during this wait (unhandled error, stop request),
+   *  this method returns.
+   *
+   * Then, data contained in transaction will be passed to the mdtPort's write queue by copy.
+   *  This method returns immediatly after enqueue,
+   *  and don't wait until data was written.
+   *
+   * \param transaction Transaction used to send data. Following members are used by this method:
+   *                     - id : transaction will be added to pending transactions with this id,
+   *                            and currentTransactionId will be set with it.
+   *                     - data : will be sent to port.
+   *                     - isQueryReplyMode : if true, the transaction will be keeped in transactions done queue
+   *                                          until readenFrame() or readenFrames() is called.
+   *                                          Note: it's possible to force keeping all incomming data (wich also owerwrite this flag)
+   *                                           by setting the global keepTransactionsDone flag.
+   *
+   * \return Transaction ID on success or value < 0 on error.
+   *          In this implementation, the only possible error is mdtAbstractPort::WriteCanceled,
+   *          witch typically occurs when port manager stops.
+   *          Some subclass can return a frame ID on success,
+   *          or a other error. See subclass documentation for details.
+   *          Note: on failure, the transaction is restored to pool.
+   * \pre Port must be set with setPort() before use of this method.
+   * \pre transaction must be a valid pointer, and not allready exists in transactions pending or transactions done queue.
+   *
+   * Subclass notes:<br>
+   *  This method can be reimplemented in subclass if needed.
+   *  Typically usefull if some encoding is needed before the
+   *  frame is submitted to port.
+   *  A frame must be taken from port's write frames pool with mdtAbstractPort::writeFramesPool()
+   *  dequeue() method (see Qt's QQueue documentation for more details on dequeue() ),
+   *  then added to port's write queue with mdtAbstractPort::addFrameToWrite() .
+   *  If protocol supports frame identification (like MODBUS's transaction ID or USBTMC's bTag),
+   *   it should be returned here and incremented using incrementCurrentTransactionId().
+   */
+  virtual int sendData(mdtPortTransaction *transaction);
+
+  /*! \brief Send data to port
+   *
+   * Will increment the current transaction ID,
+   *  get a new transaction, setup it
+   *  and finally send it with sendData(mdtPortTransaction*).
+   *
+   * \param data Data to write.
+   * \param queryReplyMode If true,
+   *                        reply will be keeped in transactions done queue
+   *                        until readenFrame() or readenFrames() is called.
+   *                       If false, behaviour depends on keepTransactionsDone flag.
+   *
+   * \sa sendData(mdtPortTransaction*)
+   */
+  virtual int sendData(const QByteArray &data, bool queryReplyMode = false);
 
   /*! \brief Write data to port
    *
@@ -487,7 +539,7 @@ class mdtPortManager : public QThread
    *  If protocol supports frame identification (like MODBUS's transaction ID or USBTMC's bTag),
    *   it should be returned here and incremented using incrementCurrentTransactionId().
    */
-  virtual int writeData(mdtPortTransaction *transaction);
+  ///virtual int writeData(mdtPortTransaction *transaction);
 
   /*! \brief Write data to port
    *
@@ -502,15 +554,16 @@ class mdtPortManager : public QThread
    *                       If false, behaviour depends on keepTransactionsDone flag.
    *
    * \sa writeData(mdtPortTransaction*)
+   * 
+   * \todo Obselete
    */
-  virtual int writeData(const QByteArray &data, bool queryReplyMode = false);
+  ///virtual int writeData(const QByteArray &data, bool queryReplyMode = false);
 
   /*! \brief Wait until a transaction is done
    *
    * Will return when transaction with given id is done or after timeout.
    *
-   * Internally, a couple of sleep and process event are called, so 
-   * Qt's event loop will not be broken.
+   * This wait method does not break Qt's event loop, no GUI freeze occurs.
    *
    * This method can return if timeout occurs, or for other
    *  reason depending on specific port (port timeout, read cancelled, ...).
@@ -519,8 +572,6 @@ class mdtPortManager : public QThread
    * \return True if Ok, false on timeout or other error. If id was not found in transactions pending lists,
    *           a warning will be generated in mdtError system, and false will be returned.
    *           On failure, transaction is restored to pool (see onThreadsErrorOccured() for details).
-   * 
-   * \todo Check about infinit read timeout, if this has sense.
    */
   bool waitTransactionDone(int id);
 
@@ -655,6 +706,22 @@ class mdtPortManager : public QThread
    */
   state_t currentState() const;
 
+  /*! \brief Check if port manager is ready
+   *
+   * Internally, the currentState is used to check if port manager is ready.
+   *  This implementation returns true if currentState is PortReady or Ready.
+   *
+   * For some port type, it can be mandatory to be connected to device before any data
+   *  can be transferred. In such case, reimplement this method.
+   */
+  virtual bool isReady() const;
+
+  /*! \brief Check if port is closed
+   *
+   * Returns true if threads are all stopped and port is closed
+   */
+  bool isClosed() const;
+
  public slots:
 
   /*! \brief Cancel read and write operations
@@ -691,48 +758,6 @@ class mdtPortManager : public QThread
    * \todo Obselete ?
    */
   void stateChanged(int newState);
-
-  /*! \brief Connecting event
-   *
-   * Used by internal state machine
-   * \todo Obselete
-   */
-  ///void connecting();
-
-  /*! \brief Disconnected event
-   *
-   * Used by internal state machine
-   * \todo Obselete
-   */
-  ///void disconnected();
-
-  /*! \brief Device ready event event
-   *
-   * Used by internal state machine
-   * \todo Obselete
-   */
-  ///void ready();
-
-  /*! \brief Device busy event event
-   *
-   * Used by internal state machine
-   * \todo Obselete
-   */
-  ///void busy();
-
-  /*! \brief Handled error event
-   *
-   * Used by internal state machine
-   * \todo Obselete
-   */
-  ///void handledError();
-
-  /*! \brief Unhandled error event
-   *
-   * Used by internal state machine
-   * \todo Obselete
-   */
-  ///void unhandledError();
 
   /*! \brief Sent when port was closed
    *
@@ -800,7 +825,39 @@ class mdtPortManager : public QThread
    */
   void pmReadyEvent();
 
+  /*! \brief Sent when a transaction timeout occured
+   *
+   * A transaction timeout can be notified by a port thread,
+   *  or/and internall transaction timer.
+   *
+   * \sa transactionTimeoutOccured()
+   * \sa onTransactionTimeoutOccured()
+   * \sa startTransactionTimer()
+   * \sa stopTransactionTimer()
+   */
+  void pmTransactionTimeoutEvent();
+
+ ///public:  /// \todo make protected
+
  protected:
+
+  /*! \brief Open the port
+   *
+   * Will try to open port defined with setPortName() or setPortInfo()
+   *
+   * \return True on success, false else.
+   * \pre Port must be set with setPort() before use of this method.
+   * \todo Should return mdtAbstractPort::error_t
+   */
+  virtual bool openPort();
+
+  /*! \brief Close the port
+   *
+   * If port was never set (with setPort() ), this method does nothing.
+   */
+  void closePort();
+
+ ///protected:
 
   /*! \brief Set the current transaction ID
    */
@@ -853,6 +910,35 @@ class mdtPortManager : public QThread
   /*! \brief Restore all transactions done to pool
    */
   void flushTransactionsDone();
+
+  /*! \brief Start transaction timer
+   *
+   * \param timeout Timeout [ms]
+   *
+   * \sa transactionTimeoutOccured()
+   * \sa pmTransactionTimeoutEvent()
+   * \sa onTransactionTimeoutOccured()
+   * \sa stopTransactionTimer()
+   */
+  void startTransactionTimer(int timeout);
+
+  /*! \brief Stop transaction timer
+   *
+   * \sa startTransactionTimer()
+   * \sa transactionTimeoutOccured()
+   * \sa pmTransactionTimeoutEvent()
+   * \sa onTransactionTimeoutOccured()
+   */
+  void stopTransactionTimer();
+
+  /*! \brief Check if a transaction timeout occured
+   *
+   * \sa pmTransactionTimeoutEvent()
+   * \sa onTransactionTimeoutOccured()
+   * \sa startTransactionTimer()
+   * \sa stopTransactionTimer()
+   */
+  bool transactionTimeoutOccured() const;
 
   /*! \brief Emit signals for each done transactions
    *
@@ -912,63 +998,6 @@ class mdtPortManager : public QThread
    */
   virtual void onThreadsErrorOccured(int error);
 
- private slots:
-
-  /*! \brief Set the disconnected state
-   *
-   * Used by internal state machine.
-   * \todo Obselete
-   */
-  ///void setStateDisconnected();
-
-  /*! \brief Set the connecting state
-   *
-   * Used by internal state machine
-   * Emit stateChanged() if current state was not Connecting.
-   * Used by internal state machine.
-   * \todo Obselete
-   */
-  ///void setStateConnecting();
-
-  /*! \brief Set the ready state
-   *
-   * Emit stateChanged() if current state was not Ready.
-   * Used by internal state machine.
-   *
-   * If more than one thread was set,
-   *  port manager enters only to ready state
-   *  if all threads are not in error state.
-   * \todo Obselete
-   *
-   * \pre Port must be set with setPort().
-   */
-  ///void setStateReady();
-
-  /*! \brief Set the busy state
-   *
-   * Busy state can be used when physical device or computer (this software) cannot process more requests.
-   * Emit stateChanged() if current state was not Busy.
-   * Used by internal state machine.
-   * \todo Obselete
-   */
-  ///void setStateBusy();
-
-  /*! \brief Set the warning state
-   *
-   * Emit stateChanged() if current state was not Warning.
-   * Used by internal state machine.
-   * \todo Obselete
-   */
-  ///void setStateWarning();
-
-  /*! \brief Set the error state
-   *
-   * Emit stateChanged() if current state was not Error.
-   * Used by internal state machine.
-   * \todo Obselete
-   */
-  ///void setStateError();
-
  protected:
 
   mdtAbstractPort *pvPort;
@@ -991,11 +1020,29 @@ class mdtPortManager : public QThread
    */
   void onThreadStopped(mdtPortThread *thread);
 
- private:
+  /*! \brief Start threads
+   */
+  void startThreads();
 
-  // Setup state machine
-  /// \todo Obselete
-  ///void buildStateMachine();
+  /*! \brief Stop threads
+   */
+  void stopThreads();
+
+  /*! \brief Called when a transaction timeout occurs
+   *
+   * Will remove transaction pending and done from queues.
+   *  The internall transaction timer will be stopped.
+   *
+   * After a call to this method, transactionTimeoutOccured() will return true.
+   *
+   * \sa pmTransactionTimeoutEvent()
+   * \sa transactionTimeoutOccured()
+   * \sa startTransactionTimer()
+   * \sa stopTransactionTimer()
+   */
+  void onTransactionTimeoutOccured();
+
+ private:
 
   /*! \brief Wait until ready state
    */
@@ -1013,26 +1060,15 @@ class mdtPortManager : public QThread
   QQueue<mdtPortTransaction*> pvTransactionsDone;       // Transactions for data that are received from device
   bool pvThreadHandlesReadTimeout;                      // Used by waitOneTransactionDone()
   int pvMaxTransactionsPending;                         // Limit before going to busy state
+  bool pvTransactionTimeoutOccured;
+  QTimer *pvTransactionTimer;
   // Threads
   QList<mdtPortThread*> pvThreadsReady;                 // See onThreadReady() and onThreadFinished()
   // Instance of reader and writer thread
   mdtPortThread *pvReadThread;
   mdtPortThread *pvWriteThread;
-  // State flag
-  /// \todo Obselete
-  ///state_t pvCurrentState;
   // State machine
   mdtPortManagerStateMachine *pvStateMachine;
-  /// \todo Obselete
-  /**
-  QStateMachine *pvStateMachine;
-  QState *pvStateDisconnected;
-  QState *pvStateConnecting;
-  QState *pvStateReady;
-  QState *pvStateBusy;
-  QState *pvStateWarning;
-  QState *pvStateError;
-  */
   // Diseable copy
   Q_DISABLE_COPY(mdtPortManager);
 };

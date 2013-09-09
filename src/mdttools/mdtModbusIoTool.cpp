@@ -142,13 +142,15 @@ void mdtModbusIoTool::setup()
   if(pvDeviceModbusWago->portManager()->isRunning()){
     if(!pvDeviceModbusWago->isWago750()){
       showStatusMessage(tr("Device is not a Wago 750 Fieldbus"), tr("I/O detetcion currently only works with Wago 750 fielbus coupler"));
-      pvDeviceModbusWago->portManager()->closePort();
+      ///pvDeviceModbusWago->portManager()->closePort();
+      pvDeviceModbusWago->portManager()->stop();
       return;
     }
     showStatusMessage(tr("I/O detection ..."));
     if(!pvDeviceModbusWago->detectIos(pvDeviceIos)){
       showStatusMessage(tr("I/O detection failed"));
-      pvDeviceModbusWago->portManager()->closePort();
+      ///pvDeviceModbusWago->portManager()->closePort();
+      pvDeviceModbusWago->portManager()->stop();
       return;
     }
     pvDeviceModbusWago->setIos(pvDeviceIos, true);
@@ -220,7 +222,8 @@ void mdtModbusIoTool::disconnectFromNode()
   mdtModbusTcpPortManager *m = pvDeviceModbusWago->modbusTcpPortManager();
   Q_ASSERT(m != 0);
 
-  m->closePort();
+  ///m->closePort();
+  m->stop();
   pvDeviceIosWidget->clearIoWidgets();
 }
 

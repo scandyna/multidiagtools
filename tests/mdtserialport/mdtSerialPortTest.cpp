@@ -225,14 +225,17 @@ void mdtSerialPortTest::startStopTest()
   QVERIFY(!ctlThd.isRunning());
 
   // Start read and write threads and check states
-  QVERIFY(rThd.start());
-  QVERIFY(wThd.start());
+  rThd.start();
+  rThd.waitReady();
+  wThd.start();
+  wThd.waitReady();
   QVERIFY(rThd.isRunning());
   QVERIFY(wThd.isRunning());
   QVERIFY(!ctlThd.isRunning());
 
   // Start control thread and check states
-  QVERIFY(ctlThd.start());
+  ctlThd.start();
+  ctlThd.waitReady();
   QVERIFY(ctlThd.isRunning());
   QVERIFY(rThd.isRunning());
   QVERIFY(wThd.isRunning());
@@ -242,13 +245,16 @@ void mdtSerialPortTest::startStopTest()
 
   // Stop control thread and check that other still running
   ctlThd.stop();
+  ctlThd.waitFinished();
   QVERIFY(!ctlThd.isRunning());
   QVERIFY(rThd.isRunning());
   QVERIFY(wThd.isRunning());
 
   // Stop all and check states
   rThd.stop();
+  rThd.waitFinished();
   wThd.stop();
+  wThd.waitFinished();
   QVERIFY(!rThd.isRunning());
   QVERIFY(!wThd.isRunning());
   QVERIFY(!ctlThd.isRunning());
@@ -257,18 +263,24 @@ void mdtSerialPortTest::startStopTest()
   QVERIFY(!ctlThd.isRunning());
   qsrand(QDateTime::currentDateTime ().toTime_t ());
   for(int i=0; i<10; i++){
-    QVERIFY(ctlThd.start());
+    ctlThd.start();
+    ctlThd.waitReady();
     QVERIFY(ctlThd.isRunning());
-    QVERIFY(rThd.start());
+    rThd.start();
+    rThd.waitReady();
     QVERIFY(rThd.isRunning());
-    QVERIFY(wThd.start());
+    wThd.start();
+    wThd.waitReady();
     QVERIFY(wThd.isRunning());
     QTest::qWait((100.0*(double)qrand()) / RAND_MAX);
     ctlThd.stop();
+    ctlThd.waitFinished();
     QVERIFY(!ctlThd.isRunning());
     rThd.stop();
+    rThd.waitFinished();
     QVERIFY(!rThd.isRunning());
     wThd.stop();
+    wThd.waitFinished();
     QVERIFY(!wThd.isRunning());
   }
 }
@@ -299,7 +311,8 @@ void mdtSerialPortTest::ctlSignalsTest()
 
   // Assign sp to the control thread and start
   ctlThd.setPort(&sp);
-  QVERIFY(ctlThd.start());
+  ctlThd.start();
+  ctlThd.waitReady();
 
   // Initial states NOTE: CAR et RNG ?
   //QVERIFY(!sp.carIsOn());
@@ -324,6 +337,7 @@ void mdtSerialPortTest::ctlSignalsTest()
   QVERIFY(!sp.dsrIsOn());
 
   ctlThd.stop();
+  ctlThd.waitFinished();
 }
 
 void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
@@ -364,15 +378,18 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
 
   // Assign sp to the RX thread and start
   rxThd.setPort(&sp);
-  QVERIFY(rxThd.start());
+  rxThd.start();
+  rxThd.waitReady();
   QVERIFY(rxThd.isRunning());
   // Assign sp to the TX thread and start
   txThd.setPort(&sp);
-  QVERIFY(txThd.start());
+  txThd.start();
+  txThd.waitReady();
   QVERIFY(txThd.isRunning());
   // Assign sp to control thread and start
   ctlThd.setPort(&sp);
-  QVERIFY(ctlThd.start());
+  ctlThd.start();
+  ctlThd.waitReady();
   QVERIFY(ctlThd.isRunning());
 
   // Get a frame
@@ -400,6 +417,7 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   // Stop control thread, and be shure that other can continue
   // This is to check the port's stop system (with signal on Posix, and waitForMultipleObjects on Windows)
   ctlThd.stop();
+  ctlThd.waitFinished();
   QVERIFY(!ctlThd.isRunning());
   QVERIFY(txThd.isRunning());
   QVERIFY(rxThd.isRunning());
@@ -423,6 +441,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   // Stop threads and close port
   rxThd.stop();
   txThd.stop();
+  rxThd.waitFinished();
+  txThd.waitFinished();
   sp.close();
 
   /* Byte per byte write */
@@ -436,9 +456,11 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   // Re-affect threads (so new setup will be read) and start it
   rxThd.setPort(&sp);
   txThd.setPort(&sp);
-  QVERIFY(rxThd.start());
+  rxThd.start();
+  rxThd.waitReady();
   QVERIFY(rxThd.isRunning());
-  QVERIFY(txThd.start());
+  txThd.start();
+  txThd.waitReady();
   QVERIFY(txThd.isRunning());
 
   // Get a frame
@@ -481,6 +503,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   // Stop threads and close port
   rxThd.stop();
   txThd.stop();
+  rxThd.waitFinished();
+  txThd.waitFinished();
   sp.close();
 }
 
@@ -538,11 +562,13 @@ void mdtSerialPortTest::txRxBinaryTopTest()
 
   // Assign sp to the RX thread and start
   rxThd.setPort(&sp);
-  QVERIFY(rxThd.start());
+  rxThd.start();
+  rxThd.waitReady();
   QVERIFY(rxThd.isRunning());
   // Assign sp to the TX thread and start
   txThd.setPort(&sp);
-  QVERIFY(txThd.start());
+  txThd.start();
+  txThd.waitReady();
   QVERIFY(txThd.isRunning());
 
   // Transmit data too fast (interframe < read timeout)
@@ -581,19 +607,25 @@ void mdtSerialPortTest::txRxBinaryTopTest()
   rxThd.stop();
   txThd.stop();
   sp.flush();
-  QVERIFY(rxThd.start());
-  QVERIFY(txThd.start());
+  rxThd.start();
+  rxThd.waitReady();
+  txThd.start();
+  txThd.waitReady();
   */
 
   // Update setup with correct interframe time
   rxThd.stop();
   txThd.stop();
+  rxThd.waitFinished();
+  txThd.waitFinished();
   sp.close();
   cfg.setWriteInterframeTime(550);
   QVERIFY(sp.open() == mdtAbstractPort::NoError);
   QVERIFY(sp.setup() == mdtAbstractPort::NoError);
-  QVERIFY(rxThd.start());
-  QVERIFY(txThd.start());
+  rxThd.start();
+  rxThd.waitReady();
+  txThd.start();
+  txThd.waitReady();
 
   // Transmit data with correct interframe time
   for(int i=0; i<data.size(); i++){
@@ -636,6 +668,8 @@ void mdtSerialPortTest::txRxBinaryTopTest()
   // Stop threads and close port
   rxThd.stop();
   txThd.stop();
+  rxThd.waitFinished();
+  txThd.waitFinished();
   sp.close();
 }
 
@@ -700,11 +734,13 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
 
   // Assign sp to the RX thread and start
   rxThd.setPort(&sp);
-  QVERIFY(rxThd.start());
+  rxThd.start();
+  rxThd.waitReady();
   QVERIFY(rxThd.isRunning());
   // Assign sp to the TX thread and start
   txThd.setPort(&sp);
-  QVERIFY(txThd.start());
+  txThd.start();
+  txThd.waitReady();
   QVERIFY(txThd.isRunning());
 
   // Get a frame
@@ -745,6 +781,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   // Stop threads and close port
   rxThd.stop();
   txThd.stop();
+  rxThd.waitFinished();
+  txThd.waitFinished();
   sp.close();
 
   /* Byte per byte write */
@@ -758,9 +796,11 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   // Re-affect threads (so new setup will be read) and start it
   rxThd.setPort(&sp);
   txThd.setPort(&sp);
-  QVERIFY(rxThd.start());
+  rxThd.start();
+  rxThd.waitReady();
   QVERIFY(rxThd.isRunning());
-  QVERIFY(txThd.start());
+  txThd.start();
+  txThd.waitReady();
   QVERIFY(txThd.isRunning());
 
   // Get a frame
@@ -805,6 +845,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   // Stop threads and close port
   rxThd.stop();
   txThd.stop();
+  rxThd.waitFinished();
+  txThd.waitFinished();
   sp.close();
 }
 
@@ -878,11 +920,13 @@ void mdtSerialPortTest::flushTest()
 
   // Assign sp to the RX thread and start
   rxThd.setPort(&sp);
-  QVERIFY(rxThd.start());
+  rxThd.start();
+  rxThd.waitReady();
   QVERIFY(rxThd.isRunning());
   // Assign sp to the TX thread and start
   txThd.setPort(&sp);
-  QVERIFY(txThd.start());
+  txThd.start();
+  txThd.waitReady();
   QVERIFY(txThd.isRunning());
 
   /*
@@ -981,6 +1025,8 @@ void mdtSerialPortTest::flushTest()
   // Stop threads and close port
   rxThd.stop();
   txThd.stop();
+  rxThd.waitFinished();
+  txThd.waitFinished();
   sp.close();
 }
 

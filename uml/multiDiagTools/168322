@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 39
+  revision 42
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3551,7 +3551,6 @@ ${inlines}
 	      on state_ref 171138 // DeviceError
 	      external 
 	    end
-
 	  end
 
 	  pseudostate 167938 initial 
@@ -4869,11 +4868,12 @@ ${inlines}
 	relation 1061634 -_->
 	  stereotype "friend"
 	  a default
-	    cpp default "#include in source"
+	    cpp default "${type}"
 	    classrelation_ref 1072898 // <dependency>
 	  b parent class_ref 859394 // PortClosed_State
       end
     end
+
   end
 
   classview 247298 "mdtTcpSocket"

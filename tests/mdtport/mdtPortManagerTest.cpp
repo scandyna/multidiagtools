@@ -181,6 +181,7 @@ void mdtPortManagerTest::portTest()
   // Init port manager
   QVERIFY(m.readThread() == 0);
   QVERIFY(m.writeThread() == 0);
+  QVERIFY(m.isClosed());
   m.setPort(port);
   m.setKeepTransactionsDone(true);
   thread = new mdtPortWriteThread;
@@ -190,22 +191,26 @@ void mdtPortManagerTest::portTest()
   m.addThread(thread);
   QVERIFY(m.readThread() == thread);
   m.setPortName(file.fileName());
-  QVERIFY(m.openPort());
+  ///QVERIFY(m.openPort());
 
   // start threads
+  QVERIFY(!m.isReady());
   QVERIFY(m.start());
-  QVERIFY(m.isRunning());
+  QVERIFY(m.isReady());
+  ///QVERIFY(m.isRunning());
 
   // Check the wait function without available data
   QVERIFY(!m.waitOneTransactionDone());
 
   // Send some data
-  QCOMPARE(m.writeData("ABCD\nEFGH\n"), 1);
+  ///QCOMPARE(m.writeData("ABCD\nEFGH\n"), 1);
+  QCOMPARE(m.sendData("ABCD\nEFGH\n"), 1);
 
   // We must re-open the file, else nothing will be readen
   QTest::qWait(100);
-  m.closePort();
-  QVERIFY(m.openPort());
+  ///m.closePort();
+  ///QVERIFY(m.openPort());
+  m.stop();
   QVERIFY(m.start());
   // Get readen data
   QVERIFY(m.waitOneTransactionDone());
@@ -225,10 +230,10 @@ void mdtPortManagerTest::portTest()
 
   // Setup same port than first manager, open must fail
   m2.setPortName(file.fileName());
-  QVERIFY(!m2.openPort());
+  ///QVERIFY(!m2.openPort());
 
   // Check that we can close port before detach without crash
-  m.closePort();
+  ///m.closePort();
 
   // Cleanup
   m2.detachPort(true, true);
@@ -257,7 +262,7 @@ void mdtPortManagerTest::usbPortTest()
 
   // Init port manager
   m.setPortInfo(*portInfoList.at(0));
-  QVERIFY(m.openPort());
+  ///QVERIFY(m.openPort());
   // start threads
   QVERIFY(m.start());
 
@@ -303,13 +308,13 @@ void mdtPortManagerTest::usbTmcPortTest()
   // Init port manager
   m.setPortName(portInfoList.at(0)->portName());
   m.config().setWriteQueueSize(1);
-  QVERIFY(m.openPort());
+  ///QVERIFY(m.openPort());
 
   // We not need the scan result anymore, free memory
   qDeleteAll(portInfoList);
   portInfoList.clear();
 
-  // start threads
+  // start port manager
   QVERIFY(m.start());
 
   // Control request
@@ -420,47 +425,67 @@ void mdtPortManagerTest::modbusTcpPortTest()
    * Open/close test with valid Host
    */
   m.setPortInfo(validPortInfo);
-  QVERIFY(m.openPort());
+  ///QVERIFY(m.openPort());
   QVERIFY(m.start());
-  QVERIFY(m.isRunning());
+  ///QVERIFY(m.isRunning());
+  QVERIFY(m.isReady());
   m.stop();
-  QVERIFY(!m.isRunning());
+  ///QVERIFY(!m.isRunning());
+  QVERIFY(!m.isReady());
+  QVERIFY(m.isClosed());
   QVERIFY(m.start());
-  QVERIFY(m.isRunning());
-  m.closePort();
-  QVERIFY(!m.isRunning());
+  ///QVERIFY(m.isRunning());
+  QVERIFY(m.isReady());
+  ///m.closePort();
+  m.stop();
+  ///QVERIFY(!m.isRunning());
+  QVERIFY(!m.isReady());
+  QVERIFY(m.isClosed());
 
   /*
    * Open/close test with invalid Host
    */
   m.setPortInfo(invalidPortInfo);
-  QVERIFY(!m.openPort());
-  QVERIFY(!m.isRunning());
+  ///QVERIFY(!m.openPort());
+  QVERIFY(!m.start());
+  ///QVERIFY(!m.isRunning());
+  QVERIFY(!m.isReady());
+  QVERIFY(m.isClosed());
   m.stop();
-  QVERIFY(!m.isRunning());
-  m.closePort();
-  QVERIFY(!m.isRunning());
+  ///QVERIFY(!m.isRunning());
+  QVERIFY(!m.isReady());
+  QVERIFY(m.isClosed());
+  ///m.closePort();
+  ///QVERIFY(!m.isRunning());
 
   /*
    * Open/close test with invalid + valid Host
    */
   m.setPortInfo(invalidPortInfo);
-  QVERIFY(!m.openPort());
-  QVERIFY(!m.isRunning());
+  ///QVERIFY(!m.openPort());
+  ///QVERIFY(!m.isRunning());
+  QVERIFY(!m.start());
+  QVERIFY(!m.isReady());
+  QVERIFY(m.isClosed());
   m.setPortInfo(validPortInfo);
-  QVERIFY(m.openPort());
   QVERIFY(m.start());
-  QVERIFY(m.isRunning());
+  QVERIFY(m.isReady());
+  ///QVERIFY(m.openPort());
+  ///QVERIFY(m.start());
+  ///QVERIFY(m.isRunning());
   m.stop();
-  QVERIFY(!m.isRunning());
+  ///QVERIFY(!m.isRunning());
+  QVERIFY(!m.isReady());
+  QVERIFY(m.isClosed());
 
   /*
    * Communication test
    */
   m.setPortInfo(validPortInfo);
-  QVERIFY(m.openPort());
+  ///QVERIFY(m.openPort());
   QVERIFY(m.start());
-  QVERIFY(m.isRunning());
+  ///QVERIFY(m.isRunning());
+  QVERIFY(m.isReady());
 
   /*
    * "Check" direct PDU write in query/reply mode

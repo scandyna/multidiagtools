@@ -69,10 +69,12 @@ void mdtUsbPortTest::vellemanK8055Test()
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
   // Start thread
-  QVERIFY(thd.start());
+  thd.start();
+  thd.waitReady();
 
   // Open/close test
   thd.stop();
+  thd.waitFinished();
   port.close();
   randomValueInit();
   for(int i=0; i<10; i++){
@@ -83,7 +85,8 @@ void mdtUsbPortTest::vellemanK8055Test()
   }
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
-  QVERIFY(thd.start());
+  thd.start();
+  thd.waitReady();
 
   // Write test
   codec.setDigitalOut(1, true);
@@ -125,6 +128,7 @@ void mdtUsbPortTest::vellemanK8055Test()
   qDebug() << "Values: " << codec.values();
   // End
   thd.stop();
+  thd.waitFinished();
 }
 
 void mdtUsbPortTest::agilentDso1000Test()
@@ -148,10 +152,12 @@ void mdtUsbPortTest::agilentDso1000Test()
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
   // Start thread
-  QVERIFY(thd.start());
+  thd.start();
+  thd.waitReady();
 
   // Open/close test
   thd.stop();
+  thd.waitFinished();
   port.close();
   randomValueInit();
   for(int i=0; i<10; i++){
@@ -162,7 +168,8 @@ void mdtUsbPortTest::agilentDso1000Test()
   }
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
-  QVERIFY(thd.start());
+  thd.start();
+  thd.waitReady();
 
   /*
    * *CLS command
@@ -277,6 +284,7 @@ void mdtUsbPortTest::agilentDso1000Test()
 
   // End
   thd.stop();
+  thd.waitFinished();
 }
 
 int main(int argc, char **argv)

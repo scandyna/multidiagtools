@@ -155,7 +155,7 @@ void mdtModbusTcpPortSetupDialog::updateConfig()
 void mdtModbusTcpPortSetupDialog::closePort()
 {
   clearDeviceInformations();
-  portManager()->closePort();
+  portManager()->stop();
 }
 
 void mdtModbusTcpPortSetupDialog::rescan()
@@ -298,23 +298,25 @@ bool mdtModbusTcpPortSetupDialog::applySetup()
   portInfo.setPortName(leHost->text().trimmed() + ":" + QString::number(sbPort->value()));
   portInfo.setDisplayText(tr("Host: ") + leHost->text().trimmed() + tr("   ,   Port: ") + QString::number(sbPort->value()));
   // We must close the port
-  portManager()->closePort();
+  portManager()->stop();
   // Apply current configuration
   updateConfig();
   portManager()->setPortInfo(portInfo);
   // Try to open port and start port manager
   showStatusMessage(tr("Trying to connect ..."));
-  if(!portManager()->openPort()){
+  if(!portManager()->start()){
     setStateDisconnected();
     showStatusMessage(tr("Cannot connect to ") + portManager()->portName());
     return false;
   }
+  /**
   if(!portManager()->start()){
     showStatusMessage(tr("Cannot start thread"));
     portManager()->closePort();
     setStateDisconnected();
     return false;
   }
+  */
   showStatusMessage(tr("Connected"), 3000);
 
   return true;

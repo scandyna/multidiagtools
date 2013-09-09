@@ -26,7 +26,6 @@
 mdtPortManagerStateMachine::mdtPortManagerStateMachine(QObject *parent)
  : mdtStateMachine(parent)
 {
-  pvStateMachine = new mdtStateMachine(this);
   // Main states
   pvPortClosed = 0;
   pvStarting = 0;
@@ -50,7 +49,6 @@ mdtPortManagerStateMachine::~mdtPortManagerStateMachine()
 
 void mdtPortManagerStateMachine::buildMainStateMachine(mdtPortManager *portManager)
 {
-  Q_ASSERT(pvStateMachine != 0);
   Q_ASSERT(portManager != 0);
 
   // Create states
@@ -59,20 +57,23 @@ void mdtPortManagerStateMachine::buildMainStateMachine(mdtPortManager *portManag
   pvPortClosed->setLedColorId(mdtLed::Green);
   pvPortClosed->setLedOn(false);
   pvStarting = new mdtState(mdtPortManager::Starting);
+  connect(pvStarting, SIGNAL(entered()), portManager, SLOT(startThreads()));
   pvRunning = new mdtState(mdtPortManager::Running);
   pvStopping = new mdtState(mdtPortManager::Stopping);
+  connect(pvStopping, SIGNAL(entered()), portManager, SLOT(stopThreads()));
   pvStopped = new mdtState(mdtPortManager::Stopped);
   pvPortError = new mdtState(mdtPortManager::PortError);
   pvPortError->setText(tr("Fatal error"));
   pvPortError->setLedColorId(mdtLed::Red);
   pvPortError->setLedOn(true);
+  connect(pvPortError, SIGNAL(entered()), portManager, SIGNAL(pmStopThreadsEvent()));
   // Add sates to machine
-  pvStateMachine->addState(pvPortClosed);
-  pvStateMachine->addState(pvStarting);
-  pvStateMachine->addState(pvRunning);
-  pvStateMachine->addState(pvStopping);
-  pvStateMachine->addState(pvStopped);
-  pvStateMachine->addState(pvPortError);
+  addState(pvPortClosed);
+  addState(pvStarting);
+  addState(pvRunning);
+  addState(pvStopping);
+  addState(pvStopped);
+  addState(pvPortError);
   // Add pvPortClosed transitions ->
   pvPortClosed->addTransition(portManager, SIGNAL(pmStartThreadsEvent()), pvStarting);
   // Add pvStarting transitions ->
@@ -91,14 +92,13 @@ void mdtPortManagerStateMachine::buildMainStateMachine(mdtPortManager *portManag
   // Build Running sub machine
   buildRunningSubMachine(portManager, pvRunning);
   // Start
-  pvStateMachine->setInitialState(pvPortClosed);
-  pvStateMachine->start();
-  pvStateMachine->waitOnState(mdtPortManager::PortClosed);
+  setInitialState(pvPortClosed);
+  start();
+  waitOnState(mdtPortManager::PortClosed);
 }
 
 void mdtPortManagerStateMachine::buildRunningSubMachine(mdtPortManager *portManager, mdtState *parentState)
 {
-  Q_ASSERT(pvStateMachine != 0);
   Q_ASSERT(portManager != 0);
   Q_ASSERT(parentState != 0);
 
@@ -135,7 +135,6 @@ void mdtPortManagerStateMachine::buildRunningSubMachine(mdtPortManager *portMana
 
 void mdtPortManagerStateMachine::buildConnectedSubMachine(mdtPortManager *portManager, mdtState *parentState)
 {
-  Q_ASSERT(pvStateMachine != 0);
   Q_ASSERT(portManager != 0);
   Q_ASSERT(parentState != 0);
 

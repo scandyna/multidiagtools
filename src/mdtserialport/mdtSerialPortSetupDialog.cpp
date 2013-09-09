@@ -90,8 +90,9 @@ void mdtSerialPortSetupDialog::displayConfig()
     index = cbPort->findData(var);
     cbPort->setCurrentIndex(index);
   }
-  // Get available baud rates. Check if port manager is running first
-  if(pvSerialPortManager->isRunning()){
+  // Get available baud rates. Check if port manager is open first
+  ///if(pvSerialPortManager->isRunning()){ /// \todo isRunning() is Obselete
+  if(!pvSerialPortManager->isClosed()){
     pvSerialPortManager->port().lockMutex();
     pvSerialPortConfigWidget->setAvailableBaudRates(pvSerialPortManager->port().availableBaudRates());
     pvSerialPortManager->port().unlockMutex();
@@ -122,12 +123,14 @@ void mdtSerialPortSetupDialog::closePort()
 {
   Q_ASSERT(pvSerialPortManager != 0);
 
-  pvSerialPortManager->closePort();
+  ///pvSerialPortManager->closePort();
+  pvSerialPortManager->stop();
 }
 
 void mdtSerialPortSetupDialog::rescan()
 {
-  if(portManager()->isRunning()){
+  ///if(portManager()->isRunning()){ /// \todo isRunning() is Obselete
+  if(!portManager()->isClosed()){
     showStatusMessage(tr("Cannot rescan because port is open"), 3000);
     return;
   }
@@ -224,19 +227,23 @@ bool mdtSerialPortSetupDialog::applySetup()
   Q_ASSERT(pvSerialPortManager != 0);
 
   // We must close the port
-  pvSerialPortManager->closePort();
+  ///pvSerialPortManager->closePort();
+  pvSerialPortManager->stop();
   // Apply current configuration
   updateConfig();
   pvSerialPortManager->setPortInfo(pvPortInfoCbHandler.currentPortInfo());
   // Try to open port and start port manager
-  if(!pvSerialPortManager->openPort()){
+  ///if(!pvSerialPortManager->openPort()){
+  if(!pvSerialPortManager->start()){
     showStatusMessage(tr("Cannot open port"), 3000);
     return false;
   }
+  /**
   if(!pvSerialPortManager->start()){
     showStatusMessage(tr("Cannot start threads"), 3000);
     return false;
   }
+  */
 
   return true;
 }

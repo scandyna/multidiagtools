@@ -52,7 +52,8 @@ void mdtTcpSocketTest::essais()
   thd.setPort(&s);
 
   // Start
-  QVERIFY(thd.start());
+  thd.start();
+  thd.waitReady();
   QVERIFY(thd.isRunning());
 
   // Init connection
@@ -99,6 +100,7 @@ void mdtTcpSocketTest::essais()
 
   // End
   thd.stop();
+  thd.waitFinished();
 }
 
 void mdtTcpSocketTest::writeReadTest()
@@ -136,7 +138,8 @@ void mdtTcpSocketTest::writeReadTest()
   thd.setPort(&s);
 
   // Start
-  QVERIFY(thd.start());
+  thd.start();
+  thd.waitReady();
   QVERIFY(thd.isRunning());
 
   // Responses comming from server
@@ -222,6 +225,7 @@ void mdtTcpSocketTest::writeReadTest()
 
   // End
   thd.stop();
+  thd.waitFinished();
 }
 
 void mdtTcpSocketTest::writeReadTest_data()
@@ -325,7 +329,8 @@ void mdtTcpSocketTest::readInvalidDataTest()
   thd.setPort(&s);
 
   // Start
-  QVERIFY(thd.start());
+  thd.start();
+  thd.waitReady();
   QVERIFY(thd.isRunning());
 
   /*
@@ -364,6 +369,7 @@ void mdtTcpSocketTest::readInvalidDataTest()
 
   // Stop and close port
   thd.stop();
+  thd.waitFinished();
   QVERIFY(!thd.isRunning());
   s.close();
 
@@ -382,7 +388,8 @@ void mdtTcpSocketTest::readInvalidDataTest()
   s.setPortName("127.0.0.1:" + peerPort);
   QVERIFY(s.open() == mdtAbstractPort::NoError);
   QVERIFY(s.setup() == mdtAbstractPort::NoError);
-  QVERIFY(thd.start());
+  thd.start();
+  thd.waitReady();
   QVERIFY(thd.isRunning());
 
   // Set TCP server data
@@ -418,6 +425,7 @@ void mdtTcpSocketTest::readInvalidDataTest()
 
   // Stop and close port
   thd.stop();
+  thd.waitFinished();
   QVERIFY(!thd.isRunning());
   s.close();
 
@@ -437,7 +445,8 @@ void mdtTcpSocketTest::readInvalidDataTest()
   s.setPortName("127.0.0.1:" + peerPort);
   QVERIFY(s.open() == mdtAbstractPort::NoError);
   QVERIFY(s.setup() == mdtAbstractPort::NoError);
-  QVERIFY(thd.start());
+  thd.start();
+  thd.waitReady();
   QVERIFY(thd.isRunning());
 
   // Set TCP server data
@@ -469,6 +478,7 @@ void mdtTcpSocketTest::readInvalidDataTest()
 
   // End
   thd.stop();
+  thd.waitFinished();
 }
 
 int main(int argc, char **argv)

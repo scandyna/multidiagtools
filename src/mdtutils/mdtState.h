@@ -125,6 +125,7 @@ class mdtState : public QState
   int pvLedColorId;
   bool pvLedIsOn;
   bool pvNotifyEnteredToUi;
+  bool pvConnectedToStateMachine;   // Flag to check if notification to state machine connection was allready made
 };
 
 #endif

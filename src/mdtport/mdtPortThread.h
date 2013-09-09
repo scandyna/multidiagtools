@@ -58,18 +58,38 @@ class mdtPortThread : public QThread
 
   /*! \brief Start the thread
    *
-   * \return True on sucsessfull start, or flase on start timeout
+   * This method will not wait until thread is running and ready.
+   * Once thread is ready, ready() signal is emitted.
    *
    * \pre Port instance must be defined.
    * \pre Port must have a valid configuration.
    */
-  bool start();
+  void start();
 
   /*! \brief Stop the running thread
+   *
+   * This method will not wait until thread is stopped.
+   * Once thread is stopped, finished() signal is emitted.
    *
    * \pre Port instance must be defined with setPort().
    */
   virtual void stop();
+
+  /*! \brief Wait until thread is ready
+   *
+   * This is a conveniance method,
+   *  mainly used by test suite.
+   * Port manager, for example, use the ready signal ensteatd of this method.
+   */
+  void waitReady();
+
+  /*! \brief Wait until thread is finished
+   *
+   * This is a conveniance method,
+   *  mainly used by test suite.
+   * Port manager, for example, use the finished signal ensteatd of this method.
+   */
+  void waitFinished();
 
   /*! \brief Returns true if the thread is running
    *
