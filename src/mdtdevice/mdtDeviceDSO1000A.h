@@ -54,7 +54,7 @@ class mdtDeviceDSO1000A : public mdtDeviceScpi
    *
    * \pre I/O's container must be set with setIos()
    */
-  void decodeReadenFrame(mdtPortTransaction transaction);
+  void decodeReadenFrame(mdtPortTransaction *transaction);
 
 private:
 

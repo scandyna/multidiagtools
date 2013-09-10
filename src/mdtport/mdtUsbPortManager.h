@@ -140,11 +140,9 @@ class mdtUsbPortManager : public mdtPortManager
    * This method can return if timeout occurs, or for other
    *  reason depending on specific port (port timeout, read canceled, ...).
    *
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   *                 If 0, the minimal timeout will be used (see adjustedReadTimeout() ).
    * \return True if Ok, false on timeout
    */
-  bool waitReadenControlResponse(int timeout = 0);
+  bool waitReadenControlResponse();
 
   /*! \brief Get all readen control responses
    *

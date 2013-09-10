@@ -52,7 +52,7 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
   setKeepTransactionsDone(false);
 
   portThread = new mdtUsbtmcPortThread;
-  connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
+  ///connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
   ///connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
   addThread(portThread);
   Q_ASSERT(pvThreads.size() == 1);
@@ -65,6 +65,8 @@ mdtUsbtmcPortManager::~mdtUsbtmcPortManager()
 
 QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
 {
+  Q_ASSERT(isClosed());
+
   QList<mdtPortInfo*> portInfoList;
   mdtDeviceInfo *deviceInfo;
   int i, j;
@@ -95,43 +97,21 @@ bool mdtUsbtmcPortManager::isReady() const
   return (currentState() == Ready);
 }
 
-int mdtUsbtmcPortManager::sendCommand(const QByteArray &command, int timeout)
+int mdtUsbtmcPortManager::sendCommand(const QByteArray &command)
 {
-  /**
-  // Wait until data can be sent
-  if(!waitOnWriteReady(timeout)){
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  // Send query
-  return writeData(command);
-  */
   return sendData(command);
 }
 
-/// \todo Remove timeouts
-QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTimeout, int readTimeout)
+QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query)
 {
   int bTag;
   mdtPortTransaction *transaction;
 
-  // Wait until data can be sent
-  /**
-  if(!waitOnWriteReady(writeTimeout)){
-    return QByteArray();
-  }
-  */
   // Send query
-  ///bTag = writeData(query);
   bTag = sendData(query);
   if(bTag < 0){
     return QByteArray();
   }
-  // Wait until more data can be sent
-  /**
-  if(!waitOnWriteReady(writeTimeout)){
-    return QByteArray();
-  }
-  */
   // Setup transaction
   transaction = getNewTransaction();
   transaction->setType(mdtFrameCodecScpi::QT_UNKNOW);
@@ -148,44 +128,6 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
 
   return readenFrame(bTag);
 }
-
-/**
-int mdtUsbtmcPortManager::writeData(const QByteArray &data)
-{
-  Q_ASSERT(pvPort != 0);
-
-  mdtFrameUsbTmc *frame;
-
-  // Get a frame in pool
-  lockPortMutex();
-  if(pvPort->writeFramesPool().size() < 1){
-    unlockPortMutex();
-    mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
-    e.commit();
-    ///emit(busy());
-    emit pmBusyEvent();
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
-  Q_ASSERT(frame != 0);
-  frame->clear();
-  frame->clearSub();
-  // Store data and add frame to write queue
-  frame->setWaitAnAnswer(false);
-  frame->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  // Increment bTag and enshure it's in correct range (1-255)
-  incrementCurrentTransactionId(1, 255);
-  frame->setbTag(currentTransactionId());
-  frame->setMessageData(data);
-  frame->setEOM(true);
-  frame->encode();
-  pvPort->addFrameToWrite(frame);
-  unlockPortMutex();
-
-  return currentTransactionId();
-}
-*/
 
 int mdtUsbtmcPortManager::sendData(const QByteArray &data)
 {
@@ -210,6 +152,9 @@ int mdtUsbtmcPortManager::sendData(const QByteArray &data)
       unlockPortMutex();
     }
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
+  if(!waitTransactionPossible()){
+    return mdtAbstractPort::WriteCanceled;
   }
   // We are ready to write
   Q_ASSERT(frame != 0);
@@ -238,23 +183,6 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
 
   mdtFrameUsbTmc *frame;
 
-  // Get a frame in pool
-  /**
-  lockPortMutex();
-  if(pvPort->writeFramesPool().size() < 1){
-    unlockPortMutex();
-    mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
-    e.commit();
-    restoreTransaction(transaction);
-    ///emit(busy());
-    emit pmBusyEvent();
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
-  Q_ASSERT(frame != 0);
-  */
-  
   // Wait until we can write
   while(1){
     // If port manager was stopped, we return
@@ -273,6 +201,9 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
       unlockPortMutex();
     }
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
+  if(!waitTransactionPossible()){
+    return mdtAbstractPort::WriteCanceled;
   }
   // We are ready to write
   Q_ASSERT(frame != 0);
@@ -504,12 +435,17 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
   mdtFrameUsbTmc *frame;
   mdtPortTransaction *transaction;
   int framesCount = 0;
+  // We need access to mdtUsbPort
+  mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
+  Q_ASSERT(port != 0);
 
   // Get frames in readen queue
   lockPortMutex();
   while(pvPort->readenFrames().size() > 0){
     frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->readenFrames().dequeue());
     Q_ASSERT(frame != 0);
+    qDebug() << "mdtUsbtmcPortManager::fromThreadNewFrameReaden() - bTag: " << frame->bTag();
+    port->expectedBulkInbTags().removeOne(frame->bTag());
     // Check if frame is complete
     if(!frame->isComplete()){
       mdtError e(MDT_USB_IO_ERROR, "Received a uncomplete frame", mdtError::Warning);
@@ -522,7 +458,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
     // If we have a pending transaction, remove it
     transaction = transactionPending(frame->bTag());
     if(transaction == 0){
-      mdtError e(MDT_USB_IO_ERROR, "Received a frame with unexpected bTag (Should be handled by thread, this is a bug)", mdtError::Warning);
+      mdtError e(MDT_USB_IO_ERROR, "Received a frame with unexpected bTag number " + QString::number(frame->bTag()) + " (Should be handled by thread, this is a bug)", mdtError::Warning);
       MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
       e.commit();
       // Put frame back into pool

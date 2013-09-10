@@ -65,7 +65,7 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
    *
-   * \pre Manager must no running
+   * \pre Manager must be closed
    */
   QList<mdtPortInfo*> scan();
 
@@ -78,9 +78,8 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
   /*! \brief Send a command to device
    *
-   * \todo Obselete timeout
-   *
-   * At first, this method waits until the ready state is set calling isReady() , and a frame is available in port's write frames pool.
+   * At first, this method waits until the ready state is set calling isReady() , a frame is available in port's write frames pool,
+   *  and until a transaction is possible (see waitTransactionPossible() ).
    *  This wait will not break event loop, so no GUI freeze occurs.
    *  If port manager is stopped during this wait (unhandled error, stop request),
    *  this method returns.
@@ -89,47 +88,26 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    *  (see mdtPortManager::waitOnWriteReady() for details).
    *
    * \param command Command to send.
-   * \param timeout Write timeout [ms]
-   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedWriteTimeout() for details).
    * \return bTag on success, or a error < 0
    *          (see mdtUsbtmcPortManager::writeData() for details).
    */
-  int sendCommand(const QByteArray &command, int timeout = 0);
+  int sendCommand(const QByteArray &command);
 
   /*! \brief Send a query to device
-   *
-   * \todo Obselete timeouts
    *
    * Will wait until it's possible to write.
    *  See sendData() and sendReadRequest() for details (used internally).
    *
    * \param query Query to send.
-   * \param writeTimeout Write timeout [ms]
-   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedWriteTimeout() for details).
-   * \param readTimeout Response timeout [ms]
-   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedReadTimeout() for details).
    * \return Result as string (empty string on error)
    *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
    */
-  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 0, int readTimeout = 0);
+  QByteArray sendQuery(const QByteArray &query);
 
   /*! \brief Write data by copy
    *
-   * Data will be encoded regarding USBTMC standard and passed to the mdtUsbPort's write queue by copy.
-   *  This method returns immediatly after enqueue,
-   *  and don't wait until data was written.
-   *
-   * This method does not use transaction, because no response will be returned.
-   *
-   * \param data Data to write
-   * \return bTag ID on success or mdtAbstractPort::WriteQueueEmpty (< 0).
-   * \pre Port must be set with setPort() before use of this method.
-   */
-  ///int writeData(const QByteArray &data);
-
-  /*! \brief Write data by copy
-   *
-   * At first, this method waits until the ready state is set calling isReady() , and a frame is available in port's write frames pool.
+   * At first, this method waits until the ready state is set calling isReady() , a frame is available in port's write frames pool,
+   *  and until a transaction is possible (see waitTransactionPossible() ).
    *  This wait will not break event loop, so no GUI freeze occurs.
    *  If port manager is stopped during this wait (unhandled error, stop request),
    *  this method returns.

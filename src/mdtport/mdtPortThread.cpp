@@ -91,9 +91,12 @@ void mdtPortThread::stop()
   int err;
 
   // Unset the running flag
+  qDebug() << "mdtPortThread::stop() ...";
   pvPort->lockMutex();
+  qDebug() << "mdtPortThread::stop() mutex locked";
   if(!pvRunning){
     pvPort->unlockMutex();
+    qDebug() << "mdtPortThread::stop() running flag unset";
     // Exit event loop (for subclass that use a event loop)
     exit();
     return;
@@ -124,6 +127,8 @@ void mdtPortThread::stop()
 
   // Exit event loop (for subclass that use a event loop)
   exit();
+  
+  qDebug() << "mdtPortThread::stop() DONE";
 }
 
 void mdtPortThread::waitReady()
@@ -242,7 +247,8 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
     error = pvPort->reconnect(pvReconnectTimeout);
     if(error == mdtAbstractPort::NoError){
       if(notify){
-        notifyError(mdtAbstractPort::NoError);  /// \todo emit connected()
+        ///notifyError(mdtAbstractPort::NoError);  /// \todo emit connected()
+        emit connected();
       }
       return mdtAbstractPort::NoError;
     }
@@ -259,7 +265,8 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
     mdtError e(MDT_PORT_IO_ERROR, "Connection failed after max try", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortThread");
     e.commit();
-    notifyError(mdtAbstractPort::Disconnected); /// \todo notify ConnectionFailed
+    ///notifyError(mdtAbstractPort::Disconnected); /// \todo notify ConnectionFailed
+    notifyError(mdtAbstractPort::ConnectionFailed);
   }
 
   return mdtAbstractPort::UnhandledError;

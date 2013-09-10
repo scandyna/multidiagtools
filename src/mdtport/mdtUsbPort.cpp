@@ -1003,6 +1003,11 @@ quint8 mdtUsbPort::currentWriteEndpointAddress() const
   return pvWriteEndpointAddress;
 }
 
+QQueue<quint8> &mdtUsbPort::expectedBulkInbTags()
+{
+  return pvExpectedBulkInbTags;
+}
+
 mdtAbstractPort::error_t mdtUsbPort::pvOpen()
 {
   Q_ASSERT(!isOpen());
@@ -1467,7 +1472,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   /// \todo define a real size for control endpoint
   pvControlBufferSize = 1024;
   pvControlBuffer = new char[pvControlBufferSize];
-  /// \todo How many frames in control pool ??
+  // We allow only 1 control transfer at same time
   pvControlFramesPool.enqueue(new mdtFrameUsbControl);
   pvCurrentControlFrame = 0;
   // Alloc read transfer and buffer

@@ -417,32 +417,10 @@ class mdtPortManager : public QThread
    */
   void restoreTransaction(mdtPortTransaction *transaction);
 
-  /*! \brief Wait until data can be written
-   *
-   * Wait until state is ready and that a frame is available in write frames pool.
-   *  The wait will not breack Qt's event loop, so this method
-   *  can be called from GUI Thread. (See wait() for details).
-   *
-   * \param timeout Timeout [ms].
-   *              If < 0, a infinite timeout is considered,
-   *              else timeout will be used, adjusted to the minimal timeout (see adjustedWriteTimeout() ).
-   *              Note: if a timeout > 0 is given, and it's lesser than defined in port configuration,
-   *               a warning will be logged. To avoid this, use a timeout > than in configuration, or 0.
-   * \param granularity Sleep time between each call of event processing [ms].
-   *                     A little value needs more CPU and big value can freese the GUI.
-   *                     Should be between 50 and 100, and must be > 0.
-   *                     Note that timeout must be a multiple of granularity.
-   * \return True if a frame is available before timeout, false else.
-   * \pre Granularity must be > 0.
-   * \pre Port must be set with setPort() before calling this method.
-   * 
-   * \todo Obselete
-   */
-  ///bool waitOnWriteReady(int timeout = 0, int granularity = 50);
-
   /*! \brief Send data on port
    *
-   * At first, this method waits until the ready state is set calling isReady() , and a frame is available in port's write frames pool.
+   * At first, this method waits until the ready state is set calling isReady() , a frame is available in port's write frames pool,
+   *  and until a transaction is possible (see waitTransactionPossible() ).
    *  This wait will not break event loop, so no GUI freeze occurs.
    *  If port manager is stopped during this wait (unhandled error, stop request),
    *  this method returns.
@@ -547,6 +525,8 @@ class mdtPortManager : public QThread
 
   /*! \brief Adjust a requested timeout to minimal timeout
    *
+   * \todo Obselete
+   *
    * We have 2 different timeouts:
    *  - Port timeout: If data are expected on the port, and nothing comes in,
    *     a port timeout occurs.
@@ -566,6 +546,8 @@ class mdtPortManager : public QThread
 
   /*! \brief Adjust a requested timeout to minimal timeout
    *
+   * \todo Obselete
+   *
    * See adjustedReadTimeout() for details.
    *
    * \param requestedTimeout Requested timeout [ms]
@@ -574,23 +556,6 @@ class mdtPortManager : public QThread
    * \pre Port must be set with setPort() and contain a valid configuration.
    */
   int adjustedWriteTimeout(int requestedTimeout, bool warn = true) const;
-
-  /*! \brief Wait some time without break the GUI's event loop
-   *
-   * This is a helper method that provide a blocking wait.
-   *  Internally, a couple of sleep and event processing
-   *  is done, avoiding freesing the GUI.
-   *
-   * This wait method is not precise.
-   *
-   * \param msecs Time to wait [ms]
-   * \param granularity Sleep time between each call of event processing [ms]<br>
-   *                     A little value needs more CPU and big value can freese the GUI.
-   *                     Should be between 50 and 100, and must be > 0.
-   *                     Note that msecs must be a multiple of granularity.
-   * \pre granularity must be > 0.
-   */
-  static void wait(int msecs, int granularity = 50);
 
   /*! \brief Flush input buffers
    *
@@ -781,8 +746,6 @@ class mdtPortManager : public QThread
    */
   void pmTransactionTimeoutEvent();
 
- ///public:  /// \todo make protected
-
  protected:
 
   /*! \brief Open the port
@@ -801,8 +764,6 @@ class mdtPortManager : public QThread
    */
   void closePort();
 
- ///protected:
-
   /*! \brief Set the current transaction ID
    */
   void setCurrentTransactionId(int id);
@@ -814,6 +775,12 @@ class mdtPortManager : public QThread
   /*! \brief Increment current transaction ID
    */
   void incrementCurrentTransactionId(int min = 0, int max = INT_MAX);
+
+  /*! \brief Wait until transaction pending queue has less than maximum possible items
+   *
+   * \return True on success, false if wait was interrupted.
+   */
+  bool waitTransactionPossible();
 
   /*! \brief Add a transaction to pending queue
    *
@@ -987,10 +954,6 @@ class mdtPortManager : public QThread
   void onTransactionTimeoutOccured();
 
  private:
-
-  /*! \brief Wait until ready state
-   */
-  bool waitOnReadyState();
 
   mdtPortInfo pvPortInfo;
   bool pvPortMutexLocked;                               // Used by lockPortMutex()

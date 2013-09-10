@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -159,6 +159,7 @@ void mdtPortTest::startStopTest()
   wrThd.waitReady();
   QVERIFY(wrThd.isRunning());
   rdThd.stop();
+  rdThd.waitFinished();
   QVERIFY(wrThd.isRunning());
   QVERIFY(!rdThd.isRunning());
   wrThd.stop();
@@ -177,23 +178,25 @@ void mdtPortTest::startStopTest()
   QVERIFY(!wrThd.isRunning());
   QVERIFY(rdThd.isRunning());
   rdThd.stop();
+  rdThd.waitFinished();
   QVERIFY(!rdThd.isRunning());
 
   // Multiple start/stop - seq: rd/wr/rd/wr
   qsrand(QDateTime::currentDateTime ().toTime_t ());
   for(int i=0; i<10; i++){
     rdThd.start();
-  rdThd.waitReady();
+    rdThd.waitReady();
     QVERIFY(rdThd.isRunning());
     wrThd.start();
-  wrThd.waitReady();
+    wrThd.waitReady();
     QVERIFY(wrThd.isRunning());
     QTest::qWait((100.0*(double)qrand()) / RAND_MAX);
     rdThd.stop();
+    rdThd.waitFinished();
     QVERIFY(!rdThd.isRunning());
     QVERIFY(wrThd.isRunning());
     wrThd.stop();
-  wrThd.waitFinished();
+    wrThd.waitFinished();
     QVERIFY(!wrThd.isRunning());
   }
 }
@@ -577,6 +580,7 @@ void mdtPortTest::readRawTest()
   // End
   qDebug() << "TEST: END, stopping thd...";
   rdThd.stop();
+  rdThd.waitFinished();
   qDebug() << "TEST: END";
 }
 
@@ -666,6 +670,7 @@ void mdtPortTest::readAsciiTest()
 
   // End
   rdThd.stop();
+  rdThd.waitFinished();
 }
 
 void mdtPortTest::readAsciiTest_data()
@@ -758,6 +763,7 @@ void mdtPortTest::readInvalidDataAsciiTest()
 
   // Stop thread
   rdThd.stop();
+  rdThd.waitFinished();
   QVERIFY(!rdThd.isRunning());
   port.close();
 
@@ -796,6 +802,7 @@ void mdtPortTest::readInvalidDataAsciiTest()
 
   // Stop thread
   rdThd.stop();
+  rdThd.waitFinished();
   QVERIFY(!rdThd.isRunning());
   port.close();
 
@@ -834,6 +841,7 @@ void mdtPortTest::readInvalidDataAsciiTest()
 
   // End
   rdThd.stop();
+  rdThd.waitFinished();
   QVERIFY(!rdThd.isRunning());
   port.close();
   
@@ -873,6 +881,7 @@ void mdtPortTest::readInvalidDataAsciiTest()
 
   // Stop thread
   rdThd.stop();
+  rdThd.waitFinished();
   QVERIFY(!rdThd.isRunning());
   port.close();
 

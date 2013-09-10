@@ -36,7 +36,7 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
   portManager()->config().setReadTimeout(30000);
   portManager()->config().setWriteFrameSize(512);
   portManager()->config().setWriteQueueSize(1);
-  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
+  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
 }
 
 mdtDeviceU3606A::~mdtDeviceU3606A()
@@ -62,43 +62,45 @@ void mdtDeviceU3606A::onStateChanged(int state)
 }
 
 /// \todo Update to mdtValue
-void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction transaction)
+void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction *transaction)
 {
+  Q_ASSERT(transaction != 0);
+
   bool ok;
 
-  qDebug() << "mdtDeviceU3606A::decodeReadenFrame() , ID: " << transaction.id();
+  qDebug() << "mdtDeviceU3606A::decodeReadenFrame() , ID: " << transaction->id();
   
   ///setStateReady();
-  switch(transaction.type()){
+  switch(transaction->type()){
     ///case MDT_FC_SCPI_VALUE:
     case mdtFrameCodecScpi::QT_VALUE:
-      if(transaction.analogIo() == 0){
+      if(transaction->analogIo() == 0){
         mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received value response from device but no I/O was affected to query", mdtError::Warning);
         MDT_ERROR_SET_SRC(e, "mdtDeviceU3606A");
         e.commit();
       }else{
-        ok = pvCodec->decodeValues(transaction.data());
+        ok = pvCodec->decodeValues(transaction->data());
         if(ok && (pvCodec->values().size() == 1)){
-          ///transaction.analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
-          transaction.analogIo()->setValue(pvCodec->values().at(0).value<mdtValue>(), false);
+          ///transaction->analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
+          transaction->analogIo()->setValue(pvCodec->values().at(0).value<mdtValue>(), false);
         }else{
-          transaction.analogIo()->setValue(mdtValue(), false);
+          transaction->analogIo()->setValue(mdtValue(), false);
         }
       }
       break;
     case mdtFrameCodecScpi::QT_SINGLE_VALUE_FLT:
-      if(transaction.analogIo() == 0){
+      if(transaction->analogIo() == 0){
         mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received value response from device but no I/O was affected to query", mdtError::Warning);
         MDT_ERROR_SET_SRC(e, "mdtDeviceU3606A");
         e.commit();
       }else{
-        ///transaction.analogIo()->setValue(pvCodec->decodeSingleValueDouble(transaction.data()).toDouble(), false);
-        transaction.analogIo()->setValue(pvCodec->decodeSingleValueDouble(transaction.data()), false);
+        ///transaction->analogIo()->setValue(pvCodec->decodeSingleValueDouble(transaction->data()).toDouble(), false);
+        transaction->analogIo()->setValue(pvCodec->decodeSingleValueDouble(transaction->data()), false);
       }
       break;
     ///case MDT_FC_SCPI_ERR:
     case mdtFrameCodecScpi::QT_ERR:
-      ok = pvCodec->decodeError(transaction.data());
+      ok = pvCodec->decodeError(transaction->data());
       if(!ok){
         mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": SYST:ERR? reply could not be decoded", mdtError::Error);
         MDT_ERROR_SET_SRC(e, "mdtDeviceU3606A");
@@ -108,7 +110,7 @@ void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction transaction)
       handleDeviceError(pvCodec->values());
       break;
     default:
-      mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unsupported response from device (type: " + QString::number(transaction.type()) + ")", mdtError::Warning);
+      mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unsupported response from device (type: " + QString::number(transaction->type()) + ")", mdtError::Warning);
       MDT_ERROR_SET_SRC(e, "mdtDeviceU3606A");
       e.commit();
   }

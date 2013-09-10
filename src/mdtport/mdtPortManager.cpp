@@ -326,66 +326,9 @@ void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
   Q_ASSERT(transaction != 0);
   Q_ASSERT(!pvTransactionsPool.contains(transaction));
 
+  ///qDebug() << "Restore transaction: " << transaction << " , ID: " << transaction->id() <<  " data: " <<  transaction->data();
   pvTransactionsPool.enqueue(transaction);
 }
-
-/// \todo Remove timeout parameter
-/**
-bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
-{
-  Q_ASSERT(granularity > 0);
-  Q_ASSERT(pvPort != 0);
-
-  int i;
-  int maxIter;
-
-  if(timeout == 0){
-    timeout = adjustedWriteTimeout(timeout, false);
-  }else{
-    timeout = adjustedWriteTimeout(timeout);
-  }
-
-  if(timeout < 0){  // Case of infinite timeout
-    while(1){
-      // Check state first
-      ///if(pvCurrentState == Ready){
-      if(currentState() == Ready){
-        // Check if a frame is available
-        lockPortMutex();
-        if(pvPort->writeFramesPool().size() > 0){
-          unlockPortMutex();
-          return true;
-        }
-        unlockPortMutex();
-      }
-      /// \todo Adapter
-      msleep(granularity);
-      qApp->processEvents();
-    }
-  }else{
-    maxIter = timeout / granularity;
-    for(i=0; i<maxIter; ++i){
-      // Check state first
-      ///if(pvCurrentState == Ready){
-      if(currentState() == Ready){
-        // Check if a frame is available
-        lockPortMutex();
-        if(pvPort->writeFramesPool().size() > 0){
-          unlockPortMutex();
-          return true;
-        }
-        unlockPortMutex();
-      }
-      /// \todo Adapter
-      msleep(granularity);
-      qApp->processEvents();
-    }
-  }
-  ///emit(busy());
-
-  return false;
-}
-*/
 
 int mdtPortManager::sendData(mdtPortTransaction *transaction)
 {
@@ -414,6 +357,9 @@ int mdtPortManager::sendData(mdtPortTransaction *transaction)
       unlockPortMutex();
     }
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
+  if(!waitTransactionPossible()){
+    return mdtAbstractPort::WriteCanceled;
   }
   // We are ready to write
   Q_ASSERT(frame != 0);
@@ -630,20 +576,6 @@ int mdtPortManager::adjustedWriteTimeout(int requestedTimeout, bool warn) const
   return requestedTimeout;
 }
 
-void mdtPortManager::wait(int msecs, int granularity)
-{
-  Q_ASSERT(granularity > 0);
-
-  int i;
-  int maxIter = msecs / granularity;
-
-  for(i=0; i<maxIter; i++){
-    /// \todo Adapter
-    msleep(granularity);
-    qApp->processEvents();
-  }
-}
-
 void mdtPortManager::flushIn(bool flushPortManagerBuffers, bool flushPortBuffers)
 {
   Q_ASSERT(pvPort != 0);
@@ -771,16 +703,42 @@ void mdtPortManager::incrementCurrentTransactionId(int min, int max)
   }
 }
 
+bool mdtPortManager::waitTransactionPossible()
+{
+  Q_ASSERT(pvPort != 0);
+
+  // Wait until we can write
+  while(1){
+    ///qDebug() << "mdtPortManager::waitTransactionPossible() - pending queue : " << pvTransactionsPending << " , max pending: " << pvMaxTransactionsPending;
+    // If port manager was stopped, we return
+    if(isClosed()){
+      return false;
+    }
+    if(isReady()){
+      if(pvTransactionsPending.size() < pvMaxTransactionsPending){
+        return true;
+      }
+    }
+    ///qDebug() << "mdtPortManager::waitTransactionPossible() ...";
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
+
+  return false;
+}
+
 void mdtPortManager::addTransactionPending(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
   Q_ASSERT(!pvTransactionsPending.contains(transaction->id()));
 
+  ///qDebug() << "Add transaction pending: " << transaction << " , ID: " << transaction->id() <<  " data: " <<  transaction->data();
   pvTransactionsPending.insert(transaction->id(), transaction);
-  // If we have more transactions pending than write queue size, we go to busy state
+  // If we have more transactions pending than write queue size, we wait here
   if(pvTransactionsPending.size() > pvMaxTransactionsPending){
-    ///emit busy();
-    emit pmBusyEvent();
+    mdtError e(MDT_PORT_IO_ERROR, "Pending transactions queue has reached maximum authorized of " + QString::number(pvMaxTransactionsPending) +  " (this is a bug)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtPortManager");
+    e.commit();
+    emit pmUnhandledErrorEvent();
   }
   // Watch transactions size
   if(pvTransactionsPending.size() > (pvMaxTransactionsPending +20)){
@@ -789,6 +747,7 @@ void mdtPortManager::addTransactionPending(mdtPortTransaction *transaction)
     e.commit();
     qDeleteAll(pvTransactionsPending);
     pvTransactionsPending.clear();
+    emit pmUnhandledErrorEvent();
   }
 }
 
@@ -967,7 +926,7 @@ void mdtPortManager::onThreadsErrorOccured(int error)
       emit pmBusyEvent();
       break;
     case mdtAbstractPort::WritePoolEmpty:
-      ///emit(busy());
+      emit pmBusyEvent();
       break;
     case mdtAbstractPort::WriteCanceled:
       flushTransactionsPending();
@@ -1010,7 +969,7 @@ void mdtPortManager::onThreadsErrorOccured(int error)
       ///emit(unhandledError());
       emit pmUnhandledErrorEvent();
   }
-  qDebug() << "-> New state: " << currentState();
+  qDebug() << "mdtPortManager::onThreadsErrorOccured() -> New state: " << currentState();
 }
 
 void mdtPortManager::onThreadReady(mdtPortThread *thread)
@@ -1040,7 +999,7 @@ void mdtPortManager::startThreads()
 {
   int i;
 
-  qDebug() << "requeste start threads ...";
+  qDebug() << "request start threads ...";
   for(i=0; i<pvThreads.size(); i++){
     pvThreads.at(i)->start();
   }
@@ -1050,7 +1009,10 @@ void mdtPortManager::stopThreads()
 {
   int i;
 
-  qDebug() << "requeste stop threads ...";
+  qDebug() << "request stop threads ...";
+  if(pvPortMutexLocked){
+    unlockPortMutex();
+  }
   for(i=0; i<pvThreads.size(); i++){
     pvThreads.at(i)->stop();
   }
@@ -1063,14 +1025,4 @@ void mdtPortManager::onTransactionTimeoutOccured()
   pvTransactionTimeoutOccured = true;
   flushTransactionsPending();
   flushTransactionsDone();
-}
-
-bool mdtPortManager::waitOnReadyState()
-{
-  while(currentState() != Ready){
-    /// \todo Should add a timeout check (read? write? connect?)
-    wait(100, 50);
-  }
-
-  return true;
 }

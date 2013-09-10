@@ -26,6 +26,8 @@
 #include <QList>
 #include <QVariant>
 
+class QTimer;
+
 /*! \brief Base class for SCPI based instruments
  *
  * Most of current instruments (Agilent, NI, ...)
@@ -77,12 +79,10 @@ class mdtDeviceScpi : public mdtDevice
    *  It's recommended to use mdtDevice functions if available.
    *
    * \param command Command to send.
-   * \param timeout Write timeout [ms]
-   *           If 0, internal defined timeout is used (see mdtPortManager::adjustedWriteTimeout() for details).
    * \return bTag on success, or a error < 0
    *          (see mdtUsbtmcPortManager::writeData() for details).
    */
-  int sendCommand(const QByteArray &command, int timeout = 0);
+  int sendCommand(const QByteArray &command);
 
   /*! \brief Send a query to device
    *
@@ -96,15 +96,10 @@ class mdtDeviceScpi : public mdtDevice
    *  It's recommended to use mdtDevice functions if available.
    *
    * \param query Query to send.
-   *      \todo adjust write timeout
-   * \param writeTimeout Write timeout [ms]
-   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedWriteTimeout() for details).
-   * \param readTimeout Response timeout [ms]
-   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedReadTimeout() for details).
    * \return Result as string (empty string on error)
    *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
    */
-  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 0, int readTimeout = 0);
+  QByteArray sendQuery(const QByteArray &query);
 
   /*! \brief Wait until operation is complete (Using *OPC? query)
    *
@@ -117,6 +112,8 @@ class mdtDeviceScpi : public mdtDevice
   bool waitOperationComplete(int timeout, int interval);
 
   /*! \brief Query device about error
+   *
+   * \todo Buggy, review !
    *
    * Will send the SYST:ERR? and return.
    *
@@ -136,6 +133,8 @@ class mdtDeviceScpi : public mdtDevice
 
   /*! \brief Handle device error
    *
+   * \todo Buggy, review !
+   *
    * This method is called from subclass's
    *  decodeReadenFrame(mdtPortTransaction) method
    *  when a frame of type MDT_FC_SCPI_ERR was received.
@@ -151,6 +150,8 @@ class mdtDeviceScpi : public mdtDevice
   void handleDeviceError(const QList<QVariant> &decodedValues);
 
   /*! \brief Handle device's specific error
+   *
+   * \todo Buggy, review !
    *
    * This method is called from handleDeviceError().
    *
@@ -173,9 +174,23 @@ class mdtDeviceScpi : public mdtDevice
 
   mdtUsbtmcPortManager *pvUsbtmcPortManager;
 
+ private slots:
+
+  /*! \brief Query device about operation complete
+   *
+   * The first call of this slot is made by waitOperationComplete(),
+   *  then it will be called by internal timer until operation is complete,
+   *  or pvOperationCompleteTryLeft is < 1.
+   *
+   * If operation is complete, pvOperationComplete is set to true.
+   */
+  void queryAboutOperationComplete();
+
  private:
 
   bool pvOperationComplete;
+  int pvOperationCompleteTryLeft;
+  QTimer *pvOperationCompleteTimer;
 };
 
 #endif  // #ifndef MDT_DEVICE_SCPI_H

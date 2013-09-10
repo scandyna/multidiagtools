@@ -26,7 +26,7 @@
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
 #include <QString>
-#include <QApplication>
+#include <QCoreApplication>
 #include <libusb-1.0/libusb.h>
 
 #include <QDebug>
@@ -209,10 +209,18 @@ void mdtUsbPortManager::readUntilShortPacketReceived()
   port->requestReadUntilShortPacketReceived();
   unlockPortMutex();
   while(!pvReadUntilShortPacketReceivedFinished){
+    // If port manager was stopped, we return
+    if(isClosed()){
+      return;
+    }
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+    /**
     msleep(50);
     Q_ASSERT(pvPort != 0);
     qApp->processEvents();
+    */
   }
+  Q_ASSERT(pvPort != 0);
 }
 
 int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, bool setwIndexAsbInterfaceNumber)
@@ -226,6 +234,7 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
   port = dynamic_cast<mdtUsbPort*>(pvPort);
   Q_ASSERT(port != 0);
   // Get a frame in pool
+  /**
   lockPortMutex();
   if(port->controlFramesPool().size() < 1){
     unlockPortMutex();
@@ -234,7 +243,25 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
     e.commit();
     return mdtAbstractPort::WritePoolEmpty;
   }
-  frame = port->controlFramesPool().dequeue();
+  */
+  // Wait until we can send a new control request
+  while(1){
+    // If port manager was stopped, we return
+    if(isClosed()){
+      return mdtAbstractPort::ControlCanceled;
+    }
+    if(isReady()){
+      lockPortMutex();
+      if(port->controlFramesPool().size() > 0){
+        frame = port->controlFramesPool().dequeue();
+        Q_ASSERT(frame != 0);
+        // Here we are ready to write - we keep port mutext locked
+        break;
+      }
+      unlockPortMutex();
+    }
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
   Q_ASSERT(frame != 0);
   frame->clear();
   frame->clearSub();
@@ -253,23 +280,31 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
 }
 
 /// \todo Adapt using internal timeouts + errors system
-bool mdtUsbPortManager::waitReadenControlResponse(int timeout)
+bool mdtUsbPortManager::waitReadenControlResponse()
 {
-  int maxIter;
+  ///int maxIter;
 
+  /**
   if(timeout == 0){
     timeout = adjustedReadTimeout(timeout, false);
   }else{
     timeout = adjustedReadTimeout(timeout);
   }
   maxIter = timeout / 50;
+  */
 
   while(pvReadenControlResponses.size() < 1){
+    // If port manager was stopped, we return
+    if(isClosed()){
+      return false;
+    }
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
     /**
     if(readWaitCanceled()){
       return false;
     }
     */
+    /**
     if(maxIter <= 0){
       return false;
     }
@@ -277,7 +312,9 @@ bool mdtUsbPortManager::waitReadenControlResponse(int timeout)
     qApp->processEvents();
     msleep(50);
     maxIter--;
+    */
   }
+  Q_ASSERT(pvPort != 0);
 
   return true;
 }
@@ -323,7 +360,7 @@ void mdtUsbPortManager::fromThreadControlResponseReaden()
   Q_ASSERT(port != 0);
 
   // Get frames in readen queue
-  unlockPortMutex();
+  lockPortMutex();
   while(port->controlResponseFrames().size() > 0){
     frame = port->controlResponseFrames().dequeue();
     Q_ASSERT(frame != 0);

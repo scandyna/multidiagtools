@@ -257,11 +257,11 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtPortThreadHelperPor
 mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortThreadHelperPort &threadHelper)
 {
   Q_ASSERT(pvPort != 0);
-  Q_ASSERT(threadHelper.currentWriteFrame() != 0);
+  ///Q_ASSERT(threadHelper.currentWriteFrame() != 0);
 
   mdtUsbPort *port;
   mdtAbstractPort::error_t portError;
-  QQueue<mdtFrameUsbControl*> ctlFramesPoolCopy;
+  ///QQueue<mdtFrameUsbControl*> ctlFramesPoolCopy;
   mdtFrameUsbControl *ctlFrame;
   quint8 status;
   int maxTry;
@@ -280,6 +280,12 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
       threadHelper.restoreCurrentWriteFrameToPool();
     }
   }
+  // Wait until we can do a control transfer
+  portError = waitOnControlTransferPossible(true);
+  if(portError != mdtAbstractPort::NoError){
+    return portError;
+  }
+  /**
   // Flush pending control frames
   while(port->controlQueryFrames().size() > 0){
     // Warn and remove frame
@@ -288,6 +294,8 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
     e.commit();
     port->controlFramesPool().enqueue(port->controlQueryFrames().dequeue());
   }
+  */
+  /**
   // Cancel possibly running control transfer
   portError = port->cancelControlTransfer();
   if(portError != mdtAbstractPort::NoError){
@@ -300,14 +308,17 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
     e.commit();
     port->controlFramesPool().enqueue(port->controlResponseFrames().dequeue());
   }
+  */
   // Get a control frame for working
   Q_ASSERT(port->controlFramesPool().size() > 0);
   ctlFrame = port->controlFramesPool().dequeue();
   Q_ASSERT(ctlFrame != 0);
+  /**
   // Take all control frames from pool, so port manager cannot init a control transfer
   while(port->controlFramesPool().size() > 0){
     ctlFramesPoolCopy.enqueue(port->controlFramesPool().dequeue());
   }
+  */
   // Send the INITIATE_ABORT_BULK_IN request and wait on response
   status = 0x81;  // STATUS_TRANSFER_NOT_IN_PROGRESS
   maxTry = 5;
@@ -316,19 +327,23 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
     if(!pvRunning){
       // restore frames and return noerror
       port->controlFramesPool().enqueue(ctlFrame);
+      /**
       while(ctlFramesPoolCopy.size() > 0){
         port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
       }
+      */
       return mdtAbstractPort::NoError;
     }
     // Send INITIATE_ABORT_BULK_IN request
     ///qDebug() << "*-* send INITIATE_ABORT_BULK_IN ...";
     portError = sendInitiateAbortBulkInRequest(bTag, ctlFrame);
     if(portError != mdtAbstractPort::NoError){
+      /**
       // restore frames and abort
       while(ctlFramesPoolCopy.size() > 0){
         port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
       }
+      */
       return portError;
     }
     // more than 1 frame available should only happen if device had a control response queued
@@ -336,12 +351,15 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
       mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN returned unexpected amount of responses", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
       e.commit();
+      /**
       // restore frames and abort
       while(ctlFramesPoolCopy.size() > 0){
         port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
       }
+      */
       return mdtAbstractPort::UnhandledError;
     }
+    Q_ASSERT(port->controlResponseFrames().size() == 1);
     ctlFrame = port->controlResponseFrames().dequeue();
     if(ctlFrame->size() != 2){
       mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN returned unexpected response size (expected 2, received " + QString::number(ctlFrame->size()) + ")", mdtError::Error);
@@ -349,14 +367,16 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
       e.commit();
       // Restore frames and abort
       port->controlFramesPool().enqueue(ctlFrame);
+      /**
       while(ctlFramesPoolCopy.size() > 0){
         port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
       }
+      */
       return mdtAbstractPort::UnhandledError;
     }
     // Check status
     status = ctlFrame->at(0);
-    ///qDebug() << "*-* abortBulkIn() , status: 0x" << hex << status;
+    qDebug() << "*-* abortBulkIn() , status: 0x" << hex << status;
     if(status == 0x81){ // STATUS_TRANSFER_NOT_IN_PROGRESS
       msleep(500);
     }
@@ -368,9 +388,11 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
     e.commit();
     // Continue working (possibly, nothing was to abort)
     port->controlFramesPool().enqueue(ctlFrame);
+    /**
     while(ctlFramesPoolCopy.size() > 0){
       port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
     }
+    */
     if(pvRunning){
       notifyError(mdtAbstractPort::ReadCanceled, true);
     }
@@ -380,9 +402,11 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
   if(status != 0x01){ // 0x01: STATUS_SUCCESS
     // No transfer in progress (device FIFO empty)
     port->controlFramesPool().enqueue(ctlFrame);
+    /**
     while(ctlFramesPoolCopy.size() > 0){
       port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
     }
+    */
     portError = port->cancelReadTransfer();
     if(portError != mdtAbstractPort::NoError){
       return portError;
@@ -397,9 +421,11 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
   if(portError != mdtAbstractPort::NoError){
     // restore frames and abort
     port->controlFramesPool().enqueue(ctlFrame);
+    /**
     while(ctlFramesPoolCopy.size() > 0){
       port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
     }
+    */
     return portError;
   }
   // Send the CHECK_ABORT_BULK_IN_STATUS request and wait on response
@@ -410,10 +436,12 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
     ///qDebug() << "*-* send CHECK_ABORT_BULK_IN_STATUS ...";
     portError = sendCheckAbortBulkInStatusRequest(bTag, ctlFrame);
     if(portError != mdtAbstractPort::NoError){
+      /**
       // restore frames and abort
       while(ctlFramesPoolCopy.size() > 0){
         port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
       }
+      */
       return portError;
     }
     // more than 1 frame available should only happen if device had a control response queued
@@ -421,10 +449,12 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
       mdtError e(MDT_USB_IO_ERROR, "CHECK_ABORT_BULK_IN_STATUS returned unexpected amount of responses", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
       e.commit();
+      /**
       // restore frames and abort
       while(ctlFramesPoolCopy.size() > 0){
         port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
       }
+      */
       return mdtAbstractPort::UnhandledError;
     }
     ctlFrame = port->controlResponseFrames().dequeue();
@@ -434,9 +464,11 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
       e.commit();
       // restore frames and abort
       port->controlFramesPool().enqueue(ctlFrame);
+      /**
       while(ctlFramesPoolCopy.size() > 0){
         port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
       }
+      */
       return mdtAbstractPort::UnhandledError;
     }
     // Check status
@@ -450,9 +482,11 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
         if(portError != mdtAbstractPort::NoError){
           // restore frames and abort
           port->controlFramesPool().enqueue(ctlFrame);
+          /**
           while(ctlFramesPoolCopy.size() > 0){
             port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
           }
+          */
           return portError;
         }
       }
@@ -467,9 +501,11 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtPortTh
   }
   // End, restore frames and notify port manager
   port->controlFramesPool().enqueue(ctlFrame);
+  /**
   while(ctlFramesPoolCopy.size() > 0){
     port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
   }
+  */
   if(pvRunning){
     notifyError(mdtAbstractPort::ReadCanceled, true);
   }
@@ -483,10 +519,10 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::sendInitiateAbortBulkInRequest(qui
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(ctlFrame != 0);
 
-  mdtAbstractPort::error_t portError;
-  QList<mdtAbstractPort::error_t> errors;
+  ///mdtAbstractPort::error_t portError;
+  ///QList<mdtAbstractPort::error_t> errors;
   mdtUsbPort *port;
-  int i;
+  ///int i;
 
   // We need a mdtUsbPort object
   port = dynamic_cast<mdtUsbPort*>(pvPort);
@@ -502,6 +538,8 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::sendInitiateAbortBulkInRequest(qui
   ctlFrame->setwLength(0x02);
   ctlFrame->encode();
   // Submit the control request and wait until transfer is done
+  return sendControlQuery(ctlFrame);
+  /**
   port->addControlRequest(ctlFrame);
   while(port->controlResponseFrames().size() < 1){
     // Check about stoping
@@ -523,6 +561,7 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::sendInitiateAbortBulkInRequest(qui
   }
 
   return mdtAbstractPort::NoError;
+  */
 }
 
 mdtAbstractPort::error_t mdtUsbtmcPortThread::sendCheckAbortBulkInStatusRequest(quint8 bTag, mdtFrameUsbControl *ctlFrame)
@@ -583,7 +622,8 @@ void mdtUsbtmcPortThread::run()
   mdtUsbPort *port;
   bool waitAnAnswer = false;
   QList<mdtAbstractPort::error_t> errors;
-  QList<quint8> expectedBulkInbTags;
+  ///QList<quint8> expectedBulkInbTags;
+  quint8 bTagToAbort;
   bool ok;
   mdtPortThreadHelperPort threadHelper;
 
@@ -683,7 +723,8 @@ void mdtUsbtmcPortThread::run()
       continue;
     }
     // Write ...
-    portError = usbtmcWrite(threadHelper, &waitAnAnswer, expectedBulkInbTags);
+    portError = usbtmcWrite(threadHelper, &waitAnAnswer, port->expectedBulkInbTags());
+    ///qDebug() << "USBTMCTHD: write done, expectedBulkInbTags: " << expectedBulkInbTags;
     if(portError != mdtAbstractPort::NoError){
       if(portError != mdtAbstractPort::ErrorHandled){
         // Unhandled error - stop
@@ -734,9 +775,10 @@ void mdtUsbtmcPortThread::run()
     QMutableListIterator<mdtFrame*> it(port->readenFrames());
     while(it.hasNext()){
       it.next();
+      Q_ASSERT(it.value() != 0);
       // We need a USBTMC frame
       usbtmcFrame = static_cast<mdtFrameUsbTmc*>(it.value());
-      qDebug() << "USBTMCTHD: current readFrame's bTag: " << usbtmcFrame->bTag() << " , expectedBulkInbTags: " << expectedBulkInbTags;
+      qDebug() << "USBTMCTHD: current readFrame's bTag: " << usbtmcFrame->bTag() << " , expectedBulkInbTags: " << port->expectedBulkInbTags();
       ok = true;
       // Check if complete
       if(!usbtmcFrame->isComplete()){
@@ -757,10 +799,17 @@ void mdtUsbtmcPortThread::run()
       }
       // Abort if error occured
       if(!ok){
+        // First remove frame from readenFrames and put back to pool, because we will release port mutex
+        bTagToAbort = usbtmcFrame->bTag();
+        Q_ASSERT(!port->readenFrames().isEmpty());
+        it.remove();
+        port->readFramesPool().enqueue(usbtmcFrame);
+        port->expectedBulkInbTags().removeOne(usbtmcFrame->bTag());
+        usbtmcFrame = 0;
         // We must abort bulk IN
         qDebug() << "USBTMCTHD: Abort bulk IN after frame check error ...";
-        Q_ASSERT(usbtmcFrame != 0);
-        portError = abortBulkIn(usbtmcFrame->bTag(), threadHelper);
+        ///Q_ASSERT(usbtmcFrame != 0);
+        portError = abortBulkIn(bTagToAbort, threadHelper);
         if(portError != mdtAbstractPort::NoError){
           if(!pvRunning){
             break;
@@ -769,23 +818,25 @@ void mdtUsbtmcPortThread::run()
             break;
           }
         }
-        // Remove frame and put back to pool
-        it.remove();
-        port->readFramesPool().enqueue(usbtmcFrame);
-        expectedBulkInbTags.removeOne(usbtmcFrame->bTag());
       }else{
         // Check if bTag was expected
-        if(!expectedBulkInbTags.contains(usbtmcFrame->bTag())){
+        qDebug() << "USBTMCTHD (2): current readFrame's bTag: " << usbtmcFrame->bTag() << " , expectedBulkInbTags: " << port->expectedBulkInbTags();
+        if(!port->expectedBulkInbTags().contains(usbtmcFrame->bTag())){
           mdtError e(MDT_USB_IO_ERROR, "Receive a frame with unexpeced bTag, will be skipped", mdtError::Error);
           MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
           e.commit();
           // Remove frame and put back to pool
+          qDebug() << "Removing from readenFrames ... - queue: " << port->readenFrames();
+          Q_ASSERT(!port->readenFrames().isEmpty());
           it.remove();
+          qDebug() << "Restore to pool ...";
           port->readFramesPool().enqueue(usbtmcFrame);
+          usbtmcFrame = 0;
           notifyError(mdtAbstractPort::ReadCanceled);
         }else{
-          expectedBulkInbTags.removeOne(usbtmcFrame->bTag());
-          // Simply emit signal, port manager will take the frame when port mutext is unlocked
+          ///expectedBulkInbTags.removeOne(usbtmcFrame->bTag()); /// \bug Port manager should remove it when it has removed frame !!
+          // Simply emit signal, port manager will take the frame and remove bTag from expectedBulkInbTags list when port mutext is unlocked
+          qDebug() << "emit newFrameReaden() - bTag: " << usbtmcFrame->bTag();
           emit(newFrameReaden());
         }
       }

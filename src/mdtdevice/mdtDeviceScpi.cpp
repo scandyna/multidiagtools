@@ -24,6 +24,8 @@
 #include <QByteArray>
 #include <QString>
 #include <QList>
+#include <QTimer>
+#include <QCoreApplication>
 
 #include <QDebug>
 
@@ -44,6 +46,10 @@ mdtDeviceScpi::mdtDeviceScpi(QObject *parent)
   }
   setBackToReadyStateTimeout(2*timeout);
   pvOperationComplete = false;
+  pvOperationCompleteTryLeft = 0;
+  pvOperationCompleteTimer = new QTimer(this);
+  pvOperationCompleteTimer->setSingleShot(true);
+  connect(pvOperationCompleteTimer, SIGNAL(timeout()), this, SLOT(queryAboutOperationComplete()));
 }
 
 mdtDeviceScpi::~mdtDeviceScpi()
@@ -131,39 +137,50 @@ mdtAbstractPort::error_t mdtDeviceScpi::connectToDevice(const mdtDeviceInfo &dev
   return retVal;
 }
 
-int mdtDeviceScpi::sendCommand(const QByteArray &command, int timeout)
+int mdtDeviceScpi::sendCommand(const QByteArray &command)
 {
-  return pvUsbtmcPortManager->sendCommand(command, timeout);
+  return pvUsbtmcPortManager->sendCommand(command);
 }
 
-QByteArray mdtDeviceScpi::sendQuery(const QByteArray &query, int writeTimeout, int readTimeout)
+QByteArray mdtDeviceScpi::sendQuery(const QByteArray &query)
 {
-  return pvUsbtmcPortManager->sendQuery(query, writeTimeout, readTimeout);
+  return pvUsbtmcPortManager->sendQuery(query);
 }
 
 bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
 {
   Q_ASSERT(interval > 0);
+  Q_ASSERT(pvOperationCompleteTimer != 0);
 
-  int maxIter;
+  ///int maxIter;
   pvOperationComplete = false;
+  pvOperationCompleteTryLeft = timeout / interval;
   QByteArray response;
 
-  maxIter = timeout / interval;
+  ///maxIter = timeout / interval;
+  // Check one time immediatly
+  response = sendQuery("*OPC?\n");
+  if(response.size() > 0){
+    if(response.at(0) == '1'){
+      return true;
+    }
+  }
+  // Check at regular interval
+  pvOperationCompleteTryLeft--;
+  pvOperationCompleteTimer->setInterval(interval);
+  pvOperationCompleteTimer->start();
   while(!pvOperationComplete){
-    if(maxIter <= 0){
+    // Check that port manager is not about to close or in error
+    if(!portManager()->isReady()){
+      pvOperationCompleteTimer->stop();
       return false;
     }
-    // Query device
-    response = sendQuery("*OPC?\n");
-    if(response.size() > 0){
-      if(response.at(0) == '1'){
-        pvOperationComplete = true;
-        return true;
-      }
+    // Check about operation complete timeout
+    if(pvOperationCompleteTryLeft < 1){
+      return false;
     }
-    portManager()->wait(interval, 50);
-    maxIter--;
+    // Wait
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
   }
 
   return true;
@@ -177,24 +194,11 @@ int mdtDeviceScpi::checkDeviceError()
   // Get a new transaction
   transaction = getNewTransaction();
   transaction->setQueryReplyMode(false);
-  // Wait until data can be sent
-  /**
-  if(!pvUsbtmcPortManager->waitOnWriteReady()){
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  */
   // Send query
-  ///bTag = pvUsbtmcPortManager->writeData("SYST:ERR?\n");
   bTag = pvUsbtmcPortManager->sendData("SYST:ERR?\n");
   if(bTag < 0){
     return bTag;
   }
-  // Wait until more data can be sent
-  /**
-  if(!pvUsbtmcPortManager->waitOnWriteReady()){
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  */
   // Remember query type.
   ///transaction->setType(MDT_FC_SCPI_ERR);
   transaction->setType(mdtFrameCodecScpi::QT_ERR);
@@ -287,4 +291,23 @@ void mdtDeviceScpi::logDeviceError(int errNum, const QString &errText, const QLi
   mdtError e(MDT_DEVICE_ERROR, message, level);
   MDT_ERROR_SET_SRC(e, "mdtDeviceScpi");
   e.commit();
+}
+
+void mdtDeviceScpi::queryAboutOperationComplete()
+{
+  QByteArray response;
+
+  // Query device
+  response = sendQuery("*OPC?\n");
+  qDebug() << "mdtDeviceScpi::queryAboutOperationComplete() - response: " << response;
+  if(response.size() > 0){
+    if(response.at(0) == '1'){
+      pvOperationComplete = true;
+      return;
+    }
+  }
+  pvOperationCompleteTryLeft--;
+  if(pvOperationCompleteTryLeft > 0){
+    pvOperationCompleteTimer->start();
+  }
 }

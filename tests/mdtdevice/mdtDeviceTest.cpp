@@ -515,7 +515,8 @@ void mdtDeviceTest::modbusWagoTest()
   if(d.connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){;
     QSKIP("No Wago 750 device found, or other error", SkipAll);
   }
-  QVERIFY(d.portManager()->isRunning());
+  ///QVERIFY(d.portManager()->isRunning());
+  QVERIFY(d.portManager()->isReady());
   qDebug() << "Analog outputs: " << d.analogOutputsCount();
   qDebug() << "Analog inputs: " << d.analogInputsCount();
   qDebug() << "Digital outputs: " << d.digitalOutputsCount();
@@ -869,7 +870,8 @@ void mdtDeviceTest::DSO1000ATest()
   QVERIFY(d.sendCommand(":TRIGger:EDGE:SWEep AUTO\n") >= 0);
   QVERIFY(d.sendCommand(":TIMebase:MAIN:SCALe 50e-3\n") >= 0);
   QVERIFY(d.sendCommand(":START\n") >= 0);
-  d.portManager()->wait(10000);
+  ///d.portManager()->wait(10000);
+  QTest::qWait(10000);
   QVERIFY(d.sendCommand(":STOP\n") >= 0);
   QVERIFY(d.sendCommand(":WAVeform:SOURce CHANnel1\n") >= 0);
   QVERIFY(d.sendCommand(":WAVeform:FORMat BYTE\n") >= 0);
@@ -877,7 +879,7 @@ void mdtDeviceTest::DSO1000ATest()
   qDebug() << "TEST: getting data ...";
   
   QVERIFY(d.waitOperationComplete(5000, 1000));
-  d.checkDeviceError();
+  ///d.checkDeviceError();  /// \todo re-enable once correted
   
   
   double y_inc, y_val, y_ref, y_origin;
@@ -887,6 +889,7 @@ void mdtDeviceTest::DSO1000ATest()
   data = d.sendQuery(":WAVeform:PREamble?\n");
   qDebug() << codec.decodeValues(data, ",");
   qDebug() << codec.values();
+  QVERIFY(codec.values().size() > 9);
   y_inc = codec.values().at(7).toDouble();
   qDebug() << "Y inc: " << y_inc;
   y_origin = codec.values().at(8).toDouble();
@@ -902,7 +905,7 @@ void mdtDeviceTest::DSO1000ATest()
   for(int i=0; i<codec.values().size(); i++){
     ///qDebug() << "data[" << i << "]: " << codec.values().at(i) << " , flt: " << codec.values().at(i).toDouble()*y_inc;
     y_val = codec.values().at(i).toDouble();
-    qDebug() << "data[" << i << "]: " << ((y_ref - y_val) * y_inc) - y_origin;
+    ///qDebug() << "data[" << i << "]: " << ((y_ref - y_val) * y_inc) - y_origin;
   }
   ///qDebug() << "Data: " << codec.values();
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -61,7 +61,7 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    *
    * \pre I/O's container must be set with setIos()
    */
-  void decodeReadenFrame(mdtPortTransaction transaction);
+  void decodeReadenFrame(mdtPortTransaction *transaction);
 
  private:
 

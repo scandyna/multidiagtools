@@ -30,6 +30,7 @@
 #include "mdtFrame.h"
 
 class mdtUsbPort;
+class mdtFrameUsbControl;
 
 class mdtUsbPortThread : public mdtPortThread
 {
@@ -68,6 +69,14 @@ class mdtUsbPortThread : public mdtPortThread
   void readUntilShortPacketReceivedFinished();
 
  protected:
+
+  /*! \brief Wait until a new control transfer is possible (i.e. when control frames pool is not empty)
+   */
+  mdtAbstractPort::error_t waitOnControlTransferPossible(bool notifyOnControlTransferComplete);
+
+  /*! \brief Send a control query and wait until response is available
+   */
+  mdtAbstractPort::error_t sendControlQuery(mdtFrameUsbControl *ctlFrame);
 
   /*! \brief Read until a short frame is received
    *

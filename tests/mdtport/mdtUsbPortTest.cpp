@@ -26,6 +26,7 @@
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtUsbEndpointDescriptor.h"
 #include "mdtUsbPortThread.h"
+#include "mdtUsbtmcPortThread.h"
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
 #include "mdtFrameCodecK8055.h"
@@ -135,7 +136,7 @@ void mdtUsbPortTest::agilentDso1000Test()
 {
   mdtFrameUsbTmc *uf;
   mdtUsbPort port;
-  mdtUsbPortThread thd;
+  mdtUsbtmcPortThread thd;
   mdtPortConfig cfg;
 
   // Setup
@@ -281,6 +282,7 @@ void mdtUsbPortTest::agilentDso1000Test()
   port.addFrameToWrite(uf);
   port.unlockMutex();
   QTest::qWait(100);
+
 
   // End
   thd.stop();

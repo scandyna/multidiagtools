@@ -420,6 +420,13 @@ class mdtUsbPort : public mdtAbstractPort
    */
   quint8 currentWriteEndpointAddress() const;
 
+  /*! \brief Get list of expeced incomming bTags
+   *
+   * This method is used by mdtUsbtmcPortManager and mdtUsbtmcPortThread
+   *  and should not be used else.
+   */
+  QQueue<quint8> &expectedBulkInbTags();
+
  private:
 
   /*! \brief Open the port given by setPortName()
@@ -529,6 +536,7 @@ class mdtUsbPort : public mdtAbstractPort
   QQueue<mdtFrame*> pvMessageInFrames;      // Incomming message frames
 
   QQueue<error_t> pvErrors;  // Set by transfer callbacks and used by thread for notifications
+  QQueue<quint8> pvExpectedBulkInbTags; // This is used by USBTMC thread and port manager. See expectedBulkInbTags()
 };
 
 #endif // #ifndef MDT_USB_PORT_H
