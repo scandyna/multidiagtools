@@ -42,7 +42,7 @@ class mdtPortThreadHelperPort : public mdtPortThreadHelper
 
   /*! \brief Reconnect
    *
-   * This implementation calls mdtPortThread::reconnect() .
+   * This implementation calls mdtAbstractPort::reconnect() .
    *
    * \pre Port must be set with mdtPortThreadHelper::setPort().
    * \pre Thread must be set with mdtPortThreadHelper::setThread().

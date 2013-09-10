@@ -71,6 +71,12 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
    */
   void connectToHost();
 
+ signals:
+
+  /*! \brief Emitted when internal socket notified that it is connected, and when we are ready
+   */
+  void connected();
+
  private slots:
 
   /*! \brief Notify the connected state

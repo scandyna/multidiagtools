@@ -78,8 +78,9 @@ class mdtAbstractPort : public QObject
                 ControlTimeout,         /*!< Control process timed out (serial port's modem line, USB control transfer) */
                 Disconnected,           /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
                                               If this error happens, the thread will try to reconnect. If connection fails after
-                                               maximum trys, a notification is sent with this Disconnected error. */
+                                               maximum trys, a notification is sent with ConnectionFailed error. */
                 Connecting,             /*!< Used to notify portmanager that connection is in progress (see mdtPortThread::reconnect() ) */
+                ConnectionFailed,       /*!< Can happen during first connection, or afetr max retry of reconnection. Port manager will stop on this error */
                 UnhandledError,         /*!< Unhandled error happen.
                                             In this case, thread will stop working and error is reported with mdtError system.
                                             Logfile could give more information, see mdtError and mdtApplication */

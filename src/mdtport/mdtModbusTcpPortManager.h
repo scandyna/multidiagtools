@@ -72,7 +72,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
    *
-   * \pre Manager must no running
+   * \pre Port manager must be stopped
    */
   QList<mdtPortInfo*> scan(const QStringList &hosts, int timeout = 500);
 
@@ -86,7 +86,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
    *
-   * \pre Manager must no running
+   * \pre Port manager must be stopped
    */
   QList<mdtPortInfo*> scan(const QNetworkInterface &iface, quint16 port = 502, int timeout = 500);
 
@@ -101,7 +101,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
    *
-   * \pre Manager must no running
+   * \pre Port manager must be stopped
    */
   QList<mdtPortInfo*> scan(const QList<QNetworkInterface> &ifaces, quint16 port = 502, int timeout = 500, bool ignoreLoopback = true);
 
@@ -111,7 +111,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \param port Port. Note that MODBUS/TCP default port is 502.
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
    * \return True on successfull connection.
-   * \pre Manager must no running
+   * \pre Port manager must be stopped
    */
   bool tryToConnect(const QString &hostName, quint16 port, int timeout);
 
@@ -134,6 +134,13 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \return List of lines or empty list if file not exists or on error.
    */
   QStringList readScanResult();
+
+  /*! \brief Check if port manager is ready
+   *
+   * Internally, the currentState is used to check if port manager is ready.
+   *  This implementation returns true if currentState is Ready (= connected to device).
+   */
+  bool isReady() const;
 
   /*! \brief Get the hardware node ID
    *

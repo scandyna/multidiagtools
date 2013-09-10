@@ -72,13 +72,15 @@ end
 transitioncanvas 144386 transition_ref 196482 // pmAllThreadsReadyEvent
   geometry VH
   
-  from ref 129922 z 2007 label "pmAllThreadsReadyEvent" xyz 174 606.5 2007 to point 257 760
+  from ref 129922 z 2007 label "pmAllThreadsReadyEvent" xyz 174 606 2007 to point 257 761
   line 144898 z 2007 to ref 144258
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 144514 transition_ref 196610 // pmUnhandledErrorEvent
+  decenter_begin 954
+  decenter_end 541
   
-  from ref 144258 z 2007 label "pmUnhandledErrorEvent" xyz 651 581 2007 to ref 128642
+  from ref 144258 z 2007 label "pmUnhandledErrorEvent" xyz 705 581 2007 to ref 128642
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 144642 transition_ref 196738 // pmStopThreadsEvent
@@ -86,6 +88,13 @@ transitioncanvas 144642 transition_ref 196738 // pmStopThreadsEvent
   
   from ref 144258 z 2007 label "pmStopThreadsEvent" xyz 850 744 2007 to point 1138 762
   line 145026 z 2007 to ref 132482
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 145666 transition_ref 211074 // pmConnectionFailedEvent
+  decenter_begin 430
+  decenter_end 223
+  
+  from ref 144258 z 2007 label "pmConnectionFailedEvent" xyz 555 637 3000 to ref 128642
   write_horizontally default show_definition default drawing_language default
 end
 line 143618 -_-_

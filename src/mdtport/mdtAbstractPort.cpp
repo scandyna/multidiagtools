@@ -384,6 +384,8 @@ QDebug operator<<(QDebug dbg, mdtAbstractPort::error_t error)
       return dbg.nospace() << "(" << (int)error << ", Disconnected" << ")";
     case mdtAbstractPort::Connecting:
       return dbg.nospace() << "(" << (int)error << ", Connecting" << ")";
+    case mdtAbstractPort::ConnectionFailed:
+      return dbg.nospace() << "(" << (int)error << ", ConnectionFailed" << ")";
     case mdtAbstractPort::UnhandledError:
       return dbg.nospace() << "(" << (int)error << ", UnhandledError" << ")";
     case mdtAbstractPort::ReadPoolEmpty:

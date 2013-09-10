@@ -210,6 +210,18 @@ bool mdtPortManager::start()
   emit pmStartThreadsEvent();
   // Wait until we are ready
   while(!isReady()){
+    qDebug() << "Portmanager start() - currentState: " << currentState();
+    // Depending on port, starting can fail if connection to device fails (TCP port f.ex.)
+    if((currentState() == PortError)||(currentState() == Stopping)||(currentState() == Stopped)){
+      qDebug() << "Portmanager start() - stopping ...";
+      stop();
+      qDebug() << "Portmanager start() - stop() DONE";
+      return false;
+    }
+    if(isClosed()){
+      qDebug() << "Portmanager start() - port closed";
+      return false;
+    }
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
   }
   Q_ASSERT(pvPort->isOpen());
@@ -221,8 +233,10 @@ bool mdtPortManager::start()
 void mdtPortManager::stop()
 {
   Q_ASSERT(pvStateMachine != 0);
-  ///int i;
 
+  if(isClosed()){
+    return;
+  }
   stopTransactionTimer();
   // We emit the pmStopThreadsEvent (see mdtPortManagerStateMachine for details)
   emit pmStopThreadsEvent();
@@ -950,6 +964,11 @@ void mdtPortManager::onThreadsErrorOccured(int error)
       break;
     case mdtAbstractPort::Connecting:
       emit pmConnectingEvent();
+      break;
+    case mdtAbstractPort::ConnectionFailed:
+      flushTransactionsPending();
+      flushTransactionsDone();
+      emit pmConnectionFailedEvent();
       break;
     case mdtAbstractPort::ReadPoolEmpty:
       emit pmBusyEvent();

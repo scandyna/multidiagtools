@@ -751,6 +751,12 @@ class mdtPortManager : public QThread
    */
   void pmDisconnectedEvent();
 
+  /*! \brief Sent when connection failed on startup or after max try
+   *
+   * Used by state machine
+   */
+  void pmConnectionFailedEvent();
+
   /*! \brief Sent when device is busy (or other slow down reason..)
    *
    * Used by state machine

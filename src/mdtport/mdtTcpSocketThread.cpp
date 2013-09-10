@@ -68,6 +68,7 @@ void mdtTcpSocketThread::run()
   threadHelper.setPort(pvPort);
   threadHelper.setThread(this);
   threadHelper.setSocket(socket);
+  connect(&threadHelper, SIGNAL(connected()), this, SIGNAL(connected()));
   // Notify that we are ready and start connecting
   emit ready(this);
   threadHelper.connectToHost();

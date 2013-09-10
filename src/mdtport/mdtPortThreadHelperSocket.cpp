@@ -122,8 +122,9 @@ void mdtPortThreadHelperSocket::onSocketConnected()
   pvPort->lockMutex();
   pvThread->setRunningFlag(true);
   pvConnectMaxTry++;
-  notifyError(mdtAbstractPort::NoError);
+  ///notifyError(mdtAbstractPort::NoError);  /// \todo Obselete
   pvPort->unlockMutex();
+  emit connected();
 }
 
 void mdtPortThreadHelperSocket::onSocketDisconnected()
@@ -139,13 +140,25 @@ void mdtPortThreadHelperSocket::onSocketDisconnected()
     MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
     e.commit();
     pvSocket->close();
+    pvPort->unlockMutex();
+    notifyError(mdtAbstractPort::ConnectionFailed);
+    return;
   }else{
     if(pvThread->runningFlagSet()){
       pvConnectMaxTry--;
       pvSocket->connectToHost(pvHost, pvPortNumber);
       pvConnectionTimeoutTimer->start();
+    }else{
+      qDebug() << "Socket thread: closing ...";
+      pvSocket->close();
+      qDebug() << "Socket thread: unlock mutex";
+      pvPort->unlockMutex();
+      qDebug() << "Socket thread: notify ConnectionFailed";
+      notifyError(mdtAbstractPort::ConnectionFailed);
+      return;
     }
   }
+  qDebug() << "Socket thread: unlock mutex";
   pvPort->unlockMutex();
 }
 

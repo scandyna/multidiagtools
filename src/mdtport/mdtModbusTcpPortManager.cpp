@@ -72,7 +72,7 @@ mdtModbusTcpPortManager::~mdtModbusTcpPortManager()
 
 QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int timeout)
 {
-  Q_ASSERT(!isRunning());
+  Q_ASSERT(isClosed());
 
   QList<mdtPortInfo*> portInfoList;
   mdtPortInfo *portInfo;
@@ -118,7 +118,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
 
 QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface, quint16 port, int timeout)
 {
-  Q_ASSERT(!isRunning());
+  Q_ASSERT(isClosed());
 
   quint32 subNet;
   quint32 bCast;
@@ -193,7 +193,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface
 
 QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QList<QNetworkInterface> &ifaces, quint16 port, int timeout, bool ignoreLoopback)
 {
-  Q_ASSERT(!isRunning());
+  Q_ASSERT(isClosed());
 
   QList<mdtPortInfo*> portInfoList;
   int i;
@@ -218,7 +218,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QList<QNetworkInterface>
 
 bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port, int timeout)
 {
-  Q_ASSERT(!isRunning());
+  Q_ASSERT(isClosed());
 
   QTcpSocket socket;
   int maxIter;
@@ -290,7 +290,7 @@ bool mdtModbusTcpPortManager::saveScanResult(const QList<mdtPortInfo*> scanResul
 
 QStringList mdtModbusTcpPortManager::readScanResult()
 {
-  Q_ASSERT(!isRunning());
+  ///Q_ASSERT(!isRunning());
 
   QFile file;
   QStringList scanResult;
@@ -309,9 +309,14 @@ QStringList mdtModbusTcpPortManager::readScanResult()
   return scanResult;
 }
 
+bool mdtModbusTcpPortManager::isReady() const
+{
+  return (currentState() == Ready);
+}
+
 int mdtModbusTcpPortManager::getHardwareNodeAddress(int bitsCount, int startFrom)
 {
-  Q_ASSERT(isRunning());
+  Q_ASSERT(isReady());
   Q_ASSERT(bitsCount > 0);
   Q_ASSERT(startFrom >= 0);
 

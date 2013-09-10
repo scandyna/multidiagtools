@@ -426,6 +426,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
    */
   m.setPortInfo(validPortInfo);
   ///QVERIFY(m.openPort());
+  qDebug() << "TEST -> start 1 ...";
   QVERIFY(m.start());
   ///QVERIFY(m.isRunning());
   QVERIFY(m.isReady());
@@ -433,6 +434,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
   ///QVERIFY(!m.isRunning());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
+  qDebug() << "TEST -> start 2 ...";
   QVERIFY(m.start());
   ///QVERIFY(m.isRunning());
   QVERIFY(m.isReady());
@@ -447,6 +449,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
    */
   m.setPortInfo(invalidPortInfo);
   ///QVERIFY(!m.openPort());
+  qDebug() << "TEST -> start 3 ...";
   QVERIFY(!m.start());
   ///QVERIFY(!m.isRunning());
   QVERIFY(!m.isReady());
@@ -464,10 +467,12 @@ void mdtPortManagerTest::modbusTcpPortTest()
   m.setPortInfo(invalidPortInfo);
   ///QVERIFY(!m.openPort());
   ///QVERIFY(!m.isRunning());
+  qDebug() << "TEST -> start 4 ...";
   QVERIFY(!m.start());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
   m.setPortInfo(validPortInfo);
+  qDebug() << "TEST -> start 5 ...";
   QVERIFY(m.start());
   QVERIFY(m.isReady());
   ///QVERIFY(m.openPort());
@@ -483,6 +488,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
    */
   m.setPortInfo(validPortInfo);
   ///QVERIFY(m.openPort());
+  qDebug() << "TEST -> start 6 ...";
   QVERIFY(m.start());
   ///QVERIFY(m.isRunning());
   QVERIFY(m.isReady());

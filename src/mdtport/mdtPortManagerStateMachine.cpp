@@ -82,6 +82,7 @@ void mdtPortManagerStateMachine::buildMainStateMachine(mdtPortManager *portManag
   // Add pvRunning transitions ->
   pvRunning->addTransition(portManager, SIGNAL(pmStopThreadsEvent()), pvStopping);
   pvRunning->addTransition(portManager, SIGNAL(pmUnhandledErrorEvent()), pvPortError);
+  pvRunning->addTransition(portManager, SIGNAL(pmConnectionFailedEvent()), pvPortError);
   // Add pvStopping transitions ->
   pvStopping->addTransition(portManager, SIGNAL(pmAllThreadsStoppedEvent()), pvStopped);
   // Add pvStopped transitions ->

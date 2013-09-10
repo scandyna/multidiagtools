@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 42
+  revision 43
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3620,6 +3620,11 @@ ${inlines}
 	    external 
 	  end
 	end
+
+	transition 211074 "pmConnectionFailedEvent"
+	  on state_ref 171010 // PortError
+	  external 
+	end
       end
     end
 
@@ -4873,7 +4878,6 @@ ${inlines}
 	  b parent class_ref 859394 // PortClosed_State
       end
     end
-
   end
 
   classview 247298 "mdtTcpSocket"

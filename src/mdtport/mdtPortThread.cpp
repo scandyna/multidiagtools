@@ -84,25 +84,6 @@ void mdtPortThread::start()
   // Start..
   pvCurrentError = mdtAbstractPort::UnhandledError;
   QThread::start();
-
-  // Wait until the thread started
-  /**
-  while(!isRunning()){
-    qApp->processEvents();
-    msleep(50);
-    i++;
-    // When something goes wrong on starting, it happens sometimes that isRunning() ruturns false forever
-    // We let the thrad 500 [ms] time to start, else generate an error
-    if(i >= 10){
-      mdtError e(MDT_PORT_IO_ERROR, "Thread start timeout reached (500 [ms]) -> abort", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtPortThread");
-      e.commit();
-      return false;
-    }
-  }
-
-  return true;
-  */
 }
 
 void mdtPortThread::stop()
@@ -114,8 +95,11 @@ void mdtPortThread::stop()
   // Unset the running flag
   qDebug() << "mdtPortThread::stop() ...";
   pvPort->lockMutex();
+  qDebug() << "mdtPortThread::stop() - mutext locked";
   if(!pvRunning){
     pvPort->unlockMutex();
+    // Exit event loop (for subclass that use a event loop)
+    exit();
     return;
   }
   pvRunning = false;
@@ -143,15 +127,9 @@ void mdtPortThread::stop()
   pvPort->unlockMutex();
 
   // Exit event loop (for subclass that use a event loop)
+  qDebug() << "mdtPortThread::stop() - calling exit() ...";
   exit();
-  // Wait the end of the thread
-  /**
-  while(!isFinished()){
-    qApp->processEvents();
-    msleep(50);
-  }
-  */
-  ///qDebug() << "mdtPortThread::stop() DONE";
+  qDebug() << "mdtPortThread::stop() DONE";
 }
 
 void mdtPortThread::waitReady()
@@ -270,7 +248,7 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
     error = pvPort->reconnect(pvReconnectTimeout);
     if(error == mdtAbstractPort::NoError){
       if(notify){
-        notifyError(mdtAbstractPort::NoError);
+        notifyError(mdtAbstractPort::NoError);  /// \todo emit connected()
       }
       return mdtAbstractPort::NoError;
     }
@@ -287,7 +265,7 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
     mdtError e(MDT_PORT_IO_ERROR, "Connection failed after max try", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortThread");
     e.commit();
-    notifyError(mdtAbstractPort::Disconnected);
+    notifyError(mdtAbstractPort::Disconnected); /// \todo notify ConnectionFailed
   }
 
   return mdtAbstractPort::UnhandledError;
