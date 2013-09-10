@@ -76,8 +76,6 @@ void mdtPortThread::start()
 {
   Q_ASSERT(pvPort != 0);
 
-  ///int i = 0;
-
   // Get thread's common setup
   pvReconnectTimeout = pvPort->config().connectTimeout();
   pvReconnectMaxTry = pvPort->config().connectMaxTry();
@@ -93,9 +91,7 @@ void mdtPortThread::stop()
   int err;
 
   // Unset the running flag
-  qDebug() << "mdtPortThread::stop() ...";
   pvPort->lockMutex();
-  qDebug() << "mdtPortThread::stop() - mutext locked";
   if(!pvRunning){
     pvPort->unlockMutex();
     // Exit event loop (for subclass that use a event loop)
@@ -127,9 +123,7 @@ void mdtPortThread::stop()
   pvPort->unlockMutex();
 
   // Exit event loop (for subclass that use a event loop)
-  qDebug() << "mdtPortThread::stop() - calling exit() ...";
   exit();
-  qDebug() << "mdtPortThread::stop() DONE";
 }
 
 void mdtPortThread::waitReady()

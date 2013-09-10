@@ -178,18 +178,23 @@ int mdtDeviceScpi::checkDeviceError()
   transaction = getNewTransaction();
   transaction->setQueryReplyMode(false);
   // Wait until data can be sent
+  /**
   if(!pvUsbtmcPortManager->waitOnWriteReady()){
     return mdtAbstractPort::WritePoolEmpty;
   }
+  */
   // Send query
-  bTag = pvUsbtmcPortManager->writeData("SYST:ERR?\n");
+  ///bTag = pvUsbtmcPortManager->writeData("SYST:ERR?\n");
+  bTag = pvUsbtmcPortManager->sendData("SYST:ERR?\n");
   if(bTag < 0){
     return bTag;
   }
   // Wait until more data can be sent
+  /**
   if(!pvUsbtmcPortManager->waitOnWriteReady()){
     return mdtAbstractPort::WritePoolEmpty;
   }
+  */
   // Remember query type.
   ///transaction->setType(MDT_FC_SCPI_ERR);
   transaction->setType(mdtFrameCodecScpi::QT_ERR);

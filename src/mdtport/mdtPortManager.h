@@ -438,7 +438,7 @@ class mdtPortManager : public QThread
    * 
    * \todo Obselete
    */
-  bool waitOnWriteReady(int timeout = 0, int granularity = 50);
+  ///bool waitOnWriteReady(int timeout = 0, int granularity = 50);
 
   /*! \brief Send data on port
    *

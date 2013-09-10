@@ -125,18 +125,23 @@ int mdtDeviceU3606A::readAnalogInput(mdtPortTransaction *transaction)
   /// \todo Handle type (Ampere, Voltage, Resistance, AC/DC, ...)
   ///setStateBusy();
   // Wait until data can be sent
+  /**
   if(!pvUsbtmcPortManager->waitOnWriteReady()){
     return mdtAbstractPort::WritePoolEmpty;
   }
+  */
   // Send query
-  bTag = pvUsbtmcPortManager->writeData("MEAS:VOLT:DC?\n");
+  ///bTag = pvUsbtmcPortManager->writeData("MEAS:VOLT:DC?\n");
+  bTag = pvUsbtmcPortManager->sendData("MEAS:VOLT:DC?\n");
   if(bTag < 0){
     return bTag;
   }
   // Wait until more data can be sent
+  /**
   if(!pvUsbtmcPortManager->waitOnWriteReady()){
     return mdtAbstractPort::WritePoolEmpty;
   }
+  */
   // Remember query type.
   ///transaction->setType(MDT_FC_SCPI_VALUE);
   transaction->setType(mdtFrameCodecScpi::QT_SINGLE_VALUE_FLT);

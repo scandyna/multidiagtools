@@ -97,12 +97,15 @@ bool mdtUsbtmcPortManager::isReady() const
 
 int mdtUsbtmcPortManager::sendCommand(const QByteArray &command, int timeout)
 {
+  /**
   // Wait until data can be sent
   if(!waitOnWriteReady(timeout)){
     return mdtAbstractPort::WritePoolEmpty;
   }
   // Send query
   return writeData(command);
+  */
+  return sendData(command);
 }
 
 /// \todo Remove timeouts
@@ -112,18 +115,23 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
   mdtPortTransaction *transaction;
 
   // Wait until data can be sent
+  /**
   if(!waitOnWriteReady(writeTimeout)){
     return QByteArray();
   }
+  */
   // Send query
-  bTag = writeData(query);
+  ///bTag = writeData(query);
+  bTag = sendData(query);
   if(bTag < 0){
     return QByteArray();
   }
   // Wait until more data can be sent
+  /**
   if(!waitOnWriteReady(writeTimeout)){
     return QByteArray();
   }
+  */
   // Setup transaction
   transaction = getNewTransaction();
   transaction->setType(mdtFrameCodecScpi::QT_UNKNOW);
@@ -141,6 +149,7 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
   return readenFrame(bTag);
 }
 
+/**
 int mdtUsbtmcPortManager::writeData(const QByteArray &data)
 {
   Q_ASSERT(pvPort != 0);
@@ -176,6 +185,50 @@ int mdtUsbtmcPortManager::writeData(const QByteArray &data)
 
   return currentTransactionId();
 }
+*/
+
+int mdtUsbtmcPortManager::sendData(const QByteArray &data)
+{
+  Q_ASSERT(pvPort != 0);
+
+  mdtFrameUsbTmc *frame;
+
+  // Wait until we can write
+  while(1){
+    // If port manager was stopped, we return
+    if(isClosed()){
+      return mdtAbstractPort::WriteCanceled;
+    }
+    if(isReady()){
+      lockPortMutex();
+      if(pvPort->writeFramesPool().size() > 0){
+        frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
+        Q_ASSERT(frame != 0);
+        // Here we are ready to write - we keep port mutext locked
+        break;
+      }
+      unlockPortMutex();
+    }
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
+  // We are ready to write
+  Q_ASSERT(frame != 0);
+  frame->clear();
+  frame->clearSub();
+  // Store data and add frame to write queue
+  frame->setWaitAnAnswer(false);
+  frame->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+  // Increment bTag and enshure it's in correct range (1-255)
+  incrementCurrentTransactionId(1, 255);
+  frame->setbTag(currentTransactionId());
+  frame->setMessageData(data);
+  frame->setEOM(true);
+  frame->encode();
+  pvPort->addFrameToWrite(frame);
+  unlockPortMutex();
+
+  return currentTransactionId();
+}
 
 int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
 {
@@ -186,6 +239,7 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   mdtFrameUsbTmc *frame;
 
   // Get a frame in pool
+  /**
   lockPortMutex();
   if(pvPort->writeFramesPool().size() < 1){
     unlockPortMutex();
@@ -198,6 +252,29 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
     return mdtAbstractPort::WritePoolEmpty;
   }
   frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
+  Q_ASSERT(frame != 0);
+  */
+  
+  // Wait until we can write
+  while(1){
+    // If port manager was stopped, we return
+    if(isClosed()){
+      restoreTransaction(transaction);
+      return mdtAbstractPort::WriteCanceled;
+    }
+    if(isReady()){
+      lockPortMutex();
+      if(pvPort->writeFramesPool().size() > 0){
+        frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
+        Q_ASSERT(frame != 0);
+        // Here we are ready to write - we keep port mutext locked
+        break;
+      }
+      unlockPortMutex();
+    }
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
+  // We are ready to write
   Q_ASSERT(frame != 0);
   frame->clear();
   frame->clearSub();
@@ -494,4 +571,14 @@ void mdtUsbtmcPortManager::onThreadsErrorOccured(int error)
     default:
       mdtUsbPortManager::onThreadsErrorOccured(error);
   }
+}
+
+int mdtUsbtmcPortManager::sendData(mdtPortTransaction *transaction)
+{
+  return mdtAbstractPort::UnhandledError;
+}
+
+int mdtUsbtmcPortManager::sendData(const QByteArray &data, bool queryReplyMode)
+{
+  return mdtAbstractPort::UnhandledError;
 }

@@ -320,14 +320,14 @@ void mdtPortManagerTest::usbTmcPortTest()
   // Control request
   QVERIFY(m.sendReadStatusByteRequest() >= 0);
   // Query without answer
-  QVERIFY(m.waitOnWriteReady(1000));
-  QVERIFY(m.writeData("*CLS\n"));
-  QVERIFY(m.waitOnWriteReady(1000));
-  QVERIFY(m.writeData("*RST\n"));
+  ///QVERIFY(m.waitOnWriteReady(1000));
+  QVERIFY(m.sendData("*CLS\n"));
+  ///QVERIFY(m.waitOnWriteReady(1000));
+  QVERIFY(m.sendData("*RST\n"));
   // Query with answer
-  QVERIFY(m.waitOnWriteReady(1000));
-  QVERIFY(m.writeData("*IDN?\n") >= 0);
-  QVERIFY(m.waitOnWriteReady(1000));
+  ///QVERIFY(m.waitOnWriteReady(1000));
+  QVERIFY(m.sendData("*IDN?\n") >= 0);
+  ///QVERIFY(m.waitOnWriteReady(1000));
   bTag = m.sendReadRequest(true);
   QVERIFY(bTag > 0);
   QVERIFY(m.waitTransactionDone(bTag));
@@ -425,22 +425,14 @@ void mdtPortManagerTest::modbusTcpPortTest()
    * Open/close test with valid Host
    */
   m.setPortInfo(validPortInfo);
-  ///QVERIFY(m.openPort());
-  qDebug() << "TEST -> start 1 ...";
   QVERIFY(m.start());
-  ///QVERIFY(m.isRunning());
   QVERIFY(m.isReady());
   m.stop();
-  ///QVERIFY(!m.isRunning());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
-  qDebug() << "TEST -> start 2 ...";
   QVERIFY(m.start());
-  ///QVERIFY(m.isRunning());
   QVERIFY(m.isReady());
-  ///m.closePort();
   m.stop();
-  ///QVERIFY(!m.isRunning());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
 
@@ -448,38 +440,24 @@ void mdtPortManagerTest::modbusTcpPortTest()
    * Open/close test with invalid Host
    */
   m.setPortInfo(invalidPortInfo);
-  ///QVERIFY(!m.openPort());
-  qDebug() << "TEST -> start 3 ...";
   QVERIFY(!m.start());
-  ///QVERIFY(!m.isRunning());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
   m.stop();
-  ///QVERIFY(!m.isRunning());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
-  ///m.closePort();
-  ///QVERIFY(!m.isRunning());
 
   /*
    * Open/close test with invalid + valid Host
    */
   m.setPortInfo(invalidPortInfo);
-  ///QVERIFY(!m.openPort());
-  ///QVERIFY(!m.isRunning());
-  qDebug() << "TEST -> start 4 ...";
   QVERIFY(!m.start());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
   m.setPortInfo(validPortInfo);
-  qDebug() << "TEST -> start 5 ...";
   QVERIFY(m.start());
   QVERIFY(m.isReady());
-  ///QVERIFY(m.openPort());
-  ///QVERIFY(m.start());
-  ///QVERIFY(m.isRunning());
   m.stop();
-  ///QVERIFY(!m.isRunning());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
 
@@ -487,10 +465,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
    * Communication test
    */
   m.setPortInfo(validPortInfo);
-  ///QVERIFY(m.openPort());
-  qDebug() << "TEST -> start 6 ...";
   QVERIFY(m.start());
-  ///QVERIFY(m.isRunning());
   QVERIFY(m.isReady());
 
   /*

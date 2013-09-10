@@ -408,10 +408,12 @@ bool mdtPortTerm::sendCommandToUsbtmcPort(const QString &command)
   }
   // If we have a query, send the read request
   if(command.right(1) == "?"){
+    /**
     if(!pvUsbtmcPortManager->waitOnWriteReady()){
       showStatusMessage(tr("Cannot send read request for the moment"), 1000);
       return false;
     }
+    */
     if(pvUsbtmcPortManager->sendReadRequest(false) < 0){
       showStatusMessage(tr("Error occured while sending read request"), 1000);
       return false;

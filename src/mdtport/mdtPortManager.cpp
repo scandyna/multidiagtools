@@ -199,7 +199,6 @@ bool mdtPortManager::start()
   Q_ASSERT(pvPort != 0);
 
   qDebug() << "mdtPortManager::start() ...";
-  ///int i;
 
   pvTransactionTimeoutOccured = false;
   // Open port
@@ -210,16 +209,12 @@ bool mdtPortManager::start()
   emit pmStartThreadsEvent();
   // Wait until we are ready
   while(!isReady()){
-    qDebug() << "Portmanager start() - currentState: " << currentState();
     // Depending on port, starting can fail if connection to device fails (TCP port f.ex.)
     if((currentState() == PortError)||(currentState() == Stopping)||(currentState() == Stopped)){
-      qDebug() << "Portmanager start() - stopping ...";
       stop();
-      qDebug() << "Portmanager start() - stop() DONE";
       return false;
     }
     if(isClosed()){
-      qDebug() << "Portmanager start() - port closed";
       return false;
     }
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
@@ -268,10 +263,6 @@ void mdtPortManager::setPortInfo(mdtPortInfo info)
 
   pvPortInfo = info;
   pvPort->setPortName(pvPortInfo.portName());
-  /**
-  qDebug() << "mdtPortManager::setPortInfo() : port name: " << pvPortInfo.portName();
-  setPortName(pvPortInfo.portName());
-  */
 }
 
 mdtPortInfo mdtPortManager::portInfo()
@@ -339,6 +330,7 @@ void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
 }
 
 /// \todo Remove timeout parameter
+/**
 bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
 {
   Q_ASSERT(granularity > 0);
@@ -393,6 +385,7 @@ bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
 
   return false;
 }
+*/
 
 int mdtPortManager::sendData(mdtPortTransaction *transaction)
 {

@@ -78,8 +78,12 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
   /*! \brief Send a command to device
    *
-   * Wait until it's possible to write to device,
-   *  then send the command.
+   * \todo Obselete timeout
+   *
+   * At first, this method waits until the ready state is set calling isReady() , and a frame is available in port's write frames pool.
+   *  This wait will not break event loop, so no GUI freeze occurs.
+   *  If port manager is stopped during this wait (unhandled error, stop request),
+   *  this method returns.
    *
    * Note that the wait will not break the GUI's event loop
    *  (see mdtPortManager::waitOnWriteReady() for details).
@@ -94,11 +98,10 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
   /*! \brief Send a query to device
    *
-   * Wait until it's possible to write to device,
-   *  send the query and wait until a response
-   *  is available or timeout.
+   * \todo Obselete timeouts
    *
-   * Note that the wait will not break the GUI's event loop.
+   * Will wait until it's possible to write.
+   *  See sendData() and sendReadRequest() for details (used internally).
    *
    * \param query Query to send.
    * \param writeTimeout Write timeout [ms]
@@ -122,16 +125,40 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    * \return bTag ID on success or mdtAbstractPort::WriteQueueEmpty (< 0).
    * \pre Port must be set with setPort() before use of this method.
    */
-  int writeData(const QByteArray &data);
+  ///int writeData(const QByteArray &data);
+
+  /*! \brief Write data by copy
+   *
+   * At first, this method waits until the ready state is set calling isReady() , and a frame is available in port's write frames pool.
+   *  This wait will not break event loop, so no GUI freeze occurs.
+   *  If port manager is stopped during this wait (unhandled error, stop request),
+   *  this method returns.
+   *
+   * Then, data will be encoded regarding USBTMC standard and passed to the mdtUsbPort's write queue by copy.
+   *  This method returns immediatly after enqueue,
+   *  and don't wait until data was written.
+   *
+   * This method does not use transaction, because no response will be returned.
+   *
+   * \param data Data to write
+   * \return bTag ID on success or mdtAbstractPort::WriteCanceled (< 0).
+   * \pre Port must be set with setPort() before use of this method.
+   */
+  int sendData(const QByteArray &data);
 
   /*! \brief Send a read request to device
    *
    * USBTMC standard need that a read request is sent to device
    *  before we can read any data.
    *
+   * At first, this method waits until the ready state is set calling isReady() , and a frame is available in port's write frames pool.
+   *  This wait will not break event loop, so no GUI freeze occurs.
+   *  If port manager is stopped during this wait (unhandled error, stop request),
+   *  this method returns.
+   *
    * \param transaction A pointer to a valid transaction, with queryReplyMode set.
    *                     (id will be set internally).
-   * \return bTag ID on success or value < 0 if write queue is full.
+   * \return bTag ID on success or mdtAbstractPort::WriteCanceled (< 0).
    *          On failure, the transaction is restored to pool.
    * \pre port must be set
    * \pre transaction must be a valid pointer
@@ -197,6 +224,14 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
   void onThreadsErrorOccured(int error);
 
  private:
+
+  /*! \brief Not usable here
+   */
+  int sendData(mdtPortTransaction *transaction);
+
+  /*! \brief Not usable here
+   */
+  int sendData(const QByteArray &data, bool queryReplyMode);
 
   // Diseable copy
   Q_DISABLE_COPY(mdtUsbtmcPortManager);
