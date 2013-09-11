@@ -226,13 +226,19 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   bool ok = false;
   QTimer timeoutTimer;
 
+  ///qDebug() << "mdtModbusTcpPortManager::tryToConnect() - hostName: " << hostName << " , port: " << port << ", timeout: " << timeout;
   timeoutTimer.setSingleShot(true);
-  connect(&timeoutTimer, SIGNAL(timeout()), this, SLOT(abortScan()));
+  connect(&timeoutTimer, SIGNAL(timeout()), this, SLOT(abortTryToConnect()));
   emit(statusMessageChanged(tr("Trying host ") + hostName + "  , port " + QString::number(port), "", 500));
   socket.connectToHost(hostName, port);
   ///maxIter = timeout / 50;
+  pvAbortTryToConnect = false;
   timeoutTimer.start(timeout);
   while(socket.state() != QAbstractSocket::ConnectedState){
+    if(pvAbortTryToConnect){
+      timeoutTimer.stop();
+      return false;
+    }
     if(pvAbortScan){
       timeoutTimer.stop();
       return false;
@@ -491,6 +497,11 @@ int mdtModbusTcpPortManager::writeData(const QByteArray &pdu, bool queryReplyMod
 void mdtModbusTcpPortManager::abortScan()
 {
   pvAbortScan = true;
+}
+
+void mdtModbusTcpPortManager::abortTryToConnect()
+{
+  pvAbortTryToConnect = true;
 }
 
 void mdtModbusTcpPortManager::fromThreadNewFrameReaden()

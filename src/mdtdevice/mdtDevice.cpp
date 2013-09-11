@@ -1022,6 +1022,8 @@ void mdtDevice::setStateFromPortManager(int portManagerState)
     case mdtPortManager::Running:
     case mdtPortManager::PortReady:
     case mdtPortManager::Connected:
+      qDebug() << "mdtDevice - emit new state: " << currentState();
+      emit stateChanged(portManagerState);
       break;
   }
   qDebug() << "mdtDevice - new state: " << currentState();
@@ -1029,9 +1031,11 @@ void mdtDevice::setStateFromPortManager(int portManagerState)
 
 void mdtDevice::setStatePortClosed()
 {
+  /**
   if(currentState() == mdtPortManager::PortClosed){
     return;
   }
+  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
@@ -1051,9 +1055,11 @@ void mdtDevice::setStatePortClosed()
 
 void mdtDevice::setStateDisconnected()
 {
+  /**
   if(currentState() == mdtPortManager::Disconnected){
     return;
   }
+  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
@@ -1073,9 +1079,11 @@ void mdtDevice::setStateDisconnected()
 
 void mdtDevice::setStateConnecting(/*const QString &message*/)
 {
+  /**
   if(currentState() == mdtPortManager::Connecting){
     return;
   }
+  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
@@ -1097,9 +1105,11 @@ void mdtDevice::setStateConnecting(/*const QString &message*/)
 
 void mdtDevice::setStateReady()
 {
+  /**
   if(currentState() == mdtPortManager::Ready){
     return;
   }
+  */
   qDebug() << "mdtDevice::setStateReady() ...";
   // Check if we have to restart query timer
   if(pvAutoQueryEnabled){
@@ -1118,9 +1128,11 @@ void mdtDevice::setStateReady()
 
 void mdtDevice::setStateBusy()
 {
+  /**
   if(currentState() == mdtPortManager::Busy){
     return;
   }
+  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
@@ -1145,9 +1157,11 @@ void mdtDevice::setStateBusy()
 
 void mdtDevice::setStateError()
 {
+  /**
   if(currentState() == mdtPortManager::PortError){
     return;
   }
+  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();

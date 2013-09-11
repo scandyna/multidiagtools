@@ -228,6 +228,10 @@ class mdtModbusTcpPortManager : public mdtPortManager
    */
   void abortScan();
 
+  /*! \brief Called by connect timeout timer
+   */
+  void abortTryToConnect();
+
   /*! \brief Called by the thread whenn a complete frame was readen
    */
   void fromThreadNewFrameReaden();
@@ -236,6 +240,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
 
   QString pvKnownHostsFileName;
   bool pvAbortScan;
+  bool pvAbortTryToConnect;
   // Helper members for Register service
   QList<int> pvRegisterValues;
 

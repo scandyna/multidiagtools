@@ -817,32 +817,32 @@ class mdtDevice : public QObject
 
   /*! \brief Set the PortClosed state
    *
-   * Emit stateChanged() if current state was not PortClosed.
+   * Emit stateChanged()
    */
   void setStatePortClosed();
 
   /*! \brief Set the disconnected state
    *
-   * Emit stateChanged() if current state was not Disconnected.
+   * Emit stateChanged()
    */
   void setStateDisconnected();
 
   /*! \brief Set the connecting state
    *
-   * Emit stateChanged() if current state was not Connecting.
+   * Emit stateChanged()
    */
   void setStateConnecting();
 
   /*! \brief Set the ready state
    *
-   * Emit stateChanged() if current state was not Ready.
+   * Emit stateChanged()
    */
   void setStateReady();
 
   /*! \brief Set the busy state
    *
    * Busy state can be used when physical device or computer (this software) cannot process more requests.
-   * Emit stateChanged() if current state was not Busy.
+   * Emit stateChanged()
    */
   void setStateBusy();
 
