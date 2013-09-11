@@ -238,6 +238,14 @@ class mdtUsbPort : public mdtAbstractPort
    */
   error_t cancelReadTransfer();
 
+  /*! \brief Clear halt on read endpoint
+   *
+   * This is a blocking method, and should only be called by port thread.
+   *  Active read transfers should be canceled before using this method
+   *  ( see cancelReadTransfer() ).
+   */
+  error_t clearReadEndpointHalt();
+
   /*! \brief Wait until data is available on port.
    *
    * Not implemented, will allways return a UnhandledError
@@ -360,6 +368,14 @@ class mdtUsbPort : public mdtAbstractPort
    * Used by mdtUsbPortThread, should not be used else.
    */
   error_t cancelWriteTransfer();
+
+  /*! \brief Clear halt on write endpoint
+   *
+   * This is a blocking method, and should only be called by port thread.
+   *  Active write transfers should be canceled before using this method
+   *  ( see cancelWriteTransfer() ).
+   */
+  error_t clearWriteEndpointHalt();
 
   /*! \brief Wait until data can be written to port.
    *

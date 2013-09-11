@@ -907,7 +907,7 @@ void mdtPortManager::onThreadsErrorOccured(int error)
 {
   switch(error){
     case mdtAbstractPort::NoError:
-      ///emit(ready());
+      emit pmReadyEvent();
       break;
     case mdtAbstractPort::Disconnected:
       flushTransactionsPending();
@@ -963,6 +963,9 @@ void mdtPortManager::onThreadsErrorOccured(int error)
       emit(unhandledError());
       break;
       */
+    case mdtAbstractPort::ReadWriteBusy:
+      emit pmBusyEvent();
+      break;
     default:
       flushTransactionsPending();
       flushTransactionsDone();

@@ -42,6 +42,26 @@ class mdtUsbPortThread : public mdtPortThread
    */
   mdtUsbPortThread(QObject *parent = 0);
 
+  /*! \brief Set the port instance
+   *
+   * \pre port must be a valid pointer
+   * \pre The thread must not running
+   */
+  void setPort(mdtUsbPort *port);
+
+  /*! \brief Get USB port instance
+   *
+   * \return Port instance, or a null pointer if it was not set
+   */
+  mdtUsbPort *usbPort();
+
+  /*! \brief Detach the port from thread
+   *
+   * \param releaseMemory If true, the port object that was set with setPort() will be deleted.
+   * \pre The thread must not running
+   */
+  void detachPort(bool releaseMemory);
+
   /*! \brief Returns true
    */
   bool isReader() const;
@@ -96,6 +116,8 @@ class mdtUsbPortThread : public mdtPortThread
   void run();
 
   Q_DISABLE_COPY(mdtUsbPortThread);
+
+  mdtUsbPort *pvUsbPort;
 };
 
 #endif  // #ifndef MDT_USB_PORT_THREAD_H

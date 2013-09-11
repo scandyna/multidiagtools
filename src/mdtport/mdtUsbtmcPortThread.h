@@ -129,20 +129,47 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    */
   mdtAbstractPort::error_t usbtmcWrite(mdtPortThreadHelperPort &threadHelper, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
 
+  /*! \brief Abort bulk OUT
+   *
+   * Mutext must be locked when calling this method.
+   *  It will be unlocked during wait.
+   *
+   * \return NoError or a error of type mdtAbstractPort::error_t.
+   * \pre port must be set before call of this method
+   */
+  mdtAbstractPort::error_t abortBulkOut(quint8 bTag, mdtPortThreadHelperPort &threadHelper);
+
+  /*! \brief Send a INITIATE_ABORT_BULK_OUT request thru the control endpoint
+   *
+   * \see abortBulkOut()
+   * \return NoError or a error of type mdtAbstractPort::error_t.
+   */
+  mdtAbstractPort::error_t initiateAbortBulkOut(quint8 bTagIn, mdtFrameUsbControl *ctlFrame, quint8 &status);
+
+  /*! \brief Send a CHECK_ABORT_BULK_OUT_STATUS request thru the control endpoint
+   *
+   * \see abortBulkOut()
+   * \return NoError or a error of type mdtAbstractPort::error_t.
+   */
+  mdtAbstractPort::error_t checkAbortBulkOutStatus(quint8 bTagIn, mdtFrameUsbControl *ctlFrame, quint8 &status);
+
   /*! \brief Abort bulk IN
    *
    * Mutext must be locked when calling this method.
    *  It will be unlocked during wait.
    *
-   * Note that pending control transfers will be cancelled.
+   * \return NoError or a error of type mdtAbstractPort::error_t.
+   * \pre port must be set before call of this method
+   */
+  mdtAbstractPort::error_t abortBulkInOld(quint8 bTag, mdtPortThreadHelperPort &threadHelper);
+
+  /*! \brief Abort bulk IN
    *
-   * Once the abort process is done, port manager will be notified
-   *  with a mdtAbstractPort::ReadCanceled (only if thread has running flag true).
-   *  Port manager then knows that it can continue working.
+   * Mutext must be locked when calling this method.
+   *  It will be unlocked during wait.
    *
    * \return NoError or a error of type mdtAbstractPort::error_t.
    * \pre port must be set before call of this method
-   * \pre threadHelper must contain a valid currentWriteFrame
    */
   mdtAbstractPort::error_t abortBulkIn(quint8 bTag, mdtPortThreadHelperPort &threadHelper);
 
@@ -151,9 +178,28 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \see abortBulkIn()
    * \return NoError or a error of type mdtAbstractPort::error_t.
    */
+  mdtAbstractPort::error_t initiateAbortBulkIn(quint8 bTagIn, mdtFrameUsbControl *ctlFrame, quint8 &status);
+
+  /*! \brief Send a CHECK_ABORT_BULK_IN_STATUS request thru the control endpoint
+   *
+   * \see abortBulkIn()
+   * \return NoError or a error of type mdtAbstractPort::error_t.
+   */
+  mdtAbstractPort::error_t checkAbortBulkInStatus(quint8 bTagIn, mdtFrameUsbControl *ctlFrame, quint8 &status, bool &bmAbortBulkInD0);
+
+  
+  /*! \brief Send a INITIATE_ABORT_BULK_IN request thru the control endpoint
+   *
+   * \todo Obselete
+   *
+   * \see abortBulkIn()
+   * \return NoError or a error of type mdtAbstractPort::error_t.
+   */
   mdtAbstractPort::error_t sendInitiateAbortBulkInRequest(quint8 bTag, mdtFrameUsbControl *ctlFrame);
 
   /*! \brief Send a CHECK_ABORT_BULK_IN_STATUS request thru the control endpoint
+   *
+   * \todo Obselete
    *
    * \see abortBulkIn()
    * \return NoError or a error of type mdtAbstractPort::error_t.

@@ -86,8 +86,12 @@ class mdtAbstractPort : public QObject
                                             Logfile could give more information, see mdtError and mdtApplication */
                 ReadPoolEmpty,          /*!< Read frames pool is empty. Says that no data can be received for the moment */
                 WritePoolEmpty,         /*!< Write queue is empty. Says that no data can be sent for the moment */
-                ErrorHandled            /*!< Used by mdtPortThread's helper methods (handle[Read|Write]Error)
+                ErrorHandled,           /*!< Used by mdtPortThread's helper methods (handle[Read|Write]Error)
                                               to tell the thread that error could be handled */
+                ReadWriteBusy,          /*!< It's currently not possible to read from or write to port/device.
+                                              This is typically used by USBTMC when some control (f.ex. abort bilk IN/OUT) is in progress */
+                UsbWriteStall,          /*!< USB specific: occurs for bulk or interrupt endpoint when a halt condition was detected */
+                UsbReadStall            /*!< USB specific: occurs for bulk or interrupt endpoint when a halt condition was detected */
                };
 
   mdtAbstractPort(QObject *parent = 0);

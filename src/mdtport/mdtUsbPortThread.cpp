@@ -30,6 +30,26 @@
 mdtUsbPortThread::mdtUsbPortThread(QObject *parent)
  : mdtPortThread(parent)
 {
+  pvUsbPort = 0;
+}
+
+void mdtUsbPortThread::setPort(mdtUsbPort *port)
+{
+  Q_ASSERT(port != 0);
+
+  pvUsbPort = port;
+  mdtPortThread::setPort(port);
+}
+
+mdtUsbPort *mdtUsbPortThread::usbPort()
+{
+  return pvUsbPort;
+}
+
+void mdtUsbPortThread::detachPort(bool releaseMemory)
+{
+  pvUsbPort = 0;
+  mdtPortThread::detachPort(releaseMemory);
 }
 
 bool mdtUsbPortThread::isReader() const

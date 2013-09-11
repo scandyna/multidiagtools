@@ -433,7 +433,7 @@ void mdtUsbPort::readTransferCallback(struct libusb_transfer *transfer)
   port->pvReadTransferPending = false;
   // Check if transfer has timed out
   if(transfer->status & LIBUSB_TRANSFER_TIMED_OUT){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_TIMED_OUT", mdtError::Warning);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_TIMED_OUT on read endpoint", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->addError(ReadTimeout);
@@ -451,15 +451,15 @@ void mdtUsbPort::readTransferCallback(struct libusb_transfer *transfer)
   }
   // Check if transfer stall
   if(transfer->status & LIBUSB_TRANSFER_STALL){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL on read endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
-    port->addError(UnhandledError);
+    port->addError(UsbReadStall);
     return;
   }
   // Check if transfer failed (not valid if cancelled)
   if(transfer->status & LIBUSB_TRANSFER_ERROR){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR on read endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->addError(UnhandledError);
@@ -467,7 +467,7 @@ void mdtUsbPort::readTransferCallback(struct libusb_transfer *transfer)
   }
   // Check transfer overflow
   if(transfer->status & LIBUSB_TRANSFER_OVERFLOW){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW on read endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->addError(UnhandledError);
@@ -475,7 +475,7 @@ void mdtUsbPort::readTransferCallback(struct libusb_transfer *transfer)
   }
   // Check transfer short frames NOK
   if(transfer->status & LIBUSB_TRANSFER_SHORT_NOT_OK){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK on read endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->addError(UnhandledError);
@@ -518,6 +518,22 @@ mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
         return portError;
       }
     }
+  }
+
+  return NoError;
+}
+
+mdtAbstractPort::error_t mdtUsbPort::clearReadEndpointHalt()
+{
+  int err;
+
+  err = libusb_clear_halt(pvHandle, pvReadEndpointAddress);
+  if(err != 0){
+    mdtError e(MDT_USB_IO_ERROR, "libusb_clear_halt() failed for read endpoint", mdtError::Error);
+    e.setSystemError(err, errorText(err));
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return mapUsbError(err, pvReadEndpointAddress);
   }
 
   return NoError;
@@ -612,7 +628,7 @@ void mdtUsbPort::messageInTransferCallback(struct libusb_transfer *transfer)
   Q_ASSERT(frame != 0);
   // Check if transfer has timed out
   if(transfer->status & LIBUSB_TRANSFER_TIMED_OUT){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_TIMED_OUT", mdtError::Warning);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_TIMED_OUT on message IN endpoint", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->pvMessageInFramesPool.enqueue(frame);
@@ -633,7 +649,7 @@ void mdtUsbPort::messageInTransferCallback(struct libusb_transfer *transfer)
   }
   // Check if transfer stall
   if(transfer->status & LIBUSB_TRANSFER_STALL){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL on message IN endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->pvMessageInFramesPool.enqueue(frame);
@@ -642,7 +658,7 @@ void mdtUsbPort::messageInTransferCallback(struct libusb_transfer *transfer)
   }
   // Check if transfer failed (not valid if cancelled)
   if(transfer->status & LIBUSB_TRANSFER_ERROR){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR on message IN endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->pvMessageInFramesPool.enqueue(frame);
@@ -651,7 +667,7 @@ void mdtUsbPort::messageInTransferCallback(struct libusb_transfer *transfer)
   }
   // Check transfer overflow
   if(transfer->status & LIBUSB_TRANSFER_OVERFLOW){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW on message IN endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->pvMessageInFramesPool.enqueue(frame);
@@ -660,7 +676,7 @@ void mdtUsbPort::messageInTransferCallback(struct libusb_transfer *transfer)
   }
   // Check transfer short frames NOK
   if(transfer->status & LIBUSB_TRANSFER_SHORT_NOT_OK){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK on message IN endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->pvMessageInFramesPool.enqueue(frame);
@@ -821,15 +837,15 @@ void mdtUsbPort::writeTransferCallback(struct libusb_transfer *transfer)
   }
   // Check if transfer stall
   if(transfer->status & LIBUSB_TRANSFER_STALL){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL on write endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
-    port->addError(UnhandledError);
+    port->addError(UsbWriteStall);
     return;
   }
   // Check if transfer failed (not valid if cancelled)
   if(transfer->status & LIBUSB_TRANSFER_ERROR){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR on write endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->addError(UnhandledError);
@@ -837,7 +853,7 @@ void mdtUsbPort::writeTransferCallback(struct libusb_transfer *transfer)
   }
   // Check transfer overflow
   if(transfer->status & LIBUSB_TRANSFER_OVERFLOW){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW on write endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->addError(UnhandledError);
@@ -845,7 +861,7 @@ void mdtUsbPort::writeTransferCallback(struct libusb_transfer *transfer)
   }
   // Check transfer short frames NOK
   if(transfer->status & LIBUSB_TRANSFER_SHORT_NOT_OK){
-    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK", mdtError::Error);
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK on write endpoint", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     port->addError(UnhandledError);
@@ -893,6 +909,21 @@ mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
   return NoError;
 }
 
+mdtAbstractPort::error_t mdtUsbPort::clearWriteEndpointHalt()
+{
+  int err;
+
+  err = libusb_clear_halt(pvHandle, pvWriteEndpointAddress);
+  if(err != 0){
+    mdtError e(MDT_USB_IO_ERROR, "libusb_clear_halt() failed for write endpoint", mdtError::Error);
+    e.setSystemError(err, errorText(err));
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return mapUsbError(err, pvWriteEndpointAddress);
+  }
+
+  return NoError;
+}
 
 mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
 {

@@ -167,21 +167,21 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    * \return 0 on success.
    * \pre port must be set before call of this method
    */
-  int abortBulkOut(quint8 bTag);
+  ///int abortBulkOut(quint8 bTag);
 
   /*! \brief Send a INITIATE_ABORT_BULK_OUT request thru the control endpoint
    *
    * \see abortBulkOut()
    * \return bTag on success or WriteQueueEmpty on error.
    */
-  int sendInitiateAbortBulkOutRequest(quint8 bTag);
+  ///int sendInitiateAbortBulkOutRequest(quint8 bTag);
 
   /*! \brief Send a CHECK_ABORT_BULK_OUT_STATUS request thru the control endpoint
    *
    * \see abortBulkOut()
    * \return bTag on success or WriteQueueEmpty on error.
    */
-  int sendCheckAbortBulkOutStatusRequest(quint8 bTag);
+  ///int sendCheckAbortBulkOutStatusRequest(quint8 bTag);
 
  public slots:
 

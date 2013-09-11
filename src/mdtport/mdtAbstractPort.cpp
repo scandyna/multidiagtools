@@ -394,6 +394,12 @@ QDebug operator<<(QDebug dbg, mdtAbstractPort::error_t error)
       return dbg.nospace() << "(" << (int)error << ", WritePoolEmpty" << ")";
     case mdtAbstractPort::ErrorHandled:
       return dbg.nospace() << "(" << (int)error << ", ErrorHandled" << ")";
+    case mdtAbstractPort::ReadWriteBusy:
+      return dbg.nospace() << "(" << (int)error << ", ReadWriteBusy" << ")";
+    case mdtAbstractPort::UsbWriteStall:
+      return dbg.nospace() << "(" << (int)error << ", UsbWriteStall" << ")";
+    case mdtAbstractPort::UsbReadStall:
+      return dbg.nospace() << "(" << (int)error << ", UsbReadStall" << ")";
   }
   return dbg.nospace() << "(" << (int)error << ", ???" << ")";
 }

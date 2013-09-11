@@ -266,6 +266,7 @@ int mdtUsbtmcPortManager::sendReadStatusByteRequest()
 }
 
 /// \todo Finish and test
+/**
 int mdtUsbtmcPortManager::abortBulkOut(quint8 bTag)
 {
   Q_ASSERT(pvPort != 0);
@@ -364,7 +365,9 @@ int mdtUsbtmcPortManager::abortBulkOut(quint8 bTag)
   /// \todo Implement clear halt
 
 }
+*/
 
+/**
 int mdtUsbtmcPortManager::sendInitiateAbortBulkOutRequest(quint8 bTag)
 {
   Q_ASSERT(pvPort != 0);
@@ -395,7 +398,9 @@ int mdtUsbtmcPortManager::sendInitiateAbortBulkOutRequest(quint8 bTag)
 
   return bTag;
 }
+*/
 
+/**
 int mdtUsbtmcPortManager::sendCheckAbortBulkOutStatusRequest(quint8 bTag)
 {
   Q_ASSERT(pvPort != 0);
@@ -426,6 +431,7 @@ int mdtUsbtmcPortManager::sendCheckAbortBulkOutStatusRequest(quint8 bTag)
 
   return bTag;
 }
+*/
 
 /// \todo On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error.
 void mdtUsbtmcPortManager::fromThreadNewFrameReaden()

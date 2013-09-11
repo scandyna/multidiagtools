@@ -47,14 +47,20 @@ class mdtPortThread : public QThread
    * \pre port must be a valid pointer
    * \pre The thread must not running
    */
-  void setPort(mdtAbstractPort *port);
+  virtual void setPort(mdtAbstractPort *port);
+
+  /*! \brief Get port instance
+   *
+   * \return Port instance, or a null pointer if it was not set
+   */
+  mdtAbstractPort *port();
 
   /*! \brief Detach the port from thread
    *
    * \param releaseMemory If true, the port object that was set with setPort() will be deleted.
    * \pre The thread must not running
    */
-  void detachPort(bool releaseMemory);
+  virtual void detachPort(bool releaseMemory);
 
   /*! \brief Start the thread
    *
