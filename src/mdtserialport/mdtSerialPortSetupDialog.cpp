@@ -91,7 +91,6 @@ void mdtSerialPortSetupDialog::displayConfig()
     cbPort->setCurrentIndex(index);
   }
   // Get available baud rates. Check if port manager is open first
-  ///if(pvSerialPortManager->isRunning()){ /// \todo isRunning() is Obselete
   if(!pvSerialPortManager->isClosed()){
     pvSerialPortManager->port().lockMutex();
     pvSerialPortConfigWidget->setAvailableBaudRates(pvSerialPortManager->port().availableBaudRates());
@@ -123,13 +122,11 @@ void mdtSerialPortSetupDialog::closePort()
 {
   Q_ASSERT(pvSerialPortManager != 0);
 
-  ///pvSerialPortManager->closePort();
   pvSerialPortManager->stop();
 }
 
 void mdtSerialPortSetupDialog::rescan()
 {
-  ///if(portManager()->isRunning()){ /// \todo isRunning() is Obselete
   if(!portManager()->isClosed()){
     showStatusMessage(tr("Cannot rescan because port is open"), 3000);
     return;
@@ -142,6 +139,19 @@ void mdtSerialPortSetupDialog::rescan()
 void mdtSerialPortSetupDialog::openPort()
 {
   applySetup();
+}
+
+void mdtSerialPortSetupDialog::setStatePortClosed()
+{
+  pbOpen->setEnabled(true);
+  pbClose->setEnabled(false);
+  pbRescan->setEnabled(true);
+  cbPort->setEnabled(true);
+  pvSerialPortConfigWidget->setEnabled(true);
+  pvPortConfigWidget->setEnabled(true);
+  setOkButtonEnabled(true);
+  setApplyButtonEnabled(true);
+  setCancelButtonEnabled(true);
 }
 
 void mdtSerialPortSetupDialog::setStateDisconnected()
@@ -170,6 +180,19 @@ void mdtSerialPortSetupDialog::setStateConnecting()
   setCancelButtonEnabled(false);
 }
 
+void mdtSerialPortSetupDialog::setStatePortReady()
+{
+  pbOpen->setEnabled(false);
+  pbClose->setEnabled(true);
+  pbRescan->setEnabled(false);
+  cbPort->setEnabled(false);
+  pvSerialPortConfigWidget->setEnabled(false);
+  pvPortConfigWidget->setEnabled(false);
+  setOkButtonEnabled(true);
+  setApplyButtonEnabled(true);
+  setCancelButtonEnabled(true);
+}
+
 void mdtSerialPortSetupDialog::setStateReady()
 {
   pbOpen->setEnabled(false);
@@ -196,19 +219,6 @@ void mdtSerialPortSetupDialog::setStateBusy()
   setCancelButtonEnabled(false);
 }
 
-void mdtSerialPortSetupDialog::setStateWarning()
-{
-  pbOpen->setEnabled(false);
-  pbClose->setEnabled(true);
-  pbRescan->setEnabled(false);
-  cbPort->setEnabled(false);
-  pvSerialPortConfigWidget->setEnabled(false);
-  pvPortConfigWidget->setEnabled(false);
-  setOkButtonEnabled(false);
-  setApplyButtonEnabled(false);
-  setCancelButtonEnabled(true);
-}
-
 void mdtSerialPortSetupDialog::setStateError()
 {
   pbOpen->setEnabled(false);
@@ -227,23 +237,15 @@ bool mdtSerialPortSetupDialog::applySetup()
   Q_ASSERT(pvSerialPortManager != 0);
 
   // We must close the port
-  ///pvSerialPortManager->closePort();
   pvSerialPortManager->stop();
   // Apply current configuration
   updateConfig();
   pvSerialPortManager->setPortInfo(pvPortInfoCbHandler.currentPortInfo());
   // Try to open port and start port manager
-  ///if(!pvSerialPortManager->openPort()){
   if(!pvSerialPortManager->start()){
     showStatusMessage(tr("Cannot open port"), 3000);
     return false;
   }
-  /**
-  if(!pvSerialPortManager->start()){
-    showStatusMessage(tr("Cannot start threads"), 3000);
-    return false;
-  }
-  */
 
   return true;
 }

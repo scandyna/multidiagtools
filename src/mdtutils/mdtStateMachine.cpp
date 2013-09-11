@@ -31,7 +31,7 @@ mdtStateMachine::mdtStateMachine(QObject *parent)
   pvTimeoutTimer->setSingleShot(true);
   pvTimeoutOccured = false;
   connect(pvTimeoutTimer, SIGNAL(timeout()), this, SLOT(onWaitTimeout()));
-  pvCurrentState = -1;
+  pvCurrentState = 0;
 }
 
 mdtStateMachine::~mdtStateMachine()
@@ -40,19 +40,22 @@ mdtStateMachine::~mdtStateMachine()
 
 int mdtStateMachine::currentState() const
 {
-  return pvCurrentState;
+  if(pvCurrentState == 0){
+    return -1;
+  }
+  return pvCurrentState->id();
 }
 
 bool mdtStateMachine::waitOnState(int state, int timeout)
 {
   pvTimeoutOccured = false;
-  if(pvCurrentState == state){
+  if(currentState() == state){
     return true;
   }
   if(timeout > 0){
     pvTimeoutTimer->start(timeout);
   }
-  while(pvCurrentState != state){
+  while(currentState() != state){
     if(pvTimeoutOccured){
       return false;
     }
@@ -63,15 +66,24 @@ bool mdtStateMachine::waitOnState(int state, int timeout)
   return true;
 }
 
+void mdtStateMachine::notifyCurrentState()
+{
+  if(pvCurrentState == 0){
+    emit stateChanged(-1);
+  }else{
+    emit stateChanged(pvCurrentState->id());
+    if(pvCurrentState->notifyEnteredToUi()){
+      emit stateChangedForUi(pvCurrentState->id(), pvCurrentState->text(), pvCurrentState->ledColorId(), pvCurrentState->ledIsOn());
+    }
+  }
+}
+
 void mdtStateMachine::onStateEntered(mdtState *state)
 {
   Q_ASSERT(state != 0);
 
-  pvCurrentState = state->id();
-  emit stateChanged(pvCurrentState);
-  if(state->notifyEnteredToUi()){
-    emit stateChangedForUi(pvCurrentState, state->text());
-  }
+  pvCurrentState = state;
+  notifyCurrentState();
 }
 
 void mdtStateMachine::onWaitTimeout()

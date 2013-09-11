@@ -162,27 +162,6 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    */
   int sendReadStatusByteRequest();
 
-  /*! \brief Abort bulk OUT
-   *
-   * \return 0 on success.
-   * \pre port must be set before call of this method
-   */
-  ///int abortBulkOut(quint8 bTag);
-
-  /*! \brief Send a INITIATE_ABORT_BULK_OUT request thru the control endpoint
-   *
-   * \see abortBulkOut()
-   * \return bTag on success or WriteQueueEmpty on error.
-   */
-  ///int sendInitiateAbortBulkOutRequest(quint8 bTag);
-
-  /*! \brief Send a CHECK_ABORT_BULK_OUT_STATUS request thru the control endpoint
-   *
-   * \see abortBulkOut()
-   * \return bTag on success or WriteQueueEmpty on error.
-   */
-  ///int sendCheckAbortBulkOutStatusRequest(quint8 bTag);
-
  public slots:
 
   /*! \brief Called by the thread whenn a frame was readen

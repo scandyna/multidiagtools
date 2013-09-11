@@ -37,19 +37,19 @@ mdtSerialPortCtlWidget::mdtSerialPortCtlWidget(QWidget *parent)
   lbDtr = new QLabel;
   lbRts = new QLabel;
   // Set alignement center
-  lbCar->setAlignment(Qt::AlignHCenter);
-  lbRng->setAlignment(Qt::AlignHCenter);
-  lbDsr->setAlignment(Qt::AlignHCenter);
-  lbCts->setAlignment(Qt::AlignHCenter);
-  lbDtr->setAlignment(Qt::AlignHCenter);
-  lbRts->setAlignment(Qt::AlignHCenter);
+  lbCar->setAlignment(Qt::AlignCenter);
+  lbRng->setAlignment(Qt::AlignCenter);
+  lbDsr->setAlignment(Qt::AlignCenter);
+  lbCts->setAlignment(Qt::AlignCenter);
+  lbDtr->setAlignment(Qt::AlignCenter);
+  lbRts->setAlignment(Qt::AlignCenter);
   // Set text
-  lbCar->setText("CAR");
-  lbRng->setText("RNG");
-  lbDtr->setText("DTR");
-  lbDsr->setText("DSR");
-  lbRts->setText("RTS");
-  lbCts->setText("CTS");
+  lbCar->setText(" CAR");
+  lbRng->setText(" RNG");
+  lbDtr->setText("  DTR");
+  lbDsr->setText(" DSR");
+  lbRts->setText("  RTS");
+  lbCts->setText(" CTS");
   // Create buttons
   pbDtr = new QPushButton;
   pbRts = new QPushButton;
@@ -69,19 +69,19 @@ mdtSerialPortCtlWidget::mdtSerialPortCtlWidget(QWidget *parent)
   l = new QGridLayout;
   // Add labels
   l->addWidget(lbCar, 0, 0);
-  l->addWidget(lbRng, 0, 1);
-  l->addWidget(lbDtr, 0, 2);
-  l->addWidget(lbDsr, 0, 3);
-  l->addWidget(lbRts, 0, 4);
-  l->addWidget(lbCts, 0, 5);
+  l->addWidget(lbRng, 0, 2);
+  l->addWidget(lbDtr, 0, 4);
+  l->addWidget(lbDsr, 0, 6);
+  l->addWidget(lbRts, 0, 8);
+  l->addWidget(lbCts, 0, 10);
   // Add LEDs
-  l->addWidget(ldCar, 1, 0);
-  l->addWidget(ldRng, 1, 1);
-  l->addWidget(ldDsr, 1, 3);
-  l->addWidget(ldCts, 1, 5);
+  l->addWidget(ldCar, 0, 1);
+  l->addWidget(ldRng, 0, 3);
+  l->addWidget(ldDsr, 0, 7);
+  l->addWidget(ldCts, 0, 11);
   // Add buttons
-  l->addWidget(pbDtr, 1, 2);
-  l->addWidget(pbRts, 1, 4);
+  l->addWidget(pbDtr, 0, 5);
+  l->addWidget(pbRts, 0, 9);
 
   setLayout(l);
 

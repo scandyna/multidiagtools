@@ -20,18 +20,17 @@
  ****************************************************************************/
 #include "mdtPortManager.h"
 #include "mdtPortManagerStateMachine.h"
+#include "mdtPortThread.h"
 #include "mdtError.h"
 #include <QTimer>
 #include <QCoreApplication>
 #include <QEventLoop>
 #include <QMutableListIterator>
 
-#include "mdtPortThread.h"
-
 #include <QDebug>
 
 mdtPortManager::mdtPortManager(QObject *parent)
- : QThread(parent)
+ : QObject(parent)
 {
   qRegisterMetaType<mdtPortTransaction>("mdtPortTransaction");
 
@@ -48,7 +47,7 @@ mdtPortManager::mdtPortManager(QObject *parent)
   connect(this, SIGNAL(pmTransactionTimeoutEvent()), this, SLOT(onTransactionTimeoutOccured()));
   // As default, we not keep all incoming frames
   setKeepTransactionsDone(false);
-  // Setup state machine
+  // Setup state machine - Note: signal/slot connections are made by state machine
   pvStateMachine = new mdtPortManagerStateMachine(this);
   pvStateMachine->buildMainStateMachine(this);
 }
@@ -57,17 +56,8 @@ mdtPortManager::~mdtPortManager()
 {
   if(pvPort != 0){
     stop();
-    /**
-    if(isRunning()){
-      stop();
-    }
-    if(pvPort->isOpen()){
-      pvPort->close();
-    }
-    */
   }
   qDeleteAll(pvTransactionsPool);
-  ///delete pvStateMachine;
 }
 
 QList<mdtPortInfo*> mdtPortManager::scan()
@@ -78,7 +68,6 @@ QList<mdtPortInfo*> mdtPortManager::scan()
 void mdtPortManager::setPort(mdtAbstractPort *port)
 {
   Q_ASSERT(port != 0);
-  ///Q_ASSERT(!isRunning());
   Q_ASSERT(isClosed());
 
   pvPort = port;
@@ -113,18 +102,12 @@ void mdtPortManager::detachPort(bool deletePort, bool deleteThreads)
     return;
   }
 
-  ///if(isRunning()){
   if(!isClosed()){
     stop();
   }
   // Detach each thread
   removeThreads(deleteThreads);
   // Detach port
-  /**
-  if(pvPort->isOpen()){
-    pvPort->close();
-  }
-  */
   if(deletePort){
     delete pvPort;
   }
@@ -135,7 +118,6 @@ void mdtPortManager::detachPort(bool deletePort, bool deleteThreads)
 void mdtPortManager::addThread(mdtPortThread *thread)
 {
   Q_ASSERT(pvPort != 0);
-  ///Q_ASSERT(!isRunning());
   Q_ASSERT(isClosed());
   Q_ASSERT(thread != 0);
 
@@ -169,7 +151,6 @@ mdtPortThread *mdtPortManager::writeThread()
 
 void mdtPortManager::removeThreads(bool releaseMemory)
 {
-  ///Q_ASSERT(!isRunning());
   Q_ASSERT(isClosed());
   Q_ASSERT(pvThreadsReady.isEmpty());
 
@@ -518,64 +499,6 @@ QList<QByteArray> mdtPortManager::readenFrames()
   return frames;
 }
 
-int mdtPortManager::adjustedReadTimeout(int requestedTimeout, bool warn) const
-{
-  int minTimeout = config().readTimeout();
-
-  if(minTimeout == -1){ // Case of infinite timeout
-    if(requestedTimeout != -1){
-      if(warn){
-        mdtError e(MDT_PORT_IO_ERROR, "Requested read timeout is to small: " + \
-                    QString::number(requestedTimeout) + " , adjusted to infinite", mdtError::Warning);
-        MDT_ERROR_SET_SRC(e, "mdtPortManager");
-        e.commit();
-      }
-      return minTimeout;
-    }
-  }else{
-    minTimeout += 1000;
-    if(requestedTimeout < minTimeout){
-      if(warn){
-        mdtError e(MDT_PORT_IO_ERROR, "Requested read timeout is to small: " + \
-                    QString::number(requestedTimeout) + " , adjusted to " + QString::number(minTimeout) + " [ms]", mdtError::Warning);
-        MDT_ERROR_SET_SRC(e, "mdtPortManager");
-        e.commit();
-      }
-      return minTimeout;
-    }
-  }
-  return requestedTimeout;
-}
-
-int mdtPortManager::adjustedWriteTimeout(int requestedTimeout, bool warn) const
-{
-  int minTimeout = config().writeTimeout();
-
-  if(minTimeout == -1){ // Case of infinite timeout
-    if(requestedTimeout != -1){
-      if(warn){
-        mdtError e(MDT_PORT_IO_ERROR, "Requested write timeout is to small: " + \
-                    QString::number(requestedTimeout) + " , adjusted to infinite", mdtError::Warning);
-        MDT_ERROR_SET_SRC(e, "mdtPortManager");
-        e.commit();
-      }
-      return minTimeout;
-    }
-  }else{
-    minTimeout += 1000;
-    if(requestedTimeout < minTimeout){
-      if(warn){
-        mdtError e(MDT_PORT_IO_ERROR, "Requested write timeout is to small: " + \
-                    QString::number(requestedTimeout) + " , adjusted to " + QString::number(minTimeout) + " [ms]", mdtError::Warning);
-        MDT_ERROR_SET_SRC(e, "mdtPortManager");
-        e.commit();
-      }
-      return minTimeout;
-    }
-  }
-  return requestedTimeout;
-}
-
 void mdtPortManager::flushIn(bool flushPortManagerBuffers, bool flushPortBuffers)
 {
   Q_ASSERT(pvPort != 0);
@@ -633,6 +556,13 @@ mdtPortManager::state_t mdtPortManager::currentState() const
   return (state_t)pvStateMachine->currentState();
 }
 
+void mdtPortManager::notifyCurrentState()
+{
+  Q_ASSERT(pvStateMachine != 0);
+
+  pvStateMachine->notifyCurrentState();
+}
+
 bool mdtPortManager::isReady() const
 {
   if((currentState() == Ready)||(currentState() == PortReady)){
@@ -659,7 +589,7 @@ bool mdtPortManager::openPort()
   Q_ASSERT(pvPort != 0);
 
   if(pvPort->setup() != mdtAbstractPort::NoError){
-    /// \todo Handle and/or display error
+    /// \todo Handle and/or display error <- Note: no graphical dialog here ! Or.. yes ?
     return false;
   }
   // Initialize flags
@@ -979,7 +909,6 @@ void mdtPortManager::onThreadReady(mdtPortThread *thread)
 {
   Q_ASSERT(thread != 0);
 
-  qDebug() << "Thread ready: " << thread;
   pvThreadsReady.append(thread);
   if(pvThreadsReady.size() == pvThreads.size()){
     emit pmAllThreadsReadyEvent();
@@ -991,7 +920,6 @@ void mdtPortManager::onThreadStopped(mdtPortThread *thread)
   Q_ASSERT(thread != 0);
   Q_ASSERT(pvThreadsReady.contains(thread));
 
-  qDebug() << "Thread finished: " << thread;
   pvThreadsReady.removeOne(thread);
   if(pvThreadsReady.isEmpty()){
     emit pmAllThreadsStoppedEvent();
@@ -1002,7 +930,6 @@ void mdtPortManager::startThreads()
 {
   int i;
 
-  qDebug() << "request start threads ...";
   for(i=0; i<pvThreads.size(); i++){
     pvThreads.at(i)->start();
   }
@@ -1012,7 +939,6 @@ void mdtPortManager::stopThreads()
 {
   int i;
 
-  qDebug() << "request stop threads ...";
   if(pvPortMutexLocked){
     unlockPortMutex();
   }

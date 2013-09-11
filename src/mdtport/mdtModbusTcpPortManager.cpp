@@ -27,13 +27,14 @@
 #include "mdtFrameCodecModbus.h"
 #include "mdtApplication.h"
 #include <QString>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QTcpSocket>
 #include <QHashIterator>
 #include <QNetworkAddressEntry>
 #include <QHostAddress>
 #include <QDir>
 #include <QFile>
+#include <QTimer>
 
 #include <QDebug>
 
@@ -221,23 +222,34 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   Q_ASSERT(isClosed());
 
   QTcpSocket socket;
-  int maxIter;
+  ///int maxIter;
   bool ok = false;
+  QTimer timeoutTimer;
 
+  timeoutTimer.setSingleShot(true);
+  connect(&timeoutTimer, SIGNAL(timeout()), this, SLOT(abortScan()));
   emit(statusMessageChanged(tr("Trying host ") + hostName + "  , port " + QString::number(port), "", 500));
   socket.connectToHost(hostName, port);
-  maxIter = timeout / 50;
+  ///maxIter = timeout / 50;
+  timeoutTimer.start(timeout);
   while(socket.state() != QAbstractSocket::ConnectedState){
     if(pvAbortScan){
+      timeoutTimer.stop();
       return false;
     }
+    /**
     if(maxIter <= 0){
       break;
     }
+    */
+    /**
     qApp->processEvents();
     msleep(50);
     maxIter--;
+    */
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
   }
+  timeoutTimer.stop();
   if(socket.state() != QAbstractSocket::UnconnectedState){
     // Check if connection was successfull
     if(socket.state() == QAbstractSocket::ConnectedState){
@@ -246,8 +258,11 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
     // Disconnect
     socket.abort();
     while((socket.state() != QAbstractSocket::ClosingState)&&(socket.state() != QAbstractSocket::UnconnectedState)){
+      /**
       qApp->processEvents();
       msleep(50);
+      */
+      QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
     }
   }
 

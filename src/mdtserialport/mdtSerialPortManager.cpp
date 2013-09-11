@@ -55,7 +55,7 @@ mdtSerialPortManager::~mdtSerialPortManager()
 
 QList<mdtPortInfo*> mdtSerialPortManager::scan()
 {
-  Q_ASSERT(!isRunning());
+  Q_ASSERT(isClosed());
 
   mdtSerialPort *port;
   QStringList portNames;

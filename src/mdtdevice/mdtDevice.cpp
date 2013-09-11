@@ -994,7 +994,7 @@ bool mdtDevice::waitTransactionDone(int id)
 
 void mdtDevice::setStateFromPortManager(int portManagerState)
 {
-  switch(portManagerState){
+  switch((mdtPortManager::state_t)portManagerState){
     case mdtPortManager::Disconnected:
       setStateDisconnected();
       break;
@@ -1002,21 +1002,20 @@ void mdtDevice::setStateFromPortManager(int portManagerState)
       setStateConnecting();
       break;
     case mdtPortManager::Ready:
-      QTimer::singleShot(50, this, SLOT(setStateReady()));
+      QTimer::singleShot(50, this, SLOT(setStateReady()));  /// \todo ?????
 ///      setStateReady();
       break;
     case mdtPortManager::Busy:
       setStateBusy();
       break;
-    case mdtPortManager::Warning:
-      setStateWarning();
-      break;
-    case mdtPortManager::Error:
+    case mdtPortManager::PortError:
       setStateError();
       break;
+      /**
     default:
       setStateError();
       emit(statusMessageChanged(tr("Received a unknown state"), "", 0));
+      */
   }
 }
 
@@ -1118,6 +1117,7 @@ void mdtDevice::setStateBusy()
   }
 }
 
+/**
 void mdtDevice::setStateWarning()
 {
   if(pvCurrentState == mdtPortManager::Warning){
@@ -1140,10 +1140,11 @@ void mdtDevice::setStateWarning()
   qDebug() << "mdtDevice: new state is Warning";
   emit(stateChanged(pvCurrentState));
 }
+*/
 
 void mdtDevice::setStateError()
 {
-  if(pvCurrentState == mdtPortManager::Error){
+  if(pvCurrentState == mdtPortManager::PortError){
     return;
   }
   // Stop auto queries if running
@@ -1159,7 +1160,7 @@ void mdtDevice::setStateError()
     pvIos->setDigitalOutputsValue(mdtValue());
     pvIos->setDigitalOutputsEnabled(false);
   }
-  pvCurrentState = mdtPortManager::Error;
+  pvCurrentState = mdtPortManager::PortError;
   // Add a error
   mdtError e(MDT_DEVICE_ERROR, "Device " + name() + " goes to error state", mdtError::Error);
   MDT_ERROR_SET_SRC(e, "mdtDevice");

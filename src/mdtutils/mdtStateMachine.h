@@ -72,6 +72,16 @@ class mdtStateMachine : public QStateMachine
    */
   bool waitOnState(int state, int timeout = -1);
 
+  /*! \brief Notify current state
+   *
+   * Will emit stateChanged() and stateChangedForUi() (if required by state).
+   *
+   * In normal way, signals are emitted when state changes.
+   *  In some situation, it can be usefull to call this method explicitly
+   *  (see mdtPortManager::notifyCurrentState() for a example).
+   */
+  void notifyCurrentState();
+
  signals:
 
   /*! \brief Emitted each time the state changed
@@ -82,7 +92,7 @@ class mdtStateMachine : public QStateMachine
    *
    * \sa mdtState::notifyEnteredToUi()
    */
-  void stateChangedForUi(int id, const QString & text);
+  void stateChangedForUi(int id, const QString & text, int ledColorId, bool ledIsOn);
 
  private slots:
 
@@ -99,7 +109,7 @@ class mdtStateMachine : public QStateMachine
   Q_DISABLE_COPY(mdtStateMachine);
 
   QTimer *pvTimeoutTimer;
-  int pvCurrentState;
+  mdtState *pvCurrentState;
   bool pvTimeoutOccured;
 };
 

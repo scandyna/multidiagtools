@@ -30,8 +30,6 @@
 #include <QFormLayout>
 #include <QVariant>
 
-//#include <QDebug>
-
 mdtUsbtmcPortSetupDialog::mdtUsbtmcPortSetupDialog(QWidget *parent)
  : mdtAbstractPortSetupDialog(parent)
 {
@@ -81,7 +79,7 @@ mdtUsbtmcPortSetupDialog::~mdtUsbtmcPortSetupDialog()
 void mdtUsbtmcPortSetupDialog::displayConfig()
 {
   // Rescan
-  if(!portManager()->isRunning()){
+  if(portManager()->isClosed()){
     rescan();
   }
 }
@@ -92,7 +90,6 @@ void mdtUsbtmcPortSetupDialog::updateConfig()
 
 void mdtUsbtmcPortSetupDialog::closePort()
 {
-  ///portManager()->closePort();
   portManager()->stop();
 }
 
@@ -101,7 +98,7 @@ void mdtUsbtmcPortSetupDialog::rescan()
   int index;
   QVariant var;
 
-  if(portManager()->isRunning()){
+  if(!portManager()->isClosed()){
     showStatusMessage(tr("Cannot rescan because port is open"), 3000);
     return;
   }
@@ -124,6 +121,18 @@ void mdtUsbtmcPortSetupDialog::openPort()
 void mdtUsbtmcPortSetupDialog::portManagerSet()
 {
   displayConfig();
+}
+
+void mdtUsbtmcPortSetupDialog::setStatePortClosed()
+{
+  pbOpen->setEnabled(true);
+  pbClose->setEnabled(false);
+  pbRescan->setEnabled(true);
+  cbPort->setEnabled(true);
+  cbInterface->setEnabled(true);
+  setOkButtonEnabled(true);
+  setApplyButtonEnabled(true);
+  setCancelButtonEnabled(true);
 }
 
 void mdtUsbtmcPortSetupDialog::setStateDisconnected()
@@ -150,6 +159,18 @@ void mdtUsbtmcPortSetupDialog::setStateConnecting()
   setCancelButtonEnabled(false);
 }
 
+void mdtUsbtmcPortSetupDialog::setStatePortReady()
+{
+  pbOpen->setEnabled(false);
+  pbClose->setEnabled(true);
+  pbRescan->setEnabled(false);
+  cbPort->setEnabled(false);
+  cbInterface->setEnabled(false);
+  setOkButtonEnabled(true);
+  setApplyButtonEnabled(true);
+  setCancelButtonEnabled(true);
+}
+
 void mdtUsbtmcPortSetupDialog::setStateReady()
 {
   pbOpen->setEnabled(false);
@@ -174,18 +195,6 @@ void mdtUsbtmcPortSetupDialog::setStateBusy()
   setCancelButtonEnabled(false);
 }
 
-void mdtUsbtmcPortSetupDialog::setStateWarning()
-{
-  pbOpen->setEnabled(false);
-  pbClose->setEnabled(true);
-  pbRescan->setEnabled(false);
-  cbPort->setEnabled(false);
-  cbInterface->setEnabled(false);
-  setOkButtonEnabled(false);
-  setApplyButtonEnabled(false);
-  setCancelButtonEnabled(true);
-}
-
 void mdtUsbtmcPortSetupDialog::setStateError()
 {
   pbOpen->setEnabled(false);
@@ -204,9 +213,11 @@ bool mdtUsbtmcPortSetupDialog::applySetup()
   QString idn;
   QStringList idnItems;
 
-  /// \todo Check if current port info is empty before
+  if(pvPortInfoCbHandler.currentPortInfo().portName().isEmpty()){
+    showStatusMessage(tr("Please choose a device in list"), 3000);
+    return false;
+  }
   // We must close the port
-  ///portManager()->closePort();
   portManager()->stop();
   // Apply current configuration
   updateConfig();
@@ -216,16 +227,6 @@ bool mdtUsbtmcPortSetupDialog::applySetup()
     showStatusMessage(tr("Cannot open port"), 3000);
     return false;
   }
-  /**
-  if(!portManager()->openPort()){
-    showStatusMessage(tr("Cannot open port"), 3000);
-    return false;
-  }
-  if(!portManager()->start()){
-    showStatusMessage(tr("Cannot start thread"), 3000);
-    return false;
-  }
-  */
   // Get identification
   usbtmcPortManager = dynamic_cast<mdtUsbtmcPortManager*>(portManager());
   Q_ASSERT(usbtmcPortManager != 0);

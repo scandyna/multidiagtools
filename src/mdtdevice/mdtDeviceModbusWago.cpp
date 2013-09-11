@@ -51,7 +51,7 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
   int i;
 
   // Check that port manager is not running
-  if(pvTcpPortManager->isRunning()){
+  if(!pvTcpPortManager->isClosed()){
     qDebug() << "mdtDeviceModbusWago::connectToDevice() : stopping ...";
     pvTcpPortManager->stop();
   }
@@ -125,7 +125,7 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPor
   int i;
 
   // Check that port manager is not running
-  if(pvTcpPortManager->isRunning()){
+  if(!pvTcpPortManager->isClosed()){
     qDebug() << "mdtDeviceModbusWago::connectToDevice() : stopping ...";
     pvTcpPortManager->stop();
   }

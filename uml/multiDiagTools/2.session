@@ -1,12 +1,10 @@
-window_sizes 1280 1001 273 1001 923 0
+window_sizes 1280 1001 214 1060 923 0
 diagrams
-  active  statediagram_ref 792578 // mdtPortManagerStateMachine
-    1001 923 100 17 96 127
-  statediagram_ref 812802 // Running
-    800 738 100 4 0 0
+  active  classdiagram_ref 294658 // mdtPortManager
+    1060 923 100 4 0 0
 end
 show_stereotypes
-selected statediagram_ref 792578 // mdtPortManagerStateMachine
+selected classdiagram_ref 294658 // mdtPortManager
 open
   state_ref 191746 // Connected
 end

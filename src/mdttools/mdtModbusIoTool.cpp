@@ -49,6 +49,8 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   // Make connections
   connect(pvDeviceModbusWago, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
   connect(pvDeviceModbusWago, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
+  Q_ASSERT(pvDeviceModbusWago->portManager() != 0);
+  connect(pvDeviceModbusWago->portManager(), SIGNAL(stateChangedForUi(int, const QString&, int, bool)), pvStatusWidget, SLOT(setState(int, const QString&, int, bool)));
 
   // Set some flags
   pvReady = false;
@@ -107,8 +109,8 @@ void mdtModbusIoTool::retranslate()
 
 void mdtModbusIoTool::setState(int state)
 {
-  pvStatusWidget->setState(state);
-  switch(state){
+  ///pvStatusWidget->setState(state);
+  switch((mdtPortManager::state_t)state){
     case mdtPortManager::Disconnected:
       setStateDisconnected();
       break;
@@ -121,15 +123,9 @@ void mdtModbusIoTool::setState(int state)
     case mdtPortManager::Busy:
       setStateBusy();
       break;
-    case mdtPortManager::Warning:
-      setStateWarning();
-      break;
-    case mdtPortManager::Error:
+    case mdtPortManager::PortError:
       setStateError();
       break;
-    default:
-      setStateError();
-      showStatusMessage(tr("Received a unknown state"));
   }
 }
 
@@ -139,7 +135,7 @@ void mdtModbusIoTool::setup()
   d.setPortManager(pvDeviceModbusWago->portManager());
   d.exec();
   // If portManager is running, we can try to detect I/Os
-  if(pvDeviceModbusWago->portManager()->isRunning()){
+  if(pvDeviceModbusWago->portManager()->isReady()){
     if(!pvDeviceModbusWago->isWago750()){
       showStatusMessage(tr("Device is not a Wago 750 Fieldbus"), tr("I/O detetcion currently only works with Wago 750 fielbus coupler"));
       ///pvDeviceModbusWago->portManager()->closePort();
@@ -166,7 +162,7 @@ void mdtModbusIoTool::connectToNode()
   mdtModbusTcpPortManager *m = pvDeviceModbusWago->modbusTcpPortManager();
   Q_ASSERT(m != 0);
 
-  if(m->isRunning()){
+  if(!m->isClosed()){
     showStatusMessage(tr("Please disconnect before reconnect"), 3000);
     return;
   }
@@ -202,7 +198,8 @@ void mdtModbusIoTool::connectToNode()
   showStatusMessage(tr("I/O detection ..."));
   if(!pvDeviceModbusWago->detectIos(pvDeviceIos)){
     showStatusMessage(tr("I/O detection failed"));
-    setStateWarning();
+    ///setStateWarning();
+    setStateError();
     ///pvDeviceModbusWago->portManager()->closePort();
     ///pbAbortScan->setEnabled(false);
     ///pbConnect->setEnabled(true);
@@ -269,6 +266,7 @@ void mdtModbusIoTool::setStateBusy()
   sbHwNodeId->setEnabled(false);
 }
 
+/**
 void mdtModbusIoTool::setStateWarning()
 {
   pbDisconnect->setEnabled(true);
@@ -276,6 +274,7 @@ void mdtModbusIoTool::setStateWarning()
   pbConnect->setEnabled(false);
   sbHwNodeId->setEnabled(false);
 }
+*/
 
 void mdtModbusIoTool::setStateError()
 {

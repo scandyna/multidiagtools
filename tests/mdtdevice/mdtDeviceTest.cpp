@@ -778,8 +778,8 @@ void mdtDeviceTest::U3606ATest()
   d.setIos(&ios, true);
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
-  dw.statusWidget()->setStateBusyText("Query running ...");
-  dw.statusWidget()->setStateBusyColor(mdtLed::Green);
+  ///dw.statusWidget()->setStateBusyText("Query running ...");
+  ///dw.statusWidget()->setStateBusyColor(mdtLed::Green);
   QVERIFY(d.portManager()->writeThread() != 0);
   QVERIFY(d.portManager()->readThread() != 0);
   dw.statusWidget()->enableTxRxLeds(d.portManager()->writeThread(), d.portManager()->readThread());

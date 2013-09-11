@@ -232,19 +232,17 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadWriteErrors(mdtAbs
 mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtPortThreadHelperPort &threadHelper, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags)
 {
   Q_ASSERT(waitAnAnswer != 0);
-  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(usbPort() != 0);
 
   qint64 written;
   mdtAbstractPort::error_t portError;
-  mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
-  Q_ASSERT(port != 0);
 
   // Check if we have something to write
   if(threadHelper.currentWriteFrame() == 0){
-    if(port->writeFrames().size() < 1){
+    if(usbPort()->writeFrames().size() < 1){
       return mdtAbstractPort::NoError;
     }
-    threadHelper.setCurrentWriteFrame(pvPort->writeFrames().dequeue());
+    threadHelper.setCurrentWriteFrame(usbPort()->writeFrames().dequeue());
   }
   Q_ASSERT(threadHelper.currentWriteFrame() != 0);
   emit(writeProcessBegin());
@@ -268,15 +266,15 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtPortThreadHelperPor
     // Restore frame to pool
     threadHelper.restoreCurrentWriteFrameToPool();
     // Check if a new frame is to write
-    if(port->writeFrames().size() > 0){
-      threadHelper.setCurrentWriteFrame(port->writeFrames().dequeue());
+    if(usbPort()->writeFrames().size() > 0){
+      threadHelper.setCurrentWriteFrame(usbPort()->writeFrames().dequeue());
       Q_ASSERT(threadHelper.currentWriteFrame() != 0);
     }
   }
   // Here, if frame is not Null, we have to init a new transfer
   if(threadHelper.currentWriteFrame() != 0){
     // Init a new write transfer (will only init if not pending)
-    portError = port->initWriteTransfer(threadHelper.currentWriteFrame()->data(), threadHelper.currentWriteFrame()->size());
+    portError = usbPort()->initWriteTransfer(threadHelper.currentWriteFrame()->data(), threadHelper.currentWriteFrame()->size());
     if(portError != mdtAbstractPort::NoError){
       // Check about stoping
       if(!pvRunning){
@@ -1010,17 +1008,17 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::sendInitiateAbortBulkInRequest(qui
 
 mdtAbstractPort::error_t mdtUsbtmcPortThread::sendCheckAbortBulkInStatusRequest(quint8 bTag, mdtFrameUsbControl *ctlFrame)
 {
-  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(usbPort() != 0);
   Q_ASSERT(ctlFrame != 0);
 
   mdtAbstractPort::error_t portError;
   QList<mdtAbstractPort::error_t> errors;
-  mdtUsbPort *port;
+  ///mdtUsbPort *port;
   int i;
 
   // We need a mdtUsbPort object
-  port = dynamic_cast<mdtUsbPort*>(pvPort);
-  Q_ASSERT(port != 0);
+  ///port = dynamic_cast<mdtUsbPort*>(pvPort);
+  ///Q_ASSERT(port != 0);
 
   // Setup frame
   ctlFrame->setDirectionDeviceToHost(true);
@@ -1028,22 +1026,22 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::sendCheckAbortBulkInStatusRequest(
   ctlFrame->setRequestRecipient(mdtFrameUsbControl::RR_ENDPOINT);
   ctlFrame->setbRequest(4);   // CHECK_ABORT_BULK_IN_STATUS
   ctlFrame->setwValue(0);
-  ctlFrame->setwIndex(port->currentReadEndpointAddress());
+  ctlFrame->setwIndex(usbPort()->currentReadEndpointAddress());
   ctlFrame->setwLength(0x08);
   ctlFrame->encode();
   // Submit the control request and wait until transfer is done
-  port->addControlRequest(ctlFrame);
-  while(port->controlResponseFrames().size() < 1){
+  usbPort()->addControlRequest(ctlFrame);
+  while(usbPort()->controlResponseFrames().size() < 1){
     // Check about stoping
     if(!pvRunning){
       return mdtAbstractPort::NoError;
     }
-    portError = port->handleUsbEvents();
+    portError = usbPort()->handleUsbEvents();
     if(portError != mdtAbstractPort::NoError){
       return portError;
     }
     // Check if transfer callback reported a error
-    errors = port->lastErrors();
+    errors = usbPort()->lastErrors();
     for(i=0; i<errors.size(); i++){
       portError = errors.at(i);
       if(portError != mdtAbstractPort::NoError){
@@ -1077,7 +1075,8 @@ void mdtUsbtmcPortThread::run()
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
   // We need a mdtUsbPort object here
-  port = dynamic_cast<mdtUsbPort*> (pvPort);
+  ///port = dynamic_cast<mdtUsbPort*> (pvPort);
+  port = usbPort();
   Q_ASSERT(port != 0);
   threadHelper.setPort(pvPort);
   threadHelper.setThread(this);

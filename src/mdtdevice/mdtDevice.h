@@ -839,7 +839,7 @@ class mdtDevice : public QObject
    *
    * Emit stateChanged() if current state was not Warning.
    */
-  void setStateWarning();
+  ///void setStateWarning();
 
   /*! \brief Set the error state
    *

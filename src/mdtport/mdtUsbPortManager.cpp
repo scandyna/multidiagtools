@@ -180,14 +180,24 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
 
 bool mdtUsbPortManager::start()
 {
+  Q_ASSERT(pvPort != 0);
+
   mdtUsbPortThread *portThread;
+
+  mdtUsbPort *port;
 
   if(pvThreads.size() < 1){
     portThread = new mdtUsbPortThread;
     connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
     ///connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
     ///connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(fromThreadReadUntilShortPacketReceivedFinished()));
+    // addThread() will set only mdtAbstractPort pointer
     addThread(portThread);
+    // We need a mdtUsbPort object
+    port = dynamic_cast<mdtUsbPort*>(pvPort);
+    Q_ASSERT(port != 0);
+    portThread->setPort(port);
+    Q_ASSERT(portThread->usbPort() != 0);
   }
 
   return mdtPortManager::start();

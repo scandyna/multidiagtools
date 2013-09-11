@@ -51,7 +51,8 @@ void mdtAbstractPortSetupDialog::setPortManager(mdtPortManager *portManager)
 
   pvPortManager = portManager;
   connect(pvPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
-  setStateFromPortManager((int)pvPortManager->currentState());
+  connect(pvPortManager, SIGNAL(stateChangedForUi(int, const QString&, int, bool)), pvStatusWidget, SLOT(setState(int, const QString&, int, bool)));
+  pvPortManager->notifyCurrentState();
   portManagerSet();
 }
 
@@ -134,13 +135,18 @@ void mdtAbstractPortSetupDialog::showStatusMessage(const QString &message, const
 
 void mdtAbstractPortSetupDialog::setStateFromPortManager(int state)
 {
-  pvStatusWidget->setState(state);
-  switch(state){
+  switch((mdtPortManager::state_t)state){
+    case mdtPortManager::PortClosed:
+      setStatePortClosed();
+      break;
     case mdtPortManager::Disconnected:
       setStateDisconnected();
       break;
     case mdtPortManager::Connecting:
       setStateConnecting();
+      break;
+    case mdtPortManager::PortReady:
+      setStatePortReady();
       break;
     case mdtPortManager::Ready:
       setStateReady();
@@ -148,29 +154,35 @@ void mdtAbstractPortSetupDialog::setStateFromPortManager(int state)
     case mdtPortManager::Busy:
       setStateBusy();
       break;
-    case mdtPortManager::Warning:
-      setStateWarning();
-      break;
-    case mdtPortManager::Error:
+    case mdtPortManager::PortError:
       setStateError();
       break;
-    default:
-      setStateError();
-      showStatusMessage(tr("Received a unknown state"));
+    case mdtPortManager::Starting:
+    case mdtPortManager::Running:
+    case mdtPortManager::Stopped:
+    case mdtPortManager::Stopping:
+    case mdtPortManager::Connected:
+      break;
   }
 }
 
 void mdtAbstractPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
 {
   Q_ASSERT(button != 0);
+  Q_ASSERT(pvPortManager != 0);
 
   QDialogButtonBox::StandardButton type;
 
   type = buttonBox->standardButton(button);
   switch(type){
     case QDialogButtonBox::Ok:
-      if(applySetup()){
+      // If port manager is ready, setup was allready applied, or nothing was changed
+      if(portManager()->isReady()){
         close();
+      }else{
+        if(applySetup()){
+          close();
+        }
       }
       break;
     case QDialogButtonBox::Apply:

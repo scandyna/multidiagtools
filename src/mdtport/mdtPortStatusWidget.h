@@ -24,7 +24,6 @@
 #include <QWidget>
 #include <QString>
 #include <QGridLayout>
-///#include "mdtDevice.h"
 #include "mdtBlinkLed.h"
 #include "mdtPortThread.h"
 
@@ -33,7 +32,13 @@ class QPushButton;
 class QTimer;
 class QMessageBox;
 
-/*! \brief
+/*! \brief Helper class to display port/device state and messages
+ *
+ * This widget contains 4 parts:
+ *  - A push button that opens a message box with details
+ *  - A status region with a LED and a text area
+ *  - A custom widget place holder
+ *  - A fixed text area (typically usefull to display wich port is open, f.ex.)
  */
 class mdtPortStatusWidget : public QWidget
 {
@@ -45,6 +50,8 @@ class mdtPortStatusWidget : public QWidget
    */
   mdtPortStatusWidget(QWidget *parent = 0);
 
+  /*! \brief Destructor
+   */
   ~mdtPortStatusWidget();
 
   /*! \brief Enable the TX/RX LEDs
@@ -69,51 +76,19 @@ class mdtPortStatusWidget : public QWidget
    */
   void removeCustomWidget();
 
-  /*! \brief Set default state texts
+  /*! \brief Set the permanent text
+   *
+   * Note: permanent text is allways visible
    */
-  void setDefaultStateTexts();
-
-  /*! \brief Set text for ready state
-   */
-  void setStateReadyText(const QString &text);
-
-  /*! \brief Set text for disconnected state
-   */
-  void setStateDisconnectedText(const QString &text);
-
-  /*! \brief Set text for connecting state
-   */
-  void setStateConnectingText(const QString &text);
-
-  /*! \brief Set text for busy state
-   */
-  void setStateBusyText(const QString &text);
-
-  /*! \brief Set default state colors
-   */
-  void setDefaultStateColors();
-
-  /*! \brief Set color for ready state
-   */
-  void setStateReadyColor(mdtLed::color_t color);
-
-  /*! \brief Set color for connecting state
-   */
-  void setStateConnectingColor(mdtLed::color_t color);
-
-  /*! \brief Set color for busy state
-   */
-  void setStateBusyColor(mdtLed::color_t color);
+  void setPermanentText(const QString &text);
 
  public slots:
 
   /*! \brief Set state
    *
    * States are defined in mdtPortManager
-   *
-   * \param state A state as define in mdeDevice
    */
-  void setState(int state);
+  void setState(int id, const QString & text, int ledColorId, bool ledIsOn);
 
   /*! \brief Used to show a message and details
    *
@@ -153,22 +128,15 @@ class mdtPortStatusWidget : public QWidget
   QPushButton *pbDetails;
   QMessageBox *mbDetails;
   QLabel *lbMessage;
+  QLabel *lbPermanentTextLabel;
   QLabel *lbTx;
   QLabel *lbRx;
   mdtBlinkLed *ldTx;
   mdtBlinkLed *ldRx;
-  // Status texts
-  QString pvReadyText;
-  QString pvDisconnectedText;
-  QString pvConnectingText;
-  QString pvBusyText;
+  // Status text
   QString pvCurrentStateText;
   QTimer *pvBackToStateTextTimer;
   bool pvShowingMessage;  // Set by showMessage()
-  // Status colors
-  mdtLed::color_t pvReadyColor;
-  mdtLed::color_t pvConnectingColor;
-  mdtLed::color_t pvBusyColor;
   // Used by disableTxRxLeds()
   mdtPortThread *pvTxThread;
   mdtPortThread *pvRxThread;

@@ -21,6 +21,7 @@
 #ifndef MDT_USBTMC_PORT_SETUP_DIALOG_H
 #define MDT_USBTMC_PORT_SETUP_DIALOG_H
 
+#include "mdtAbstractPortSetupDialog.h"
 #include "mdtPortConfigWidget.h"
 #include "mdtPortInfoCbHandler.h"
 #include "mdtPortInfo.h"
@@ -28,8 +29,6 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
-
-#include "mdtAbstractPortSetupDialog.h"
 
 class mdtUsbtmcPortManager;
 class QWidget;
@@ -67,6 +66,10 @@ class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
    */
   void portManagerSet();
 
+  /*! \brief Set the PortClosed state
+   */
+  void setStatePortClosed();
+
   /*! \brief Set the Disconnected state
    */
   void setStateDisconnected();
@@ -74,6 +77,10 @@ class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
   /*! \brief Set the Connecting state
    */
   void setStateConnecting();
+
+  /*! \brief Set the PortReady state
+   */
+  void setStatePortReady();
 
   /*! \brief Set the Ready state
    */
@@ -83,10 +90,6 @@ class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
    */
   void setStateBusy();
 
-  /*! \brief Set the Warning state
-   */
-  void setStateWarning();
-
   /*! \brief Set the Error state
    */
   void setStateError();
@@ -95,7 +98,6 @@ class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
    */
   bool applySetup();
 
-  ///mdtPortConfigWidget *pvPortConfigWidget;
   mdtPortInfoCbHandler pvPortInfoCbHandler;
   mdtPortInfo pvCurrentPortInfo;
   QPushButton *pbOpen;

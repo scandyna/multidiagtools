@@ -24,7 +24,6 @@
 #include <QString>
 #include <QStringList>
 #include <QObject>
-#include <QThread>
 #include "mdtAbstractPort.h"
 #include "mdtPortInfo.h"
 #include "mdtPortConfig.h"
@@ -195,7 +194,7 @@ class QTimer;
  *  restored directly, but only once data was readen with readenFrame() or readenFrames().
  *  To handle this, commitFrames() will use mdtPortTransaction::isQueryReplyMode().
  */
-class mdtPortManager : public QThread
+class mdtPortManager : public QObject
 {
  Q_OBJECT
 
@@ -218,9 +217,7 @@ class mdtPortManager : public QThread
                 Connecting,       /*!< Trying to connect to device */
                 Connected ,       /*!< Global state (sub machine) */
                 Ready ,           /*!< Port is ready and connection to device was made. Communication is possible */
-                Busy ,            /*!< Port is up and device is connected but cannot accept requests for the moment */
-                Warning,          /*!< \todo Obselete ! - Device or port communication handled error occured */
-                Error             /*!< \todo Obselete ! - Device or port communication unhandled error occured */
+                Busy              /*!< Port is up and device is connected but cannot accept requests for the moment */
                };
 
   /*! \brief Contruct a port manager
@@ -523,40 +520,6 @@ class mdtPortManager : public QThread
    */
   QList<QByteArray> readenFrames();
 
-  /*! \brief Adjust a requested timeout to minimal timeout
-   *
-   * \todo Obselete
-   *
-   * We have 2 different timeouts:
-   *  - Port timeout: If data are expected on the port, and nothing comes in,
-   *     a port timeout occurs.
-   *  - Response (or complete frame) timeout: Timeout to receive a complete frame
-   *
-   * For example, we expect a complete frame of, say, 200 Bytes.
-   *  The device will send , f.ex. , 20 x 10 Bytes.
-   *  During the read process, a port timeout can occur (device busy, or something else).
-   *  If read process works fine, all data can be readen in a time less than port timeout.
-   *
-   * \param requestedTimeout Requested timeout [ms]
-   * \param warn If true, a warning will be logged if requested timeout is to small.
-   * \return Requested timeout or port's timeout + offset (offset is currently hardcoded: 1000 [ms])
-   * \pre Port must be set with setPort() and contain a valid configuration.
-   */
-  int adjustedReadTimeout(int requestedTimeout, bool warn = true) const;
-
-  /*! \brief Adjust a requested timeout to minimal timeout
-   *
-   * \todo Obselete
-   *
-   * See adjustedReadTimeout() for details.
-   *
-   * \param requestedTimeout Requested timeout [ms]
-   * \param warn If true, a warning will be logged if requested timeout is to small.
-   * \return Requested timeout or port's timeout + offset (offset is currently hardcoded: 1000 [ms])
-   * \pre Port must be set with setPort() and contain a valid configuration.
-   */
-  int adjustedWriteTimeout(int requestedTimeout, bool warn = true) const;
-
   /*! \brief Flush input buffers
    *
    * \param flushPortManagerBuffers If true, port manager buffers (transactions done and pending) will be cleared.
@@ -609,6 +572,16 @@ class mdtPortManager : public QThread
    */
   state_t currentState() const;
 
+  /*! \brief Notify the current state
+   *
+   * Will force to emit stateChanged() and stateChangedForUi() .
+   *
+   * Can be usefull during application setup, because some
+   *  initial states (like PortClosed) are directly notified,
+   *  probably before signals are connected to application slots.
+   */
+  void notifyCurrentState();
+
   /*! \brief Check if port manager is ready
    *
    * Internally, the currentState is used to check if port manager is ready.
@@ -649,7 +622,7 @@ class mdtPortManager : public QThread
    *
    * The error is one of the mdtAbstractPort::error_t.
    */
-  void errorStateChanged(int error, const QString & message = QString(), const QString & details = QString());
+  ///void errorStateChanged(int error, const QString & message = QString(), const QString & details = QString());
 
   /*! \brief Emitted when a new status message is to display
    *
@@ -657,10 +630,15 @@ class mdtPortManager : public QThread
    */
   void statusMessageChanged(const QString &message, const QString &details, int timeout);
 
-  /*! \brief Emitted when state has changed
-   * \todo Obselete ?
+  /*! \brief Emitted each time the state changed
    */
-  void stateChanged(int newState);
+  void stateChanged(int stateId);
+
+  /*! \brief Emitted only if a state that must be notified is entered
+   *
+   * \sa mdtStateMachine
+   */
+  void stateChangedForUi(int stateId, const QString & stateText, int ledColorId, bool ledIsOn);
 
   /*! \brief Sent when port was closed
    *

@@ -117,7 +117,7 @@ void mdtModbusTcpPortSetupDialog::displayConfig()
     displayHostPort(index);
   }
   // If port manager is running, we can try to get device informations
-  if(portManager()->isRunning()){
+  if(portManager()->isReady()){
     getDeviceInformations();
     getHardwareNodeAddress();
   }
@@ -162,7 +162,7 @@ void mdtModbusTcpPortSetupDialog::rescan()
 {
   Q_ASSERT(pvModbusTcpPortManager != 0);
 
-  if(pvModbusTcpPortManager->isRunning()){
+  if(!pvModbusTcpPortManager->isClosed()){
     showStatusMessage(tr("Cannot rescan because port is open"), 3000);
     return;
   }
@@ -206,6 +206,19 @@ void mdtModbusTcpPortSetupDialog::portManagerSet()
   connect(pbAbort, SIGNAL(clicked()), pvModbusTcpPortManager, SLOT(abortScan()));
 }
 
+void mdtModbusTcpPortSetupDialog::setStatePortClosed()
+{
+  pbConnect->setEnabled(true);
+  pbDisconnect->setEnabled(false);
+  pbRescan->setEnabled(true);
+  cbDevices->setEnabled(true);
+  setOkButtonEnabled(false);
+  setApplyButtonEnabled(false);
+  setCancelButtonEnabled(true);
+  leHost->setEnabled(true);
+  sbPort->setEnabled(true);
+}
+
 void mdtModbusTcpPortSetupDialog::setStateDisconnected()
 {
   pbConnect->setEnabled(true);
@@ -220,6 +233,19 @@ void mdtModbusTcpPortSetupDialog::setStateDisconnected()
 }
 
 void mdtModbusTcpPortSetupDialog::setStateConnecting()
+{
+  pbConnect->setEnabled(false);
+  pbDisconnect->setEnabled(false);
+  pbRescan->setEnabled(false);
+  cbDevices->setEnabled(false);
+  setOkButtonEnabled(false);
+  setApplyButtonEnabled(false);
+  setCancelButtonEnabled(false);
+  leHost->setEnabled(false);
+  sbPort->setEnabled(false);
+}
+
+void mdtModbusTcpPortSetupDialog::setStatePortReady()
 {
   pbConnect->setEnabled(false);
   pbDisconnect->setEnabled(false);
@@ -254,19 +280,6 @@ void mdtModbusTcpPortSetupDialog::setStateBusy()
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(false);
-  leHost->setEnabled(false);
-  sbPort->setEnabled(false);
-}
-
-void mdtModbusTcpPortSetupDialog::setStateWarning()
-{
-  pbConnect->setEnabled(false);
-  pbDisconnect->setEnabled(true);
-  pbRescan->setEnabled(false);
-  cbDevices->setEnabled(false);
-  setOkButtonEnabled(false);
-  setApplyButtonEnabled(false);
-  setCancelButtonEnabled(true);
   leHost->setEnabled(false);
   sbPort->setEnabled(false);
 }
@@ -349,7 +362,7 @@ void mdtModbusTcpPortSetupDialog::getDeviceInformations()
   Q_ASSERT(pvModbusTcpPortManager != 0);
 
   clearDeviceInformations();
-  if(!pvModbusTcpPortManager->isRunning()){
+  if(!pvModbusTcpPortManager->isReady()){
     showStatusMessage(tr("Cannot get device informations, please connect first"), 3000);
     return;
   }
@@ -377,7 +390,7 @@ void mdtModbusTcpPortSetupDialog::getDeviceInformations()
 bool mdtModbusTcpPortSetupDialog::getWago750Informations()
 {
   Q_ASSERT(pvModbusTcpPortManager != 0);
-  Q_ASSERT(pvModbusTcpPortManager->isRunning());
+  Q_ASSERT(pvModbusTcpPortManager->isReady());
 
   QString model;
   QString fwRevision;
@@ -472,7 +485,7 @@ bool mdtModbusTcpPortSetupDialog::getWago750Informations()
 bool mdtModbusTcpPortSetupDialog::getBeckhoffBcInformations()
 {
   Q_ASSERT(pvModbusTcpPortManager != 0);
-  Q_ASSERT(pvModbusTcpPortManager->isRunning());
+  Q_ASSERT(pvModbusTcpPortManager->isReady());
 
   QString model;
   QString fwRevision;
@@ -546,7 +559,7 @@ bool mdtModbusTcpPortSetupDialog::getBeckhoffBcInformations()
 void mdtModbusTcpPortSetupDialog::getHardwareNodeAddress()
 {
   Q_ASSERT(pvModbusTcpPortManager != 0);
-  Q_ASSERT(pvModbusTcpPortManager->isRunning());
+  Q_ASSERT(pvModbusTcpPortManager->isReady());
 
   int nodeId;
 

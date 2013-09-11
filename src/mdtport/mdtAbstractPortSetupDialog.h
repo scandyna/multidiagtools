@@ -72,6 +72,14 @@ class mdtAbstractPortSetupDialog : public QDialog, public Ui::mdtAbstractPortSet
    */
   virtual void portManagerSet();
 
+  /*! \brief Set the PortClosed state
+   *
+   * This method must be implemented in subclass.
+   *  Goal is to keep GUI coherent to current state
+   *  (f.ex. disable/enable some buttons).
+   */
+  virtual void setStatePortClosed() = 0;
+
   /*! \brief Set the Disconnected state
    *
    * This method must be implemented in subclass.
@@ -88,7 +96,15 @@ class mdtAbstractPortSetupDialog : public QDialog, public Ui::mdtAbstractPortSet
    */
   virtual void setStateConnecting() = 0;
 
-  /*! \brief Set the Ready state
+  /*! \brief Set the PortReady state
+   *
+   * This method must be implemented in subclass.
+   *  Goal is to keep GUI coherent to current state
+   *  (f.ex. disable/enable some buttons).
+   */
+  virtual void setStatePortReady() = 0;
+
+  /*! \brief Set the Ready state (called when connected to device)
    *
    * This method must be implemented in subclass.
    *  Goal is to keep GUI coherent to current state
@@ -103,14 +119,6 @@ class mdtAbstractPortSetupDialog : public QDialog, public Ui::mdtAbstractPortSet
    *  (f.ex. disable/enable some buttons).
    */
   virtual void setStateBusy() = 0;
-
-  /*! \brief Set the Warning state
-   *
-   * This method must be implemented in subclass.
-   *  Goal is to keep GUI coherent to current state
-   *  (f.ex. disable/enable some buttons).
-   */
-  virtual void setStateWarning() = 0;
 
   /*! \brief Set the Error state
    *

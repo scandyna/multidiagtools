@@ -25,8 +25,6 @@
 #include <QTimer>
 #include <QMessageBox>
 
-#include <QDebug>
-
 mdtPortStatusWidget::mdtPortStatusWidget(QWidget *parent)
  : QWidget(parent)
 {
@@ -53,10 +51,10 @@ mdtPortStatusWidget::mdtPortStatusWidget(QWidget *parent)
   lbMessage = new QLabel;
   lbMessage->setMinimumWidth(150);
   pvLayout->addWidget(lbMessage, 0, 2);
+  pvLayout->setColumnStretch(3, 2);
+  lbPermanentTextLabel = new QLabel;
+  pvLayout->addWidget(lbPermanentTextLabel, 1, 0, 1, -1);
   setLayout(pvLayout);
-  // Set some default attributes
-  setDefaultStateTexts();
-  setDefaultStateColors();
   // Setup back to state text timer
   pvBackToStateTextTimer = new QTimer(this);
   pvBackToStateTextTimer->setSingleShot(true);
@@ -149,80 +147,18 @@ void mdtPortStatusWidget::removeCustomWidget()
   }
 }
 
-void mdtPortStatusWidget::setDefaultStateTexts()
+void mdtPortStatusWidget::setPermanentText(const QString &text)
 {
-  pvReadyText = tr("Ready");
-  pvDisconnectedText = tr("Disconnected");
-  pvConnectingText = tr("Connecting ...");
-  pvBusyText = tr("Busy");
+  lbPermanentTextLabel->setText(text);
 }
 
-void mdtPortStatusWidget::setStateReadyText(const QString &text)
+void mdtPortStatusWidget::setState(int id, const QString & text, int ledColorId, bool ledIsOn)
 {
-  pvReadyText = text;
-}
-
-void mdtPortStatusWidget::setStateDisconnectedText(const QString &text)
-{
-  pvDisconnectedText = text;
-}
-
-void mdtPortStatusWidget::setStateConnectingText(const QString &text)
-{
-  pvConnectingText = text;
-}
-
-void mdtPortStatusWidget::setStateBusyText(const QString &text)
-{
-  pvBusyText = text;
-}
-
-void mdtPortStatusWidget::setDefaultStateColors()
-{
-  pvReadyColor = mdtLed::Green;
-  pvConnectingColor = mdtLed::Orange;
-  pvBusyColor = mdtLed::Orange;
-}
-
-void mdtPortStatusWidget::setStateReadyColor(mdtLed::color_t color)
-{
-  pvReadyColor = color;
-}
-
-void mdtPortStatusWidget::setStateConnectingColor(mdtLed::color_t color)
-{
-  pvConnectingColor = color;
-}
-
-void mdtPortStatusWidget::setStateBusyColor(mdtLed::color_t color)
-{
-  pvBusyColor = color;
-}
-
-void mdtPortStatusWidget::setState(int state)
-{
-  if(state == mdtPortManager::Ready){
-    ldState->setColor(pvReadyColor);
-    ldState->setOn();
-    pvCurrentStateText = pvReadyText;
-  }else if(state == mdtPortManager::Disconnected){
-    ldState->setGreen();
-    ldState->setOff();
-    pvCurrentStateText = pvDisconnectedText;
-  }else if(state == mdtPortManager::Connecting){
-    ldState->setColor(pvConnectingColor);
-    ldState->setOn();
-    pvCurrentStateText = pvConnectingText;
-  }else if(state == mdtPortManager::Busy){
-    ldState->setColor(pvBusyColor);
-    ldState->setOn();
-    pvCurrentStateText = pvBusyText;
-  }else{
-    ldState->setRed();
-    ldState->setOn();
-    pvCurrentStateText = tr("Unknown state");
-  }
+  // Set LED
+  ldState->setColor((mdtLed::color_t)ledColorId);
+  ldState->setOn(ledIsOn);
   // Set state text
+  pvCurrentStateText = text;
   if(!pvShowingMessage){
     lbMessage->setText(pvCurrentStateText);
   }

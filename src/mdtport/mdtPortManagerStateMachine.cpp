@@ -51,11 +51,15 @@ void mdtPortManagerStateMachine::buildMainStateMachine(mdtPortManager *portManag
 {
   Q_ASSERT(portManager != 0);
 
+  // Connect state changed signals
+  connect(this, SIGNAL(stateChanged(int)), portManager, SIGNAL(stateChanged(int)));
+  connect(this, SIGNAL(stateChangedForUi(int, const QString&, int, bool)), portManager, SIGNAL(stateChangedForUi(int, const QString&, int, bool)));
   // Create states
   pvPortClosed = new mdtState(mdtPortManager::PortClosed);
   pvPortClosed->setText(tr("Port closed"));
   pvPortClosed->setLedColorId(mdtLed::Green);
   pvPortClosed->setLedOn(false);
+  pvPortClosed->setNotifyEnteredToUi(true);
   pvStarting = new mdtState(mdtPortManager::Starting);
   connect(pvStarting, SIGNAL(entered()), portManager, SLOT(startThreads()));
   pvRunning = new mdtState(mdtPortManager::Running);
@@ -66,6 +70,7 @@ void mdtPortManagerStateMachine::buildMainStateMachine(mdtPortManager *portManag
   pvPortError->setText(tr("Fatal error"));
   pvPortError->setLedColorId(mdtLed::Red);
   pvPortError->setLedOn(true);
+  pvPortError->setNotifyEnteredToUi(true);
   connect(pvPortError, SIGNAL(entered()), portManager, SIGNAL(pmStopThreadsEvent()));
   // Add sates to machine
   addState(pvPortClosed);
@@ -108,15 +113,18 @@ void mdtPortManagerStateMachine::buildRunningSubMachine(mdtPortManager *portMana
   pvPortReady->setText(tr("Port ready"));
   pvPortReady->setLedColorId(mdtLed::Green);
   pvPortReady->setLedOn(true);
+  pvPortReady->setNotifyEnteredToUi(true);
   pvConnecting = new mdtState(mdtPortManager::Connecting, parentState);
   pvConnecting->setText(tr("Connecting ..."));
   pvConnecting->setLedColorId(mdtLed::Orange);
   pvConnecting->setLedOn(true);
+  pvConnecting->setNotifyEnteredToUi(true);
   pvConnected = new mdtState(mdtPortManager::Connected, parentState);
   pvDisconnected = new mdtState(mdtPortManager::Disconnected, parentState);
   pvDisconnected->setText(tr("Disconnected"));
   pvDisconnected->setLedColorId(mdtLed::Green);
   pvDisconnected->setLedOn(false);
+  pvDisconnected->setNotifyEnteredToUi(true);
   // Add pvPortReady transitions ->
   pvPortReady->addTransition(portManager, SIGNAL(pmConnectingEvent()), pvConnecting);
   // Add pvConnecting transitions ->
@@ -144,10 +152,12 @@ void mdtPortManagerStateMachine::buildConnectedSubMachine(mdtPortManager *portMa
   pvReady->setText(tr("Ready"));
   pvReady->setLedColorId(mdtLed::Green);
   pvReady->setLedOn(true);
+  pvReady->setNotifyEnteredToUi(true);
   pvBusy = new mdtState(mdtPortManager::Busy , parentState);
   pvBusy->setText(tr("Busy"));
   pvBusy->setLedColorId(mdtLed::Orange);
   pvBusy->setLedOn(true);
+  pvBusy->setNotifyEnteredToUi(true);
   // Add pvReady transitions ->
   pvReady->addTransition(portManager, SIGNAL(pmBusyEvent()), pvBusy);
   // Add pvBusy transitions ->

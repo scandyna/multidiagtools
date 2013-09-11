@@ -116,7 +116,7 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
 
   /*! \brief Set the warning state
    */
-  void setStateWarning();
+  ///void setStateWarning();
 
   /*! \brief Set the error state
    */

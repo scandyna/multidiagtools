@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -49,6 +49,12 @@ void mdtBlinkLed::setOn()
 {
   setBlinking(false);
   mdtLed::setOn();
+}
+
+void mdtBlinkLed::setOn(bool on)
+{
+  setBlinking(false);
+  mdtLed::setOn(on);
 }
 
 void mdtBlinkLed::setOn(int holdTime, bool priority)

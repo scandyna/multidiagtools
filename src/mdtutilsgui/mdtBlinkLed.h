@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,7 +24,7 @@
 #include "mdtLed.h"
 
 /*! \brief Blinking LED
- * 
+ *
  * This class can be helpfull to get a blinking LED
  * in a simple way.<br>
  * If a lot of blinking LED's are needed, it is recommanded
@@ -63,14 +63,20 @@ class mdtBlinkLed : public mdtLed
  public slots:
 
   /*! \brief Set the LED ON
-   *
    */
   void setOn();
+
+  /*! \brief Set the LED ON or OFF
+   *
+   *  \param on If true, the LED is set ON , else OFF
+   */
+  void setOn(bool on);
 
   /*! \brief Set the LED ON for a given time
    *
    * The LED will set ON and hold this state for specified time.
    * After this time, the LED goes back OFF.
+   *
    * \param holdTime ON state hold time [ms]
    * \param priority  If true, cancel allready running shot.
    */

@@ -70,6 +70,10 @@ class mdtSerialPortSetupDialog : public mdtAbstractPortSetupDialog
 
  private:
 
+  /*! \brief Set the PortClosed state
+   */
+  void setStatePortClosed();
+
   /*! \brief Set the Disconnected state
    */
   void setStateDisconnected();
@@ -78,6 +82,10 @@ class mdtSerialPortSetupDialog : public mdtAbstractPortSetupDialog
    */
   void setStateConnecting();
 
+  /*! \brief Set the PortReady state
+   */
+  void setStatePortReady();
+
   /*! \brief Set the Ready state
    */
   void setStateReady();
@@ -85,10 +93,6 @@ class mdtSerialPortSetupDialog : public mdtAbstractPortSetupDialog
   /*! \brief Set the Busy state
    */
   void setStateBusy();
-
-  /*! \brief Set the Warning state
-   */
-  void setStateWarning();
 
   /*! \brief Set the Error state
    */

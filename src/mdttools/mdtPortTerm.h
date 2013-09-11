@@ -105,6 +105,10 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
 
   /*! \brief Set the disconnected state
    */
+  void setStatePortClosed();
+
+  /*! \brief Set the disconnected state
+   */
   void setStateDisconnected();
 
   /*! \brief Set the connecting state
@@ -118,10 +122,6 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   /*! \brief Set the busy state
    */
   void setStateBusy();
-
-  /*! \brief Set the warning state
-   */
-  void setStateWarning();
 
   /*! \brief Set the error state
    */

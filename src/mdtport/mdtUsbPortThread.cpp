@@ -69,25 +69,25 @@ bool mdtUsbPortThread::handlesTimeout() const
 
 mdtAbstractPort::error_t mdtUsbPortThread::waitOnControlTransferPossible(bool notifyOnControlTransferComplete)
 {
-  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(usbPort() != 0);
 
   mdtAbstractPort::error_t portError;
   QList<mdtAbstractPort::error_t> errors;
   int i;
-  mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
-  Q_ASSERT(port != 0);
+  ///mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
+  ///Q_ASSERT(port != 0);
 
-  while(port->controlFramesPool().size() < 1){
+  while(usbPort()->controlFramesPool().size() < 1){
     // Check about stoping
     if(!pvRunning){
       return mdtAbstractPort::NoError;
     }
-    portError = port->handleUsbEvents();
+    portError = usbPort()->handleUsbEvents();
     if(portError != mdtAbstractPort::NoError){
       return portError;
     }
     // Check if transfer callback reported a error
-    errors = port->lastErrors();
+    errors = usbPort()->lastErrors();
     for(i=0; i<errors.size(); i++){
       portError = errors.at(i);
       if(portError != mdtAbstractPort::NoError){
@@ -95,51 +95,51 @@ mdtAbstractPort::error_t mdtUsbPortThread::waitOnControlTransferPossible(bool no
       }
     }
     // Check if a control transfer finished
-    if(port->controlResponseFrames().size() > 0){
+    if(usbPort()->controlResponseFrames().size() > 0){
       // If we notify port manager, we have to unlock port mutext sometimes
       if(notifyOnControlTransferComplete){
         emit(controlResponseReaden());
-        port->unlockMutex();
+        usbPort()->unlockMutex();
         msleep(50);
-        port->lockMutex();
+        usbPort()->lockMutex();
       }
     }else{
       // Here, we hope that caller knows what hi is doing - simply restore frame to pool
       mdtError e(MDT_USB_IO_ERROR, "Loosing a control transfer response frame", mdtError::Warning);
       MDT_ERROR_SET_SRC(e, "mdtUsbPortThread");
       e.commit();
-      port->controlFramesPool().enqueue(port->controlResponseFrames().dequeue());
+      usbPort()->controlFramesPool().enqueue(usbPort()->controlResponseFrames().dequeue());
     }
   }
-  Q_ASSERT(port->controlFramesPool().size() > 0);
+  Q_ASSERT(usbPort()->controlFramesPool().size() > 0);
 
   return mdtAbstractPort::NoError;
 }
 
 mdtAbstractPort::error_t mdtUsbPortThread::sendControlQuery(mdtFrameUsbControl *ctlFrame)
 {
-  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(usbPort() != 0);
   Q_ASSERT(ctlFrame != 0);
 
   mdtAbstractPort::error_t portError;
   QList<mdtAbstractPort::error_t> errors;
   int i;
-  mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
-  Q_ASSERT(port != 0);
+  ///mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
+  ///Q_ASSERT(port != 0);
 
   // Submit the control request and wait until transfer is done
-  port->addControlRequest(ctlFrame);
-  while(port->controlResponseFrames().size() < 1){
+  usbPort()->addControlRequest(ctlFrame);
+  while(usbPort()->controlResponseFrames().size() < 1){
     // Check about stoping
     if(!pvRunning){
       return mdtAbstractPort::NoError;
     }
-    portError = port->handleUsbEvents();
+    portError = usbPort()->handleUsbEvents();
     if(portError != mdtAbstractPort::NoError){
       return portError;
     }
     // Check if transfer callback reported a error
-    errors = port->lastErrors();
+    errors = usbPort()->lastErrors();
     for(i=0; i<errors.size(); i++){
       portError = errors.at(i);
       if(portError != mdtAbstractPort::NoError){
@@ -153,42 +153,42 @@ mdtAbstractPort::error_t mdtUsbPortThread::sendControlQuery(mdtFrameUsbControl *
 
 mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxReadTransfers)
 {
-  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(usbPort() != 0);
 
   mdtAbstractPort::error_t portError;
   QList<mdtAbstractPort::error_t> errors;
-  mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
-  Q_ASSERT(port != 0);
-  char *buffer = new char[port->readBufferSize()];
+  ///mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
+  ///Q_ASSERT(port != 0);
+  char *buffer = new char[usbPort()->readBufferSize()];
   int readen;
   int i;
 
   while(maxReadTransfers > 0){
-    portError = port->initReadTransfer(port->readBufferSize());
+    portError = usbPort()->initReadTransfer(usbPort()->readBufferSize());
     if(portError != mdtAbstractPort::NoError){
       delete[] buffer;
       return portError;
     }
-    portError = port->handleUsbEvents();
+    portError = usbPort()->handleUsbEvents();
     if(portError != mdtAbstractPort::NoError){
       delete[] buffer;
       return portError;
     }
-    errors = port->lastErrors();
+    errors = usbPort()->lastErrors();
     for(i=0; i<errors.size(); i++){
       if(errors.at(i) != mdtAbstractPort::NoError){
         delete[] buffer;
         return portError;
       }
     }
-    readen = port->read(buffer, port->readBufferSize());
+    readen = usbPort()->read(buffer, usbPort()->readBufferSize());
     ///qDebug() << "mdtUsbPortThread::readUntilShortPacketReceived() , readen: " << readen;
     if(readen < 0){
       delete[] buffer;
       qDebug() << "mdtUsbPortThread::readUntilShortPacketReceived() , error " << readen;
       return (mdtAbstractPort::error_t)readen;
     }
-    if(readen < port->readBufferSize()){
+    if(readen < usbPort()->readBufferSize()){
       ///qDebug() << "mdtUsbPortThread::readUntilShortPacketReceived() , END , Ok";
       delete[] buffer;
       return mdtAbstractPort::NoError;
@@ -224,7 +224,8 @@ void mdtUsbPortThread::run()
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
   // We need a mdtUsbPort object here
-  port = dynamic_cast<mdtUsbPort*> (pvPort);
+  ///port = dynamic_cast<mdtUsbPort*> (pvPort);
+  port = usbPort();
   Q_ASSERT(port != 0);
   // Set the running flag
   pvRunning = true;

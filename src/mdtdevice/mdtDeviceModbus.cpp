@@ -74,7 +74,7 @@ mdtModbusTcpPortManager *mdtDeviceModbus::modbusTcpPortManager()
 
 mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
 {
-  Q_ASSERT(!pvTcpPortManager->isRunning());
+  Q_ASSERT(pvTcpPortManager->isClosed());
 
   int i;
 
