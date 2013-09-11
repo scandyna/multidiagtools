@@ -47,7 +47,7 @@ void mdtDeviceTest::deviceBaseTest()
 
   // Initial states
   ///QVERIFY(dev.state() == mdtDevice::Disconnected);
-  QVERIFY(dev.state() == mdtPortManager::Disconnected);
+  ///QVERIFY(dev.state() == mdtPortManager::Disconnected);
 
   dev.start(100);
 }

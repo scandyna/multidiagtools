@@ -35,23 +35,13 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
   pvTcpPortManager = new mdtModbusTcpPortManager;
   pvCodec = new mdtFrameCodecModbus;
   connect(pvTcpPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
-  ///connect(pvTcpPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
   connect(pvTcpPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
-  
-  ///connect(pvTcpPortManager, SIGNAL(statusMessageChanged(const QString&, int)), this, SIGNAL(statusMessageChanged(const QString&, int)));
-  connect(pvTcpPortManager, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SIGNAL(statusMessageChanged(const QString&, const QString&, int)));
   timeout = pvTcpPortManager->config().readTimeout();
   if(pvTcpPortManager->config().writeTimeout() > timeout){
     timeout = pvTcpPortManager->config().writeTimeout();
   }
   setBackToReadyStateTimeout(2*timeout);
-  /// \note Provisoire !!
-  ///pvTcpPortManager->setPortName("192.168.1.110:502");
-  ///pvTcpPortManager->setPortName("192.168.1.103:502");
-  ///connect(this, SIGNAL(stateChanged(int)), this, SLOT(onStateChanged(int)));
-  ///pvTcpPortManager->openPort();
-  ///pvTcpPortManager->start();
-  ///setStateReady();
+  pvTcpPortManager->notifyCurrentState();
 }
 
 mdtDeviceModbus::~mdtDeviceModbus()

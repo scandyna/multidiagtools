@@ -618,12 +618,6 @@ class mdtPortManager : public QObject
    */
   void newTransactionDone(mdtPortTransaction *transaction);
 
-  /*! \brief Emitted when error number has changed
-   *
-   * The error is one of the mdtAbstractPort::error_t.
-   */
-  ///void errorStateChanged(int error, const QString & message = QString(), const QString & details = QString());
-
   /*! \brief Emitted when a new status message is to display
    *
    * Typically used with mdtDeviceStatusWidget.

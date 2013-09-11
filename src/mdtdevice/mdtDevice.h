@@ -493,7 +493,7 @@ class mdtDevice : public QObject
 
   /*! \brief Get device state
    */
-  mdtPortManager::state_t state() const;
+  mdtPortManager::state_t currentState();
 
  public slots:
 
@@ -785,12 +785,17 @@ class mdtDevice : public QObject
    *
    * This signal should be used by application developpers,
    *  and not directly mdtPortManager::stateChanged().
+   *  This is because some actions are made when
+   *  entering new state, and stateChanged() is sent after.
+   *
+   * But, to display current state in a easier way (f.ex. using mdtPortStatusWidget),
+   *  mdtPortManager::stateChangedForUi() can be used.
    */
   void stateChanged(int state);
 
   /*! \brief Emitted when a new status message is to display
    *
-   * Typically used with mdtDeviceStatusWidget
+   * Typically used with mdtPortStatusWidget
    */
   void statusMessageChanged(const QString &message, const QString &details, int timeout);
 
@@ -809,6 +814,12 @@ class mdtDevice : public QObject
    *  must be done in subclass.
    */
   void setStateFromPortManager(int portManagerState);
+
+  /*! \brief Set the PortClosed state
+   *
+   * Emit stateChanged() if current state was not PortClosed.
+   */
+  void setStatePortClosed();
 
   /*! \brief Set the disconnected state
    *
@@ -835,12 +846,6 @@ class mdtDevice : public QObject
    */
   void setStateBusy();
 
-  /*! \brief Set the warning state
-   *
-   * Emit stateChanged() if current state was not Warning.
-   */
-  ///void setStateWarning();
-
   /*! \brief Set the error state
    *
    * Emit stateChanged() if current state was not Error.
@@ -856,8 +861,6 @@ class mdtDevice : public QObject
   bool pvAutoQueryEnabled;  // Flag used for state handling
   int pvBackToReadyStateTimeout;
   QTimer *pvBackToReadyStateTimer;
-  // State flag
-  mdtPortManager::state_t pvCurrentState;
 };
 
 #endif  // #ifndef MDT_DEVICE_H

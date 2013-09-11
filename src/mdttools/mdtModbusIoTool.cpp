@@ -54,25 +54,15 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
 
   // Set some flags
   pvReady = false;
-
-  /**
-  pvDeviceModbusWago->connectToDevice(mdtDeviceInfo());
-  pvDeviceModbusWago->detectIos(pvDeviceIos);
-  pvDeviceModbusWago->setIos(pvDeviceIos, true);
-  pvDeviceIosWidget->setDeviceIos(pvDeviceIos);
-  */
-
     // Actions
   connect(action_Setup, SIGNAL(triggered()), this, SLOT(setup()));
   pvLanguageActionGroup = 0;
-
+  // Buttons
   connect(pbConnect, SIGNAL(clicked()), this, SLOT(connectToNode()));
   connect(pbDisconnect, SIGNAL(clicked()), this, SLOT(disconnectFromNode()));
   connect(pbAbortScan, SIGNAL(clicked()), pvDeviceModbusWago->modbusTcpPortManager(), SLOT(abortScan()));
   setWindowTitle(tr("MODBUS I/O tool for Wago 750"));
-  ///setStateFromPortManager(pvDeviceModbusWago->modbusTcpPortManager()->currentState());
-  setStateDisconnected();
-  showStatusMessage(tr("Disconnected"));
+  pvDeviceModbusWago->portManager()->notifyCurrentState();
 }
 
 mdtModbusIoTool::~mdtModbusIoTool()
@@ -109,8 +99,11 @@ void mdtModbusIoTool::retranslate()
 
 void mdtModbusIoTool::setState(int state)
 {
-  ///pvStatusWidget->setState(state);
+  qDebug() << "mdtModbusIoTool - new state: " << pvDeviceModbusWago->currentState() << " ...";
   switch((mdtPortManager::state_t)state){
+    case mdtPortManager::PortClosed:
+      setStatePortClosed();
+      break;
     case mdtPortManager::Disconnected:
       setStateDisconnected();
       break;
@@ -127,6 +120,7 @@ void mdtModbusIoTool::setState(int state)
       setStateError();
       break;
   }
+  qDebug() << "mdtModbusIoTool - new state: " << pvDeviceModbusWago->currentState();
 }
 
 void mdtModbusIoTool::setup()
@@ -234,6 +228,14 @@ void mdtModbusIoTool::showStatusMessage(const QString & message, const QString &
   pvStatusWidget->showMessage(message, details, timeout);
 }
 
+void mdtModbusIoTool::setStatePortClosed()
+{
+  pbDisconnect->setEnabled(false);
+  pbAbortScan->setEnabled(false);
+  pbConnect->setEnabled(true);
+  sbHwNodeId->setEnabled(true);
+}
+
 void mdtModbusIoTool::setStateDisconnected()
 {
   pbDisconnect->setEnabled(false);
@@ -265,16 +267,6 @@ void mdtModbusIoTool::setStateBusy()
   pbConnect->setEnabled(false);
   sbHwNodeId->setEnabled(false);
 }
-
-/**
-void mdtModbusIoTool::setStateWarning()
-{
-  pbDisconnect->setEnabled(true);
-  pbAbortScan->setEnabled(false);
-  pbConnect->setEnabled(false);
-  sbHwNodeId->setEnabled(false);
-}
-*/
 
 void mdtModbusIoTool::setStateError()
 {
