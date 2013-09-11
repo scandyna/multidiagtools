@@ -1,5 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="17,197,124,227"/>
-<area shape="rect" id="node4" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="12,101,129,131"/>
-<area shape="rect" id="node6" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="17,5,124,35"/>
+<area shape="rect" id="node2" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="227,197,333,227"/>
+<area shape="rect" id="node4" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="199,101,316,131"/>
+<area shape="rect" id="node8" href="$classmdt_usb_port.html" title="USB port I/O port class." alt="" coords="112,197,203,227"/>
+<area shape="rect" id="node6" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="204,5,311,35"/>
+<area shape="rect" id="node11" href="$classmdt_frame_usb_control.html" title="USB Control frame." alt="" coords="5,101,152,131"/>
+<area shape="rect" id="node13" href="$classmdt_frame.html" title="Provide an array of bytes." alt="" coords="39,5,119,35"/>
 </map>

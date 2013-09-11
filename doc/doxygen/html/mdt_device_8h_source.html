@@ -171,7 +171,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00470"></a>00470 
 <a name="l00492"></a>00492   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a7b86a816e55a91f0d62426e1741437c6" title="Write all digital outputs to physical device and update (G)UI representation.">setDigitalOutputs</a>(<span class="keywordtype">bool</span> waitOnReply);
 <a name="l00493"></a>00493 
-<a name="l00496"></a>00496   <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382da" title="State of device.">mdtPortManager::state_t</a> <a class="code" href="classmdt_device.html#ae0c760cc40523e1116bb5716b077dc1e" title="Get device state.">state</a>() <span class="keyword">const</span>;
+<a name="l00496"></a>00496   <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382da" title="State of device.">mdtPortManager::state_t</a> <a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state.">currentState</a>();
 <a name="l00497"></a>00497 
 <a name="l00498"></a>00498  <span class="keyword">public</span> slots:
 <a name="l00499"></a>00499 
@@ -223,40 +223,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00779"></a>00779 
 <a name="l00780"></a>00780  signals:
 <a name="l00781"></a>00781 
-<a name="l00789"></a>00789   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(<span class="keywordtype">int</span> state);
-<a name="l00790"></a>00790 
-<a name="l00795"></a>00795   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c" title="Emitted when a new status message is to display.">statusMessageChanged</a>(<span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details, <span class="keywordtype">int</span> timeout);
-<a name="l00796"></a>00796 
-<a name="l00797"></a>00797  <span class="keyword">private</span> slots:
-<a name="l00798"></a>00798 
-<a name="l00811"></a>00811   <span class="keywordtype">void</span> setStateFromPortManager(<span class="keywordtype">int</span> portManagerState);
-<a name="l00812"></a>00812 
-<a name="l00817"></a>00817   <span class="keywordtype">void</span> setStateDisconnected();
-<a name="l00818"></a>00818 
-<a name="l00823"></a>00823   <span class="keywordtype">void</span> setStateConnecting();
-<a name="l00824"></a>00824 
-<a name="l00829"></a>00829   <span class="keywordtype">void</span> setStateReady();
-<a name="l00830"></a>00830 
-<a name="l00836"></a>00836   <span class="keywordtype">void</span> setStateBusy();
-<a name="l00837"></a>00837 
-<a name="l00842"></a>00842   <span class="keywordtype">void</span> setStateWarning();
-<a name="l00843"></a>00843 
-<a name="l00848"></a>00848   <span class="keywordtype">void</span> setStateError();
-<a name="l00849"></a>00849 
-<a name="l00850"></a>00850  <span class="keyword">private</span>:
-<a name="l00851"></a>00851 
-<a name="l00852"></a>00852   Q_DISABLE_COPY(<a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>);
-<a name="l00853"></a>00853 
-<a name="l00854"></a>00854   QString pvName;
-<a name="l00855"></a>00855   QTimer *pvQueryTimer;
-<a name="l00856"></a>00856   <span class="keywordtype">bool</span> pvAutoQueryEnabled;  <span class="comment">// Flag used for state handling</span>
-<a name="l00857"></a>00857   <span class="keywordtype">int</span> pvBackToReadyStateTimeout;
-<a name="l00858"></a>00858   QTimer *pvBackToReadyStateTimer;
-<a name="l00859"></a>00859   <span class="comment">// State flag</span>
-<a name="l00860"></a>00860   <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382da" title="State of device.">mdtPortManager::state_t</a> pvCurrentState;
-<a name="l00861"></a>00861 };
-<a name="l00862"></a>00862 
-<a name="l00863"></a>00863 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_H</span>
+<a name="l00794"></a>00794   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(<span class="keywordtype">int</span> state);
+<a name="l00795"></a>00795 
+<a name="l00800"></a>00800   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c" title="Emitted when a new status message is to display.">statusMessageChanged</a>(<span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details, <span class="keywordtype">int</span> timeout);
+<a name="l00801"></a>00801 
+<a name="l00802"></a>00802  <span class="keyword">private</span> slots:
+<a name="l00803"></a>00803 
+<a name="l00816"></a>00816   <span class="keywordtype">void</span> setStateFromPortManager(<span class="keywordtype">int</span> portManagerState);
+<a name="l00817"></a>00817 
+<a name="l00822"></a>00822   <span class="keywordtype">void</span> setStatePortClosed();
+<a name="l00823"></a>00823 
+<a name="l00828"></a>00828   <span class="keywordtype">void</span> setStateDisconnected();
+<a name="l00829"></a>00829 
+<a name="l00834"></a>00834   <span class="keywordtype">void</span> setStateConnecting();
+<a name="l00835"></a>00835 
+<a name="l00840"></a>00840   <span class="keywordtype">void</span> setStateReady();
+<a name="l00841"></a>00841 
+<a name="l00847"></a>00847   <span class="keywordtype">void</span> setStateBusy();
+<a name="l00848"></a>00848 
+<a name="l00853"></a>00853   <span class="keywordtype">void</span> setStateError();
+<a name="l00854"></a>00854 
+<a name="l00855"></a>00855  <span class="keyword">private</span>:
+<a name="l00856"></a>00856 
+<a name="l00857"></a>00857   Q_DISABLE_COPY(<a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>);
+<a name="l00858"></a>00858 
+<a name="l00859"></a>00859   QString pvName;
+<a name="l00860"></a>00860   QTimer *pvQueryTimer;
+<a name="l00861"></a>00861   <span class="keywordtype">bool</span> pvAutoQueryEnabled;  <span class="comment">// Flag used for state handling</span>
+<a name="l00862"></a>00862   <span class="keywordtype">int</span> pvBackToReadyStateTimeout;
+<a name="l00863"></a>00863   QTimer *pvBackToReadyStateTimer;
+<a name="l00864"></a>00864 };
+<a name="l00865"></a>00865 
+<a name="l00866"></a>00866 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -273,7 +271,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:06 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -84,7 +84,7 @@ Collaboration diagram for mdtModbusTcpPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_modbus_tcp_port_manager__coll__graph.png" border="0" usemap="#mdt_modbus_tcp_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_modbus_tcp_port_manager_coll__map" id="mdt_modbus_tcp_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="81,309,199,339"/><area shape="rect" id="node4" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="87,197,193,227"/><area shape="rect" id="node6" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node8" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/><area shape="rect" id="node10" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="217,197,308,227"/></map>
+<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="287,472,405,501"/><area shape="rect" id="node4" href="classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="61,360,258,389"/><area shape="rect" id="node6" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="137,183,259,212"/><area shape="rect" id="node8" href="classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="37,5,111,35"/><area shape="rect" id="node11" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="369,360,475,389"/><area shape="rect" id="node13" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="298,183,415,212"/><area shape="rect" id="node15" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="303,5,410,35"/><area shape="rect" id="node17" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="499,360,590,389"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_modbus_tcp_port_manager-members.html">List of all members.</a></p>
@@ -94,6 +94,9 @@ Public Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6cc6b2a57c1c126be0a9c3142a6f0e5"></a><!-- doxytag: member="mdtModbusTcpPortManager::abortScan" ref="ab6cc6b2a57c1c126be0a9c3142a6f0e5" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#ab6cc6b2a57c1c126be0a9c3142a6f0e5">abortScan</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort the scan process. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d16b312f74974d4147d631b425771e4"></a><!-- doxytag: member="mdtModbusTcpPortManager::abortTryToConnect" ref="a4d16b312f74974d4147d631b425771e4" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#a4d16b312f74974d4147d631b425771e4">abortTryToConnect</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by connect timeout timer. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9">fromThreadNewFrameReaden</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the thread whenn a complete frame was readen.  <a href="#ad941ea607f00db54aa6deb2866a539e9"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
@@ -114,6 +117,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save a scan result into the known hosts file.  <a href="#a3a1f5a54c93fa90ba83dea8785407da3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#ab4d0a994973af6008faf489ca9ddb03d">readScanResult</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read scan result stored in cache file.  <a href="#ab4d0a994973af6008faf489ca9ddb03d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#a5477eb7e8d57c5a42004046b426e39b6">isReady</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if port manager is ready.  <a href="#a5477eb7e8d57c5a42004046b426e39b6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#a4f52a477c264f809984e25abbc856db8">getHardwareNodeAddress</a> (int bitsCount, int startFrom=0)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the hardware node ID.  <a href="#a4f52a477c264f809984e25abbc856db8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#ab5e780409492b5f56326a870bc4262ec">getRegisterValues</a> (int address, int n)</td></tr>
@@ -129,7 +134,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>MODBUS/TCP port manager. </p>
 <p>This is the simplest way to use the MODBUS/TCP API.</p>
 <p>All needed object are created by constructor. To alter configuration, use <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config()</a>. To access the tcp port object, use port().</p>
-<p>Use <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start()</a> to begin read/write and stop to end.</p>
+<p>Use <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start port manager.">start()</a> to begin read/write and stop to end.</p>
 <p>References:</p>
 <ul>
 <li>MODBUS Application Protocol Specification V1.1b</li>
@@ -156,7 +161,7 @@ Public Member Functions</h2></td></tr>
 <p>Construct a MODBUS/TCP port manager. </p>
 <p>Creates a <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>, a <a class="el" href="classmdt_tcp_socket.html" title="Wrapper class between QTcpSocket and mdtAbstractPort.">mdtTcpSocket</a>, and thread object. </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -177,7 +182,7 @@ Public Member Functions</h2></td></tr>
 <p>Destructor. </p>
 <p>Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00066">66</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -198,13 +203,13 @@ Public Member Functions</h2></td></tr>
 
 <p>Called by the thread whenn a complete frame was readen. </p>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>check about transaction ID ? Should be a assertion ? </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>check about transaction ID ? Should be a assertion ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00475">475</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00507">507</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -251,7 +256,7 @@ bitsCount must be &gt; 0 </dd>
 <dd>
 startFrom must be &gt;= 0 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00312">312</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00338">338</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -286,7 +291,30 @@ startFrom must be &gt;= 0 </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success. Values are the available with <a class="el" href="classmdt_modbus_tcp_port_manager.html#a99a13b5250a8523aa63869991581e56a" title="Helper method for register service.">registerValues()</a> </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>address and n must be &gt; 0 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00364">364</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00390">390</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5477eb7e8d57c5a42004046b426e39b6"></a><!-- doxytag: member="mdtModbusTcpPortManager::isReady" ref="a5477eb7e8d57c5a42004046b426e39b6" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtModbusTcpPortManager::isReady </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Check if port manager is ready. </p>
+<p>Internally, the currentState is used to check if port manager is ready. This implementation returns true if currentState is Ready (= connected to device). </p>
+
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a6dc2798324521d177fb8f79d4f6c5f0f">mdtPortManager</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00333">333</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -308,7 +336,10 @@ startFrom must be &gt;= 0 </dd></dl>
 <p>The file stored by <a class="el" href="classmdt_modbus_tcp_port_manager.html#a3a1f5a54c93fa90ba83dea8785407da3" title="Save a scan result into the known hosts file.">saveScanResult()</a> is readen (if exists) and content returned.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>List of lines or empty list if file not exists or on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00291">291</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p><p>Q_ASSERT(!isRunning()); </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00312">312</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -329,7 +360,7 @@ startFrom must be &gt;= 0 </dd></dl>
 <p>Helper method for register service. </p>
 <p>Return result set by <a class="el" href="classmdt_modbus_tcp_port_manager.html#ab5e780409492b5f56326a870bc4262ec" title="Helper method for register service.">getRegisterValues()</a>. Note that values are keeped until next call of <a class="el" href="classmdt_modbus_tcp_port_manager.html#ab5e780409492b5f56326a870bc4262ec" title="Helper method for register service.">getRegisterValues()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00413">413</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00439">439</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -362,7 +393,7 @@ startFrom must be &gt;= 0 </dd></dl>
 <p><p>Q_ASSERT(!isRunning()); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00257">257</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00278">278</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -400,9 +431,9 @@ startFrom must be &gt;= 0 </dd></dl>
   </dd>
 </dl>
 <p>Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port manager must be stopped </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00073">73</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -447,13 +478,13 @@ startFrom must be &gt;= 0 </dd></dl>
   </dd>
 </dl>
 <p>Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port manager must be stopped </dd></dl>
 
 <p><p>portInfo-&gt;setDisplayText(currentIp.toString() + ":" + QString::number(port));</p>
 <p>qDebug() &lt;&lt; "mdtModbusTcpPortManager::scan(): add port: " &lt;&lt; portInfo-&gt;<a class="el" href="classmdt_port_manager.html#af4fcab6aaad98d74aeabfc972da1d406" title="Get current port name.">portName()</a>; </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00119">119</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00120">120</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -505,9 +536,9 @@ startFrom must be &gt;= 0 </dd></dl>
   </dd>
 </dl>
 <p>Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port manager must be stopped </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00194">194</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00195">195</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -552,9 +583,17 @@ startFrom must be &gt;= 0 </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull connection. </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port manager must be stopped </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00219">219</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p><p>int maxIter;</p>
+<p>qDebug() &lt;&lt; "mdtModbusTcpPortManager::tryToConnect() - hostName: " &lt;&lt; hostName &lt;&lt; " , port: " &lt;&lt; port &lt;&lt; ", timeout: " &lt;&lt; timeout;</p>
+<p>maxIter = timeout / 50;</p>
+<p>if(maxIter &lt;= 0){ break; }</p>
+<p>qApp-&gt;processEvents(); msleep(50); maxIter--;</p>
+<p>qApp-&gt;processEvents(); msleep(50);</p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00220">220</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -567,7 +606,7 @@ startFrom must be &gt;= 0 </dd></dl>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *&#160;</td>
           <td class="paramname"><em>transaction</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
@@ -586,12 +625,11 @@ startFrom must be &gt;= 0 </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Transaction ID on success. If the maximum of authorized transactions are reached, mdtAbstractPort::WriteQueueEmpty (&lt; 0) is returned. Note: internally, the writeFramesPool size of <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> is used to fix maximum transactions, and this is configurable in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>. See <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">mdtPortManager::config()</a> . On failure, the transaction is restored to pool. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Handle this ? </dd></dl>
+<p><p>emit busy();</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>Handle this ? </dd></dl>
 </p>
 
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da">mdtPortManager</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00418">418</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00444">444</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -614,7 +652,7 @@ startFrom must be &gt;= 0 </dd></dl>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td><code> [virtual]</code></td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -623,9 +661,7 @@ startFrom must be &gt;= 0 </dd></dl>
 <p>Write PDU by copy. </p>
 <p>Will get a new transaction, setup it with pdu as data and queryReplyMode flag, then send it with <a class="el" href="classmdt_modbus_tcp_port_manager.html#afdee5f0444f7f6b258a23733cc134684" title="Write PDU by copy.">writeData(mdtPortTransaction*)</a>. </p>
 
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a9b902a60c8b21585904bcb1d6e604369">mdtPortManager</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00456">456</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00483">483</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -648,7 +684,7 @@ startFrom must be &gt;= 0 </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:10 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

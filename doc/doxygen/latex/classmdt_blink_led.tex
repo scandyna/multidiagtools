@@ -32,8 +32,13 @@ Collaboration diagram for mdtBlinkLed:\nopagebreak
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}{setOn} ()
+\hypertarget{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}{
+void \hyperlink{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}{setOn} ()}
+\label{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}
+
 \begin{DoxyCompactList}\small\item\em Set the LED ON. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_blink_led_aae5bb31d3d9a428717771cd926aa1d33}{setOn} (bool on)
+\begin{DoxyCompactList}\small\item\em Set the LED ON or OFF. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_blink_led_aab370ebe5c53203947e49e794d0959a7}{setOn} (int holdTime, bool priority=false)
 \begin{DoxyCompactList}\small\item\em Set the LED ON for a given time. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_blink_led_a951465e8a9ae5167e7eb05a7107ab13f}{setOff} ()
@@ -130,28 +135,33 @@ Reimplemented from \hyperlink{classmdt_led_a4c8f5f6aa91b7c90ae6b1aa4933ba6e0}{md
 
 
 
-Definition at line 68 of file mdtBlinkLed.cpp.
+Definition at line 74 of file mdtBlinkLed.cpp.
 
-\hypertarget{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}{
+\hypertarget{classmdt_blink_led_aae5bb31d3d9a428717771cd926aa1d33}{
 \index{mdtBlinkLed@{mdtBlinkLed}!setOn@{setOn}}
 \index{setOn@{setOn}!mdtBlinkLed@{mdtBlinkLed}}
 \subsubsection[{setOn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtBlinkLed::setOn (
 \begin{DoxyParamCaption}
-{}
+\item[{bool}]{on}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}
+\label{classmdt_blink_led_aae5bb31d3d9a428717771cd926aa1d33}
 
 
-Set the LED ON. 
+Set the LED ON or OFF. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em on} & If true, the LED is set ON , else OFF \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classmdt_led_aabbe7fcb23d539946dffec4526c89495}{mdtLed}.
 
 
 
-Reimplemented from \hyperlink{classmdt_led_a389ee3e0082ce8fa38cb258944a04892}{mdtLed}.
-
-
-
-Definition at line 48 of file mdtBlinkLed.cpp.
+Definition at line 54 of file mdtBlinkLed.cpp.
 
 \hypertarget{classmdt_blink_led_aab370ebe5c53203947e49e794d0959a7}{
 \index{mdtBlinkLed@{mdtBlinkLed}!setOn@{setOn}}
@@ -167,7 +177,9 @@ Definition at line 48 of file mdtBlinkLed.cpp.
 
 Set the LED ON for a given time. 
 
-The LED will set ON and hold this state for specified time. After this time, the LED goes back OFF. 
+The LED will set ON and hold this state for specified time. After this time, the LED goes back OFF.
+
+
 \begin{DoxyParams}{Parameters}
 {\em holdTime} & ON state hold time \mbox{[}ms\mbox{]} \\
 \hline
@@ -176,7 +188,7 @@ The LED will set ON and hold this state for specified time. After this time, the
 \end{DoxyParams}
 
 
-Definition at line 54 of file mdtBlinkLed.cpp.
+Definition at line 60 of file mdtBlinkLed.cpp.
 
 
 

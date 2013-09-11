@@ -99,19 +99,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00037"></a>00037   lbDtr = <span class="keyword">new</span> QLabel;
 <a name="l00038"></a>00038   lbRts = <span class="keyword">new</span> QLabel;
 <a name="l00039"></a>00039   <span class="comment">// Set alignement center</span>
-<a name="l00040"></a>00040   lbCar-&gt;setAlignment(Qt::AlignHCenter);
-<a name="l00041"></a>00041   lbRng-&gt;setAlignment(Qt::AlignHCenter);
-<a name="l00042"></a>00042   lbDsr-&gt;setAlignment(Qt::AlignHCenter);
-<a name="l00043"></a>00043   lbCts-&gt;setAlignment(Qt::AlignHCenter);
-<a name="l00044"></a>00044   lbDtr-&gt;setAlignment(Qt::AlignHCenter);
-<a name="l00045"></a>00045   lbRts-&gt;setAlignment(Qt::AlignHCenter);
+<a name="l00040"></a>00040   lbCar-&gt;setAlignment(Qt::AlignCenter);
+<a name="l00041"></a>00041   lbRng-&gt;setAlignment(Qt::AlignCenter);
+<a name="l00042"></a>00042   lbDsr-&gt;setAlignment(Qt::AlignCenter);
+<a name="l00043"></a>00043   lbCts-&gt;setAlignment(Qt::AlignCenter);
+<a name="l00044"></a>00044   lbDtr-&gt;setAlignment(Qt::AlignCenter);
+<a name="l00045"></a>00045   lbRts-&gt;setAlignment(Qt::AlignCenter);
 <a name="l00046"></a>00046   <span class="comment">// Set text</span>
-<a name="l00047"></a>00047   lbCar-&gt;setText(<span class="stringliteral">&quot;CAR&quot;</span>);
-<a name="l00048"></a>00048   lbRng-&gt;setText(<span class="stringliteral">&quot;RNG&quot;</span>);
-<a name="l00049"></a>00049   lbDtr-&gt;setText(<span class="stringliteral">&quot;DTR&quot;</span>);
-<a name="l00050"></a>00050   lbDsr-&gt;setText(<span class="stringliteral">&quot;DSR&quot;</span>);
-<a name="l00051"></a>00051   lbRts-&gt;setText(<span class="stringliteral">&quot;RTS&quot;</span>);
-<a name="l00052"></a>00052   lbCts-&gt;setText(<span class="stringliteral">&quot;CTS&quot;</span>);
+<a name="l00047"></a>00047   lbCar-&gt;setText(<span class="stringliteral">&quot; CAR&quot;</span>);
+<a name="l00048"></a>00048   lbRng-&gt;setText(<span class="stringliteral">&quot; RNG&quot;</span>);
+<a name="l00049"></a>00049   lbDtr-&gt;setText(<span class="stringliteral">&quot;  DTR&quot;</span>);
+<a name="l00050"></a>00050   lbDsr-&gt;setText(<span class="stringliteral">&quot; DSR&quot;</span>);
+<a name="l00051"></a>00051   lbRts-&gt;setText(<span class="stringliteral">&quot;  RTS&quot;</span>);
+<a name="l00052"></a>00052   lbCts-&gt;setText(<span class="stringliteral">&quot; CTS&quot;</span>);
 <a name="l00053"></a>00053   <span class="comment">// Create buttons</span>
 <a name="l00054"></a>00054   pbDtr = <span class="keyword">new</span> QPushButton;
 <a name="l00055"></a>00055   pbRts = <span class="keyword">new</span> QPushButton;
@@ -131,19 +131,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00069"></a>00069   l = <span class="keyword">new</span> QGridLayout;
 <a name="l00070"></a>00070   <span class="comment">// Add labels</span>
 <a name="l00071"></a>00071   l-&gt;addWidget(lbCar, 0, 0);
-<a name="l00072"></a>00072   l-&gt;addWidget(lbRng, 0, 1);
-<a name="l00073"></a>00073   l-&gt;addWidget(lbDtr, 0, 2);
-<a name="l00074"></a>00074   l-&gt;addWidget(lbDsr, 0, 3);
-<a name="l00075"></a>00075   l-&gt;addWidget(lbRts, 0, 4);
-<a name="l00076"></a>00076   l-&gt;addWidget(lbCts, 0, 5);
+<a name="l00072"></a>00072   l-&gt;addWidget(lbRng, 0, 2);
+<a name="l00073"></a>00073   l-&gt;addWidget(lbDtr, 0, 4);
+<a name="l00074"></a>00074   l-&gt;addWidget(lbDsr, 0, 6);
+<a name="l00075"></a>00075   l-&gt;addWidget(lbRts, 0, 8);
+<a name="l00076"></a>00076   l-&gt;addWidget(lbCts, 0, 10);
 <a name="l00077"></a>00077   <span class="comment">// Add LEDs</span>
-<a name="l00078"></a>00078   l-&gt;addWidget(ldCar, 1, 0);
-<a name="l00079"></a>00079   l-&gt;addWidget(ldRng, 1, 1);
-<a name="l00080"></a>00080   l-&gt;addWidget(ldDsr, 1, 3);
-<a name="l00081"></a>00081   l-&gt;addWidget(ldCts, 1, 5);
+<a name="l00078"></a>00078   l-&gt;addWidget(ldCar, 0, 1);
+<a name="l00079"></a>00079   l-&gt;addWidget(ldRng, 0, 3);
+<a name="l00080"></a>00080   l-&gt;addWidget(ldDsr, 0, 7);
+<a name="l00081"></a>00081   l-&gt;addWidget(ldCts, 0, 11);
 <a name="l00082"></a>00082   <span class="comment">// Add buttons</span>
-<a name="l00083"></a>00083   l-&gt;addWidget(pbDtr, 1, 2);
-<a name="l00084"></a>00084   l-&gt;addWidget(pbRts, 1, 4);
+<a name="l00083"></a>00083   l-&gt;addWidget(pbDtr, 0, 5);
+<a name="l00084"></a>00084   l-&gt;addWidget(pbRts, 0, 9);
 <a name="l00085"></a>00085 
 <a name="l00086"></a>00086   setLayout(l);
 <a name="l00087"></a>00087 
@@ -204,7 +204,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:06 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

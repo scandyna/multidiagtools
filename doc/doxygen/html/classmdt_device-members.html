@@ -66,6 +66,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 This is the complete list of members for <a class="el" href="classmdt_device.html">mdtDevice</a>, including all inherited members.<table>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">connectToDevice</a>(const mdtDeviceInfo &amp;devInfo)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f">currentState</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ad211ba3be781c3db0397d5bf91f796d1">decodeReadenFrame</a>(mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual, slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a98cba3132db15317daf54eb701388e91">getAnalogInputs</a>(bool waitOnReply)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ab828764660ba53ffce1995901ddf5a0a">getAnalogInputValue</a>(mdtAnalogIo *analogInput, bool queryDevice, bool waitOnReply)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
@@ -113,7 +114,6 @@ This is the complete list of members for <a class="el" href="classmdt_device.htm
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2">setIos</a>(mdtDeviceIos *ios, bool autoOutputUpdate=false)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518">setName</a>(const QString &amp;name)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7">start</a>(int queryInterval)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ae0c760cc40523e1116bb5716b077dc1e">state</a>() const </td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d">stateChanged</a>(int state)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c">statusMessageChanged</a>(const QString &amp;message, const QString &amp;details, int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407">stop</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
@@ -138,7 +138,7 @@ This is the complete list of members for <a class="el" href="classmdt_device.htm
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:07 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

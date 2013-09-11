@@ -80,7 +80,7 @@ Collaboration diagram for mdtUsbPortThread:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_usb_port_thread__coll__graph.png" border="0" usemap="#mdt_usb_port_thread_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_usb_port_thread_coll__map" id="mdt_usb_port_thread_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="17,197,124,227"/><area shape="rect" id="node4" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="12,101,129,131"/><area shape="rect" id="node6" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="17,5,124,35"/></map>
+<area shape="rect" id="node2" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="227,197,333,227"/><area shape="rect" id="node4" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="199,101,316,131"/><area shape="rect" id="node8" href="classmdt_usb_port.html" title="USB port I/O port class." alt="" coords="112,197,203,227"/><area shape="rect" id="node6" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="204,5,311,35"/><area shape="rect" id="node11" href="classmdt_frame_usb_control.html" title="USB Control frame." alt="" coords="5,101,152,131"/><area shape="rect" id="node13" href="classmdt_frame.html" title="Provide an array of bytes." alt="" coords="39,5,119,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_usb_port_thread-members.html">List of all members.</a></p>
@@ -101,6 +101,12 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf4e5883224f05d80132b31a921ac899"></a><!-- doxytag: member="mdtUsbPortThread::mdtUsbPortThread" ref="aaf4e5883224f05d80132b31a921ac899" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#aaf4e5883224f05d80132b31a921ac899">mdtUsbPortThread</a> (QObject *parent=0)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#a1661f362e2d772c1524f09daa6da3f15">setPort</a> (<a class="el" href="classmdt_usb_port.html">mdtUsbPort</a> *port)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port instance.  <a href="#a1661f362e2d772c1524f09daa6da3f15"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_usb_port.html">mdtUsbPort</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62">usbPort</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get USB port instance.  <a href="#aaa8e1ce181489dbae57c81b42dc6ad62"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#a99070e7dba4bd7939b054cddbd66979f">detachPort</a> (bool releaseMemory)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach the port from thread.  <a href="#a99070e7dba4bd7939b054cddbd66979f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed82b57c84745f1e2391750697db1022"></a><!-- doxytag: member="mdtUsbPortThread::isReader" ref="aed82b57c84745f1e2391750697db1022" args="() const " -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">isReader</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true. <br/></td></tr>
@@ -112,13 +118,47 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Retunrs true. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#a2d234f3900b502ecced6897facdcf029">waitOnControlTransferPossible</a> (bool notifyOnControlTransferComplete)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a new control transfer is possible (i.e. when control frames pool is not empty)  <a href="#a2d234f3900b502ecced6897facdcf029"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#ae154415b3f311b02934405cd58eb9aa5">sendControlQuery</a> (<a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> *ctlFrame)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a control query and wait until response is available.  <a href="#ae154415b3f311b02934405cd58eb9aa5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#acca2af9704cc6894ec5b2058ca102af1">readUntilShortPacketReceived</a> (int maxReadTransfers)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read until a short frame is received.  <a href="#acca2af9704cc6894ec5b2058ca102af1"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="mdt_usb_port_thread_8h_source.html#l00034">34</a> of file <a class="el" href="mdt_usb_port_thread_8h_source.html">mdtUsbPortThread.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_thread_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_usb_port_thread_8h_source.html">mdtUsbPortThread.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a99070e7dba4bd7939b054cddbd66979f"></a><!-- doxytag: member="mdtUsbPortThread::detachPort" ref="a99070e7dba4bd7939b054cddbd66979f" args="(bool releaseMemory)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtUsbPortThread::detachPort </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>releaseMemory</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Detach the port from thread. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">releaseMemory</td><td>If true, the port object that was set with <a class="el" href="classmdt_usb_port_thread.html#a1661f362e2d772c1524f09daa6da3f15" title="Set the port instance.">setPort()</a> will be deleted. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>The thread must not running </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_port_thread.html#a29b434534a5564efbd9dfe570a61b143">mdtPortThread</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="acca2af9704cc6894ec5b2058ca102af1"></a><!-- doxytag: member="mdtUsbPortThread::readUntilShortPacketReceived" ref="acca2af9704cc6894ec5b2058ca102af1" args="(int maxReadTransfers)" -->
 <div class="memitem">
 <div class="memproto">
@@ -142,13 +182,107 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NoError or a error of type <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>. If maxReadTransfers is reached, ReadTimeout is returned. </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2" title="Set the port instance.">setPort()</a> before using this method. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_usb_port_thread.html#a1661f362e2d772c1524f09daa6da3f15" title="Set the port instance.">setPort()</a> before using this method. </dd></dl>
 
-<p><p>qDebug() &lt;&lt; "mdtUsbPortThread::readUntilShortPacketReceived() , readen: " &lt;&lt; readen;</p>
+<p><p><a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port = dynamic_cast&lt;mdtUsbPort*&gt;(pvPort); Q_ASSERT(port != 0);</p>
+<p>qDebug() &lt;&lt; "mdtUsbPortThread::readUntilShortPacketReceived() , readen: " &lt;&lt; readen;</p>
 <p>qDebug() &lt;&lt; "mdtUsbPortThread::readUntilShortPacketReceived() , END , Ok"; </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00154">154</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae154415b3f311b02934405cd58eb9aa5"></a><!-- doxytag: member="mdtUsbPortThread::sendControlQuery" ref="ae154415b3f311b02934405cd58eb9aa5" args="(mdtFrameUsbControl *ctlFrame)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPortThread::sendControlQuery </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> *&#160;</td>
+          <td class="paramname"><em>ctlFrame</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Send a control query and wait until response is available. </p>
+
+<p><p><a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port = dynamic_cast&lt;mdtUsbPort*&gt;(pvPort); Q_ASSERT(port != 0); </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00119">119</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1661f362e2d772c1524f09daa6da3f15"></a><!-- doxytag: member="mdtUsbPortThread::setPort" ref="a1661f362e2d772c1524f09daa6da3f15" args="(mdtUsbPort *port)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtUsbPortThread::setPort </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_usb_port.html">mdtUsbPort</a> *&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the port instance. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be a valid pointer </dd>
+<dd>
+The thread must not running </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaa8e1ce181489dbae57c81b42dc6ad62"></a><!-- doxytag: member="mdtUsbPortThread::usbPort" ref="aaa8e1ce181489dbae57c81b42dc6ad62" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_usb_port.html">mdtUsbPort</a> * mdtUsbPortThread::usbPort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get USB port instance. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Port instance, or a null pointer if it was not set </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00044">44</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2d234f3900b502ecced6897facdcf029"></a><!-- doxytag: member="mdtUsbPortThread::waitOnControlTransferPossible" ref="a2d234f3900b502ecced6897facdcf029" args="(bool notifyOnControlTransferComplete)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPortThread::waitOnControlTransferPossible </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>notifyOnControlTransferComplete</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wait until a new control transfer is possible (i.e. when control frames pool is not empty) </p>
+
+<p><p><a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port = dynamic_cast&lt;mdtUsbPort*&gt;(pvPort); Q_ASSERT(port != 0); </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -171,7 +305,7 @@ Protected Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

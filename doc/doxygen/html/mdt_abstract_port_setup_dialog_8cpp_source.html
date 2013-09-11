@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00033"></a>00033   pvPortManager = 0;
 <a name="l00034"></a>00034   wHeader = 0;
 <a name="l00035"></a>00035   <span class="comment">// Setup status widget</span>
-<a name="l00036"></a>00036   pvStatusWidget = <span class="keyword">new</span> <a class="code" href="classmdt_port_status_widget.html">mdtPortStatusWidget</a>;
+<a name="l00036"></a>00036   pvStatusWidget = <span class="keyword">new</span> <a class="code" href="classmdt_port_status_widget.html" title="Helper class to display port/device state and messages.">mdtPortStatusWidget</a>;
 <a name="l00037"></a>00037   bottomLayout-&gt;insertWidget(0, pvStatusWidget);
 <a name="l00038"></a>00038   <span class="comment">// Remove options tabs</span>
 <a name="l00039"></a>00039   <span class="keywordflow">while</span>(twOptions-&gt;count() &gt; 0){
@@ -113,141 +113,153 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052   pvPortManager = <a class="code" href="classmdt_abstract_port_setup_dialog.html#a4aeeb47c43174bfa005e51100b767c13" title="Get port manager.">portManager</a>;
 <a name="l00053"></a>00053   connect(pvPortManager, SIGNAL(stateChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(setStateFromPortManager(<span class="keywordtype">int</span>)));
-<a name="l00054"></a>00054   setStateFromPortManager((<span class="keywordtype">int</span>)pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a59241d9e6b6ee71e6c1aeb3e6c0ca81a" title="Get current state.">currentState</a>());
-<a name="l00055"></a>00055   <a class="code" href="classmdt_abstract_port_setup_dialog.html#a3393de371465c1e278711b5b2fd8d2c2" title="Called by setPortManager()">portManagerSet</a>();
-<a name="l00056"></a>00056 }
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a4aeeb47c43174bfa005e51100b767c13">00058</a> <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> *<a class="code" href="classmdt_abstract_port_setup_dialog.html#a4aeeb47c43174bfa005e51100b767c13" title="Get port manager.">mdtAbstractPortSetupDialog::portManager</a>()
-<a name="l00059"></a>00059 {
-<a name="l00060"></a>00060   Q_ASSERT(pvPortManager != 0);
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="keywordflow">return</span> pvPortManager;
-<a name="l00063"></a>00063 }
-<a name="l00064"></a>00064 
-<a name="l00065"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a3393de371465c1e278711b5b2fd8d2c2">00065</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a3393de371465c1e278711b5b2fd8d2c2" title="Called by setPortManager()">mdtAbstractPortSetupDialog::portManagerSet</a>()
-<a name="l00066"></a>00066 {
-<a name="l00067"></a>00067 }
-<a name="l00068"></a>00068 
-<a name="l00069"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#ab01700b5a09fc1b6c5f6f62e77148b43">00069</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#ab01700b5a09fc1b6c5f6f62e77148b43" title="Set the header widget.">mdtAbstractPortSetupDialog::setHeaderWidget</a>(QWidget *w)
-<a name="l00070"></a>00070 {
-<a name="l00071"></a>00071   Q_ASSERT(layout() != 0);
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073   QVBoxLayout *l = <span class="keyword">dynamic_cast&lt;</span>QVBoxLayout*<span class="keyword">&gt;</span>(layout());
-<a name="l00074"></a>00074   Q_ASSERT(l != 0);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <span class="keywordflow">if</span>(wHeader != 0){
-<a name="l00077"></a>00077     l-&gt;removeWidget(wHeader);
-<a name="l00078"></a>00078     <span class="keyword">delete</span> wHeader;
-<a name="l00079"></a>00079   }
-<a name="l00080"></a>00080   wHeader = w;
-<a name="l00081"></a>00081   l-&gt;insertWidget(0, wHeader);
-<a name="l00082"></a>00082 }
-<a name="l00083"></a>00083 
-<a name="l00084"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#ad21fb0a1f6f2c175d12fa066c4f3f5a9">00084</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#ad21fb0a1f6f2c175d12fa066c4f3f5a9" title="Add a widget to the options tab.">mdtAbstractPortSetupDialog::addOptionsTabWidget</a>(QWidget *w, <span class="keyword">const</span> QString &amp;label)
-<a name="l00085"></a>00085 {
-<a name="l00086"></a>00086   twOptions-&gt;addTab(w, label);
-<a name="l00087"></a>00087 }
-<a name="l00088"></a>00088 
-<a name="l00089"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a19f18be7722d2437dbab87b7a568b216">00089</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a19f18be7722d2437dbab87b7a568b216" title="Enable/disable Ok button.">mdtAbstractPortSetupDialog::setOkButtonEnabled</a>(<span class="keywordtype">bool</span> enabled)
-<a name="l00090"></a>00090 {
-<a name="l00091"></a>00091   QPushButton *button = buttonBox-&gt;button(QDialogButtonBox::Ok);
-<a name="l00092"></a>00092   <span class="keywordflow">if</span>(button == 0){
-<a name="l00093"></a>00093     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_GUI_ERROR, <span class="stringliteral">&quot;Ok button not found in buttonBox&quot;</span>, mdtError::Warning);
-<a name="l00094"></a>00094     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);
-<a name="l00095"></a>00095     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00096"></a>00096     <span class="keywordflow">return</span>;
-<a name="l00097"></a>00097   }
-<a name="l00098"></a>00098   button-&gt;setEnabled(enabled);
-<a name="l00099"></a>00099 }
-<a name="l00100"></a>00100 
-<a name="l00101"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a4fa65cf9827a81bf501008ced33b69ab">00101</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a4fa65cf9827a81bf501008ced33b69ab" title="Enable/disable Apply button.">mdtAbstractPortSetupDialog::setApplyButtonEnabled</a>(<span class="keywordtype">bool</span> enabled)
-<a name="l00102"></a>00102 {
-<a name="l00103"></a>00103   QPushButton *button = buttonBox-&gt;button(QDialogButtonBox::Apply);
-<a name="l00104"></a>00104   <span class="keywordflow">if</span>(button == 0){
-<a name="l00105"></a>00105     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_GUI_ERROR, <span class="stringliteral">&quot;Apply button not found in buttonBox&quot;</span>, mdtError::Warning);
-<a name="l00106"></a>00106     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);
-<a name="l00107"></a>00107     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00108"></a>00108     <span class="keywordflow">return</span>;
-<a name="l00109"></a>00109   }
-<a name="l00110"></a>00110   button-&gt;setEnabled(enabled);
-<a name="l00111"></a>00111 }
-<a name="l00112"></a>00112 
-<a name="l00113"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a7a63a08869469615f5be2c10fd490641">00113</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a7a63a08869469615f5be2c10fd490641" title="Enable/disable Cancel button.">mdtAbstractPortSetupDialog::setCancelButtonEnabled</a>(<span class="keywordtype">bool</span> enabled)
-<a name="l00114"></a>00114 {
-<a name="l00115"></a>00115   QPushButton *button = buttonBox-&gt;button(QDialogButtonBox::Cancel);
-<a name="l00116"></a>00116   <span class="keywordflow">if</span>(button == 0){
-<a name="l00117"></a>00117     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_GUI_ERROR, <span class="stringliteral">&quot;Cancel button not found in buttonBox&quot;</span>, mdtError::Warning);
-<a name="l00118"></a>00118     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);
-<a name="l00119"></a>00119     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00120"></a>00120     <span class="keywordflow">return</span>;
-<a name="l00121"></a>00121   }
-<a name="l00122"></a>00122   button-&gt;setEnabled(enabled);
-<a name="l00123"></a>00123 }
-<a name="l00124"></a>00124 
-<a name="l00125"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a93809d1ae18b5580eeebf15c561bc89f">00125</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a93809d1ae18b5580eeebf15c561bc89f" title="Used to show a message in status widget.">mdtAbstractPortSetupDialog::showStatusMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keywordtype">int</span> timeout)
-<a name="l00126"></a>00126 {
-<a name="l00127"></a>00127   pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81" title="Used to show a message and details.">showMessage</a>(message, QString(), timeout);
-<a name="l00128"></a>00128 }
-<a name="l00129"></a>00129 
-<a name="l00130"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#aa7f429788e0a6ab9d635afa126480e2d">00130</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a93809d1ae18b5580eeebf15c561bc89f" title="Used to show a message in status widget.">mdtAbstractPortSetupDialog::showStatusMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details, <span class="keywordtype">int</span> timeout)
-<a name="l00131"></a>00131 {
-<a name="l00132"></a>00132   pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81" title="Used to show a message and details.">showMessage</a>(message, details, timeout);
-<a name="l00133"></a>00133 }
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135 <span class="keywordtype">void</span> mdtAbstractPortSetupDialog::setStateFromPortManager(<span class="keywordtype">int</span> state)
-<a name="l00136"></a>00136 {
-<a name="l00137"></a>00137   pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a356064b89de5c7c8d1c8d5639d1d8f73" title="Set state.">setState</a>(state);
-<a name="l00138"></a>00138   <span class="keywordflow">switch</span>(state){
-<a name="l00139"></a>00139     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa4004253e25d51b1e628bb5006dbbd153">mdtPortManager::Disconnected</a>:
-<a name="l00140"></a>00140       <a class="code" href="classmdt_abstract_port_setup_dialog.html#a6943bd9ed9fd9678c256b54c44d7227c" title="Set the Disconnected state.">setStateDisconnected</a>();
+<a name="l00054"></a>00054   connect(pvPortManager, SIGNAL(stateChangedForUi(<span class="keywordtype">int</span>, <span class="keyword">const</span> QString&amp;, <span class="keywordtype">int</span>, <span class="keywordtype">bool</span>)), pvStatusWidget, SLOT(setState(<span class="keywordtype">int</span>, <span class="keyword">const</span> QString&amp;, <span class="keywordtype">int</span>, <span class="keywordtype">bool</span>)));
+<a name="l00055"></a>00055   pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a0c460b47b12e38e708321be79f6343d8" title="Notify the current state.">notifyCurrentState</a>();
+<a name="l00056"></a>00056   <a class="code" href="classmdt_abstract_port_setup_dialog.html#a3393de371465c1e278711b5b2fd8d2c2" title="Called by setPortManager()">portManagerSet</a>();
+<a name="l00057"></a>00057 }
+<a name="l00058"></a>00058 
+<a name="l00059"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a4aeeb47c43174bfa005e51100b767c13">00059</a> <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> *<a class="code" href="classmdt_abstract_port_setup_dialog.html#a4aeeb47c43174bfa005e51100b767c13" title="Get port manager.">mdtAbstractPortSetupDialog::portManager</a>()
+<a name="l00060"></a>00060 {
+<a name="l00061"></a>00061   Q_ASSERT(pvPortManager != 0);
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063   <span class="keywordflow">return</span> pvPortManager;
+<a name="l00064"></a>00064 }
+<a name="l00065"></a>00065 
+<a name="l00066"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a3393de371465c1e278711b5b2fd8d2c2">00066</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a3393de371465c1e278711b5b2fd8d2c2" title="Called by setPortManager()">mdtAbstractPortSetupDialog::portManagerSet</a>()
+<a name="l00067"></a>00067 {
+<a name="l00068"></a>00068 }
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#ab01700b5a09fc1b6c5f6f62e77148b43">00070</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#ab01700b5a09fc1b6c5f6f62e77148b43" title="Set the header widget.">mdtAbstractPortSetupDialog::setHeaderWidget</a>(QWidget *w)
+<a name="l00071"></a>00071 {
+<a name="l00072"></a>00072   Q_ASSERT(layout() != 0);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074   QVBoxLayout *l = <span class="keyword">dynamic_cast&lt;</span>QVBoxLayout*<span class="keyword">&gt;</span>(layout());
+<a name="l00075"></a>00075   Q_ASSERT(l != 0);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077   <span class="keywordflow">if</span>(wHeader != 0){
+<a name="l00078"></a>00078     l-&gt;removeWidget(wHeader);
+<a name="l00079"></a>00079     <span class="keyword">delete</span> wHeader;
+<a name="l00080"></a>00080   }
+<a name="l00081"></a>00081   wHeader = w;
+<a name="l00082"></a>00082   l-&gt;insertWidget(0, wHeader);
+<a name="l00083"></a>00083 }
+<a name="l00084"></a>00084 
+<a name="l00085"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#ad21fb0a1f6f2c175d12fa066c4f3f5a9">00085</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#ad21fb0a1f6f2c175d12fa066c4f3f5a9" title="Add a widget to the options tab.">mdtAbstractPortSetupDialog::addOptionsTabWidget</a>(QWidget *w, <span class="keyword">const</span> QString &amp;label)
+<a name="l00086"></a>00086 {
+<a name="l00087"></a>00087   twOptions-&gt;addTab(w, label);
+<a name="l00088"></a>00088 }
+<a name="l00089"></a>00089 
+<a name="l00090"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a19f18be7722d2437dbab87b7a568b216">00090</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a19f18be7722d2437dbab87b7a568b216" title="Enable/disable Ok button.">mdtAbstractPortSetupDialog::setOkButtonEnabled</a>(<span class="keywordtype">bool</span> enabled)
+<a name="l00091"></a>00091 {
+<a name="l00092"></a>00092   QPushButton *button = buttonBox-&gt;button(QDialogButtonBox::Ok);
+<a name="l00093"></a>00093   <span class="keywordflow">if</span>(button == 0){
+<a name="l00094"></a>00094     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_GUI_ERROR, <span class="stringliteral">&quot;Ok button not found in buttonBox&quot;</span>, mdtError::Warning);
+<a name="l00095"></a>00095     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);
+<a name="l00096"></a>00096     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00097"></a>00097     <span class="keywordflow">return</span>;
+<a name="l00098"></a>00098   }
+<a name="l00099"></a>00099   button-&gt;setEnabled(enabled);
+<a name="l00100"></a>00100 }
+<a name="l00101"></a>00101 
+<a name="l00102"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a4fa65cf9827a81bf501008ced33b69ab">00102</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a4fa65cf9827a81bf501008ced33b69ab" title="Enable/disable Apply button.">mdtAbstractPortSetupDialog::setApplyButtonEnabled</a>(<span class="keywordtype">bool</span> enabled)
+<a name="l00103"></a>00103 {
+<a name="l00104"></a>00104   QPushButton *button = buttonBox-&gt;button(QDialogButtonBox::Apply);
+<a name="l00105"></a>00105   <span class="keywordflow">if</span>(button == 0){
+<a name="l00106"></a>00106     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_GUI_ERROR, <span class="stringliteral">&quot;Apply button not found in buttonBox&quot;</span>, mdtError::Warning);
+<a name="l00107"></a>00107     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);
+<a name="l00108"></a>00108     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00109"></a>00109     <span class="keywordflow">return</span>;
+<a name="l00110"></a>00110   }
+<a name="l00111"></a>00111   button-&gt;setEnabled(enabled);
+<a name="l00112"></a>00112 }
+<a name="l00113"></a>00113 
+<a name="l00114"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a7a63a08869469615f5be2c10fd490641">00114</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a7a63a08869469615f5be2c10fd490641" title="Enable/disable Cancel button.">mdtAbstractPortSetupDialog::setCancelButtonEnabled</a>(<span class="keywordtype">bool</span> enabled)
+<a name="l00115"></a>00115 {
+<a name="l00116"></a>00116   QPushButton *button = buttonBox-&gt;button(QDialogButtonBox::Cancel);
+<a name="l00117"></a>00117   <span class="keywordflow">if</span>(button == 0){
+<a name="l00118"></a>00118     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_GUI_ERROR, <span class="stringliteral">&quot;Cancel button not found in buttonBox&quot;</span>, mdtError::Warning);
+<a name="l00119"></a>00119     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);
+<a name="l00120"></a>00120     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00121"></a>00121     <span class="keywordflow">return</span>;
+<a name="l00122"></a>00122   }
+<a name="l00123"></a>00123   button-&gt;setEnabled(enabled);
+<a name="l00124"></a>00124 }
+<a name="l00125"></a>00125 
+<a name="l00126"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#a93809d1ae18b5580eeebf15c561bc89f">00126</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a93809d1ae18b5580eeebf15c561bc89f" title="Used to show a message in status widget.">mdtAbstractPortSetupDialog::showStatusMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keywordtype">int</span> timeout)
+<a name="l00127"></a>00127 {
+<a name="l00128"></a>00128   pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81" title="Used to show a message and details.">showMessage</a>(message, QString(), timeout);
+<a name="l00129"></a>00129 }
+<a name="l00130"></a>00130 
+<a name="l00131"></a><a class="code" href="classmdt_abstract_port_setup_dialog.html#aa7f429788e0a6ab9d635afa126480e2d">00131</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a93809d1ae18b5580eeebf15c561bc89f" title="Used to show a message in status widget.">mdtAbstractPortSetupDialog::showStatusMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details, <span class="keywordtype">int</span> timeout)
+<a name="l00132"></a>00132 {
+<a name="l00133"></a>00133   pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81" title="Used to show a message and details.">showMessage</a>(message, details, timeout);
+<a name="l00134"></a>00134 }
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136 <span class="keywordtype">void</span> mdtAbstractPortSetupDialog::setStateFromPortManager(<span class="keywordtype">int</span> state)
+<a name="l00137"></a>00137 {
+<a name="l00138"></a>00138   <span class="keywordflow">switch</span>((<a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382da" title="State of device.">mdtPortManager::state_t</a>)state){
+<a name="l00139"></a>00139     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daabac9679c411402c9db01399ecb72b84d">mdtPortManager::PortClosed</a>:
+<a name="l00140"></a>00140       <a class="code" href="classmdt_abstract_port_setup_dialog.html#a8df0ba3ef89cf29c9bc16c01e1aafc25" title="Set the PortClosed state.">setStatePortClosed</a>();
 <a name="l00141"></a>00141       <span class="keywordflow">break</span>;
-<a name="l00142"></a>00142     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa89e805c9c75c39ecc8371d5f38131227">mdtPortManager::Connecting</a>:
-<a name="l00143"></a>00143       <a class="code" href="classmdt_abstract_port_setup_dialog.html#af0b938b1b8c3567c03feb02ba71307d4" title="Set the Connecting state.">setStateConnecting</a>();
+<a name="l00142"></a>00142     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa4004253e25d51b1e628bb5006dbbd153">mdtPortManager::Disconnected</a>:
+<a name="l00143"></a>00143       <a class="code" href="classmdt_abstract_port_setup_dialog.html#a6943bd9ed9fd9678c256b54c44d7227c" title="Set the Disconnected state.">setStateDisconnected</a>();
 <a name="l00144"></a>00144       <span class="keywordflow">break</span>;
-<a name="l00145"></a>00145     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaf2ba40e19587c3a98235ee96a4acf20e">mdtPortManager::Ready</a>:
-<a name="l00146"></a>00146       <a class="code" href="classmdt_abstract_port_setup_dialog.html#aac277958ac97ad7ad94135e0d152b732" title="Set the Ready state.">setStateReady</a>();
+<a name="l00145"></a>00145     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa89e805c9c75c39ecc8371d5f38131227">mdtPortManager::Connecting</a>:
+<a name="l00146"></a>00146       <a class="code" href="classmdt_abstract_port_setup_dialog.html#af0b938b1b8c3567c03feb02ba71307d4" title="Set the Connecting state.">setStateConnecting</a>();
 <a name="l00147"></a>00147       <span class="keywordflow">break</span>;
-<a name="l00148"></a>00148     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa5da3fa5dd98a264ecb4a37a1983ea0ff">mdtPortManager::Busy</a>:
-<a name="l00149"></a>00149       <a class="code" href="classmdt_abstract_port_setup_dialog.html#ae69fe60533e2df56f790e2522bb81592" title="Set the Busy state.">setStateBusy</a>();
+<a name="l00148"></a>00148     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa3a3b42b9d783381f3c7447086503fde6">mdtPortManager::PortReady</a>:
+<a name="l00149"></a>00149       <a class="code" href="classmdt_abstract_port_setup_dialog.html#a7a25a1b0377f60dad49856e7d04a1558" title="Set the PortReady state.">setStatePortReady</a>();
 <a name="l00150"></a>00150       <span class="keywordflow">break</span>;
-<a name="l00151"></a>00151     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa8ca72085e29c5c6745294e58684e5d3c">mdtPortManager::Warning</a>:
-<a name="l00152"></a>00152       <a class="code" href="classmdt_abstract_port_setup_dialog.html#a0c337beb9880709807900d0eed73e9bb" title="Set the Warning state.">setStateWarning</a>();
+<a name="l00151"></a>00151     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaf2ba40e19587c3a98235ee96a4acf20e">mdtPortManager::Ready</a>:
+<a name="l00152"></a>00152       <a class="code" href="classmdt_abstract_port_setup_dialog.html#aac277958ac97ad7ad94135e0d152b732" title="Set the Ready state (called when connected to device)">setStateReady</a>();
 <a name="l00153"></a>00153       <span class="keywordflow">break</span>;
-<a name="l00154"></a>00154     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa687598301ad573e51cafaa209da72718">mdtPortManager::Error</a>:
-<a name="l00155"></a>00155       <a class="code" href="classmdt_abstract_port_setup_dialog.html#a7cd081326d0935ea06d617b821795bb9" title="Set the Error state.">setStateError</a>();
+<a name="l00154"></a>00154     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa5da3fa5dd98a264ecb4a37a1983ea0ff">mdtPortManager::Busy</a>:
+<a name="l00155"></a>00155       <a class="code" href="classmdt_abstract_port_setup_dialog.html#ae69fe60533e2df56f790e2522bb81592" title="Set the Busy state.">setStateBusy</a>();
 <a name="l00156"></a>00156       <span class="keywordflow">break</span>;
-<a name="l00157"></a>00157     <span class="keywordflow">default</span>:
+<a name="l00157"></a>00157     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa2440f5bfc7ae5c78db1598ef6d3d394c">mdtPortManager::PortError</a>:
 <a name="l00158"></a>00158       <a class="code" href="classmdt_abstract_port_setup_dialog.html#a7cd081326d0935ea06d617b821795bb9" title="Set the Error state.">setStateError</a>();
-<a name="l00159"></a>00159       <a class="code" href="classmdt_abstract_port_setup_dialog.html#a93809d1ae18b5580eeebf15c561bc89f" title="Used to show a message in status widget.">showStatusMessage</a>(tr(<span class="stringliteral">&quot;Received a unknown state&quot;</span>));
-<a name="l00160"></a>00160   }
-<a name="l00161"></a>00161 }
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163 <span class="keywordtype">void</span> mdtAbstractPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
-<a name="l00164"></a>00164 {
-<a name="l00165"></a>00165   Q_ASSERT(button != 0);
-<a name="l00166"></a>00166 
-<a name="l00167"></a>00167   QDialogButtonBox::StandardButton type;
+<a name="l00159"></a>00159       <span class="keywordflow">break</span>;
+<a name="l00160"></a>00160     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaca288962f5cb3d352f44f4e4c15f14d2">mdtPortManager::Starting</a>:
+<a name="l00161"></a>00161     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaa7af1c561e17e65982c027de942d4a75">mdtPortManager::Running</a>:
+<a name="l00162"></a>00162     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daadbd7b0395c62e9ae38525c5dc5ba44a6">mdtPortManager::Stopped</a>:
+<a name="l00163"></a>00163     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa1c68525fc2c4d94e39a73d1a4bea0476">mdtPortManager::Stopping</a>:
+<a name="l00164"></a>00164     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa3c3620c8eb4ddb126568053e3d49195f">mdtPortManager::Connected</a>:
+<a name="l00165"></a>00165       <span class="keywordflow">break</span>;
+<a name="l00166"></a>00166   }
+<a name="l00167"></a>00167 }
 <a name="l00168"></a>00168 
-<a name="l00169"></a>00169   type = buttonBox-&gt;standardButton(button);
-<a name="l00170"></a>00170   <span class="keywordflow">switch</span>(type){
-<a name="l00171"></a>00171     <span class="keywordflow">case</span> QDialogButtonBox::Ok:
-<a name="l00172"></a>00172       <span class="keywordflow">if</span>(<a class="code" href="classmdt_abstract_port_setup_dialog.html#ab090cd4da49eb9f2f1fc2f507bdb9717" title="Apply setup.">applySetup</a>()){
-<a name="l00173"></a>00173         close();
-<a name="l00174"></a>00174       }
-<a name="l00175"></a>00175       <span class="keywordflow">break</span>;
-<a name="l00176"></a>00176     <span class="keywordflow">case</span> QDialogButtonBox::Apply:
-<a name="l00177"></a>00177       <a class="code" href="classmdt_abstract_port_setup_dialog.html#ab090cd4da49eb9f2f1fc2f507bdb9717" title="Apply setup.">applySetup</a>();
-<a name="l00178"></a>00178       <span class="keywordflow">break</span>;
-<a name="l00179"></a>00179     <span class="keywordflow">case</span> QDialogButtonBox::Cancel:
-<a name="l00180"></a>00180       close();
-<a name="l00181"></a>00181       <span class="keywordflow">break</span>;
-<a name="l00182"></a>00182     <span class="keywordflow">default</span>:
-<a name="l00183"></a>00183       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_GUI_ERROR, <span class="stringliteral">&quot;Recived signal from buttonBox with unknown button type&quot;</span>, mdtError::Warning);
-<a name="l00184"></a>00184       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);
-<a name="l00185"></a>00185       e.commit();
-<a name="l00186"></a>00186   }
-<a name="l00187"></a>00187 }
-<a name="l00188"></a>00188 
+<a name="l00169"></a>00169 <span class="keywordtype">void</span> mdtAbstractPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
+<a name="l00170"></a>00170 {
+<a name="l00171"></a>00171   Q_ASSERT(button != 0);
+<a name="l00172"></a>00172   Q_ASSERT(pvPortManager != 0);
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174   QDialogButtonBox::StandardButton type;
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176   type = buttonBox-&gt;standardButton(button);
+<a name="l00177"></a>00177   <span class="keywordflow">switch</span>(type){
+<a name="l00178"></a>00178     <span class="keywordflow">case</span> QDialogButtonBox::Ok:
+<a name="l00179"></a>00179       <span class="comment">// If port manager is ready, setup was allready applied, or nothing was changed</span>
+<a name="l00180"></a>00180       <span class="keywordflow">if</span>(<a class="code" href="classmdt_abstract_port_setup_dialog.html#a4aeeb47c43174bfa005e51100b767c13" title="Get port manager.">portManager</a>()-&gt;isReady()){
+<a name="l00181"></a>00181         close();
+<a name="l00182"></a>00182       }<span class="keywordflow">else</span>{
+<a name="l00183"></a>00183         <span class="keywordflow">if</span>(<a class="code" href="classmdt_abstract_port_setup_dialog.html#ab090cd4da49eb9f2f1fc2f507bdb9717" title="Apply setup.">applySetup</a>()){
+<a name="l00184"></a>00184           close();
+<a name="l00185"></a>00185         }
+<a name="l00186"></a>00186       }
+<a name="l00187"></a>00187       <span class="keywordflow">break</span>;
+<a name="l00188"></a>00188     <span class="keywordflow">case</span> QDialogButtonBox::Apply:
+<a name="l00189"></a>00189       <a class="code" href="classmdt_abstract_port_setup_dialog.html#ab090cd4da49eb9f2f1fc2f507bdb9717" title="Apply setup.">applySetup</a>();
+<a name="l00190"></a>00190       <span class="keywordflow">break</span>;
+<a name="l00191"></a>00191     <span class="keywordflow">case</span> QDialogButtonBox::Cancel:
+<a name="l00192"></a>00192       close();
+<a name="l00193"></a>00193       <span class="keywordflow">break</span>;
+<a name="l00194"></a>00194     <span class="keywordflow">default</span>:
+<a name="l00195"></a>00195       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_GUI_ERROR, <span class="stringliteral">&quot;Recived signal from buttonBox with unknown button type&quot;</span>, mdtError::Warning);
+<a name="l00196"></a>00196       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);
+<a name="l00197"></a>00197       e.commit();
+<a name="l00198"></a>00198   }
+<a name="l00199"></a>00199 }
+<a name="l00200"></a>00200 
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -264,7 +276,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:06 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

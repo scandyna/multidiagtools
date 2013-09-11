@@ -22,11 +22,12 @@ Inheritance diagram for mdtModbusTcpPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtModbusTcpPortManager:\nopagebreak
+Collaboration diagram for mdtModbusTcpPortManager:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=310pt]{classmdt_modbus_tcp_port_manager__coll__graph}
+\includegraphics[width=400pt]{classmdt_modbus_tcp_port_manager__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
@@ -37,6 +38,11 @@ void \hyperlink{classmdt_modbus_tcp_port_manager_ab6cc6b2a57c1c126be0a9c3142a6f0
 \label{classmdt_modbus_tcp_port_manager_ab6cc6b2a57c1c126be0a9c3142a6f0e5}
 
 \begin{DoxyCompactList}\small\item\em Abort the scan process. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_modbus_tcp_port_manager_a4d16b312f74974d4147d631b425771e4}{
+void \hyperlink{classmdt_modbus_tcp_port_manager_a4d16b312f74974d4147d631b425771e4}{abortTryToConnect} ()}
+\label{classmdt_modbus_tcp_port_manager_a4d16b312f74974d4147d631b425771e4}
+
+\begin{DoxyCompactList}\small\item\em Called by connect timeout timer. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_modbus_tcp_port_manager_ad941ea607f00db54aa6deb2866a539e9}{fromThreadNewFrameReaden} ()
 \begin{DoxyCompactList}\small\item\em Called by the thread whenn a complete frame was readen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -58,6 +64,8 @@ bool \hyperlink{classmdt_modbus_tcp_port_manager_a3a1f5a54c93fa90ba83dea8785407d
 \begin{DoxyCompactList}\small\item\em Save a scan result into the known hosts file. \end{DoxyCompactList}\item 
 QStringList \hyperlink{classmdt_modbus_tcp_port_manager_ab4d0a994973af6008faf489ca9ddb03d}{readScanResult} ()
 \begin{DoxyCompactList}\small\item\em Read scan result stored in cache file. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_modbus_tcp_port_manager_a5477eb7e8d57c5a42004046b426e39b6}{isReady} () const 
+\begin{DoxyCompactList}\small\item\em Check if port manager is ready. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_modbus_tcp_port_manager_a4f52a477c264f809984e25abbc856db8}{getHardwareNodeAddress} (int bitsCount, int startFrom=0)
 \begin{DoxyCompactList}\small\item\em Get the hardware node ID. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{getRegisterValues} (int address, int n)
@@ -105,7 +113,7 @@ Construct a MODBUS/TCP port manager.
 
 Creates a \hyperlink{classmdt_port_config}{mdtPortConfig}, a \hyperlink{classmdt_tcp_socket}{mdtTcpSocket}, and thread object. 
 
-Definition at line 40 of file mdtModbusTcpPortManager.cpp.
+Definition at line 41 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_aabe51a50a53c6b23884cc4862730b731}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!$\sim$mdtModbusTcpPortManager@{$\sim$mdtModbusTcpPortManager}}
@@ -122,7 +130,7 @@ Destructor.
 
 Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
 
-Definition at line 65 of file mdtModbusTcpPortManager.cpp.
+Definition at line 66 of file mdtModbusTcpPortManager.cpp.
 
 
 
@@ -143,11 +151,11 @@ Called by the thread whenn a complete frame was readen.
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000017}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000019}{Todo}]Error on incomplete frame \end{Desc}
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000018}{Todo}]check about transaction ID ? Should be a assertion ? \end{Desc}
+\item[\hyperlink{todo__todo000020}{Todo}]check about transaction ID ? Should be a assertion ? \end{Desc}
 
 
 
@@ -156,7 +164,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6
 
 
 
-Definition at line 475 of file mdtModbusTcpPortManager.cpp.
+Definition at line 507 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a4f52a477c264f809984e25abbc856db8}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!getHardwareNodeAddress@{getHardwareNodeAddress}}
@@ -197,7 +205,7 @@ startFrom must be $>$= 0
 \end{DoxyPrecond}
 
 
-Definition at line 312 of file mdtModbusTcpPortManager.cpp.
+Definition at line 338 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!getRegisterValues@{getRegisterValues}}
@@ -225,7 +233,28 @@ address and n must be $>$ 0
 \end{DoxyPrecond}
 
 
-Definition at line 364 of file mdtModbusTcpPortManager.cpp.
+Definition at line 390 of file mdtModbusTcpPortManager.cpp.
+
+\hypertarget{classmdt_modbus_tcp_port_manager_a5477eb7e8d57c5a42004046b426e39b6}{
+\index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!isReady@{isReady}}
+\index{isReady@{isReady}!mdtModbusTcpPortManager@{mdtModbusTcpPortManager}}
+\subsubsection[{isReady}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtModbusTcpPortManager::isReady (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_modbus_tcp_port_manager_a5477eb7e8d57c5a42004046b426e39b6}
+
+
+Check if port manager is ready. 
+
+Internally, the currentState is used to check if port manager is ready. This implementation returns true if currentState is Ready (= connected to device). 
+
+Reimplemented from \hyperlink{classmdt_port_manager_a6dc2798324521d177fb8f79d4f6c5f0f}{mdtPortManager}.
+
+
+
+Definition at line 333 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_ab4d0a994973af6008faf489ca9ddb03d}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!readScanResult@{readScanResult}}
@@ -247,7 +276,11 @@ List of lines or empty list if file not exists or on error.
 \end{DoxyReturn}
 
 
-Definition at line 291 of file mdtModbusTcpPortManager.cpp.
+Q\_\-ASSERT(!isRunning()); 
+
+
+
+Definition at line 312 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a99a13b5250a8523aa63869991581e56a}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!registerValues@{registerValues}}
@@ -264,7 +297,7 @@ Helper method for register service.
 
 Return result set by \hyperlink{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{getRegisterValues()}. Note that values are keeped until next call of \hyperlink{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{getRegisterValues()}. 
 
-Definition at line 413 of file mdtModbusTcpPortManager.cpp.
+Definition at line 439 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a3a1f5a54c93fa90ba83dea8785407da3}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!saveScanResult@{saveScanResult}}
@@ -298,7 +331,7 @@ Q\_\-ASSERT(!isRunning());
 
 
 
-Definition at line 257 of file mdtModbusTcpPortManager.cpp.
+Definition at line 278 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a216ee2495440be4eefb2faf9da3c9e47}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!scan@{scan}}
@@ -324,11 +357,11 @@ Scan for available hosts with a MODBUS/TCP compatible device attached.
 Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).
 
 \begin{DoxyPrecond}{Precondition}
-Manager must no running 
+Port manager must be stopped 
 \end{DoxyPrecond}
 
 
-Definition at line 73 of file mdtModbusTcpPortManager.cpp.
+Definition at line 74 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a7cfd5dcde142cd262925974b43e58bff}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!scan@{scan}}
@@ -357,7 +390,7 @@ Scan for available hosts with a MODBUS/TCP compatible device attached.
 Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).
 
 \begin{DoxyPrecond}{Precondition}
-Manager must no running 
+Port manager must be stopped 
 \end{DoxyPrecond}
 
 
@@ -367,7 +400,7 @@ qDebug() $<$$<$ \char`\"{}mdtModbusTcpPortManager::scan(): add port: \char`\"{} 
 
 
 
-Definition at line 119 of file mdtModbusTcpPortManager.cpp.
+Definition at line 120 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a2f1128e1f564a785e35b2e9b16bc990f}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!scan@{scan}}
@@ -399,11 +432,11 @@ Scan for available hosts with a MODBUS/TCP compatible device attached.
 Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).
 
 \begin{DoxyPrecond}{Precondition}
-Manager must no running 
+Port manager must be stopped 
 \end{DoxyPrecond}
 
 
-Definition at line 194 of file mdtModbusTcpPortManager.cpp.
+Definition at line 195 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_ab04f69b660487a7c59d309df7a8f5baa}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!tryToConnect@{tryToConnect}}
@@ -433,11 +466,25 @@ Try to connect to a host.
 True on successfull connection. 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
-Manager must no running 
+Port manager must be stopped 
 \end{DoxyPrecond}
 
 
-Definition at line 219 of file mdtModbusTcpPortManager.cpp.
+int maxIter;
+
+qDebug() $<$$<$ \char`\"{}mdtModbusTcpPortManager::tryToConnect() -\/ hostName: \char`\"{} $<$$<$ hostName $<$$<$ \char`\"{} , port: \char`\"{} $<$$<$ port $<$$<$ \char`\"{}, timeout: \char`\"{} $<$$<$ timeout;
+
+maxIter = timeout / 50;
+
+if(maxIter $<$= 0)\{ break; \}
+
+qApp-\/$>$processEvents(); msleep(50); maxIter-\/-\/;
+
+qApp-\/$>$processEvents(); msleep(50);
+
+
+
+Definition at line 220 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_afdee5f0444f7f6b258a23733cc134684}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!writeData@{writeData}}
@@ -446,7 +493,7 @@ Definition at line 219 of file mdtModbusTcpPortManager.cpp.
 \begin{DoxyParamCaption}
 \item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_modbus_tcp_port_manager_afdee5f0444f7f6b258a23733cc134684}
 
 
@@ -471,17 +518,15 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
+emit busy();
+
 \begin{Desc}
-\item[\hyperlink{todo__todo000016}{Todo}]Handle this ? \end{Desc}
+\item[\hyperlink{todo__todo000018}{Todo}]Handle this ? \end{Desc}
 
 
 
 
-Reimplemented from \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager}.
-
-
-
-Definition at line 418 of file mdtModbusTcpPortManager.cpp.
+Definition at line 444 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a5e687204475d788170b9b61a1f06eecf}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!writeData@{writeData}}
@@ -491,7 +536,7 @@ Definition at line 418 of file mdtModbusTcpPortManager.cpp.
 \item[{const QByteArray \&}]{pdu, }
 \item[{bool}]{queryReplyMode = {\ttfamily false}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_modbus_tcp_port_manager_a5e687204475d788170b9b61a1f06eecf}
 
 
@@ -499,11 +544,7 @@ Write PDU by copy.
 
 Will get a new transaction, setup it with pdu as data and queryReplyMode flag, then send it with \hyperlink{classmdt_modbus_tcp_port_manager_afdee5f0444f7f6b258a23733cc134684}{writeData(mdtPortTransaction$\ast$)}. 
 
-Reimplemented from \hyperlink{classmdt_port_manager_a9b902a60c8b21585904bcb1d6e604369}{mdtPortManager}.
-
-
-
-Definition at line 456 of file mdtModbusTcpPortManager.cpp.
+Definition at line 483 of file mdtModbusTcpPortManager.cpp.
 
 
 

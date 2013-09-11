@@ -88,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00026"></a>00026 <span class="preprocessor">#include &quot;mdtUsbConfigDescriptor.h&quot;</span>
 <a name="l00027"></a>00027 <span class="preprocessor">#include &quot;mdtUsbInterfaceDescriptor.h&quot;</span>
 <a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QApplication&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QCoreApplication&gt;</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include &lt;libusb-1.0/libusb.h&gt;</span>
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032 <span class="preprocessor">#include &lt;QDebug&gt;</span>
@@ -109,321 +109,334 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00048"></a>00048 {
 <a name="l00049"></a>00049   Q_ASSERT(pvPort != 0);
 <a name="l00050"></a>00050 
-<a name="l00051"></a>00051   <span class="keyword">delete</span> &amp;pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>();
-<a name="l00052"></a>00052   <a class="code" href="classmdt_port_manager.html#a39cb4af4aedc0b6b7c4d4f53002c3fd1" title="Detach port.">detachPort</a>(<span class="keyword">true</span>, <span class="keyword">true</span>);
-<a name="l00053"></a>00053 }
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b">00055</a> QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b" title="Get a list of attached USB devices.">mdtUsbPortManager::scan</a>()
-<a name="l00056"></a>00056 {
-<a name="l00057"></a>00057   <span class="keywordflow">return</span> <a class="code" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b" title="Get a list of attached USB devices.">scan</a>(-1, -1, -1);
-<a name="l00058"></a>00058 }
+<a name="l00051"></a>00051   <a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
+<a name="l00052"></a>00052   <span class="keyword">delete</span> &amp;pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>();
+<a name="l00053"></a>00053   <a class="code" href="classmdt_port_manager.html#a39cb4af4aedc0b6b7c4d4f53002c3fd1" title="Detach port.">detachPort</a>(<span class="keyword">true</span>, <span class="keyword">true</span>);
+<a name="l00054"></a>00054 }
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b">00056</a> QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b" title="Get a list of attached USB devices.">mdtUsbPortManager::scan</a>()
+<a name="l00057"></a>00057 {
+<a name="l00058"></a>00058   Q_ASSERT(<a class="code" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed</a>());
 <a name="l00059"></a>00059 
-<a name="l00060"></a><a class="code" href="classmdt_usb_port_manager.html#ab28253c46c80bb12cbbd116b05c4bcd3">00060</a> QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b" title="Get a list of attached USB devices.">mdtUsbPortManager::scan</a>(<span class="keywordtype">int</span> bDeviceClass, <span class="keywordtype">int</span> bDeviceSubClass, <span class="keywordtype">int</span> bDeviceProtocol)
-<a name="l00061"></a>00061 {
-<a name="l00062"></a>00062   Q_ASSERT(!<a class="code" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2" title="Get the running state.">isRunning</a>());
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064   QList&lt;mdtPortInfo*&gt; portInfoList;
-<a name="l00065"></a>00065   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> *deviceInfo;
-<a name="l00066"></a>00066   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get current port info.">portInfo</a>;
-<a name="l00067"></a>00067   libusb_context *ctx;
-<a name="l00068"></a>00068   libusb_device **devicesList;
-<a name="l00069"></a>00069   <a class="code" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> deviceDescriptor;
-<a name="l00070"></a>00070   <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a> *configDescriptor;
-<a name="l00071"></a>00071   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *ifaceDescriptor;
-<a name="l00072"></a>00072   QString <a class="code" href="classmdt_port_manager.html#af4fcab6aaad98d74aeabfc972da1d406" title="Get current port name.">portName</a>;
-<a name="l00073"></a>00073   libusb_device *device;
-<a name="l00074"></a>00074   ssize_t devicesCount;
-<a name="l00075"></a>00075   ssize_t i;
-<a name="l00076"></a>00076   <span class="keywordtype">int</span> j, k;
-<a name="l00077"></a>00077   <span class="keywordtype">int</span> err;
-<a name="l00078"></a>00078   QString str;
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080   <span class="comment">// Init libusb</span>
-<a name="l00081"></a>00081   err = libusb_init(&amp;ctx);
-<a name="l00082"></a>00082   <span class="keywordflow">if</span>(err != 0){
-<a name="l00083"></a>00083     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Cannot init libusb&quot;</span>, mdtError::Error);
-<a name="l00084"></a>00084     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortManager&quot;</span>);
-<a name="l00085"></a>00085     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00086"></a>00086     <span class="keywordflow">return</span> portInfoList;
-<a name="l00087"></a>00087   }
-<a name="l00088"></a>00088   <span class="comment">// Get devices list</span>
-<a name="l00089"></a>00089   devicesCount = libusb_get_device_list(ctx, &amp;devicesList);
-<a name="l00090"></a>00090   <span class="keywordflow">if</span>(devicesCount &lt; 0){
-<a name="l00091"></a>00091     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Cannot list devices&quot;</span>, mdtError::Error);
-<a name="l00092"></a>00092     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortManager&quot;</span>);
-<a name="l00093"></a>00093     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00094"></a>00094     <span class="keywordflow">return</span> portInfoList;
-<a name="l00095"></a>00095   }
-<a name="l00096"></a>00096   <span class="comment">// Scan ...</span>
-<a name="l00097"></a>00097   <span class="keywordflow">for</span>(i=0; i&lt;devicesCount; i++){
-<a name="l00098"></a>00098     device = devicesList[i];
-<a name="l00099"></a>00099     err = deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500" title="Ftech the device descriptor&#39;s attributes.">fetchAttributes</a>(device, <span class="keyword">false</span>);
-<a name="l00100"></a>00100     <span class="keywordflow">if</span>(err != 0){
-<a name="l00101"></a>00101       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Device attributes fetch failed&quot;</span>, mdtError::Error);
-<a name="l00102"></a>00102       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortManager&quot;</span>);
-<a name="l00103"></a>00103       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00104"></a>00104       <span class="keywordflow">continue</span>;
-<a name="l00105"></a>00105     }
-<a name="l00106"></a>00106     <span class="comment">// Create a port info object</span>
-<a name="l00107"></a>00107     portInfo = <span class="keyword">new</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>;
-<a name="l00108"></a>00108     <span class="comment">// Search interfaces in various configurations</span>
-<a name="l00109"></a>00109     <span class="keywordflow">for</span>(j=0; j&lt;deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02" title="Access configurations.">configurations</a>().size(); j++){
-<a name="l00110"></a>00110       configDescriptor = deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02" title="Access configurations.">configurations</a>().at(j);
-<a name="l00111"></a>00111       Q_ASSERT(configDescriptor != 0);
-<a name="l00112"></a>00112       <span class="keywordflow">for</span>(k=0; k&lt;configDescriptor-&gt;interfaces().size(); k++){
-<a name="l00113"></a>00113         ifaceDescriptor = configDescriptor-&gt;interfaces().at(k);
-<a name="l00114"></a>00114         Q_ASSERT(ifaceDescriptor != 0);
-<a name="l00115"></a>00115         <span class="comment">// See if a specific bDeviceClass was requested</span>
-<a name="l00116"></a>00116         <span class="keywordflow">if</span>(bDeviceClass &gt;= 0){
-<a name="l00117"></a>00117           <span class="keywordflow">if</span>(ifaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a345952007f1822d7decc6b115883a250" title="Class code (assigned by the USB-IF)">bInterfaceClass</a>() != (quint8)bDeviceClass){
-<a name="l00118"></a>00118             <span class="keywordflow">continue</span>;
-<a name="l00119"></a>00119           }
-<a name="l00120"></a>00120         }
-<a name="l00121"></a>00121         <span class="comment">// See if a specific bDeviceSubClass was requested</span>
-<a name="l00122"></a>00122         <span class="keywordflow">if</span>(bDeviceSubClass &gt;= 0){
-<a name="l00123"></a>00123           <span class="keywordflow">if</span>(ifaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#aad3fbaacba0b0c32daaffb14d52fd05a" title="Subclass code (assigned by the USB-IF)">bInterfaceSubClass</a>() != (quint8)bDeviceSubClass){
-<a name="l00124"></a>00124             <span class="keywordflow">continue</span>;
-<a name="l00125"></a>00125           }
-<a name="l00126"></a>00126         }
-<a name="l00127"></a>00127         <span class="comment">// See if a specific bDeviceProtocol was requested</span>
-<a name="l00128"></a>00128         <span class="keywordflow">if</span>(bDeviceProtocol &gt;= 0){
-<a name="l00129"></a>00129           <span class="keywordflow">if</span>(ifaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a9be6f58db4a2fdf1e3a1a0acf1b838f7" title="Protocol code (assigned by the USB)">bInterfaceProtocol</a>() != (quint8)bDeviceProtocol){
-<a name="l00130"></a>00130             <span class="keywordflow">continue</span>;
-<a name="l00131"></a>00131           }
-<a name="l00132"></a>00132         }
-<a name="l00133"></a>00133         <span class="comment">// Interresting interface</span>
-<a name="l00134"></a>00134         deviceInfo = <span class="keyword">new</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>;
-<a name="l00135"></a>00135         <span class="comment">// Build the display text</span>
-<a name="l00136"></a>00136         str = deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b" title="Vendor name (assigned by the USB-IF)">vendorName</a>();
-<a name="l00137"></a>00137         str += <span class="stringliteral">&quot;, &quot;</span>;
-<a name="l00138"></a>00138         str += deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866" title="Product name.">productName</a>();
-<a name="l00139"></a>00139         <span class="keywordflow">if</span>(!deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>().isEmpty()){
-<a name="l00140"></a>00140           str += <span class="stringliteral">&quot; (SN: &quot;</span> + deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>() + <span class="stringliteral">&quot;)&quot;</span>;
-<a name="l00141"></a>00141         }
-<a name="l00142"></a>00142         portInfo-&gt;<a class="code" href="classmdt_port_info.html#aad09e261bafcdc72ef6b2479ec37fbe8" title="Set the display text.">setDisplayText</a>(str);
-<a name="l00143"></a>00143         <span class="comment">// Set VID, PID, SID and protocol ID</span>
-<a name="l00144"></a>00144         deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#a3b56cda14d31f3288353480a15731ebb" title="Set vendor ID.">setVendorId</a>(deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a8bbfdb3c54af6cccf15cd7e5f29e8a8e" title="Vendor ID (assigned by the USB-IF)">idVendor</a>());
-<a name="l00145"></a>00145         deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#a91ca6f02bfe86656073599c8d3d79da7" title="Set product ID.">setProductId</a>(deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a722dad54d42f03470508115f6394b9a1" title="Product ID.">idProduct</a>());
-<a name="l00146"></a>00146         deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#aeefd846da860838aa5cd70a27ac961c6" title="Set serial number/ID.">setSerialId</a>(deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>());
-<a name="l00147"></a>00147         deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#ad90e39b5d34d4859527651cebb273e78" title="Set protocol ID.">setProtocolId</a>(ifaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a9be6f58db4a2fdf1e3a1a0acf1b838f7" title="Protocol code (assigned by the USB)">bInterfaceProtocol</a>());
-<a name="l00148"></a>00148         <span class="comment">// Add interface to list</span>
-<a name="l00149"></a>00149         portInfo-&gt;<a class="code" href="classmdt_port_info.html#a2a8d6603b7e134ffd9e11900ece88a61" title="Add a device.">addDevice</a>(deviceInfo);
-<a name="l00150"></a>00150       }
-<a name="l00151"></a>00151     }
-<a name="l00152"></a>00152     <span class="comment">// If port info has no device, delete it, else add it to list</span>
-<a name="l00153"></a>00153     <span class="keywordflow">if</span>(portInfo-&gt;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().size() &lt; 1){
-<a name="l00154"></a>00154       <span class="keyword">delete</span> <a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get current port info.">portInfo</a>;
-<a name="l00155"></a>00155     }<span class="keywordflow">else</span>{
-<a name="l00156"></a>00156       <span class="comment">// Build port name</span>
-<a name="l00157"></a>00157       deviceInfo = portInfo-&gt;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().at(0);
-<a name="l00158"></a>00158       Q_ASSERT(deviceInfo != 0);
-<a name="l00159"></a>00159       portName = <span class="stringliteral">&quot;VID=0x&quot;</span>;
-<a name="l00160"></a>00160       portName += QString::number((<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#a45edf71f1fa6a653c1bfa984e90e094e" title="Get vendor ID.">vendorId</a>(), 16);
-<a name="l00161"></a>00161       portName += <span class="stringliteral">&quot;:PID=0x&quot;</span>;
-<a name="l00162"></a>00162       portName += QString::number((<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#a53006d4fbaeb0ba2fd47057f36b9b813" title="Get product ID.">productId</a>(), 16);
-<a name="l00163"></a>00163       <span class="keywordflow">if</span>(!deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>().isEmpty()){
-<a name="l00164"></a>00164         portName += <span class="stringliteral">&quot;:SID=&quot;</span> + deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>();
-<a name="l00165"></a>00165       }
-<a name="l00166"></a>00166       portInfo-&gt;<a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33" title="Set the port name.">setPortName</a>(portName);
-<a name="l00167"></a>00167       <span class="comment">// Add port info to list</span>
-<a name="l00168"></a>00168       portInfoList.append(portInfo);
-<a name="l00169"></a>00169     }
-<a name="l00170"></a>00170   }
-<a name="l00171"></a>00171   <span class="comment">// Release ressources</span>
-<a name="l00172"></a>00172   libusb_free_device_list(devicesList, 1);
-<a name="l00173"></a>00173   libusb_exit(ctx);
-<a name="l00174"></a>00174 
-<a name="l00175"></a>00175   <span class="keywordflow">return</span> portInfoList;
-<a name="l00176"></a>00176 }
+<a name="l00060"></a>00060   <span class="keywordflow">return</span> <a class="code" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b" title="Get a list of attached USB devices.">scan</a>(-1, -1, -1);
+<a name="l00061"></a>00061 }
+<a name="l00062"></a>00062 
+<a name="l00063"></a><a class="code" href="classmdt_usb_port_manager.html#ab28253c46c80bb12cbbd116b05c4bcd3">00063</a> QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b" title="Get a list of attached USB devices.">mdtUsbPortManager::scan</a>(<span class="keywordtype">int</span> bDeviceClass, <span class="keywordtype">int</span> bDeviceSubClass, <span class="keywordtype">int</span> bDeviceProtocol)
+<a name="l00064"></a>00064 {
+<a name="l00065"></a>00065   Q_ASSERT(<a class="code" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed</a>());
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067   QList&lt;mdtPortInfo*&gt; portInfoList;
+<a name="l00068"></a>00068   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> *deviceInfo;
+<a name="l00069"></a>00069   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get current port info.">portInfo</a>;
+<a name="l00070"></a>00070   libusb_context *ctx;
+<a name="l00071"></a>00071   libusb_device **devicesList;
+<a name="l00072"></a>00072   <a class="code" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> deviceDescriptor;
+<a name="l00073"></a>00073   <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a> *configDescriptor;
+<a name="l00074"></a>00074   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *ifaceDescriptor;
+<a name="l00075"></a>00075   QString <a class="code" href="classmdt_port_manager.html#af4fcab6aaad98d74aeabfc972da1d406" title="Get current port name.">portName</a>;
+<a name="l00076"></a>00076   libusb_device *device;
+<a name="l00077"></a>00077   ssize_t devicesCount;
+<a name="l00078"></a>00078   ssize_t i;
+<a name="l00079"></a>00079   <span class="keywordtype">int</span> j, k;
+<a name="l00080"></a>00080   <span class="keywordtype">int</span> err;
+<a name="l00081"></a>00081   QString str;
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083   <span class="comment">// Init libusb</span>
+<a name="l00084"></a>00084   err = libusb_init(&amp;ctx);
+<a name="l00085"></a>00085   <span class="keywordflow">if</span>(err != 0){
+<a name="l00086"></a>00086     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Cannot init libusb&quot;</span>, mdtError::Error);
+<a name="l00087"></a>00087     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortManager&quot;</span>);
+<a name="l00088"></a>00088     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00089"></a>00089     <span class="keywordflow">return</span> portInfoList;
+<a name="l00090"></a>00090   }
+<a name="l00091"></a>00091   <span class="comment">// Get devices list</span>
+<a name="l00092"></a>00092   devicesCount = libusb_get_device_list(ctx, &amp;devicesList);
+<a name="l00093"></a>00093   <span class="keywordflow">if</span>(devicesCount &lt; 0){
+<a name="l00094"></a>00094     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Cannot list devices&quot;</span>, mdtError::Error);
+<a name="l00095"></a>00095     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortManager&quot;</span>);
+<a name="l00096"></a>00096     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00097"></a>00097     <span class="keywordflow">return</span> portInfoList;
+<a name="l00098"></a>00098   }
+<a name="l00099"></a>00099   <span class="comment">// Scan ...</span>
+<a name="l00100"></a>00100   <span class="keywordflow">for</span>(i=0; i&lt;devicesCount; i++){
+<a name="l00101"></a>00101     device = devicesList[i];
+<a name="l00102"></a>00102     err = deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500" title="Ftech the device descriptor&#39;s attributes.">fetchAttributes</a>(device, <span class="keyword">false</span>);
+<a name="l00103"></a>00103     <span class="keywordflow">if</span>(err != 0){
+<a name="l00104"></a>00104       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Device attributes fetch failed&quot;</span>, mdtError::Error);
+<a name="l00105"></a>00105       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortManager&quot;</span>);
+<a name="l00106"></a>00106       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00107"></a>00107       <span class="keywordflow">continue</span>;
+<a name="l00108"></a>00108     }
+<a name="l00109"></a>00109     <span class="comment">// Create a port info object</span>
+<a name="l00110"></a>00110     portInfo = <span class="keyword">new</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>;
+<a name="l00111"></a>00111     <span class="comment">// Search interfaces in various configurations</span>
+<a name="l00112"></a>00112     <span class="keywordflow">for</span>(j=0; j&lt;deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02" title="Access configurations.">configurations</a>().size(); j++){
+<a name="l00113"></a>00113       configDescriptor = deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02" title="Access configurations.">configurations</a>().at(j);
+<a name="l00114"></a>00114       Q_ASSERT(configDescriptor != 0);
+<a name="l00115"></a>00115       <span class="keywordflow">for</span>(k=0; k&lt;configDescriptor-&gt;interfaces().size(); k++){
+<a name="l00116"></a>00116         ifaceDescriptor = configDescriptor-&gt;interfaces().at(k);
+<a name="l00117"></a>00117         Q_ASSERT(ifaceDescriptor != 0);
+<a name="l00118"></a>00118         <span class="comment">// See if a specific bDeviceClass was requested</span>
+<a name="l00119"></a>00119         <span class="keywordflow">if</span>(bDeviceClass &gt;= 0){
+<a name="l00120"></a>00120           <span class="keywordflow">if</span>(ifaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a345952007f1822d7decc6b115883a250" title="Class code (assigned by the USB-IF)">bInterfaceClass</a>() != (quint8)bDeviceClass){
+<a name="l00121"></a>00121             <span class="keywordflow">continue</span>;
+<a name="l00122"></a>00122           }
+<a name="l00123"></a>00123         }
+<a name="l00124"></a>00124         <span class="comment">// See if a specific bDeviceSubClass was requested</span>
+<a name="l00125"></a>00125         <span class="keywordflow">if</span>(bDeviceSubClass &gt;= 0){
+<a name="l00126"></a>00126           <span class="keywordflow">if</span>(ifaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#aad3fbaacba0b0c32daaffb14d52fd05a" title="Subclass code (assigned by the USB-IF)">bInterfaceSubClass</a>() != (quint8)bDeviceSubClass){
+<a name="l00127"></a>00127             <span class="keywordflow">continue</span>;
+<a name="l00128"></a>00128           }
+<a name="l00129"></a>00129         }
+<a name="l00130"></a>00130         <span class="comment">// See if a specific bDeviceProtocol was requested</span>
+<a name="l00131"></a>00131         <span class="keywordflow">if</span>(bDeviceProtocol &gt;= 0){
+<a name="l00132"></a>00132           <span class="keywordflow">if</span>(ifaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a9be6f58db4a2fdf1e3a1a0acf1b838f7" title="Protocol code (assigned by the USB)">bInterfaceProtocol</a>() != (quint8)bDeviceProtocol){
+<a name="l00133"></a>00133             <span class="keywordflow">continue</span>;
+<a name="l00134"></a>00134           }
+<a name="l00135"></a>00135         }
+<a name="l00136"></a>00136         <span class="comment">// Interresting interface</span>
+<a name="l00137"></a>00137         deviceInfo = <span class="keyword">new</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>;
+<a name="l00138"></a>00138         <span class="comment">// Build the display text</span>
+<a name="l00139"></a>00139         str = deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b" title="Vendor name (assigned by the USB-IF)">vendorName</a>();
+<a name="l00140"></a>00140         str += <span class="stringliteral">&quot;, &quot;</span>;
+<a name="l00141"></a>00141         str += deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866" title="Product name.">productName</a>();
+<a name="l00142"></a>00142         <span class="keywordflow">if</span>(!deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>().isEmpty()){
+<a name="l00143"></a>00143           str += <span class="stringliteral">&quot; (SN: &quot;</span> + deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>() + <span class="stringliteral">&quot;)&quot;</span>;
+<a name="l00144"></a>00144         }
+<a name="l00145"></a>00145         portInfo-&gt;<a class="code" href="classmdt_port_info.html#aad09e261bafcdc72ef6b2479ec37fbe8" title="Set the display text.">setDisplayText</a>(str);
+<a name="l00146"></a>00146         <span class="comment">// Set VID, PID, SID and protocol ID</span>
+<a name="l00147"></a>00147         deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#a3b56cda14d31f3288353480a15731ebb" title="Set vendor ID.">setVendorId</a>(deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a8bbfdb3c54af6cccf15cd7e5f29e8a8e" title="Vendor ID (assigned by the USB-IF)">idVendor</a>());
+<a name="l00148"></a>00148         deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#a91ca6f02bfe86656073599c8d3d79da7" title="Set product ID.">setProductId</a>(deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a722dad54d42f03470508115f6394b9a1" title="Product ID.">idProduct</a>());
+<a name="l00149"></a>00149         deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#aeefd846da860838aa5cd70a27ac961c6" title="Set serial number/ID.">setSerialId</a>(deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>());
+<a name="l00150"></a>00150         deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#ad90e39b5d34d4859527651cebb273e78" title="Set protocol ID.">setProtocolId</a>(ifaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a9be6f58db4a2fdf1e3a1a0acf1b838f7" title="Protocol code (assigned by the USB)">bInterfaceProtocol</a>());
+<a name="l00151"></a>00151         <span class="comment">// Add interface to list</span>
+<a name="l00152"></a>00152         portInfo-&gt;<a class="code" href="classmdt_port_info.html#a2a8d6603b7e134ffd9e11900ece88a61" title="Add a device.">addDevice</a>(deviceInfo);
+<a name="l00153"></a>00153       }
+<a name="l00154"></a>00154     }
+<a name="l00155"></a>00155     <span class="comment">// If port info has no device, delete it, else add it to list</span>
+<a name="l00156"></a>00156     <span class="keywordflow">if</span>(portInfo-&gt;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().size() &lt; 1){
+<a name="l00157"></a>00157       <span class="keyword">delete</span> <a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get current port info.">portInfo</a>;
+<a name="l00158"></a>00158     }<span class="keywordflow">else</span>{
+<a name="l00159"></a>00159       <span class="comment">// Build port name</span>
+<a name="l00160"></a>00160       deviceInfo = portInfo-&gt;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().at(0);
+<a name="l00161"></a>00161       Q_ASSERT(deviceInfo != 0);
+<a name="l00162"></a>00162       portName = <span class="stringliteral">&quot;VID=0x&quot;</span>;
+<a name="l00163"></a>00163       portName += QString::number((<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#a45edf71f1fa6a653c1bfa984e90e094e" title="Get vendor ID.">vendorId</a>(), 16);
+<a name="l00164"></a>00164       portName += <span class="stringliteral">&quot;:PID=0x&quot;</span>;
+<a name="l00165"></a>00165       portName += QString::number((<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#a53006d4fbaeb0ba2fd47057f36b9b813" title="Get product ID.">productId</a>(), 16);
+<a name="l00166"></a>00166       <span class="keywordflow">if</span>(!deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>().isEmpty()){
+<a name="l00167"></a>00167         portName += <span class="stringliteral">&quot;:SID=&quot;</span> + deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>();
+<a name="l00168"></a>00168       }
+<a name="l00169"></a>00169       portInfo-&gt;<a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33" title="Set the port name.">setPortName</a>(portName);
+<a name="l00170"></a>00170       <span class="comment">// Add port info to list</span>
+<a name="l00171"></a>00171       portInfoList.append(portInfo);
+<a name="l00172"></a>00172     }
+<a name="l00173"></a>00173   }
+<a name="l00174"></a>00174   <span class="comment">// Release ressources</span>
+<a name="l00175"></a>00175   libusb_free_device_list(devicesList, 1);
+<a name="l00176"></a>00176   libusb_exit(ctx);
 <a name="l00177"></a>00177 
+<a name="l00178"></a>00178   <span class="keywordflow">return</span> portInfoList;
+<a name="l00179"></a>00179 }
+<a name="l00180"></a>00180 
+<a name="l00181"></a><a class="code" href="classmdt_usb_port_manager.html#ac656805c6de08c9c6a2487291cf3f347">00181</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_usb_port_manager.html#ac656805c6de08c9c6a2487291cf3f347" title="Open the port.">mdtUsbPortManager::start</a>()
+<a name="l00182"></a>00182 {
+<a name="l00183"></a>00183   Q_ASSERT(pvPort != 0);
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185   <a class="code" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a> *portThread;
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port;
 <a name="l00188"></a>00188 
-<a name="l00195"></a><a class="code" href="classmdt_usb_port_manager.html#ac656805c6de08c9c6a2487291cf3f347">00195</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_usb_port_manager.html#ac656805c6de08c9c6a2487291cf3f347" title="Open the port.">mdtUsbPortManager::start</a>()
-<a name="l00196"></a>00196 {
-<a name="l00197"></a>00197   <a class="code" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a> *portThread;
-<a name="l00198"></a>00198 
-<a name="l00199"></a>00199   <span class="keywordflow">if</span>(pvThreads.size() &lt; 1){
-<a name="l00200"></a>00200     portThread = <span class="keyword">new</span> <a class="code" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>;
-<a name="l00201"></a>00201     connect(portThread, SIGNAL(controlResponseReaden()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_usb_port_manager.html#af043c75c74665b23d13f3cb73150935c" title="Called from USB thread when a control reply was received.">fromThreadControlResponseReaden</a>()));
-<a name="l00204"></a>00204     <a class="code" href="classmdt_port_manager.html#ab62591409d019a4a2576b4310c411b8f" title="Add a thread and assign it to port.">addThread</a>(portThread);
-<a name="l00205"></a>00205   }
-<a name="l00206"></a>00206 
-<a name="l00207"></a>00207   <span class="keywordflow">return</span> <a class="code" href="classmdt_usb_port_manager.html#ac656805c6de08c9c6a2487291cf3f347" title="Open the port.">mdtPortManager::start</a>();
-<a name="l00208"></a>00208 }
+<a name="l00189"></a>00189   <span class="keywordflow">if</span>(pvThreads.size() &lt; 1){
+<a name="l00190"></a>00190     portThread = <span class="keyword">new</span> <a class="code" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>;
+<a name="l00191"></a>00191     connect(portThread, SIGNAL(controlResponseReaden()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_usb_port_manager.html#af043c75c74665b23d13f3cb73150935c" title="Called from USB thread when a control reply was received.">fromThreadControlResponseReaden</a>()));
+<a name="l00194"></a>00194     <span class="comment">// addThread() will set only mdtAbstractPort pointer</span>
+<a name="l00195"></a>00195     <a class="code" href="classmdt_port_manager.html#ab62591409d019a4a2576b4310c411b8f" title="Add a thread and assign it to port.">addThread</a>(portThread);
+<a name="l00196"></a>00196     <span class="comment">// We need a mdtUsbPort object</span>
+<a name="l00197"></a>00197     port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span>(pvPort);
+<a name="l00198"></a>00198     Q_ASSERT(port != 0);
+<a name="l00199"></a>00199     portThread-&gt;<a class="code" href="classmdt_usb_port_thread.html#a1661f362e2d772c1524f09daa6da3f15" title="Set the port instance.">setPort</a>(port);
+<a name="l00200"></a>00200     Q_ASSERT(portThread-&gt;<a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>() != 0);
+<a name="l00201"></a>00201   }
+<a name="l00202"></a>00202 
+<a name="l00203"></a>00203   <span class="keywordflow">return</span> <a class="code" href="classmdt_usb_port_manager.html#ac656805c6de08c9c6a2487291cf3f347" title="Open the port.">mdtPortManager::start</a>();
+<a name="l00204"></a>00204 }
+<a name="l00205"></a>00205 
+<a name="l00206"></a><a class="code" href="classmdt_usb_port_manager.html#adff8a1f8ed2b0e68229e2016c75e04a6">00206</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#adff8a1f8ed2b0e68229e2016c75e04a6" title="Check if port manager is ready.">mdtUsbPortManager::readUntilShortPacketReceived</a>()
+<a name="l00207"></a>00207 {
+<a name="l00208"></a>00208   Q_ASSERT(pvPort != 0);
 <a name="l00209"></a>00209 
-<a name="l00210"></a><a class="code" href="classmdt_usb_port_manager.html#adff8a1f8ed2b0e68229e2016c75e04a6">00210</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#adff8a1f8ed2b0e68229e2016c75e04a6" title="Request port to read until a short frame is received.">mdtUsbPortManager::readUntilShortPacketReceived</a>()
-<a name="l00211"></a>00211 {
-<a name="l00212"></a>00212   Q_ASSERT(pvPort != 0);
-<a name="l00213"></a>00213 
-<a name="l00214"></a>00214   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port;
+<a name="l00210"></a>00210   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port;
+<a name="l00211"></a>00211 
+<a name="l00212"></a>00212   <span class="comment">// We need a mdtUsbPort object</span>
+<a name="l00213"></a>00213   port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span>(pvPort);
+<a name="l00214"></a>00214   Q_ASSERT(port != 0);
 <a name="l00215"></a>00215 
-<a name="l00216"></a>00216   <span class="comment">// We need a mdtUsbPort object</span>
-<a name="l00217"></a>00217   port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span>(pvPort);
-<a name="l00218"></a>00218   Q_ASSERT(port != 0);
-<a name="l00219"></a>00219 
-<a name="l00220"></a>00220   pvReadUntilShortPacketReceivedFinished = <span class="keyword">false</span>;
-<a name="l00221"></a>00221   <span class="comment">// Send request</span>
-<a name="l00222"></a>00222   <a class="code" href="classmdt_port_manager.html#a3107b7121dfe5b9686d9b3b3a48a0af0" title="Lock the port&#39;s mutex.">lockPortMutex</a>();
-<a name="l00223"></a>00223   port-&gt;<a class="code" href="classmdt_usb_port.html#a719fc7b43461a3e2d9a4926d3e3961c2" title="Request to read until a short packet is received.">requestReadUntilShortPacketReceived</a>();
-<a name="l00224"></a>00224   <a class="code" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex</a>();
-<a name="l00225"></a>00225   <span class="keywordflow">while</span>(!pvReadUntilShortPacketReceivedFinished){
-<a name="l00226"></a>00226     msleep(50);
-<a name="l00227"></a>00227     Q_ASSERT(pvPort != 0);
-<a name="l00228"></a>00228     qApp-&gt;processEvents();
-<a name="l00229"></a>00229   }
-<a name="l00230"></a>00230 }
-<a name="l00231"></a>00231 
-<a name="l00232"></a><a class="code" href="classmdt_usb_port_manager.html#aea4a67550effcba13acfc110d6d30c3e">00232</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_usb_port_manager.html#aea4a67550effcba13acfc110d6d30c3e" title="Send a control request by copy.">mdtUsbPortManager::sendControlRequest</a>(<span class="keyword">const</span> <a class="code" href="classmdt_frame_usb_control.html" title="USB Control frame.">mdtFrameUsbControl</a> &amp;request, <span class="keywordtype">bool</span> setwIndexAsbInterfaceNumber)
-<a name="l00233"></a>00233 {
-<a name="l00234"></a>00234   Q_ASSERT(pvPort != 0);
+<a name="l00216"></a>00216   pvReadUntilShortPacketReceivedFinished = <span class="keyword">false</span>;
+<a name="l00217"></a>00217   <span class="comment">// Send request</span>
+<a name="l00218"></a>00218   <a class="code" href="classmdt_port_manager.html#a3107b7121dfe5b9686d9b3b3a48a0af0" title="Lock the port&#39;s mutex.">lockPortMutex</a>();
+<a name="l00219"></a>00219   port-&gt;<a class="code" href="classmdt_usb_port.html#a719fc7b43461a3e2d9a4926d3e3961c2" title="Request to read until a short packet is received.">requestReadUntilShortPacketReceived</a>();
+<a name="l00220"></a>00220   <a class="code" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex</a>();
+<a name="l00221"></a>00221   <span class="keywordflow">while</span>(!pvReadUntilShortPacketReceivedFinished){
+<a name="l00222"></a>00222     <span class="comment">// If port manager was stopped, we return</span>
+<a name="l00223"></a>00223     <span class="keywordflow">if</span>(<a class="code" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed</a>()){
+<a name="l00224"></a>00224       <span class="keywordflow">return</span>;
+<a name="l00225"></a>00225     }
+<a name="l00226"></a>00226     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+<a name="l00232"></a>00232   }
+<a name="l00233"></a>00233   Q_ASSERT(pvPort != 0);
+<a name="l00234"></a>00234 }
 <a name="l00235"></a>00235 
-<a name="l00236"></a>00236   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port;
-<a name="l00237"></a>00237   <a class="code" href="classmdt_frame_usb_control.html" title="USB Control frame.">mdtFrameUsbControl</a> *frame;
-<a name="l00238"></a>00238 
-<a name="l00239"></a>00239   <span class="comment">// We need a mdtUsbPort object</span>
-<a name="l00240"></a>00240   port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span>(pvPort);
-<a name="l00241"></a>00241   Q_ASSERT(port != 0);
-<a name="l00242"></a>00242   <span class="comment">// Get a frame in pool</span>
-<a name="l00243"></a>00243   <a class="code" href="classmdt_port_manager.html#a3107b7121dfe5b9686d9b3b3a48a0af0" title="Lock the port&#39;s mutex.">lockPortMutex</a>();
-<a name="l00244"></a>00244   <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().size() &lt; 1){
-<a name="l00245"></a>00245     <a class="code" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex</a>();
-<a name="l00246"></a>00246     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_PORT_IO_ERROR, <span class="stringliteral">&quot;No frame available in control frames pool&quot;</span>, mdtError::Error);
-<a name="l00247"></a>00247     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortManager&quot;</span>);
-<a name="l00248"></a>00248     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00249"></a>00249     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693">mdtAbstractPort::WritePoolEmpty</a>;
-<a name="l00250"></a>00250   }
-<a name="l00251"></a>00251   frame = port-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().dequeue();
-<a name="l00252"></a>00252   Q_ASSERT(frame != 0);
-<a name="l00253"></a>00253   frame-&gt;<a class="code" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">clear</a>();
-<a name="l00254"></a>00254   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#a04aab4a1e3efd99d805dffd8171e78de" title="mdtFrame subclass specific clear">clearSub</a>();
-<a name="l00255"></a>00255   <span class="comment">// Store data, encode and add frame to queue</span>
-<a name="l00256"></a>00256   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#aad3ab6ac60374075f13972679eed6a1b" title="Set direction.">setDirectionDeviceToHost</a>(request.<a class="code" href="classmdt_frame_usb_control.html#af1b656b1f1d41d40d8ae6e1e79d66092" title="Get direction.">directionIsDeviceToHost</a>());
-<a name="l00257"></a>00257   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#a62121aef1ceb3dd04c78c2fe91b86a4f" title="Set bmRequestType.">setbmRequestType</a>(request.<a class="code" href="classmdt_frame_usb_control.html#a760f73ebe2d8cefc1d70c4d22f84fac3" title="Get bmRequestType.">bmRequestType</a>());
-<a name="l00258"></a>00258   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#a308340318fd79b4d34d887a026e6e652" title="Set the bRequest.">setbRequest</a>(request.<a class="code" href="classmdt_frame_usb_control.html#ab4c57d23805b5ef21a571d200109b403" title="Get the bRequest.">bRequest</a>());
-<a name="l00259"></a>00259   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#a9200179b1a6ac8edf75897f5dfcd4ed4" title="Set the wValue.">setwValue</a>(request.<a class="code" href="classmdt_frame_usb_control.html#a0ab37031950ec1fab8031953b5b815fd" title="Get the wValue.">wValue</a>());
-<a name="l00260"></a>00260   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#ab0501a5ece1a908622fa503cde190c7f" title="Set the wIndex.">setwIndex</a>(request.<a class="code" href="classmdt_frame_usb_control.html#aff3d13dbedafdcacc1541f7c7743ae16" title="Get the wIndex.">wIndex</a>());
-<a name="l00261"></a>00261   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#ad6cb34c3587abe7db45977d16fc0c058" title="Set wLength.">setwLength</a>(request.<a class="code" href="classmdt_frame_usb_control.html#a4c69a912c9ef404fb5f019698d676e52" title="Get wLength.">wLength</a>());
-<a name="l00262"></a>00262   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#af60cb9e9fd8cb55fc44d696fce0331c0" title="Encode the control frame.">encode</a>();
-<a name="l00263"></a>00263   port-&gt;<a class="code" href="classmdt_usb_port.html#a4fbcd0fcc179335c55c6d7ccc40a7c31" title="Add a control request.">addControlRequest</a>(frame, setwIndexAsbInterfaceNumber);
-<a name="l00264"></a>00264   <a class="code" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex</a>();
-<a name="l00265"></a>00265 
-<a name="l00266"></a>00266   <span class="keywordflow">return</span> 0;
-<a name="l00267"></a>00267 }
-<a name="l00268"></a>00268 
-<a name="l00270"></a><a class="code" href="classmdt_usb_port_manager.html#ad91c432e85737f2224bbae651fb65a8d">00270</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_usb_port_manager.html#ad91c432e85737f2224bbae651fb65a8d" title="Wait until a control response is readen.">mdtUsbPortManager::waitReadenControlResponse</a>(<span class="keywordtype">int</span> timeout)
-<a name="l00271"></a>00271 {
-<a name="l00272"></a>00272   <span class="keywordtype">int</span> maxIter;
-<a name="l00273"></a>00273 
-<a name="l00274"></a>00274   <span class="keywordflow">if</span>(timeout == 0){
-<a name="l00275"></a>00275     timeout = <a class="code" href="classmdt_port_manager.html#a7cb3155940e23db0122d14f21fca858d" title="Adjust a requested timeout to minimal timeout.">adjustedReadTimeout</a>(timeout, <span class="keyword">false</span>);
-<a name="l00276"></a>00276   }<span class="keywordflow">else</span>{
-<a name="l00277"></a>00277     timeout = <a class="code" href="classmdt_port_manager.html#a7cb3155940e23db0122d14f21fca858d" title="Adjust a requested timeout to minimal timeout.">adjustedReadTimeout</a>(timeout);
-<a name="l00278"></a>00278   }
-<a name="l00279"></a>00279   maxIter = timeout / 50;
-<a name="l00280"></a>00280 
-<a name="l00281"></a>00281   <span class="keywordflow">while</span>(pvReadenControlResponses.size() &lt; 1){
-<a name="l00287"></a>00287     <span class="keywordflow">if</span>(maxIter &lt;= 0){
-<a name="l00288"></a>00288       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00289"></a>00289     }
-<a name="l00290"></a>00290     Q_ASSERT(pvPort != 0);
-<a name="l00291"></a>00291     qApp-&gt;processEvents();
-<a name="l00292"></a>00292     msleep(50);
-<a name="l00293"></a>00293     maxIter--;
-<a name="l00294"></a>00294   }
-<a name="l00295"></a>00295 
-<a name="l00296"></a>00296   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00297"></a>00297 }
-<a name="l00298"></a>00298 
-<a name="l00299"></a><a class="code" href="classmdt_usb_port_manager.html#a84c26fee7dfb26290659aa002e0842c6">00299</a> QList&lt;mdtFrameUsbControl&gt; <a class="code" href="classmdt_usb_port_manager.html#a84c26fee7dfb26290659aa002e0842c6" title="Get all readen control responses.">mdtUsbPortManager::readenControlResponses</a>()
-<a name="l00300"></a>00300 {
-<a name="l00301"></a>00301   QList&lt;mdtFrameUsbControl&gt; frames;
-<a name="l00302"></a>00302 
-<a name="l00303"></a>00303   frames = pvReadenControlResponses;
-<a name="l00304"></a>00304   pvReadenControlResponses.clear();
-<a name="l00305"></a>00305 
-<a name="l00306"></a>00306   <span class="keywordflow">return</span> frames;
-<a name="l00307"></a>00307 }
-<a name="l00308"></a>00308 
-<a name="l00309"></a><a class="code" href="classmdt_usb_port_manager.html#a982256ed17db155e1c95d544683a6dba">00309</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_manager.html#a4c44ce6ec40c4afc6be441c10d7ee827" title="Flush input buffers.">mdtUsbPortManager::flushIn</a>(<span class="keywordtype">bool</span> flushPortManagerBuffers, <span class="keywordtype">bool</span> flushPortBuffers)
-<a name="l00310"></a>00310 {
-<a name="l00311"></a>00311   Q_ASSERT(pvPort != 0);
-<a name="l00312"></a>00312 
-<a name="l00313"></a>00313   <span class="keywordflow">if</span>(flushPortManagerBuffers){
-<a name="l00314"></a>00314     pvReadenControlResponses.clear();
-<a name="l00315"></a>00315     qDebug() &lt;&lt; <span class="stringliteral">&quot;*1*2* Control responses cleared&quot;</span>;
-<a name="l00316"></a>00316   }
-<a name="l00317"></a>00317   <a class="code" href="classmdt_port_manager.html#a4c44ce6ec40c4afc6be441c10d7ee827" title="Flush input buffers.">mdtPortManager::flushIn</a>(flushPortManagerBuffers, flushPortBuffers);
-<a name="l00318"></a>00318 }
-<a name="l00319"></a>00319 
-<a name="l00320"></a><a class="code" href="classmdt_usb_port_manager.html#ab723086376175c40635df44adf358985">00320</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_manager.html#ab34018a9653a5af784fa7da06a9e50d3" title="Flush output buffers.">mdtUsbPortManager::flushOut</a>(<span class="keywordtype">bool</span> flushPortManagerBuffers, <span class="keywordtype">bool</span> flushPortBuffers)
-<a name="l00321"></a>00321 {
-<a name="l00322"></a>00322   Q_ASSERT(pvPort != 0);
-<a name="l00323"></a>00323 
-<a name="l00324"></a>00324   <a class="code" href="classmdt_port_manager.html#ab34018a9653a5af784fa7da06a9e50d3" title="Flush output buffers.">mdtPortManager::flushOut</a>(flushPortManagerBuffers, flushPortBuffers);
-<a name="l00325"></a>00325 }
-<a name="l00326"></a>00326 
-<a name="l00327"></a><a class="code" href="classmdt_usb_port_manager.html#af043c75c74665b23d13f3cb73150935c">00327</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#af043c75c74665b23d13f3cb73150935c" title="Called from USB thread when a control reply was received.">mdtUsbPortManager::fromThreadControlResponseReaden</a>()
-<a name="l00328"></a>00328 {
-<a name="l00329"></a>00329   qDebug() &lt;&lt; <span class="stringliteral">&quot; *= mdtUsbPortManager::fromThreadControlResponseReaden(): control response !!!!&quot;</span>;
-<a name="l00330"></a>00330   Q_ASSERT(pvPort != 0);
+<a name="l00236"></a><a class="code" href="classmdt_usb_port_manager.html#aea4a67550effcba13acfc110d6d30c3e">00236</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_usb_port_manager.html#aea4a67550effcba13acfc110d6d30c3e" title="Send a control request by copy.">mdtUsbPortManager::sendControlRequest</a>(<span class="keyword">const</span> <a class="code" href="classmdt_frame_usb_control.html" title="USB Control frame.">mdtFrameUsbControl</a> &amp;request, <span class="keywordtype">bool</span> setwIndexAsbInterfaceNumber)
+<a name="l00237"></a>00237 {
+<a name="l00238"></a>00238   Q_ASSERT(pvPort != 0);
+<a name="l00239"></a>00239 
+<a name="l00240"></a>00240   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port;
+<a name="l00241"></a>00241   <a class="code" href="classmdt_frame_usb_control.html" title="USB Control frame.">mdtFrameUsbControl</a> *frame;
+<a name="l00242"></a>00242 
+<a name="l00243"></a>00243   <span class="comment">// We need a mdtUsbPort object</span>
+<a name="l00244"></a>00244   port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span>(pvPort);
+<a name="l00245"></a>00245   Q_ASSERT(port != 0);
+<a name="l00246"></a>00246   <span class="comment">// Get a frame in pool</span>
+<a name="l00257"></a>00257 <span class="comment"></span>  <span class="comment">// Wait until we can send a new control request</span>
+<a name="l00258"></a>00258   <span class="keywordflow">while</span>(1){
+<a name="l00259"></a>00259     <span class="comment">// If port manager was stopped, we return</span>
+<a name="l00260"></a>00260     <span class="keywordflow">if</span>(<a class="code" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed</a>()){
+<a name="l00261"></a>00261       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea44eaa84d8f888f4f9d5c814291e54079">mdtAbstractPort::ControlCanceled</a>;
+<a name="l00262"></a>00262     }
+<a name="l00263"></a>00263     <span class="keywordflow">if</span>(<a class="code" href="classmdt_port_manager.html#a6dc2798324521d177fb8f79d4f6c5f0f" title="Check if port manager is ready.">isReady</a>()){
+<a name="l00264"></a>00264       <a class="code" href="classmdt_port_manager.html#a3107b7121dfe5b9686d9b3b3a48a0af0" title="Lock the port&#39;s mutex.">lockPortMutex</a>();
+<a name="l00265"></a>00265       <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().size() &gt; 0){
+<a name="l00266"></a>00266         frame = port-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().dequeue();
+<a name="l00267"></a>00267         Q_ASSERT(frame != 0);
+<a name="l00268"></a>00268         <span class="comment">// Here we are ready to write - we keep port mutext locked</span>
+<a name="l00269"></a>00269         <span class="keywordflow">break</span>;
+<a name="l00270"></a>00270       }
+<a name="l00271"></a>00271       <a class="code" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex</a>();
+<a name="l00272"></a>00272     }
+<a name="l00273"></a>00273     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+<a name="l00274"></a>00274   }
+<a name="l00275"></a>00275   Q_ASSERT(frame != 0);
+<a name="l00276"></a>00276   frame-&gt;<a class="code" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">clear</a>();
+<a name="l00277"></a>00277   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#a04aab4a1e3efd99d805dffd8171e78de" title="mdtFrame subclass specific clear">clearSub</a>();
+<a name="l00278"></a>00278   <span class="comment">// Store data, encode and add frame to queue</span>
+<a name="l00279"></a>00279   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#aad3ab6ac60374075f13972679eed6a1b" title="Set direction.">setDirectionDeviceToHost</a>(request.<a class="code" href="classmdt_frame_usb_control.html#af1b656b1f1d41d40d8ae6e1e79d66092" title="Get direction.">directionIsDeviceToHost</a>());
+<a name="l00280"></a>00280   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#a62121aef1ceb3dd04c78c2fe91b86a4f" title="Set bmRequestType.">setbmRequestType</a>(request.<a class="code" href="classmdt_frame_usb_control.html#a760f73ebe2d8cefc1d70c4d22f84fac3" title="Get bmRequestType.">bmRequestType</a>());
+<a name="l00281"></a>00281   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#a308340318fd79b4d34d887a026e6e652" title="Set the bRequest.">setbRequest</a>(request.<a class="code" href="classmdt_frame_usb_control.html#ab4c57d23805b5ef21a571d200109b403" title="Get the bRequest.">bRequest</a>());
+<a name="l00282"></a>00282   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#a9200179b1a6ac8edf75897f5dfcd4ed4" title="Set the wValue.">setwValue</a>(request.<a class="code" href="classmdt_frame_usb_control.html#a0ab37031950ec1fab8031953b5b815fd" title="Get the wValue.">wValue</a>());
+<a name="l00283"></a>00283   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#ab0501a5ece1a908622fa503cde190c7f" title="Set the wIndex.">setwIndex</a>(request.<a class="code" href="classmdt_frame_usb_control.html#aff3d13dbedafdcacc1541f7c7743ae16" title="Get the wIndex.">wIndex</a>());
+<a name="l00284"></a>00284   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#ad6cb34c3587abe7db45977d16fc0c058" title="Set wLength.">setwLength</a>(request.<a class="code" href="classmdt_frame_usb_control.html#a4c69a912c9ef404fb5f019698d676e52" title="Get wLength.">wLength</a>());
+<a name="l00285"></a>00285   frame-&gt;<a class="code" href="classmdt_frame_usb_control.html#af60cb9e9fd8cb55fc44d696fce0331c0" title="Encode the control frame.">encode</a>();
+<a name="l00286"></a>00286   port-&gt;<a class="code" href="classmdt_usb_port.html#a4fbcd0fcc179335c55c6d7ccc40a7c31" title="Add a control request.">addControlRequest</a>(frame, setwIndexAsbInterfaceNumber);
+<a name="l00287"></a>00287   <a class="code" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex</a>();
+<a name="l00288"></a>00288 
+<a name="l00289"></a>00289   <span class="keywordflow">return</span> 0;
+<a name="l00290"></a>00290 }
+<a name="l00291"></a>00291 
+<a name="l00293"></a><a class="code" href="classmdt_usb_port_manager.html#a34bf0ac118e586bf2547a98964a2230c">00293</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_usb_port_manager.html#a34bf0ac118e586bf2547a98964a2230c" title="Wait until a control response is readen.">mdtUsbPortManager::waitReadenControlResponse</a>()
+<a name="l00294"></a>00294 {
+<a name="l00296"></a>00296 
+<a name="l00306"></a>00306   <span class="keywordflow">while</span>(pvReadenControlResponses.size() &lt; 1){
+<a name="l00307"></a>00307     <span class="comment">// If port manager was stopped, we return</span>
+<a name="l00308"></a>00308     <span class="keywordflow">if</span>(<a class="code" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed</a>()){
+<a name="l00309"></a>00309       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00310"></a>00310     }
+<a name="l00311"></a>00311     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+<a name="l00326"></a>00326   }
+<a name="l00327"></a>00327   Q_ASSERT(pvPort != 0);
+<a name="l00328"></a>00328 
+<a name="l00329"></a>00329   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00330"></a>00330 }
 <a name="l00331"></a>00331 
-<a name="l00332"></a>00332   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port;
-<a name="l00333"></a>00333   <a class="code" href="classmdt_frame_usb_control.html" title="USB Control frame.">mdtFrameUsbControl</a> *frame;
-<a name="l00334"></a>00334 
-<a name="l00335"></a>00335   <span class="comment">// We need a mdtUsbPort object</span>
-<a name="l00336"></a>00336   port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span>(pvPort);
-<a name="l00337"></a>00337   Q_ASSERT(port != 0);
+<a name="l00332"></a><a class="code" href="classmdt_usb_port_manager.html#a84c26fee7dfb26290659aa002e0842c6">00332</a> QList&lt;mdtFrameUsbControl&gt; <a class="code" href="classmdt_usb_port_manager.html#a84c26fee7dfb26290659aa002e0842c6" title="Get all readen control responses.">mdtUsbPortManager::readenControlResponses</a>()
+<a name="l00333"></a>00333 {
+<a name="l00334"></a>00334   QList&lt;mdtFrameUsbControl&gt; frames;
+<a name="l00335"></a>00335 
+<a name="l00336"></a>00336   frames = pvReadenControlResponses;
+<a name="l00337"></a>00337   pvReadenControlResponses.clear();
 <a name="l00338"></a>00338 
-<a name="l00339"></a>00339   <span class="comment">// Get frames in readen queue</span>
-<a name="l00340"></a>00340   <a class="code" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex</a>();
-<a name="l00341"></a>00341   <span class="keywordflow">while</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().size() &gt; 0){
-<a name="l00342"></a>00342     frame = port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().dequeue();
-<a name="l00343"></a>00343     Q_ASSERT(frame != 0);
-<a name="l00344"></a>00344     <span class="comment">// Copy data</span>
-<a name="l00345"></a>00345     qDebug() &lt;&lt; <span class="stringliteral">&quot; *= mdtUsbPortManager::fromThreadControlResponseReaden(): add data ...&quot;</span>;
-<a name="l00346"></a>00346     pvReadenControlResponses.enqueue(*frame);
-<a name="l00347"></a>00347     <span class="comment">// Restore frame back into pool</span>
-<a name="l00348"></a>00348     port-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().enqueue(frame);
-<a name="l00349"></a>00349   };
-<a name="l00350"></a>00350   <a class="code" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex</a>();
-<a name="l00351"></a>00351   <span class="comment">// Watch queue size</span>
-<a name="l00352"></a>00352   qDebug() &lt;&lt; <span class="stringliteral">&quot; *= mdtUsbPortManager::fromThreadControlResponseReaden(): queue size: &quot;</span> &lt;&lt; pvReadenControlResponses.size();
-<a name="l00353"></a>00353   <span class="keywordflow">if</span>(pvReadenControlResponses.size() &gt; 20){
-<a name="l00354"></a>00354     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Readen control resonses queue is largen than 20 items, will be leared (this is a bug)&quot;</span>, mdtError::Error);
-<a name="l00355"></a>00355     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortManager&quot;</span>);
-<a name="l00356"></a>00356     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00357"></a>00357     pvReadenControlResponses.clear();
-<a name="l00358"></a>00358   }
-<a name="l00359"></a>00359 }
-<a name="l00360"></a>00360 
-<a name="l00361"></a><a class="code" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa">00361</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa" title="Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint)...">mdtUsbPortManager::fromThreadMessageInReaden</a>()
-<a name="l00362"></a>00362 {
-<a name="l00363"></a>00363   qDebug() &lt;&lt; <span class="stringliteral">&quot; ** mdtUsbPortManager::fromThreadMessageInReaden(): message IN !!!!&quot;</span>;
-<a name="l00364"></a>00364 }
-<a name="l00365"></a>00365 
-<a name="l00366"></a><a class="code" href="classmdt_usb_port_manager.html#a8f53dc5445b7f8f4a077f3cc25880b5d">00366</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#a8f53dc5445b7f8f4a077f3cc25880b5d" title="Called by thread when the read until a short packet process is finished.">mdtUsbPortManager::fromThreadReadUntilShortPacketReceivedFinished</a>()
-<a name="l00367"></a>00367 {
-<a name="l00368"></a>00368   qDebug() &lt;&lt; <span class="stringliteral">&quot; ** mdtUsbPortManager::fromThreadReadUntilShortPacketReceivedFinished()&quot;</span>;
-<a name="l00369"></a>00369   pvReadUntilShortPacketReceivedFinished = <span class="keyword">true</span>;
-<a name="l00370"></a>00370 }
+<a name="l00339"></a>00339   <span class="keywordflow">return</span> frames;
+<a name="l00340"></a>00340 }
+<a name="l00341"></a>00341 
+<a name="l00342"></a><a class="code" href="classmdt_usb_port_manager.html#a982256ed17db155e1c95d544683a6dba">00342</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_manager.html#a4c44ce6ec40c4afc6be441c10d7ee827" title="Flush input buffers.">mdtUsbPortManager::flushIn</a>(<span class="keywordtype">bool</span> flushPortManagerBuffers, <span class="keywordtype">bool</span> flushPortBuffers)
+<a name="l00343"></a>00343 {
+<a name="l00344"></a>00344   Q_ASSERT(pvPort != 0);
+<a name="l00345"></a>00345 
+<a name="l00346"></a>00346   <span class="keywordflow">if</span>(flushPortManagerBuffers){
+<a name="l00347"></a>00347     pvReadenControlResponses.clear();
+<a name="l00348"></a>00348     qDebug() &lt;&lt; <span class="stringliteral">&quot;*1*2* Control responses cleared&quot;</span>;
+<a name="l00349"></a>00349   }
+<a name="l00350"></a>00350   <a class="code" href="classmdt_port_manager.html#a4c44ce6ec40c4afc6be441c10d7ee827" title="Flush input buffers.">mdtPortManager::flushIn</a>(flushPortManagerBuffers, flushPortBuffers);
+<a name="l00351"></a>00351 }
+<a name="l00352"></a>00352 
+<a name="l00353"></a><a class="code" href="classmdt_usb_port_manager.html#ab723086376175c40635df44adf358985">00353</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_manager.html#ab34018a9653a5af784fa7da06a9e50d3" title="Flush output buffers.">mdtUsbPortManager::flushOut</a>(<span class="keywordtype">bool</span> flushPortManagerBuffers, <span class="keywordtype">bool</span> flushPortBuffers)
+<a name="l00354"></a>00354 {
+<a name="l00355"></a>00355   Q_ASSERT(pvPort != 0);
+<a name="l00356"></a>00356 
+<a name="l00357"></a>00357   <a class="code" href="classmdt_port_manager.html#ab34018a9653a5af784fa7da06a9e50d3" title="Flush output buffers.">mdtPortManager::flushOut</a>(flushPortManagerBuffers, flushPortBuffers);
+<a name="l00358"></a>00358 }
+<a name="l00359"></a>00359 
+<a name="l00360"></a><a class="code" href="classmdt_usb_port_manager.html#af043c75c74665b23d13f3cb73150935c">00360</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#af043c75c74665b23d13f3cb73150935c" title="Called from USB thread when a control reply was received.">mdtUsbPortManager::fromThreadControlResponseReaden</a>()
+<a name="l00361"></a>00361 {
+<a name="l00362"></a>00362   qDebug() &lt;&lt; <span class="stringliteral">&quot; *= mdtUsbPortManager::fromThreadControlResponseReaden(): control response !!!!&quot;</span>;
+<a name="l00363"></a>00363   Q_ASSERT(pvPort != 0);
+<a name="l00364"></a>00364 
+<a name="l00365"></a>00365   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port;
+<a name="l00366"></a>00366   <a class="code" href="classmdt_frame_usb_control.html" title="USB Control frame.">mdtFrameUsbControl</a> *frame;
+<a name="l00367"></a>00367 
+<a name="l00368"></a>00368   <span class="comment">// We need a mdtUsbPort object</span>
+<a name="l00369"></a>00369   port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span>(pvPort);
+<a name="l00370"></a>00370   Q_ASSERT(port != 0);
 <a name="l00371"></a>00371 
-<a name="l00372"></a><a class="code" href="classmdt_usb_port_manager.html#ad6cbef2c218efe73fdad6d5f598f743f">00372</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#ad6cbef2c218efe73fdad6d5f598f743f" title="Manage errors comming from usb port thread.">mdtUsbPortManager::onThreadsErrorOccured</a>(<span class="keywordtype">int</span> error)
-<a name="l00373"></a>00373 {
-<a name="l00374"></a>00374   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtUsbPortManager::onThreadsErrorOccured(): &quot;</span> &lt;&lt; (<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>)error;
-<a name="l00375"></a>00375   
-<a name="l00376"></a>00376   <span class="keywordflow">switch</span>(error){
-<a name="l00377"></a>00377     <span class="keywordflow">case</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea44eaa84d8f888f4f9d5c814291e54079">mdtAbstractPort::ControlCanceled</a>:
-<a name="l00378"></a>00378       emit(<a class="code" href="classmdt_port_manager.html#a30fac00920ab8d760df777f917183add" title="Handled error event.">handledError</a>());
-<a name="l00379"></a>00379       <span class="keywordflow">break</span>;
-<a name="l00380"></a>00380     <span class="keywordflow">case</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eabdb5a36cd2c7dd2dcf59e996fc4922c9">mdtAbstractPort::ControlTimeout</a>:
-<a name="l00381"></a>00381       emit(<a class="code" href="classmdt_port_manager.html#a0936c65454409ffcf64ecb0632f6dbe3" title="Device busy event event.">busy</a>());
-<a name="l00382"></a>00382       <span class="keywordflow">break</span>;
-<a name="l00383"></a>00383     <span class="keywordflow">case</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>:
-<a name="l00384"></a>00384       emit(<a class="code" href="classmdt_port_manager.html#a75111efb0c8956ddc98a87a9aedec695" title="Unhandled error event.">unhandledError</a>());
-<a name="l00385"></a>00385       <span class="keywordflow">break</span>;
-<a name="l00386"></a>00386     <span class="keywordflow">default</span>:
-<a name="l00387"></a>00387       <a class="code" href="classmdt_usb_port_manager.html#ad6cbef2c218efe73fdad6d5f598f743f" title="Manage errors comming from usb port thread.">mdtPortManager::onThreadsErrorOccured</a>(error);
-<a name="l00388"></a>00388   }
-<a name="l00389"></a>00389 }
+<a name="l00372"></a>00372   <span class="comment">// Get frames in readen queue</span>
+<a name="l00373"></a>00373   <a class="code" href="classmdt_port_manager.html#a3107b7121dfe5b9686d9b3b3a48a0af0" title="Lock the port&#39;s mutex.">lockPortMutex</a>();
+<a name="l00374"></a>00374   <span class="keywordflow">while</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().size() &gt; 0){
+<a name="l00375"></a>00375     frame = port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().dequeue();
+<a name="l00376"></a>00376     Q_ASSERT(frame != 0);
+<a name="l00377"></a>00377     <span class="comment">// Copy data</span>
+<a name="l00378"></a>00378     qDebug() &lt;&lt; <span class="stringliteral">&quot; *= mdtUsbPortManager::fromThreadControlResponseReaden(): add data ...&quot;</span>;
+<a name="l00379"></a>00379     pvReadenControlResponses.enqueue(*frame);
+<a name="l00380"></a>00380     <span class="comment">// Restore frame back into pool</span>
+<a name="l00381"></a>00381     port-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().enqueue(frame);
+<a name="l00382"></a>00382   };
+<a name="l00383"></a>00383   <a class="code" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex</a>();
+<a name="l00384"></a>00384   <span class="comment">// Watch queue size</span>
+<a name="l00385"></a>00385   qDebug() &lt;&lt; <span class="stringliteral">&quot; *= mdtUsbPortManager::fromThreadControlResponseReaden(): queue size: &quot;</span> &lt;&lt; pvReadenControlResponses.size();
+<a name="l00386"></a>00386   <span class="keywordflow">if</span>(pvReadenControlResponses.size() &gt; 20){
+<a name="l00387"></a>00387     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Readen control resonses queue is largen than 20 items, will be leared (this is a bug)&quot;</span>, mdtError::Error);
+<a name="l00388"></a>00388     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortManager&quot;</span>);
+<a name="l00389"></a>00389     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00390"></a>00390     pvReadenControlResponses.clear();
+<a name="l00391"></a>00391   }
+<a name="l00392"></a>00392 }
+<a name="l00393"></a>00393 
+<a name="l00394"></a><a class="code" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa">00394</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa" title="Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint)...">mdtUsbPortManager::fromThreadMessageInReaden</a>()
+<a name="l00395"></a>00395 {
+<a name="l00396"></a>00396   qDebug() &lt;&lt; <span class="stringliteral">&quot; ** mdtUsbPortManager::fromThreadMessageInReaden(): message IN !!!!&quot;</span>;
+<a name="l00397"></a>00397 }
+<a name="l00398"></a>00398 
+<a name="l00399"></a><a class="code" href="classmdt_usb_port_manager.html#a8f53dc5445b7f8f4a077f3cc25880b5d">00399</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#a8f53dc5445b7f8f4a077f3cc25880b5d" title="Called by thread when the read until a short packet process is finished.">mdtUsbPortManager::fromThreadReadUntilShortPacketReceivedFinished</a>()
+<a name="l00400"></a>00400 {
+<a name="l00401"></a>00401   qDebug() &lt;&lt; <span class="stringliteral">&quot; ** mdtUsbPortManager::fromThreadReadUntilShortPacketReceivedFinished()&quot;</span>;
+<a name="l00402"></a>00402   pvReadUntilShortPacketReceivedFinished = <span class="keyword">true</span>;
+<a name="l00403"></a>00403 }
+<a name="l00404"></a>00404 
+<a name="l00405"></a><a class="code" href="classmdt_usb_port_manager.html#ad6cbef2c218efe73fdad6d5f598f743f">00405</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_manager.html#ad6cbef2c218efe73fdad6d5f598f743f" title="Manage errors comming from usb port thread.">mdtUsbPortManager::onThreadsErrorOccured</a>(<span class="keywordtype">int</span> error)
+<a name="l00406"></a>00406 {
+<a name="l00407"></a>00407   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtUsbPortManager::onThreadsErrorOccured(): &quot;</span> &lt;&lt; (<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>)error;
+<a name="l00408"></a>00408   
+<a name="l00409"></a>00409   <span class="keywordflow">switch</span>(error){
+<a name="l00410"></a>00410     <span class="keywordflow">case</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea44eaa84d8f888f4f9d5c814291e54079">mdtAbstractPort::ControlCanceled</a>:
+<a name="l00412"></a>00412       <span class="keywordflow">break</span>;
+<a name="l00413"></a>00413     <span class="keywordflow">case</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eabdb5a36cd2c7dd2dcf59e996fc4922c9">mdtAbstractPort::ControlTimeout</a>:
+<a name="l00415"></a>00415       <span class="keywordflow">break</span>;
+<a name="l00416"></a>00416     <span class="keywordflow">case</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>:
+<a name="l00417"></a>00417       emit <a class="code" href="classmdt_port_manager.html#a94d3fa4a26f8686449313a54003f0b4d" title="Sent when a unhandled error occured.">pmUnhandledErrorEvent</a>();
+<a name="l00418"></a>00418       <span class="keywordflow">break</span>;
+<a name="l00419"></a>00419     <span class="keywordflow">default</span>:
+<a name="l00420"></a>00420       <a class="code" href="classmdt_usb_port_manager.html#ad6cbef2c218efe73fdad6d5f598f743f" title="Manage errors comming from usb port thread.">mdtPortManager::onThreadsErrorOccured</a>(error);
+<a name="l00421"></a>00421   }
+<a name="l00422"></a>00422 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -440,7 +453,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:06 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

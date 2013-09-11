@@ -124,6 +124,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit a read transfer.  <a href="#a5e380852b8726f71e8558c86cba5bd1f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881">cancelReadTransfer</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel current bulk/interrupt input transfer.  <a href="#a3570b708f9f51408e4bbf2f61cc8c881"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#af940b6fe25e874ff0746686bc30c4f2c">clearReadEndpointHalt</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear halt on read endpoint.  <a href="#af940b6fe25e874ff0746686bc30c4f2c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36">waitForReadyRead</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#ab8ddd4ebee603ac381e8da0383a61e36"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d">read</a> (char *data, qint64 maxSize)</td></tr>
@@ -142,6 +144,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a new bulk/interrupt out transfer.  <a href="#a3340dc3f53e857e39053988e4925fc97"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a7cbe1cd3649861aac5e6a14830f06cf9">cancelWriteTransfer</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel current bulk/interrupt input transfer.  <a href="#a7cbe1cd3649861aac5e6a14830f06cf9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a2dd0f7c680fda1ca1247217fa4e3f2e8">clearWriteEndpointHalt</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear halt on write endpoint.  <a href="#a2dd0f7c680fda1ca1247217fa4e3f2e8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7">waitEventWriteReady</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a3be875f6f10ae94fd3a94f925bb935e7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#ae777e33325ff2adef326dd7f81b00838">write</a> (const char *, qint64)</td></tr>
@@ -158,6 +162,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current read endpoint address.  <a href="#a860e89069ba433e6174c032a28d0eae2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">quint8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#ae2319ee6ff5a2f4399410175fbac6a44">currentWriteEndpointAddress</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current write endpoint address.  <a href="#ae2319ee6ff5a2f4399410175fbac6a44"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; quint8 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a0ad07939f4709240b0c79c501edc9498">expectedBulkInbTags</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get list of expeced incomming bTags.  <a href="#a0ad07939f4709240b0c79c501edc9498"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a84ddd2d0bf77b4db60358846c7da4853">controlTransferCallback</a> (struct libusb_transfer *transfer)</td></tr>
@@ -254,7 +260,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Used by transfer callbacks</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00923">923</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00954">954</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -280,7 +286,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00726">726</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00742">742</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -322,7 +328,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Cancel current interrupt message input transfer. </p>
 <p>Used by <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>, should not be used else. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00677">677</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00693">693</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -365,7 +371,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Will cancel all pending transfers.</p>
 <p>Used by <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>, should not be used else. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00938">938</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00969">969</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -386,7 +392,49 @@ Static Public Member Functions</h2></td></tr>
 <p>Cancel current bulk/interrupt input transfer. </p>
 <p>Used by <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>, should not be used else. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00856">856</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00872">872</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af940b6fe25e874ff0746686bc30c4f2c"></a><!-- doxytag: member="mdtUsbPort::clearReadEndpointHalt" ref="af940b6fe25e874ff0746686bc30c4f2c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPort::clearReadEndpointHalt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clear halt on read endpoint. </p>
+<p>This is a blocking method, and should only be called by port thread. Active read transfers should be canceled before using this method ( see <a class="el" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881" title="Cancel current bulk/interrupt input transfer.">cancelReadTransfer()</a> ). </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00526">526</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2dd0f7c680fda1ca1247217fa4e3f2e8"></a><!-- doxytag: member="mdtUsbPort::clearWriteEndpointHalt" ref="a2dd0f7c680fda1ca1247217fa4e3f2e8" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPort::clearWriteEndpointHalt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clear halt on write endpoint. </p>
+<p>This is a blocking method, and should only be called by port thread. Active write transfers should be canceled before using this method ( see <a class="el" href="classmdt_usb_port.html#a7cbe1cd3649861aac5e6a14830f06cf9" title="Cancel current bulk/interrupt input transfer.">cancelWriteTransfer()</a> ). </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00912">912</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -501,7 +549,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <p>Get current read endpoint address. </p>
 <p>Note: mutex is not handled by this method </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00996">996</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l01027">1027</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -522,7 +570,28 @@ transfer-&gt;user_data must be valid </dd></dl>
 <p>Get current write endpoint address. </p>
 <p>Note: mutex is not handled by this method </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l01001">1001</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l01032">1032</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0ad07939f4709240b0c79c501edc9498"></a><!-- doxytag: member="mdtUsbPort::expectedBulkInbTags" ref="a0ad07939f4709240b0c79c501edc9498" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QQueue&lt; quint8 &gt; &amp; mdtUsbPort::expectedBulkInbTags </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get list of expeced incomming bTags. </p>
+<p>This method is used by <a class="el" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> and <a class="el" href="classmdt_usbtmc_port_thread.html">mdtUsbtmcPortThread</a> and should not be used else. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l01037">1037</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -544,7 +613,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <p>Notes: must be called only by I/O thread (typically <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>). This method unlocks the mutex during wait (must be locked by call, is locked again before return)</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NoError or <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> error (Note: timeout is ignored here) </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00962">962</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00993">993</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -569,7 +638,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <p>Mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NoError or a error from <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00560">560</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00576">576</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -630,7 +699,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <p>Mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NoError or a error from <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00744">744</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00760">760</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -652,7 +721,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <p>Will clear internal list (a second call will return a empty list)</p>
 <p>Used by <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>, should not be used else. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00928">928</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00959">959</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -674,7 +743,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <p>This queue contains the message IN frames.</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00721">721</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00737">737</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -696,7 +765,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <p>This queue contains the pool of message IN frames.</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00716">716</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00732">732</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -723,7 +792,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <dd>
 transfer-&gt;user_data must be valid </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00592">592</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00608">608</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -760,7 +829,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00531">531</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00547">547</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -783,7 +852,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <p>This method is used by USB thread, and should not be used else.</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00555">555</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00571">571</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -979,7 +1048,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00897">897</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00928">928</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1002,7 +1071,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00526">526</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00542">542</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1037,7 +1106,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00902">902</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00933">933</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1064,7 +1133,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 <dd>
 transfer-&gt;user_data must be valid </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00798">798</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00814">814</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1087,7 +1156,7 @@ transfer-&gt;user_data must be valid </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

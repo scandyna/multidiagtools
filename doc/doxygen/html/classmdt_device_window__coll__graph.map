@@ -1,5 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_port_status_widget.html" title="mdtPortStatusWidget" alt="" coords="93,328,240,357"/>
+<area shape="rect" id="node2" href="$classmdt_port_status_widget.html" title="Helper class to display port/device state and messages." alt="" coords="93,328,240,357"/>
 <area shape="rect" id="node4" href="$classmdt_blink_led.html" title="Blinking LED." alt="" coords="5,197,99,227"/>
 <area shape="rect" id="node6" href="$classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="20,101,84,131"/>
 <area shape="rect" id="node8" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="123,197,229,227"/>

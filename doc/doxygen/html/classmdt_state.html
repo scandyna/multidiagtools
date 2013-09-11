@@ -96,6 +96,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6dabbc771acb33f16c3caf169414d53"></a><!-- doxytag: member="mdtState::text" ref="ab6dabbc771acb33f16c3caf169414d53" args="() const " -->
 QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_state.html#ab6dabbc771acb33f16c3caf169414d53">text</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get text of the state. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_state.html#a0a8a66a96a1e37cefc4367e3a5d71d8b">setLedColorId</a> (int colorId)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set LED color ID.  <a href="#a0a8a66a96a1e37cefc4367e3a5d71d8b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_state.html#ab75a482b70c27fb0e585fd1c0c343a6d">ledColorId</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get LED color ID.  <a href="#ab75a482b70c27fb0e585fd1c0c343a6d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e0bb7e259c160209e41af7d31892648"></a><!-- doxytag: member="mdtState::setLedOn" ref="a6e0bb7e259c160209e41af7d31892648" args="(bool on)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_state.html#a6e0bb7e259c160209e41af7d31892648">setLedOn</a> (bool on)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set LED ON state. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7daacab2967f6f9ab2c0e156e6295545"></a><!-- doxytag: member="mdtState::ledIsOn" ref="a7daacab2967f6f9ab2c0e156e6295545" args="() const " -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_state.html#a7daacab2967f6f9ab2c0e156e6295545">ledIsOn</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get LED ON state. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_state.html#a366f2dac01b3a4150c8966d355ecfba7">setNotifyEnteredToUi</a> (bool notify)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set notifyEnteredToUi flag.  <a href="#a366f2dac01b3a4150c8966d355ecfba7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_state.html#a8097cd281438cc58b39b9a195076d841">notifyEnteredToUi</a> () const </td></tr>
@@ -136,7 +146,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>Constructor. </p>
 <p>Will set given id, let a empty text and set notifyEnteredToUi flag false. </p>
 
-<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00023">23</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00026">26</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
 
 </div>
 </div>
@@ -178,7 +188,28 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>Get ID. </p>
 <p>The id can typically be used with enums (STATE_READY, ...) </p>
 
-<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab75a482b70c27fb0e585fd1c0c343a6d"></a><!-- doxytag: member="mdtState::ledColorId" ref="ab75a482b70c27fb0e585fd1c0c343a6d" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtState::ledColorId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get LED color ID. </p>
+<p>The color ID can, for example, be used with <a class="el" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED">mdtLed</a> color enum. It was choosen store this id in int format, because <a class="el" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED">mdtLed</a> is in mdtUtilsGui package (we not want to depend on it). </p>
+
+<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00066">66</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
 
 </div>
 </div>
@@ -199,7 +230,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>Get notifyEnteredToUi flag. </p>
 <p>If notifyEnteredToUi is true, <a class="el" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine.">mdtStateMachine</a> will emit stateChangedForUi() signal each time this state was entered. </p>
 
-<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00086">86</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
 
 </div>
 </div>
@@ -221,7 +252,29 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>Set state ID. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_state.html#a034345dce9f3d0c976d5987bd42dc1cf" title="Get ID.">id()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00035">35</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0a8a66a96a1e37cefc4367e3a5d71d8b"></a><!-- doxytag: member="mdtState::setLedColorId" ref="a0a8a66a96a1e37cefc4367e3a5d71d8b" args="(int colorId)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtState::setLedColorId </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>colorId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set LED color ID. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_state.html#ab75a482b70c27fb0e585fd1c0c343a6d" title="Get LED color ID.">ledColorId()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
 
 </div>
 </div>
@@ -243,7 +296,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>Set notifyEnteredToUi flag. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_state.html#a8097cd281438cc58b39b9a195076d841" title="Get notifyEnteredToUi flag.">notifyEnteredToUi()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00055">55</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_state_8cpp_source.html#l00081">81</a> of file <a class="el" href="mdt_state_8cpp_source.html">mdtState.cpp</a>.</p>
 
 </div>
 </div>
@@ -266,7 +319,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

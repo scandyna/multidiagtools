@@ -91,8 +91,11 @@ Collaboration diagram for mdtBlinkLed:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f">setOn</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LED ON.  <a href="#ae51c54f31a11dbaebe69ab2c0b814d0f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae51c54f31a11dbaebe69ab2c0b814d0f"></a><!-- doxytag: member="mdtBlinkLed::setOn" ref="ae51c54f31a11dbaebe69ab2c0b814d0f" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f">setOn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LED ON. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_blink_led.html#aae5bb31d3d9a428717771cd926aa1d33">setOn</a> (bool on)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LED ON or OFF.  <a href="#aae5bb31d3d9a428717771cd926aa1d33"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_blink_led.html#aab370ebe5c53203947e49e794d0959a7">setOn</a> (int holdTime, bool priority=false)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LED ON for a given time.  <a href="#aab370ebe5c53203947e49e794d0959a7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_blink_led.html#a951465e8a9ae5167e7eb05a7107ab13f">setOff</a> ()</td></tr>
@@ -187,29 +190,36 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_led.html#a4c8f5f6aa91b7c90ae6b1aa4933ba6e0">mdtLed</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_blink_led_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_blink_led_8cpp_source.html">mdtBlinkLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_blink_led_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_blink_led_8cpp_source.html">mdtBlinkLed.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae51c54f31a11dbaebe69ab2c0b814d0f"></a><!-- doxytag: member="mdtBlinkLed::setOn" ref="ae51c54f31a11dbaebe69ab2c0b814d0f" args="()" -->
+<a class="anchor" id="aae5bb31d3d9a428717771cd926aa1d33"></a><!-- doxytag: member="mdtBlinkLed::setOn" ref="aae5bb31d3d9a428717771cd926aa1d33" args="(bool on)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void mdtBlinkLed::setOn </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>on</em></td><td>)</td>
           <td><code> [slot]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Set the LED ON. </p>
+<p>Set the LED ON or OFF. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">on</td><td>If true, the LED is set ON , else OFF </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Reimplemented from <a class="el" href="classmdt_led.html#a389ee3e0082ce8fa38cb258944a04892">mdtLed</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_led.html#aabbe7fcb23d539946dffec4526c89495">mdtLed</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_blink_led_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_blink_led_8cpp_source.html">mdtBlinkLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_blink_led_8cpp_source.html#l00054">54</a> of file <a class="el" href="mdt_blink_led_8cpp_source.html">mdtBlinkLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -239,7 +249,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Set the LED ON for a given time. </p>
-<p>The LED will set ON and hold this state for specified time. After this time, the LED goes back OFF. </p>
+<p>The LED will set ON and hold this state for specified time. After this time, the LED goes back OFF.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">holdTime</td><td>ON state hold time [ms] </td></tr>
@@ -248,7 +258,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_blink_led_8cpp_source.html#l00054">54</a> of file <a class="el" href="mdt_blink_led_8cpp_source.html">mdtBlinkLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_blink_led_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_blink_led_8cpp_source.html">mdtBlinkLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -271,7 +281,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:07 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -67,7 +67,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">mdtPortStatusWidget Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtPortStatusWidget" --><div class="dynheader">
+<!-- doxytag: class="mdtPortStatusWidget" -->
+<p>Helper class to display port/device state and messages.  
+ <a href="classmdt_port_status_widget.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="mdt_port_status_widget_8h_source.html">mdtPortStatusWidget.h</a>&gt;</code></p>
+<div class="dynheader">
 Collaboration diagram for mdtPortStatusWidget:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_status_widget__coll__graph.png" border="0" usemap="#mdt_port_status_widget_coll__map" alt="Collaboration graph"/></div>
@@ -79,8 +84,8 @@ Collaboration diagram for mdtPortStatusWidget:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a356064b89de5c7c8d1c8d5639d1d8f73">setState</a> (int state)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set state.  <a href="#a356064b89de5c7c8d1c8d5639d1d8f73"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a489b587cd7be7dd6ae6f2782565553bf">setState</a> (int id, const QString &amp;text, int ledColorId, bool ledIsOn)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set state.  <a href="#a489b587cd7be7dd6ae6f2782565553bf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81">showMessage</a> (const QString &amp;message, const QString &amp;details, int timeout=0)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to show a message and details.  <a href="#a8fce28ddb290512f5681cf800ac17b81"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
@@ -88,6 +93,9 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac92d61928204f88704de3f597d5754c7"></a><!-- doxytag: member="mdtPortStatusWidget::mdtPortStatusWidget" ref="ac92d61928204f88704de3f597d5754c7" args="(QWidget *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#ac92d61928204f88704de3f597d5754c7">mdtPortStatusWidget</a> (QWidget *parent=0)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a status widget with default texts. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a239dbbcdc412d2cd332c665a55ecfa9b"></a><!-- doxytag: member="mdtPortStatusWidget::~mdtPortStatusWidget" ref="a239dbbcdc412d2cd332c665a55ecfa9b" args="()" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a239dbbcdc412d2cd332c665a55ecfa9b">~mdtPortStatusWidget</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a8e87596be48b5cfda6703c42655b2f25">enableTxRxLeds</a> (<a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *txThread, <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *rxThread)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the TX/RX LEDs.  <a href="#a8e87596be48b5cfda6703c42655b2f25"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af57ccc9a560d8ae1a49bc57a774a7db7"></a><!-- doxytag: member="mdtPortStatusWidget::disableTxRxLeds" ref="af57ccc9a560d8ae1a49bc57a774a7db7" args="()" -->
@@ -97,37 +105,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a custom widget.  <a href="#ac14c1207abd242248538815542cb9068"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a108227f8f64dd69edd2dcdca2b52b8a0">removeCustomWidget</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the custom widget.  <a href="#a108227f8f64dd69edd2dcdca2b52b8a0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa0b9020b56e33ea2a6c680552447228"></a><!-- doxytag: member="mdtPortStatusWidget::setDefaultStateTexts" ref="afa0b9020b56e33ea2a6c680552447228" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#afa0b9020b56e33ea2a6c680552447228">setDefaultStateTexts</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set default state texts. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3961e272b2a124e8c989084e5c263e18"></a><!-- doxytag: member="mdtPortStatusWidget::setStateReadyText" ref="a3961e272b2a124e8c989084e5c263e18" args="(const QString &amp;text)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a3961e272b2a124e8c989084e5c263e18">setStateReadyText</a> (const QString &amp;text)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set text for ready state. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3bf9ad36ee604e993a4802701c0b4f5a"></a><!-- doxytag: member="mdtPortStatusWidget::setStateDisconnectedText" ref="a3bf9ad36ee604e993a4802701c0b4f5a" args="(const QString &amp;text)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a3bf9ad36ee604e993a4802701c0b4f5a">setStateDisconnectedText</a> (const QString &amp;text)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set text for disconnected state. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20930a75418e6c6ce6beae619521d7ec"></a><!-- doxytag: member="mdtPortStatusWidget::setStateConnectingText" ref="a20930a75418e6c6ce6beae619521d7ec" args="(const QString &amp;text)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a20930a75418e6c6ce6beae619521d7ec">setStateConnectingText</a> (const QString &amp;text)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set text for connecting state. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e74bad896b205add3183e1442f0d7d3"></a><!-- doxytag: member="mdtPortStatusWidget::setStateBusyText" ref="a5e74bad896b205add3183e1442f0d7d3" args="(const QString &amp;text)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a5e74bad896b205add3183e1442f0d7d3">setStateBusyText</a> (const QString &amp;text)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set text for busy state. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afbf619cd274d866a2c0c06444a13dc75"></a><!-- doxytag: member="mdtPortStatusWidget::setDefaultStateColors" ref="afbf619cd274d866a2c0c06444a13dc75" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#afbf619cd274d866a2c0c06444a13dc75">setDefaultStateColors</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set default state colors. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4930dd9b6e88b3b87cd99d5af25d9707"></a><!-- doxytag: member="mdtPortStatusWidget::setStateReadyColor" ref="a4930dd9b6e88b3b87cd99d5af25d9707" args="(mdtLed::color_t color)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a4930dd9b6e88b3b87cd99d5af25d9707">setStateReadyColor</a> (<a class="el" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef">mdtLed::color_t</a> color)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set color for ready state. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac46df457ec12e933c991d2954688c432"></a><!-- doxytag: member="mdtPortStatusWidget::setStateConnectingColor" ref="ac46df457ec12e933c991d2954688c432" args="(mdtLed::color_t color)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#ac46df457ec12e933c991d2954688c432">setStateConnectingColor</a> (<a class="el" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef">mdtLed::color_t</a> color)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set color for connecting state. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ed8af43258073bf57005232202e3137"></a><!-- doxytag: member="mdtPortStatusWidget::setStateBusyColor" ref="a5ed8af43258073bf57005232202e3137" args="(mdtLed::color_t color)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a5ed8af43258073bf57005232202e3137">setStateBusyColor</a> (<a class="el" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef">mdtLed::color_t</a> color)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set color for busy state. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314">setPermanentText</a> (const QString &amp;text)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the permanent text.  <a href="#a1b7fd23b45d75ccc106242026f3f8314"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="mdt_port_status_widget_8h_source.html#l00038">38</a> of file <a class="el" href="mdt_port_status_widget_8h_source.html">mdtPortStatusWidget.h</a>.</p>
+<div class="textblock"><p>Helper class to display port/device state and messages. </p>
+<p>This widget contains 4 parts:</p>
+<ul>
+<li>A push button that opens a message box with details</li>
+<li>A status region with a LED and a text area</li>
+<li>A custom widget place holder</li>
+<li>A fixed text area (typically usefull to display wich port is open, f.ex.) </li>
+</ul>
+
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8h_source.html#l00043">43</a> of file <a class="el" href="mdt_port_status_widget_8h_source.html">mdtPortStatusWidget.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ac14c1207abd242248538815542cb9068"></a><!-- doxytag: member="mdtPortStatusWidget::addCustomWidget" ref="ac14c1207abd242248538815542cb9068" args="(QWidget *widget)" -->
 <div class="memitem">
@@ -147,7 +138,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Add a custom widget. </p>
 <p>One custom widget can be added. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -179,7 +170,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Enable the TX/RX LEDs. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>txThread and rxThread must be valid. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -200,11 +191,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Remove the custom widget. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_status_widget.html#ac14c1207abd242248538815542cb9068" title="Add a custom widget.">addCustomWidget()</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00142">142</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00140">140</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a356064b89de5c7c8d1c8d5639d1d8f73"></a><!-- doxytag: member="mdtPortStatusWidget::setState" ref="a356064b89de5c7c8d1c8d5639d1d8f73" args="(int state)" -->
+<a class="anchor" id="a1b7fd23b45d75ccc106242026f3f8314"></a><!-- doxytag: member="mdtPortStatusWidget::setPermanentText" ref="a1b7fd23b45d75ccc106242026f3f8314" args="(const QString &amp;text)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortStatusWidget::setPermanentText </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the permanent text. </p>
+<p>Note: permanent text is allways visible </p>
+
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00150">150</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a489b587cd7be7dd6ae6f2782565553bf"></a><!-- doxytag: member="mdtPortStatusWidget::setState" ref="a489b587cd7be7dd6ae6f2782565553bf" args="(int id, const QString &amp;text, int ledColorId, bool ledIsOn)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -212,23 +225,39 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname">void mdtPortStatusWidget::setState </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>state</em></td><td>)</td>
-          <td><code> [slot]</code></td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ledColorId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>ledIsOn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [slot]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Set state. </p>
-<p>States are defined in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a></p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">state</td><td>A state as define in mdeDevice </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>States are defined in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> </p>
 
-<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00202">202</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00155">155</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -273,10 +302,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>Implement details ! </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>Implement details ! </dd></dl>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00231">231</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00167">167</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -299,7 +328,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:10 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

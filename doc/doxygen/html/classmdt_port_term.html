@@ -77,7 +77,7 @@ Collaboration diagram for mdtPortTerm:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_term__coll__graph.png" border="0" usemap="#mdt_port_term_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_term_coll__map" id="mdt_port_term_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="683,287,800,316"/><area shape="rect" id="node22" href="classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API." alt="" coords="947,268,1088,297"/><area shape="rect" id="node25" href="classmdt_serial_port_manager.html" title="Serial port manager class." alt="" coords="943,207,1092,236"/><area shape="rect" id="node4" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="420,209,527,239"/><area shape="rect" id="node13" href="classmdt_port_status_widget.html" title="mdtPortStatusWidget" alt="" coords="1311,149,1457,179"/><area shape="rect" id="node28" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="663,207,820,236"/><area shape="rect" id="node6" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="213,257,331,287"/><area shape="rect" id="node8" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,257,112,287"/><area shape="rect" id="node10" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="428,349,519,379"/><area shape="rect" id="node15" href="classmdt_blink_led.html" title="Blinking LED." alt="" coords="971,100,1064,129"/><area shape="rect" id="node17" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="709,73,773,103"/><area shape="rect" id="node31" href="classmdt_serial_port_ctl_widget.html" title="mdtSerialPortCtlWidget" alt="" coords="1119,37,1276,67"/><area shape="rect" id="node20" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="1303,268,1465,297"/></map>
+<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="829,316,947,345"/><area shape="rect" id="node29" href="classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API." alt="" coords="1093,340,1235,369"/><area shape="rect" id="node32" href="classmdt_serial_port_manager.html" title="Serial port manager class." alt="" coords="1089,393,1239,423"/><area shape="rect" id="node4" href="classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="465,223,663,252"/><area shape="rect" id="node6" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="252,5,375,35"/><area shape="rect" id="node8" href="classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="21,213,96,243"/><area shape="rect" id="node11" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="511,409,617,439"/><area shape="rect" id="node20" href="classmdt_port_status_widget.html" title="Helper class to display port/device state and messages." alt="" coords="1457,459,1604,488"/><area shape="rect" id="node35" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="809,400,967,429"/><area shape="rect" id="node13" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="255,329,372,359"/><area shape="rect" id="node15" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,329,112,359"/><area shape="rect" id="node17" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="519,341,609,371"/><area shape="rect" id="node22" href="classmdt_blink_led.html" title="Blinking LED." alt="" coords="1117,520,1211,549"/><area shape="rect" id="node24" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="856,556,920,585"/><area shape="rect" id="node38" href="classmdt_serial_port_ctl_widget.html" title="mdtSerialPortCtlWidget" alt="" coords="1265,585,1423,615"/><area shape="rect" id="node27" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="1449,340,1612,369"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_term-members.html">List of all members.</a></p>
@@ -100,7 +100,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Retranslate.  <a href="#a542e20f789bcdc5f2ddf2b6e698ceea2"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_term.html#a5e93890f53b5112be80983779a3ab233">mdtPortTerm</a> (QWidget *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e93890f53b5112be80983779a3ab233"></a><!-- doxytag: member="mdtPortTerm::mdtPortTerm" ref="a5e93890f53b5112be80983779a3ab233" args="(QWidget *parent=0)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>mdtPortTerm</b> (QWidget *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6f97444089eb87ec5db557a2ccb24db"></a><!-- doxytag: member="mdtPortTerm::setAvailableTranslations" ref="af6f97444089eb87ec5db557a2ccb24db" args="(const QMap&lt; QString, QString &gt; &amp;avaliableTranslations, const QString &amp;currentTranslationKey)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_term.html#af6f97444089eb87ec5db557a2ccb24db">setAvailableTranslations</a> (const QMap&lt; QString, QString &gt; &amp;avaliableTranslations, const QString &amp;currentTranslationKey)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the translations menu. <br/></td></tr>
@@ -109,30 +110,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="textblock"><p>Mini port treminal. </p>
 
 <p>Definition at line <a class="el" href="mdt_port_term_8h_source.html#l00044">44</a> of file <a class="el" href="mdt_port_term_8h_source.html">mdtPortTerm.h</a>.</p>
-</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a5e93890f53b5112be80983779a3ab233"></a><!-- doxytag: member="mdtPortTerm::mdtPortTerm" ref="a5e93890f53b5112be80983779a3ab233" args="(QWidget *parent=0)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mdtPortTerm::mdtPortTerm </td>
-          <td>(</td>
-          <td class="paramtype">QWidget *&#160;</td>
-          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p><p>action_SerialPort-&gt;setChecked(true); attachToSerialPort(); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
-
-</div>
-</div>
-<hr/><h2>Member Function Documentation</h2>
+</div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a542e20f789bcdc5f2ddf2b6e698ceea2"></a><!-- doxytag: member="mdtPortTerm::retranslate" ref="a542e20f789bcdc5f2ddf2b6e698ceea2" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -150,7 +128,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Retranslate. </p>
 <p>This slot is called by <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> when language has changed </p>
 
-<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00148">148</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
 
 </div>
 </div>
@@ -173,7 +151,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:10 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

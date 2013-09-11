@@ -11,6 +11,26 @@ Extend Qt's QStateMachine.
 
 {\ttfamily \#include $<$mdtStateMachine.h$>$}
 
+
+
+Inheritance diagram for mdtStateMachine:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{classmdt_state_machine__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtStateMachine:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=193pt]{classmdt_state_machine__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
@@ -19,7 +39,7 @@ void \hyperlink{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{stateC
 \label{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}
 
 \begin{DoxyCompactList}\small\item\em Emitted each time the state changed. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_state_machine_ace677654f9ef9d7c1620c1c9f740ae0b}{stateChangedForUi} (int id, const QString \&text)
+void \hyperlink{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{stateChangedForUi} (int id, const QString \&text, int ledColorId, bool ledIsOn)
 \begin{DoxyCompactList}\small\item\em Emitted only if a state that must be notified is entered. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -31,15 +51,15 @@ virtual \hyperlink{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}{$\s
 \label{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}
 
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_state_machine_a827fffcccafebfdf0dddb6a65d75b0bf}{addState} (\hyperlink{classmdt_state}{mdtState} $\ast$state)
-\begin{DoxyCompactList}\small\item\em Add a new state to state machine. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{
 int \hyperlink{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{currentState} () const }
 \label{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}
 
 \begin{DoxyCompactList}\small\item\em Get current state. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{waitOnState} (int state, int timeout=-\/1)
-\begin{DoxyCompactList}\small\item\em Wait until a state is reached. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Wait until a state is reached. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}{notifyCurrentState} ()
+\begin{DoxyCompactList}\small\item\em Notify current state. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -79,38 +99,37 @@ Definition at line 27 of file mdtStateMachine.cpp.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_state_machine_a827fffcccafebfdf0dddb6a65d75b0bf}{
-\index{mdtStateMachine@{mdtStateMachine}!addState@{addState}}
-\index{addState@{addState}!mdtStateMachine@{mdtStateMachine}}
-\subsubsection[{addState}]{\setlength{\rightskip}{0pt plus 5cm}void mdtStateMachine::addState (
+\hypertarget{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}{
+\index{mdtStateMachine@{mdtStateMachine}!notifyCurrentState@{notifyCurrentState}}
+\index{notifyCurrentState@{notifyCurrentState}!mdtStateMachine@{mdtStateMachine}}
+\subsubsection[{notifyCurrentState}]{\setlength{\rightskip}{0pt plus 5cm}void mdtStateMachine::notifyCurrentState (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtState} $\ast$}]{state}
+{}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_state_machine_a827fffcccafebfdf0dddb6a65d75b0bf}
+\label{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}
 
 
-Add a new state to state machine. 
+Notify current state. 
 
-Will use QStateMachine's \hyperlink{classmdt_state_machine_a827fffcccafebfdf0dddb6a65d75b0bf}{addState()} internally.
+Will emit \hyperlink{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{stateChanged()} and \hyperlink{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{stateChangedForUi()} (if required by state).
 
-\begin{DoxyPrecond}{Precondition}
-state must be a valid pointer. 
-\end{DoxyPrecond}
+In normal way, signals are emitted when state changes. In some situation, it can be usefull to call this method explicitly (see \hyperlink{classmdt_port_manager_a0c460b47b12e38e708321be79f6343d8}{mdtPortManager::notifyCurrentState()} for a example). 
 
+Definition at line 69 of file mdtStateMachine.cpp.
 
-Definition at line 41 of file mdtStateMachine.cpp.
-
-\hypertarget{classmdt_state_machine_ace677654f9ef9d7c1620c1c9f740ae0b}{
+\hypertarget{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{
 \index{mdtStateMachine@{mdtStateMachine}!stateChangedForUi@{stateChangedForUi}}
 \index{stateChangedForUi@{stateChangedForUi}!mdtStateMachine@{mdtStateMachine}}
 \subsubsection[{stateChangedForUi}]{\setlength{\rightskip}{0pt plus 5cm}void mdtStateMachine::stateChangedForUi (
 \begin{DoxyParamCaption}
 \item[{int}]{id, }
-\item[{const QString \&}]{text}
+\item[{const QString \&}]{text, }
+\item[{int}]{ledColorId, }
+\item[{bool}]{ledIsOn}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_state_machine_ace677654f9ef9d7c1620c1c9f740ae0b}
+\label{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}
 
 
 Emitted only if a state that must be notified is entered. 
@@ -146,7 +165,7 @@ True on success, false on timeout.
 \end{DoxyReturn}
 
 
-Definition at line 54 of file mdtStateMachine.cpp.
+Definition at line 49 of file mdtStateMachine.cpp.
 
 
 

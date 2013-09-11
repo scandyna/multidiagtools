@@ -22,7 +22,8 @@ Inheritance diagram for mdtAbstractPortSetupDialog:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtAbstractPortSetupDialog:\nopagebreak
+Collaboration diagram for mdtAbstractPortSetupDialog:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -58,16 +59,18 @@ void \hyperlink{classmdt_abstract_port_setup_dialog_aa7f429788e0a6ab9d635afa1264
 \item 
 virtual void \hyperlink{classmdt_abstract_port_setup_dialog_a3393de371465c1e278711b5b2fd8d2c2}{portManagerSet} ()
 \begin{DoxyCompactList}\small\item\em Called by \hyperlink{classmdt_abstract_port_setup_dialog_a016ab988e47c7702a9400985eb95fbc5}{setPortManager()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_setup_dialog_a8df0ba3ef89cf29c9bc16c01e1aafc25}{setStatePortClosed} ()=0
+\begin{DoxyCompactList}\small\item\em Set the PortClosed state. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_setup_dialog_a6943bd9ed9fd9678c256b54c44d7227c}{setStateDisconnected} ()=0
 \begin{DoxyCompactList}\small\item\em Set the Disconnected state. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_setup_dialog_af0b938b1b8c3567c03feb02ba71307d4}{setStateConnecting} ()=0
 \begin{DoxyCompactList}\small\item\em Set the Connecting state. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_setup_dialog_a7a25a1b0377f60dad49856e7d04a1558}{setStatePortReady} ()=0
+\begin{DoxyCompactList}\small\item\em Set the PortReady state. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_setup_dialog_aac277958ac97ad7ad94135e0d152b732}{setStateReady} ()=0
-\begin{DoxyCompactList}\small\item\em Set the Ready state. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Set the Ready state (called when connected to device) \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_setup_dialog_ae69fe60533e2df56f790e2522bb81592}{setStateBusy} ()=0
 \begin{DoxyCompactList}\small\item\em Set the Busy state. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_port_setup_dialog_a0c337beb9880709807900d0eed73e9bb}{setStateWarning} ()=0
-\begin{DoxyCompactList}\small\item\em Set the Warning state. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_setup_dialog_a7cd081326d0935ea06d617b821795bb9}{setStateError} ()=0
 \begin{DoxyCompactList}\small\item\em Set the Error state. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_port_setup_dialog_ab090cd4da49eb9f2f1fc2f507bdb9717}{applySetup} ()=0
@@ -119,7 +122,7 @@ Add a widget to the options tab.
 
 Options tab is a QTabWidget 
 
-Definition at line 84 of file mdtAbstractPortSetupDialog.cpp.
+Definition at line 85 of file mdtAbstractPortSetupDialog.cpp.
 
 \hypertarget{classmdt_abstract_port_setup_dialog_ab090cd4da49eb9f2f1fc2f507bdb9717}{
 \index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!applySetup@{applySetup}}
@@ -154,7 +157,7 @@ A valid port manager must be set with \hyperlink{classmdt_abstract_port_setup_di
 \end{DoxyPrecond}
 
 
-Definition at line 58 of file mdtAbstractPortSetupDialog.cpp.
+Definition at line 59 of file mdtAbstractPortSetupDialog.cpp.
 
 \hypertarget{classmdt_abstract_port_setup_dialog_a3393de371465c1e278711b5b2fd8d2c2}{
 \index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!portManagerSet@{portManagerSet}}
@@ -171,7 +174,7 @@ Called by \hyperlink{classmdt_abstract_port_setup_dialog_a016ab988e47c7702a94009
 
 Defaul implementation does nothing 
 
-Definition at line 65 of file mdtAbstractPortSetupDialog.cpp.
+Definition at line 66 of file mdtAbstractPortSetupDialog.cpp.
 
 \hypertarget{classmdt_abstract_port_setup_dialog_ab01700b5a09fc1b6c5f6f62e77148b43}{
 \index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!setHeaderWidget@{setHeaderWidget}}
@@ -193,7 +196,7 @@ w must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 69 of file mdtAbstractPortSetupDialog.cpp.
+Definition at line 70 of file mdtAbstractPortSetupDialog.cpp.
 
 \hypertarget{classmdt_abstract_port_setup_dialog_a016ab988e47c7702a9400985eb95fbc5}{
 \index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!setPortManager@{setPortManager}}
@@ -269,6 +272,32 @@ This method must be implemented in subclass. Goal is to keep GUI coherent to cur
 
 Set the Error state. 
 
+This method must be implemented in subclass. Goal is to keep GUI coherent to current state (f.ex. disable/enable some buttons). \hypertarget{classmdt_abstract_port_setup_dialog_a8df0ba3ef89cf29c9bc16c01e1aafc25}{
+\index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!setStatePortClosed@{setStatePortClosed}}
+\index{setStatePortClosed@{setStatePortClosed}!mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}}
+\subsubsection[{setStatePortClosed}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPortSetupDialog::setStatePortClosed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_setup_dialog_a8df0ba3ef89cf29c9bc16c01e1aafc25}
+
+
+Set the PortClosed state. 
+
+This method must be implemented in subclass. Goal is to keep GUI coherent to current state (f.ex. disable/enable some buttons). \hypertarget{classmdt_abstract_port_setup_dialog_a7a25a1b0377f60dad49856e7d04a1558}{
+\index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!setStatePortReady@{setStatePortReady}}
+\index{setStatePortReady@{setStatePortReady}!mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}}
+\subsubsection[{setStatePortReady}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPortSetupDialog::setStatePortReady (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_setup_dialog_a7a25a1b0377f60dad49856e7d04a1558}
+
+
+Set the PortReady state. 
+
 This method must be implemented in subclass. Goal is to keep GUI coherent to current state (f.ex. disable/enable some buttons). \hypertarget{classmdt_abstract_port_setup_dialog_aac277958ac97ad7ad94135e0d152b732}{
 \index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!setStateReady@{setStateReady}}
 \index{setStateReady@{setStateReady}!mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}}
@@ -280,22 +309,34 @@ This method must be implemented in subclass. Goal is to keep GUI coherent to cur
 \label{classmdt_abstract_port_setup_dialog_aac277958ac97ad7ad94135e0d152b732}
 
 
-Set the Ready state. 
+Set the Ready state (called when connected to device) 
 
-This method must be implemented in subclass. Goal is to keep GUI coherent to current state (f.ex. disable/enable some buttons). \hypertarget{classmdt_abstract_port_setup_dialog_a0c337beb9880709807900d0eed73e9bb}{
-\index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!setStateWarning@{setStateWarning}}
-\index{setStateWarning@{setStateWarning}!mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}}
-\subsubsection[{setStateWarning}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPortSetupDialog::setStateWarning (
+This method must be implemented in subclass. Goal is to keep GUI coherent to current state (f.ex. disable/enable some buttons). \hypertarget{classmdt_abstract_port_setup_dialog_a93809d1ae18b5580eeebf15c561bc89f}{
+\index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!showStatusMessage@{showStatusMessage}}
+\index{showStatusMessage@{showStatusMessage}!mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}}
+\subsubsection[{showStatusMessage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPortSetupDialog::showStatusMessage (
 \begin{DoxyParamCaption}
-{}
+\item[{const QString \&}]{message, }
+\item[{int}]{timeout = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
-\label{classmdt_abstract_port_setup_dialog_a0c337beb9880709807900d0eed73e9bb}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, slot\mbox{]}}}}
+\label{classmdt_abstract_port_setup_dialog_a93809d1ae18b5580eeebf15c561bc89f}
 
 
-Set the Warning state. 
+Used to show a message in status widget. 
 
-This method must be implemented in subclass. Goal is to keep GUI coherent to current state (f.ex. disable/enable some buttons). \hypertarget{classmdt_abstract_port_setup_dialog_aa7f429788e0a6ab9d635afa126480e2d}{
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Message to show \\
+\hline
+{\em timeout} & If $>$ 0, message will be cleared after timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 126 of file mdtAbstractPortSetupDialog.cpp.
+
+\hypertarget{classmdt_abstract_port_setup_dialog_aa7f429788e0a6ab9d635afa126480e2d}{
 \index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!showStatusMessage@{showStatusMessage}}
 \index{showStatusMessage@{showStatusMessage}!mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}}
 \subsubsection[{showStatusMessage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPortSetupDialog::showStatusMessage (
@@ -321,32 +362,7 @@ Used to show a message and details in status widget.
 \end{DoxyParams}
 
 
-Definition at line 130 of file mdtAbstractPortSetupDialog.cpp.
-
-\hypertarget{classmdt_abstract_port_setup_dialog_a93809d1ae18b5580eeebf15c561bc89f}{
-\index{mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}!showStatusMessage@{showStatusMessage}}
-\index{showStatusMessage@{showStatusMessage}!mdtAbstractPortSetupDialog@{mdtAbstractPortSetupDialog}}
-\subsubsection[{showStatusMessage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPortSetupDialog::showStatusMessage (
-\begin{DoxyParamCaption}
-\item[{const QString \&}]{message, }
-\item[{int}]{timeout = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, slot\mbox{]}}}}
-\label{classmdt_abstract_port_setup_dialog_a93809d1ae18b5580eeebf15c561bc89f}
-
-
-Used to show a message in status widget. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em message} & Message to show \\
-\hline
-{\em timeout} & If $>$ 0, message will be cleared after timeout \mbox{[}ms\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 125 of file mdtAbstractPortSetupDialog.cpp.
+Definition at line 131 of file mdtAbstractPortSetupDialog.cpp.
 
 
 

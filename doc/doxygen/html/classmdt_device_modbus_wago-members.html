@@ -77,6 +77,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus_wago.html#ad812b7ee3a2f2677cddde205da5ec787">analogOutputsCount</a>()</td><td><a class="el" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">connectToDevice</a>(const mdtDeviceInfo &amp;devInfo)</td><td><a class="el" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus_wago.html#a12ad1f1ef34b16be5903d1d6232a7c6d">connectToDevice</a>(const QList&lt; mdtPortInfo * &gt; &amp;scanResult, int hardwareNodeId, int bitsCount, int startFrom=0)</td><td><a class="el" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f">currentState</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus_wago.html#a03b04618bbf1a89e936bc541f6375baf">detectIos</a>(mdtDeviceIos *ios)</td><td><a class="el" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus_wago.html#ad51fd45858e62c597ba8fc2bf3e877bd">digitalInputsCount</a>()</td><td><a class="el" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus_wago.html#afbe8797aa0f84ca8cb1d5c4245dfb849">digitalIoModuleIosCount</a>(quint16 word) const </td><td><a class="el" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a></td><td></td></tr>
@@ -102,7 +103,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14">getRegisterValues</a>(int address, int n)</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1">isWago750</a>()</td><td><a class="el" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a6d501791e7243358cc61b144254b80db">mdtDevice</a>(QObject *parent=0)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device_modbus.html#ac69cfbe26681342ba05672ab63de2a1f">mdtDeviceModbus</a>(QObject *parent=0)</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>mdtDeviceModbus</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a>)</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus_wago.html#a31abb03678a8afe2e6bf7c03e5e92726">mdtDeviceModbusWago</a>(QObject *parent=0)</td><td><a class="el" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus.html#ac547788aa95d46c00ddb1342eb46ef93">modbusTcpPortManager</a>()</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a>() const </td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
@@ -136,7 +137,6 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2">setIos</a>(mdtDeviceIos *ios, bool autoOutputUpdate=false)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518">setName</a>(const QString &amp;name)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7">start</a>(int queryInterval)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ae0c760cc40523e1116bb5716b077dc1e">state</a>() const </td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d">stateChanged</a>(int state)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c">statusMessageChanged</a>(const QString &amp;message, const QString &amp;details, int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407">stop</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
@@ -163,7 +163,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:07 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

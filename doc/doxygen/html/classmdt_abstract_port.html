@@ -112,11 +112,16 @@ Public Types</h2></td></tr>
 &#160;&#160;<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eabdb5a36cd2c7dd2dcf59e996fc4922c9">ControlTimeout</a>, 
 <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">Disconnected</a>, 
 <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93">Connecting</a>, 
-<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>, 
+<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea79cfce29fadf5a27dbcbc6e0cbc8d118">ConnectionFailed</a>, 
 <br/>
-&#160;&#160;<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984">ReadPoolEmpty</a>, 
+&#160;&#160;<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>, 
+<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984">ReadPoolEmpty</a>, 
 <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693">WritePoolEmpty</a>, 
-<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d">ErrorHandled</a>
+<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d">ErrorHandled</a>, 
+<br/>
+&#160;&#160;<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea2d198672405289a1a7e662492ff073f8">ReadWriteBusy</a>, 
+<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaf89af56394b281f71247cd2eb4eaac62">UsbWriteStall</a>, 
+<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea7b3edb569231d6ebd0c933974df60160">UsbReadStall</a>
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error.  <a href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">More...</a><br/></td></tr>
@@ -230,7 +235,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Base class for port I/O. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8h_source.html#l00042">42</a> of file <a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
@@ -290,10 +295,13 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>Control process timed out (serial port's modem line, USB control transfer) </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c"></a><!-- doxytag: member="Disconnected" ref="ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c" args="" -->Disconnected</em>&nbsp;</td><td>
-<p>For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will try to reconnect. If connection fails after maximum trys, a notification is sent with this Disconnected error. </p>
+<p>For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will try to reconnect. If connection fails after maximum trys, a notification is sent with ConnectionFailed error. </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93"></a><!-- doxytag: member="Connecting" ref="ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93" args="" -->Connecting</em>&nbsp;</td><td>
 <p>Used to notify portmanager that connection is in progress (see <a class="el" href="classmdt_port_thread.html#abee1d2f9b67ca37cfd13e108ca978b36" title="Try to reconnect to device/peer.">mdtPortThread::reconnect()</a> ) </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea79cfce29fadf5a27dbcbc6e0cbc8d118"></a><!-- doxytag: member="ConnectionFailed" ref="ad4121bb930c95887e77f8bafa065a85ea79cfce29fadf5a27dbcbc6e0cbc8d118" args="" -->ConnectionFailed</em>&nbsp;</td><td>
+<p>Can happen during first connection, or afetr max retry of reconnection. Port manager will stop on this error </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712"></a><!-- doxytag: member="UnhandledError" ref="ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712" args="" -->UnhandledError</em>&nbsp;</td><td>
 <p>Unhandled error happen. In this case, thread will stop working and error is reported with <a class="el" href="classmdt_error.html">mdtError</a> system. Logfile could give more information, see <a class="el" href="classmdt_error.html">mdtError</a> and <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> </p>
@@ -306,6 +314,15 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d"></a><!-- doxytag: member="ErrorHandled" ref="ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d" args="" -->ErrorHandled</em>&nbsp;</td><td>
 <p>Used by mdtPortThread's helper methods (handle[Read|Write]Error) to tell the thread that error could be handled </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea2d198672405289a1a7e662492ff073f8"></a><!-- doxytag: member="ReadWriteBusy" ref="ad4121bb930c95887e77f8bafa065a85ea2d198672405289a1a7e662492ff073f8" args="" -->ReadWriteBusy</em>&nbsp;</td><td>
+<p>It's currently not possible to read from or write to port/device. This is typically used by USBTMC when some control (f.ex. abort bilk IN/OUT) is in progress </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85eaf89af56394b281f71247cd2eb4eaac62"></a><!-- doxytag: member="UsbWriteStall" ref="ad4121bb930c95887e77f8bafa065a85eaf89af56394b281f71247cd2eb4eaac62" args="" -->UsbWriteStall</em>&nbsp;</td><td>
+<p>USB specific: occurs for bulk or interrupt endpoint when a halt condition was detected </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea7b3edb569231d6ebd0c933974df60160"></a><!-- doxytag: member="UsbReadStall" ref="ad4121bb930c95887e77f8bafa065a85ea7b3edb569231d6ebd0c933974df60160" args="" -->UsbReadStall</em>&nbsp;</td><td>
+<p>USB specific: occurs for bulk or interrupt endpoint when a halt condition was detected </p>
 </td></tr>
 </table>
 </dd>
@@ -501,7 +518,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>This method is used by thread, and should not be used directly. If a request is pending, thread will put his current read frame back to pool.</p>
 <p>A call of this method will clear the internall flag. (a second call will then return false).</p>
 <p>Mutex is not handled by this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00172">172</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
@@ -549,7 +566,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>This method is used by thread, and should not be used directly. If a request is pending, thread will put his current write frame back to pool.</p>
 <p>A call of this method will clear the internall flag. (a second call will then return false).</p>
 <p>Mutex is not handled by this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
@@ -1241,7 +1258,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:06 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

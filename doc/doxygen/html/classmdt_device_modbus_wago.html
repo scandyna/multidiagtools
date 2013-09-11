@@ -78,7 +78,7 @@ Collaboration diagram for mdtDeviceModbusWago:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_device_modbus_wago__coll__graph.png" border="0" usemap="#mdt_device_modbus_wago_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_device_modbus_wago_coll__map" id="mdt_device_modbus_wago_coll__map">
-<area shape="rect" id="node2" href="classmdt_device_modbus.html" title="Represent a MODBUS device." alt="" coords="140,501,271,531"/><area shape="rect" id="node4" href="classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="13,405,99,435"/><area shape="rect" id="node6" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="5,309,107,339"/><area shape="rect" id="node8" href="classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?" alt="" coords="123,405,288,435"/><area shape="rect" id="node10" href="classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="147,309,264,339"/><area shape="rect" id="node12" href="classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager." alt="" coords="312,405,499,435"/><area shape="rect" id="node14" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="347,309,464,339"/><area shape="rect" id="node16" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="352,197,459,227"/><area shape="rect" id="node18" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="271,101,388,131"/><area shape="rect" id="node20" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="276,5,383,35"/><area shape="rect" id="node22" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="483,197,573,227"/></map>
+<area shape="rect" id="node2" href="classmdt_device_modbus.html" title="Represent a MODBUS device." alt="" coords="140,664,271,693"/><area shape="rect" id="node4" href="classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="13,568,99,597"/><area shape="rect" id="node6" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="5,472,107,501"/><area shape="rect" id="node8" href="classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?" alt="" coords="123,568,288,597"/><area shape="rect" id="node10" href="classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="147,472,264,501"/><area shape="rect" id="node12" href="classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager." alt="" coords="312,568,499,597"/><area shape="rect" id="node14" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="347,472,464,501"/><area shape="rect" id="node16" href="classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="120,360,317,389"/><area shape="rect" id="node18" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="196,183,319,212"/><area shape="rect" id="node20" href="classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="96,5,171,35"/><area shape="rect" id="node23" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="428,360,535,389"/><area shape="rect" id="node25" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="357,183,475,212"/><area shape="rect" id="node27" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="363,5,469,35"/><area shape="rect" id="node29" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="559,360,649,389"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_device_modbus_wago-members.html">List of all members.</a></p>
@@ -169,7 +169,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Note: calling this method will query the device</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of analog inputs, or &lt; 0 on error </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00186">186</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00196">196</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -197,7 +197,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of I/O's or -1 for unknown module. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00466">466</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00476">476</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -225,7 +225,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if module is a input, false if module is a output. For a unknown module, a invalid QVariant is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00454">454</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00464">464</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -253,7 +253,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Unit of module, or a empty string for unknown module. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00478">478</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00488">488</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -282,7 +282,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bits count used for value, or -1 for a unknown module. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00418">418</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00428">428</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -311,7 +311,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Index of LSB of value, or -1 for unknown module. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00430">430</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00440">440</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -339,7 +339,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The max. value in floating format. If partNumber is unknow, a invalid QVariant is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00406">406</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00416">416</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -367,7 +367,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The min. value in floating format. If partNumber is unknow, a invalid QVariant is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00394">394</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00404">404</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -395,7 +395,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if module's representation is signed, false if not. For a unknown module, a invalid QVariant is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00442">442</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00452">452</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -417,7 +417,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Note: calling this method will query the device</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of analog outputs, or &lt; 0 on error </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00185">185</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -461,12 +461,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Search and connect to physical device. </p>
 <p>Work as <a class="el" href="classmdt_device_modbus.html#a323b16687f448a4e45eb0b313635b77f" title="Search and connect to physical device.">mdtDeviceModbus::connectToDevice()</a> , but checks that device is a Wago 750 fieldbus coupler. </p>
 
-<p><p>Q_ASSERT(!pvTcpPortManager-&gt;isRunning()); </p>
+<p><p>Q_ASSERT(!pvTcpPortManager-&gt;isRunning());</p>
+<p>if(!pvTcpPortManager-&gt;openPort()){ continue; }</p>
+<p>pvTcpPortManager-&gt;closePort();</p>
+<p>pvTcpPortManager-&gt;closePort();</p>
+<p>pvTcpPortManager-&gt;closePort(); </p>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device_modbus.html#a323b16687f448a4e45eb0b313635b77f">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00113">113</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00121">121</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -495,6 +499,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A error listed in <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> (NoError on success) </dd></dl>
+
+<p><p>if(!pvTcpPortManager-&gt;openPort()){ continue; }</p>
+<p>pvTcpPortManager-&gt;closePort();</p>
+<p>pvTcpPortManager-&gt;closePort();</p>
+<p>pvTcpPortManager-&gt;closePort();</p>
+<p>if(!pvTcpPortManager-&gt;openPort()){ continue; }</p>
+<p>pvTcpPortManager-&gt;closePort();</p>
+<p>pvTcpPortManager-&gt;closePort();</p>
+<p>pvTcpPortManager-&gt;closePort(); </p>
+</p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>.</p>
 
@@ -529,7 +543,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>dio-&gt;setAddress(i); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00219">219</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00229">229</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -551,7 +565,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Note: calling this method will query the device</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of digital inputs, or &lt; 0 on error </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00208">208</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00218">218</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -579,7 +593,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of I/O's or -1 for unknown description. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00510">510</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00520">520</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -607,7 +621,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if module is a input, false if module is a output. For a unknown or uncoherent description, a invalid QVariant is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00490">490</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00500">500</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -629,7 +643,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Note: calling this method will query the device</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of digital outputs, or &lt; 0 on error </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00197">197</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00207">207</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -652,7 +666,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:07 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -87,247 +87,183 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QTimer&gt;</span>
 <a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QMessageBox&gt;</span>
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QDebug&gt;</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a><a class="code" href="classmdt_port_status_widget.html#ac92d61928204f88704de3f597d5754c7">00030</a> <a class="code" href="classmdt_port_status_widget.html#ac92d61928204f88704de3f597d5754c7" title="Build a status widget with default texts.">mdtPortStatusWidget::mdtPortStatusWidget</a>(QWidget *parent)
-<a name="l00031"></a>00031  : QWidget(parent)
-<a name="l00032"></a>00032 {
-<a name="l00033"></a>00033   pvLayout = <span class="keyword">new</span> QGridLayout;
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035   pvCustomWidget = 0;
-<a name="l00036"></a>00036   pvTxThread = 0;
-<a name="l00037"></a>00037   pvRxThread = 0;
-<a name="l00038"></a>00038   lbTx = 0;
-<a name="l00039"></a>00039   lbRx = 0;
-<a name="l00040"></a>00040   ldTx = 0;
-<a name="l00041"></a>00041   ldRx = 0;
-<a name="l00042"></a>00042   pvShowingMessage = <span class="keyword">false</span>;
-<a name="l00043"></a>00043   <span class="comment">// Add GUI elements</span>
-<a name="l00044"></a>00044   pbDetails = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;...&quot;</span>);
-<a name="l00045"></a>00045   pbDetails-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00046"></a>00046   mbDetails = <span class="keyword">new</span> QMessageBox(<span class="keyword">this</span>);
-<a name="l00047"></a>00047   mbDetails-&gt;setStandardButtons(QMessageBox::Ok);
-<a name="l00048"></a>00048   mbDetails-&gt;setIcon(QMessageBox::Warning);
-<a name="l00049"></a>00049   pvLayout-&gt;addWidget(pbDetails, 0, 0);
-<a name="l00050"></a>00050   ldState = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
-<a name="l00051"></a>00051   ldState-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(15, 15);
-<a name="l00052"></a>00052   pvLayout-&gt;addWidget(ldState, 0, 1);
-<a name="l00053"></a>00053   lbMessage = <span class="keyword">new</span> QLabel;
-<a name="l00054"></a>00054   lbMessage-&gt;setMinimumWidth(150);
-<a name="l00055"></a>00055   pvLayout-&gt;addWidget(lbMessage, 0, 2);
-<a name="l00056"></a>00056   setLayout(pvLayout);
-<a name="l00057"></a>00057   <span class="comment">// Set some default attributes</span>
-<a name="l00058"></a>00058   <a class="code" href="classmdt_port_status_widget.html#afa0b9020b56e33ea2a6c680552447228" title="Set default state texts.">setDefaultStateTexts</a>();
-<a name="l00059"></a>00059   <a class="code" href="classmdt_port_status_widget.html#afbf619cd274d866a2c0c06444a13dc75" title="Set default state colors.">setDefaultStateColors</a>();
-<a name="l00060"></a>00060   <span class="comment">// Setup back to state text timer</span>
-<a name="l00061"></a>00061   pvBackToStateTextTimer = <span class="keyword">new</span> QTimer(<span class="keyword">this</span>);
-<a name="l00062"></a>00062   pvBackToStateTextTimer-&gt;setSingleShot(<span class="keyword">true</span>);
-<a name="l00063"></a>00063   connect(pvBackToStateTextTimer, SIGNAL(timeout()), <span class="keyword">this</span>, SLOT(backToStateText()));
-<a name="l00064"></a>00064   connect(pbDetails, SIGNAL(clicked()), mbDetails, SLOT(exec()));
-<a name="l00065"></a>00065 }
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067 mdtPortStatusWidget::~mdtPortStatusWidget()
-<a name="l00068"></a>00068 {
-<a name="l00069"></a>00069   <a class="code" href="classmdt_port_status_widget.html#af57ccc9a560d8ae1a49bc57a774a7db7" title="Disable the TX/RX LED&#39;s.">disableTxRxLeds</a>();
-<a name="l00070"></a>00070 }
-<a name="l00071"></a>00071 
-<a name="l00072"></a><a class="code" href="classmdt_port_status_widget.html#a8e87596be48b5cfda6703c42655b2f25">00072</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a8e87596be48b5cfda6703c42655b2f25" title="Enable the TX/RX LEDs.">mdtPortStatusWidget::enableTxRxLeds</a>(<a class="code" href="classmdt_port_thread.html">mdtPortThread</a> *txThread, <a class="code" href="classmdt_port_thread.html">mdtPortThread</a> *rxThread)
-<a name="l00073"></a>00073 {
-<a name="l00074"></a>00074   Q_ASSERT(pvLayout != 0);
-<a name="l00075"></a>00075   Q_ASSERT(txThread != 0);
-<a name="l00076"></a>00076   Q_ASSERT(rxThread != 0);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078   <span class="comment">// Remove LEDs (if exists)</span>
-<a name="l00079"></a>00079   <a class="code" href="classmdt_port_status_widget.html#af57ccc9a560d8ae1a49bc57a774a7db7" title="Disable the TX/RX LED&#39;s.">disableTxRxLeds</a>();
-<a name="l00080"></a>00080   <span class="comment">// Create LEDs</span>
-<a name="l00081"></a>00081   ldTx = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
-<a name="l00082"></a>00082   ldTx-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(12, 12);
-<a name="l00083"></a>00083   ldTx-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
-<a name="l00084"></a>00084   ldRx = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
-<a name="l00085"></a>00085   ldRx-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(12, 12);
-<a name="l00086"></a>00086   ldRx-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
-<a name="l00087"></a>00087   <span class="comment">// Create labels</span>
-<a name="l00088"></a>00088   lbTx = <span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Tx&quot;</span>);
-<a name="l00089"></a>00089   lbRx = <span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Rx&quot;</span>);
-<a name="l00090"></a>00090   <span class="comment">// Layout</span>
-<a name="l00091"></a>00091   pvLayout-&gt;addWidget(lbTx, 0, 3);
-<a name="l00092"></a>00092   pvLayout-&gt;addWidget(ldTx, 0, 4);
-<a name="l00093"></a>00093   pvLayout-&gt;addWidget(lbRx, 0, 5);
-<a name="l00094"></a>00094   pvLayout-&gt;addWidget(ldRx, 0, 6);
-<a name="l00095"></a>00095   <span class="comment">// Make connections</span>
-<a name="l00096"></a>00096   pvTxThread = txThread;
-<a name="l00097"></a>00097   pvRxThread = rxThread;
-<a name="l00098"></a>00098   connect(pvTxThread, SIGNAL(writeProcessBegin()), <span class="keyword">this</span>, SLOT(trigTxLed()));
-<a name="l00099"></a>00099   connect(pvRxThread, SIGNAL(readProcessBegin()), <span class="keyword">this</span>, SLOT(trigRxLed()));
-<a name="l00100"></a>00100 }
-<a name="l00101"></a>00101 
-<a name="l00102"></a><a class="code" href="classmdt_port_status_widget.html#af57ccc9a560d8ae1a49bc57a774a7db7">00102</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#af57ccc9a560d8ae1a49bc57a774a7db7" title="Disable the TX/RX LED&#39;s.">mdtPortStatusWidget::disableTxRxLeds</a>()
-<a name="l00103"></a>00103 {
-<a name="l00104"></a>00104   Q_ASSERT(layout() != 0);
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106   <span class="keywordflow">if</span>(ldTx != 0){
-<a name="l00107"></a>00107     Q_ASSERT(pvTxThread != 0);
-<a name="l00108"></a>00108     disconnect(pvTxThread, SIGNAL(writeProcessBegin()), <span class="keyword">this</span>, SLOT(trigTxLed()));
-<a name="l00109"></a>00109     layout()-&gt;removeWidget(ldTx);
-<a name="l00110"></a>00110     <span class="keyword">delete</span> ldTx;
-<a name="l00111"></a>00111     ldTx = 0;
-<a name="l00112"></a>00112   }
-<a name="l00113"></a>00113   <span class="keywordflow">if</span>(lbTx != 0){
-<a name="l00114"></a>00114     layout()-&gt;removeWidget(lbTx);
-<a name="l00115"></a>00115     <span class="keyword">delete</span> lbTx;
-<a name="l00116"></a>00116     lbTx = 0;
-<a name="l00117"></a>00117   }
-<a name="l00118"></a>00118   <span class="keywordflow">if</span>(ldRx != 0){
-<a name="l00119"></a>00119     Q_ASSERT(pvRxThread != 0);
-<a name="l00120"></a>00120     disconnect(pvRxThread, SIGNAL(readProcessBegin()), <span class="keyword">this</span>, SLOT(trigRxLed()));
-<a name="l00121"></a>00121     layout()-&gt;removeWidget(ldRx);
-<a name="l00122"></a>00122     <span class="keyword">delete</span> ldRx;
-<a name="l00123"></a>00123     ldRx = 0;
-<a name="l00124"></a>00124   }
-<a name="l00125"></a>00125   <span class="keywordflow">if</span>(lbRx != 0){
-<a name="l00126"></a>00126     layout()-&gt;removeWidget(lbRx);
-<a name="l00127"></a>00127     <span class="keyword">delete</span> lbRx;
-<a name="l00128"></a>00128     lbRx = 0;
-<a name="l00129"></a>00129   }
-<a name="l00130"></a>00130 }
-<a name="l00131"></a>00131 
-<a name="l00132"></a><a class="code" href="classmdt_port_status_widget.html#ac14c1207abd242248538815542cb9068">00132</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#ac14c1207abd242248538815542cb9068" title="Add a custom widget.">mdtPortStatusWidget::addCustomWidget</a>(QWidget *widget)
-<a name="l00133"></a>00133 {
-<a name="l00134"></a>00134   Q_ASSERT(pvLayout != 0);
-<a name="l00135"></a>00135   Q_ASSERT(widget != 0);
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137   <a class="code" href="classmdt_port_status_widget.html#a108227f8f64dd69edd2dcdca2b52b8a0" title="Remove the custom widget.">removeCustomWidget</a>();
-<a name="l00138"></a>00138   pvCustomWidget = widget;
-<a name="l00139"></a>00139   pvLayout-&gt;addWidget(pvCustomWidget, 0, pvLayout-&gt;columnCount());
-<a name="l00140"></a>00140 }
-<a name="l00141"></a>00141 
-<a name="l00142"></a><a class="code" href="classmdt_port_status_widget.html#a108227f8f64dd69edd2dcdca2b52b8a0">00142</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a108227f8f64dd69edd2dcdca2b52b8a0" title="Remove the custom widget.">mdtPortStatusWidget::removeCustomWidget</a>()
-<a name="l00143"></a>00143 {
-<a name="l00144"></a>00144   Q_ASSERT(pvLayout != 0);
-<a name="l00145"></a>00145 
-<a name="l00146"></a>00146   <span class="keywordflow">if</span>(pvCustomWidget != 0){
-<a name="l00147"></a>00147     pvLayout-&gt;removeWidget(pvCustomWidget);
-<a name="l00148"></a>00148     pvCustomWidget = 0;
-<a name="l00149"></a>00149   }
-<a name="l00150"></a>00150 }
-<a name="l00151"></a>00151 
-<a name="l00152"></a><a class="code" href="classmdt_port_status_widget.html#afa0b9020b56e33ea2a6c680552447228">00152</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#afa0b9020b56e33ea2a6c680552447228" title="Set default state texts.">mdtPortStatusWidget::setDefaultStateTexts</a>()
-<a name="l00153"></a>00153 {
-<a name="l00154"></a>00154   pvReadyText = tr(<span class="stringliteral">&quot;Ready&quot;</span>);
-<a name="l00155"></a>00155   pvDisconnectedText = tr(<span class="stringliteral">&quot;Disconnected&quot;</span>);
-<a name="l00156"></a>00156   pvConnectingText = tr(<span class="stringliteral">&quot;Connecting ...&quot;</span>);
-<a name="l00157"></a>00157   pvBusyText = tr(<span class="stringliteral">&quot;Busy&quot;</span>);
-<a name="l00158"></a>00158 }
-<a name="l00159"></a>00159 
-<a name="l00160"></a><a class="code" href="classmdt_port_status_widget.html#a3961e272b2a124e8c989084e5c263e18">00160</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a3961e272b2a124e8c989084e5c263e18" title="Set text for ready state.">mdtPortStatusWidget::setStateReadyText</a>(<span class="keyword">const</span> QString &amp;text)
-<a name="l00161"></a>00161 {
-<a name="l00162"></a>00162   pvReadyText = text;
-<a name="l00163"></a>00163 }
-<a name="l00164"></a>00164 
-<a name="l00165"></a><a class="code" href="classmdt_port_status_widget.html#a3bf9ad36ee604e993a4802701c0b4f5a">00165</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a3bf9ad36ee604e993a4802701c0b4f5a" title="Set text for disconnected state.">mdtPortStatusWidget::setStateDisconnectedText</a>(<span class="keyword">const</span> QString &amp;text)
-<a name="l00166"></a>00166 {
-<a name="l00167"></a>00167   pvDisconnectedText = text;
-<a name="l00168"></a>00168 }
-<a name="l00169"></a>00169 
-<a name="l00170"></a><a class="code" href="classmdt_port_status_widget.html#a20930a75418e6c6ce6beae619521d7ec">00170</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a20930a75418e6c6ce6beae619521d7ec" title="Set text for connecting state.">mdtPortStatusWidget::setStateConnectingText</a>(<span class="keyword">const</span> QString &amp;text)
-<a name="l00171"></a>00171 {
-<a name="l00172"></a>00172   pvConnectingText = text;
-<a name="l00173"></a>00173 }
-<a name="l00174"></a>00174 
-<a name="l00175"></a><a class="code" href="classmdt_port_status_widget.html#a5e74bad896b205add3183e1442f0d7d3">00175</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a5e74bad896b205add3183e1442f0d7d3" title="Set text for busy state.">mdtPortStatusWidget::setStateBusyText</a>(<span class="keyword">const</span> QString &amp;text)
-<a name="l00176"></a>00176 {
-<a name="l00177"></a>00177   pvBusyText = text;
-<a name="l00178"></a>00178 }
-<a name="l00179"></a>00179 
-<a name="l00180"></a><a class="code" href="classmdt_port_status_widget.html#afbf619cd274d866a2c0c06444a13dc75">00180</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#afbf619cd274d866a2c0c06444a13dc75" title="Set default state colors.">mdtPortStatusWidget::setDefaultStateColors</a>()
-<a name="l00181"></a>00181 {
-<a name="l00182"></a>00182   pvReadyColor = <a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfefaee73db242171b49a26ca3285edc877e7">mdtLed::LED_COLOR_GREEN</a>;
-<a name="l00183"></a>00183   pvConnectingColor = <a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfefa350264f3c85b168b7068033fbf1c0cd2">mdtLed::LED_COLOR_ORANGE</a>;
-<a name="l00184"></a>00184   pvBusyColor = <a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfefa350264f3c85b168b7068033fbf1c0cd2">mdtLed::LED_COLOR_ORANGE</a>;
-<a name="l00185"></a>00185 }
-<a name="l00186"></a>00186 
-<a name="l00187"></a><a class="code" href="classmdt_port_status_widget.html#a4930dd9b6e88b3b87cd99d5af25d9707">00187</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a4930dd9b6e88b3b87cd99d5af25d9707" title="Set color for ready state.">mdtPortStatusWidget::setStateReadyColor</a>(<a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef" title="LED predefined colors.">mdtLed::color_t</a> color)
-<a name="l00188"></a>00188 {
-<a name="l00189"></a>00189   pvReadyColor = color;
-<a name="l00190"></a>00190 }
-<a name="l00191"></a>00191 
-<a name="l00192"></a><a class="code" href="classmdt_port_status_widget.html#ac46df457ec12e933c991d2954688c432">00192</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#ac46df457ec12e933c991d2954688c432" title="Set color for connecting state.">mdtPortStatusWidget::setStateConnectingColor</a>(<a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef" title="LED predefined colors.">mdtLed::color_t</a> color)
-<a name="l00193"></a>00193 {
-<a name="l00194"></a>00194   pvConnectingColor = color;
-<a name="l00195"></a>00195 }
+<a name="l00028"></a><a class="code" href="classmdt_port_status_widget.html#ac92d61928204f88704de3f597d5754c7">00028</a> <a class="code" href="classmdt_port_status_widget.html#ac92d61928204f88704de3f597d5754c7" title="Build a status widget with default texts.">mdtPortStatusWidget::mdtPortStatusWidget</a>(QWidget *parent)
+<a name="l00029"></a>00029  : QWidget(parent)
+<a name="l00030"></a>00030 {
+<a name="l00031"></a>00031   pvLayout = <span class="keyword">new</span> QGridLayout;
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033   pvCustomWidget = 0;
+<a name="l00034"></a>00034   pvTxThread = 0;
+<a name="l00035"></a>00035   pvRxThread = 0;
+<a name="l00036"></a>00036   lbTx = 0;
+<a name="l00037"></a>00037   lbRx = 0;
+<a name="l00038"></a>00038   ldTx = 0;
+<a name="l00039"></a>00039   ldRx = 0;
+<a name="l00040"></a>00040   pvShowingMessage = <span class="keyword">false</span>;
+<a name="l00041"></a>00041   <span class="comment">// Add GUI elements</span>
+<a name="l00042"></a>00042   pbDetails = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;...&quot;</span>);
+<a name="l00043"></a>00043   pbDetails-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00044"></a>00044   mbDetails = <span class="keyword">new</span> QMessageBox(<span class="keyword">this</span>);
+<a name="l00045"></a>00045   mbDetails-&gt;setStandardButtons(QMessageBox::Ok);
+<a name="l00046"></a>00046   mbDetails-&gt;setIcon(QMessageBox::Warning);
+<a name="l00047"></a>00047   pvLayout-&gt;addWidget(pbDetails, 0, 0);
+<a name="l00048"></a>00048   ldState = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
+<a name="l00049"></a>00049   ldState-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(15, 15);
+<a name="l00050"></a>00050   pvLayout-&gt;addWidget(ldState, 0, 1);
+<a name="l00051"></a>00051   lbMessage = <span class="keyword">new</span> QLabel;
+<a name="l00052"></a>00052   lbMessage-&gt;setMinimumWidth(150);
+<a name="l00053"></a>00053   pvLayout-&gt;addWidget(lbMessage, 0, 2);
+<a name="l00054"></a>00054   pvLayout-&gt;setColumnStretch(3, 2);
+<a name="l00055"></a>00055   lbPermanentTextLabel = <span class="keyword">new</span> QLabel;
+<a name="l00056"></a>00056   pvLayout-&gt;addWidget(lbPermanentTextLabel, 1, 0, 1, -1);
+<a name="l00057"></a>00057   setLayout(pvLayout);
+<a name="l00058"></a>00058   <span class="comment">// Setup back to state text timer</span>
+<a name="l00059"></a>00059   pvBackToStateTextTimer = <span class="keyword">new</span> QTimer(<span class="keyword">this</span>);
+<a name="l00060"></a>00060   pvBackToStateTextTimer-&gt;setSingleShot(<span class="keyword">true</span>);
+<a name="l00061"></a>00061   connect(pvBackToStateTextTimer, SIGNAL(timeout()), <span class="keyword">this</span>, SLOT(backToStateText()));
+<a name="l00062"></a>00062   connect(pbDetails, SIGNAL(clicked()), mbDetails, SLOT(exec()));
+<a name="l00063"></a>00063 }
+<a name="l00064"></a>00064 
+<a name="l00065"></a><a class="code" href="classmdt_port_status_widget.html#a239dbbcdc412d2cd332c665a55ecfa9b">00065</a> <a class="code" href="classmdt_port_status_widget.html#a239dbbcdc412d2cd332c665a55ecfa9b" title="Destructor.">mdtPortStatusWidget::~mdtPortStatusWidget</a>()
+<a name="l00066"></a>00066 {
+<a name="l00067"></a>00067   <a class="code" href="classmdt_port_status_widget.html#af57ccc9a560d8ae1a49bc57a774a7db7" title="Disable the TX/RX LED&#39;s.">disableTxRxLeds</a>();
+<a name="l00068"></a>00068 }
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="classmdt_port_status_widget.html#a8e87596be48b5cfda6703c42655b2f25">00070</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a8e87596be48b5cfda6703c42655b2f25" title="Enable the TX/RX LEDs.">mdtPortStatusWidget::enableTxRxLeds</a>(<a class="code" href="classmdt_port_thread.html">mdtPortThread</a> *txThread, <a class="code" href="classmdt_port_thread.html">mdtPortThread</a> *rxThread)
+<a name="l00071"></a>00071 {
+<a name="l00072"></a>00072   Q_ASSERT(pvLayout != 0);
+<a name="l00073"></a>00073   Q_ASSERT(txThread != 0);
+<a name="l00074"></a>00074   Q_ASSERT(rxThread != 0);
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076   <span class="comment">// Remove LEDs (if exists)</span>
+<a name="l00077"></a>00077   <a class="code" href="classmdt_port_status_widget.html#af57ccc9a560d8ae1a49bc57a774a7db7" title="Disable the TX/RX LED&#39;s.">disableTxRxLeds</a>();
+<a name="l00078"></a>00078   <span class="comment">// Create LEDs</span>
+<a name="l00079"></a>00079   ldTx = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
+<a name="l00080"></a>00080   ldTx-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(12, 12);
+<a name="l00081"></a>00081   ldTx-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
+<a name="l00082"></a>00082   ldRx = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
+<a name="l00083"></a>00083   ldRx-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(12, 12);
+<a name="l00084"></a>00084   ldRx-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
+<a name="l00085"></a>00085   <span class="comment">// Create labels</span>
+<a name="l00086"></a>00086   lbTx = <span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Tx&quot;</span>);
+<a name="l00087"></a>00087   lbRx = <span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Rx&quot;</span>);
+<a name="l00088"></a>00088   <span class="comment">// Layout</span>
+<a name="l00089"></a>00089   pvLayout-&gt;addWidget(lbTx, 0, 3);
+<a name="l00090"></a>00090   pvLayout-&gt;addWidget(ldTx, 0, 4);
+<a name="l00091"></a>00091   pvLayout-&gt;addWidget(lbRx, 0, 5);
+<a name="l00092"></a>00092   pvLayout-&gt;addWidget(ldRx, 0, 6);
+<a name="l00093"></a>00093   <span class="comment">// Make connections</span>
+<a name="l00094"></a>00094   pvTxThread = txThread;
+<a name="l00095"></a>00095   pvRxThread = rxThread;
+<a name="l00096"></a>00096   connect(pvTxThread, SIGNAL(writeProcessBegin()), <span class="keyword">this</span>, SLOT(trigTxLed()));
+<a name="l00097"></a>00097   connect(pvRxThread, SIGNAL(readProcessBegin()), <span class="keyword">this</span>, SLOT(trigRxLed()));
+<a name="l00098"></a>00098 }
+<a name="l00099"></a>00099 
+<a name="l00100"></a><a class="code" href="classmdt_port_status_widget.html#af57ccc9a560d8ae1a49bc57a774a7db7">00100</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#af57ccc9a560d8ae1a49bc57a774a7db7" title="Disable the TX/RX LED&#39;s.">mdtPortStatusWidget::disableTxRxLeds</a>()
+<a name="l00101"></a>00101 {
+<a name="l00102"></a>00102   Q_ASSERT(layout() != 0);
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104   <span class="keywordflow">if</span>(ldTx != 0){
+<a name="l00105"></a>00105     Q_ASSERT(pvTxThread != 0);
+<a name="l00106"></a>00106     disconnect(pvTxThread, SIGNAL(writeProcessBegin()), <span class="keyword">this</span>, SLOT(trigTxLed()));
+<a name="l00107"></a>00107     layout()-&gt;removeWidget(ldTx);
+<a name="l00108"></a>00108     <span class="keyword">delete</span> ldTx;
+<a name="l00109"></a>00109     ldTx = 0;
+<a name="l00110"></a>00110   }
+<a name="l00111"></a>00111   <span class="keywordflow">if</span>(lbTx != 0){
+<a name="l00112"></a>00112     layout()-&gt;removeWidget(lbTx);
+<a name="l00113"></a>00113     <span class="keyword">delete</span> lbTx;
+<a name="l00114"></a>00114     lbTx = 0;
+<a name="l00115"></a>00115   }
+<a name="l00116"></a>00116   <span class="keywordflow">if</span>(ldRx != 0){
+<a name="l00117"></a>00117     Q_ASSERT(pvRxThread != 0);
+<a name="l00118"></a>00118     disconnect(pvRxThread, SIGNAL(readProcessBegin()), <span class="keyword">this</span>, SLOT(trigRxLed()));
+<a name="l00119"></a>00119     layout()-&gt;removeWidget(ldRx);
+<a name="l00120"></a>00120     <span class="keyword">delete</span> ldRx;
+<a name="l00121"></a>00121     ldRx = 0;
+<a name="l00122"></a>00122   }
+<a name="l00123"></a>00123   <span class="keywordflow">if</span>(lbRx != 0){
+<a name="l00124"></a>00124     layout()-&gt;removeWidget(lbRx);
+<a name="l00125"></a>00125     <span class="keyword">delete</span> lbRx;
+<a name="l00126"></a>00126     lbRx = 0;
+<a name="l00127"></a>00127   }
+<a name="l00128"></a>00128 }
+<a name="l00129"></a>00129 
+<a name="l00130"></a><a class="code" href="classmdt_port_status_widget.html#ac14c1207abd242248538815542cb9068">00130</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#ac14c1207abd242248538815542cb9068" title="Add a custom widget.">mdtPortStatusWidget::addCustomWidget</a>(QWidget *widget)
+<a name="l00131"></a>00131 {
+<a name="l00132"></a>00132   Q_ASSERT(pvLayout != 0);
+<a name="l00133"></a>00133   Q_ASSERT(widget != 0);
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135   <a class="code" href="classmdt_port_status_widget.html#a108227f8f64dd69edd2dcdca2b52b8a0" title="Remove the custom widget.">removeCustomWidget</a>();
+<a name="l00136"></a>00136   pvCustomWidget = widget;
+<a name="l00137"></a>00137   pvLayout-&gt;addWidget(pvCustomWidget, 0, pvLayout-&gt;columnCount());
+<a name="l00138"></a>00138 }
+<a name="l00139"></a>00139 
+<a name="l00140"></a><a class="code" href="classmdt_port_status_widget.html#a108227f8f64dd69edd2dcdca2b52b8a0">00140</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a108227f8f64dd69edd2dcdca2b52b8a0" title="Remove the custom widget.">mdtPortStatusWidget::removeCustomWidget</a>()
+<a name="l00141"></a>00141 {
+<a name="l00142"></a>00142   Q_ASSERT(pvLayout != 0);
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144   <span class="keywordflow">if</span>(pvCustomWidget != 0){
+<a name="l00145"></a>00145     pvLayout-&gt;removeWidget(pvCustomWidget);
+<a name="l00146"></a>00146     pvCustomWidget = 0;
+<a name="l00147"></a>00147   }
+<a name="l00148"></a>00148 }
+<a name="l00149"></a>00149 
+<a name="l00150"></a><a class="code" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314">00150</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314" title="Set the permanent text.">mdtPortStatusWidget::setPermanentText</a>(<span class="keyword">const</span> QString &amp;text)
+<a name="l00151"></a>00151 {
+<a name="l00152"></a>00152   lbPermanentTextLabel-&gt;setText(text);
+<a name="l00153"></a>00153 }
+<a name="l00154"></a>00154 
+<a name="l00155"></a><a class="code" href="classmdt_port_status_widget.html#a489b587cd7be7dd6ae6f2782565553bf">00155</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a489b587cd7be7dd6ae6f2782565553bf" title="Set state.">mdtPortStatusWidget::setState</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keyword">const</span> QString &amp; text, <span class="keywordtype">int</span> ledColorId, <span class="keywordtype">bool</span> ledIsOn)
+<a name="l00156"></a>00156 {
+<a name="l00157"></a>00157   <span class="comment">// Set LED</span>
+<a name="l00158"></a>00158   ldState-&gt;<a class="code" href="classmdt_led.html#a16e89edb08321c7abec736b2ebf28986" title="Set the LED color.">setColor</a>((<a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef" title="LED predefined colors.">mdtLed::color_t</a>)ledColorId);
+<a name="l00159"></a>00159   ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>(ledIsOn);
+<a name="l00160"></a>00160   <span class="comment">// Set state text</span>
+<a name="l00161"></a>00161   pvCurrentStateText = text;
+<a name="l00162"></a>00162   <span class="keywordflow">if</span>(!pvShowingMessage){
+<a name="l00163"></a>00163     lbMessage-&gt;setText(pvCurrentStateText);
+<a name="l00164"></a>00164   }
+<a name="l00165"></a>00165 }
+<a name="l00166"></a>00166 
+<a name="l00167"></a><a class="code" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81">00167</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81" title="Used to show a message and details.">mdtPortStatusWidget::showMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details, <span class="keywordtype">int</span> timeout)
+<a name="l00168"></a>00168 {
+<a name="l00169"></a>00169   pvShowingMessage = <span class="keyword">true</span>;
+<a name="l00170"></a>00170   lbMessage-&gt;setText(message);
+<a name="l00171"></a>00171   <span class="keywordflow">if</span>(!details.isEmpty()){
+<a name="l00172"></a>00172     mbDetails-&gt;setText(message);
+<a name="l00173"></a>00173     mbDetails-&gt;setInformativeText(details);
+<a name="l00174"></a>00174     pbDetails-&gt;setEnabled(<span class="keyword">true</span>);
+<a name="l00176"></a>00176   }<span class="keywordflow">else</span>{
+<a name="l00177"></a>00177     mbDetails-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);
+<a name="l00178"></a>00178     mbDetails-&gt;setInformativeText(<span class="stringliteral">&quot;&quot;</span>);
+<a name="l00179"></a>00179     pbDetails-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00180"></a>00180   }
+<a name="l00181"></a>00181   <span class="keywordflow">if</span>(timeout &gt; 0){
+<a name="l00182"></a>00182     pvBackToStateTextTimer-&gt;start(timeout);
+<a name="l00183"></a>00183   }
+<a name="l00184"></a>00184 }
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186 <span class="keywordtype">void</span> mdtPortStatusWidget::trigTxLed()
+<a name="l00187"></a>00187 {
+<a name="l00188"></a>00188   Q_ASSERT(ldTx != 0);
+<a name="l00189"></a>00189 
+<a name="l00190"></a>00190   ldTx-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>(100);
+<a name="l00191"></a>00191 }
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193 <span class="keywordtype">void</span> mdtPortStatusWidget::trigRxLed()
+<a name="l00194"></a>00194 {
+<a name="l00195"></a>00195   Q_ASSERT(ldRx != 0);
 <a name="l00196"></a>00196 
-<a name="l00197"></a><a class="code" href="classmdt_port_status_widget.html#a5ed8af43258073bf57005232202e3137">00197</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a5ed8af43258073bf57005232202e3137" title="Set color for busy state.">mdtPortStatusWidget::setStateBusyColor</a>(<a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef" title="LED predefined colors.">mdtLed::color_t</a> color)
-<a name="l00198"></a>00198 {
-<a name="l00199"></a>00199   pvBusyColor = color;
-<a name="l00200"></a>00200 }
-<a name="l00201"></a>00201 
-<a name="l00202"></a><a class="code" href="classmdt_port_status_widget.html#a356064b89de5c7c8d1c8d5639d1d8f73">00202</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a356064b89de5c7c8d1c8d5639d1d8f73" title="Set state.">mdtPortStatusWidget::setState</a>(<span class="keywordtype">int</span> state)
-<a name="l00203"></a>00203 {
-<a name="l00204"></a>00204   <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaf2ba40e19587c3a98235ee96a4acf20e">mdtPortManager::Ready</a>){
-<a name="l00205"></a>00205     ldState-&gt;<a class="code" href="classmdt_led.html#a16e89edb08321c7abec736b2ebf28986" title="Set the LED color.">setColor</a>(pvReadyColor);
-<a name="l00206"></a>00206     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
-<a name="l00207"></a>00207     pvCurrentStateText = pvReadyText;
-<a name="l00208"></a>00208   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa4004253e25d51b1e628bb5006dbbd153">mdtPortManager::Disconnected</a>){
-<a name="l00209"></a>00209     ldState-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
-<a name="l00210"></a>00210     ldState-&gt;<a class="code" href="classmdt_blink_led.html#a951465e8a9ae5167e7eb05a7107ab13f" title="Set the LED OFF.">setOff</a>();
-<a name="l00211"></a>00211     pvCurrentStateText = pvDisconnectedText;
-<a name="l00212"></a>00212   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa89e805c9c75c39ecc8371d5f38131227">mdtPortManager::Connecting</a>){
-<a name="l00213"></a>00213     ldState-&gt;<a class="code" href="classmdt_led.html#a16e89edb08321c7abec736b2ebf28986" title="Set the LED color.">setColor</a>(pvConnectingColor);
-<a name="l00214"></a>00214     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
-<a name="l00215"></a>00215     pvCurrentStateText = pvConnectingText;
-<a name="l00216"></a>00216   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa5da3fa5dd98a264ecb4a37a1983ea0ff">mdtPortManager::Busy</a>){
-<a name="l00217"></a>00217     ldState-&gt;<a class="code" href="classmdt_led.html#a16e89edb08321c7abec736b2ebf28986" title="Set the LED color.">setColor</a>(pvBusyColor);
-<a name="l00218"></a>00218     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
-<a name="l00219"></a>00219     pvCurrentStateText = pvBusyText;
-<a name="l00220"></a>00220   }<span class="keywordflow">else</span>{
-<a name="l00221"></a>00221     ldState-&gt;<a class="code" href="classmdt_led.html#a28e208fb105c99b21d81d4c82ed50a98" title="Set the LED color to red.">setRed</a>();
-<a name="l00222"></a>00222     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
-<a name="l00223"></a>00223     pvCurrentStateText = tr(<span class="stringliteral">&quot;Unknown state&quot;</span>);
-<a name="l00224"></a>00224   }
-<a name="l00225"></a>00225   <span class="comment">// Set state text</span>
-<a name="l00226"></a>00226   <span class="keywordflow">if</span>(!pvShowingMessage){
-<a name="l00227"></a>00227     lbMessage-&gt;setText(pvCurrentStateText);
-<a name="l00228"></a>00228   }
-<a name="l00229"></a>00229 }
-<a name="l00230"></a>00230 
-<a name="l00231"></a><a class="code" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81">00231</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81" title="Used to show a message and details.">mdtPortStatusWidget::showMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details, <span class="keywordtype">int</span> timeout)
-<a name="l00232"></a>00232 {
-<a name="l00233"></a>00233   pvShowingMessage = <span class="keyword">true</span>;
-<a name="l00234"></a>00234   lbMessage-&gt;setText(message);
-<a name="l00235"></a>00235   <span class="keywordflow">if</span>(!details.isEmpty()){
-<a name="l00236"></a>00236     mbDetails-&gt;setText(message);
-<a name="l00237"></a>00237     mbDetails-&gt;setInformativeText(details);
-<a name="l00238"></a>00238     pbDetails-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00240"></a>00240   }<span class="keywordflow">else</span>{
-<a name="l00241"></a>00241     mbDetails-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);
-<a name="l00242"></a>00242     mbDetails-&gt;setInformativeText(<span class="stringliteral">&quot;&quot;</span>);
-<a name="l00243"></a>00243     pbDetails-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00244"></a>00244   }
-<a name="l00245"></a>00245   <span class="keywordflow">if</span>(timeout &gt; 0){
-<a name="l00246"></a>00246     pvBackToStateTextTimer-&gt;start(timeout);
-<a name="l00247"></a>00247   }
-<a name="l00248"></a>00248 }
-<a name="l00249"></a>00249 
-<a name="l00250"></a>00250 <span class="keywordtype">void</span> mdtPortStatusWidget::trigTxLed()
-<a name="l00251"></a>00251 {
-<a name="l00252"></a>00252   Q_ASSERT(ldTx != 0);
-<a name="l00253"></a>00253 
-<a name="l00254"></a>00254   ldTx-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>(100);
-<a name="l00255"></a>00255 }
-<a name="l00256"></a>00256 
-<a name="l00257"></a>00257 <span class="keywordtype">void</span> mdtPortStatusWidget::trigRxLed()
-<a name="l00258"></a>00258 {
-<a name="l00259"></a>00259   Q_ASSERT(ldRx != 0);
-<a name="l00260"></a>00260 
-<a name="l00261"></a>00261   ldRx-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>(100);
-<a name="l00262"></a>00262 }
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264 <span class="keywordtype">void</span> mdtPortStatusWidget::backToStateText()
-<a name="l00265"></a>00265 {
-<a name="l00266"></a>00266   pvShowingMessage = <span class="keyword">false</span>;
-<a name="l00267"></a>00267   lbMessage-&gt;setText(pvCurrentStateText);
-<a name="l00268"></a>00268   pbDetails-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00269"></a>00269 }
+<a name="l00197"></a>00197   ldRx-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>(100);
+<a name="l00198"></a>00198 }
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200 <span class="keywordtype">void</span> mdtPortStatusWidget::backToStateText()
+<a name="l00201"></a>00201 {
+<a name="l00202"></a>00202   pvShowingMessage = <span class="keyword">false</span>;
+<a name="l00203"></a>00203   lbMessage-&gt;setText(pvCurrentStateText);
+<a name="l00204"></a>00204   pbDetails-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00205"></a>00205 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -344,7 +280,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:06 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

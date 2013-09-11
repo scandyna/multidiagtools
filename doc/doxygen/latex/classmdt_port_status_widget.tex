@@ -4,6 +4,15 @@
 }
 
 
+Helper class to display port/device state and messages.  
+
+
+
+
+{\ttfamily \#include $<$mdtPortStatusWidget.h$>$}
+
+
+
 Collaboration diagram for mdtPortStatusWidget:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -14,7 +23,7 @@ Collaboration diagram for mdtPortStatusWidget:\nopagebreak
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_port_status_widget_a356064b89de5c7c8d1c8d5639d1d8f73}{setState} (int state)
+void \hyperlink{classmdt_port_status_widget_a489b587cd7be7dd6ae6f2782565553bf}{setState} (int id, const QString \&text, int ledColorId, bool ledIsOn)
 \begin{DoxyCompactList}\small\item\em Set state. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_status_widget_a8fce28ddb290512f5681cf800ac17b81}{showMessage} (const QString \&message, const QString \&details, int timeout=0)
 \begin{DoxyCompactList}\small\item\em Used to show a message and details. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -26,6 +35,11 @@ void \hyperlink{classmdt_port_status_widget_a8fce28ddb290512f5681cf800ac17b81}{s
 \label{classmdt_port_status_widget_ac92d61928204f88704de3f597d5754c7}
 
 \begin{DoxyCompactList}\small\item\em Build a status widget with default texts. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_status_widget_a239dbbcdc412d2cd332c665a55ecfa9b}{
+\hyperlink{classmdt_port_status_widget_a239dbbcdc412d2cd332c665a55ecfa9b}{$\sim$mdtPortStatusWidget} ()}
+\label{classmdt_port_status_widget_a239dbbcdc412d2cd332c665a55ecfa9b}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_status_widget_a8e87596be48b5cfda6703c42655b2f25}{enableTxRxLeds} (\hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$txThread, \hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$rxThread)
 \begin{DoxyCompactList}\small\item\em Enable the TX/RX LEDs. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_status_widget_af57ccc9a560d8ae1a49bc57a774a7db7}{
@@ -37,57 +51,22 @@ void \hyperlink{classmdt_port_status_widget_ac14c1207abd242248538815542cb9068}{a
 \begin{DoxyCompactList}\small\item\em Add a custom widget. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_status_widget_a108227f8f64dd69edd2dcdca2b52b8a0}{removeCustomWidget} ()
 \begin{DoxyCompactList}\small\item\em Remove the custom widget. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_status_widget_afa0b9020b56e33ea2a6c680552447228}{
-void \hyperlink{classmdt_port_status_widget_afa0b9020b56e33ea2a6c680552447228}{setDefaultStateTexts} ()}
-\label{classmdt_port_status_widget_afa0b9020b56e33ea2a6c680552447228}
-
-\begin{DoxyCompactList}\small\item\em Set default state texts. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_status_widget_a3961e272b2a124e8c989084e5c263e18}{
-void \hyperlink{classmdt_port_status_widget_a3961e272b2a124e8c989084e5c263e18}{setStateReadyText} (const QString \&text)}
-\label{classmdt_port_status_widget_a3961e272b2a124e8c989084e5c263e18}
-
-\begin{DoxyCompactList}\small\item\em Set text for ready state. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_status_widget_a3bf9ad36ee604e993a4802701c0b4f5a}{
-void \hyperlink{classmdt_port_status_widget_a3bf9ad36ee604e993a4802701c0b4f5a}{setStateDisconnectedText} (const QString \&text)}
-\label{classmdt_port_status_widget_a3bf9ad36ee604e993a4802701c0b4f5a}
-
-\begin{DoxyCompactList}\small\item\em Set text for disconnected state. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_status_widget_a20930a75418e6c6ce6beae619521d7ec}{
-void \hyperlink{classmdt_port_status_widget_a20930a75418e6c6ce6beae619521d7ec}{setStateConnectingText} (const QString \&text)}
-\label{classmdt_port_status_widget_a20930a75418e6c6ce6beae619521d7ec}
-
-\begin{DoxyCompactList}\small\item\em Set text for connecting state. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_status_widget_a5e74bad896b205add3183e1442f0d7d3}{
-void \hyperlink{classmdt_port_status_widget_a5e74bad896b205add3183e1442f0d7d3}{setStateBusyText} (const QString \&text)}
-\label{classmdt_port_status_widget_a5e74bad896b205add3183e1442f0d7d3}
-
-\begin{DoxyCompactList}\small\item\em Set text for busy state. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_status_widget_afbf619cd274d866a2c0c06444a13dc75}{
-void \hyperlink{classmdt_port_status_widget_afbf619cd274d866a2c0c06444a13dc75}{setDefaultStateColors} ()}
-\label{classmdt_port_status_widget_afbf619cd274d866a2c0c06444a13dc75}
-
-\begin{DoxyCompactList}\small\item\em Set default state colors. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_status_widget_a4930dd9b6e88b3b87cd99d5af25d9707}{
-void \hyperlink{classmdt_port_status_widget_a4930dd9b6e88b3b87cd99d5af25d9707}{setStateReadyColor} (\hyperlink{classmdt_led_a2d57d9ef04d2105d2fad93b57fc7cfef}{mdtLed::color\_\-t} color)}
-\label{classmdt_port_status_widget_a4930dd9b6e88b3b87cd99d5af25d9707}
-
-\begin{DoxyCompactList}\small\item\em Set color for ready state. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_status_widget_ac46df457ec12e933c991d2954688c432}{
-void \hyperlink{classmdt_port_status_widget_ac46df457ec12e933c991d2954688c432}{setStateConnectingColor} (\hyperlink{classmdt_led_a2d57d9ef04d2105d2fad93b57fc7cfef}{mdtLed::color\_\-t} color)}
-\label{classmdt_port_status_widget_ac46df457ec12e933c991d2954688c432}
-
-\begin{DoxyCompactList}\small\item\em Set color for connecting state. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_status_widget_a5ed8af43258073bf57005232202e3137}{
-void \hyperlink{classmdt_port_status_widget_a5ed8af43258073bf57005232202e3137}{setStateBusyColor} (\hyperlink{classmdt_led_a2d57d9ef04d2105d2fad93b57fc7cfef}{mdtLed::color\_\-t} color)}
-\label{classmdt_port_status_widget_a5ed8af43258073bf57005232202e3137}
-
-\begin{DoxyCompactList}\small\item\em Set color for busy state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_port_status_widget_a1b7fd23b45d75ccc106242026f3f8314}{setPermanentText} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Set the permanent text. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+Helper class to display port/device state and messages. 
 
+This widget contains 4 parts:
+\begin{DoxyItemize}
+\item A push button that opens a message box with details
+\item A status region with a LED and a text area
+\item A custom widget place holder
+\item A fixed text area (typically usefull to display wich port is open, f.ex.) 
+\end{DoxyItemize}
 
-Definition at line 38 of file mdtPortStatusWidget.h.
+Definition at line 43 of file mdtPortStatusWidget.h.
 
 
 
@@ -107,7 +86,7 @@ Add a custom widget.
 
 One custom widget can be added. 
 
-Definition at line 132 of file mdtPortStatusWidget.cpp.
+Definition at line 130 of file mdtPortStatusWidget.cpp.
 
 \hypertarget{classmdt_port_status_widget_a8e87596be48b5cfda6703c42655b2f25}{
 \index{mdtPortStatusWidget@{mdtPortStatusWidget}!enableTxRxLeds@{enableTxRxLeds}}
@@ -128,7 +107,7 @@ txThread and rxThread must be valid.
 \end{DoxyPrecond}
 
 
-Definition at line 72 of file mdtPortStatusWidget.cpp.
+Definition at line 70 of file mdtPortStatusWidget.cpp.
 
 \hypertarget{classmdt_port_status_widget_a108227f8f64dd69edd2dcdca2b52b8a0}{
 \index{mdtPortStatusWidget@{mdtPortStatusWidget}!removeCustomWidget@{removeCustomWidget}}
@@ -148,31 +127,44 @@ Remove the custom widget.
 \end{DoxySeeAlso}
 
 
-Definition at line 142 of file mdtPortStatusWidget.cpp.
+Definition at line 140 of file mdtPortStatusWidget.cpp.
 
-\hypertarget{classmdt_port_status_widget_a356064b89de5c7c8d1c8d5639d1d8f73}{
+\hypertarget{classmdt_port_status_widget_a1b7fd23b45d75ccc106242026f3f8314}{
+\index{mdtPortStatusWidget@{mdtPortStatusWidget}!setPermanentText@{setPermanentText}}
+\index{setPermanentText@{setPermanentText}!mdtPortStatusWidget@{mdtPortStatusWidget}}
+\subsubsection[{setPermanentText}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortStatusWidget::setPermanentText (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_status_widget_a1b7fd23b45d75ccc106242026f3f8314}
+
+
+Set the permanent text. 
+
+Note: permanent text is allways visible 
+
+Definition at line 150 of file mdtPortStatusWidget.cpp.
+
+\hypertarget{classmdt_port_status_widget_a489b587cd7be7dd6ae6f2782565553bf}{
 \index{mdtPortStatusWidget@{mdtPortStatusWidget}!setState@{setState}}
 \index{setState@{setState}!mdtPortStatusWidget@{mdtPortStatusWidget}}
 \subsubsection[{setState}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortStatusWidget::setState (
 \begin{DoxyParamCaption}
-\item[{int}]{state}
+\item[{int}]{id, }
+\item[{const QString \&}]{text, }
+\item[{int}]{ledColorId, }
+\item[{bool}]{ledIsOn}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_port_status_widget_a356064b89de5c7c8d1c8d5639d1d8f73}
+\label{classmdt_port_status_widget_a489b587cd7be7dd6ae6f2782565553bf}
 
 
 Set state. 
 
-States are defined in \hyperlink{classmdt_port_manager}{mdtPortManager}
+States are defined in \hyperlink{classmdt_port_manager}{mdtPortManager} 
 
-
-\begin{DoxyParams}{Parameters}
-{\em state} & A state as define in mdeDevice \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 202 of file mdtPortStatusWidget.cpp.
+Definition at line 155 of file mdtPortStatusWidget.cpp.
 
 \hypertarget{classmdt_port_status_widget_a8fce28ddb290512f5681cf800ac17b81}{
 \index{mdtPortStatusWidget@{mdtPortStatusWidget}!showMessage@{showMessage}}
@@ -201,12 +193,12 @@ Used to show a message and details.
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000026}{Todo}]Implement details ! \end{Desc}
+\item[\hyperlink{todo__todo000028}{Todo}]Implement details ! \end{Desc}
 
 
 
 
-Definition at line 231 of file mdtPortStatusWidget.cpp.
+Definition at line 167 of file mdtPortStatusWidget.cpp.
 
 
 

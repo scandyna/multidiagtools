@@ -130,14 +130,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00068"></a>00068   threadHelper.<a class="code" href="classmdt_port_thread_helper.html#a4127c0b28dc63df06b5a36a4be8b3bb7" title="Set the port instance.">setPort</a>(pvPort);
 <a name="l00069"></a>00069   threadHelper.<a class="code" href="classmdt_port_thread_helper.html#af6c9d2cb2e9e922942236068bf634b0b" title="Set the thread instance.">setThread</a>(<span class="keyword">this</span>);
 <a name="l00070"></a>00070   threadHelper.<a class="code" href="classmdt_port_thread_helper_socket.html#ab8d22e337e1cc2e043683da8b8a034e5" title="Set socket.">setSocket</a>(socket);
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00073"></a>00073   <span class="comment">// Run...</span>
-<a name="l00074"></a>00074   exec();
-<a name="l00075"></a>00075   <a class="code" href="classmdt_port_thread.html#a30bdd11ef16d4f3321921c9d9b26399d" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>);
-<a name="l00076"></a>00076   <span class="comment">// Cleanup</span>
-<a name="l00077"></a>00077   <span class="keyword">delete</span> socket;
-<a name="l00078"></a>00078 }
+<a name="l00071"></a>00071   connect(&amp;threadHelper, SIGNAL(<a class="code" href="classmdt_port_thread.html#a88070ed43976a83b6e4d289d6f1827bd" title="Emitted when connection with device is done.">connected</a>()), <span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_port_thread.html#a88070ed43976a83b6e4d289d6f1827bd" title="Emitted when connection with device is done.">connected</a>()));
+<a name="l00072"></a>00072   <span class="comment">// Notify that we are ready and start connecting</span>
+<a name="l00073"></a>00073   emit <a class="code" href="classmdt_port_thread.html#ae71ae3aa58eb1f409a2b128e6ef3148b" title="Emitted when thread is started and ready.">ready</a>(<span class="keyword">this</span>);
+<a name="l00074"></a>00074   threadHelper.<a class="code" href="classmdt_port_thread_helper_socket.html#a1948457ffe9027edfe3fcf5c01e8d7e1" title="Connect to host set during setSocket()">connectToHost</a>();
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00077"></a>00077   <span class="comment">// Run...</span>
+<a name="l00078"></a>00078   exec();
+<a name="l00080"></a>00080   <span class="comment">// Cleanup</span>
+<a name="l00081"></a>00081   <span class="keyword">delete</span> socket;
+<a name="l00082"></a>00082 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -154,7 +157,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:06 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

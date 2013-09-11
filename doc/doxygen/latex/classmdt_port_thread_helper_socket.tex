@@ -29,6 +29,14 @@ Collaboration diagram for mdtPortThreadHelperSocket:\nopagebreak
 \includegraphics[width=342pt]{classmdt_port_thread_helper_socket__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_port_thread_helper_socket_abd11bd8f13c7180389e8bf2249c643bf}{
+void \hyperlink{classmdt_port_thread_helper_socket_abd11bd8f13c7180389e8bf2249c643bf}{connected} ()}
+\label{classmdt_port_thread_helper_socket_abd11bd8f13c7180389e8bf2249c643bf}
+
+\begin{DoxyCompactList}\small\item\em Emitted when internal socket notified that it is connected, and when we are ready. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -40,7 +48,9 @@ Collaboration diagram for mdtPortThreadHelperSocket:\nopagebreak
 
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_thread_helper_socket_ab8d22e337e1cc2e043683da8b8a034e5}{setSocket} (QTcpSocket $\ast$socket)
-\begin{DoxyCompactList}\small\item\em Set socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set socket. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_thread_helper_socket_a1948457ffe9027edfe3fcf5c01e8d7e1}{connectToHost} ()
+\begin{DoxyCompactList}\small\item\em Connect to host set during \hyperlink{classmdt_port_thread_helper_socket_ab8d22e337e1cc2e043683da8b8a034e5}{setSocket()} \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -65,7 +75,7 @@ Definition at line 32 of file mdtPortThreadHelperSocket.h.
 Constructor. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000029}{Todo}]Implement socket options (think also about \hyperlink{classmdt_port_config}{mdtPortConfig}) \end{Desc}
+\item[\hyperlink{todo__todo000033}{Todo}]Implement socket options (think also about \hyperlink{classmdt_port_config}{mdtPortConfig}) \end{Desc}
 
 
 Definition at line 33 of file mdtPortThreadHelperSocket.cpp.
@@ -73,6 +83,28 @@ Definition at line 33 of file mdtPortThreadHelperSocket.cpp.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_port_thread_helper_socket_a1948457ffe9027edfe3fcf5c01e8d7e1}{
+\index{mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}!connectToHost@{connectToHost}}
+\index{connectToHost@{connectToHost}!mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}}
+\subsubsection[{connectToHost}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortThreadHelperSocket::connectToHost (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_thread_helper_socket_a1948457ffe9027edfe3fcf5c01e8d7e1}
+
+
+Connect to host set during \hyperlink{classmdt_port_thread_helper_socket_ab8d22e337e1cc2e043683da8b8a034e5}{setSocket()} 
+
+\begin{DoxyPrecond}{Precondition}
+port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdtPortThreadHelper::setPort()} 
+
+socket must be set with \hyperlink{classmdt_port_thread_helper_socket_ab8d22e337e1cc2e043683da8b8a034e5}{setSocket()} 
+\end{DoxyPrecond}
+
+
+Definition at line 104 of file mdtPortThreadHelperSocket.cpp.
+
 \hypertarget{classmdt_port_thread_helper_socket_ab8d22e337e1cc2e043683da8b8a034e5}{
 \index{mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}!setSocket@{setSocket}}
 \index{setSocket@{setSocket}!mdtPortThreadHelperSocket@{mdtPortThreadHelperSocket}}

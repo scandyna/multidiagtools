@@ -84,7 +84,7 @@ Collaboration diagram for mdtUsbtmcPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_usbtmc_port_manager__coll__graph.png" border="0" usemap="#mdt_usbtmc_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_usbtmc_port_manager_coll__map" id="mdt_usbtmc_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API." alt="" coords="69,389,211,419"/><area shape="rect" id="node4" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="81,309,199,339"/><area shape="rect" id="node6" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="87,197,193,227"/><area shape="rect" id="node8" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node10" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/><area shape="rect" id="node12" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="217,197,308,227"/></map>
+<area shape="rect" id="node2" href="classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API." alt="" coords="275,552,417,581"/><area shape="rect" id="node4" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="287,472,405,501"/><area shape="rect" id="node6" href="classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="61,360,258,389"/><area shape="rect" id="node8" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="137,183,259,212"/><area shape="rect" id="node10" href="classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="37,5,111,35"/><area shape="rect" id="node13" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="369,360,475,389"/><area shape="rect" id="node15" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="298,183,415,212"/><area shape="rect" id="node17" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="303,5,410,35"/><area shape="rect" id="node19" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="499,360,590,389"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_usbtmc_port_manager-members.html">List of all members.</a></p>
@@ -101,24 +101,20 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aad6b2eef9b5cfb5c324affb6962a463b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6">scan</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available ports with a USBTMC compatible device attached.  <a href="#a992d1227810186d3c7dc166452e2e3b6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#aaab645cfcafbac7a83a69f2084900246">sendCommand</a> (const QByteArray &amp;command, int timeout=0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a command to device.  <a href="#aaab645cfcafbac7a83a69f2084900246"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a858590909ce63319a3390140c4d0a6ca">sendQuery</a> (const QByteArray &amp;query, int writeTimeout=0, int readTimeout=0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a query to device.  <a href="#a858590909ce63319a3390140c4d0a6ca"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a58fbe73aad9b42214335187f8d21e3c6">writeData</a> (const QByteArray &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#a58fbe73aad9b42214335187f8d21e3c6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a0b90ceb0bbf424222ec878a355d206d7">isReady</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if port manager is ready.  <a href="#a0b90ceb0bbf424222ec878a355d206d7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#af6abc4a3693fc386a12f346f57282c11">sendCommand</a> (const QByteArray &amp;command)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a command to device.  <a href="#af6abc4a3693fc386a12f346f57282c11"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#acbbb8539c54034989b2ea6f6071e90bf">sendQuery</a> (const QByteArray &amp;query)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a query to device.  <a href="#acbbb8539c54034989b2ea6f6071e90bf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a6d566c68ddeb7c7ca14b5c70ae784efc">sendData</a> (const QByteArray &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#a6d566c68ddeb7c7ca14b5c70ae784efc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b">sendReadRequest</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a read request to device.  <a href="#a2920bdd6b189f198f132de9e5555a78b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#ab1604a1c8f2e9192714d039dbf9a5158">sendReadRequest</a> (bool enqueueResponse)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a read request to device.  <a href="#ab1604a1c8f2e9192714d039dbf9a5158"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a7bcc280bd4a26ed523832550b1e61553">sendReadStatusByteRequest</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a READ_STATUS_BYTE request thru the control endpoint.  <a href="#a7bcc280bd4a26ed523832550b1e61553"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#af412ba1b1e7e56ebecd2e59cb6bf607a">abortBulkOut</a> (quint8 bTag)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort bulk OUT.  <a href="#af412ba1b1e7e56ebecd2e59cb6bf607a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a987b71d620dac06be85567a92f272f6b">sendInitiateAbortBulkOutRequest</a> (quint8 bTag)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a INITIATE_ABORT_BULK_OUT request thru the control endpoint.  <a href="#a987b71d620dac06be85567a92f272f6b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a724a999c11ab0458f53427fbb6862d62">sendCheckAbortBulkOutStatusRequest</a> (quint8 bTag)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a CHECK_ABORT_BULK_OUT_STATUS request thru the control endpoint.  <a href="#a724a999c11ab0458f53427fbb6862d62"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USBTMC port manager. </p>
@@ -147,7 +143,7 @@ Public Member Functions</h2></td></tr>
 <p>Construct a USBTMC port manager. </p>
 <p>Create a thread and setup port. </p>
 
-<p><p>connect(portThread, SIGNAL(messageInReaden()), this, SLOT(<a class="el" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa" title="Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint)...">fromThreadMessageInReaden()</a>)); </p>
+<p><p>connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(<a class="el" href="classmdt_usb_port_manager.html#af043c75c74665b23d13f3cb73150935c" title="Called from USB thread when a control reply was received.">fromThreadControlResponseReaden()</a>)); connect(portThread, SIGNAL(messageInReaden()), this, SLOT(<a class="el" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa" title="Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint)...">fromThreadMessageInReaden()</a>)); </p>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
@@ -171,38 +167,11 @@ Public Member Functions</h2></td></tr>
 <p>Destructor. </p>
 <p>Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00062">62</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="af412ba1b1e7e56ebecd2e59cb6bf607a"></a><!-- doxytag: member="mdtUsbtmcPortManager::abortBulkOut" ref="af412ba1b1e7e56ebecd2e59cb6bf607a" args="(quint8 bTag)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int mdtUsbtmcPortManager::abortBulkOut </td>
-          <td>(</td>
-          <td class="paramtype">quint8&#160;</td>
-          <td class="paramname"><em>bTag</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Abort bulk OUT. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 on success. </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be set before call of this method</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000039">Todo:</a></b></dt><dd>Finish and test </dd></dl>
-
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000040">Todo:</a></b></dt><dd>Implement clear halt </dd></dl>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00254">254</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="aca42b343ae1f6a324e6e45968f03bbea"></a><!-- doxytag: member="mdtUsbtmcPortManager::fromThreadNewFrameReaden" ref="aca42b343ae1f6a324e6e45968f03bbea" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -218,14 +187,37 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Called by the thread whenn a frame was readen. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000041">Todo:</a></b></dt><dd>On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Todo:</a></b></dt><dd>On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. &lt;- Should be done in thread.. </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Todo:</a></b></dt><dd>Check ID coherence ? Should be a assertion ? </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Todo:</a></b></dt><dd>Check ID coherence ? Should be a assertion ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00416">416</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00275">275</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0b90ceb0bbf424222ec878a355d206d7"></a><!-- doxytag: member="mdtUsbtmcPortManager::isReady" ref="a0b90ceb0bbf424222ec878a355d206d7" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtUsbtmcPortManager::isReady </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Check if port manager is ready. </p>
+<p>Internally, the currentState is used to check if port manager is ready. This implementation returns true if currentState is Ready. </p>
+
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a6dc2798324521d177fb8f79d4f6c5f0f">mdtPortManager</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00101">101</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -245,38 +237,15 @@ Public Member Functions</h2></td></tr>
 
 <p>Scan for available ports with a USBTMC compatible device attached. </p>
 <p>Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must be closed </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b">mdtUsbPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00066">66</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a724a999c11ab0458f53427fbb6862d62"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendCheckAbortBulkOutStatusRequest" ref="a724a999c11ab0458f53427fbb6862d62" args="(quint8 bTag)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int mdtUsbtmcPortManager::sendCheckAbortBulkOutStatusRequest </td>
-          <td>(</td>
-          <td class="paramtype">quint8&#160;</td>
-          <td class="paramname"><em>bTag</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Send a CHECK_ABORT_BULK_OUT_STATUS request thru the control endpoint. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_usbtmc_port_manager.html#af412ba1b1e7e56ebecd2e59cb6bf607a" title="Abort bulk OUT.">abortBulkOut()</a> </dd></dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success or WriteQueueEmpty on error. </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00384">384</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aaab645cfcafbac7a83a69f2084900246"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendCommand" ref="aaab645cfcafbac7a83a69f2084900246" args="(const QByteArray &amp;command, int timeout=0)" -->
+<a class="anchor" id="af6abc4a3693fc386a12f346f57282c11"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendCommand" ref="af6abc4a3693fc386a12f346f57282c11" args="(const QByteArray &amp;command)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -284,63 +253,61 @@ Public Member Functions</h2></td></tr>
           <td class="memname">int mdtUsbtmcPortManager::sendCommand </td>
           <td>(</td>
           <td class="paramtype">const QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>command</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>command</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Send a command to device. </p>
-<p>Wait until it's possible to write to device, then send the command.</p>
-<p>Note that the wait will not break the GUI's event loop (see <a class="el" href="classmdt_port_manager.html#a1ca92c5ac120d87e5b10bff54ed1aa5c" title="Wait until data can be written.">mdtPortManager::waitOnWriteReady()</a> for details).</p>
+<p>At first, this method waits until the ready state is set calling <a class="el" href="classmdt_usbtmc_port_manager.html#a0b90ceb0bbf424222ec878a355d206d7" title="Check if port manager is ready.">isReady()</a> , a frame is available in port's write frames pool, and until a transaction is possible (see <a class="el" href="classmdt_port_manager.html#ac04a12f8aa20ba04695083afce45a6cc" title="Wait until transaction pending queue has less than maximum possible items.">waitTransactionPossible()</a> ). This wait will not break event loop, so no GUI freeze occurs. If port manager is stopped during this wait (unhandled error, stop request), this method returns.</p>
+<p>Note that the wait will not break the GUI's event loop (see mdtPortManager::waitOnWriteReady() for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">command</td><td>Command to send. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Write timeout [ms] If 0, internal defined timeout is used (see <a class="el" href="classmdt_port_manager.html#a9d6782be514745a1b1392216d17d41df" title="Adjust a requested timeout to minimal timeout.">mdtPortManager::adjustedWriteTimeout()</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success, or a error &lt; 0 (see <a class="el" href="classmdt_usbtmc_port_manager.html#a58fbe73aad9b42214335187f8d21e3c6" title="Write data by copy.">mdtUsbtmcPortManager::writeData()</a> for details). </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success, or a error &lt; 0 (see mdtUsbtmcPortManager::writeData() for details). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00106">106</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a987b71d620dac06be85567a92f272f6b"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendInitiateAbortBulkOutRequest" ref="a987b71d620dac06be85567a92f272f6b" args="(quint8 bTag)" -->
+<a class="anchor" id="a6d566c68ddeb7c7ca14b5c70ae784efc"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendData" ref="a6d566c68ddeb7c7ca14b5c70ae784efc" args="(const QByteArray &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int mdtUsbtmcPortManager::sendInitiateAbortBulkOutRequest </td>
+          <td class="memname">int mdtUsbtmcPortManager::sendData </td>
           <td>(</td>
-          <td class="paramtype">quint8&#160;</td>
-          <td class="paramname"><em>bTag</em></td><td>)</td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Send a INITIATE_ABORT_BULK_OUT request thru the control endpoint. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_usbtmc_port_manager.html#af412ba1b1e7e56ebecd2e59cb6bf607a" title="Abort bulk OUT.">abortBulkOut()</a> </dd></dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success or WriteQueueEmpty on error. </dd></dl>
+<p>Write data by copy. </p>
+<p>At first, this method waits until the ready state is set calling <a class="el" href="classmdt_usbtmc_port_manager.html#a0b90ceb0bbf424222ec878a355d206d7" title="Check if port manager is ready.">isReady()</a> , a frame is available in port's write frames pool, and until a transaction is possible (see <a class="el" href="classmdt_port_manager.html#ac04a12f8aa20ba04695083afce45a6cc" title="Wait until transaction pending queue has less than maximum possible items.">waitTransactionPossible()</a> ). This wait will not break event loop, so no GUI freeze occurs. If port manager is stopped during this wait (unhandled error, stop request), this method returns.</p>
+<p>Then, data will be encoded regarding USBTMC standard and passed to the mdtUsbPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.</p>
+<p>This method does not use transaction, because no response will be returned.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Data to write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a> (&lt; 0). </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00353">353</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a858590909ce63319a3390140c4d0a6ca"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendQuery" ref="a858590909ce63319a3390140c4d0a6ca" args="(const QByteArray &amp;query, int writeTimeout=0, int readTimeout=0)" -->
+<a class="anchor" id="acbbb8539c54034989b2ea6f6071e90bf"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendQuery" ref="acbbb8539c54034989b2ea6f6071e90bf" args="(const QByteArray &amp;query)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -348,44 +315,24 @@ Public Member Functions</h2></td></tr>
           <td class="memname">QByteArray mdtUsbtmcPortManager::sendQuery </td>
           <td>(</td>
           <td class="paramtype">const QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>query</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>query</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>writeTimeout</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>readTimeout</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Send a query to device. </p>
-<p>Wait until it's possible to write to device, send the query and wait until a response is available or timeout.</p>
-<p>Note that the wait will not break the GUI's event loop.</p>
+<p>Will wait until it's possible to write. See <a class="el" href="classmdt_usbtmc_port_manager.html#a6d566c68ddeb7c7ca14b5c70ae784efc" title="Write data by copy.">sendData()</a> and <a class="el" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b" title="Send a read request to device.">sendReadRequest()</a> for details (used internally).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">query</td><td>Query to send. </td></tr>
-    <tr><td class="paramname">writeTimeout</td><td>Write timeout [ms] If 0, internal defined timeout is used (see <a class="el" href="classmdt_port_manager.html#a9d6782be514745a1b1392216d17d41df" title="Adjust a requested timeout to minimal timeout.">mdtPortManager::adjustedWriteTimeout()</a> for details). </td></tr>
-    <tr><td class="paramname">readTimeout</td><td>Response timeout [ms] If 0, internal defined timeout is used (see <a class="el" href="classmdt_port_manager.html#a7cb3155940e23db0122d14f21fca858d" title="Adjust a requested timeout to minimal timeout.">mdtPortManager::adjustedReadTimeout()</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Result as string (empty string on error) Note that <a class="el" href="classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;">mdtFrameCodecScpi</a> can be helpful to decode returned result.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000037">Todo:</a></b></dt><dd>Remove timeouts </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Result as string (empty string on error) Note that <a class="el" href="classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;">mdtFrameCodecScpi</a> can be helpful to decode returned result. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00104">104</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -406,18 +353,19 @@ Public Member Functions</h2></td></tr>
 
 <p>Send a read request to device. </p>
 <p>USBTMC standard need that a read request is sent to device before we can read any data.</p>
+<p>At first, this method waits until the ready state is set calling <a class="el" href="classmdt_usbtmc_port_manager.html#a0b90ceb0bbf424222ec878a355d206d7" title="Check if port manager is ready.">isReady()</a> , and a frame is available in port's write frames pool. This wait will not break event loop, so no GUI freeze occurs. If port manager is stopped during this wait (unhandled error, stop request), this method returns.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>A pointer to a valid transaction, with queryReplyMode set. (id will be set internally). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 if write queue is full. On failure, the transaction is restored to pool. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a> (&lt; 0). On failure, the transaction is restored to pool. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be set </dd>
 <dd>
 transaction must be a valid pointer </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00174">174</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00184">184</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -444,10 +392,10 @@ transaction must be a valid pointer </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Todo:</a></b></dt><dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000044">Todo:</a></b></dt><dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 if write queue is full. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00214">214</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00235">235</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -467,43 +415,12 @@ transaction must be a valid pointer </dd></dl>
 
 <p>Send a READ_STATUS_BYTE request thru the control endpoint. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success or WriteQueueEmpty on error.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000038">Todo:</a></b></dt><dd>finish ! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000041">Todo:</a></b></dt><dd>finish ! </dd></dl>
 
 <p><p>m.sendControlRequest(f); End Sandbox ! </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00226">226</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a58fbe73aad9b42214335187f8d21e3c6"></a><!-- doxytag: member="mdtUsbtmcPortManager::writeData" ref="a58fbe73aad9b42214335187f8d21e3c6" args="(const QByteArray &amp;data)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int mdtUsbtmcPortManager::writeData </td>
-          <td>(</td>
-          <td class="paramtype">const QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Write data by copy. </p>
-<p>Data will be encoded regarding USBTMC standard and passed to the mdtUsbPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.</p>
-<p>This method does not use transaction, because no response will be returned.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>Data to write </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or mdtAbstractPort::WriteQueueEmpty (&lt; 0). </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00139">139</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00247">247</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -526,7 +443,7 @@ transaction must be a valid pointer </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:12 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

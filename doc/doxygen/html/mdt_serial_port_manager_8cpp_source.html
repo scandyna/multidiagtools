@@ -117,7 +117,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00055"></a>00055 
 <a name="l00056"></a><a class="code" href="classmdt_serial_port_manager.html#a791572f869d1d605d0c4658ca4187260">00056</a> QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_serial_port_manager.html#a791572f869d1d605d0c4658ca4187260" title="Scan for available serial ports.">mdtSerialPortManager::scan</a>()
 <a name="l00057"></a>00057 {
-<a name="l00058"></a>00058   Q_ASSERT(!<a class="code" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2" title="Get the running state.">isRunning</a>());
+<a name="l00058"></a>00058   Q_ASSERT(<a class="code" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed</a>());
 <a name="l00059"></a>00059 
 <a name="l00060"></a>00060   <a class="code" href="classmdt_serial_port.html">mdtSerialPort</a> *<a class="code" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d" title="Get the serial port instance.">port</a>;
 <a name="l00061"></a>00061   QStringList portNames;
@@ -145,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00083"></a>00083   <span class="comment">// Common device directory</span>
 <a name="l00084"></a>00084   dir.setPath(<span class="stringliteral">&quot;/dev&quot;</span>);
 <a name="l00085"></a>00085   <span class="keywordflow">if</span>(!dir.exists()){
-<a name="l00086"></a>00086     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;directory &#39;&quot;</span> + dir.dirName() + <span class="stringliteral">&quot;&#39; not exists&quot;</span>, <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa687598301ad573e51cafaa209da72718">mdtError::Error</a>);
+<a name="l00086"></a>00086     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;directory &#39;&quot;</span> + dir.dirName() + <span class="stringliteral">&quot;&#39; not exists&quot;</span>, mdtError::Error);
 <a name="l00087"></a>00087     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPortManagerPosix&quot;</span>);
 <a name="l00088"></a>00088     e.commit();
 <a name="l00089"></a>00089     <span class="keywordflow">return</span> availablePorts;
@@ -237,7 +237,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:06 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

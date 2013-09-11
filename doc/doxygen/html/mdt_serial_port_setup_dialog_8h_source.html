@@ -122,31 +122,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00070"></a>00070 
 <a name="l00071"></a>00071  <span class="keyword">private</span>:
 <a name="l00072"></a>00072 
-<a name="l00075"></a>00075   <span class="keywordtype">void</span> setStateDisconnected();
+<a name="l00075"></a>00075   <span class="keywordtype">void</span> setStatePortClosed();
 <a name="l00076"></a>00076 
-<a name="l00079"></a>00079   <span class="keywordtype">void</span> setStateConnecting();
+<a name="l00079"></a>00079   <span class="keywordtype">void</span> setStateDisconnected();
 <a name="l00080"></a>00080 
-<a name="l00083"></a>00083   <span class="keywordtype">void</span> setStateReady();
+<a name="l00083"></a>00083   <span class="keywordtype">void</span> setStateConnecting();
 <a name="l00084"></a>00084 
-<a name="l00087"></a>00087   <span class="keywordtype">void</span> setStateBusy();
+<a name="l00087"></a>00087   <span class="keywordtype">void</span> setStatePortReady();
 <a name="l00088"></a>00088 
-<a name="l00091"></a>00091   <span class="keywordtype">void</span> setStateWarning();
+<a name="l00091"></a>00091   <span class="keywordtype">void</span> setStateReady();
 <a name="l00092"></a>00092 
-<a name="l00095"></a>00095   <span class="keywordtype">void</span> setStateError();
+<a name="l00095"></a>00095   <span class="keywordtype">void</span> setStateBusy();
 <a name="l00096"></a>00096 
-<a name="l00099"></a>00099   <span class="keywordtype">bool</span> applySetup();
+<a name="l00099"></a>00099   <span class="keywordtype">void</span> setStateError();
 <a name="l00100"></a>00100 
-<a name="l00101"></a>00101   <a class="code" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a> *pvSerialPortManager;
-<a name="l00102"></a>00102   <a class="code" href="classmdt_port_config_widget.html">mdtPortConfigWidget</a> *pvPortConfigWidget;
-<a name="l00103"></a>00103   <a class="code" href="classmdt_serial_port_config_widget.html">mdtSerialPortConfigWidget</a> *pvSerialPortConfigWidget;
-<a name="l00104"></a>00104   <a class="code" href="classmdt_port_info_cb_handler.html" title="Handle the port info comboBox and the device info comboBox.">mdtPortInfoCbHandler</a> pvPortInfoCbHandler;
-<a name="l00105"></a>00105   QPushButton *pbOpen;
-<a name="l00106"></a>00106   QPushButton *pbClose;
-<a name="l00107"></a>00107   QPushButton *pbRescan;
-<a name="l00108"></a>00108   QComboBox *cbPort;
-<a name="l00109"></a>00109 };
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111 <span class="preprocessor">#endif  // #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H</span>
+<a name="l00103"></a>00103   <span class="keywordtype">bool</span> applySetup();
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105   <a class="code" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a> *pvSerialPortManager;
+<a name="l00106"></a>00106   <a class="code" href="classmdt_port_config_widget.html">mdtPortConfigWidget</a> *pvPortConfigWidget;
+<a name="l00107"></a>00107   <a class="code" href="classmdt_serial_port_config_widget.html">mdtSerialPortConfigWidget</a> *pvSerialPortConfigWidget;
+<a name="l00108"></a>00108   <a class="code" href="classmdt_port_info_cb_handler.html" title="Handle the port info comboBox and the device info comboBox.">mdtPortInfoCbHandler</a> pvPortInfoCbHandler;
+<a name="l00109"></a>00109   QPushButton *pbOpen;
+<a name="l00110"></a>00110   QPushButton *pbClose;
+<a name="l00111"></a>00111   QPushButton *pbRescan;
+<a name="l00112"></a>00112   QComboBox *cbPort;
+<a name="l00113"></a>00113 };
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115 <span class="preprocessor">#endif  // #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -163,7 +165,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 2 2013 18:16:06 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -1,7 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="81,309,199,339"/>
-<area shape="rect" id="node4" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="87,197,193,227"/>
-<area shape="rect" id="node6" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/>
-<area shape="rect" id="node8" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/>
-<area shape="rect" id="node10" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="217,197,308,227"/>
+<area shape="rect" id="node2" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="287,472,405,501"/>
+<area shape="rect" id="node4" href="$classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="61,360,258,389"/>
+<area shape="rect" id="node6" href="$classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="137,183,259,212"/>
+<area shape="rect" id="node8" href="$classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="37,5,111,35"/>
+<area shape="rect" id="node11" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="369,360,475,389"/>
+<area shape="rect" id="node13" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="298,183,415,212"/>
+<area shape="rect" id="node15" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="303,5,410,35"/>
+<area shape="rect" id="node17" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="499,360,590,389"/>
 </map>
