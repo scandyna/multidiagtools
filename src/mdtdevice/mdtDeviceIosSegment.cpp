@@ -23,8 +23,6 @@
 #include "mdtAnalogIo.h"
 #include "mdtDigitalIo.h"
 
-#include <QDebug>
-
 mdtDeviceIosSegment::mdtDeviceIosSegment()
 {
   pvStartAddressRead = 0;
@@ -170,10 +168,56 @@ QList<int> mdtDeviceIosSegment::addressesWrite() const
 
 bool mdtDeviceIosSegment::setValues(const QList<mdtValue> & values)
 {
+  int i, n;
+  int max = qMin(pvValues.size(), values.size());
+
+  n = pvValues.size();  // Remeber internal I/O's count set
+  pvValues.clear();
+  for(i = 0; i < max; ++i){
+    pvValues.append(values.at(i));
+  }
+  for(i = max; i < n; ++i){
+    pvValues.append(mdtValue());
+  }
+  if(values.size() != n){
+    return false;
+  }else{
+    return true;
+  }
 }
 
-bool mdtDeviceIosSegment::setValues(const QVariant & values)
+bool mdtDeviceIosSegment::setValues(const QList<QVariant> & values)
 {
+  int i, n;
+  QVariant var;
+  int max = qMin(pvValues.size(), values.size());
+
+  n = pvValues.size();  // Remeber internal I/O's count set
+  pvValues.clear();
+  for(i = 0; i < max; ++i){
+    var = values.at(i);
+    switch(var.type()){
+      case QVariant::Int:
+        pvValues.append(values.at(i).toInt());
+        break;
+      case QVariant::Double:
+        pvValues.append(values.at(i).toDouble());
+        break;
+      case QVariant::Bool:
+        pvValues.append(values.at(i).toBool());
+        break;
+      default:
+        pvValues.append(mdtValue());
+    }
+  }
+  for(i = max; i < n; ++i){
+    pvValues.append(mdtValue());
+  }
+  if(values.size() != n){
+    return false;
+  }else{
+    return true;
+  }
 }
 
 const QList<mdtValue> &mdtDeviceIosSegment::values() const
@@ -216,11 +260,3 @@ QList<bool> mdtDeviceIosSegment::valuesBool() const
 
   return valuesList;
 }
-
-#ifdef QT_DEBUG
-/**
-void mdtDeviceIosSegment::debugCheckIosList(const QList<mdtAbstractIo*> lst)
-{
-}
-*/
-#endif  // #ifdef QT_DEBUG

@@ -112,7 +112,7 @@ class mdtDeviceIosSegment
    *
    * \overload setValues(const QList<mdtValue> &)
    */
-  bool setValues(const QVariant & values);
+  bool setValues(const QList<QVariant> & values);
 
   /*! \brief Get list of stored I/O's values
    */
@@ -134,10 +134,6 @@ class mdtDeviceIosSegment
 
   Q_DISABLE_COPY(mdtDeviceIosSegment);
 
-#ifdef QT_DEBUG
-  // Used by setIos()
-  ///void debugCheckIosList(const QList<mdtAbstractIo*> lst);
-#endif
   int pvStartAddressRead;
   int pvStartAddressWrite;
   int pvEndAddressRead;

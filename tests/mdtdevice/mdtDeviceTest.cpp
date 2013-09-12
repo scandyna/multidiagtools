@@ -66,6 +66,8 @@ void mdtDeviceTest::deviceIosSegmentTest()
   QList<int> expectedValuesInt;
   QList<double> expectedValuesDouble;
   QList<bool> expectedValuesBool;
+  QList<mdtValue> valuesMdt;
+  QList<QVariant> valuesVar;
 
   // Check default values
   QCOMPARE(seg.startAddressRead(), 0);
@@ -105,7 +107,89 @@ void mdtDeviceTest::deviceIosSegmentTest()
   QCOMPARE(seg.addressesWrite(), expectedWriteAddresses);
   QCOMPARE(seg.valuesInt(), expectedValuesInt);
   QCOMPARE(seg.valuesDouble(), expectedValuesDouble);
-  // Edit some values and check
+  // Set some values and check - correct amount of values - type: mdtValue
+  valuesMdt.clear();
+  expectedValuesInt.clear();
+  for(int i = 0; i < 9; i++){
+    valuesMdt.append(2*i);
+    expectedValuesInt.append(2*i);
+  }
+  QVERIFY(seg.setValues(valuesMdt));
+  QCOMPARE(seg.values().size(), 9);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  // Set some values and check - correct amount of values - type: QVariant
+  valuesVar.clear();
+  expectedValuesInt.clear();
+  for(int i = 0; i < 9; i++){
+    valuesVar.append(5*i);
+    expectedValuesInt.append(5*i);
+  }
+  QVERIFY(seg.setValues(valuesVar));
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  // Set some values and check - to less values - type: mdtValue
+  valuesMdt.clear();
+  expectedValuesInt.clear();
+  for(int i = 0; i < 5; i++){
+    valuesMdt.append(7*i);
+    expectedValuesInt.append(7*i);
+  }
+  QVERIFY(!seg.setValues(valuesMdt));
+  QCOMPARE(seg.values().size(), 9);
+  for(int i = 0; i < 5; i++){
+    QVERIFY(seg.values().at(i).isValid());
+    QCOMPARE(seg.values().at(i).valueInt(), expectedValuesInt.at(i));
+    QCOMPARE(seg.valuesInt().at(i), expectedValuesInt.at(i));
+  }
+  QVERIFY(!seg.values().at(6).isValid());
+  QVERIFY(!seg.values().at(7).isValid());
+  QVERIFY(!seg.values().at(8).isValid());
+  // Set some values and check - to less values - type: QVariant
+  valuesVar.clear();
+  expectedValuesInt.clear();
+  for(int i = 0; i < 3; i++){
+    valuesVar.append(3*i);
+    expectedValuesInt.append(3*i);
+  }
+  QVERIFY(!seg.setValues(valuesVar));
+  QCOMPARE(seg.values().size(), 9);
+  for(int i = 0; i < 3; i++){
+    QVERIFY(seg.values().at(i).isValid());
+    QCOMPARE(seg.values().at(i).valueInt(), expectedValuesInt.at(i));
+    QCOMPARE(seg.valuesInt().at(i), expectedValuesInt.at(i));
+  }
+  QVERIFY(!seg.values().at(4).isValid());
+  QVERIFY(!seg.values().at(5).isValid());
+  QVERIFY(!seg.values().at(6).isValid());
+  QVERIFY(!seg.values().at(7).isValid());
+  QVERIFY(!seg.values().at(8).isValid());
+  // Set some values and check - to many values - type: mdtValue
+  valuesMdt.clear();
+  expectedValuesInt.clear();
+  for(int i = 0; i < 20; i++){
+    valuesMdt.append(3*i);
+    expectedValuesInt.append(3*i);
+  }
+  QVERIFY(!seg.setValues(valuesMdt));
+  QCOMPARE(seg.values().size(), 9);
+  for(int i = 0; i < 9; i++){
+    QVERIFY(seg.values().at(i).isValid());
+    QCOMPARE(seg.values().at(i).valueInt(), expectedValuesInt.at(i));
+    QCOMPARE(seg.valuesInt().at(i), expectedValuesInt.at(i));
+  }
+  // Set some values and check - to many values - type: QVariant
+  valuesVar.clear();
+  expectedValuesInt.clear();
+  for(int i = 0; i < 30; i++){
+    valuesVar.append(2*i);
+    expectedValuesInt.append(2*i);
+  }
+  QVERIFY(!seg.setValues(valuesVar));
+  QCOMPARE(seg.values().size(), 9);
+  for(int i = 0; i < 9; i++){
+    QVERIFY(seg.values().at(i).isValid());
+    QCOMPARE(seg.values().at(i).valueInt(), expectedValuesInt.at(i));
+    QCOMPARE(seg.valuesInt().at(i), expectedValuesInt.at(i));
+  }
 
   /*
    * Digital I/O
@@ -122,7 +206,6 @@ void mdtDeviceTest::deviceIosSegmentTest()
     dIo->setAddressWrite(i+100);
     expectedWriteAddresses.append(i+100);
     dIo->setValue((i%2)==0);
-    qDebug() << dIo->value();
     expectedValuesBool.append((i%2)==0);
     dIoList.append(dIo);
   }
@@ -136,8 +219,89 @@ void mdtDeviceTest::deviceIosSegmentTest()
   QCOMPARE(seg.addressesRead(), expectedReadAddresses);
   QCOMPARE(seg.addressesWrite(), expectedWriteAddresses);
   QCOMPARE(seg.valuesBool(), expectedValuesBool);
-  // Edit some values and check
-
+  // Set some values and check - correct amount of values - type: mdtValue
+  valuesMdt.clear();
+  expectedValuesBool.clear();
+  for(int i = 0; i < 10; i++){
+    valuesMdt.append((i%2)!=0);
+    expectedValuesBool.append((i%2)!=0);
+  }
+  QVERIFY(seg.setValues(valuesMdt));
+  QCOMPARE(seg.values().size(), 10);
+  QCOMPARE(seg.valuesBool(), expectedValuesBool);
+  // Set some values and check - correct amount of values - type: QVariant
+  valuesVar.clear();
+  expectedValuesBool.clear();
+  for(int i = 0; i < 10; i++){
+    valuesVar.append((i%2)==0);
+    expectedValuesBool.append((i%2)==0);
+  }
+  QVERIFY(seg.setValues(valuesVar));
+  QCOMPARE(seg.valuesBool(), expectedValuesBool);
+  // Set some values and check - to less values - type: mdtValue
+  valuesMdt.clear();
+  expectedValuesBool.clear();
+  for(int i = 0; i < 5; i++){
+    valuesMdt.append((i%2)!=0);
+    expectedValuesBool.append((i%2)!=0);
+  }
+  QVERIFY(!seg.setValues(valuesMdt));
+  QCOMPARE(seg.values().size(), 10);
+  for(int i = 0; i < 5; i++){
+    QVERIFY(seg.values().at(i).isValid());
+    QCOMPARE(seg.values().at(i).valueBool(), expectedValuesBool.at(i));
+    QCOMPARE(seg.valuesBool().at(i), expectedValuesBool.at(i));
+  }
+  QVERIFY(!seg.values().at(6).isValid());
+  QVERIFY(!seg.values().at(7).isValid());
+  QVERIFY(!seg.values().at(8).isValid());
+  // Set some values and check - to less values - type: QVariant
+  valuesVar.clear();
+  expectedValuesBool.clear();
+  for(int i = 0; i < 3; i++){
+    valuesVar.append((i%2)==0);
+    expectedValuesBool.append((i%2)==0);
+  }
+  QVERIFY(!seg.setValues(valuesVar));
+  QCOMPARE(seg.values().size(), 10);
+  for(int i = 0; i < 3; i++){
+    QVERIFY(seg.values().at(i).isValid());
+    QCOMPARE(seg.values().at(i).valueBool(), expectedValuesBool.at(i));
+    QCOMPARE(seg.valuesBool().at(i), expectedValuesBool.at(i));
+  }
+  QVERIFY(!seg.values().at(4).isValid());
+  QVERIFY(!seg.values().at(5).isValid());
+  QVERIFY(!seg.values().at(6).isValid());
+  QVERIFY(!seg.values().at(7).isValid());
+  QVERIFY(!seg.values().at(8).isValid());
+  // Set some values and check - to many values - type: mdtValue
+  valuesMdt.clear();
+  expectedValuesBool.clear();
+  for(int i = 0; i < 20; i++){
+    valuesMdt.append((i%2)!=0);
+    expectedValuesBool.append((i%2)!=0);
+  }
+  QVERIFY(!seg.setValues(valuesMdt));
+  QCOMPARE(seg.values().size(), 10);
+  for(int i = 0; i < 9; i++){
+    QVERIFY(seg.values().at(i).isValid());
+    QCOMPARE(seg.values().at(i).valueBool(), expectedValuesBool.at(i));
+    QCOMPARE(seg.valuesBool().at(i), expectedValuesBool.at(i));
+  }
+  // Set some values and check - to many values - type: QVariant
+  valuesVar.clear();
+  expectedValuesBool.clear();
+  for(int i = 0; i < 30; i++){
+    valuesVar.append((i%2)==0);
+    expectedValuesBool.append((i%2)==0);
+  }
+  QVERIFY(!seg.setValues(valuesVar));
+  QCOMPARE(seg.values().size(), 10);
+  for(int i = 0; i < 9; i++){
+    QVERIFY(seg.values().at(i).isValid());
+    QCOMPARE(seg.values().at(i).valueBool(), expectedValuesBool.at(i));
+    QCOMPARE(seg.valuesBool().at(i), expectedValuesBool.at(i));
+  }
 }
 
 void mdtDeviceTest::deviceIosTest()
