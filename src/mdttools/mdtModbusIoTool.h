@@ -142,6 +142,7 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
   mdtDeviceIos *pvDeviceIos;
   mdtDeviceIosWidget *pvDeviceIosWidget;
   mdtPortStatusWidget *pvStatusWidget;
+  QString pvStatusDeviceInformations;   // Used to display informations about device in permanent area of status widget
   // Translations menu
   QActionGroup *pvLanguageActionGroup;
   // Diseable copy

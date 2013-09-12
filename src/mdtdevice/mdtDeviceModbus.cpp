@@ -311,10 +311,10 @@ void mdtDeviceModbus::onStateChanged(int state)
 
 bool mdtDeviceModbus::queriesSequence()
 {
-  if(getAnalogInputs(0) < 0){
+  if(getAnalogInputs(true) < 0){
     return false;
   }
-  if(getDigitalInputs(0) < 0){
+  if(getDigitalInputs(true) < 0){
     return false;
   }
 

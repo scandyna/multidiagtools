@@ -322,14 +322,6 @@ bool mdtModbusTcpPortSetupDialog::applySetup()
     showStatusMessage(tr("Cannot connect to ") + portManager()->portName());
     return false;
   }
-  /**
-  if(!portManager()->start()){
-    showStatusMessage(tr("Cannot start thread"));
-    portManager()->closePort();
-    setStateDisconnected();
-    return false;
-  }
-  */
   showStatusMessage(tr("Connected"), 3000);
 
   return true;

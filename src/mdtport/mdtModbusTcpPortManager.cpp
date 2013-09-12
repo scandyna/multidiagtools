@@ -71,11 +71,14 @@ mdtModbusTcpPortManager::~mdtModbusTcpPortManager()
   detachPort(true, true);
 }
 
-QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int timeout)
+QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int timeout, const QList<int> &expectedHwNodeAddresses, int bitsCount, int bitsCountStartFrom)
 {
   Q_ASSERT(isClosed());
 
   QList<mdtPortInfo*> portInfoList;
+  QList<int> foundHwNodeAddresses;
+  bool hwNodeAddressScan = false;
+  int hwNodeAddress;
   mdtPortInfo *portInfo;
   int i;
   QStringList host;
@@ -83,6 +86,9 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
   quint16 hostPort;
   bool ok;
 
+  if(!expectedHwNodeAddresses.isEmpty()){
+    hwNodeAddressScan = true;
+  }
   for(i=0; i<hosts.size(); i++){
     if(pvAbortScan){
       portInfoList.clear();
@@ -107,17 +113,38 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
     }
     // Try to connect
     if(tryToConnect(hostName, hostPort, timeout)){
-      portInfo = new mdtPortInfo;
-      portInfo->setPortName(hosts.at(i));
-      portInfo->setDisplayText(tr("Host: ") + hostName + tr("  ,  port: ") + QString::number(hostPort));
-      portInfoList.append(portInfo);
+      // Check about HW node addresss if requested
+      if(hwNodeAddressScan){
+        setPortName(hostName + ":" + QString::number(hostPort));
+        if(!start()){
+          continue;
+        }
+        hwNodeAddress = getHardwareNodeAddress(bitsCount, bitsCountStartFrom);
+        stop();
+        if(expectedHwNodeAddresses.contains(hwNodeAddress)){
+          foundHwNodeAddresses.append(hwNodeAddress);
+          portInfo = new mdtPortInfo;
+          portInfo->setPortName(hosts.at(i));
+          portInfo->setDisplayText(tr("Host: ") + hostName + tr("  ,  port: ") + QString::number(hostPort));
+          portInfoList.append(portInfo);
+        }
+        if(foundHwNodeAddresses.size() == expectedHwNodeAddresses.size()){
+          return portInfoList;
+        }
+      }else{
+        // We are in simple scan mode (scan all hosts) - simply add host
+        portInfo = new mdtPortInfo;
+        portInfo->setPortName(hosts.at(i));
+        portInfo->setDisplayText(tr("Host: ") + hostName + tr("  ,  port: ") + QString::number(hostPort));
+        portInfoList.append(portInfo);
+      }
     }
   }
 
   return portInfoList;
 }
 
-QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface, quint16 port, int timeout)
+QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface, quint16 port, int timeout, const QList<int> &expectedHwNodeAddresses, int bitsCount, int bitsCountStartFrom)
 {
   Q_ASSERT(isClosed());
 
@@ -134,7 +161,13 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface
   mdtPortInfo *portInfo;
   int i;
   quint32 j;
+  QList<int> foundHwNodeAddresses;
+  bool hwNodeAddressScan = false;
+  int hwNodeAddress;
 
+  if(!expectedHwNodeAddresses.isEmpty()){
+    hwNodeAddressScan = true;
+  }
   // Get address entries of interface
   entries = iface.addressEntries();
   if(entries.size() < 1){
@@ -173,12 +206,31 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface
       }
       currentIp.setAddress(j);
       if(tryToConnect(currentIp.toString(), port, timeout)){
-        portInfo = new mdtPortInfo;
-        portInfo->setPortName(currentIp.toString() + ":" + QString::number(port));
-        ///portInfo->setDisplayText(currentIp.toString() + ":" + QString::number(port));
-        portInfo->setDisplayText(tr("Host: ") + currentIp.toString() + tr("  ,  port: ") + QString::number(port));
-        ///qDebug() << "mdtModbusTcpPortManager::scan(): add port: " << portInfo->portName();
-        portInfoList.append(portInfo);
+        // Check about HW node addresss if requested
+        if(hwNodeAddressScan){
+          setPortName(currentIp.toString() + ":" + QString::number(port));
+          if(!start()){
+            continue;
+          }
+          hwNodeAddress = getHardwareNodeAddress(bitsCount, bitsCountStartFrom);
+          stop();
+          if(expectedHwNodeAddresses.contains(hwNodeAddress)){
+            foundHwNodeAddresses.append(hwNodeAddress);
+            portInfo = new mdtPortInfo;
+            portInfo->setPortName(currentIp.toString() + ":" + QString::number(port));
+            portInfo->setDisplayText(tr("Host: ") + currentIp.toString() + tr("  ,  port: ") + QString::number(port));
+            portInfoList.append(portInfo);
+          }
+          if(foundHwNodeAddresses.size() == expectedHwNodeAddresses.size()){
+            return portInfoList;
+          }
+        }else{
+          // We are in simple scan mode (scan all hosts) - simply add host
+          portInfo = new mdtPortInfo;
+          portInfo->setPortName(currentIp.toString() + ":" + QString::number(port));
+          portInfo->setDisplayText(tr("Host: ") + currentIp.toString() + tr("  ,  port: ") + QString::number(port));
+          portInfoList.append(portInfo);
+        }
       }
     }
   }
@@ -192,7 +244,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface
   return portInfoList;
 }
 
-QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QList<QNetworkInterface> &ifaces, quint16 port, int timeout, bool ignoreLoopback)
+QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QList<QNetworkInterface> &ifaces, quint16 port, int timeout, bool ignoreLoopback, const QList<int> &expectedHwNodeAddresses, int bitsCount, int bitsCountStartFrom)
 {
   Q_ASSERT(isClosed());
 
@@ -211,7 +263,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QList<QNetworkInterface>
         continue;
       }
     }
-    portInfoList.append(scan(ifaces.at(i), port, timeout));
+    portInfoList.append(scan(ifaces.at(i), port, timeout, expectedHwNodeAddresses, bitsCount, bitsCountStartFrom));
   }
 
   return portInfoList;
@@ -222,16 +274,13 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   Q_ASSERT(isClosed());
 
   QTcpSocket socket;
-  ///int maxIter;
   bool ok = false;
   QTimer timeoutTimer;
 
-  ///qDebug() << "mdtModbusTcpPortManager::tryToConnect() - hostName: " << hostName << " , port: " << port << ", timeout: " << timeout;
   timeoutTimer.setSingleShot(true);
   connect(&timeoutTimer, SIGNAL(timeout()), this, SLOT(abortTryToConnect()));
   emit(statusMessageChanged(tr("Trying host ") + hostName + "  , port " + QString::number(port), "", 500));
   socket.connectToHost(hostName, port);
-  ///maxIter = timeout / 50;
   pvAbortTryToConnect = false;
   timeoutTimer.start(timeout);
   while(socket.state() != QAbstractSocket::ConnectedState){
@@ -243,16 +292,6 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
       timeoutTimer.stop();
       return false;
     }
-    /**
-    if(maxIter <= 0){
-      break;
-    }
-    */
-    /**
-    qApp->processEvents();
-    msleep(50);
-    maxIter--;
-    */
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
   }
   timeoutTimer.stop();
@@ -264,10 +303,6 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
     // Disconnect
     socket.abort();
     while((socket.state() != QAbstractSocket::ClosingState)&&(socket.state() != QAbstractSocket::UnconnectedState)){
-      /**
-      qApp->processEvents();
-      msleep(50);
-      */
       QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
     }
   }
@@ -441,47 +476,6 @@ const QList<int> &mdtModbusTcpPortManager::registerValues() const
   return pvRegisterValues;
 }
 
-/**
-int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
-{
-  Q_ASSERT(pvPort != 0);
-  Q_ASSERT(transaction != 0);
-
-  mdtFrameModbusTcp *frame;
-
-  // Get a frame in pool
-  lockPortMutex();
-  if(pvPort->writeFramesPool().size() < 1){
-    unlockPortMutex();
-    mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
-    e.commit();
-    restoreTransaction(transaction);
-    ///emit busy();
-    emit pmBusyEvent();
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  frame = dynamic_cast<mdtFrameModbusTcp*> (pvPort->writeFramesPool().dequeue());
-  Q_ASSERT(frame != 0);
-  frame->clear();
-  frame->clearSub();
-  // Store data and add frame to write queue
-  incrementCurrentTransactionId(0, 65535);
-  frame->setTransactionId(currentTransactionId());
-  frame->setUnitId(0xFF);    /// \todo Handle this ?
-  frame->setPdu(transaction->data());
-  frame->encode();
-  // We enable waitAnAnswer , used by mdtTcpSocketThread for timeout detection
-  frame->setWaitAnAnswer(true);
-  pvPort->addFrameToWrite(frame);
-  transaction->setId(currentTransactionId());
-  addTransactionPending(transaction);
-  unlockPortMutex();
-
-  return transaction->id();
-}
-*/
-
 int mdtModbusTcpPortManager::sendData(mdtPortTransaction *transaction)
 {
   Q_ASSERT(pvPort != 0);
@@ -533,22 +527,6 @@ int mdtModbusTcpPortManager::sendData(mdtPortTransaction *transaction)
 
   return transaction->id();
 }
-
-/**
-int mdtModbusTcpPortManager::writeData(const QByteArray &pdu, bool queryReplyMode)
-{
-  Q_ASSERT(pvPort != 0);
-
-  mdtPortTransaction *transaction;
-
-  transaction = getNewTransaction();
-  Q_ASSERT(transaction != 0);
-  transaction->setData(pdu);
-  transaction->setQueryReplyMode(queryReplyMode);
-
-  return writeData(transaction);
-}
-*/
 
 int mdtModbusTcpPortManager::sendData(const QByteArray &pdu, bool queryReplyMode)
 {

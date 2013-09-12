@@ -162,10 +162,23 @@ class mdtDevice : public QObject
    */
   virtual mdtPortManager *portManager();
 
+  /*! \brief Check if device is ready
+   *
+   * This default implementation calls mdtPortManager::isReady() ,
+   *  or returns false if portManager was not set.
+   *
+   * Note: isReady() should return true only if device it ready for querying.
+   */
+  virtual bool isReady();
+
   /*! \brief Start periodic device querying
    *
    * Internally, the runQueries() slot will be called each queryInterval of time.
    *
+   * Note: if device is ready, querying starts immediatly,
+   *        else it will start once device becomes ready.
+   *
+   * \sa isReady()
    * \param queryInterval Query interval [ms]
    */
   void start(int queryInterval);

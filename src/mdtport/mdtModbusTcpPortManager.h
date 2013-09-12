@@ -68,13 +68,17 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \param hosts A list of hosts to scan. Each host must be set with format hostname:port, or ip:port.
    *               Note that MODBUS/TCP default port is 502.
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
+   *                                 See getHardwareNodeAddress() for details about HW node address.
+   * \param bitsCount See getHardwareNodeAddress()
+   * \param bitsCountStartFrom See getHardwareNodeAddress()
    *
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
    *
    * \pre Port manager must be stopped
    */
-  QList<mdtPortInfo*> scan(const QStringList &hosts, int timeout = 500);
+  QList<mdtPortInfo*> scan(const QStringList &hosts, int timeout = 500, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
 
   /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
    *
@@ -82,13 +86,17 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *               Note that only IPv4 is implemented.
    * \param port Port. Note that MODBUS/TCP default port is 502.
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
+   *                                 See getHardwareNodeAddress() for details about HW node address.
+   * \param bitsCount See getHardwareNodeAddress()
+   * \param bitsCountStartFrom See getHardwareNodeAddress()
    *
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
    *
    * \pre Port manager must be stopped
    */
-  QList<mdtPortInfo*> scan(const QNetworkInterface &iface, quint16 port = 502, int timeout = 500);
+  QList<mdtPortInfo*> scan(const QNetworkInterface &iface, quint16 port = 502, int timeout = 500, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
 
   /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
    *
@@ -97,13 +105,17 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \param port Port. Note that MODBUS/TCP default port is 502.
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
    * \param ignoreLoopback If true, loopback interface will be ignored.
+   * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
+   *                                 See getHardwareNodeAddress() for details about HW node address.
+   * \param bitsCount See getHardwareNodeAddress()
+   * \param bitsCountStartFrom See getHardwareNodeAddress()
    *
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
    *
    * \pre Port manager must be stopped
    */
-  QList<mdtPortInfo*> scan(const QList<QNetworkInterface> &ifaces, quint16 port = 502, int timeout = 500, bool ignoreLoopback = true);
+  QList<mdtPortInfo*> scan(const QList<QNetworkInterface> &ifaces, quint16 port = 502, int timeout = 500, bool ignoreLoopback = true, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
 
   /*! \brief Try to connect to a host
    *
@@ -166,7 +178,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *
    * \param bitsCount Number of digital inputs that represents the hardware node address.
    * \param startFrom First digital input that represents the hardware node address (is the LSB).
-   * \return Node address or value < 0 corresponding on mdtAbstractPort error_t.
+   * \return Node address or value < 0 corresponding on mdtAbstractPor::error_t .
    * \pre Port manager must be connected and thread running before calling this method.
    * \pre bitsCount must be > 0
    * \pre startFrom must be >= 0
@@ -190,28 +202,6 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Note that values are keeped until next call of getRegisterValues().
    */
   const QList<int> &registerValues() const;
-
-  /*! \brief Write PDU by copy
-   *
-   * Data will be encoded regarding MODBUS/TCP standard and passed to the mdtTcpSocket write queue by copy.
-   *  This method returns immediatly after enqueue,
-   *  and don't wait until data was written.
-   *
-   * Internally, the transaction ID is incremented at each request and returned.
-   *
-   * \param transaction A valid pointer to a mdtPortTransaction object. The id is set internally.
-   *                     Transaction's data is get as PDU.
-   *                     If isQueryReplyMode is set true, transaction will be keeped in done queue
-   *                     until readenFrame(int) is called. For all cases, signal newReadenFrame(mdtPortTransaction*)
-   *                     is emitted when data comes in.
-   * \return Transaction ID on success.
-   *          If the maximum of authorized transactions are reached, mdtAbstractPort::WriteQueueEmpty (< 0) is returned.
-   *          Note: internally, the writeFramesPool size of mdtAbstractPort is used to fix maximum transactions, and
-   *                this is configurable in mdtPortConfig. See mdtPortManager::config() .
-   *                On failure, the transaction is restored to pool.
-   * \pre Port must be set with setPort() before use of this method.
-   */
-  ///int writeData(mdtPortTransaction *transaction);
 
   /*! \brief Send PDU on TCP port
    *
@@ -241,16 +231,6 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \pre transaction must be a valid pointer, and not allready exists in transactions pending or transactions done queue.
    */
   int sendData(mdtPortTransaction *transaction);
-
-  /*! \brief Write PDU by copy
-   *
-   * Will get a new transaction,
-   *  setup it with pdu as data and queryReplyMode flag,
-   *  then send it with writeData(mdtPortTransaction*).
-   *
-   * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
-   */
-  ///int writeData(const QByteArray &pdu, bool queryReplyMode = false);
 
   /*! \brief Send PDU by copy
    *

@@ -118,11 +118,21 @@ mdtPortManager *mdtDevice::portManager()
   return 0;
 }
 
+bool mdtDevice::isReady()
+{
+  if(portManager() == 0){
+    return false;
+  }
+  return portManager()->isReady();
+}
+
 void mdtDevice::start(int queryInterval)
 {
   pvQueryTimer->setInterval(queryInterval);
   pvAutoQueryEnabled = true;
-  pvQueryTimer->start();
+  if(isReady()){
+    pvQueryTimer->start();
+  }
 }
 
 void mdtDevice::stop()
@@ -626,7 +636,6 @@ mdtValue mdtDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool quer
   int transactionId;
   mdtPortTransaction *transaction;
 
-  ///qDebug() << "mdtDevice::getDigitalOutputValue() ...";
   // Check if only cached state is requested
   if(!queryDevice){
     return digitalOutput->value();
@@ -644,13 +653,11 @@ mdtValue mdtDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool quer
       return mdtValue();
     }
     // Wait on result (use device's defined timeout)
-    ///qDebug() << "mdtDevice::getDigitalOutputValue() waitTransactionDone - transactionId: " << transactionId << " ...";
     if(!waitTransactionDone(transactionId)){
       digitalOutput->setValue(mdtValue());
       return mdtValue();
     }
     // Return value
-    ///qDebug() << "mdtDevice::getDigitalOutputValue() DONE - value: " << digitalOutput->value().valueBool();
     return digitalOutput->value();
   }else{
     transaction->setQueryReplyMode(false);
@@ -660,7 +667,6 @@ mdtValue mdtDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool quer
       return mdtValue();
     }
   }
-  ///qDebug() << "mdtDevice::getDigitalOutputValue() DONE";
 
   return mdtValue();
 }
@@ -750,7 +756,6 @@ int mdtDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue
   int transactionId;
   mdtPortTransaction *transaction;
 
-  ///qDebug() << "mdtDevice::SetDigitalOutputValue() ...";
   digitalOutput->setValue(value, false);
   if(!sendToDevice){
     return 0;
@@ -782,7 +787,6 @@ int mdtDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue
       return -1;
     }
   }
-  ///qDebug() << "mdtDevice::SetDigitalOutputValue() DONE - value: " << digitalOutput->value().valueBool();
 
   return transactionId;
 }
@@ -1035,20 +1039,13 @@ void mdtDevice::setStateFromPortManager(int portManagerState)
     case mdtPortManager::Running:
     case mdtPortManager::PortReady:
     case mdtPortManager::Connected:
-      qDebug() << "mdtDevice - emit new state: " << currentState();
       emit stateChanged(portManagerState);
       break;
   }
-  qDebug() << "mdtDevice - new state: " << currentState();
 }
 
 void mdtDevice::setStatePortClosed()
 {
-  /**
-  if(currentState() == mdtPortManager::PortClosed){
-    return;
-  }
-  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
@@ -1062,17 +1059,11 @@ void mdtDevice::setStatePortClosed()
     pvIos->setDigitalOutputsValue(mdtValue());
     pvIos->setDigitalOutputsEnabled(false);
   }
-  qDebug() << "mdtDevice: new state is PortClosed";
   emit(stateChanged(currentState()));
 }
 
 void mdtDevice::setStateDisconnected()
 {
-  /**
-  if(currentState() == mdtPortManager::Disconnected){
-    return;
-  }
-  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
@@ -1092,11 +1083,6 @@ void mdtDevice::setStateDisconnected()
 
 void mdtDevice::setStateConnecting(/*const QString &message*/)
 {
-  /**
-  if(currentState() == mdtPortManager::Connecting){
-    return;
-  }
-  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
@@ -1118,14 +1104,8 @@ void mdtDevice::setStateConnecting(/*const QString &message*/)
 
 void mdtDevice::setStateReady()
 {
-  /**
-  if(currentState() == mdtPortManager::Ready){
-    return;
-  }
-  */
-  qDebug() << "mdtDevice::setStateReady() ...";
   // Check if we have to restart query timer
-  if(pvAutoQueryEnabled){
+  if((pvAutoQueryEnabled)&&(isReady())){
     pvQueryTimer->start();
   }
   // Update I/Os
@@ -1135,17 +1115,11 @@ void mdtDevice::setStateReady()
     getDigitalInputs(true);
     getDigitalOutputs(true);
   }
-  qDebug() << "mdtDevice: new state is Ready";
   emit(stateChanged(currentState()));
 }
 
 void mdtDevice::setStateBusy()
 {
-  /**
-  if(currentState() == mdtPortManager::Busy){
-    return;
-  }
-  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
@@ -1170,11 +1144,6 @@ void mdtDevice::setStateBusy()
 
 void mdtDevice::setStateError()
 {
-  /**
-  if(currentState() == mdtPortManager::PortError){
-    return;
-  }
-  */
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
