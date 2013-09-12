@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 44
+  revision 45
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -7009,6 +7009,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 1087106 // pvIoSegment (<unidirectional association>)
+	relation 1075842 --->
+	  a role_name "pvIoSegment" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1087106 // pvIoSegment (<unidirectional association>)
+	  b parent class_ref 875138 // mdtDeviceIosSegment
       end
     end
   end

@@ -2,7 +2,7 @@ format 76
 
 classcanvas 128002 class_ref 545666 // mdtDeviceIos
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 6 159 2000
+  xyz 12 156 2000
 end
 classcanvas 128130 class_ref 138626 // QObject
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -25,8 +25,23 @@ classcanvas 128770 class_ref 539138 // mdtDigitalIo
   xyz 584.5 678.5 2000
 end
 classcanvas 129410 class_ref 309250 // mdtDevice
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 138 77 2006
+end
+classcanvas 130306 class_ref 875138 // mdtDeviceIosSegment
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 599 181 2006
+  xyz 644 304 2000
+end
+classcanvas 130562 class_ref 538882 // mdtAbstractIo
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 705 784 2006
+end
+note 131330 "mdtDeviceIos contains (possibly many) lists of segment for each I/O type (analog IN, analog OUT, etc..).
+Note: if a I/O is not for data (f.ex.configuration register), it must be stored in a specific list of segments."
+  xyzwh 653 125 2000 281 145
+classcanvas 131586 class_ref 465410 // mdtPortTransaction
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 789 718 2007
 end
 relationcanvas 128258 relation_ref 641666 // <generalisation>
   from ref 128002 z 2001 to ref 128130
@@ -45,13 +60,13 @@ relationcanvas 129026 relation_ref 641922 // <directional aggregation>
 end
 relationcanvas 129154 relation_ref 642050 // <directional aggregation>
   from ref 128002 z 2001 to ref 128642
-  role_a_pos 415 692 3000 no_role_b
-  multiplicity_a_pos 372 692 3000 no_multiplicity_b
+  role_a_pos 416 692 3000 no_role_b
+  multiplicity_a_pos 373 692 3000 no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 642178 // <directional aggregation>
   from ref 128002 z 2001 to ref 128770
-  role_a_pos 492 663 3000 no_role_b
-  multiplicity_a_pos 579 693 3000 no_multiplicity_b
+  role_a_pos 492 664 3000 no_role_b
+  multiplicity_a_pos 579 694 3000 no_multiplicity_b
 end
 relationcanvas 129538 relation_ref 372098 // <generalisation>
   from ref 129410 z 2007 to ref 128130
@@ -60,7 +75,54 @@ relationcanvas 129538 relation_ref 372098 // <generalisation>
 end
 relationcanvas 130178 relation_ref 642306 // <unidirectional association>
   from ref 129410 z 2007 to ref 128002
-  role_a_pos 578 264 3000 no_role_b
-  multiplicity_a_pos 578 294 3000 no_multiplicity_b
+  role_a_pos 210 133 3000 no_role_b
+  multiplicity_a_pos 166 133 3000 no_multiplicity_b
 end
+relationcanvas 130434 relation_ref 1075714 // <directional composition>
+  from ref 128002 z 2001 to ref 130306
+  no_role_a no_role_b
+  multiplicity_a_pos 610 450 3000 no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 627714 // <generalisation>
+  from ref 130562 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 627074 // <generalisation>
+  from ref 128514 z 2007 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130946 relation_ref 627202 // <generalisation>
+  from ref 128770 z 2007 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131074 relation_ref 627202 // <generalisation>
+  from ref 128642 z 2007 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131202 relation_ref 627074 // <generalisation>
+  from ref 128386 z 2007 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 676354 // <unidirectional association>
+  from ref 131586 z 2008 to ref 128514
+  role_a_pos 283 697 3000 no_role_b
+  multiplicity_a_pos 283 727 3000 no_multiplicity_b
+end
+relationcanvas 131842 relation_ref 676482 // <unidirectional association>
+  from ref 131586 z 2008 to ref 128770
+  role_a_pos 696 684 3000 no_role_b
+  multiplicity_a_pos 696 714 3000 no_multiplicity_b
+end
+relationcanvas 131970 relation_ref 1075842 // <unidirectional association>
+  from ref 131586 z 2008 to ref 130306
+  role_a_pos 855 644 3000 no_role_b
+  multiplicity_a_pos 811 644 3000 no_multiplicity_b
+end
+line 131458 -_-_
+  from ref 131330 z 2002 to ref 130434
 end

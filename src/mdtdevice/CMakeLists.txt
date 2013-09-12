@@ -26,6 +26,7 @@ set (SOURCES_FILES
           # Device
           mdtDevice.cpp
           mdtDeviceIos.cpp
+          mdtDeviceIosSegment.cpp
           mdtDeviceIosWidget.cpp
           mdtDeviceWindow.cpp
           #mdtDeviceStatusWidget.cpp

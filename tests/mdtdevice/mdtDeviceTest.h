@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -33,6 +33,7 @@ class mdtDeviceTest : public mdtTest
   void deviceBaseTest();
 
   // I/O's container test
+  void deviceIosSegmentTest();
   void deviceIosTest();
 
   // I/O's widget container test

@@ -284,31 +284,6 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
   }
 }
 
-/**
-void mdtDeviceModbus::onStateChanged(int state)
-{
-  if(pvIos == 0){
-    return;
-  }
-  */
-  /**
-  if(state == Ready){
-    if(getAnalogInputs(500) < 0){
-      return;
-    }
-    if(getAnalogOutputs(500) < 0){
-      return;
-    }
-    if(getDigitalInputs(500) < 0){
-      return;
-    }
-    if(getDigitalOutputs(500) < 0){
-      return;
-    }
-  }
-  */
-///}
-
 bool mdtDeviceModbus::queriesSequence()
 {
   if(getAnalogInputs(true) < 0){

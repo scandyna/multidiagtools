@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 48
+  revision 49
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -4901,6 +4901,14 @@ ${inlines}
 	
 	
       end
+
+      classrelation 1086722 // <dependency>
+	relation 1075458 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 1086722 // <dependency>
+	  b parent class_ref 539010 // mdtAnalogIo
+      end
     end
 
     class 518786 "mdtDigitalInWidget"
@@ -5181,13 +5189,6 @@ ${inlines}
 	
       end
 
-      classrelation 635522 // <dependency>
-	relation 627458 -_->
-	  a private
-	    cpp default "#include dans les sources"
-	    classrelation_ref 635522 // <dependency>
-	  b parent class_ref 539010 // mdtAnalogIo
-      end
     end
 
     class 519170 "mdtAnalogOutWidget"

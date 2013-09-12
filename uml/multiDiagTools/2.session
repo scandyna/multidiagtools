@@ -1,11 +1,20 @@
-window_sizes 1280 1001 214 1060 923 0
+window_sizes 1280 1001 314 960 923 0
 diagrams
-  active  statediagram_ref 792578 // mdtPortManagerStateMachine
-    1060 923 100 17 0 0
+  classdiagram_ref 839426 // mdtDeviceModbusWago
+    768 738 80 3 324 0
+  active  classdiagram_ref 521730 // mdtDeviceIos
+    960 923 100 18 0 12
 end
 show_stereotypes
-selected statediagram_ref 792578 // mdtPortManagerStateMachine
+selected operation_ref 1567234 // setValues
 open
-  state_ref 191746 // Connected
+  attribute_ref 869762 // pvValue
+  classview_ref 240514 // mdtDevice
+  operation_ref 1567234 // setValues
+  operation_ref 1566978 // valuesBool
+  class_ref 532226 // mdtDeviceModbusWago
+  class_ref 874498 // mdtDeviceModbusWagoModule
+  class_ref 875010 // mdtDeviceModbusWagoModuleAttribute
+  classview_ref 405378 // mdtModbusIoTool
 end
 end

@@ -21,6 +21,7 @@
 #include "mdtDeviceTest.h"
 #include "mdtApplication.h"
 #include "mdtDeviceIos.h"
+#include "mdtDeviceIosSegment.h"
 #include "mdtDeviceIosWidget.h"
 #include "mdtDeviceModbus.h"
 #include "mdtModbusTcpPortManager.h"
@@ -51,6 +52,92 @@ void mdtDeviceTest::deviceBaseTest()
   ///QVERIFY(dev.state() == mdtPortManager::Disconnected);
 
   dev.start(100);
+}
+
+void mdtDeviceTest::deviceIosSegmentTest()
+{
+  mdtDeviceIosSegment seg;
+  mdtAnalogIo *aIo;
+  mdtDigitalIo *dIo;
+  QList<mdtAnalogIo*> aIoList;
+  QList<mdtDigitalIo*> dIoList;
+  QList<int> expectedReadAddresses;
+  QList<int> expectedWriteAddresses;
+  QList<int> expectedValuesInt;
+  QList<double> expectedValuesDouble;
+  QList<bool> expectedValuesBool;
+
+  // Check default values
+  QCOMPARE(seg.startAddressRead(), 0);
+  QCOMPARE(seg.startAddressWrite(), 0);
+  QCOMPARE(seg.endAddressRead(), 0);
+  QCOMPARE(seg.endAddressWrite(), 0);
+  QCOMPARE(seg.ioCount(), 0);
+
+  /*
+   * Analog I/O
+   */
+
+  // Build a list of 9 I/O's
+  expectedReadAddresses.clear();
+  expectedWriteAddresses.clear();
+  expectedValuesInt.clear();
+  expectedValuesDouble.clear();
+  for(int i = 0; i < 9; i++){
+    aIo = new mdtAnalogIo;
+    aIo->setAddressRead(i);
+    expectedReadAddresses.append(i);
+    aIo->setAddressWrite(i+100);
+    expectedWriteAddresses.append(i+100);
+    aIo->setValue(3*i);
+    expectedValuesInt.append(3*i);
+    expectedValuesDouble.append(3*i);
+    aIoList.append(aIo);
+  }
+  // Set I/O's and check ...
+  seg.setIos(aIoList);
+  QCOMPARE(seg.startAddressRead(), 0);
+  QCOMPARE(seg.startAddressWrite(), 100);
+  QCOMPARE(seg.endAddressRead(), 8);
+  QCOMPARE(seg.endAddressWrite(), 108);
+  QCOMPARE(seg.ioCount(), 9);
+  QCOMPARE(seg.addressesRead(), expectedReadAddresses);
+  QCOMPARE(seg.addressesWrite(), expectedWriteAddresses);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  QCOMPARE(seg.valuesDouble(), expectedValuesDouble);
+  // Edit some values and check
+
+  /*
+   * Digital I/O
+   */
+
+  // Build a list of 10 I/O's
+  expectedReadAddresses.clear();
+  expectedWriteAddresses.clear();
+  expectedValuesBool.clear();
+  for(int i = 0; i < 10; i++){
+    dIo = new mdtDigitalIo;
+    dIo->setAddressRead(i);
+    expectedReadAddresses.append(i);
+    dIo->setAddressWrite(i+100);
+    expectedWriteAddresses.append(i+100);
+    dIo->setValue((i%2)==0);
+    qDebug() << dIo->value();
+    expectedValuesBool.append((i%2)==0);
+    dIoList.append(dIo);
+  }
+  // Set I/O's and check ...
+  seg.setIos(dIoList);
+  QCOMPARE(seg.startAddressRead(), 0);
+  QCOMPARE(seg.startAddressWrite(), 100);
+  QCOMPARE(seg.endAddressRead(), 9);
+  QCOMPARE(seg.endAddressWrite(), 109);
+  QCOMPARE(seg.ioCount(), 10);
+  QCOMPARE(seg.addressesRead(), expectedReadAddresses);
+  QCOMPARE(seg.addressesWrite(), expectedWriteAddresses);
+  QCOMPARE(seg.valuesBool(), expectedValuesBool);
+  // Edit some values and check
+
 }
 
 void mdtDeviceTest::deviceIosTest()

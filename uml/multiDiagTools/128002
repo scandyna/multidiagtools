@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 123
+  revision 124
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -5975,6 +5975,16 @@ ${inlines}
 	
 	
 	
+      end
+
+      attribute 869762 "pvValue"
+	private explicit_type "mdtValue"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
 
       attribute 645762 "pvLabelShort"

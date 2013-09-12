@@ -58,7 +58,7 @@ void mdtSerialPortManagerTest::simpleTest()
   ///QVERIFY(m.openPort());
 
   // Check that available baud rates contains 9600 (very standard, should exists on most device)
-  QVERIFY(m.port().open());
+  QCOMPARE((int)m.port().open(), 0);
   QVERIFY(m.port().availableBaudRates().size() > 0);
   QVERIFY(m.port().availableBaudRates().contains(9600));
   // Check that the right port is set
@@ -113,7 +113,7 @@ void mdtSerialPortManagerTest::transferTest()
   m.setPortName(portInfoList.at(0)->portName());
   ///QVERIFY(m.openPort());
   // Check that available baud rates contains 9600 (very standard, should exists on most device)
-  QVERIFY(m.port().open());
+  QCOMPARE((int)m.port().open(), 0);
   QVERIFY(m.port().availableBaudRates().size() > 0);
   QVERIFY(m.port().availableBaudRates().contains(9600));
   m.port().close();

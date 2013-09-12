@@ -964,6 +964,8 @@ void mdtPortTest::emptyQueueRecoveryTest()
   QVERIFY(frame1 != 0);
   QVERIFY(*frame1 == "MNOP");
   port.unlockMutex();
+  rdThd.stop();
+  rdThd.waitFinished();
 }
 
 
