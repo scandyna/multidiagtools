@@ -47,6 +47,10 @@ mdtPortManager::mdtPortManager(QObject *parent)
   connect(this, SIGNAL(pmTransactionTimeoutEvent()), this, SLOT(onTransactionTimeoutOccured()));
   // As default, we not keep all incoming frames
   setKeepTransactionsDone(false);
+  // Setup wait timer
+  pvWaitTimer = new QTimer(this);
+  pvWaitTimer->setSingleShot(true);
+  connect(pvWaitTimer, SIGNAL(timeout()), this, SLOT(onWaitTimerTimeout()));
   // Setup state machine - Note: signal/slot connections are made by state machine
   pvStateMachine = new mdtPortManagerStateMachine(this);
   pvStateMachine->buildMainStateMachine(this);
@@ -340,6 +344,8 @@ int mdtPortManager::sendData(mdtPortTransaction *transaction)
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
   }
   if(!waitTransactionPossible()){
+    restoreTransaction(transaction);
+    unlockPortMutex();
     return mdtAbstractPort::WriteCanceled;
   }
   // We are ready to write
@@ -467,6 +473,15 @@ bool mdtPortManager::waitOneTransactionDone()
   stopTransactionTimer();
 
   return true;
+}
+
+void mdtPortManager::wait(int ms)
+{
+  pvWaitTimerTimedOut = false;
+  pvWaitTimer->start(ms);
+  while(!pvWaitTimerTimedOut){
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
 }
 
 QByteArray mdtPortManager::readenFrame(int id)
@@ -954,4 +969,9 @@ void mdtPortManager::onTransactionTimeoutOccured()
   pvTransactionTimeoutOccured = true;
   flushTransactionsPending();
   flushTransactionsDone();
+}
+
+void mdtPortManager::onWaitTimerTimeout()
+{
+  pvWaitTimerTimedOut = true;
 }

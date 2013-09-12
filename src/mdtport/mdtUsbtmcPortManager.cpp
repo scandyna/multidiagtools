@@ -122,12 +122,12 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query)
   transaction = getNewTransaction();
   transaction->setType(mdtFrameCodecScpi::QT_UNKNOW);
   transaction->setQueryReplyMode(true);
-  // Send read request
+  // Send read request - transaction is restored by sendReadRequest() on failure
   bTag = sendReadRequest(transaction);
   if(bTag < 0){
     return QByteArray();
   }
-  // Wait on response
+  // Wait on response - transaction are restored automatically during waitTransactionDone() on failure
   if(!waitTransactionDone(bTag)){
     return QByteArray();
   }
@@ -160,6 +160,7 @@ int mdtUsbtmcPortManager::sendData(const QByteArray &data)
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
   }
   if(!waitTransactionPossible()){
+    unlockPortMutex();
     return mdtAbstractPort::WriteCanceled;
   }
   // We are ready to write
@@ -209,6 +210,8 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
   }
   if(!waitTransactionPossible()){
+    restoreTransaction(transaction);
+    unlockPortMutex();
     return mdtAbstractPort::WriteCanceled;
   }
   // We are ready to write

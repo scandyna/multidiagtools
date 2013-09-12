@@ -131,6 +131,13 @@ void mdtDevice::stop()
   pvQueryTimer->stop();
 }
 
+void mdtDevice::wait(int ms)
+{
+  Q_ASSERT(portManager() != 0);
+
+  portManager()->wait(ms);
+}
+
 mdtValue mdtDevice::getAnalogInputValue(mdtAnalogIo *analogInput, bool queryDevice, bool waitOnReply)
 {
   Q_ASSERT(analogInput != 0);
@@ -619,6 +626,7 @@ mdtValue mdtDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool quer
   int transactionId;
   mdtPortTransaction *transaction;
 
+  ///qDebug() << "mdtDevice::getDigitalOutputValue() ...";
   // Check if only cached state is requested
   if(!queryDevice){
     return digitalOutput->value();
@@ -636,11 +644,13 @@ mdtValue mdtDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool quer
       return mdtValue();
     }
     // Wait on result (use device's defined timeout)
+    ///qDebug() << "mdtDevice::getDigitalOutputValue() waitTransactionDone - transactionId: " << transactionId << " ...";
     if(!waitTransactionDone(transactionId)){
       digitalOutput->setValue(mdtValue());
       return mdtValue();
     }
     // Return value
+    ///qDebug() << "mdtDevice::getDigitalOutputValue() DONE - value: " << digitalOutput->value().valueBool();
     return digitalOutput->value();
   }else{
     transaction->setQueryReplyMode(false);
@@ -650,6 +660,7 @@ mdtValue mdtDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool quer
       return mdtValue();
     }
   }
+  ///qDebug() << "mdtDevice::getDigitalOutputValue() DONE";
 
   return mdtValue();
 }
@@ -739,6 +750,7 @@ int mdtDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue
   int transactionId;
   mdtPortTransaction *transaction;
 
+  ///qDebug() << "mdtDevice::SetDigitalOutputValue() ...";
   digitalOutput->setValue(value, false);
   if(!sendToDevice){
     return 0;
@@ -770,6 +782,7 @@ int mdtDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue
       return -1;
     }
   }
+  ///qDebug() << "mdtDevice::SetDigitalOutputValue() DONE - value: " << digitalOutput->value().valueBool();
 
   return transactionId;
 }

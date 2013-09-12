@@ -479,16 +479,16 @@ void mdtPortManagerTest::modbusTcpPortTest()
   ///tId1 = m.writeData(pdu, true);
   ///tId1 = m.writeData(pdu, transaction);
   transaction->setData(pdu);
-  tId1 = m.writeData(transaction);
+  tId1 = m.sendData(transaction);
   QVERIFY(tId1 >= 0);
   // Transaction 2
   transaction = m.getNewTransaction();
   QVERIFY(transaction != 0);
   transaction->setQueryReplyMode(true);
-  ///tId2 = m.writeData(pdu, true);
-  ///tId2 = m.writeData(pdu, transaction);
+  ///tId2 = m.sendData(pdu, true);
+  ///tId2 = m.sendData(pdu, transaction);
   transaction->setData(pdu);
-  tId2 = m.writeData(transaction);
+  tId2 = m.sendData(transaction);
   QVERIFY(tId2 >= 0);
   // Transaction 3
   transaction = m.getNewTransaction();
@@ -497,7 +497,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
   ///tId3 = m.writeData(pdu, true);
   ///tId3 = m.writeData(pdu, transaction);
   transaction->setData(pdu);
-  tId3 = m.writeData(transaction);
+  tId3 = m.sendData(transaction);
   QVERIFY(tId3 >= 0);
   qDebug() << "TEST, tId1: " << tId1 << " , tId2: " << tId2 << " , tId3: " << tId3;
   ///QVERIFY(m.waitOnFrame(tId1));
@@ -517,7 +517,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
   ///tId1 = m.writeData(pdu, false);
   ///tId1 = m.writeData(pdu, transaction);
   transaction->setData(pdu);
-  tId1 = m.writeData(transaction);
+  tId1 = m.sendData(transaction);
   ///QVERIFY(!m.waitOnFrame(tId1));
   QVERIFY(!m.waitTransactionDone(tId1));
 
@@ -532,7 +532,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
   ///tId1 = m.writeData(pdu, true);
   ///tId1 = m.writeData(pdu, transaction);
   transaction->setData(pdu);
-  tId1 = m.writeData(transaction);
+  tId1 = m.sendData(transaction);
   QVERIFY(tId1 >= 0);
   ///QVERIFY(m.waitOnFrame(tId1));
   QVERIFY(m.waitTransactionDone(tId1));

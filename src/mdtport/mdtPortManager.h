@@ -500,6 +500,32 @@ class mdtPortManager : public QObject
    */
   bool waitOneTransactionDone();
 
+  /*! \brief Wait for some time
+   *
+   * This will block the caller until ms milliseconds elapsed.
+   *  This will not block event loop, i.e. no GUI freeze occurs.
+   *
+   * Such wait method can be usfull if, for example, a device
+   *  needs some time between two requests.
+   *
+   * Note: this method should not be used to wait on a specific event (frame received, ...).
+   *        For such problem, please considere the transaction API (in this class) and mdtDevice
+   *        witch give some helper methods and a API when developping new communication classes with devices.
+   *
+   * Internally, a QTimer is used. Please considere Qt documentation about time precisions and limitations.
+   *  Note: mdtPortManager is not designed for real time applications, but in mind to communicate in a easy way with devices.
+   *
+   * For the story, a example with a Wago 750 I/O system:
+   *  In multidiagtools test suite we do set/get tests
+   *   on outputs. We wait confirmation of device for each request
+   *   (see mdtDevice for details).
+   *   Some times test failed because the get didn't return the value set just before.
+   *   By mesuring set and get times, we could see that it can take about 2[ms] -> 40[ms].
+   *   This can be shorter than PLC needs to update its cache (read all I/O on bus, ...),
+   *   and we had a old value in get reply.
+   */
+  void wait(int ms);
+
   /*! \brief Get data by frame ID
    *
    * The frame ID is a protocol specific identification.
@@ -925,6 +951,12 @@ class mdtPortManager : public QObject
    */
   void onTransactionTimeoutOccured();
 
+  /*! \brief Used by waitTimer - see wait() method
+   *
+   * Will set the pvWaitTimerTimedOut flag
+   */
+  void onWaitTimerTimeout();
+
  private:
 
   mdtPortInfo pvPortInfo;
@@ -941,6 +973,8 @@ class mdtPortManager : public QObject
   int pvMaxTransactionsPending;                         // Limit before going to busy state
   bool pvTransactionTimeoutOccured;
   QTimer *pvTransactionTimer;
+  QTimer *pvWaitTimer;
+  bool pvWaitTimerTimedOut;
   // Threads
   QList<mdtPortThread*> pvThreadsReady;                 // See onThreadReady() and onThreadFinished()
   // Instance of reader and writer thread

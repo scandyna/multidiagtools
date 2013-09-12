@@ -174,6 +174,13 @@ class mdtDevice : public QObject
    */
   void stop();
 
+  /*! \brief Wait some time
+   *
+   * \sa mdtPortManager::wait()
+   * \pre Port manager must be set before using this method
+   */
+  void wait(int ms);
+
   /*! \brief Get analog input value
    *
    * Get device or internal analog value.

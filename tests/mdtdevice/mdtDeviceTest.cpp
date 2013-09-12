@@ -39,6 +39,7 @@
 #include <QVariant>
 #include <QList>
 
+#include <QTime>
 #include <QDebug>
 
 void mdtDeviceTest::deviceBaseTest()
@@ -494,6 +495,7 @@ void mdtDeviceTest::modbusWagoTest()
   mdtDeviceIos ios;
   mdtDeviceIosWidget *iosw;
   mdtDeviceWindow dw;
+  int setGetWaitTime = 30;  // [ms]
 
   /*
    * Setup I/O's
@@ -527,6 +529,10 @@ void mdtDeviceTest::modbusWagoTest()
 
   /*
    * Tests
+   *
+   * Note: we make set/get on outputs.
+   *  Because a set or get can be done fast (2-30 ms),
+   *  we let the PLC some time to update its cache (else it sometimes returns us a cached value)
    */
 
   // Analog inputs
@@ -549,11 +555,13 @@ void mdtDeviceTest::modbusWagoTest()
   QVERIFY(d.getAnalogOutputValue(0x200, false, false).isValid());
   QVERIFY(!d.getAnalogOutputValue(0x200, true, false).isValid());
   QVERIFY(d.setAnalogOutputValue(0, 2.5, true, true) >= 0);
+  d.wait(setGetWaitTime);
   QVERIFY(d.getAnalogOutputValue(0x200, true, true).isValid());
   QVERIFY(d.getAnalogOutputs(true) >= 0);
   QVERIFY(d.getAnalogOutputValue(0x200, false, false).isValid());
   MDT_COMPARE(d.getAnalogOutputValue(0x200, false, false).valueDouble(), 2.5, 12, -10.0, 10.0);
   QVERIFY(d.setAnalogOutputValue("AO1", 2.5, true, true) >= 0);
+  d.wait(setGetWaitTime);
   QVERIFY(d.getAnalogOutputValue("AO1", true, true).isValid());
   ///QVERIFY(qAbs(d.getAnalogOutputValue(0x200, 500, true).valueDouble()-2.5) < (10.0/4050.0));
   MDT_COMPARE(d.getAnalogOutputValue(0x200, true, true).valueDouble(), 2.5, 12, -10.0, 10.0);
@@ -564,6 +572,7 @@ void mdtDeviceTest::modbusWagoTest()
   QVERIFY(d.setAnalogOutputs(true) >= 0);
   ///QVERIFY(qAbs(d.getAnalogOutputValue(0x200, 500, true).toDouble()-1.5) < (10.0/4050.0));
   ///QVERIFY(qAbs(d.getAnalogOutputValue(0x201, 500, true).toDouble()-2.5) < (10.0/4050.0));
+  d.wait(setGetWaitTime);
   MDT_COMPARE(d.getAnalogOutputValue(0x200, true, true).valueDouble(), 1.5, 12, -10.0, 10.0);
   MDT_COMPARE(d.getAnalogOutputValue(0x201, true, true).valueDouble(), 2.5, 12, -10.0, 10.0);
   MDT_COMPARE(d.getAnalogOutputValue("AO1", true, true).valueDouble(), 1.5, 12, -10.0, 10.0);
@@ -589,13 +598,17 @@ void mdtDeviceTest::modbusWagoTest()
   QVERIFY(d.getDigitalOutputs(true) >= 0);
   QVERIFY(d.getDigitalOutputValue(0x200, false, false).isValid());
   QVERIFY(d.setDigitalOutputValue(0, true, true, true) >= 0);
+  d.wait(setGetWaitTime);
   QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), true);
   QVERIFY(d.setDigitalOutputValue(0, false, true, true) >= 0);
+  d.wait(setGetWaitTime);
   QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), false);
   QVERIFY(d.setDigitalOutputValue("DO1", true, true, true) >= 0);
+  d.wait(setGetWaitTime);
   QCOMPARE(d.getDigitalOutputValue("DO1", true, true).valueBool(), true);
   QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), true);
   QVERIFY(d.setDigitalOutputValue("DO1", false, true, true) >= 0);
+  d.wait(setGetWaitTime);
   QCOMPARE(d.getDigitalOutputValue("DO1", true, true).valueBool(), false);
   QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), false);
   ///QVERIFY(!d.getDigitalOutputState(0x200, 0).isValid());

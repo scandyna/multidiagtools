@@ -193,13 +193,12 @@ class mdtModbusTcpPortManager : public mdtPortManager
 
   /*! \brief Write PDU by copy
    *
-   * Data will be encoded regarding MODBUS/TCP standard and passed to the mdtTcpSocket's write queue by copy.
+   * Data will be encoded regarding MODBUS/TCP standard and passed to the mdtTcpSocket write queue by copy.
    *  This method returns immediatly after enqueue,
    *  and don't wait until data was written.
    *
    * Internally, the transaction ID is incremented at each request and returned.
    *
-   * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
    * \param transaction A valid pointer to a mdtPortTransaction object. The id is set internally.
    *                     Transaction's data is get as PDU.
    *                     If isQueryReplyMode is set true, transaction will be keeped in done queue
@@ -212,15 +211,56 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *                On failure, the transaction is restored to pool.
    * \pre Port must be set with setPort() before use of this method.
    */
-  int writeData(mdtPortTransaction *transaction);
+  ///int writeData(mdtPortTransaction *transaction);
+
+  /*! \brief Send PDU on TCP port
+   *
+   * At first, this method waits until the ready state is set calling isReady() , a frame is available in port's write frames pool,
+   *  and until a transaction is possible (see waitTransactionPossible() ).
+   *  This wait will not break event loop, so no GUI freeze occurs.
+   *  If port manager is stopped during this wait (unhandled error, stop request),
+   *  this method returns.
+   *
+   * Then, data will be encoded regarding MODBUS/TCP standard and passed to the mdtTcpSocket write queue.
+   *  This method returns immediatly after enqueue,
+   *  and don't wait until data was written.
+   *
+   * \param transaction Transaction used to send data. Following members are used by this method:
+   *                     - id : MODBUS/TCP transaction ID (will be set internally).
+   *                     - data : PDU to send.
+   *                     - isQueryReplyMode : if true, the transaction will be keeped in transactions done queue
+   *                                          until readenFrame(int) is called.
+   *                                           For all cases, signal newReadenFrame(mdtPortTransaction*)
+   *                                            is emitted when data comes in.
+   *
+   * \return Transaction ID on success or value < 0 on error.
+   *          Possible error is mdtAbstractPort::WriteCanceled,
+   *          witch typically occurs when port manager stops.
+   *          Note: on failure, the transaction is restored to pool.
+   * \pre Port must be set with setPort() before use of this method.
+   * \pre transaction must be a valid pointer, and not allready exists in transactions pending or transactions done queue.
+   */
+  int sendData(mdtPortTransaction *transaction);
 
   /*! \brief Write PDU by copy
    *
    * Will get a new transaction,
    *  setup it with pdu as data and queryReplyMode flag,
    *  then send it with writeData(mdtPortTransaction*).
+   *
+   * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
    */
-  int writeData(const QByteArray &pdu, bool queryReplyMode = false);
+  ///int writeData(const QByteArray &pdu, bool queryReplyMode = false);
+
+  /*! \brief Send PDU by copy
+   *
+   * Will get a new transaction,
+   *  setup it with pdu as data and queryReplyMode flag,
+   *  then send it with sendData(mdtPortTransaction*).
+   *
+   * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
+   */
+  int sendData(const QByteArray &pdu, bool queryReplyMode = false);
 
  public slots:
 

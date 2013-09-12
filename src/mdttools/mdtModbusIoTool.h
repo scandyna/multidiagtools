@@ -98,6 +98,20 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
 
  private:
 
+  /*! \brief Set connecting to node state
+   *
+   * Will set the pvConnectingToNode flag, so
+   *  other states will not update all widgets
+   */
+  void setStateConnectingToNode();
+
+  /*! \brief Set connecting to node finished state
+   *
+   * Will unset pvConnectingToNode flag
+   *  and tell port manager to notify current state
+   */
+  void setStateConnectingToNodeFinished();
+
   /*! \brief Set the disconnected state
    */
   void setStatePortClosed();
@@ -122,7 +136,8 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
    */
   void setStateError();
 
-  bool pvReady;
+  bool pvReady; /// \todo Ok ???
+  bool pvConnectingToNode;
   mdtDeviceModbusWago *pvDeviceModbusWago;
   mdtDeviceIos *pvDeviceIos;
   mdtDeviceIosWidget *pvDeviceIosWidget;

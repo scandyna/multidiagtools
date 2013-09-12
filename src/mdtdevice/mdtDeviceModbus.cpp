@@ -48,6 +48,7 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
 mdtDeviceModbus::~mdtDeviceModbus()
 {
   qDebug() << "mdtDeviceModbus::~mdtDeviceModbus() ...";
+  pvTcpPortManager->stop();
   delete pvTcpPortManager;
   delete pvCodec;
   qDebug() << "mdtDeviceModbus::~mdtDeviceModbus() DONE";
@@ -73,13 +74,7 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInf
     Q_ASSERT(scanResult.at(i) != 0);
     // Try to connect
     pvTcpPortManager->setPortInfo(*scanResult.at(i));
-    /**
-    if(!pvTcpPortManager->openPort()){
-      continue;
-    }
-    */
     if(!pvTcpPortManager->start()){
-      ///pvTcpPortManager->closePort();
       continue;
     }
     // We are connected here, get the hardware node ID
@@ -87,7 +82,6 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInf
       return mdtAbstractPort::NoError;
     }else{
       pvTcpPortManager->stop();
-      ///pvTcpPortManager->closePort();
       continue;
     }
   }
@@ -341,7 +335,7 @@ int mdtDeviceModbus::readAnalogInput(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::readAnalogInputs(mdtPortTransaction *transaction)
@@ -358,7 +352,7 @@ int mdtDeviceModbus::readAnalogInputs(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::readAnalogOutput(mdtPortTransaction *transaction)
@@ -375,7 +369,7 @@ int mdtDeviceModbus::readAnalogOutput(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::readAnalogOutputs(mdtPortTransaction *transaction)
@@ -392,7 +386,7 @@ int mdtDeviceModbus::readAnalogOutputs(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::writeAnalogOutput(int value, mdtPortTransaction *transaction)
@@ -409,7 +403,7 @@ int mdtDeviceModbus::writeAnalogOutput(int value, mdtPortTransaction *transactio
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction)
@@ -426,7 +420,7 @@ int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::readDigitalInput(mdtPortTransaction *transaction)
@@ -443,7 +437,7 @@ int mdtDeviceModbus::readDigitalInput(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::readDigitalInputs(mdtPortTransaction *transaction)
@@ -460,7 +454,7 @@ int mdtDeviceModbus::readDigitalInputs(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::readDigitalOutput(mdtPortTransaction *transaction)
@@ -477,7 +471,7 @@ int mdtDeviceModbus::readDigitalOutput(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::readDigitalOutputs(mdtPortTransaction *transaction)
@@ -494,7 +488,7 @@ int mdtDeviceModbus::readDigitalOutputs(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::writeDigitalOutput(bool state, mdtPortTransaction *transaction)
@@ -511,7 +505,7 @@ int mdtDeviceModbus::writeDigitalOutput(bool state, mdtPortTransaction *transact
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }
 
 int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction)
@@ -528,5 +522,5 @@ int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction)
   }
   // Send request
   transaction->setData(pdu);
-  return pvTcpPortManager->writeData(transaction);
+  return pvTcpPortManager->sendData(transaction);
 }

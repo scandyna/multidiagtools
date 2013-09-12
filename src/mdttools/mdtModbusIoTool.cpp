@@ -54,6 +54,7 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
 
   // Set some flags
   pvReady = false;
+  pvConnectingToNode = false;
     // Actions
   connect(action_Setup, SIGNAL(triggered()), this, SLOT(setup()));
   pvLanguageActionGroup = 0;
@@ -161,10 +162,13 @@ void mdtModbusIoTool::connectToNode()
     return;
   }
   // Update GUI state
+  setStateConnectingToNode();
+  /**
   pbDisconnect->setEnabled(false);
   pbAbortScan->setEnabled(true);
   pbConnect->setEnabled(false);
   sbHwNodeId->setEnabled(false);
+  */
   // Scan looking in chache file first
   portInfoList = m->scan(m->readScanResult());
   // Try to connect ...
@@ -179,6 +183,7 @@ void mdtModbusIoTool::connectToNode()
       ///pbAbortScan->setEnabled(false);
       ///pbConnect->setEnabled(true);
       ///setStateWarning();
+      setStateConnectingToNodeFinished();
       return;
     }
     // Ok found, save scan result
@@ -193,10 +198,11 @@ void mdtModbusIoTool::connectToNode()
   if(!pvDeviceModbusWago->detectIos(pvDeviceIos)){
     showStatusMessage(tr("I/O detection failed"));
     ///setStateWarning();
-    setStateError();
+    ///setStateError();
     ///pvDeviceModbusWago->portManager()->closePort();
     ///pbAbortScan->setEnabled(false);
     ///pbConnect->setEnabled(true);
+    setStateConnectingToNodeFinished();
     return;
   }
   pvDeviceModbusWago->setIos(pvDeviceIos, true);
@@ -205,7 +211,7 @@ void mdtModbusIoTool::connectToNode()
   showStatusMessage(tr("I/O detection done"), 1000);
   pbAbortScan->setEnabled(false);
   ///pbConnect->setEnabled(true);
-  // GUI state will be updated by portManager when ready
+  setStateConnectingToNodeFinished();
 }
 
 void mdtModbusIoTool::disconnectFromNode()
@@ -228,50 +234,77 @@ void mdtModbusIoTool::showStatusMessage(const QString & message, const QString &
   pvStatusWidget->showMessage(message, details, timeout);
 }
 
-void mdtModbusIoTool::setStatePortClosed()
+void mdtModbusIoTool::setStateConnectingToNode()
 {
-  pbDisconnect->setEnabled(false);
-  pbAbortScan->setEnabled(false);
-  pbConnect->setEnabled(true);
-  sbHwNodeId->setEnabled(true);
-}
-
-void mdtModbusIoTool::setStateDisconnected()
-{
-  pbDisconnect->setEnabled(false);
-  pbAbortScan->setEnabled(false);
-  pbConnect->setEnabled(true);
-  sbHwNodeId->setEnabled(true);
-}
-
-void mdtModbusIoTool::setStateConnecting()
-{
+  pvConnectingToNode = true;
   pbDisconnect->setEnabled(false);
   pbAbortScan->setEnabled(true);
   pbConnect->setEnabled(false);
   sbHwNodeId->setEnabled(false);
 }
 
+void mdtModbusIoTool::setStateConnectingToNodeFinished()
+{
+  pvConnectingToNode = false;
+  pvDeviceModbusWago->portManager()->notifyCurrentState();
+}
+
+void mdtModbusIoTool::setStatePortClosed()
+{
+  if(!pvConnectingToNode){
+    pbDisconnect->setEnabled(false);
+    pbAbortScan->setEnabled(false);
+    pbConnect->setEnabled(true);
+    sbHwNodeId->setEnabled(true);
+  }
+}
+
+void mdtModbusIoTool::setStateDisconnected()
+{
+  if(!pvConnectingToNode){
+    pbDisconnect->setEnabled(false);
+    pbAbortScan->setEnabled(false);
+    pbConnect->setEnabled(true);
+    sbHwNodeId->setEnabled(true);
+  }
+}
+
+void mdtModbusIoTool::setStateConnecting()
+{
+  if(!pvConnectingToNode){
+    pbDisconnect->setEnabled(false);
+    pbAbortScan->setEnabled(true);
+    pbConnect->setEnabled(false);
+    sbHwNodeId->setEnabled(false);
+  }
+}
+
 void mdtModbusIoTool::setStateReady()
 {
-  pbDisconnect->setEnabled(true);
-  pbAbortScan->setEnabled(false);
-  pbConnect->setEnabled(false);
-  sbHwNodeId->setEnabled(false);
+  if(!pvConnectingToNode){
+    pbDisconnect->setEnabled(true);
+    pbAbortScan->setEnabled(false);
+    pbConnect->setEnabled(false);
+    sbHwNodeId->setEnabled(false);
+  }
 }
 
 void mdtModbusIoTool::setStateBusy()
 {
-  pbDisconnect->setEnabled(true);
-  pbAbortScan->setEnabled(false);
-  pbConnect->setEnabled(false);
-  sbHwNodeId->setEnabled(false);
+  if(!pvConnectingToNode){
+    pbDisconnect->setEnabled(true);
+    pbAbortScan->setEnabled(false);
+    pbConnect->setEnabled(false);
+    sbHwNodeId->setEnabled(false);
+  }
 }
 
 void mdtModbusIoTool::setStateError()
 {
-  pbDisconnect->setEnabled(true);
-  pbAbortScan->setEnabled(false);
-  pbConnect->setEnabled(false);
-  sbHwNodeId->setEnabled(false);
+  if(!pvConnectingToNode){
+    pbDisconnect->setEnabled(true);
+    pbAbortScan->setEnabled(false);
+    pbConnect->setEnabled(false);
+    sbHwNodeId->setEnabled(false);
+  }
 }
