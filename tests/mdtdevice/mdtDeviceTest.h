@@ -35,6 +35,7 @@ class mdtDeviceTest : public mdtTest
   // I/O's container test
   void deviceIosSegmentTest();
   void deviceIosTest();
+  void deviceIosSegmentStorageTest();
 
   // I/O's widget container test
   void deviceIosWidgetTest();

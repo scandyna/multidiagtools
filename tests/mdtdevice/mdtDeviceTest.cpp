@@ -190,6 +190,10 @@ void mdtDeviceTest::deviceIosSegmentTest()
     QCOMPARE(seg.values().at(i).valueInt(), expectedValuesInt.at(i));
     QCOMPARE(seg.valuesInt().at(i), expectedValuesInt.at(i));
   }
+  // Change ve value of last aIo and check that it is reflected
+  QVERIFY(seg.valuesInt().at(8) != 11);
+  aIo->setValue(11);
+  QCOMPARE(seg.valuesInt().at(8), 11);
 
   /*
    * Digital I/O
@@ -302,6 +306,12 @@ void mdtDeviceTest::deviceIosSegmentTest()
     QCOMPARE(seg.values().at(i).valueBool(), expectedValuesBool.at(i));
     QCOMPARE(seg.valuesBool().at(i), expectedValuesBool.at(i));
   }
+  // Change ve value of last aIo and check that it is reflected
+  dIo->setValue(true);
+  QCOMPARE(seg.valuesBool().at(9), true);
+  dIo->setValue(false);
+  QCOMPARE(seg.valuesBool().at(9), false);
+
 }
 
 void mdtDeviceTest::deviceIosTest()
@@ -579,6 +589,45 @@ void mdtDeviceTest::deviceIosTest()
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), false);
 
+}
+
+void mdtDeviceTest::deviceIosSegmentStorageTest()
+{
+  mdtDeviceIos ios;
+  mdtAnalogIo *ai;
+  mdtDeviceIosSegment *seg;
+  ///mdtAnalogIo *ao;
+  ///mdtDigitalIo *di;
+  ///mdtDigitalIo *dout;
+
+  // Add analog inputs
+  ai = new mdtAnalogIo;
+  ai->setAddress(0);
+  ios.addAnalogInput(ai);
+  ai = new mdtAnalogIo;
+  ai->setAddress(2);
+  ios.addAnalogInput(ai);
+  ai = new mdtAnalogIo;
+  ai->setAddress(1);
+  ai = new mdtAnalogIo;
+  ai->setAddress(5);
+  ai = new mdtAnalogIo;
+  ai->setAddress(6);
+  // Check segments
+  QCOMPARE(ios.analogInputsSegments().size(), 2);
+  // First segment
+  seg = ios.analogInputsSegments().at(0);
+  QVERIFY(seg != 0);
+  QCOMPARE(seg->addressesRead().size(), 3);
+  QCOMPARE(seg->addressesRead().at(0), 0);
+  QCOMPARE(seg->addressesRead().at(0), 1);
+  QCOMPARE(seg->addressesRead().at(0), 2);
+  // Second segment
+  seg = ios.analogInputsSegments().at(1);
+  QVERIFY(seg != 0);
+  QCOMPARE(seg->addressesRead().size(), 2);
+  QCOMPARE(seg->addressesRead().at(0), 5);
+  QCOMPARE(seg->addressesRead().at(0), 6);
 }
 
 void mdtDeviceTest::deviceIosWidgetTest()

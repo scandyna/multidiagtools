@@ -116,7 +116,7 @@ class mdtDeviceIosSegment
 
   /*! \brief Get list of stored I/O's values
    */
-  const QList<mdtValue> &values() const;
+  QList<mdtValue> values() const;
 
   /*! \brief Get list of stored I/O's values
    */
@@ -138,7 +138,8 @@ class mdtDeviceIosSegment
   int pvStartAddressWrite;
   int pvEndAddressRead;
   int pvEndAddressWrite;
-  QList<mdtValue> pvValues;
+  QList<mdtValue> pvValues;   /// \todo Obselete
+  QList<mdtAbstractIo*> pvIos;
 };
 
 #endif  // #ifndef MDT_DEVICE_IOS_SEGMENT_H

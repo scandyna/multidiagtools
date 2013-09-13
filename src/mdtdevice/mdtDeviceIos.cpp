@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtDeviceIos.h"
+#include "mdtDeviceIosSegment.h"
 #include <QMapIterator>
 #include <QMutableListIterator>
 #include <QtGlobal>
@@ -112,6 +113,10 @@ mdtAnalogIo *mdtDeviceIos::analogInputWithLabelShort(const QString &labelShort)
 const QList<mdtAnalogIo*> mdtDeviceIos::analogInputs() const
 {
   return pvAnalogInputs;
+}
+
+const QList<mdtDeviceIosSegment*> mdtDeviceIos::analogInputsSegments() const
+{
 }
 
 int mdtDeviceIos::analogInputsFirstAddress() const

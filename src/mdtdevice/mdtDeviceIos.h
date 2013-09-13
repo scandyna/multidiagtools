@@ -29,6 +29,8 @@
 #include <QMap>
 #include <QVariant>
 
+class mdtDeviceIosSegment;
+
 /*! \brief Container for a set of I/O's
  *
  * This class can contain 4 type of I/O:
@@ -58,6 +60,18 @@
  *    - mdtAnalogIo *analogIn = new mdtAnalogIo;
  *    - analogIn->setAddress(25);
  *    - ios.addAnalogInput(analogIn);
+ *
+ * For some devices it's possible to read/write multiple I/O's in one query
+ *  (f.ex. I/O systems communicating with MODBUS).
+ *  To use this functionnality, this I/O container provide a solution to get values for several I/O's.
+ *  Because addresses of all I/O's that will be stored in this container are not necessarily contiguous,
+ *  the concept of segment is used. For example: ADDRESS|0|1|2|5|6| . Here, we have 2 segments: |0|1|2| and |5|6| .
+ *  If we would write all I/O's present in this example, we could do it with 2 queries (1 per segment).
+ *  To set/get data for segments, the folowing methods can be used:
+ *   - analogInputsSegments()
+ *   - analogOutputsSegments()
+ *   - digitalInputsSegments()
+ *   - digitalOutputsSegments()
  */
 class mdtDeviceIos : public QObject
 {
@@ -107,9 +121,14 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Get a list containing all analog inputs
    *
-   * Note: the returned list is not sorted
+   * Note: the returned list is not sorted.
+   *        for grouped queries, see analogInputsSegments()
    */
   const QList<mdtAnalogIo*> analogInputs() const;
+
+  /*! \brief Get a list of all analog inputs segments
+   */
+  const QList<mdtDeviceIosSegment*> analogInputsSegments() const;
 
   /*! \brief Get address of the first analog input
    */

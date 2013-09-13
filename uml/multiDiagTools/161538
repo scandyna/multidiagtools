@@ -1,6 +1,6 @@
 format 76
 "mdtdevice" // mdtdevice
-  revision 34
+  revision 35
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2434,7 +2434,6 @@ ${inlines}
 	    classrelation_ref 1086082 // pvModules (<directional composition>)
 	  b parent class_ref 874498 // mdtDeviceModbusWagoModule
       end
-
     end
 
     class 874498 "mdtDeviceModbusWagoModule"
