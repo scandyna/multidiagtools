@@ -25,10 +25,6 @@
 
 mdtDeviceIosSegment::mdtDeviceIosSegment()
 {
-  pvStartAddressRead = 0;
-  pvStartAddressWrite = 0;
-  pvEndAddressRead = 0;
-  pvEndAddressWrite = 0;
 }
 
 mdtDeviceIosSegment::~mdtDeviceIosSegment()
@@ -38,7 +34,6 @@ mdtDeviceIosSegment::~mdtDeviceIosSegment()
 void mdtDeviceIosSegment::setIos(const QList<mdtAnalogIo*> & ios)
 {
   int i;
-  ///mdtAnalogIo *io;
 
   // We copy pointers, because direct QList<T1*> QList<T2*> is not possible
   pvIos.clear();
@@ -51,43 +46,11 @@ void mdtDeviceIosSegment::setIos(const QList<mdtAnalogIo*> & ios)
     Q_ASSERT(pvIos.at(pvIos.size()-1)->addressRead() >= pvIos.at(0)->addressRead());
     Q_ASSERT(pvIos.at(pvIos.size()-1)->addressWrite() >= pvIos.at(0)->addressWrite());
   }
-  /**
-  pvValues.clear();
-  for(i = 0; i < ios.size(); ++i){
-    io = ios.at(i);
-    Q_ASSERT(io != 0);
-    if(i == 0){
-      pvStartAddressRead = io->addressRead();
-      pvStartAddressWrite = io->addressWrite();
-    }
-    pvValues.append(io->value());
-  }
-  pvEndAddressRead = pvStartAddressRead + pvValues.size() - 1;
-  pvEndAddressWrite = pvStartAddressWrite + pvValues.size() - 1;
-  // some checks
-  Q_ASSERT(pvValues.size() == ios.size());
-  if(i > 0){
-    // Check address
-    Q_ASSERT(pvStartAddressRead >= 0);
-    Q_ASSERT(pvStartAddressWrite >= 0);
-    Q_ASSERT(pvEndAddressRead >= 0);
-    Q_ASSERT(pvEndAddressWrite >= 0);
-    Q_ASSERT(pvEndAddressRead >= pvStartAddressRead);
-    Q_ASSERT(pvEndAddressWrite >= pvStartAddressWrite);
-    Q_ASSERT(pvStartAddressRead == ios.at(0)->addressRead());
-    Q_ASSERT(pvStartAddressWrite == ios.at(0)->addressWrite());
-    Q_ASSERT(pvEndAddressRead == ios.at(pvValues.size()-1)->addressRead());
-    Q_ASSERT(pvEndAddressWrite == ios.at(pvValues.size()-1)->addressWrite());
-    // Check value
-    Q_ASSERT(pvValues.at(0) == ios.at(0)->value());
-  }
-  */
 }
 
 void mdtDeviceIosSegment::setIos(const QList<mdtDigitalIo*> & ios)
 {
   int i;
-  ///mdtDigitalIo *io;
 
   // We copy pointers, because direct QList<T1*> QList<T2*> is not possible
   pvIos.clear();
@@ -100,38 +63,6 @@ void mdtDeviceIosSegment::setIos(const QList<mdtDigitalIo*> & ios)
     Q_ASSERT(pvIos.at(pvIos.size()-1)->addressRead() >= pvIos.at(0)->addressRead());
     Q_ASSERT(pvIos.at(pvIos.size()-1)->addressWrite() >= pvIos.at(0)->addressWrite());
   }
-
-  /**
-  pvValues.clear();
-  for(i = 0; i < ios.size(); ++i){
-    io = ios.at(i);
-    Q_ASSERT(io != 0);
-    if(i == 0){
-      pvStartAddressRead = io->addressRead();
-      pvStartAddressWrite = io->addressWrite();
-    }
-    pvValues.append(io->value());
-  }
-  pvEndAddressRead = pvStartAddressRead + pvValues.size() - 1;
-  pvEndAddressWrite = pvStartAddressWrite + pvValues.size() - 1;
-  // some checks
-  Q_ASSERT(pvValues.size() == ios.size());
-  if(i > 0){
-    // Check address
-    Q_ASSERT(pvStartAddressRead >= 0);
-    Q_ASSERT(pvStartAddressWrite >= 0);
-    Q_ASSERT(pvEndAddressRead >= 0);
-    Q_ASSERT(pvEndAddressWrite >= 0);
-    Q_ASSERT(pvEndAddressRead >= pvStartAddressRead);
-    Q_ASSERT(pvEndAddressWrite >= pvStartAddressWrite);
-    Q_ASSERT(pvStartAddressRead == ios.at(0)->addressRead());
-    Q_ASSERT(pvStartAddressWrite == ios.at(0)->addressWrite());
-    Q_ASSERT(pvEndAddressRead == ios.at(pvValues.size()-1)->addressRead());
-    Q_ASSERT(pvEndAddressWrite == ios.at(pvValues.size()-1)->addressWrite());
-    // Check value
-    Q_ASSERT(pvValues.at(0) == ios.at(0)->value());
-  }
-  */
 }
 
 int mdtDeviceIosSegment::startAddressRead() const
@@ -141,7 +72,6 @@ int mdtDeviceIosSegment::startAddressRead() const
   }
   Q_ASSERT(pvIos.at(0) != 0);
   return pvIos.at(0)->addressRead();
-  ///return pvStartAddressRead;
 }
 
 int mdtDeviceIosSegment::startAddressWrite() const
@@ -151,7 +81,6 @@ int mdtDeviceIosSegment::startAddressWrite() const
   }
   Q_ASSERT(pvIos.at(0) != 0);
   return pvIos.at(0)->addressWrite();
-  ///return pvStartAddressWrite;
 }
 
 int mdtDeviceIosSegment::endAddressRead() const
@@ -161,7 +90,6 @@ int mdtDeviceIosSegment::endAddressRead() const
   }
   Q_ASSERT(pvIos.at(pvIos.size()-1) != 0);
   return pvIos.at(pvIos.size()-1)->addressRead();
-  ///return pvEndAddressRead;
 }
 
 int mdtDeviceIosSegment::endAddressWrite() const
@@ -171,13 +99,26 @@ int mdtDeviceIosSegment::endAddressWrite() const
   }
   Q_ASSERT(pvIos.at(pvIos.size()-1) != 0);
   return pvIos.at(pvIos.size()-1)->addressWrite();
-  ///return pvEndAddressWrite;
 }
 
 int mdtDeviceIosSegment::ioCount() const
 {
   return pvIos.size();
-  ///return pvValues.size();
+}
+
+bool mdtDeviceIosSegment::containsAddressRead(int address) const
+{
+  int firstAddress, lastAddress;
+
+  if(pvIos.isEmpty()){
+    return false;
+  }
+  Q_ASSERT(pvIos.at(0) != 0);
+  firstAddress = pvIos.at(0)->addressRead();
+  Q_ASSERT(pvIos.at(pvIos.size()-1) != 0);
+  lastAddress = pvIos.at(pvIos.size()-1)->addressRead();
+
+  return ((address >= firstAddress)&&(address <= lastAddress));
 }
 
 QList<int> mdtDeviceIosSegment::addressesRead() const
@@ -195,17 +136,23 @@ QList<int> mdtDeviceIosSegment::addressesRead() const
     ++address;
   }
   Q_ASSERT(addressList.size() == pvIos.size());
-  /**
-  address = pvStartAddressRead;
-  for(i = 0; i < pvValues.size(); ++i){
-    addressList.append(address);
-    ++address;
-  }
-  Q_ASSERT(addressList.size() == pvValues.size());
-  Q_ASSERT(addressList.at(pvValues.size()-1) == pvEndAddressRead);
-  */
 
   return addressList;
+}
+
+bool mdtDeviceIosSegment::containsAddressWrite(int address) const
+{
+  int firstAddress, lastAddress;
+
+  if(pvIos.isEmpty()){
+    return false;
+  }
+  Q_ASSERT(pvIos.at(0) != 0);
+  firstAddress = pvIos.at(0)->addressWrite();
+  Q_ASSERT(pvIos.at(pvIos.size()-1) != 0);
+  lastAddress = pvIos.at(pvIos.size()-1)->addressWrite();
+
+  return ((address >= firstAddress)&&(address <= lastAddress));
 }
 
 QList<int> mdtDeviceIosSegment::addressesWrite() const
@@ -223,28 +170,22 @@ QList<int> mdtDeviceIosSegment::addressesWrite() const
     ++address;
   }
   Q_ASSERT(addressList.size() == pvIos.size());
-  /**
-  address = pvStartAddressWrite;
-  for(i = 0; i < pvValues.size(); ++i){
-    addressList.append(address);
-    ++address;
-  }
-  Q_ASSERT(addressList.size() == pvValues.size());
-  Q_ASSERT(addressList.at(pvValues.size()-1) == pvEndAddressWrite);
-  */
 
   return addressList;
 }
 
-bool mdtDeviceIosSegment::setValues(const QList<mdtValue> & values)
+int mdtDeviceIosSegment::setValues(const QList<mdtValue> & values)
 {
-  int i; ///, n;
+  int i;
   int max = qMin(pvIos.size(), values.size());
 
   for(i = 0; i < max; ++i){
     Q_ASSERT(pvIos.at(i) != 0);
     pvIos.at(i)->setValue(values.at(i));
   }
+
+  return max;
+  /**
   for(i = max; i < pvIos.size(); ++i){
     Q_ASSERT(pvIos.at(i) != 0);
     pvIos.at(i)->setValue(mdtValue());
@@ -254,26 +195,12 @@ bool mdtDeviceIosSegment::setValues(const QList<mdtValue> & values)
   }else{
     return true;
   }
-  /**
-  n = pvValues.size();  // Remeber internal I/O's count set
-  pvValues.clear();
-  for(i = 0; i < max; ++i){
-    pvValues.append(values.at(i));
-  }
-  for(i = max; i < n; ++i){
-    pvValues.append(mdtValue());
-  }
-  if(values.size() != n){
-    return false;
-  }else{
-    return true;
-  }
   */
 }
 
-bool mdtDeviceIosSegment::setValues(const QList<QVariant> & values)
+int mdtDeviceIosSegment::setValues(const QList<QVariant> & values)
 {
-  int i; ///, n;
+  int i;
   QVariant var;
   int max = qMin(pvIos.size(), values.size());
 
@@ -282,18 +209,21 @@ bool mdtDeviceIosSegment::setValues(const QList<QVariant> & values)
     var = values.at(i);
     switch(var.type()){
       case QVariant::Int:
-        pvIos.at(i)->setValue(values.at(i).toInt());
+        pvIos.at(i)->setValue(var.toInt());
         break;
       case QVariant::Double:
-        pvIos.at(i)->setValue(values.at(i).toDouble());
+        pvIos.at(i)->setValue(var.toDouble());
         break;
       case QVariant::Bool:
-        pvIos.at(i)->setValue(values.at(i).toBool());
+        pvIos.at(i)->setValue(var.toBool());
         break;
       default:
-        pvValues.append(mdtValue());
+        pvIos.at(i)->setValue(mdtValue());
     }
   }
+
+  return max;
+  /**
   for(i = max; i < pvIos.size(); ++i){
     Q_ASSERT(pvIos.at(i) != 0);
     pvIos.at(i)->setValue(mdtValue());
@@ -303,34 +233,151 @@ bool mdtDeviceIosSegment::setValues(const QList<QVariant> & values)
   }else{
     return true;
   }
-  /**
-  n = pvValues.size();  // Remeber internal I/O's count set
-  pvValues.clear();
-  for(i = 0; i < max; ++i){
-    var = values.at(i);
-    switch(var.type()){
-      case QVariant::Int:
-        pvValues.append(values.at(i).toInt());
-        break;
-      case QVariant::Double:
-        pvValues.append(values.at(i).toDouble());
-        break;
-      case QVariant::Bool:
-        pvValues.append(values.at(i).toBool());
-        break;
-      default:
-        pvValues.append(mdtValue());
+  */
+}
+
+int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QList<mdtValue> & values)
+{
+  int i, j;
+  bool found = false;
+
+  // Find I/O with startAddress
+  for(i = 0; i < pvIos.size(); ++i){
+    Q_ASSERT(pvIos.at(i) != 0);
+    if(pvIos.at(i)->addressRead() == startAddress){
+      found = true;
+      break;
     }
   }
-  for(i = max; i < n; ++i){
-    pvValues.append(mdtValue());
+  if(!found){
+    return 0;
   }
-  if(values.size() != n){
-    return false;
-  }else{
-    return true;
+  // Update values
+  for(j = 0; j < values.size(); ++j){
+    if(i >= pvIos.size()){
+      return j;
+    }
+    Q_ASSERT(pvIos.at(i) != 0);
+    pvIos.at(i)->setValue(values.at(j));
+    ++i;
   }
-  */
+
+  return j;
+}
+
+int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QList<QVariant> & values)
+{
+  int i, j;
+  bool found = false;
+  QVariant var;
+
+  // Find I/O with startAddress
+  for(i = 0; i < pvIos.size(); ++i){
+    Q_ASSERT(pvIos.at(i) != 0);
+    if(pvIos.at(i)->addressRead() == startAddress){
+      found = true;
+      break;
+    }
+  }
+  if(!found){
+    return 0;
+  }
+  // Update values
+  for(j = 0; j < values.size(); ++j){
+    if(i >= pvIos.size()){
+      return j;
+    }
+    Q_ASSERT(pvIos.at(i) != 0);
+    var = values.at(j);
+    switch(var.type()){
+      case QVariant::Int:
+        pvIos.at(i)->setValue(var.toInt());
+        break;
+      case QVariant::Double:
+        pvIos.at(i)->setValue(var.toDouble());
+        break;
+      case QVariant::Bool:
+        pvIos.at(i)->setValue(var.toBool());
+        break;
+      default:
+        pvIos.at(i)->setValue(mdtValue());
+    }
+    ++i;
+  }
+
+  return j;
+}
+
+int mdtDeviceIosSegment::updateValuesFromAddressWrite(int startAddress, const QList<mdtValue> & values)
+{
+  int i, j;
+  bool found = false;
+
+  // Find I/O with startAddress
+  for(i = 0; i < pvIos.size(); ++i){
+    Q_ASSERT(pvIos.at(i) != 0);
+    if(pvIos.at(i)->addressWrite() == startAddress){
+      found = true;
+      break;
+    }
+  }
+  if(!found){
+    return 0;
+  }
+  // Update values
+  for(j = 0; j < values.size(); ++j){
+    if(i >= pvIos.size()){
+      return j;
+    }
+    Q_ASSERT(pvIos.at(i) != 0);
+    pvIos.at(i)->setValue(values.at(j));
+    ++i;
+  }
+
+  return j;
+}
+
+int mdtDeviceIosSegment::updateValuesFromAddressWrite(int startAddress, const QList<QVariant> & values)
+{
+  int i, j;
+  bool found = false;
+  QVariant var;
+
+  // Find I/O with startAddress
+  for(i = 0; i < pvIos.size(); ++i){
+    Q_ASSERT(pvIos.at(i) != 0);
+    if(pvIos.at(i)->addressWrite() == startAddress){
+      found = true;
+      break;
+    }
+  }
+  if(!found){
+    return 0;
+  }
+  // Update values
+  for(j = 0; j < values.size(); ++j){
+    if(i >= pvIos.size()){
+      return j;
+    }
+    Q_ASSERT(pvIos.at(i) != 0);
+    var = values.at(j);
+    switch(var.type()){
+      case QVariant::Int:
+        pvIos.at(i)->setValue(var.toInt());
+        break;
+      case QVariant::Double:
+        pvIos.at(i)->setValue(var.toDouble());
+        break;
+      case QVariant::Bool:
+        pvIos.at(i)->setValue(var.toBool());
+        break;
+      default:
+        pvIos.at(i)->setValue(mdtValue());
+    }
+    ++i;
+  }
+
+  return j;
 }
 
 QList<mdtValue> mdtDeviceIosSegment::values() const
@@ -344,7 +391,6 @@ QList<mdtValue> mdtDeviceIosSegment::values() const
   }
 
   return valuesList;
-  ///return pvValues;
 }
 
 QList<int> mdtDeviceIosSegment::valuesInt() const
@@ -355,7 +401,6 @@ QList<int> mdtDeviceIosSegment::valuesInt() const
   for(i = 0; i < pvIos.size(); ++i){
     Q_ASSERT(pvIos.at(i) != 0);
     valuesList.append(pvIos.at(i)->value().valueInt());
-    ///valuesList.append(pvValues.at(i).valueInt());
   }
 
   return valuesList;
@@ -369,7 +414,6 @@ QList<double> mdtDeviceIosSegment::valuesDouble() const
   for(i = 0; i < pvIos.size(); ++i){
     Q_ASSERT(pvIos.at(i) != 0);
     valuesList.append(pvIos.at(i)->value().valueDouble());
-    ///valuesList.append(pvValues.at(i).valueDouble());
   }
 
   return valuesList;
@@ -383,7 +427,6 @@ QList<bool> mdtDeviceIosSegment::valuesBool() const
   for(i = 0; i < pvIos.size(); ++i){
     Q_ASSERT(pvIos.at(i) != 0);
     valuesList.append(pvIos.at(i)->value().valueBool());
-    ///valuesList.append(pvValues.at(i).valueBool());
   }
 
   return valuesList;

@@ -30,7 +30,7 @@ mdtDeviceIos::mdtDeviceIos(QObject *parent)
  : QObject(parent)
 {
   pvAutoDeleteIos = true;
-  pvAnalogInputsFirstAddressRead = 0;
+  ///pvAnalogInputsFirstAddressRead = 0;
   pvAnalogOutputsFirstAddressRead = 0;
   pvAnalogOutputsFirstAddressWrite = 0;
   pvDigitalInputsFirstAddressRead = 0;
@@ -44,7 +44,25 @@ mdtDeviceIos::~mdtDeviceIos()
   qDebug() << "mdtDeviceIos::~mdtDeviceIos() ...";
   if(pvAutoDeleteIos){
     deleteIos();
+  }else{
+    pvAnalogInputs.clear();
+    pvAnalogInputsByAddressRead.clear();
+    ///pvAnalogInputsFirstAddressRead = 0;
+    pvAnalogOutputs.clear();
+    pvAnalogOutputsByAddressRead.clear();
+    pvAnalogOutputsByAddressWrite.clear();
+    pvAnalogOutputsFirstAddressRead = 0;
+    pvAnalogOutputsFirstAddressWrite = 0;
+    pvDigitalInputs.clear();
+    pvDigitalInputsByAddressRead.clear();
+    pvDigitalInputsFirstAddressRead = 0;
+    pvDigitalOutputs.clear();
+    pvDigitalOutputsByAddressRead.clear();
+    pvDigitalOutputsByAddressWrite.clear();
+    pvDigitalOutputsFirstAddressRead = 0;
+    pvDigitalOutputsFirstAddressWrite = 0;
   }
+
   qDebug() << "mdtDeviceIos::~mdtDeviceIos() DONE";
 }
 
@@ -59,7 +77,7 @@ void mdtDeviceIos::deleteIos()
   qDeleteAll(pvAnalogInputs);
   pvAnalogInputs.clear();
   pvAnalogInputsByAddressRead.clear();
-  pvAnalogInputsFirstAddressRead = 0;
+  ///pvAnalogInputsFirstAddressRead = 0;
   qDeleteAll(pvAnalogOutputs);
   pvAnalogOutputs.clear();
   pvAnalogOutputsByAddressRead.clear();
@@ -83,12 +101,42 @@ void mdtDeviceIos::addAnalogInput(mdtAnalogIo *ai)
 {
   Q_ASSERT(ai != 0);
 
+  QList<mdtAnalogIo*> aiList;
+  mdtDeviceIosSegment *segment;
+  QList<mdtAnalogIo*> segmentAiList;
+  int i;
+
   pvAnalogInputs.append(ai);
   pvAnalogInputsByAddressRead.insert(ai->addressRead(), ai);
   Q_ASSERT(pvAnalogInputsByAddressRead.values().size() > 0);
   Q_ASSERT(pvAnalogInputsByAddressRead.values().at(0) != 0);
   // QMap returns a list sorted by keys, ascending
-  pvAnalogInputsFirstAddressRead = pvAnalogInputsByAddressRead.values().at(0)->addressRead();
+  ///pvAnalogInputsFirstAddressRead = pvAnalogInputsByAddressRead.values().at(0)->addressRead();
+  // We must reorganize segments - We use the QMap conatiner, because it is allready sorted by keys, ascending
+  qDeleteAll(pvAnalogInputsSegments);
+  pvAnalogInputsSegments.clear();
+  aiList = pvAnalogInputsByAddressRead.values();
+  Q_ASSERT(aiList.size() > 0);
+  // We know that we have at least 1 I/O - Just create a segment and add first item
+  segment = new mdtDeviceIosSegment;
+  segmentAiList.append(aiList.at(0));
+  for(i = 1; i < aiList.size(); ++i){
+    Q_ASSERT(aiList.at(i) != 0);
+    // If address of current item is not directly successor of previous, we have a hole -> create a new segment
+    if((aiList.at(i)->addressRead() - aiList.at(i-1)->addressRead() ) != 1){
+      // Add current segment to list and create a new one
+      segment->setIos(segmentAiList);
+      segmentAiList.clear();
+      pvAnalogInputsSegments.append(segment);
+      segment = new mdtDeviceIosSegment;
+    }
+    segmentAiList.append(aiList.at(i));
+  }
+  // Add current segment to list
+  segment->setIos(segmentAiList);
+  pvAnalogInputsSegments.append(segment);
+
+
 }
 
 mdtAnalogIo *mdtDeviceIos::analogInputAt(int address)
@@ -115,14 +163,19 @@ const QList<mdtAnalogIo*> mdtDeviceIos::analogInputs() const
   return pvAnalogInputs;
 }
 
-const QList<mdtDeviceIosSegment*> mdtDeviceIos::analogInputsSegments() const
+const QList<mdtDeviceIosSegment*> &mdtDeviceIos::analogInputsSegments() const
 {
+  return pvAnalogInputsSegments;
 }
+
 
 int mdtDeviceIos::analogInputsFirstAddress() const
 {
-  return pvAnalogInputsFirstAddressRead;
+  ///return pvAnalogInputsFirstAddressRead;
+  qDebug() << "!!! *** !!! mdtDeviceIos::analogInputsFirstAddress() is Obselete !!";
+  return -1;
 }
+
 
 int mdtDeviceIos::analogInputsCount() const
 {
@@ -371,12 +424,170 @@ QList<bool> mdtDeviceIos::digitalOutputsStatesByAddressWrite() const
   return states;
 }
 
-void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values, int firstAddress, int n)
+void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values, int firstAddress, int n, bool matchAddresses)
 {
-  int i, max;
+  int i, max, cursor, stored;
   QList<mdtAnalogIo*> lst;
   QVariant var;
+  mdtDeviceIosSegment *segment;
+  QList<mdtDeviceIosSegment*> segmentList;
+  int segmentSpace;
+  bool found = false;
+  int address;
 
+  // Find the first segment
+  i = 0;
+  if(analogInputsSegments().isEmpty()){
+    return;
+  }
+  if(firstAddress < 0){
+    segment = analogInputsSegments().at(0);
+    Q_ASSERT(segment != 0);
+    address = segment->startAddressRead();
+    found = true;
+  }else{
+    address = firstAddress;
+    for(i = 0; i < analogInputsSegments().size(); ++i){
+      segment = analogInputsSegments().at(i);
+      Q_ASSERT(segment != 0);
+      if(segment->containsAddressRead(firstAddress)){
+        found = true;
+        break;
+      }
+    }
+  }
+  if(!found){
+    return;
+  }
+  Q_ASSERT(segment != 0);
+  segmentSpace = segment->ioCount();
+  segmentList.append(segment);
+  // Fix quantity of inputs to update
+  if(n < 0){
+    max = qMin(values.size(), pvAnalogInputs.size());
+  }else{
+    max = qMin(n, pvAnalogInputs.size());
+  }
+  Q_ASSERT(max <= values.size());
+  // Find needed amount of segments to store max items
+  qDebug() << "Building segment list - Total available: " << analogInputsSegments().size();
+  for(i = 1; i < analogInputsSegments().size(); ++i){
+    segment = analogInputsSegments().at(i);
+    Q_ASSERT(segment != 0);
+    segmentSpace += segment->ioCount();
+    segmentList.append(segment);
+    if(segmentSpace >= max){
+      break;
+    }
+  }
+  // Update
+  qDebug() << "analogInputsSegments(): " << analogInputsSegments();
+  qDebug() << "segmentList: " << segmentList;
+  cursor = 0;
+  Q_ASSERT(segmentList.size() > 0);
+  segment = segmentList.at(0);
+  i = 0;
+  while(cursor < max){
+    // Store in current segment
+    ///qDebug() << "Address: " << address;
+    ///qDebug() << "Segment addresses: " << segment->addressesRead();
+    qDebug() << "cursor: " << cursor << " - values[cursor-end]: " << values.mid(cursor);
+    if(matchAddresses){
+      stored = segment->updateValuesFromAddressRead(address, values.mid(cursor));
+    }else{
+      stored = segment->setValues(values.mid(cursor));
+    }
+    ///qDebug() << "In segment " << i << ": Stored " << stored << " from address " << address;
+    qDebug() << "In segment " << i << ": Stored " << stored;
+    // If we stored less than segment size, we have finished
+    /**
+    if(stored < segment->ioCount()){
+      return;
+    }
+    */
+    // Get next segment - If no more available, we have finished
+    ++i;
+    if(i < segmentList.size()){
+      qDebug() << "Getting new segment  - i:" << i;
+      segment = segmentList.at(i);
+    }else{
+      return;
+    }
+    Q_ASSERT(segment != 0);
+    // Update data cursor and address
+    cursor += stored;
+    address += stored;
+    // If matchAddresses is true , we must matter about address match
+    if(matchAddresses){
+      while((cursor < max)&&(!segment->containsAddressRead(address))){
+        qDebug() << "Searching a maching address - address: " << address << " - cursor: " << cursor;
+        ++address;
+        ++cursor;
+      }
+    }
+  }
+  
+  return;
+  
+  // update I/O's
+  cursor = 0;
+  while(cursor < max){
+    // Check if current segment contains address - If not, search one
+    qDebug() << "Begin of loop - address: " << firstAddress;
+    if(segment->containsAddressRead(firstAddress)){
+      found = true;
+    }else{
+      found = false;
+      for(i = 0; i < analogInputsSegments().size(); ++i){
+        segment = analogInputsSegments().at(i);
+        Q_ASSERT(segment != 0);
+        if(segment->containsAddressRead(firstAddress)){
+          found = true;
+          break;
+        }
+      }
+    }
+    if(found){
+      // Store in current segment
+      stored = segment->updateValuesFromAddressRead(firstAddress, values.mid(cursor));
+      qDebug() << "firstAddress: " << firstAddress <<  "Stored: " << stored << " from: " << values.mid(cursor);
+      cursor += stored;
+      firstAddress += stored;
+      Q_ASSERT(stored > 0);
+    }else{
+      // If we found nothing, we are possibly in a hole - try again
+      qDebug() << "Address " << firstAddress << " not found in current segment";
+      ++cursor;
+      ++firstAddress;
+    }
+    /**
+    // If nothing was stored, we must find a new segment
+    if(stored < 1){
+      ++cursor;
+      if(cursor >= max){
+        return;
+      }
+      found = false;
+      while(i < analogInputsSegments().size()){
+        segment = analogInputsSegments().at(i);
+        Q_ASSERT(segment != 0);
+        if(segment->containsAddressRead(firstAddress)){
+          found = true;
+          break;
+        }
+        ++i;
+      }
+      // If no segment was found, we have no more I/O's to update or we are in a hole
+      if(!found){
+        i = 0;
+        ++firstAddress;
+      }
+    }
+    */
+  }
+
+  return;
+  
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
   lst = pvAnalogInputsByAddressRead.values();
   // Remove items with address < firstAddress

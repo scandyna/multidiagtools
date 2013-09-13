@@ -102,6 +102,28 @@ void mdtDeviceTest::deviceIosSegmentTest()
   QCOMPARE(seg.startAddressWrite(), 100);
   QCOMPARE(seg.endAddressRead(), 8);
   QCOMPARE(seg.endAddressWrite(), 108);
+  QVERIFY(!seg.containsAddressRead(-1));
+  QVERIFY(seg.containsAddressRead(0));
+  QVERIFY(seg.containsAddressRead(1));
+  QVERIFY(seg.containsAddressRead(2));
+  QVERIFY(seg.containsAddressRead(3));
+  QVERIFY(seg.containsAddressRead(4));
+  QVERIFY(seg.containsAddressRead(5));
+  QVERIFY(seg.containsAddressRead(6));
+  QVERIFY(seg.containsAddressRead(7));
+  QVERIFY(seg.containsAddressRead(8));
+  QVERIFY(!seg.containsAddressRead(9));
+  QVERIFY(!seg.containsAddressWrite(99));
+  QVERIFY(seg.containsAddressWrite(100));
+  QVERIFY(seg.containsAddressWrite(101));
+  QVERIFY(seg.containsAddressWrite(102));
+  QVERIFY(seg.containsAddressWrite(103));
+  QVERIFY(seg.containsAddressWrite(104));
+  QVERIFY(seg.containsAddressWrite(105));
+  QVERIFY(seg.containsAddressWrite(106));
+  QVERIFY(seg.containsAddressWrite(107));
+  QVERIFY(seg.containsAddressWrite(108));
+  QVERIFY(!seg.containsAddressWrite(109));
   QCOMPARE(seg.ioCount(), 9);
   QCOMPARE(seg.addressesRead(), expectedReadAddresses);
   QCOMPARE(seg.addressesWrite(), expectedWriteAddresses);
@@ -114,7 +136,7 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesMdt.append(2*i);
     expectedValuesInt.append(2*i);
   }
-  QVERIFY(seg.setValues(valuesMdt));
+  QCOMPARE(seg.setValues(valuesMdt), 9);
   QCOMPARE(seg.values().size(), 9);
   QCOMPARE(seg.valuesInt(), expectedValuesInt);
   // Set some values and check - correct amount of values - type: QVariant
@@ -124,7 +146,7 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesVar.append(5*i);
     expectedValuesInt.append(5*i);
   }
-  QVERIFY(seg.setValues(valuesVar));
+  QCOMPARE(seg.setValues(valuesVar), 9);
   QCOMPARE(seg.valuesInt(), expectedValuesInt);
   // Set some values and check - to less values - type: mdtValue
   valuesMdt.clear();
@@ -133,16 +155,17 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesMdt.append(7*i);
     expectedValuesInt.append(7*i);
   }
-  QVERIFY(!seg.setValues(valuesMdt));
+  QCOMPARE(seg.setValues(valuesMdt), 5);
   QCOMPARE(seg.values().size(), 9);
   for(int i = 0; i < 5; i++){
     QVERIFY(seg.values().at(i).isValid());
     QCOMPARE(seg.values().at(i).valueInt(), expectedValuesInt.at(i));
     QCOMPARE(seg.valuesInt().at(i), expectedValuesInt.at(i));
   }
-  QVERIFY(!seg.values().at(6).isValid());
-  QVERIFY(!seg.values().at(7).isValid());
-  QVERIFY(!seg.values().at(8).isValid());
+  QCOMPARE(seg.values().at(5).valueInt(), 5*5);
+  QCOMPARE(seg.values().at(6).valueInt(), 5*6);
+  QCOMPARE(seg.values().at(7).valueInt(), 5*7);
+  QCOMPARE(seg.values().at(8).valueInt(), 5*8);
   // Set some values and check - to less values - type: QVariant
   valuesVar.clear();
   expectedValuesInt.clear();
@@ -150,18 +173,19 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesVar.append(3*i);
     expectedValuesInt.append(3*i);
   }
-  QVERIFY(!seg.setValues(valuesVar));
+  QCOMPARE(seg.setValues(valuesVar), 3);
   QCOMPARE(seg.values().size(), 9);
   for(int i = 0; i < 3; i++){
     QVERIFY(seg.values().at(i).isValid());
     QCOMPARE(seg.values().at(i).valueInt(), expectedValuesInt.at(i));
     QCOMPARE(seg.valuesInt().at(i), expectedValuesInt.at(i));
   }
-  QVERIFY(!seg.values().at(4).isValid());
-  QVERIFY(!seg.values().at(5).isValid());
-  QVERIFY(!seg.values().at(6).isValid());
-  QVERIFY(!seg.values().at(7).isValid());
-  QVERIFY(!seg.values().at(8).isValid());
+  QCOMPARE(seg.values().at(3).valueInt(), 7*3);
+  QCOMPARE(seg.values().at(4).valueInt(), 7*4);
+  QCOMPARE(seg.values().at(5).valueInt(), 5*5);
+  QCOMPARE(seg.values().at(6).valueInt(), 5*6);
+  QCOMPARE(seg.values().at(7).valueInt(), 5*7);
+  QCOMPARE(seg.values().at(8).valueInt(), 5*8);
   // Set some values and check - to many values - type: mdtValue
   valuesMdt.clear();
   expectedValuesInt.clear();
@@ -169,7 +193,7 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesMdt.append(3*i);
     expectedValuesInt.append(3*i);
   }
-  QVERIFY(!seg.setValues(valuesMdt));
+  QCOMPARE(seg.setValues(valuesMdt), 9);
   QCOMPARE(seg.values().size(), 9);
   for(int i = 0; i < 9; i++){
     QVERIFY(seg.values().at(i).isValid());
@@ -183,7 +207,7 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesVar.append(2*i);
     expectedValuesInt.append(2*i);
   }
-  QVERIFY(!seg.setValues(valuesVar));
+  QCOMPARE(seg.setValues(valuesVar), 9);
   QCOMPARE(seg.values().size(), 9);
   for(int i = 0; i < 9; i++){
     QVERIFY(seg.values().at(i).isValid());
@@ -194,6 +218,106 @@ void mdtDeviceTest::deviceIosSegmentTest()
   QVERIFY(seg.valuesInt().at(8) != 11);
   aIo->setValue(11);
   QCOMPARE(seg.valuesInt().at(8), 11);
+  // Update some values and check - Address read - type: mdtValue
+  expectedValuesInt = seg.valuesInt();
+  expectedValuesInt[0] = -10;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesMdt.clear();
+  valuesMdt << -10;
+  QCOMPARE(seg.updateValuesFromAddressRead(0, valuesMdt), 1);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  expectedValuesInt[2] = -20;
+  expectedValuesInt[3] = -30;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesMdt.clear();
+  valuesMdt << -20 << -30;
+  QCOMPARE(seg.updateValuesFromAddressRead(2, valuesMdt), 2);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  expectedValuesInt[6] = -60;
+  expectedValuesInt[7] = -70;
+  expectedValuesInt[8] = -80;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesMdt.clear();
+  valuesMdt << -60 << -70 << -80 << -90 << -100;
+  QCOMPARE(seg.updateValuesFromAddressRead(6, valuesMdt), 3);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  valuesMdt << -2000 << -3000;
+  QCOMPARE(seg.updateValuesFromAddressRead(40, valuesMdt), 0);
+  // Update some values and check - Address read - type: QVariant
+  expectedValuesInt = seg.valuesInt();
+  expectedValuesInt[0] = -100;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesVar.clear();
+  valuesVar << -100;
+  QCOMPARE(seg.updateValuesFromAddressRead(0, valuesVar), 1);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  expectedValuesInt[2] = -200;
+  expectedValuesInt[3] = -300;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesVar.clear();
+  valuesVar << -200 << -300;
+  QCOMPARE(seg.updateValuesFromAddressRead(2, valuesVar), 2);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  expectedValuesInt[6] = -600;
+  expectedValuesInt[7] = -700;
+  expectedValuesInt[8] = -800;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesVar.clear();
+  valuesVar << -600 << -700 << -800 << -900 << -1000;
+  QCOMPARE(seg.updateValuesFromAddressRead(6, valuesVar), 3);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  valuesVar << -2000 << -3000;
+  QCOMPARE(seg.updateValuesFromAddressRead(40, valuesVar), 0);
+  // Update some values and check - Address write - type: mdtValue
+  expectedValuesInt = seg.valuesInt();
+  expectedValuesInt[0] = -10;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesMdt.clear();
+  valuesMdt << -10;
+  QCOMPARE(seg.updateValuesFromAddressWrite(100, valuesMdt), 1);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  expectedValuesInt[2] = -20;
+  expectedValuesInt[3] = -30;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesMdt.clear();
+  valuesMdt << -20 << -30;
+  QCOMPARE(seg.updateValuesFromAddressWrite(102, valuesMdt), 2);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  expectedValuesInt[6] = -60;
+  expectedValuesInt[7] = -70;
+  expectedValuesInt[8] = -80;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesMdt.clear();
+  valuesMdt << -60 << -70 << -80 << -90 << -100;
+  QCOMPARE(seg.updateValuesFromAddressWrite(106, valuesMdt), 3);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  valuesMdt << -2000 << -3000;
+  QCOMPARE(seg.updateValuesFromAddressWrite(140, valuesMdt), 0);
+  // Update some values and check - Address write - type: QVariant
+  expectedValuesInt = seg.valuesInt();
+  expectedValuesInt[0] = -100;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesVar.clear();
+  valuesVar << -100;
+  QCOMPARE(seg.updateValuesFromAddressWrite(100, valuesVar), 1);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  expectedValuesInt[2] = -200;
+  expectedValuesInt[3] = -300;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesVar.clear();
+  valuesVar << -200 << -300;
+  QCOMPARE(seg.updateValuesFromAddressWrite(102, valuesVar), 2);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  expectedValuesInt[6] = -600;
+  expectedValuesInt[7] = -700;
+  expectedValuesInt[8] = -800;
+  QVERIFY(!(seg.valuesInt() == expectedValuesInt));
+  valuesVar.clear();
+  valuesVar << -600 << -700 << -800 << -900 << -1000;
+  QCOMPARE(seg.updateValuesFromAddressWrite(106, valuesVar), 3);
+  QCOMPARE(seg.valuesInt(), expectedValuesInt);
+  valuesVar << -2000 << -3000;
+  QCOMPARE(seg.updateValuesFromAddressWrite(140, valuesVar), 0);
 
   /*
    * Digital I/O
@@ -219,6 +343,30 @@ void mdtDeviceTest::deviceIosSegmentTest()
   QCOMPARE(seg.startAddressWrite(), 100);
   QCOMPARE(seg.endAddressRead(), 9);
   QCOMPARE(seg.endAddressWrite(), 109);
+  QVERIFY(!seg.containsAddressRead(-1));
+  QVERIFY(seg.containsAddressRead(0));
+  QVERIFY(seg.containsAddressRead(1));
+  QVERIFY(seg.containsAddressRead(2));
+  QVERIFY(seg.containsAddressRead(3));
+  QVERIFY(seg.containsAddressRead(4));
+  QVERIFY(seg.containsAddressRead(5));
+  QVERIFY(seg.containsAddressRead(6));
+  QVERIFY(seg.containsAddressRead(7));
+  QVERIFY(seg.containsAddressRead(8));
+  QVERIFY(seg.containsAddressRead(9));
+  QVERIFY(!seg.containsAddressRead(10));
+  QVERIFY(!seg.containsAddressWrite(99));
+  QVERIFY(seg.containsAddressWrite(100));
+  QVERIFY(seg.containsAddressWrite(101));
+  QVERIFY(seg.containsAddressWrite(102));
+  QVERIFY(seg.containsAddressWrite(103));
+  QVERIFY(seg.containsAddressWrite(104));
+  QVERIFY(seg.containsAddressWrite(105));
+  QVERIFY(seg.containsAddressWrite(106));
+  QVERIFY(seg.containsAddressWrite(107));
+  QVERIFY(seg.containsAddressWrite(108));
+  QVERIFY(seg.containsAddressWrite(109));
+  QVERIFY(!seg.containsAddressWrite(110));
   QCOMPARE(seg.ioCount(), 10);
   QCOMPARE(seg.addressesRead(), expectedReadAddresses);
   QCOMPARE(seg.addressesWrite(), expectedWriteAddresses);
@@ -230,7 +378,7 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesMdt.append((i%2)!=0);
     expectedValuesBool.append((i%2)!=0);
   }
-  QVERIFY(seg.setValues(valuesMdt));
+  QCOMPARE(seg.setValues(valuesMdt), 10);
   QCOMPARE(seg.values().size(), 10);
   QCOMPARE(seg.valuesBool(), expectedValuesBool);
   // Set some values and check - correct amount of values - type: QVariant
@@ -240,7 +388,7 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesVar.append((i%2)==0);
     expectedValuesBool.append((i%2)==0);
   }
-  QVERIFY(seg.setValues(valuesVar));
+  QCOMPARE(seg.setValues(valuesVar), 10);
   QCOMPARE(seg.valuesBool(), expectedValuesBool);
   // Set some values and check - to less values - type: mdtValue
   valuesMdt.clear();
@@ -249,16 +397,16 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesMdt.append((i%2)!=0);
     expectedValuesBool.append((i%2)!=0);
   }
-  QVERIFY(!seg.setValues(valuesMdt));
+  QCOMPARE(seg.setValues(valuesMdt), 5);
   QCOMPARE(seg.values().size(), 10);
   for(int i = 0; i < 5; i++){
     QVERIFY(seg.values().at(i).isValid());
     QCOMPARE(seg.values().at(i).valueBool(), expectedValuesBool.at(i));
     QCOMPARE(seg.valuesBool().at(i), expectedValuesBool.at(i));
   }
-  QVERIFY(!seg.values().at(6).isValid());
-  QVERIFY(!seg.values().at(7).isValid());
-  QVERIFY(!seg.values().at(8).isValid());
+  QCOMPARE(seg.values().at(6).valueBool(), (6%2)==0);
+  QCOMPARE(seg.values().at(7).valueBool(), (7%2)==0);
+  QCOMPARE(seg.values().at(8).valueBool(), (8%2)==0);
   // Set some values and check - to less values - type: QVariant
   valuesVar.clear();
   expectedValuesBool.clear();
@@ -266,18 +414,19 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesVar.append((i%2)==0);
     expectedValuesBool.append((i%2)==0);
   }
-  QVERIFY(!seg.setValues(valuesVar));
+  QCOMPARE(seg.setValues(valuesVar), 3);
   QCOMPARE(seg.values().size(), 10);
   for(int i = 0; i < 3; i++){
     QVERIFY(seg.values().at(i).isValid());
     QCOMPARE(seg.values().at(i).valueBool(), expectedValuesBool.at(i));
     QCOMPARE(seg.valuesBool().at(i), expectedValuesBool.at(i));
   }
-  QVERIFY(!seg.values().at(4).isValid());
-  QVERIFY(!seg.values().at(5).isValid());
-  QVERIFY(!seg.values().at(6).isValid());
-  QVERIFY(!seg.values().at(7).isValid());
-  QVERIFY(!seg.values().at(8).isValid());
+  QCOMPARE(seg.values().at(3).valueBool(), (3%2)!= 0);
+  QCOMPARE(seg.values().at(4).valueBool(), (4%2)!= 0);
+  QCOMPARE(seg.values().at(5).valueBool(), (5%2)==0);
+  QCOMPARE(seg.values().at(6).valueBool(), (6%2)==0);
+  QCOMPARE(seg.values().at(7).valueBool(), (7%2)==0);
+  QCOMPARE(seg.values().at(8).valueBool(), (8%2)==0);
   // Set some values and check - to many values - type: mdtValue
   valuesMdt.clear();
   expectedValuesBool.clear();
@@ -285,7 +434,7 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesMdt.append((i%2)!=0);
     expectedValuesBool.append((i%2)!=0);
   }
-  QVERIFY(!seg.setValues(valuesMdt));
+  QCOMPARE(seg.setValues(valuesMdt), 10);
   QCOMPARE(seg.values().size(), 10);
   for(int i = 0; i < 9; i++){
     QVERIFY(seg.values().at(i).isValid());
@@ -299,18 +448,21 @@ void mdtDeviceTest::deviceIosSegmentTest()
     valuesVar.append((i%2)==0);
     expectedValuesBool.append((i%2)==0);
   }
-  QVERIFY(!seg.setValues(valuesVar));
+  QCOMPARE(seg.setValues(valuesVar), 10);
   QCOMPARE(seg.values().size(), 10);
   for(int i = 0; i < 9; i++){
     QVERIFY(seg.values().at(i).isValid());
     QCOMPARE(seg.values().at(i).valueBool(), expectedValuesBool.at(i));
     QCOMPARE(seg.valuesBool().at(i), expectedValuesBool.at(i));
   }
-  // Change ve value of last aIo and check that it is reflected
+  // Change value of last aIo and check that it is reflected
   dIo->setValue(true);
   QCOMPARE(seg.valuesBool().at(9), true);
   dIo->setValue(false);
   QCOMPARE(seg.valuesBool().at(9), false);
+  // Update some values and check - type: mdtValue
+  
+  // Update some values and check - type: QVariant
 
 }
 
@@ -371,7 +523,7 @@ void mdtDeviceTest::deviceIosTest()
 
   // Check analog inputs
   QCOMPARE(ios.analogInputsCount(), 2);
-  QCOMPARE(ios.analogInputsFirstAddress(), 10);
+  ///QCOMPARE(ios.analogInputsFirstAddress(), 10);
   QVERIFY(ios.analogInputAt(10) != 0);
   QCOMPARE(ios.analogInputAt(10)->address() , 10);
   QVERIFY(ios.analogInputWithLabelShort("AI10") != 0);
@@ -599,6 +751,12 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   ///mdtAnalogIo *ao;
   ///mdtDigitalIo *di;
   ///mdtDigitalIo *dout;
+  QList<int> expectedValuesInt;
+  QList<QVariant> valuesVar;
+
+  /*
+   * Analog IN
+   */
 
   // Add analog inputs
   ai = new mdtAnalogIo;
@@ -609,10 +767,13 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   ios.addAnalogInput(ai);
   ai = new mdtAnalogIo;
   ai->setAddress(1);
+  ios.addAnalogInput(ai);
   ai = new mdtAnalogIo;
   ai->setAddress(5);
+  ios.addAnalogInput(ai);
   ai = new mdtAnalogIo;
   ai->setAddress(6);
+  ios.addAnalogInput(ai);
   // Check segments
   QCOMPARE(ios.analogInputsSegments().size(), 2);
   // First segment
@@ -620,14 +781,81 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   QVERIFY(seg != 0);
   QCOMPARE(seg->addressesRead().size(), 3);
   QCOMPARE(seg->addressesRead().at(0), 0);
-  QCOMPARE(seg->addressesRead().at(0), 1);
-  QCOMPARE(seg->addressesRead().at(0), 2);
+  QCOMPARE(seg->addressesRead().at(1), 1);
+  QCOMPARE(seg->addressesRead().at(2), 2);
+  // First segment - Set some values and check
+  ai = ios.analogInputAt(0);
+  QVERIFY(ai != 0);
+  ai->setValue(10);
+  ai = ios.analogInputAt(1);
+  QVERIFY(ai != 0);
+  ai->setValue(11);
+  ai = ios.analogInputAt(2);
+  QVERIFY(ai != 0);
+  ai->setValue(12);
+  expectedValuesInt.clear();
+  expectedValuesInt << 10 << 11 << 12;
+  QCOMPARE(seg->valuesInt(), expectedValuesInt);
   // Second segment
   seg = ios.analogInputsSegments().at(1);
   QVERIFY(seg != 0);
   QCOMPARE(seg->addressesRead().size(), 2);
   QCOMPARE(seg->addressesRead().at(0), 5);
-  QCOMPARE(seg->addressesRead().at(0), 6);
+  QCOMPARE(seg->addressesRead().at(1), 6);
+  // Second segment - Set some values and check
+  ai = ios.analogInputAt(5);
+  QVERIFY(ai != 0);
+  ai->setValue(15);
+  ai = ios.analogInputAt(6);
+  QVERIFY(ai != 0);
+  ai->setValue(16);
+  expectedValuesInt.clear();
+  expectedValuesInt << 15 << 16;
+  QCOMPARE(seg->valuesInt(), expectedValuesInt);
+  // Check grouped updates - Only first segment
+  valuesVar.clear();
+  valuesVar << -10;
+  QVERIFY(ios.analogInputAt(0) != 0);
+  QVERIFY(ios.analogInputAt(0)->value().valueInt() != -10);
+  ios.updateAnalogInputValues(valuesVar, 0, -1);
+  QCOMPARE(ios.analogInputAt(0)->value().valueInt(), -10);
+  ios.updateAnalogInputValues(valuesVar, 3, -1);  // Address 3 not exists
+  QCOMPARE(ios.analogInputAt(0)->value().valueInt(), -10);
+  // Check grouped updates - first + second segments
+  // Note: considere that we only included I/O's with addresses 0,1,2,5,6 in container, but we made a query to device for addresses 2-6
+  valuesVar.clear();
+  valuesVar << 200 << 300 << 400 << 500 << 600;
+  QVERIFY(ios.analogInputAt(2) != 0);
+  QVERIFY(ios.analogInputAt(2)->value().valueInt() != 200);
+  QVERIFY(ios.analogInputAt(5) != 0);
+  QVERIFY(ios.analogInputAt(5)->value().valueInt() != 500);
+  QVERIFY(ios.analogInputAt(6) != 0);
+  QVERIFY(ios.analogInputAt(6)->value().valueInt() != 600);
+  ios.updateAnalogInputValues(valuesVar, 2, -1, true);
+  QCOMPARE(ios.analogInputAt(2)->value().valueInt(), 200);
+  QCOMPARE(ios.analogInputAt(5)->value().valueInt(), 500);
+  QCOMPARE(ios.analogInputAt(6)->value().valueInt(), 600);
+  // Same story, but we queried device about addresses 0-3 (and I/O with address 3 does not exist in container)
+  valuesVar.clear();
+  valuesVar << 0 << 10 << 20 << 30;
+  QVERIFY(ios.analogInputAt(0) != 0);
+  QVERIFY(ios.analogInputAt(0)->value().valueInt() != 0);
+  QVERIFY(ios.analogInputAt(1) != 0);
+  QVERIFY(ios.analogInputAt(1)->value().valueInt() != 10);
+  QVERIFY(ios.analogInputAt(2) != 0);
+  QVERIFY(ios.analogInputAt(2)->value().valueInt() != 20);
+  // We will check that 4th I/O was untouched
+  QVERIFY(ios.analogInputAt(5) != 0);
+  QVERIFY(ios.analogInputAt(5)->value().valueInt() == 500);
+  ios.updateAnalogInputValues(valuesVar, -1, -1, true);
+  QCOMPARE(ios.analogInputAt(0)->value().valueInt(), 0);
+  QCOMPARE(ios.analogInputAt(1)->value().valueInt(), 10);
+  QCOMPARE(ios.analogInputAt(2)->value().valueInt(), 20);
+  // Check that 4th I/O was untouched
+  QCOMPARE(ios.analogInputAt(5)->value().valueInt(), 500);
+
+
+  
 }
 
 void mdtDeviceTest::deviceIosWidgetTest()

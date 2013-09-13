@@ -21,6 +21,7 @@
 #include "mdtDevice.h"
 #include "mdtError.h"
 #include "mdtAnalogIo.h"
+#include "mdtDeviceIosSegment.h"
 #include "mdtPortManager.h"
 #include <QTimer>
 #include <QList>
@@ -231,8 +232,10 @@ mdtValue mdtDevice::getAnalogInputValue(const QString &labelShort, bool queryDev
 
 int mdtDevice::getAnalogInputs(bool waitOnReply)
 {
-  int transactionId;
+  int transactionId = -1;
+  int i;
   mdtPortTransaction *transaction;
+  mdtDeviceIosSegment *segment;
 
   if(pvIos == 0){
     return -1;
@@ -240,29 +243,35 @@ int mdtDevice::getAnalogInputs(bool waitOnReply)
   if(pvIos->analogInputsCount() < 1){
     return 0;
   }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIoCount(pvIos->analogInputsCount());
-  transaction->setAddress(pvIos->analogInputsFirstAddress());
-  // Send query and wait if requested
-  if(waitOnReply){
-    transaction->setQueryReplyMode(true);
-    transactionId = readAnalogInputs(transaction);
-    if(transactionId < 0){
-      pvIos->setAnalogInputsValue(mdtValue());
-      return transactionId;
-    }
-    // Wait on result (use device's defined timeout)
-    if(!waitTransactionDone(transactionId)){
-      pvIos->setAnalogInputsValue(mdtValue());
-      return -1;
-    }
-  }else{
-    transaction->setQueryReplyMode(false);
-    transactionId = readAnalogInputs(transaction);
-    if(transactionId < 0){
-      pvIos->setAnalogInputsValue(mdtValue());
-      return transactionId;
+  for(i = 0; i < pvIos->analogInputsSegments().size(); ++i){
+    segment = pvIos->analogInputsSegments().at(i);
+    Q_ASSERT(segment != 0);
+    // Get a new transaction
+    transaction = getNewTransaction();
+    ///transaction->setIoCount(pvIos->analogInputsCount());
+    transaction->setIoCount(segment->ioCount());
+    ///transaction->setAddress(pvIos->analogInputsFirstAddress());
+    transaction->setAddress(segment->startAddressRead());
+    // Send query and wait if requested
+    if(waitOnReply){
+      transaction->setQueryReplyMode(true);
+      transactionId = readAnalogInputs(transaction);
+      if(transactionId < 0){
+        pvIos->setAnalogInputsValue(mdtValue());
+        return transactionId;
+      }
+      // Wait on result (use device's defined timeout)
+      if(!waitTransactionDone(transactionId)){
+        pvIos->setAnalogInputsValue(mdtValue());
+        return -1;
+      }
+    }else{
+      transaction->setQueryReplyMode(false);
+      transactionId = readAnalogInputs(transaction);
+      if(transactionId < 0){
+        pvIos->setAnalogInputsValue(mdtValue());
+        return transactionId;
+      }
     }
   }
 

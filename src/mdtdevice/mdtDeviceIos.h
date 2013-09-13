@@ -128,7 +128,7 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Get a list of all analog inputs segments
    */
-  const QList<mdtDeviceIosSegment*> analogInputsSegments() const;
+  const QList<mdtDeviceIosSegment*> &analogInputsSegments() const;
 
   /*! \brief Get address of the first analog input
    */
@@ -200,6 +200,8 @@ class mdtDeviceIos : public QObject
   /*! \brief Add a digital input
    *
    * \pre di must be a valid pointer
+   * 
+   * \todo Obselete
    */
   void addDigitalInput(mdtDigitalIo *di);
 
@@ -298,15 +300,36 @@ class mdtDeviceIos : public QObject
    *
    * \param values The values of inputs, must be sorted by address, ascending.
    *                If a value is invalid, concerned input will be set invalid.
-   * \param firstAddress Address of first inputs to update.
-   *                          If < 0, the internal first address is considered.
-   * \param n Quantity of inputs to update. If < 0, the internal quantity is considered.
+   * \param firstAddress Address of first input to update:
+   *                      - firstAddress < 0 : the I/O in container that has the lowest address will fix the first address.
+   *                      - firstAddress >= 0 : will be token as first address.
+   *                    
+   *                      - firstAddress < 0 : I/O's from first to n-1 will be updated.
+   *                      - firstAddress >= 0 : only values that correspond to a I/O will be updated.
+   *
+   *
+   * \param n Maximum quantity of inputs to update (can be < values size).
+   *           If < 0, the maximum possible values to store is determined between list size and the internal quantity of inputs.
+   *           Note: this limit was introduced for conveniance for MODBUS decoding.
+   *
+   * \param matchAddresses If true, first index of values will be considered as first address ,
+   *                        and only I/O's for witch address match (calculated) address will be updated.
+   *           For example, if we have following I/O's addresses in container: 0,1,2,5,6 and we give 4 values:
+   *            - If firstAddress = 2 and matchAddresses is set : I/O's with address 2, 5 and 6 will be updated
+   *                with values at index 0 and 3 
+   *                (by giving firstAddress = 2, values are considered 2,3,4,5, so only 2 values will be updated).
+   *            - If firstAddress = -1 and matchAddresses is set : I/O's with address 0, 1 and 2 will be updated
+   *               (4th value must match address 3 that not exit in container, so only 3 values will be updated).
+   *            - If firstAddress = 2 and matchAddresses not set : I/O's with address 2, 5 and 6 will be updated (only 3 values).
+   *            - If firstAddress = -1 and matchAddresses not set : I/O's with address 0, 1, 2 and 5 will be updated (all 4 values).
    *
    * Note:
    *  - If one value is invalid, concerned input will be set invalid.
    *  - Regarding on internal values type (double, int, ...), conversions will be done by internal mdtAnalogIo.
+   *
+   * \pre n must be <= values size
    */
-  void updateAnalogInputValues(const QList<QVariant> &values, int firstAddress, int n);
+  void updateAnalogInputValues(const QList<QVariant> &values, int firstAddress, int n, bool matchAddresses = false);
 
   /*! \brief Update (G)UI's value for a set of analog outputs
    *
@@ -358,7 +381,8 @@ class mdtDeviceIos : public QObject
   // Analog inputs members
   QList<mdtAnalogIo*> pvAnalogInputs;
   QMap<int, mdtAnalogIo*> pvAnalogInputsByAddressRead;
-  int pvAnalogInputsFirstAddressRead;
+  ///int pvAnalogInputsFirstAddressRead;   /// \todo Obselete
+  QList<mdtDeviceIosSegment*> pvAnalogInputsSegments;
   // Analog outputs members
   QList<mdtAnalogIo*> pvAnalogOutputs;
   QMap<int, mdtAnalogIo*> pvAnalogOutputsByAddressRead;

@@ -87,9 +87,17 @@ class mdtDeviceIosSegment
    */
   int ioCount() const;
 
+  /*! \brief Check if segment contains a address for read access
+   */
+  bool containsAddressRead(int address) const;
+
   /*! \brief Get a list of contigous addresses for read access
    */
   QList<int> addressesRead() const;
+
+  /*! \brief Check if segment contains a address for write access
+   */
+  bool containsAddressWrite(int address) const;
 
   /*! \brief Get a list of contigous addresses for write access
    */
@@ -101,18 +109,51 @@ class mdtDeviceIosSegment
    *  exactly the same way than ios list set with setIos()
    *
    * If values list contains less items than stored I/O's values,
-   *  the first ones will be updated and the rest will receive a invalid value.
+   *  only the first ones will be updated.
    * If values list contains more items than stored I/O's values,
    *  all I/O's values are updated, and rest of values are ignored.
-   *  In both case, this method returns false.
+   *
+   * \returns Number of I/O's updated
    */
-  bool setValues(const QList<mdtValue> & values);
+  int setValues(const QList<mdtValue> & values);
 
   /*! \brief Set values
    *
    * \overload setValues(const QList<mdtValue> &)
    */
-  bool setValues(const QList<QVariant> & values);
+  int setValues(const QList<QVariant> & values);
+
+  /*! \brief Update some values starting at address read
+   *
+   * Note: some checking are made:
+   *  - If startAddress was not found, 0 values will be updated
+   *  - If values contains to much items, only items that can be stored are updated
+   *
+   * \returns Number of updated values
+   */
+  int updateValuesFromAddressRead(int startAddress, const QList<mdtValue> & values);
+
+  /*! \brief Update some values starting at address read
+   *
+   * \overload updateValuesFromAddressRead(int , const QList<mdtValue> &)
+   */
+  int updateValuesFromAddressRead(int startAddress, const QList<QVariant> & values);
+
+  /*! \brief Update some values starting at address write
+   *
+   * Note: some checking are made:
+   *  - If startAddress was not found, 0 values will be updated
+   *  - If values contains to much items, only items that can be stored are updated
+   *
+   * \returns Number of updated values
+   */
+  int updateValuesFromAddressWrite(int startAddress, const QList<mdtValue> & values);
+
+  /*! \brief Update some values starting at address write
+   *
+   * \overload updateValuesFromAddressRead(int , const QList<mdtValue> &)
+   */
+  int updateValuesFromAddressWrite(int startAddress, const QList<QVariant> & values);
 
   /*! \brief Get list of stored I/O's values
    */
@@ -134,11 +175,6 @@ class mdtDeviceIosSegment
 
   Q_DISABLE_COPY(mdtDeviceIosSegment);
 
-  int pvStartAddressRead;
-  int pvStartAddressWrite;
-  int pvEndAddressRead;
-  int pvEndAddressWrite;
-  QList<mdtValue> pvValues;   /// \todo Obselete
   QList<mdtAbstractIo*> pvIos;
 };
 
