@@ -72,6 +72,12 @@ class mdtDeviceIosSegment;
  *   - analogOutputsSegments()
  *   - digitalInputsSegments()
  *   - digitalOutputsSegments()
+ *
+ * Some helper methods are also available:
+ *  - updateAnalogInputValues()
+ *  - updateAnalogOutputValues()
+ *  - updateDigitalInputValues()
+ *  - updateDigitalOutputValues()
  */
 class mdtDeviceIos : public QObject
 {
@@ -79,7 +85,23 @@ class mdtDeviceIos : public QObject
 
  public:
 
+  /*! \brief Adress access type
+   *
+   * It can happen that a I/O must be accessed by 2 different
+   *  addresses for write (set) and read (get).
+   *  A typical example is MODBUS.
+   */
+  enum addressAccess_t {
+                        Read ,  /*!< Considere the read access address */
+                        Write   /*!< Considere the write access address */
+                       };
+
+  /*! \brief Constructor
+   */
   mdtDeviceIos(QObject *parent = 0);
+
+  /*! \brief Destructor
+   */
   ~mdtDeviceIos();
 
   /*! \brief Set the auto delete flag
@@ -99,7 +121,8 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Add a analog input
    *
-   * \pre ai must be a valid pointer
+   * \pre ao must be a valid pointer allready be stored
+   * \pre No I/O with same address must be set as double
    */
   void addAnalogInput(mdtAnalogIo *ai);
 
@@ -122,17 +145,13 @@ class mdtDeviceIos : public QObject
   /*! \brief Get a list containing all analog inputs
    *
    * Note: the returned list is not sorted.
-   *        for grouped queries, see analogInputsSegments()
+   *        for grouped queries, see analogInputsSegments() and updateAnalogInputValues()
    */
   const QList<mdtAnalogIo*> analogInputs() const;
 
   /*! \brief Get a list of all analog inputs segments
    */
   const QList<mdtDeviceIosSegment*> &analogInputsSegments() const;
-
-  /*! \brief Get address of the first analog input
-   */
-  int analogInputsFirstAddress() const;
 
   /*! \brief Get the number of analog inputs
    */
@@ -144,9 +163,16 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Add a analog output
    *
-   * \pre ao must be a valid pointer
+   * \param sortSegmentsBy Output will be added to a segment.
+   *          sortSegmentsBy give the address access to consider.
+   *          Note: if device maps addresses for read and write access
+   *                in the same order, but just with a offset, this parameter is not important
+   *                (The address set in mdtAnalogIo object are not changed).
+   *
+   * \pre ao must be a valid pointer allready be stored
+   * \pre No I/O with same address must be set as double
    */
-  void addAnalogOutput(mdtAnalogIo *ao);
+  void addAnalogOutput(mdtAnalogIo *ao, addressAccess_t sortSegmentsBy = Write);
 
   /*! \brief Get analog output at given address for read access
    *
@@ -177,11 +203,19 @@ class mdtDeviceIos : public QObject
    */
   const QList<mdtAnalogIo*> analogOutputs() const;
 
+  /*! \brief Get a list of all analog inputs segments
+   */
+  const QList<mdtDeviceIosSegment*> &analogOutputsSegments() const;
+
   /*! \brief Get address for read access of the first analog output
+   *
+   * \todo Obselete
    */
   int analogOutputsFirstAddressRead() const;
 
   /*! \brief Get address for write access of the first analog output
+   *
+   * \todo Obselete
    */
   int analogOutputsFirstAddressWrite() const;
 
@@ -201,7 +235,7 @@ class mdtDeviceIos : public QObject
    *
    * \pre di must be a valid pointer
    * 
-   * \todo Obselete
+   * \todo Obselete ??
    */
   void addDigitalInput(mdtDigitalIo *di);
 
@@ -303,17 +337,13 @@ class mdtDeviceIos : public QObject
    * \param firstAddress Address of first input to update:
    *                      - firstAddress < 0 : the I/O in container that has the lowest address will fix the first address.
    *                      - firstAddress >= 0 : will be token as first address.
-   *                    
-   *                      - firstAddress < 0 : I/O's from first to n-1 will be updated.
-   *                      - firstAddress >= 0 : only values that correspond to a I/O will be updated.
-   *
    *
    * \param n Maximum quantity of inputs to update (can be < values size).
    *           If < 0, the maximum possible values to store is determined between list size and the internal quantity of inputs.
    *           Note: this limit was introduced for conveniance for MODBUS decoding.
    *
    * \param matchAddresses If true, first index of values will be considered as first address ,
-   *                        and only I/O's for witch address match (calculated) address will be updated.
+   *                        and only I/O's for witch address match will be updated.
    *           For example, if we have following I/O's addresses in container: 0,1,2,5,6 and we give 4 values:
    *            - If firstAddress = 2 and matchAddresses is set : I/O's with address 2, 5 and 6 will be updated
    *                with values at index 0 and 3 
@@ -329,7 +359,7 @@ class mdtDeviceIos : public QObject
    *
    * \pre n must be <= values size
    */
-  void updateAnalogInputValues(const QList<QVariant> &values, int firstAddress, int n, bool matchAddresses = false);
+  void updateAnalogInputValues(const QList<QVariant> &values, const int firstAddress, const int n, bool matchAddresses);
 
   /*! \brief Update (G)UI's value for a set of analog outputs
    *
@@ -343,7 +373,7 @@ class mdtDeviceIos : public QObject
    *  - If one value is invalid, concerned output will be set invalid.
    *  - Regarding on internal values type (double, int, ...), conversions will be done by internal mdtAnalogIo.
    */
-  void updateAnalogOutputValues(const QList<QVariant> &values, int firstAddressRead, int n);
+  void updateAnalogOutputValues(const QList<QVariant> &values, int firstAddressRead, int n, bool matchAddresses = false);
 
   /*! \brief Enable/disable (G)UI's analog outputs
    */
@@ -381,14 +411,14 @@ class mdtDeviceIos : public QObject
   // Analog inputs members
   QList<mdtAnalogIo*> pvAnalogInputs;
   QMap<int, mdtAnalogIo*> pvAnalogInputsByAddressRead;
-  ///int pvAnalogInputsFirstAddressRead;   /// \todo Obselete
   QList<mdtDeviceIosSegment*> pvAnalogInputsSegments;
   // Analog outputs members
   QList<mdtAnalogIo*> pvAnalogOutputs;
   QMap<int, mdtAnalogIo*> pvAnalogOutputsByAddressRead;
   QMap<int, mdtAnalogIo*> pvAnalogOutputsByAddressWrite;
-  int pvAnalogOutputsFirstAddressRead;
-  int pvAnalogOutputsFirstAddressWrite;
+  int pvAnalogOutputsFirstAddressRead;  /// \todo Obselete
+  int pvAnalogOutputsFirstAddressWrite; /// \todo Obselete
+  QList<mdtDeviceIosSegment*> pvAnalogOutputsSegments;
   // Digital inputs members
   QList<mdtDigitalIo*> pvDigitalInputs;
   QMap<int, mdtDigitalIo*> pvDigitalInputsByAddressRead;

@@ -358,6 +358,7 @@ mdtValue mdtDevice::getAnalogOutputValue(const QString &labelShort, bool queryDe
   return getAnalogOutputValue(ao, queryDevice, waitOnReply);
 }
 
+/// \todo Implement segments
 int mdtDevice::getAnalogOutputs(bool waitOnReply)
 {
   int transactionId;
@@ -479,6 +480,7 @@ int mdtDevice::setAnalogOutputValue(const QString &labelShort, const mdtValue &v
   return setAnalogOutputValue(analogOutput, value, sendToDevice, waitOnReply);
 }
 
+/// \todo Implement segments
 int mdtDevice::setAnalogOutputs(bool waitOnReply)
 {
   int transactionId;

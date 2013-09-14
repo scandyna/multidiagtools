@@ -191,7 +191,7 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         }
       }else{
         // Multiple I/O reply
-        pvIos->updateAnalogInputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
+        pvIos->updateAnalogInputValues(pvCodec->values(), transaction->address(), transaction->ioCount(), true);
       }
       break;
     case 0x05:  // Write single coil reply
