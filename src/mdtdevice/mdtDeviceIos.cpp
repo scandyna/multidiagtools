@@ -31,8 +31,8 @@ mdtDeviceIos::mdtDeviceIos(QObject *parent)
 {
   pvAutoDeleteIos = true;
   ///pvAnalogInputsFirstAddressRead = 0;
-  pvAnalogOutputsFirstAddressRead = 0;
-  pvAnalogOutputsFirstAddressWrite = 0;
+  ///pvAnalogOutputsFirstAddressRead = 0;
+  ///pvAnalogOutputsFirstAddressWrite = 0;
   pvDigitalInputsFirstAddressRead = 0;
   pvDigitalOutputsFirstAddressRead = 0;
   pvDigitalOutputsFirstAddressWrite = 0;
@@ -53,8 +53,8 @@ mdtDeviceIos::~mdtDeviceIos()
     pvAnalogOutputs.clear();
     pvAnalogOutputsByAddressRead.clear();
     pvAnalogOutputsByAddressWrite.clear();
-    pvAnalogOutputsFirstAddressRead = 0;
-    pvAnalogOutputsFirstAddressWrite = 0;
+    ///pvAnalogOutputsFirstAddressRead = 0;
+    ///pvAnalogOutputsFirstAddressWrite = 0;
     qDeleteAll(pvAnalogOutputsSegments);
     pvAnalogOutputsSegments.clear();
     pvDigitalInputs.clear();
@@ -90,8 +90,8 @@ void mdtDeviceIos::deleteIos()
   pvAnalogOutputs.clear();
   pvAnalogOutputsByAddressRead.clear();
   pvAnalogOutputsByAddressWrite.clear();
-  pvAnalogOutputsFirstAddressRead = 0;
-  pvAnalogOutputsFirstAddressWrite = 0;
+  ///pvAnalogOutputsFirstAddressRead = 0;
+  ///pvAnalogOutputsFirstAddressWrite = 0;
   qDeleteAll(pvAnalogOutputsSegments);
   pvAnalogOutputsSegments.clear();
   qDeleteAll(pvDigitalInputs);
@@ -217,11 +217,11 @@ void mdtDeviceIos::addAnalogOutput(mdtAnalogIo *ao, mdtDeviceIos::addressAccess_
   Q_ASSERT(pvAnalogOutputsByAddressRead.values().size() > 0);
   Q_ASSERT(pvAnalogOutputsByAddressRead.values().at(0) != 0);
   // QMap returns a list sorted by keys, ascending
-  pvAnalogOutputsFirstAddressRead = pvAnalogOutputsByAddressRead.values().at(0)->addressRead();
+  ///pvAnalogOutputsFirstAddressRead = pvAnalogOutputsByAddressRead.values().at(0)->addressRead();
   Q_ASSERT(pvAnalogOutputsByAddressWrite.values().size() > 0);
   Q_ASSERT(pvAnalogOutputsByAddressWrite.values().at(0) != 0);
   // QMap returns a list sorted by keys, ascending
-  pvAnalogOutputsFirstAddressWrite = pvAnalogOutputsByAddressWrite.values().at(0)->addressWrite();  /// \todo Obselete
+  ///pvAnalogOutputsFirstAddressWrite = pvAnalogOutputsByAddressWrite.values().at(0)->addressWrite();  /// \todo Obselete
   // We must reorganize segments - We use the QMap conatiner, because it is allready sorted by keys, ascending
   qDeleteAll(pvAnalogOutputsSegments);
   pvAnalogOutputsSegments.clear();
@@ -292,15 +292,19 @@ const QList<mdtDeviceIosSegment*> &mdtDeviceIos::analogOutputsSegments() const
   return pvAnalogOutputsSegments;
 }
 
+/**
 int mdtDeviceIos::analogOutputsFirstAddressRead() const
 {
   return pvAnalogOutputsFirstAddressRead;
 }
+*/
 
+/**
 int mdtDeviceIos::analogOutputsFirstAddressWrite() const
 {
   return pvAnalogOutputsFirstAddressWrite;
 }
+*/
 
 int mdtDeviceIos::analogOutputsCount() const
 {
@@ -561,7 +565,114 @@ void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values, const 
   }
 }
 
-void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values, int firstAddressRead, int n, bool matchAddresses)
+void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values, int firstAddress, addressAccess_t firstAddressAccess, int n, bool matchAddresses)
+{
+  int i, max, cursor, stored;
+  mdtDeviceIosSegment *segment;
+  QList<mdtDeviceIosSegment*> segmentList;
+  int segmentSpace;
+  bool found = false;
+  int address;
+
+  // Find the first segment
+  i = 0;
+  if(analogOutputsSegments().isEmpty()){
+    return;
+  }
+  if(firstAddress < 0){
+    segment = analogOutputsSegments().at(0);
+    Q_ASSERT(segment != 0);
+    if(firstAddressAccess == Read){
+      address = segment->startAddressRead();
+    }else{
+      address = segment->startAddressWrite();
+    }
+    found = true;
+  }else{
+    address = firstAddress;
+    for(i = 0; i < analogOutputsSegments().size(); ++i){
+      segment = analogOutputsSegments().at(i);
+      Q_ASSERT(segment != 0);
+      if(firstAddressAccess == Read){
+        found = segment->containsAddressRead(firstAddress);
+      }else{
+        found = segment->containsAddressWrite(firstAddress);
+      }
+      if(found){
+        break;
+      }
+    }
+  }
+  if(!found){
+    return;
+  }
+  Q_ASSERT(segment != 0);
+  segmentSpace = segment->ioCount();
+  segmentList.append(segment);
+  // Fix quantity of inputs to update
+  if(n < 0){
+    max = qMin(values.size(), pvAnalogOutputs.size());
+  }else{
+    max = qMin(n, pvAnalogOutputs.size());
+  }
+  Q_ASSERT(max <= values.size());
+  // Find needed amount of segments to store max items
+  for(i = 1; i < analogOutputsSegments().size(); ++i){
+    segment = analogOutputsSegments().at(i);
+    Q_ASSERT(segment != 0);
+    segmentSpace += segment->ioCount();
+    segmentList.append(segment);
+    if(segmentSpace >= max){
+      break;
+    }
+  }
+  // Update
+  cursor = 0;
+  Q_ASSERT(segmentList.size() > 0);
+  segment = segmentList.at(0);
+  i = 0;
+  while(cursor < max){
+    // Store in current segment
+    if(matchAddresses){
+      if(firstAddressAccess == Read){
+        stored = segment->updateValuesFromAddressRead(address, values.mid(cursor));
+      }else{
+        stored = segment->updateValuesFromAddressWrite(address, values.mid(cursor));
+      }
+    }else{
+      stored = segment->setValues(values.mid(cursor));
+    }
+    // Get next segment - If no more available, we have finished
+    ++i;
+    if(i < segmentList.size()){
+      segment = segmentList.at(i);
+    }else{
+      return;
+    }
+    Q_ASSERT(segment != 0);
+    // Update data cursor and address
+    cursor += stored;
+    address += stored;
+    // If matchAddresses is true , we must matter about address match
+    if(matchAddresses){
+      if(firstAddressAccess == Read){
+        while((cursor < max)&&(!segment->containsAddressRead(address))){
+          ++address;
+          ++cursor;
+        }
+      }else{
+        while((cursor < max)&&(!segment->containsAddressWrite(address))){
+          ++address;
+          ++cursor;
+        }
+      }
+    }
+  }
+}
+
+/// \todo Obselete
+/**
+void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values, int firstAddressRead, int n)
 {
   int i, max;
   QList<mdtAnalogIo*> lst;
@@ -602,6 +713,7 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values, int f
     }
   }
 }
+*/
 
 void mdtDeviceIos::setAnalogOutputsEnabled(bool enabled)
 {

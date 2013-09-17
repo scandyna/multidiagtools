@@ -361,8 +361,10 @@ mdtValue mdtDevice::getAnalogOutputValue(const QString &labelShort, bool queryDe
 /// \todo Implement segments
 int mdtDevice::getAnalogOutputs(bool waitOnReply)
 {
-  int transactionId;
+  int transactionId = -1;
+  int i;
   mdtPortTransaction *transaction;
+  mdtDeviceIosSegment *segment;
 
   if(pvIos == 0){
     return -1;
@@ -370,29 +372,35 @@ int mdtDevice::getAnalogOutputs(bool waitOnReply)
   if(pvIos->analogOutputsCount() < 1){
     return 0;
   }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIoCount(pvIos->analogOutputsCount());
-  transaction->setAddress(pvIos->analogOutputsFirstAddressRead());
-  // Send query and wait if requested
-  if(waitOnReply){
-    transaction->setQueryReplyMode(true);
-    transactionId = readAnalogOutputs(transaction);
-    if(transactionId < 0){
-      pvIos->setAnalogOutputsValue(mdtValue());
-      return transactionId;
-    }
-    // Wait on result (use device's defined timeout)
-    if(!waitTransactionDone(transactionId)){
-      pvIos->setAnalogOutputsValue(mdtValue());
-      return -1;
-    }
-  }else{
-    transaction->setQueryReplyMode(false);
-    transactionId = readAnalogOutputs(transaction);
-    if(transactionId < 0){
-      pvIos->setAnalogOutputsValue(mdtValue());
-      return transactionId;
+  for(i = 0; i < pvIos->analogOutputsSegments().size(); ++i){
+    segment = pvIos->analogOutputsSegments().at(i);
+    Q_ASSERT(segment != 0);
+    // Get a new transaction
+    transaction = getNewTransaction();
+    ///transaction->setIoCount(pvIos->analogOutputsCount());
+    transaction->setIoCount(segment->ioCount());
+    ///transaction->setAddress(pvIos->analogOutputsFirstAddressRead());
+    transaction->setAddress(segment->startAddressRead());
+    // Send query and wait if requested
+    if(waitOnReply){
+      transaction->setQueryReplyMode(true);
+      transactionId = readAnalogOutputs(transaction);
+      if(transactionId < 0){
+        pvIos->setAnalogOutputsValue(mdtValue());
+        return transactionId;
+      }
+      // Wait on result (use device's defined timeout)
+      if(!waitTransactionDone(transactionId)){
+        pvIos->setAnalogOutputsValue(mdtValue());
+        return -1;
+      }
+    }else{
+      transaction->setQueryReplyMode(false);
+      transactionId = readAnalogOutputs(transaction);
+      if(transactionId < 0){
+        pvIos->setAnalogOutputsValue(mdtValue());
+        return transactionId;
+      }
     }
   }
 
@@ -483,37 +491,48 @@ int mdtDevice::setAnalogOutputValue(const QString &labelShort, const mdtValue &v
 /// \todo Implement segments
 int mdtDevice::setAnalogOutputs(bool waitOnReply)
 {
-  int transactionId;
+  int transactionId = -1;
+  int i;
   mdtPortTransaction *transaction;
+  mdtDeviceIosSegment *segment;
 
   if(pvIos == 0){
     return -1;
   }
+  if(pvIos->analogOutputsCount() < 1){
+    return 0;
+  }
   // Disable I/Os - Must be re-enabled by subclass once data are in
   pvIos->setAnalogOutputsEnabled(false);
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIoCount(pvIos->analogOutputsCount());
-  transaction->setAddress(pvIos->analogOutputsFirstAddressWrite());
-  // Send query and wait if requested
-  if(waitOnReply){
-    transaction->setQueryReplyMode(true);
-    transactionId = writeAnalogOutputs(transaction);
-    if(transactionId < 0){
-      pvIos->setAnalogOutputsValue(mdtValue());
-      return transactionId;
-    }
-    // Wait on result (use device's defined timeout)
-    if(!waitTransactionDone(transactionId)){
-      pvIos->setAnalogOutputsValue(mdtValue());
-      return -1;
-    }
-  }else{
-    transaction->setQueryReplyMode(false);
-    transactionId = writeAnalogOutputs(transaction);
-    if(transactionId < 0){
-      pvIos->setAnalogOutputsValue(mdtValue());
-      return transactionId;
+  for(i = 0; i < pvIos->analogOutputsSegments().size(); ++i){
+    segment = pvIos->analogOutputsSegments().at(i);
+    Q_ASSERT(segment != 0);
+    // Get a new transaction
+    transaction = getNewTransaction();
+    ///transaction->setIoCount(pvIos->analogOutputsCount());
+    transaction->setIoCount(segment->ioCount());
+    ///transaction->setAddress(pvIos->analogOutputsFirstAddressWrite());
+    transaction->setAddress(segment->startAddressWrite());
+    // Send query and wait if requested
+    if(waitOnReply){
+      transaction->setQueryReplyMode(true);
+      transactionId = writeAnalogOutputs(transaction);
+      if(transactionId < 0){
+        pvIos->setAnalogOutputsValue(mdtValue());
+        return transactionId;
+      }
+      // Wait on result (use device's defined timeout)
+      if(!waitTransactionDone(transactionId)){
+        pvIos->setAnalogOutputsValue(mdtValue());
+        return -1;
+      }
+    }else{
+      transaction->setQueryReplyMode(false);
+      transactionId = writeAnalogOutputs(transaction);
+      if(transactionId < 0){
+        pvIos->setAnalogOutputsValue(mdtValue());
+        return transactionId;
+      }
     }
   }
 

@@ -595,36 +595,36 @@ void mdtDeviceTest::deviceIosTest()
   QCOMPARE(ios.analogOutputAtAddressWrite(108)->labelShort() , QString("AO8"));
   aIoList = ios.analogOutputs();
   QCOMPARE(aIoList.size() , 2);
-  QCOMPARE(ios.analogOutputsFirstAddressRead(), 8);
-  QCOMPARE(ios.analogOutputsFirstAddressWrite(), 108);
+  ///QCOMPARE(ios.analogOutputsFirstAddressRead(), 8);
+  ///QCOMPARE(ios.analogOutputsFirstAddressWrite(), 108);
   values.clear();
   values << 1.0 << 12.5;
-  ios.updateAnalogOutputValues(values, -1, -1);
+  ios.updateAnalogOutputValues(values, -1, mdtDeviceIos::Read, -1, false);
   QCOMPARE(ios.analogOutputAtAddressRead(8)->value().valueDouble() , 1.0);
   QCOMPARE(ios.analogOutputAtAddressRead(15)->value().valueDouble() , 12.5);
   values.clear();
   values << 2.0 << 3.0;
-  ios.updateAnalogOutputValues(values, -1, 1);
+  ios.updateAnalogOutputValues(values, -1, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.analogOutputAtAddressRead(8)->value().valueDouble() , 2.0);
   QCOMPARE(ios.analogOutputAtAddressRead(15)->value().valueDouble() , 12.5);
   values.clear();
   values << 4.0 << 5.0;
-  ios.updateAnalogOutputValues(values, 8, -1);
+  ios.updateAnalogOutputValues(values, 8, mdtDeviceIos::Read, -1, false);
   QCOMPARE(ios.analogOutputAtAddressRead(8)->value().valueDouble() , 4.0);
   QCOMPARE(ios.analogOutputAtAddressRead(15)->value().valueDouble() , 5.0);
   values.clear();
   values << 6.0 << 7.0;
-  ios.updateAnalogOutputValues(values, 8, 1);
+  ios.updateAnalogOutputValues(values, 8, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.analogOutputAtAddressRead(8)->value().valueDouble() , 6.0);
   QCOMPARE(ios.analogOutputAtAddressRead(15)->value().valueDouble() , 5.0);
   values.clear();
   values << 8.0;
-  ios.updateAnalogOutputValues(values, 15, 1);
+  ios.updateAnalogOutputValues(values, 15, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.analogOutputAtAddressRead(8)->value().valueDouble() , 6.0);
   QCOMPARE(ios.analogOutputAtAddressRead(15)->value().valueDouble() , 8.0);
   values.clear();
   values << 9.0 << 10.0;
-  ios.updateAnalogOutputValues(values, 15, 1);
+  ios.updateAnalogOutputValues(values, 15, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.analogOutputAtAddressRead(8)->value().valueDouble() , 6.0);
   QCOMPARE(ios.analogOutputAtAddressRead(15)->value().valueDouble() , 9.0);
 
@@ -975,17 +975,27 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   QCOMPARE(seg->valuesInt(), expectedValuesInt);
   // Check grouped updates - Only first segment
   valuesVar.clear();
-  valuesVar << -10 << -20;
+  valuesVar << -10 << -20;  // Supposed addresses for read access 1 and 2
   QVERIFY(ios.analogOutputAtAddressRead(1) != 0);
   QVERIFY(ios.analogOutputAtAddressRead(1)->value().valueInt() != -10);
   QVERIFY(ios.analogOutputAtAddressRead(2) != 0);
   QVERIFY(ios.analogOutputAtAddressRead(2)->value().valueInt() != -20);
-  ios.updateAnalogOutputValues(valuesVar, 0, -1, true);
+  ios.updateAnalogOutputValues(valuesVar, 1, mdtDeviceIos::Read, -1, true);
   QCOMPARE(ios.analogOutputAtAddressRead(1)->value().valueInt(), -10);
   QCOMPARE(ios.analogOutputAtAddressRead(2)->value().valueInt(), -20);
-  ios.updateAnalogOutputValues(valuesVar, 3, -1, true);  // Address 3 not exists
+  ios.updateAnalogOutputValues(valuesVar, 3, mdtDeviceIos::Read, -1, true);  // Address 3 not exists
   QCOMPARE(ios.analogOutputAtAddressRead(1)->value().valueInt(), -10);
   QCOMPARE(ios.analogOutputAtAddressRead(2)->value().valueInt(), -20);
+  valuesVar.clear();
+  valuesVar << -11 << -12;  // Supposed addresses for write access 11 and 12
+  QVERIFY(ios.analogOutputAtAddressRead(1)->value().valueInt() != -11);
+  QVERIFY(ios.analogOutputAtAddressRead(2)->value().valueInt() != -12);
+  ios.updateAnalogOutputValues(valuesVar, 11, mdtDeviceIos::Write, -1, true);
+  QCOMPARE(ios.analogOutputAtAddressRead(1)->value().valueInt(), -11);
+  QCOMPARE(ios.analogOutputAtAddressRead(2)->value().valueInt(), -12);
+  ios.updateAnalogOutputValues(valuesVar, 13, mdtDeviceIos::Write, -1, true);  // Address 13 not exists
+  QCOMPARE(ios.analogOutputAtAddressRead(1)->value().valueInt(), -11);
+  QCOMPARE(ios.analogOutputAtAddressRead(2)->value().valueInt(), -12);
   // Check grouped updates - first + second segments
   // Note: considere that we only included I/O's with addresses 1,2,5,6,7 in container, but we made a query to device for addresses 2-6
   valuesVar.clear();
@@ -996,11 +1006,11 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   QVERIFY(ios.analogOutputAtAddressRead(5)->value().valueInt() != 500);
   QVERIFY(ios.analogOutputAtAddressRead(6) != 0);
   QVERIFY(ios.analogOutputAtAddressRead(6)->value().valueInt() != 600);
-  ios.updateAnalogOutputValues(valuesVar, 2, -1, true);
+  ios.updateAnalogOutputValues(valuesVar, 2, mdtDeviceIos::Read, -1, true);
   QCOMPARE(ios.analogOutputAtAddressRead(2)->value().valueInt(), 200);
   QCOMPARE(ios.analogOutputAtAddressRead(5)->value().valueInt(), 500);
   QCOMPARE(ios.analogOutputAtAddressRead(6)->value().valueInt(), 600);
-  // Set a known value ad read address 7 for next test
+  // Set a known value at read address 7 for next test
   QVERIFY(ios.analogOutputAtAddressRead(7) != 0);
   ios.analogOutputAtAddressRead(7)->setValue(70);
   // Same story, but we queried device about addresses 1-6 (I/O with addresses 0, 3 and 4 does not exist in container)
@@ -1014,13 +1024,11 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   QVERIFY(ios.analogOutputAtAddressRead(5)->value().valueInt() != 50);
   QVERIFY(ios.analogOutputAtAddressRead(6) != 0);
   QVERIFY(ios.analogOutputAtAddressRead(6)->value().valueInt() != 60);
-  QVERIFY(ios.analogOutputAtAddressRead(7) != 0);
-  QVERIFY(ios.analogOutputAtAddressRead(7)->value().valueInt() != 70);
   // We will check that I/O with read address 7 was untouched
   QVERIFY(ios.analogOutputAtAddressRead(7) != 0);
   QVERIFY(ios.analogOutputAtAddressRead(7)->value().valueInt() == 70);
   // Update I/O's and check
-  ios.updateAnalogOutputValues(valuesVar, -1, -1, true);
+  ios.updateAnalogOutputValues(valuesVar, -1, mdtDeviceIos::Read, -1, true);
   QCOMPARE(ios.analogOutputAtAddressRead(1)->value().valueInt(), 10);
   QCOMPARE(ios.analogOutputAtAddressRead(2)->value().valueInt(), 20);
   QCOMPARE(ios.analogOutputAtAddressRead(5)->value().valueInt(), 50);

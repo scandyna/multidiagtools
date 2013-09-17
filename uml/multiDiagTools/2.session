@@ -1,9 +1,7 @@
 window_sizes 1280 1001 314 960 923 0
 diagrams
-  classdiagram_ref 839426 // mdtDeviceModbusWago
-    768 738 80 3 324 0
-  active  classdiagram_ref 521730 // mdtDeviceIos
-    960 923 100 18 0 0
+  active  classdiagram_ref 839426 // mdtDeviceModbusWago
+    960 923 80 3 360 0
 end
 show_stereotypes
 open

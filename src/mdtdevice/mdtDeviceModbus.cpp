@@ -170,7 +170,8 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         transaction->analogIo()->setEnabled(true);
       }else{
         // Multiple I/O reply
-        pvIos->updateAnalogOutputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
+        ///pvIos->updateAnalogOutputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
+        pvIos->updateAnalogOutputValues(pvCodec->values(), transaction->address(), mdtDeviceIos::Read, transaction->ioCount(), true);
         pvIos->setAnalogOutputsEnabled(true);
       }
       break;
