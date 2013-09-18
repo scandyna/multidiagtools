@@ -190,17 +190,6 @@ int mdtDeviceIosSegment::setValues(const QList<mdtValue> & values, int max)
   }
 
   return max;
-  /**
-  for(i = max; i < pvIos.size(); ++i){
-    Q_ASSERT(pvIos.at(i) != 0);
-    pvIos.at(i)->setValue(mdtValue());
-  }
-  if(values.size() != pvIos.size()){
-    return false;
-  }else{
-    return true;
-  }
-  */
 }
 
 int mdtDeviceIosSegment::setValues(const QList<QVariant> & values, int max)
@@ -233,17 +222,6 @@ int mdtDeviceIosSegment::setValues(const QList<QVariant> & values, int max)
   }
 
   return max;
-  /**
-  for(i = max; i < pvIos.size(); ++i){
-    Q_ASSERT(pvIos.at(i) != 0);
-    pvIos.at(i)->setValue(mdtValue());
-  }
-  if(values.size() != pvIos.size()){
-    return false;
-  }else{
-    return true;
-  }
-  */
 }
 
 int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QList<mdtValue> & values, int max)

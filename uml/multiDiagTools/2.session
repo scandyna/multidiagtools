@@ -1,9 +1,10 @@
 window_sizes 1280 1001 314 960 923 0
 diagrams
   active  classdiagram_ref 839426 // mdtDeviceModbusWago
-    960 923 80 3 360 0
+    960 923 80 3 468 0
 end
 show_stereotypes
+selected attribute_ref 870274 // Type
 open
   attribute_ref 869762 // pvValue
   classview_ref 240514 // mdtDevice

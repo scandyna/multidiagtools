@@ -856,42 +856,35 @@ void mdtDeviceTest::deviceIosTest()
   // Check multiple digital outputs update - List contains the correct number of items
   values.clear();
   values << false << true;
-  ///ios.updateDigitalOutputValues(values, -1, -1);
   ios.updateDigitalOutputValues(values, -1, mdtDeviceIos::Read, -1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), false);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
   values.clear();
   values << true;
-  ///ios.updateDigitalOutputValues(values, -1, 1);
   ios.updateDigitalOutputValues(values, -1, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
   values.clear();
   values << false;
-  ///ios.updateDigitalOutputValues(values, 30, 1);
   ios.updateDigitalOutputValues(values, 30, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), false);
   // Check multiple digital outputs update - List contains the to much items
   values.clear();
   values << false << true;
-  ///ios.updateDigitalOutputValues(values, -1, -1);
   ios.updateDigitalOutputValues(values, -1, mdtDeviceIos::Read, -1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), false);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
   values.clear();
   values << true << false;
-  ///ios.updateDigitalOutputValues(values, -1, 1);
   ios.updateDigitalOutputValues(values, -1, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
   values.clear();
   values << false << false;
-  ///ios.updateDigitalOutputValues(values, 30, 1);
   ios.updateDigitalOutputValues(values, 30, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), false);
-  
   // We add a digital output with address read 29 / write 129 (so we have 20/120,29/129,30/130)
   dout = new mdtDigitalIo;
   dout->setAddressRead(29);
@@ -908,7 +901,6 @@ void mdtDeviceTest::deviceIosTest()
   // Check multiple digital outputs update starting at address read 29, 1 item, with a list of 2 items
   values.clear();
   values << true << true;
-  ///ios.updateDigitalOutputValues(values, 29, 1);
   ios.updateDigitalOutputValues(values, 29, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(29)->value().valueBool(), true);

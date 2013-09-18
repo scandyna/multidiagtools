@@ -30,8 +30,6 @@ mdtDeviceIos::mdtDeviceIos(QObject *parent)
  : QObject(parent)
 {
   pvAutoDeleteIos = true;
-  ///pvDigitalOutputsFirstAddressRead = 0;
-  ///pvDigitalOutputsFirstAddressWrite = 0;
 }
 
 mdtDeviceIos::~mdtDeviceIos()
@@ -57,8 +55,6 @@ mdtDeviceIos::~mdtDeviceIos()
     pvDigitalOutputs.clear();
     pvDigitalOutputsByAddressRead.clear();
     pvDigitalOutputsByAddressWrite.clear();
-    ///pvDigitalOutputsFirstAddressRead = 0;
-    ///pvDigitalOutputsFirstAddressWrite = 0;
     qDeleteAll(pvDigitalOutputsSegments);
     pvDigitalOutputsSegments.clear();
   }
@@ -94,9 +90,6 @@ void mdtDeviceIos::deleteIos()
   pvDigitalOutputs.clear();
   pvDigitalOutputsByAddressRead.clear();
   pvDigitalOutputsByAddressWrite.clear();
-  ///pvDigitalOutputsFirstAddressRead = 0;
-  ///pvDigitalOutputsFirstAddressWrite = 0;
-  /// \todo Don't forget segment container
   qDeleteAll(pvDigitalOutputsSegments);
   pvDigitalOutputsSegments.clear();
   qDebug() << "delete I/Os DONE";
@@ -415,13 +408,8 @@ void mdtDeviceIos::addDigitalOutput(mdtDigitalIo *dout, addressAccess_t sortSegm
   pvDigitalOutputsByAddressWrite.insert(dout->addressWrite(), dout);
   Q_ASSERT(pvDigitalOutputsByAddressRead.values().size() > 0);
   Q_ASSERT(pvDigitalOutputsByAddressRead.values().at(0) != 0);
-  // QMap returns a list sorted by keys, ascending
-  ///pvDigitalOutputsFirstAddressRead = pvDigitalOutputsByAddressRead.values().at(0)->addressRead();
   Q_ASSERT(pvDigitalOutputsByAddressWrite.values().size() > 0);
   Q_ASSERT(pvDigitalOutputsByAddressWrite.values().at(0) != 0);
-  // QMap returns a list sorted by keys, ascending
-  ///pvDigitalOutputsFirstAddressWrite = pvDigitalOutputsByAddressWrite.values().at(0)->addressWrite();
-
   // We must reorganize segments - We use the QMap container, because it is allready sorted by keys, ascending
   qDeleteAll(pvDigitalOutputsSegments);
   pvDigitalOutputsSegments.clear();
@@ -486,20 +474,6 @@ const QList<mdtDigitalIo*> mdtDeviceIos::digitalOutputs() const
 {
   return pvDigitalOutputs;
 }
-
-/**
-int mdtDeviceIos::digitalOutputsFirstAddressRead() const
-{
-  return pvDigitalOutputsFirstAddressRead;
-}
-*/
-
-/**
-int mdtDeviceIos::digitalOutputsFirstAddressWrite() const
-{
-  return pvDigitalOutputsFirstAddressWrite;
-}
-*/
 
 const QList<mdtDeviceIosSegment*> &mdtDeviceIos::digitalOutputsSegments() const
 {
@@ -820,42 +794,6 @@ void mdtDeviceIos::updateDigitalInputValues(const QList<QVariant> &values, int f
     }
   }
 }
-
-/**
-void mdtDeviceIos::updateDigitalOutputValues(const QList<QVariant> &values, int firstAddressRead, int n)
-{
-  int i, max;
-  QList<mdtDigitalIo*> lst;
-
-  // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
-  lst = pvDigitalOutputsByAddressRead.values();  // We update (G)UI, so we read from device
-  // Remove items with addressRead < firstAddressRead
-  if((firstAddressRead > -1)&&(firstAddressRead > digitalOutputsFirstAddressRead())){
-    QMutableListIterator<mdtDigitalIo*> it(lst);
-    while(it.hasNext()){
-      it.next();
-      Q_ASSERT(it.value() != 0);
-      if(it.value()->addressRead() >= firstAddressRead){
-        break;
-      }
-      it.remove();
-    }
-  }
-  // Fix quantity of outputs and update outputs
-  if(n < 0){
-    n = lst.size();
-  }
-  max = qMin(values.size(), n);
-  for(i=0; i<max; ++i){
-    Q_ASSERT(lst.at(i) != 0);
-    if((values.at(i).isValid())&&(values.at(i).type() == QVariant::Bool)){
-      lst.at(i)->setValue(values.at(i).toBool(), false);
-    }else{
-      lst.at(i)->setValue(mdtValue());
-    }
-  }
-}
-*/
 
 void mdtDeviceIos::updateDigitalOutputValues(const QList<QVariant> &values, int firstAddress, addressAccess_t firstAddressAccess, int n, bool matchAddresses)
 {

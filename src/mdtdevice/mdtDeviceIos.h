@@ -302,18 +302,6 @@ class mdtDeviceIos : public QObject
    */
   const QList<mdtDigitalIo*> digitalOutputs() const;
 
-  /*! \brief Get address for read access of the first digital output
-   * 
-   * \todo Obselete
-   */
-  ///int digitalOutputsFirstAddressRead() const;
-
-  /*! \brief Get address for write access of the first digital output
-   * 
-   * \todo Obselete
-   */
-  ///int digitalOutputsFirstAddressWrite() const;
-
   /*! \brief Get a list of all digital outputs segments
    */
   const QList<mdtDeviceIosSegment*> &digitalOutputsSegments() const;
@@ -433,18 +421,6 @@ class mdtDeviceIos : public QObject
    */
   void updateDigitalInputValues(const QList<QVariant> &values, int firstAddress, int n, bool matchAddresses);
 
-  /*! \brief Update (G)UI's state for a set of digital outputs
-   *
-   * \param values The values of outputs, must be sorted by address, ascending.
-   *                If a value is invalid, concerned output will be set invalid.
-   * \param firstAddressRead Address (for device read access) of first output to update.
-   *                          If < 0, the internal first address is considered.
-   * \param n Quantity of outputs to update. If < 0, the internal quantity is considered.
-   * 
-   * \todo Obselete
-   */
-  ///void updateDigitalOutputValues(const QList<QVariant> &values, int firstAddressRead, int n);
-
   /*! \brief Update (G)UI's value for a set of digital outputs
    *
    * \param values The values of outputs, must be sorted by address, ascending.
@@ -507,8 +483,6 @@ class mdtDeviceIos : public QObject
   QMap<int, mdtDigitalIo*> pvDigitalOutputsByAddressRead;
   QMap<int, mdtDigitalIo*> pvDigitalOutputsByAddressWrite;
   QList<mdtDeviceIosSegment*> pvDigitalOutputsSegments;
-  ///int pvDigitalOutputsFirstAddressRead; /// \todo Obselete
-  ///int pvDigitalOutputsFirstAddressWrite;  /// \todo Obselete
 };
 
 #endif  // #ifndef MDT_DEVICE_IOS_H

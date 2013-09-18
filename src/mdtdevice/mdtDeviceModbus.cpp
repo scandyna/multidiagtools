@@ -129,7 +129,6 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         transaction->digitalIo()->setEnabled(true);
       }else{
         // Transaction contains first I/O address (for read access) and qty of I/Os
-        ///pvIos->updateDigitalOutputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
         pvIos->updateDigitalOutputValues(pvCodec->values(), transaction->address(), mdtDeviceIos::Read , transaction->ioCount(), true);
         pvIos->setDigitalOutputsEnabled(true);
       }
@@ -150,7 +149,6 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         }
       }else{
         // Transaction contains first I/O address and qty of I/Os
-        ///pvIos->updateDigitalInputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
         pvIos->updateDigitalInputValues(pvCodec->values(), transaction->address(), transaction->ioCount(), true);
       }
       break;
@@ -172,7 +170,6 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         transaction->analogIo()->setEnabled(true);
       }else{
         // Multiple I/O reply
-        ///pvIos->updateAnalogOutputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
         pvIos->updateAnalogOutputValues(pvCodec->values(), transaction->address(), mdtDeviceIos::Read, transaction->ioCount(), true);
         pvIos->setAnalogOutputsEnabled(true);
       }
