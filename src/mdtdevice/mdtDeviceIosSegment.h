@@ -112,48 +112,51 @@ class mdtDeviceIosSegment
    *  only the first ones will be updated.
    * If values list contains more items than stored I/O's values,
    *  all I/O's values are updated, and rest of values are ignored.
+   * If max > -1, same rules but not more than max items are stored.
    *
    * \returns Number of I/O's updated
    */
-  int setValues(const QList<mdtValue> & values);
+  int setValues(const QList<mdtValue> & values, int max = -1);
 
   /*! \brief Set values
    *
    * \overload setValues(const QList<mdtValue> &)
    */
-  int setValues(const QList<QVariant> & values);
+  int setValues(const QList<QVariant> & values, int max = -1);
 
   /*! \brief Update some values starting at address read
    *
    * Note: some checking are made:
    *  - If startAddress was not found, 0 values will be updated
    *  - If values contains to much items, only items that can be stored are updated
+   *  - If max > -1 , the minimum between values size, internall items count and max will be updated
    *
    * \returns Number of updated values
    */
-  int updateValuesFromAddressRead(int startAddress, const QList<mdtValue> & values);
+  int updateValuesFromAddressRead(int startAddress, const QList<mdtValue> & values, int max = -1);
 
   /*! \brief Update some values starting at address read
    *
    * \overload updateValuesFromAddressRead(int , const QList<mdtValue> &)
    */
-  int updateValuesFromAddressRead(int startAddress, const QList<QVariant> & values);
+  int updateValuesFromAddressRead(int startAddress, const QList<QVariant> & values, int max = -1);
 
   /*! \brief Update some values starting at address write
    *
    * Note: some checking are made:
    *  - If startAddress was not found, 0 values will be updated
    *  - If values contains to much items, only items that can be stored are updated
+   * - If max > -1 , the minimum between values size, internall items count and max will be updated
    *
    * \returns Number of updated values
    */
-  int updateValuesFromAddressWrite(int startAddress, const QList<mdtValue> & values);
+  int updateValuesFromAddressWrite(int startAddress, const QList<mdtValue> & values, int max = -1);
 
   /*! \brief Update some values starting at address write
    *
    * \overload updateValuesFromAddressRead(int , const QList<mdtValue> &)
    */
-  int updateValuesFromAddressWrite(int startAddress, const QList<QVariant> & values);
+  int updateValuesFromAddressWrite(int startAddress, const QList<QVariant> & values, int max = -1);
 
   /*! \brief Get list of stored I/O's values
    */

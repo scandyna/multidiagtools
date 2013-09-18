@@ -248,9 +248,7 @@ int mdtDevice::getAnalogInputs(bool waitOnReply)
     Q_ASSERT(segment != 0);
     // Get a new transaction
     transaction = getNewTransaction();
-    ///transaction->setIoCount(pvIos->analogInputsCount());
     transaction->setIoCount(segment->ioCount());
-    ///transaction->setAddress(pvIos->analogInputsFirstAddress());
     transaction->setAddress(segment->startAddressRead());
     // Send query and wait if requested
     if(waitOnReply){
@@ -358,7 +356,6 @@ mdtValue mdtDevice::getAnalogOutputValue(const QString &labelShort, bool queryDe
   return getAnalogOutputValue(ao, queryDevice, waitOnReply);
 }
 
-/// \todo Implement segments
 int mdtDevice::getAnalogOutputs(bool waitOnReply)
 {
   int transactionId = -1;
@@ -377,9 +374,7 @@ int mdtDevice::getAnalogOutputs(bool waitOnReply)
     Q_ASSERT(segment != 0);
     // Get a new transaction
     transaction = getNewTransaction();
-    ///transaction->setIoCount(pvIos->analogOutputsCount());
     transaction->setIoCount(segment->ioCount());
-    ///transaction->setAddress(pvIos->analogOutputsFirstAddressRead());
     transaction->setAddress(segment->startAddressRead());
     // Send query and wait if requested
     if(waitOnReply){
@@ -488,7 +483,6 @@ int mdtDevice::setAnalogOutputValue(const QString &labelShort, const mdtValue &v
   return setAnalogOutputValue(analogOutput, value, sendToDevice, waitOnReply);
 }
 
-/// \todo Implement segments
 int mdtDevice::setAnalogOutputs(bool waitOnReply)
 {
   int transactionId = -1;
@@ -509,9 +503,7 @@ int mdtDevice::setAnalogOutputs(bool waitOnReply)
     Q_ASSERT(segment != 0);
     // Get a new transaction
     transaction = getNewTransaction();
-    ///transaction->setIoCount(pvIos->analogOutputsCount());
     transaction->setIoCount(segment->ioCount());
-    ///transaction->setAddress(pvIos->analogOutputsFirstAddressWrite());
     transaction->setAddress(segment->startAddressWrite());
     // Send query and wait if requested
     if(waitOnReply){

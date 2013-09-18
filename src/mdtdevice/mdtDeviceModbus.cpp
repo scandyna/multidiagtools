@@ -149,7 +149,8 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         }
       }else{
         // Transaction contains first I/O address and qty of I/Os
-        pvIos->updateDigitalInputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
+        ///pvIos->updateDigitalInputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
+        pvIos->updateDigitalInputValues(pvCodec->values(), transaction->address(), transaction->ioCount(), true);
       }
       break;
     case 0x03:  // Read holding registers

@@ -174,10 +174,15 @@ QList<int> mdtDeviceIosSegment::addressesWrite() const
   return addressList;
 }
 
-int mdtDeviceIosSegment::setValues(const QList<mdtValue> & values)
+int mdtDeviceIosSegment::setValues(const QList<mdtValue> & values, int max)
 {
   int i;
-  int max = qMin(pvIos.size(), values.size());
+
+  // Define max
+  if(max < 0){
+    max = values.size();
+  }
+  max = qMin(max, pvIos.size());
 
   for(i = 0; i < max; ++i){
     Q_ASSERT(pvIos.at(i) != 0);
@@ -198,11 +203,16 @@ int mdtDeviceIosSegment::setValues(const QList<mdtValue> & values)
   */
 }
 
-int mdtDeviceIosSegment::setValues(const QList<QVariant> & values)
+int mdtDeviceIosSegment::setValues(const QList<QVariant> & values, int max)
 {
   int i;
   QVariant var;
-  int max = qMin(pvIos.size(), values.size());
+
+  // Define max
+  if(max < 0){
+    max = values.size();
+  }
+  max = qMin(max, pvIos.size());
 
   for(i = 0; i < max; ++i){
     Q_ASSERT(pvIos.at(i) != 0);
@@ -236,7 +246,7 @@ int mdtDeviceIosSegment::setValues(const QList<QVariant> & values)
   */
 }
 
-int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QList<mdtValue> & values)
+int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QList<mdtValue> & values, int max)
 {
   int i, j;
   bool found = false;
@@ -253,7 +263,12 @@ int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QLi
     return 0;
   }
   // Update values
-  for(j = 0; j < values.size(); ++j){
+  if(max < 0){
+    max = values.size();
+  }else{
+    max = qMin(max, values.size());
+  }
+  for(j = 0; j < max; ++j){
     if(i >= pvIos.size()){
       return j;
     }
@@ -265,7 +280,7 @@ int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QLi
   return j;
 }
 
-int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QList<QVariant> & values)
+int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QList<QVariant> & values, int max)
 {
   int i, j;
   bool found = false;
@@ -283,7 +298,12 @@ int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QLi
     return 0;
   }
   // Update values
-  for(j = 0; j < values.size(); ++j){
+  if(max < 0){
+    max = values.size();
+  }else{
+    max = qMin(max, values.size());
+  }
+  for(j = 0; j < max; ++j){
     if(i >= pvIos.size()){
       return j;
     }
@@ -308,7 +328,7 @@ int mdtDeviceIosSegment::updateValuesFromAddressRead(int startAddress, const QLi
   return j;
 }
 
-int mdtDeviceIosSegment::updateValuesFromAddressWrite(int startAddress, const QList<mdtValue> & values)
+int mdtDeviceIosSegment::updateValuesFromAddressWrite(int startAddress, const QList<mdtValue> & values, int max)
 {
   int i, j;
   bool found = false;
@@ -325,7 +345,12 @@ int mdtDeviceIosSegment::updateValuesFromAddressWrite(int startAddress, const QL
     return 0;
   }
   // Update values
-  for(j = 0; j < values.size(); ++j){
+  if(max < 0){
+    max = values.size();
+  }else{
+    max = qMin(max, values.size());
+  }
+  for(j = 0; j < max; ++j){
     if(i >= pvIos.size()){
       return j;
     }
@@ -337,7 +362,7 @@ int mdtDeviceIosSegment::updateValuesFromAddressWrite(int startAddress, const QL
   return j;
 }
 
-int mdtDeviceIosSegment::updateValuesFromAddressWrite(int startAddress, const QList<QVariant> & values)
+int mdtDeviceIosSegment::updateValuesFromAddressWrite(int startAddress, const QList<QVariant> & values, int max)
 {
   int i, j;
   bool found = false;
@@ -355,7 +380,12 @@ int mdtDeviceIosSegment::updateValuesFromAddressWrite(int startAddress, const QL
     return 0;
   }
   // Update values
-  for(j = 0; j < values.size(); ++j){
+  if(max < 0){
+    max = values.size();
+  }else{
+    max = qMin(max, values.size());
+  }
+  for(j = 0; j < max; ++j){
     if(i >= pvIos.size()){
       return j;
     }
