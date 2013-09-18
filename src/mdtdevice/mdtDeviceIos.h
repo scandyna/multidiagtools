@@ -164,7 +164,7 @@ class mdtDeviceIos : public QObject
   /*! \brief Add a analog output
    *
    * \param sortSegmentsBy Output will be added to a segment.
-   *          sortSegmentsBy give the address access to consider.
+   *          sortSegmentsBy gives the address access to consider.
    *          Note: if device maps addresses for read and write access
    *                in the same order, but just with a offset, this parameter is not important
    *                (The address set in mdtAnalogIo object are not changed).
@@ -252,11 +252,6 @@ class mdtDeviceIos : public QObject
    */
   const QList<mdtDeviceIosSegment*> &digitalInputsSegments() const;
 
-  /*! \brief Get address of the first digital input
-   * \todo Obselete
-   */
-  int digitalInputsFirstAddress() const;
-
   /*! \brief Get the number of digital inputs
    */
   int digitalInputsCount() const;
@@ -267,9 +262,16 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Add a digital output
    *
-   * \pre dout must be a valid pointer
+   * \param sortSegmentsBy Output will be added to a segment.
+   *          sortSegmentsBy gives the address access to consider.
+   *          Note: if device maps addresses for read and write access
+   *                in the same order, but just with a offset, this parameter is not important
+   *                (The address set in mdtAnalogIo object are not changed).
+   *
+   * \pre ao must be a valid pointer allready be stored
+   * \pre No I/O with same address must be set as double
    */
-  void addDigitalOutput(mdtDigitalIo *dout);
+  void addDigitalOutput(mdtDigitalIo *dout, addressAccess_t sortSegmentsBy = Write);
 
   /*! \brief Get digital output at given address for read access
    *
@@ -301,12 +303,20 @@ class mdtDeviceIos : public QObject
   const QList<mdtDigitalIo*> digitalOutputs() const;
 
   /*! \brief Get address for read access of the first digital output
+   * 
+   * \todo Obselete
    */
-  int digitalOutputsFirstAddressRead() const;
+  ///int digitalOutputsFirstAddressRead() const;
 
   /*! \brief Get address for write access of the first digital output
+   * 
+   * \todo Obselete
    */
-  int digitalOutputsFirstAddressWrite() const;
+  ///int digitalOutputsFirstAddressWrite() const;
+
+  /*! \brief Get a list of all digital outputs segments
+   */
+  const QList<mdtDeviceIosSegment*> &digitalOutputsSegments() const;
 
   /*! \brief Get the number of digital outputs
    */
@@ -430,8 +440,45 @@ class mdtDeviceIos : public QObject
    * \param firstAddressRead Address (for device read access) of first output to update.
    *                          If < 0, the internal first address is considered.
    * \param n Quantity of outputs to update. If < 0, the internal quantity is considered.
+   * 
+   * \todo Obselete
    */
-  void updateDigitalOutputValues(const QList<QVariant> &values, int firstAddressRead, int n);
+  ///void updateDigitalOutputValues(const QList<QVariant> &values, int firstAddressRead, int n);
+
+  /*! \brief Update (G)UI's value for a set of digital outputs
+   *
+   * \param values The values of outputs, must be sorted by address, ascending.
+   *                If a value is invalid, concerned outputs will be set invalid.
+   * \param firstAddress Address of first output to update:
+   *                      - firstAddress < 0 : the I/O in container that has the lowest address will fix the first address.
+   *                      - firstAddress >= 0 : will be token as first address.
+   *
+   * \param firstAddressAccess Tell here if given firstAddress is supposed for read or write access.
+   *               Note: f.ex: by decoding a MODBUS PDU, we update I/O's of this container once we had
+   *                     read states from device, here the address access will also be Read.
+   *
+   * \param n Maximum quantity of outputs to update (can be < values size).
+   *           If < 0, the maximum possible values to store is determined between list size and the internal quantity of outputs.
+   *           Note: this limit was introduced for conveniance during MODBUS decoding.
+   *
+   * \param matchAddresses If true, first index of values will be considered as first address ,
+   *                        and only I/O's for witch address match will be updated.
+   *           For example, if we have following I/O's addresses in container: 0,1,2,5,6 and we give 4 values:
+   *            - If firstAddress = 2 and matchAddresses is set : I/O's with address 2, 5 and 6 will be updated
+   *                with values at index 0 and 3 
+   *                (by giving firstAddress = 2, addresses are considered 2,3,4,5, so only 2 values will be updated).
+   *            - If firstAddress = -1 and matchAddresses is set : I/O's with address 0, 1 and 2 will be updated
+   *               (4th value must match address 3 that not exit in container, so only 3 values will be updated).
+   *            - If firstAddress = 2 and matchAddresses not set : I/O's with address 2, 5 and 6 will be updated (only 3 values).
+   *            - If firstAddress = -1 and matchAddresses not set : I/O's with address 0, 1, 2 and 5 will be updated (all 4 values).
+   *
+   * Note:
+   *  - If one value is invalid, concerned output will be set invalid.
+   *  - Regarding on internal values type (double, int, ...), conversions will be done by internal mdtAnalogIo.
+   *
+   * \pre n must be <= values size
+   */
+  void updateDigitalOutputValues(const QList<QVariant> &values, int firstAddress, addressAccess_t firstAddressAccess, int n, bool matchAddresses);
 
   /*! \brief Enable/disable (G)UI's digital outputs
    */
@@ -455,13 +502,13 @@ class mdtDeviceIos : public QObject
   QList<mdtDigitalIo*> pvDigitalInputs;
   QMap<int, mdtDigitalIo*> pvDigitalInputsByAddressRead;
   QList<mdtDeviceIosSegment*> pvDigitalInputsSegments;
-  int pvDigitalInputsFirstAddressRead;  /// \todo Obselete
   // Digital outputs members
   QList<mdtDigitalIo*> pvDigitalOutputs;
   QMap<int, mdtDigitalIo*> pvDigitalOutputsByAddressRead;
   QMap<int, mdtDigitalIo*> pvDigitalOutputsByAddressWrite;
-  int pvDigitalOutputsFirstAddressRead;
-  int pvDigitalOutputsFirstAddressWrite;
+  QList<mdtDeviceIosSegment*> pvDigitalOutputsSegments;
+  ///int pvDigitalOutputsFirstAddressRead; /// \todo Obselete
+  ///int pvDigitalOutputsFirstAddressWrite;  /// \todo Obselete
 };
 
 #endif  // #ifndef MDT_DEVICE_IOS_H

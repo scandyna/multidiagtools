@@ -647,7 +647,6 @@ void mdtDeviceTest::deviceIosTest()
   ios.updateAnalogInputValues(values, 12, 1, false);
   QCOMPARE(ios.analogInputAt(10)->value().valueDouble() , 6.0);
   QCOMPARE(ios.analogInputAt(12)->value().valueDouble() , 9.0);
-
   // We add a analog input with address 13, so we have 10,12,13
   ai = new mdtAnalogIo;
   ai->setAddress(13);
@@ -722,7 +721,6 @@ void mdtDeviceTest::deviceIosTest()
   ios.updateAnalogOutputValues(values, 15, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.analogOutputAtAddressRead(8)->value().valueDouble() , 6.0);
   QCOMPARE(ios.analogOutputAtAddressRead(15)->value().valueDouble() , 9.0);
-  
   // We add a new analog output with address read 9 / write 109 (we have also 8/108, 9/109, 15/115)
   ao = new mdtAnalogIo;
   ao->setAddressRead(9);
@@ -769,7 +767,6 @@ void mdtDeviceTest::deviceIosTest()
   QCOMPARE(ios.digitalInputWithLabelShort("DI18")->labelShort(), QString("DI18"));
   dIoList = ios.digitalInputs();
   QCOMPARE(dIoList.size(), 2);
-  QCOMPARE(ios.digitalInputsFirstAddress(), 17);
   // Check multiple digital inputs update - List contains the correct number of items
   values.clear();
   values << false << true;
@@ -829,8 +826,6 @@ void mdtDeviceTest::deviceIosTest()
   QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), false);
   QCOMPARE(ios.digitalInputAt(20)->value().valueBool(), true);
 
-
-
   // Check digital outputs
   QVERIFY(ios.digitalOutputAtAddressRead(19) == 0);
   QVERIFY(ios.digitalOutputAtAddressRead(20) != 0);
@@ -858,38 +853,42 @@ void mdtDeviceTest::deviceIosTest()
   QCOMPARE(ios.digitalOutputWithLabelShort("DO30")->labelShort(), QString("DO30"));
   dIoList = ios.digitalOutputs();
   QCOMPARE(dIoList.size(), 2);
-  QCOMPARE(ios.digitalOutputsFirstAddressRead(), 20);
-  QCOMPARE(ios.digitalOutputsFirstAddressWrite(), 120);
   // Check multiple digital outputs update - List contains the correct number of items
   values.clear();
   values << false << true;
-  ios.updateDigitalOutputValues(values, -1, -1);
+  ///ios.updateDigitalOutputValues(values, -1, -1);
+  ios.updateDigitalOutputValues(values, -1, mdtDeviceIos::Read, -1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), false);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
   values.clear();
   values << true;
-  ios.updateDigitalOutputValues(values, -1, 1);
+  ///ios.updateDigitalOutputValues(values, -1, 1);
+  ios.updateDigitalOutputValues(values, -1, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
   values.clear();
   values << false;
-  ios.updateDigitalOutputValues(values, 30, 1);
+  ///ios.updateDigitalOutputValues(values, 30, 1);
+  ios.updateDigitalOutputValues(values, 30, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), false);
   // Check multiple digital outputs update - List contains the to much items
   values.clear();
   values << false << true;
-  ios.updateDigitalOutputValues(values, -1, -1);
+  ///ios.updateDigitalOutputValues(values, -1, -1);
+  ios.updateDigitalOutputValues(values, -1, mdtDeviceIos::Read, -1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), false);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
   values.clear();
   values << true << false;
-  ios.updateDigitalOutputValues(values, -1, 1);
+  ///ios.updateDigitalOutputValues(values, -1, 1);
+  ios.updateDigitalOutputValues(values, -1, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
   values.clear();
   values << false << false;
-  ios.updateDigitalOutputValues(values, 30, 1);
+  ///ios.updateDigitalOutputValues(values, 30, 1);
+  ios.updateDigitalOutputValues(values, 30, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), false);
   
@@ -909,7 +908,8 @@ void mdtDeviceTest::deviceIosTest()
   // Check multiple digital outputs update starting at address read 29, 1 item, with a list of 2 items
   values.clear();
   values << true << true;
-  ios.updateDigitalOutputValues(values, 29, 1);
+  ///ios.updateDigitalOutputValues(values, 29, 1);
+  ios.updateDigitalOutputValues(values, 29, mdtDeviceIos::Read, 1, false);
   QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(29)->value().valueBool(), true);
   QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), false);
@@ -924,7 +924,7 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   mdtAnalogIo *ai;
   mdtAnalogIo *ao;
   mdtDigitalIo *di;
-  ///mdtDigitalIo *dout;
+  mdtDigitalIo *dout;
   mdtDeviceIosSegment *seg;
   QList<int> expectedValuesInt;
   QList<bool> expectedValuesBool;
@@ -1308,6 +1308,182 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   // Check that 4th I/O was untouched
   QCOMPARE(ios.digitalInputAt(5)->value().valueBool(), false);
 
+  /*
+   * Digital OUT
+   */
+
+  // Add digital outputs - consider write address access
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(1);
+  dout->setAddressWrite(11);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Write);
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(2);
+  dout->setAddressWrite(12);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Write);
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(7);
+  dout->setAddressWrite(17);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Write);
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(5);
+  dout->setAddressWrite(15);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Write);
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(6);
+  dout->setAddressWrite(16);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Write);
+  // Check segments
+  QCOMPARE(ios.digitalOutputsSegments().size(), 2);
+  // First segment
+  seg = ios.digitalOutputsSegments().at(0);
+  QVERIFY(seg != 0);
+  QCOMPARE(seg->addressesRead().size(), 2);
+  QCOMPARE(seg->addressesRead().at(0), 1);
+  QCOMPARE(seg->addressesRead().at(1), 2);
+  QCOMPARE(seg->addressesWrite().size(), 2);
+  QCOMPARE(seg->addressesWrite().at(0), 11);
+  QCOMPARE(seg->addressesWrite().at(1), 12);
+  // Second segment
+  seg = ios.digitalOutputsSegments().at(1);
+  QVERIFY(seg != 0);
+  QCOMPARE(seg->addressesRead().size(), 3);
+  QCOMPARE(seg->addressesRead().at(0), 5);
+  QCOMPARE(seg->addressesRead().at(1), 6);
+  QCOMPARE(seg->addressesRead().at(1), 6);
+  QCOMPARE(seg->addressesWrite().size(), 3);
+  QCOMPARE(seg->addressesWrite().at(0), 15);
+  QCOMPARE(seg->addressesWrite().at(1), 16);
+  QCOMPARE(seg->addressesWrite().at(2), 17);
+  // Check delete
+  ios.deleteIos();
+  QCOMPARE(ios.digitalOutputsSegments().size(), 0);
+  // Add digital outputs - consider read address access
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(1);
+  dout->setAddressWrite(11);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Read);
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(2);
+  dout->setAddressWrite(12);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Read);
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(7);
+  dout->setAddressWrite(17);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Read);
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(5);
+  dout->setAddressWrite(15);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Read);
+  dout = new mdtDigitalIo;
+  dout->setAddressRead(6);
+  dout->setAddressWrite(16);
+  ios.addDigitalOutput(dout, mdtDeviceIos::Read);
+  // Check segments
+  QCOMPARE(ios.digitalOutputsSegments().size(), 2);
+  // First segment
+  seg = ios.digitalOutputsSegments().at(0);
+  QVERIFY(seg != 0);
+  QCOMPARE(seg->addressesRead().size(), 2);
+  QCOMPARE(seg->addressesRead().at(0), 1);
+  QCOMPARE(seg->addressesRead().at(1), 2);
+  QCOMPARE(seg->addressesWrite().size(), 2);
+  QCOMPARE(seg->addressesWrite().at(0), 11);
+  QCOMPARE(seg->addressesWrite().at(1), 12);
+  // Second segment
+  seg = ios.digitalOutputsSegments().at(1);
+  QVERIFY(seg != 0);
+  QCOMPARE(seg->addressesRead().size(), 3);
+  QCOMPARE(seg->addressesRead().at(0), 5);
+  QCOMPARE(seg->addressesRead().at(1), 6);
+  QCOMPARE(seg->addressesRead().at(1), 6);
+  QCOMPARE(seg->addressesWrite().size(), 3);
+  QCOMPARE(seg->addressesWrite().at(0), 15);
+  QCOMPARE(seg->addressesWrite().at(1), 16);
+  QCOMPARE(seg->addressesWrite().at(2), 17);
+  // First segment - Set some values and check
+  dout = ios.digitalOutputAtAddressRead(1);
+  QVERIFY(dout != 0);
+  dout->setValue(true);
+  dout = ios.digitalOutputAtAddressRead(2);
+  QVERIFY(dout != 0);
+  dout->setValue(false);
+  expectedValuesBool.clear();
+  expectedValuesBool << true << false;
+  seg = ios.digitalOutputsSegments().at(0);
+  QVERIFY(seg != 0);
+  QCOMPARE(seg->valuesBool(), expectedValuesBool);
+  // Second segment - Set some values and check
+  dout = ios.digitalOutputAtAddressRead(5);
+  QVERIFY(dout != 0);
+  dout->setValue(true);
+  dout = ios.digitalOutputAtAddressRead(6);
+  QVERIFY(dout != 0);
+  dout->setValue(false);
+  dout = ios.digitalOutputAtAddressRead(7);
+  QVERIFY(dout != 0);
+  dout->setValue(true);
+  expectedValuesBool.clear();
+  expectedValuesBool << true << false << true;
+  seg = ios.digitalOutputsSegments().at(1);
+  QVERIFY(seg != 0);
+  QCOMPARE(seg->valuesBool(), expectedValuesBool);
+  // Check that all I/O's was set
+  QVERIFY(ios.digitalOutputAtAddressRead(1) != 0);
+  QVERIFY(ios.digitalOutputAtAddressRead(2) != 0);
+  QVERIFY(ios.digitalOutputAtAddressRead(5) != 0);
+  QVERIFY(ios.digitalOutputAtAddressRead(6) != 0);
+  QVERIFY(ios.digitalOutputAtAddressRead(7) != 0);
+  QVERIFY(ios.digitalOutputAtAddressWrite(11) != 0);
+  QVERIFY(ios.digitalOutputAtAddressWrite(12) != 0);
+  QVERIFY(ios.digitalOutputAtAddressWrite(15) != 0);
+  QVERIFY(ios.digitalOutputAtAddressWrite(16) != 0);
+  QVERIFY(ios.digitalOutputAtAddressWrite(17) != 0);
+  // Check grouped updates - Only first segment
+  valuesVar.clear();
+  valuesVar << false << true;  // Supposed addresses for read access 1 and 2
+  QVERIFY(ios.digitalOutputAtAddressRead(1)->value().valueBool() != false);
+  QVERIFY(ios.digitalOutputAtAddressRead(2)->value().valueBool() != true);
+  ios.updateDigitalOutputValues(valuesVar, 1, mdtDeviceIos::Read, -1, true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(1)->value().valueBool(), false);
+  QCOMPARE(ios.digitalOutputAtAddressRead(2)->value().valueBool(), true);
+  ios.updateDigitalOutputValues(valuesVar, 3, mdtDeviceIos::Read, -1, true);  // Address 3 not exists
+  QCOMPARE(ios.digitalOutputAtAddressRead(1)->value().valueBool(), false);
+  QCOMPARE(ios.digitalOutputAtAddressRead(2)->value().valueBool(), true);
+  valuesVar.clear();
+  valuesVar << true << false;  // Supposed addresses for write access 11 and 12
+  ios.updateDigitalOutputValues(valuesVar, 11, mdtDeviceIos::Write, -1, true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(1)->value().valueBool(), true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(2)->value().valueBool(), false);
+  ios.updateDigitalOutputValues(valuesVar, 13, mdtDeviceIos::Write, -1, true);  // Address 13 not exists
+  QCOMPARE(ios.digitalOutputAtAddressRead(1)->value().valueBool(), true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(2)->value().valueBool(), false);
+  // Check grouped updates - first + second segments
+  // Note: considere that we only included I/O's with addresses 1,2,5,6,7 in container, but we made a query to device for addresses 2-6
+  ios.setDigitalOutputsValue(mdtValue());
+  valuesVar.clear();
+  valuesVar << true << false << true << false << true;
+  ios.updateDigitalOutputValues(valuesVar, 2, mdtDeviceIos::Read, -1, true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(2)->value().valueBool(), true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(5)->value().valueBool(), false);
+  QCOMPARE(ios.digitalOutputAtAddressRead(6)->value().valueBool(), true);
+  // Set a known value at read address 7 for next test
+  QVERIFY(ios.digitalOutputAtAddressRead(7) != 0);
+  ios.digitalOutputAtAddressRead(7)->setValue(false);
+  // Same story, but we queried device about addresses 1-6 (I/O with addresses 0, 3 and 4 does not exist in container)
+  valuesVar.clear();
+  valuesVar << false << true << false << true << false << true;
+  // We will check that I/O with read address 7 was untouched
+  QVERIFY(ios.digitalOutputAtAddressRead(7) != 0);
+  QVERIFY(ios.digitalOutputAtAddressRead(7)->value().valueBool() == false);
+  // Update I/O's and check
+  ios.updateDigitalOutputValues(valuesVar, -1, mdtDeviceIos::Read, -1, true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(1)->value().valueBool(), false);
+  QCOMPARE(ios.digitalOutputAtAddressRead(2)->value().valueBool(), true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(5)->value().valueBool(), false);
+  QCOMPARE(ios.digitalOutputAtAddressRead(6)->value().valueBool(), true);
+  // Check that I/O with read address 7 was untouched
+  QCOMPARE(ios.digitalOutputAtAddressRead(7)->value().valueBool(), false);
 }
 
 void mdtDeviceTest::deviceIosWidgetTest()

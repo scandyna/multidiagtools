@@ -613,8 +613,11 @@ mdtValue mdtDevice::getDigitalInputValue(const QString &labelShort, bool queryDe
 
 int mdtDevice::getDigitalInputs(bool waitOnReply)
 {
-  int transactionId;
+  int transactionId = -1;
+  int i;
   mdtPortTransaction *transaction;
+  mdtDeviceIosSegment *segment;
+
 
   if(pvIos == 0){
     return -1;
@@ -622,29 +625,33 @@ int mdtDevice::getDigitalInputs(bool waitOnReply)
   if(pvIos->digitalInputsCount() < 1){
     return 0;
   }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIoCount(pvIos->digitalInputsCount());
-  transaction->setAddress(pvIos->digitalInputsFirstAddress());
-  // Send query and wait if requested
-  if(waitOnReply){
-    transaction->setQueryReplyMode(true);
-    transactionId = readDigitalInputs(transaction);
-    if(transactionId < 0){
-      pvIos->setDigitalInputsValue(mdtValue());
-      return transactionId;
-    }
-    // Wait on result (use device's defined timeout)
-    if(!waitTransactionDone(transactionId)){
-      pvIos->setDigitalInputsValue(mdtValue());
-      return -1;
-    }
-  }else{
-    transaction->setQueryReplyMode(false);
-    transactionId = readDigitalInputs(transaction);
-    if(transactionId < 0){
-      pvIos->setDigitalInputsValue(mdtValue());
-      return transactionId;
+  for(i = 0; i < pvIos->digitalInputsSegments().size(); ++i){
+    segment = pvIos->digitalInputsSegments().at(i);
+    Q_ASSERT(segment != 0);
+    // Get a new transaction
+    transaction = getNewTransaction();
+    transaction->setIoCount(segment->ioCount());
+    transaction->setAddress(segment->startAddressRead());
+    // Send query and wait if requested
+    if(waitOnReply){
+      transaction->setQueryReplyMode(true);
+      transactionId = readDigitalInputs(transaction);
+      if(transactionId < 0){
+        pvIos->setDigitalInputsValue(mdtValue());
+        return transactionId;
+      }
+      // Wait on result (use device's defined timeout)
+      if(!waitTransactionDone(transactionId)){
+        pvIos->setDigitalInputsValue(mdtValue());
+        return -1;
+      }
+    }else{
+      transaction->setQueryReplyMode(false);
+      transactionId = readDigitalInputs(transaction);
+      if(transactionId < 0){
+        pvIos->setDigitalInputsValue(mdtValue());
+        return transactionId;
+      }
     }
   }
 
@@ -733,8 +740,11 @@ mdtValue mdtDevice::getDigitalOutputValue(const QString &labelShort, bool queryD
 
 int mdtDevice::getDigitalOutputs(bool waitOnReply)
 {
-  int transactionId;
+  int transactionId = -1;
+  int i;
   mdtPortTransaction *transaction;
+  mdtDeviceIosSegment *segment;
+
 
   if(pvIos == 0){
     return -1;
@@ -742,29 +752,33 @@ int mdtDevice::getDigitalOutputs(bool waitOnReply)
   if(pvIos->digitalOutputsCount() < 1){
     return 0;
   }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setAddress(pvIos->digitalOutputsFirstAddressRead());
-  transaction->setIoCount(pvIos->digitalOutputsCount());
-  // Send query and wait if requested
-  if(waitOnReply){
-    transaction->setQueryReplyMode(true);
-    transactionId = readDigitalOutputs(transaction);
-    if(transactionId < 0){
-      pvIos->setDigitalOutputsValue(mdtValue());
-      return transactionId;
-    }
-    // Wait on result (use device's defined timeout)
-    if(!waitTransactionDone(transactionId)){
-      pvIos->setDigitalOutputsValue(mdtValue());
-      return -1;
-    }
-  }else{
-    transaction->setQueryReplyMode(false);
-    transactionId = readDigitalOutputs(transaction);
-    if(transactionId < 0){
-      pvIos->setDigitalOutputsValue(mdtValue());
-      return transactionId;
+  for(i = 0; i < pvIos->digitalOutputsSegments().size(); ++i){
+    segment = pvIos->digitalOutputsSegments().at(i);
+    Q_ASSERT(segment != 0);
+    // Get a new transaction
+    transaction = getNewTransaction();
+    transaction->setAddress(segment->startAddressRead());
+    transaction->setIoCount(segment->ioCount());
+    // Send query and wait if requested
+    if(waitOnReply){
+      transaction->setQueryReplyMode(true);
+      transactionId = readDigitalOutputs(transaction);
+      if(transactionId < 0){
+        pvIos->setDigitalOutputsValue(mdtValue());
+        return transactionId;
+      }
+      // Wait on result (use device's defined timeout)
+      if(!waitTransactionDone(transactionId)){
+        pvIos->setDigitalOutputsValue(mdtValue());
+        return -1;
+      }
+    }else{
+      transaction->setQueryReplyMode(false);
+      transactionId = readDigitalOutputs(transaction);
+      if(transactionId < 0){
+        pvIos->setDigitalOutputsValue(mdtValue());
+        return transactionId;
+      }
     }
   }
 
@@ -853,37 +867,46 @@ int mdtDevice::setDigitalOutputValue(const QString &labelShort, const mdtValue &
 
 int mdtDevice::setDigitalOutputs(bool waitOnReply)
 {
-  int transactionId;
+  int transactionId = -1;
+  int i;
   mdtPortTransaction *transaction;
+  mdtDeviceIosSegment *segment;
 
   if(pvIos == 0){
     return -1;
   }
+  if(pvIos->digitalOutputsCount() < 1){
+    return -1;
+  }
   // Disable I/Os - Must be re-enabled by subclass once data are in
   pvIos->setDigitalOutputsEnabled(false);
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIoCount(pvIos->digitalOutputsCount());
-  transaction->setAddress(pvIos->digitalOutputsFirstAddressWrite());
-  // Send query and wait if requested
-  if(waitOnReply){
-    transaction->setQueryReplyMode(true);
-    transactionId = writeDigitalOutputs(transaction);
-    if(transactionId < 0){
-      pvIos->setDigitalOutputsValue(mdtValue());
-      return transactionId;
-    }
-    // Wait on result (use device's defined timeout)
-    if(!waitTransactionDone(transactionId)){
-      pvIos->setDigitalOutputsValue(mdtValue());
-      return -1;
-    }
-  }else{
-    transaction->setQueryReplyMode(false);
-    transactionId = writeDigitalOutputs(transaction);
-    if(transactionId < 0){
-      pvIos->setDigitalOutputsValue(mdtValue());
-      return transactionId;
+  for(i = 0; i < pvIos->digitalOutputsSegments().size(); ++i){
+    segment = pvIos->digitalOutputsSegments().at(i);
+    Q_ASSERT(segment != 0);
+    // Get a new transaction
+    transaction = getNewTransaction();
+    transaction->setAddress(segment->startAddressWrite());
+    transaction->setIoCount(segment->ioCount());
+    // Send query and wait if requested
+    if(waitOnReply){
+      transaction->setQueryReplyMode(true);
+      transactionId = writeDigitalOutputs(transaction);
+      if(transactionId < 0){
+        pvIos->setDigitalOutputsValue(mdtValue());
+        return transactionId;
+      }
+      // Wait on result (use device's defined timeout)
+      if(!waitTransactionDone(transactionId)){
+        pvIos->setDigitalOutputsValue(mdtValue());
+        return -1;
+      }
+    }else{
+      transaction->setQueryReplyMode(false);
+      transactionId = writeDigitalOutputs(transaction);
+      if(transactionId < 0){
+        pvIos->setDigitalOutputsValue(mdtValue());
+        return transactionId;
+      }
     }
   }
 

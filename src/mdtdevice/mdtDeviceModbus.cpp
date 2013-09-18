@@ -129,7 +129,8 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         transaction->digitalIo()->setEnabled(true);
       }else{
         // Transaction contains first I/O address (for read access) and qty of I/Os
-        pvIos->updateDigitalOutputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
+        ///pvIos->updateDigitalOutputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
+        pvIos->updateDigitalOutputValues(pvCodec->values(), transaction->address(), mdtDeviceIos::Read , transaction->ioCount(), true);
         pvIos->setDigitalOutputsEnabled(true);
       }
       break;
