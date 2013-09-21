@@ -136,6 +136,16 @@ void mdtDeviceIos::addAnalogInput(mdtAnalogIo *ai)
   pvAnalogInputsSegments.append(segment);
 }
 
+void mdtDeviceIos::addAnalogInputs(const QList<mdtAnalogIo*> & aiList)
+{
+  int i;
+
+  for(i = 0; i < aiList.size(); ++i){
+    Q_ASSERT(aiList.at(i) != 0);
+    addAnalogInput(aiList.at(i));
+  }
+}
+
 mdtAnalogIo *mdtDeviceIos::analogInputAt(int address)
 {
   return pvAnalogInputsByAddressRead.value(address, 0);
@@ -236,6 +246,16 @@ void mdtDeviceIos::addAnalogOutput(mdtAnalogIo *ao, mdtDeviceIos::addressAccess_
   // Add current segment to list
   segment->setIos(segmentAoList);
   pvAnalogOutputsSegments.append(segment);
+}
+
+void mdtDeviceIos::addAnalogOutputs(const QList<mdtAnalogIo*> & aoList, addressAccess_t sortSegmentsBy)
+{
+  int i;
+
+  for(i = 0; i < aoList.size(); ++i){
+    Q_ASSERT(aoList.at(i) != 0);
+    addAnalogOutput(aoList.at(i), sortSegmentsBy);
+  }
 }
 
 mdtAnalogIo *mdtDeviceIos::analogOutputAtAddressRead(int address)
@@ -345,6 +365,16 @@ void mdtDeviceIos::addDigitalInput(mdtDigitalIo *di)
   pvDigitalInputsSegments.append(segment);
 }
 
+void mdtDeviceIos::addDigitalInputs(const QList<mdtDigitalIo*> & diList)
+{
+  int i;
+
+  for(i = 0; i < diList.size(); ++i){
+    Q_ASSERT(diList.at(i) != 0);
+    addDigitalInput(diList.at(i));
+  }
+}
+
 mdtDigitalIo *mdtDeviceIos::digitalInputAt(int address)
 {
   return pvDigitalInputsByAddressRead.value(address, 0);
@@ -446,6 +476,16 @@ void mdtDeviceIos::addDigitalOutput(mdtDigitalIo *dout, addressAccess_t sortSegm
   pvDigitalOutputsSegments.append(segment);
 }
 
+void mdtDeviceIos::addDigitalOutputs(const QList<mdtDigitalIo*> & doList, addressAccess_t sortSegmentsBy)
+{
+  int i;
+
+  for(i = 0; i < doList.size(); ++i){
+    Q_ASSERT(doList.at(i) != 0);
+    addDigitalOutput(doList.at(i), sortSegmentsBy);
+  }
+}
+
 mdtDigitalIo *mdtDeviceIos::digitalOutputAtAddressRead(int address)
 {
   return pvDigitalOutputsByAddressRead.value(address, 0);
@@ -508,6 +548,38 @@ QList<bool> mdtDeviceIos::digitalOutputsStatesByAddressWrite() const
   }
 
   return states;
+}
+
+void mdtDeviceIos::setIosDefaultLabelShort()
+{
+  QList<mdtAnalogIo*> aiList;
+  QList<mdtAnalogIo*> aoList;
+  QList<mdtDigitalIo*> diList;
+  QList<mdtDigitalIo*> doList;
+  int i;
+
+  // We get I/O lists from QMap containers, because they are sorted by addresses, ascending
+  aiList = pvAnalogInputsByAddressRead.values();
+  aoList = pvAnalogOutputsByAddressRead.values();
+  diList = pvDigitalInputsByAddressRead.values();
+  doList = pvDigitalOutputsByAddressRead.values();
+
+  for(i = 0; i < aiList.size(); ++i){
+    Q_ASSERT(aiList.at(i) != 0);
+    aiList.at(i)->setLabelShort("AI" + QString::number(i+1));
+  }
+  for(i = 0; i < aoList.size(); ++i){
+    Q_ASSERT(aoList.at(i) != 0);
+    aoList.at(i)->setLabelShort("AO" + QString::number(i+1));
+  }
+  for(i = 0; i < diList.size(); ++i){
+    Q_ASSERT(diList.at(i) != 0);
+    diList.at(i)->setLabelShort("DI" + QString::number(i+1));
+  }
+  for(i = 0; i < doList.size(); ++i){
+    Q_ASSERT(doList.at(i) != 0);
+    doList.at(i)->setLabelShort("DO" + QString::number(i+1));
+  }
 }
 
 void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values, const int firstAddress, const int n, bool matchAddresses)

@@ -126,6 +126,12 @@ class mdtDeviceIos : public QObject
    */
   void addAnalogInput(mdtAnalogIo *ai);
 
+  /*! \brief Add a list of analog inputs
+   *
+   * \sa addAnalogInput()
+   */
+  void addAnalogInputs(const QList<mdtAnalogIo*> & aiList);
+
   /*! \brief Get analog input at given address
    *
    * If no object exists at given address,
@@ -173,6 +179,12 @@ class mdtDeviceIos : public QObject
    * \pre No I/O with same address must be set as double
    */
   void addAnalogOutput(mdtAnalogIo *ao, addressAccess_t sortSegmentsBy = Write);
+
+  /*! \brief Add a list of analog outputs
+   *
+   * \sa addAnalogOutput()
+   */
+  void addAnalogOutputs(const QList<mdtAnalogIo*> & aoList, addressAccess_t sortSegmentsBy = Write);
 
   /*! \brief Get analog output at given address for read access
    *
@@ -226,6 +238,12 @@ class mdtDeviceIos : public QObject
    */
   void addDigitalInput(mdtDigitalIo *di);
 
+  /*! \brief Add a list of digital inputs
+   *
+   * \sa addDigitalInput()
+   */
+  void addDigitalInputs(const QList<mdtDigitalIo*> & diList);
+
   /*! \brief Get digital input at given address
    *
    * If no object exists at given address,
@@ -273,6 +291,12 @@ class mdtDeviceIos : public QObject
    */
   void addDigitalOutput(mdtDigitalIo *dout, addressAccess_t sortSegmentsBy = Write);
 
+  /*! \brief Add a list of digital outputs
+   *
+   * \sa addDigitalOutput()
+   */
+  void addDigitalOutputs(const QList<mdtDigitalIo*> & doList, addressAccess_t sortSegmentsBy = Write);
+
   /*! \brief Get digital output at given address for read access
    *
    * If no object exists at given address,
@@ -317,6 +341,13 @@ class mdtDeviceIos : public QObject
   /*! \brief Get all digital outputs states sorted by address for write access
    */
   QList<bool> digitalOutputsStatesByAddressWrite() const;
+
+  /*! \brief Set a default short label for each I/O
+   *
+   * Default short label is the I/O type suffixed with his number
+   *  (AI1, AI2, AO1, DI1, DO1, ...) 
+   */
+  void setIosDefaultLabelShort();
 
  public slots:
 

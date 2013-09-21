@@ -106,7 +106,7 @@ void mdtDeviceModbusWagoModule::setFirstAddress(int addressRead, int addressWrit
     if(pvAnalogIos.size() > i){
       aio = pvAnalogIos.at(i);
       Q_ASSERT(aio != 0);
-      aio->setAddressRead(currentAddressRead);
+      aio->setAddress(currentAddressRead);
       ++currentAddressRead;
       if(pvType == AnalogOutputs){
         Q_ASSERT(addressWrite >= 0);
@@ -117,7 +117,7 @@ void mdtDeviceModbusWagoModule::setFirstAddress(int addressRead, int addressWrit
     if(pvDigitalIos.size() > i){
       dio = pvDigitalIos.at(i);
       Q_ASSERT(dio != 0);
-      dio->setAddressRead(currentAddressRead);
+      dio->setAddress(currentAddressRead);
       ++currentAddressRead;
       if(pvType == DigitalOutputs){
         Q_ASSERT(addressWrite >= 0);

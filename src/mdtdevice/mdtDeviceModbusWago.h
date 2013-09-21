@@ -27,6 +27,8 @@
 #include <QList>
 #include <QVariant>
 
+class mdtDeviceModbusWagoModule;
+
 /*! \brief
  */
 class mdtDeviceModbusWago : public mdtDeviceModbus
@@ -223,6 +225,8 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    */
   bool addDigitalIos(QList<mdtDigitalIo*> &digitalInputs, QList<mdtDigitalIo*> &digitalOutputs, quint16 word) const;
 
+  QList<mdtDeviceModbusWagoModule*> pvModules;
+  
   // Helper members for Register service
   ///bool getRegisterValues(int address, int n);
   ///QList<int> pvRegisterValues;

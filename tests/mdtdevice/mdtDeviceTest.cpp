@@ -1685,24 +1685,28 @@ void mdtDeviceTest::modbusWagoModuleTest()
   MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
   QCOMPARE(aio->unit(), QString("[V]"));
   QCOMPARE(aio->addressRead(), 2);
+  QVERIFY(aio->addressWrite() == aio->addressRead());
   aio = m.analogIos().at(1);
   QVERIFY(aio != 0);
   MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
   MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
   QCOMPARE(aio->unit(), QString("[V]"));
   QCOMPARE(aio->addressRead(), 3);
+  QVERIFY(aio->addressWrite() == aio->addressRead());
   aio = m.analogIos().at(2);
   QVERIFY(aio != 0);
   MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
   MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
   QCOMPARE(aio->unit(), QString("[V]"));
   QCOMPARE(aio->addressRead(), 4);
+  QVERIFY(aio->addressWrite() == aio->addressRead());
   aio = m.analogIos().at(3);
   QVERIFY(aio != 0);
   MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
   MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
   QCOMPARE(aio->unit(), QString("[V]"));
   QCOMPARE(aio->addressRead(), 5);
+  QVERIFY(aio->addressWrite() == aio->addressRead());
 
   /*
    * Check clear
@@ -1782,15 +1786,19 @@ void mdtDeviceTest::modbusWagoModuleTest()
   dio = m.digitalIos().at(0);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 0);
+  QVERIFY(dio->addressWrite() == dio->addressRead());
   dio = m.digitalIos().at(1);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 1);
+  QVERIFY(dio->addressWrite() == dio->addressRead());
   dio = m.digitalIos().at(2);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 2);
+  QVERIFY(dio->addressWrite() == dio->addressRead());
   dio = m.digitalIos().at(3);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 3);
+  QVERIFY(dio->addressWrite() == dio->addressRead());
 
   /*
    * Digital OUT module
