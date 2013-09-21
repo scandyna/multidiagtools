@@ -66,7 +66,7 @@ void mdtTest::compare(double x, double y, int n, double min, double max, const c
     QString msg = "Compared values are out of tolerence:\n";
     msg += "  Actual:   " + QString::number(x) + "\n";
     msg += "  Expected: " + QString::number(y) + " (min: " + QString::number(y-lsb-DBL_EPSILON) + " , max: " + QString::number(y+lsb+DBL_EPSILON) + ")\n";
-    msg += "  LSB:      " + QString::number(lsb) + "\n";
+    msg += "  LSB:      " + QString::number(lsb) + " (" + QString::number(n) + " bit resolution) \n";
     msg += "  SRC: " + QString(file) + "(" + QString::number(line) + ")";
     QFAIL(msg.toAscii());
   }

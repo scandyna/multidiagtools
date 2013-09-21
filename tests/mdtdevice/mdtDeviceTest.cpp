@@ -26,6 +26,7 @@
 #include "mdtDeviceModbus.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtDeviceModbusWago.h"
+#include "mdtDeviceModbusWagoModule.h"
 #include "mdtDeviceScpi.h"
 #include "mdtDeviceU3606A.h"
 #include "mdtDeviceDSO1000A.h"
@@ -1635,6 +1636,192 @@ void mdtDeviceTest::modbusTest()
   while(dw.isVisible()){
     QTest::qWait(1000);
   }
+}
+
+void mdtDeviceTest::modbusWagoModuleTest()
+{
+  mdtDeviceModbusWagoModule m(true);
+  mdtAnalogIo *aio;
+  mdtDigitalIo *dio;
+
+  // Check initial values
+  QVERIFY(m.firstAddressRead() < 0);
+  QVERIFY(m.firstAddressWrite() < 0);
+  QVERIFY(m.lastAddressRead() < 0);
+  QVERIFY(m.lastAddressWrite() < 0);
+  QCOMPARE(m.ioCount() , 0);
+  QVERIFY(m.analogIos().isEmpty());
+  QVERIFY(m.digitalIos().isEmpty());
+  QVERIFY(m.type() == mdtDeviceModbusWagoModule::Unknown);
+  QCOMPARE(m.partNumber() , 0);
+  QVERIFY(m.partNumberText().isEmpty());
+
+  /*
+   * Analog IN module
+   *
+   * Check with 750-457 witch has:
+   *  - 4 analog IN
+   *  - Range: -10V to +10V
+   *  - Unit: [V]
+   *
+   * We use a address range:
+   *  - Read access: 2-5
+   *  - Write access: N/A
+   */
+  QVERIFY(m.setupFromRegisterWord(457));
+  m.setFirstAddress(2);
+  QCOMPARE(m.firstAddressRead() , 2);
+  QCOMPARE(m.lastAddressRead() , 5);
+  QCOMPARE(m.ioCount() , 4);
+  QCOMPARE(m.analogIos().size(), 4);
+  QVERIFY(m.digitalIos().isEmpty());
+  QVERIFY(m.type() == mdtDeviceModbusWagoModule::AnalogInputs);
+  QCOMPARE(m.partNumber() , 457);
+  QCOMPARE(m.partNumberText() , QString("457"));
+  // Check internal I/O setup
+  aio = m.analogIos().at(0);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
+  MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
+  QCOMPARE(aio->unit(), QString("[V]"));
+  QCOMPARE(aio->addressRead(), 2);
+  aio = m.analogIos().at(1);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
+  MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
+  QCOMPARE(aio->unit(), QString("[V]"));
+  QCOMPARE(aio->addressRead(), 3);
+  aio = m.analogIos().at(2);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
+  MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
+  QCOMPARE(aio->unit(), QString("[V]"));
+  QCOMPARE(aio->addressRead(), 4);
+  aio = m.analogIos().at(3);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
+  MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
+  QCOMPARE(aio->unit(), QString("[V]"));
+  QCOMPARE(aio->addressRead(), 5);
+
+  /*
+   * Check clear
+   */
+  m.clear();
+  QVERIFY(m.firstAddressRead() < 0);
+  QVERIFY(m.firstAddressWrite() < 0);
+  QVERIFY(m.lastAddressRead() < 0);
+  QVERIFY(m.lastAddressWrite() < 0);
+  QCOMPARE(m.ioCount() , 0);
+  QVERIFY(m.analogIos().isEmpty());
+  QVERIFY(m.digitalIos().isEmpty());
+  QVERIFY(m.type() == mdtDeviceModbusWagoModule::Unknown);
+  QCOMPARE(m.partNumber() , 0);
+  QVERIFY(m.partNumberText().isEmpty());
+
+  /*
+   * Analog OUT module
+   *
+   * Check with 750-550 witch has:
+   *  - 2 analog OUT
+   *  - Range: 0V to +10V
+   *  - Unit: [V]
+   *
+   * We use a address range:
+   *  - Read access: 6-7
+   *  - Write access: 16-17
+   */
+  m.clear();
+  QVERIFY(m.setupFromRegisterWord(550));
+  m.setFirstAddress(6, 16);
+  QCOMPARE(m.firstAddressRead() , 6);
+  QCOMPARE(m.firstAddressWrite() , 16);
+  QCOMPARE(m.lastAddressRead() , 7);
+  QCOMPARE(m.lastAddressWrite() , 17);
+  QCOMPARE(m.ioCount() , 2);
+  QCOMPARE(m.analogIos().size(), 2);
+  QVERIFY(m.digitalIos().isEmpty());
+  QVERIFY(m.type() == mdtDeviceModbusWagoModule::AnalogOutputs);
+  QCOMPARE(m.partNumber() , 550);
+  QCOMPARE(m.partNumberText() , QString("550"));
+  // Check internal I/O setup
+  aio = m.analogIos().at(0);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), 0.0, 12, 0.0, 10.0);
+  MDT_COMPARE(aio->maximum(), 10.0, 12, 0.0, 10.0);
+  QCOMPARE(aio->unit(), QString("[V]"));
+  QCOMPARE(aio->addressRead(), 6);
+  QCOMPARE(aio->addressWrite(), 16);
+  aio = m.analogIos().at(1);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), 0.0, 12, 0.0, 10.0);
+  MDT_COMPARE(aio->maximum(), 10.0, 12, 0.0, 10.0);
+  QCOMPARE(aio->unit(), QString("[V]"));
+  QCOMPARE(aio->addressRead(), 7);
+  QCOMPARE(aio->addressWrite(), 17);
+
+  /*
+   * Digital IN module
+   *
+   * Check with a 4 digital input module.
+   *
+   * We use a address range:
+   *  - Read access: 0-3
+   *  - Write access: N/A
+   */
+  m.clear();
+  QVERIFY(m.setupFromRegisterWord(0x8401));
+  QVERIFY(m.type() == mdtDeviceModbusWagoModule::DigitalInputs);
+  m.setFirstAddress(0);
+  QCOMPARE(m.firstAddressRead() , 0);
+  QCOMPARE(m.lastAddressRead() , 3);
+  QCOMPARE(m.ioCount() , 4);
+  QVERIFY(m.analogIos().isEmpty());
+  QCOMPARE(m.digitalIos().size(), 4);
+  // Check internal I/O setup
+  dio = m.digitalIos().at(0);
+  QVERIFY(dio != 0);
+  QCOMPARE(dio->addressRead(), 0);
+  dio = m.digitalIos().at(1);
+  QVERIFY(dio != 0);
+  QCOMPARE(dio->addressRead(), 1);
+  dio = m.digitalIos().at(2);
+  QVERIFY(dio != 0);
+  QCOMPARE(dio->addressRead(), 2);
+  dio = m.digitalIos().at(3);
+  QVERIFY(dio != 0);
+  QCOMPARE(dio->addressRead(), 3);
+
+  /*
+   * Digital OUT module
+   *
+   * Check with a 2 digital output module.
+   *
+   * We use a address range:
+   *  - Read access: 4-5
+   *  - Write access: 14-15
+   */
+  m.clear();
+  QVERIFY(m.setupFromRegisterWord(0x8202));
+  QVERIFY(m.type() == mdtDeviceModbusWagoModule::DigitalOutputs);
+  m.setFirstAddress(4, 14);
+  QCOMPARE(m.firstAddressRead() , 4);
+  QCOMPARE(m.firstAddressWrite() , 14);
+  QCOMPARE(m.lastAddressRead() , 5);
+  QCOMPARE(m.lastAddressWrite() , 15);
+  QCOMPARE(m.ioCount() , 2);
+  QVERIFY(m.analogIos().isEmpty());
+  QCOMPARE(m.digitalIos().size(), 2);
+  // Check internal I/O setup
+  dio = m.digitalIos().at(0);
+  QVERIFY(dio != 0);
+  QCOMPARE(dio->addressRead(), 4);
+  QCOMPARE(dio->addressWrite(), 14);
+  dio = m.digitalIos().at(1);
+  QVERIFY(dio != 0);
+  QCOMPARE(dio->addressRead(), 5);
+  QCOMPARE(dio->addressWrite(), 15);
+
 }
 
 void mdtDeviceTest::modbusWagoTest()

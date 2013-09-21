@@ -502,7 +502,7 @@ QVariant mdtDeviceModbusWago::digitalIoModuleIsInput(quint16 word) const
   // Bit 0 is set for a input module
   if(word & 0x0001){
     // Should be a input, check bit 1
-    if(word & 0x002){
+    if(word & 0x0002){
       return QVariant();
     }else{
       return true;

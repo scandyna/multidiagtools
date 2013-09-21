@@ -32,6 +32,7 @@ set (SOURCES_FILES
           #mdtDeviceStatusWidget.cpp
           mdtDeviceModbus.cpp
           mdtDeviceModbusWago.cpp
+          mdtDeviceModbusWagoModule.cpp
           mdtDeviceScpi.cpp
           mdtDeviceU3606A.cpp
           mdtDeviceDSO1000A.cpp

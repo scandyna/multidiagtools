@@ -42,6 +42,7 @@ class mdtDeviceTest : public mdtTest
 
   // Some simple coherence tests (no real test possible without MODBUS server)
   void modbusTest();
+  void modbusWagoModuleTest();
   void modbusWagoTest();
   void modbusBeckhoffTest();
 
