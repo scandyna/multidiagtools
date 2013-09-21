@@ -1,6 +1,6 @@
 format 76
 "mdtdevice" // mdtdevice
-  revision 39
+  revision 40
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2438,7 +2438,7 @@ ${inlines}
     end
 
     class 874498 "mdtDeviceModbusWagoModule"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -3133,6 +3133,17 @@ ${inlines}
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1585282 "getIoCount"
+	abstract force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	

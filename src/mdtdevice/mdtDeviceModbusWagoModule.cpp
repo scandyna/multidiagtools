@@ -317,6 +317,10 @@ bool mdtDeviceModbusWagoModule::writeControlBytes(int firstChannel, int lastChan
 QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMin(int partNumber) const
 {
   switch(partNumber){
+    case 452:
+      return 0.0;
+    case 454:
+      return 4.0;
     case 457:
       return QVariant(-10.0);
     case 550:
@@ -329,6 +333,10 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMin(int partNumber) const
 QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMax(int partNumber) const
 {
   switch(partNumber){
+    case 452:
+      return 20.0;
+    case 454:
+      return 20.0;
     case 457:
       return QVariant(10.0);
     case 550:
@@ -341,6 +349,10 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMax(int partNumber) const
 int mdtDeviceModbusWagoModule::analogIoModuleValueBitsCount(int partNumber) const
 {
   switch(partNumber){
+    case 452:
+      return 12;
+    case 454:
+      return 12;
     case 457:
       return 13;
     case 550:
@@ -353,6 +365,10 @@ int mdtDeviceModbusWagoModule::analogIoModuleValueBitsCount(int partNumber) cons
 int mdtDeviceModbusWagoModule::analogIoModuleValueLsbIndex(int partNumber) const
 {
   switch(partNumber){
+    case 452:
+      return 3;
+    case 454:
+      return 3;
     case 457:
       return 3;
     case 550:
@@ -365,6 +381,10 @@ int mdtDeviceModbusWagoModule::analogIoModuleValueLsbIndex(int partNumber) const
 QVariant mdtDeviceModbusWagoModule::analogIoModuleValueSigned(int partNumber) const
 {
   switch(partNumber){
+    case 452:
+      return false;
+    case 454:
+      return false;
     case 457:
       return true;
     case 550:
@@ -377,6 +397,10 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleValueSigned(int partNumber) co
 QVariant mdtDeviceModbusWagoModule::analogIoModuleIsInput(int partNumber) const
 {
   switch(partNumber){
+    case 452:
+      return true;
+    case 454:
+      return true;
     case 457:
       return true;
     case 550:
@@ -389,6 +413,10 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleIsInput(int partNumber) const
 int mdtDeviceModbusWagoModule::analogIoModuleIosCount(int partNumber) const
 {
   switch(partNumber){
+    case 452:
+      return 2;
+    case 454:
+      return 2;
     case 457:
       return 4;
     case 550:
@@ -401,6 +429,10 @@ int mdtDeviceModbusWagoModule::analogIoModuleIosCount(int partNumber) const
 QString mdtDeviceModbusWagoModule::analogIoModuleUnit(int partNumber) const
 {
   switch(partNumber){
+    case 452:
+      return "mA";
+    case 454:
+      return "mA";
     case 457:
       return "V";
     case 550:
