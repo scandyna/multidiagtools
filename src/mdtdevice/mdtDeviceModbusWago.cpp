@@ -242,8 +242,8 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   QList<mdtAnalogIo*> analogOutputs;
   QList<mdtDigitalIo*> digitalInputs;
   QList<mdtDigitalIo*> digitalOutputs;
-  mdtAnalogIo *aio;
-  mdtDigitalIo *dio;
+  ///mdtAnalogIo *aio;
+  ///mdtDigitalIo *dio;
   QVariant var;
   mdtDeviceModbusWagoModule *module;
   int aiAddressRead;
@@ -426,6 +426,7 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   return true;
   
   /// \todo Obselete
+  /**
   // Check coherence between detected setup and I/Os count
   if(analogInputs.size() != analogInputsCnt){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": analog inputs count not coherent", mdtError::Error);
@@ -502,8 +503,10 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   }
 
   return true;
+  */
 }
 
+/**
 QVariant mdtDeviceModbusWago::analogIoModuleValueMin(int partNumber) const
 {
   switch(partNumber){
@@ -624,7 +627,9 @@ int mdtDeviceModbusWago::digitalIoModuleIosCount(quint16 word) const
 {
   return ((word & 0x0F00) >> 8);
 }
+*/
 
+/**
 mdtAnalogIo *mdtDeviceModbusWago::getNewAnalogIo(int partNumber) const
 {
   mdtAnalogIo *aio;
@@ -668,7 +673,9 @@ mdtAnalogIo *mdtDeviceModbusWago::getNewAnalogIo(int partNumber) const
 
   return aio;
 }
+*/
 
+/**
 bool mdtDeviceModbusWago::addAnalogIos(QList<mdtAnalogIo*> &analogInputs, QList<mdtAnalogIo*> &analogOutputs, int partNumber) const
 {
   int iosCount;
@@ -712,7 +719,9 @@ bool mdtDeviceModbusWago::addAnalogIos(QList<mdtAnalogIo*> &analogInputs, QList<
 
   return true;
 }
+*/
 
+/**
 bool mdtDeviceModbusWago::addDigitalIos(QList<mdtDigitalIo*> &digitalInputs, QList<mdtDigitalIo*> &digitalOutputs, quint16 word) const
 {
   int iosCount;
@@ -756,6 +765,7 @@ bool mdtDeviceModbusWago::addDigitalIos(QList<mdtDigitalIo*> &digitalInputs, QLi
 
   return true;
 }
+*/
 
 /**
 bool mdtDeviceModbusWago::getRegisterValues(int address, int n)

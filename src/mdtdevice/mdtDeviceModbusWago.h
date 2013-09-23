@@ -110,14 +110,14 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return The min. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
    */
-  QVariant analogIoModuleValueMin(int partNumber) const;
+  ///QVariant analogIoModuleValueMin(int partNumber) const;
 
   /*! \brief Get the max value of a range of a analog I/O module
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return The max. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
    */
-  QVariant analogIoModuleValueMax(int partNumber) const;
+  ///QVariant analogIoModuleValueMax(int partNumber) const;
 
   /*! \brief Get the number of bits (including sign bit) used to represent a value of a analog I/O module
    *
@@ -127,7 +127,7 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return bits count used for value, or -1 for a unknown module.
    */
-  int analogIoModuleValueBitsCount(int partNumber) const;
+  ///int analogIoModuleValueBitsCount(int partNumber) const;
 
   /*! \brief Get index of the first bit (LSB) that represents the value of a analog I/O module
    *
@@ -137,7 +137,7 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return Index of LSB of value, or -1 for unknown module.
    */
-  int analogIoModuleValueLsbIndex(int partNumber) const;
+  ///int analogIoModuleValueLsbIndex(int partNumber) const;
 
   /*! \brief Check if a analog I/O module returns a signed value or not
    *
@@ -145,7 +145,7 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \return True if module's representation is signed, false if not.
    *          For a unknown module, a invalid QVariant is returned.
    */
-  QVariant analogIoModuleValueSigned(int partNumber) const;
+  ///QVariant analogIoModuleValueSigned(int partNumber) const;
 
   /*! \brief Check if a analog I/O module is a input
    *
@@ -153,21 +153,21 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \return True if module is a input, false if module is a output.
    *          For a unknown module, a invalid QVariant is returned.
    */
-  QVariant analogIoModuleIsInput(int partNumber) const;
+  ///QVariant analogIoModuleIsInput(int partNumber) const;
 
   /*! \brief Get number of I/Os for a analog I/O module
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return Number of I/O's or -1 for unknown module.
    */
-  int analogIoModuleIosCount(int partNumber) const;
+  ///int analogIoModuleIosCount(int partNumber) const;
 
   /*! \brief Get unit of a analog I/O module (V, A, ...)
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return Unit of module, or a empty string for unknown module.
    */
-  QString analogIoModuleUnit(int partNumber) const;
+  ///QString analogIoModuleUnit(int partNumber) const;
 
   /*! \brief Check if a digital I/O module is a input
    *
@@ -175,14 +175,14 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \return True if module is a input, false if module is a output.
    *          For a unknown or uncoherent description, a invalid QVariant is returned.
    */
-  QVariant digitalIoModuleIsInput(quint16 word) const;
+  ///QVariant digitalIoModuleIsInput(quint16 word) const;
 
   /*! \brief Get number of I/Os for a digital I/O module
    *
    * \param word The identification word (see Wago doc, part of register 0x2030 for details).
    * \return Number of I/O's or -1 for unknown description.
    */
-  int digitalIoModuleIosCount(quint16 word) const;
+  ///int digitalIoModuleIosCount(quint16 word) const;
 
  private:
 
@@ -195,7 +195,7 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \return A new configured analog I/O, or a null pointer if module part number is unknown or other error.
    *          Note: the returned object must be deleted by user whenn not used anymore.
    */
-  mdtAnalogIo *getNewAnalogIo(int partNumber) const;
+  ///mdtAnalogIo *getNewAnalogIo(int partNumber) const;
 
   /*! \brief Add analog I/O(s) to I/O's container
    *
@@ -209,7 +209,7 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return True on success, false else (probably due to a unknown part number).
    */
-  bool addAnalogIos(QList<mdtAnalogIo*> &analogInputs, QList<mdtAnalogIo*> &analogOutputs, int partNumber) const;
+  ///bool addAnalogIos(QList<mdtAnalogIo*> &analogInputs, QList<mdtAnalogIo*> &analogOutputs, int partNumber) const;
 
   /*! \brief Add digital I/O(s) to I/O's container
    *
@@ -223,7 +223,7 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \param word The identification word (see Wago doc, part of register 0x2030 for details).
    * \return True on success, false else (probably due to a unknown part number).
    */
-  bool addDigitalIos(QList<mdtDigitalIo*> &digitalInputs, QList<mdtDigitalIo*> &digitalOutputs, quint16 word) const;
+  ///bool addDigitalIos(QList<mdtDigitalIo*> &digitalInputs, QList<mdtDigitalIo*> &digitalOutputs, quint16 word) const;
 
   QList<mdtDeviceModbusWagoModule*> pvModules;
   

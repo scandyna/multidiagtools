@@ -268,34 +268,59 @@ QString mdtDeviceModbusWagoModule::partNumberText() const
 
 quint8 mdtDeviceModbusWagoModule::statusByte(int channel) const
 {
+  Q_ASSERT((channel >= 0)&&(channel < pvStatusBytes.size()));
+
+  return pvStatusBytes.at(channel).second;
 }
 
 void mdtDeviceModbusWagoModule::setControlByte(int channel, quint8 byte)
 {
+  Q_ASSERT((channel >= 0)&&(channel < pvControlBytes.size()));
+
+  pvControlBytes[channel].second = byte;
 }
 
 quint8 mdtDeviceModbusWagoModule::controlByte(int channel) const
 {
+  Q_ASSERT((channel >= 0)&&(channel < pvControlBytes.size()));
+ 
+  return pvControlBytes.at(channel).second;
 }
 
 void mdtDeviceModbusWagoModule::setRegisterDataWord(int channel, quint16 word)
 {
+  Q_ASSERT((channel >= 0)&&(channel < pvRegisterDataWords.size()));
+
+  pvRegisterDataWords[channel].second = word;
 }
 
 quint16 mdtDeviceModbusWagoModule::registerDataWord(int channel) const
 {
+  Q_ASSERT((channel >= 0)&&(channel < pvRegisterDataWords.size()));
+
+  return pvRegisterDataWords.at(channel).second;
 }
 
 void mdtDeviceModbusWagoModule::setRegisterDataBytes(int channel, quint8 byteD1, quint8 byteD0)
 {
+  Q_ASSERT((channel >= 0)&&(channel < pvRegisterDataWords.size()));
+
+  quint16 word = (byteD0 | (byteD1 << 8));
+  setRegisterDataWord(channel, word);
 }
 
 quint8 mdtDeviceModbusWagoModule::registerDataByteD1(int channel)
 {
+  Q_ASSERT((channel >= 0)&&(channel < pvRegisterDataWords.size()));
+
+  return (pvRegisterDataWords.at(channel).second >> 8);
 }
 
 quint8 mdtDeviceModbusWagoModule::registerDataByteD0(int channel)
 {
+  Q_ASSERT((channel >= 0)&&(channel < pvRegisterDataWords.size()));
+
+  return (pvRegisterDataWords.at(channel).second & 0x00FF);
 }
 
 bool mdtDeviceModbusWagoModule::readRegisters(int firstChannel, int lastChannel, bool needDeviceSetupState)
@@ -312,6 +337,41 @@ bool mdtDeviceModbusWagoModule::readStatusBytes(int firstChannel, int lastChanne
 
 bool mdtDeviceModbusWagoModule::writeControlBytes(int firstChannel, int lastChannel, bool needDeviceSetupState)
 {
+}
+
+QVariant mdtDeviceModbusWagoModule::specialModuleValueMin()
+{
+  return QVariant();
+}
+
+QVariant mdtDeviceModbusWagoModule::specialModuleValueMax()
+{
+  return QVariant();
+}
+
+QVariant mdtDeviceModbusWagoModule::specialModuleValueBitsCount()
+{
+  return QVariant();
+}
+
+QVariant mdtDeviceModbusWagoModule::specialModuleValueLsbIndex()
+{
+  return QVariant();
+}
+
+QVariant mdtDeviceModbusWagoModule::specialModuleValueSigned()
+{
+  return QVariant();
+}
+
+QVariant mdtDeviceModbusWagoModule::specialModuleIsInput()
+{
+  return QVariant();
+}
+
+QVariant mdtDeviceModbusWagoModule::specialModuleIosCount()
+{
+  return QVariant();
 }
 
 QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMin(int partNumber) const

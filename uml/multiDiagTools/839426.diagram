@@ -2,19 +2,19 @@ format 76
 
 classcanvas 128002 class_ref 532226 // mdtDeviceModbusWago
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 119 555.9 2000
+  xyz 119 555.7 2000
 end
 classcanvas 128130 class_ref 874498 // mdtDeviceModbusWagoModule
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 505 703.9 2000
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 609.8 890.9 2000
 end
 classcanvas 128642 class_ref 309250 // mdtDevice
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 327.9 5.5 2006
+  xyz 327.5 5.5 2006
 end
 classcanvas 128898 class_ref 518274 // mdtDeviceModbus
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 79.2 66 3005
+  xyz 79.8 66 3005
 end
 classcanvas 129538 class_ref 874626 // mdtDeviceModbusWagoSetupDialog
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -22,42 +22,42 @@ classcanvas 129538 class_ref 874626 // mdtDeviceModbusWagoSetupDialog
 end
 classcanvas 129666 class_ref 538882 // mdtAbstractIo
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 218.1 969 2000
+  xyz 218.9 969.2 2000
 end
 classcanvas 129794 class_ref 539010 // mdtAnalogIo
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 90.1 1136.5 2006
+  xyz 90.7 1136.3 2006
 end
 classcanvas 130050 class_ref 539138 // mdtDigitalIo
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 268.2 1147.9 2006
+  xyz 268.4 1147.5 2006
 end
 classcanvas 130562 class_ref 874882 // mdtDeviceModbusWagoCoupler
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 39.2 717.6 2005
+  xyz 39 717.2 2005
 end
 classcanvas 130818 class_ref 518658 // mdtAbstractIoWidget
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 77.2 1230.4 3005
+  xyz 77.4 1230.6 3005
 end
 classcanvas 131458 class_ref 875010 // mdtDeviceModbusWagoModuleAttribute
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 848.2 515.4 2000
+  xyz 848 515.2 2000
 end
 classcanvas 131714 class_ref 598786 // mdtAbstractPortSetupDialog
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 719.2 127.2 3005
+  xyz 719.8 127.8 3005
 end
 classcanvas 131842 class_ref 545666 // mdtDeviceIos
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 145.6 785.2 3011
+  xyz 145.4 785.2 3011
 end
 relationcanvas 128258 relation_ref 1074818 // <directional composition>
   decenter_begin 975
   decenter_end 418
   from ref 128002 z 2001 to ref 128130
-  role_a_pos 690 691 3000 no_role_b
-  multiplicity_a_pos 739 722 3000 no_multiplicity_b
+  role_a_pos 721 867 3000 no_role_b
+  multiplicity_a_pos 669 867 3000 no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 604546 // <generalisation>
   from ref 128898 z 3006 to ref 128642
@@ -94,8 +94,8 @@ end
 relationcanvas 131586 relation_ref 1075586 // <directional composition>
   decenter_begin 898
   from ref 128130 z 2001 to ref 131458
-  role_a_pos 1049 594 3000 no_role_b
-  multiplicity_a_pos 997 594 3000 no_multiplicity_b
+  role_a_pos 993 594 3000 no_role_b
+  multiplicity_a_pos 940 594 3000 no_multiplicity_b
 end
 relationcanvas 131970 relation_ref 641794 // <directional aggregation>
   from ref 131842 z 3012 to ref 129794
@@ -124,12 +124,12 @@ relationcanvas 132482 relation_ref 642306 // <unidirectional association>
 end
 relationcanvas 132610 relation_ref 1082370 // <directional composition>
   from ref 128130 z 2007 to ref 129794
-  role_a_pos 214 1133 3000 no_role_b
-  multiplicity_a_pos 213 1164 3000 no_multiplicity_b
+  role_a_pos 196 1108 3000 no_role_b
+  multiplicity_a_pos 195 1139 3000 no_multiplicity_b
 end
 relationcanvas 132738 relation_ref 1082498 // <directional composition>
   from ref 128130 z 2007 to ref 130050
-  role_a_pos 387 1143 3000 no_role_b
-  multiplicity_a_pos 387 1174 3000 no_multiplicity_b
+  role_a_pos 361 1117 3000 no_role_b
+  multiplicity_a_pos 360 1148 3000 no_multiplicity_b
 end
 end

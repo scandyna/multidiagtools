@@ -56,7 +56,7 @@ class mdtDeviceModbusWagoModule
    *
    * If autoDeleteIos is true, internal I/O's are deleted
    */
-  ~mdtDeviceModbusWagoModule();
+  virtual ~mdtDeviceModbusWagoModule();
 
   /*! \brief Clear I/O module
    *
@@ -201,6 +201,8 @@ class mdtDeviceModbusWagoModule
    *
    * Note: this method only set cached register data bytes,
    *  to set them to physical module, use writeRegisters() .
+   *
+   * \pre channel must be in a valid range
    */
   void setRegisterDataWord(int channel, quint16 word);
 
@@ -219,18 +221,24 @@ class mdtDeviceModbusWagoModule
    *
    * Note: this method only set cached register data bytes,
    *  to set them to physical module, use writeRegisters() .
+   *
+   * \pre channel must be in a valid range
    */
   void setRegisterDataBytes(int channel, quint8 byteD1, quint8 byteD0);
 
   /*! \brief Get register data byte D1 or D3 or ...
    *
    * \sa setRegisterDataBytes()
+   *
+   * \pre channel must be in a valid range
    */
   quint8 registerDataByteD1(int channel);
 
   /*! \brief Get register data byte D0 or D2 or ...
    *
    * \sa setRegisterDataBytes()
+   *
+   * \pre channel must be in a valid range
    */
   quint8 registerDataByteD0(int channel);
 
@@ -262,6 +270,62 @@ class mdtDeviceModbusWagoModule
    * \sa setControlByte()
    */
   bool writeControlBytes(int firstChannel, int lastChannel, bool needDeviceSetupState);
+
+  /*! \brief Get the min value of a range of special (analog) module
+   *
+   * Subclass that implement special module should re-implement this method.
+   *
+   * Default implementation returns a invalid QVariant
+   */
+  virtual QVariant specialModuleValueMin();
+
+  /*! \brief Get the max value of a range of special (analog) module
+   *
+   * Subclass that implement special module should re-implement this method.
+   *
+   * Default implementation returns a invalid QVariant
+   */
+  virtual QVariant specialModuleValueMax();
+
+  /*! \brief Get the number of bits (including sign bit) used to represent a value of special (analog) module
+   *
+   * Subclass that implement special module should re-implement this method.
+   *
+   * Default implementation returns a invalid QVariant
+   */
+  virtual QVariant specialModuleValueBitsCount();
+
+  /*! \brief Get index of the first bit (LSB) that represents the value of special (analog) module
+   *
+   * Subclass that implement special module should re-implement this method.
+   *
+   * Default implementation returns a invalid QVariant
+   */
+  virtual QVariant specialModuleValueLsbIndex();
+
+  /*! \brief Check if a special (analog) module returns a signed value or not
+   *
+   * Subclass that implement special module should re-implement this method.
+   *
+   * Default implementation returns a invalid QVariant
+   */
+  virtual QVariant specialModuleValueSigned();
+
+  /*! \brief Check if a special module returns is a inputs module
+   *
+   * Subclass that implement special module should re-implement this method.
+   *
+   * Default implementation returns a invalid QVariant
+   */
+  virtual QVariant specialModuleIsInput();
+
+  /*! \brief Get I/O's count of a special module
+   *
+   * Subclass that implement special module should re-implement this method.
+   *
+   * Default implementation returns a invalid QVariant
+   */
+  virtual QVariant specialModuleIosCount();
 
  private:
 
