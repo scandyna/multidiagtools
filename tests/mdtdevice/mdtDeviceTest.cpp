@@ -1640,7 +1640,8 @@ void mdtDeviceTest::modbusTest()
 
 void mdtDeviceTest::modbusWagoModuleTest()
 {
-  mdtDeviceModbusWagoModule m(true);
+  mdtDeviceModbusWago *device = new mdtDeviceModbusWago;
+  mdtDeviceModbusWagoModule m(true, device);
   mdtAnalogIo *aio;
   mdtDigitalIo *dio;
 
@@ -1830,6 +1831,8 @@ void mdtDeviceTest::modbusWagoModuleTest()
   QCOMPARE(dio->addressRead(), 5);
   QCOMPARE(dio->addressWrite(), 15);
 
+  // free
+  delete device;
 }
 
 void mdtDeviceTest::modbusWagoTest()

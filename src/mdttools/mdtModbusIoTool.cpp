@@ -28,6 +28,7 @@
 #include "mdtModbusTcpPortManager.h"
 #include "mdtModbusTcpPortSetupDialog.h"
 #include "mdtPortInfo.h"
+#include "mdtErrorOut.h"
 #include <QList>
 #include <QMessageBox>
 
@@ -53,6 +54,9 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   Q_ASSERT(pvDeviceModbusWago->portManager() != 0);
   connect(pvDeviceModbusWago->portManager(), SIGNAL(stateChangedForUi(int, const QString&, int, bool)), pvStatusWidget, SLOT(setState(int, const QString&, int, bool)));
 
+  /// \note Test
+  connect(this, SIGNAL(errorEvent()), pvDeviceModbusWago->portManager(), SIGNAL(pmUnhandledErrorEvent()));
+  
   // Set some flags
   pvReady = false;
   pvConnectingToNode = false;
@@ -197,8 +201,14 @@ void mdtModbusIoTool::connectToNode()
   }
   showStatusMessage(tr("I/O detection ..."));
   if(!pvDeviceModbusWago->detectIos(pvDeviceIos)){
-    showStatusMessage(tr("I/O detection failed"));
+    QString details = tr("This probably caused by presence of a unsupported module.");
+    details += tr("Take a look at log file for more details.");
+    details += "\n" + tr("Path to log file: ");
+    details += mdtErrorOut::logFile();
+    showStatusMessage(tr("I/O detection failed"), details);
+    ///pvDeviceModbusWago->portManager()->stop();
     setStateConnectingToNodeFinished();
+    emit errorEvent();
     return;
   }
   pvDeviceModbusWago->setIos(pvDeviceIos, true);
@@ -216,7 +226,7 @@ void mdtModbusIoTool::disconnectFromNode()
   mdtModbusTcpPortManager *m = pvDeviceModbusWago->modbusTcpPortManager();
   Q_ASSERT(m != 0);
 
-  ///m->closePort();
+  pvStatusWidget->clearMessage();
   m->stop();
   pvDeviceIosWidget->clearIoWidgets();
 }

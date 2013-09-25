@@ -215,6 +215,7 @@ void mdtPortManager::stop()
   Q_ASSERT(pvStateMachine != 0);
 
   if(isClosed()){
+    qDebug() << "mdtPortManager::stop() allready closed";
     return;
   }
   stopTransactionTimer();

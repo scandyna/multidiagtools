@@ -82,6 +82,14 @@ class mdtPortStatusWidget : public QWidget
    */
   void setPermanentText(const QString &text);
 
+  /*! \brief Clear current message
+   *
+   * Clear message showed with showMessage()
+   *
+   * After calling this method, netx call of setState() will update text.
+   */
+  void clearMessage();
+
  public slots:
 
   /*! \brief Set state
@@ -92,7 +100,9 @@ class mdtPortStatusWidget : public QWidget
 
   /*! \brief Used to show a message and details
    *
-   * \param message Message to show
+   * Note: calling this slot with a empty message has the same effect than clearMessage() .
+   *
+   * \param message Message to show.
    * \param details Details to show
    * \param timeout If > 0, message will be cleared after timeout [ms]
    */

@@ -6,7 +6,7 @@ statecanvas 128130 state_ref 170498 // PortClosed
 end
 statecanvas 128642 state_ref 171010 // PortError
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 645.35 384.05 2000 439 74
+  xyzwh 645.35 384.05 2000 439 91
 end
 pseudostatecanvas 129666 pseudostate_ref 161410 // initial
    xyz 104.9 128.4 2000
@@ -61,12 +61,12 @@ transitioncanvas 133506 transition_ref 184450 // pmAllThreadsStoppedEvent
 end
 transitioncanvas 142338 transition_ref 187778 // pmUnhandledErrorEvent
   
-  from ref 129922 z 2001 label "pmUnhandledErrorEvent" xyz 440 401 2001 to ref 128642
+  from ref 129922 z 2001 label "pmUnhandledErrorEvent" xyz 440 404 2001 to ref 128642
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 143746 transition_ref 196226 // pmStopThreadsEvent
   
-  from ref 128642 z 2001 label "pmStopThreadsEvent" xyz 932 493 2001 to ref 132482
+  from ref 128642 z 2001 label "pmStopThreadsEvent" xyz 939.5 501.5 2001 to ref 132482
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 144386 transition_ref 196482 // pmAllThreadsReadyEvent
@@ -77,10 +77,10 @@ transitioncanvas 144386 transition_ref 196482 // pmAllThreadsReadyEvent
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 144514 transition_ref 196610 // pmUnhandledErrorEvent
-  decenter_begin 954
+  decenter_begin 953
   decenter_end 541
   
-  from ref 144258 z 2007 label "pmUnhandledErrorEvent" xyz 705 581 2007 to ref 128642
+  from ref 144258 z 2007 label "pmUnhandledErrorEvent" xyz 705 589.5 2007 to ref 128642
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 144642 transition_ref 196738 // pmStopThreadsEvent
@@ -94,7 +94,7 @@ transitioncanvas 145666 transition_ref 211074 // pmConnectionFailedEvent
   decenter_begin 430
   decenter_end 223
   
-  from ref 144258 z 2007 label "pmConnectionFailedEvent" xyz 555 637 3000 to ref 128642
+  from ref 144258 z 2007 label "pmConnectionFailedEvent" xyz 555 645.5 2007 to ref 128642
   write_horizontally default show_definition default drawing_language default
 end
 line 143618 -_-_

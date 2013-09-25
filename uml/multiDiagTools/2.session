@@ -1,19 +1,18 @@
-window_sizes 1024 718 370 648 640 0
+window_sizes 1280 1001 370 904 923 0
 diagrams
   classdiagram_ref 839426 // mdtDeviceModbusWago
     960 923 80 3 108 0
   classdiagram_ref 845954 // mdtDeviceModbusWagoModule
     768 738 80 4 0 0
   active  classdiagram_ref 846082 // mdtDeviceModbusWagoModuleRtd
-    648 640 80 3 252 0
+    904 923 80 3 468 0
 end
 show_stereotypes
-selected operation_ref 1593218 // specialModuleIosCount
+selected operation_ref 1573762 // mdtDeviceModbusWagoModule
 open
-  attribute_ref 869762 // pvValue
+  
+  package_ref 128002 // mdtutils
   classview_ref 240514 // mdtDevice
-  operation_ref 1567234 // setValues
-  operation_ref 1566978 // valuesBool
   classrelation_ref 1093634 // pvAnalogIos (<directional composition>)
   attribute_ref 877698 // pvAutoDeleteIos
   operation_ref 1577218 // firstAddressRead

@@ -99,6 +99,11 @@ const QList<int> &mdtDeviceModbus::registerValues() const
   return pvTcpPortManager->registerValues();
 }
 
+bool mdtDeviceModbus::setRegisterValues(int startAddress, QList<int> &values)
+{
+  return pvTcpPortManager->setRegisterValues(startAddress, values);
+}
+
 void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);

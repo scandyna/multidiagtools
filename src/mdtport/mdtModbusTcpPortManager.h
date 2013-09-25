@@ -192,7 +192,8 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Note: to get analog I/O values, the mdtDevice API should be used.
    *
    * \return True on success. Values are the available with registerValues()
-   * \pre address and n must be > 0
+   * \pre address must be >= 0
+   * \pre n must be > 0
    */
   bool getRegisterValues(int address, int n);
 
@@ -202,6 +203,17 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Note that values are keeped until next call of getRegisterValues().
    */
   const QList<int> &registerValues() const;
+
+  /*! \brief Helper method for register service
+   *
+   * Usefull to set register values (f.ex. configurations regsisters, ...).
+   *
+   * Note: to set analog I/O values, the mdtDevice API should be used.
+   *
+   * \return True on success.
+   * \pre startAddress must be >= 0
+   */
+  bool setRegisterValues(int startAddress, QList<int> &values);
 
   /*! \brief Send PDU on TCP port
    *

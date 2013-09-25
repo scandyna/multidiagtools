@@ -454,7 +454,10 @@ bool mdtModbusTcpPortManager::getRegisterValues(int address, int n)
     return false;
   }
   // Get reply and decode
-  if(codec.decode(readenFrame(transactionId)) < 0){
+  if(codec.decode(readenFrame(transactionId)) != 4){
+    mdtError e(MDT_DEVICE_ERROR, "Received unexptected response code, expeced 0x04 (FC4)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
     return false;
   }
   // Store values
@@ -474,6 +477,44 @@ bool mdtModbusTcpPortManager::getRegisterValues(int address, int n)
 const QList<int> &mdtModbusTcpPortManager::registerValues() const
 {
   return pvRegisterValues;
+}
+
+bool mdtModbusTcpPortManager::setRegisterValues(int startAddress, QList<int> &values)
+{
+  Q_ASSERT(startAddress >= 0);
+
+  int transactionId;
+  mdtPortTransaction *transaction;
+  QByteArray pdu;
+  mdtFrameCodecModbus codec;
+
+  // Setup MODBUS PDU
+  pdu = codec.encodeWriteMultipleRegisters(startAddress, values);
+  if(pdu.isEmpty()){
+    return false;
+  }
+  // Get a new transaction
+  transaction = getNewTransaction();
+  // Send query
+  transaction->setQueryReplyMode(true);
+  transaction->setData(pdu);
+  transactionId = sendData(transaction);
+  if(transactionId < 0){
+    return false;
+  }
+  // Wait on result (use device's defined timeout)
+  if(!waitTransactionDone(transactionId)){
+    return false;
+  }
+  // Get reply and decode
+  if(codec.decode(readenFrame(transactionId)) != 16){
+    mdtError e(MDT_DEVICE_ERROR, "Received unexptected response code, expeced 0x10 (FC16)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    return false;
+  }
+
+  return true;
 }
 
 int mdtModbusTcpPortManager::sendData(mdtPortTransaction *transaction)

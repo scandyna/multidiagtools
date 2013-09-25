@@ -52,6 +52,10 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
    */
   void setAvailableTranslations(const QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey);
 
+signals:
+  
+  void errorEvent();
+  
  public slots:
 
   /*! \brief Retranslate

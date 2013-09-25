@@ -49,8 +49,10 @@ class mdtDeviceModbusWagoModule
   /*! \brief Constructor
    *
    * \param autoDeleteIos If true, internally created I/O's are deleted when this object is destroyed
+   * \param device Pointer to device (used for register service access)
+   * \pre device must be a valid pointer
    */
-  mdtDeviceModbusWagoModule(bool autoDeleteIos);
+  mdtDeviceModbusWagoModule(bool autoDeleteIos, mdtDeviceModbusWago *device);
 
   /*! \brief Destructor
    *
@@ -62,8 +64,10 @@ class mdtDeviceModbusWagoModule
    *
    * If autoDeleteIos is set, memory is freed for internal I/O
    *  (mdtAbstractIo pointers will also become invalid)
+   *
+   * \param forceDeleteIos Will delete I/O's undependant of autoDeleteIos flag.
    */
-  void clear();
+  void clear(bool forceDeleteIos = false);
 
   /*! \brief Setup module
    *
@@ -246,6 +250,12 @@ class mdtDeviceModbusWagoModule
    *
    * Will read status (Sx) and data (Dx) bytes from physical module
    *  and update internally cached values.
+   *
+   * Note: this method will not send a specific query.
+   *  For this, control byte must be setup regarding specific module and
+   *  sent to device with writeControlBytes() first.
+   *
+   * \pre firstChannel and lastChannel must be in a valid range
    */
   bool readRegisters(int firstChannel, int lastChannel, bool needDeviceSetupState);
 
@@ -260,6 +270,7 @@ class mdtDeviceModbusWagoModule
    * Will read status byte (Sx) from physical module and update internally cached value.
    *
    * \sa statusByte()
+   * \pre firstChannel and lastChannel must be in a valid range
    */
   bool readStatusBytes(int firstChannel, int lastChannel, bool needDeviceSetupState);
 
@@ -447,6 +458,8 @@ class mdtDeviceModbusWagoModule
   QList<QPair<int, quint8> > pvStatusBytes;
   QList<QPair<int, quint8> > pvControlBytes;
   QList<QPair<int, quint16> > pvRegisterDataWords;
+  // Device
+  mdtDeviceModbusWago *pvDevice;
 
   ///<mdtDeviceModbusWagoModuleAttribute> pvAttributes;
 };

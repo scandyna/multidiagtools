@@ -20,13 +20,19 @@
  ****************************************************************************/
 #include "mdtDeviceModbusWagoModule.h"
 #include "mdtDeviceModbusWago.h"
+#include "mdtPortManager.h"
 #include "mdtAnalogIo.h"
 #include "mdtDigitalIo.h"
 #include "mdtError.h"
 
-mdtDeviceModbusWagoModule::mdtDeviceModbusWagoModule(bool autoDeleteIos)
+#include <QDebug>
+
+mdtDeviceModbusWagoModule::mdtDeviceModbusWagoModule(bool autoDeleteIos, mdtDeviceModbusWago *device)
 {
+  Q_ASSERT(device != 0);
+
   pvAutoDeleteIos = autoDeleteIos;
+  pvDevice = device;
   pvType = Unknown;
   pvPartNumber = 0;
 }
@@ -36,11 +42,11 @@ mdtDeviceModbusWagoModule::~mdtDeviceModbusWagoModule()
   clear();
 }
 
-void mdtDeviceModbusWagoModule::clear()
+void mdtDeviceModbusWagoModule::clear(bool forceDeleteIos)
 {
   pvType = Unknown;
   pvPartNumber = 0;
-  if(pvAutoDeleteIos){
+  if((pvAutoDeleteIos)||(forceDeleteIos)){
     qDeleteAll(pvAnalogIos);
     qDeleteAll(pvDigitalIos);
   }
@@ -323,18 +329,102 @@ quint8 mdtDeviceModbusWagoModule::registerDataByteD0(int channel)
   return (pvRegisterDataWords.at(channel).second & 0x00FF);
 }
 
+/// \todo Implement needDeviceSetupState
 bool mdtDeviceModbusWagoModule::readRegisters(int firstChannel, int lastChannel, bool needDeviceSetupState)
 {
+  Q_ASSERT(pvDevice != 0);
+  Q_ASSERT(firstChannel >= 0);
+  Q_ASSERT(lastChannel >= 0);
+  Q_ASSERT(lastChannel < pvStatusBytes.size());
+  Q_ASSERT(lastChannel < pvRegisterDataWords.size());
+  Q_ASSERT(firstChannel <= lastChannel);
+
+  int startAddress;
+  int registersCount;
+  int channel;
+
+  /**
+  if(needDeviceSetupState && (pvDevice->currentState() != mdtPortManager::Setup)){
+  }
+  */
+  // Read registers from device
+  startAddress = pvStatusBytes.at(0).first;
+  registersCount = pvRegisterDataWords.at(lastChannel).first - startAddress + 1;
+  qDebug() << "Module - readRegisters(): startAddress: " << startAddress << " , qty: " << registersCount;
+  if(!pvDevice->getRegisterValues(startAddress, registersCount)){
+    mdtError e(MDT_DEVICE_ERROR, "Device: " + pvDevice->name() + " : unable to get register values from device", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return false;
+  }
+  if(pvDevice->registerValues().size() != registersCount){
+    mdtError e(MDT_DEVICE_ERROR, "Device: " + pvDevice->name() + " : received unpexpected count of register values from device", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return false;
+  }
+  // Update cache
+  Q_ASSERT(pvDevice->registerValues().size() == (lastChannel + 1));
+  for(channel = firstChannel; channel <= lastChannel; channel += 2){
+    pvStatusBytes[channel].second = pvDevice->registerValues().at(channel) & 0x00FF;
+    pvRegisterDataWords[channel].second = pvDevice->registerValues().at(channel + 1);
+  }
+  qDebug() << "Module - readRegisters(): status bytes : " << pvStatusBytes;
+  qDebug() << "Module - readRegisters(): register data: " << pvRegisterDataWords;
+
+  return true;
 }
 
+/// \todo Implement needDeviceSetupState
 bool mdtDeviceModbusWagoModule::writeRegisters(int firstChannel, int lastChannel, bool needDeviceSetupState)
 {
 }
 
+/// \todo Implement needDeviceSetupState
 bool mdtDeviceModbusWagoModule::readStatusBytes(int firstChannel, int lastChannel, bool needDeviceSetupState)
 {
+  Q_ASSERT(pvDevice != 0);
+  Q_ASSERT(firstChannel >= 0);
+  Q_ASSERT(lastChannel >= 0);
+  Q_ASSERT(lastChannel < pvStatusBytes.size());
+  Q_ASSERT(lastChannel < pvRegisterDataWords.size());
+  Q_ASSERT(firstChannel <= lastChannel);
+
+  int startAddress;
+  int registersCount;
+  int channel;
+
+  /**
+  if(needDeviceSetupState && (pvDevice->currentState() != mdtPortManager::Setup)){
+  }
+  */
+  // Read registers from device
+  startAddress = pvStatusBytes.at(0).first;
+  registersCount = pvStatusBytes.at(lastChannel).first - startAddress + 1;
+  qDebug() << "Module - readStatusBytes(): startAddress: " << startAddress << " , qty: " << registersCount;
+  if(!pvDevice->getRegisterValues(startAddress, registersCount)){
+    mdtError e(MDT_DEVICE_ERROR, "Device: " + pvDevice->name() + " : unable to get register values from device", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return false;
+  }
+  if(pvDevice->registerValues().size() != registersCount){
+    mdtError e(MDT_DEVICE_ERROR, "Device: " + pvDevice->name() + " : received unpexpected count of register values from device", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return false;
+  }
+  // Update cache
+  Q_ASSERT(pvDevice->registerValues().size() == (lastChannel + 1));
+  for(channel = firstChannel; channel <= lastChannel; channel += 2){
+    pvStatusBytes[channel].second = pvDevice->registerValues().at(channel) & 0x00FF;
+  }
+  qDebug() << "Module - readStatusBytes(): status bytes : " << pvStatusBytes;
+
+  return true;
 }
 
+/// \todo Implement needDeviceSetupState
 bool mdtDeviceModbusWagoModule::writeControlBytes(int firstChannel, int lastChannel, bool needDeviceSetupState)
 {
 }

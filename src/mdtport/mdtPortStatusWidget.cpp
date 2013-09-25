@@ -152,6 +152,16 @@ void mdtPortStatusWidget::setPermanentText(const QString &text)
   lbPermanentTextLabel->setText(text);
 }
 
+void mdtPortStatusWidget::clearMessage()
+{
+  pvBackToStateTextTimer->stop();
+  pvShowingMessage = false;
+  lbMessage->clear();
+  mbDetails->setText(QString());
+  mbDetails->setInformativeText("");
+  pbDetails->setEnabled(false);
+}
+
 void mdtPortStatusWidget::setState(int id, const QString & text, int ledColorId, bool ledIsOn)
 {
   // Set LED
@@ -166,6 +176,11 @@ void mdtPortStatusWidget::setState(int id, const QString & text, int ledColorId,
 
 void mdtPortStatusWidget::showMessage(const QString &message, const QString &details, int timeout)
 {
+  if(message.isEmpty()){
+    clearMessage();
+    return;
+  }
+  pvBackToStateTextTimer->stop();
   pvShowingMessage = true;
   lbMessage->setText(message);
   if(!details.isEmpty()){

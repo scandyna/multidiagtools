@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 45
+  revision 46
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3407,6 +3407,7 @@ ${inlines}
 
       state 171010 "PortError"
 	  uml_on_entry "notifyErrorToUi , emit pmStopThreadsEvent"
+	  uml_on_exit "clearMessage"
 	transition 184066 "allThreadsStoppedEvent"
 	  on state_ref 191618 // Stopped
 	  external 

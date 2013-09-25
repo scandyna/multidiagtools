@@ -91,6 +91,18 @@ class mdtDeviceModbus : public mdtDevice
    */
   const QList<int> &registerValues() const;
 
+  /*! \brief Helper method for register service
+   *
+   * Usefull to set register values (f.ex. configurations regsisters, ...).
+   *
+   * Note: to set analog I/O values, the mdtDevice API should be used.
+   *
+   * \return True on success.
+   * \pre startAddress must be >= 0
+   * \sa mdtModbusTcpPortManager::setRegisterValues()
+   */
+  bool setRegisterValues(int startAddress, QList<int> &values);
+
  private slots:
 
   /*! \brief Decode incoming frames
