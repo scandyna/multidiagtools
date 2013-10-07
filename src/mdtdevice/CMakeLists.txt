@@ -33,6 +33,7 @@ set (SOURCES_FILES
           mdtDeviceModbus.cpp
           mdtDeviceModbusWago.cpp
           mdtDeviceModbusWagoModule.cpp
+          mdtDeviceModbusWagoModuleRtd.cpp
           mdtDeviceScpi.cpp
           mdtDeviceU3606A.cpp
           mdtDeviceDSO1000A.cpp

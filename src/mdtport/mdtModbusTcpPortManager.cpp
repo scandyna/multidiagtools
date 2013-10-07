@@ -433,6 +433,7 @@ bool mdtModbusTcpPortManager::getRegisterValues(int address, int n)
   mdtFrameCodecModbus codec;
   int i;
 
+  qDebug() << "mdtModbusTcpPortManager::getRegisterValues() - start address: " << address << " - end address: " << address + n - 1;
   // Clear previous results
   pvRegisterValues.clear();
   // Setup MODBUS PDU
@@ -489,6 +490,7 @@ bool mdtModbusTcpPortManager::setRegisterValues(int startAddress, QList<int> &va
   mdtFrameCodecModbus codec;
 
   // Setup MODBUS PDU
+  qDebug() << "mdtModbusTcpPortManager::setRegisterValues() - start address: " << startAddress << " - end address: " << startAddress + values.size() - 1;
   pdu = codec.encodeWriteMultipleRegisters(startAddress, values);
   if(pdu.isEmpty()){
     return false;

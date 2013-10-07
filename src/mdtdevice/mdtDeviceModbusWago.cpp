@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtDeviceModbusWago.h"
 #include "mdtDeviceModbusWagoModule.h"
+#include "mdtDeviceModbusWagoModuleRtd.h"
 #include "mdtDeviceInfo.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtFrameCodecModbus.h"
@@ -209,7 +210,7 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   int analogOutputsCnt;
   int digitalInputsCnt;
   int digitalOutputsCnt;
-  int i, k;
+  int i;
   quint16 word;
   QVariant var;
   mdtDeviceModbusWagoModule *module;
@@ -251,6 +252,13 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
     e.commit();
     return false;
   }
+  
+  qDebug() << "Analog  IN  count: " << analogInputsCount();
+  qDebug() << "Analog  OUT count: " << analogOutputsCount();
+  qDebug() << "Digital IN  count: " << digitalInputsCount();
+  qDebug() << "Digital OUT count: " << digitalOutputsCount();
+
+  
   // Get modules configuration
   /// \bug If number of requested modules is > 62, this hangs up with 750-352 filedbus (possibly a bug in mdtLib..)
   if(!getRegisterValues(0x2030, 62)){
@@ -280,6 +288,8 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
     e.commit();
     return false;
   }
+  
+  
   /// \todo Handle adrress mapping of bus coupler (can be a problem with > 256 I/O on 750-352 f.ex.)
   aiAddressRead = 0;
   aoAddressRead = 0x0200;
@@ -296,12 +306,24 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
     /// \todo Check for known special modules and get instance of correct class
     /// \todo Because special modules have to communicate, addressing must be done here directly
     // 1) Check if word is a part number of a known special module (f.ex. 464)
-    
+    qDebug() << "I/O setup word: " << word  << " ...";
     // Get a new module object - We check if a special instance is needed - Module must not delete created I/Os itself
     module = 0;
     switch(word){
       case 464:     // Special RTD module
         qDebug() << "750-464 module ...";
+        module = new mdtDeviceModbusWagoModuleRtd(false, this);
+        // Because of register access, this module is mapped to analog outputs process image
+        ///if(module->getSpecialModuleSetup(464, aoAddressRead, aoAddressWrite)){
+        if(module->getSpecialModuleSetup(464, 512, 0)){
+          aoAddressRead = module->lastAddressRead() + 1;
+          aoAddressWrite = module->lastAddressWrite() + 1;
+          ios->addAnalogInputs(module->analogIos());
+        }else{
+          module->clear(true);
+          delete module;
+          module = 0;
+        }
         break;
       default:      // Common I/O module
         module = new mdtDeviceModbusWagoModule(false, this);
@@ -374,71 +396,7 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
     
     // 5) update current address, add module's I/Os, ...
     
-    // Setup a new module - Module must not delete I/O's itself
-    ///module = new mdtDeviceModbusWagoModule(false, this);
-    /**
-    if(module->setupFromRegisterWord(word)){
-      pvModules.append(module);
-    }else{
-      mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": setup failed on a module (setup word: " + QString::number(word) + ")", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-      e.commit();
-      // We have to free I/O's created by each module
-      module->clear(true);
-      delete module;
-      for(k = 0; k < pvModules.size(); ++k){
-        Q_ASSERT(pvModules.at(k) != 0);
-        pvModules.at(k)->clear(true);
-      }
-      qDeleteAll(pvModules);
-      pvModules.clear();
-      return false;
-    }
-    */
   }
-  // Add each module's I/Os to container
-  /// \todo Handle adrress mapping of bus coupler (can be a problem with > 256 I/O on 750-352 f.ex.)
-  /**
-  aiAddressRead = 0;
-  aoAddressRead = 0x0200;
-  aoAddressWrite = 0;
-  diAddressRead = 0;
-  doAddressRead = 0x0200;
-  doAddressWrite = 0;
-  */
-  /**
-  for(i = 0; i < pvModules.size(); ++i){
-    module = pvModules.at(i);
-    Q_ASSERT(module != 0);
-    Q_ASSERT(module->type() != mdtDeviceModbusWagoModule::Unknown);
-    switch(module->type()){
-      case mdtDeviceModbusWagoModule::Unknown:
-        break;
-      case mdtDeviceModbusWagoModule::AnalogInputs:
-        module->setFirstAddress(aiAddressRead);
-        aiAddressRead = module->lastAddressRead() + 1;
-        ios->addAnalogInputs(module->analogIos());
-        break;
-      case mdtDeviceModbusWagoModule::AnalogOutputs:
-        module->setFirstAddress(aoAddressRead, aoAddressWrite);
-        aoAddressRead = module->lastAddressRead() + 1;
-        aoAddressWrite = module->lastAddressWrite() + 1;
-        ios->addAnalogOutputs(module->analogIos());
-        break;
-      case mdtDeviceModbusWagoModule::DigitalInputs:
-        module->setFirstAddress(diAddressRead);
-        diAddressRead = module->lastAddressRead() + 1;
-        ios->addDigitalInputs(module->digitalIos());
-        break;
-      case mdtDeviceModbusWagoModule::DigitalOutputs:
-        module->setFirstAddress(doAddressRead, doAddressWrite);
-        doAddressRead = module->lastAddressRead() + 1;
-        doAddressWrite = module->lastAddressWrite() + 1;
-        ios->addDigitalOutputs(module->digitalIos());
-        break;
-    }
-  }
-  */
   // Check coherence between detected setup and I/Os count
   if(ios->analogInputsCount() != analogInputsCnt){
     qDeleteAll(pvModules);

@@ -80,6 +80,9 @@ class mdtDeviceModbusWagoModule
    *  Note that no absolute addressing is done at this step.
    *  Call setFirstAddresse() for this.
    *
+   * Some special modules need to communicate with fieldbus coupler to access register service.
+   *  To get setup during I/O detection, use getSpecialModuleSetup() instead of this method.
+   *
    * \param word Word that contains I/O informations.
    */
   bool setupFromRegisterWord(quint16 word);
@@ -99,6 +102,19 @@ class mdtDeviceModbusWagoModule
    * \pre if module contains outputs and/or control bytes, addressWrite must be >= 0 .
    */
   void setFirstAddress(int addressRead, int addressWrite = -1);
+
+  /*! \brief Setup a special module
+   *
+   * Use this method during I/O detection. It has same goal as setupFromRegisterWord() ,
+   *  but is used for special modules.
+   *
+   * Because special module can need to communicate with fieldbus coupler,
+   *  first address is needed.
+   *
+   * Note: special module subclass must implement this method.
+   *  This default implementation does nothing and allways returns false.
+   */
+  virtual bool getSpecialModuleSetup(quint16 word, int firstAddressRead, int firstAddressWrite);
 
   /*! \brief Get first address (for read access) of module's process image
    *
@@ -159,7 +175,45 @@ class mdtDeviceModbusWagoModule
    */
   QString partNumberText() const;
 
+  /*! \brief Get device name
+   */
+  QString deviceName();
+
  protected:
+
+  /*! \brief Add a analog I/O
+   *
+   * \brief aio must be a valid pointer
+   */
+  void addAnalogIo(mdtAnalogIo *aio);
+
+  /*! \brief Add a digital I/O
+   *
+   * \brief dio must be a valid pointer
+   */
+  void addDigitalIo(mdtDigitalIo *dio);
+
+  /*! \brief Add registers
+   *
+   * Will add control byte, status byte and register data for given channelCount
+   */
+  void addRegisters(int channelCount, int firstAddressRead, int firstAddressWrite);
+
+  /*! \brief Clear registers
+   *
+   * Will remove control bytes, status bytes and data registers.
+   */
+  void clearRegisters();
+
+  /*! \brief Get number of channels regarding registers
+   *
+   * During I/O detection or channel count setup,
+   *  register count can be incoherent with I/O count.
+   *
+   * This method will return channel count only regarding
+   *  number of control/status/data register sizes.
+   */
+  int channelCountRegisters() const;
 
   /*! \brief Get the status byte for given channel
    *
@@ -262,6 +316,8 @@ class mdtDeviceModbusWagoModule
   /*! \brief Write register bytes for given range of channels
    *
    * Will write cached control (Cx) and data (Dx) bytes to physical module.
+   *
+   * \pre firstChannel and lastChannel must be in a valid range
    */
   bool writeRegisters(int firstChannel, int lastChannel, bool needDeviceSetupState);
 
@@ -279,8 +335,15 @@ class mdtDeviceModbusWagoModule
    * Will write cached control byte (Cx) to physical module.
    *
    * \sa setControlByte()
+   * \pre firstChannel and lastChannel must be in a valid range
    */
   bool writeControlBytes(int firstChannel, int lastChannel, bool needDeviceSetupState);
+
+  /*! \brief Wait some time
+   *
+   * \sa mdtDevice::wait()
+   */
+  void wait(int ms);
 
   /*! \brief Get the min value of a range of special (analog) module
    *
@@ -457,7 +520,8 @@ class mdtDeviceModbusWagoModule
   // List for register communication. QPair::first is address, QPair::second is data part
   QList<QPair<int, quint8> > pvStatusBytes;
   QList<QPair<int, quint8> > pvControlBytes;
-  QList<QPair<int, quint16> > pvRegisterDataWords;
+  ///QList<QPair<int, quint16> > pvRegisterDataWords;  /// \todo Don't store address here (is not possible becaus of read/write address)
+  QList<quint16> pvRegisterDataWords;
   // Device
   mdtDeviceModbusWago *pvDevice;
 

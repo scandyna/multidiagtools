@@ -52,8 +52,7 @@ void mdtDeviceModbusWagoModule::clear(bool forceDeleteIos)
   }
   pvAnalogIos.clear();
   pvDigitalIos.clear();
-  pvStatusBytes.clear();
-  pvControlBytes.clear();
+  clearRegisters();
 }
 
 bool mdtDeviceModbusWagoModule::setupFromRegisterWord(quint16 word)
@@ -134,6 +133,11 @@ void mdtDeviceModbusWagoModule::setFirstAddress(int addressRead, int addressWrit
   }
 }
 
+bool mdtDeviceModbusWagoModule::getSpecialModuleSetup(quint16 word, int firstAddressRead, int firstAddressWrite)
+{
+  return false;
+}
+
 int mdtDeviceModbusWagoModule::firstAddressRead() const
 {
   int firstAddress = -1;
@@ -153,7 +157,11 @@ int mdtDeviceModbusWagoModule::firstAddressRead() const
   }
   // Check status byte (register data bytes overlaps I/Os)
   if(pvStatusBytes.size() > 0){
-    firstAddress = qMin(firstAddress, pvStatusBytes.at(0).first);
+    if(firstAddress >= 0){
+      firstAddress = qMin(firstAddress, pvStatusBytes.at(0).first);
+    }else{
+      firstAddress = pvStatusBytes.at(0).first;
+    }
   }
 
   return firstAddress;
@@ -178,7 +186,11 @@ int mdtDeviceModbusWagoModule::firstAddressWrite() const
   }
   // Check control byte (register data bytes overlaps I/Os)
   if(pvControlBytes.size() > 0){
-    firstAddress = qMin(firstAddress, pvControlBytes.at(0).first);
+    if(firstAddress >= 0){
+      firstAddress = qMin(firstAddress, pvControlBytes.at(0).first);
+    }else{
+      firstAddress = pvControlBytes.at(0).first;
+    }
   }
 
   return firstAddress;
@@ -272,6 +284,60 @@ QString mdtDeviceModbusWagoModule::partNumberText() const
   return QString::number(pvPartNumber);
 }
 
+QString mdtDeviceModbusWagoModule::deviceName()
+{
+  Q_ASSERT(pvDevice != 0);
+
+  return pvDevice->name();
+}
+
+void mdtDeviceModbusWagoModule::addAnalogIo(mdtAnalogIo *aio)
+{
+  Q_ASSERT(aio != 0);
+
+  pvAnalogIos.append(aio);
+}
+
+void mdtDeviceModbusWagoModule::addDigitalIo(mdtDigitalIo *dio)
+{
+  Q_ASSERT(dio != 0);
+
+  pvDigitalIos.append(dio);
+}
+
+void mdtDeviceModbusWagoModule::addRegisters(int channelCount, int firstAddressRead, int firstAddressWrite)
+{
+  int i;
+  int currentAddressRead, currentAddressWrite;
+
+  currentAddressRead = firstAddressRead;
+  currentAddressWrite = firstAddressWrite;
+  for(i = 0; i < channelCount; ++i){
+    pvControlBytes.append(QPair<int, quint8>(currentAddressWrite, 0));
+    pvStatusBytes.append(QPair<int, quint8>(currentAddressRead, 0));
+    currentAddressWrite += 2;
+    currentAddressRead += 2;
+    ///pvRegisterDataWords.append(QPair<int, quint16>(currentAddressRead, 0)); /// \todo Gag avec adresses !!
+    pvRegisterDataWords.append((quint16)0);
+    ///++currentAddressRead;
+  }
+}
+
+void mdtDeviceModbusWagoModule::clearRegisters()
+{
+  pvControlBytes.clear();
+  pvStatusBytes.clear();
+  pvRegisterDataWords.clear();
+}
+
+int mdtDeviceModbusWagoModule::channelCountRegisters() const
+{
+  Q_ASSERT(pvStatusBytes.size() == pvControlBytes.size());
+  Q_ASSERT(pvRegisterDataWords.size() == pvControlBytes.size());
+
+  return pvControlBytes.size();
+}
+
 quint8 mdtDeviceModbusWagoModule::statusByte(int channel) const
 {
   Q_ASSERT((channel >= 0)&&(channel < pvStatusBytes.size()));
@@ -283,7 +349,9 @@ void mdtDeviceModbusWagoModule::setControlByte(int channel, quint8 byte)
 {
   Q_ASSERT((channel >= 0)&&(channel < pvControlBytes.size()));
 
+  qDebug() << "setControlByte() - byte [hex]: " << hex << byte;
   pvControlBytes[channel].second = byte;
+  qDebug() << "setControlByte() - pvControlBytes [hex]: " << hex << pvControlBytes;
 }
 
 quint8 mdtDeviceModbusWagoModule::controlByte(int channel) const
@@ -297,14 +365,16 @@ void mdtDeviceModbusWagoModule::setRegisterDataWord(int channel, quint16 word)
 {
   Q_ASSERT((channel >= 0)&&(channel < pvRegisterDataWords.size()));
 
-  pvRegisterDataWords[channel].second = word;
+  ///pvRegisterDataWords[channel].second = word;
+  pvRegisterDataWords[channel] = word;
 }
 
 quint16 mdtDeviceModbusWagoModule::registerDataWord(int channel) const
 {
   Q_ASSERT((channel >= 0)&&(channel < pvRegisterDataWords.size()));
 
-  return pvRegisterDataWords.at(channel).second;
+  ///return pvRegisterDataWords.at(channel).second;
+  return pvRegisterDataWords.at(channel);
 }
 
 void mdtDeviceModbusWagoModule::setRegisterDataBytes(int channel, quint8 byteD1, quint8 byteD0)
@@ -319,14 +389,16 @@ quint8 mdtDeviceModbusWagoModule::registerDataByteD1(int channel)
 {
   Q_ASSERT((channel >= 0)&&(channel < pvRegisterDataWords.size()));
 
-  return (pvRegisterDataWords.at(channel).second >> 8);
+  ///return (pvRegisterDataWords.at(channel).second >> 8);
+  return (pvRegisterDataWords.at(channel) >> 8);
 }
 
 quint8 mdtDeviceModbusWagoModule::registerDataByteD0(int channel)
 {
   Q_ASSERT((channel >= 0)&&(channel < pvRegisterDataWords.size()));
 
-  return (pvRegisterDataWords.at(channel).second & 0x00FF);
+  ///return (pvRegisterDataWords.at(channel).second & 0x00FF);
+  return (pvRegisterDataWords.at(channel) & 0x00FF);
 }
 
 /// \todo Implement needDeviceSetupState
@@ -341,15 +413,16 @@ bool mdtDeviceModbusWagoModule::readRegisters(int firstChannel, int lastChannel,
 
   int startAddress;
   int registersCount;
-  int channel;
+  int channel, i;
 
   /**
   if(needDeviceSetupState && (pvDevice->currentState() != mdtPortManager::Setup)){
   }
   */
   // Read registers from device
-  startAddress = pvStatusBytes.at(0).first;
-  registersCount = pvRegisterDataWords.at(lastChannel).first - startAddress + 1;
+  startAddress = pvStatusBytes.at(firstChannel).first;
+  registersCount = pvStatusBytes.at(lastChannel).first + 1 - startAddress + 1;
+  ///registersCount = pvRegisterDataWords.at(lastChannel).first - startAddress + 1;  /// \todo Change to status byte of last channel + 1......
   qDebug() << "Module - readRegisters(): startAddress: " << startAddress << " , qty: " << registersCount;
   if(!pvDevice->getRegisterValues(startAddress, registersCount)){
     mdtError e(MDT_DEVICE_ERROR, "Device: " + pvDevice->name() + " : unable to get register values from device", mdtError::Error);
@@ -357,6 +430,7 @@ bool mdtDeviceModbusWagoModule::readRegisters(int firstChannel, int lastChannel,
     e.commit();
     return false;
   }
+  qDebug() << "Module - readRegisters(): getRegisterValues() done - values [hex]: " << hex << pvDevice->registerValues();
   if(pvDevice->registerValues().size() != registersCount){
     mdtError e(MDT_DEVICE_ERROR, "Device: " + pvDevice->name() + " : received unpexpected count of register values from device", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
@@ -364,13 +438,25 @@ bool mdtDeviceModbusWagoModule::readRegisters(int firstChannel, int lastChannel,
     return false;
   }
   // Update cache
+  channel = firstChannel;
+  for(i = 0; i < pvDevice->registerValues().size(); i += 2){
+    Q_ASSERT((i + 1) < pvDevice->registerValues().size());
+    Q_ASSERT(channel < pvStatusBytes.size());
+    Q_ASSERT(channel < pvRegisterDataWords.size());
+    pvStatusBytes[channel].second = pvDevice->registerValues().at(i) & 0x00FF;
+    ///pvRegisterDataWords[channel].second = pvDevice->registerValues().at(i + 1);
+    pvRegisterDataWords[channel] = pvDevice->registerValues().at(i + 1);
+    ++channel;
+  }
+  /**
   Q_ASSERT(pvDevice->registerValues().size() == (lastChannel + 1));
   for(channel = firstChannel; channel <= lastChannel; channel += 2){
     pvStatusBytes[channel].second = pvDevice->registerValues().at(channel) & 0x00FF;
     pvRegisterDataWords[channel].second = pvDevice->registerValues().at(channel + 1);
   }
-  qDebug() << "Module - readRegisters(): status bytes : " << pvStatusBytes;
-  qDebug() << "Module - readRegisters(): register data: " << pvRegisterDataWords;
+  */
+  qDebug() << "Module - readRegisters(): status bytes [hex] : " << hex << pvStatusBytes;
+  qDebug() << "Module - readRegisters(): register data [hex]: " << hex << pvRegisterDataWords;
 
   return true;
 }
@@ -378,6 +464,41 @@ bool mdtDeviceModbusWagoModule::readRegisters(int firstChannel, int lastChannel,
 /// \todo Implement needDeviceSetupState
 bool mdtDeviceModbusWagoModule::writeRegisters(int firstChannel, int lastChannel, bool needDeviceSetupState)
 {
+  Q_ASSERT(pvDevice != 0);
+  Q_ASSERT(firstChannel >= 0);
+  Q_ASSERT(lastChannel >= 0);
+  Q_ASSERT(lastChannel < pvControlBytes.size());
+  Q_ASSERT(lastChannel < pvRegisterDataWords.size());
+  Q_ASSERT(firstChannel <= lastChannel);
+  Q_ASSERT(pvRegisterDataWords.size() == pvControlBytes.size());
+
+  int startAddress;
+  int i;
+  QList<int> values;
+
+  /**
+  if(needDeviceSetupState && (pvDevice->currentState() != mdtPortManager::Setup)){
+  }
+  */
+  // Get startAddress and registers count
+  startAddress = pvControlBytes.at(0).first;
+  // Build values list
+  for(i = 0; i < pvControlBytes.size(); ++i){
+    values.append(pvControlBytes.at(i).second);
+    ///values.append(pvRegisterDataWords.at(i).second);
+    values.append(pvRegisterDataWords.at(i));
+  }
+  qDebug() << "Module - writeRegisters(): startAddress: " << startAddress << " , qty: " << values.size();
+  qDebug() << "Module - writeRegisters(): values [hex]: " << hex << values;
+  // Write registers to device
+  if(!pvDevice->setRegisterValues(startAddress, values)){
+    mdtError e(MDT_DEVICE_ERROR, "Device: " + pvDevice->name() + " : unable to set register values to device", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return false;
+  }
+
+  return true;
 }
 
 /// \todo Implement needDeviceSetupState
@@ -387,7 +508,7 @@ bool mdtDeviceModbusWagoModule::readStatusBytes(int firstChannel, int lastChanne
   Q_ASSERT(firstChannel >= 0);
   Q_ASSERT(lastChannel >= 0);
   Q_ASSERT(lastChannel < pvStatusBytes.size());
-  Q_ASSERT(lastChannel < pvRegisterDataWords.size());
+  ///Q_ASSERT(lastChannel < pvRegisterDataWords.size());
   Q_ASSERT(firstChannel <= lastChannel);
 
   int startAddress;
@@ -427,6 +548,43 @@ bool mdtDeviceModbusWagoModule::readStatusBytes(int firstChannel, int lastChanne
 /// \todo Implement needDeviceSetupState
 bool mdtDeviceModbusWagoModule::writeControlBytes(int firstChannel, int lastChannel, bool needDeviceSetupState)
 {
+  Q_ASSERT(pvDevice != 0);
+  Q_ASSERT(firstChannel >= 0);
+  Q_ASSERT(lastChannel >= 0);
+  Q_ASSERT(lastChannel < pvControlBytes.size());
+  ///Q_ASSERT(lastChannel < pvRegisterDataWords.size());
+  Q_ASSERT(firstChannel <= lastChannel);
+
+  int startAddress;
+  int channel;
+  QList<int> values;
+
+  /**
+  if(needDeviceSetupState && (pvDevice->currentState() != mdtPortManager::Setup)){
+  }
+  */
+  // Write each control byte to device
+  for(channel = firstChannel; channel <= lastChannel; ++channel){
+    values.append(pvControlBytes.at(channel).second);
+    startAddress = pvControlBytes.at(channel).first;
+    qDebug() << "writeControlBytes() : startAddress: " << startAddress << " , values [hex]: " << hex << values;
+    if(!pvDevice->setRegisterValues(startAddress, values)){
+      mdtError e(MDT_DEVICE_ERROR, "Device: " + pvDevice->name() + " : unable to set register values to device", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+      e.commit();
+      return false;
+    }
+    values.clear();
+  }
+
+  return true;
+}
+
+void mdtDeviceModbusWagoModule::wait(int ms)
+{
+  Q_ASSERT(pvDevice != 0);
+
+  pvDevice->wait(ms);
 }
 
 QVariant mdtDeviceModbusWagoModule::specialModuleValueMin()
@@ -464,6 +622,7 @@ QVariant mdtDeviceModbusWagoModule::specialModuleIosCount()
   return QVariant();
 }
 
+/// \todo adapt
 QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMin(int partNumber) const
 {
   switch(partNumber){

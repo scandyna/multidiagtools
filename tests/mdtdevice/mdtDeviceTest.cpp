@@ -27,6 +27,7 @@
 #include "mdtModbusTcpPortManager.h"
 #include "mdtDeviceModbusWago.h"
 #include "mdtDeviceModbusWagoModule.h"
+#include "mdtDeviceModbusWagoModuleRtd.h"
 #include "mdtDeviceScpi.h"
 #include "mdtDeviceU3606A.h"
 #include "mdtDeviceDSO1000A.h"
@@ -1833,6 +1834,75 @@ void mdtDeviceTest::modbusWagoModuleTest()
 
   // free
   delete device;
+}
+
+void mdtDeviceTest::modbusWagoModuleRtdTest()
+{
+  mdtDeviceModbusWago *device = new mdtDeviceModbusWago;
+  mdtDeviceModbusWagoModuleRtd m(true, device);
+  mdtAnalogIo *aio;
+  mdtDigitalIo *dio;
+
+  // Check initial values
+  m.setInitialSetupForTests(4, 10, 0);
+  QCOMPARE(m.ioCountRegisters(), 4);
+  QCOMPARE(m.firstAddressRead(), 10);
+  QCOMPARE(m.firstAddressWrite(), 0);
+  ///QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
+  
+  /*
+   * Simple set/get (on cached values) test
+   */
+
+  // Register 47
+  m.setPsrrMode(mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
+  QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
+  m.setPsrrMode(mdtDeviceModbusWagoModuleRtd::Psrr50Hz);
+  QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::Psrr50Hz);
+  m.setPsrrMode(mdtDeviceModbusWagoModuleRtd::Psrr60Hz);
+  QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::Psrr60Hz);
+  m.setPsrrMode(mdtDeviceModbusWagoModuleRtd::Psrr5060Hz);
+  QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::Psrr5060Hz);
+  m.setIoCount(2);
+  QCOMPARE(m.ioCountRegisters(), 2);
+  m.setIoCount(4);
+  QCOMPARE(m.ioCountRegisters(), 4);
+  // Set scaling: channel 0, manufacturer scaling OFF, user scaling ON, user offset: 1.0, user gain: 2.0, 2 wire offset: 1.5
+  m.setScaling(0, false, true, 1.0, 2.0, 1.5);
+  QVERIFY(!m.manufacturerScalingIsEnabled(0));
+  QVERIFY(m.userScalingIsEnabled(0));
+  /**
+  QCOMPARE(m.userScalingOffset(0), 1.0);
+  QCOMPARE(m.userScalingGain(0), 2.0);
+  QCOMPARE(m.twoWireOffset(0), 1.5);
+  */
+  // Sensor type
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt100);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt100);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni100);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni100);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt1000);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt1000);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt500);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt500);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt200);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt200);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni1000);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni1000);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt200);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt200);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni120);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni120);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni1000TK);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni1000TK);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Potentiometer);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Potentiometer);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::R10R5000);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::R10R5000);
+  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::R10R1200);
+  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::R10R1200);
+
+
 }
 
 void mdtDeviceTest::modbusWagoTest()

@@ -114,6 +114,7 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
   int fc;
   QVariant var;
 
+  /// \todo 1) Add a flag for special register data in mdtPortTransaction, 2) Don't update I/O if this flag is set
   // Decode readen frame and update I/O's
   fc = pvCodec->decode(transaction->data());
   switch(fc){

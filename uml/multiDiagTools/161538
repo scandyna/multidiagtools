@@ -1,6 +1,6 @@
 format 76
 "mdtdevice" // mdtdevice
-  revision 44
+  revision 47
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2541,7 +2541,7 @@ ${inlines}
       end
 
       attribute 878210 "pvRegisterDataWords"
-	private explicit_type "QList<QPair<int, quint16> >"
+	private explicit_type "QList<quint16>"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -2561,8 +2561,9 @@ ${inlines}
 
       operation 1573762 "mdtDeviceModbusWagoModule"
 	public explicit_return_type ""
-	nparams 1
+	nparams 2
 	  param in name "autoDeleteIos" explicit_type "bool"
+	  param in name "device" type class_ref 532226 // mdtDeviceModbusWago
 	cpp_decl "    ${comment}${inline}${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} {
@@ -2609,6 +2610,20 @@ ${inlines}
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1611394 "getSpecialModuleSetup"
+	abstract force_body_gen cpp_virtual public explicit_return_type "bool"
+	nparams 3
+	  param in name "word" explicit_type "quint16"
+	  param in name "firstAddressRead" explicit_type "int"
+	  param in name "firstAddressWrite" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -2948,6 +2963,51 @@ ${inlines}
 	
       end
 
+      operation 1618050 "addAnalogIo"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "aio" type class_ref 539010 // mdtAnalogIo
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1618178 "addDigitalIo"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "dio" type class_ref 539138 // mdtDigitalIo
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1618306 "addRegisters"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "channelCount" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 1576578 "statusByte"
 	const protected explicit_return_type "quint8"
 	nparams 1
@@ -3141,83 +3201,6 @@ ${inlines}
 	
 	
       end
-
-      operation 1592450 "specialModuleValueMin"
-	abstract force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1592578 "specialModuleValueMax"
-	abstract force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1592706 "specialModuleValueBitsCount"
-	abstract force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1592834 "specialModuleValueLsbIndex"
-	abstract force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1592962 "specialModuleValueSigned"
-	abstract force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1593090 "specialModuleIsInput"
-	abstract force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1593218 "specialModuleIosCount"
-	abstract force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
     end
 
     classdiagram 846082 "mdtDeviceModbusWagoModuleRtd"
@@ -3267,6 +3250,23 @@ ${inlines}
 	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1611522 "getSpecialModuleSetup"
+	force_body_gen cpp_virtual public explicit_return_type "bool"
+	nparams 3
+	  param in name "word" explicit_type "quint16"
+	  param in name "firstAddressRead" explicit_type "int"
+	  param in name "firstAddressWrite" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -3912,83 +3912,6 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
-
-      operation 1604098 "specialModuleValueMin"
-	force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1604226 "specialModuleValueMax"
-	force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1604354 "specialModuleValueBitsCount"
-	force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1604482 "specialModuleValueLsbIndex"
-	force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1604610 "specialModuleValueSigned"
-	force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1604738 "specialModuleIsInput"
-	force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1604866 "specialModuleIosCount"
-	force_body_gen cpp_virtual protected return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
     end
 
     class 874626 "mdtDeviceModbusWagoSetupDialog"
@@ -4077,6 +4000,29 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 874498 // mdtDeviceModbusWagoModule
+      end
+    end
+
+    artifact 539010 "mdtDeviceModbusWagoModuleRtd"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 881666 // mdtDeviceModbusWagoModuleRtd
       end
     end
   end
