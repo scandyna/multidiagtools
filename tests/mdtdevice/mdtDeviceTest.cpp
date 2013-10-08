@@ -1908,8 +1908,8 @@ void mdtDeviceTest::modbusWagoModuleRtdTest()
   // Check initial values
   m.setInitialSetupForTests(4, 10, 0);
   QCOMPARE(m.ioCountRegisters(), 4);
-  QCOMPARE(m.firstAddressRead(), 10);
-  QCOMPARE(m.firstAddressWrite(), 0);
+  QCOMPARE(m.firstAiAddress(), 10);
+  QCOMPARE(m.firstAoAddressWrite(), 0);
   ///QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
   
   /*

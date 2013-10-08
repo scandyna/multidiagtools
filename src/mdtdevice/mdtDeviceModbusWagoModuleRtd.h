@@ -26,14 +26,10 @@
 
 class mdtDeviceModbusWago;
 
-/*! \brief Get/Set setup and help for module detection for special RTD modules
+/*! \brief Helper class for RTD modules
  *
  * Current version implements following modules:
  *  - 750-464 2/4 AI RTD
- *
- * Several set/get methods are provided to handle settings of module.
- *  Note that these methods only work on internally cached values.
- *  To really get/set settings from/to device, .... \todo Finish comment
  */
 class mdtDeviceModbusWagoModuleRtd : public mdtDeviceModbusWagoModule
 {
@@ -91,15 +87,6 @@ class mdtDeviceModbusWagoModuleRtd : public mdtDeviceModbusWagoModule
   /*! \brief Get module setup
    */
   bool getSpecialModuleSetup(quint16 word, int firstAddressRead, int firstAddressWrite);
-
-  //Will also enter password 0x1235 in register 31
-  /*! \brief Enter password 0x1235 to register 31
-   */
-  bool enterSetupMode();
-
-  /*! \brief Reset password of register 31 to 0x0000
-   */
-  bool exitSetupMode();
 
   /*! \brief Set the I/O count
    *
@@ -269,47 +256,6 @@ class mdtDeviceModbusWagoModuleRtd : public mdtDeviceModbusWagoModule
    * It also will use firstAddressRead() and firstAddressWrite() to set register addresses.
    */
   void updateRegisterCount();
-
-  /*! \brief Set a register for a given range of channels
-   *
-   * Will setup control byte (Cx) of given channels
-   *  with registerNumber, Reg_Com bit set and write access.
-   * Then, control byte (Cx) and cached data bytes (Dx) are sent to module.
-   *
-   * \pre firstChannel and lastChannel must be in a valid range
-   * \sa mdtDeviceModbusWagoModule::setRegisterDataWord()
-   * \sa mdtDeviceModbusWagoModule::setRegisterDataBytes()
-   */
-  bool setRegister(int registerNumber, int firstChannel, int lastChannel, bool needDeviceSetupState);
-
-  /*! \brief Get a register for given range of channels
-   *
-   * Will setup control byte (Cx) of given channels
-   *  with registerNumber, Reg_Com bit set and read access.
-   *  Then, control byte is sent to module.
-   *  Next, status bytes, register data are readen from module and cached.
-   *
-   * \pre firstChannel and lastChannel must be in a valid range
-   */
-  bool getRegister(int registerNumber, int firstChannel, int lastChannel, bool needDeviceSetupState);
-
-  /*! \brief Set cached register 47 to device
-   */
-  bool setRegister47();
-
-  /*! \brief Get register 47 from device and store it into cache
-   *
-   * On success, register count will be updated with updateRegisterCount()
-   */
-  bool getRegister47();
-
-  /*! \brief Set cached register 32 for each existing channel to device
-   */
-  bool setRegister32();
-
-  /*! \brief Get register 32 from device for each existing channel and store it into cache
-   */
-  bool getRegister32();
 
   QList<quint16> pvRegister32;
   QList<quint16> pvRegister33;

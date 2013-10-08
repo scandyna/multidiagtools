@@ -252,13 +252,6 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
     e.commit();
     return false;
   }
-  
-  qDebug() << "Analog  IN  count: " << analogInputsCount();
-  qDebug() << "Analog  OUT count: " << analogOutputsCount();
-  qDebug() << "Digital IN  count: " << digitalInputsCount();
-  qDebug() << "Digital OUT count: " << digitalOutputsCount();
-
-  
   // Get modules configuration
   /// \bug If number of requested modules is > 62, this hangs up with 750-352 filedbus (possibly a bug in mdtLib..)
   if(!getRegisterValues(0x2030, 62)){
@@ -288,8 +281,6 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
     e.commit();
     return false;
   }
-  
-  
   /// \todo Handle adrress mapping of bus coupler (can be a problem with > 256 I/O on 750-352 f.ex.)
   aiAddress = 0;
   aoAddressRead = 0x0200;
@@ -325,6 +316,17 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
       }
       module->updateAddresses(aiAddress, aoAddressRead, aoAddressWrite, diAddress, doAddressRead, doAddressWrite);
     }
+    // If module is null, a problem occured - cleanup and fail
+    if(module == 0){
+      mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": setup failed on a module (setup word: " + QString::number(word) + ")", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+      e.commit();
+      qDeleteAll(pvModules);
+      pvModules.clear();
+      ios->deleteIos();
+      return false;
+    }
+    Q_ASSERT(module != 0);
     Q_ASSERT(module->type() != mdtDeviceModbusWagoModule::Unknown);
     // Add module's I/Os to container
     ios->addAnalogInputs(module->analogInputs());
@@ -338,102 +340,8 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
     diAddress = module->nextModuleFirstDiAddress();
     doAddressRead = module->nextModuleFirstDoAddressRead();
     doAddressWrite = module->nextModuleFirstDoAddressWrite();
-    
-    /// \todo Check for known special modules and get instance of correct class
-    /// \todo Because special modules have to communicate, addressing must be done here directly
-    // 1) Check if word is a part number of a known special module (f.ex. 464)
-    ///qDebug() << "I/O setup word: " << word  << " ...";
-    // Get a new module object - We check if a special instance is needed - Module must not delete created I/Os itself
-    /**
-    module = 0;
-    switch(word){
-      case 464:     // Special RTD module
-        qDebug() << "750-464 module ...";
-        module = new mdtDeviceModbusWagoModuleRtd(false, this);
-        // Because of register access, this module is mapped to analog outputs process image
-        ///if(module->getSpecialModuleSetup(464, aoAddressRead, aoAddressWrite)){
-        if(module->getSpecialModuleSetup(464, 512, 0)){
-          aoAddressRead = module->lastAddressRead() + 1;
-          aoAddressWrite = module->lastAddressWrite() + 1;
-          ios->addAnalogInputs(module->analogInputs());
-        }else{
-          module->clear(true);
-          delete module;
-          module = 0;
-        }
-        break;
-      default:      // Common I/O module
-        module = new mdtDeviceModbusWagoModule(false, this);
-        if(module->setupFromRegisterWord(word)){
-          Q_ASSERT(module->type() != mdtDeviceModbusWagoModule::Unknown);
-          switch(module->type()){
-            case mdtDeviceModbusWagoModule::Unknown:
-              break;
-            case mdtDeviceModbusWagoModule::AnalogInputs:
-              module->setFirstAddress(aiAddressRead);
-              aiAddressRead = module->lastAddressRead() + 1;
-              ios->addAnalogInputs(module->analogInputs());
-              break;
-            case mdtDeviceModbusWagoModule::AnalogOutputs:
-              module->setFirstAddress(aoAddressRead, aoAddressWrite);
-              aoAddressRead = module->lastAddressRead() + 1;
-              aoAddressWrite = module->lastAddressWrite() + 1;
-              ios->addAnalogOutputs(module->analogOutputs());
-              break;
-            case mdtDeviceModbusWagoModule::DigitalInputs:
-              module->setFirstAddress(diAddressRead);
-              diAddressRead = module->lastAddressRead() + 1;
-              ios->addDigitalInputs(module->digitalInputs());
-              break;
-            case mdtDeviceModbusWagoModule::DigitalOutputs:
-              module->setFirstAddress(doAddressRead, doAddressWrite);
-              doAddressRead = module->lastAddressRead() + 1;
-              doAddressWrite = module->lastAddressWrite() + 1;
-              ios->addDigitalOutputs(module->digitalOutputs());
-              break;
-          }
-        }else{
-          module->clear(true);
-          delete module;
-          module = 0;
-        }
-    }
-    */
-    // If module is null, a problem occured - cleanup and fail
-    if(module == 0){
-      mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": setup failed on a module (setup word: " + QString::number(word) + ")", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-      e.commit();
-      // We have to free I/O's created by each module
-      /**
-      for(k = 0; k < pvModules.size(); ++k){
-        Q_ASSERT(pvModules.at(k) != 0);
-        pvModules.at(k)->clear(true);
-      }
-      */
-      qDeleteAll(pvModules);
-      pvModules.clear();
-      ios->deleteIos();
-      return false;
-    }
-    // Add module
+    // Add module to modules container
     pvModules.append(module);
-    
-    
-    // 2a) word is not a part number of known special module: get instance of new mdtDeviceModbusWagoModule
-    
-    // 3a) setupFromRegisterWord()
-    
-    // 4a) setFirstAddress()
-    
-    // 2b) word is part number of known special module: get instance of a new specific class
-    
-    // 3b) setFirstAddress()
-    
-    // 4b) setupXY()
-    
-    // 5) update current address, add module's I/Os, ...
-    
   }
   // Check coherence between detected setup and I/Os count
   if(ios->analogInputsCount() != analogInputsCnt){

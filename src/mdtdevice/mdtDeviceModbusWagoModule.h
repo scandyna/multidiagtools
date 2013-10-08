@@ -109,24 +109,6 @@ class mdtDeviceModbusWagoModule
    */
   virtual void updateAddresses(int firstAiAddress, int firstAoAddressRead, int firstAoAddressWrite, int firstDiAddress, int firstDoAddressRead, int firstDoAddressWrite);
 
-  /*! \brief Set module process image I/O range
-   *
-   * Setup must be done before addressing can be done.
-   *  Sett setupFromRegisterWord() .
-   *
-   * Note: if address of mdtAbstractIo based objects are updated,
-   *        the new given address will not be reflected here.
-   *
-   * If module is of type AnalogInputs or DigitalInputs, and has no control bytes
-   *  addressWrite is ignored.
-   *
-   * \pre addressRead must be >= 0 .
-   * \pre if module contains outputs and/or control bytes, addressWrite must be >= 0 .
-   * 
-   * \todo Obselete. Should become a virtual protected method, like updateAddresses() or something so..
-   */
-  void setFirstAddress(int addressRead, int addressWrite = -1);
-
   /*! \brief Setup a special module
    *
    * Use this method during I/O detection. It has same goal as setupFromRegisterWord() ,
@@ -214,39 +196,6 @@ class mdtDeviceModbusWagoModule
    */
   virtual int nextModuleFirstDoAddressWrite() const;
 
-
-  /*! \brief Get first address (for read access) of module's process image
-   *
-   * Returns a value < 0 if addressing was not done
-   */
-  int firstAddressRead() const;
-
-  /*! \brief Get first address (for write access) of module's process image
-   *
-   * Returns a value < 0 if addressing was not done or module has no outputs and no control bytes
-   */
-  int firstAddressWrite() const;
-
-  /*! \brief Get last address (for read access) of module's process image
-   *
-   * Returns a value < 0 if addressing was not done
-   */
-  int lastAddressRead() const;
-
-  /*! \brief Get last address (for write access) of module's process image
-   *
-   * Returns a value < 0 if addressing was not done or module has no outputs and no control bytes
-   */
-  int lastAddressWrite() const;
-
-  /*! \brief Get number of internal I/O's
-   *
-   * Note: special registers are not considered as I/O,
-   *        only analog or digital are counted.
-   */
-  int ioCount() const;
-
-  
   /*! \brief Access internal analog inputs
    */
   const QList<mdtAnalogIo*> & analogInputs();
@@ -465,63 +414,6 @@ class mdtDeviceModbusWagoModule
    */
   void wait(int ms);
 
-  /*! \brief Get the min value of a range of special (analog) module
-   *
-   * Subclass that implement special module should re-implement this method.
-   *
-   * Default implementation returns a invalid QVariant
-   */
-  ///virtual QVariant specialModuleValueMin();
-
-  /*! \brief Get the max value of a range of special (analog) module
-   *
-   * Subclass that implement special module should re-implement this method.
-   *
-   * Default implementation returns a invalid QVariant
-   */
-  ///virtual QVariant specialModuleValueMax();
-
-  /*! \brief Get the number of bits (including sign bit) used to represent a value of special (analog) module
-   *
-   * Subclass that implement special module should re-implement this method.
-   *
-   * Default implementation returns a invalid QVariant
-   */
-  ///virtual QVariant specialModuleValueBitsCount();
-
-  /*! \brief Get index of the first bit (LSB) that represents the value of special (analog) module
-   *
-   * Subclass that implement special module should re-implement this method.
-   *
-   * Default implementation returns a invalid QVariant
-   */
-  ///virtual QVariant specialModuleValueLsbIndex();
-
-  /*! \brief Check if a special (analog) module returns a signed value or not
-   *
-   * Subclass that implement special module should re-implement this method.
-   *
-   * Default implementation returns a invalid QVariant
-   */
-  ///virtual QVariant specialModuleValueSigned();
-
-  /*! \brief Check if a special module returns is a inputs module
-   *
-   * Subclass that implement special module should re-implement this method.
-   *
-   * Default implementation returns a invalid QVariant
-   */
-  ///virtual QVariant specialModuleIsInput();
-
-  /*! \brief Get I/O's count of a special module
-   *
-   * Subclass that implement special module should re-implement this method.
-   *
-   * Default implementation returns a invalid QVariant
-   */
-  ///virtual QVariant specialModuleIosCount();
-  
-
   /*! \brief Get the min value of a range of analog inputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
@@ -606,14 +498,6 @@ class mdtDeviceModbusWagoModule
    */
   virtual QVariant analogOutputsValueSigned(int partNumber) const;
 
-  /*! \brief Check if a analog I/O module is a input
-   *
-   * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
-   * \return True if module is a input, false if module is a output.
-   *          For a unknown module, a invalid QVariant is returned.
-   */
-  ///QVariant analogIoModuleIsInput(int partNumber) const;
-
   /*! \brief Get number of analog inputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
@@ -678,24 +562,6 @@ class mdtDeviceModbusWagoModule
    */
   virtual int digitalOutputsCount(quint16 word) const;
 
-  
-  
-
-  /*! \brief Check if a digital I/O module is a input
-   *
-   * \param word The identification word (see Wago doc, part of register 0x2030 for details).
-   * \return True if module is a input, false if module is a output.
-   *          For a unknown or uncoherent description, a invalid QVariant is returned.
-   */
-  ///QVariant digitalIoModuleIsInput(quint16 word) const;
-
-  /*! \brief Get number of I/Os for a digital I/O module
-   *
-   * \param word The identification word (see Wago doc, part of register 0x2030 for details).
-   * \return Number of I/O's or -1 for unknown description.
-   */
-  ///int digitalIoModuleIosCount(quint16 word) const;
-
  private:
 
   /*! \brief Build a new analog input
@@ -739,10 +605,8 @@ class mdtDeviceModbusWagoModule
 
   Q_DISABLE_COPY(mdtDeviceModbusWagoModule);
 
-  ///QList<mdtAnalogIo*> pvAnalogIos;
   QList<mdtAnalogIo*> pvAnalogInputs;
   QList<mdtAnalogIo*> pvAnalogOutputs;
-  ///QList<mdtDigitalIo*> pvDigitalIos;
   QList<mdtDigitalIo*> pvDigitalInputs;
   QList<mdtDigitalIo*> pvDigitalOutputs;
   bool pvAutoDeleteIos;
@@ -752,7 +616,6 @@ class mdtDeviceModbusWagoModule
   // List for register communication. QPair::first is address, QPair::second is data part
   QList<QPair<int, quint8> > pvStatusBytes;
   QList<QPair<int, quint8> > pvControlBytes;
-  ///QList<QPair<int, quint16> > pvRegisterDataWords;  /// \todo Don't store address here (is not possible becaus of read/write address)
   QList<quint16> pvRegisterDataWords;
   // Addresses
   int pvFirstAiAddress;
