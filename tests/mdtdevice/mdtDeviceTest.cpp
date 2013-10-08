@@ -1647,13 +1647,18 @@ void mdtDeviceTest::modbusWagoModuleTest()
   mdtDigitalIo *dio;
 
   // Check initial values
+  /**
   QVERIFY(m.firstAddressRead() < 0);
   QVERIFY(m.firstAddressWrite() < 0);
   QVERIFY(m.lastAddressRead() < 0);
   QVERIFY(m.lastAddressWrite() < 0);
   QCOMPARE(m.ioCount() , 0);
-  QVERIFY(m.analogIos().isEmpty());
-  QVERIFY(m.digitalIos().isEmpty());
+  */
+  QVERIFY(m.analogInputs().isEmpty());
+  QVERIFY(m.analogOutputs().isEmpty());
+  ///QVERIFY(m.digitalIos().isEmpty());
+  QVERIFY(m.digitalInputs().isEmpty());
+  QVERIFY(m.digitalOutputs().isEmpty());
   QVERIFY(m.type() == mdtDeviceModbusWagoModule::Unknown);
   QCOMPARE(m.partNumber() , 0);
   QVERIFY(m.partNumberText().isEmpty());
@@ -1671,38 +1676,49 @@ void mdtDeviceTest::modbusWagoModuleTest()
    *  - Write access: N/A
    */
   QVERIFY(m.setupFromRegisterWord(457));
-  m.setFirstAddress(2);
-  QCOMPARE(m.firstAddressRead() , 2);
-  QCOMPARE(m.lastAddressRead() , 5);
-  QCOMPARE(m.ioCount() , 4);
-  QCOMPARE(m.analogIos().size(), 4);
-  QVERIFY(m.digitalIos().isEmpty());
+  ///m.setFirstAddress(2);
+  m.updateAddresses(2, 0, 0, 0, 0, 0);
+  QCOMPARE(m.firstAiAddress() , 2);
+  QCOMPARE(m.lastAiAddress() , 5);
+  QCOMPARE(m.nextModuleFirstAiAddress() , 6);
+  QCOMPARE(m.firstAoAddressRead() , 0);
+  QCOMPARE(m.lastAoAddressRead() , 0);
+  QCOMPARE(m.nextModuleFirstAoAddressRead() , 0);
+  QCOMPARE(m.firstAoAddressWrite() , 0);
+  QCOMPARE(m.lastAoAddressWrite() , 0);
+  QCOMPARE(m.nextModuleFirstAoAddressWrite() , 0);
+  ///QCOMPARE(m.ioCount() , 4);
+  QCOMPARE(m.analogInputs().size(), 4);
+  QCOMPARE(m.analogOutputs().size(), 0);
+  ///QVERIFY(m.digitalIos().isEmpty());
+  QVERIFY(m.digitalInputs().isEmpty());
+  QVERIFY(m.digitalOutputs().isEmpty());
   QVERIFY(m.type() == mdtDeviceModbusWagoModule::AnalogInputs);
   QCOMPARE(m.partNumber() , 457);
   QCOMPARE(m.partNumberText() , QString("457"));
   // Check internal I/O setup
-  aio = m.analogIos().at(0);
+  aio = m.analogInputs().at(0);
   QVERIFY(aio != 0);
   MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
   MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
   QCOMPARE(aio->unit(), QString("[V]"));
   QCOMPARE(aio->addressRead(), 2);
   QVERIFY(aio->addressWrite() == aio->addressRead());
-  aio = m.analogIos().at(1);
+  aio = m.analogInputs().at(1);
   QVERIFY(aio != 0);
   MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
   MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
   QCOMPARE(aio->unit(), QString("[V]"));
   QCOMPARE(aio->addressRead(), 3);
   QVERIFY(aio->addressWrite() == aio->addressRead());
-  aio = m.analogIos().at(2);
+  aio = m.analogInputs().at(2);
   QVERIFY(aio != 0);
   MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
   MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
   QCOMPARE(aio->unit(), QString("[V]"));
   QCOMPARE(aio->addressRead(), 4);
   QVERIFY(aio->addressWrite() == aio->addressRead());
-  aio = m.analogIos().at(3);
+  aio = m.analogInputs().at(3);
   QVERIFY(aio != 0);
   MDT_COMPARE(aio->minimum(), -10.0, 12, -10.0, 10.0);
   MDT_COMPARE(aio->maximum(), 10.0, 12, -10.0, 10.0);
@@ -1714,13 +1730,19 @@ void mdtDeviceTest::modbusWagoModuleTest()
    * Check clear
    */
   m.clear();
+  /**
   QVERIFY(m.firstAddressRead() < 0);
   QVERIFY(m.firstAddressWrite() < 0);
   QVERIFY(m.lastAddressRead() < 0);
   QVERIFY(m.lastAddressWrite() < 0);
   QCOMPARE(m.ioCount() , 0);
-  QVERIFY(m.analogIos().isEmpty());
-  QVERIFY(m.digitalIos().isEmpty());
+  */
+  ///QVERIFY(m.analogIos().isEmpty());
+  QVERIFY(m.analogInputs().isEmpty());
+  QVERIFY(m.analogOutputs().isEmpty());
+  ///QVERIFY(m.digitalIos().isEmpty());
+  QVERIFY(m.digitalInputs().isEmpty());
+  QVERIFY(m.digitalOutputs().isEmpty());
   QVERIFY(m.type() == mdtDeviceModbusWagoModule::Unknown);
   QCOMPARE(m.partNumber() , 0);
   QVERIFY(m.partNumberText().isEmpty());
@@ -1739,6 +1761,19 @@ void mdtDeviceTest::modbusWagoModuleTest()
    */
   m.clear();
   QVERIFY(m.setupFromRegisterWord(550));
+  m.updateAddresses(0, 6, 16, 0, 0, 0);
+  QCOMPARE(m.firstAiAddress() , 0);
+  QCOMPARE(m.lastAiAddress() , 0);
+  QCOMPARE(m.nextModuleFirstAiAddress() , 0);
+  QCOMPARE(m.firstAoAddressRead() , 6);
+  QCOMPARE(m.lastAoAddressRead() , 7);
+  QCOMPARE(m.nextModuleFirstAoAddressRead() , 8);
+  QCOMPARE(m.firstAoAddressWrite() , 16);
+  QCOMPARE(m.lastAoAddressWrite() , 17);
+  QCOMPARE(m.nextModuleFirstAoAddressWrite() , 18);
+  QCOMPARE(m.analogInputs().size(), 0);
+  QCOMPARE(m.analogOutputs().size(), 2);
+  /**
   m.setFirstAddress(6, 16);
   QCOMPARE(m.firstAddressRead() , 6);
   QCOMPARE(m.firstAddressWrite() , 16);
@@ -1746,19 +1781,22 @@ void mdtDeviceTest::modbusWagoModuleTest()
   QCOMPARE(m.lastAddressWrite() , 17);
   QCOMPARE(m.ioCount() , 2);
   QCOMPARE(m.analogIos().size(), 2);
-  QVERIFY(m.digitalIos().isEmpty());
+  */
+  ///QVERIFY(m.digitalIos().isEmpty());
+  QVERIFY(m.digitalInputs().isEmpty());
+  QVERIFY(m.digitalOutputs().isEmpty());
   QVERIFY(m.type() == mdtDeviceModbusWagoModule::AnalogOutputs);
   QCOMPARE(m.partNumber() , 550);
   QCOMPARE(m.partNumberText() , QString("550"));
   // Check internal I/O setup
-  aio = m.analogIos().at(0);
+  aio = m.analogOutputs().at(0);
   QVERIFY(aio != 0);
   MDT_COMPARE(aio->minimum(), 0.0, 12, 0.0, 10.0);
   MDT_COMPARE(aio->maximum(), 10.0, 12, 0.0, 10.0);
   QCOMPARE(aio->unit(), QString("[V]"));
   QCOMPARE(aio->addressRead(), 6);
   QCOMPARE(aio->addressWrite(), 16);
-  aio = m.analogIos().at(1);
+  aio = m.analogOutputs().at(1);
   QVERIFY(aio != 0);
   MDT_COMPARE(aio->minimum(), 0.0, 12, 0.0, 10.0);
   MDT_COMPARE(aio->maximum(), 10.0, 12, 0.0, 10.0);
@@ -1778,26 +1816,37 @@ void mdtDeviceTest::modbusWagoModuleTest()
   m.clear();
   QVERIFY(m.setupFromRegisterWord(0x8401));
   QVERIFY(m.type() == mdtDeviceModbusWagoModule::DigitalInputs);
-  m.setFirstAddress(0);
-  QCOMPARE(m.firstAddressRead() , 0);
-  QCOMPARE(m.lastAddressRead() , 3);
-  QCOMPARE(m.ioCount() , 4);
-  QVERIFY(m.analogIos().isEmpty());
-  QCOMPARE(m.digitalIos().size(), 4);
+  ///m.setFirstAddress(0);
+  m.updateAddresses(0, 0, 0, 0, 0, 0);
+  QCOMPARE(m.firstDiAddress(), 0);
+  QCOMPARE(m.lastDiAddress(), 3);
+  QCOMPARE(m.nextModuleFirstDiAddress(), 4);
+  ///QCOMPARE(m.firstAddressRead() , 0);
+  ///QCOMPARE(m.lastAddressRead() , 3);
+  ///QCOMPARE(m.ioCount() , 4);
+  QVERIFY(m.analogInputs().isEmpty());
+  QVERIFY(m.analogOutputs().isEmpty());
+  ///QCOMPARE(m.digitalIos().size(), 4);
+  QCOMPARE(m.digitalInputs().size(), 4);
+  QCOMPARE(m.digitalOutputs().size(), 0);
   // Check internal I/O setup
-  dio = m.digitalIos().at(0);
+  ///dio = m.digitalIos().at(0);
+  dio = m.digitalInputs().at(0);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 0);
   QVERIFY(dio->addressWrite() == dio->addressRead());
-  dio = m.digitalIos().at(1);
+  ///dio = m.digitalIos().at(1);
+  dio = m.digitalInputs().at(1);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 1);
   QVERIFY(dio->addressWrite() == dio->addressRead());
-  dio = m.digitalIos().at(2);
+  ///dio = m.digitalIos().at(2);
+  dio = m.digitalInputs().at(2);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 2);
   QVERIFY(dio->addressWrite() == dio->addressRead());
-  dio = m.digitalIos().at(3);
+  ///dio = m.digitalIos().at(3);
+  dio = m.digitalInputs().at(3);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 3);
   QVERIFY(dio->addressWrite() == dio->addressRead());
@@ -1814,20 +1863,33 @@ void mdtDeviceTest::modbusWagoModuleTest()
   m.clear();
   QVERIFY(m.setupFromRegisterWord(0x8202));
   QVERIFY(m.type() == mdtDeviceModbusWagoModule::DigitalOutputs);
-  m.setFirstAddress(4, 14);
-  QCOMPARE(m.firstAddressRead() , 4);
-  QCOMPARE(m.firstAddressWrite() , 14);
-  QCOMPARE(m.lastAddressRead() , 5);
-  QCOMPARE(m.lastAddressWrite() , 15);
-  QCOMPARE(m.ioCount() , 2);
-  QVERIFY(m.analogIos().isEmpty());
-  QCOMPARE(m.digitalIos().size(), 2);
+  ///m.setFirstAddress(4, 14);
+  m.updateAddresses(0, 0, 0, 0, 4, 14);
+  QCOMPARE(m.firstDoAddressRead(), 4);
+  QCOMPARE(m.lastDoAddressRead(), 5);
+  QCOMPARE(m.nextModuleFirstDoAddressRead(), 6);
+  QCOMPARE(m.firstDoAddressWrite(), 14);
+  QCOMPARE(m.lastDoAddressWrite(), 15);
+  QCOMPARE(m.nextModuleFirstDoAddressWrite(), 16);
+  ///QCOMPARE(m.firstAddressRead() , 4);
+  ///QCOMPARE(m.firstAddressWrite() , 14);
+  ///QCOMPARE(m.lastAddressRead() , 5);
+  ///QCOMPARE(m.lastAddressWrite() , 15);
+  ///QCOMPARE(m.ioCount() , 2);
+  ///QVERIFY(m.analogIos().isEmpty());
+  QVERIFY(m.analogInputs().isEmpty());
+  QVERIFY(m.analogOutputs().isEmpty());
+  ///QCOMPARE(m.digitalIos().size(), 2);
+  QCOMPARE(m.digitalInputs().size(), 0);
+  QCOMPARE(m.digitalOutputs().size(), 2);
   // Check internal I/O setup
-  dio = m.digitalIos().at(0);
+  ///dio = m.digitalIos().at(0);
+  dio = m.digitalOutputs().at(0);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 4);
   QCOMPARE(dio->addressWrite(), 14);
-  dio = m.digitalIos().at(1);
+  ///dio = m.digitalIos().at(1);
+  dio = m.digitalOutputs().at(1);
   QVERIFY(dio != 0);
   QCOMPARE(dio->addressRead(), 5);
   QCOMPARE(dio->addressWrite(), 15);

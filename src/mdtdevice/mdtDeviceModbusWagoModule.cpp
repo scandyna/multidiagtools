@@ -47,12 +47,26 @@ void mdtDeviceModbusWagoModule::clear(bool forceDeleteIos)
   pvType = Unknown;
   pvPartNumber = 0;
   if((pvAutoDeleteIos)||(forceDeleteIos)){
-    qDeleteAll(pvAnalogIos);
-    qDeleteAll(pvDigitalIos);
+    ///qDeleteAll(pvAnalogIos);
+    qDeleteAll(pvAnalogInputs);
+    qDeleteAll(pvAnalogOutputs);
+    ///qDeleteAll(pvDigitalIos);
+    qDeleteAll(pvDigitalInputs);
+    qDeleteAll(pvDigitalOutputs);
   }
-  pvAnalogIos.clear();
-  pvDigitalIos.clear();
+  ///pvAnalogIos.clear();
+  pvAnalogInputs.clear();
+  pvAnalogOutputs.clear();
+  ///pvDigitalIos.clear();
+  pvDigitalInputs.clear();
+  pvDigitalOutputs.clear();
   clearRegisters();
+  pvFirstAiAddress = 0;
+  pvFirstAoAddressRead = 0;
+  pvFirstAoAddressWrite = 0;
+  pvFirstDiAddress = 0;
+  pvFirstDoAddressRead = 0;
+  pvFirstDoAddressWrite = 0;
 }
 
 bool mdtDeviceModbusWagoModule::setupFromRegisterWord(quint16 word)
@@ -62,10 +76,8 @@ bool mdtDeviceModbusWagoModule::setupFromRegisterWord(quint16 word)
   clear();
   // Check module type (analog or digital)
   if(word & 0x8000){
-    ///qDebug() << "Module[" << i << "]: digital I/O";
     ok = addDigitalIos(word);
   }else{
-    ///qDebug() << "Module[" << i << "]: analog I/O";
     ok = addAnalogIos(word);
   }
   if(!ok){
@@ -75,6 +87,61 @@ bool mdtDeviceModbusWagoModule::setupFromRegisterWord(quint16 word)
   /// \todo Implement
 
   return true;
+}
+
+void mdtDeviceModbusWagoModule::updateAddresses(int firstAiAddress, int firstAoAddressRead, int firstAoAddressWrite, int firstDiAddress, int firstDoAddressRead, int firstDoAddressWrite)
+{
+  Q_ASSERT(firstAiAddress >= 0);
+  Q_ASSERT(firstAoAddressRead >= 0);
+  Q_ASSERT(firstAoAddressWrite >= 0);
+  Q_ASSERT(firstDiAddress >= 0);
+  Q_ASSERT(firstDoAddressRead >= 0);
+  Q_ASSERT(firstDoAddressWrite >= 0);
+
+  int i;
+  int currentAddress, currentAddressRead, currentAddressWrite;
+
+  // Store first addresses
+  pvFirstAiAddress = firstAiAddress;
+  pvFirstAoAddressRead = firstAoAddressRead;
+  pvFirstAoAddressWrite = firstAoAddressWrite;
+  pvFirstDiAddress = firstDiAddress;
+  pvFirstDoAddressRead = firstDoAddressRead;
+  pvFirstDoAddressWrite = firstDoAddressWrite;
+  // Address analog inputs
+  currentAddress = pvFirstAiAddress;
+  for(i = 0; i < pvAnalogInputs.size(); ++i){
+    Q_ASSERT(pvAnalogInputs.at(i) != 0);
+    pvAnalogInputs.at(i)->setAddress(currentAddress);
+    ++currentAddress;
+  }
+  // Address analog outputs
+  currentAddressRead = pvFirstAoAddressRead;
+  currentAddressWrite = pvFirstAoAddressWrite;
+  for(i = 0; i < pvAnalogOutputs.size(); ++i){
+    Q_ASSERT(pvAnalogOutputs.at(i) != 0);
+    pvAnalogOutputs.at(i)->setAddressRead(currentAddressRead);
+    pvAnalogOutputs.at(i)->setAddressWrite(currentAddressWrite);
+    ++currentAddressRead;
+    ++currentAddressWrite;
+  }
+  // Address digital inputs
+  currentAddress = pvFirstDiAddress;
+  for(i = 0; i < pvDigitalInputs.size(); ++i){
+    Q_ASSERT(pvDigitalInputs.at(i) != 0);
+    pvDigitalInputs.at(i)->setAddress(currentAddress);
+    ++currentAddress;
+  }
+  // Address digital outputs
+  currentAddressRead = pvFirstDoAddressRead;
+  currentAddressWrite = pvFirstDoAddressWrite;
+  for(i = 0; i < pvDigitalOutputs.size(); ++i){
+    Q_ASSERT(pvDigitalOutputs.at(i) != 0);
+    pvDigitalOutputs.at(i)->setAddressRead(currentAddressRead);
+    pvDigitalOutputs.at(i)->setAddressWrite(currentAddressWrite);
+    ++currentAddressRead;
+    ++currentAddressWrite;
+  }
 }
 
 void mdtDeviceModbusWagoModule::setFirstAddress(int addressRead, int addressWrite)
@@ -108,6 +175,7 @@ void mdtDeviceModbusWagoModule::setFirstAddress(int addressRead, int addressWrit
       ++currentAddressRead;
     }
     // Setup I/O
+    /**
     if(pvAnalogIos.size() > i){
       aio = pvAnalogIos.at(i);
       Q_ASSERT(aio != 0);
@@ -119,6 +187,8 @@ void mdtDeviceModbusWagoModule::setFirstAddress(int addressRead, int addressWrit
         ++addressWrite;
       }
     }
+    */
+    /**
     if(pvDigitalIos.size() > i){
       dio = pvDigitalIos.at(i);
       Q_ASSERT(dio != 0);
@@ -130,6 +200,7 @@ void mdtDeviceModbusWagoModule::setFirstAddress(int addressRead, int addressWrit
         ++currentAddressWrite;
       }
     }
+    */
   }
 }
 
@@ -138,15 +209,133 @@ bool mdtDeviceModbusWagoModule::getSpecialModuleSetup(quint16 word, int firstAdd
   return false;
 }
 
+int mdtDeviceModbusWagoModule::firstAiAddress() const
+{
+  return pvFirstAiAddress;
+}
+
+int mdtDeviceModbusWagoModule::lastAiAddress() const
+{
+  if(pvAnalogInputs.isEmpty()){
+    return pvFirstAiAddress;
+  }else{
+    return pvFirstAiAddress + pvAnalogInputs.size() - 1;
+  }
+}
+
+int mdtDeviceModbusWagoModule::nextModuleFirstAiAddress() const
+{
+  return pvFirstAiAddress + pvAnalogInputs.size();
+}
+
+int mdtDeviceModbusWagoModule::firstAoAddressRead() const
+{
+  return pvFirstAoAddressRead;
+}
+
+int mdtDeviceModbusWagoModule::lastAoAddressRead() const
+{
+  if(pvAnalogOutputs.isEmpty()){
+    return pvFirstAoAddressRead;
+  }else{
+    return pvFirstAoAddressRead + pvAnalogOutputs.size() - 1;
+  }
+}
+
+int mdtDeviceModbusWagoModule::nextModuleFirstAoAddressRead() const
+{
+  return pvFirstAoAddressRead + pvAnalogOutputs.size();
+}
+
+int mdtDeviceModbusWagoModule::firstAoAddressWrite() const
+{
+  return pvFirstAoAddressWrite;
+}
+
+int mdtDeviceModbusWagoModule::lastAoAddressWrite() const
+{
+  if(pvAnalogOutputs.isEmpty()){
+    return pvFirstAoAddressWrite;
+  }else{
+    return pvFirstAoAddressWrite + pvAnalogOutputs.size() - 1;
+  }
+}
+
+int mdtDeviceModbusWagoModule::nextModuleFirstAoAddressWrite() const
+{
+  return pvFirstAoAddressWrite + pvAnalogOutputs.size();
+}
+
+int mdtDeviceModbusWagoModule::firstDiAddress() const
+{
+  return pvFirstDiAddress;
+}
+
+int mdtDeviceModbusWagoModule::lastDiAddress() const
+{
+  if(pvDigitalInputs.isEmpty()){
+    return pvFirstDiAddress;
+  }else{
+    return pvFirstDiAddress + pvDigitalInputs.size() - 1;
+  }
+}
+
+int mdtDeviceModbusWagoModule::nextModuleFirstDiAddress() const
+{
+  return pvFirstDiAddress + pvDigitalInputs.size();
+}
+
+int mdtDeviceModbusWagoModule::firstDoAddressRead() const
+{
+  return pvFirstDoAddressRead;
+}
+
+int mdtDeviceModbusWagoModule::lastDoAddressRead() const
+{
+  if(pvDigitalOutputs.isEmpty()){
+    return pvFirstDoAddressRead;
+  }else{
+    return pvFirstDoAddressRead + pvDigitalOutputs.size() - 1;
+  }
+}
+
+int mdtDeviceModbusWagoModule::nextModuleFirstDoAddressRead() const
+{
+  return pvFirstDoAddressRead + pvDigitalOutputs.size();
+}
+
+int mdtDeviceModbusWagoModule::firstDoAddressWrite() const
+{
+  return pvFirstDoAddressWrite;
+}
+
+int mdtDeviceModbusWagoModule::lastDoAddressWrite() const
+{
+  if(pvDigitalOutputs.isEmpty()){
+    return pvFirstDoAddressWrite;
+  }else{
+    return pvFirstDoAddressWrite + pvDigitalOutputs.size() - 1;
+  }
+}
+
+int mdtDeviceModbusWagoModule::nextModuleFirstDoAddressWrite() const
+{
+  return pvFirstDoAddressWrite + pvDigitalOutputs.size();
+}
+
+
 int mdtDeviceModbusWagoModule::firstAddressRead() const
 {
   int firstAddress = -1;
 
   // Check in I/O's
+  /**
   if(pvAnalogIos.size() > 0){
     Q_ASSERT(pvAnalogIos.at(0) != 0);
     firstAddress = pvAnalogIos.at(0)->addressRead();
   }
+  */
+  /**
   if(pvDigitalIos.size() > 0){
     Q_ASSERT(pvDigitalIos.at(0) != 0);
     if(firstAddress >= 0){
@@ -155,6 +344,7 @@ int mdtDeviceModbusWagoModule::firstAddressRead() const
       firstAddress = pvDigitalIos.at(0)->addressRead();
     }
   }
+  */
   // Check status byte (register data bytes overlaps I/Os)
   if(pvStatusBytes.size() > 0){
     if(firstAddress >= 0){
@@ -172,10 +362,13 @@ int mdtDeviceModbusWagoModule::firstAddressWrite() const
   int firstAddress = -1;
 
   // Check in I/O's
+  /**
   if(pvAnalogIos.size() > 0){
     Q_ASSERT(pvAnalogIos.at(0) != 0);
     firstAddress = pvAnalogIos.at(0)->addressWrite();
   }
+  */
+  /**
   if(pvDigitalIos.size() > 0){
     Q_ASSERT(pvDigitalIos.at(0) != 0);
     if(firstAddress >= 0){
@@ -184,6 +377,7 @@ int mdtDeviceModbusWagoModule::firstAddressWrite() const
       firstAddress = pvDigitalIos.at(0)->addressWrite();
     }
   }
+  */
   // Check control byte (register data bytes overlaps I/Os)
   if(pvControlBytes.size() > 0){
     if(firstAddress >= 0){
@@ -202,16 +396,20 @@ int mdtDeviceModbusWagoModule::lastAddressRead() const
   int lastIndex;
 
   // Check in I/O's
+  /**
   lastIndex = pvAnalogIos.size() - 1;
   if(lastIndex >= 0){
     Q_ASSERT(pvAnalogIos.at(lastIndex) != 0);
     lastAddress = pvAnalogIos.at(lastIndex)->addressRead();
   }
+  */
+  /**
   lastIndex = pvDigitalIos.size() - 1;
   if(lastIndex >= 0){
     Q_ASSERT(pvDigitalIos.at(lastIndex) != 0);
     lastAddress = qMax(lastAddress, pvDigitalIos.at(lastIndex)->addressRead());
   }
+  */
   // Check status byte (register data bytes overlaps I/Os)
   lastIndex = pvStatusBytes.size() - 1;
   if(lastIndex >= 0){
@@ -227,16 +425,20 @@ int mdtDeviceModbusWagoModule::lastAddressWrite() const
   int lastIndex;
 
   // Check in I/O's
+  /**
   lastIndex = pvAnalogIos.size() - 1;
   if(lastIndex >= 0){
     Q_ASSERT(pvAnalogIos.at(lastIndex) != 0);
     lastAddress = pvAnalogIos.at(lastIndex)->addressWrite();
   }
+  */
+  /**
   lastIndex = pvDigitalIos.size() - 1;
   if(lastIndex >= 0){
     Q_ASSERT(pvDigitalIos.at(lastIndex) != 0);
     lastAddress = qMax(lastAddress, pvDigitalIos.at(lastIndex)->addressWrite());
   }
+  */
   // Check control byte (register data bytes overlaps I/Os)
   lastIndex = pvControlBytes.size() - 1;
   if(lastIndex >= 0){
@@ -248,17 +450,28 @@ int mdtDeviceModbusWagoModule::lastAddressWrite() const
 
 int mdtDeviceModbusWagoModule::ioCount() const
 {
-  return (pvAnalogIos.size() + pvDigitalIos.size());
+  ///return (pvAnalogIos.size() + pvDigitalIos.size());
+  ///return (pvAnalogIos.size() + pvDigitalInputs.size() + pvDigitalOutputs.size());
 }
 
-const QList<mdtAnalogIo*> & mdtDeviceModbusWagoModule::analogIos()
+const QList<mdtAnalogIo*> & mdtDeviceModbusWagoModule::analogInputs()
 {
-  return pvAnalogIos;
+  return pvAnalogInputs;
 }
 
-const QList<mdtDigitalIo*> & mdtDeviceModbusWagoModule::digitalIos()
+const QList<mdtAnalogIo*> & mdtDeviceModbusWagoModule::analogOutputs()
 {
-  return pvDigitalIos;
+  return pvAnalogOutputs;
+}
+
+const QList<mdtDigitalIo*> & mdtDeviceModbusWagoModule::digitalInputs()
+{
+  return pvDigitalInputs;
+}
+
+const QList<mdtDigitalIo*> & mdtDeviceModbusWagoModule::digitalOutputs()
+{
+  return pvDigitalOutputs;
 }
 
 mdtDeviceModbusWagoModule::type_t mdtDeviceModbusWagoModule::type() const
@@ -291,18 +504,32 @@ QString mdtDeviceModbusWagoModule::deviceName()
   return pvDevice->name();
 }
 
-void mdtDeviceModbusWagoModule::addAnalogIo(mdtAnalogIo *aio)
+void mdtDeviceModbusWagoModule::addAnalogInput(mdtAnalogIo *aio)
 {
   Q_ASSERT(aio != 0);
 
-  pvAnalogIos.append(aio);
+  pvAnalogInputs.append(aio);
 }
 
-void mdtDeviceModbusWagoModule::addDigitalIo(mdtDigitalIo *dio)
+void mdtDeviceModbusWagoModule::addAnalogOutput(mdtAnalogIo *aio)
+{
+  Q_ASSERT(aio != 0);
+
+  pvAnalogOutputs.append(aio);
+}
+
+void mdtDeviceModbusWagoModule::addDigitalInput(mdtDigitalIo *dio)
 {
   Q_ASSERT(dio != 0);
 
-  pvDigitalIos.append(dio);
+  pvDigitalInputs.append(dio);
+}
+
+void mdtDeviceModbusWagoModule::addDigitalOutput(mdtDigitalIo *dio)
+{
+  Q_ASSERT(dio != 0);
+
+  pvDigitalOutputs.append(dio);
 }
 
 void mdtDeviceModbusWagoModule::addRegisters(int channelCount, int firstAddressRead, int firstAddressWrite)
@@ -587,11 +814,14 @@ void mdtDeviceModbusWagoModule::wait(int ms)
   pvDevice->wait(ms);
 }
 
+/**
 QVariant mdtDeviceModbusWagoModule::specialModuleValueMin()
 {
   return QVariant();
 }
+*/
 
+/**
 QVariant mdtDeviceModbusWagoModule::specialModuleValueMax()
 {
   return QVariant();
@@ -611,19 +841,23 @@ QVariant mdtDeviceModbusWagoModule::specialModuleValueSigned()
 {
   return QVariant();
 }
+*/
 
+/**
 QVariant mdtDeviceModbusWagoModule::specialModuleIsInput()
 {
   return QVariant();
 }
+*/
 
+/**
 QVariant mdtDeviceModbusWagoModule::specialModuleIosCount()
 {
   return QVariant();
 }
+*/
 
-/// \todo adapt
-QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMin(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogInputsValueMin(int partNumber) const
 {
   switch(partNumber){
     case 452:
@@ -631,7 +865,15 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMin(int partNumber) const
     case 454:
       return 4.0;
     case 457:
-      return QVariant(-10.0);
+      return -10.0;
+    default:
+      return QVariant();
+  }
+}
+
+QVariant mdtDeviceModbusWagoModule::analogOutputsValueMin(int partNumber) const
+{
+  switch(partNumber){
     case 550:
       return QVariant(0.0);
     default:
@@ -639,7 +881,7 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMin(int partNumber) const
   }
 }
 
-QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMax(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogInputsValueMax(int partNumber) const
 {
   switch(partNumber){
     case 452:
@@ -647,15 +889,23 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleValueMax(int partNumber) const
     case 454:
       return 20.0;
     case 457:
-      return QVariant(10.0);
-    case 550:
-      return QVariant(10.0);
+      return 10.0;
     default:
       return QVariant();
   }
 }
 
-int mdtDeviceModbusWagoModule::analogIoModuleValueBitsCount(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogOutputsValueMax(int partNumber) const
+{
+  switch(partNumber){
+    case 550:
+      return 10.0;
+    default:
+      return QVariant();
+  }
+}
+
+int mdtDeviceModbusWagoModule::analogInputsValueBitsCount(int partNumber) const
 {
   switch(partNumber){
     case 452:
@@ -664,6 +914,14 @@ int mdtDeviceModbusWagoModule::analogIoModuleValueBitsCount(int partNumber) cons
       return 12;
     case 457:
       return 13;
+    default:
+      return -1;
+  }
+}
+
+int mdtDeviceModbusWagoModule::analogOutputsValueBitsCount(int partNumber) const
+{
+  switch(partNumber){
     case 550:
       return 12;
     default:
@@ -671,7 +929,7 @@ int mdtDeviceModbusWagoModule::analogIoModuleValueBitsCount(int partNumber) cons
   }
 }
 
-int mdtDeviceModbusWagoModule::analogIoModuleValueLsbIndex(int partNumber) const
+int mdtDeviceModbusWagoModule::analogInputsValueLsbIndex(int partNumber) const
 {
   switch(partNumber){
     case 452:
@@ -680,6 +938,14 @@ int mdtDeviceModbusWagoModule::analogIoModuleValueLsbIndex(int partNumber) const
       return 3;
     case 457:
       return 3;
+    default:
+      return -1;
+  }
+}
+
+int mdtDeviceModbusWagoModule::analogOutputsValueLsbIndex(int partNumber) const
+{
+  switch(partNumber){
     case 550:
       return 3;
     default:
@@ -687,7 +953,7 @@ int mdtDeviceModbusWagoModule::analogIoModuleValueLsbIndex(int partNumber) const
   }
 }
 
-QVariant mdtDeviceModbusWagoModule::analogIoModuleValueSigned(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogInputsValueSigned(int partNumber) const
 {
   switch(partNumber){
     case 452:
@@ -696,6 +962,14 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleValueSigned(int partNumber) co
       return false;
     case 457:
       return true;
+    default:
+      return QVariant();
+  }
+}
+
+QVariant mdtDeviceModbusWagoModule::analogOutputsValueSigned(int partNumber) const
+{
+  switch(partNumber){
     case 550:
       return false;
     default:
@@ -703,6 +977,7 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleValueSigned(int partNumber) co
   }
 }
 
+/**
 QVariant mdtDeviceModbusWagoModule::analogIoModuleIsInput(int partNumber) const
 {
   switch(partNumber){
@@ -718,8 +993,9 @@ QVariant mdtDeviceModbusWagoModule::analogIoModuleIsInput(int partNumber) const
       return QVariant();
   }
 }
+*/
 
-int mdtDeviceModbusWagoModule::analogIoModuleIosCount(int partNumber) const
+int mdtDeviceModbusWagoModule::analogInputsCount(int partNumber) const
 {
   switch(partNumber){
     case 452:
@@ -729,13 +1005,29 @@ int mdtDeviceModbusWagoModule::analogIoModuleIosCount(int partNumber) const
     case 457:
       return 4;
     case 550:
+      return 0;
+    default:
+      return -1;
+  }
+}
+
+int mdtDeviceModbusWagoModule::analogOutputsCount(int partNumber) const
+{
+  switch(partNumber){
+    case 452:
+      return 0;
+    case 454:
+      return 0;
+    case 457:
+      return 0;
+    case 550:
       return 2;
     default:
       return -1;
   }
 }
 
-QString mdtDeviceModbusWagoModule::analogIoModuleUnit(int partNumber) const
+QString mdtDeviceModbusWagoModule::analogInputsUnit(int partNumber) const
 {
   switch(partNumber){
     case 452:
@@ -744,6 +1036,14 @@ QString mdtDeviceModbusWagoModule::analogIoModuleUnit(int partNumber) const
       return "mA";
     case 457:
       return "V";
+    default:
+      return "";
+  }
+}
+
+QString mdtDeviceModbusWagoModule::analogOutputsUnit(int partNumber) const
+{
+  switch(partNumber){
     case 550:
       return "V";
     default:
@@ -751,6 +1051,40 @@ QString mdtDeviceModbusWagoModule::analogIoModuleUnit(int partNumber) const
   }
 }
 
+int mdtDeviceModbusWagoModule::digitalInputsProcessImageSize(quint16 word) const
+{
+  // Bit 0 is set for a input module
+  if(word & 1){
+    return ((word & 0x0F00) >> 8);
+  }else{
+    return 0;
+  }
+}
+
+int mdtDeviceModbusWagoModule::digitalInputsCount(quint16 word) const
+{
+  return digitalInputsProcessImageSize(word);
+}
+
+int mdtDeviceModbusWagoModule::digitalOutputsProcessImageSize(quint16 word) const
+{
+  // Bit 0 is set for a input module
+  if(word & 1){
+    return 0;
+  }else{
+    return ((word & 0x0F00) >> 8);
+  }
+}
+
+int mdtDeviceModbusWagoModule::digitalOutputsCount(quint16 word) const
+{
+  return digitalOutputsProcessImageSize(word);
+}
+
+
+
+/// \todo Check if ok. A module can have inputs and outputs (f.ex. 750-1502)
+/**
 QVariant mdtDeviceModbusWagoModule::digitalIoModuleIsInput(quint16 word) const
 {
   // Bit 0 is set for a input module
@@ -770,13 +1104,16 @@ QVariant mdtDeviceModbusWagoModule::digitalIoModuleIsInput(quint16 word) const
     }
   }
 }
+*/
 
+/**
 int mdtDeviceModbusWagoModule::digitalIoModuleIosCount(quint16 word) const
 {
   return ((word & 0x0F00) >> 8);
 }
+*/
 
-mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogIo(int partNumber) const
+mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber) const
 {
   mdtAnalogIo *aio;
   QVariant value;
@@ -785,25 +1122,25 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogIo(int partNumber) const
   bool intValueSigned;
 
   // Get I/O module's parameters
-  value = analogIoModuleValueMin(partNumber);
+  value = analogInputsValueMin(partNumber);
   if(!value.isValid()){
     return 0;
   }
   min = value.toDouble();
-  value = analogIoModuleValueMax(partNumber);
+  value = analogInputsValueMax(partNumber);
   if(!value.isValid()){
     return 0;
   }
   max = value.toDouble();
-  intValueBitsCount = analogIoModuleValueBitsCount(partNumber);
+  intValueBitsCount = analogInputsValueBitsCount(partNumber);
   if(intValueBitsCount < 0){
     return 0;
   }
-  intValueLsbIndex = analogIoModuleValueLsbIndex(partNumber);
+  intValueLsbIndex = analogInputsValueLsbIndex(partNumber);
   if(intValueLsbIndex < 0){
     return 0;
   }
-  value = analogIoModuleValueSigned(partNumber);
+  value = analogInputsValueSigned(partNumber);
   if(!value.isValid()){
     return 0;
   }
@@ -814,7 +1151,51 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogIo(int partNumber) const
     return 0;
   }
   aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned);
-  aio->setUnit("[" + analogIoModuleUnit(partNumber) + "]");
+  aio->setUnit("[" + analogInputsUnit(partNumber) + "]");
+  aio->setLabel("Module: 750-" + QString::number(partNumber));
+
+  return aio;
+}
+
+mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber) const
+{
+  mdtAnalogIo *aio;
+  QVariant value;
+  double min, max;
+  int intValueBitsCount, intValueLsbIndex;
+  bool intValueSigned;
+
+  // Get I/O module's parameters
+  value = analogOutputsValueMin(partNumber);
+  if(!value.isValid()){
+    return 0;
+  }
+  min = value.toDouble();
+  value = analogOutputsValueMax(partNumber);
+  if(!value.isValid()){
+    return 0;
+  }
+  max = value.toDouble();
+  intValueBitsCount = analogOutputsValueBitsCount(partNumber);
+  if(intValueBitsCount < 0){
+    return 0;
+  }
+  intValueLsbIndex = analogOutputsValueLsbIndex(partNumber);
+  if(intValueLsbIndex < 0){
+    return 0;
+  }
+  value = analogOutputsValueSigned(partNumber);
+  if(!value.isValid()){
+    return 0;
+  }
+  intValueSigned = value.toBool();
+  // Have all needed parameters, build I/O
+  aio = new mdtAnalogIo;
+  if(aio == 0){
+    return 0;
+  }
+  aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned);
+  aio->setUnit("[" + analogOutputsUnit(partNumber) + "]");
   aio->setLabel("Module: 750-" + QString::number(partNumber));
 
   return aio;
@@ -824,13 +1205,40 @@ bool mdtDeviceModbusWagoModule::addAnalogIos(int partNumber)
 {
   int iosCount;
   int i;
-  bool isInput;
-  QVariant var;
+  ///bool isInput;
+  ///QVariant var;
   mdtAnalogIo *aio;
 
   // Store part number
   pvPartNumber = partNumber;
+  // Add module's analog inputs
+  iosCount = analogInputsCount(partNumber);
+  for(i = 0; i < iosCount; ++i){
+    aio = getNewAnalogInput(pvPartNumber);
+    if(aio == 0){
+      mdtError e(MDT_DEVICE_ERROR, "Cannot get I/O module's parameters (unknown part number: " + partNumberText() + ")", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+      e.commit();
+      clear(true);
+      return false;
+    }
+    pvAnalogInputs.append(aio);
+  }
+  // Add module's analog outputs
+  iosCount = analogOutputsCount(partNumber);
+  for(i = 0; i < iosCount; ++i){
+    aio = getNewAnalogOutput(pvPartNumber);
+    if(aio == 0){
+      mdtError e(MDT_DEVICE_ERROR, "Cannot get I/O module's parameters (unknown part number: " + partNumberText() + ")", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+      e.commit();
+      clear(true);
+      return false;
+    }
+    pvAnalogOutputs.append(aio);
+  }
   // check if module is input or output
+  /**
   var = analogIoModuleIsInput(pvPartNumber);
   if(!var.isValid()){
     mdtError e(MDT_DEVICE_ERROR, "Cannot check if I/O module has inputs or a outputs (unknown part number: " + partNumberText() + ")", mdtError::Error);
@@ -847,21 +1255,18 @@ bool mdtDeviceModbusWagoModule::addAnalogIos(int partNumber)
     e.commit();
     return false;
   }
-  // Add I/Os
-  for(i = 0; i < iosCount; ++i){
-    aio = getNewAnalogIo(pvPartNumber);
-    if(aio == 0){
-      mdtError e(MDT_DEVICE_ERROR, "Cannot get I/O module's parameters (unknown part number: " + partNumberText() + ")", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-      e.commit();
-      return false;
-    }
-    pvAnalogIos.append(aio);
-    if(isInput){
-      pvType = AnalogInputs;
-    }else{
-      pvType = AnalogOutputs;
-    }
+  */
+  // Set module type
+  if((pvAnalogInputs.size() > 0)&&(pvAnalogOutputs.size() > 0)){
+    mdtError e(MDT_DEVICE_ERROR, "Analog module with inputs and outputs is not supported (part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    clear(true);
+    return false;
+  }else if(pvAnalogInputs.size() > 0){
+    pvType = AnalogInputs;
+  }else{
+    pvType = AnalogOutputs;
   }
 
   return true;
@@ -871,11 +1276,12 @@ bool mdtDeviceModbusWagoModule::addDigitalIos(quint16 word)
 {
   int iosCount;
   int i;
-  bool isInput;
-  QVariant var;
+  ///bool isInput;
+  ///QVariant var;
   mdtDigitalIo *dio;
 
   // Check if module is input or output
+  /**
   var = digitalIoModuleIsInput(word);
   if(!var.isValid()){
     mdtError e(MDT_DEVICE_ERROR, "Cannot check if I/O module has inputs or a outputs", mdtError::Error);
@@ -884,16 +1290,18 @@ bool mdtDeviceModbusWagoModule::addDigitalIos(quint16 word)
     return false;
   }
   isInput = var.toBool();
-  // Get I/Os count
-  iosCount = digitalIoModuleIosCount(word);
+  */
+  
+  // Add digital inputs
+  ///iosCount = digitalIoModuleIosCount(word);
+  iosCount = digitalInputsCount(word);
   if(iosCount < 0){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get module's number of I/Os", mdtError::Error);
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get module's number of digital inputs", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
     e.commit();
     return false;
   }
-  // Add I/Os
-  for(i=0; i<iosCount; i++){
+  for(i = 0; i < iosCount; ++i){
     dio = new mdtDigitalIo;
     if(dio == 0){
       mdtError e(MDT_DEVICE_ERROR, "Unable to build a digital I/O (memory full ?)", mdtError::Error);
@@ -901,12 +1309,34 @@ bool mdtDeviceModbusWagoModule::addDigitalIos(quint16 word)
       e.commit();
       return false;
     }
-    pvDigitalIos.append(dio);
-    if(isInput){
-      pvType = DigitalInputs;
-    }else{
-      pvType = DigitalOutputs;
+    pvDigitalInputs.append(dio);
+  }
+  // Add digital outputs
+  iosCount = digitalOutputsCount(word);
+  if(iosCount < 0){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get module's number of digital outputs", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return false;
+  }
+  for(i = 0; i < iosCount; ++i){
+    dio = new mdtDigitalIo;
+    if(dio == 0){
+      mdtError e(MDT_DEVICE_ERROR, "Unable to build a digital I/O (memory full ?)", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+      e.commit();
+      clear(true);
+      return false;
     }
+    pvDigitalOutputs.append(dio);
+  }
+  // Set module type
+  if((pvDigitalInputs.size() > 0)&&(pvDigitalOutputs.size() > 0)){
+    pvType = DigitalInputsOutputs;
+  }else if(pvDigitalInputs.size() > 0){
+    pvType = DigitalInputs;
+  }else{
+    pvType = DigitalOutputs;
   }
 
   return true;

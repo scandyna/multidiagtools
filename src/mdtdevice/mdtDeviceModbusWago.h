@@ -25,6 +25,7 @@
 #include "mdtDeviceInfo.h"
 #include "mdtDeviceIos.h"
 #include <QList>
+#include <QMap>
 #include <QVariant>
 
 class mdtDeviceModbusWagoModule;
@@ -101,8 +102,22 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    *  but not added to internal ios container (use setIos() for this).
    *  Goal is to be able to detect setup without alter the internal container,
    *  so a check could be made before running really, or something else.
+   *
+   * For some special configurable modules, channels count and process image format can vary.
+   *  Because some of these parameters cannot be readen from module via MODBUS,
+   *  a instance of a module object with corresponding setup must be given as argument.
+   *  (It's also possible to specify only the special modules. Internally, 
+   *   setup regarding register word returned from fieldbus coupler will be used for
+   *   positions that are not present in the map).
+   *
+   * \param ios I/O container in witch the result will be stored.
+   * \param specialModules Map with module position as key and special module object as value.
+   *          Note: position 0 is the fieldbus coupler, so module position starts at 1.
+   *          Module objects contained in the map are not deleted in this method.
+   * \return True on success. A failure is mostly due to a communication error, an unsupported
+   *          fieldbus coupler, a unsupported module or a mistmatch with a special module configuration.
    */
-  bool detectIos(mdtDeviceIos *ios);
+  bool detectIos(mdtDeviceIos *ios, const QMap<int, mdtDeviceModbusWagoModule*> specialModules = QMap<int, mdtDeviceModbusWagoModule*>());
 
  private:
 

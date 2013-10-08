@@ -39,11 +39,12 @@ class mdtDeviceModbusWagoModule
   /*! \brief Module type
    */
   enum type_t {
-                Unknown ,         /*!< Unknown module type */
-                AnalogInputs ,    /*!< Analog inputs module */
-                AnalogOutputs ,   /*!< Analog outputs module */
-                DigitalInputs ,   /*!< Digital inputs module */
-                DigitalOutputs    /*!< Digital outputs module */
+                Unknown ,             /*!< Unknown module type */
+                AnalogInputs ,        /*!< Analog inputs module */
+                AnalogOutputs ,       /*!< Analog outputs module */
+                DigitalInputs ,       /*!< Digital inputs module */
+                DigitalOutputs ,      /*!< Digital outputs module */
+                DigitalInputsOutputs  /*!< Module with digital inputs and outputs */
               };
 
   /*! \brief Constructor
@@ -77,15 +78,36 @@ class mdtDeviceModbusWagoModule
    *
    * This method will use this word do create internally I/O's based on mdtAbstractIo
    *  and setup them on the base of known parameters (range, type, etc...).
+   *
    *  Note that no absolute addressing is done at this step.
-   *  Call setFirstAddresse() for this.
+   *  Call updateAddresses() for this.
    *
    * Some special modules need to communicate with fieldbus coupler to access register service.
-   *  To get setup during I/O detection, use getSpecialModuleSetup() instead of this method.
+   *  To get setup during I/O detection, use getSpecialModuleSetup() instead of this method. \todo Adapt
    *
    * \param word Word that contains I/O informations.
    */
   bool setupFromRegisterWord(quint16 word);
+
+  /*! \brief Update addresses of the module
+   *
+   * If no I/O was set, this method will store given addresses.
+   *  This can be usefull for some special modules witch needs to communicate
+   *  with fieldbus during setup.
+   *
+   * However, the normal way is to stup the module with setupFromRegisterWord() first,
+   *  then call this method to address I/Os.
+   *
+   * This default implementation will address all present I/Os in a linear way.
+   *
+   * \param firstAiAddress First address in the analog inputs process image.
+   * \param firstAoAddressRead  First address in the analog outputs process image for read access.
+   * \param firstAoAddressWrite First address in the analog outputs process image for write access.
+   * \param firstDiAddress First address in the digital inputs process image.
+   * \param firstDoAddressRead  First address in the digital outputs process image for read access.
+   * \param firstDoAddressWrite First address in the digital outputs process image for write access.
+   */
+  virtual void updateAddresses(int firstAiAddress, int firstAoAddressRead, int firstAoAddressWrite, int firstDiAddress, int firstDoAddressRead, int firstDoAddressWrite);
 
   /*! \brief Set module process image I/O range
    *
@@ -100,6 +122,8 @@ class mdtDeviceModbusWagoModule
    *
    * \pre addressRead must be >= 0 .
    * \pre if module contains outputs and/or control bytes, addressWrite must be >= 0 .
+   * 
+   * \todo Obselete. Should become a virtual protected method, like updateAddresses() or something so..
    */
   void setFirstAddress(int addressRead, int addressWrite = -1);
 
@@ -108,13 +132,88 @@ class mdtDeviceModbusWagoModule
    * Use this method during I/O detection. It has same goal as setupFromRegisterWord() ,
    *  but is used for special modules.
    *
-   * Because special module can need to communicate with fieldbus coupler,
+   * Because some special module needs to communicate with fieldbus coupler,
    *  first address is needed.
    *
    * Note: special module subclass must implement this method.
    *  This default implementation does nothing and allways returns false.
+   * 
+   * \todo Obselete. Should become a protected method that will read setup from module.
    */
   virtual bool getSpecialModuleSetup(quint16 word, int firstAddressRead, int firstAddressWrite);
+
+  /*! \brief Get first address of module's analog inputs process image
+   */
+  int firstAiAddress() const;
+
+  /*! \brief Get last address of module's analog inputs process image
+   */
+  virtual int lastAiAddress() const;
+
+  /*! \brief Get first address for next module in analog inputs process image
+   */
+  virtual int nextModuleFirstAiAddress() const;
+
+  /*! \brief Get first address of module's analog outputs process image for read access
+   */
+  int firstAoAddressRead() const;
+
+  /*! \brief Get last address of module's analog outputs process image for read access
+   */
+  virtual int lastAoAddressRead() const;
+
+  /*! \brief Get first address for next module in analog outputs process image for read access
+   */
+  virtual int nextModuleFirstAoAddressRead() const;
+
+  /*! \brief Get first address of module's analog outputs process image for write access
+   */
+  int firstAoAddressWrite() const;
+
+  /*! \brief Get last address of module's analog outputs process image for write access
+   */
+  virtual int lastAoAddressWrite() const;
+
+  /*! \brief Get first address for next module in digital outputs process image for write access
+   */
+  virtual int nextModuleFirstAoAddressWrite() const;
+
+  /*! \brief Get first address of module's digital inputs process image
+   */
+  int firstDiAddress() const;
+
+  /*! \brief Get last address of module's digital inputs process image
+   */
+  virtual int lastDiAddress() const;
+
+  /*! \brief Get first address for next module in digital inputs process image
+   */
+  virtual int nextModuleFirstDiAddress() const;
+
+  /*! \brief Get first address of module's digital outputs process image for read access
+   */
+  int firstDoAddressRead() const;
+
+  /*! \brief Get last address of module's digital outputs process image for read access
+   */
+  virtual int lastDoAddressRead() const;
+
+  /*! \brief Get first address for next module in digital outputs process image for read access
+   */
+  virtual int nextModuleFirstDoAddressRead() const;
+
+  /*! \brief Get first address of module's digital outputs process image for write access
+   */
+  int firstDoAddressWrite() const;
+
+  /*! \brief Get last address of module's digital outputs process image for write access
+   */
+  virtual int lastDoAddressWrite() const;
+
+  /*! \brief Get first address for next module in digital outputs process image for write access
+   */
+  virtual int nextModuleFirstDoAddressWrite() const;
+
 
   /*! \brief Get first address (for read access) of module's process image
    *
@@ -147,13 +246,22 @@ class mdtDeviceModbusWagoModule
    */
   int ioCount() const;
 
-  /*! \brief Access internal analog I/O's
+  
+  /*! \brief Access internal analog inputs
    */
-  const QList<mdtAnalogIo*> & analogIos();
+  const QList<mdtAnalogIo*> & analogInputs();
 
-  /*! \brief Access internal digital I/O's
+  /*! \brief Access internal analog outputs
    */
-  const QList<mdtDigitalIo*> & digitalIos();
+  const QList<mdtAnalogIo*> & analogOutputs();
+
+  /*! \brief Access internal digital inputs
+   */
+  const QList<mdtDigitalIo*> & digitalInputs();
+
+  /*! \brief Access internal digital outputs
+   */
+  const QList<mdtDigitalIo*> & digitalOutputs();
 
   /*! \brief Get module type
    */
@@ -181,17 +289,29 @@ class mdtDeviceModbusWagoModule
 
  protected:
 
-  /*! \brief Add a analog I/O
+  /*! \brief Add a analog input
    *
-   * \brief aio must be a valid pointer
+   * \pre aio must be a valid pointer
    */
-  void addAnalogIo(mdtAnalogIo *aio);
+  void addAnalogInput(mdtAnalogIo *aio);
 
-  /*! \brief Add a digital I/O
+  /*! \brief Add a analog output
    *
-   * \brief dio must be a valid pointer
+   * \pre aio must be a valid pointer
    */
-  void addDigitalIo(mdtDigitalIo *dio);
+  void addAnalogOutput(mdtAnalogIo *aio);
+
+  /*! \brief Add a digital input
+   *
+   * \pre dio must be a valid pointer
+   */
+  void addDigitalInput(mdtDigitalIo *dio);
+
+  /*! \brief Add a digital output
+   *
+   * \pre dio must be a valid pointer
+   */
+  void addDigitalOutput(mdtDigitalIo *dio);
 
   /*! \brief Add registers
    *
@@ -351,7 +471,7 @@ class mdtDeviceModbusWagoModule
    *
    * Default implementation returns a invalid QVariant
    */
-  virtual QVariant specialModuleValueMin();
+  ///virtual QVariant specialModuleValueMin();
 
   /*! \brief Get the max value of a range of special (analog) module
    *
@@ -359,7 +479,7 @@ class mdtDeviceModbusWagoModule
    *
    * Default implementation returns a invalid QVariant
    */
-  virtual QVariant specialModuleValueMax();
+  ///virtual QVariant specialModuleValueMax();
 
   /*! \brief Get the number of bits (including sign bit) used to represent a value of special (analog) module
    *
@@ -367,7 +487,7 @@ class mdtDeviceModbusWagoModule
    *
    * Default implementation returns a invalid QVariant
    */
-  virtual QVariant specialModuleValueBitsCount();
+  ///virtual QVariant specialModuleValueBitsCount();
 
   /*! \brief Get index of the first bit (LSB) that represents the value of special (analog) module
    *
@@ -375,7 +495,7 @@ class mdtDeviceModbusWagoModule
    *
    * Default implementation returns a invalid QVariant
    */
-  virtual QVariant specialModuleValueLsbIndex();
+  ///virtual QVariant specialModuleValueLsbIndex();
 
   /*! \brief Check if a special (analog) module returns a signed value or not
    *
@@ -383,7 +503,7 @@ class mdtDeviceModbusWagoModule
    *
    * Default implementation returns a invalid QVariant
    */
-  virtual QVariant specialModuleValueSigned();
+  ///virtual QVariant specialModuleValueSigned();
 
   /*! \brief Check if a special module returns is a inputs module
    *
@@ -391,7 +511,7 @@ class mdtDeviceModbusWagoModule
    *
    * Default implementation returns a invalid QVariant
    */
-  virtual QVariant specialModuleIsInput();
+  ///virtual QVariant specialModuleIsInput();
 
   /*! \brief Get I/O's count of a special module
    *
@@ -399,25 +519,38 @@ class mdtDeviceModbusWagoModule
    *
    * Default implementation returns a invalid QVariant
    */
-  virtual QVariant specialModuleIosCount();
+  ///virtual QVariant specialModuleIosCount();
+  
 
- private:
-
-  /*! \brief Get the min value of a range of a analog I/O module
+  /*! \brief Get the min value of a range of analog inputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return The min. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
    */
-  QVariant analogIoModuleValueMin(int partNumber) const;
+  virtual QVariant analogInputsValueMin(int partNumber) const;
 
-  /*! \brief Get the max value of a range of a analog I/O module
+  /*! \brief Get the min value of a range of analog outputs
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \return The min. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
+   */
+  virtual QVariant analogOutputsValueMin(int partNumber) const;
+
+  /*! \brief Get the max value of a range of analog inputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return The max. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
    */
-  QVariant analogIoModuleValueMax(int partNumber) const;
+  virtual QVariant analogInputsValueMax(int partNumber) const;
 
-  /*! \brief Get the number of bits (including sign bit) used to represent a value of a analog I/O module
+  /*! \brief Get the max value of a range of analog outputs
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \return The max. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
+   */
+  virtual QVariant analogOutputsValueMax(int partNumber) const;
+
+  /*! \brief Get the number of bits (including sign bit) used to represent a value of analog inputs
    *
    * The resolution of each analog module is not the same.
    *  For example, the 750-457 has a resolution of 13 bits.
@@ -425,9 +558,19 @@ class mdtDeviceModbusWagoModule
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return bits count used for value, or -1 for a unknown module.
    */
-  int analogIoModuleValueBitsCount(int partNumber) const;
+  virtual int analogInputsValueBitsCount(int partNumber) const;
 
-  /*! \brief Get index of the first bit (LSB) that represents the value of a analog I/O module
+  /*! \brief Get the number of bits (including sign bit) used to represent a value of analog outputs
+   *
+   * The resolution of each analog module is not the same.
+   *  For example, the 750-550 has a resolution of 12 bits.
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \return bits count used for value, or -1 for a unknown module.
+   */
+  virtual int analogOutputsValueBitsCount(int partNumber) const;
+
+  /*! \brief Get index of the first bit (LSB) that represents the value of analog inputs
    *
    * Some modules have bits used for other purprose than value.
    *  At exemple, for module 750-457, the LSB index is 3.
@@ -435,15 +578,33 @@ class mdtDeviceModbusWagoModule
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return Index of LSB of value, or -1 for unknown module.
    */
-  int analogIoModuleValueLsbIndex(int partNumber) const;
+  virtual int analogInputsValueLsbIndex(int partNumber) const;
 
-  /*! \brief Check if a analog I/O module returns a signed value or not
+  /*! \brief Get index of the first bit (LSB) that represents the value of analog outputs
+   *
+   * Some modules have bits used for other purprose than value.
+   *  At exemple, for module 750-550, the LSB index is 3.
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \return Index of LSB of value, or -1 for unknown module.
+   */
+  virtual int analogOutputsValueLsbIndex(int partNumber) const;
+
+  /*! \brief Check if a analog inputs returns a signed value or not
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return True if module's representation is signed, false if not.
    *          For a unknown module, a invalid QVariant is returned.
    */
-  QVariant analogIoModuleValueSigned(int partNumber) const;
+  virtual QVariant analogInputsValueSigned(int partNumber) const;
+
+  /*! \brief Check if a analog outputs returns a signed value or not
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \return True if module's representation is signed, false if not.
+   *          For a unknown module, a invalid QVariant is returned.
+   */
+  virtual QVariant analogOutputsValueSigned(int partNumber) const;
 
   /*! \brief Check if a analog I/O module is a input
    *
@@ -451,21 +612,74 @@ class mdtDeviceModbusWagoModule
    * \return True if module is a input, false if module is a output.
    *          For a unknown module, a invalid QVariant is returned.
    */
-  QVariant analogIoModuleIsInput(int partNumber) const;
+  ///QVariant analogIoModuleIsInput(int partNumber) const;
 
-  /*! \brief Get number of I/Os for a analog I/O module
+  /*! \brief Get number of analog inputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return Number of I/O's or -1 for unknown module.
    */
-  int analogIoModuleIosCount(int partNumber) const;
+  virtual int analogInputsCount(int partNumber) const;
 
-  /*! \brief Get unit of a analog I/O module (V, A, ...)
+  /*! \brief Get number of analog outputs
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \return Number of I/O's or -1 for unknown module.
+   */
+  virtual int analogOutputsCount(int partNumber) const;
+
+  /*! \brief Get unit of a analog inputs (V, A, ...)
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return Unit of module, or a empty string for unknown module.
    */
-  QString analogIoModuleUnit(int partNumber) const;
+  virtual QString analogInputsUnit(int partNumber) const;
+
+  /*! \brief Get unit of a analog outputs (V, A, ...)
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \return Unit of module, or a empty string for unknown module.
+   */
+  virtual QString analogOutputsUnit(int partNumber) const;
+
+  /*! \brief Get size of digital inputs process image
+   *
+   * For common digital inputs modules, this will match with the number of digital inputs.
+   *  For special modules that have status/iformation mapped in porecess image,
+   *   these are also include in the result.
+   *
+   * \param word The identification word (see Wago fieldbus coupler doc, part of register 0x2030 for details).
+   * \return Digital inputs process image size [bits] or -1 on unknown description.
+   */
+  int digitalInputsProcessImageSize(quint16 word) const;
+
+  /*! \brief Get the number of digital inputs
+   *
+   * This implementation returns value from digitalInputsProcessImageSize() .
+   *  This method can be re-implemented for special modules.
+   */
+  virtual int digitalInputsCount(quint16 word) const;
+
+  /*! \brief Get size of digital outputs process image
+   *
+   * For common digital outputs modules, this will match with the number of digital outputs.
+   *  For special modules that have status/iformation mapped in porecess image,
+   *   these are also include in the result.
+   *
+   * \param word The identification word (see Wago fieldbus coupler doc, part of register 0x2030 for details).
+   * \return Digital outputs process image size [bits] or -1 on unknown description.
+   */
+  int digitalOutputsProcessImageSize(quint16 word) const;
+
+  /*! \brief Get the number of digital outputs
+   *
+   * This implementation returns value from digitalOutputsProcessImageSize() .
+   *  This method can be re-implemented for special modules.
+   */
+  virtual int digitalOutputsCount(quint16 word) const;
+
+  
+  
 
   /*! \brief Check if a digital I/O module is a input
    *
@@ -473,16 +687,18 @@ class mdtDeviceModbusWagoModule
    * \return True if module is a input, false if module is a output.
    *          For a unknown or uncoherent description, a invalid QVariant is returned.
    */
-  QVariant digitalIoModuleIsInput(quint16 word) const;
+  ///QVariant digitalIoModuleIsInput(quint16 word) const;
 
   /*! \brief Get number of I/Os for a digital I/O module
    *
    * \param word The identification word (see Wago doc, part of register 0x2030 for details).
    * \return Number of I/O's or -1 for unknown description.
    */
-  int digitalIoModuleIosCount(quint16 word) const;
+  ///int digitalIoModuleIosCount(quint16 word) const;
 
-  /*! \brief Build a new analog I/O
+ private:
+
+  /*! \brief Build a new analog input
    *
    * Will get parameters reagrding part number if known.
    *  The new created I/O is configured.
@@ -491,7 +707,18 @@ class mdtDeviceModbusWagoModule
    * \return A new configured analog I/O, or a null pointer if module part number is unknown or other error.
    *          Note: the returned object must be deleted by user whenn not used anymore.
    */
-  mdtAnalogIo *getNewAnalogIo(int partNumber) const;
+  mdtAnalogIo *getNewAnalogInput(int partNumber) const;
+
+  /*! \brief Build a new analog output
+   *
+   * Will get parameters reagrding part number if known.
+   *  The new created I/O is configured.
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \return A new configured analog I/O, or a null pointer if module part number is unknown or other error.
+   *          Note: the returned object must be deleted by user whenn not used anymore.
+   */
+  mdtAnalogIo *getNewAnalogOutput(int partNumber) const;
 
   /*! \brief Create, configure and add module's analog I/O's
    *
@@ -504,6 +731,7 @@ class mdtDeviceModbusWagoModule
   /*! \brief Create, configure and add module's analog I/O's
    *
    * Will use given word to set parameters of each I/O.
+   *  No addressing is done here.
    *
    * \return True on success.
    */
@@ -511,8 +739,12 @@ class mdtDeviceModbusWagoModule
 
   Q_DISABLE_COPY(mdtDeviceModbusWagoModule);
 
-  QList<mdtAnalogIo*> pvAnalogIos;
-  QList<mdtDigitalIo*> pvDigitalIos;
+  ///QList<mdtAnalogIo*> pvAnalogIos;
+  QList<mdtAnalogIo*> pvAnalogInputs;
+  QList<mdtAnalogIo*> pvAnalogOutputs;
+  ///QList<mdtDigitalIo*> pvDigitalIos;
+  QList<mdtDigitalIo*> pvDigitalInputs;
+  QList<mdtDigitalIo*> pvDigitalOutputs;
   bool pvAutoDeleteIos;
   type_t pvType;    // Module type
   ///QString TypeText;
@@ -522,6 +754,13 @@ class mdtDeviceModbusWagoModule
   QList<QPair<int, quint8> > pvControlBytes;
   ///QList<QPair<int, quint16> > pvRegisterDataWords;  /// \todo Don't store address here (is not possible becaus of read/write address)
   QList<quint16> pvRegisterDataWords;
+  // Addresses
+  int pvFirstAiAddress;
+  int pvFirstAoAddressRead;
+  int pvFirstAoAddressWrite;
+  int pvFirstDiAddress;
+  int pvFirstDoAddressRead;
+  int pvFirstDoAddressWrite;
   // Device
   mdtDeviceModbusWago *pvDevice;
 
