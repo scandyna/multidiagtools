@@ -38,8 +38,12 @@ class mdtAnalogIo : public mdtAbstractIo
 
  public:
 
+  /*! \brief Constructor
+   */
   mdtAnalogIo(QObject *parent = 0);
 
+  /*! \brief Destructor
+   */
   ~mdtAnalogIo();
 
   /*! \brief Set the unit (V, A, °C, ...)
@@ -66,20 +70,28 @@ class mdtAnalogIo : public mdtAbstractIo
    *  - Value is scaled from -10 V to 10 V
    *
    * In this example, this method must be called with
-   *  min = -10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 and intValueSigned = true .
+   *  min = -10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 , intValueSigned = true , scaleFromMinToMax = true , conversionFactor = 1.0 .
    *
-   * Note that some analog output hardware use a different resolution for read and write (f.ex. Wago 750-550).
-   *  In such case, you can set parameters for reading here, and use setEncodeBitSettings() for alternate
-   *  parameters for write.
+   * Here is another example with Wago 750-464 with Pt100 sensor and normal format:
+   *  - Value is encoded in 16 bits
+   *  - Scaling is allready done by device
+   *  - Value represents 0.1°C per digit -> we have to apply a conversion factor of 0.1
+   *
+   * In this example, this method must be called with
+   *  min = -200.0 , max = 850.0 , intValueBitsCount = 16 , intValueLsbIndex = 0 , intValueSigned = true , scaleFromMinToMax = false , conversionFactor = 0.1 .
+   *
    *
    * \param min Minimum value to display (f.ex. 0V, or 4mA)
    * \param max Maximum value to display (f.ex. 10V, or 20mA)
    * \param intValueBitsCount Number of bits used for the value, including sign bit.
-   *                           (has only effect when using setValueInt() ).
    * \param intValueLsbIndex Index of first bit to use for value extraction.
-   *                          (has only effect when using setValueInt() ).
    * \param intValueSigned If true, decoded value is considered as signed value, i.e. the most significant bit is the sign.
-   *                        (has only effect when using setValueInt() ).
+   * \param scaleFromMinToMax If true, given value INT will be scaled from min to max regarding LSB.
+   *                           LSB is determined from intValueBitsCount .
+   * \param conversionFactor This factor is applied as follow (min, max scaling is ignored in this example):
+   *                          - ValueDouble = valueInt * LSB * conversionFactor
+   *                          - ValueInt = valueDouble / (LSB * conversionFactor)<br>
+   *                          LSB is determined from intValueBitsCount .
    *
    * \return true on success. Some checks are done, and if one fails, false is returned and
    *          the previous settingsare used for conversion.
@@ -90,7 +102,7 @@ class mdtAnalogIo : public mdtAbstractIo
    *  - The signal rangeChangedForUi() is emited
    *  - The signal valueChangedForUi() is emited
    */
-  bool setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex = 0, bool intValueSigned = false);
+  bool setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex = 0, bool intValueSigned = false, bool scaleFromMinToMax = true, double conversionFactor = 1.0);
 
   /*! \brief Set the bits encode parammeters
    *
@@ -110,7 +122,7 @@ class mdtAnalogIo : public mdtAbstractIo
    * \return true on success. Some checks are done, and if one fails, false is returned and
    *          the previous settingsare used for conversion.
    */
-  bool setEncodeBitSettings(int intValueBitsCount, int intValueLsbIndex);
+  ///bool setEncodeBitSettings(int intValueBitsCount, int intValueLsbIndex);
 
   /*! \brief Get the minimum value of the range
    */
@@ -185,8 +197,8 @@ class mdtAnalogIo : public mdtAbstractIo
   QString pvUnit;
   double pvMinimum;
   double pvMaximum;
-  double pvStep;
-  double pvStepInverse;
+  double pvStepQ;             // Quantification step, it is also the factor used for Int (encoded) -> Floating (analog value) conversion (D/A conversion)
+  double pvStepAD;            // Factor used for Floating (analog value) -> Int (encoded) conversion (A/D conversion)
   // Members used for integer <-> float value conversion
   int pvIntValueLsbIndex;     // Index of least significant bit, used in setValueInt()
   int pvIntValueLsbIndexEnc;  // Index of least significant bit, used in valueInt()
@@ -194,6 +206,7 @@ class mdtAnalogIo : public mdtAbstractIo
   int pvIntValueMaskEnc;      // Mask to extract the correct bits count, used in valueInt()
   int pvIntValueSignMask;
   bool pvIntValueSigned;
+  bool pvScaleFromMinToMax;
 };
 
 #endif  // #ifndef MDT_ANALOG_IO_H

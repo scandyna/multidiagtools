@@ -49,6 +49,8 @@ class mdtDeviceModbusWagoModule
 
   /*! \brief Constructor
    *
+   * The module will have all addresses set to 0.
+   *
    * \param autoDeleteIos If true, internally created I/O's are deleted when this object is destroyed
    * \param device Pointer to device (used for register service access)
    * \pre device must be a valid pointer
@@ -65,6 +67,8 @@ class mdtDeviceModbusWagoModule
    *
    * If autoDeleteIos is set, memory is freed for internal I/O
    *  (mdtAbstractIo pointers will also become invalid)
+   *
+   * Note that all addresses will be reset to 0 after a clear.
    *
    * \param forceDeleteIos Will delete I/O's undependant of autoDeleteIos flag.
    */
@@ -108,21 +112,6 @@ class mdtDeviceModbusWagoModule
    * \param firstDoAddressWrite First address in the digital outputs process image for write access.
    */
   virtual void updateAddresses(int firstAiAddress, int firstAoAddressRead, int firstAoAddressWrite, int firstDiAddress, int firstDoAddressRead, int firstDoAddressWrite);
-
-  /*! \brief Setup a special module
-   *
-   * Use this method during I/O detection. It has same goal as setupFromRegisterWord() ,
-   *  but is used for special modules.
-   *
-   * Because some special module needs to communicate with fieldbus coupler,
-   *  first address is needed.
-   *
-   * Note: special module subclass must implement this method.
-   *  This default implementation does nothing and allways returns false.
-   * 
-   * \todo Obselete. Should become a protected method that will read setup from module.
-   */
-  virtual bool getSpecialModuleSetup(quint16 word, int firstAddressRead, int firstAddressWrite);
 
   /*! \brief Get first address of module's analog inputs process image
    */
@@ -417,30 +406,34 @@ class mdtDeviceModbusWagoModule
   /*! \brief Get the min value of a range of analog inputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return The min. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
    */
-  virtual QVariant analogInputsValueMin(int partNumber) const;
+  virtual QVariant analogInputValueMin(int partNumber, int channel) const;
 
   /*! \brief Get the min value of a range of analog outputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return The min. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
    */
-  virtual QVariant analogOutputsValueMin(int partNumber) const;
+  virtual QVariant analogOutputValueMin(int partNumber, int channel) const;
 
   /*! \brief Get the max value of a range of analog inputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return The max. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
    */
-  virtual QVariant analogInputsValueMax(int partNumber) const;
+  virtual QVariant analogInputValueMax(int partNumber, int channel) const;
 
   /*! \brief Get the max value of a range of analog outputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return The max. value in floating format. If partNumber is unknow, a invalid QVariant is returned.
    */
-  virtual QVariant analogOutputsValueMax(int partNumber) const;
+  virtual QVariant analogOutputValueMax(int partNumber, int channel) const;
 
   /*! \brief Get the number of bits (including sign bit) used to represent a value of analog inputs
    *
@@ -448,9 +441,10 @@ class mdtDeviceModbusWagoModule
    *  For example, the 750-457 has a resolution of 13 bits.
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return bits count used for value, or -1 for a unknown module.
    */
-  virtual int analogInputsValueBitsCount(int partNumber) const;
+  virtual int analogInputValueBitsCount(int partNumber, int channel) const;
 
   /*! \brief Get the number of bits (including sign bit) used to represent a value of analog outputs
    *
@@ -458,9 +452,10 @@ class mdtDeviceModbusWagoModule
    *  For example, the 750-550 has a resolution of 12 bits.
    *
    * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return bits count used for value, or -1 for a unknown module.
    */
-  virtual int analogOutputsValueBitsCount(int partNumber) const;
+  virtual int analogOutputValueBitsCount(int partNumber, int channel) const;
 
   /*! \brief Get index of the first bit (LSB) that represents the value of analog inputs
    *
@@ -468,9 +463,10 @@ class mdtDeviceModbusWagoModule
    *  At exemple, for module 750-457, the LSB index is 3.
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return Index of LSB of value, or -1 for unknown module.
    */
-  virtual int analogInputsValueLsbIndex(int partNumber) const;
+  virtual int analogInputValueLsbIndex(int partNumber, int channel) const;
 
   /*! \brief Get index of the first bit (LSB) that represents the value of analog outputs
    *
@@ -478,25 +474,28 @@ class mdtDeviceModbusWagoModule
    *  At exemple, for module 750-550, the LSB index is 3.
    *
    * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return Index of LSB of value, or -1 for unknown module.
    */
-  virtual int analogOutputsValueLsbIndex(int partNumber) const;
+  virtual int analogOutputValueLsbIndex(int partNumber, int channel) const;
 
   /*! \brief Check if a analog inputs returns a signed value or not
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return True if module's representation is signed, false if not.
    *          For a unknown module, a invalid QVariant is returned.
    */
-  virtual QVariant analogInputsValueSigned(int partNumber) const;
+  virtual QVariant analogInputValueSigned(int partNumber, int channel) const;
 
   /*! \brief Check if a analog outputs returns a signed value or not
    *
    * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return True if module's representation is signed, false if not.
    *          For a unknown module, a invalid QVariant is returned.
    */
-  virtual QVariant analogOutputsValueSigned(int partNumber) const;
+  virtual QVariant analogOutputValueSigned(int partNumber, int channel) const;
 
   /*! \brief Get number of analog inputs
    *
@@ -515,16 +514,18 @@ class mdtDeviceModbusWagoModule
   /*! \brief Get unit of a analog inputs (V, A, ...)
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return Unit of module, or a empty string for unknown module.
    */
-  virtual QString analogInputsUnit(int partNumber) const;
+  virtual QString analogInputUnit(int partNumber, int channel) const;
 
   /*! \brief Get unit of a analog outputs (V, A, ...)
    *
    * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return Unit of module, or a empty string for unknown module.
    */
-  virtual QString analogOutputsUnit(int partNumber) const;
+  virtual QString analogOutputUnit(int partNumber, int channel) const;
 
   /*! \brief Get size of digital inputs process image
    *
@@ -570,10 +571,11 @@ class mdtDeviceModbusWagoModule
    *  The new created I/O is configured.
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return A new configured analog I/O, or a null pointer if module part number is unknown or other error.
    *          Note: the returned object must be deleted by user whenn not used anymore.
    */
-  mdtAnalogIo *getNewAnalogInput(int partNumber) const;
+  mdtAnalogIo *getNewAnalogInput(int partNumber, int channel) const;
 
   /*! \brief Build a new analog output
    *
@@ -581,10 +583,11 @@ class mdtDeviceModbusWagoModule
    *  The new created I/O is configured.
    *
    * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \param channel Some special module supports different data per channel, so channel must be given here
    * \return A new configured analog I/O, or a null pointer if module part number is unknown or other error.
    *          Note: the returned object must be deleted by user whenn not used anymore.
    */
-  mdtAnalogIo *getNewAnalogOutput(int partNumber) const;
+  mdtAnalogIo *getNewAnalogOutput(int partNumber, int channel) const;
 
   /*! \brief Create, configure and add module's analog I/O's
    *

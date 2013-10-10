@@ -175,7 +175,7 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   MDT_COMPARE(ai.value().valueDouble(), 4.0, 8, 4.0, 20.0);
   MDT_COMPARE(ai.value().valueInt(), 0, 8, 0, 255);
   ao.setValueInt(127, true, true);
-  QVERIFY(qAbs(ao.value().valueDouble()-12.0) < (12.0/250.0));
+  MDT_COMPARE(ao.value().valueDouble(), 12.0, 8, 4.0, 20.0);
   MDT_COMPARE(ao.value().valueInt(), 127, 8, 0, 255);
   MDT_COMPARE(ai.value().valueDouble(), 12.0, 8, 4.0, 20.0);
   MDT_COMPARE(ai.value().valueInt(), 127, 8, 0, 255);

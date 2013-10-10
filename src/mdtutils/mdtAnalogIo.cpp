@@ -30,11 +30,12 @@ mdtAnalogIo::mdtAnalogIo(QObject *parent)
 {
   pvMinimum = 0.0;
   pvMaximum = 0.0;
-  pvStep = 1.0;
-  pvStepInverse = 1.0;
+  pvStepQ = 1.0;
+  pvStepAD = 1.0;
   pvIntValueLsbIndex = 0;
   pvIntValueLsbIndexEnc = 0;
   pvIntValueSigned = false;
+  pvScaleFromMinToMax = false;
   // Set a full 1 mask
   pvIntValueMask = -1;
   pvIntValueMaskEnc = -1;
@@ -57,9 +58,10 @@ QString mdtAnalogIo::unit() const
   return pvUnit;
 }
 
-bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex, bool intValueSigned)
+bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex, bool intValueSigned, bool scaleFromMinToMax, double conversionFactor)
 {
   Q_ASSERT(max > min);
+  Q_ASSERT((qAbs(conversionFactor) - DBL_EPSILON) > 0.0);
 
   int i;
 
@@ -88,20 +90,40 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
   // Setup mask
   pvIntValueMask = 0;
   pvIntValueMaskEnc = 0;
-  for(i=0; i<intValueBitsCount; ++i){
+  for(i = 0; i < intValueBitsCount; ++i){
     pvIntValueMask += (1<<i);
     pvIntValueMaskEnc += (1<<i);
   }
   // Set factors + sign mask
   pvIntValueSigned = intValueSigned;
+  pvScaleFromMinToMax = scaleFromMinToMax;
+  if(pvScaleFromMinToMax){
+    pvStepQ = conversionFactor * (max-min) / (pow(2.0, intValueBitsCount));
+    ///pvIntValueSignMask = (1 << (intValueBitsCount-1) );
+  }else{
+    pvStepQ = conversionFactor;
+    ///pvIntValueSignMask = 0;
+  }
+  pvIntValueSignMask = (1 << (intValueBitsCount-1) );
+  /**
   if(intValueSigned){
-    pvStep = max / (pow(2.0, (intValueBitsCount-1)) - 1);
+    if(pvScaleFromMinToMax){
+      pvStep = conversionFactor * max / (pow(2.0, (intValueBitsCount-1)));
+    }else{
+      pvStep = conversionFactor;
+    }
     pvIntValueSignMask = (1 << (intValueBitsCount-1) );
   }else{
-    pvStep = (max-min) / (pow(2.0, intValueBitsCount) - 1);
+    if(pvScaleFromMinToMax){
+    pvStep = conversionFactor * (max-min) / (pow(2.0, intValueBitsCount));
+    }else{
+      pvStep = conversionFactor;
+    }
     pvIntValueSignMask = 0;
   }
-  pvStepInverse = 1.0/pvStep;
+  */
+  pvStepAD = 1.0/pvStepQ;
+  ///qDebug() << "pvStepQ: " << pvStepQ << " , pvStepAD: " << pvStepAD;
 
   // Store min and max and signal
   pvMinimum = min;
@@ -117,6 +139,7 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
   return true;
 }
 
+/**
 bool mdtAnalogIo::setEncodeBitSettings(int intValueBitsCount, int intValueLsbIndex)
 {
   int i;
@@ -156,6 +179,7 @@ bool mdtAnalogIo::setEncodeBitSettings(int intValueBitsCount, int intValueLsbInd
 
   return true;
 }
+*/
 
 double mdtAnalogIo::minimum() const
 {
@@ -181,9 +205,12 @@ void mdtAnalogIo::setValueInt(int value, bool isValid, bool emitValueChanged)
 void mdtAnalogIo::setValue(const mdtValue &value, bool emitValueChanged)
 {
   pvNotifyUi = true;
+  ///qDebug() << "value: " << value;
   if(value.hasValueDouble()){
+    ///qDebug() << "* Value has double -> call setValueFromDouble() [AD]";
     setValueFromDouble(value, emitValueChanged);
   }else{
+    ///qDebug() << " -> call setValueFromInt() [DA]";
     setValueFromInt(value, emitValueChanged);
   }
 }
@@ -208,27 +235,46 @@ void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChange
   double x = value.valueDouble();
 
   // Check if new value has changed
-  if((fabs(x - pvValue.valueDouble()) <= pvStep)&&(value.isValid() == pvValue.isValid())){
+  if((fabs(x - pvValue.valueDouble()) <= pvStepQ)&&(value.isValid() == pvValue.isValid())){
+    ///qDebug() << "setValueFromDouble() : no change";
     return;
   }
   // Check validity of new value and process if true
   if((value.isValid())&&(value.hasValueDouble())){
+    // We must clip value, else we can have strongly wrong errors (underflow/overflow errors)
+    if(x <= (pvMinimum + pvStepQ)){
+      x = pvMinimum;
+    }else if(x >= (pvMaximum - pvStepQ)){
+      ///qDebug() << "+Clip on value: " << x;
+      x = pvMaximum - pvStepQ;
+      ///qDebug() << "-> down to: " << x;
+    }
     // Make conversion
     if(pvIntValueSigned){
-      m = pvStepInverse * x;
+      m = pvStepAD * x;
     }else{
-      m = pvStepInverse * (x - pvMinimum);
+      if(pvScaleFromMinToMax){
+        m = pvStepAD * (x - pvMinimum);
+      }else{
+        m = pvStepAD * x;
+      }
     }
-    // Apply C1 and negate if value < 0
+    // Apply C2 and negate if value < 0
     if(pvIntValueSigned && (x < 0.0)){
       m = -m;
-      m = (~m) & pvIntValueMaskEnc;
+      m = (~m) & pvIntValueMaskEnc; // C1
+      ++m;  // C2
     }
+    ///qDebug() << "(A) x: " << x << " , m: " << m << " (0x" << hex << m << ")";
+    ///qDebug() << "Apply mask: " << pvIntValueMaskEnc << " (0x" << hex << pvIntValueMaskEnc << ")";
     m &= pvIntValueMaskEnc;
+    ///qDebug() << "(B) x: " << x << " , m: " << m << " (0x" << hex << m << ")";
     m = m << pvIntValueLsbIndexEnc;
+    ///qDebug() << "(C) x: " << x << " , m: " << m << " (0x" << hex << m << ")";
     // Store value
     pvValue.setValue(m);
     pvValue.setValue(x, value.isMinusOl(), value.isPlusOl());
+    ///qDebug() << "(D) x: " << x << " , m: " << m << " (0x" << hex << m << ")";
   }else{
     pvValue.clear();
   }
@@ -255,26 +301,36 @@ void mdtAnalogIo::setValueFromInt(const mdtValue &value, bool emitValueChanged)
   // Check validity of new value and process if true
   if((value.isValid())&&(value.hasValueInt())){
     m = value.valueInt();
+    ///qDebug() << "(1) m: " << m << " (0x" << hex << m << ")";
     // Extract bits in correct range
     m = m >> pvIntValueLsbIndex;
     m &= pvIntValueMask;
+    ///qDebug() << "(2) m: " << m << " (0x" << hex << m << ")";
     // Apply C1 and negate if sign bit is present
-    if(m & pvIntValueSignMask){
-      m = ( (~m) & pvIntValueMask );
+    if((pvIntValueSigned)&&(m & pvIntValueSignMask)){
+    ///if(m & pvIntValueSignMask){
+      m = ( (~m) & pvIntValueMask );  // C1
+      ++m;  // C2
       m = -m;
     }
+    ///qDebug() << "(3) m: " << m << " (0x" << hex << m << ")";
     // Make conversion
     if(pvIntValueSigned){
-      x = pvStep*(double)m;
+      x = pvStepQ*(double)m;
     }else{
-      x = pvStep*(double)m + pvMinimum;
+      if(pvScaleFromMinToMax){
+        x = pvStepQ*(double)m + pvMinimum;
+      }else{
+        x = pvStepQ*(double)m;
+      }
     }
+    ///qDebug() << "(4) m: " << m << " (0x" << hex << m << ") , x: " << dec << x;
     // Store
     pvValue.setValue(x);
     pvValue.setValue(m, value.isMinusOl(), value.isPlusOl());
   }else{
     pvValue.clear();
-    x = pvValue.valueDouble();
+    x = pvValue.valueDouble();  /// \todo Check if x hase sense here ...
   }
   // Notify
   if(pvNotifyUi){

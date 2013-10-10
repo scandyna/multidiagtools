@@ -396,6 +396,8 @@ void mdtIoTest::analogIoTest()
   io.setValue(mdtValue(127), false);
   QVERIFY(io.hasValidData());
   MDT_COMPARE(io.value().valueDouble(), 5.0, 8, 0.0, 10.0);
+  
+  /// \todo Clip test (setValue with double format)
 }
 
 void mdtIoTest::wagoAnalogInputTest()
@@ -435,6 +437,27 @@ void mdtIoTest::wagoAnalogInputTest()
   MDT_COMPARE(io.value().valueDouble(), 25.0, 14, 0.0, 30.0);
   io.setValueInt(0x7FFF, true, false);
   MDT_COMPARE(io.value().valueDouble(), 30.0, 14, 0.0, 30.0);
+
+  // Wago 750-464 - AI RTD - Pt100/Pt1000, C2 format, -200 to 850°C
+  QVERIFY(io.setRange(-200.0, 850.0, 16, 0, true, false, 0.1));
+  io.setValueInt(0xF830, true, false);
+  MDT_COMPARE(io.value().valueDouble(), -200.0, 16, -200.0, 850.0);
+  io.setValueInt(0xFC18, true, false);
+  MDT_COMPARE(io.value().valueDouble(), -100.0, 16, -200.0, 850.0);
+  io.setValueInt(0x0000, true, false);
+  MDT_COMPARE(io.value().valueDouble(), 0.0, 16, -200.0, 850.0);
+  io.setValueInt(0x03E8, true, false);
+  MDT_COMPARE(io.value().valueDouble(), 100.0, 16, -200.0, 850.0);
+  io.setValueInt(0x07D0, true, false);
+  MDT_COMPARE(io.value().valueDouble(), 200.0, 16, -200.0, 850.0);
+  io.setValueInt(0x1388, true, false);
+  MDT_COMPARE(io.value().valueDouble(), 500.0, 16, -200.0, 850.0);
+  io.setValueInt(0x1D4C, true, false);
+  MDT_COMPARE(io.value().valueDouble(), 750.0, 16, -200.0, 850.0);
+  io.setValueInt(0x1F40, true, false);
+  MDT_COMPARE(io.value().valueDouble(), 800.0, 16, -200.0, 850.0);
+  io.setValueInt(0x2134, true, false);
+  MDT_COMPARE(io.value().valueDouble(), 850.0, 16, -200.0, 850.0);
 }
 
 void mdtIoTest::wagoAnalogOutputTest()
@@ -445,7 +468,7 @@ void mdtIoTest::wagoAnalogOutputTest()
    * 750-550 - AO - 0 to 10 V
    */
   QVERIFY(io.setRange(0.0, 10.0, 12, 3, false));
-  QVERIFY(io.setEncodeBitSettings(15, 0));
+  ///QVERIFY(io.setEncodeBitSettings(15, 0));
   // Read test
   io.setValueInt(0x0000, true, false);
   QVERIFY(io.hasValidData());
@@ -466,31 +489,44 @@ void mdtIoTest::wagoAnalogOutputTest()
   MDT_COMPARE(io.value().valueDouble(), 8.75, 12, 0.0, 10.0);
   io.setValueInt(0x7FFF, true, false);
   MDT_COMPARE(io.value().valueDouble(), 10.0, 12, 0.0, 10.0);
-  // Write test - We take values from table in manual (1 bit approximate)
+  // Write test - We take values from table in manual
   io.setValue(0.0, true);
+  MDT_COMPARE(io.value().valueDouble(), 0.0, 12, 0, 10.0);
   MDT_COMPARE(io.value().valueInt(), 0x0000, 12, 0, 4096);
   io.setValue(1.25, true);
-  MDT_COMPARE(io.value().valueInt(), 0x0FFF, 12, 0, 4096);
+  ///MDT_COMPARE(io.value().valueInt(), 0x0FFF, 12, 0, 4096);
+  MDT_COMPARE(io.value().valueInt(), 0x1000, 12, 0, 4096);
   io.setValue(2.5, true);
-  MDT_COMPARE(io.value().valueInt(), 0x1FFF, 12, 0, 4096);
+  ///MDT_COMPARE(io.value().valueInt(), 0x1FFF, 12, 0, 4096);
+  MDT_COMPARE(io.value().valueInt(), 0x2000, 12, 0, 4096);
   io.setValue(3.75, true);
-  MDT_COMPARE(io.value().valueInt(), 0x2FFF, 12, 0, 4096);
+  ///MDT_COMPARE(io.value().valueInt(), 0x2FFF, 12, 0, 4096);
+  MDT_COMPARE(io.value().valueInt(), 0x3000, 12, 0, 4096);
   io.setValue(5.0, true);
-  MDT_COMPARE(io.value().valueInt(), 0x3FFF, 12, 0, 4096);
+  ///MDT_COMPARE(io.value().valueInt(), 0x3FFF, 12, 0, 4096);
+  MDT_COMPARE(io.value().valueInt(), 0x4000, 12, 0, 4096);
   io.setValue(6.25, true);
-  MDT_COMPARE(io.value().valueInt(), 0x4FFF, 12, 0, 4096);
+  ///MDT_COMPARE(io.value().valueInt(), 0x4FFF, 12, 0, 4096);
+  MDT_COMPARE(io.value().valueInt(), 0x5000, 12, 0, 4096);
   io.setValue(7.5, true);
-  MDT_COMPARE(io.value().valueInt(), 0x5FFF, 12, 0, 4096);
+  ///MDT_COMPARE(io.value().valueInt(), 0x5FFF, 12, 0, 4096);
+  MDT_COMPARE(io.value().valueInt(), 0x6000, 12, 0, 4096);
   io.setValue(8.75, true);
-  MDT_COMPARE(io.value().valueInt(), 0x6FFF, 12, 0, 4096);
+  ///MDT_COMPARE(io.value().valueInt(), 0x6FFF, 12, 0, 4096);
+  MDT_COMPARE(io.value().valueInt(), 0x7000, 12, 0, 4096);
   io.setValue(10.0, true);
-  MDT_COMPARE(io.value().valueInt(), 0x7FFF, 12, 0, 4096);
+  ///MDT_COMPARE(io.value().valueInt(), 0x7FFF, 12, 0, 4096);
+  /*
+   * There is a little error in Wago datasheet: max value with 12 bits is 0xFFF.
+   * Shifted by 3 bits on the right: 0xFFF*2^3=0x7FF8 (not 0x7FFF)
+   */
+  MDT_COMPARE(io.value().valueInt(), 0x7FF8, 12, 0, 4096);
 
   /*
    * 750-556 - AO - -10 to +10 V
    */
   QVERIFY(io.setRange(-10.0, 10.0, 13, 3, true));
-  QVERIFY(io.setEncodeBitSettings(16, 0));
+  ///QVERIFY(io.setEncodeBitSettings(16, 0));
   // Read test
   io.setValueInt(0x8001, true, false);
   QVERIFY(io.hasValidData());
@@ -523,13 +559,17 @@ void mdtIoTest::wagoAnalogOutputTest()
   io.setValue(0.0, true);
   MDT_COMPARE(io.value().valueInt(), 0x0000, 13, 0, 8192);
   io.setValue(2.5, true);
-  MDT_COMPARE(io.value().valueInt(), 0x1FFF, 13, 0, 8192);
+  MDT_COMPARE(io.value().valueInt(), 0x2000, 13, 0, 8192);
   io.setValue(5.0, true);
-  MDT_COMPARE(io.value().valueInt(), 0x3FFF, 13, 0, 8192);
+  MDT_COMPARE(io.value().valueInt(), 0x4000, 13, 0, 8192);
   io.setValue(7.5, true);
-  MDT_COMPARE(io.value().valueInt(), 0x5FFF, 13, 0, 8192);
+  MDT_COMPARE(io.value().valueInt(), 0x6000, 13, 0, 8192);
   io.setValue(10.0, true);
-  MDT_COMPARE(io.value().valueInt(), 0x7FFF, 13, 0, 8192);
+  /*
+   * There is a little error in Wago datasheet: max value with 12 bits is 0xFFF.
+   * Shifted by 3 bits on the right: 0xFFF*2^3=0x7FF8 (not 0x7FFF)
+   */
+  MDT_COMPARE(io.value().valueInt(), 0x7FF8, 13, 0, 8192);
 }
 
 void mdtIoTest::digitalIoTest()

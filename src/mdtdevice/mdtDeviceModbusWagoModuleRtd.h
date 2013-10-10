@@ -84,26 +84,14 @@ class mdtDeviceModbusWagoModuleRtd : public mdtDeviceModbusWagoModule
    */
   ~mdtDeviceModbusWagoModuleRtd();
 
-  /*! \brief Get module setup
-   */
-  bool getSpecialModuleSetup(quint16 word, int firstAddressRead, int firstAddressWrite);
-
   /*! \brief Set the I/O count
    *
-   * Will only set I/O count to cached register 47.
+   * Note that analog inputs (mdtAnalogIo objects) are not created here.
+   *  They will be created by mdtDeviceModbusWagoModule::setupFromRegisterWord() .
    *
    * \pre count must be 2 or 4
-   * \sa ioCountRegister()
    */
   void setIoCount(int count);
-
-  /*! \brief Get I/O count
-   *
-   * This method only returns I/O count cached
-   *  in register 47 and can return a other result
-   *  than mdtDeviceModbusWagoModule::ioCount() .
-   */
-  int ioCountRegisters() const;
 
   /*! \brief Set the PSRR mode
    */
@@ -149,15 +137,17 @@ class mdtDeviceModbusWagoModuleRtd : public mdtDeviceModbusWagoModule
    */
   bool averageValueFilterIsEnabled(int channel) const;
 
-  /*! \brief
+  /*! \brief Set process value representation for given channel
+   *
+   * \pre Channel must be in a valid range
    */
   void setProcessValueRepresentation(int channel, processValueRepresentation_t representation);
 
-  /*! \brief
+  /*! \brief Get process value representation for given channel
+   *
+   * \pre Channel must be in a valid range
    */
-  processValueRepresentation_t processValueRepresentation(int channel);
-
-  ///void setSiemensFormatEnabled(int channel, bool enable);
+  processValueRepresentation_t processValueRepresentation(int channel) const;
 
   /*! \brief
    */
@@ -239,13 +229,39 @@ class mdtDeviceModbusWagoModuleRtd : public mdtDeviceModbusWagoModule
    */
   double twoWireOffset(int channel) const;
 
-  /*! \brief Set a setup for tests
-   *
-   * This method is used by unit tests and should not be used in application.
-   */
-  void setInitialSetupForTests(int channelCount, int firstAddressRead, int firstAddressWrite);
-
  private:
+
+  /*! \brief Get the min value of a range of analog inputs
+   */
+  QVariant analogInputValueMin(int partNumber, int channel) const;
+
+  /*! \brief Get the max value of a range of analog inputs
+   */
+  QVariant analogInputValueMax(int partNumber, int channel) const;
+
+  /*! \brief Get the number of bits (including sign bit) used to represent a value of analog inputs
+   */
+  int analogInputValueBitsCount(int partNumber, int channel) const;
+
+  /*! \brief Get index of the first bit (LSB) that represents the value of analog inputs
+   */
+  int analogInputValueLsbIndex(int partNumber, int channel) const;
+
+  /*! \brief Check if a analog inputs returns a signed value or not
+   */
+  QVariant analogInputValueSigned(int partNumber, int channel) const;
+
+  /*! \brief Get number of analog inputs
+   */
+  int analogInputsCount(int partNumber) const;
+
+  /*! \brief Get number of analog outputs
+   */
+  int analogOutputsCount(int partNumber) const;
+
+  /*! \brief Get unit of a analog inputs (V, A, ...)
+   */
+  QString analogInputUnit(int partNumber, int channel) const;
 
   /*! \brief Update registers count
    *
@@ -255,18 +271,11 @@ class mdtDeviceModbusWagoModuleRtd : public mdtDeviceModbusWagoModule
    *
    * It also will use firstAddressRead() and firstAddressWrite() to set register addresses.
    */
-  void updateRegisterCount();
+  ///void updateRegisterCount();
 
-  QList<quint16> pvRegister32;
-  QList<quint16> pvRegister33;
-  QList<quint16> pvRegister34;
-  QList<quint16> pvRegister35;
-  QList<quint16> pvRegister36;
-  QList<quint16> pvRegister37;
-  QList<quint16> pvRegister39;
-  QList<quint16> pvRegister40;
-  quint16 pvRegister47;
-
+  psrrMode_t pvPsrrMode;
+  QList<sensorType_t> pvSensorTypes;
+  QList<processValueRepresentation_t> pvProcessValueRepresentations;
 };
 
 #endif  // #ifndef MDT_DEVICE_MODBUS_WAGO_MODULE_RTD_H

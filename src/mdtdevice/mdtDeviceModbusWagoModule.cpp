@@ -35,6 +35,12 @@ mdtDeviceModbusWagoModule::mdtDeviceModbusWagoModule(bool autoDeleteIos, mdtDevi
   pvDevice = device;
   pvType = Unknown;
   pvPartNumber = 0;
+  pvFirstAiAddress = 0;
+  pvFirstAoAddressRead = 0;
+  pvFirstAoAddressWrite = 0;
+  pvFirstDiAddress = 0;
+  pvFirstDoAddressRead = 0;
+  pvFirstDoAddressWrite = 0;
 }
 
 mdtDeviceModbusWagoModule::~mdtDeviceModbusWagoModule()
@@ -138,11 +144,6 @@ void mdtDeviceModbusWagoModule::updateAddresses(int firstAiAddress, int firstAoA
     ++currentAddressRead;
     ++currentAddressWrite;
   }
-}
-
-bool mdtDeviceModbusWagoModule::getSpecialModuleSetup(quint16 word, int firstAddressRead, int firstAddressWrite)
-{
-  return false;
 }
 
 int mdtDeviceModbusWagoModule::firstAiAddress() const
@@ -614,7 +615,7 @@ void mdtDeviceModbusWagoModule::wait(int ms)
   pvDevice->wait(ms);
 }
 
-QVariant mdtDeviceModbusWagoModule::analogInputsValueMin(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogInputValueMin(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 452:
@@ -628,7 +629,7 @@ QVariant mdtDeviceModbusWagoModule::analogInputsValueMin(int partNumber) const
   }
 }
 
-QVariant mdtDeviceModbusWagoModule::analogOutputsValueMin(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogOutputValueMin(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 550:
@@ -638,7 +639,7 @@ QVariant mdtDeviceModbusWagoModule::analogOutputsValueMin(int partNumber) const
   }
 }
 
-QVariant mdtDeviceModbusWagoModule::analogInputsValueMax(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogInputValueMax(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 452:
@@ -652,7 +653,7 @@ QVariant mdtDeviceModbusWagoModule::analogInputsValueMax(int partNumber) const
   }
 }
 
-QVariant mdtDeviceModbusWagoModule::analogOutputsValueMax(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogOutputValueMax(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 550:
@@ -662,7 +663,7 @@ QVariant mdtDeviceModbusWagoModule::analogOutputsValueMax(int partNumber) const
   }
 }
 
-int mdtDeviceModbusWagoModule::analogInputsValueBitsCount(int partNumber) const
+int mdtDeviceModbusWagoModule::analogInputValueBitsCount(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 452:
@@ -676,7 +677,7 @@ int mdtDeviceModbusWagoModule::analogInputsValueBitsCount(int partNumber) const
   }
 }
 
-int mdtDeviceModbusWagoModule::analogOutputsValueBitsCount(int partNumber) const
+int mdtDeviceModbusWagoModule::analogOutputValueBitsCount(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 550:
@@ -686,7 +687,7 @@ int mdtDeviceModbusWagoModule::analogOutputsValueBitsCount(int partNumber) const
   }
 }
 
-int mdtDeviceModbusWagoModule::analogInputsValueLsbIndex(int partNumber) const
+int mdtDeviceModbusWagoModule::analogInputValueLsbIndex(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 452:
@@ -700,7 +701,7 @@ int mdtDeviceModbusWagoModule::analogInputsValueLsbIndex(int partNumber) const
   }
 }
 
-int mdtDeviceModbusWagoModule::analogOutputsValueLsbIndex(int partNumber) const
+int mdtDeviceModbusWagoModule::analogOutputValueLsbIndex(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 550:
@@ -710,7 +711,7 @@ int mdtDeviceModbusWagoModule::analogOutputsValueLsbIndex(int partNumber) const
   }
 }
 
-QVariant mdtDeviceModbusWagoModule::analogInputsValueSigned(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogInputValueSigned(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 452:
@@ -724,7 +725,7 @@ QVariant mdtDeviceModbusWagoModule::analogInputsValueSigned(int partNumber) cons
   }
 }
 
-QVariant mdtDeviceModbusWagoModule::analogOutputsValueSigned(int partNumber) const
+QVariant mdtDeviceModbusWagoModule::analogOutputValueSigned(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 550:
@@ -766,7 +767,7 @@ int mdtDeviceModbusWagoModule::analogOutputsCount(int partNumber) const
   }
 }
 
-QString mdtDeviceModbusWagoModule::analogInputsUnit(int partNumber) const
+QString mdtDeviceModbusWagoModule::analogInputUnit(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 452:
@@ -780,7 +781,7 @@ QString mdtDeviceModbusWagoModule::analogInputsUnit(int partNumber) const
   }
 }
 
-QString mdtDeviceModbusWagoModule::analogOutputsUnit(int partNumber) const
+QString mdtDeviceModbusWagoModule::analogOutputUnit(int partNumber, int /*channel*/) const
 {
   switch(partNumber){
     case 550:
@@ -820,7 +821,7 @@ int mdtDeviceModbusWagoModule::digitalOutputsCount(quint16 word) const
   return digitalOutputsProcessImageSize(word);
 }
 
-mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber) const
+mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber, int channel) const
 {
   mdtAnalogIo *aio;
   QVariant value;
@@ -829,42 +830,60 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber) const
   bool intValueSigned;
 
   // Get I/O module's parameters
-  value = analogInputsValueMin(partNumber);
+  value = analogInputValueMin(partNumber, channel);
   if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input range minimum value (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
   min = value.toDouble();
-  value = analogInputsValueMax(partNumber);
+  value = analogInputValueMax(partNumber, channel);
   if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input range maximum value (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
   max = value.toDouble();
-  intValueBitsCount = analogInputsValueBitsCount(partNumber);
+  intValueBitsCount = analogInputValueBitsCount(partNumber, channel);
   if(intValueBitsCount < 0){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input value bits count (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
-  intValueLsbIndex = analogInputsValueLsbIndex(partNumber);
+  intValueLsbIndex = analogInputValueLsbIndex(partNumber, channel);
   if(intValueLsbIndex < 0){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input value LSB index (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
-  value = analogInputsValueSigned(partNumber);
+  value = analogInputValueSigned(partNumber, channel);
   if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog input value is signed (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
   intValueSigned = value.toBool();
   // Have all needed parameters, build I/O
   aio = new mdtAnalogIo;
   if(aio == 0){
+    mdtError e(MDT_DEVICE_ERROR, "Memory allocation failed during analog input creation (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
   aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned);
-  aio->setUnit("[" + analogInputsUnit(partNumber) + "]");
+  aio->setUnit("[" + analogInputUnit(partNumber, channel) + "]");
   aio->setLabel("Module: 750-" + QString::number(partNumber));
 
   return aio;
 }
 
-mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber) const
+mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber, int channel) const
 {
   mdtAnalogIo *aio;
   QVariant value;
@@ -873,36 +892,54 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber) const
   bool intValueSigned;
 
   // Get I/O module's parameters
-  value = analogOutputsValueMin(partNumber);
+  value = analogOutputValueMin(partNumber, channel);
   if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output range minimum value (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
   min = value.toDouble();
-  value = analogOutputsValueMax(partNumber);
+  value = analogOutputValueMax(partNumber, channel);
   if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output range maximum value (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
   max = value.toDouble();
-  intValueBitsCount = analogOutputsValueBitsCount(partNumber);
+  intValueBitsCount = analogOutputValueBitsCount(partNumber, channel);
   if(intValueBitsCount < 0){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output value bits count (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
-  intValueLsbIndex = analogOutputsValueLsbIndex(partNumber);
+  intValueLsbIndex = analogOutputValueLsbIndex(partNumber, channel);
   if(intValueLsbIndex < 0){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output value LSB index (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
-  value = analogOutputsValueSigned(partNumber);
+  value = analogOutputValueSigned(partNumber, channel);
   if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog output value is signed (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
   intValueSigned = value.toBool();
   // Have all needed parameters, build I/O
   aio = new mdtAnalogIo;
   if(aio == 0){
+    mdtError e(MDT_DEVICE_ERROR, "Memory allocation failed during analog output creation (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
     return 0;
   }
   aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned);
-  aio->setUnit("[" + analogOutputsUnit(partNumber) + "]");
+  aio->setUnit("[" + analogOutputUnit(partNumber, channel) + "]");
   aio->setLabel("Module: 750-" + QString::number(partNumber));
 
   return aio;
@@ -919,9 +956,9 @@ bool mdtDeviceModbusWagoModule::addAnalogIos(int partNumber)
   // Add module's analog inputs
   iosCount = analogInputsCount(partNumber);
   for(i = 0; i < iosCount; ++i){
-    aio = getNewAnalogInput(pvPartNumber);
+    aio = getNewAnalogInput(pvPartNumber, i);
     if(aio == 0){
-      mdtError e(MDT_DEVICE_ERROR, "Cannot get I/O module's parameters (unknown part number: " + partNumberText() + ")", mdtError::Error);
+      mdtError e(MDT_DEVICE_ERROR, "Cannot get I/O module's parameters (part number: " + partNumberText() + ")", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
       e.commit();
       clear(true);
@@ -932,9 +969,9 @@ bool mdtDeviceModbusWagoModule::addAnalogIos(int partNumber)
   // Add module's analog outputs
   iosCount = analogOutputsCount(partNumber);
   for(i = 0; i < iosCount; ++i){
-    aio = getNewAnalogOutput(pvPartNumber);
+    aio = getNewAnalogOutput(pvPartNumber, i);
     if(aio == 0){
-      mdtError e(MDT_DEVICE_ERROR, "Cannot get I/O module's parameters (unknown part number: " + partNumberText() + ")", mdtError::Error);
+      mdtError e(MDT_DEVICE_ERROR, "Cannot get I/O module's parameters (part number: " + partNumberText() + ")", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
       e.commit();
       clear(true);

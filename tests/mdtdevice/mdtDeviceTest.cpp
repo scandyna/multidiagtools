@@ -1647,13 +1647,15 @@ void mdtDeviceTest::modbusWagoModuleTest()
   mdtDigitalIo *dio;
 
   // Check initial values
-  /**
-  QVERIFY(m.firstAddressRead() < 0);
-  QVERIFY(m.firstAddressWrite() < 0);
-  QVERIFY(m.lastAddressRead() < 0);
-  QVERIFY(m.lastAddressWrite() < 0);
-  QCOMPARE(m.ioCount() , 0);
-  */
+  QCOMPARE(m.firstAiAddress() , 0);
+  QCOMPARE(m.lastAiAddress() , 0);
+  QCOMPARE(m.nextModuleFirstAiAddress() , 0);
+  QCOMPARE(m.firstAoAddressRead() , 0);
+  QCOMPARE(m.lastAoAddressRead() , 0);
+  QCOMPARE(m.nextModuleFirstAoAddressRead() , 0);
+  QCOMPARE(m.firstAoAddressWrite() , 0);
+  QCOMPARE(m.lastAoAddressWrite() , 0);
+  QCOMPARE(m.nextModuleFirstAoAddressWrite() , 0);
   QVERIFY(m.analogInputs().isEmpty());
   QVERIFY(m.analogOutputs().isEmpty());
   ///QVERIFY(m.digitalIos().isEmpty());
@@ -1730,13 +1732,15 @@ void mdtDeviceTest::modbusWagoModuleTest()
    * Check clear
    */
   m.clear();
-  /**
-  QVERIFY(m.firstAddressRead() < 0);
-  QVERIFY(m.firstAddressWrite() < 0);
-  QVERIFY(m.lastAddressRead() < 0);
-  QVERIFY(m.lastAddressWrite() < 0);
-  QCOMPARE(m.ioCount() , 0);
-  */
+  QCOMPARE(m.firstAiAddress() , 0);
+  QCOMPARE(m.lastAiAddress() , 0);
+  QCOMPARE(m.nextModuleFirstAiAddress() , 0);
+  QCOMPARE(m.firstAoAddressRead() , 0);
+  QCOMPARE(m.lastAoAddressRead() , 0);
+  QCOMPARE(m.nextModuleFirstAoAddressRead() , 0);
+  QCOMPARE(m.firstAoAddressWrite() , 0);
+  QCOMPARE(m.lastAoAddressWrite() , 0);
+  QCOMPARE(m.nextModuleFirstAoAddressWrite() , 0);
   ///QVERIFY(m.analogIos().isEmpty());
   QVERIFY(m.analogInputs().isEmpty());
   QVERIFY(m.analogOutputs().isEmpty());
@@ -1901,70 +1905,111 @@ void mdtDeviceTest::modbusWagoModuleTest()
 void mdtDeviceTest::modbusWagoModuleRtdTest()
 {
   mdtDeviceModbusWago *device = new mdtDeviceModbusWago;
-  mdtDeviceModbusWagoModuleRtd m(true, device);
-  mdtAnalogIo *aio;
-  mdtDigitalIo *dio;
+  mdtDeviceModbusWagoModuleRtd *module = new mdtDeviceModbusWagoModuleRtd(true, device);
+  mdtAnalogIo *ai;
 
   // Check initial values
-  m.setInitialSetupForTests(4, 10, 0);
-  QCOMPARE(m.ioCountRegisters(), 4);
-  QCOMPARE(m.firstAiAddress(), 10);
-  QCOMPARE(m.firstAoAddressWrite(), 0);
-  ///QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
+  QCOMPARE(module->firstAiAddress(), 0);
+  QCOMPARE(module->firstAoAddressWrite(), 0);
+  ///QVERIFY(module->psrrMode() == mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
   
   /*
    * Simple set/get (on cached values) test
    */
 
-  // Register 47
-  m.setPsrrMode(mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
-  QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
-  m.setPsrrMode(mdtDeviceModbusWagoModuleRtd::Psrr50Hz);
-  QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::Psrr50Hz);
-  m.setPsrrMode(mdtDeviceModbusWagoModuleRtd::Psrr60Hz);
-  QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::Psrr60Hz);
-  m.setPsrrMode(mdtDeviceModbusWagoModuleRtd::Psrr5060Hz);
-  QVERIFY(m.psrrMode() == mdtDeviceModbusWagoModuleRtd::Psrr5060Hz);
-  m.setIoCount(2);
-  QCOMPARE(m.ioCountRegisters(), 2);
-  m.setIoCount(4);
-  QCOMPARE(m.ioCountRegisters(), 4);
-  // Set scaling: channel 0, manufacturer scaling OFF, user scaling ON, user offset: 1.0, user gain: 2.0, 2 wire offset: 1.5
-  m.setScaling(0, false, true, 1.0, 2.0, 1.5);
-  QVERIFY(!m.manufacturerScalingIsEnabled(0));
-  QVERIFY(m.userScalingIsEnabled(0));
-  /**
-  QCOMPARE(m.userScalingOffset(0), 1.0);
-  QCOMPARE(m.userScalingGain(0), 2.0);
-  QCOMPARE(m.twoWireOffset(0), 1.5);
-  */
+  // PSRR mode
+  module->setPsrrMode(mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
+  QVERIFY(module->psrrMode() == mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
+  module->setPsrrMode(mdtDeviceModbusWagoModuleRtd::Psrr50Hz);
+  QVERIFY(module->psrrMode() == mdtDeviceModbusWagoModuleRtd::Psrr50Hz);
+  module->setPsrrMode(mdtDeviceModbusWagoModuleRtd::Psrr60Hz);
+  QVERIFY(module->psrrMode() == mdtDeviceModbusWagoModuleRtd::Psrr60Hz);
+  module->setPsrrMode(mdtDeviceModbusWagoModuleRtd::Psrr5060Hz);
+  QVERIFY(module->psrrMode() == mdtDeviceModbusWagoModuleRtd::Psrr5060Hz);
+  // I/O count change - Must not affect I/O count
+  module->setIoCount(2);
+  QCOMPARE(module->analogInputs().size(), 0);
+  module->setIoCount(4);
+  QCOMPARE(module->analogInputs().size(), 0);
+  // Check that setup works
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt100);
+  module->setSensorType(1, mdtDeviceModbusWagoModuleRtd::Pt100);
+  module->setSensorType(2, mdtDeviceModbusWagoModuleRtd::Pt100);
+  module->setSensorType(3, mdtDeviceModbusWagoModuleRtd::Pt100);
+  module->setProcessValueRepresentation(0, mdtDeviceModbusWagoModuleRtd::C2);
+  module->setProcessValueRepresentation(1, mdtDeviceModbusWagoModuleRtd::C2);
+  module->setProcessValueRepresentation(2, mdtDeviceModbusWagoModuleRtd::C2);
+  module->setProcessValueRepresentation(3, mdtDeviceModbusWagoModuleRtd::C2);
+  QVERIFY(module->setupFromRegisterWord(464));
+  QCOMPARE(module->analogInputs().size(), 4);
+  /*
+   * Check addressing
+   * We use a address range 2-5
+   */
+  module->updateAddresses(2, 0, 0, 0, 0, 0);
+  QCOMPARE(module->firstAiAddress(), 2);
+  QCOMPARE(module->lastAiAddress(), 5);
+  QCOMPARE(module->nextModuleFirstAiAddress(), 6);
+  QCOMPARE(module->nextModuleFirstAoAddressRead(), 0);
+  QCOMPARE(module->nextModuleFirstAoAddressWrite(), 0);
+  QCOMPARE(module->nextModuleFirstDiAddress(), 0);
+  QCOMPARE(module->nextModuleFirstDoAddressRead(), 0);
+  QCOMPARE(module->nextModuleFirstDoAddressWrite(), 0);
   // Sensor type
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt100);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt100);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni100);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni100);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt1000);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt1000);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt500);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt500);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt200);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt200);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni1000);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni1000);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt200);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt200);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni120);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni120);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni1000TK);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni1000TK);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::Potentiometer);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::Potentiometer);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::R10R5000);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::R10R5000);
-  m.setSensorType(0, mdtDeviceModbusWagoModuleRtd::R10R1200);
-  QVERIFY(m.sensorType(0) == mdtDeviceModbusWagoModuleRtd::R10R1200);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt100);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt100);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni100);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni100);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt1000);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt1000);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt500);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt500);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt200);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt200);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni1000);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni1000);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt200);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Pt200);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni120);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni120);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Ni1000TK);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Ni1000TK);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Potentiometer);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::Potentiometer);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::R10R5000);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::R10R5000);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::R10R1200);
+  QVERIFY(module->sensorType(0) == mdtDeviceModbusWagoModuleRtd::R10R1200);
+
+  /*
+   * Setup module for 2 channel operation :
+   *  - Channel 0: Pt100
+   *  - Channel 1: Pt1000
+   */
+  module->clear();
+  module->setIoCount(2);
+  module->setSensorType(0, mdtDeviceModbusWagoModuleRtd::Pt100);
+  module->setSensorType(1, mdtDeviceModbusWagoModuleRtd::Pt100);
+  module->setProcessValueRepresentation(0, mdtDeviceModbusWagoModuleRtd::C2);
+  module->setProcessValueRepresentation(1, mdtDeviceModbusWagoModuleRtd::C2);
+  QVERIFY(module->setupFromRegisterWord(464));
+  QCOMPARE(module->analogInputs().size(), 2);
+  // Check channel 0 with Pt100
+  ai = module->analogInputs().at(0);
+  QVERIFY(ai != 0);
+  ai->setValue(0xF830);
+  MDT_COMPARE(ai->value().valueDouble(), -200.0, 16, -200.0, 850.0);
+  ai->setValue(0x0000);
+  MDT_COMPARE(ai->value().valueDouble(), 0.0, 16, -200.0, 850.0);
+  ai->setValue(0x2134);
+  MDT_COMPARE(ai->value().valueDouble(), 850.0, 16, -200.0, 850.0);
+
+  
 
 
+  // Free ...
+  delete device;
+  delete module;
 }
 
 void mdtDeviceTest::modbusWagoTest()
@@ -2148,7 +2193,7 @@ void mdtDeviceTest::modbusBeckhoffTest()
   ao->setUnit("[V]");
   ao->setDetails("Module type: KL4001");
   QVERIFY(ao->setRange(0.0, 10.0, 12, 3, false));
-  QVERIFY(ao->setEncodeBitSettings(15, 0));
+  ///QVERIFY(ao->setEncodeBitSettings(15, 0));
   ios.addAnalogOutput(ao);
 
   // Digital inputs
