@@ -5,10 +5,12 @@
 # Project
 project (multidiagtools)
 
-message("PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
+# message("PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
+
+# message("HDRs: ${HEADER_FILES}")
 
 # Header files containing Qt Q_OBJECT macro
-set (HEADER_FILES
+set (TEST_HEADER_FILES
           ../src/mdtClVehicleTypeEditor.h
           ../src/mdtClArticleEditor.h
           ../src/mdtClUnitEditor.h
@@ -16,11 +18,12 @@ set (HEADER_FILES
           ../src/mdtClUnitConnectionSelectionDialog.h
           ../src/mdtClTerminalBlockEditor.h
           ../src/mdtClTerminalEditorDialog.h
+          ../src/mdtClArticleComponentDialog.h
           ../src/mdtClArticleLinkDialog.h
-    )
+   )
 
 # Source files
-set (SOURCES_FILES 
+set (TEST_SOURCES_FILES 
           ../src/mdtClVehicleTypeEditor.cpp
           ../src/mdtClArticleEditor.cpp
           ../src/mdtClUnit.cpp
@@ -31,18 +34,20 @@ set (SOURCES_FILES
           ../src/mdtClTerminalBlockEditor.cpp
           ../src/mdtClTerminalEditorDialog.cpp
           ../src/mdtClUnitVehicleType.cpp
+          ../src/mdtClArticleComponentDialog.cpp
           ../src/mdtClArticleLinkDialog.cpp
           ../src/mdtClArticle.cpp
     )
 
 # Qt ui files
-set (FORM_FILES
+set (TEST_FORM_FILES
           ../src/mdtClVehicleTypeEditor.ui
           ../src/mdtClArticleEditor.ui
           ../src/mdtClUnitEditor.ui
           ../src/mdtClUnitConnectionEditor.ui
           ../src/mdtClLinkEditor.ui
           ../src/mdtClTerminalBlockEditor.ui
+          ../src/mdtClArticleComponentDialog.ui
           ../src/mdtClArticleLinkDialog.ui
     )
 
@@ -57,8 +62,8 @@ target_link_libraries(mdtclsandbox "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdttest")
 
 # mdtClUnit
-QT4_WRAP_CPP(MDT_CL_UNIT_TEST "mdtClUnitTest.h")
-add_executable(mdtclunittest "mdtClUnitTest.cpp" ${MDT_CL_UNIT_TEST} ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+QT4_WRAP_CPP(TEST_MOC "mdtClUnitTest.h" ${TEST_HEADER_FILES})
+add_executable(mdtclunittest "mdtClUnitTest.cpp" ${TEST_SOURCES_FILES} ${TEST_MOC})
 target_link_libraries(mdtclunittest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdttest")

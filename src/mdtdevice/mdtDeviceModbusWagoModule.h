@@ -497,6 +497,44 @@ class mdtDeviceModbusWagoModule
    */
   virtual QVariant analogOutputValueSigned(int partNumber, int channel) const;
 
+  /*! \brief Check if analog input's value is scaled from minimum to maximum
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \param channel Some special module supports different data per channel, so channel must be given here
+   * \return True if module's representation is scaled from minimum to maximum, false if not.
+   *          For a unknown module, a invalid QVariant is returned.
+   */
+  virtual QVariant analogInputValueScaledFromMinToMax(int partNumber, int channel) const;
+
+  /*! \brief Check if analog output's value is scaled from minimum to maximum
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \param channel Some special module supports different data per channel, so channel must be given here
+   * \return True if module's representation is scaled from minimum to maximum, false if not.
+   *          For a unknown module, a invalid QVariant is returned.
+   */
+  virtual QVariant analogOutputValueScaledFromMinToMax(int partNumber, int channel) const;
+
+  /*! \brief Get analog input's conversion factor
+   *
+   * For example, RTD module 750-464 has a conversion factor of 0.1 for channel configured as Pt100
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 464 if module is a 750-464).
+   * \param channel Some special module supports different data per channel, so channel must be given here
+   * \return Scale factor for given input.
+   *          For a unknown module, a invalid QVariant is returned.
+   */
+  virtual QVariant analogInputValueConversionFactor(int partNumber, int channel) const;
+
+  /*! \brief Get analog output's conversion factor
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 550 if module is a 750-550).
+   * \param channel Some special module supports different data per channel, so channel must be given here
+   * \return Scale factor for given output.
+   *          For a unknown module, a invalid QVariant is returned.
+   */
+  virtual QVariant analogOutputValueConversionFactor(int partNumber, int channel) const;
+
   /*! \brief Get number of analog inputs
    *
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).

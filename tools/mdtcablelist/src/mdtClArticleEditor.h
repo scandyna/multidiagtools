@@ -22,6 +22,7 @@
 #define MDT_CL_ARTICLE_EDITOR_H
 
 #include <QSqlDatabase>
+#include <QModelIndex>
 #include <QObject>
 #include <QVariant>
 #include "mdtSqlFormWindow.h"
@@ -54,6 +55,22 @@ class mdtClArticleEditor : public QObject
 
  private slots:
 
+  /*! \brief Add component
+   */
+  void addComponent();
+
+  /*! \brief Edit a component
+   */
+  void editComponent();
+
+  /*! \brief Edit component for given index
+   */
+  void editComponent(const QModelIndex &index);
+
+  /*! \brief Remove components
+   */
+  void removeComponents();
+
   /*! \brief Add link
    */
   void addLink();
@@ -77,6 +94,14 @@ class mdtClArticleEditor : public QObject
   /*! \brief Setup Article table
    */
   bool setupArticleTable();
+
+  /*! \brief Setup Article-Component table
+   */
+  bool setupArticleComponentTable();
+
+  /*! \brief Setup Article-Component usage table
+   */
+  bool setupArticleUsedByTable();
 
   /*! \brief Setup Article-Connection table
    */

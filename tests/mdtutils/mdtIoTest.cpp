@@ -396,8 +396,13 @@ void mdtIoTest::analogIoTest()
   io.setValue(mdtValue(127), false);
   QVERIFY(io.hasValidData());
   MDT_COMPARE(io.value().valueDouble(), 5.0, 8, 0.0, 10.0);
-  
-  /// \todo Clip test (setValue with double format)
+
+  // Check that a to big value not overflows - Must be clipped to max possible value, 0xFF (255) with 8 bits
+  io.setValue(11.0, false);
+  MDT_COMPARE(io.value().valueInt(), 255, 8, 0.0, 255);
+  // Chack that a to little value does not underflow - Must be clipped to min possible value (0x00)
+  io.setValue(-1.0, false);
+  MDT_COMPARE(io.value().valueInt(), 0, 8, 0.0, 255);
 }
 
 void mdtIoTest::wagoAnalogInputTest()
@@ -468,7 +473,6 @@ void mdtIoTest::wagoAnalogOutputTest()
    * 750-550 - AO - 0 to 10 V
    */
   QVERIFY(io.setRange(0.0, 10.0, 12, 3, false));
-  ///QVERIFY(io.setEncodeBitSettings(15, 0));
   // Read test
   io.setValueInt(0x0000, true, false);
   QVERIFY(io.hasValidData());
@@ -494,28 +498,20 @@ void mdtIoTest::wagoAnalogOutputTest()
   MDT_COMPARE(io.value().valueDouble(), 0.0, 12, 0, 10.0);
   MDT_COMPARE(io.value().valueInt(), 0x0000, 12, 0, 4096);
   io.setValue(1.25, true);
-  ///MDT_COMPARE(io.value().valueInt(), 0x0FFF, 12, 0, 4096);
   MDT_COMPARE(io.value().valueInt(), 0x1000, 12, 0, 4096);
   io.setValue(2.5, true);
-  ///MDT_COMPARE(io.value().valueInt(), 0x1FFF, 12, 0, 4096);
   MDT_COMPARE(io.value().valueInt(), 0x2000, 12, 0, 4096);
   io.setValue(3.75, true);
-  ///MDT_COMPARE(io.value().valueInt(), 0x2FFF, 12, 0, 4096);
   MDT_COMPARE(io.value().valueInt(), 0x3000, 12, 0, 4096);
   io.setValue(5.0, true);
-  ///MDT_COMPARE(io.value().valueInt(), 0x3FFF, 12, 0, 4096);
   MDT_COMPARE(io.value().valueInt(), 0x4000, 12, 0, 4096);
   io.setValue(6.25, true);
-  ///MDT_COMPARE(io.value().valueInt(), 0x4FFF, 12, 0, 4096);
   MDT_COMPARE(io.value().valueInt(), 0x5000, 12, 0, 4096);
   io.setValue(7.5, true);
-  ///MDT_COMPARE(io.value().valueInt(), 0x5FFF, 12, 0, 4096);
   MDT_COMPARE(io.value().valueInt(), 0x6000, 12, 0, 4096);
   io.setValue(8.75, true);
-  ///MDT_COMPARE(io.value().valueInt(), 0x6FFF, 12, 0, 4096);
   MDT_COMPARE(io.value().valueInt(), 0x7000, 12, 0, 4096);
   io.setValue(10.0, true);
-  ///MDT_COMPARE(io.value().valueInt(), 0x7FFF, 12, 0, 4096);
   /*
    * There is a little error in Wago datasheet: max value with 12 bits is 0xFFF.
    * Shifted by 3 bits on the right: 0xFFF*2^3=0x7FF8 (not 0x7FFF)
@@ -526,7 +522,6 @@ void mdtIoTest::wagoAnalogOutputTest()
    * 750-556 - AO - -10 to +10 V
    */
   QVERIFY(io.setRange(-10.0, 10.0, 13, 3, true));
-  ///QVERIFY(io.setEncodeBitSettings(16, 0));
   // Read test
   io.setValueInt(0x8001, true, false);
   QVERIFY(io.hasValidData());

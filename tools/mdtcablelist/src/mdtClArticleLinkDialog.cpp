@@ -342,6 +342,7 @@ void mdtClArticleLinkDialog::displayCurrentSelectedStartConnection()
       index = pvArticleConnectionModel->index(row, 2);
       data = pvArticleConnectionModel->data(index);
       lbStartContactName->setText(data.toString());
+      break;
     }
   }
 }
@@ -369,6 +370,7 @@ void mdtClArticleLinkDialog::displayCurrentSelectedEndConnection()
       index = pvArticleConnectionModel->index(row, 2);
       data = pvArticleConnectionModel->data(index);
       lbEndContactName->setText(data.toString());
+      break;
     }
   }
 }

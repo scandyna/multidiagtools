@@ -251,6 +251,14 @@ class mdtDeviceModbusWagoModuleRtd : public mdtDeviceModbusWagoModule
    */
   QVariant analogInputValueSigned(int partNumber, int channel) const;
 
+  /*! \brief Check if analog input's value is scaled from minimum to maximum
+   */
+  QVariant analogInputValueScaledFromMinToMax(int partNumber, int channel) const;
+
+  /*! \brief Get analog input's conversion factor
+   */
+  QVariant analogInputValueConversionFactor(int partNumber, int channel) const;
+
   /*! \brief Get number of analog inputs
    */
   int analogInputsCount(int partNumber) const;

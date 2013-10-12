@@ -104,26 +104,6 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   bool setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex = 0, bool intValueSigned = false, bool scaleFromMinToMax = true, double conversionFactor = 1.0);
 
-  /*! \brief Set the bits encode parammeters
-   *
-   * On many analog output module, it is possible
-   *  to set a value, and read it.
-   * It can happen that the bitmap differs between
-   *  write and read (f.ex. Wago 750-550).
-   * In such case, a alternate bits count and lsb index can be set here.
-   *
-   * Note that setRange() will overwrite thiese settings.
-   *
-   * \param intValueBitsCount Number of bits used for the value, including sign bit.
-   *                           (has only effect when using valueInt() ).
-   * \param intValueLsbIndex Index of first bit to use for value extraction.
-   *                          (has only effect when using valueInt() ).
-   *
-   * \return true on success. Some checks are done, and if one fails, false is returned and
-   *          the previous settingsare used for conversion.
-   */
-  ///bool setEncodeBitSettings(int intValueBitsCount, int intValueLsbIndex);
-
   /*! \brief Get the minimum value of the range
    */
   double minimum() const;

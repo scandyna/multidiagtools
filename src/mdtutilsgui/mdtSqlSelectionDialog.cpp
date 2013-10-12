@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlSelectionDialog.h"
+#include "mdtError.h"
 #include <QSqlQueryModel>
 #include <QTableView>
 #include <QDialogButtonBox>
@@ -123,15 +124,11 @@ void mdtSqlSelectionDialog::setSelectionResultColumns(const QList<int> &columns)
 void mdtSqlSelectionDialog::setSelectionResultColumns(const QStringList &fields)
 {
   Q_ASSERT(pvModel != 0);
-  int column;
   int i;
 
   pvSelectionResultColumns.clear();
   for(i = 0; i < fields.size(); ++i){
-    column = pvModel->record().indexOf(fields.at(i));
-    if(column >= 0){
-      pvSelectionResultColumns.append(column);
-    }
+    addSelectionResultColumn(fields.at(i));
   }
 }
 
@@ -141,9 +138,13 @@ void mdtSqlSelectionDialog::addSelectionResultColumn(const QString &field)
   int column;
 
   column = pvModel->record().indexOf(field);
-  if(column >= 0){
-    pvSelectionResultColumns.append(column);
+  if(column < 0){
+    mdtError e(MDT_DATABASE_ERROR, "Field '" + field + "' not found", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlSelectionDialog");
+    e.commit();
+    return;
   }
+  pvSelectionResultColumns.append(column);
 }
 
 QList<QVariant> mdtSqlSelectionDialog::selectionResult()

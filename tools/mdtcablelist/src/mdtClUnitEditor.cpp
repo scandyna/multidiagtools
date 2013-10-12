@@ -43,12 +43,14 @@
 #include <QString>
 #include <QList>
 #include <QVariant>
-#include <QModelIndex>
+///#include <QModelIndex>
 #include <QItemSelectionModel>
 #include <QMessageBox>
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QDataWidgetMapper>
+
+#include <QTableView>
 
 #include <QDebug>
 
@@ -83,6 +85,10 @@ bool mdtClUnitEditor::setupTables(bool includeConnections)
 {
   // Setup Unit table
   if(!setupUnitTable()){
+    return false;
+  }
+  // Setup unit component view table
+  if(!setupUnitComponentViewTable()){
     return false;
   }
   // Setup connection view table
@@ -267,6 +273,51 @@ void mdtClUnitEditor::setBaseArticle()
   if(!pvForm->setCurrentData("Unit_tbl", "Article_Id_FK", selectedItem.at(0))){
     return;
   }
+}
+
+void mdtClUnitEditor::addComponent()
+{
+  mdtSqlSelectionDialog dialog;
+  QSqlQueryModel *unitModel;
+  mdtClUnit unit(pvDatabase);
+  QModelIndex index;
+  QVariant data;
+  int row;
+
+  // Setup and show dialog
+  ///articleModel.setQuery("SELECT Id_PK, ArticleCode, Unit, DesignationEN FROM Article_tbl", pvDatabase);
+  unitModel = unit.unitModelForComponentSelection(currentUnitId());
+  Q_ASSERT(unitModel != 0);
+  dialog.setMessage(tr("Please select a unit"));
+  dialog.setModel(unitModel, false);
+  /**
+  dialog.setColumnHidden("Id_PK", true);
+  dialog.setHeaderData("ArticleConnectorName", "Connector");
+  dialog.setHeaderData("ArticleContactName", "Contact");
+  dialog.setHeaderData("IoType", "I/O type");
+  dialog.setHeaderData("FunctionEN", "Function");
+  */
+  dialog.addSelectionResultColumn("Id_PK");
+  dialog.resize(600, 400);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Store result
+  Q_ASSERT(dialog.selectionResult().size() == 1);
+  qDebug() << "Selected components: " << dialog.selectionResult();
+  ///pvComponentId = dialog.selectionResult().at(0);
+}
+
+void mdtClUnitEditor::editComponent()
+{
+}
+
+void mdtClUnitEditor::editComponent(const QModelIndex &index)
+{
+}
+
+void mdtClUnitEditor::removeComponents()
+{
 }
 
 void mdtClUnitEditor::addConnection()
@@ -518,6 +569,48 @@ bool mdtClUnitEditor::setupUnitTable()
   connect(baseArticleRelation, SIGNAL(childModelIsEmpty()), baseArticleMapper, SLOT(revert()));
   // Force a update
   pvForm->mainSqlWidget()->setCurrentIndex(pvForm->mainSqlWidget()->currentRow());
+
+  return true;
+}
+
+bool mdtClUnitEditor::setupUnitComponentViewTable()
+{
+  mdtSqlTableWidget *widget;
+  QPushButton *pbAddComponent;
+  QPushButton *pbEditComponent;
+  QPushButton *pbRemoveComponents;
+
+  if(!pvForm->addChildTable("UnitComponent_view", tr("Components"), pvDatabase)){
+    return false;
+  }
+  if(!pvForm->addRelation("Id_PK", "UnitComponent_view", "Unit_Id_PK")){
+    return false;
+  }
+  widget = pvForm->sqlTableWidget("UnitComponent_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  ///widget->setColumnHidden("", true);
+  ///widget->setColumnHidden("", true);
+  // Set fields a user friendly name
+  /**
+  widget->setHeaderData("", tr(""));
+  widget->setHeaderData("", tr(""));
+  widget->setHeaderData("", tr(""));
+  widget->setHeaderData("", tr(""));
+  */
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
+  // Add edition buttons
+  pbAddComponent = new QPushButton(tr("Add component ..."));
+  connect(pbAddComponent, SIGNAL(clicked()), this, SLOT(addComponent()));
+  widget->addWidgetToLocalBar(pbAddComponent);
+  pbEditComponent = new QPushButton(tr("Edit component ..."));
+  connect(pbEditComponent, SIGNAL(clicked()), this, SLOT(editComponent()));
+  widget->addWidgetToLocalBar(pbEditComponent);
+  pbRemoveComponents = new QPushButton(tr("Remove components"));
+  connect(pbRemoveComponents, SIGNAL(clicked()), this, SLOT(removeComponents()));
+  widget->addWidgetToLocalBar(pbRemoveComponents);
+  widget->addStretchToLocalBar();
 
   return true;
 }

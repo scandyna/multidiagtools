@@ -25,16 +25,55 @@ mdtClUnit::mdtClUnit(QSqlDatabase db)
 {
   pvDatabase = db;
   pvToUnitConnectionRelatedRangesModel = new QSqlQueryModel;
+  pvUnitModel = new QSqlQueryModel;
 }
 
 mdtClUnit::~mdtClUnit()
 {
   delete pvToUnitConnectionRelatedRangesModel;
+  delete pvUnitModel;
 }
 
-QSqlError mdtClUnit::lastError()
+const QSqlError &mdtClUnit::lastError()
 {
   return pvLastError;
+}
+
+QSqlQueryModel *mdtClUnit::unitModelForComponentSelection(const QVariant &unitId)
+{
+  QString sql;
+
+  sql =  "SELECT Id_PK, SchemaPosition, Cabinet, Coordinate "\
+         "FROM Unit_tbl "\
+         "WHERE ( Id_PK <> " + unitId.toString() + " ) "\
+         "AND ( Composite_Id_FK NOT IN ( "\
+         " SELECT Composite_Id_FK "\
+         " FROM Unit_tbl "\
+         " WHERE Composite_Id_FK = " + unitId.toString() + " ) "\
+         " ) ";
+  pvUnitModel->setQuery(sql, pvDatabase);
+
+  return pvUnitModel;
+}
+
+bool mdtClUnit::addComponent(const QVariant &unitId, const QVariant &componentId)
+{
+}
+
+bool mdtClUnit::editComponent(const QVariant &unitId, const QVariant &currentComponentId, const QVariant &newComponentId)
+{
+}
+
+bool mdtClUnit::removeComponent(const QVariant &unitId, const QVariant &componentId)
+{
+}
+
+bool mdtClUnit::removeComponents(const QVariant &unitId, const QList<QVariant> &componentIdList)
+{
+}
+
+bool mdtClUnit::removeComponents(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows)
+{
 }
 
 int mdtClUnit::toUnitRelatedArticleConnectionCount(const QVariant & unitId)

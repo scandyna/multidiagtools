@@ -23,6 +23,7 @@
 
 #include <QSqlDatabase>
 #include <QObject>
+#include <QModelIndex>
 #include "mdtSqlFormWindow.h"
 
 /*! \brief Cable list's device editor
@@ -65,6 +66,22 @@ class mdtClUnitEditor : public QObject
    */
   void setBaseArticle();
 
+  /*! \brief Add component
+   */
+  void addComponent();
+
+  /*! \brief Edit a component
+   */
+  void editComponent();
+
+  /*! \brief Edit component for given index
+   */
+  void editComponent(const QModelIndex &index);
+
+  /*! \brief Remove components
+   */
+  void removeComponents();
+
   /*! \brief Add a connection to unit connection table
    */
   void addConnection();
@@ -91,6 +108,10 @@ class mdtClUnitEditor : public QObject
   /*! \brief Setup Unit table and widget
    */
   bool setupUnitTable();
+
+  /*! \brief Setup unit component view table and widget
+   */
+  bool setupUnitComponentViewTable();
 
   /*! \brief Setup unit connection view table and widget
    */

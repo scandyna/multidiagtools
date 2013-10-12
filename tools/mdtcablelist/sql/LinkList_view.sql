@@ -36,11 +36,9 @@ FROM Link_tbl
   ON US.Id_PK = CS.Unit_Id_FK
  JOIN Unit_tbl UE
   ON UE.Id_PK = CE.Unit_Id_FK
- JOIN VehicleType_Unit_tbl VUS
-  ON VUS.Unit_Id_FK = US.Id_PK
- JOIN VehicleType_Unit_tbl VUE
-  ON VUE.Unit_Id_FK = UE.Id_PK
+ JOIN VehicleType_Link_tbl
+  ON VehicleType_Link_tbl.Link_Id_FK = Link_tbl.Id_PK
  JOIN VehicleType_tbl VS
-  ON VS.Id_PK = VUS.VehicleType_Id_FK
+  ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK
  JOIN VehicleType_tbl VE
-  ON VE.Id_PK = VUE.VehicleType_Id_FK 
+  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK

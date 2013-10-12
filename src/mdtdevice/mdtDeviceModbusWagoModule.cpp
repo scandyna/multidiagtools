@@ -735,6 +735,54 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueSigned(int partNumber, int 
   }
 }
 
+QVariant mdtDeviceModbusWagoModule::analogInputValueScaledFromMinToMax(int partNumber, int channel) const
+{
+  switch(partNumber){
+    case 452:
+      return true;
+    case 454:
+      return true;
+    case 457:
+      return true;
+    default:
+      return QVariant();
+  }
+}
+
+QVariant mdtDeviceModbusWagoModule::analogOutputValueScaledFromMinToMax(int partNumber, int channel) const
+{
+  switch(partNumber){
+    case 550:
+      return true;
+    default:
+      return QVariant();
+  }
+}
+
+QVariant mdtDeviceModbusWagoModule::analogInputValueConversionFactor(int partNumber, int channel) const
+{
+  switch(partNumber){
+    case 452:
+      return 1.0;
+    case 454:
+      return 1.0;
+    case 457:
+      return 1.0;
+    default:
+      return QVariant();
+  }
+}
+
+QVariant mdtDeviceModbusWagoModule::analogOutputValueConversionFactor(int partNumber, int channel) const
+{
+  switch(partNumber){
+    case 550:
+      return 1.0;
+    default:
+      return QVariant();
+  }
+}
+
 int mdtDeviceModbusWagoModule::analogInputsCount(int partNumber) const
 {
   switch(partNumber){
@@ -828,6 +876,8 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber, int ch
   double min, max;
   int intValueBitsCount, intValueLsbIndex;
   bool intValueSigned;
+  bool scaleFromMinToMax;
+  double conversionFactor;
 
   // Get I/O module's parameters
   value = analogInputValueMin(partNumber, channel);
@@ -868,6 +918,22 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber, int ch
     return 0;
   }
   intValueSigned = value.toBool();
+  value = analogInputValueScaledFromMinToMax(partNumber, channel);
+  if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog input value is scaled from minimum to maximum (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return 0;
+  }
+  scaleFromMinToMax = value.toBool();
+  value = analogInputValueConversionFactor(partNumber, channel);
+  if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input conversion factor (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return 0;
+  }
+  conversionFactor = value.toDouble();
   // Have all needed parameters, build I/O
   aio = new mdtAnalogIo;
   if(aio == 0){
@@ -876,7 +942,7 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber, int ch
     e.commit();
     return 0;
   }
-  aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned);
+  aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned, scaleFromMinToMax, conversionFactor);
   aio->setUnit("[" + analogInputUnit(partNumber, channel) + "]");
   aio->setLabel("Module: 750-" + QString::number(partNumber));
 
@@ -890,6 +956,8 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber, int c
   double min, max;
   int intValueBitsCount, intValueLsbIndex;
   bool intValueSigned;
+  bool scaleFromMinToMax;
+  double conversionFactor;
 
   // Get I/O module's parameters
   value = analogOutputValueMin(partNumber, channel);
@@ -930,6 +998,22 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber, int c
     return 0;
   }
   intValueSigned = value.toBool();
+  value = analogOutputValueScaledFromMinToMax(partNumber, channel);
+  if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog output value is scaled from minimum to maximum (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return 0;
+  }
+  scaleFromMinToMax = value.toBool();
+  value = analogOutputValueConversionFactor(partNumber, channel);
+  if(!value.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output conversion factor (unknown part number: " + partNumberText() + ")", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+    e.commit();
+    return 0;
+  }
+  conversionFactor = value.toDouble();
   // Have all needed parameters, build I/O
   aio = new mdtAnalogIo;
   if(aio == 0){
@@ -938,7 +1022,7 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber, int c
     e.commit();
     return 0;
   }
-  aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned);
+  aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned, scaleFromMinToMax, conversionFactor);
   aio->setUnit("[" + analogOutputUnit(partNumber, channel) + "]");
   aio->setLabel("Module: 750-" + QString::number(partNumber));
 

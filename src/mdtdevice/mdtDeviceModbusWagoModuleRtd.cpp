@@ -27,6 +27,17 @@
 mdtDeviceModbusWagoModuleRtd::mdtDeviceModbusWagoModuleRtd(bool autoDeleteIos, mdtDeviceModbusWago *device)
  : mdtDeviceModbusWagoModule(autoDeleteIos, device)
 {
+  // Set factory settings
+  /// \todo Finish/correct
+  setIoCount(4);
+  setSensorType(0, Pt100);
+  setSensorType(1, Pt100);
+  setSensorType(2, Pt100);
+  setSensorType(3, Pt100);
+  setProcessValueRepresentation(0, C2);
+  setProcessValueRepresentation(1, C2);
+  setProcessValueRepresentation(2, C2);
+  setProcessValueRepresentation(3, C2);
 }
 
 mdtDeviceModbusWagoModuleRtd::~mdtDeviceModbusWagoModuleRtd()
@@ -46,6 +57,7 @@ void mdtDeviceModbusWagoModuleRtd::setIoCount(int count)
     return;
   }
   // Update..
+  qDebug() << "RTD - new I/O count: " << count;
   pvSensorTypes.clear();
   pvProcessValueRepresentations.clear();
   for(i = 0; i < count; ++i){
@@ -207,7 +219,7 @@ QVariant mdtDeviceModbusWagoModuleRtd::analogInputValueMin(int partNumber, int c
 
   switch(sensorType(channel)){
     case Pt100:
-      return -32768.0;
+      return -200.0;
     case Pt200:
       return -200.0;
     case Pt500:
@@ -240,7 +252,7 @@ QVariant mdtDeviceModbusWagoModuleRtd::analogInputValueMax(int partNumber, int c
 
   switch(sensorType(channel)){
     case Pt100:
-      return 32767.0;
+      return 850.0;
     case Pt200:
       return 850.0;
     case Pt500:
@@ -314,6 +326,45 @@ QVariant mdtDeviceModbusWagoModuleRtd::analogInputValueSigned(int partNumber, in
       return true;
     case AmountSignS5:
       return true;
+  }
+}
+
+QVariant mdtDeviceModbusWagoModuleRtd::analogInputValueScaledFromMinToMax(int partNumber, int channel) const
+{
+  return false;
+}
+
+QVariant mdtDeviceModbusWagoModuleRtd::analogInputValueConversionFactor(int partNumber, int channel) const
+{
+  Q_ASSERT(channel >= 0);
+  Q_ASSERT(channel < pvSensorTypes.size());
+
+  /// \todo Depend on format !
+  switch(sensorType(channel)){
+    case Pt100:
+      return 0.1;
+    case Pt200:
+      return 0.1;
+    case Pt500:
+      return 0.1;
+    case Pt1000:
+      return 0.1;
+    case Ni100:
+      return 0.1;
+    case Ni120:
+      return 0.1;
+    case Ni1000:
+      return 0.1;
+    case Ni1000TK:
+      return 0.1;
+    case R10R1200:
+      return 0.1;
+    case R10R5000:
+      return 0.5;
+    case Potentiometer:
+      return 0.1;
+    case Unknown:
+      return QVariant();
   }
 }
 

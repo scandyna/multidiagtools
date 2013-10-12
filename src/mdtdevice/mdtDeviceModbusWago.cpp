@@ -308,7 +308,12 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
       module->updateAddresses(aiAddress, aoAddressRead, aoAddressWrite, diAddress, doAddressRead, doAddressWrite);
     }else{
       // Create a module object, setup and adrress it
-      module = new mdtDeviceModbusWagoModule(false, this);
+      /// \todo Provisoire !!!!
+      if(word == 464){
+        module = new mdtDeviceModbusWagoModuleRtd(false, this);
+      }else{
+        module = new mdtDeviceModbusWagoModule(false, this);
+      }
       if(!module->setupFromRegisterWord(word)){
         module->clear(true);
         delete module;
@@ -328,6 +333,7 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
     }
     Q_ASSERT(module != 0);
     Q_ASSERT(module->type() != mdtDeviceModbusWagoModule::Unknown);
+    qDebug() << "Module pos. " << i << ": word: " << word << ", firs AI address: " << module->firstAiAddress() << " , IN count: " << module->analogInputs().size();
     // Add module's I/Os to container
     ios->addAnalogInputs(module->analogInputs());
     ios->addAnalogOutputs(module->analogOutputs());

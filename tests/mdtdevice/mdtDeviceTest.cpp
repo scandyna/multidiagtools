@@ -1908,9 +1908,28 @@ void mdtDeviceTest::modbusWagoModuleRtdTest()
   mdtDeviceModbusWagoModuleRtd *module = new mdtDeviceModbusWagoModuleRtd(true, device);
   mdtAnalogIo *ai;
 
-  // Check initial values
+  // Check initial values (Factory settings)
   QCOMPARE(module->firstAiAddress(), 0);
   QCOMPARE(module->firstAoAddressWrite(), 0);
+  ///QCOMPARE(module->analogInputs().size(), 4);
+  /**
+  QVERIFY(module->analogInputs().at(0) != 0);
+  QVERIFY(module->analogInputs().at(1) != 0);
+  QVERIFY(module->analogInputs().at(2) != 0);
+  QVERIFY(module->analogInputs().at(3) != 0);
+  */
+  QCOMPARE(module->analogOutputs().size(), 0);
+  QCOMPARE(module->digitalInputs().size(), 0);
+  QCOMPARE(module->digitalOutputs().size(), 4);
+  QCOMPARE(module->sensorType(0), mdtDeviceModbusWagoModuleRtd::Pt100);
+  QCOMPARE(module->sensorType(1), mdtDeviceModbusWagoModuleRtd::Pt100);
+  QCOMPARE(module->sensorType(2), mdtDeviceModbusWagoModuleRtd::Pt100);
+  QCOMPARE(module->sensorType(3), mdtDeviceModbusWagoModuleRtd::Pt100);
+  /// \todo Check if true .....
+  QCOMPARE(module->processValueRepresentation(0), mdtDeviceModbusWagoModuleRtd::C2);
+  QCOMPARE(module->processValueRepresentation(1), mdtDeviceModbusWagoModuleRtd::C2);
+  QCOMPARE(module->processValueRepresentation(2), mdtDeviceModbusWagoModuleRtd::C2);
+  QCOMPARE(module->processValueRepresentation(3), mdtDeviceModbusWagoModuleRtd::C2);
   ///QVERIFY(module->psrrMode() == mdtDeviceModbusWagoModuleRtd::PsrrUnknown);
   
   /*
@@ -2003,6 +2022,7 @@ void mdtDeviceTest::modbusWagoModuleRtdTest()
   MDT_COMPARE(ai->value().valueDouble(), 0.0, 16, -200.0, 850.0);
   ai->setValue(0x2134);
   MDT_COMPARE(ai->value().valueDouble(), 850.0, 16, -200.0, 850.0);
+  /// \todo Check with other sensors
 
   
 

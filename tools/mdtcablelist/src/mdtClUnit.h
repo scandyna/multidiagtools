@@ -46,7 +46,45 @@ class mdtClUnit
 
   /*! \brief Get last error occured
    */
-  QSqlError lastError();
+  const QSqlError &lastError();
+
+  /*! \brief Get a model with units for compononent selection
+   *
+   * Will setup a query model witch contains all units except unitId
+   *  and units that allready are component of unitId .
+   */
+  QSqlQueryModel *unitModelForComponentSelection(const QVariant &unitId);
+
+  /*! \brief Add a unit as component
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool addComponent(const QVariant &unitId, const QVariant &componentId);
+
+  /*! \brief Edit a component
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool editComponent(const QVariant &unitId, const QVariant &currentComponentId, const QVariant &newComponentId);
+
+  /*! \brief Remove a single component
+   */
+  bool removeComponent(const QVariant &unitId, const QVariant &componentId);
+
+  /*! \brief Remove a list of components
+   */
+  bool removeComponents(const QVariant &unitId, const QList<QVariant> &componentIdList);
+
+  /*! \brief Remove each link that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeComponents(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief Return the number unit connections that are related to article connections
    *
@@ -97,6 +135,7 @@ class mdtClUnit
 
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvToUnitConnectionRelatedRangesModel;
+  QSqlQueryModel *pvUnitModel;
   QSqlError pvLastError;
 };
 

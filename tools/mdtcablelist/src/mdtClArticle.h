@@ -22,6 +22,7 @@
 #define MDT_CL_ARTICLE_H
 
 #include <QSqlDatabase>
+#include <QSqlQueryModel>
 #include <QSqlError>
 #include <QVariant>
 #include <QModelIndex>
@@ -44,6 +45,44 @@ class mdtClArticle
   /*! \brief Get last error
    */
   const QSqlError &lastError() const;
+
+  /*! \brief Get a model with articles for compononent selection
+   *
+   * Will setup a query model witch contains all articles except articleId
+   *  and articles that allready are component of articleID .
+   */
+  QSqlQueryModel *articleModelForComponentSelection(const QVariant &articleId);
+
+  /*! \brief Add a article as component
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool addComponent(const QVariant &articleId, const QVariant &componentId, const QVariant &qty, const QVariant &qtyUnit);
+
+  /*! \brief Edit a component
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool editComponent(const QVariant &articleId, const QVariant &currentComponentId, const QVariant &newComponentId, const QVariant &qty, const QVariant &qtyUnit);
+
+  /*! \brief Remove a single component
+   */
+  bool removeComponent(const QVariant &articleId, const QVariant &componentId);
+
+  /*! \brief Remove a list of components
+   */
+  bool removeComponents(const QVariant &articleId, const QList<QVariant> &componentIdList);
+
+  /*! \brief Remove each link that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeComponents(const QVariant &articleId, const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief Add a record in Link table
    *
@@ -104,6 +143,7 @@ class mdtClArticle
 
   QSqlDatabase pvDatabase;
   QSqlError pvLastError;
+  QSqlQueryModel *pvArticleModel;
 };
 
 #endif  // #ifndef MDT_CL_ARTICLE_H

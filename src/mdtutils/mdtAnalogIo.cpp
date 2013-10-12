@@ -23,7 +23,7 @@
 #include <cmath>
 #include <float.h>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtAnalogIo::mdtAnalogIo(QObject *parent)
  : mdtAbstractIo(parent)
@@ -99,31 +99,11 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
   pvScaleFromMinToMax = scaleFromMinToMax;
   if(pvScaleFromMinToMax){
     pvStepQ = conversionFactor * (max-min) / (pow(2.0, intValueBitsCount));
-    ///pvIntValueSignMask = (1 << (intValueBitsCount-1) );
   }else{
     pvStepQ = conversionFactor;
-    ///pvIntValueSignMask = 0;
   }
   pvIntValueSignMask = (1 << (intValueBitsCount-1) );
-  /**
-  if(intValueSigned){
-    if(pvScaleFromMinToMax){
-      pvStep = conversionFactor * max / (pow(2.0, (intValueBitsCount-1)));
-    }else{
-      pvStep = conversionFactor;
-    }
-    pvIntValueSignMask = (1 << (intValueBitsCount-1) );
-  }else{
-    if(pvScaleFromMinToMax){
-    pvStep = conversionFactor * (max-min) / (pow(2.0, intValueBitsCount));
-    }else{
-      pvStep = conversionFactor;
-    }
-    pvIntValueSignMask = 0;
-  }
-  */
   pvStepAD = 1.0/pvStepQ;
-  ///qDebug() << "pvStepQ: " << pvStepQ << " , pvStepAD: " << pvStepAD;
 
   // Store min and max and signal
   pvMinimum = min;
@@ -138,48 +118,6 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
 
   return true;
 }
-
-/**
-bool mdtAnalogIo::setEncodeBitSettings(int intValueBitsCount, int intValueLsbIndex)
-{
-  int i;
-
-  // Check that lsb index and bits count are in acceptable range
-  if(intValueLsbIndex < 0){
-    mdtError e(MDT_PARSE_ERROR, "Specified intValueLsbIndex is < 0, using current conversion parameters", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
-    e.commit();
-    return false;
-  }
-  if(intValueBitsCount < 0){
-    mdtError e(MDT_PARSE_ERROR, "Specified intValueBitsCount is < 0, using current conversion parameters", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
-    e.commit();
-    return false;
-  }
-  if((unsigned int)(intValueLsbIndex+intValueBitsCount) > (unsigned int)(8*sizeof(int))){
-    mdtError e(MDT_PARSE_ERROR, "Specified intValueLsbIndex + intValueBitsCount is to big, using current conversion parameters", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
-    e.commit();
-    return false;
-  }
-  // Store lsbIndex
-  pvIntValueLsbIndexEnc = intValueLsbIndex;
-  // Setup mask
-  pvIntValueMaskEnc = 0;
-  for(i=0; i<intValueBitsCount; ++i){
-    pvIntValueMaskEnc += (1<<i);
-  }
-  // Set factor
-  if(pvIntValueSigned){
-    pvStepInverse = (pow(2.0, (intValueBitsCount-1)) - 1) / pvMaximum;
-  }else{
-    pvStepInverse = (pow(2.0, intValueBitsCount) - 1) / (pvMaximum - pvMinimum);
-  }
-
-  return true;
-}
-*/
 
 double mdtAnalogIo::minimum() const
 {
@@ -205,12 +143,9 @@ void mdtAnalogIo::setValueInt(int value, bool isValid, bool emitValueChanged)
 void mdtAnalogIo::setValue(const mdtValue &value, bool emitValueChanged)
 {
   pvNotifyUi = true;
-  ///qDebug() << "value: " << value;
   if(value.hasValueDouble()){
-    ///qDebug() << "* Value has double -> call setValueFromDouble() [AD]";
     setValueFromDouble(value, emitValueChanged);
   }else{
-    ///qDebug() << " -> call setValueFromInt() [DA]";
     setValueFromInt(value, emitValueChanged);
   }
 }
@@ -236,7 +171,6 @@ void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChange
 
   // Check if new value has changed
   if((fabs(x - pvValue.valueDouble()) <= pvStepQ)&&(value.isValid() == pvValue.isValid())){
-    ///qDebug() << "setValueFromDouble() : no change";
     return;
   }
   // Check validity of new value and process if true
@@ -245,9 +179,7 @@ void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChange
     if(x <= (pvMinimum + pvStepQ)){
       x = pvMinimum;
     }else if(x >= (pvMaximum - pvStepQ)){
-      ///qDebug() << "+Clip on value: " << x;
       x = pvMaximum - pvStepQ;
-      ///qDebug() << "-> down to: " << x;
     }
     // Make conversion
     if(pvIntValueSigned){
@@ -265,16 +197,11 @@ void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChange
       m = (~m) & pvIntValueMaskEnc; // C1
       ++m;  // C2
     }
-    ///qDebug() << "(A) x: " << x << " , m: " << m << " (0x" << hex << m << ")";
-    ///qDebug() << "Apply mask: " << pvIntValueMaskEnc << " (0x" << hex << pvIntValueMaskEnc << ")";
     m &= pvIntValueMaskEnc;
-    ///qDebug() << "(B) x: " << x << " , m: " << m << " (0x" << hex << m << ")";
     m = m << pvIntValueLsbIndexEnc;
-    ///qDebug() << "(C) x: " << x << " , m: " << m << " (0x" << hex << m << ")";
     // Store value
     pvValue.setValue(m);
     pvValue.setValue(x, value.isMinusOl(), value.isPlusOl());
-    ///qDebug() << "(D) x: " << x << " , m: " << m << " (0x" << hex << m << ")";
   }else{
     pvValue.clear();
   }
@@ -301,19 +228,15 @@ void mdtAnalogIo::setValueFromInt(const mdtValue &value, bool emitValueChanged)
   // Check validity of new value and process if true
   if((value.isValid())&&(value.hasValueInt())){
     m = value.valueInt();
-    ///qDebug() << "(1) m: " << m << " (0x" << hex << m << ")";
     // Extract bits in correct range
     m = m >> pvIntValueLsbIndex;
     m &= pvIntValueMask;
-    ///qDebug() << "(2) m: " << m << " (0x" << hex << m << ")";
-    // Apply C1 and negate if sign bit is present
+    // Apply C2 and negate if sign bit is present
     if((pvIntValueSigned)&&(m & pvIntValueSignMask)){
-    ///if(m & pvIntValueSignMask){
       m = ( (~m) & pvIntValueMask );  // C1
       ++m;  // C2
       m = -m;
     }
-    ///qDebug() << "(3) m: " << m << " (0x" << hex << m << ")";
     // Make conversion
     if(pvIntValueSigned){
       x = pvStepQ*(double)m;
@@ -324,13 +247,11 @@ void mdtAnalogIo::setValueFromInt(const mdtValue &value, bool emitValueChanged)
         x = pvStepQ*(double)m;
       }
     }
-    ///qDebug() << "(4) m: " << m << " (0x" << hex << m << ") , x: " << dec << x;
     // Store
     pvValue.setValue(x);
     pvValue.setValue(m, value.isMinusOl(), value.isPlusOl());
   }else{
     pvValue.clear();
-    x = pvValue.valueDouble();  /// \todo Check if x hase sense here ...
   }
   // Notify
   if(pvNotifyUi){

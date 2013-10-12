@@ -195,7 +195,7 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
   for(i=0; i<pvRelations.size(); ++i){
     item = pvRelations.at(i);
     Q_ASSERT(item != 0);
-    qDebug() << "mdtSqlRelation, parent record is NULL: " << record.isNull(item->parentFieldIndex());
+    ///qDebug() << "mdtSqlRelation, parent record is NULL: " << record.isNull(item->parentFieldIndex());
     // Get parent model's data
     if(!record.isNull(item->parentFieldIndex())){
       data = record.value(item->parentFieldIndex());
@@ -203,7 +203,7 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
     if(i>0){
       pvChildModelRelationFilter += " AND";
     }
-    qDebug() << "mdtSqlRelation, parent data: " << data;
+    ///qDebug() << "mdtSqlRelation, parent data: " << data;
     pvChildModelRelationFilter += item->nameProtection() + pvChildModel->tableName() + item->nameProtection() + "." + item->nameProtection() + item->childFieldName() + item->nameProtection() + "=";
     if(data.isValid()){
       pvChildModelRelationFilter += item->dataProtection() + data.toString() + item->dataProtection();
@@ -223,5 +223,5 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
 void mdtSqlRelation::generateChildModelFilter()
 {
   pvChildModelFilter = pvChildModelRelationFilter;
-  qDebug() << "mdtSqlRelation, filter: " << pvChildModelFilter;
+  ///qDebug() << "mdtSqlRelation, filter: " << pvChildModelFilter;
 }
