@@ -55,7 +55,7 @@ class mdtClUnitConnectionData
 
   /*! \brief Get unit connection ID
    */
-  QVariant id();
+  QVariant id() const;
 
   /*! \brief Set unit ID
    */

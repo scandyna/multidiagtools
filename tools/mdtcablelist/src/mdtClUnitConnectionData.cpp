@@ -61,7 +61,7 @@ void mdtClUnitConnectionData::setId(const QVariant & id)
   pvId = id;
 }
 
-QVariant mdtClUnitConnectionData::id()
+QVariant mdtClUnitConnectionData::id() const
 {
   return pvId;
 }

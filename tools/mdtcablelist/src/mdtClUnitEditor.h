@@ -82,6 +82,10 @@ class mdtClUnitEditor : public QObject
    */
   void addFreeConnection();
 
+  /*! \brief Edit a connection
+   */
+  void editConnection();
+
   /*! \brief Remove connection from unit connection table
    */
   void removeConnections();

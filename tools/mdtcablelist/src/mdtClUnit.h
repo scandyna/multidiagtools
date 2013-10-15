@@ -113,15 +113,21 @@ class mdtClUnit
    */
   bool addUnitConnection(const mdtClUnitConnectionData & data);
 
-  /*! \brief
-   */
-  bool removeUnitConnection(const QVariant & unitConnectionId);
-
-  /*! \brief
+  /*! \brief Edit a unit connection
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
    */
   bool editUnitConnection(const mdtClUnitConnectionData & data);
 
   /*! \brief
+   */
+  bool removeUnitConnection(const QVariant & unitConnectionId);
+
+  /*! \brief Get a object with unit connection data for given unit connection ID (primary key)
+   *
+   * \return data, or empty data on error.
+   *          To get reason of failure, use lastError() .
    */
   mdtClUnitConnectionData getUnitConnectionData(const QVariant & unitConnectionId);
 

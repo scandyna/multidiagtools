@@ -109,7 +109,15 @@ void mdtClUnitConnectionDialog::setData(const mdtClUnitConnectionData &data)
     lbArticleFunctionIT->setText(data.articleFunctionIT().toString());
   }
   // Update GUI - Unit connection data part
-  
+  leSchemaPage->setText(data.schemaPage().toString());
+  leFunctionEN->setText(data.functionEN().toString());
+  leFunctionFR->setText(data.functionFR().toString());
+  leFunctionDE->setText(data.functionDE().toString());
+  leFunctionIT->setText(data.functionIT().toString());
+  leSignalName->setText(data.signalName().toString());
+  sbSwAddress->setValue(data.swAddress().toInt());
+  leUnitConnectorName->setText(data.unitConnectorName().toString());
+  leUnitContactName->setText(data.unitContactName().toString());
   // Store data
   pvData = data;
 }
@@ -217,6 +225,19 @@ void mdtClUnitConnectionDialog::copyContactName()
 
 void mdtClUnitConnectionDialog::accept()
 {
+  // Checks
+  if((leUnitConnectorName->text().isEmpty())&&(leUnitContactName->text().isEmpty())){
+    QMessageBox msgBox(this);
+    msgBox.setText(tr("Connector name and contact name are both empty."));
+    msgBox.setInformativeText(tr("Do you want to continue ?"));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::No);
+    if(msgBox.exec() != QMessageBox::Yes){
+      return;
+    }
+  }
+  // Store data
   if(!leSchemaPage->text().isEmpty()){
     pvData.setSchemaPage(leSchemaPage->text());
   }
