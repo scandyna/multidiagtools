@@ -73,6 +73,62 @@ class mdtClUnitConnectionData
    */
   QVariant articleConnectionId() const;
 
+  /*! \brief Set article connector name
+   */
+  void setArticleConnectorName(const QVariant &name);
+
+  /*! \brief Get article connector name
+   */
+  QVariant articleConnectorName() const;
+
+  /*! \brief Set article contact name
+   */
+  void setArticleContactName(const QVariant &name);
+
+  /*! \brief Get article contact name
+   */
+  QVariant articleContactName() const;
+
+  /*! \brief Set article I/O type
+   */
+  void setArticleIoType(const QVariant &ioType);
+
+  /*! \brief Get article I/O type
+   */
+  QVariant articleIoType() const;
+
+  /*! \brief Set article function EN
+   */
+  void setArticleFunctionEN(const QVariant &function);
+
+  /*! \brief Get article function EN
+   */
+  QVariant articleFunctionEN() const;
+
+  /*! \brief Set article function FR
+   */
+  void setArticleFunctionFR(const QVariant &function);
+
+  /*! \brief Get article function FR
+   */
+  QVariant articleFunctionFR() const;
+
+  /*! \brief Set article function DE
+   */
+  void setArticleFunctionDE(const QVariant &function);
+
+  /*! \brief Get article function DE
+   */
+  QVariant articleFunctionDE() const;
+
+  /*! \brief Set article function IT
+   */
+  void setArticleFunctionIT(const QVariant &function);
+
+  /*! \brief Get article function IT
+   */
+  QVariant articleFunctionIT() const;
+
   /*! \brief Set schema page
    */
   void setSchemaPage(const QVariant & schemaPage);
@@ -150,6 +206,13 @@ class mdtClUnitConnectionData
   QVariant pvId;
   QVariant pvUintId;
   QVariant pvArticleConnectionId;
+  QVariant pvArticleConnectorName;
+  QVariant pvArticleContactName;
+  QVariant pvArticleIoType;
+  QVariant pvArticleFunctionEN;
+  QVariant pvArticleFunctionFR;
+  QVariant pvArticleFunctionDE;
+  QVariant pvArticleFunctionIT;
   QVariant pvSchemaPage;
   QVariant pvFunctionEN;
   QVariant pvFunctionFR;

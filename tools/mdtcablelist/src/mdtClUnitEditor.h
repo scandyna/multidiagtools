@@ -70,25 +70,21 @@ class mdtClUnitEditor : public QObject
    */
   void addComponent();
 
-  /*! \brief Edit a component
-   */
-  void editComponent();
-
-  /*! \brief Edit component for given index
-   */
-  void editComponent(const QModelIndex &index);
-
   /*! \brief Remove components
    */
   void removeComponents();
 
-  /*! \brief Add a connection to unit connection table
+  /*! \brief Add a connection to unit connection table that is related to a article connection
    */
   void addConnection();
 
+  /*! \brief Add a connection to unit connection table
+   */
+  void addFreeConnection();
+
   /*! \brief Remove connection from unit connection table
    */
-  void removeConnection();
+  void removeConnections();
 
  signals:
 

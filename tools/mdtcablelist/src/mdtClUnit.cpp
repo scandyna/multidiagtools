@@ -21,17 +21,21 @@
 #include "mdtClUnit.h"
 #include <QSqlQuery>
 
+#include <QDebug>
+
 mdtClUnit::mdtClUnit(QSqlDatabase db)
 {
   pvDatabase = db;
   pvToUnitConnectionRelatedRangesModel = new QSqlQueryModel;
   pvUnitModel = new QSqlQueryModel;
+  pvArticleConnectionModel = new QSqlQueryModel;
 }
 
 mdtClUnit::~mdtClUnit()
 {
   delete pvToUnitConnectionRelatedRangesModel;
   delete pvUnitModel;
+  delete pvArticleConnectionModel;
 }
 
 const QSqlError &mdtClUnit::lastError()
@@ -45,12 +49,8 @@ QSqlQueryModel *mdtClUnit::unitModelForComponentSelection(const QVariant &unitId
 
   sql =  "SELECT Id_PK, SchemaPosition, Cabinet, Coordinate "\
          "FROM Unit_tbl "\
-         "WHERE ( Id_PK <> " + unitId.toString() + " ) "\
-         "AND ( Composite_Id_FK NOT IN ( "\
-         " SELECT Composite_Id_FK "\
-         " FROM Unit_tbl "\
-         " WHERE Composite_Id_FK = " + unitId.toString() + " ) "\
-         " ) ";
+         "WHERE ( Id_PK <> " + unitId.toString() + " "\
+         "AND Composite_Id_FK IS NULL )";
   pvUnitModel->setQuery(sql, pvDatabase);
 
   return pvUnitModel;
@@ -58,22 +58,115 @@ QSqlQueryModel *mdtClUnit::unitModelForComponentSelection(const QVariant &unitId
 
 bool mdtClUnit::addComponent(const QVariant &unitId, const QVariant &componentId)
 {
+  QString sql;
+  QSqlQuery query(pvDatabase);
+
+  // Prepare query for edition
+  sql = "UPDATE Unit_tbl "\
+        "SET Composite_Id_FK = :Composite_Id_FK "\
+        "WHERE Id_PK = " + componentId.toString();
+  if(!query.prepare(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for component assignation", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":Composite_Id_FK", unitId);
+  if(!query.exec()){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for component assignation", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+
+  return true;
 }
 
-bool mdtClUnit::editComponent(const QVariant &unitId, const QVariant &currentComponentId, const QVariant &newComponentId)
+bool mdtClUnit::removeComponent(const QVariant &componentId)
 {
+  QList<QVariant> idList;
+
+  idList.append(componentId);
+
+  return removeComponents(idList);
 }
 
-bool mdtClUnit::removeComponent(const QVariant &unitId, const QVariant &componentId)
+bool mdtClUnit::removeComponents(const QList<QVariant> &componentIdList)
 {
+  int i;
+  QString sql;
+
+  if(componentIdList.size() < 1){
+    return true;
+  }
+  // Generate SQL
+  sql = "UPDATE Unit_tbl SET Composite_Id_FK = NULL ";
+  for(i = 0; i < componentIdList.size(); ++i){
+    if(i == 0){
+      sql += " WHERE ( ";
+    }else{
+      sql += " OR ";
+    }
+    sql += " Id_PK = " + componentIdList.at(i).toString();
+  }
+  sql += " ) ";
+  // Submit query
+  QSqlQuery query(pvDatabase);
+  if(!query.exec(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for component assignation remove", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+
+  return true;
 }
 
-bool mdtClUnit::removeComponents(const QVariant &unitId, const QList<QVariant> &componentIdList)
+bool mdtClUnit::removeComponents(const QModelIndexList & indexListOfSelectedRows)
 {
+  int i;
+  QList<QVariant> idList;
+
+  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
+    idList.append(indexListOfSelectedRows.at(i).data());
+  }
+
+  return removeComponents(idList);
 }
 
-bool mdtClUnit::removeComponents(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows)
+QSqlQueryModel *mdtClUnit::modelForArticleConnectionSelection(const QVariant & unitId, const QVariant &articleId)
 {
+  QString sql;
+
+  sql = "SELECT "\
+        " ArticleConnection_tbl.Id_PK , "\
+        " ArticleConnection_tbl.Article_Id_FK , "\
+        " ArticleConnection_tbl.ArticleConnectorName , "\
+        " ArticleConnection_tbl.ArticleContactName , "\
+        " ArticleConnection_tbl.IoType , "\
+        " ArticleConnection_tbl.FunctionEN "\
+        "FROM ArticleConnection_tbl "\
+        "LEFT JOIN UnitConnection_tbl "\
+        " ON ArticleConnection_tbl.Id_PK = UnitConnection_tbl.ArticleConnection_Id_FK "\
+        "WHERE Article_Id_FK = " + articleId.toString();
+  qDebug() << "SEL ART CNN SQL: " << sql;
+  pvArticleConnectionModel->setQuery(sql, pvDatabase);
+  pvLastError = pvArticleConnectionModel->lastError();
+  if(pvLastError.isValid()){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for article connection selection", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+  }
+
+  return pvArticleConnectionModel;
 }
 
 int mdtClUnit::toUnitRelatedArticleConnectionCount(const QVariant & unitId)
@@ -120,7 +213,42 @@ QSqlQueryModel *mdtClUnit::toUnitConnectionRelatedRangesModel(const QVariant & u
   return pvToUnitConnectionRelatedRangesModel;
 }
 
-bool mdtClUnit::addUnitConnection(const mdtClUnitConnectionData & data) {
+bool mdtClUnit::addUnitConnection(const mdtClUnitConnectionData & data)
+{
+  QString sql;
+  QSqlQuery query(pvDatabase);
+
+  // Prepare query for insertion
+  sql = "INSERT INTO UnitConnection_tbl (Unit_Id_FK, ArticleConnection_Id_FK, IsATestPoint, SchemaPage, FunctionEN, SignalName, SwAddress, UnitConnectorName, UnitContactName) "\
+        "VALUES (:Unit_Id_FK, :ArticleConnection_Id_FK, :IsATestPoint, :SchemaPage, :FunctionEN, :SignalName, :SwAddress, :UnitConnectorName, :UnitContactName)";
+  if(!query.prepare(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for component inertion", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":Unit_Id_FK", data.unitId());
+  query.bindValue(":ArticleConnection_Id_FK", data.articleConnectionId());
+  query.bindValue(":IsATestPoint", QVariant());   /// \todo Implement
+  query.bindValue(":SchemaPage", data.schemaPage());
+  query.bindValue(":FunctionEN", data.functionEN());
+  query.bindValue(":SignalName", data.signalName());
+  query.bindValue(":SwAddress", data.swAddress());
+  query.bindValue(":UnitConnectorName", data.unitConnectorName());
+  query.bindValue(":UnitContactName", data.unitContactName());
+  if(!query.exec()){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for connection inertion", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtClUnit::removeUnitConnection(const QVariant & unitConnectionId) {

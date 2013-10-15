@@ -161,7 +161,7 @@ bool mdtClArticle::removeComponents(const QVariant &articleId, const QList<QVari
   QSqlQuery query(pvDatabase);
   if(!query.exec(sql)){
     pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for link deletion", mdtError::Error);
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for component deletion", mdtError::Error);
     e.setSystemError(pvLastError.number(), pvLastError.text());
     MDT_ERROR_SET_SRC(e, "mdtClArticle");
     e.commit();
@@ -174,7 +174,6 @@ bool mdtClArticle::removeComponents(const QVariant &articleId, const QList<QVari
 bool mdtClArticle::removeComponents(const QVariant &articleId, const QModelIndexList & indexListOfSelectedRows)
 {
   int i;
-  QString sql;
   QList<QVariant> idList;
 
   for(i = 0; i < indexListOfSelectedRows.size(); ++i){

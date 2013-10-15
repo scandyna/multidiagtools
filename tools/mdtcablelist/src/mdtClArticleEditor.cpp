@@ -190,7 +190,7 @@ void mdtClArticleEditor::removeComponents()
     msgBox.exec();
     return;
   }
-  // Update link table
+  // Update component table
   pvForm->select("ArticleComponent_view");
 }
 

@@ -86,6 +86,76 @@ QVariant mdtClUnitConnectionData::articleConnectionId() const
   return pvArticleConnectionId;
 }
 
+void mdtClUnitConnectionData::setArticleConnectorName(const QVariant &name)
+{
+  pvArticleConnectorName = name;
+}
+
+QVariant mdtClUnitConnectionData::articleConnectorName() const
+{
+  return pvArticleConnectorName;
+}
+
+void mdtClUnitConnectionData::setArticleContactName(const QVariant &name)
+{
+  pvArticleContactName = name;
+}
+
+QVariant mdtClUnitConnectionData::articleContactName() const
+{
+  return pvArticleContactName;  
+}
+
+void mdtClUnitConnectionData::setArticleIoType(const QVariant &ioType)
+{
+  pvArticleIoType = ioType;
+}
+
+QVariant mdtClUnitConnectionData::articleIoType() const
+{
+  return pvArticleIoType;
+}
+
+void mdtClUnitConnectionData::setArticleFunctionEN(const QVariant &function)
+{
+  pvArticleFunctionEN = function;
+}
+
+QVariant mdtClUnitConnectionData::articleFunctionEN() const
+{
+  return pvArticleFunctionEN;
+}
+
+void mdtClUnitConnectionData::setArticleFunctionFR(const QVariant &function)
+{
+  pvArticleFunctionFR = function;
+}
+
+QVariant mdtClUnitConnectionData::articleFunctionFR() const
+{
+  return pvArticleFunctionFR;
+}
+
+void mdtClUnitConnectionData::setArticleFunctionDE(const QVariant &function)
+{
+  pvArticleFunctionDE = function;
+}
+
+QVariant mdtClUnitConnectionData::articleFunctionDE() const
+{
+  return pvArticleFunctionDE;
+}
+
+void mdtClUnitConnectionData::setArticleFunctionIT(const QVariant &function)
+{
+  pvArticleFunctionIT = function;
+}
+
+QVariant mdtClUnitConnectionData::articleFunctionIT() const
+{
+  return pvArticleFunctionIT;
+}
+
 void mdtClUnitConnectionData::setSchemaPage(const QVariant & schemaPage)
 {
   pvSchemaPage = schemaPage;

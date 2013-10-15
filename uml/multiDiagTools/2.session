@@ -1,28 +1,14 @@
 window_sizes 1280 1001 370 904 923 0
 diagrams
-  classdiagram_ref 839426 // mdtDeviceModbusWago
-    960 923 80 3 108 0
-  active  classdiagram_ref 845954 // mdtDeviceModbusWagoModule
-    904 923 90 4 0 0
-  classdiagram_ref 846082 // mdtDeviceModbusWagoModuleRtd
-    904 923 80 3 396 0
+  classdiagram_ref 732802 // Global
+    723 738 100 4 0 0
+  active  classdiagram_ref 739330 // Conceptual
+    904 923 100 3 180 0
 end
 show_stereotypes
-selected attribute_ref 878210 // pvRegisterDataWords
+selected classdiagram_ref 739330 // Conceptual
 open
-  
-  package_ref 128002 // mdtutils
-  classview_ref 240514 // mdtDevice
-  classrelation_ref 1093634 // pvAnalogIos (<directional composition>)
-  attribute_ref 877698 // pvAutoDeleteIos
-  operation_ref 1577218 // firstAddressRead
-  operation_ref 1577602 // lastAddressWrite
-  operation_ref 1576066 // analogIos
-  operation_ref 1576194 // digitalIos
-  operation_ref 1574402 // typeText
-  operation_ref 1618178 // addDigitalIo
-  operation_ref 1578754 // writeControlBytes
-  operation_ref 1611522 // getSpecialModuleSetup
-  classview_ref 405378 // mdtModbusIoTool
+  classview_ref 477314 // Global
+  classview_ref 483842 // Conceptual
 end
 end

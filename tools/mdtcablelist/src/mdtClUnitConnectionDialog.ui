@@ -63,7 +63,7 @@
      <item row="2" column="0">
       <widget class="QLabel" name="lbFunctionEN">
        <property name="text">
-        <string>Function EN :</string>
+        <string>Function ENG :</string>
        </property>
        <property name="buddy">
         <cstring>leFunctionEN</cstring>
@@ -94,7 +94,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="lbFunctionFR">
        <property name="text">
-        <string>Function FR :</string>
+        <string>Function FRA :</string>
        </property>
        <property name="buddy">
         <cstring>leFunctionFR</cstring>
@@ -125,7 +125,7 @@
      <item row="4" column="0">
       <widget class="QLabel" name="lbFunctionDE">
        <property name="text">
-        <string>Function DE :</string>
+        <string>Function DEU :</string>
        </property>
        <property name="buddy">
         <cstring>leFunctionDE</cstring>
@@ -156,7 +156,7 @@
      <item row="5" column="0">
       <widget class="QLabel" name="lbFunctionIT">
        <property name="text">
-        <string>Function IT :</string>
+        <string>Function ITA :</string>
        </property>
        <property name="buddy">
         <cstring>leFunctionIT</cstring>

@@ -62,20 +62,13 @@ class mdtClUnit
    */
   bool addComponent(const QVariant &unitId, const QVariant &componentId);
 
-  /*! \brief Edit a component
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  bool editComponent(const QVariant &unitId, const QVariant &currentComponentId, const QVariant &newComponentId);
-
   /*! \brief Remove a single component
    */
-  bool removeComponent(const QVariant &unitId, const QVariant &componentId);
+  bool removeComponent(const QVariant &componentId);
 
   /*! \brief Remove a list of components
    */
-  bool removeComponents(const QVariant &unitId, const QList<QVariant> &componentIdList);
+  bool removeComponents(const QList<QVariant> &componentIdList);
 
   /*! \brief Remove each link that is contained in selection
    *
@@ -84,7 +77,11 @@ class mdtClUnit
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeComponents(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows);
+  bool removeComponents(const QModelIndexList & indexListOfSelectedRows);
+
+  /*! \brief Get a model that contains a list of unsused article connections related to given unit ID
+   */
+  QSqlQueryModel *modelForArticleConnectionSelection(const QVariant & unitId, const QVariant &articleId);
 
   /*! \brief Return the number unit connections that are related to article connections
    *
@@ -109,7 +106,10 @@ class mdtClUnit
    */
   QSqlQueryModel *toUnitConnectionRelatedRangesModel(const QVariant & unitConnectionId);
 
-  /*! \brief
+  /*! \brief Add a unit connection
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
    */
   bool addUnitConnection(const mdtClUnitConnectionData & data);
 
@@ -136,6 +136,7 @@ class mdtClUnit
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvToUnitConnectionRelatedRangesModel;
   QSqlQueryModel *pvUnitModel;
+  QSqlQueryModel *pvArticleConnectionModel;
   QSqlError pvLastError;
 };
 
