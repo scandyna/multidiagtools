@@ -31,6 +31,7 @@ mdtClUnit::mdtClUnit(QSqlDatabase db)
   pvToUnitConnectionRelatedRangesModel = new QSqlQueryModel;
   pvUnitModel = new QSqlQueryModel;
   pvArticleConnectionModel = new QSqlQueryModel;
+  pvUnitLinkModel = 0;
 }
 
 mdtClUnit::~mdtClUnit()
@@ -38,6 +39,7 @@ mdtClUnit::~mdtClUnit()
   delete pvToUnitConnectionRelatedRangesModel;
   delete pvUnitModel;
   delete pvArticleConnectionModel;
+  delete pvUnitLinkModel;
 }
 
 const QSqlError &mdtClUnit::lastError()
@@ -220,6 +222,144 @@ QSqlQueryModel *mdtClUnit::toUnitConnectionRelatedRangesModel(const QVariant & u
   return pvToUnitConnectionRelatedRangesModel;
 }
 
+QSqlQueryModel *mdtClUnit::toUnitRelatedLinksModel(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList)
+{
+  QString sql;
+  int i;
+
+  if(pvUnitLinkModel == 0){
+    pvUnitLinkModel = new QSqlQueryModel;
+  }
+  sql = "SELECT * FROM UnitLink_view "\
+        "WHERE ( StartUnit_Id_FK = " + unitId.toString() + " "\
+        "OR EndUnit_Id_FK = " + unitId.toString() + " ) ";
+  if(unitConnectionIdList.size() > 0){
+    sql += " AND ( ";
+  }
+  for(i = 0; i < unitConnectionIdList.size(); ++i){
+    if(i > 0){
+      sql += " OR ";
+    }
+    sql += " UnitConnectionStart_Id_FK = " + unitConnectionIdList.at(i).toString();
+    sql += " OR UnitConnectionEnd_Id_FK = " + unitConnectionIdList.at(i).toString();
+  }
+  if(unitConnectionIdList.size() > 0){
+    sql += " ) ";
+  }
+  pvUnitLinkModel->setQuery(sql, pvDatabase);
+  pvLastError = pvUnitLinkModel->lastError();
+  if(pvLastError.isValid()){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query to get links related to unit", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+  }
+
+  return pvUnitLinkModel;
+}
+
+QStringList mdtClUnit::toUnitRelatedLinksList(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList)
+{
+  int row, col;
+  QSqlQueryModel *model;
+  QModelIndex index;
+  QString link;
+  QStringList linksList;
+
+  model = toUnitRelatedLinksModel(unitId, unitConnectionIdList);
+  Q_ASSERT(model != 0);
+  for(row = 0; row < model->rowCount(); ++row){
+    col = model->record().indexOf("Identification");
+    index = model->index(row, col);
+    link = model->data(index).toString();
+    link += "-(";
+    col = model->record().indexOf("StartUnitConnectorName");
+    index = model->index(row, col);
+    link += model->data(index).toString();
+    link += ";";
+    col = model->record().indexOf("StartUnitContactName");
+    index = model->index(row, col);
+    link += model->data(index).toString();
+    link += "-";
+    col = model->record().indexOf("EndUnitConnectorName");
+    index = model->index(row, col);
+    link += model->data(index).toString();
+    link += ";";
+    col = model->record().indexOf("EndUnitContactName");
+    index = model->index(row, col);
+    link += model->data(index).toString();
+    link += ")";
+    linksList.append(link);
+  }
+
+  return linksList;
+}
+
+QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList)
+{
+  QStringList linksList;
+  QString str;
+  int i;
+
+  linksList = toUnitRelatedLinksList(unitId, unitConnectionIdList);
+  for(i = 0; i < linksList.size(); ++i){
+    str += linksList.at(i) + "\n";
+  }
+
+  return str;
+}
+
+QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows)
+{
+  int i;
+  QList<QVariant> idList;
+
+  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
+    idList.append(indexListOfSelectedRows.at(i).data());
+  }
+
+  return toUnitRelatedLinksListStr(unitId, idList);
+}
+
+mdtClUnitConnectionData mdtClUnit::getUnitConnectionData(const QVariant & unitConnectionId)
+{
+  QSqlQuery query(pvDatabase);
+  mdtClUnitConnectionData data;
+  QSqlRecord rec;
+  QString sql;
+
+  // Run query
+  sql = "SELECT * FROM UnitConnection_view WHERE UnitConnection_Id_PK = " + unitConnectionId.toString();
+  if(!query.exec(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query to get connection data", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return data;
+  }
+  if(!query.next()){
+    return data;
+  }
+  rec = query.record();
+  // Set data
+  data.setId(query.value(rec.indexOf("UnitConnection_Id_PK")));
+  data.setArticleConnectionId(query.value(rec.indexOf("ArticleConnection_Id_FK")));
+  data.setArticleConnectorName(query.value(rec.indexOf("ArticleConnectorName")));
+  data.setArticleContactName(query.value(rec.indexOf("ArticleContactName")));
+  data.setArticleIoType(query.value(rec.indexOf("IoType")));
+  data.setArticleFunctionEN(query.value(rec.indexOf("ArticleFunctionEN")));
+  data.setUnitId(query.value(rec.indexOf("Unit_Id_FK")));
+  data.setSchemaPage(query.value(rec.indexOf("SchemaPage")));
+  data.setFunctionEN(query.value(rec.indexOf("UnitFunctionEN")));
+  data.setSignalName(query.value(rec.indexOf("SignalName")));
+  data.setSwAddress(query.value(rec.indexOf("SwAddress")));
+  data.setUnitConnectorName(query.value(rec.indexOf("UnitConnectorName")));
+  data.setUnitContactName(query.value(rec.indexOf("UnitContactName")));
+
+  return data;
+}
+
 bool mdtClUnit::addUnitConnection(const mdtClUnitConnectionData & data)
 {
   QString sql;
@@ -307,48 +447,57 @@ bool mdtClUnit::editUnitConnection(const mdtClUnitConnectionData & data)
 
 bool mdtClUnit::removeUnitConnection(const QVariant & unitConnectionId)
 {
+  QList<QVariant> idList;
 
+  idList.append(unitConnectionId);
+
+  return removeUnitConnections(idList);
 }
 
-mdtClUnitConnectionData mdtClUnit::getUnitConnectionData(const QVariant & unitConnectionId)
+bool mdtClUnit::removeUnitConnections(const QList<QVariant> &unitConnectionIdList)
 {
-  QSqlQuery query(pvDatabase);
-  mdtClUnitConnectionData data;
-  QSqlRecord rec;
+  int i;
   QString sql;
 
-  // Run query
-  sql = "SELECT * FROM UnitConnection_view WHERE UnitConnection_Id_PK = " + unitConnectionId.toString();
+  if(unitConnectionIdList.size() < 1){
+    return true;
+  }
+  // Generate SQL
+  sql = "DELETE FROM UnitConnection_tbl ";
+  for(i = 0; i < unitConnectionIdList.size(); ++i){
+    if(i == 0){
+      sql += " WHERE ( ";
+    }else{
+      sql += " OR ";
+    }
+    sql += " Id_PK = " + unitConnectionIdList.at(i).toString();
+  }
+  sql += " ) ";
+  // Submit query
+  QSqlQuery query(pvDatabase);
   if(!query.exec(sql)){
     pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query to get connection data", mdtError::Error);
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for unit connection deletion", mdtError::Error);
     e.setSystemError(pvLastError.number(), pvLastError.text());
     MDT_ERROR_SET_SRC(e, "mdtClUnit");
     e.commit();
-    return data;
+    return false;
   }
-  if(!query.next()){
-    return data;
-  }
-  rec = query.record();
-  // Set data
-  data.setId(query.value(rec.indexOf("UnitConnection_Id_PK")));
-  data.setArticleConnectionId(query.value(rec.indexOf("ArticleConnection_Id_FK")));
-  data.setArticleConnectorName(query.value(rec.indexOf("ArticleConnectorName")));
-  data.setArticleContactName(query.value(rec.indexOf("ArticleContactName")));
-  data.setArticleIoType(query.value(rec.indexOf("IoType")));
-  data.setArticleFunctionEN(query.value(rec.indexOf("ArticleFunctionEN")));
-  data.setUnitId(query.value(rec.indexOf("Unit_Id_FK")));
-  data.setSchemaPage(query.value(rec.indexOf("SchemaPage")));
-  data.setFunctionEN(query.value(rec.indexOf("UnitFunctionEN")));
-  data.setSignalName(query.value(rec.indexOf("SignalName")));
-  data.setSwAddress(query.value(rec.indexOf("SwAddress")));
-  data.setUnitConnectorName(query.value(rec.indexOf("UnitConnectorName")));
-  data.setUnitContactName(query.value(rec.indexOf("UnitContactName")));
 
-  return data;
+  return true;
 }
 
+bool mdtClUnit::removeUnitConnections(const QModelIndexList & indexListOfSelectedRows)
+{
+  int i;
+  QList<QVariant> idList;
+
+  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
+    idList.append(indexListOfSelectedRows.at(i).data());
+  }
+
+  return removeUnitConnections(idList);
+}
 
 
 bool mdtClUnit::addRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData) {

@@ -88,11 +88,13 @@ class mdtSqlRelation : public QObject
    * \param copyParentToChildOnInsertion If true, data from parent model will be copied
    *                                      to child model for this fields.
    *                                      (See mdtSqlRelationItem for details).
+   * \param operatorWithPreviousItem Most of cases, the operator between multiple relation items is AND.
+   *                     If another is needed (f.ex. OR), specify it here.
    * \return True on succes, false if a field could not be found.
    * \pre Parent model must be set with setParentModel() before using this method.
    * \pre Child model must be set with setChildModel() before using this method.
    */
-  bool addRelation(const QString &parentFieldName, const QString &childFieldName, bool copyParentToChildOnInsertion);
+  bool addRelation(const QString &parentFieldName, const QString &childFieldName, bool copyParentToChildOnInsertion, const QString &operatorWithPreviousItem = "AND");
 
   /*! \brief Clear relations
    *

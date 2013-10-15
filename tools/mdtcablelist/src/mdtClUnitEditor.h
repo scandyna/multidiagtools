@@ -121,6 +121,10 @@ class mdtClUnitEditor : public QObject
    */
   bool setupUnitConnectionEditTable();
 
+  /*! \brief Setup unit link table
+   */
+  bool setupUnitLinkTable();
+
   /*! \brief Setup VehicleUnit table and widget
    */
   bool setupVehicleTable();

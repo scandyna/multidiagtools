@@ -118,7 +118,7 @@ bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFrie
   return true;
 }
 
-bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &childTableName, const QString &childFieldName)
+bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &childTableName, const QString &childFieldName, const QString &operatorWithPreviousItem)
 {
   mdtSqlRelation *relation;
 
@@ -131,7 +131,7 @@ bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &chil
     return false;
   }
   // Add relation
-  if(!relation->addRelation(parentFieldName, childFieldName, true)){
+  if(!relation->addRelation(parentFieldName, childFieldName, true, operatorWithPreviousItem)){
     return false;
   }
   // Force a update a first time

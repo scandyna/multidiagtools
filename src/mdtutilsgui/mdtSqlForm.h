@@ -105,7 +105,7 @@ class mdtSqlForm : public QObject
    * \return True on succes,
    *          false if childTableName or a field does not exit.
    */
-  bool addRelation(const QString &parentFieldName, const QString &childTableName, const QString &childFieldName);
+  bool addRelation(const QString &parentFieldName, const QString &childTableName, const QString &childFieldName, const QString &operatorWithPreviousItem = "AND");
 
   /*! \brief Get instance of the stored SQL widget related to a table name
    *

@@ -53,7 +53,7 @@ void mdtSqlRelation::setChildModel(QSqlTableModel *model)
   connect(pvChildModel, SIGNAL(beforeInsert(QSqlRecord&)), this, SLOT(onChildBeforeInsert(QSqlRecord&)));
 }
 
-bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &childFieldName, bool copyParentToChildOnInsertion)
+bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &childFieldName, bool copyParentToChildOnInsertion, const QString &operatorWithPreviousItem)
 {
   Q_ASSERT(pvParentModel != 0);
   Q_ASSERT(pvChildModel != 0);
@@ -91,6 +91,7 @@ bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &
   item->setChildField(childField);
   item->setChildFieldIndex(childFieldIndex);
   item->setCopyParentToChildOnInsertion(copyParentToChildOnInsertion);
+  item->setRelationOperatorWithPreviousItem(" " + operatorWithPreviousItem.trimmed() + " ");
   pvRelations.append(item);
 
   return true;
@@ -201,7 +202,8 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
       data = record.value(item->parentFieldIndex());
     }
     if(i>0){
-      pvChildModelRelationFilter += " AND";
+      ///pvChildModelRelationFilter += " AND";
+      pvChildModelRelationFilter += item->relationOperatorWithPreviousItem();
     }
     ///qDebug() << "mdtSqlRelation, parent data: " << data;
     pvChildModelRelationFilter += item->nameProtection() + pvChildModel->tableName() + item->nameProtection() + "." + item->nameProtection() + item->childFieldName() + item->nameProtection() + "=";

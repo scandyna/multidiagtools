@@ -26,6 +26,7 @@ mdtSqlRelationItem::mdtSqlRelationItem()
   pvParentFieldIndex = -1;
   pvChildFieldIndex = -1;
   pvCopyParentToChildOnInsertion = false;
+  pvRelationOperatorWithPreviousItem = " AND ";
 }
 
 mdtSqlRelationItem::~mdtSqlRelationItem()
@@ -116,4 +117,14 @@ void mdtSqlRelationItem::setCopyParentToChildOnInsertion(bool enable)
 bool mdtSqlRelationItem::copyParentToChildOnInsertion() const
 {
   return pvCopyParentToChildOnInsertion;
+}
+
+void mdtSqlRelationItem::setRelationOperatorWithPreviousItem(const QString &operatorWithPreviousItem)
+{
+  pvRelationOperatorWithPreviousItem = operatorWithPreviousItem;
+}
+
+QString mdtSqlRelationItem::relationOperatorWithPreviousItem() const
+{
+  return pvRelationOperatorWithPreviousItem;
 }

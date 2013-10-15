@@ -115,6 +115,21 @@ class mdtSqlRelationItem
    */
   bool copyParentToChildOnInsertion() const;
 
+  /*! \brief Set relation operator with previous item
+   *
+   * For most of cases, the relation operator between items is AND,
+   *  that is the default.
+   *  For some cases, it can be usefull to have a OR operator between 2 relation items.
+   *  On this case, specify this here.
+   */
+  void setRelationOperatorWithPreviousItem(const QString &operatorWithPreviousItem);
+
+  /*! \brief Get relation operator with previous item
+   *
+   * \sa setRelationOperatorWithPreviousItem()
+   */
+  QString relationOperatorWithPreviousItem() const;
+
  private:
 
   Q_DISABLE_COPY(mdtSqlRelationItem);
@@ -127,6 +142,7 @@ class mdtSqlRelationItem
   QString pvDataProtection;
   QVariant pvValueForNoDataFilter;
   bool pvCopyParentToChildOnInsertion;
+  QString pvRelationOperatorWithPreviousItem;
 };
 
 #endif  // #ifndef MDT_SQL_RELATION_ITEM_H

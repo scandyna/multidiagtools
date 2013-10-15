@@ -28,7 +28,9 @@
 #include <QSqlError>
 #include <QVariant>
 #include <QString>
+#include <QStringList>
 #include <QList>
+#include <QModelIndex>
 
 /*! \brief Helper class to mana unit and related data
  */
@@ -70,7 +72,7 @@ class mdtClUnit
    */
   bool removeComponents(const QList<QVariant> &componentIdList);
 
-  /*! \brief Remove each link that is contained in selection
+  /*! \brief Remove each component that is contained in selection
    *
    * This is usefull used together with mdtSqlTableWidget .
    *
@@ -106,6 +108,38 @@ class mdtClUnit
    */
   QSqlQueryModel *toUnitConnectionRelatedRangesModel(const QVariant & unitConnectionId);
 
+  /*! \brief Get a model that contains links that are related to given unit ID and a list of unit connection IDs
+   */
+  QSqlQueryModel *toUnitRelatedLinksModel(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList);
+
+  /*! \brief Get a list of links that are related to given unit ID
+   *
+   * This is a helper method to display a message to the user in a simple way.
+   *  Do not use the result for technical processing.
+   */
+  QStringList toUnitRelatedLinksList(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList);
+
+  /*! \brief Get a list of links that are related to given unit ID
+   *
+   * This is a helper method to display a message to the user in a simple way.
+   *  Do not use the result for technical processing.
+   */
+  QString toUnitRelatedLinksListStr(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList);
+
+  /*! \brief Get a list of links that are related to given unit ID
+   *
+   * This is a helper method to display a message to the user in a simple way.
+   *  Do not use the result for technical processing.
+   */
+  QString toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows);
+
+  /*! \brief Get a object with unit connection data for given unit connection ID (primary key)
+   *
+   * \return data, or empty data on error.
+   *          To get reason of failure, use lastError() .
+   */
+  mdtClUnitConnectionData getUnitConnectionData(const QVariant & unitConnectionId);
+
   /*! \brief Add a unit connection
    *
    * \return True on success, false else.
@@ -120,16 +154,22 @@ class mdtClUnit
    */
   bool editUnitConnection(const mdtClUnitConnectionData & data);
 
-  /*! \brief
+  /*! \brief Remove a single unit connection
    */
   bool removeUnitConnection(const QVariant & unitConnectionId);
 
-  /*! \brief Get a object with unit connection data for given unit connection ID (primary key)
+  /*! \brief Remove a list of unit connections
+   */
+  bool removeUnitConnections(const QList<QVariant> &unitConnectionIdList);
+
+  /*! \brief Remove each unit connection that is contained in selection
    *
-   * \return data, or empty data on error.
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  mdtClUnitConnectionData getUnitConnectionData(const QVariant & unitConnectionId);
+  bool removeUnitConnections(const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief
    */
@@ -143,6 +183,7 @@ class mdtClUnit
   QSqlQueryModel *pvToUnitConnectionRelatedRangesModel;
   QSqlQueryModel *pvUnitModel;
   QSqlQueryModel *pvArticleConnectionModel;
+  QSqlQueryModel *pvUnitLinkModel;
   QSqlError pvLastError;
 };
 
