@@ -189,7 +189,7 @@ bool mdtClArticle::addLink(const QVariant & articleConnectionStartId, const QVar
   QSqlQuery query(pvDatabase);
 
   // Prepare query for insertion
-  sql = "INSERT INTO Link_tbl (ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK, Value, LinkDirection_Code_FK, LinkType_Code_FK)\
+  sql = "INSERT INTO ArticleLink_tbl (ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK, Value, LinkDirection_Code_FK, LinkType_Code_FK)\
                   VALUES (:ArticleConnectionStart_Id_FK, :ArticleConnectionEnd_Id_FK, :Value, :LinkDirection_Code_FK, :LinkType_Code_FK)";
   if(!query.prepare(sql)){
     pvLastError = query.lastError();
@@ -238,7 +238,7 @@ bool mdtClArticle::editLink(const QVariant &linkId, const QVariant & articleConn
   QSqlQuery query(pvDatabase);
 
   // Prepare query for edition
-  sql = "UPDATE Link_tbl \
+  sql = "UPDATE ArticleLink_tbl \
          SET ArticleConnectionStart_Id_FK = :ArticleConnectionStart_Id_FK ,\
              ArticleConnectionEnd_Id_FK = :ArticleConnectionEnd_Id_FK ,\
              Value = :Value ,\
@@ -289,7 +289,7 @@ bool mdtClArticle::removeLinks(const QList<QVariant> &linkIdList)
     return true;
   }
   // Generate SQL
-  sql = "DELETE FROM Link_tbl ";
+  sql = "DELETE FROM ArticleLink_tbl ";
   for(i = 0; i < linkIdList.size(); ++i){
     if(i == 0){
       sql += " WHERE ( ";

@@ -109,17 +109,13 @@ class mdtClUnitEditor : public QObject
    */
   bool setupUnitTable();
 
-  /*! \brief Setup unit component view table and widget
+  /*! \brief Setup unit component table and widget
    */
-  bool setupUnitComponentViewTable();
+  bool setupUnitComponentTable();
 
-  /*! \brief Setup unit connection view table and widget
+  /*! \brief Setup unit connection table and widget
    */
-  bool setupUnitConnectionViewTable();
-
-  /*! \brief Setup unit connection editor table and widget
-   */
-  bool setupUnitConnectionEditTable();
+  bool setupUnitConnectionTable();
 
   /*! \brief Setup unit link table
    */
@@ -128,10 +124,6 @@ class mdtClUnitEditor : public QObject
   /*! \brief Setup VehicleUnit table and widget
    */
   bool setupVehicleTable();
-
-  /*! \brief Setup base Article table and widget
-   */
-  bool setupArticleTable();
 
   Q_DISABLE_COPY(mdtClUnitEditor);
 

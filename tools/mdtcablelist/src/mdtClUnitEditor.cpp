@@ -19,24 +19,18 @@
  **
  ****************************************************************************/
 #include "mdtClUnitEditor.h"
-
 #include "mdtClUnit.h"
-
 #include "ui_mdtClUnitEditor.h"
-#include "ui_mdtClUnitConnectionEditor.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
-
 #include "mdtSqlFormWindow.h"
 #include "mdtClUnitVehicleType.h"
-
 #include "mdtClUnitConnectionDialog.h"
 #include "mdtClUnitConnectionData.h"
-
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -46,37 +40,19 @@
 #include <QString>
 #include <QList>
 #include <QVariant>
-///#include <QModelIndex>
 #include <QItemSelectionModel>
 #include <QMessageBox>
 #include <QWidget>
-#include <QHBoxLayout>
 #include <QDataWidgetMapper>
-
 #include <QTableView>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClUnitEditor::mdtClUnitEditor(QObject *parent, QSqlDatabase db)
  : QObject(parent)
 {
   pvDatabase = db;
   pvForm = new mdtSqlFormWindow;
-  // Setup unit
-  // Setup unit connection editor
-  /**
-  pvUnitConnectionEditWidget = new mdtSqlFormWidget;
-  Ui::mdtClUnitConnectionEditor *uce = new Ui::mdtClUnitConnectionEditor;
-  uce->setupUi(pvUnitConnectionEditWidget);
-  pvUnitConnectionEditModel = new QSqlTableModel(this, pvDatabase);
-  pvUnitConnectionEditRelation = new mdtSqlRelation;
-  connect(pvUnitConnectionEditWidget, SIGNAL(submitEnabledStateChanged(bool)), uce->pbSave, SLOT(setEnabled(bool)));
-  connect(uce->pbSave, SIGNAL(clicked()), pvUnitConnectionEditWidget, SLOT(submit()));
-  uce->pbSave->setEnabled(false);
-  connect(pvUnitConnectionEditWidget, SIGNAL(revertEnabledStateChanged(bool)), uce->pbCancel, SLOT(setEnabled(bool)));
-  connect(uce->pbCancel, SIGNAL(clicked()), pvUnitConnectionEditWidget, SLOT(revert()));
-  uce->pbCancel->setEnabled(false);
-  */
 }
 
 mdtClUnitEditor::~mdtClUnitEditor()
@@ -90,30 +66,20 @@ bool mdtClUnitEditor::setupTables(bool includeConnections)
   if(!setupUnitTable()){
     return false;
   }
-  // Setup unit component view table
-  if(!setupUnitComponentViewTable()){
+  // Setup unit component table
+  if(!setupUnitComponentTable()){
     return false;
   }
   // Setup connection table
-  if(!setupUnitConnectionViewTable()){
+  if(!setupUnitConnectionTable()){
     return false;
   }
   // Setup unit link table
   if(!setupUnitLinkTable()){
     return false;
   }
-  // Setup connection edit table
-  /**
-  if(!setupUnitConnectionEditTable()){
-    return false;
-  }
-  */
   // Setup VehicleType_Unit
   if(!setupVehicleTable()){
-    return false;
-  }
-  // Setup Article
-  if(!setupArticleTable()){
     return false;
   }
 
@@ -289,9 +255,6 @@ void mdtClUnitEditor::addComponent()
   mdtSqlSelectionDialog dialog;
   QSqlQueryModel *unitModel;
   mdtClUnit unit(pvDatabase);
-  ///QModelIndex index;
-  ///QVariant data;
-  ///int row;
 
   // Setup and show dialog
   unitModel = unit.unitModelForComponentSelection(currentUnitId());
@@ -432,7 +395,6 @@ void mdtClUnitEditor::addConnection()
     }
     selectedItem = selectionDialog.selectionResult();
     Q_ASSERT(selectedItem.size() == 6);
-    qDebug() << "Selected: " << selectedItem;
     // Set article connection data
     data.setArticleConnectionId(selectedItem.at(0));
     data.setArticleConnectorName(selectedItem.at(2));
@@ -637,7 +599,7 @@ bool mdtClUnitEditor::setupUnitTable()
   return true;
 }
 
-bool mdtClUnitEditor::setupUnitComponentViewTable()
+bool mdtClUnitEditor::setupUnitComponentTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddComponent;
@@ -674,7 +636,7 @@ bool mdtClUnitEditor::setupUnitComponentViewTable()
   return true;
 }
 
-bool mdtClUnitEditor::setupUnitConnectionViewTable()
+bool mdtClUnitEditor::setupUnitConnectionTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddConnection;
@@ -725,43 +687,9 @@ bool mdtClUnitEditor::setupUnitConnectionViewTable()
   return true;
 }
 
-bool mdtClUnitEditor::setupUnitConnectionEditTable()
-{
-  // Setup relation
-  ///pvUnitConnectionEditRelation->setParentModel(pvUnitConnectionViewModel);
-  ///pvUnitConnectionEditRelation->setChildModel(pvUnitConnectionEditModel);
-  /**
-  if(!pvUnitConnectionEditRelation->addRelation("ArticleConnection_Id_PK", "ArticleConnection_Id_FK")){
-    return false;
-  }
-  if(!pvUnitConnectionEditRelation->addRelation("Unit_Id_FK", "Unit_Id_FK")){
-    return false;
-  }
-  */
-  ///connect(pvUnitConnectionViewWidget, SIGNAL(currentRowChanged(int)), pvUnitConnectionEditRelation, SLOT(setParentCurrentIndex(int)));
-  ///pvUnitConnectionViewWidget->addChildWidget(pvUnitConnectionEditWidget, pvUnitConnectionEditRelation);
-  // Force a update of relations
-  ///pvUnitConnectionEditRelation->setParentCurrentIndex(pvUnitConnectionViewWidget->currentRow());
-
-  /// \todo provisoire
-  /**
-  mdtSqlWindow *w = new mdtSqlWindow;
-  w->setSqlWidget(pvUnitConnectionEditWidget);
-  w->enableNavigation();
-  w->enableEdition();
-  w->show();
-  */
-
-  return true;
-}
-
 bool mdtClUnitEditor::setupUnitLinkTable()
 {
   mdtSqlTableWidget *widget;
-  QPushButton *pbAddConnection;
-  QPushButton *pbAddFreeConnection;
-  QPushButton *pbEditConnection;
-  QPushButton *pbRemoveConnection;
 
   if(!pvForm->addChildTable("UnitLink_view", tr("Links"), pvDatabase)){
     return false;
@@ -812,35 +740,6 @@ bool mdtClUnitEditor::setupVehicleTable()
   widget->addWidgetToLocalBar(pbRemoveVehicle);
   connect(pbRemoveVehicle, SIGNAL(clicked()), this, SLOT(removeVehicleAssignation()));
   widget->addStretchToLocalBar();
-
-  return true;
-}
-
-bool mdtClUnitEditor::setupArticleTable()
-{
-  ///QPushButton *pbSetBaseArticle;
-
-  /*
-   * Setup Unit <-> Article relation
-   * Here we make it reversed,
-   *  because the parent table is the Article table,
-   *  but we need to display the article on witch
-   *  current Unit is based
-   */
-  /**
-  pvArticleRelation->setChildModel(pvArticleModel);
-  if(!pvArticleRelation->addRelation("Article_Id_FK", "Id_PK")){
-    return false;
-  }
-  */
-  ///pvUnitWidget->addChildWidget(pvArticleWidget, pvArticleRelation);
-  // Add base article assignation button
-  /**
-  pbSetBaseArticle = new QPushButton(tr("Set base article"));
-  pvArticleWidget->addWidgetToLocalBar(pbSetBaseArticle);
-  pvArticleWidget->addStretchToLocalBar();
-  connect(pbSetBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
-  */
 
   return true;
 }

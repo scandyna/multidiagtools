@@ -6,8 +6,6 @@ SELECT
  UCE.Unit_Id_FK AS EndUnit_Id_FK ,
  Link_tbl.LinkType_Code_FK ,
  Link_tbl.LinkDirection_Code_FK ,
- Link_tbl.ArticleConnectionStart_Id_FK ,
- Link_tbl.ArticleConnectionEnd_Id_FK ,
  Link_tbl.UnitConnectionStart_Id_FK ,
  Link_tbl.UnitConnectionEnd_Id_FK ,
  Link_tbl.SinceVersion ,
@@ -16,6 +14,8 @@ SELECT
  LinkType_tbl.NameEN AS LinkTypeNameEN ,
  Link_tbl.Value ,
  LinkType_tbl.ValueUnit ,
+ ArticleLink_tbl.ArticleConnectionStart_Id_FK ,
+ ArticleLink_tbl.ArticleConnectionEnd_Id_FK ,
  UCS.UnitConnectorName AS StartUnitConnectorName ,
  UCS.UnitContactName AS StartUnitContactName ,
  UCS.SchemaPage AS StartSchemaPage ,
@@ -38,3 +38,5 @@ JOIN LinkType_tbl
  ON LinkType_tbl.Code_PK = Link_tbl.LinkType_Code_FK
 JOIN LinkDirection_tbl
  ON LinkDirection_tbl.Code_PK = Link_tbl.LinkDirection_Code_FK
+LEFT JOIN ArticleLink_tbl
+ ON ArticleLink_tbl.Id_PK = Link_tbl.ArticleLink_Id_FK

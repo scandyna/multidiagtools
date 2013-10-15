@@ -94,15 +94,15 @@ class mdtClUnit
 
   /*! \brief
    */
-  QList<QVariant> toUnitRelatedArticleConnectionIds(const QVariant & unitId);
+  ///QList<QVariant> toUnitRelatedArticleConnectionIds(const QVariant & unitId);
 
   /*! \brief
    */
-  bool unitConnectionIsRelatedToArticleConnection(const QVariant & unitConnectionId);
+  ///bool unitConnectionIsRelatedToArticleConnection(const QVariant & unitConnectionId);
 
   /*! \brief
    */
-  QVariant toUnitConnectionRelatedArticleConnectionData(const QVariant & unitConnectionId, const QString & field);
+  ///QVariant toUnitConnectionRelatedArticleConnectionData(const QVariant & unitConnectionId, const QString & field);
 
   /*! \brief
    */

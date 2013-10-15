@@ -206,6 +206,7 @@ int mdtClUnit::toUnitRelatedArticleConnectionCount(const QVariant & unitId)
   return -1;
 }
 
+/**
 QList<QVariant> mdtClUnit::toUnitRelatedArticleConnectionIds(const QVariant & unitId) {
 }
 
@@ -214,11 +215,10 @@ bool mdtClUnit::unitConnectionIsRelatedToArticleConnection(const QVariant & unit
 
 QVariant mdtClUnit::toUnitConnectionRelatedArticleConnectionData(const QVariant & unitConnectionId, const QString & field) {
 }
+*/
 
 QSqlQueryModel *mdtClUnit::toUnitConnectionRelatedRangesModel(const QVariant & unitConnectionId)
 {
-  
-  
   return pvToUnitConnectionRelatedRangesModel;
 }
 

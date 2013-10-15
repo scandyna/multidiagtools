@@ -1,17 +1,14 @@
 DROP VIEW IF EXISTS ArticleLink_view;
 CREATE VIEW ArticleLink_view AS
 SELECT
- Link_tbl.Id_PK ,
- Link_tbl.LinkType_Code_FK ,
- Link_tbl.LinkDirection_Code_FK ,
- Link_tbl.ArticleConnectionStart_Id_FK ,
- Link_tbl.ArticleConnectionEnd_Id_FK ,
- Link_tbl.UnitConnectionStart_Id_FK ,
- Link_tbl.UnitConnectionEnd_Id_FK ,
- Link_tbl.SinceVersion ,
- Link_tbl.Modification ,
+ ArticleLink_tbl.Id_PK ,
+ ArticleLink_tbl.LinkType_Code_FK ,
+ ArticleLink_tbl.LinkDirection_Code_FK ,
+ ArticleLink_tbl.ArticleConnectionStart_Id_FK ,
+ ArticleLink_tbl.ArticleConnectionEnd_Id_FK ,
+ ArticleLink_tbl.Identification ,
  LinkType_tbl.NameEN AS LinkTypeNameEN ,
- Link_tbl.Value ,
+ ArticleLink_tbl.Value ,
  LinkType_tbl.ValueUnit ,
  ACS.Article_Id_FK AS StartArticle_Id_FK ,
  ACS.ArticleConnectorName AS StartArticleConnectorName ,
@@ -24,12 +21,12 @@ SELECT
  ACE.ArticleContactName AS EndArticleContactName ,
  ACE.IoType AS EndIoType ,
  ACE.FunctionEN AS EndFunctionEN
-FROM Link_tbl
+FROM ArticleLink_tbl
 JOIN ArticleConnection_tbl ACS
- ON Link_tbl.ArticleConnectionStart_Id_FK = ACS.Id_PK
+ ON ArticleLink_tbl.ArticleConnectionStart_Id_FK = ACS.Id_PK
 JOIN ArticleConnection_tbl ACE
- ON Link_tbl.ArticleConnectionEnd_Id_FK = ACE.Id_PK
+ ON ArticleLink_tbl.ArticleConnectionEnd_Id_FK = ACE.Id_PK
 JOIN LinkType_tbl
- ON LinkType_tbl.Code_PK = Link_tbl.LinkType_Code_FK
+ ON LinkType_tbl.Code_PK = ArticleLink_tbl.LinkType_Code_FK
 JOIN LinkDirection_tbl
- ON LinkDirection_tbl.Code_PK = Link_tbl.LinkDirection_Code_FK
+ ON LinkDirection_tbl.Code_PK = ArticleLink_tbl.LinkDirection_Code_FK
