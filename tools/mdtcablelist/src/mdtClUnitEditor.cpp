@@ -31,6 +31,7 @@
 #include "mdtClUnitVehicleType.h"
 #include "mdtClUnitConnectionDialog.h"
 #include "mdtClUnitConnectionData.h"
+#include "mdtClUnitLinkDialog.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -46,7 +47,7 @@
 #include <QDataWidgetMapper>
 #include <QTableView>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtClUnitEditor::mdtClUnitEditor(QObject *parent, QSqlDatabase db)
  : QObject(parent)
@@ -534,6 +535,24 @@ void mdtClUnitEditor::removeConnections()
   pvForm->select("UnitConnection_view");
 }
 
+void mdtClUnitEditor::addLink()
+{
+  mdtSqlFormWidget *widget;
+  mdtClUnitLinkDialog dialog(0, pvDatabase);
+  QVariant unitId;
+
+  widget = pvForm->sqlFormWidget("Unit_tbl");
+  Q_ASSERT(widget != 0);
+  unitId = currentUnitId();
+  dialog.setStartUnit(unitId, widget->currentData("SchemaPosition"), widget->currentData("Cabinet"));
+  dialog.setStartVehicleTypes(unitId);
+  dialog.exec();
+  qDebug() << "Link type: " << dialog.linkTypeCode();
+  qDebug() << "Link dir : " << dialog.linkDirectionCode();
+  qDebug() << "Selected unit ID: " << dialog.startUnitId();
+  qDebug() << "Selected vehicles: " << dialog.startVehicleTypeIdList();
+}
+
 int mdtClUnitEditor::currentUnitId()
 {
   QVariant var;
@@ -690,6 +709,7 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
 bool mdtClUnitEditor::setupUnitLinkTable()
 {
   mdtSqlTableWidget *widget;
+  QPushButton *pbAddLink;
 
   if(!pvForm->addChildTable("UnitLink_view", tr("Links"), pvDatabase)){
     return false;
@@ -700,9 +720,20 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   if(!pvForm->addRelation("Id_PK", "UnitLink_view", "EndUnit_Id_FK", "OR")){
     return false;
   }
-  widget = pvForm->sqlTableWidget("UnitConnection_view");
+  widget = pvForm->sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
   // Add the Add and remove buttons
+  pbAddLink = new QPushButton(tr("Add link ..."));
+  connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
+  widget->addWidgetToLocalBar(pbAddLink);
+  widget->addStretchToLocalBar();
+  
+  // Hide relation fields and PK
+  
+  // Give fields a user friendly name
+  
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
 
   return true;
 }

@@ -15,6 +15,7 @@ set (HEADER_FILES
           src/mdtClLinkEditor.h
           src/mdtClUnitConnectionDialog.h
           src/mdtClUnitConnectionSelectionDialog.h
+          src/mdtClUnitLinkDialog.h
           src/mdtClTerminalBlockEditor.h
           src/mdtClTerminalEditorDialog.h
           src/mdtClArticleComponentDialog.h
@@ -33,6 +34,7 @@ set (SOURCES_FILES
           src/mdtClLinkEditor.cpp
           src/mdtClUnitConnectionDialog.cpp
           src/mdtClUnitConnectionSelectionDialog.cpp
+          src/mdtClUnitLinkDialog.cpp
           src/mdtClTerminalBlockEditor.cpp
           src/mdtClTerminalEditorDialog.cpp
           src/mdtClUnitVehicleType.cpp
@@ -47,7 +49,8 @@ set (FORM_FILES
           src/mdtClArticleEditor.ui
           src/mdtClUnitEditor.ui
           src/mdtClUnitConnectionDialog.ui
-          src/mdtClUnitConnectionEditor.ui
+          src/mdtClUnitLinkDialog.ui
+#          src/mdtClUnitConnectionEditor.ui
           src/mdtClLinkEditor.ui
           src/mdtClTerminalBlockEditor.ui
           src/mdtClArticleComponentDialog.ui

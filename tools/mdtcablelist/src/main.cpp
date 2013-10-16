@@ -91,12 +91,14 @@ int main(int argc, char **argv)
   vehicleTypeEditorWindow.show();
   */
   // Setup article editor
+  /**
   articleEditor = new mdtClArticleEditor(0, db);
   if(!articleEditor->setupTables(true)){
     QMessageBox::warning(0, "DB setup error", "Cannot setup tables for article editor");
     return 1;
   }
   articleEditor->form()->show();
+  */
   // Setup Unit editor
   unitEditor = new mdtClUnitEditor(0, db);
   if(!unitEditor->setupTables(true)){
@@ -113,9 +115,10 @@ int main(int argc, char **argv)
   }
   linkEditor->setupUi(&linkEditorWindow);
   linkEditorWindow.setWindowTitle("Link edition");
+  linkEditorWindow.show();
   */
-  ///linkEditorWindow.show();
   // Setup terminal block editor
+  /**
   terminalBlockEditor = new mdtClTerminalBlockEditor(0, db);
   if(!terminalBlockEditor->setupTables()){
     QMessageBox::warning(0, "DB setup error", "Cannot setup tables for terminal block editor");
@@ -123,7 +126,8 @@ int main(int argc, char **argv)
   }
   terminalBlockEditor->setupUi(&terminalBlockEditorWindow);
   terminalBlockEditorWindow.setWindowTitle(QObject::tr("Terminal block edition"));
-  ///terminalBlockEditorWindow.show();
+  terminalBlockEditorWindow.show();
+  */
 
   retVal = app.exec();
   db.close();
