@@ -51,6 +51,14 @@ class mdtSqlSelectionDialog : public QDialog
    */
   void setMessage(const QString &message);
 
+  /*! \brief Set allow empty result
+   *
+   * If this flag is true, the dialog cannot be accepted if nothing was selected.
+   *
+   * Default is false.
+   */
+  void setAllowEmptyResult(bool allow);
+
   /*! \brief Set model that contain data to display
    *
    * \pre model must be a valid pointer.
@@ -72,6 +80,15 @@ class mdtSqlSelectionDialog : public QDialog
    * \pre Model must be set with setModel() before using this method.
    */
   void setColumnHidden(const QString &fieldName, bool hide);
+
+  /*! \brief Select rows
+   *
+   * Will select rows for witch data in field (designated by fieldName)
+   *  matches given matchData .
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  void selectRows(const QString &fieldName, const QVariant &matchData);
 
   /*! \brief Set a list of column that will contain the selected data
    *
@@ -117,6 +134,22 @@ class mdtSqlSelectionDialog : public QDialog
    */
   QModelIndexList selectionResults();
 
+  /*! \brief Return data that user has selected
+   *
+   * Will return data from selection results that match given row,
+   *  for given fieldName .
+   *
+   * Note that row to give does not match given model's row,
+   *  but is the row in selection.
+   *
+   * This method alos works for multiple rows selection,
+   *  but is slower than selectionResults() .
+   *
+   * If row is out of bound or fieldName not exists,
+   *  a invalid QVariant is returned.
+   */
+  QVariant selectedData(int row, const QString &fieldName);
+
  public slots:
 
   /*! \brief Overloads QDialog to to build selection results
@@ -139,8 +172,8 @@ class mdtSqlSelectionDialog : public QDialog
   QTableView *pvTableView;
   QSqlQueryModel *pvModel;
   QList<int> pvSelectionResultColumns;
-  bool pvDialogRejected;
   QModelIndexList pvSelectionResults;
+  bool pvAllowEmptyResult;            // If false, dialog cannot be accepted if nothing was selected
 };
 
 #endif  // #ifndef MDT_SQL_SELECTION_DIALOG_H

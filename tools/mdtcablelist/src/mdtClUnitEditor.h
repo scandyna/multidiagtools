@@ -94,6 +94,10 @@ class mdtClUnitEditor : public QObject
    */
   void addLink();
 
+  /*! \brief Remove  links
+   */
+  void removeLinks();
+
  signals:
 
   /*! \brief Used to tell unit widget that we have edited some data

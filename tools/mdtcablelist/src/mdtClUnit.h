@@ -22,6 +22,7 @@
 #define MDT_CL_UNIT_H
 
 #include "mdtClUnitConnectionData.h"
+#include "mdtClLinkData.h"
 #include "mdtError.h"
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
@@ -175,7 +176,45 @@ class mdtClUnit
    */
   bool addRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData);
 
+  /*! \brief Get a data object for a given link
+   */
+  mdtClLinkData getUnitLinkData(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
+
+  /*! \brief Add a unit link
+   */
+  bool addLink(const mdtClLinkData &data);
+
+  /*! \brief Remove a unit link
+   *
+   * Will also remove all vehicle type related links
+   */
+  bool removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
+
+  /*! \brief Remove each unit link that is contained in selection
+   */
+  bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
+
  private:
+
+  /*! \brief Add link to vehicle type table
+   */
+  bool addLinkToVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
+
+  /*! \brief Remove a link from vehicle type table
+   */
+  bool removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
+
+  /*! \brief Beginn manually a new transaction
+   */
+  bool beginTransaction();
+
+  /*! \brief Rollback manually a new transaction
+   */
+  bool rollbackTransaction();
+
+  /*! \brief Commit manually a new transaction
+   */
+  bool commitTransaction();
 
   Q_DISABLE_COPY(mdtClUnit);
 

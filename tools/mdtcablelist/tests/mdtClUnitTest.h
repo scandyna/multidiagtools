@@ -30,6 +30,7 @@ class mdtClUnitTest : public mdtTest
  private slots:
 
   void unitConnectionDataTest();
+  void linkDataTest();
 };
 
 

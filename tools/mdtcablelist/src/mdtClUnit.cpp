@@ -22,6 +22,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlField>
+#include <QPair>
 
 #include <QDebug>
 
@@ -503,3 +504,277 @@ bool mdtClUnit::removeUnitConnections(const QModelIndexList & indexListOfSelecte
 bool mdtClUnit::addRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData) {
 }
 
+mdtClLinkData mdtClUnit::getUnitLinkData(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId)
+{
+  QString sql;
+  QSqlQuery query(pvDatabase);
+  mdtClLinkData data;
+
+  // Setup and run query to get data in unit link view
+  sql = "SELECT "\
+        "UnitConnectionStart_Id_FK , UnitConnectionEnd_Id_FK, ArticleLink_Id_FK, "\
+        "SinceVersion, Modification, Identification, Value, LinkType_Code_FK, LinkDirection_Code_FK ";
+  sql += " FROM UnitLink_view ";
+  sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
+  if(!query.exec(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot get link data", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return data;
+  }
+  if(!query.next()){
+    return data;
+  }
+  data.setUnitConnectionStartId(query.value(0));
+  data.setUnitConnectionEndId(query.value(1));
+  data.setArticleLinkId(query.value(2));
+  data.setSinceVersion(query.value(3));
+  data.setModification(query.value(4));
+  data.setIdentification(query.value(5));
+  data.setValue(query.value(6));
+  data.setLinkTypeCode(query.value(7));
+  data.setLinkDirectionCode(query.value(8));
+  // Setup and run query to get data in vehicles type table
+  sql = "SELECT VehicleTypeStart_Id_FK, VehicleTypeEnd_Id_FK FROM VehicleType_Link_tbl ";
+  sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
+  if(!query.exec(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot get vehicle type link data", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return data;
+  }
+  while(query.next()){
+    data.addVehicleTypeStartId(query.value(0));
+    data.addVehicleTypeEndId(query.value(1));
+  }
+
+  return data;
+}
+
+bool mdtClUnit::addLink(const mdtClLinkData &data)
+{
+  QString sql;
+  QSqlQuery query(pvDatabase);
+  QList<QPair<QVariant, QVariant> > lst;
+  int i;
+
+  qDebug() << "Link type: " << data.linkTypeCode();
+  qDebug() << "Link dir : " << data.linkDirectionCode();
+  qDebug() << "Start CNN ID : " << data.unitConnectionStartId();
+  qDebug() << "End   CNN ID : " << data.unitConnectionEndId();
+  qDebug() << "Selected vehicles on start: " << data.vehicleTypeStartIdList();
+  qDebug() << "Selected vehicles on end: " << data.vehicleTypeEndIdList();
+
+  // We want to update 2 tables, so manually ask to beginn a transaction
+  if(!beginTransaction()){
+    return false;
+  }
+  // Prepare query for insertion in Link table
+  sql = "INSERT INTO Link_tbl (ArticleLink_Id_FK, UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, "\
+                              "SinceVersion, Modification, Identification, LinkDirection_Code_FK, "\
+                              "LinkType_Code_FK, Value) "\
+        "VALUES (ArticleLink_Id_FK, :UnitConnectionStart_Id_FK, :UnitConnectionEnd_Id_FK, "\
+                               ":SinceVersion, :Modification, :Identification, :LinkDirection_Code_FK, "\
+                               ":LinkType_Code_FK, :Value)";
+  if(!query.prepare(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for link inertion", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":ArticleLink_Id_FK", data.articleLinkId());
+  query.bindValue(":UnitConnectionStart_Id_FK", data.unitConnectionStartId());
+  query.bindValue(":UnitConnectionEnd_Id_FK", data.unitConnectionEndId());
+  query.bindValue(":SinceVersion", data.sinceVersion());
+  query.bindValue(":Modification", data.modification());
+  query.bindValue(":Identification", data.identification());
+  query.bindValue(":LinkDirection_Code_FK", data.linkDirectionCode());
+  query.bindValue(":LinkType_Code_FK", data.linkTypeCode());
+  query.bindValue(":Value", data.value());
+  if(!query.exec()){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for connection inertion in Link_tbl", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Add a link in VehicleType_Link table for each start-end vehicles id assignation
+  lst = data.vehicleTypeStartEndIdList();
+  for(i = 0; i < lst.size(); ++i){
+    if(!addLinkToVehicleType(lst.at(i).first, lst.at(i).second, data.unitConnectionStartId(), data.unitConnectionEndId())){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  // Commit the insertion
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClUnit::removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId)
+{
+  mdtClLinkData data;
+  QList<QPair<QVariant, QVariant> > vehicleTypeList;
+  QString sql;
+  QSqlQuery query(pvDatabase);
+  int i;
+
+  // Get list of attached vehicle type
+  data = getUnitLinkData(unitConnectionStartId, unitConnectionEndId);
+  data.buildVehicleTypeStartEndIdList();
+  vehicleTypeList = data.vehicleTypeStartEndIdList();
+  // We want to update 2 tables, so manually ask to beginn a transaction
+  if(!beginTransaction()){
+    return false;
+  }
+  // Remove related vehicle type links
+  for(i = 0; i < vehicleTypeList.size(); ++i){
+    if(!removeLinkFromVehicleType(vehicleTypeList.at(i).first, vehicleTypeList.at(i).second, data.unitConnectionStartId(), data.unitConnectionEndId())){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  // Remove links
+  sql = "DELETE FROM Link_tbl ";
+  sql += " WHERE UnitConnectionStart_Id_FK = " + data.unitConnectionStartId().toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + data.unitConnectionEndId().toString();
+  if(!query.exec(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query to remove link Link_tbl", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Commit the insertion
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClUnit::removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows)
+{
+  int row;
+  QModelIndexList indexes;
+
+  for(row = 0; row < indexListOfSelectedRowsByRows.size(); ++row){
+    indexes = indexListOfSelectedRowsByRows.at(row);
+    Q_ASSERT(indexes.size() == 2);
+    if(!removeLink(indexes.at(0).data(), indexes.at(1).data())){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtClUnit::addLinkToVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId)
+{
+  QString sql;
+  QSqlQuery query(pvDatabase);
+
+  // Prepare query for insertion in VehicleType_Link table
+  sql = "INSERT INTO VehicleType_Link_tbl (VehicleTypeStart_Id_FK, VehicleTypeEnd_Id_FK, UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK) "\
+        "VALUES (:VehicleTypeStart_Id_FK, :VehicleTypeEnd_Id_FK, :UnitConnectionStart_Id_FK, :UnitConnectionEnd_Id_FK)";
+  if(!query.prepare(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for link inertion in VehicleType_Link_tbl", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":VehicleTypeStart_Id_FK", vehicleTypeStartId);
+  query.bindValue(":VehicleTypeEnd_Id_FK", vehicleTypeEndId);
+  query.bindValue(":UnitConnectionStart_Id_FK", unitConnectionStartId);
+  query.bindValue(":UnitConnectionEnd_Id_FK", unitConnectionEndId);
+  if(!query.exec()){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for connection inertion in VehicleType_Link_tbl", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClUnit::removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId)
+{
+  QString sql;
+  QSqlQuery query(pvDatabase);
+
+  sql = "DELETE FROM VehicleType_Link_tbl "\
+        "WHERE VehicleTypeStart_Id_FK = " + vehicleTypeStartId.toString();
+  sql += " AND VehicleTypeEnd_Id_FK = " + vehicleTypeEndId.toString();
+  sql += " AND UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
+  if(!query.exec(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query to remove link in VehicleType_Link_tbl", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClUnit::beginTransaction()
+{
+  if(!pvDatabase.transaction()){
+    pvLastError = pvDatabase.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot beginn transaction", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+  return true;
+}
+
+bool mdtClUnit::rollbackTransaction()
+{
+  if(!pvDatabase.rollback()){
+    pvLastError = pvDatabase.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot rollback transaction", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+  }
+  return true;
+}
+
+bool mdtClUnit::commitTransaction()
+{
+  if(!pvDatabase.commit()){
+    pvLastError = pvDatabase.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot commit transaction", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+  return true;
+}

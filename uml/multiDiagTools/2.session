@@ -1,14 +1,14 @@
 window_sizes 1280 1001 370 904 923 0
 diagrams
-  classdiagram_ref 732802 // Global
-    723 738 100 4 0 0
-  active  classdiagram_ref 739330 // Conceptual
-    904 923 100 3 180 0
+  active  classdiagram_ref 852610 // mdtClLinkData
+    904 923 100 4 24 0
 end
 show_stereotypes
-selected classdiagram_ref 739330 // Conceptual
+selected operation_ref 1628290 // vehicleTypeEndIdList
 open
+  classview_ref 457602 // mdtCableList
   classview_ref 477314 // Global
   classview_ref 483842 // Conceptual
+  class_ref 888194 // mdtClLinkData
 end
 end

@@ -540,17 +540,75 @@ void mdtClUnitEditor::addLink()
   mdtSqlFormWidget *widget;
   mdtClUnitLinkDialog dialog(0, pvDatabase);
   QVariant unitId;
+  mdtClUnit unit(pvDatabase);
 
   widget = pvForm->sqlFormWidget("Unit_tbl");
   Q_ASSERT(widget != 0);
+  // Setup and show dialog
   unitId = currentUnitId();
   dialog.setStartUnit(unitId, widget->currentData("SchemaPosition"), widget->currentData("Cabinet"));
-  dialog.setStartVehicleTypes(unitId);
-  dialog.exec();
-  qDebug() << "Link type: " << dialog.linkTypeCode();
-  qDebug() << "Link dir : " << dialog.linkDirectionCode();
-  qDebug() << "Selected unit ID: " << dialog.startUnitId();
-  qDebug() << "Selected vehicles: " << dialog.startVehicleTypeIdList();
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  if(!dialog.linkData().buildVehicleTypeStartEndIdList()){
+    qDebug() << "ERROR building VJC list";
+    return;
+  }
+  qDebug() << "Editor, vhcs: " << dialog.linkData().vehicleTypeStartEndIdList();
+  // Add link
+  if(!unit.addLink(dialog.linkData())){
+    QSqlError sqlError = unit.lastError();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Link adding failed."));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  // Update connections view
+  pvForm->select("UnitLink_view");
+}
+
+void mdtClUnitEditor::removeLinks()
+{
+  mdtSqlTableWidget *widget;
+  mdtClUnit unit(pvDatabase);
+  QMessageBox msgBox;
+  QList<QModelIndexList> indexes;
+  QSqlError sqlError;
+  QStringList fields;
+
+  widget = pvForm->sqlTableWidget("UnitLink_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  fields << "UnitConnectionStart_Id_FK" << "UnitConnectionEnd_Id_FK";
+  indexes = widget->indexListOfSelectedRowsByRowsList(fields);
+  if(indexes.size() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove links attached to current unit."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!unit.removeLinks(indexes)){
+    QSqlError sqlError = unit.lastError();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Link adding failed."));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  // Update connections view
+  pvForm->select("UnitLink_view");
 }
 
 int mdtClUnitEditor::currentUnitId()
@@ -710,6 +768,7 @@ bool mdtClUnitEditor::setupUnitLinkTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddLink;
+  QPushButton *pbRemoveLinks;
 
   if(!pvForm->addChildTable("UnitLink_view", tr("Links"), pvDatabase)){
     return false;
@@ -726,12 +785,41 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   pbAddLink = new QPushButton(tr("Add link ..."));
   connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
   widget->addWidgetToLocalBar(pbAddLink);
+  pbRemoveLinks = new QPushButton(tr("Remove links"));
+  connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
+  widget->addWidgetToLocalBar(pbRemoveLinks);
   widget->addStretchToLocalBar();
   
   // Hide relation fields and PK
-  
+  widget->setColumnHidden("UnitConnectionStart_Id_FK", true);
+  widget->setColumnHidden("UnitConnectionEnd_Id_FK", true);
+  widget->setColumnHidden("ArticleLink_Id_FK", true);
+  widget->setColumnHidden("StartUnit_Id_FK", true);
+  widget->setColumnHidden("EndUnit_Id_FK", true);
+  widget->setColumnHidden("LinkType_Code_FK", true);
+  widget->setColumnHidden("LinkDirection_Code_FK", true);
+  widget->setColumnHidden("ArticleConnectionStart_Id_FK", true);
+  widget->setColumnHidden("ArticleConnectionEnd_Id_FK", true);
+  widget->setColumnHidden("", true);
   // Give fields a user friendly name
-  
+  widget->setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
+  widget->setHeaderData("StartUnitConnectorName", tr("Start\nconnector"));
+  widget->setHeaderData("StartUnitContactName", tr("Start\ncontact"));
+  widget->setHeaderData("EndSchemaPosition", tr("End\nschema pos."));
+  widget->setHeaderData("EndUnitConnectorName", tr("End\nconnector"));
+  widget->setHeaderData("EndUnitContactName", tr("End\ncontact"));
+  widget->setHeaderData("SinceVersion", tr("Since\nversion"));
+  widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
+  widget->setHeaderData("ValueUnit", tr("Unit"));
+  widget->setHeaderData("LinkDirectionPictureAscii", tr("Direction"));
+  widget->setHeaderData("StartSchemaPage", tr("Start\nschema\npage"));
+  widget->setHeaderData("EndSchemaPage", tr("End\nschema\npage"));
+  widget->setHeaderData("StartFunctionEN", tr("Start\nfunction (ENG)"));
+  widget->setHeaderData("EndFunctionEN", tr("End\nfunction (ENG)"));
+  widget->setHeaderData("StartSignalName", tr("Start\nsignal"));
+  widget->setHeaderData("EndSignalName", tr("End\nsignal"));
+  widget->setHeaderData("StartSwAddress", tr("Start\nSW address"));
+  widget->setHeaderData("EndSwAddress", tr("End\nSW address"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
 

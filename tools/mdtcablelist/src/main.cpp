@@ -105,6 +105,7 @@ int main(int argc, char **argv)
     QMessageBox::warning(0, "DB setup error", "Cannot setup tables for unit editor");
     return 1;
   }
+  unitEditor->form()->sqlWindow()->resize(1000, 600);
   unitEditor->form()->show();
   // Setup link editor
   /**

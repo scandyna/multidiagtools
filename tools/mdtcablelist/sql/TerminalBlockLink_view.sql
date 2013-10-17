@@ -1,7 +1,6 @@
 DROP VIEW IF EXISTS TerminalBlockLink_view;
 CREATE VIEW TerminalBlockLink_view AS
 SELECT 
- Link_tbl.Id_PK AS Link_Id_PK , 
  Link_tbl.UnitConnectionStart_Id_FK , 
  Link_tbl.UnitConnectionEnd_Id_FK , 
  US.Id_PK AS UnitStart_Id_PK ,

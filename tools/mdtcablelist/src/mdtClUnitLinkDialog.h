@@ -23,6 +23,7 @@
 
 #include "ui_mdtClUnitLinkDialog.h"
 #include "mdtClUnitConnectionData.h"
+#include "mdtClLinkData.h"
 #include <QDialog>
 #include <QVariant>
 #include <QSqlDatabase>
@@ -50,11 +51,13 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   /*! \brief Set start unit
    *
-   * This variant will get data from unit table
+   * This variant will get data from unit table and calls setStartUnit(const QVariant&, const QVariant&, const QVariant&) .
    */
   void setStartUnit(const QVariant &unitId);
 
   /*! \brief Set start unit
+   *
+   * This will also clear start connection and set start vehicle types.
    */
   void setStartUnit(const QVariant &unitId, const QVariant &schemaPosition, const QVariant &cabinet);
 
@@ -62,9 +65,37 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   QVariant startUnitId() const;
 
+  /*! \brief Set end unit
+   *
+   * This variant will get data from unit table and calls setEndUnit(const QVariant&, const QVariant&, const QVariant&) .
+   */
+  void setEndUnit(const QVariant &unitId);
+
+  /*! \brief Set end unit
+   *
+   * This will also clear end connection and set end vehicle types.
+   */
+  void setEndUnit(const QVariant &unitId, const QVariant &schemaPosition, const QVariant &cabinet);
+
+  /*! \brief Get selected end unit ID
+   */
+  QVariant endUnitId() const;
+
   /*! \brief Set the start connection data
    */
   void setStartConnectionData(const mdtClUnitConnectionData &data);
+
+  /*! \brief Get selected start connection data
+   */
+  mdtClUnitConnectionData startConnectionData() const;
+
+  /*! \brief Set the end connection data
+   */
+  void setEndConnectionData(const mdtClUnitConnectionData &data);
+
+  /*! \brief Get selected end connection data
+   */
+  mdtClUnitConnectionData endConnectionData() const;
 
   /*! \brief Set start vehicle types
    */
@@ -73,6 +104,14 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   /*! \brief Get selected start vehicle types
    */
   const QList<QVariant> startVehicleTypeIdList() const;
+
+  /*! \brief Set end vehicle types
+   */
+  void setEndVehicleTypes(const QVariant &unitId);
+
+  /*! \brief Get selected end vehicle types
+   */
+  const QList<QVariant> endVehicleTypeIdList() const;
 
   /*! \brief Display link type in combobox
    */
@@ -90,6 +129,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   QVariant linkDirectionCode() const;
 
+  /*! \brief Get link data
+   */
+  mdtClLinkData &linkData();
+
  private slots:
 
   /*! \brief Update some things when link type combobox index changed
@@ -104,6 +147,26 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void selectStartUnit();
 
+  /*! \brief Select the end unit
+   */
+  void selectEndUnit();
+
+  /*! \brief Select the start connection
+   */
+  void selectStartConnection();
+
+  /*! \brief Select the end connection
+   */
+  void selectEndConnection();
+
+  /*! \brief Select the start vehicle types
+   */
+  void selectStartVehicleTypes();
+
+  /*! \brief Select the end vehicle types
+   */
+  void selectEndVehicleTypes();
+
  private:
 
   Q_DISABLE_COPY(mdtClUnitLinkDialog);
@@ -111,8 +174,13 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvLinkTypeModel;
   QSqlQueryModel *pvLinkDirectionModel;
+  mdtClLinkData pvLinkData;
   QVariant pvStartUnitId;
+  QVariant pvEndUnitId;
+  mdtClUnitConnectionData pvStartConnectionData;
+  mdtClUnitConnectionData pvEndConnectionData;
   QSqlQueryModel *pvStartVehicleTypesModel;
+  QSqlQueryModel *pvEndVehicleTypesModel;
 };
 
 #endif // #ifndef MDT_CL_UNIT_LINK_DIALOG_H

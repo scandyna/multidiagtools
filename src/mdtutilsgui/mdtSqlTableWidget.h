@@ -172,6 +172,22 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   void setDefaultColumnToSelect(const QString &fieldName);
 
+  /*! \brief Get a list of currently selected indexes in a list of rows
+   *
+   * Will return a list of indexes that contains only coulumns
+   *  specified by columnList.
+   * This alos works for multiple rows selection.
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  QList<QModelIndexList> indexListOfSelectedRowsByRowsList(const QList<int> &columnList);
+
+  /*! \brief Get a list of currently selected indexes in a list of rows
+   *
+   * \overload indexListOfSelectedRowsByRowsList(const QList<int> &)
+   */
+  QList<QModelIndexList> indexListOfSelectedRowsByRowsList(const QStringList &fieldList);
+
   /*! \brief Get a list of currently selected indexes
    *
    * Will return a list of indexes that contains only coulumns

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtClUnitLinkDialog.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtClUnit.h"
 #include "mdtError.h"
 #include <QWidget>
 #include <QModelIndex>
@@ -54,13 +55,19 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   cbLinkDirection->setCurrentIndex(-1);
   // Set default link type
   setLinkTypeCode("CABLELINK");
+  // Setup unit
+  connect(pbStartUnit, SIGNAL(clicked()), this, SLOT(selectStartUnit()));
+  connect(pbEndUnit, SIGNAL(clicked()), this, SLOT(selectEndUnit()));
+  // Setup connections
+  connect(pbStartConnection, SIGNAL(clicked()), this, SLOT(selectStartConnection()));
+  connect(pbEndConnection, SIGNAL(clicked()), this, SLOT(selectEndConnection()));
   // Setup vehicle types
   pvStartVehicleTypesModel = new QSqlQueryModel(this);
   twStartVehicles->setModel(pvStartVehicleTypesModel);
-
-  // Setup start unit
-  connect(pbStartUnit, SIGNAL(clicked()), this, SLOT(selectStartUnit()));
-  
+  connect(pbStartVehicles, SIGNAL(clicked()), this, SLOT(selectStartVehicleTypes()));
+  pvEndVehicleTypesModel = new QSqlQueryModel(this);
+  twEndVehicles->setModel(pvEndVehicleTypesModel);
+  connect(pbEndVehicles, SIGNAL(clicked()), this, SLOT(selectEndVehicleTypes()));
   // Clear field labels
   lbStartSchemaPosition->clear();
   lbStartCabinet->clear();
@@ -85,7 +92,6 @@ void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId)
   QSqlError sqlError;
   QString sql;
 
-  pvStartUnitId = unitId;
   sql = "SELECT Id_PK, SchemaPosition, Cabinet FROM Unit_tbl WHERE Id_PK = " + unitId.toString();
   if(!query.exec(sql)){
     sqlError = query.lastError();
@@ -105,7 +111,6 @@ void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId)
     return;
   }
   setStartUnit(unitId, query.value(1), query.value(2));
-  /// \todo Update connections + vehicles + Prevent infinite update loop ..
 }
 
 void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId, const QVariant &schemaPosition, const QVariant &cabinet)
@@ -113,6 +118,8 @@ void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId, const QVariant &s
   pvStartUnitId = unitId;
   lbStartSchemaPosition->setText(schemaPosition.toString());
   lbStartCabinet->setText(cabinet.toString());
+  setStartConnectionData(mdtClUnitConnectionData());
+  setStartVehicleTypes(unitId);
 }
 
 QVariant mdtClUnitLinkDialog::startUnitId() const
@@ -120,23 +127,85 @@ QVariant mdtClUnitLinkDialog::startUnitId() const
   return pvStartUnitId;
 }
 
+void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId)
+{
+  QSqlQuery query(pvDatabase);
+  QSqlError sqlError;
+  QString sql;
+
+  sql = "SELECT Id_PK, SchemaPosition, Cabinet FROM Unit_tbl WHERE Id_PK = " + unitId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot select data from Unit_view", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnitLinkDialog");
+    e.commit();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot select data from Unit_view."));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  if(!query.next()){
+    return;
+  }
+  setEndUnit(unitId, query.value(1), query.value(2));
+}
+
+void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId, const QVariant &schemaPosition, const QVariant &cabinet)
+{
+  pvEndUnitId = unitId;
+  lbEndSchemaPosition->setText(schemaPosition.toString());
+  lbEndCabinet->setText(cabinet.toString());
+  setEndConnectionData(mdtClUnitConnectionData());
+  setEndVehicleTypes(unitId);
+}
+
+QVariant mdtClUnitLinkDialog::endUnitId() const
+{
+  return pvEndUnitId;
+}
+
 void mdtClUnitLinkDialog::setStartConnectionData(const mdtClUnitConnectionData &data)
 {
-  qDebug() << "mdtClUnitLinkDialog::setStartConnectionData() : NOT implemented yet !!";
+  pvStartConnectionData = data;
+  pvLinkData.setUnitConnectionStartId(pvStartConnectionData.id());
+  lbStartConnectorName->setText(pvStartConnectionData.unitConnectorName().toString());
+  lbStartContactName->setText(pvStartConnectionData.unitContactName().toString());
+}
+
+mdtClUnitConnectionData mdtClUnitLinkDialog::startConnectionData() const
+{
+  return pvStartConnectionData;
+}
+
+void mdtClUnitLinkDialog::setEndConnectionData(const mdtClUnitConnectionData &data)
+{
+  pvEndConnectionData = data;
+  pvLinkData.setUnitConnectionEndId(pvEndConnectionData.id());
+  lbEndConnectorName->setText(pvEndConnectionData.unitConnectorName().toString());
+  lbEndContactName->setText(pvEndConnectionData.unitContactName().toString());
+}
+
+mdtClUnitConnectionData mdtClUnitLinkDialog::endConnectionData() const
+{
+  return pvEndConnectionData;
 }
 
 void mdtClUnitLinkDialog::setStartVehicleTypes(const QVariant &unitId)
 {
-  QSqlError sqlError;
   QString sql;
 
-  pvStartUnitId = unitId;
   sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE Unit_Id_FK = " + unitId.toString();
+  sql += " ORDER BY VehicleType_Id_FK ASC";
   pvStartVehicleTypesModel->setQuery(sql, pvDatabase);
   pvStartVehicleTypesModel->setHeaderData(0, Qt::Horizontal, tr("Type"));
   pvStartVehicleTypesModel->setHeaderData(1, Qt::Horizontal, tr("Sub type"));
   pvStartVehicleTypesModel->setHeaderData(2, Qt::Horizontal, tr("Serie"));
   twStartVehicles->setColumnHidden(3, true);
+  pvLinkData.setVehicleTypeStartIdList(startVehicleTypeIdList());
 }
 
 const QList<QVariant> mdtClUnitLinkDialog::startVehicleTypeIdList() const
@@ -148,6 +217,34 @@ const QList<QVariant> mdtClUnitLinkDialog::startVehicleTypeIdList() const
   for(row = 0; row < pvStartVehicleTypesModel->rowCount(); ++row){
     index = pvStartVehicleTypesModel->index(row, 3);
     idList.append(pvStartVehicleTypesModel->data(index));
+  }
+
+  return idList;
+}
+
+void mdtClUnitLinkDialog::setEndVehicleTypes(const QVariant &unitId)
+{
+  QString sql;
+
+  sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE Unit_Id_FK = " + unitId.toString();
+  sql += " ORDER BY VehicleType_Id_FK ASC";
+  pvEndVehicleTypesModel->setQuery(sql, pvDatabase);
+  pvEndVehicleTypesModel->setHeaderData(0, Qt::Horizontal, tr("Type"));
+  pvEndVehicleTypesModel->setHeaderData(1, Qt::Horizontal, tr("Sub type"));
+  pvEndVehicleTypesModel->setHeaderData(2, Qt::Horizontal, tr("Serie"));
+  twEndVehicles->setColumnHidden(3, true);
+  pvLinkData.setVehicleTypeEndIdList(endVehicleTypeIdList());
+}
+
+const QList<QVariant> mdtClUnitLinkDialog::endVehicleTypeIdList() const
+{
+  QList<QVariant> idList;
+  QModelIndex index;
+  int row;
+
+  for(row = 0; row < pvEndVehicleTypesModel->rowCount(); ++row){
+    index = pvEndVehicleTypesModel->index(row, 3);
+    idList.append(pvEndVehicleTypesModel->data(index));
   }
 
   return idList;
@@ -217,6 +314,11 @@ QVariant mdtClUnitLinkDialog::linkDirectionCode() const
   return data;
 }
 
+mdtClLinkData &mdtClUnitLinkDialog::linkData()
+{
+  return pvLinkData;
+}
+
 void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
 {
   QModelIndex index;
@@ -242,6 +344,8 @@ void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
   index = pvLinkTypeModel->index(row, 2);
   data = pvLinkTypeModel->data(index);
   lbUnit->setText("[" + data.toString() + "]");
+  // Update link data
+  pvLinkData.setLinkTypeCode(linkTypeCode());
 }
 
 void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
@@ -257,21 +361,262 @@ void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
   index = pvLinkDirectionModel->index(row, 2);
   data = pvLinkDirectionModel->data(index);
   lbLinkDirectionAsciiPicture->setText(data.toString());
+  // Update link data
+  pvLinkData.setLinkDirectionCode(linkDirectionCode());
 }
 
 void mdtClUnitLinkDialog::selectStartUnit()
 {
   mdtSqlSelectionDialog selectionDialog(this);
+  QString sql;
+  QSqlQueryModel model;
+  QList<QVariant> result;
 
+  // Setup and run query
+  sql = "SELECT * FROM Unit_view ";
+  if(!pvStartUnitId.isNull()){
+    sql += " WHERE Unit_Id_PK <> " + pvStartUnitId.toString();
+  }
+  model.setQuery(sql, pvDatabase);
   // Setup and show dialog
   selectionDialog.setMessage("Please select start unit");
-  ///selectionDialog.setModel(&uvt.vehicleTypeNotAssignedToUnitModel(unitId), true);
-  ///selectionDialog.setColumnHidden("Id_PK", true);
-  ///selectionDialog.setHeaderData("SubType", tr("Variant"));
-  ///selectionDialog.addSelectionResultColumn("Id_PK");
+  selectionDialog.setModel(&model, false);
+  selectionDialog.setColumnHidden("Unit_Id_PK", true);
+  selectionDialog.setColumnHidden("Article_Id_PK", true);
+  selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
+  selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
+  selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
+  selectionDialog.addSelectionResultColumn("Unit_Id_PK");
+  selectionDialog.addSelectionResultColumn("SchemaPosition");
+  selectionDialog.addSelectionResultColumn("Cabinet");
+  selectionDialog.resize(700, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  result = selectionDialog.selectionResult();
+  Q_ASSERT(result.size() == 3);
+  // Store unit and update GUI
+  setStartUnit(result.at(0), result.at(1), result.at(2));
+  // We have to update vehicle types
+  ///setStartVehicleTypes(pvStartUnitId);
+  // Clear connections
+  ///setStartConnectionData(mdtClUnitConnectionData());
+}
+
+void mdtClUnitLinkDialog::selectEndUnit()
+{
+  mdtSqlSelectionDialog selectionDialog(this);
+  QString sql;
+  QSqlQueryModel model;
+  QList<QVariant> result;
+
+  // Setup and run query
+  sql = "SELECT * FROM Unit_view ";
+  if(!pvEndUnitId.isNull()){
+    sql += " WHERE Unit_Id_PK <> " + pvEndUnitId.toString();
+  }
+  model.setQuery(sql, pvDatabase);
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select end unit");
+  selectionDialog.setModel(&model, false);
+  selectionDialog.setColumnHidden("Unit_Id_PK", true);
+  selectionDialog.setColumnHidden("Article_Id_PK", true);
+  selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
+  selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
+  selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
+  selectionDialog.addSelectionResultColumn("Unit_Id_PK");
+  selectionDialog.addSelectionResultColumn("SchemaPosition");
+  selectionDialog.addSelectionResultColumn("Cabinet");
+  selectionDialog.resize(700, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  result = selectionDialog.selectionResult();
+  Q_ASSERT(result.size() == 3);
+  // Store unit and update GUI
+  setEndUnit(result.at(0), result.at(1), result.at(2));
+  // We have to update vehicle types
+  ///setStartVehicleTypes(pvStartUnitId);
+  // Clear connections
+  ///setStartConnectionData(mdtClUnitConnectionData());
+}
+
+void mdtClUnitLinkDialog::selectStartConnection()
+{
+  mdtSqlSelectionDialog selectionDialog(this);
+  QString sql;
+  QSqlQueryModel model;
+  QList<QVariant> result;
+  mdtClUnitConnectionData data;
+  mdtClUnit unit(pvDatabase);
+
+  // Setup and run query
+  sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
+  model.setQuery(sql, pvDatabase);
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select start connection");
+  selectionDialog.setModel(&model, false);
+  selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
+  selectionDialog.setColumnHidden("Unit_Id_FK", true);
+  selectionDialog.setColumnHidden("ArticleConnection_Id_FK", true);
+  selectionDialog.setHeaderData("SchemaPage", tr("Schema\npage"));
+  selectionDialog.setHeaderData("UnitFunctionEN", tr("Unit\nfunction (ENG)"));
+  selectionDialog.setHeaderData("SignalName", tr("Signal name"));
+  selectionDialog.setHeaderData("SwAddress", tr("SW address"));
+  selectionDialog.setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
+  selectionDialog.setHeaderData("UnitContactName", tr("Unit\ncontact"));
+  selectionDialog.setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
+  selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
+  selectionDialog.setHeaderData("IoType", tr("I/O type"));
+  selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
+  selectionDialog.addSelectionResultColumn("UnitConnection_Id_PK");
+  selectionDialog.resize(700, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  result = selectionDialog.selectionResult();
+  Q_ASSERT(result.size() == 1);
+  // Get connection data and update
+  data = unit.getUnitConnectionData(result.at(0));
+  setStartConnectionData(data);
+}
+
+void mdtClUnitLinkDialog::selectEndConnection()
+{
+  mdtSqlSelectionDialog selectionDialog(this);
+  QString sql;
+  QSqlQueryModel model;
+  QList<QVariant> result;
+  mdtClUnitConnectionData data;
+  mdtClUnit unit(pvDatabase);
+
+  // Setup and run query
+  sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvEndUnitId.toString();
+  model.setQuery(sql, pvDatabase);
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select start connection");
+  selectionDialog.setModel(&model, false);
+  selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
+  selectionDialog.setColumnHidden("Unit_Id_FK", true);
+  selectionDialog.setColumnHidden("ArticleConnection_Id_FK", true);
+  selectionDialog.setHeaderData("SchemaPage", tr("Schema\npage"));
+  selectionDialog.setHeaderData("UnitFunctionEN", tr("Unit\nfunction (ENG)"));
+  selectionDialog.setHeaderData("SignalName", tr("Signal name"));
+  selectionDialog.setHeaderData("SwAddress", tr("SW address"));
+  selectionDialog.setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
+  selectionDialog.setHeaderData("UnitContactName", tr("Unit\ncontact"));
+  selectionDialog.setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
+  selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
+  selectionDialog.setHeaderData("IoType", tr("I/O type"));
+  selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
+  selectionDialog.addSelectionResultColumn("UnitConnection_Id_PK");
+  selectionDialog.resize(700, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  result = selectionDialog.selectionResult();
+  Q_ASSERT(result.size() == 1);
+  // Get connection data and update
+  data = unit.getUnitConnectionData(result.at(0));
+  setEndConnectionData(data);
+}
+
+void mdtClUnitLinkDialog::selectStartVehicleTypes()
+{
+  mdtSqlSelectionDialog selectionDialog(this);
+  QString sql;
+  QSqlQueryModel model;
+  int row;
+  QModelIndex index;
+  QModelIndexList vehicleIdList;
+  QVariant data;
+
+  // Setup and run query
+  sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
+  sql += " ORDER BY VehicleType_Id_FK ASC";
+  model.setQuery(sql, pvDatabase);
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select start vehicles");
+  selectionDialog.setModel(&model, true);
+  selectionDialog.setAllowEmptyResult(true);
+  for(row = 0; row < pvStartVehicleTypesModel->rowCount(); ++row){
+    index = pvStartVehicleTypesModel->index(row, 3);
+    data = pvStartVehicleTypesModel->data(index);
+    selectionDialog.selectRows("VehicleType_Id_FK", data);
+  }
+  selectionDialog.setColumnHidden("VehicleType_Id_FK", true);
+  selectionDialog.setHeaderData("SubType", tr("Sub type"));
+  selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
+  selectionDialog.addSelectionResultColumn("VehicleType_Id_FK");
   selectionDialog.resize(500, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
+  vehicleIdList = selectionDialog.selectionResults();
+  // Set new query to vehicle types model
+  if(vehicleIdList.isEmpty()){
+    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE VehicleType_Id_FK = -1";
+  }else{
+    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view ORDER BY VehicleType_Id_FK ASC ";
+    for(row = 0; row < vehicleIdList.size(); ++row){
+      if(row == 0){
+        sql += " WHERE ( ";
+      }else{
+        sql += " OR ";
+      }
+      sql += " VehicleType_Id_FK = " + vehicleIdList.at(row).data().toString();
+    }
+    sql += " ) AND Unit_Id_FK = " + pvStartUnitId.toString();
+  }
+  pvStartVehicleTypesModel->setQuery(sql, pvDatabase);
+}
 
+void mdtClUnitLinkDialog::selectEndVehicleTypes()
+{
+  mdtSqlSelectionDialog selectionDialog(this);
+  QString sql;
+  QSqlQueryModel model;
+  int row;
+  QModelIndex index;
+  QModelIndexList vehicleIdList;
+  QVariant data;
+
+  // Setup and run query
+  sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE Unit_Id_FK = " + pvEndUnitId.toString();
+  sql += " ORDER BY VehicleType_Id_FK ASC";
+  model.setQuery(sql, pvDatabase);
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select end vehicles");
+  selectionDialog.setModel(&model, true);
+  selectionDialog.setAllowEmptyResult(true);
+  for(row = 0; row < pvEndVehicleTypesModel->rowCount(); ++row){
+    index = pvEndVehicleTypesModel->index(row, 3);
+    data = pvEndVehicleTypesModel->data(index);
+    selectionDialog.selectRows("VehicleType_Id_FK", data);
+  }
+  selectionDialog.setColumnHidden("VehicleType_Id_FK", true);
+  selectionDialog.setHeaderData("SubType", tr("Sub type"));
+  selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
+  selectionDialog.addSelectionResultColumn("VehicleType_Id_FK");
+  selectionDialog.resize(500, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  vehicleIdList = selectionDialog.selectionResults();
+  // Set new query to vehicle types model
+  if(vehicleIdList.isEmpty()){
+    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE VehicleType_Id_FK = -1";
+  }else{
+    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view ORDER BY VehicleType_Id_FK ASC ";
+    for(row = 0; row < vehicleIdList.size(); ++row){
+      if(row == 0){
+        sql += " WHERE ( ";
+      }else{
+        sql += " OR ";
+      }
+      sql += " VehicleType_Id_FK = " + vehicleIdList.at(row).data().toString();
+    }
+    sql += " ) AND Unit_Id_FK = " + pvEndUnitId.toString();
+  }
+  pvEndVehicleTypesModel->setQuery(sql, pvDatabase);
 }

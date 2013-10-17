@@ -29,6 +29,8 @@
 #include <QItemSelectionModel>
 #include <QLabel>
 
+//#include <QDebug>
+
 mdtSqlSelectionDialog::mdtSqlSelectionDialog(QWidget *parent)
  : QDialog(parent)
 {
@@ -36,8 +38,8 @@ mdtSqlSelectionDialog::mdtSqlSelectionDialog(QWidget *parent)
   QDialogButtonBox *buttonBox;
 
   // Set defaults
-  pvDialogRejected = false;
   pvModel = 0;
+  pvAllowEmptyResult = false;
 
   layout = new QVBoxLayout;
 
@@ -67,6 +69,11 @@ mdtSqlSelectionDialog::~mdtSqlSelectionDialog()
 void mdtSqlSelectionDialog::setMessage(const QString &message)
 {
   pvMessageLabel->setText(message);
+}
+
+void mdtSqlSelectionDialog::setAllowEmptyResult(bool allow)
+{
+  pvAllowEmptyResult = allow;
 }
 
 void mdtSqlSelectionDialog::setModel(QSqlQueryModel *model, bool allowMultiSelection)
@@ -116,6 +123,25 @@ void mdtSqlSelectionDialog::setColumnHidden(const QString &fieldName, bool hide)
   setColumnHidden(column, hide);
 }
 
+void mdtSqlSelectionDialog::selectRows(const QString &fieldName, const QVariant &matchData)
+{
+  Q_ASSERT(pvModel != 0);
+
+  int row, column;
+  QModelIndex index;
+
+  column = pvModel->record().indexOf(fieldName);
+  if(column < 0){
+    return;
+  }
+  for(row = 0; row < pvModel->rowCount(); ++row){
+    index = pvModel->index(row, column);
+    if(pvModel->data(index) == matchData){
+      pvTableView->selectRow(row);
+    }
+  }
+}
+
 void mdtSqlSelectionDialog::setSelectionResultColumns(const QList<int> &columns)
 {
   pvSelectionResultColumns = columns;
@@ -155,26 +181,7 @@ QList<QVariant> mdtSqlSelectionDialog::selectionResult()
   QList<QVariant> result;
   int row, i;
   QModelIndex index;
-  QModelIndexList selectedRows;
 
-  /**
-  if(pvDialogRejected){
-    return result;
-  }
-  selectedRows = pvTableView->selectionModel()->selectedRows();
-  if(selectedRows.size() != 1){
-    return result;
-  }
-  index = selectedRows.at(0);
-  if(!index.isValid()){
-    return result;
-  }
-  row = index.row();
-  for(i = 0; i < pvSelectionResultColumns.size(); ++i){
-    index = pvModel->index(row, pvSelectionResultColumns.at(i));
-    result.append(pvModel->data(index));
-  }
-  */
   if(pvSelectionResults.isEmpty()){
     return result;
   }
@@ -197,19 +204,55 @@ QModelIndexList mdtSqlSelectionDialog::selectionResults()
   return pvSelectionResults;
 }
 
+QVariant mdtSqlSelectionDialog::selectedData(int row, const QString &fieldName)
+{
+  Q_ASSERT(pvModel != 0);
+  Q_ASSERT(pvTableView->selectionModel() != 0);
+
+  int i;
+  int column;
+  QModelIndex index;
+  QModelIndexList rowIndexes;
+  QVariant data;
+
+  // Get indexes that maches given row
+  for(i = 0; i < pvSelectionResults.size(); ++i){
+    index = pvSelectionResults.at(i);
+    if(index.row() == row){
+      rowIndexes.append(index);
+    }
+  }
+  if(rowIndexes.isEmpty()){
+    return data;
+  }
+  // Get column for given fieldName
+  column = pvModel->record().indexOf(fieldName);
+  if(column < 0){
+    return data;
+  }
+  // Get data
+  for(i = 0; i < rowIndexes.size(); ++i){
+    index = rowIndexes.at(i);
+    if(index.column() == column){
+      index = pvModel->index(index.row(), index.column());
+      data = pvModel->data(index);
+    }
+  }
+
+  return data;
+}
+
 void mdtSqlSelectionDialog::reject()
 {
-  pvDialogRejected = true;
   QDialog::reject();
 }
 
 void mdtSqlSelectionDialog::accept()
 {
   buildSelectionResults();
-  if(pvSelectionResults.isEmpty()){
+  if((pvSelectionResults.isEmpty())&&(!pvAllowEmptyResult)){
     return;
   }
-  pvDialogRejected = false;
   QDialog::accept();
 }
 
@@ -223,8 +266,9 @@ void mdtSqlSelectionDialog::buildSelectionResults()
   QModelIndexList selectedIndexes;
 
   pvSelectionResults.clear();
-  selectedIndexes = pvTableView->selectionModel()->selectedRows();
+  selectedIndexes = pvTableView->selectionModel()->selectedIndexes();
   for(i = 0; i < selectedIndexes.size(); ++i){
+    // If
     index = pvModel->index(selectedIndexes.at(i).row(), selectedIndexes.at(i).column());
     if((index.isValid()) && (pvSelectionResultColumns.contains(index.column()))){
       pvSelectionResults.append(index);

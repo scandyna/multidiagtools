@@ -21,9 +21,12 @@
 #include "mdtClUnitTest.h"
 #include "mdtApplication.h"
 #include "mdtClUnitConnectionData.h"
+#include "mdtClLinkData.h"
 #include <QTest>
 #include <QString>
 #include <QVariant>
+#include <QPair>
+#include <QList>
 
 void mdtClUnitTest::unitConnectionDataTest()
 {
@@ -38,7 +41,57 @@ void mdtClUnitTest::unitConnectionDataTest()
   QCOMPARE(data.id(), QVariant(25));
 }
 
+void mdtClUnitTest::linkDataTest()
+{
+  mdtClLinkData data;
+  ///QList<QPair<QVariant, QVariant> > pairList;
+  QList<QVariant> list;
 
+  /*
+   * Check vehicle types
+   */
+  QCOMPARE(data.vehicleTypeStartEndIdList().size(), 0);
+  // Add 1 start vehicle - Case Error (one list empty)
+  data.addVehicleTypeStartId(1);
+  QVERIFY(!data.buildVehicleTypeStartEndIdList());
+  QCOMPARE(data.vehicleTypeStartEndIdList().size(), 0);
+  // Add 1 end vehicle - Case 1 start -> 1 end
+  data.addVehicleTypeEndId(11);
+  QVERIFY(data.buildVehicleTypeStartEndIdList());
+  QCOMPARE(data.vehicleTypeStartEndIdList().size(), 1);
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(0).first, QVariant(1));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(0).second, QVariant(11));
+  // Add a second start vehicle - Case 2 start -> 1 end
+  data.addVehicleTypeStartId(2);
+  QVERIFY(data.buildVehicleTypeStartEndIdList());
+  QCOMPARE(data.vehicleTypeStartEndIdList().size(), 2);
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(0).first, QVariant(1));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(0).second, QVariant(11));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(1).first, QVariant(2));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(1).second, QVariant(11));
+  // Add a second end vehicle - Case 2*(1 start -> 1 end)
+  data.addVehicleTypeEndId(12);
+  QVERIFY(data.buildVehicleTypeStartEndIdList());
+  QCOMPARE(data.vehicleTypeStartEndIdList().size(), 2);
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(0).first, QVariant(1));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(0).second, QVariant(11));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(1).first, QVariant(2));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(1).second, QVariant(12));
+  // Clear start list - Case Error (one list empty)
+  list.clear();
+  data.setVehicleTypeStartIdList(list);
+  QVERIFY(!data.buildVehicleTypeStartEndIdList());
+  QCOMPARE(data.vehicleTypeStartEndIdList().size(), 0);
+  // Add 1 start vehicle - Case 1 start -> 2 end
+  data.addVehicleTypeStartId(3);
+  QVERIFY(data.buildVehicleTypeStartEndIdList());
+  QCOMPARE(data.vehicleTypeStartEndIdList().size(), 2);
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(0).first, QVariant(3));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(0).second, QVariant(11));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(1).first, QVariant(3));
+  QCOMPARE(data.vehicleTypeStartEndIdList().at(1).second, QVariant(12));
+
+}
 
 /*
  * Main

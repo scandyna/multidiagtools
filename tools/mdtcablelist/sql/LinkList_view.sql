@@ -1,12 +1,11 @@
 DROP VIEW IF EXISTS LinkList_view;
 CREATE VIEW LinkList_view AS
 SELECT 
+ Link_tbl.UnitConnectionStart_Id_FK , 
+ Link_tbl.UnitConnectionEnd_Id_FK , 
  VS.Type AS StartVehicleType ,
  VS.SubType AS StartVehicleSubType ,
  VS.SeriesNumber AS StartVehicleSerie,
- Link_tbl.Id_PK AS Link_Id_PK , 
- Link_tbl.UnitConnectionStart_Id_FK , 
- Link_tbl.UnitConnectionEnd_Id_FK , 
  Link_tbl.SinceVersion , 
  Link_tbl.Modification , 
  Link_tbl.Identification ,
@@ -37,7 +36,8 @@ FROM Link_tbl
  JOIN Unit_tbl UE
   ON UE.Id_PK = CE.Unit_Id_FK
  JOIN VehicleType_Link_tbl
-  ON VehicleType_Link_tbl.Link_Id_FK = Link_tbl.Id_PK
+  ON VehicleType_Link_tbl.UnitConnectionStart_Id_FK = Link_tbl.UnitConnectionStart_Id_FK
+  AND VehicleType_Link_tbl.UnitConnectionEnd_Id_FK = Link_tbl.UnitConnectionEnd_Id_FK
  JOIN VehicleType_tbl VS
   ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK
  JOIN VehicleType_tbl VE

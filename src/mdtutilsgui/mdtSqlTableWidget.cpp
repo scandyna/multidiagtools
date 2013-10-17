@@ -281,6 +281,62 @@ void mdtSqlTableWidget::setDefaultColumnToSelect(const QString &fieldName)
   setDefaultColumnToSelect(model()->fieldIndex(fieldName));
 }
 
+QList<QModelIndexList> mdtSqlTableWidget::indexListOfSelectedRowsByRowsList(const QList<int> &columnList)
+{
+  Q_ASSERT(model() != 0);
+  Q_ASSERT(selectionModel() != 0);
+
+  QModelIndexList indexes;
+  QList<QModelIndexList> result;
+  QModelIndexList rowResult;
+  QModelIndex index;
+  QList<int> selectedRows;
+  int i, j;
+  int row;
+  int column;
+
+  // Get currently selected indexes
+  indexes = selectionModel()->selectedIndexes();
+  // Build a list of selected rows
+  for(i = 0; i < indexes.size(); ++i){
+    row = indexes.at(i).row();
+    Q_ASSERT(row >= 0);
+    if(!selectedRows.contains(row)){
+      selectedRows.append(row);
+    }
+  }
+  qSort(selectedRows.begin(), selectedRows.end());
+  // Build list with only interresting columns
+  for(i = 0; i < selectedRows.size(); ++i){
+    row = selectedRows.at(i);
+    rowResult.clear();
+    for(j = 0; j < columnList.size(); ++j){
+      column = columnList.at(j);
+      index = model()->index(row, column);
+      Q_ASSERT(index.isValid());
+      rowResult.append(index);
+    }
+    result.append(rowResult);
+  }
+
+  return result;
+}
+
+QList<QModelIndexList> mdtSqlTableWidget::indexListOfSelectedRowsByRowsList(const QStringList &fieldList)
+{
+  Q_ASSERT(model() != 0);
+  Q_ASSERT(selectionModel() != 0);
+
+  QList<int> columns;
+  int i;
+
+  for(i = 0; i < fieldList.size(); ++i){
+    columns.append(model()->fieldIndex(fieldList.at(i)));
+  }
+
+  return indexListOfSelectedRowsByRowsList(columns);
+}
+
 QModelIndexList mdtSqlTableWidget::indexListOfSelectedRows(const QList<int> &columnList)
 {
   Q_ASSERT(model() != 0);
