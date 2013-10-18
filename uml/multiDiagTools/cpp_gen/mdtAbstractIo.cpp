@@ -28,7 +28,7 @@ void mdtAbstractIo::setDetails(const QString & text) {
 QString mdtAbstractIo::details() {
 }
 
-slot mdtAbstractIo::addressChangedForUi(int adr) {
+void mdtAbstractIo::addressChangedForUi(int adr) {
 }
 
 void mdtAbstractIo::labelShortChangedForUi(const QString & text) {

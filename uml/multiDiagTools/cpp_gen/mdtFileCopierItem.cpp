@@ -10,10 +10,22 @@
 void mdtFileCopierItem::setFileSize(const qInt64 & size) {
 }
 
+void mdtFileCopierItem::setSrcFilePath(const QString & filePath) {
+}
+
 QString mdtFileCopierItem::srcFilePath() {
 }
 
+void mdtFileCopierItem::setSrcFileName(const QString & fileName) {
+}
+
+QString mdtFileCopierItem::srcFileName() {
+}
+
 qInt64 mdtFileCopierItem::fileSize() {
+}
+
+void mdtFileCopierItem::setDestFilePath(const QString & filePath) {
 }
 
 QString mdtFileCopierItem::destFilePath() {

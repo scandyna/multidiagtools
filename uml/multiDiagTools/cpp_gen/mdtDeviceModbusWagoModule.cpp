@@ -4,10 +4,7 @@
 #include "mdtAnalogIo.h"
 #include "mdtDigitalIo.h"
 
-mdtDeviceModbusWagoModule::mdtDeviceModbusWagoModule(bool autoDeleteIos) {
-}
-
-mdtDeviceModbusWagoModule::~mdtDeviceModbusWagoModule() {
+mdtDeviceModbusWagoModule::mdtDeviceModbusWagoModule(bool autoDeleteIos, const mdtDeviceModbusWago & device) {
 }
 
 bool mdtDeviceModbusWagoModule::setupFromRegisterWord(const quint16 & word) {
@@ -83,6 +80,15 @@ bool mdtDeviceModbusWagoModule::addAnalogIos() {
 }
 
 bool mdtDeviceModbusWagoModule::addDigitalIos() {
+}
+
+void mdtDeviceModbusWagoModule::addAnalogIo(const mdtAnalogIo & aio) {
+}
+
+void mdtDeviceModbusWagoModule::addDigitalIo(const mdtDigitalIo & dio) {
+}
+
+void mdtDeviceModbusWagoModule::addRegisters(int channelCount) {
 }
 
 quint8 mdtDeviceModbusWagoModule::statusByte(int channel) const {

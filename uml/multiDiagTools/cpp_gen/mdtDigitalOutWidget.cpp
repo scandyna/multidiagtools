@@ -7,12 +7,9 @@
  mdtDigitalOutWidget::~mdtDigitalOutWidget() {
 }
 
+void mdtDigitalOutWidget::setIo(const mdtDigitalIo & io) {
+}
+
 void mdtDigitalOutWidget::setOn(bool on) {
-}
-
-bool mdtDigitalOutWidget::isOn() {
-}
-
-void mdtDigitalOutWidget::stateChanged(bool on) {
 }
 

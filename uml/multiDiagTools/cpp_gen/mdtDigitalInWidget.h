@@ -3,6 +3,7 @@
 
 
 #include "mdtAbstractIoWidget.h"
+#include "mdtDigitalIo.h"
 
 class mdtDigitalInWidget : public mdtAbstractIoWidget {
   public:
@@ -10,9 +11,11 @@ class mdtDigitalInWidget : public mdtAbstractIoWidget {
 
      ~mdtDigitalInWidget();
 
-    void setOn(bool on);
+    void setIo(const mdtDigitalIo & io);
 
-    bool isOn();
+
+  private:
+    void setOn(bool on);
 
 };
 #endif

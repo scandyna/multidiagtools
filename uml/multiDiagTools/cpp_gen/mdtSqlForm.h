@@ -6,19 +6,19 @@
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 
-class mdtSqlForm : public QWidget {
+class mdtSqlForm : public QObject {
   private:
     mdtAbstractSqlWidget pvSqlWidget;
 
 
   public:
-    mdtSqlForm(const QWidget & parent, const QSqlDatabase & db);
+    mdtSqlForm(const QObject & parent, const  & );
 
     virtual ~mdtSqlForm();
 
-    bool setTable(const QString & tableName, const QWidget & uiWidget);
+    virtual bool setTable(const QString & tableName, const QSqlDatabase & db, const QWidget & uiWidget) = 0;
 
-    bool addChildTable(const QString & tableName);
+    virtual bool addChildTable(const QString & tableName, const QSqlDatabase & db) = 0;
 
     bool addRelation(const QString & parentFieldName, const QString & childTableName, const QString & childFieldName, const  & );
 

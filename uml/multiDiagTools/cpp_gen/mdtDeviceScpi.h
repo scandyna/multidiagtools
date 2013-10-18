@@ -2,7 +2,7 @@
 #define _MDTDEVICESCPI_H
 
 
-#include "mdtUsbPortManager.h"
+class mdtDeviceInfo;
 
 class mdtDeviceScpi : public mdtDevice {
   public:
@@ -10,17 +10,17 @@ class mdtDeviceScpi : public mdtDevice {
 
     ~mdtDeviceScpi();
 
+    mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo & devInfo);
+
     int sendCommand(const QByteArray & command, int timeout);
 
     QByteArray sendQuery(const QByteArray & query, int writeTimeout, int readTimeout);
 
+    int waitOperationComplete(int timeout);
+
 
   private:
-    mdtUsbPortManager pvUsbtmcPortManager;
-
-
-  public:
-    int waitOperationComplete(int timeout);
+    mdtUsbtmcPortManager pvUsbtmcPortManager;
 
 };
 #endif

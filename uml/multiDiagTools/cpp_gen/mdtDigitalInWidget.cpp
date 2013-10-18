@@ -7,9 +7,9 @@
  mdtDigitalInWidget::~mdtDigitalInWidget() {
 }
 
-void mdtDigitalInWidget::setOn(bool on) {
+void mdtDigitalInWidget::setIo(const mdtDigitalIo & io) {
 }
 
-bool mdtDigitalInWidget::isOn() {
+void mdtDigitalInWidget::setOn(bool on) {
 }
 

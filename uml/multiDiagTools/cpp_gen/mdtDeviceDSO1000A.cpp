@@ -1,7 +1,6 @@
 
 #include "mdtDeviceDSO1000A.h"
 #include "mdtDeviceInfo.h"
-#include "mdtPortTransaction.h"
 
 mdtDeviceDSO1000A::mdtDeviceDSO1000A(const QObject & parent) {
 }

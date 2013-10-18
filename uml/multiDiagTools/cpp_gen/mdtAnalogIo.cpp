@@ -7,6 +7,12 @@
  mdtAnalogIo::~mdtAnalogIo() {
 }
 
+void mdtAnalogIo::setUnit(const QString & unit) {
+}
+
+QString mdtAnalogIo::unit() {
+}
+
 void mdtAnalogIo::setRange(double min, double max, int steps) {
 }
 
@@ -28,7 +34,13 @@ void mdtAnalogIo::setValueInt(int value) {
 int mdtAnalogIo::valueInt() {
 }
 
-void mdtAnalogIo::valueChanged(double newValue) {
+void mdtAnalogIo::valueChanged(double newValue,  ) {
+}
+
+void mdtAnalogIo::valueChanged(int address, double newValue) {
+}
+
+void mdtAnalogIo::unitChangedForUi(const QString & unit) {
 }
 
 void mdtAnalogIo::rangeChangedForUi(double min, double max) {

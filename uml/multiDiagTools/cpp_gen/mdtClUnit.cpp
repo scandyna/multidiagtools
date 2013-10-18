@@ -34,9 +34,15 @@ bool mdtClUnit::editUnitConnection(const mdtClUnitConnectionData & data) {
 mdtClUnitConnectionData mdtClUnit::getUnitConnectionData(const QVariant & unitConnectionId) {
 }
 
-QSqlQueryModel mdtClUnit::relatedRangesModel(const QVariant & unitConnectionId) {
+QSqlQueryModel mdtClUnit::unitConnectionRangesModel(const QVariant & unitConnectionId) {
 }
 
-bool mdtClUnit::addRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData) {
+bool mdtClUnit::addUnitConnectionRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData) {
+}
+
+bool mdtClUnit::updateUnitConnectionRanges(const QVariant & baseUnitConnectionId, const QStandardItemModel & ranges) {
+}
+
+bool mdtClUnit::removeUnitConnectionRange(const QVariant & unitConnectionId) {
 }
 

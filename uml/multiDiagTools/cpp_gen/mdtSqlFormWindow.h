@@ -5,11 +5,27 @@
 #include "mdtSqlWindow.h"
 #include "mdtSqlForm.h"
 
-class mdtSqlFormWindow : public mdtSqlWindow, public mdtSqlForm {
+class mdtAbstractSqlWidget;
+
+class mdtSqlFormWindow : public mdtSqlForm {
   public:
-    mdtSqlFormWindow(const QWidget & parent);
+    mdtSqlFormWindow(const QObject & parent);
 
     ~mdtSqlFormWindow();
+
+    mdtSqlWindow sqlWindow();
+
+
+  private:
+    mdtSqlWindow pvWindow;
+
+
+  public:
+    void show();
+
+
+  private:
+     addChildWidget(const mdtAbstractSqlWidget & widget);
 
 };
 #endif

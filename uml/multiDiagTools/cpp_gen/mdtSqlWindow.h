@@ -18,6 +18,8 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow {
   public:
     void setSqlWidget(const mdtAbstractSqlWidget & sqlWidget);
 
+    void addChildWidget(const QWidget & widget, const QString & label);
+
 
   private:
     QAction actSubmit;

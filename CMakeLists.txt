@@ -38,7 +38,7 @@ set(MDTLIB_VERSION_MICRO 0)
 
 # Library version suffix:
 #  Since version 0.2.8, naming convension has changed.
-#  The problem was that API is currently ustable and breaks
+#  The problem was that API is currently unstable and breaks
 #  distributed version compatibility.
 #  The new binary library name is now: libname-VMAJOR.VMINOR
 # This convention is used for:
@@ -87,6 +87,12 @@ get_filename_component(QWT_LIBRARY_DIR ${QWT_LIBRARIES} PATH)
 if(WIN32)
   link_directories(${QWT_LIBRARY_DIR})
 endif(WIN32)
+
+# Get Boost
+find_package(Boost REQUIRED)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
+endif(Boost_FOUND)
 
 # Headers directories
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")

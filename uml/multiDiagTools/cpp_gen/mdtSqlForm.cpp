@@ -1,13 +1,7 @@
 
 #include "mdtSqlForm.h"
 
-mdtSqlForm::mdtSqlForm(const QWidget & parent, const QSqlDatabase & db) {
-}
-
-bool mdtSqlForm::setTable(const QString & tableName, const QWidget & uiWidget) {
-}
-
-bool mdtSqlForm::addChildTable(const QString & tableName) {
+mdtSqlForm::mdtSqlForm(const QObject & parent, const  & ) {
 }
 
 bool mdtSqlForm::addRelation(const QString & parentFieldName, const QString & childTableName, const QString & childFieldName, const  & ) {

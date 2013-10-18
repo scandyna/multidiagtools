@@ -2,7 +2,7 @@
 #include "mdtSqlFormWidgetDataValidator.h"
 #include "mdtSqlFieldHandler.h"
 
-mdtSqlFormWidgetDataValidator::mdtSqlFormWidgetDataValidator(const QObject & parent, const QSqlTableModel & model, const mdtSqlFieldHandler & fieldHandler) {
+mdtSqlFormWidgetDataValidator::mdtSqlFormWidgetDataValidator(const QSqlTableModel & model, const QObject & parent, const mdtSqlFieldHandler & fieldHandler) {
 }
 
 mdtSqlFormWidgetDataValidator::~mdtSqlFormWidgetDataValidator() {

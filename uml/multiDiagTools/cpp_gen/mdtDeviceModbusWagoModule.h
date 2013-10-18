@@ -24,19 +24,21 @@ class mdtDeviceModbusWagoModule {
 
     QList<QPair<int, quint8> > pvControlBytes;
 
-    QList<QPair<int, quint16> > pvRegisterDataWords;
+    QList<quint16> pvRegisterDataWords;
 
     <mdtDeviceModbusWagoModuleAttribute> pvAttributes;
 
 
   public:
-    mdtDeviceModbusWagoModule(bool autoDeleteIos);
+    mdtDeviceModbusWagoModule(bool autoDeleteIos, const mdtDeviceModbusWago & device);
 
-    ~mdtDeviceModbusWagoModule();
+    virtual ~mdtDeviceModbusWagoModule();
 
     bool setupFromRegisterWord(const quint16 & word);
 
     void setFirstAddresse(int addressRead, int addressWrite);
+
+    virtual bool getSpecialModuleSetup(const quint16 & word, int firstAddressRead, int firstAddressWrite) = 0;
 
     int firstAddressRead();
 
@@ -88,6 +90,12 @@ class mdtDeviceModbusWagoModule {
 
 
   protected:
+    void addAnalogIo(const mdtAnalogIo & aio);
+
+    void addDigitalIo(const mdtDigitalIo & dio);
+
+    void addRegisters(int channelCount);
+
     quint8 statusByte(int channel) const;
 
     void setControlByte(int channel, const quint8 & byte);

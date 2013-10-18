@@ -19,6 +19,18 @@ void mdtState::setText(const QString & text) {
 QString mdtState::text() const {
 }
 
+void mdtState::setLedColorId(int colorId) {
+}
+
+int mdtState::ledColorId() const {
+}
+
+void mdtState::setLedOn(bool state) {
+}
+
+bool mdtState::ledOn() {
+}
+
 void mdtState::setNotifyEnteredToUi(bool notify) {
 }
 

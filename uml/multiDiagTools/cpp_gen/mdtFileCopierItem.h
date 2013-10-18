@@ -12,6 +12,8 @@ class mdtFileCopierItem {
   private:
     QString pvSrcFilePath;
 
+    QString pvSrcFileName;
+
     QString pvDestFilePath;
 
     qInt64 pvFileSize;
@@ -24,9 +26,17 @@ class mdtFileCopierItem {
   public:
     void setFileSize(const qInt64 & size);
 
+    void setSrcFilePath(const QString & filePath);
+
     QString srcFilePath();
 
+    void setSrcFileName(const QString & fileName);
+
+    QString srcFileName();
+
     qInt64 fileSize();
+
+    void setDestFilePath(const QString & filePath);
 
     QString destFilePath();
 

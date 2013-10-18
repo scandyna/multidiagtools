@@ -16,6 +16,14 @@ class mdtState : public QState {
 
     QString text() const;
 
+    void setLedColorId(int colorId);
+
+    int ledColorId() const;
+
+    void setLedOn(bool state);
+
+    bool ledOn();
+
     void setNotifyEnteredToUi(bool notify);
 
     bool notifyEnteredToUi() const;
@@ -31,6 +39,10 @@ class mdtState : public QState {
     QString pvText;
 
     bool pvNotifyEnteredToUi;
+
+    int pvLedColorId;
+
+    bool pvLedOn;
 
 };
 #endif

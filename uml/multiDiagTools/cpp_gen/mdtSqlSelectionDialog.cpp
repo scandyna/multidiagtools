@@ -1,7 +1,7 @@
 
 #include "mdtSqlSelectionDialog.h"
 
-mdtSqlSelectionDialog::mdtSqlSelectionDialog(const QWidget & parent) {
+mdtSqlSelectionDialog::mdtSqlSelectionDialog(const QObject & parent) {
 }
 
 mdtSqlSelectionDialog::~mdtSqlSelectionDialog() {

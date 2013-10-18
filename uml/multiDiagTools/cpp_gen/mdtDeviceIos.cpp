@@ -1,5 +1,6 @@
 
 #include "mdtDeviceIos.h"
+#include "mdtDeviceIosSegment.h"
 
 mdtDeviceIos::mdtDeviceIos(const QObject & parent) {
 }
@@ -47,5 +48,23 @@ mdtDigitalIo mdtDeviceIos::digitalOutputAt(int address) {
 }
 
 QList<mdtDigitalIo> mdtDeviceIos::digitalOutputs() {
+}
+
+void mdtDeviceIos::analogOutputValueChanged(int address, double value) {
+}
+
+void mdtDeviceIos::digitalOutputStateChanged(int address, bool state) {
+}
+
+void mdtDeviceIos::updateAnalogInputValue(int address, double value) {
+}
+
+void mdtDeviceIos::updateAnalogOutputValue(int address, double value) {
+}
+
+void mdtDeviceIos::updateDigitalInputState(int address, bool state) {
+}
+
+void mdtDeviceIos::updateDigitalOutputState(int address, bool state) {
 }
 

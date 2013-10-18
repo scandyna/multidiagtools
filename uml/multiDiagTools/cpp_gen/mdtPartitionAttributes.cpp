@@ -7,7 +7,7 @@ mdtPartitionAttributes::mdtPartitionAttributes() {
 mdtPartitionAttributes::~mdtPartitionAttributes() {
 }
 
-bool mdtPartitionAttributes::setPath() {
+bool mdtPartitionAttributes::setPath(const QString & path) {
 }
 
 QString mdtPartitionAttributes::rootPath(bool nativeFormat) {
@@ -23,5 +23,9 @@ bool mdtPartitionAttributes::isWriteable() {
 }
 
 QString mdtPartitionAttributes::fileSystem() {
+}
+
+QStringList mdtPartitionAttributes::availablePartitions()
+{
 }
 

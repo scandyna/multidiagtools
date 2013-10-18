@@ -11,7 +11,7 @@ class mdtGraphVertexAdjacent {
 
 
   public:
-    mdtGraphVertexAdjacent(const mdtGraphVertex & vertex);
+    mdtGraphVertexAdjacent(const mdtGraphVertex & vertex, const mdtGraphEdgeData & data);
 
     ~mdtGraphVertexAdjacent();
 
@@ -23,9 +23,7 @@ class mdtGraphVertexAdjacent {
   public:
     mdtGraphVertex vertex();
 
-    void setData(const mdtGraphEdgeData & data);
-
-    mdtGraphEdgeData data();
+    mdtGraphEdgeData edgeData();
 
 };
 #endif

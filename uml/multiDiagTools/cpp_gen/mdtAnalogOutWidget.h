@@ -3,6 +3,7 @@
 
 
 #include "mdtAbstractIoWidget.h"
+#include "mdtAnalogIo.h"
 
 class mdtAnalogOutWidget : public mdtAbstractIoWidget {
   public:
@@ -10,23 +11,13 @@ class mdtAnalogOutWidget : public mdtAbstractIoWidget {
 
      ~mdtAnalogOutWidget();
 
-    void setRange(double min, double max, int steps);
-
-    void setValue(double value);
-
-    double value();
-
-    void setValueInt(int value);
-
-    int valueInt();
-
-    void valueChanged(double value);
+    void setIo(const mdtAnalogIo & io);
 
 
   private:
-    double pvStep;
+    void setRange(double min, double max,  );
 
-    double pvStepInverse;
+    void setValue(double value);
 
 };
 #endif

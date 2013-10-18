@@ -8,9 +8,11 @@ class mdtSqlDataValidator : public QObject {
 
 
   public:
-    mdtSqlDataValidator(const QObject & parent, const QSqlTableModel & model);
+    mdtSqlDataValidator(const QSqlTableModel & model, const QObject & parent);
 
     virtual ~mdtSqlDataValidator();
+
+    QSqlTableModel model();
 
     virtual bool checkBeforeSubmit() = 0;
 

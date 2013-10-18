@@ -10,6 +10,10 @@ class mdtAnalogIo : public mdtAbstractIo {
 
      ~mdtAnalogIo();
 
+    void setUnit(const QString & unit);
+
+    QString unit();
+
     void setRange(double min, double max, int steps);
 
     double minimum();
@@ -38,15 +42,21 @@ class mdtAnalogIo : public mdtAbstractIo {
 
 
   public:
-    void valueChanged(double newValue);
+    void valueChanged(double newValue,  );
+
+    void valueChanged(int address, double newValue);
 
 
   private:
+    void unitChangedForUi(const QString & unit);
+
     void rangeChangedForUi(double min, double max);
 
     void valueChangedForUi(double newValue);
 
     void setValueFromUi(double value);
+
+    QString pvUnit;
 
 };
 #endif

@@ -10,15 +10,18 @@ mdtPortLock::~mdtPortLock() {
 int mdtPortLock::openLocked(const QString & portName, int flags) {
 }
 
-void mdtPortLock::unlock() {
+bool mdtPortLock::isLocked() {
 }
 
-bool mdtPortLock::isLocked() {
+void mdtPortLock::unlock() {
 }
 
 void mdtPortLock::scanForLockDirectories() {
 }
 
 void mdtPortLock::buildLockFilesList() {
+}
+
+bool mdtPortLock::createLockFile(const QFileInfo & file) {
 }
 

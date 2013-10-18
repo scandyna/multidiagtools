@@ -26,6 +26,21 @@
 #include <QList>
 #include "mdtClSandbox.h"
 
+#include <boost/config.hpp>
+#include <vector>
+#include <string>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/tuple/tuple.hpp>
+#include <boost/graph/breadth_first_search.hpp>
+#include <boost/graph/connected_components.hpp>
+
+#include <QHash>
+#include <QPair>
+
+#include <QApplication>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsSimpleTextItem>
 
 #include <QDebug>
 
@@ -343,6 +358,206 @@ void mdtClSandbox::essais()
   g.display();
 }
 
+/**
+class VertexProperties
+{
+ public:
+  VertexProperties();
+  VertexProperties(const QVariant &data);
+  ~VertexProperties();
+  QVariant data() const;
+ private:
+  QVariant pvData;
+};
+
+VertexProperties::VertexProperties()
+{
+  qDebug() << "VertexProperties::VertexProperties() ...";
+}
+VertexProperties::VertexProperties(const QVariant &data)
+{
+  qDebug() << "VertexProperties::VertexProperties(" << data << ") ...";
+  pvData = data;
+}
+VertexProperties::~VertexProperties()
+{
+  qDebug() << "VertexProperties::~VertexProperties() ...";
+}
+QVariant VertexProperties::data() const
+{
+  return pvData;
+}
+*/
+
+
+struct EdgeProperties
+{
+};
+
+struct GraphProperties
+{
+};
+
+
+  typedef boost::adjacency_list<
+      boost::vecS, boost::vecS, boost::directedS,
+      boost::property<boost::vertex_bundle_t, QPair<int, QVariant> >,
+      boost::property<boost::edge_bundle_t, QVariant>,
+      boost::property<boost::graph_bundle_t, GraphProperties>
+  > graph_t;
+
+typedef boost::graph_traits<graph_t>::vertex_descriptor vertex_t;
+typedef boost::graph_traits<graph_t>::edge_descriptor edge_t;
+
+class MyVisitor : public boost::default_bfs_visitor
+{
+public:
+  MyVisitor(){ path = 0;}
+  MyVisitor(QString *outPath, QString *outPathV2, QHash<int, QVariant> *outLst) { path = outPath; pathV2 = outPathV2; pvLst = outLst; }
+  void discover_vertex(vertex_t v, const graph_t & g)
+  {
+    QPair<int, QVariant> data = get(boost::vertex_bundle, g)[v];
+    qDebug() << "Vertex, ID: " << data.first << " , data: " << data.second.toString();
+    *path += data.second.toString();
+    *pathV2 += data.second.toString() + "-";
+    pvLst->insert(data.first, data.second);
+  }
+  void examine_edge(edge_t e, const graph_t &g)
+  {
+    QVariant data = get(boost::edge_bundle, g)[e];
+    qDebug() << "-> Edge, data " << data.toString();
+    *path += "(" + data.toString() + ")";
+    boost::default_bfs_visitor::examine_edge(e, g);
+  }
+  QString *path, *pathV2;
+  QHash<int, QVariant> *pvLst;
+};
+
+void mdtClSandbox::tryBoost()
+{
+
+
+  graph_t g;
+
+  vertex_t v1 = boost::add_vertex(QPair<int, QVariant>(1, "v1"), g);
+  vertex_t v2 = boost::add_vertex(QPair<int, QVariant>(2, "v2"), g);
+  vertex_t v3 = boost::add_vertex(QPair<int, QVariant>(3, "v3"), g);
+  vertex_t v4 = boost::add_vertex(QPair<int, QVariant>(4, "v4"), g);
+  vertex_t v5 = boost::add_vertex(QPair<int, QVariant>(5, "v5"), g);
+  vertex_t v6 = boost::add_vertex(QPair<int, QVariant>(6, "v6"), g);
+
+  ///VertexProperties const & vp = g[v2];
+  ///qDebug() << vp.data();
+  qDebug() << "N: " << (int)num_vertices(g);
+
+  /**
+  graph_t::edge_descriptor e;
+  bool ok;
+  tie(e, ok) = boost::add_edge(v1, v2, g);
+  */
+  ///qDebug() << "ok: " << ok;
+  ///boost::add_edge(v3, v4, g);
+  ///boost::add_edge(v4, v3, g);
+
+  boost::add_edge(v1, v2, QVariant("v1->v2"), g);
+  boost::add_edge(v2, v1, QVariant("v2->v1"), g);
+  boost::add_edge(v5, v6, QVariant("v5->v6"), g);
+  boost::add_edge(v2, v5, QVariant("v2->v5"), g);
+  
+  boost::graph_traits<graph_t>::vertex_iterator vi, vi_end;
+  boost::graph_traits<graph_t>::adjacency_iterator ai, ai_end;
+
+  /** 
+  for(boost::tie(vi, vi_end) = vertices(g); vi != vi_end; ++vi){
+    qDebug() << "Vertex : " << get(boost::vertex_bundle, g)[*vi];
+    boost::tie(ai, ai_end) = adjacent_vertices(*vi, g);
+    while(ai != ai_end){
+      qDebug() << "-> Adjacent: " << get(boost::vertex_bundle, g)[*ai];
+      ai++;
+    }
+  }
+  */
+  
+  ///boost::default_bfs_visitor visitor;
+  
+  
+  ///g.clear();
+  
+  QHash<int, vertex_t> lst;
+  QPair<int, QVariant> vertexData;  // <cnnIdPk, "X1;35">
+  QVariant edgeData;
+
+  
+  QString path, pa2;
+  QHash<int, QVariant> lst2;
+  MyVisitor visitor(&path, &pa2, &lst2);
+  breadth_first_search(g, v1, boost::visitor(visitor));
+  qDebug() << "Path  : " << path;
+  qDebug() << "PathV2: " << pa2;
+  qDebug() << "PathV3: " << lst2;
+
+  
+  /**
+  std::vector<int> component(num_vertices(g));
+  int num = connected_components(g, &component[0]);
+  qDebug() << "num: " << num;
+  qDebug() << "Connected components:";
+  for(int i = 0; i < component.size(); ++i){
+    qDebug() << get(boost::vertex_bundle, g)[i] << " is in component  " << get(boost::vertex_bundle, g)[component[i]];
+  }
+  */
+  
+  /**
+  graph_t g(N);
+  add_edge(Jeanie, Debbie, g);
+  add_edge(Jeanie, John, g);
+
+  graph_traits< adjacency_list<> >::vertex_iterator vi, v_end;
+  graph_traits< adjacency_list<> >::adjacency_iterator ai, a_end;
+  property_map <adjacency_list<>, vertex_index_t >::type index_map = get(vertex_index, g);
+
+  for(boost::tie(vi, v_end) = vertices(g); vi != v_end; ++vi){
+    qDebug() << name[get(index_map, *vi)];
+    boost::tie(ai, a_end) = adjacent_vertices(*vi, g);
+    if(ai == a_end){
+      qDebug() << "-> No child";
+    }else{
+      qDebug() << "-> Is parent of:";
+    }
+    for(; ai != a_end; ++ai){
+      qDebug() << "-*> " << name[get(index_map, *ai)];
+    }
+  }
+  */
+}
+
+void mdtClSandbox::graphicsView()
+{
+  QGraphicsScene scene;
+  QGraphicsTextItem *textItem;
+  
+  textItem = scene.addText("8564");
+  textItem->setPos(200/2 - textItem->boundingRect().width()/2, -15);
+  
+  scene.addEllipse(0, 0, 10, 10);
+  textItem = scene.addText("W\nXK94A:02\nXK94A:02;3");
+  textItem->setPos(0-textItem->boundingRect().width()/2, -30-textItem->boundingRect().height()/2);
+  
+  scene.addEllipse(200-5, 0, 10, 10);
+  textItem = scene.addText("CD\n94\nX1;2d");
+  textItem->setPos(200-textItem->boundingRect().width()/2, -30-textItem->boundingRect().height()/2);
+
+  scene.addLine(0+5, 0+5, 200, 0+5);
+  
+  
+  
+  QGraphicsView view(&scene);
+  view.show();
+
+  while(view.isVisible()){
+    QTest::qWait(500);
+  }
+}
 
 /*
  * Main

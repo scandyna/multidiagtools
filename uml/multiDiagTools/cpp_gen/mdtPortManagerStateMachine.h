@@ -18,6 +18,8 @@ class mdtPortManagerStateMachine : public mdtStateMachine {
 
     void buildMainStateMachine(const mdtPortManager & portManager);
 
+
+  protected:
     void buildRunningSubMachine(const mdtPortManager & portManager, const mdtState & parentState);
 
     void buildConnectedSubMachine(const mdtPortManager & portManager, const mdtState & parentState);

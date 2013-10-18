@@ -5,7 +5,6 @@
 #include "mdtDeviceScpi.h"
 
 class mdtDeviceInfo;
-class mdtPortTransaction;
 
 class mdtDeviceDSO1000A : public mdtDeviceScpi {
   public:

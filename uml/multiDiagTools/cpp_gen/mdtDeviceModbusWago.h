@@ -5,6 +5,7 @@
 #include "mdtDeviceModbus.h"
 
 class mdtDeviceInfo;
+class mdtDeviceModbusWagoModule;
 
 class mdtDeviceModbusWago : public mdtDeviceModbus {
   public:
@@ -13,6 +14,10 @@ class mdtDeviceModbusWago : public mdtDeviceModbus {
     ~mdtDeviceModbusWago();
 
     mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo & devInfo);
+
+
+  private:
+    <mdtDeviceModbusWagoModule> pvModules;
 
 };
 #endif

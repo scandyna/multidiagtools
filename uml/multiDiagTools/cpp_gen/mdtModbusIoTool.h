@@ -37,14 +37,10 @@ class mdtModbusIoTool : public QMainWindow, public ui_mdtModbusIoTool {
 
     void setStateError();
 
-
-  public:
     void showStatusMessage(const QString & message, int timeout);
 
     void showStatusMessage(const QString & message, const QString & details, int timeout);
 
-
-  private:
     bool pvReady;
 
 };

@@ -2,19 +2,14 @@
 #define _MDTCLUNITEDITOR_H
 
 
-#include "mdtSqlFormWidget.h"
-#include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
+#include "mdtSqlFormWindow.h"
 
 class mdtSqlWindow;
 
-class mdtClUnitEditor {
+class mdtClUnitEditor : public QObject {
   private:
     Ui::mdtClUnitEditor pvUiUnitWidget;
-
-    mdtSqlFormWidget pvUintWidget;
-
-    mdtSqlTableWidget pvConnectionWidget;
 
     mdtSqlRelation pvRelation;
 
@@ -31,6 +26,8 @@ class mdtClUnitEditor {
 
   private:
     QSqlDatabase * pvDatabase;
+
+    mdtSqlFormWindow pvForm;
 
 };
 #endif

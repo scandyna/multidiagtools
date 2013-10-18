@@ -24,14 +24,6 @@ class mdtSqlRelation : public QObject {
 
     void clear();
 
-
-  private:
-    QSqlTableModel pvParentModel;
-
-    QSqlTableModel pvChildModel;
-
-
-  public:
     void setParentCurrentIndex(int index);
 
     void setParentCurrentIndex(const QModelIndex & index);
@@ -49,6 +41,10 @@ class mdtSqlRelation : public QObject {
     void generateChildModelRelationFilter();
 
     void generateChildModelFilter();
+
+    QSqlTableModel * pvParentModel;
+
+    QSqlTableModel * pvChildModel;
 
 };
 #endif

@@ -10,9 +10,9 @@ class mdtClUnitVehicleType {
 
     QSqlQueryModel vehicleTypeNotAssignedToUnitModel(const QVariant & unitId);
 
-    QSqlError addUnitVehicleTypeAssignments(const QVariant & unitId, const QList<QVariant> & vehicleTypeIdList);
+    bool addUnitVehicleTypeAssignments(const QVariant & unitId, const QList<QVariant> & vehicleTypeIdList);
 
-    QSqlError removeUnitVehicleAssignments(const QVariant & unitId, const QList<QVariant> & vehicleTypeIdList);
+    bool removeUnitVehicleAssignments(const QVariant & unitId, const QList<QVariant> & vehicleTypeIdList);
 
 
   private:
@@ -20,7 +20,9 @@ class mdtClUnitVehicleType {
 
     QSqlDatabase pvDatabase;
 
-    QSqlQueryModel pvUnitVehicleTypeModel;
+
+  public:
+    QSqlError lastError();
 
 };
 #endif

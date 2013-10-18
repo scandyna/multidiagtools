@@ -5,6 +5,8 @@
 #include "mdtAnalogIo.h"
 #include "mdtDigitalIo.h"
 
+class mdtDeviceIosSegment;
+
 class mdtDeviceIos : public QObject {
   private:
     bool pvAutoDeleteIos;
@@ -54,6 +56,22 @@ class mdtDeviceIos : public QObject {
     mdtDigitalIo digitalOutputAt(int address);
 
     QList<mdtDigitalIo> digitalOutputs();
+
+    void analogOutputValueChanged(int address, double value);
+
+    void digitalOutputStateChanged(int address, bool state);
+
+    void updateAnalogInputValue(int address, double value);
+
+    void updateAnalogOutputValue(int address, double value);
+
+    void updateDigitalInputState(int address, bool state);
+
+    void updateDigitalOutputState(int address, bool state);
+
+
+  private:
+    <mdtDeviceIosSegment> ;
 
 };
 #endif

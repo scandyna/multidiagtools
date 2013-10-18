@@ -6,7 +6,7 @@ class mdtGraphVertexData {
   private:
     QVariant pvKey;
 
-    QMap<QVariant, QVariant> pvData;
+    QMap<QString, QVariant> pvData;
 
 
   public:
@@ -18,9 +18,9 @@ class mdtGraphVertexData {
 
     QVariant key();
 
-    void setData(const QVariant & data, const QVariant & field);
+    void setData(const QVariant & data, const QString & field);
 
-    QVariant data(const QVariant & field);
+    QVariant data(const QString & field);
 
 };
 #endif

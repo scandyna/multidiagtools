@@ -4,9 +4,7 @@
 
 class mdtClLinkData {
   private:
-    QVariant pvLinkId;
-
-    QVariant pvArticleId;
+    QVariant pvArticleLinkId;
 
     QVariant pvUnitConnectionStartId;
 
@@ -30,13 +28,9 @@ class mdtClLinkData {
 
 
   public:
-  void setLinkId(const QVariant & value);
+  void setArticleLinkId(const QVariant & value);
 
-  QVariant linkId() const;
-
-  void setArticleId(const QVariant & value);
-
-  QVariant articleId() const;
+  QVariant articleLinkId() const;
 
   void setUnitConnectionStartId(const QVariant & value);
 

@@ -20,15 +20,23 @@ class mdtPortLock {
   public:
     int openLocked(const QString & portName, int flags);
 
-    void unlock();
-
     bool isLocked();
+
+    void unlock();
 
 
   private:
     void scanForLockDirectories();
 
     void buildLockFilesList();
+
+    bool pvIsLocked;
+
+    bool createLockFile(const QFileInfo & file);
+
+    struct flock pvLock;
+
+    int pvFd;
 
 };
 #endif

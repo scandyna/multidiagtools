@@ -20,13 +20,15 @@ class mdtDigitalIo : public mdtAbstractIo {
 
 
   public:
-    void stateChanged(bool on);
+    void stateChanged(bool on,  );
+
+    void stateChanged(int address, bool on);
 
 
   private:
     void setStateFromUi(bool on);
 
-    void valueChangedForUi(bool on);
+    void stateChangedForUi(bool on);
 
 };
 #endif

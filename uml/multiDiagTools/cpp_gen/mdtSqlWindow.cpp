@@ -11,6 +11,9 @@ mdtSqlWindow::~mdtSqlWindow() {
 void mdtSqlWindow::setSqlWidget(const mdtAbstractSqlWidget & sqlWidget) {
 }
 
+void mdtSqlWindow::addChildWidget(const QWidget & widget, const QString & label) {
+}
+
 void mdtSqlWindow::enableNavigation() {
 }
 

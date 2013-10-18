@@ -2,15 +2,17 @@
 #define _MDTDEVICESTATUSWIDGET_H
 
 
-class mdtDeviceStatusWidget : public QWidget {
+class mdtPortStatusWidget : public QWidget {
   public:
-    mdtDeviceStatusWidget(const QWidget & parent);
+    mdtPortStatusWidget(const QWidget & parent);
 
-    ~mdtDeviceStatusWidget();
+    ~mdtPortStatusWidget();
 
     void setState(const state_t & state);
 
-    void setState(const state_t & state, const QString & message, const QString & details);
+    void setState(int state, int stateText, int ledColor);
+
+    void showMessage(const QString & message, const QString & details, int timeout);
 
 
   private:

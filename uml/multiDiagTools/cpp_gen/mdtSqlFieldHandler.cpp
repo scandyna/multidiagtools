@@ -10,6 +10,12 @@ mdtSqlFieldHandler::~mdtSqlFieldHandler() {
 void mdtSqlFieldHandler::setField(const QSqlField & field) {
 }
 
+void mdtSqlFieldHandler::setReadOnly(bool readOnly) {
+}
+
+bool mdtSqlFieldHandler::isReadOnly() {
+}
+
 void mdtSqlFieldHandler::setDataWidget(const QLineEdit & widget) {
 }
 

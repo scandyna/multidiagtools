@@ -4,27 +4,21 @@
 
 #include "mdtAbstractIoWidget.h"
 
+class mdtAnalogIo;
+
 class mdtAnalogInWidget : public mdtAbstractIoWidget {
   public:
      mdtAnalogInWidget(const QWidget & parent = 0);
 
      ~mdtAnalogInWidget();
 
-    void setRange(double min, double max, int steps);
-
-    void setValue(double value);
-
-    double value();
-
-    void setValueInt(int value);
-
-    int valueInt();
+    void setIo(const mdtAnalogIo & io);
 
 
   private:
-    double pvStep;
+    void setRange(double min, double max,  );
 
-    double pvStepInverse;
+    void setValue(double value);
 
 };
 #endif

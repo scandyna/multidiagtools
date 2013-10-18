@@ -18,6 +18,10 @@ class mdtSqlFieldHandler : public QObject {
 
     void setField(const QSqlField & field);
 
+    void setReadOnly(bool readOnly);
+
+    bool isReadOnly();
+
     void setDataWidget(const QLineEdit & widget);
 
     void setDataWidget(const QAbstractButton & widget);
@@ -48,8 +52,6 @@ class mdtSqlFieldHandler : public QObject {
 
     void onDataEdited(const QDateTime & datetime);
 
-    QLineEdit * pvLineEdit;
-
     QAbstractButton * pvAbstractButton;
 
     QDateTimeEdit * pvDateTimeEdit;
@@ -59,6 +61,10 @@ class mdtSqlFieldHandler : public QObject {
     QSpinBox * pvSpinBox;
 
     QComboBox * pvComboBox;
+
+    bool pvIsReadOnly;
+
+    <mdtSqlFieldHandlerAbstractDataWidget> pvDataWidget;
 
 };
 #endif

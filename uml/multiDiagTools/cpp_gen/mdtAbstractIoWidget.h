@@ -2,6 +2,9 @@
 #define _MDTABSTRACTIOWIDGET_H
 
 
+class mdtAbstractIo;
+class mdtAnalogIo;
+
 class mdtAbstractIoWidget : public QWidget {
   public:
      mdtAbstractIoWidget(const QWidget & parent = 0);
@@ -9,28 +12,18 @@ class mdtAbstractIoWidget : public QWidget {
      ~mdtAbstractIoWidget();
 
 
+  protected:
+    void setIo(const mdtAbstractIo & io);
+
+
   private:
-    int pvAddress;
+    void setAddress(int adr);
 
-    QString pvLabelShort;
-
-    QString pvLabel;
-
-    QString pvDetails;
-
-
-  public:
     void setLabelShort(const QString & text);
-
-    QString labelShort();
 
     void setLabel(const QString & text);
 
-    QString label();
-
     void setDetails(const QString & text);
-
-    QString details();
 
 };
 #endif

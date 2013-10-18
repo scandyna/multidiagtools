@@ -1,6 +1,7 @@
 
 #include "mdtDeviceModbusWago.h"
 #include "mdtDeviceInfo.h"
+#include "mdtDeviceModbusWagoModule.h"
 
 mdtDeviceModbusWago::mdtDeviceModbusWago(const QObject & parent) {
 }

@@ -16,7 +16,9 @@ class mdtFileCopier : public QThread {
 
     FILE pvDestFile;
 
-    QFileInfo pvFileInfo;
+    QFileInfo pvSrcFileInfo;
+
+    QFileInfo pvDestFileInfo;
 
     QMutex pvMutex;
 
@@ -55,6 +57,8 @@ class mdtFileCopier : public QThread {
     bool sync();
 
     virtual void run();
+
+    <mdtFileCopierItem> pvCopiesInProcess;
 
 };
 #endif

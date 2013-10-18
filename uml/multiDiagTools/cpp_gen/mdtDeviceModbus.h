@@ -2,8 +2,6 @@
 #define _MDTDEVICEMODBUS_H
 
 
-class mdtModbusTcpPortManager;
-
 class mdtDeviceModbus : public mdtDevice {
   public:
     mdtDeviceModbus(const QObject & parent);
@@ -28,29 +26,35 @@ class mdtDeviceModbus : public mdtDevice {
 
 
   public:
-    QVariant getAnalogInputValue(int address, bool readDirectly);
+    bool getRegisterValues(int address, int n);
 
-    bool readAnalogInputs();
+const   QList<int> registerValues() const;
+
+    QVariant getAnalogInputValue(int address, bool readDirectly);
 
     bool setAnalogOutput(int address, int value, bool writeDirectly);
 
     virtual QVariant getAnalogOutputValue(int address, bool readDirectly) = 0;
 
-    bool writeAnalogOutputs();
-
-    virtual bool readAnalogOutputs() = 0;
-
     QVariant getDigitalInputState(int address, bool readDirectly);
-
-    bool readDigitalInputs();
 
     bool setDigitalOutput(int address, bool state, bool writeDirectly);
 
     virtual QVariant getDigitalOutputState(int address, bool readDirectly) = 0;
 
-    bool writeDigitalOutputs(const  & );
 
-    virtual bool readDigitalOutputs(const  & ) = 0;
+  protected:
+    bool readAnalogInputs();
+
+    virtual bool readAnalogOutputs() = 0;
+
+    bool writeAnalogOutputs();
+
+    bool readDigitalInputs();
+
+    bool writeDigitalOutputs(const mdtPortTransaction & transaction);
+
+    virtual bool readDigitalOutputs(const mdtPortTransaction & transaction);
 
 };
 #endif

@@ -18,11 +18,13 @@ class mdtSqlDialog : public QDialog {
 
     void addChildWidget(const QWidget & widget, const QString & label);
 
-    bool setCurrentRow(int row);
+    void setCurrentRow(int row);
 
     bool setCurrentRow(const QString & fieldName, const QVariant & matchData);
 
-    bool setCurrentRow(const QList<QPair<QString, AVariant> > & matchList);
+    bool setCurrentRow(const QList<QPair<QString, QVariant> > & matchList);
+
+    void insertRow();
 
     virtual void accept();
 

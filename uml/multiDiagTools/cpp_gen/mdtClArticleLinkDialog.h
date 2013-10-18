@@ -54,5 +54,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
     QVariant endConnectionId();
 
+    mdtClArticleLinkDialog(const QWidget & parent, const QSqlDatabase & db);
+
 };
 #endif

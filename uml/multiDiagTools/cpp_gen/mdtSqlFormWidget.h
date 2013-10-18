@@ -4,6 +4,8 @@
 
 #include "mdtAbstractSqlWidget.h"
 
+class mdtSqlFieldHandler;
+
 class mdtSqlFormWidget : public mdtAbstractSqlWidget {
   public:
     mdtSqlFormWidget(const QWidget & parent);
@@ -12,19 +14,35 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget {
 
     virtual void setModel(const QSqlTableModel & model);
 
-    void setForm(const QWidget & form);
 
-    virtual void submit();
+  private:
+    <mdtSqlFieldHandler> pvFieldHandlers;
 
-    virtual void revert();
 
-    virtual void insert();
+  public:
+    virtual void toFirst();
 
-    virtual void delete();
+    virtual void toLast();
+
+    virtual void toPrevious();
+
+    virtual void toNext();
 
 
   private:
-    mdtSqlDataWidgetMapper pvWidgetMapper;
+    virtual bool doSubmit();
+
+    virtual bool doRevert();
+
+    virtual bool doInsert();
+
+    virtual bool doSubmitNewRow();
+
+    virtual bool doRevertNewRow();
+
+    virtual bool doRemove();
+
+    QDataWidgetMapper pvWidgetMapper;
 
 };
 #endif

@@ -1,7 +1,10 @@
 
 #include "mdtSqlDataValidator.h"
 
-mdtSqlDataValidator::mdtSqlDataValidator(const QObject & parent, const QSqlTableModel & model) {
+mdtSqlDataValidator::mdtSqlDataValidator(const QSqlTableModel & model, const QObject & parent) {
+}
+
+QSqlTableModel mdtSqlDataValidator::model() {
 }
 
 void mdtSqlDataValidator::displayWarning(const QString & text, const QString & informativeText, const QSqlError & sqlError) {

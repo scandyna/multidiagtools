@@ -4,10 +4,11 @@
 
 #include "mdtGraphVertexData.h"
 
+class mdtGraphEdgeData;
+class mdtGraphVertexAdjacent;
+
 class mdtGraphVertex {
   private:
-    <mdtGraphVertex> pvAdjacencyList;
-
     mdtGraphVertexData * pvData;
 
 
@@ -20,9 +21,9 @@ class mdtGraphVertex {
 
     mdtGraphVertexData data();
 
-    void addAdjacent(const mdtGraphVertex & v);
+    void addAdjacent(const mdtGraphVertex & v, const mdtGraphEdgeData & d);
 
-    bool removeAdjacent(const QVariant & key);
+    bool removeAdjacent(const QVariant & key, bool deleteEdgeData);
 
     bool containsAdjacent(const QVariant & key);
 
@@ -33,6 +34,8 @@ class mdtGraphVertex {
 
   private:
     color_t pvColor;
+
+    <mdtGraphVertexAdjacent> pvAdjacencyList;
 
 };
 #endif

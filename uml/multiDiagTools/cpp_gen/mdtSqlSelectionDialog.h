@@ -4,7 +4,7 @@
 
 class mdtSqlSelectionDialog : public QDialog {
   public:
-    mdtSqlSelectionDialog(const QWidget & parent);
+    mdtSqlSelectionDialog(const QObject & parent);
 
     ~mdtSqlSelectionDialog();
 

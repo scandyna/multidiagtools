@@ -44,3 +44,6 @@ QVariant mdtClArticleLinkDialog::startConnectionId() {
 QVariant mdtClArticleLinkDialog::endConnectionId() {
 }
 
+mdtClArticleLinkDialog::mdtClArticleLinkDialog(const QWidget & parent, const QSqlDatabase & db) {
+}
+

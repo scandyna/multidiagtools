@@ -10,13 +10,17 @@ class mdtAbstractIo : public QObject {
 
 
   private:
-    int pvAddress;
+    mdtValue pvValue;
 
     QString pvLabelShort;
 
     QString pvLabel;
 
     QString pvDetails;
+
+
+  protected:
+    int pvAddress;
 
 
   public:
@@ -38,7 +42,7 @@ class mdtAbstractIo : public QObject {
 
 
   private:
-    slot addressChangedForUi(int adr);
+    void addressChangedForUi(int adr);
 
     void labelShortChangedForUi(const QString & text);
 

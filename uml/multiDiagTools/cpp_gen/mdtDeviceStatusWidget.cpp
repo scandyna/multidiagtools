@@ -1,15 +1,18 @@
 
 #include "mdtDeviceStatusWidget.h"
 
-mdtDeviceStatusWidget::mdtDeviceStatusWidget(const QWidget & parent) {
+mdtPortStatusWidget::mdtPortStatusWidget(const QWidget & parent) {
 }
 
-mdtDeviceStatusWidget::~mdtDeviceStatusWidget() {
+mdtPortStatusWidget::~mdtPortStatusWidget() {
 }
 
-void mdtDeviceStatusWidget::setState(const state_t & state) {
+void mdtPortStatusWidget::setState(const state_t & state) {
 }
 
-void mdtDeviceStatusWidget::setState(const state_t & state, const QString & message, const QString & details) {
+void mdtPortStatusWidget::setState(int state, int stateText, int ledColor) {
+}
+
+void mdtPortStatusWidget::showMessage(const QString & message, const QString & details, int timeout) {
 }
 

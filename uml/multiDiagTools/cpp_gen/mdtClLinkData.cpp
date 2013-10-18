@@ -1,22 +1,12 @@
 
 #include "mdtClLinkData.h"
 
-void mdtClLinkData::setLinkId(const QVariant & value) 
+void mdtClLinkData::setArticleLinkId(const QVariant & value) 
 {
 
 }
 
-QVariant mdtClLinkData::linkId() const 
-{
-
-}
-
-void mdtClLinkData::setArticleId(const QVariant & value) 
-{
-
-}
-
-QVariant mdtClLinkData::articleId() const 
+QVariant mdtClLinkData::articleLinkId() const 
 {
 
 }

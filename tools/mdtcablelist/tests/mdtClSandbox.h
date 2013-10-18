@@ -30,6 +30,10 @@ class mdtClSandbox : public mdtTest
  private slots:
 
   void essais();
+  
+  void tryBoost();
+  
+  void graphicsView();
 };
 
 #endif // #ifndef MDT_CL_SANDBOX_H

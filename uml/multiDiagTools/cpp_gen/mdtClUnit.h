@@ -34,15 +34,19 @@ class mdtClUnit {
 
     mdtClUnitConnectionData getUnitConnectionData(const QVariant & unitConnectionId);
 
-    QSqlQueryModel relatedRangesModel(const QVariant & unitConnectionId);
-
 
   private:
     QSqlDatabase pvDatabase;
 
 
   public:
-    bool addRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData);
+    QSqlQueryModel unitConnectionRangesModel(const QVariant & unitConnectionId);
+
+    bool addUnitConnectionRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData);
+
+    bool updateUnitConnectionRanges(const QVariant & baseUnitConnectionId, const QStandardItemModel & ranges);
+
+    bool removeUnitConnectionRange(const QVariant & unitConnectionId);
 
 };
 #endif

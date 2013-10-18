@@ -8,7 +8,7 @@ class mdtSqlFieldHandler;
 
 class mdtSqlFormWidgetDataValidator : public mdtSqlDataValidator {
   public:
-    mdtSqlFormWidgetDataValidator(const QObject & parent, const QSqlTableModel & model, const mdtSqlFieldHandler & fieldHandler);
+    mdtSqlFormWidgetDataValidator(const QSqlTableModel & model, const QObject & parent, const mdtSqlFieldHandler & fieldHandler);
 
     ~mdtSqlFormWidgetDataValidator();
 

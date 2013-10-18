@@ -23,7 +23,7 @@
   relations_stereotypes 5 // uml cpp java pythonidl
     "sequence" "vector" "Vector" "list" "sequence"
     "vector" "vector" "Vector" "list" "sequence"
-    "list" "list" "List" "list" "sequence"
+    "list" "QList" "List" "list" "sequence"
     "set" "set" "Set" "set" "sequence"
     "map" "map" "Map" "dict" "sequence"
   
@@ -55,25 +55,29 @@ ${declarations}
 ${namespace_start}
 ${definition}
 ${namespace_end}
-#endif
+
+#endif // #ifndef ${NAME}_H
 "
   cpp_default_src_content "${comment}
 ${includes}
 ${namespace_start}
 ${members}
 ${namespace_end}"
-  cpp_default_class_decl "${comment}${template}class ${name}${inherit} {
+  cpp_default_class_decl "${comment}${template}class ${name}${inherit}
+{
 ${members}};
 ${inlines}
 "
   cpp_default_external_class_decl "${name}
 #include <${name}.h>
 "
-  cpp_default_struct_decl "${comment}${template}struct ${name}${inherit} {
+  cpp_default_struct_decl "${comment}${template}struct ${name}${inherit}
+{
 ${members}};
 ${inlines}
 "
-  cpp_default_union_decl "${comment}${template}union ${name} {
+  cpp_default_union_decl "${comment}${template}union ${name}
+{
 ${members}};
 ${inlines}
 "
@@ -83,7 +87,7 @@ ${items}
 "
   cpp_default_typedef_decl "${comment}typedef ${type} ${name};
 "
-  cpp_default_attribute_declaration "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+  cpp_default_attribute_declaration "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 " // multiplicity 1
   "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 " // multiplicity * a..b
@@ -104,11 +108,12 @@ ${items}
 " // multiplicity * a..b
     "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
 " // multiplicity [..]
-  cpp_get "get_${name}" inline const value_const public
-  cpp_set "set_${name}" public
-  cpp_default_operation_declaration "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+  cpp_get "${name}" inline const value_const public
+  cpp_set "set${name}" public
+  cpp_default_operation_declaration "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-  cpp_default_operation_definition "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  cpp_default_operation_definition "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
   ${body}}
 "
   cpp_indent_visibility "  " cpp_indent_friendclass "  " cpp_indent_subclass "    "
@@ -309,5 +314,5 @@ ${items}};
   idl_set "set_${name}"  twoways
   idl_default_operation_declaration "  ${comment}${oneway}${type} ${name}${(}${)}${raisesnl}${raises};
 "
-  uml_get_name uml uml_set_name uml
+  uml_get_name c++ uml_set_name c++
 end

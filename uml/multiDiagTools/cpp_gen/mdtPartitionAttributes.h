@@ -18,7 +18,7 @@ class mdtPartitionAttributes {
 
     ~mdtPartitionAttributes();
 
-    bool setPath();
+    bool setPath(const QString & path);
 
     QString rootPath(bool nativeFormat);
 
@@ -29,6 +29,8 @@ class mdtPartitionAttributes {
     bool isWriteable();
 
     QString fileSystem();
+
+    static QStringList availablePartitions();
 
 };
 #endif
