@@ -41,6 +41,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsSimpleTextItem>
+#include "mdtClPathGraphicsConnection.h"
+#include "mdtClPathGraphicsLink.h"
 
 #include <QDebug>
 
@@ -535,7 +537,7 @@ void mdtClSandbox::graphicsView()
 {
   QGraphicsScene scene;
   QGraphicsTextItem *textItem;
-  
+  /**
   textItem = scene.addText("8564");
   textItem->setPos(200/2 - textItem->boundingRect().width()/2, -15);
   
@@ -548,10 +550,23 @@ void mdtClSandbox::graphicsView()
   textItem->setPos(200-textItem->boundingRect().width()/2, -30-textItem->boundingRect().height()/2);
 
   scene.addLine(0+5, 0+5, 200, 0+5);
-  
-  
+  */
+  mdtClPathGraphicsConnection cnn1, cnn2;
+  mdtClPathGraphicsLink link1(&cnn1, &cnn2);
+  link1.setText("5248");
+  cnn1.setPos(20, 50);
+  cnn1.setText("W\nXK94A:02\nXK94A:02;3");
+  cnn2.setPos(200, 60);
+  cnn2.setText("CD\n94\nX1;2d");
+  ///cnn2.setCircleDiameter(10.0);
+  scene.addItem(&cnn1);
+  scene.addItem(&cnn2);
+  scene.addItem(&link1);
   
   QGraphicsView view(&scene);
+  view.setRenderHint(QPainter::Antialiasing);
+  view.setCacheMode(QGraphicsView::CacheBackground);
+  view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
   view.show();
 
   while(view.isVisible()){

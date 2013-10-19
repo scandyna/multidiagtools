@@ -42,6 +42,8 @@ set (TEST_SOURCES_FILES
           ../src/mdtClArticleComponentDialog.cpp
           ../src/mdtClArticleLinkDialog.cpp
           ../src/mdtClArticle.cpp
+          ../src/mdtClPathGraphicsConnection.cpp
+          ../src/mdtClPathGraphicsLink.cpp
     )
 
 # Qt ui files
@@ -63,9 +65,10 @@ include_directories("${PROJECT_SOURCE_DIR}/../../../tests/mdttest")
 include_directories("${PROJECT_SOURCE_DIR}/../src")
 
 # Sandbox
-QT4_WRAP_CPP(MDT_CL_SANDBOX "mdtClSandbox.h")
-add_executable(mdtclsandbox "mdtClSandbox.cpp" ${MDT_CL_SANDBOX})
+QT4_WRAP_CPP(MDT_CL_SANDBOX_MOC "mdtClSandbox.h" ${TEST_HEADER_FILES})
+add_executable(mdtclsandbox "mdtClSandbox.cpp" ${TEST_SOURCES_FILES} ${MDT_CL_SANDBOX_MOC})
 target_link_libraries(mdtclsandbox "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclsandbox "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdttest")
 
 # mdtClUnit

@@ -1,6 +1,6 @@
 format 76
 "Program" // mdttools::CableList::Sandbox::Program
-  revision 16
+  revision 17
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2477,7 +2477,7 @@ ${inlines}
       size A4
     end
 
-    class 894722 "mdtClPathGraphItem"
+    class 894722 "mdtClPathGraphItemData"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -2510,7 +2510,7 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
 	  b parent class_ref 818946 // mdtClUnitConnectionData
       end
 
-      operation 1635586 "mdtClPathGraphItem"
+      operation 1635586 "mdtClPathGraphItemData"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
@@ -2525,7 +2525,7 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
 	
       end
 
-      operation 1635714 "~mdtClPathGraphItem"
+      operation 1635714 "~mdtClPathGraphItemData"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -2647,14 +2647,14 @@ ${inlines}
       explicit_switch_type ""
       
       comment "Handle also the (Boost) graph"
-      classrelation 1107074 // pvItems (<directional composition>)
+      classrelation 1107074 // pvItemDataList (<directional composition>)
 	relation 1095810 *-->
-	  a role_name "pvItems" multiplicity "0..*" private
+	  a role_name "pvItemDataList" multiplicity "0..*" private
 	    comment "Put direct in a QList, no pointers !"
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
-	    classrelation_ref 1107074 // pvItems (<directional composition>)
-	  b parent class_ref 894722 // mdtClPathGraphItem
+	    classrelation_ref 1107074 // pvItemDataList (<directional composition>)
+	  b parent class_ref 894722 // mdtClPathGraphItemData
       end
 
       classrelation 1108098 // pvLinkDataList (<directional composition>)
@@ -2785,18 +2785,18 @@ ${inlines}
 	
       end
 
-      classrelation 1109890 // pvGraphicsItemList (<directional composition>)
+      classrelation 1109890 // pvItemList (<directional composition>)
 	relation 1098626 *-->
 	  stereotype "list"
-	  a role_name "pvGraphicsItemList" multiplicity "0..*" private
+	  a role_name "pvItemList" multiplicity "0..*" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
-	    classrelation_ref 1109890 // pvGraphicsItemList (<directional composition>)
-	  b parent class_ref 896130 // mdtClPathGraphicsItem
+	    classrelation_ref 1109890 // pvItemList (<directional composition>)
+	  b parent class_ref 896130 // mdtClPathGraphItem
       end
     end
 
-    class 896130 "mdtClPathGraphicsItem"
+    class 896130 "mdtClPathGraphItem"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -2809,39 +2809,343 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 1109378 // <unidirectional association>
-	relation 1098114 --->
-	  a role_name "" multiplicity "0..2" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
-"
-	    classrelation_ref 1109378 // <unidirectional association>
-	  b parent class_ref 896258 // QGraphicsEllipseItem
-      end
-
-      classrelation 1109506 // <unidirectional association>
-	relation 1098242 --->
-	  a role_name "" multiplicity "0..3" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
-"
-	    classrelation_ref 1109506 // <unidirectional association>
-	  b parent class_ref 894978 // QGraphicsTextItem
-      end
-
-      classrelation 1109634 // <unidirectional association>
-	relation 1098370 --->
-	  a role_name "" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1109634 // <unidirectional association>
-	  b parent class_ref 895490 // QGraphicsLineItem
-      end
-
       classrelation 1109762 // <dependency>
 	relation 1098498 -_->
 	  a default
 	    cpp default "#include in source"
 	    classrelation_ref 1109762 // <dependency>
-	  b parent class_ref 894722 // mdtClPathGraphItem
+	  b parent class_ref 894722 // mdtClPathGraphItemData
+      end
+
+      classrelation 1116418 // pvLink (<unidirectional association>)
+	relation 1105154 --->
+	  a role_name "pvLink" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1116418 // pvLink (<unidirectional association>)
+	  b parent class_ref 903682 // mdtClPathGraphicsLink
+      end
+
+      classrelation 1116546 // <unidirectional association>
+	relation 1105282 --->
+	  a role_name "" multiplicity "0..2" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1116546 // <unidirectional association>
+	  b parent class_ref 903554 // mdtClPathGraphicsConnection
+      end
+    end
+
+    classdiagram 867714 "mdtClPathGraphicsConnection"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 903554 "mdtClPathGraphicsConnection"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1116802 // pvLinkList (<association>)
+	relation_ref 1105410 // <association>
+      end
+
+      operation 1644162 "mdtClPathGraphicsConnection"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1644418 "addLink"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "link" type class_ref 903682 // mdtClPathGraphicsLink
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1644546 "links"
+	stereotype "list"
+	public return_type class_ref 903682 // mdtClPathGraphicsLink
+	multiplicity "*"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1116930 // <generalisation>
+	relation 1105538 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1116930 // <generalisation>
+	  b parent class_ref 895234 // QGraphicsItem
+      end
+
+      operation 1644674 "type"
+	const cpp_virtual public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1644802 "boundingRect"
+	const cpp_virtual public return_type class_ref 902914 // QRectF
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1644930 "shape"
+	const cpp_virtual public return_type class_ref 903042 // QPainterPath
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645058 "paint"
+	cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "painter" type class_ref 903170 // QPainter
+	  param in name "option" type class_ref 903298 // QStyleOptionGraphicsItem
+	  param in name "widget" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 867842 "mdtClPathGraphicsLink"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 903682 "mdtClPathGraphicsLink"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1116674 // <association>
+	relation 1105410 ----
+	  a role_name "" multiplicity "2" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${multiplicity}${value};
+"
+	    classrelation_ref 1116674 // <association>
+	  b role_name "pvLinkList" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1116802 // pvLinkList (<association>)
+      end
+
+      operation 1644290 "mdtClPathGraphicsLink"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "startConnection" type class_ref 903554 // mdtClPathGraphicsConnection
+	  param in name "endConnection" type class_ref 903554 // mdtClPathGraphicsConnection
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1117058 // <generalisation>
+	relation 1105666 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1117058 // <generalisation>
+	  b parent class_ref 895234 // QGraphicsItem
+      end
+
+      operation 1645186 "startConnection"
+	public return_type class_ref 903554 // mdtClPathGraphicsConnection
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645314 "endConnection"
+	public return_type class_ref 903554 // mdtClPathGraphicsConnection
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645442 "adjust"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645570 "type"
+	const cpp_virtual public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645698 "boundingRect"
+	const cpp_virtual public return_type class_ref 902914 // QRectF
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645826 "paint"
+	cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "painter" type class_ref 903170 // QPainter
+	  param in name "option" type class_ref 903298 // QStyleOptionGraphicsItem
+	  param in name "widget" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 907394 "pvStartPoint"
+	private explicit_type "QPointF"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 907522 "pvEndPoint"
+	private explicit_type "QPointF"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
     end
   end
@@ -2870,6 +3174,54 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 888194 // mdtClLinkData
+      end
+    end
+
+    artifact 552066 "mdtClPathGraphicsConnection"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 903554 // mdtClPathGraphicsConnection
+      end
+    end
+
+    artifact 552194 "mdtClPathGraphicsLink"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 903682 // mdtClPathGraphicsLink
       end
     end
   end

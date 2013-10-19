@@ -42,6 +42,8 @@ set (SOURCES_FILES
           src/mdtClArticleComponentDialog.cpp
           src/mdtClArticleLinkDialog.cpp
           src/mdtClArticle.cpp
+          src/mdtClPathGraphicsConnection.cpp
+          src/mdtClPathGraphicsLink.cpp
     )
 
 # Qt ui files
