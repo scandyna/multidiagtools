@@ -1,6 +1,6 @@
 format 76
 "Program" // mdttools::CableList::Sandbox::Program
-  revision 17
+  revision 18
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2477,7 +2477,7 @@ ${inlines}
       size A4
     end
 
-    class 894722 "mdtClPathGraphItemData"
+    class 894722 "mdtClPathGraphEdgeData"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -2510,7 +2510,7 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
 	  b parent class_ref 818946 // mdtClUnitConnectionData
       end
 
-      operation 1635586 "mdtClPathGraphItemData"
+      operation 1635586 "mdtClPathGraphEdgeData"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
@@ -2525,7 +2525,7 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
 	
       end
 
-      operation 1635714 "~mdtClPathGraphItemData"
+      operation 1635714 "~mdtClPathGraphEdgeData"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -2636,7 +2636,8 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
 
     class 894850 "mdtClPathGraph"
       visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
 ${members}};
 ${inlines}
 "
@@ -2647,38 +2648,6 @@ ${inlines}
       explicit_switch_type ""
       
       comment "Handle also the (Boost) graph"
-      classrelation 1107074 // pvItemDataList (<directional composition>)
-	relation 1095810 *-->
-	  a role_name "pvItemDataList" multiplicity "0..*" private
-	    comment "Put direct in a QList, no pointers !"
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 1107074 // pvItemDataList (<directional composition>)
-	  b parent class_ref 894722 // mdtClPathGraphItemData
-      end
-
-      classrelation 1108098 // pvLinkDataList (<directional composition>)
-	relation 1096834 *-->
-	  stereotype "list"
-	  a role_name "pvLinkDataList" multiplicity "0..*" private
-	    comment "For memory handling, use list of pointers"
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 1108098 // pvLinkDataList (<directional composition>)
-	  b parent class_ref 888194 // mdtClLinkData
-      end
-
-      classrelation 1108226 // pvConnectionList (<directional composition>)
-	relation 1096962 *-->
-	  stereotype "list"
-	  a role_name "pvConnectionList" multiplicity "0..*" private
-	    comment "For memory management. Use list of pointers"
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 1108226 // pvConnectionList (<directional composition>)
-	  b parent class_ref 818946 // mdtClUnitConnectionData
-      end
-
       classrelation 1108354 // pvLinkListModel (<directional composition>)
 	relation 1097090 *-->
 	  a role_name "pvLinkListModel" multiplicity "1" private
@@ -2688,7 +2657,7 @@ ${inlines}
 	  b parent class_ref 174338 // QSqlQueryModel
       end
 
-      attribute 900866 "pvDatabase"
+      attribute 900866 "Database"
 	private type class_ref 405122 // QSqlDatabase
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -2696,6 +2665,28 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+
+      attribute 914050 "pvEdgeQueue"
+	private explicit_type "QPair<QVariant, QVariant>"
+	multiplicity "*"
+	stereotype "queue"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1123586 // pvDrawnConnections (<unidirectional association>)
+	relation 1112194 --->
+	  stereotype "hash"
+	  a role_name "pvDrawnConnections" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1123586 // pvDrawnConnections (<unidirectional association>)
+	  b parent class_ref 903554 // mdtClPathGraphicsConnection
       end
 
       operation 1634818 "mdtClPathGraph"
@@ -2719,6 +2710,21 @@ ${inlines}
 	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1652354 "loadLinkList"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
   ${body}}
 "
 	
@@ -2785,54 +2791,52 @@ ${inlines}
 	
       end
 
-      classrelation 1109890 // pvItemList (<directional composition>)
-	relation 1098626 *-->
-	  stereotype "list"
-	  a role_name "pvItemList" multiplicity "0..*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+      operation 1652482 "getUnitConnectionStartDataFromModel"
+	private return_type class_ref 818946 // mdtClUnitConnectionData
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 1109890 // pvItemList (<directional composition>)
-	  b parent class_ref 896130 // mdtClPathGraphItem
-      end
-    end
-
-    class 896130 "mdtClPathGraphItem"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
-${members}};
-${inlines}
+  ${body}}
 "
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      classrelation 1109762 // <dependency>
-	relation 1098498 -_->
-	  a default
-	    cpp default "#include in source"
-	    classrelation_ref 1109762 // <dependency>
-	  b parent class_ref 894722 // mdtClPathGraphItemData
+	
+	
+	
+	
       end
 
-      classrelation 1116418 // pvLink (<unidirectional association>)
-	relation 1105154 --->
-	  a role_name "pvLink" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+      operation 1652610 "getUnitConnectionEndDataFromModel"
+	private return_type class_ref 818946 // mdtClUnitConnectionData
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 1116418 // pvLink (<unidirectional association>)
-	  b parent class_ref 903682 // mdtClPathGraphicsLink
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      classrelation 1116546 // <unidirectional association>
-	relation 1105282 --->
-	  a role_name "" multiplicity "0..2" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+      operation 1652738 "getLinkDataFromModel"
+	private return_type class_ref 888194 // mdtClLinkData
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 1116546 // <unidirectional association>
-	  b parent class_ref 903554 // mdtClPathGraphicsConnection
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -2854,7 +2858,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 1116802 // pvLinkList (<association>)
+      classrelation 1116802 // <association>
 	relation_ref 1105410 // <association>
       end
 
@@ -2977,6 +2981,21 @@ ${inlines}
 	
 	
       end
+
+      operation 1652866 "nextPosition"
+	public explicit_return_type "QPointF"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 867842 "mdtClPathGraphicsLink"
@@ -3006,7 +3025,7 @@ ${inlines}
 	  b role_name "pvLinkList" multiplicity "*" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
 "
-	    classrelation_ref 1116802 // pvLinkList (<association>)
+	    classrelation_ref 1116802 // <association>
       end
 
       operation 1644290 "mdtClPathGraphicsLink"
@@ -3222,6 +3241,30 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 903682 // mdtClPathGraphicsLink
+      end
+    end
+
+    artifact 558722 "mdtClPathGraph"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 894850 // mdtClPathGraph
       end
     end
   end

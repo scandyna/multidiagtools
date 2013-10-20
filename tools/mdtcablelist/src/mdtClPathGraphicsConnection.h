@@ -24,6 +24,7 @@
 #include <QGraphicsItem>
 #include <QList>
 #include <QPainterPath>
+#include <QPointF>
 #include <QRectF>
 #include <QVariant>
 #include <QString>
@@ -56,6 +57,16 @@ class mdtClPathGraphicsConnection : public QGraphicsItem
   /*! \brief Set the circle diameter
    */
   void setCircleDiameter(qreal diameter);
+
+  /*! \brief Get the position for next connection (node)
+   *
+   * This is a helper method to place connection on a scene.
+   *  This will not alter current connection's position.
+   *
+   * \param linkLength The expected length of link
+   * \param dAlpha Angle increment (default is approx pi/4, 45°)
+   */
+  QPointF nextPosition(qreal linkLength = 200.0, qreal dAlpha = 0.785398163397) const;
 
   /*! \brief Add a link
    */

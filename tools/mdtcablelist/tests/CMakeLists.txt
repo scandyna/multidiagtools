@@ -44,6 +44,7 @@ set (TEST_SOURCES_FILES
           ../src/mdtClArticle.cpp
           ../src/mdtClPathGraphicsConnection.cpp
           ../src/mdtClPathGraphicsLink.cpp
+          ../src/mdtClPathGraph.cpp
     )
 
 # Qt ui files

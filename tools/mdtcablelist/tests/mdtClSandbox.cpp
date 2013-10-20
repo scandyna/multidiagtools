@@ -41,8 +41,13 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsSimpleTextItem>
+#include <QSqlDatabase>
 #include "mdtClPathGraphicsConnection.h"
 #include "mdtClPathGraphicsLink.h"
+#include "mdtClPathGraph.h"
+
+#include <QMessageBox>
+#include <QInputDialog>
 
 #include <QDebug>
 
@@ -402,7 +407,7 @@ struct GraphProperties
 
 
   typedef boost::adjacency_list<
-      boost::vecS, boost::vecS, boost::directedS,
+      boost::vecS, boost::vecS, boost::/**directedS*/undirectedS,
       boost::property<boost::vertex_bundle_t, QPair<int, QVariant> >,
       boost::property<boost::edge_bundle_t, QVariant>,
       boost::property<boost::graph_bundle_t, GraphProperties>
@@ -462,9 +467,9 @@ void mdtClSandbox::tryBoost()
   ///boost::add_edge(v4, v3, g);
 
   boost::add_edge(v1, v2, QVariant("v1->v2"), g);
-  boost::add_edge(v2, v1, QVariant("v2->v1"), g);
-  boost::add_edge(v5, v6, QVariant("v5->v6"), g);
-  boost::add_edge(v2, v5, QVariant("v2->v5"), g);
+  boost::add_edge(v2, v1, QVariant("v5->v2"), g);
+  ///boost::add_edge(v5, v6, QVariant("v5->v6"), g);
+  ///boost::add_edge(v2, v5, QVariant("v2->v5"), g);
   
   boost::graph_traits<graph_t>::vertex_iterator vi, vi_end;
   boost::graph_traits<graph_t>::adjacency_iterator ai, ai_end;
@@ -535,38 +540,97 @@ void mdtClSandbox::tryBoost()
 
 void mdtClSandbox::graphicsView()
 {
-  QGraphicsScene scene;
-  QGraphicsTextItem *textItem;
-  /**
-  textItem = scene.addText("8564");
-  textItem->setPos(200/2 - textItem->boundingRect().width()/2, -15);
-  
-  scene.addEllipse(0, 0, 10, 10);
-  textItem = scene.addText("W\nXK94A:02\nXK94A:02;3");
-  textItem->setPos(0-textItem->boundingRect().width()/2, -30-textItem->boundingRect().height()/2);
-  
-  scene.addEllipse(200-5, 0, 10, 10);
-  textItem = scene.addText("CD\n94\nX1;2d");
-  textItem->setPos(200-textItem->boundingRect().width()/2, -30-textItem->boundingRect().height()/2);
+  QSqlDatabase db;
+  QGraphicsView view;
+  bool ok;
+  QString password;
 
-  scene.addLine(0+5, 0+5, 200, 0+5);
-  */
-  mdtClPathGraphicsConnection cnn1, cnn2;
-  mdtClPathGraphicsLink link1(&cnn1, &cnn2);
-  link1.setText("5248");
-  cnn1.setPos(20, 50);
-  cnn1.setText("W\nXK94A:02\nXK94A:02;3");
-  cnn2.setPos(200, 60);
-  cnn2.setText("CD\n94\nX1;2d");
-  ///cnn2.setCircleDiameter(10.0);
-  scene.addItem(&cnn1);
-  scene.addItem(&cnn2);
-  scene.addItem(&link1);
+  // Setup DB connection
+  db = QSqlDatabase::addDatabase("QMYSQL");
+  db.setHostName("127.0.0.1");
+  db.setDatabaseName("cablelist");
+  db.setUserName("scandyna");
+  password = QInputDialog::getText(0, "Password for DB connection", \
+                                      "Please enter password to connect to DB", \
+                                      QLineEdit::Password, "", &ok);
+  if(!ok){
+    return;
+  }
+  db.setPassword(password);
+  if(!db.open()){
+    QMessageBox::warning(0, "DB connection error", "Cannot connect to database");
+    return;
+  }
   
-  QGraphicsView view(&scene);
+  mdtClPathGraph pathGraph(db);
+
   view.setRenderHint(QPainter::Antialiasing);
   view.setCacheMode(QGraphicsView::CacheBackground);
   view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+
+  pathGraph.attachView(&view);
+  QVERIFY(pathGraph.loadLinkList());
+  ///QVERIFY(pathGraph.drawPath(8));
+  QVERIFY(pathGraph.drawPath(29));
+
+  /**
+  QGraphicsScene scene;
+  QPointF pos(0.0, 0.0);
+
+  mdtClPathGraphicsConnection cnn1, cnn2, cnn3, cnn21, cnn211, cnn22;
+  cnn1.setPos(0, 0);
+  cnn1.setText("W\nXK94A:02\nXK94A:02;3");
+  cnn2.setPos(cnn1.nextPosition());
+  cnn2.setText("CD\n94\nX1;2d");
+  mdtClPathGraphicsLink link1(&cnn1, &cnn2);
+  link1.setText("5248\n(EL_BREMSE)");
+  cnn3.setPos(cnn2.nextPosition());
+  cnn3.setText("Z2\nXW34\nXW34;5248");
+  mdtClPathGraphicsLink link2(&cnn2, &cnn3);
+  link2.setText("5248");
+  cnn21.setPos(cnn2.nextPosition());
+  cnn21.setText("HA2\n34.02\nX5;5z");
+  mdtClPathGraphicsLink link3(&cnn2, &cnn21);
+  link3.setText("5248");
+  cnn211.setPos(cnn21.nextPosition());
+  cnn211.setText("cnn211");
+  mdtClPathGraphicsLink link21211(&cnn21, &cnn211);
+  link21211.setText("21211");
+  cnn22.setPos(cnn2.nextPosition());
+  cnn22.setText("cnn22");
+  mdtClPathGraphicsLink link222(&cnn2, &cnn22);
+  link222.setText("222");
+  scene.addItem(&cnn1);
+  scene.addItem(&cnn2);
+  scene.addItem(&cnn3);
+  scene.addItem(&cnn21);
+  scene.addItem(&cnn211);
+  scene.addItem(&cnn22);
+  scene.addItem(&link1);
+  scene.addItem(&link2);
+  scene.addItem(&link3);
+  scene.addItem(&link21211);
+  scene.addItem(&link222);
+  */
+  /**
+  qreal posX = 600.0;
+  mdtClPathGraphicsConnection *previousCnn;
+  for(int i = 0; i < 1000; ++i){
+    mdtClPathGraphicsConnection *cnn = new mdtClPathGraphicsConnection;
+    cnn->setPos(posX, 0.0);
+    cnn->setText("CNN\n" + QString::number(i));
+    mdtClPathGraphicsLink *link;
+    if(i == 0){
+      link = new mdtClPathGraphicsLink(&cnn3, cnn);
+    }else{
+      link = new mdtClPathGraphicsLink(previousCnn, cnn);
+    }
+    scene.addItem(cnn);
+    scene.addItem(link);
+    previousCnn = cnn;
+    posX += 200.0;
+  }
+  */
   view.show();
 
   while(view.isVisible()){

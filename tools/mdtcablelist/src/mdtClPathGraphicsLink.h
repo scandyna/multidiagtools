@@ -25,6 +25,7 @@
 #include <QList>
 #include <QPointF>
 #include <QSizeF>
+#include <QRectF>
 #include <QString>
 
 class mdtClPathGraphicsConnection;
@@ -74,12 +75,19 @@ class mdtClPathGraphicsLink : public QGraphicsItem
 
  private:
 
+  /*! \brief Update the bounding rect regarding current text and line sizes
+   */
+  void updateBoundingRect();
+
+  Q_DISABLE_COPY(mdtClPathGraphicsLink);
+
   mdtClPathGraphicsConnection *pvStartConnection;
   mdtClPathGraphicsConnection *pvEndConnection;
   QPointF pvStartPoint;
   QPointF pvEndPoint;
   QString pvText;
   QSizeF pvTextSize;
+  QRectF pvBoundingRect;
 };
 
 #endif // #ifndef MDT_CL_PATH_GRAPHICS_LINK_H

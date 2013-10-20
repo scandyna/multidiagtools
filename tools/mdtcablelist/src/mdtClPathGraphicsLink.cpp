@@ -23,7 +23,6 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QLineF>
-#include <QRectF>
 #include <QStringList>
 #include <QFont>
 #include <QFontMetrics>
@@ -62,6 +61,7 @@ void mdtClPathGraphicsLink::setText(const QString &text)
   }
   pvTextSize.setWidth(width);
   pvTextSize.setHeight(height + space);
+  updateBoundingRect();
 }
 
 mdtClPathGraphicsConnection *mdtClPathGraphicsLink::startConnection() 
@@ -86,6 +86,7 @@ void mdtClPathGraphicsLink::adjust()
   /// \todo Implement a method in mdtClPathGraphicsConnection to get a valid attachement point
   pvStartPoint = line.p1();
   pvEndPoint = line.p2();
+  updateBoundingRect();
 }
 
 int mdtClPathGraphicsLink::type() const 
@@ -95,55 +96,10 @@ int mdtClPathGraphicsLink::type() const
 
 QRectF mdtClPathGraphicsLink::boundingRect() const 
 {
-  QRectF rect;
-  qreal penWidth = 1.0;
-  qreal extra = (penWidth + 2.0) / 2.0;
-  qreal width;
-  qreal height;
-  qreal xOffset;
-
   if((pvStartConnection == 0)||(pvEndConnection == 0)){
     return QRectF();
   }
-  width = qAbs(pvEndPoint.x() - pvStartPoint.x());
-  if(width < pvTextSize.width()){
-    xOffset = (pvTextSize.width() - width) / 2.0;
-    width = pvTextSize.width();
-  }else{
-    xOffset = 0.0;
-  }
-  ///width = qMax(width, pvTextSize.width());
-  height = qAbs(pvEndPoint.y() - pvStartPoint.y());
-  height = qMax(height, height/2.0 + pvTextSize.height());
-  if(pvStartPoint.x() < pvEndPoint.x()){
-    ///rect.setX(pvEndPoint.x() - width);
-    rect.setX(pvStartPoint.x() - xOffset);
-  }else{
-    ///rect.setX(pvStartPoint.x() - width);
-    rect.setX(pvEndPoint.x() - xOffset);
-  }
-  /**
-  if(pvStartPoint.x() < pvEndPoint.x()){
-    rect.setX(pvStartPoint.x() - width/2.0);
-  }else{
-    rect.setX(pvEndPoint.x() - width/2.0);
-  }
-  */
-  ///rect.setY((pvEndPoint.y() - pvStartPoint.y()) / 2.0 + pvTextSize.height());
-  if(pvStartPoint.y() < pvEndPoint.y()){
-    rect.setY(pvEndPoint.y() - height);
-  }else{
-    rect.setY(pvStartPoint.y() - height);
-  }
-  rect.setWidth(width);
-  ///rect.setHeight((pvEndPoint.y() - pvStartPoint.y()) / 2 + pvTextSize.height());
-  rect.setHeight(height);
-  rect = rect.normalized();
-  rect = rect.adjusted(-extra, -extra, extra, extra);
-  qDebug() << "boundingRect: " << rect;
-
-  return rect;
-  ///return QRectF(pvStartPoint, QSizeF(pvEndPoint.x() - pvStartPoint.x(), pvEndPoint.y() - pvStartPoint.y())).normalized().adjusted(-extra, -extra, extra, extra);
+  return pvBoundingRect;
 }
 
 void mdtClPathGraphicsLink::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
@@ -157,17 +113,43 @@ void mdtClPathGraphicsLink::paint(QPainter *painter, const QStyleOptionGraphicsI
   if(qFuzzyCompare(line.length(), qreal(0.0))){
     return;
   }
-  ///qDebug() << "Start point: " << pvStartPoint;
-  ///qDebug() << "End   point: " << pvEndPoint;
-  ///qDebug() << "line dy: " << line.dy();
   textRect.setX(pvStartPoint.x() + (line.dx() - pvTextSize.width()) / 2.0);
   textRect.setY(pvStartPoint.y() + line.dy() / 2.0 - pvTextSize.height());
   textRect.setSize(pvTextSize);
-  qDebug() << "textRect: " << textRect;
-  qDebug() << "line: " << line;
-
   painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
   painter->drawLine(line);
   painter->drawText(textRect, Qt::AlignHCenter | Qt::TextDontClip, pvText);
-  painter->drawRect(boundingRect());
+}
+
+void mdtClPathGraphicsLink::updateBoundingRect()
+{
+  qreal penWidth = 1.0;
+  qreal extra = (penWidth + 2.0) / 2.0;
+  qreal width;
+  qreal height;
+  qreal xOffset;
+
+  width = qAbs(pvEndPoint.x() - pvStartPoint.x());
+  if(width < pvTextSize.width()){
+    xOffset = (pvTextSize.width() - width) / 2.0;
+    width = pvTextSize.width();
+  }else{
+    xOffset = 0.0;
+  }
+  height = qAbs(pvEndPoint.y() - pvStartPoint.y());
+  height = qMax(height, height/2.0 + pvTextSize.height());
+  if(pvStartPoint.x() < pvEndPoint.x()){
+    pvBoundingRect.setX(pvStartPoint.x() - xOffset);
+  }else{
+    pvBoundingRect.setX(pvEndPoint.x() - xOffset);
+  }
+  if(pvStartPoint.y() < pvEndPoint.y()){
+    pvBoundingRect.setY(pvEndPoint.y() - height);
+  }else{
+    pvBoundingRect.setY(pvStartPoint.y() - height);
+  }
+  pvBoundingRect.setWidth(width);
+  pvBoundingRect.setHeight(height);
+  pvBoundingRect = pvBoundingRect.normalized();
+  pvBoundingRect = pvBoundingRect.adjusted(-extra, -extra, extra, extra);
 }

@@ -1,20 +1,16 @@
 window_sizes 1280 1001 370 904 923 0
 diagrams
-  classdiagram_ref 859138 // LinkPath
-    904 923 100 4 296 0
-  classdiagram_ref 867714 // mdtClPathGraphicsConnection
-    723 738 100 4 0 0
-  active  classdiagram_ref 867842 // mdtClPathGraphicsLink
-    904 923 100 4 0 0
+  active  classdiagram_ref 859138 // LinkPath
+    904 923 100 4 225 0
 end
 show_stereotypes
-selected attribute_ref 907522 // pvEndPoint
+selected classrelation_ref 1123586 // pvDrawnConnections (<unidirectional association>)
 open
   classview_ref 457602 // mdtCableList
   classview_ref 477314 // Global
   classview_ref 483842 // Conceptual
-  class_ref 894722 // mdtClPathGraphItemData
-  attribute_ref 900866 // pvDatabase
+  class_ref 894722 // mdtClPathGraphEdgeData
+  operation_ref 1652738 // getLinkDataFromModel
   class_ref 903554 // mdtClPathGraphicsConnection
   class_ref 903682 // mdtClPathGraphicsLink
   class_ref 895234 // QGraphicsItem

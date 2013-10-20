@@ -73,7 +73,7 @@ bool mdtFieldMap::updateItem(mdtFieldMapItem *item)
     // We have a multi hash here, erase all corresponding items first
     keysByIndex = pvItemsBySourceFieldIndex.keys(item);
     Q_ASSERT(keysByIndex.size() <= 1);
-    for(i=0; i<keysByIndex.size(); i++){
+    for(i=0; i<keysByIndex.size(); i++){  /// \todo Works ok ??? (should not use a utable iterator ?)
       pvItemsBySourceFieldIndex.remove(keysByIndex.at(i));
     }
     pvItemsBySourceFieldIndex.insert(item->sourceFieldIndex(), item);
@@ -81,7 +81,7 @@ bool mdtFieldMap::updateItem(mdtFieldMapItem *item)
   if(!item->sourceFieldName().isEmpty()){
     keysByName = pvItemsBySourceFieldName.keys(item);
     Q_ASSERT(keysByName.size() <= 1);
-    for(i=0; i<keysByName.size(); i++){
+    for(i=0; i<keysByName.size(); i++){ /// \todo Works ok ??? (should not use a utable iterator ?)
       pvItemsBySourceFieldName.remove(keysByName.at(i));
     }
     pvItemsBySourceFieldName.insert(item->sourceFieldName(), item);

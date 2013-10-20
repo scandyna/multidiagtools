@@ -804,6 +804,15 @@ void mdtPortManager::commitFrames()
   }
 }
 
+/** \todo A méditer:
+ *  - Lock le mutex
+ *  - Prendre les frames disponibles (-> sdans une liste ...)
+ *  - Libéréer le mutex
+ *  - Effectier les traitements
+ *  - Lock le mutex
+ *  - Restituer les frames
+ *  - Libéréer le mutex
+ */
 void mdtPortManager::fromThreadNewFrameReaden()
 {
   Q_ASSERT(pvPort != 0);

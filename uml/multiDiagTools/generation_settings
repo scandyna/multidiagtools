@@ -20,12 +20,13 @@
     "double" "double" "double" "double" "${type}" "${type} &" "${type} &" "${type}"
     "string" "string" "String" "string" "${type}" "${type} &" "${type} &" "${type}"
   
-  relations_stereotypes 5 // uml cpp java pythonidl
+  relations_stereotypes 6 // uml cpp java pythonidl
     "sequence" "vector" "Vector" "list" "sequence"
     "vector" "vector" "Vector" "list" "sequence"
     "list" "QList" "List" "list" "sequence"
     "set" "set" "Set" "set" "sequence"
-    "map" "map" "Map" "dict" "sequence"
+    "map" "Qmap" "Map" "dict" "sequence"
+    "queue" "QQueue" "" "" ""
   
   classes_stereotypes 14 // uml cpp java php python idl
     "class" "class" "class" "class" "class" "valuetype"

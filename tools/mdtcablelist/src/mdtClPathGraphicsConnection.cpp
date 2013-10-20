@@ -25,6 +25,10 @@
 #include <QFont>
 #include <QFontMetrics>
 #include <QStringList>
+#include <cmath>
+#ifndef M_PI
+ #define M_PI (3.14159265358979323846)
+#endif
 
 #include <QDebug>
 
@@ -74,6 +78,28 @@ void mdtClPathGraphicsConnection::setCircleDiameter(qreal diameter)
   // Update text rect
   setText(pvText);
   updateBoundingRect();
+}
+
+QPointF mdtClPathGraphicsConnection::nextPosition(qreal linkLength, qreal dAlpha) const
+{
+  int n;
+  qreal alpha;
+  qreal x, y;
+
+  n = pvLinkList.size() / 2;
+  if((pvLinkList.size() % 2) == 0){
+    n = -n;
+  }
+  alpha = n * dAlpha;
+  x = -mapFromScene(pvCircleRect.center()).x();
+  y = -mapFromScene(pvCircleRect.center()).y();
+  x += linkLength * cos(alpha);
+  y += linkLength * sin(alpha);
+  QPainterPath path;
+  path.addEllipse(x, y, 20, 20);
+  qDebug() << "nextPosition, x: " << x << " , y: " << y << " , collision? : " << collidesWithPath(path);
+
+  return QPointF(x, y);
 }
 
 void mdtClPathGraphicsConnection::addLink(mdtClPathGraphicsLink *link) 
