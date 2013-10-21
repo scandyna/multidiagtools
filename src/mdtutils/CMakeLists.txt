@@ -62,12 +62,6 @@ set (SOURCES_FILES
           mdtDigitalIo.cpp
           # Value
           mdtValue.cpp
-          # mdtGraph
-          mdtGraphVertexData.cpp
-          mdtGraphEdgeData.cpp
-          mdtGraph.cpp
-          mdtGraphVertex.cpp
-          mdtGraphVertexAdjacent.cpp
           # State machine
           mdtState.cpp
           mdtStateMachine.cpp
