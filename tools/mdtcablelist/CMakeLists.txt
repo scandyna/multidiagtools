@@ -20,6 +20,7 @@ set (HEADER_FILES
           src/mdtClTerminalEditorDialog.h
           src/mdtClArticleComponentDialog.h
           src/mdtClArticleLinkDialog.h
+          src/mdtClPathGraphDialog.h
     )
 
 # Source files
@@ -45,6 +46,7 @@ set (SOURCES_FILES
           src/mdtClPathGraphicsConnection.cpp
           src/mdtClPathGraphicsLink.cpp
           src/mdtClPathGraph.cpp
+          src/mdtClPathGraphDialog.cpp
     )
 
 # Qt ui files
@@ -59,6 +61,7 @@ set (FORM_FILES
           src/mdtClTerminalBlockEditor.ui
           src/mdtClArticleComponentDialog.ui
           src/mdtClArticleLinkDialog.ui
+          src/mdtClPathGraphDialog.ui
     )
 
 # Fichiers à traiter par le compilateur moc

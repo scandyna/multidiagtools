@@ -21,13 +21,11 @@
 #ifndef MDT_CL_PATH_GRAPH_H
 #define MDT_CL_PATH_GRAPH_H
 
-#include "mdtClUnitConnectionData.h"
-#include "mdtClLinkData.h"
 #include <QSqlDatabase>
 #include <QQueue>
 #include <QPair>
 #include <QVariant>
-///#include <QList>
+#include <QStringList>
 #include <QHash>
 #include <boost/config.hpp>
 #include <vector>
@@ -65,7 +63,6 @@ namespace mdtClPathGraphPrivate
   typedef boost::adjacency_list<
     boost::vecS, boost::vecS, boost::directedS, // OutEdgeList: vecS (std::vector) , VertexList: vecS (std::vector) , Directed: directedS (Directed graph)
     boost::no_property,                         // VertexProperties: no_property (None)
-    ///boost::property<boost::edge_bundle_t, QPair<QVariant, QVariant> >,  // EdgeProperties: we store each link as <start,end> connection IDs
     boost::property<boost::edge_bundle_t, mdtClPathGraphEdgeData>,
     boost::no_property,                         // GraphProperties: no_property (None)
     boost::listS                                // EdgeList: listS (std::list)
@@ -80,22 +77,18 @@ namespace mdtClPathGraphPrivate
    */
   class mdtClPathGraphVisitor : public boost::default_bfs_visitor
   {
-  public:
+    public:
 
-    mdtClPathGraphVisitor();
-    ///mdtClPathGraphVisitor(QQueue<QPair<QVariant, QVariant> > *edgeQueue);
-    mdtClPathGraphVisitor(QQueue<mdtClPathGraphEdgeData> *edgeQueue);
-    void discover_vertex(vertex_t v, const graph_t & g);
-    void examine_edge(edge_t e, const graph_t &g);
+      mdtClPathGraphVisitor();
+      mdtClPathGraphVisitor(QQueue<mdtClPathGraphEdgeData> *edgeQueue);
+      void examine_edge(edge_t e, const graph_t &g);
 
-  private:
+    private:
 
-    ///QQueue<QPair<QVariant, QVariant> > *pvEdgeQueue;
-    QQueue<mdtClPathGraphEdgeData> *pvEdgeQueue;
+      QQueue<mdtClPathGraphEdgeData> *pvEdgeQueue;
   };
 };  // end namespace mdtClPathGraphPrivate
 
-//Handle also the (Boost) graph
 /*! \brief Represents the link list in a graph
  */
 class mdtClPathGraph
@@ -118,13 +111,19 @@ class mdtClPathGraph
    */
   bool drawPath(const QVariant & fromConnectionId);
 
-  /*! \brief
-   */
-  QVariant getLinkedConnectionIds(const QVariant & fromConnectionId);
-
   /*! \brief Attach a view to the scene of the path graph
    */
   void attachView(QGraphicsView *view);
+
+  /*! \brief Get last error message
+   *
+   * The returned list is ready to be used with a QMessageBox .
+   *  The first string contains also the text, second the informativeText
+   *  and last the detailedText .
+   *
+   * \post Returned list has allways a size of 3 (detailedText can simply contain a empty string)
+   */
+  const QStringList &lastErrorMessage() const;
 
  private:
 
@@ -136,29 +135,16 @@ class mdtClPathGraph
    */
   bool setGraphicsItemsData(mdtClPathGraphicsConnection *startConnection, mdtClPathGraphicsConnection *endConnection, mdtClPathGraphicsLink *link, int startConnectionId, int endConnectionId);
 
-  /*! \brief
-   */
-  mdtClUnitConnectionData getUnitConnectionStartDataFromModel(int row);
-
-  /*! \brief
-   */
-  mdtClUnitConnectionData getUnitConnectionEndDataFromModel(int row);
-
-  /*! \brief
-   */
-  mdtClLinkData getLinkDataFromModel(int row);
-
   Q_DISABLE_COPY(mdtClPathGraph);
 
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvLinkListModel;
-  ///QQueue<QPair<QVariant, QVariant> > pvEdgeQueue;
   QQueue<mdtClPathGraphPrivate::mdtClPathGraphEdgeData> pvEdgeQueue;
-  ///QList<mdtClPathGraphicsConnection *> pvDrawnConnections;
   QHash<int, mdtClPathGraphicsConnection *> pvDrawnConnections;
   QGraphicsScene *pvGraphicsScene;
   mdtClPathGraphPrivate::graph_t pvGraph;
   QHash<int, mdtClPathGraphPrivate::vertex_t> pvGraphVertices;
+  QStringList pvLastErrorMessage;
 };
 
 #endif // #ifndef MDT_CL_PATH_GRAPH_H

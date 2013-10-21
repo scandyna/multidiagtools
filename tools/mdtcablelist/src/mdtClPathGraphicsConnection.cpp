@@ -32,7 +32,7 @@
  #define M_PI (3.14159265358979323846)
 #endif
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClPathGraphicsConnection::mdtClPathGraphicsConnection()
 {
@@ -82,14 +82,12 @@ void mdtClPathGraphicsConnection::setCircleDiameter(qreal diameter)
   updateBoundingRect();
 }
 
-QPointF mdtClPathGraphicsConnection::nextPosition(bool reverse, qreal linkLength, qreal dAlpha) const
+QPointF mdtClPathGraphicsConnection::nextPos(bool reverse, qreal linkLength, qreal dAlpha) const
 {
-  int n;
   qreal alpha;
   qreal x, y;
   qreal newX, newY;
   qreal pi = M_PI;
-  ///QPointF nextPosPoint;
 
   if(scene() == 0){
     return QPointF();
@@ -97,19 +95,16 @@ QPointF mdtClPathGraphicsConnection::nextPosition(bool reverse, qreal linkLength
   // Get scene position of this item
   x = mapToScene(pvCircleRect.center()).x();
   y = mapToScene(pvCircleRect.center()).y();
-  qDebug() << "Item: " << pvText << " , current pos. x: " << x << " , y: " << y;
   // Try to find a point directly on the right (or the left if reverse)
   newY = y;
   if(reverse){
     newX = x - linkLength;
-    qDebug() << "Trying on the left , x: " << newX << " , y: " << newY;
     if(scene()->itemAt(newX, newY, QTransform()) == 0){
       // No item here, we found a point
       return QPointF(newX, newY);
     }
   }else{
     newX = x + linkLength;
-    qDebug() << "Trying on the right , x: " << newX << " , y: " << newY;
     if(scene()->itemAt(newX, newY, QTransform()) == 0){
       // No item here, we found a point
       return QPointF(newX, newY);
@@ -121,17 +116,14 @@ QPointF mdtClPathGraphicsConnection::nextPosition(bool reverse, qreal linkLength
     // Try with current alpha
     newX = x + linkLength * cos(alpha);
     newY = y + linkLength * sin(alpha);
-    qDebug() << "Trying with alpha (1) " << alpha << " , x: " << newX << " , y: " << newY;
     if(scene()->itemAt(newX, newY, QTransform()) == 0){
       // No item here, we found a point
       return QPointF(newX, newY);
     }
     // Try with next alpha
     alpha += dAlpha;
-    qDebug() << "Trying with alpha " << alpha;
     newX = x + linkLength * cos(alpha);
     newY = y + linkLength * sin(alpha);
-    qDebug() << "Trying with alpha (2) " << alpha << " , x: " << newX << " , y: " << newY;
     if(scene()->itemAt(newX, newY, QTransform()) == 0){
       // No item here, we found a point
       return QPointF(newX, newY);
@@ -140,7 +132,6 @@ QPointF mdtClPathGraphicsConnection::nextPosition(bool reverse, qreal linkLength
     alpha = -alpha;
     newX = x + linkLength * cos(alpha);
     newY = y + linkLength * sin(alpha);
-    qDebug() << "Trying with alpha (3) " << alpha << " , x: " << newX << " , y: " << newY;
     if(scene()->itemAt(newX, newY, QTransform()) == 0){
       // No item here, we found a point
       return QPointF(newX, newY);
@@ -151,22 +142,6 @@ QPointF mdtClPathGraphicsConnection::nextPosition(bool reverse, qreal linkLength
   }
 
   return QPointF();
-
-  n = pvLinkList.size() / 2;
-  if((pvLinkList.size() % 2) == 0){
-    n = -n;
-  }
-  alpha = n * dAlpha;
-  ///qDebug() << "x , mapFromScene(): " << mapFromScene(pvCircleRect.center()).x();
-  ///qDebug() << "x , mapToScene(): " << mapToScene(pvCircleRect.center()).x();
-  ///x = -mapFromScene(pvCircleRect.center()).x();
-  
-  ///y = -mapFromScene(pvCircleRect.center()).y();
-  
-
-  qDebug() << "nextPosition, x: " << x << " , y: " << y << " , itemAt pos : " << scene()->itemAt(QPointF(x, y), QTransform());
-
-  return QPointF(x, y);
 }
 
 void mdtClPathGraphicsConnection::addLink(mdtClPathGraphicsLink *link) 
@@ -198,7 +173,6 @@ QPainterPath mdtClPathGraphicsConnection::shape() const
   QPainterPath path;
 
   path.addEllipse(pvCircleRect);
-  ///path.addText(pvTextRect.topLeft(), QFont(), pvText);
 
   return path;
 }
@@ -213,7 +187,6 @@ void mdtClPathGraphicsConnection::paint(QPainter *painter, const QStyleOptionGra
   painter->drawEllipse(pvCircleRect);
   painter->setPen(Qt::black);
   painter->setBrush(Qt::red);
-  painter->setFont(QFont("Arial", 10));
   painter->drawText(pvTextRect, Qt::AlignHCenter | Qt::TextDontClip, pvText);
 }
 

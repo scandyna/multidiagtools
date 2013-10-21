@@ -67,7 +67,7 @@ class mdtClPathGraphicsConnection : public QGraphicsItem
    * \param linkLength The expected length of link
    * \param dAlpha Angle increment (default is approx pi/4, 45°)
    */
-  QPointF nextPosition(bool reverse = false, qreal linkLength = 200.0, qreal dAlpha = 0.785398163397) const;
+  QPointF nextPos(bool reverse = false, qreal linkLength = 200.0, qreal dAlpha = 0.785398163397) const;
 
   /*! \brief Add a link
    */

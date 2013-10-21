@@ -572,6 +572,7 @@ void mdtClSandbox::graphicsView()
   QVERIFY(pathGraph.loadLinkList());
   ///QVERIFY(pathGraph.drawPath(8));
   QVERIFY(pathGraph.drawPath(29));
+  qDebug() << pathGraph.lastErrorMessage();
 
   /**
   QGraphicsScene scene;

@@ -27,7 +27,7 @@
 #include <QFont>
 #include <QFontMetrics>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClPathGraphicsLink::mdtClPathGraphicsLink(mdtClPathGraphicsConnection *startConnection, mdtClPathGraphicsConnection *endConnection) 
 {

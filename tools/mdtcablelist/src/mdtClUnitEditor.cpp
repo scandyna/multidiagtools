@@ -32,6 +32,7 @@
 #include "mdtClUnitConnectionDialog.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitLinkDialog.h"
+#include "mdtClPathGraphDialog.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -611,6 +612,34 @@ void mdtClUnitEditor::removeLinks()
   pvForm->select("UnitLink_view");
 }
 
+void mdtClUnitEditor::viewPath()
+{
+  mdtClPathGraphDialog dialog(0, pvDatabase);
+  mdtSqlTableWidget *widget;
+  QVariant startConnectionId;
+
+  widget = pvForm->sqlTableWidget("UnitLink_view");
+  Q_ASSERT(widget != 0);
+  // Get selected row
+  startConnectionId = widget->currentData("UnitConnectionStart_Id_FK");
+  if(startConnectionId.isNull()){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Please select a link."));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+    return;
+  }
+  // Setup and show dialog
+  if(!dialog.loadLinkList()){
+    return;
+  }
+  if(!dialog.drawPath(startConnectionId)){
+    return;
+  }
+
+  dialog.exec();
+}
+
 int mdtClUnitEditor::currentUnitId()
 {
   QVariant var;
@@ -769,6 +798,7 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddLink;
   QPushButton *pbRemoveLinks;
+  QPushButton *pbViewPath;
 
   if(!pvForm->addChildTable("UnitLink_view", tr("Links"), pvDatabase)){
     return false;
@@ -788,6 +818,9 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   pbRemoveLinks = new QPushButton(tr("Remove links"));
   connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
   widget->addWidgetToLocalBar(pbRemoveLinks);
+  pbViewPath = new QPushButton(tr("View path"));
+  connect(pbViewPath, SIGNAL(clicked()), this, SLOT(viewPath()));
+  widget->addWidgetToLocalBar(pbViewPath);
   widget->addStretchToLocalBar();
   
   // Hide relation fields and PK

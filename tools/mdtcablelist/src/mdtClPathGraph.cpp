@@ -29,8 +29,9 @@
 #include <QGraphicsView>
 #include <QString>
 #include <QModelIndex>
+#include <QObject>
 
-#include <QDebug>
+//#include <QDebug>
 
 using namespace mdtClPathGraphPrivate;
 
@@ -43,9 +44,6 @@ mdtClPathGraphVisitor::mdtClPathGraphVisitor()
   pvEdgeQueue = 0;
 }
 
-
-
-///mdtClPathGraphVisitor::mdtClPathGraphVisitor(QQueue<QPair<QVariant, QVariant> > *edgeQueue)
 mdtClPathGraphVisitor::mdtClPathGraphVisitor(QQueue<mdtClPathGraphEdgeData> *edgeQueue)
 {
   Q_ASSERT(edgeQueue != 0);
@@ -53,20 +51,12 @@ mdtClPathGraphVisitor::mdtClPathGraphVisitor(QQueue<mdtClPathGraphEdgeData> *edg
   pvEdgeQueue = edgeQueue;
 }
 
-void mdtClPathGraphVisitor::discover_vertex(vertex_t v, const graph_t & g)
-{
-  qDebug() << "Discover vertex: " << v;
-}
-
 void mdtClPathGraphVisitor::examine_edge(edge_t e, const graph_t &g)
 {
   Q_ASSERT(pvEdgeQueue != 0);
 
-  ///QPair<QVariant, QVariant> edgeData = get(boost::edge_bundle, g)[e];
   mdtClPathGraphEdgeData edgeData = get(boost::edge_bundle, g)[e];
   pvEdgeQueue->enqueue(edgeData);
-  ///qDebug() << "Visitor:  added " << edgeData;
-  boost::default_bfs_visitor::examine_edge(e, g); /// Utile ??
 }
 
 
@@ -79,6 +69,7 @@ mdtClPathGraph::mdtClPathGraph(QSqlDatabase db)
   pvDatabase = db;
   pvLinkListModel = new QSqlQueryModel;
   pvGraphicsScene = new QGraphicsScene;
+  pvLastErrorMessage << "" << "" << ""; 
 }
 
 mdtClPathGraph::~mdtClPathGraph()
@@ -94,7 +85,6 @@ bool mdtClPathGraph::loadLinkList()
   int row;
   QModelIndex index;
   QVariant data;
-  ///QPair<QVariant, QVariant> edgeData;
   mdtClPathGraphEdgeData edgeData;
   vertex_t startVertex, endVertex;
   edge_t edge;
@@ -108,7 +98,12 @@ bool mdtClPathGraph::loadLinkList()
   pvLinkListModel->setQuery(sql, pvDatabase);
   sqlError = pvLinkListModel->lastError();
   if(sqlError.isValid()){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot load link list from database", mdtError::Error);
+    pvLastErrorMessage.clear();
+    pvLastErrorMessage << QObject::tr("Cannot load link list from database.");
+    pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
+    pvLastErrorMessage << sqlError.text();
+    Q_ASSERT(pvLastErrorMessage.size() == 3);
+    mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0), mdtError::Error);
     e.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
     e.commit();
@@ -116,31 +111,43 @@ bool mdtClPathGraph::loadLinkList()
   }
   // Build the graph
   for(row = 0; row < pvLinkListModel->rowCount(); ++row){
-    qDebug() << "Import row " << row << " ...";
     // Get start connection ID
     index = pvLinkListModel->index(row, 0);
     data = pvLinkListModel->data(index);
     if(data.isNull()){
-      return false; /// \todo Error message ...
+      pvLastErrorMessage.clear();
+      pvLastErrorMessage << QObject::tr("Cannot load link list from database.");
+      pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
+      pvLastErrorMessage << QObject::tr("UnitConnectionStart_Id_FK returned a NULL value.");
+      Q_ASSERT(pvLastErrorMessage.size() == 3);
+      mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0) + " " + pvLastErrorMessage.at(2), mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
+      e.commit();
+      return false;
     }
     startConnectionId = data.toInt();
     // Get start vertex or create one if not allready exists
-    qDebug() << "getting start vertex ...";
     if(pvGraphVertices.contains(startConnectionId)){
       startVertex = pvGraphVertices.value(startConnectionId);
     }else{
       startVertex = boost::add_vertex(pvGraph);
       pvGraphVertices.insert(startConnectionId, startVertex);
-      qDebug() << "Created new start vertex: << " << startVertex << " , ID: " << startConnectionId;
     }
     // Set start ID to edge data
-    ///edgeData.first = data;
     edgeData.startConnectionId = data;
     // Get end connection ID
     index = pvLinkListModel->index(row, 1);
     data = pvLinkListModel->data(index);
     if(data.isNull()){
-      return false; /// \todo Error message ...
+      pvLastErrorMessage.clear();
+      pvLastErrorMessage << QObject::tr("Cannot load link list from database.");
+      pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
+      pvLastErrorMessage << QObject::tr("UnitConnectionEnd_Id_FK returned a NULL value.");
+      Q_ASSERT(pvLastErrorMessage.size() == 3);
+      mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0) + " " + pvLastErrorMessage.at(2), mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
+      e.commit();
+      return false;
     }
     endConnectionId = data.toInt();
     // Get end vertex or create one if not allready exists
@@ -149,10 +156,8 @@ bool mdtClPathGraph::loadLinkList()
     }else{
       endVertex = boost::add_vertex(pvGraph);
       pvGraphVertices.insert(endConnectionId, endVertex);
-      qDebug() << "Created new end vertex: << " << endVertex << " , ID: " << endConnectionId;
     }
     // Set end connection ID to edge data
-    ///edgeData.second = data;
     edgeData.endConnectionId = data;
     // Add edge
     edgeData.isComplement = false;
@@ -164,30 +169,13 @@ bool mdtClPathGraph::loadLinkList()
       edgeData.isComplement = true;
       boost::add_edge(endVertex, startVertex, edgeData, pvGraph);
     }
-    // 
-    ///qDebug() << "Edge data: " << edgeData;
   }
-  /**
-  boost::graph_traits<graph_t>::vertex_iterator vi, vi_end;
-  boost::graph_traits<graph_t>::adjacency_iterator ai, ai_end;
-  for(boost::tie(vi, vi_end) = vertices(pvGraph); vi != vi_end; ++vi){
-    ///qDebug() << "Vertex : " << get(boost::vertex_bundle, pvGraph)[*vi];
-    qDebug() << "Vertex : " << *vi;
-    boost::tie(ai, ai_end) = adjacent_vertices(*vi, pvGraph);
-    while(ai != ai_end){
-      qDebug() << "-> Adjacent: " << *ai;
-      ai++;
-    }
-  }
-  */
-
 
   return true;
 }
 
 bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
 {
-  ///QPair<QVariant, QVariant> edge;
   mdtClPathGraphEdgeData edge;
   mdtClPathGraphicsConnection *startConnection, *endConnection;
   mdtClPathGraphicsLink *link;
@@ -195,42 +183,28 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
   mdtClPathGraphVisitor visitor(&pvEdgeQueue);
   vertex_t vertex;
 
-  qDebug() << "Vertices: " << pvGraphVertices;
   // Check if we have requested connection ID in the graph
   if(!pvGraphVertices.contains(fromConnectionId.toInt())){
-    return false;   /// \todo message..
+    pvLastErrorMessage.clear();
+    pvLastErrorMessage << QObject::tr("Cannot draw requested path.");
+    pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
+    pvLastErrorMessage << QObject::tr("Start connection ID not found") + " (ID: " + fromConnectionId.toString() + ").";
+    Q_ASSERT(pvLastErrorMessage.size() == 3);
+    mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0) + " " + pvLastErrorMessage.at(2), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
+    e.commit();
+    return false;
   }
   vertex = pvGraphVertices.value(fromConnectionId.toInt());
-  qDebug() << "Id: " << fromConnectionId.toInt() << " , vertex: " << vertex;
   // Clear previous results
   pvEdgeQueue.clear();
   pvDrawnConnections.clear();
   pvGraphicsScene->clear();
   // Proceed BFS
   breadth_first_search(pvGraph, vertex, boost::visitor(visitor));
-
-  // Simulation BFS ...
-  /**
-  for(int i = 0; i < 10; i++){
-    edge.startConnectionId = i;
-    edge.endConnectionId = i+1;
-    edge.isComplement = false;
-    pvEdgeQueue.enqueue(edge);
-  }
-  */
-  /**
-  for(int i = 9; i < 11; i++){
-    pvEdgeQueue.enqueue(QPair<QVariant, QVariant>(i, i+2));
-  }
-  for(int i = 9; i < 16; i++){
-    pvEdgeQueue.enqueue(QPair<QVariant, QVariant>(i, i+3));
-  }
-  */
-
-  // draw all
+  // draw ...
   while(!pvEdgeQueue.isEmpty()){
     edge = pvEdgeQueue.dequeue();
-    ///qDebug() << "Edge, start: " << edge.startConnectionId << " , end: " << edge.endConnectionId << " , isComplement: " << edge.isComplement;
     Q_ASSERT(!edge.startConnectionId.isNull());
     Q_ASSERT(!edge.endConnectionId.isNull());
     if(!edge.isComplement){
@@ -240,7 +214,6 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
       // Try to get end connection
       endConnectionId = edge.endConnectionId.toInt();
       endConnection = pvDrawnConnections.value(endConnectionId, 0);
-      ///qDebug() << "Adding from ID " << startConnectionId << " to " << endConnectionId;
       // Create missing connections
       if((startConnection == 0)&&(endConnection == 0)){
         startConnection = newConnectionItem(startConnectionId, 0, false);
@@ -256,7 +229,6 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
       Q_ASSERT(endConnection != 0);
       // Draw link
       link = new mdtClPathGraphicsLink(startConnection, endConnection);
-      ///link->setText(QString::number(startConnectionId) + "->" + QString::number(endConnectionId));
       pvGraphicsScene->addItem(link);
       // Set connections and link data
       setGraphicsItemsData(startConnection, endConnection, link, startConnectionId, endConnectionId);
@@ -266,15 +238,17 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
   return true;
 }
 
-QVariant mdtClPathGraph::getLinkedConnectionIds(const QVariant & fromConnectionId) 
-{
-}
-
 void mdtClPathGraph::attachView(QGraphicsView *view) 
 {
   Q_ASSERT(view != 0);
 
   view->setScene(pvGraphicsScene);
+}
+
+const QStringList &mdtClPathGraph::lastErrorMessage() const
+{
+  Q_ASSERT(pvLastErrorMessage.size() == 3);
+  return pvLastErrorMessage;
 }
 
 mdtClPathGraphicsConnection *mdtClPathGraph::newConnectionItem(int id, mdtClPathGraphicsConnection *itemForNextPos, bool reverse)
@@ -283,7 +257,7 @@ mdtClPathGraphicsConnection *mdtClPathGraph::newConnectionItem(int id, mdtClPath
 
   item = new mdtClPathGraphicsConnection;
   if(itemForNextPos != 0){
-    item->setPos(itemForNextPos->nextPosition(reverse));
+    item->setPos(itemForNextPos->nextPos(reverse));
   }else{
     item->setPos(0.0, 0.0);
   }
@@ -312,7 +286,12 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
   sql += " AND UnitConnectionEnd_Id_FK = " + QString::number(endConnectionId);
   if(!query.exec(sql)){
     sqlError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot get connections informations from database", mdtError::Error);
+    pvLastErrorMessage.clear();
+    pvLastErrorMessage << QObject::tr("Cannot get connections informations from database.");
+    pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
+    pvLastErrorMessage << sqlError.text();
+    Q_ASSERT(pvLastErrorMessage.size() == 3);
+    mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0), mdtError::Error);
     e.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
     e.commit();
@@ -339,16 +318,3 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
 
   return true;
 }
-
-mdtClUnitConnectionData mdtClPathGraph::getUnitConnectionStartDataFromModel(int row) 
-{
-}
-
-mdtClUnitConnectionData mdtClPathGraph::getUnitConnectionEndDataFromModel(int row) 
-{
-}
-
-mdtClLinkData mdtClPathGraph::getLinkDataFromModel(int row) 
-{
-}
-

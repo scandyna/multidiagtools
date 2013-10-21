@@ -22,6 +22,7 @@ set (TEST_HEADER_FILES
           ../src/mdtClTerminalEditorDialog.h
           ../src/mdtClArticleComponentDialog.h
           ../src/mdtClArticleLinkDialog.h
+          ../src/mdtClPathGraphDialog.h
    )
 
 # Source files
@@ -45,6 +46,7 @@ set (TEST_SOURCES_FILES
           ../src/mdtClPathGraphicsConnection.cpp
           ../src/mdtClPathGraphicsLink.cpp
           ../src/mdtClPathGraph.cpp
+          ../src/mdtClPathGraphDialog.cpp
     )
 
 # Qt ui files
@@ -59,6 +61,7 @@ set (TEST_FORM_FILES
           ../src/mdtClTerminalBlockEditor.ui
           ../src/mdtClArticleComponentDialog.ui
           ../src/mdtClArticleLinkDialog.ui
+          ../src/mdtClPathGraphDialog.ui
     )
 
 # Access to project's include files

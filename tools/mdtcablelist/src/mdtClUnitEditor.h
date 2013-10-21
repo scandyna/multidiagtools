@@ -98,6 +98,10 @@ class mdtClUnitEditor : public QObject
    */
   void removeLinks();
 
+  /*! \brief View a path of links
+   */
+  void viewPath();
+
  signals:
 
   /*! \brief Used to tell unit widget that we have edited some data
