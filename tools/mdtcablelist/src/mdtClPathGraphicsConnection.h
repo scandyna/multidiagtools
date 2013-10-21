@@ -63,10 +63,11 @@ class mdtClPathGraphicsConnection : public QGraphicsItem
    * This is a helper method to place connection on a scene.
    *  This will not alter current connection's position.
    *
+   * \param reverse If true, next position will be searched from right to left
    * \param linkLength The expected length of link
    * \param dAlpha Angle increment (default is approx pi/4, 45°)
    */
-  QPointF nextPosition(qreal linkLength = 200.0, qreal dAlpha = 0.785398163397) const;
+  QPointF nextPosition(bool reverse = false, qreal linkLength = 200.0, qreal dAlpha = 0.785398163397) const;
 
   /*! \brief Add a link
    */

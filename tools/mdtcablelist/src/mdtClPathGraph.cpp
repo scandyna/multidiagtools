@@ -23,6 +23,7 @@
 #include "mdtClPathGraphicsLink.h"
 #include "mdtError.h"
 #include <QSqlQueryModel>
+#include <QSqlQuery>
 #include <QSqlError>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -103,7 +104,7 @@ bool mdtClPathGraph::loadLinkList()
   pvGraph.clear();
   pvGraphVertices.clear();
   // Run query to get start and end connection IDs
-  sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK FROM LinkList_view";
+  sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, LinkDirection_Code_FK FROM LinkList_view";
   pvLinkListModel->setQuery(sql, pvDatabase);
   sqlError = pvLinkListModel->lastError();
   if(sqlError.isValid()){
@@ -156,13 +157,17 @@ bool mdtClPathGraph::loadLinkList()
     // Add edge
     edgeData.isComplement = false;
     boost::add_edge(startVertex, endVertex, edgeData, pvGraph);
-    /// \todo Check if link is bidirectinnal
-    edgeData.isComplement = true;
-    boost::add_edge(endVertex, startVertex, edgeData, pvGraph);
+    // Add complement edge if link is bidirectinnal
+    index = pvLinkListModel->index(row, 2);
+    data = pvLinkListModel->data(index);
+    if(data.toString() == "BID"){
+      edgeData.isComplement = true;
+      boost::add_edge(endVertex, startVertex, edgeData, pvGraph);
+    }
     // 
     ///qDebug() << "Edge data: " << edgeData;
   }
-  
+  /**
   boost::graph_traits<graph_t>::vertex_iterator vi, vi_end;
   boost::graph_traits<graph_t>::adjacency_iterator ai, ai_end;
   for(boost::tie(vi, vi_end) = vertices(pvGraph); vi != vi_end; ++vi){
@@ -174,6 +179,7 @@ bool mdtClPathGraph::loadLinkList()
       ai++;
     }
   }
+  */
 
 
   return true;
@@ -206,8 +212,13 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
   // Simulation BFS ...
   /**
   for(int i = 0; i < 10; i++){
-    pvEdgeQueue.enqueue(QPair<QVariant, QVariant>(i, i+1));
+    edge.startConnectionId = i;
+    edge.endConnectionId = i+1;
+    edge.isComplement = false;
+    pvEdgeQueue.enqueue(edge);
   }
+  */
+  /**
   for(int i = 9; i < 11; i++){
     pvEdgeQueue.enqueue(QPair<QVariant, QVariant>(i, i+2));
   }
@@ -219,36 +230,36 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
   // draw all
   while(!pvEdgeQueue.isEmpty()){
     edge = pvEdgeQueue.dequeue();
-    qDebug() << "Edge, start: " << edge.startConnectionId << " , end: " << edge.endConnectionId << " , isComplement: " << edge.isComplement;
+    ///qDebug() << "Edge, start: " << edge.startConnectionId << " , end: " << edge.endConnectionId << " , isComplement: " << edge.isComplement;
     Q_ASSERT(!edge.startConnectionId.isNull());
     Q_ASSERT(!edge.endConnectionId.isNull());
     if(!edge.isComplement){
-      // Draw start connection
+      // Try to get startConnection
       startConnectionId = edge.startConnectionId.toInt();
       startConnection = pvDrawnConnections.value(startConnectionId, 0);
-      if(startConnection == 0){
-        startConnection = new mdtClPathGraphicsConnection;
-        startConnection->setText(edge.startConnectionId.toString());
-        startConnection->setPos(0.0, 0.0);
-        pvDrawnConnections.insert(startConnectionId, startConnection);
-        pvGraphicsScene->addItem(startConnection);
-      }
-      Q_ASSERT(startConnection != 0);
-      // Draw end connection
+      // Try to get end connection
       endConnectionId = edge.endConnectionId.toInt();
       endConnection = pvDrawnConnections.value(endConnectionId, 0);
-      if(endConnection == 0){
-        endConnection = new mdtClPathGraphicsConnection;
-        pvDrawnConnections.insert(endConnectionId, endConnection);
-        pvGraphicsScene->addItem(endConnection);
-        endConnection->setText(edge.endConnectionId.toString());
-        endConnection->setPos(startConnection->nextPosition());
+      ///qDebug() << "Adding from ID " << startConnectionId << " to " << endConnectionId;
+      // Create missing connections
+      if((startConnection == 0)&&(endConnection == 0)){
+        startConnection = newConnectionItem(startConnectionId, 0, false);
+        endConnection = newConnectionItem(endConnectionId, startConnection, false);
+      }else if(startConnection == 0){
+        Q_ASSERT(endConnection != 0);
+        startConnection = newConnectionItem(startConnectionId, endConnection, false);
+      }else{
+        Q_ASSERT(startConnection != 0);
+        endConnection = newConnectionItem(endConnectionId, startConnection, false);
       }
+      Q_ASSERT(startConnection != 0);
       Q_ASSERT(endConnection != 0);
       // Draw link
       link = new mdtClPathGraphicsLink(startConnection, endConnection);
-      link->setText(QString::number(startConnectionId) + "->" + QString::number(endConnectionId));
+      ///link->setText(QString::number(startConnectionId) + "->" + QString::number(endConnectionId));
       pvGraphicsScene->addItem(link);
+      // Set connections and link data
+      setGraphicsItemsData(startConnection, endConnection, link, startConnectionId, endConnectionId);
     }
   }
 
@@ -264,6 +275,69 @@ void mdtClPathGraph::attachView(QGraphicsView *view)
   Q_ASSERT(view != 0);
 
   view->setScene(pvGraphicsScene);
+}
+
+mdtClPathGraphicsConnection *mdtClPathGraph::newConnectionItem(int id, mdtClPathGraphicsConnection *itemForNextPos, bool reverse)
+{
+  mdtClPathGraphicsConnection *item;
+
+  item = new mdtClPathGraphicsConnection;
+  if(itemForNextPos != 0){
+    item->setPos(itemForNextPos->nextPosition(reverse));
+  }else{
+    item->setPos(0.0, 0.0);
+  }
+  pvGraphicsScene->addItem(item);
+  pvDrawnConnections.insert(id, item);
+
+  return item;
+}
+
+bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConnection, mdtClPathGraphicsConnection *endConnection, mdtClPathGraphicsLink *link, int startConnectionId, int endConnectionId)
+{
+  Q_ASSERT(startConnection != 0);
+  Q_ASSERT(endConnection != 0);
+  Q_ASSERT(link != 0);
+
+  QString sql;
+  QSqlError sqlError; 
+  QVariant data;
+  QSqlQuery query(pvDatabase);
+  QString str;
+
+  sql = "SELECT StartCabinet, StartSchemaPosition, StartUnitConnectorName, StartUnitContactName, "\
+        "EndCabinet, EndSchemaPosition, EndUnitConnectorName, EndUnitContactName, Identification "\
+        "FROM LinkList_view ";
+  sql += " WHERE UnitConnectionStart_Id_FK = " + QString::number(startConnectionId);
+  sql += " AND UnitConnectionEnd_Id_FK = " + QString::number(endConnectionId);
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot get connections informations from database", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
+    e.commit();
+    startConnection->setText("??");
+    endConnection->setText("??");
+    return false;
+  }
+  query.next();
+  // Set start data
+  str = query.value(0).toString() + "\n";
+  str += query.value(1).toString() + "\n";
+  str += query.value(2).toString() + ";";
+  str += query.value(3).toString();
+  startConnection->setText(str);
+  // Set end data
+  str = query.value(4).toString() + "\n";
+  str += query.value(5).toString() + "\n";
+  str += query.value(6).toString() + ";";
+  str += query.value(7).toString();
+  endConnection->setText(str);
+  // Set link data
+  str = query.value(8).toString();
+  link->setText(str);
+
+  return true;
 }
 
 mdtClUnitConnectionData mdtClPathGraph::getUnitConnectionStartDataFromModel(int row) 

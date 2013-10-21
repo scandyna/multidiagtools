@@ -22,6 +22,8 @@
 #include "mdtClPathGraphicsLink.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <QGraphicsScene>
+#include <QTransform>
 #include <QFont>
 #include <QFontMetrics>
 #include <QStringList>
@@ -80,24 +82,89 @@ void mdtClPathGraphicsConnection::setCircleDiameter(qreal diameter)
   updateBoundingRect();
 }
 
-QPointF mdtClPathGraphicsConnection::nextPosition(qreal linkLength, qreal dAlpha) const
+QPointF mdtClPathGraphicsConnection::nextPosition(bool reverse, qreal linkLength, qreal dAlpha) const
 {
   int n;
   qreal alpha;
   qreal x, y;
+  qreal newX, newY;
+  qreal pi = M_PI;
+  ///QPointF nextPosPoint;
+
+  if(scene() == 0){
+    return QPointF();
+  }
+  // Get scene position of this item
+  x = mapToScene(pvCircleRect.center()).x();
+  y = mapToScene(pvCircleRect.center()).y();
+  qDebug() << "Item: " << pvText << " , current pos. x: " << x << " , y: " << y;
+  // Try to find a point directly on the right (or the left if reverse)
+  newY = y;
+  if(reverse){
+    newX = x - linkLength;
+    qDebug() << "Trying on the left , x: " << newX << " , y: " << newY;
+    if(scene()->itemAt(newX, newY, QTransform()) == 0){
+      // No item here, we found a point
+      return QPointF(newX, newY);
+    }
+  }else{
+    newX = x + linkLength;
+    qDebug() << "Trying on the right , x: " << newX << " , y: " << newY;
+    if(scene()->itemAt(newX, newY, QTransform()) == 0){
+      // No item here, we found a point
+      return QPointF(newX, newY);
+    }
+  }
+  // Try to find a free point around us, alternating with alpha 0, alpha > and alpha < 0
+  alpha = dAlpha;
+  while((alpha > -pi)&&(alpha < pi)){
+    // Try with current alpha
+    newX = x + linkLength * cos(alpha);
+    newY = y + linkLength * sin(alpha);
+    qDebug() << "Trying with alpha (1) " << alpha << " , x: " << newX << " , y: " << newY;
+    if(scene()->itemAt(newX, newY, QTransform()) == 0){
+      // No item here, we found a point
+      return QPointF(newX, newY);
+    }
+    // Try with next alpha
+    alpha += dAlpha;
+    qDebug() << "Trying with alpha " << alpha;
+    newX = x + linkLength * cos(alpha);
+    newY = y + linkLength * sin(alpha);
+    qDebug() << "Trying with alpha (2) " << alpha << " , x: " << newX << " , y: " << newY;
+    if(scene()->itemAt(newX, newY, QTransform()) == 0){
+      // No item here, we found a point
+      return QPointF(newX, newY);
+    }
+    // Try with opposite alpha
+    alpha = -alpha;
+    newX = x + linkLength * cos(alpha);
+    newY = y + linkLength * sin(alpha);
+    qDebug() << "Trying with alpha (3) " << alpha << " , x: " << newX << " , y: " << newY;
+    if(scene()->itemAt(newX, newY, QTransform()) == 0){
+      // No item here, we found a point
+      return QPointF(newX, newY);
+    }
+    // No free point here, continue
+    alpha = -alpha;
+    alpha += dAlpha;
+  }
+
+  return QPointF();
 
   n = pvLinkList.size() / 2;
   if((pvLinkList.size() % 2) == 0){
     n = -n;
   }
   alpha = n * dAlpha;
-  x = -mapFromScene(pvCircleRect.center()).x();
-  y = -mapFromScene(pvCircleRect.center()).y();
-  x += linkLength * cos(alpha);
-  y += linkLength * sin(alpha);
-  QPainterPath path;
-  path.addEllipse(x, y, 20, 20);
-  qDebug() << "nextPosition, x: " << x << " , y: " << y << " , collision? : " << collidesWithPath(path);
+  ///qDebug() << "x , mapFromScene(): " << mapFromScene(pvCircleRect.center()).x();
+  ///qDebug() << "x , mapToScene(): " << mapToScene(pvCircleRect.center()).x();
+  ///x = -mapFromScene(pvCircleRect.center()).x();
+  
+  ///y = -mapFromScene(pvCircleRect.center()).y();
+  
+
+  qDebug() << "nextPosition, x: " << x << " , y: " << y << " , itemAt pos : " << scene()->itemAt(QPointF(x, y), QTransform());
 
   return QPointF(x, y);
 }

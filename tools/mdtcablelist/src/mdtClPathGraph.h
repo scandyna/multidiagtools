@@ -37,6 +37,7 @@
 #include <boost/graph/breadth_first_search.hpp>
 
 class mdtClPathGraphicsConnection;
+class mdtClPathGraphicsLink;
 class QSqlQueryModel;
 class QGraphicsScene;
 class QGraphicsView;
@@ -126,6 +127,14 @@ class mdtClPathGraph
   void attachView(QGraphicsView *view);
 
  private:
+
+  /*! \brief Create a new graphics connection item
+   */
+  mdtClPathGraphicsConnection *newConnectionItem(int id, mdtClPathGraphicsConnection *itemForNextPos, bool reverse);
+
+  /*! \brief Set connection and link data
+   */
+  bool setGraphicsItemsData(mdtClPathGraphicsConnection *startConnection, mdtClPathGraphicsConnection *endConnection, mdtClPathGraphicsLink *link, int startConnectionId, int endConnectionId);
 
   /*! \brief
    */
