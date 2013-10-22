@@ -31,6 +31,7 @@
 #include "mdtClUnitVehicleType.h"
 #include "mdtClUnitConnectionDialog.h"
 #include "mdtClUnitConnectionData.h"
+#include "mdtClLinkData.h"
 #include "mdtClUnitLinkDialog.h"
 #include "mdtClPathGraphDialog.h"
 #include <QSqlTableModel>
@@ -524,7 +525,7 @@ void mdtClUnitEditor::removeConnections()
   // Delete seleced rows
   if(!unit.removeUnitConnections(indexes)){
     sqlError = unit.lastError();
-    QMessageBox msgBox;
+    ///QMessageBox msgBox;
     msgBox.setText(tr("Connections removing failed."));
     ///msgBox.setInformativeText(tr("Please check if connect"));
     msgBox.setDetailedText(sqlError.text());
@@ -552,6 +553,7 @@ void mdtClUnitEditor::addLink()
     return;
   }
   if(!dialog.linkData().buildVehicleTypeStartEndIdList()){
+    /// \todo MsgBox with error
     qDebug() << "ERROR building VJC list";
     return;
   }
@@ -560,14 +562,103 @@ void mdtClUnitEditor::addLink()
   if(!unit.addLink(dialog.linkData())){
     QSqlError sqlError = unit.lastError();
     QMessageBox msgBox;
-    msgBox.setText(tr("Link adding failed."));
+    msgBox.setText(tr("Link adding failed.           "));
     ///msgBox.setInformativeText(tr("Please check if connect"));
     msgBox.setDetailedText(sqlError.text());
     msgBox.setIcon(QMessageBox::Critical);
     msgBox.exec();
     return;
   }
-  // Update connections view
+  // Update links view
+  pvForm->select("UnitLink_view");
+}
+
+void mdtClUnitEditor::editLink()
+{
+  mdtSqlFormWidget *unitWidget;
+  mdtSqlTableWidget *linkWidget;
+  mdtClUnitLinkDialog dialog(0, pvDatabase);
+  QVariant unitId, startConnectionId, endConnectionId;
+  mdtClUnitConnectionData startConnectionData;
+  mdtClUnitConnectionData endConnectionData;
+  mdtClLinkData linkData;
+  mdtClUnit unit(pvDatabase);
+
+  unitWidget = pvForm->sqlFormWidget("Unit_tbl");
+  Q_ASSERT(unitWidget != 0);
+  linkWidget = pvForm->sqlTableWidget("UnitLink_view");
+  Q_ASSERT(linkWidget != 0);
+  // Get connection IDs
+  startConnectionId = linkWidget->currentData("UnitConnectionStart_Id_FK");
+  endConnectionId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+  if(startConnectionId.isNull() || endConnectionId.isNull()){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Please select a link."));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+    return;
+  }
+  // Get current link data
+  startConnectionData = unit.getUnitConnectionData(startConnectionId);
+  if(!startConnectionData.isValid()){
+    QSqlError sqlError = unit.lastError();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot get data for start connection."));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  endConnectionData = unit.getUnitConnectionData(endConnectionId);
+  if(!endConnectionData.isValid()){
+    QSqlError sqlError = unit.lastError();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot get data for end connection."));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  linkData = unit.getUnitLinkData(startConnectionId, endConnectionId);
+  if(!linkData.isValid()){
+    QSqlError sqlError = unit.lastError();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot get data for link."));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  // Setup and show dialog
+  unitId = currentUnitId();
+  dialog.setStartUnit(unitId, unitWidget->currentData("SchemaPosition"), unitWidget->currentData("Cabinet"));
+  dialog.setStartConnectionData(startConnectionData);
+  dialog.setEndUnit(unitId, unitWidget->currentData("SchemaPosition"), unitWidget->currentData("Cabinet"));
+  dialog.setEndConnectionData(endConnectionData);
+  dialog.setLinkData(linkData);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  if(!dialog.linkData().buildVehicleTypeStartEndIdList()){
+    /// \todo MsgBox with error
+    qDebug() << "ERROR building VJC list";
+    return;
+  }
+  // Add link
+  if(!unit.editLink(startConnectionId, endConnectionId, dialog.linkData())){
+    QSqlError sqlError = unit.lastError();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Link edition failed.           "));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  // Update links view
   pvForm->select("UnitLink_view");
 }
 
@@ -600,8 +691,8 @@ void mdtClUnitEditor::removeLinks()
   // Delete seleced rows
   if(!unit.removeLinks(indexes)){
     QSqlError sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Link adding failed."));
+    ///QMessageBox msgBox;
+    msgBox.setText(tr("Link removing failed.           "));
     ///msgBox.setInformativeText(tr("Please check if connect"));
     msgBox.setDetailedText(sqlError.text());
     msgBox.setIcon(QMessageBox::Critical);
@@ -797,6 +888,7 @@ bool mdtClUnitEditor::setupUnitLinkTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddLink;
+  QPushButton *pbEditLink;
   QPushButton *pbRemoveLinks;
   QPushButton *pbViewPath;
 
@@ -815,6 +907,9 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   pbAddLink = new QPushButton(tr("Add link ..."));
   connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
   widget->addWidgetToLocalBar(pbAddLink);
+  pbEditLink = new QPushButton(tr("Edit link"));
+  connect(pbEditLink, SIGNAL(clicked()), this, SLOT(editLink()));
+  widget->addWidgetToLocalBar(pbEditLink);
   pbRemoveLinks = new QPushButton(tr("Remove links"));
   connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
   widget->addWidgetToLocalBar(pbRemoveLinks);

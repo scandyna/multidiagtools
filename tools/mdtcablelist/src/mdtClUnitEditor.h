@@ -94,6 +94,10 @@ class mdtClUnitEditor : public QObject
    */
   void addLink();
 
+  /*! \brief Edit selected link
+   */
+  void editLink();
+
   /*! \brief Remove  links
    */
   void removeLinks();

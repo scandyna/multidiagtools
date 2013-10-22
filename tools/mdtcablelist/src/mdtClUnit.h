@@ -184,6 +184,10 @@ class mdtClUnit
    */
   bool addLink(const mdtClLinkData &data);
 
+  /*! \brief Edit a unit link
+   */
+  bool editLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, const mdtClLinkData &data);
+
   /*! \brief Remove a unit link
    *
    * Will also remove all vehicle type related links
@@ -202,7 +206,7 @@ class mdtClUnit
 
   /*! \brief Remove a link from vehicle type table
    */
-  bool removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
+  bool removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, QSqlQuery &query);
 
   /*! \brief Beginn manually a new transaction
    */

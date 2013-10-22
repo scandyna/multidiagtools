@@ -23,17 +23,22 @@
 
 #include <QDebug>
 
-/**
-void mdtClLinkData::setLinkId(const QVariant & value) 
+bool mdtClLinkData::isValid()
 {
-  pvLinkId = value;
+  if(pvUnitConnectionStartId.isNull()){
+    return false;
+  }
+  if(pvUnitConnectionEndId.isNull()){
+    return false;
+  }
+  if(pvLinkDirectionCode.isNull()){
+    return false;
+  }
+  if(pvLinkTypeCode.isNull()){
+    return false;
+  }
+  return true;
 }
-
-QVariant mdtClLinkData::linkId() const 
-{
-  return pvLinkId;
-}
-*/
 
 void mdtClLinkData::setArticleLinkId(const QVariant & value) 
 {
@@ -42,7 +47,6 @@ void mdtClLinkData::setArticleLinkId(const QVariant & value)
 
 QVariant mdtClLinkData::articleLinkId() const 
 {
-
   return pvArticleLinkId;
 }
 

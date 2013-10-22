@@ -129,6 +129,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   QVariant linkDirectionCode() const;
 
+  /*! \brief Set link data
+   */
+  void setLinkData(mdtClLinkData &data);
+
   /*! \brief Get link data
    */
   mdtClLinkData &linkData();
@@ -167,7 +171,19 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void selectEndVehicleTypes();
 
+  /*! \brief Do some check, store values and accept dialog if Ok
+   */
+  void accept();
+
  private:
+
+  /*! \brief Update modification combobox
+   */
+  void updateModificationCombobox(const QVariant &data);
+
+  /*! \brief Update since version combobox
+   */
+  void updateSinceVersionCombobox(const QVariant &data);
 
   Q_DISABLE_COPY(mdtClUnitLinkDialog);
 

@@ -53,6 +53,11 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   cbLinkDirection->setModelColumn(1);
   connect(cbLinkDirection, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkDirectionCurrentIndexChanged(int)));
   cbLinkDirection->setCurrentIndex(-1);
+  // Setup modification combobox
+  cbModification->addItem("new", QVariant("new"));
+  // Setup since version combobox
+  
+  
   // Set default link type
   setLinkTypeCode("CABLELINK");
   // Setup unit
@@ -205,6 +210,7 @@ void mdtClUnitLinkDialog::setStartVehicleTypes(const QVariant &unitId)
   pvStartVehicleTypesModel->setHeaderData(1, Qt::Horizontal, tr("Sub type"));
   pvStartVehicleTypesModel->setHeaderData(2, Qt::Horizontal, tr("Serie"));
   twStartVehicles->setColumnHidden(3, true);
+  twStartVehicles->resizeColumnsToContents();
   pvLinkData.setVehicleTypeStartIdList(startVehicleTypeIdList());
 }
 
@@ -233,6 +239,7 @@ void mdtClUnitLinkDialog::setEndVehicleTypes(const QVariant &unitId)
   pvEndVehicleTypesModel->setHeaderData(1, Qt::Horizontal, tr("Sub type"));
   pvEndVehicleTypesModel->setHeaderData(2, Qt::Horizontal, tr("Serie"));
   twEndVehicles->setColumnHidden(3, true);
+  twEndVehicles->resizeColumnsToContents();
   pvLinkData.setVehicleTypeEndIdList(endVehicleTypeIdList());
 }
 
@@ -312,6 +319,17 @@ QVariant mdtClUnitLinkDialog::linkDirectionCode() const
   data = pvLinkDirectionModel->data(index);
 
   return data;
+}
+
+void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
+{
+  pvLinkData = data;
+  leIdentification->setText(data.identification().toString());
+  updateModificationCombobox(data.modification());
+  updateSinceVersionCombobox(data.sinceVersion());
+  setLinkTypeCode(data.linkTypeCode());
+  setLinkDirectionCode(data.linkDirectionCode());
+  sbValue->setValue(data.value().toDouble());
 }
 
 mdtClLinkData &mdtClUnitLinkDialog::linkData()
@@ -526,11 +544,21 @@ void mdtClUnitLinkDialog::selectStartVehicleTypes()
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
   QSqlQueryModel model;
+  QSqlError sqlError;
   int row;
   QModelIndex index;
   QModelIndexList vehicleIdList;
   QVariant data;
 
+  // Check that start unit ID is set
+  if(pvStartUnitId.isNull()){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Unit is not set for start connection."));
+    msgBox.setInformativeText(tr("Please select a unit before choosing vehicle types to use."));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.exec();
+    return;
+  }
   // Setup and run query
   sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
   sql += " ORDER BY VehicleType_Id_FK ASC";
@@ -557,7 +585,7 @@ void mdtClUnitLinkDialog::selectStartVehicleTypes()
   if(vehicleIdList.isEmpty()){
     sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE VehicleType_Id_FK = -1";
   }else{
-    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view ORDER BY VehicleType_Id_FK ASC ";
+    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view ";
     for(row = 0; row < vehicleIdList.size(); ++row){
       if(row == 0){
         sql += " WHERE ( ";
@@ -568,7 +596,23 @@ void mdtClUnitLinkDialog::selectStartVehicleTypes()
     }
     sql += " ) AND Unit_Id_FK = " + pvStartUnitId.toString();
   }
+  sql += " ORDER BY VehicleType_Id_FK ASC";
   pvStartVehicleTypesModel->setQuery(sql, pvDatabase);
+  sqlError = pvStartVehicleTypesModel->lastError();
+  if(sqlError.isValid()){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot get start vehicle type list.", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnitLinkDialog");
+    e.commit();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot get start vehicle type list."));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  twStartVehicles->resizeColumnsToContents();
 }
 
 void mdtClUnitLinkDialog::selectEndVehicleTypes()
@@ -576,11 +620,21 @@ void mdtClUnitLinkDialog::selectEndVehicleTypes()
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
   QSqlQueryModel model;
+  QSqlError sqlError;
   int row;
   QModelIndex index;
   QModelIndexList vehicleIdList;
   QVariant data;
 
+  // Check that end unit ID is set
+  if(pvEndUnitId.isNull()){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Unit is not set for end connection."));
+    msgBox.setInformativeText(tr("Please select a unit before choosing vehicle types to use."));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.exec();
+    return;
+  }
   // Setup and run query
   sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE Unit_Id_FK = " + pvEndUnitId.toString();
   sql += " ORDER BY VehicleType_Id_FK ASC";
@@ -607,7 +661,7 @@ void mdtClUnitLinkDialog::selectEndVehicleTypes()
   if(vehicleIdList.isEmpty()){
     sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE VehicleType_Id_FK = -1";
   }else{
-    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view ORDER BY VehicleType_Id_FK ASC ";
+    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view ";
     for(row = 0; row < vehicleIdList.size(); ++row){
       if(row == 0){
         sql += " WHERE ( ";
@@ -618,5 +672,62 @@ void mdtClUnitLinkDialog::selectEndVehicleTypes()
     }
     sql += " ) AND Unit_Id_FK = " + pvEndUnitId.toString();
   }
+  sql += " ORDER BY VehicleType_Id_FK ASC";
   pvEndVehicleTypesModel->setQuery(sql, pvDatabase);
+  sqlError = pvEndVehicleTypesModel->lastError();
+  if(sqlError.isValid()){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot get end vehicle type list.", mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnitLinkDialog");
+    e.commit();
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot get end vehicle type list."));
+    ///msgBox.setInformativeText(tr("Please check if connect"));
+    msgBox.setDetailedText(sqlError.text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  twEndVehicles->resizeColumnsToContents();
+}
+
+void mdtClUnitLinkDialog::accept()
+{
+  // Most of data are dynamically stored during edition, but some are to do here
+  pvLinkData.setIdentification(leIdentification->text());
+  pvLinkData.setModification(cbModification->currentText());
+  pvLinkData.setSinceVersion(cbSinceVersion->currentText());
+  pvLinkData.setValue(sbValue->value());
+  
+  /// \todo checks
+  
+  QDialog::accept();
+}
+
+void mdtClUnitLinkDialog::updateModificationCombobox(const QVariant &data)
+{
+  int row;
+
+  for(row = 0; row < cbModification->count(); ++row){
+    if(cbModification->itemData(row) == data){
+      cbModification->setCurrentIndex(row);
+      return;
+    }
+  }
+  // Data not found
+  cbModification->setCurrentIndex(-1);
+}
+
+void mdtClUnitLinkDialog::updateSinceVersionCombobox(const QVariant &data)
+{
+  int row;
+
+  for(row = 0; row < cbSinceVersion->count(); ++row){
+    if(cbSinceVersion->itemData(row) == data){
+      cbSinceVersion->setCurrentIndex(row);
+      return;
+    }
+  }
+  // Data not found
+  cbSinceVersion->setCurrentIndex(-1);
 }

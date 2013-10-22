@@ -32,13 +32,15 @@ class mdtClLinkData
 {
  public:
 
-  /*! \brief Set link ID
+  /*! \brief Check data validity
+   *
+   * Data object is valid if:
+   *  - unitConnectionStartId is set
+   *  - unitConnectionEndId is set
+   *  - linkDirectionCode is set
+   *  - linkTypeCode is set
    */
-  ///void setLinkId(const QVariant & value);
-
-  /*! \brief Get link ID
-   */
-  ///QVariant linkId() const;
+  bool isValid();
 
   /*! \brief Set article link ID
    */

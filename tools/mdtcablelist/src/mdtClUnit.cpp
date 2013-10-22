@@ -560,21 +560,14 @@ mdtClLinkData mdtClUnit::getUnitLinkData(const QVariant &unitConnectionStartId, 
 bool mdtClUnit::addLink(const mdtClLinkData &data)
 {
   QString sql;
-  QSqlQuery query(pvDatabase);
   QList<QPair<QVariant, QVariant> > lst;
   int i;
-
-  qDebug() << "Link type: " << data.linkTypeCode();
-  qDebug() << "Link dir : " << data.linkDirectionCode();
-  qDebug() << "Start CNN ID : " << data.unitConnectionStartId();
-  qDebug() << "End   CNN ID : " << data.unitConnectionEndId();
-  qDebug() << "Selected vehicles on start: " << data.vehicleTypeStartIdList();
-  qDebug() << "Selected vehicles on end: " << data.vehicleTypeEndIdList();
 
   // We want to update 2 tables, so manually ask to beginn a transaction
   if(!beginTransaction()){
     return false;
   }
+  QSqlQuery query(pvDatabase);
   // Prepare query for insertion in Link table
   sql = "INSERT INTO Link_tbl (ArticleLink_Id_FK, UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, "\
                               "SinceVersion, Modification, Identification, LinkDirection_Code_FK, "\
@@ -603,7 +596,7 @@ bool mdtClUnit::addLink(const mdtClLinkData &data)
   query.bindValue(":Value", data.value());
   if(!query.exec()){
     pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for connection inertion in Link_tbl", mdtError::Error);
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for link inertion in Link_tbl", mdtError::Error);
     e.setSystemError(pvLastError.number(), pvLastError.text());
     MDT_ERROR_SET_SRC(e, "mdtClUnit");
     e.commit();
@@ -626,12 +619,96 @@ bool mdtClUnit::addLink(const mdtClLinkData &data)
   return true;
 }
 
+bool mdtClUnit::editLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, const mdtClLinkData &data)
+{
+  QString sql;
+  QList<QPair<QVariant, QVariant> > vehicleTypeList;
+  int i;
+  mdtClLinkData currentLinkData;
+
+  // Get list of currently attached vehicle type
+  currentLinkData = getUnitLinkData(unitConnectionStartId, unitConnectionEndId);
+  if(!currentLinkData.isValid()){
+    pvLastError.setDatabaseText("Cannot get current link data");
+    mdtError e(MDT_DATABASE_ERROR, "Cannot get current link data", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    return false;
+  }
+  currentLinkData.buildVehicleTypeStartEndIdList();
+  vehicleTypeList = currentLinkData.vehicleTypeStartEndIdList();
+  // We want to update 2 tables, so manually ask to beginn a transaction
+  if(!beginTransaction()){
+    return false;
+  }
+  QSqlQuery query(pvDatabase);
+  // Remove currently related vehicle types
+  for(i = 0; i < vehicleTypeList.size(); ++i){
+    if(!removeLinkFromVehicleType(vehicleTypeList.at(i).first, vehicleTypeList.at(i).second, currentLinkData.unitConnectionStartId(), currentLinkData.unitConnectionEndId(), query)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  // Prepare query for Link table edition
+  sql = "UPDATE Link_tbl SET "\
+        "ArticleLink_Id_FK = :ArticleLink_Id_FK , "\
+        "UnitConnectionStart_Id_FK = :UnitConnectionStart_Id_FK , "\
+        "UnitConnectionEnd_Id_FK = :UnitConnectionEnd_Id_FK , "\
+        "SinceVersion = :SinceVersion , "\
+        "Modification = :Modification , "\
+        "Identification = :Identification , "\
+        "LinkDirection_Code_FK = :LinkDirection_Code_FK , "\
+        "LinkType_Code_FK = :LinkType_Code_FK , "\
+        "Value = :Value ";
+  sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
+  if(!query.prepare(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for link edition", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":ArticleLink_Id_FK", data.articleLinkId());
+  query.bindValue(":UnitConnectionStart_Id_FK", data.unitConnectionStartId());
+  query.bindValue(":UnitConnectionEnd_Id_FK", data.unitConnectionEndId());
+  query.bindValue(":SinceVersion", data.sinceVersion());
+  query.bindValue(":Modification", data.modification());
+  query.bindValue(":Identification", data.identification());
+  query.bindValue(":LinkDirection_Code_FK", data.linkDirectionCode());
+  query.bindValue(":LinkType_Code_FK", data.linkTypeCode());
+  query.bindValue(":Value", data.value());
+  if(!query.exec()){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for link edition", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClUnit");
+    e.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Add a link in VehicleType_Link table for each start-end vehicles id assignation
+  vehicleTypeList = data.vehicleTypeStartEndIdList();
+  for(i = 0; i < vehicleTypeList.size(); ++i){
+    if(!addLinkToVehicleType(vehicleTypeList.at(i).first, vehicleTypeList.at(i).second, data.unitConnectionStartId(), data.unitConnectionEndId())){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  commitTransaction();
+
+  return true;
+}
+
 bool mdtClUnit::removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId)
 {
   mdtClLinkData data;
   QList<QPair<QVariant, QVariant> > vehicleTypeList;
   QString sql;
-  QSqlQuery query(pvDatabase);
   int i;
 
   // Get list of attached vehicle type
@@ -642,9 +719,10 @@ bool mdtClUnit::removeLink(const QVariant &unitConnectionStartId, const QVariant
   if(!beginTransaction()){
     return false;
   }
+  QSqlQuery query(pvDatabase);
   // Remove related vehicle type links
   for(i = 0; i < vehicleTypeList.size(); ++i){
-    if(!removeLinkFromVehicleType(vehicleTypeList.at(i).first, vehicleTypeList.at(i).second, data.unitConnectionStartId(), data.unitConnectionEndId())){
+    if(!removeLinkFromVehicleType(vehicleTypeList.at(i).first, vehicleTypeList.at(i).second, data.unitConnectionStartId(), data.unitConnectionEndId(), query)){
       rollbackTransaction();
       return false;
     }
@@ -691,6 +769,8 @@ bool mdtClUnit::addLinkToVehicleType(const QVariant &vehicleTypeStartId, const Q
   QString sql;
   QSqlQuery query(pvDatabase);
 
+  qDebug() << "Adding link in vehicles links table, Unit start CNN ID: " << unitConnectionStartId << " , end CNN ID: " << unitConnectionEndId;
+  
   // Prepare query for insertion in VehicleType_Link table
   sql = "INSERT INTO VehicleType_Link_tbl (VehicleTypeStart_Id_FK, VehicleTypeEnd_Id_FK, UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK) "\
         "VALUES (:VehicleTypeStart_Id_FK, :VehicleTypeEnd_Id_FK, :UnitConnectionStart_Id_FK, :UnitConnectionEnd_Id_FK)";
@@ -719,16 +799,17 @@ bool mdtClUnit::addLinkToVehicleType(const QVariant &vehicleTypeStartId, const Q
   return true;
 }
 
-bool mdtClUnit::removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId)
+bool mdtClUnit::removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, QSqlQuery &query)
 {
   QString sql;
-  QSqlQuery query(pvDatabase);
+  ///QSqlQuery query(pvDatabase);
 
   sql = "DELETE FROM VehicleType_Link_tbl "\
         "WHERE VehicleTypeStart_Id_FK = " + vehicleTypeStartId.toString();
   sql += " AND VehicleTypeEnd_Id_FK = " + vehicleTypeEndId.toString();
   sql += " AND UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
   sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
+  qDebug() << "REM VHC Link, SQL: " << sql;
   if(!query.exec(sql)){
     pvLastError = query.lastError();
     mdtError e(MDT_DATABASE_ERROR, "Cannot execute query to remove link in VehicleType_Link_tbl", mdtError::Error);
