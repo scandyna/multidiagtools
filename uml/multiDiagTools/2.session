@@ -1,19 +1,29 @@
 window_sizes 1280 1001 370 904 923 0
 diagrams
-  active  classdiagram_ref 859138 // LinkPath
-    904 923 100 4 225 0
+  classdiagram_ref 600962 // mdtDataTableItemDelegate
+    723 738 100 4 0 0
+  classdiagram_ref 607618 // mdtDataTableModel
+    723 738 100 4 0 0
+  classdiagram_ref 614146 // mdtDataTableManager
+    723 738 100 4 0 0
+  active  classdiagram_ref 874370 // mdtSqlSchema
+    904 923 90 18 0 0
 end
 show_stereotypes
-selected classrelation_ref 1123586 // pvDrawnConnections (<unidirectional association>)
+selected operation_ref 1661058 // setDatabaseName
 open
-  classview_ref 457602 // mdtCableList
-  classview_ref 477314 // Global
-  classview_ref 483842 // Conceptual
-  class_ref 894722 // mdtClPathGraphEdgeData
-  operation_ref 1652738 // getLinkDataFromModel
-  class_ref 903554 // mdtClPathGraphicsConnection
-  class_ref 903682 // mdtClPathGraphicsLink
-  class_ref 895234 // QGraphicsItem
-  class_ref 895618 // QGraphicsScene
+  attribute_ref 921090 // DatabaseName
+  attribute_ref 920706 // TableName
+  attribute_ref 920962 // pvDropTableIfExists
+  attribute_ref 920834 // MySqlEngineName
+  operation_ref 1660034 // setDriverName
+  operation_ref 1661058 // setDatabaseName
+  operation_ref 1660418 // setTableName
+  operation_ref 1660290 // setMysqlEngine
+  operation_ref 1660674 // addIndex
+  operation_ref 1660930 // addFieldToForeignKey
+  classrelation_ref 1130882 // pvForeignKeys (<directional composition>)
+  classview_ref 418434 // mdtDataTable
+  classview_ref 287106 // Database
 end
 end

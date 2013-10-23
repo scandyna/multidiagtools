@@ -107,6 +107,7 @@ set (SOURCES_FILES
           mdtSqlForm.cpp
           mdtSqlFormWindow.cpp
           mdtSqlFormDialog.cpp
+          mdtSqlSchemaTable.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
