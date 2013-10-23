@@ -23,6 +23,7 @@
 
 #include "mdtCsvFile.h"
 #include "mdtFieldMap.h"
+#include "mdtSqlSchemaTable.h"
 #include <QSqlDatabase>
 #include <QObject>
 #include <QMap>
@@ -111,7 +112,8 @@ class mdtDataTableManager : public QObject
    * \param mode Behaviour to adopt during database/file creation.
    * \return True on success.
    */
-  bool createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields, create_mode_t mode);
+  ///bool createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields, create_mode_t mode);
+  bool createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, create_mode_t mode);
 
   /*! \brief Get internal database instance
    */
@@ -245,6 +247,7 @@ class mdtDataTableManager : public QObject
    * \pre db must be valid and open
    */
   bool createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields);
+  bool createDatabaseTable(const mdtSqlSchemaTable &table);
 
   /*! \brief Drop database table
    *

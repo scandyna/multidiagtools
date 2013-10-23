@@ -142,7 +142,8 @@ QString mdtDataTableManager::getFieldName(const QString &columnName)
   return fieldName;
 }
 
-bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields, create_mode_t mode)
+bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, create_mode_t mode)
+///bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields, create_mode_t mode)
 {
   QFile file;
   QFileInfo fileInfo;
@@ -228,7 +229,10 @@ bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, co
     }
   }
   // Here, we must create database table
-  if(!createDatabaseTable(tableName, primaryKey, createPrimaryKeyFields, fields)){
+  ///if(!createDatabaseTable(tableName, primaryKey, createPrimaryKeyFields, fields)){
+  table.setDriverName(pvDb.driverName());
+  table.setTableName(tableName);
+  if(!createDatabaseTable(table)){
     mdtError e(MDT_DATABASE_ERROR, "Cannot create database table for data set " + name, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
     e.commit();
@@ -291,9 +295,12 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   QList<mdtFieldMapItem*> mapItems;
   int csvFieldIndex;
   int modelFieldIndex;
-  QSqlIndex pk;
+  ///QSqlIndex pk;
   QSqlField field;
-  QList<QSqlField> fields;
+  ///QList<QSqlField> fields;
+  
+  mdtSqlSchemaTable table;
+  
   QSqlTableModel::EditStrategy originalEditStrategy;;
   QProgressDialog *progress = 0;
   int totalLineCount;
@@ -342,22 +349,26 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     mapItem->setFieldDisplayText("id_PK");
     mapItem->setDataType(QVariant::Int);
     pvFieldMap.addItem(mapItem);
-    pk.append(QSqlField("id_PK", QVariant::Int));
+    ///pk.append(QSqlField("id_PK", QVariant::Int));
     // Create primary key field
+    field = QSqlField();
     field.setName("id_PK");
     field.setType(QVariant::Int);
     field.setAutoValue(true);
-    fields.append(field);
+    table.addField(field, true);
+    ///fields.append(field);
     modelFieldIndex++;
   }else{
     // Primary key is one of the CSV header
-    for(i=0; i<pkFields.size(); i++){
+    /**
+    for(i = 0; i < pkFields.size(); ++i){
       Q_ASSERT(header.contains(pkFields.at(i)));
       pk.append(getFieldName(pkFields.at(i)));
     }
+    */
   }
   // Create fields regarding field map
-  for(csvFieldIndex=0; csvFieldIndex<header.size(); csvFieldIndex++){
+  for(csvFieldIndex = 0; csvFieldIndex < header.size(); ++csvFieldIndex){
     if(!header.at(csvFieldIndex).isEmpty()){
       mapItems = pvFieldMap.itemsAtSourceFieldName(header.at(csvFieldIndex));
       if(mapItems.isEmpty()){
@@ -371,16 +382,22 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
         mapItems.append(mapItem);
       }
       // Create fields
-      for(i=0; i<mapItems.size(); i++){
+      for(i = 0; i < mapItems.size(); i++){
         // Update field map indexes
         mapItem = mapItems.at(i);
         Q_ASSERT(mapItem != 0);
         mapItem->setSourceFieldIndex(csvFieldIndex);
         mapItem->setFieldIndex(modelFieldIndex);
         pvFieldMap.updateItem(mapItem);
+        field = QSqlField();
         field.setName(mapItem->fieldName());
         field.setType(mapItem->dataType());
-        fields.append(field);
+        if(pkFields.contains(field.name())){
+          table.addField(field, true);
+        }else{
+          table.addField(field, false);
+        }
+        ///fields.append(field);
         modelFieldIndex++;
       }
     }
@@ -388,7 +405,8 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   // Create data set
   pvDataSetName = fileInfo.baseName();
   dataSetTableName = getTableName(pvDataSetName);
-  if(!createDataSet(dbDir, pvDataSetName, pk, false, fields, mode)){
+  ///if(!createDataSet(dbDir, pvDataSetName, pk, false, fields, mode)){
+  if(!createDataSet(dbDir, pvDataSetName, table, mode)){
     csvFile.close();
     return false;
   }
@@ -429,7 +447,8 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     line = csvFile.readLine(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol);
     // On some parse error, it can happen that we have to much columns
     // Common known issue is the ending ; with no more data, but we don't loose data in this case.
-    while(line.size() > fields.size()){
+    ///while(line.size() > fields.size()){
+    while(line.size() > table.fieldCount()){
       if(!line.last().isEmpty()){
         dataLossCount++;
       }
@@ -556,6 +575,28 @@ mdtDataTableModel *mdtDataTableManager::model()
 void mdtDataTableManager::setAbortFlag()
 {
   pvAbort = true;
+}
+
+bool mdtDataTableManager::createDatabaseTable(const mdtSqlSchemaTable &table)
+{
+  Q_ASSERT(pvDb.isValid());
+  Q_ASSERT(pvDb.isOpen());
+
+  QString sql;
+  QSqlQuery query(pvDb);
+  QSqlError sqlError;
+
+  sql = table.sqlForCreateTable();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot create table " + table.tableName(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.setSystemError(sqlError.number(), sqlError.driverText());
+    e.commit();
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtDataTableManager::createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields)

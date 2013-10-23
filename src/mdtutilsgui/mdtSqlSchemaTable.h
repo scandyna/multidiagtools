@@ -78,11 +78,12 @@ class mdtSqlSchemaTable
   void setDatabaseName(const QString & name);
 
   /*! \brief Set table name
-   *
-   * If dropIfExists is set, sqlForCreateTable() will include
-   *  a drop table before the create table statement.
    */
-  void setTableName(const QString & name, bool dropIfExists, const QString &charset = QString(), Qt::CaseSensitivity cs = Qt::CaseInsensitive);
+  void setTableName(const QString & name, const QString &charset = QString(), Qt::CaseSensitivity cs = Qt::CaseInsensitive);
+
+  /*! \brief Get table name
+   */
+  QString tableName() const;
 
   /*! \brief Set the Maria DB/MySQL storage engine (XtraDB, Inno DB, ...)
    */
@@ -91,6 +92,10 @@ class mdtSqlSchemaTable
   /*! \brief Add a field
    */
   void addField(const QSqlField & field, bool isPartOfPrimaryKey);
+
+  /*! \brief Get number of fields
+   */
+  int fieldCount() const;
 
   /*! \brief Add a index
    *
@@ -120,11 +125,11 @@ class mdtSqlSchemaTable
 
   /*! \brief Get SQL statement for table creation
    */
-  QString sqlForCreateTable();
+  QString sqlForCreateTable() const;
 
   /*! \brief Get SQL statement for table deleteion
    */
-  QString sqlForDropTable();
+  QString sqlForDropTable() const;
 
  private:
 
@@ -132,63 +137,65 @@ class mdtSqlSchemaTable
 
   /*! \brief Build create table statement for Maria DB/MySQL
    */
-  QString sqlForCreateTableMySql();
+  QString sqlForCreateTableMySql() const;
 
   /*! \brief Build create table statement for Sqlite
    */
-  QString sqlForCreateTableSqlite();
+  QString sqlForCreateTableSqlite() const;
 
   /*! \brief Get SQL statement for the fields part for Maria DB/MySQL
    */
-  QString sqlForFieldsMySql();
+  QString sqlForFieldsMySql() const;
 
   /*! \brief Get SQL statement for the fields part for Sqlite
    */
-  QString sqlForFieldsSqlite();
+  QString sqlForFieldsSqlite() const;
 
   /*! \brief Get SQL statement for the primary key
    */
-  QString sqlForPrimaryKey(const QString &delimiter);
+  QString sqlForPrimaryKey(const QString &delimiter) const;
 
   /*! \brief Get SQL statement for the indexes
    */
-  QString sqlForIndexes(const QString &delimiter);
+  ///QString sqlForIndexes();
+
+  /*! \brief Get SQL statement for the indexes for Maria DB/MySQL
+   */
+  QString sqlForIndexesMySql() const;
+
+  /*! \brief Get SQL statement for the indexes for Sqlite
+   */
+  QString sqlForIndexesSqlite() const;
 
   /*! \brief Get SQL statement for the foreign keys
    */
-  QString sqlForForeignKeys(const QString &delimiter);
+  QString sqlForForeignKeys(const QString &delimiter) const;
 
   /*! \brief Get field type name for Maria DB/MySQL
    */
-  QString fieldTypeNameMySql(QVariant::Type type, int length);
+  QString fieldTypeNameMySql(QVariant::Type type, int length) const;
 
   /*! \brief Get field type name for Maria Sqlite
    */
-  QString fieldTypeNameSqlite(QVariant::Type type, int length);
-
-  /*! \brief Set collation regarding pvCharset and cs
-   */
-  ///void setCollation(Qt::CaseSensitivity cs);
+  QString fieldTypeNameSqlite(QVariant::Type type, int length) const;
 
   /*! \brief Get the COLLATE string for Maria DB/MySQL
    */
-  QString sqlForCollateMySql();
+  QString sqlForCollateMySql() const;
 
   /*! \brief Get the COLLATE string for Sqlite
    */
-  QString sqlForCollateSqlite();
+  QString sqlForCollateSqlite() const;
 
   /*! \brief Get the string version of foreignKeyAction_t
    */
-  QString foreignKeyActionName(foreignKeyAction_t action);
+  QString foreignKeyActionName(foreignKeyAction_t action) const;
 
   QString pvDriverName;
   QString pvDatabaseName;
   QString pvTableName;
   QString pvCharset;
-  ///QString pvCollation;
   Qt::CaseSensitivity pvCaseSensitivity;
-  bool pvDropTableIfExists;
   QString pvStorageEngineName;
   QList<QSqlField> pvFields;
   QSqlIndex pvPrimaryKey;

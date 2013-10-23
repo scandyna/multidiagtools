@@ -26,6 +26,7 @@
 #include "mdtFieldMap.h"
 #include "mdtFieldMapItem.h"
 #include "mdtSqlQueryWidget.h"
+#include "mdtSqlSchemaTable.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
@@ -144,14 +145,17 @@ void mdtDataTableTest::createDataSetTest()
   mdtDataTableModel *model;
   QTemporaryFile dbFile;
   QFileInfo fileInfo;
-  QList<QSqlField> fields;
+  ///QList<QSqlField> fields;
   QSqlField field;
-  QSqlIndex pk;
+  ///QSqlIndex pk;
   QSqlDatabase db;
   QString dataSetName;
   QString dataSetTableName;
+  
+  mdtSqlSchemaTable table;
 
   // Build fields
+  /**
   pk.append(QSqlField("id_PK", QVariant::Int));
   field.setName("value");
   field.setType(QVariant::Double);
@@ -159,21 +163,39 @@ void mdtDataTableTest::createDataSetTest()
   field.setName("name");
   field.setType(QVariant::String);
   fields.append(field);
+  */
+  field = QSqlField();
+  field.setName("id_PK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  field = QSqlField();
+  field.setName("value");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  field = QSqlField();
+  field.setName("name");
+  field.setType(QVariant::String);
+  table.addField(field, false);
+
 
   // Check data set creation modes
   QVERIFY(dbFile.open());
   fileInfo.setFile(dbFile);
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
+  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::KeepExisting));
+  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::KeepExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::KeepExisting));
   QVERIFY(manager.database().isOpen());
-  QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::FailIfExists));
+  ///QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::FailIfExists));
+  QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::FailIfExists));
   QVERIFY(!manager.database().isOpen());
 
   // Check table creation: PK fields are automatically created
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
+  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
   // Get model and check that columns exists
   model = manager.model();
@@ -188,9 +210,11 @@ void mdtDataTableTest::createDataSetTest()
   QCOMPARE(model->rowCount(), 0);
 
   // Check table creation: PK fields are NOT automatically created
-  QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, pk, false, fields, mdtDataTableManager::OverwriteExisting));
-  QVERIFY(!manager.database().isOpen());
+  ///QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, pk, false, fields, mdtDataTableManager::OverwriteExisting));
+  ///QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
+  ///QVERIFY(!manager.database().isOpen());
   // Rebuild fields in correct way
+  /**
   fields.clear();
   field.setName("id_PK");
   field.setType(QVariant::Int);
@@ -201,7 +225,9 @@ void mdtDataTableTest::createDataSetTest()
   field.setName("name");
   field.setType(QVariant::String);
   fields.append(field);
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, false, fields, mdtDataTableManager::OverwriteExisting));
+  */
+  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, false, fields, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
   // Get model and check that columns exists
   model = manager.model();
@@ -223,9 +249,9 @@ void mdtDataTableTest::editDataTest()
   mdtDataTableModel *model;
   QTemporaryFile dbFile;
   QFileInfo fileInfo;
-  QList<QSqlField> fields;
+  ///QList<QSqlField> fields;
   QSqlField field;
-  QSqlIndex pk;
+  ///QSqlIndex pk;
   QSqlDatabase db;
   QString dataSetName;
   QString dataSetTableName;
@@ -238,7 +264,10 @@ void mdtDataTableTest::editDataTest()
   QList<QStringList> rowsData4;
   ///QList<QList<QVariant> > rowsData4;
 
+  mdtSqlSchemaTable table;
+  
   // Build fields
+  /**
   pk.append(QSqlField("id_PK", QVariant::Int));
   field.setName("signal");
   field.setType(QVariant::String);
@@ -246,12 +275,27 @@ void mdtDataTableTest::editDataTest()
   field.setName("value");
   field.setType(QVariant::Double);
   fields.append(field);
+  */
+  field = QSqlField();
+  field.setName("id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  field = QSqlField();
+  field.setName("signal");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  field = QSqlField();
+  field.setName("value");
+  field.setType(QVariant::String);
+  table.addField(field, false);
   // Create data set
   QVERIFY(dbFile.open());
   fileInfo.setFile(dbFile);
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
+  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
   // Get model and check that columns exists
   model = manager.model();
   QVERIFY(model != 0);
@@ -918,15 +962,18 @@ void mdtDataTableTest::csvExportTest()
   mdtDataTableManager manager;
   QTemporaryFile dbFile;
   QFileInfo fileInfo;
-  QList<QSqlField> fields;
+  ///QList<QSqlField> fields;
   QSqlField field;
-  QSqlIndex pk;
+  ///QSqlIndex pk;
   QSqlDatabase db;
   QString dataSetName;
   QString dataSetTableName;
   QMap<QString,QVariant> rowData;
+  
+  mdtSqlSchemaTable table;
 
   // Build fields
+  /**
   pk.append(QSqlField("id_PK", QVariant::Int));
   field.setName("signal");
   field.setType(QVariant::String);
@@ -934,15 +981,32 @@ void mdtDataTableTest::csvExportTest()
   field.setName("value");
   field.setType(QVariant::Double);
   fields.append(field);
+  */
+  field = QSqlField();
+  field.setName("id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  field = QSqlField();
+  field.setName("signal");
+  field.setType(QVariant::String);
+  table.addField(field, false);
+  field = QSqlField();
+  field.setName("value");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+
   // Create data set
   QVERIFY(dbFile.open());
   fileInfo.setFile(dbFile);
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
+  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
   // Set model and check that columns exists
   mdtDataTableModel m(0, db);
   m.setTable(dataSetTableName);
+  QVERIFY(m.select());
   QCOMPARE(m.columnCount(), 3);
   QCOMPARE(m.headerData(0, Qt::Horizontal), QVariant("id_PK"));
   QCOMPARE(m.headerData(1, Qt::Horizontal), QVariant("signal"));

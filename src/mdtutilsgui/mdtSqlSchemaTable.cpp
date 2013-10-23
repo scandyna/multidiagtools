@@ -25,7 +25,6 @@
 
 mdtSqlSchemaTable::mdtSqlSchemaTable()
 {
-  pvDropTableIfExists = false;
 }
 
 mdtSqlSchemaTable::~mdtSqlSchemaTable()
@@ -38,9 +37,7 @@ void mdtSqlSchemaTable::clear()
   pvDatabaseName.clear();
   pvTableName.clear();
   pvCharset.clear();
-  ///pvCollation.clear();
   pvCaseSensitivity = Qt::CaseInsensitive;
-  pvDropTableIfExists = false;
   pvStorageEngineName.clear();
   pvFields.clear();
   pvPrimaryKey.clear();
@@ -59,13 +56,16 @@ void mdtSqlSchemaTable::setDatabaseName(const QString & name)
   pvDatabaseName = name;
 }
 
-void mdtSqlSchemaTable::setTableName(const QString & name, bool dropIfExists, const QString &charset, Qt::CaseSensitivity cs) 
+void mdtSqlSchemaTable::setTableName(const QString & name, const QString &charset, Qt::CaseSensitivity cs) 
 {
   pvTableName = name;
-  pvDropTableIfExists = dropIfExists;
   pvCharset = charset.toLower();
   pvCaseSensitivity = cs;
-  ///setCollation(cs);
+}
+
+QString mdtSqlSchemaTable::tableName() const
+{
+  return pvTableName;
 }
 
 void mdtSqlSchemaTable::setStorageEngineName(const QString & name) 
@@ -79,6 +79,11 @@ void mdtSqlSchemaTable::addField(const QSqlField & field, bool isPartOfPrimaryKe
   if(isPartOfPrimaryKey){
     pvPrimaryKey.append(field);
   }
+}
+
+int mdtSqlSchemaTable::fieldCount() const
+{
+  return pvFields.size();
 }
 
 void mdtSqlSchemaTable::addIndex(const QString & name, bool unique) 
@@ -153,7 +158,7 @@ bool mdtSqlSchemaTable::addFieldToForeignKey(const QString & foreignKeyName, con
   return true;
 }
 
-QString mdtSqlSchemaTable::sqlForCreateTable() 
+QString mdtSqlSchemaTable::sqlForCreateTable()  const
 {
   QString sql;
 
@@ -163,10 +168,6 @@ QString mdtSqlSchemaTable::sqlForCreateTable()
   }
   if(pvFields.isEmpty()){
     return sql;
-  }
-  // Add the drop table statement if requested
-  if(pvDropTableIfExists){
-    sql = sqlForDropTable();
   }
   // Add the create table statement regarding driver
   if(pvDriverName == "QMYSQL"){
@@ -183,7 +184,7 @@ QString mdtSqlSchemaTable::sqlForCreateTable()
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForDropTable() 
+QString mdtSqlSchemaTable::sqlForDropTable() const
 {
   QString sql;
   QString delimiter;
@@ -205,7 +206,7 @@ QString mdtSqlSchemaTable::sqlForDropTable()
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForCreateTableMySql() 
+QString mdtSqlSchemaTable::sqlForCreateTableMySql() const
 {
   QString sql;
 
@@ -222,7 +223,7 @@ QString mdtSqlSchemaTable::sqlForCreateTableMySql()
   // Add primary key
   sql += sqlForPrimaryKey("`");
   // Add indexes
-  sql += sqlForIndexes("`");
+  sql += sqlForIndexesMySql();
   // Add foreign keys
   sql += sqlForForeignKeys("`");
   // Add end + table attributes
@@ -236,17 +237,12 @@ QString mdtSqlSchemaTable::sqlForCreateTableMySql()
   if(pvDriverName.trimmed() == "QMYSQL"){
     sql += sqlForCollateMySql();
   }
-  /**
-  if(!pvCollation.trimmed().isEmpty()){
-    sql += " COLLATE=" + pvCollation;
-  }
-  */
   sql += ";\n";
 
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForCreateTableSqlite() 
+QString mdtSqlSchemaTable::sqlForCreateTableSqlite() const
 {
   QString sql;
   QSqlField field;
@@ -266,27 +262,16 @@ QString mdtSqlSchemaTable::sqlForCreateTableSqlite()
     sql += sqlForPrimaryKey("'");
   }
   // Add indexes
-  sql += sqlForIndexes("'");
+  sql += sqlForIndexesSqlite();
   // Add foreign keys
   sql += sqlForForeignKeys("'");
   // Add end + table attributes
-  sql += "\n)";
-  /**
-  if(!pvCharset.trimmed().isEmpty()){
-    sql += " DEFAULT CHARSET=" + pvCharset;
-  }
-  */
-  /**
-  if(!pvCollation.trimmed().isEmpty()){
-    sql += " COLLATE=" + pvCollation;
-  }
-  */
-  sql += ";\n";
+  sql += "\n);\n";
 
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForFieldsMySql()
+QString mdtSqlSchemaTable::sqlForFieldsMySql() const
 {
   QString sql;
   QSqlField field;
@@ -318,7 +303,7 @@ QString mdtSqlSchemaTable::sqlForFieldsMySql()
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForFieldsSqlite()
+QString mdtSqlSchemaTable::sqlForFieldsSqlite() const
 {
   QString sql;
   QSqlField field;
@@ -343,12 +328,6 @@ QString mdtSqlSchemaTable::sqlForFieldsSqlite()
         }
       }
     }
-    /**
-    if((pvPrimaryKey.contains(field.name()))&&(pvPrimaryKey.)&&(field.isAutoValue())){
-      sql += " AUTOINCREMENT";
-    }else{
-    }
-    */
     if(field.type() == QVariant::String){
       sql += sqlForCollateSqlite();
     }
@@ -360,7 +339,7 @@ QString mdtSqlSchemaTable::sqlForFieldsSqlite()
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForPrimaryKey(const QString &delimiter)
+QString mdtSqlSchemaTable::sqlForPrimaryKey(const QString &delimiter) const
 {
   QString sql;
   int i;
@@ -380,7 +359,20 @@ QString mdtSqlSchemaTable::sqlForPrimaryKey(const QString &delimiter)
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForIndexes(const QString &delimiter)
+/**
+QString mdtSqlSchemaTable::sqlForIndexes()
+{
+  if(pvDriverName.trimmed() == "QMYSQL"){
+    return sqlForIndexesMySql();
+  }
+  if(pvDriverName.trimmed() == "QSQLITE"){
+    return sqlForIndexesSqlite();
+  }
+  return "";
+}
+*/
+
+QString mdtSqlSchemaTable::sqlForIndexesMySql() const
 {
   QString sql;
   QSqlIndex index;
@@ -395,12 +387,12 @@ QString mdtSqlSchemaTable::sqlForIndexes(const QString &delimiter)
     it.next();
     index = it.value();
     if(pvIndexeAtIsUnique.value(index.name())){
-      sql += "  UNIQUE INDEX " + delimiter + index.name() + delimiter + " (";
+      sql += "  UNIQUE INDEX `" + index.name() + "` (";
     }else{
-      sql += "  INDEX " + delimiter + index.name() + delimiter + " (";
+      sql += "  INDEX `" + index.name() + "` (";
     }
     for(i = 0; i < index.count(); ++i){
-      sql += delimiter + index.field(i).name() + delimiter;
+      sql += "`" + index.field(i).name() + "`";
       if(i < (index.count() - 1)){
         sql += ",";
       }
@@ -415,7 +407,42 @@ QString mdtSqlSchemaTable::sqlForIndexes(const QString &delimiter)
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter)
+QString mdtSqlSchemaTable::sqlForIndexesSqlite() const
+{
+  QString sql, indexSql;
+  QSqlIndex index;
+  int i;
+
+  if(pvIndexes.isEmpty()){
+    return "";
+  }
+  QHashIterator<QString, QSqlIndex> it(pvIndexes);
+  while(it.hasNext()){
+    it.next();
+    index = it.value();
+    if(pvIndexeAtIsUnique.value(index.name())){
+      indexSql += "  UNIQUE (";
+      for(i = 0; i < index.count(); ++i){
+        indexSql += "'" + index.field(i).name() + "'";
+        if(i < (index.count() - 1)){
+          indexSql += ",";
+        }
+      }
+      if(it.hasNext()){
+        indexSql += "),\n";
+      }else{
+        indexSql += ")";
+      }
+    }
+  }
+  if(!indexSql.trimmed().isEmpty()){
+    sql = ",\n" + indexSql;
+  }
+
+  return sql;
+}
+
+QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter) const
 {
   QString sql;
   QSqlField field;
@@ -431,7 +458,11 @@ QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter)
   while(itf.hasNext()){
     itf.next();
     fkInfo = itf.value();
-    sql += "  FOREIGN KEY `" + itf.key() + delimiter + " (";
+    if(pvDriverName.trimmed() == "QSQLITE"){
+      sql += "  FOREIGN KEY (";
+    }else{
+      sql += "  FOREIGN KEY " + delimiter + itf.key() + delimiter + " (";
+    }
     fields = fkInfo.fields;
     for(i = 0; i < fields.count(); ++i){
       sql += delimiter + fields.field(i).name() + delimiter;
@@ -464,7 +495,7 @@ QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter)
   return sql;
 }
 
-QString mdtSqlSchemaTable::fieldTypeNameMySql(QVariant::Type type, int length)
+QString mdtSqlSchemaTable::fieldTypeNameMySql(QVariant::Type type, int length) const
 {
   QString strType;
 
@@ -522,7 +553,7 @@ QString mdtSqlSchemaTable::fieldTypeNameMySql(QVariant::Type type, int length)
   return strType;
 }
 
-QString mdtSqlSchemaTable::fieldTypeNameSqlite(QVariant::Type type, int length)
+QString mdtSqlSchemaTable::fieldTypeNameSqlite(QVariant::Type type, int length) const
 {
   QString strType;
 
@@ -580,29 +611,7 @@ QString mdtSqlSchemaTable::fieldTypeNameSqlite(QVariant::Type type, int length)
   return strType;
 }
 
-/**
-void mdtSqlSchemaTable::setCollation(Qt::CaseSensitivity cs)
-{
-  if(pvCharset.trimmed().isEmpty()){
-    return;
-  }
-  // Set first part regarding charset
-  if(pvCharset.toLower() == "utf8"){
-    pvCollation = "utf8_unicode";
-  }
-  // Set case sensitivity
-  switch(cs){
-    case Qt::CaseInsensitive:
-      pvCollation += "_ci";
-      break;
-    case Qt::CaseSensitive:
-      pvCollation += "_cs";
-      break;
-  }
-}
-*/
-
-QString mdtSqlSchemaTable::sqlForCollateMySql()
+QString mdtSqlSchemaTable::sqlForCollateMySql() const
 {
   QString sql;
 
@@ -627,7 +636,7 @@ QString mdtSqlSchemaTable::sqlForCollateMySql()
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForCollateSqlite()
+QString mdtSqlSchemaTable::sqlForCollateSqlite() const
 {
   switch(pvCaseSensitivity){
     case Qt::CaseInsensitive:
@@ -640,7 +649,7 @@ QString mdtSqlSchemaTable::sqlForCollateSqlite()
   return "";
 }
 
-QString mdtSqlSchemaTable::foreignKeyActionName(foreignKeyAction_t action)
+QString mdtSqlSchemaTable::foreignKeyActionName(foreignKeyAction_t action) const
 {
   switch(action){
     case Cascade:
