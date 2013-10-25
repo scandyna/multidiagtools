@@ -47,6 +47,7 @@ set (SOURCES_FILES
           src/mdtClPathGraphicsLink.cpp
           src/mdtClPathGraph.cpp
           src/mdtClPathGraphDialog.cpp
+          src/mdtClDatabaseSchema.cpp
     )
 
 # Qt ui files

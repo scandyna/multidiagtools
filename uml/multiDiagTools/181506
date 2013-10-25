@@ -1,6 +1,6 @@
 format 76
 "mdttools" // mdttools
-  revision 9
+  revision 10
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -635,7 +635,6 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 706434 // mdtClUnitEditor
       end
     end
   end

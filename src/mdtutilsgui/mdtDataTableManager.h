@@ -25,7 +25,7 @@
 #include "mdtFieldMap.h"
 #include "mdtSqlDatabaseManager.h"
 #include "mdtSqlSchemaTable.h"
-#include <QSqlDatabase>
+#include "mdtError.h"
 #include <QObject>
 #include <QMap>
 #include <QByteArray>
@@ -49,16 +49,6 @@ class mdtDataTableManager : public QObject
 
  public:
 
-  /*! \brief Dataset creation mode
-   */
-  ///enum create_mode_t{
-  ///                  OverwriteExisting,  /*!< If file/database allready exists, it will be overwritten */
-  ///                  KeepExisting,       /*!< If file/database allready exists, it will simply be open */
-  ///                  FailIfExists,       /*!< If file/database allready exists, create method will fail */
-  ///                  AskUserIfExists     /*!< If file/database allready exists, 
-  ///                                            a dialog box will ask the user if it must be overwritten or not */
-  ///};
-
   /*! \brief
    */
   mdtDataTableManager(QObject *parent = 0, QSqlDatabase db = QSqlDatabase());
@@ -69,6 +59,10 @@ class mdtDataTableManager : public QObject
    *  Be avare when referencing pointer returned by model().
    */
   ~mdtDataTableManager();
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const;
 
   /*! \brief Close
    *
@@ -251,20 +245,6 @@ class mdtDataTableManager : public QObject
 
  private:
 
-  /*! \brief Create database table
-   *
-   * \see createDataSet()
-   * \pre db must be valid and open
-   */
-  ///bool createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields);
-  ///bool createDatabaseTable(const mdtSqlSchemaTable &table);
-
-  /*! \brief Drop database table
-   *
-   * \pre db must be valid and open
-   */
-  ///bool dropDatabaseTable(const QString &tableName);
-
   /*! \brief Open a dialog box that ask the user if he wants do overwrite a existing file
    *
    * \return True if user choosed to overwrite file
@@ -285,8 +265,8 @@ class mdtDataTableManager : public QObject
   QDir pvDataSetDirectory;
   mdtDataTableModel *pvModel;
   mdtFieldMap pvFieldMap;
+  mdtError pvLastError;
   // Database specific members
-  ///QSqlDatabase pvDb;
   mdtSqlDatabaseManager *pvDatabaseManager;
   // CSV specific members
   QString pvCsvSeparator;

@@ -133,8 +133,6 @@ class mdtSqlSchemaTable
 
  private:
 
-  Q_DISABLE_COPY(mdtSqlSchemaTable);
-
   /*! \brief Build create table statement for Maria DB/MySQL
    */
   QString sqlForCreateTableMySql() const;

@@ -136,22 +136,36 @@ bool mdtSqlSchemaTable::addFieldToForeignKey(const QString & foreignKeyName, con
   int i;
 
   if(!pvForeignKeys.contains(foreignKeyName)){
+    mdtError e("Foreign key named " + foreignKeyName + " not found", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
+    e.commit();
     return false;
   }
   for(i = 0; i < pvFields.size(); ++i){
     if(pvFields.at(i).name() == fieldName){
       field = pvFields.at(i);
     }
+    /**
     if(pvFields.at(i).name() == referingFieldName){
       referingField = pvFields.at(i);
     }
+    */
   }
   if(field.name().isEmpty()){
+    mdtError e("Field named " + fieldName + " not found", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
+    e.commit();
     return false;
   }
+  /**
   if(referingField.name().isEmpty()){
+    mdtError e("Refering field named " + referingFieldName + " not found", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
+    e.commit();
     return false;
   }
+  */
+  referingField.setName(referingFieldName);
   pvForeignKeys[foreignKeyName].fields.append(field);
   pvForeignKeys[foreignKeyName].referingFields.append(referingField);
 
@@ -470,11 +484,7 @@ QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter) const
         sql += ",";
       }
     }
-    if(itf.hasNext()){
-      sql += "),\n";
-    }else{
-      sql += ")\n";
-    }
+    sql += ")\n";
     sql += "   REFERENCES " + delimiter + fkInfo.referingTableName + delimiter + " (";
     fields = fkInfo.referingFields;
     for(i = 0; i < fields.count(); ++i){
@@ -483,13 +493,12 @@ QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter) const
         sql += ",";
       }
     }
-    if(itf.hasNext()){
-      sql += "),\n";
-    }else{
-      sql += ")\n";
-    }
+    sql += ")\n";
     sql += "   ON DELETE " + foreignKeyActionName((foreignKeyAction_t)fkInfo.actionOnDelete) + "\n";
     sql += "   ON UPDATE " + foreignKeyActionName((foreignKeyAction_t)fkInfo.actionOnUpdate);
+    if(itf.hasNext()){
+      sql += ",\n";
+    }
   }
 
   return sql;

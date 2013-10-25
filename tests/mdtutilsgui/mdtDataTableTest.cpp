@@ -146,25 +146,12 @@ void mdtDataTableTest::createDataSetTest()
   mdtDataTableModel *model;
   QTemporaryFile dbFile;
   QFileInfo fileInfo;
-  ///QList<QSqlField> fields;
   QSqlField field;
-  ///QSqlIndex pk;
-  QSqlDatabase db;
   QString dataSetName;
   QString dataSetTableName;
-  
   mdtSqlSchemaTable table;
 
   // Build fields
-  /**
-  pk.append(QSqlField("id_PK", QVariant::Int));
-  field.setName("value");
-  field.setType(QVariant::Double);
-  fields.append(field);
-  field.setName("name");
-  field.setType(QVariant::String);
-  fields.append(field);
-  */
   field = QSqlField();
   field.setName("id_PK");
   field.setType(QVariant::Int);
@@ -178,25 +165,20 @@ void mdtDataTableTest::createDataSetTest()
   field.setType(QVariant::String);
   table.addField(field, false);
 
-
   // Check data set creation modes
   QVERIFY(dbFile.open());
   fileInfo.setFile(dbFile);
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
-  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
-  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::KeepExisting));
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::KeepExisting));
   QVERIFY(manager.database().isOpen());
-  ///QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::FailIfExists));
   QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::FailIfExists));
   QVERIFY(manager.database().isOpen());
   manager.close();
 
   // Check table creation: PK fields are automatically created
-  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
   // Get model and check that columns exists
@@ -212,24 +194,6 @@ void mdtDataTableTest::createDataSetTest()
   QCOMPARE(model->rowCount(), 0);
   manager.close();
 
-  // Check table creation: PK fields are NOT automatically created
-  ///QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, pk, false, fields, mdtDataTableManager::OverwriteExisting));
-  ///QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
-  ///QVERIFY(!manager.database().isOpen());
-  // Rebuild fields in correct way
-  /**
-  fields.clear();
-  field.setName("id_PK");
-  field.setType(QVariant::Int);
-  fields.append(field);
-  field.setName("value");
-  field.setType(QVariant::Double);
-  fields.append(field);
-  field.setName("name");
-  field.setType(QVariant::String);
-  fields.append(field);
-  */
-  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, false, fields, mdtDataTableManager::OverwriteExisting));
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
   // Get model and check that columns exists
@@ -243,7 +207,6 @@ void mdtDataTableTest::createDataSetTest()
   // Check that data set is empty
   QVERIFY(model->select());
   QCOMPARE(model->rowCount(), 0);
-
 }
 
 void mdtDataTableTest::editDataTest()
@@ -252,10 +215,7 @@ void mdtDataTableTest::editDataTest()
   mdtDataTableModel *model;
   QTemporaryFile dbFile;
   QFileInfo fileInfo;
-  ///QList<QSqlField> fields;
   QSqlField field;
-  ///QSqlIndex pk;
-  QSqlDatabase db;
   QString dataSetName;
   QString dataSetTableName;
   QMap<QString,QVariant> rowData;
@@ -263,22 +223,10 @@ void mdtDataTableTest::editDataTest()
   mdtFieldMap fieldMap;
   mdtFieldMapItem *mapItem;
   QStringList rowData3;
-  ///QList<QVariant> rowData3;
   QList<QStringList> rowsData4;
-  ///QList<QList<QVariant> > rowsData4;
-
   mdtSqlSchemaTable table;
-  
+
   // Build fields
-  /**
-  pk.append(QSqlField("id_PK", QVariant::Int));
-  field.setName("signal");
-  field.setType(QVariant::String);
-  fields.append(field);
-  field.setName("value");
-  field.setType(QVariant::Double);
-  fields.append(field);
-  */
   field = QSqlField();
   field.setName("id_PK");
   field.setType(QVariant::Int);
@@ -297,7 +245,6 @@ void mdtDataTableTest::editDataTest()
   fileInfo.setFile(dbFile);
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
-  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   // Get model and check that columns exists
   model = manager.model();
@@ -965,26 +912,13 @@ void mdtDataTableTest::csvExportTest()
   mdtDataTableManager manager;
   QTemporaryFile dbFile;
   QFileInfo fileInfo;
-  ///QList<QSqlField> fields;
   QSqlField field;
-  ///QSqlIndex pk;
-  QSqlDatabase db;
   QString dataSetName;
   QString dataSetTableName;
   QMap<QString,QVariant> rowData;
-  
   mdtSqlSchemaTable table;
 
   // Build fields
-  /**
-  pk.append(QSqlField("id_PK", QVariant::Int));
-  field.setName("signal");
-  field.setType(QVariant::String);
-  fields.append(field);
-  field.setName("value");
-  field.setType(QVariant::Double);
-  fields.append(field);
-  */
   field = QSqlField();
   field.setName("id_PK");
   field.setType(QVariant::Int);
@@ -1004,7 +938,6 @@ void mdtDataTableTest::csvExportTest()
   fileInfo.setFile(dbFile);
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
-  ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   // Set model and check that columns exists
   mdtDataTableModel m(0, manager.database());
@@ -1015,6 +948,7 @@ void mdtDataTableTest::csvExportTest()
   QCOMPARE(m.headerData(1, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(m.headerData(2, Qt::Horizontal), QVariant("value"));
 
+  QSKIP("Test not completly implemented", SkipAll);
 }
 
 void mdtDataTableTest::csvImportTest()

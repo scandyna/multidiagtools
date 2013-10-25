@@ -1,6 +1,6 @@
 format 76
-"DatabaseLogical" // mdttools::CableList::Sandbox::DatabaseLogical
-  revision 4
+"DatabaseLogical" // mdttools::CableList::DatabaseLogical
+  revision 5
   modified_by 2 "philippe"
   // class settings
   //class diagram settings

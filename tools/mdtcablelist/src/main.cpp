@@ -29,6 +29,7 @@
 #include "mdtClArticleEditor.h"
 #include "mdtClLinkEditor.h"
 #include "mdtClTerminalBlockEditor.h"
+#include "mdtClDatabaseSchema.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -44,6 +45,7 @@ int main(int argc, char **argv)
   QString password;
   bool ok;
   int retVal;
+  mdtClDatabaseSchema dbSchema;
   mdtSqlWindow vehicleTypeEditorWindow;
   mdtClVehicleTypeEditor *vehicleTypeEditor;
   mdtClArticleEditor *articleEditor;
@@ -63,6 +65,13 @@ int main(int argc, char **argv)
   ///QObject::connect(&app, SIGNAL(languageChanged()), &modbusIoTool, SLOT(retranslate()));
   ///modbusIoTool.setAvailableTranslations(app.availableTranslations(), app.currentTranslationKey());
 
+  // Create schema
+  if(!dbSchema.createSchemaSqlite()){
+    return 1;
+  }
+  
+  return 0;
+  
   // Setup DB connection
   db = QSqlDatabase::addDatabase("QMYSQL");
   db.setHostName("127.0.0.1");

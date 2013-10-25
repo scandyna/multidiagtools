@@ -151,6 +151,7 @@ void mdtDatabaseTest::sqlSchemaTableTest()
 {
   mdtSqlSchemaTable st;
   QString expectedSql;
+  QString expectedSql2; // For copy test, at end
   QSqlField field;
 
   // Initial
@@ -308,6 +309,7 @@ void mdtDatabaseTest::sqlSchemaTableTest()
 
   /*
    * Second table for Sqlite that is child of Client_tbl
+   *  Note: we added a non existant foreing key (had a bug when more than one was declared)
    */
   st.clear();
   st.setDriverName("QSQLITE");
@@ -333,6 +335,8 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   QVERIFY(st.addFieldToIndex("Client_Id_FK_IDX", "Client_Id_FK"));
   st.addForeignKey("Client_Id_FK1", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   QVERIFY(st.addFieldToForeignKey("Client_Id_FK1", "Client_Id_FK", "Id_PK"));
+  st.addForeignKey("Client_Id_FK2", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  QVERIFY(st.addFieldToForeignKey("Client_Id_FK2", "Client_Id_FK", "Id_PK"));
   expectedSql  = "CREATE TABLE 'sandbox'.'Address_tbl' (\n";
   expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
   expectedSql += "  'Street' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
@@ -340,11 +344,24 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql += "  FOREIGN KEY ('Client_Id_FK')\n";
   expectedSql += "   REFERENCES 'Client_tbl' ('Id_PK')\n";
   expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE,\n";
+  expectedSql += "  FOREIGN KEY ('Client_Id_FK')\n";
+  expectedSql += "   REFERENCES 'Client_tbl' ('Id_PK')\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
   expectedSql += "   ON UPDATE CASCADE\n";
   expectedSql += ");\n";
   QCOMPARE(st.sqlForCreateTable(), expectedSql);
-  expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Address_tbl';\n";
-  QCOMPARE(st.sqlForDropTable(), expectedSql);
+  expectedSql2 = "DROP TABLE IF EXISTS 'sandbox'.'Address_tbl';\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql2);
+
+  // Copy test
+  mdtSqlSchemaTable st2;
+  QCOMPARE(st2.sqlForCreateTable(), QString());
+  QCOMPARE(st2.sqlForDropTable(), QString());
+  st2 = st;
+  QCOMPARE(st2.sqlForCreateTable(), expectedSql);
+  QCOMPARE(st2.sqlForDropTable(), expectedSql2);
+
 }
 
 void mdtDatabaseTest::sqlSchemaTableSqliteTest()
