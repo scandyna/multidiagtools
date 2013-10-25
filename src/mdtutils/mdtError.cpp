@@ -24,9 +24,11 @@
  #include <windows.h>
 #endif
 #include <QFileInfo>
+#include <QObject>
 
 mdtError::mdtError()
 {
+  pvLevel = NoError;
 }
 
 mdtError::mdtError(int number, const QString &text, mdtError::level_t level)
@@ -38,6 +40,37 @@ mdtError::mdtError(int number, const QString &text, mdtError::level_t level)
   pvSystemText = "";
   pvFunctionName = "";
   pvFileName = "";
+  pvFileLine = 0;
+}
+
+mdtError::mdtError(const QString &text, level_t level)
+{
+  pvNumber = 0;
+  pvText = text;
+  pvLevel = level;
+  pvSystemNumber = 0;
+  pvSystemText = "";
+  pvFunctionName = "";
+  pvFileName = "";
+  pvFileLine = 0;
+}
+
+void mdtError::setError(const QString &text, level_t level)
+{
+  clear();
+  pvText = text;
+  pvLevel = level;
+}
+
+void mdtError::clear()
+{
+  pvNumber = 0;
+  pvText.clear();
+  pvLevel = NoError;
+  pvSystemNumber = 0;
+  pvSystemText.clear();
+  pvFunctionName.clear();
+  pvFileName.clear();
   pvFileLine = 0;
 }
 
@@ -92,6 +125,21 @@ mdtError::level_t mdtError::level() const
   return pvLevel;
 }
 
+QMessageBox::Icon mdtError::levelIcon() const
+{
+  switch(pvLevel){
+    case NoError:
+      return QMessageBox::Information;
+    case Info:
+      return QMessageBox::Information;
+    case Warning:
+      return QMessageBox::Warning;
+    case Error:
+      return QMessageBox::Critical;
+  }
+  return QMessageBox::NoIcon;
+}
+
 int mdtError::systemNumber() const
 {
   return pvSystemNumber;
@@ -100,6 +148,35 @@ int mdtError::systemNumber() const
 QString mdtError::systemText() const
 {
   return pvSystemText;
+}
+
+QString mdtError::systemErrorString(QObject *obj) const
+{
+  QString str;
+  QString num;
+
+  if(pvSystemText.isEmpty()){
+    return str;
+  }
+  num.setNum(pvSystemNumber);
+  if(obj != 0){
+    str = obj->tr("System returned error number ") + num + obj->tr(":\n");
+  }else{
+    str = "System returned error number " + num + ":\n";
+  }
+  str += pvSystemText;
+
+  return str;
+}
+
+void mdtError::setInformativeText(const QString &text)
+{
+  pvInformativeText = text;
+}
+
+QString mdtError::informativeText() const
+{
+  return pvInformativeText;
 }
 
 QString mdtError::functionName() const

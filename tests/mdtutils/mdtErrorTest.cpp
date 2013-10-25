@@ -157,6 +157,23 @@ void mdtErrorTest::errorOutBackupTest()
   mdtErrorOut::setDialogLevelsMask(0);
 }
 
+void mdtErrorTest::copyTest()
+{
+  mdtError e1("One", mdtError::Warning);
+  mdtError e2;
+
+  // Check e1 and e2
+  QCOMPARE(e1.text(), QString("One"));
+  QVERIFY(e1.level() == mdtError::Warning);
+  QCOMPARE(e2.text(), QString(""));
+  QVERIFY(e2.level() == mdtError::NoError);
+  // Copy and check
+  e2 = e1;
+  QCOMPARE(e1.text(), QString("One"));
+  QVERIFY(e1.level() == mdtError::Warning);
+  QCOMPARE(e2.text(), QString("One"));
+  QVERIFY(e2.level() == mdtError::Warning);
+}
 
 int main(int argc, char **argv)
 {

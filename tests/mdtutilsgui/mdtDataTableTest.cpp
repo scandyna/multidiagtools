@@ -29,6 +29,7 @@
 #include "mdtSqlSchemaTable.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QSqlQueryModel>
 #include <QString>
 #include <QStringList>
@@ -184,18 +185,19 @@ void mdtDataTableTest::createDataSetTest()
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
   ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
   ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::KeepExisting));
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::KeepExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::KeepExisting));
   QVERIFY(manager.database().isOpen());
   ///QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::FailIfExists));
-  QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::FailIfExists));
-  QVERIFY(!manager.database().isOpen());
+  QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::FailIfExists));
+  QVERIFY(manager.database().isOpen());
+  manager.close();
 
   // Check table creation: PK fields are automatically created
   ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
   // Get model and check that columns exists
   model = manager.model();
@@ -208,6 +210,7 @@ void mdtDataTableTest::createDataSetTest()
   // Check that data set is empty
   QVERIFY(model->select());
   QCOMPARE(model->rowCount(), 0);
+  manager.close();
 
   // Check table creation: PK fields are NOT automatically created
   ///QVERIFY(!manager.createDataSet(fileInfo.dir(), dataSetName, pk, false, fields, mdtDataTableManager::OverwriteExisting));
@@ -227,7 +230,7 @@ void mdtDataTableTest::createDataSetTest()
   fields.append(field);
   */
   ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, false, fields, mdtDataTableManager::OverwriteExisting));
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
   // Get model and check that columns exists
   model = manager.model();
@@ -295,7 +298,7 @@ void mdtDataTableTest::editDataTest()
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
   ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   // Get model and check that columns exists
   model = manager.model();
   QVERIFY(model != 0);
@@ -1002,10 +1005,10 @@ void mdtDataTableTest::csvExportTest()
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
   ///QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, true, fields, mdtDataTableManager::OverwriteExisting));
-  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   // Set model and check that columns exists
-  mdtDataTableModel m(0, db);
-  m.setTable(dataSetTableName);
+  mdtDataTableModel m(0, manager.database());
+  m.setTable(table.tableName());
   QVERIFY(m.select());
   QCOMPARE(m.columnCount(), 3);
   QCOMPARE(m.headerData(0, Qt::Horizontal), QVariant("id_PK"));
@@ -1028,7 +1031,7 @@ void mdtDataTableTest::csvImportTest()
   csvFile1.close();
   // Configure manager and import CSV
   manager.setCsvFormat(";", "", "", '\0');
-  QVERIFY(manager.importFromCsvFile(csvFile1.fileName(), mdtDataTableManager::OverwriteExisting, "", QStringList("id_PK")));
+  QVERIFY(manager.importFromCsvFile(csvFile1.fileName(), mdtSqlDatabaseManager::OverwriteExisting, "", QStringList("id_PK")));
   model = manager.model();
   QVERIFY(model != 0);
   // Check model's header
@@ -1055,7 +1058,7 @@ void mdtDataTableTest::csvImportTest()
   // Configure manager and import CSV
   manager.clearFieldMap();
   manager.setCsvFormat(";", "", "", '\0');
-  QVERIFY(manager.importFromCsvFile(csvFile2.fileName(), mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.importFromCsvFile(csvFile2.fileName(), mdtSqlDatabaseManager::OverwriteExisting));
   model = manager.model();
   QVERIFY(model != 0);
   // Check model's header
@@ -1088,7 +1091,7 @@ void mdtDataTableTest::csvImportTest()
   manager.addFieldMapping("bin I/O", "powerState", "Power state", QVariant::String, 0, 0);
   manager.addFieldMapping("bin I/O", "cpuState", "CPU state", QVariant::String, 1, 1);
   manager.addFieldMapping("value", "value", "Value", QVariant::Double);
-  QVERIFY(manager.importFromCsvFile(csvFile3.fileName(), mdtDataTableManager::OverwriteExisting));
+  QVERIFY(manager.importFromCsvFile(csvFile3.fileName(), mdtSqlDatabaseManager::OverwriteExisting));
   model = manager.model();
   QVERIFY(model != 0);
   // Check model's header. Note: we don't know in witch order field splitting is done
@@ -1158,7 +1161,7 @@ void mdtDataTableTest::csvImportTest()
   manager.addFieldMapping("Logici 1", "fakePanto5state", "Fake panto 5 state", QVariant::String, 6, 6);
   manager.addFieldMapping("Logici 1", "fakePanto6state", "Fake panto 6 state", QVariant::String, 7, 7);
   
-  QVERIFY(manager.importFromCsvFile("/tmp/example_dwn.csv", mdtDataTableManager::AskUserIfExists));
+  QVERIFY(manager.importFromCsvFile("/tmp/example_dwn.csv", mdtSqlDatabaseManager::AskUserIfExists));
   ///manager.setCsvFormat(";", "\"", "", '"', "\r\n", "UTF-8");
   ///QVERIFY(manager.importFromCsvFile("/tmp/example_unicontrol.csv", mdtDataTableManager::AskUserIfExists));
   ///QVERIFY(manager.importFromCsvFile("/media/PS_MBS/example_dwn.csv", mdtDataTableManager::AskUserIfExists));

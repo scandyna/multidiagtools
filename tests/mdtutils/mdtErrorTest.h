@@ -36,6 +36,8 @@ class mdtErrorTest : public mdtTest
   void errorOutAddTest();
 
   void errorOutBackupTest();
+
+  void copyTest();
 };
 
 #endif // #ifndef MDT_ERROR_TEST_H

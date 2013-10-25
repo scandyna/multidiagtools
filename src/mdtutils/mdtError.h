@@ -23,8 +23,15 @@
 
 #include <QString>
 #include <QMetaType>
+#include <QMessageBox>
+
+class QObject;
 
 /*! \brief error list
+ *
+ * \todo Check if this is not obselete ?
+ *    Errors are very specific, and per module/class error enum 
+ *     seems to be better than a central, very big and incoherent enum ...
  */
 enum mdt_error_t{
   MDT_NO_ERROR = 0,             /*!< No error */
@@ -46,26 +53,70 @@ enum mdt_error_t{
 };
 
 /*! \brief Add source information to error
+ *
  * Source informations are file, file line and function name
  */
 #define MDT_ERROR_SET_SRC(e, className) e.setSource(__FILE__, __LINE__, className, __FUNCTION__);
 
+/*! \brief mdtError contains informations about a error that occured
+ *
+ * Currently, a mdtError contains several informations:
+ *  - text (mandatory) : a description of the error that occured .
+ *          Access: mdtError(const QString&, level_t) , text() .
+ *  - level (mandatory) : the severity of the error .
+ *          Access: mdtError(const QString&, level_t) , level() , levelIcon() .
+ *  - systemNumber (optional) : error number returned by a system (or other library) call .
+ *          Access: setSystemError() , systemNumber() , systemErrorString() .
+ *  - systemText (optional) : error text number returned by a system (or other library) call .
+ *          Access: setSystemError() , systemText() , systemErrorString() .
+ *  - informativeText (optional) : can be used the same way than QMessageBox .
+ *         Access : setInformativeText() , informativeText() .
+ *
+ * number : currently used with mdt_error_t enum, but it seems that this is not a good idea,
+ *           and this will change once a better one is found ...
+ *
+ * This class contains the information of a error. To just put it to standard defined outputs,
+ *  use commit() .
+ *
+ * Note: no copy constrctor/operator are defined, because only primitve and copiable objects are used,
+ *  but a mdtError can be copied .
+ */
 class mdtError
 {
  public:
 
+  /*! \brief Error level
+   */
   enum level_t{
-    NoError = 0x00,
-    Info = 0x01,
-    Warning = 0x02,
-    Error = 0x04
+    NoError = 0x00,   /*!< No error . */
+    Info = 0x01,      /*!< Just a information, application continues to work in normal way . */
+    Warning = 0x02,   /*!< Error that could be handled */
+    Error = 0x04      /*!< Error that was not handled */
   };
 
+  /*! \brief Constructor
+   */
   mdtError();
 
   /*! \brief Construct new error
+   *
+   * \deprecated If no good idea falls in for the usage of number , this constrctor should become obselete .
    */
   mdtError(int number, const QString &text, level_t level);
+
+  /*! \brief Construct new error
+   */
+  mdtError(const QString &text, level_t level);
+
+  /*! \brief Set error
+   *
+   * Will also clear current error .
+   */
+  void setError(const QString &text, level_t level);
+
+  /*! \brief Clear
+   */
+  void clear();
 
   /*! \brief Add system returned error (for example, errno)
    */
@@ -91,6 +142,8 @@ class mdtError
   void commit();
 
   /*! \brief Error number
+   *
+   * \deprecated If no good idea falls in for the usage of number , this method should become obselete .
    */
   int number() const;
 
@@ -103,6 +156,10 @@ class mdtError
    */
   level_t level() const;
 
+  /*! \brief Map the level to a QMessageBox Icon
+   */
+  QMessageBox::Icon levelIcon() const;
+
   /*! \brief Error number returned from system if available
    */
   int systemNumber() const;
@@ -110,6 +167,21 @@ class mdtError
   /*! \brief Error text returned from system, if available
    */
   QString systemText() const;
+
+  /*! \brief Error number and text from system, if available
+   *
+   * If obj is set, translation is used.
+   *  (We not want to use the static QObject::tr() ).
+   */
+  QString systemErrorString(QObject *obj = 0) const;
+
+  /*! \brief Set informative text
+   */
+  void setInformativeText(const QString &text);
+
+  /*! \brief Get informative text
+   */
+  QString informativeText() const;
 
   /*! \brief Error source function
    */
@@ -127,6 +199,7 @@ class mdtError
 
   int pvNumber;
   QString pvText;
+  QString pvInformativeText;
   level_t pvLevel;
   int pvSystemNumber;
   QString pvSystemText;

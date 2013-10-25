@@ -23,6 +23,7 @@
 
 #include "mdtCsvFile.h"
 #include "mdtFieldMap.h"
+#include "mdtSqlDatabaseManager.h"
 #include "mdtSqlSchemaTable.h"
 #include <QSqlDatabase>
 #include <QObject>
@@ -50,13 +51,13 @@ class mdtDataTableManager : public QObject
 
   /*! \brief Dataset creation mode
    */
-  enum create_mode_t{
-                    OverwriteExisting,  /*!< If file/database allready exists, it will be overwritten */
-                    KeepExisting,       /*!< If file/database allready exists, it will simply be open */
-                    FailIfExists,       /*!< If file/database allready exists, create method will fail */
-                    AskUserIfExists     /*!< If file/database allready exists, 
-                                              a dialog box will ask the user if it must be overwritten or not */
-  };
+  ///enum create_mode_t{
+  ///                  OverwriteExisting,  /*!< If file/database allready exists, it will be overwritten */
+  ///                  KeepExisting,       /*!< If file/database allready exists, it will simply be open */
+  ///                  FailIfExists,       /*!< If file/database allready exists, create method will fail */
+  ///                  AskUserIfExists     /*!< If file/database allready exists, 
+  ///                                            a dialog box will ask the user if it must be overwritten or not */
+  ///};
 
   /*! \brief
    */
@@ -68,6 +69,12 @@ class mdtDataTableManager : public QObject
    *  Be avare when referencing pointer returned by model().
    */
   ~mdtDataTableManager();
+
+  /*! \brief Close
+   *
+   * Will delete internal model and close database.
+   */
+  void close();
 
   /*! \brief Set dataset directory
    *
@@ -113,7 +120,8 @@ class mdtDataTableManager : public QObject
    * \return True on success.
    */
   ///bool createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields, create_mode_t mode);
-  bool createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, create_mode_t mode);
+  ///bool createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, create_mode_t mode);
+  bool createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, mdtSqlDatabaseManager::createMode_t mode);
 
   /*! \brief Get internal database instance
    */
@@ -145,7 +153,8 @@ class mdtDataTableManager : public QObject
    * 
    * \todo Add: separator, data protection, escape char, EOL
    */
-  bool exportToCsvFile(const QString &filePath, create_mode_t mode);
+  ///bool exportToCsvFile(const QString &filePath, create_mode_t mode);
+  bool exportToCsvFile(const QString &filePath, mdtSqlDatabaseManager::createMode_t mode);
 
   /*! \brief Import a CSV file
    *
@@ -159,7 +168,8 @@ class mdtDataTableManager : public QObject
    *                  If list is empty, one named id_PK will be created.
    * \pre All given CSV header items to use as part of primary key must exit in CSV file (See pkFields argument).
    */
-  bool importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir = QString(), const QStringList &pkFields = QStringList());
+  ///bool importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir = QString(), const QStringList &pkFields = QStringList());
+  bool importFromCsvFile(const QString &csvFilePath, mdtSqlDatabaseManager::createMode_t mode, const QString &dir = QString(), const QStringList &pkFields = QStringList());
 
   /*! \brief Add a mapping between CSV header part (item) and model field
    *
@@ -227,7 +237,7 @@ class mdtDataTableManager : public QObject
    * Note that this pointer changes when some
    *  of methods are called.
    *
-   * \return Pointer to current model, or 0 if it was not set.
+   * \return Pointer to current model, or 0 if it was not set or manager is closed.
    */
   mdtDataTableModel *model();
 
@@ -246,14 +256,14 @@ class mdtDataTableManager : public QObject
    * \see createDataSet()
    * \pre db must be valid and open
    */
-  bool createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields);
-  bool createDatabaseTable(const mdtSqlSchemaTable &table);
+  ///bool createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields);
+  ///bool createDatabaseTable(const mdtSqlSchemaTable &table);
 
   /*! \brief Drop database table
    *
    * \pre db must be valid and open
    */
-  bool dropDatabaseTable(const QString &tableName);
+  ///bool dropDatabaseTable(const QString &tableName);
 
   /*! \brief Open a dialog box that ask the user if he wants do overwrite a existing file
    *
@@ -276,7 +286,8 @@ class mdtDataTableManager : public QObject
   mdtDataTableModel *pvModel;
   mdtFieldMap pvFieldMap;
   // Database specific members
-  QSqlDatabase pvDb;
+  ///QSqlDatabase pvDb;
+  mdtSqlDatabaseManager *pvDatabaseManager;
   // CSV specific members
   QString pvCsvSeparator;
   QString pvCsvDataProtection;

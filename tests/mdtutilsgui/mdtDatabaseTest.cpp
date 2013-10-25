@@ -37,6 +37,7 @@
 #include "mdtSqlFormDialog.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlSchemaTable.h"
+#include "mdtSqlDatabaseManager.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -1365,6 +1366,59 @@ void mdtDatabaseTest::sqlSelectionDialogTest()
 
   // delete created table
   QVERIFY(q.exec("DROP TABLE 'somedata'"));
+}
+
+void mdtDatabaseTest::databaseManagerTest()
+{
+  mdtSqlDatabaseManager m;
+  QSqlDatabase db;
+  mdtSqlSchemaTable st;
+  QSqlField field;
+
+  QTemporaryFile dbFile;
+  QFileInfo dbFileInfo;
+
+  /*
+   * Check Sqlite database creation
+   */
+  QVERIFY(dbFile.open());
+  dbFileInfo.setFile(dbFile);
+  // database was never open, creation must work (file will be overwritten)
+  QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting));
+  QVERIFY(m.database().isOpen());
+  // database exists and is allready open, must work
+  QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::KeepExisting));
+  QVERIFY(m.database().isOpen());
+  // database exists and is allready open, must fail
+  QVERIFY(!m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::FailIfExists));
+  // Check that manager not closes the database
+  QVERIFY(m.database().isOpen());
+  m.database().close();
+  QVERIFY(!m.database().isOpen());
+  // database is closed, but allready exists, must fail
+  QVERIFY(!m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::FailIfExists));
+  QVERIFY(!m.database().isOpen());
+  // database is closed but exists. We want to overwite -> must work
+  QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting));
+  QVERIFY(m.database().isOpen());
+  // Check table creation
+  st.setTableName("Client_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  // Fisrt creation
+  QVERIFY(m.createTable(st, mdtSqlDatabaseManager::FailIfExists));
+  QVERIFY(m.database().tables().contains("Client_tbl"));
+  // Check overwite
+  QVERIFY(m.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
+  QVERIFY(m.database().tables().contains("Client_tbl"));
 }
 
 void mdtDatabaseTest::clickMessageBoxButton(QMessageBox::StandardButton button)

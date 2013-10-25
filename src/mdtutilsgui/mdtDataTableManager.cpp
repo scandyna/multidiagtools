@@ -39,7 +39,9 @@
 mdtDataTableManager::mdtDataTableManager(QObject *parent, QSqlDatabase db)
  : QObject(parent)
 {
-  pvDb = db;
+  pvDatabaseManager = new mdtSqlDatabaseManager(this);
+  pvDatabaseManager->setDatabase(db);
+  ///pvDb = db;
   pvModel = 0;
   pvProgressDialogEnabled = false;
   // Set a default CSV format
@@ -49,6 +51,15 @@ mdtDataTableManager::mdtDataTableManager(QObject *parent, QSqlDatabase db)
 mdtDataTableManager::~mdtDataTableManager()
 {
   ///delete pvModel;
+}
+
+void mdtDataTableManager::close()
+{
+  if(pvModel != 0){
+    delete pvModel;
+    pvModel = 0;
+  }
+  pvDatabaseManager->database().close();
 }
 
 bool mdtDataTableManager::setDataSetDirectory(const QDir &dir)
@@ -142,7 +153,9 @@ QString mdtDataTableManager::getFieldName(const QString &columnName)
   return fieldName;
 }
 
-bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, create_mode_t mode)
+/// \todo Use mdtSqlDatabaseManager createMode_t !
+bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, mdtSqlDatabaseManager::createMode_t mode)
+///bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, create_mode_t mode)
 ///bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields, create_mode_t mode)
 {
   QFile file;
@@ -159,6 +172,13 @@ bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, md
 
   qDebug() << "Creating dataset ...";
   
+  // Create database
+  if(!pvDatabaseManager->createDatabaseSqlite(fileInfo, mode, cnnName)){
+    /// \todo Error storage/output
+    return false;
+  }
+  
+  /**
   // We check that data set directory exists
   if(!dir.exists()){
     mdtError e(MDT_FILE_IO_ERROR, "Directory not found, path: " + dir.absolutePath(), mdtError::Error);
@@ -228,10 +248,19 @@ bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, md
         break;
     }
   }
+  
+  */
+  
   // Here, we must create database table
   ///if(!createDatabaseTable(tableName, primaryKey, createPrimaryKeyFields, fields)){
-  table.setDriverName(pvDb.driverName());
+  ///table.setDriverName(pvDb.driverName());
   table.setTableName(tableName);
+  qDebug() << "create table " << table.tableName() << " ...";
+  if(!pvDatabaseManager->createTable(table, mode)){
+    /// \todo Err output
+    return false;
+  }
+  /**
   if(!createDatabaseTable(table)){
     mdtError e(MDT_DATABASE_ERROR, "Cannot create database table for data set " + name, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
@@ -239,9 +268,11 @@ bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, md
     pvDb.close();
     return false;
   }
+  */
   // Finished
   delete pvModel;
-  pvModel = new mdtDataTableModel(this, pvDb);
+  ///pvModel = new mdtDataTableModel(this, pvDb);
+  pvModel = new mdtDataTableModel(this, pvDatabaseManager->database());
   pvModel->setTable(tableName);
 
   return true;
@@ -249,7 +280,7 @@ bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, md
 
 QSqlDatabase mdtDataTableManager::database() const
 {
-  return pvDb;
+  return pvDatabaseManager->database();
 }
 
 void mdtDataTableManager::enableProgressDialog(bool enable)
@@ -276,12 +307,12 @@ void mdtDataTableManager::setCsvFormat(const QString &separator, const QString &
   }
 }
 
-bool mdtDataTableManager::exportToCsvFile(const QString & filePath, create_mode_t mode)
+bool mdtDataTableManager::exportToCsvFile(const QString & filePath, mdtSqlDatabaseManager::createMode_t mode)
 {
   return false;
 }
 
-bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir, const QStringList &pkFields)
+bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDatabaseManager::createMode_t mode, const QString &dir, const QStringList &pkFields)
 {
   QFileInfo fileInfo(csvFilePath);
   QDir dbDir;
@@ -403,6 +434,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     }
   }
   // Create data set
+  close();
   pvDataSetName = fileInfo.baseName();
   dataSetTableName = getTableName(pvDataSetName);
   ///if(!createDataSet(dbDir, pvDataSetName, pk, false, fields, mode)){
@@ -416,7 +448,9 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
     e.commit();
     csvFile.close();
-    pvDb.close();
+    close();
+    ///pvDb.close();
+    pvDatabaseManager->database().close();
     return false;
   }
   // For multiple rows inserstion, we need OnManualSubmit edit strategy
@@ -440,7 +474,9 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     // Check if we have to abort
     if(pvAbort){
       csvFile.close();
-      pvDb.close();
+      ///pvDb.close();
+      ///pvDatabaseManager->database().close();
+      close();
       return false;
     }
     // Read a line in CSV file
@@ -458,7 +494,9 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     if(lineCount>100){
       if(!commitRowsToModel(rows)){
         csvFile.close();
-        pvDb.close();
+        ///pvDb.close();
+        ///pvDatabaseManager->database().close();
+        close();
         return false;
       }
       // Update progress dialog
@@ -477,7 +515,9 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   qDebug() << "Commit last " << rows.size() << " lines...";
   if(!commitRowsToModel(rows)){
     csvFile.close();
-    pvDb.close();
+    ///pvDb.close();
+    ///pvDatabaseManager->database().close();
+    close();
     return false;
   }
   csvFile.close();
@@ -577,6 +617,7 @@ void mdtDataTableManager::setAbortFlag()
   pvAbort = true;
 }
 
+/**
 bool mdtDataTableManager::createDatabaseTable(const mdtSqlSchemaTable &table)
 {
   Q_ASSERT(pvDb.isValid());
@@ -598,7 +639,9 @@ bool mdtDataTableManager::createDatabaseTable(const mdtSqlSchemaTable &table)
 
   return true;
 }
+*/
 
+/**
 bool mdtDataTableManager::createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields)
 {
   Q_ASSERT(pvDb.isValid());
@@ -691,7 +734,9 @@ bool mdtDataTableManager::createDatabaseTable(const QString &tableName, const QS
 
   return true;
 }
+*/
 
+/**
 bool mdtDataTableManager::dropDatabaseTable(const QString &tableName)
 {
   Q_ASSERT(pvDb.isValid());
@@ -713,6 +758,7 @@ bool mdtDataTableManager::dropDatabaseTable(const QString &tableName)
 
   return true;
 }
+*/
 
 bool mdtDataTableManager::userChooseToOverwrite(const QDir &dir, const QString &fileName)
 {
@@ -738,10 +784,13 @@ bool mdtDataTableManager::userChooseToOverwrite(const QDir &dir, const QString &
 
 bool mdtDataTableManager::commitRowsToModel(const QList<QStringList> &rows)
 {
+  QSqlDatabase db = pvDatabaseManager->database();
+
   // Begin transaction (without, insertions are very slow)
-  if(!pvDb.transaction()){
+  if(!db.transaction()){
+  ///if(!pvDb.transaction()){
     mdtError e(MDT_DATABASE_ERROR, "Unable to begin transaction, data set: " + pvDataSetName, mdtError::Error);
-    e.setSystemError(pvDb.lastError().number(), pvDb.lastError().text());
+    e.setSystemError(db.lastError().number(), db.lastError().text());
     MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
     e.commit();
     return false;
@@ -755,9 +804,10 @@ bool mdtDataTableManager::commitRowsToModel(const QList<QStringList> &rows)
     return false;
   }
   // Commit transaction
-  if(!pvDb.commit()){
+  if(!db.commit()){
+  ///if(!pvDb.commit()){
     mdtError e(MDT_DATABASE_ERROR, "Unable to commit transaction, data set: " + pvDataSetName, mdtError::Error);
-    e.setSystemError(pvDb.lastError().number(), pvDb.lastError().text());
+    e.setSystemError(db.lastError().number(), db.lastError().text());
     MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
     e.commit();
     return false;

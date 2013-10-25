@@ -66,6 +66,7 @@ set (HEADER_FILES
           mdtSqlForm.h
           mdtSqlFormWindow.h
           mdtSqlFormDialog.h
+          mdtSqlDatabaseManager.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -108,6 +109,7 @@ set (SOURCES_FILES
           mdtSqlFormWindow.cpp
           mdtSqlFormDialog.cpp
           mdtSqlSchemaTable.cpp
+          mdtSqlDatabaseManager.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
