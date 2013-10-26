@@ -267,7 +267,7 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql  = "CREATE TABLE `sandbox`.`Address_tbl` (\n";
   expectedSql += "  `Id_PK` INT NOT NULL AUTO_INCREMENT,\n";
   expectedSql += "  `Street` VARCHAR(50) DEFAULT NULL,\n";
-  expectedSql += "  `Client_Id_FK` INT NOT NULL,\n";
+  expectedSql += "  `Client_Id_FK` INT NOT NULL DEFAULT NULL,\n";
   expectedSql += "  PRIMARY KEY (`Id_PK`),\n";
   expectedSql += "  INDEX `Client_Id_FK_IDX` (`Client_Id_FK`),\n";
   expectedSql += "  FOREIGN KEY `Client_Id_FK1` (`Client_Id_FK`)\n";
@@ -340,7 +340,7 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql  = "CREATE TABLE 'sandbox'.'Address_tbl' (\n";
   expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
   expectedSql += "  'Street' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
-  expectedSql += "  'Client_Id_FK' INT NOT NULL,\n";
+  expectedSql += "  'Client_Id_FK' INT NOT NULL DEFAULT NULL,\n";
   expectedSql += "  FOREIGN KEY ('Client_Id_FK')\n";
   expectedSql += "   REFERENCES 'Client_tbl' ('Id_PK')\n";
   expectedSql += "   ON DELETE RESTRICT\n";

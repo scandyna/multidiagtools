@@ -49,12 +49,6 @@ bool mdtClDatabaseSchema::createSchemaSqlite(const QFileInfo & dbFileInfo)
   if(!pvDatabaseManager->createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting)){
     return false;
   }
-  // Enable foreing key support
-  QSqlQuery query(pvDatabaseManager->database());
-  sql = "PRAGMA foreign_keys = ON";
-  if(!query.exec(sql)){
-    return false;
-  }
 
   setupTables();
   if(!createTablesSqlite()){
@@ -323,6 +317,7 @@ void mdtClDatabaseSchema::setupArticleTable()
   field.setType(QVariant::String);
   field.setLength(10);
   field.setRequiredStatus(QSqlField::Required);
+  field.setDefaultValue("pce");
   table.addField(field, false);
 
   pvTables.append(table);
@@ -610,7 +605,11 @@ void mdtClDatabaseSchema::setupUnitConnectionTable()
   field.setName("ArticleConnection_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
-  /// IsATestPoint
+  // IsATestPoint
+  field = QSqlField();
+  field.setName("IsATestPoint");
+  field.setType(QVariant::Bool);
+  table.addField(field, false);
   // SchemaPage
   field = QSqlField();
   field.setName("SchemaPage");

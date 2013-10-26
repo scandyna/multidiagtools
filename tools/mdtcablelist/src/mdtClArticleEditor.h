@@ -44,10 +44,8 @@ class mdtClArticleEditor : public QObject
   ~mdtClArticleEditor();
 
   /*! \brief Setup tables
-   *
-   * \param includeConnections If true, ArticleConnection_tbl will be added as child widget.
    */
-  bool setupTables(bool includeConnections);
+  bool setupTables();
 
   /*! \brief Get form object
    */

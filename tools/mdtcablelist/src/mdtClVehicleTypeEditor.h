@@ -21,17 +21,12 @@
 #ifndef MDT_CL_VEHICLE_TYPE_EDITOR_H
 #define MDT_CL_VEHICLE_TYPE_EDITOR_H
 
+#include "mdtSqlFormWindow.h"
 #include <QSqlDatabase>
 #include <QObject>
+#include <QVariant>
 
-class mdtSqlWindow;
-class mdtSqlFormWidget;
-class mdtSqlTableWidget;
-class mdtSqlRelation;
-class QSqlTableModel;
-class QPushButton;
-
-/*! \brief Cable list's article editor
+/*! \brief Vehicle type editor
  */
 class mdtClVehicleTypeEditor : public QObject
 {
@@ -48,27 +43,24 @@ class mdtClVehicleTypeEditor : public QObject
   ~mdtClVehicleTypeEditor();
 
   /*! \brief Setup tables
-   *
-   * \param includeConnections If true, Unit_tbl will be added as child widget.
    */
-  bool setupTables(bool includeConnections);
+  bool setupTables();
 
-  /*! \brief Setup GUI
-   *
-   * Will dispose internal widgets into window
-   *
-   * \pre window must be a valid pointer
+  /*! \brief Get form object
    */
-  void setupUi(mdtSqlWindow *window);
+  mdtSqlFormWindow *form();
+
+ signals:
+
+  /*! \brief Used to tell vehicle type widget that we have edited some data
+   */
+  void vehicleTypeEdited();
 
  private:
 
-  /*! \brief Get current Article ID
-   *
-   * Will return current ID from Unit table.
-   *  Returns a value < 0 on error (no row, ...)
+  /*! \brief Get current vehicle type ID
    */
-  int currentVehicleTypeId();
+  QVariant currentVehicleTypeId();
 
   /*! \brief Setup Article table and widget
    */
@@ -81,11 +73,8 @@ class mdtClVehicleTypeEditor : public QObject
   Q_DISABLE_COPY(mdtClVehicleTypeEditor);
 
   QSqlDatabase pvDatabase;
-  mdtSqlFormWidget *pvVehicleTypeWidget;
-  mdtSqlTableWidget *pvUnitWidget;
-  QSqlTableModel *pvVehicleTypeModel;
-  QSqlTableModel *pvUnitModel;
-  mdtSqlRelation *pvUnitRelation;
+  // Form object
+  mdtSqlFormWindow *pvForm;
 };
 
 #endif  // #ifndef MDT_CL_VEHICLE_TYPE_EDITOR_H

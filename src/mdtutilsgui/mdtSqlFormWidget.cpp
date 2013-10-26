@@ -100,6 +100,7 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
           }
           // Add to widget mapper
           pvWidgetMapper->addMapping(fieldHandler, fieldIndex, "data");
+          qDebug() << "Mapped " << fieldName;
         }else{
           w->setEnabled(false);
           mdtError e(MDT_DATABASE_ERROR, "Cannot find field for widget " + w->objectName(), mdtError::Warning);

@@ -301,6 +301,12 @@ QString mdtSqlSchemaTable::sqlForFieldsMySql() const
     if((pvPrimaryKey.contains(field.name()))&&(field.isAutoValue())){
       sql += " AUTO_INCREMENT";
     }else{
+      if(field.defaultValue().isNull()){
+        sql += " DEFAULT NULL";
+      }else{
+        sql += " DEFAULT " + field.defaultValue().toString();
+      }
+      /**
       if(field.requiredStatus() != QSqlField::Required){
         if(field.defaultValue().isNull()){
           sql += " DEFAULT NULL";
@@ -308,6 +314,7 @@ QString mdtSqlSchemaTable::sqlForFieldsMySql() const
           sql += " DEFAULT " + field.defaultValue().toString();
         }
       }
+      */
     }
     if(i < (pvFields.size() - 1)){
       sql += ",\n";
@@ -334,6 +341,12 @@ QString mdtSqlSchemaTable::sqlForFieldsSqlite() const
       if((field.requiredStatus() == QSqlField::Required)||(pvPrimaryKey.contains(field.name()))){
         sql += " NOT NULL";
       }
+      if(field.defaultValue().isNull()){
+        sql += " DEFAULT NULL";
+      }else{
+        sql += " DEFAULT " + field.defaultValue().toString();
+      }
+      /**
       if(field.requiredStatus() != QSqlField::Required){
         if(field.defaultValue().isNull()){
           sql += " DEFAULT NULL";
@@ -341,6 +354,7 @@ QString mdtSqlSchemaTable::sqlForFieldsSqlite() const
           sql += " DEFAULT " + field.defaultValue().toString();
         }
       }
+      */
     }
     if(field.type() == QVariant::String){
       sql += sqlForCollateSqlite();

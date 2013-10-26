@@ -34,7 +34,6 @@
 #include <QStringList>
 #include <QString>
 #include <QList>
-#include <QVariant>
 #include <QModelIndex>
 #include <QItemSelectionModel>
 #include <QMessageBox>
@@ -45,37 +44,21 @@ mdtClVehicleTypeEditor::mdtClVehicleTypeEditor(QObject *parent, const QSqlDataba
  : QObject(parent)
 {
   pvDatabase = db;
-  // Setup unit
-  pvVehicleTypeWidget = new mdtSqlFormWidget;
-  Ui::mdtClVehicleTypeEditor *e = new Ui::mdtClVehicleTypeEditor;
-  e->setupUi(pvVehicleTypeWidget);
-  pvVehicleTypeModel = new QSqlTableModel(this, pvDatabase);
-  // Setup connection
-  pvUnitWidget = new mdtSqlTableWidget;
-  pvUnitModel = new QSqlTableModel(this, pvDatabase);
-
-  pvUnitRelation = new mdtSqlRelation;
+  pvForm = new mdtSqlFormWindow;
 }
 
 mdtClVehicleTypeEditor::~mdtClVehicleTypeEditor()
 {
-  ///delete pvVehicleTypeWidget;
-  ///delete pvUnitWidget;
-  delete pvUnitRelation;
-  ///delete pvVehicleTypeModel;
-  ///delete pvUnitModel;
-  ///delete pvVehicleTypeUnitModel;
+  delete pvForm;
 }
 
-bool mdtClVehicleTypeEditor::setupTables(bool includeConnections)
+bool mdtClVehicleTypeEditor::setupTables()
 {
   QSqlError sqlError;
 
-  // Setup Unit table
   if(!setupVehicleTypeTable()){
     return false;
   }
-  // Setup connection table
   if(!setupUnitTable()){
     return false;
   }
@@ -83,85 +66,63 @@ bool mdtClVehicleTypeEditor::setupTables(bool includeConnections)
   return true;
 }
 
-void mdtClVehicleTypeEditor::setupUi(mdtSqlWindow *window)
+mdtSqlFormWindow *mdtClVehicleTypeEditor::form()
 {
-  Q_ASSERT(window != 0);
+  Q_ASSERT(pvForm != 0);
 
-  window->setSqlWidget(pvVehicleTypeWidget);
-  window->addChildWidget(pvUnitWidget, "Units");
-  window->enableNavigation();
-  window->enableEdition();
-  window->resize(700, 500);
+  return pvForm;
 }
 
-int mdtClVehicleTypeEditor::currentVehicleTypeId()
+QVariant mdtClVehicleTypeEditor::currentVehicleTypeId()
 {
-  int vehicleTypeIdColumn;
-  QModelIndex index;
-
-  if(pvVehicleTypeWidget->currentRow() < 0){
-    return -1;
-  }
-  vehicleTypeIdColumn = pvVehicleTypeModel->record().indexOf("Id_PK");
-  if(vehicleTypeIdColumn < 0){
-    return -1;
-  }
-  index = pvVehicleTypeModel->index(pvVehicleTypeWidget->currentRow(), vehicleTypeIdColumn);
-  if(!index.isValid()){
-    return -1;
-  }
-
-  return pvVehicleTypeModel->data(index).toInt();
+  return pvForm->currentData("VehicleType_tbl", "Id_PK");
 }
 
 bool mdtClVehicleTypeEditor::setupVehicleTypeTable()
 {
-  QSqlError sqlError;
+  Ui::mdtClVehicleTypeEditor vte;
 
-  pvVehicleTypeModel->setTable("VehicleType_tbl");
-  if(!pvVehicleTypeModel->select()){
-    sqlError = pvVehicleTypeModel->lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table 'VehicleType_tbl'", mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClVehicleTypeEditor");
-    e.commit();
+  // Setup main form widget
+  vte.setupUi(pvForm->mainSqlWidget());
+  connect(this, SIGNAL(vehicleTypeEdited()), pvForm->mainSqlWidget(), SIGNAL(dataEdited()));
+  // Setup form
+  if(!pvForm->setTable("VehicleType_tbl", "Vehicle types", pvDatabase)){
     return false;
   }
-  pvVehicleTypeWidget->setModel(pvVehicleTypeModel);
-  pvVehicleTypeWidget->mapFormWidgets();
+  pvForm->sqlWindow()->enableNavigation();
+  pvForm->sqlWindow()->enableEdition();
+  pvForm->sqlWindow()->resize(800, 500);
+  pvForm->sqlWindow()->setWindowTitle(tr("Vehicle types edition"));
+  // Force a update
+  pvForm->mainSqlWidget()->setCurrentIndex(pvForm->mainSqlWidget()->currentRow());
 
   return true;
 }
 
 bool mdtClVehicleTypeEditor::setupUnitTable()
 {
-  QSqlError sqlError;
+  mdtSqlTableWidget *widget;
 
-  pvUnitModel->setTable("Unit_tbl");
-  if(!pvUnitModel->select()){
-    sqlError = pvUnitModel->lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table 'Unit_tbl'", mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClVehicleTypeEditor");
-    e.commit();
+  // Add unit table
+  if(!pvForm->addChildTable("VehicleType_Unit_view", tr("Units"), pvDatabase)){
     return false;
   }
-  pvUnitWidget->setModel(pvUnitModel);
-  pvUnitWidget->enableLocalEdition();
+  // Setup Unit <-> VehicleType relation
+  if(!pvForm->addRelation("Id_PK", "VehicleType_Unit_view", "VehicleType_Id_FK")){
+    return false;
+  }
+  // Get widget to continue setup
+  widget = pvForm->sqlTableWidget("VehicleType_Unit_view");
+  Q_ASSERT(widget != 0);
   // Hide relation fields and PK
-  ///pvUnitWidget->setColumnHidden("Id_PK", true);
-  ///pvUnitWidget->setColumnHidden("Article_Id_FK", true);
+  widget->setColumnHidden("Type", true);
+  widget->setColumnHidden("SubType", true);
+  widget->setColumnHidden("SeriesNumber", true);
+  widget->setColumnHidden("VehicleType_Unit_Id_PK", true);
+  widget->setColumnHidden("VehicleType_Id_FK", true);
+  widget->setColumnHidden("Unit_Id_FK", true);
   // Give fields a user friendly name
-  ///pvUnitWidget->setHeaderData("ConnectorName", tr("Connector"));
-  ///pvUnitWidget->setHeaderData("ContactName", tr("Contact"));
-  ///pvUnitWidget->setHeaderData("IoType", tr("I/O type"));
-  // Setup Article <-> Connection relation
-  pvUnitRelation->setParentModel(pvVehicleTypeModel);
-  pvUnitRelation->setChildModel(pvUnitModel);
-  if(!pvUnitRelation->addRelation("Id_PK", "VehicleType_Id_FK", true)){
-    return false;
-  }
-  pvVehicleTypeWidget->addChildWidget(pvUnitWidget, pvUnitRelation);
+  widget->setHeaderData("SchemaPosition", tr("Schema position"));
 
   return true;
 }

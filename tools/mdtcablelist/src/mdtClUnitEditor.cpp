@@ -42,7 +42,6 @@
 #include <QStringList>
 #include <QString>
 #include <QList>
-#include <QVariant>
 #include <QItemSelectionModel>
 #include <QMessageBox>
 #include <QWidget>
@@ -63,7 +62,7 @@ mdtClUnitEditor::~mdtClUnitEditor()
   delete pvForm;
 }
 
-bool mdtClUnitEditor::setupTables(bool includeConnections)
+bool mdtClUnitEditor::setupTables()
 {
   // Setup Unit table
   if(!setupUnitTable()){
@@ -99,14 +98,14 @@ mdtSqlFormWindow *mdtClUnitEditor::form()
 void mdtClUnitEditor::assignVehicle()
 {
   mdtSqlSelectionDialog selectionDialog;
-  int unitId;
+  QVariant unitId;
   QSqlError sqlError;
   QModelIndexList selectedVehicles;
   mdtClUnitVehicleType uvt(pvDatabase);
 
   // Get current unit ID
   unitId = currentUnitId();
-  if(unitId < 0){
+  if(unitId.isNull()){
     return;
   }
   // Setup and show dialog
@@ -137,7 +136,7 @@ void mdtClUnitEditor::assignVehicle()
 
 void mdtClUnitEditor::removeVehicleAssignation()
 {
-  int unitId;
+  QVariant unitId;
   QSqlError sqlError;
   int ret;
   QMessageBox msgBox;
@@ -151,7 +150,7 @@ void mdtClUnitEditor::removeVehicleAssignation()
   Q_ASSERT(vehicleTypeWidget->selectionModel() != 0);
   // Get current unit ID
   unitId = currentUnitId();
-  if(unitId < 0){
+  if(unitId.isNull()){
     return;
   }
   // Get selected rows
@@ -259,6 +258,9 @@ void mdtClUnitEditor::addComponent()
   QSqlQueryModel *unitModel;
   mdtClUnit unit(pvDatabase);
 
+  if(currentUnitId().isNull()){
+    return;
+  }
   // Setup and show dialog
   unitModel = unit.unitModelForComponentSelection(currentUnitId());
   Q_ASSERT(unitModel != 0);
@@ -347,6 +349,9 @@ void mdtClUnitEditor::addConnection()
 
   // We must have current unit ID and base article ID
   unitId = currentUnitId();
+  if(unitId.isNull()){
+    return;
+  }
   articleIdFk = pvForm->currentData("Unit_tbl", "Article_Id_FK");
   // Get qeury model for article connection selection
   queryModel = unit.modelForArticleConnectionSelection(unitId, articleIdFk);
@@ -432,6 +437,9 @@ void mdtClUnitEditor::addFreeConnection()
   mdtClUnitConnectionDialog dialog(0, pvDatabase);
   mdtClUnit unit(pvDatabase);
 
+  if(currentUnitId().isNull()){
+    return;
+  }
   // Setup and show dialog
   dialog.setUnitId(currentUnitId());
   if(dialog.exec() != QDialog::Accepted){
@@ -465,6 +473,9 @@ void mdtClUnitEditor::editConnection()
 
   // Get current item's data
   data = unit.getUnitConnectionData(widget->currentData("UnitConnection_Id_PK"));
+  if(!data.isValid()){
+    return;
+  }
   // Setup and show dialog
   dialog.setData(data);
   if(dialog.exec() != QDialog::Accepted){
@@ -548,6 +559,9 @@ void mdtClUnitEditor::addLink()
   Q_ASSERT(widget != 0);
   // Setup and show dialog
   unitId = currentUnitId();
+  if(unitId.isNull()){
+    return;
+  }
   dialog.setStartUnit(unitId, widget->currentData("SchemaPosition"), widget->currentData("Cabinet"));
   if(dialog.exec() != QDialog::Accepted){
     return;
@@ -731,8 +745,10 @@ void mdtClUnitEditor::viewPath()
   dialog.exec();
 }
 
-int mdtClUnitEditor::currentUnitId()
+QVariant mdtClUnitEditor::currentUnitId()
 {
+  return pvForm->currentData("Unit_tbl", "Id_PK");
+  /**
   QVariant var;
 
   var = pvForm->currentData("Unit_tbl", "Id_PK");
@@ -741,6 +757,7 @@ int mdtClUnitEditor::currentUnitId()
   }
 
   return var.toInt();
+  */
 }
 
 bool mdtClUnitEditor::setupUnitTable()

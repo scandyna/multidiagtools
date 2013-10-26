@@ -24,6 +24,7 @@
 #include <QSqlDatabase>
 #include <QObject>
 #include <QModelIndex>
+#include <QVariant>
 #include "mdtSqlFormWindow.h"
 
 /*! \brief Cable list's device editor
@@ -46,7 +47,7 @@ class mdtClUnitEditor : public QObject
    *
    * \param includeConnections If true, connection_tbl will be added as child widget.
    */
-  bool setupTables(bool includeConnections);
+  bool setupTables();
 
   /*! \brief Get form object
    */
@@ -115,11 +116,8 @@ class mdtClUnitEditor : public QObject
  private:
 
   /*! \brief Get current Unit ID
-   *
-   * Will return current ID from Unit table.
-   *  Returns a value < 0 on error (no row, ...)
    */
-  int currentUnitId();
+  QVariant currentUnitId();
 
   /*! \brief Setup Unit table and widget
    */

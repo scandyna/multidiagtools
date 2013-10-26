@@ -24,13 +24,10 @@
 #include <QLocale>
 #include <QSqlDatabase>
 #include "mdtSqlWindow.h"
-#include "mdtClVehicleTypeEditor.h"
-#include "mdtClUnitEditor.h"
-#include "mdtClArticleEditor.h"
+
 #include "mdtClLinkEditor.h"
 #include "mdtClTerminalBlockEditor.h"
-#include "mdtClDatabaseSchema.h"
-#include "mdtSqlDatabaseManager.h"
+
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -39,6 +36,8 @@
 
 #include <QDir>
 #include <QFileInfo>
+
+#include "mdtClMainWindow.h"
 
 #include <QDebug>
 
@@ -50,9 +49,9 @@ int main(int argc, char **argv)
   bool ok;
   int retVal;
   mdtSqlWindow vehicleTypeEditorWindow;
-  mdtClVehicleTypeEditor *vehicleTypeEditor;
-  mdtClArticleEditor *articleEditor;
-  mdtClUnitEditor *unitEditor;
+  ///mdtClVehicleTypeEditor *vehicleTypeEditor;
+  ///mdtClArticleEditor *articleEditor;
+  ///mdtClUnitEditor *unitEditor;
   // Terminal block editor
   mdtSqlWindow terminalBlockEditorWindow;
   mdtClTerminalBlockEditor *terminalBlockEditor;
@@ -68,29 +67,12 @@ int main(int argc, char **argv)
   ///QObject::connect(&app, SIGNAL(languageChanged()), &modbusIoTool, SLOT(retranslate()));
   ///modbusIoTool.setAvailableTranslations(app.availableTranslations(), app.currentTranslationKey());
 
-  mdtSqlDatabaseManager dbManager;
+  mdtClMainWindow window;
 
-  // Create database if needed
-  QDir dataDir = QDir::home();
-  if(!dataDir.cd("mdtcablelist")){
-    if(!dataDir.mkdir("mdtcablelist")){
-      qDebug() << "Unable to create mdtcablelist directory";
-      return 1;
-    }
-    if(!dataDir.cd("mdtcablelist")){
-      qDebug() << "Unable to enter mdtcablelist directory";
-      return 1;
-    }
-  }
-  QFileInfo fileInfo(dataDir, "test01.sqlite");
-  if(!dbManager.openDatabaseSqlite(fileInfo)){
-    mdtClDatabaseSchema dbSchema(&dbManager);
-    if(!dbSchema.createSchemaSqlite(fileInfo)){
-      qDebug() << "Unable to create schema";
-      return 1;
-    }
-  }
-  db = dbManager.database();
+  window.show();
+  
+  ///mdtSqlDatabaseManager dbManager;
+
   
   // Setup DB connection
   /**
@@ -111,13 +93,10 @@ int main(int argc, char **argv)
   }
   */
   // Setup vehicle type editor
+  
+  ///vehicleTypeEditor->setupUi(&vehicleTypeEditorWindow);
+  
   /**
-  vehicleTypeEditor = new mdtClVehicleTypeEditor(0, db);
-  if(!vehicleTypeEditor->setupTables(true)){
-    QMessageBox::warning(0, "DB setup error", "Cannot setup tables for vehicle type editor");
-    return 1;
-  }
-  vehicleTypeEditor->setupUi(&vehicleTypeEditorWindow);
   vehicleTypeEditorWindow.setWindowTitle(QObject::tr("Vehicle type edition"));
   vehicleTypeEditorWindow.show();
   */
@@ -131,6 +110,7 @@ int main(int argc, char **argv)
   articleEditor->form()->show();
   */
   // Setup Unit editor
+  /**
   unitEditor = new mdtClUnitEditor(0, db);
   if(!unitEditor->setupTables(true)){
     QMessageBox::warning(0, "DB setup error", "Cannot setup tables for unit editor");
@@ -138,6 +118,7 @@ int main(int argc, char **argv)
   }
   unitEditor->form()->sqlWindow()->resize(1000, 600);
   unitEditor->form()->show();
+  */
   // Setup link editor
   /**
   linkEditor = new mdtClLinkEditor(0, db);
@@ -163,9 +144,9 @@ int main(int argc, char **argv)
 
   retVal = app.exec();
   db.close();
-  delete unitEditor;
-  delete articleEditor;
-  delete vehicleTypeEditor;
+  ///delete unitEditor;
+  ///delete articleEditor;
+  ///delete vehicleTypeEditor;
   ///delete linkEditor;
   delete terminalBlockEditor;
 

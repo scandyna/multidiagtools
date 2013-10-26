@@ -57,7 +57,7 @@ mdtClArticleEditor::~mdtClArticleEditor()
   delete pvForm;
 }
 
-bool mdtClArticleEditor::setupTables(bool includeConnections)
+bool mdtClArticleEditor::setupTables()
 {
   QSqlError sqlError;
 
@@ -97,6 +97,9 @@ void mdtClArticleEditor::addComponent()
   mdtClArticleComponentDialog dialog(0, pvDatabase, currentArticleId());
   mdtClArticle art(pvDatabase);
 
+  if(currentArticleId().isNull()){
+    return;
+  }
   // Setup and show dialog
   if(dialog.exec() != QDialog::Accepted){
     return;
@@ -233,6 +236,9 @@ void mdtClArticleEditor::editLink()
   mdtAbstractSqlWidget *widget;
   mdtClArticle art(pvDatabase);
 
+  if(currentArticleId().isNull()){
+    return;
+  }
   widget = pvForm->sqlWidget("ArticleLink_view");
   Q_ASSERT(widget != 0);
   // Check that a link is selected
