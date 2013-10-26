@@ -350,7 +350,6 @@ bool mdtSqlDatabaseManager::createTable(mdtSqlSchemaTable & table, createMode_t 
   }
   // Create table
   sql = table.sqlForCreateTable();
-  qDebug() << "SQL: " << sql;
   if(!query.exec(sql)){
     sqlError = query.lastError();
     pvLastError.setError(tr("Cannot create table '") + table.tableName() + tr("'"), mdtError::Error);

@@ -22,8 +22,10 @@
 #define MDT_CL_DATABASE_SCHEMA_H
 
 #include "mdtSqlSchemaTable.h"
+#include "mdtError.h"
 #include <QList>
 #include <QString>
+#include <QFileInfo>
 
 class mdtSqlDatabaseManager;
 
@@ -35,15 +37,15 @@ class mdtClDatabaseSchema
 
   /*! \brief Constructor
    */
-  mdtClDatabaseSchema();
+  mdtClDatabaseSchema(mdtSqlDatabaseManager *dbManager);
 
   /*! \brief Destructor
    */
   ~mdtClDatabaseSchema();
 
-  /*! \brief
+  /*! \brief Create schema using Sqlite
    */
-  bool createSchemaSqlite();
+  bool createSchemaSqlite(const QFileInfo & dbFileInfo);
 
   private:
 
@@ -107,7 +109,9 @@ class mdtClDatabaseSchema
    */
   void setupLinkTypeTable();
 
-  /*! \brief
+  /*! \brief Create a view
+   *
+   * Will also drop it first if extits
    */
   bool createView(const QString & viewName, const QString & sql);
 
@@ -155,6 +159,7 @@ class mdtClDatabaseSchema
 
   mdtSqlDatabaseManager *pvDatabaseManager;
   QList<mdtSqlSchemaTable> pvTables;
+  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_CL_DATABASE_SCHEMA_H

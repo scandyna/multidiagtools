@@ -30,11 +30,15 @@
 #include "mdtClLinkEditor.h"
 #include "mdtClTerminalBlockEditor.h"
 #include "mdtClDatabaseSchema.h"
+#include "mdtSqlDatabaseManager.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QSqlTableModel>
 #include <QStringList>
+
+#include <QDir>
+#include <QFileInfo>
 
 #include <QDebug>
 
@@ -45,7 +49,6 @@ int main(int argc, char **argv)
   QString password;
   bool ok;
   int retVal;
-  mdtClDatabaseSchema dbSchema;
   mdtSqlWindow vehicleTypeEditorWindow;
   mdtClVehicleTypeEditor *vehicleTypeEditor;
   mdtClArticleEditor *articleEditor;
@@ -65,14 +68,32 @@ int main(int argc, char **argv)
   ///QObject::connect(&app, SIGNAL(languageChanged()), &modbusIoTool, SLOT(retranslate()));
   ///modbusIoTool.setAvailableTranslations(app.availableTranslations(), app.currentTranslationKey());
 
-  // Create schema
-  if(!dbSchema.createSchemaSqlite()){
-    return 1;
+  mdtSqlDatabaseManager dbManager;
+
+  // Create database if needed
+  QDir dataDir = QDir::home();
+  if(!dataDir.cd("mdtcablelist")){
+    if(!dataDir.mkdir("mdtcablelist")){
+      qDebug() << "Unable to create mdtcablelist directory";
+      return 1;
+    }
+    if(!dataDir.cd("mdtcablelist")){
+      qDebug() << "Unable to enter mdtcablelist directory";
+      return 1;
+    }
   }
-  
-  return 0;
+  QFileInfo fileInfo(dataDir, "test01.sqlite");
+  if(!dbManager.openDatabaseSqlite(fileInfo)){
+    mdtClDatabaseSchema dbSchema(&dbManager);
+    if(!dbSchema.createSchemaSqlite(fileInfo)){
+      qDebug() << "Unable to create schema";
+      return 1;
+    }
+  }
+  db = dbManager.database();
   
   // Setup DB connection
+  /**
   db = QSqlDatabase::addDatabase("QMYSQL");
   db.setHostName("127.0.0.1");
   db.setDatabaseName("cablelist");
@@ -88,6 +109,7 @@ int main(int argc, char **argv)
     QMessageBox::warning(0, "DB connection error", "Cannot connect to database");
     return 1;
   }
+  */
   // Setup vehicle type editor
   /**
   vehicleTypeEditor = new mdtClVehicleTypeEditor(0, db);
