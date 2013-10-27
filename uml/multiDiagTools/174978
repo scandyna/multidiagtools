@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 51
+  revision 52
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -5128,8 +5128,6 @@ ${inlines}
 "
 	    classrelation_ref 1137666 // pvDatabase (<directional composition>)
 	  b parent class_ref 405122 // QSqlDatabase
-	get_oper operation_ref 1668482 // pvDatabase
-	set_oper operation_ref 1668610 // setpvDatabase
       end
 
       attribute 928002 "DatabaseName"
@@ -5416,7 +5414,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 917250 "mdtSqlDatabaseManagerDialog"
@@ -7174,6 +7171,21 @@ ${inlines}
 	
       end
 
+      operation 1687042 "allItems"
+	public explicit_return_type "QList<mdtFieldMapItem*>"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 1206018 "dataForFieldIndex"
 	public return_type class_ref 161154 // QVariant
 	nparams 1
@@ -7263,6 +7275,261 @@ ${inlines}
 	
 	
       end
+    end
+
+    classdiagram 894210 "mdtFieldMapDialog"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 930306 "mdtFieldMapDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1150850 // <generalisation>
+	relation 1139458 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1150850 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      operation 1686018 "mdtFieldMapDialog"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1686146 "~mdtFieldMapDialog"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1150978 // <generalisation>
+	relation 1139586 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1150978 // <generalisation>
+	  b parent class_ref 930434 // Ui::mdtFieldMapDialog
+      end
+
+      classrelation 1151106 // pvCurrentFieldMap (<unidirectional association>)
+	relation 1139714 --->
+	  a role_name "pvCurrentFieldMap" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1151106 // pvCurrentFieldMap (<unidirectional association>)
+	  b parent class_ref 631682 // mdtFieldMap
+      end
+
+      attribute 934530 "InternalFieldMap"
+	private type class_ref 631682 // mdtFieldMap
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "For memory management"
+      end
+
+      operation 1686274 "setFieldMap"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "map" type class_ref 631682 // mdtFieldMap
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1686402 "fieldMap"
+	public return_type class_ref 631682 // mdtFieldMap
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1686530 "updateSourcePreview"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1686658 "updateDestinationPreview"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1151490 // <dependency>
+	relation 1140098 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 1151490 // <dependency>
+	  b parent class_ref 930562 // mdtFieldMapItemDialog
+      end
+    end
+
+    class 930434 "Ui::mdtFieldMapDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    classdiagram 894338 "mdtFieldMapItemDialog"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 930562 "mdtFieldMapItemDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1151234 // <generalisation>
+	relation 1139842 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1151234 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      classrelation 1151362 // <generalisation>
+	relation 1139970 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1151362 // <generalisation>
+	  b parent class_ref 930690 // Ui::mdtFieldMapItemDialog
+      end
+
+      operation 1686786 "mdtFieldMapItemDialog"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1686914 "~mdtFieldMapItemDialog"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 930690 "Ui::mdtFieldMapItemDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
     end
   end
 

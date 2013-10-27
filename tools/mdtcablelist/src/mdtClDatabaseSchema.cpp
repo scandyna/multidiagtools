@@ -561,6 +561,12 @@ void mdtClDatabaseSchema::setupUnitTable()
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
+  // Alias
+  field = QSqlField();
+  field.setName("Alias");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
   // Indexes
   table.addIndex("Article_Id_FK_idx", false);
   if(!table.addFieldToIndex("Article_Id_FK_idx", "Article_Id_FK")){

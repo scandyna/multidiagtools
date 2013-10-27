@@ -757,22 +757,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
     }else if(w->objectName() == "fld_remarks"){
       leRemarks = dynamic_cast<QLineEdit*>(w);
     }
-    ///qDebug() << "w[" << i << "]: " << w->objectName();
   }
-  /**
-  QVERIFY(sqlFormWidget->layout() != 0);
-  for(int i=0; i<sqlFormWidget->layout()->count(); i++){
-    QVERIFY(sqlFormWidget->layout()->itemAt(i) != 0);
-    qDebug() << "W Item: " << sqlFormWidget->layout()->itemAt(i);
-    w = sqlFormWidget->layout()->itemAt(i)->widget();
-    QVERIFY(w != 0);
-    if(w->objectName() == "fld_first_name"){
-      leFirstName = dynamic_cast<QLineEdit*>(w);
-    }else if(w->objectName() == "fld_remarks"){
-      leRemarks = dynamic_cast<QLineEdit*>(w);
-    }
-  }
-  */
   QVERIFY(leFirstName != 0);
   QVERIFY(leRemarks != 0);
   

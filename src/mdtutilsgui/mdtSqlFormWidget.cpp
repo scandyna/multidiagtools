@@ -108,50 +108,6 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
       e.commit();
     }
   }
-  /**
-  objectList = children();
-  for(i = 0; i < objectList.size(); ++i){
-    w = qobject_cast<QWidget*>(objectList.at(i));
-    if(w != 0){
-      fieldName = w->objectName();
-      // If name begins with fld_ , search matching field in model
-      if(fieldName.left(4) == "fld_"){
-        fieldName = fieldName.right(fieldName.length()-4);
-        fieldIndex = model()->record().indexOf(fieldName);
-        // If field was found, map it
-        if(fieldIndex >= 0){
-          fieldHandler = new mdtSqlFieldHandler;
-          // If we want informations about fields, we must get record from database instance
-          record = model()->database().record(model()->tableName());
-          fieldHandler->setField(record.field(fieldIndex));
-          fieldHandler->setDataWidget(w);
-          connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
-          */
-          /*
-           * When we go out from Editing state, we must update flags
-           */
-          /// \todo Check redoundances with onCurrentIndexChanged()
-          /**
-          connect(this, SIGNAL(stateEditingExited()), fieldHandler, SLOT(updateFlags()));
-          connect(this, SIGNAL(stateEditingNewRowExited()), fieldHandler, SLOT(updateFlags()));
-          pvFieldHandlers.append(fieldHandler);
-          // If this widget is the first in focus chain, ref it
-          if(w->objectName() == firstWidgetInTabOrder){
-            pvFirstDataWidget = w;
-          }
-          // Add to widget mapper
-          pvWidgetMapper->addMapping(fieldHandler, fieldIndex, "data");
-          qDebug() << "Mapped " << fieldName;
-        }else{
-          w->setEnabled(false);
-          mdtError e(MDT_DATABASE_ERROR, "Cannot find field for widget " + w->objectName(), mdtError::Warning);
-          MDT_ERROR_SET_SRC(e, "mdtSqlFormWidget");
-          e.commit();
-        }
-      }
-    }
-  }
-  */
   connect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
   /*
    * When calling select() , setQuery() , setFilter() or something similar on model,

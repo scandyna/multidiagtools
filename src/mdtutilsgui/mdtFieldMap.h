@@ -84,21 +84,21 @@ class mdtFieldMap
    * \return True on success, false if item was not found
    * \pre Item must be a valid pointer
    */
-  bool updateItem(mdtFieldMapItem *item);
+  ///bool updateItem(mdtFieldMapItem *item);
 
   /*! \brief Get the item for a given index
    *
    * \param index In above example, it's the model column index.
    * \return Pointer to item if found, else 0 (null pointer).
    */
-  mdtFieldMapItem *itemAtFieldIndex(int index);
+  mdtFieldMapItem *itemAtFieldIndex(int index) const;
 
   /*! \brief Get the item for a given filed name
    *
    * \param name Technical field name.
    * \return Pointer to item if found, else 0 (null pointer).
    */
-  mdtFieldMapItem *itemAtFieldName(const QString &name);
+  mdtFieldMapItem *itemAtFieldName(const QString &name) const;
 
   /*! \brief Get the item for a given display text
    *
@@ -119,7 +119,7 @@ class mdtFieldMap
    * \param index In above example, it's the index of field in CSV header.
    * \return Pointer to item if found, else 0 (null pointer).
    */
-  QList<mdtFieldMapItem*> itemsAtSourceFieldIndex(int index);
+  QList<mdtFieldMapItem*> itemsAtSourceFieldIndex(int index) const;
 
   /*! \brief Get the items for given source field name
    *
@@ -142,7 +142,7 @@ class mdtFieldMap
    * \param fieldName Technical field name.
    * \return Converted data, or invalid QVariant if name was not found, or on failed conversion.
    */
-  QVariant dataForFieldName(const QStringList &sourceData, const QString &fieldName);
+  QVariant dataForFieldName(const QStringList &sourceData, const QString &fieldName) const;
 
   /*! \brief Get data for a given field display text in source data
    *
@@ -183,11 +183,11 @@ class mdtFieldMap
   // Main container
   QList<mdtFieldMapItem*> pvItems;
   // To have a fast access, we refer items by several QHash containers
-  QHash<int, mdtFieldMapItem*> pvItemsByFieldIndex;
-  QHash<QString, mdtFieldMapItem*> pvItemsByFieldName;
-  QHash<QString, mdtFieldMapItem*> pvItemsByDisplayText;
-  QMultiHash<int, mdtFieldMapItem*> pvItemsBySourceFieldIndex;
-  QMultiHash<QString, mdtFieldMapItem*> pvItemsBySourceFieldName;
+  ///QHash<int, mdtFieldMapItem*> pvItemsByFieldIndex;
+  ///QHash<QString, mdtFieldMapItem*> pvItemsByFieldName;
+  ///QHash<QString, mdtFieldMapItem*> pvItemsByDisplayText;
+  ///QMultiHash<int, mdtFieldMapItem*> pvItemsBySourceFieldIndex;
+  ///QMultiHash<QString, mdtFieldMapItem*> pvItemsBySourceFieldName;
 };
 
 #endif  // #ifndef MDT_FIELD_MAP_H

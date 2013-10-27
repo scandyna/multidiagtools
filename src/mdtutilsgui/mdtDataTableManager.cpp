@@ -297,12 +297,10 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
     modelFieldIndex++;
   }else{
     // Primary key is one of the CSV header
-    /**
     for(i = 0; i < pkFields.size(); ++i){
       Q_ASSERT(header.contains(pkFields.at(i)));
-      pk.append(getFieldName(pkFields.at(i)));
+      ///pk.append(getFieldName(pkFields.at(i)));
     }
-    */
   }
   // Create fields regarding field map
   for(csvFieldIndex = 0; csvFieldIndex < header.size(); ++csvFieldIndex){
@@ -325,7 +323,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
         Q_ASSERT(mapItem != 0);
         mapItem->setSourceFieldIndex(csvFieldIndex);
         mapItem->setFieldIndex(modelFieldIndex);
-        pvFieldMap.updateItem(mapItem);
+        ///pvFieldMap.updateItem(mapItem);
         field = QSqlField();
         field.setName(mapItem->fieldName());
         field.setType(mapItem->dataType());

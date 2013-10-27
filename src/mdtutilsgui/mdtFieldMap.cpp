@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtFieldMap.h"
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtFieldMap::mdtFieldMap()
 {
@@ -38,20 +38,23 @@ void mdtFieldMap::addItem(mdtFieldMapItem *item)
   if(!pvItems.contains(item)){
     pvItems.append(item);
   }
-  updateItem(item);
+  ///updateItem(item);
 }
 
 void mdtFieldMap::clear()
 {
   qDeleteAll(pvItems);
   pvItems.clear();
+  /**
   pvItemsByFieldIndex.clear();
   pvItemsByFieldName.clear();
   pvItemsByDisplayText.clear();
   pvItemsBySourceFieldIndex.clear();
   pvItemsBySourceFieldName.clear();
+  */
 }
 
+/**
 bool mdtFieldMap::updateItem(mdtFieldMapItem *item)
 {
   Q_ASSERT(item != 0);
@@ -89,20 +92,58 @@ bool mdtFieldMap::updateItem(mdtFieldMapItem *item)
 
   return true;
 }
+*/
 
-mdtFieldMapItem *mdtFieldMap::itemAtFieldIndex(int index)
+mdtFieldMapItem *mdtFieldMap::itemAtFieldIndex(int index) const
 {
-  return pvItemsByFieldIndex.value(index, 0);
+  int i;
+  mdtFieldMapItem *item;
+
+  for(i = 0; i < pvItems.size(); ++i){
+    item = pvItems.at(i);
+    Q_ASSERT(item != 0);
+    if(item->fieldIndex() == index){
+      return item;
+    }
+  }
+
+  return 0;
+
+  ///return pvItemsByFieldIndex.value(index, 0);
 }
 
-mdtFieldMapItem *mdtFieldMap::itemAtFieldName(const QString &name)
+mdtFieldMapItem *mdtFieldMap::itemAtFieldName(const QString &name) const
 {
-  return pvItemsByFieldName.value(name, 0);
+  int i;
+  mdtFieldMapItem *item;
+
+  for(i = 0; i < pvItems.size(); ++i){
+    item = pvItems.at(i);
+    Q_ASSERT(item != 0);
+    if(item->fieldName() == name){
+      return item;
+    }
+  }
+
+  return 0;
+  ///return pvItemsByFieldName.value(name, 0);
 }
 
 mdtFieldMapItem *mdtFieldMap::itemAtDisplayText(const QString &text)
 {
-  return pvItemsByDisplayText.value(text, 0);
+  int i;
+  mdtFieldMapItem *item;
+
+  for(i = 0; i < pvItems.size(); ++i){
+    item = pvItems.at(i);
+    Q_ASSERT(item != 0);
+    if(item->fieldDisplayText() == text){
+      return item;
+    }
+  }
+
+  return 0;
+  ///return pvItemsByDisplayText.value(text, 0);
 }
 
 QString mdtFieldMap::sourceFieldNameAtFieldIndex(int index) const
@@ -110,7 +151,8 @@ QString mdtFieldMap::sourceFieldNameAtFieldIndex(int index) const
   QString name;
   mdtFieldMapItem *item;
 
-  item = pvItemsByFieldIndex.value(index, 0);
+  item = itemAtFieldIndex(index);
+  ///item = pvItemsByFieldIndex.value(index, 0);
   if(item != 0){
     name = item->sourceFieldName();
   }
@@ -118,14 +160,42 @@ QString mdtFieldMap::sourceFieldNameAtFieldIndex(int index) const
   return name;
 }
 
-QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldIndex(int index)
+QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldIndex(int index) const
 {
-  return pvItemsBySourceFieldIndex.values(index);
+  QList<mdtFieldMapItem*> items;
+  mdtFieldMapItem *item;
+  int i;
+
+  for(i = 0; i < pvItems.size(); ++i){
+    item = pvItems.at(i);
+    Q_ASSERT(item != 0);
+    if(item->sourceFieldIndex() == index){
+      items.append(item);
+    }
+  }
+
+  return items;
+  
+  ///return pvItemsBySourceFieldIndex.values(index);
 }
 
 QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name)
 {
-  return pvItemsBySourceFieldName.values(name);
+  QList<mdtFieldMapItem*> items;
+  mdtFieldMapItem *item;
+  int i;
+
+  for(i = 0; i < pvItems.size(); ++i){
+    item = pvItems.at(i);
+    Q_ASSERT(item != 0);
+    if(item->sourceFieldName() == name){
+      items.append(item);
+    }
+  }
+
+  return items;
+
+  ///return pvItemsBySourceFieldName.values(name);
 }
 
 QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int fieldIndex) const
@@ -133,7 +203,8 @@ QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int field
   QString src;
   QVariant data;
 
-  mdtFieldMapItem *item = pvItemsByFieldIndex.value(fieldIndex, 0);
+  ///mdtFieldMapItem *item = pvItemsByFieldIndex.value(fieldIndex, 0);
+  mdtFieldMapItem *item = itemAtFieldIndex(fieldIndex);
   if(item == 0){
     return QVariant();
   }
@@ -143,7 +214,7 @@ QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int field
   if(item->sourceFieldIndex() >= sourceData.size()){
     return QVariant();
   }
-  if((item->sourceFieldDataStartOffset()<0)&&(item->sourceFieldDataEndOffset()<0)){
+  if((item->sourceFieldDataStartOffset() < 0)&&(item->sourceFieldDataEndOffset() < 0)){
     src = sourceData.at(item->sourceFieldIndex());
     data = src;
     data.convert(item->dataType());
@@ -170,9 +241,10 @@ QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int field
   return data;
 }
 
-QVariant mdtFieldMap::dataForFieldName(const QStringList &sourceData, const QString &fieldName)
+QVariant mdtFieldMap::dataForFieldName(const QStringList &sourceData, const QString &fieldName) const
 {
-  mdtFieldMapItem *item = pvItemsByFieldName.value(fieldName, 0);
+  ///mdtFieldMapItem *item = pvItemsByFieldName.value(fieldName, 0);
+  mdtFieldMapItem *item = itemAtFieldName(fieldName);
   if(item == 0){
     return QVariant();
   }
@@ -181,7 +253,8 @@ QVariant mdtFieldMap::dataForFieldName(const QStringList &sourceData, const QStr
 
 QVariant mdtFieldMap::dataForDisplayText(const QStringList &sourceData, const QString &displayText)
 {
-  mdtFieldMapItem *item = pvItemsByDisplayText.value(displayText, 0);
+  ///mdtFieldMapItem *item = pvItemsByDisplayText.value(displayText, 0);
+  mdtFieldMapItem *item = itemAtDisplayText(displayText);
   if(item == 0){
     return QVariant();
   }
@@ -192,13 +265,14 @@ QString mdtFieldMap::dataForSourceFieldIndex(const QList<QVariant> &data, int so
 {
   int i;
   QString str;
-  QList<mdtFieldMapItem*> items = pvItemsBySourceFieldIndex.values(sourceFieldIndex);
+  QList<mdtFieldMapItem*> items;/// = pvItemsBySourceFieldIndex.values(sourceFieldIndex);
   mdtFieldMapItem *item;
 
+  items = itemsAtSourceFieldIndex(sourceFieldIndex);
   for(i=0; i<items.size(); i++){
     item = items.at(i);
     Q_ASSERT(item != 0);
-    if((item->fieldIndex()>=0)&&(item->fieldIndex()<data.size())){
+    if((item->fieldIndex() >= 0)&&(item->fieldIndex() < data.size())){
       insertDataIntoSourceString(str, data.at(item->fieldIndex()), item);
     }
   }
@@ -210,9 +284,10 @@ QString mdtFieldMap::dataForSourceFieldName(const QList<QVariant> &data, const Q
 {
   int i;
   QString str;
-  QList<mdtFieldMapItem*> items = pvItemsBySourceFieldName.values(sourceFieldName);
+  QList<mdtFieldMapItem*> items;/// = pvItemsBySourceFieldName.values(sourceFieldName);
   mdtFieldMapItem *item;
 
+  items = itemsAtSourceFieldName(sourceFieldName);
   for(i=0; i<items.size(); i++){
     item = items.at(i);
     Q_ASSERT(item != 0);
