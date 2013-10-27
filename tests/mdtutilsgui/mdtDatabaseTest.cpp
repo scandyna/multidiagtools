@@ -724,6 +724,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QLineEdit *leFirstName = 0;
   QLineEdit *leRemarks = 0;
   QWidget *w;
+  QWidgetList mappedWidgets;
   int rowCount;
   int row;
   QVariant data;
@@ -747,9 +748,22 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   window.enableNavigation();
   window.enableEdition();
   // We need access to form's line edits
+  mappedWidgets = sqlFormWidget->mappedWidgets();
+  for(int i = 0; i < mappedWidgets.size(); ++i){
+    w = mappedWidgets.at(i);
+    QVERIFY(w != 0);
+    if(w->objectName() == "fld_first_name"){
+      leFirstName = dynamic_cast<QLineEdit*>(w);
+    }else if(w->objectName() == "fld_remarks"){
+      leRemarks = dynamic_cast<QLineEdit*>(w);
+    }
+    ///qDebug() << "w[" << i << "]: " << w->objectName();
+  }
+  /**
   QVERIFY(sqlFormWidget->layout() != 0);
   for(int i=0; i<sqlFormWidget->layout()->count(); i++){
     QVERIFY(sqlFormWidget->layout()->itemAt(i) != 0);
+    qDebug() << "W Item: " << sqlFormWidget->layout()->itemAt(i);
     w = sqlFormWidget->layout()->itemAt(i)->widget();
     QVERIFY(w != 0);
     if(w->objectName() == "fld_first_name"){
@@ -758,6 +772,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
       leRemarks = dynamic_cast<QLineEdit*>(w);
     }
   }
+  */
   QVERIFY(leFirstName != 0);
   QVERIFY(leRemarks != 0);
   

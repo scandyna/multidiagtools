@@ -27,6 +27,7 @@
 #include <QSqlTableModel>
 #include <QString>
 #include <QLayout>
+#include <QLayoutItem>
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QSqlField>
@@ -69,7 +70,45 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
   pvWidgetMapper->clearMapping();
   pvFirstDataWidget = 0;
 
-  // Search widgets in childs
+  // Search widgets with fld_ as prefix in they objectName
+  buildWidgetsList("fld_");
+  // Map found widgets
+  for(i = 0; i < pvFoundWidgets.size(); ++i){
+    w = pvFoundWidgets.at(i);
+    Q_ASSERT(w != 0);
+    fieldName = w->objectName();
+    // Search matching field in model
+    fieldName = fieldName.right(fieldName.length()-4);
+    fieldIndex = model()->record().indexOf(fieldName);
+    // If field was found, map it
+    if(fieldIndex >= 0){
+      fieldHandler = new mdtSqlFieldHandler;
+      // If we want informations about fields, we must get record from database instance
+      record = model()->database().record(model()->tableName());
+      fieldHandler->setField(record.field(fieldIndex));
+      fieldHandler->setDataWidget(w);
+      connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
+      /*
+        * When we go out from Editing state, we must update flags
+        */
+      /// \todo Check redoundances with onCurrentIndexChanged()
+      connect(this, SIGNAL(stateEditingExited()), fieldHandler, SLOT(updateFlags()));
+      connect(this, SIGNAL(stateEditingNewRowExited()), fieldHandler, SLOT(updateFlags()));
+      pvFieldHandlers.append(fieldHandler);
+      // If this widget is the first in focus chain, ref it
+      if(w->objectName() == firstWidgetInTabOrder){
+        pvFirstDataWidget = w;
+      }
+      // Add to widget mapper
+      pvWidgetMapper->addMapping(fieldHandler, fieldIndex, "data");
+    }else{
+      w->setEnabled(false);
+      mdtError e(tr("Cannot find field for widget '") + w->objectName() + tr("'"), mdtError::Warning);
+      MDT_ERROR_SET_SRC(e, "mdtSqlFormWidget");
+      e.commit();
+    }
+  }
+  /**
   objectList = children();
   for(i = 0; i < objectList.size(); ++i){
     w = qobject_cast<QWidget*>(objectList.at(i));
@@ -87,10 +126,12 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
           fieldHandler->setField(record.field(fieldIndex));
           fieldHandler->setDataWidget(w);
           connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
+          */
           /*
            * When we go out from Editing state, we must update flags
            */
           /// \todo Check redoundances with onCurrentIndexChanged()
+          /**
           connect(this, SIGNAL(stateEditingExited()), fieldHandler, SLOT(updateFlags()));
           connect(this, SIGNAL(stateEditingNewRowExited()), fieldHandler, SLOT(updateFlags()));
           pvFieldHandlers.append(fieldHandler);
@@ -110,6 +151,7 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
       }
     }
   }
+  */
   connect(pvWidgetMapper, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
   /*
    * When calling select() , setQuery() , setFilter() or something similar on model,
@@ -126,6 +168,23 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
   }
   // Add data validator
   addDataValidator(new mdtSqlFormWidgetDataValidator(model(), 0, pvFieldHandlers));
+}
+
+QWidgetList mdtSqlFormWidget::mappedWidgets() const
+{
+  QWidgetList wList;
+  mdtSqlFieldHandler *fh;
+  int i;
+
+  for(i = 0; i < pvFieldHandlers.size(); ++i){
+    fh = pvFieldHandlers.at(i);
+    Q_ASSERT(fh != 0);
+    if(fh->dataWidget() != 0){
+      wList.append(fh->dataWidget());
+    }
+  }
+
+  return wList;
 }
 
 int mdtSqlFormWidget::currentRow() const
@@ -442,4 +501,48 @@ void mdtSqlFormWidget::warnUserAboutUnsavedRow()
   msgBox.setIcon(QMessageBox::Warning);
   msgBox.setStandardButtons(QMessageBox::Ok);
   msgBox.exec();
+}
+
+void mdtSqlFormWidget::buildWidgetsList(const QString &prefix)
+{
+  Q_ASSERT(layout() != 0);
+
+  int i;
+
+  pvFoundWidgets.clear();
+  for(i = 0; i < layout()->count(); ++i){
+    searchWidgets(layout()->itemAt(i), prefix);
+  }
+}
+
+void mdtSqlFormWidget::searchWidgets(QLayoutItem *item, const QString &prefix)
+{
+  Q_ASSERT(item != 0);
+
+  int i;
+  QWidget *widget;
+  QLayout *layout;
+  QString name;
+
+  // If current item is a layout, and search in it if true
+  layout = item->layout();
+  if(layout != 0){
+    for(i = 0; i < layout->count(); ++i){
+      searchWidgets(layout->itemAt(i), prefix);
+    }
+  }
+  widget = item->widget();
+  if(widget != 0){
+    name = widget->objectName();
+    if(name.left(prefix.size()) == prefix){
+      pvFoundWidgets.append(widget);
+    }
+    // If widget has a layout, serach in it
+    layout = widget->layout();
+    if(layout != 0){
+      for(i = 0; i < layout->count(); ++i){
+        searchWidgets(layout->itemAt(i), prefix);
+      }
+    }
+  }
 }

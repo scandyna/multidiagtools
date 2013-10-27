@@ -30,6 +30,7 @@
 class QDataWidgetMapper;
 class mdtSqlFieldHandler;
 class QSqlTableModel;
+class QLayoutItem;
 
 /*! \brief Widget that accept a user designed form and helps dealing with table model
  *
@@ -79,7 +80,7 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
 
   /*! \brief Map widgets to matching database fields
    *
-   * Will parse all child widgets found in layout,
+   * Will parse all child widgets found in layout (and contained widgets layouts),
    *  extract widgets that have a fld_ prefix as object name.
    *  For each of them, corresponding field will be searched in model (database).
    *
@@ -92,6 +93,12 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    * \pre Model must be set with setModel() before using this method.
    */
   void mapFormWidgets(const QString &firstWidgetInTabOrder = QString());
+
+  /*! \brief Get a list of mapped widgets
+   *
+   * Note: the list is built at each call of this method.
+   */
+  QWidgetList mappedWidgets() const;
 
   /*! \brief Get the current row
    *
@@ -202,9 +209,22 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void warnUserAboutUnsavedRow();
 
+  /*! \brief Build the list of widgets
+   *
+   * Result will be stored to pvFoundWidgets .
+   */
+  void buildWidgetsList(const QString &prefix);
+
+  /*! \brief Search all widgets contained in a layout item
+   *
+   * If objectName beginns with prefix, it will be added to pvFoundWidgets .
+   */
+  void searchWidgets(QLayoutItem *item, const QString &prefix);
+
   Q_DISABLE_COPY(mdtSqlFormWidget);
 
   QDataWidgetMapper *pvWidgetMapper;
+  QWidgetList pvFoundWidgets;     // Used temporary during mapping - see searchWidgets() and buildWidgetsList()
   QList<mdtSqlFieldHandler*> pvFieldHandlers;
   QWidget *pvFirstDataWidget;  // Keep trace of first data edit/view widget in focus chain
 };

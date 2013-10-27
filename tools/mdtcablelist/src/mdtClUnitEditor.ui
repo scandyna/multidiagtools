@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
+    <width>603</width>
     <height>133</height>
    </rect>
   </property>
@@ -63,7 +63,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="lb_Coordinate">
         <property name="text">
-         <string>Coordinate</string>
+         <string>Location (or coordinate)</string>
         </property>
        </widget>
       </item>

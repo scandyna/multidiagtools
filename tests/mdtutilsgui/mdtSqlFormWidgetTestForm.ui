@@ -6,43 +6,56 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
-    <height>101</height>
+    <width>324</width>
+    <height>132</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="lb_id_PK">
-     <property name="text">
-      <string>ID</string>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="lb_id_PK">
+       <property name="text">
+        <string>ID</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="fld_id_PK"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lb_first_name">
+       <property name="text">
+        <string>First name</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="fld_first_name"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>GroupBox</string>
      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="lb_remarks">
+        <property name="text">
+         <string>Remarks</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="fld_remarks"/>
+      </item>
+     </layout>
     </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="fld_id_PK"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="lb_first_name">
-     <property name="text">
-      <string>First name</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="fld_first_name"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="lb_remarks">
-     <property name="text">
-      <string>Remarks</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="fld_remarks"/>
    </item>
   </layout>
  </widget>
