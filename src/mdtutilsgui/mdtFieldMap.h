@@ -29,6 +29,24 @@
 #include <QHash>
 #include <QMultiHash>
 
+/*! \brief Basic container for fiel informations
+ */
+struct mdtFieldMapField
+{
+  /*! \brief Index of the field (typically column index of a table model)
+   */
+  int index;
+
+  /*! \brief Name of the field
+   */
+  QString name;
+
+  /*! \brief Text to display (instead of name)
+   */
+  QString displayText;
+};
+Q_DECLARE_METATYPE(mdtFieldMapField);
+
 /*! \brief Map fields between a source and a destination data set
  *
  * To explain this class, we take a example.
@@ -69,22 +87,15 @@ class mdtFieldMap
    */
   void addItem(mdtFieldMapItem *item);
 
+  /*! \brief Add a item
+   */
+  
+
   /*! \brief Delete all items
    *
    *  Take care that items pointers will become invalid after calling this method.
    */
   void clear();
-
-  /*! \brief Update a item
-   *
-   * Whenn updating a item, it's important to call this method,
-   *  else internal keys are not updated.
-   *
-   * \param item item to update
-   * \return True on success, false if item was not found
-   * \pre Item must be a valid pointer
-   */
-  ///bool updateItem(mdtFieldMapItem *item);
 
   /*! \brief Get the item for a given index
    *
@@ -182,12 +193,6 @@ class mdtFieldMap
 
   // Main container
   QList<mdtFieldMapItem*> pvItems;
-  // To have a fast access, we refer items by several QHash containers
-  ///QHash<int, mdtFieldMapItem*> pvItemsByFieldIndex;
-  ///QHash<QString, mdtFieldMapItem*> pvItemsByFieldName;
-  ///QHash<QString, mdtFieldMapItem*> pvItemsByDisplayText;
-  ///QMultiHash<int, mdtFieldMapItem*> pvItemsBySourceFieldIndex;
-  ///QMultiHash<QString, mdtFieldMapItem*> pvItemsBySourceFieldName;
 };
 
 #endif  // #ifndef MDT_FIELD_MAP_H

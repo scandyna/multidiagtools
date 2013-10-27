@@ -54,4 +54,14 @@ relationcanvas 129410 relation_ref 1140098 // <dependency>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
+relationcanvas 129538 relation_ref 1146626 // <dependency>
+  from ref 129154 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 1146754 // <unidirectional association>
+  from ref 129154 z 3006 to ref 128514
+  role_a_pos 489 127 3000 no_role_b
+  multiplicity_a_pos 538 157 3000 no_multiplicity_b
+end
 end

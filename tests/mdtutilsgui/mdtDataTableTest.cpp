@@ -25,6 +25,9 @@
 #include "mdtDataTableItemDelegate.h"
 #include "mdtFieldMap.h"
 #include "mdtFieldMapItem.h"
+
+#include "mdtFieldMapItemDialog.h"
+
 #include "mdtSqlQueryWidget.h"
 #include "mdtSqlSchemaTable.h"
 #include <QSqlDatabase>
@@ -50,6 +53,57 @@
 
 void mdtDataTableTest::sandbox()
 {
+  mdtFieldMapItemDialog dialog;
+  QList<mdtFieldMapField> sourceFields;
+  QList<mdtFieldMapField> destinationFields;
+  mdtFieldMapField field;
+  mdtFieldMapItem mapItem;
+
+  // Fill source fields
+  field.index = 0;
+  field.name = "SRC01";
+  field.displayText = "Source 1";
+  sourceFields << field;
+  field.index = 1;
+  field.name = "SRC02";
+  field.displayText = "";
+  sourceFields << field;
+  field.index = 2;
+  field.name = "SRC03";
+  field.displayText = "Source 3";
+  sourceFields << field;
+  // Fill destination fields
+  field.index = 0;
+  field.name = "DEST01";
+  field.displayText = "Destination 1";
+  destinationFields << field;
+  field.index = 1;
+  field.name = "DEST02";
+  field.displayText = "";
+  destinationFields << field;
+  field.index = 2;
+  field.name = "DEST03";
+  field.displayText = "Destination 3";
+  destinationFields << field;
+  field.index = 3;
+  field.name = "DEST04";
+  field.displayText = "Destination 4";
+  destinationFields << field;
+
+  dialog.setMapItem(&mapItem);
+  dialog.setSourceFields(sourceFields);
+  dialog.setDestinationFields(destinationFields);
+  dialog.exec();
+  
+  qDebug() << "mapItem:";
+  qDebug() << "-> source field index: " << mapItem.sourceFieldIndex();
+  qDebug() << "-> source field name : " << mapItem.sourceFieldName();
+  qDebug() << "-> source field data start offset : " << mapItem.sourceFieldDataStartOffset();
+  qDebug() << "-> source field data end   offset : " << mapItem.sourceFieldDataEndOffset();
+  qDebug() << "-> destination field index : " << mapItem.fieldIndex();
+  qDebug() << "-> destination field name : " << mapItem.fieldName();
+  qDebug() << "-> destination field D. text : " << mapItem.fieldDisplayText();
+  
   QSKIP("Just a sanbox test", SkipAll);
 
   QSqlDatabase db;
@@ -815,22 +869,18 @@ void mdtDataTableTest::fieldMapTest()
   QVERIFY(item != 0);
   item->setSourceFieldIndex(1);
   item->setFieldIndex(10);
-  ///map.updateItem(item);
   item = map.itemAtFieldName("a2");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(1);
   item->setFieldIndex(11);
-  ///map.updateItem(item);
   item = map.itemAtFieldName("b");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(2);
   item->setFieldIndex(12);
-  ///map.updateItem(item);
   item = map.itemAtFieldName("c");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(3);
   item->setFieldIndex(13);
-  ///map.updateItem(item);
   // Check the mapping - search by field index
   item = map.itemAtFieldIndex(10);
   QVERIFY(item != 0);

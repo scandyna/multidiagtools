@@ -4,16 +4,21 @@ diagrams
     723 738 100 4 0 0
   classdiagram_ref 894210 // mdtFieldMapDialog
     723 738 100 4 12 0
-  classdiagram_ref 894338 // mdtFieldMapItemDialog
-    712 738 100 4 0 0
-  active  classdiagram_ref 620674 // mdtFieldMap
-    890 923 100 4 168 0
+  active  classdiagram_ref 894338 // mdtFieldMapItemDialog
+    890 923 100 4 0 0
+  classdiagram_ref 620674 // mdtFieldMap
+    890 923 100 4 296 0
 end
 show_stereotypes
-selected classdiagram_ref 620674 // mdtFieldMap
+selected operation_ref 1695490 // setSrcSplitParameterWidgetsEnabled
 open
   classview_ref 286978 // mdtDatabase
+  attribute_ref 941186 // DestinationFields
+  attribute_ref 941314 // pvLastError
   operation_ref 1206658 // dataForSourceFieldDisplayText
-  class_ref 930562 // mdtFieldMapItemDialog
+  operation_ref 1694210 // sourceFields
+  operation_ref 1694338 // destinationFields
+  operation_ref 1693954 // generateMappingByNames
+  operation_ref 1695234 // setDestinationData
 end
 end

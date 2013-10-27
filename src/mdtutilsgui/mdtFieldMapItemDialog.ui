@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Mapping field edition</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
@@ -40,7 +40,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cbDestinetionField"/>
+      <widget class="QComboBox" name="cbDestinationField"/>
      </item>
     </layout>
    </item>

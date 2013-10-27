@@ -22,6 +22,7 @@
 #define MDT_FIELD_MAP_ITEM_H
 
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 
 /*! \brief Provide informations for mdtFieldMap
@@ -113,6 +114,23 @@ class mdtFieldMapItem
   /*! \brief Get data type
    */
   QVariant::Type dataType() const;
+
+  /*! \brief Get destination data from source row
+   *
+   * This method will extract data in sourceRow
+   *  at sourceFieldIndex (if valid).
+   *
+   * If a source field start and end offsets are set,
+   *  only the part from start to end is returned.
+   */
+  QVariant destinationData(const QStringList &sourceRow);
+
+  /*! \brief Get destination data from source data
+   *
+   * If a source field start and end offsets are set,
+   *  only the part from start to end is returned.
+   */
+  QVariant destinationData(const QString &sourceData);
 
  private:
 

@@ -323,7 +323,6 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
         Q_ASSERT(mapItem != 0);
         mapItem->setSourceFieldIndex(csvFieldIndex);
         mapItem->setFieldIndex(modelFieldIndex);
-        ///pvFieldMap.updateItem(mapItem);
         field = QSqlField();
         field.setName(mapItem->fieldName());
         field.setType(mapItem->dataType());

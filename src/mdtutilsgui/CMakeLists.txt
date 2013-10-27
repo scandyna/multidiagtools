@@ -50,6 +50,7 @@ set (HEADER_FILES
           mdtDataTableItemDelegate.h
           mdtDataTableManager.h
           mdtDataTableModel.h
+          mdtFieldMapItemDialog.h
           mdtSqlQueryWidget.h
           mdtItemsSelectorDialog.h
           mdtSqlRelation.h
@@ -91,6 +92,7 @@ set (SOURCES_FILES
           mdtDataTableModel.cpp
           mdtFieldMap.cpp
           mdtFieldMapItem.cpp
+          mdtFieldMapItemDialog.cpp
           mdtSqlQueryWidget.cpp
           mdtItemsSelectorDialog.cpp
           mdtSqlRelation.cpp
@@ -120,6 +122,7 @@ set (FORM_FILES
           mdtSqlQueryWidget.ui
           mdtSqlWindow.ui
           mdtItemsSelectorDialog.ui
+          mdtFieldMapItemDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)
