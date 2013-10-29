@@ -22,7 +22,7 @@
 #include <QSharedData>
 #include <QSharedDataPointer>
 
-#include <QDebug>
+//#include <QDebug>
 
 
 /*
@@ -31,15 +31,10 @@
 
 mdtFieldMapData::mdtFieldMapData()
 {
-  qDebug() << "mdtFieldMapData::mdtFieldMapData()";
 }
 
 mdtFieldMapData::mdtFieldMapData(const mdtFieldMapData &other)
 {
-  qDebug() << "mdtFieldMapData::mdtFieldMapData(const mdtFieldMapData &other)";
-  qDebug() << "-> this : " << this << " - items:" << pvItems;
-  qDebug() << "-> other: " << &other << " - items: " << other.pvItems;
-  
   int i;
   mdtFieldMapItem *item;
 
@@ -58,7 +53,6 @@ mdtFieldMapData::mdtFieldMapData(const mdtFieldMapData &other)
 
 mdtFieldMapData::~mdtFieldMapData()
 {
-  qDebug() << "mdtFieldMapData::~mdtFieldMapData() - this: " << this << " - items: " << pvItems;
   qDeleteAll(pvItems);
 }
 
@@ -92,6 +86,31 @@ const QList<mdtFieldMapField> &mdtFieldMap::sourceFields() const
   return d->pvSourceFields;
 }
 
+const QList<mdtFieldMapField> mdtFieldMap::notMappedSourceFields(mdtFieldMap::FieldReference_t reference) const
+{
+  QList<mdtFieldMapField> notMappedFields;
+  int itemCount = 0;
+  mdtFieldMapField field;
+  int i;
+
+  for(i = 0; i < d->pvSourceFields.size(); ++i){
+    // Check if field exists in map
+    field = d->pvSourceFields.at(i);
+    switch(reference){
+      case ReferenceByIndex:
+        itemCount = itemsAtSourceFieldIndex(field.index).size();
+      case ReferenceByName:
+        itemCount = itemsAtSourceFieldName(field.name).size();
+    }
+    // If found, add it to result
+    if(itemCount == 0){
+      notMappedFields.append(field);
+    }
+  }
+
+  return notMappedFields;
+}
+
 void mdtFieldMap::setDestinationFields(const QList<mdtFieldMapField> &fields)
 {
   d->pvDestinationFields = fields;
@@ -100,6 +119,32 @@ void mdtFieldMap::setDestinationFields(const QList<mdtFieldMapField> &fields)
 const QList<mdtFieldMapField> &mdtFieldMap::destinationFields() const
 {
   return d->pvDestinationFields;
+}
+
+const QList<mdtFieldMapField> mdtFieldMap::notMappedDestinationFields(mdtFieldMap::FieldReference_t reference) const
+{
+  QList<mdtFieldMapField> notMappedFields;
+  mdtFieldMapItem *item = 0;
+  mdtFieldMapField field;
+  int i;
+
+  for(i = 0; i < d->pvDestinationFields.size(); ++i){
+    // Check if field exists in map
+    field = d->pvDestinationFields.at(i);
+    switch(reference){
+      case ReferenceByIndex:
+        item = itemAtFieldIndex(field.index);
+      case ReferenceByName:
+        item = itemAtFieldName(field.name);
+    }
+    // If found, add it to result
+    if(item == 0){
+      notMappedFields.append(field);
+    }
+  }
+
+  return notMappedFields;
+
 }
 
 void mdtFieldMap::addItem(mdtFieldMapItem *item)
@@ -200,7 +245,7 @@ QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldIndex(int index) const
   return items;
 }
 
-QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name)
+QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name) const
 {
   QList<mdtFieldMapItem*> items;
   mdtFieldMapItem *item;
@@ -219,48 +264,12 @@ QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name)
 
 QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int fieldIndex) const
 {
-  ///QString src;
-  ///QVariant data;
-
   mdtFieldMapItem *item = itemAtFieldIndex(fieldIndex);
   if(item == 0){
     return QVariant();
   }
 
   return item->destinationData(sourceData);
-  /**
-  if(item->sourceFieldIndex() < 0){
-    return QVariant();
-  }
-  if(item->sourceFieldIndex() >= sourceData.size()){
-    return QVariant();
-  }
-  if((item->sourceFieldDataStartOffset() < 0)&&(item->sourceFieldDataEndOffset() < 0)){
-    src = sourceData.at(item->sourceFieldIndex());
-    data = src;
-    data.convert(item->dataType());
-    return data;
-  }
-  if(item->sourceFieldDataStartOffset()<0){
-    src = sourceData.at(item->sourceFieldIndex()).left(item->sourceFieldDataEndOffset()+1);
-    data = src;
-    data.convert(item->dataType());
-    return data;
-  }
-  if(item->sourceFieldDataEndOffset()<0){
-    src = sourceData.at(item->sourceFieldIndex());
-    src = src.right(src.size() - item->sourceFieldDataStartOffset());
-    data = src;
-    data.convert(item->dataType());
-    return data;
-  }
-  src = sourceData.at(item->sourceFieldIndex());
-  src = src.mid(item->sourceFieldDataStartOffset(), item->sourceFieldDataEndOffset() - item->sourceFieldDataStartOffset() + 1);
-  data = src;
-  data.convert(item->dataType());
-
-  return data;
-  */
 }
 
 QVariant mdtFieldMap::dataForFieldName(const QStringList &sourceData, const QString &fieldName) const

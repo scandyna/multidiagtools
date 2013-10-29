@@ -87,6 +87,16 @@ class mdtFieldMap
 {
  public:
 
+  /*! \brief Field reference
+   *
+   * Used by some methods that need to know what
+   *  the reference is to find a field .
+   */
+  enum FieldReference_t {
+                          ReferenceByIndex ,  /*!< Field index is used as reference */
+                          ReferenceByName     /*!< Field name is used as reference */
+                        };
+
   /*! \brief Create a empty field map
    */
   mdtFieldMap();
@@ -110,6 +120,10 @@ class mdtFieldMap
    */
   const QList<mdtFieldMapField> &sourceFields() const;
 
+  /*! \brief Get a list of source fields that are not allready mapped
+   */
+  const QList<mdtFieldMapField> notMappedSourceFields(FieldReference_t reference) const;
+
   /*! \brief Set the list of destination fields
    *
    * This can be used if destination fields is allready known .
@@ -121,6 +135,10 @@ class mdtFieldMap
   /*! \brief Get the list of destination fields
    */
   const QList<mdtFieldMapField> &destinationFields() const;
+
+  /*! \brief Get a list of destination fields that are not allready mapped
+   */
+  const QList<mdtFieldMapField> notMappedDestinationFields(FieldReference_t reference) const;
 
   /*! \brief Add a item
    *
@@ -181,7 +199,7 @@ class mdtFieldMap
    * \param name In above example, it's the technical field name in CSV header.
    * \return Pointer to item if found, else 0 (null pointer).
    */
-  QList<mdtFieldMapItem*> itemsAtSourceFieldName(const QString &name);
+  QList<mdtFieldMapItem*> itemsAtSourceFieldName(const QString &name) const;
 
   /*! \brief Get data for a given index in source data
    *
@@ -233,15 +251,7 @@ class mdtFieldMap
    */
   void insertDataIntoSourceString(QString &str, const QVariant &data, mdtFieldMapItem *item);
 
-  ///Q_DISABLE_COPY(mdtFieldMap);
-
   QSharedDataPointer<mdtFieldMapData> d;
-
-  // Available fields container
-  ///QList<mdtFieldMapField> pvSourceFields;
-  ///QList<mdtFieldMapField> pvDestinationFields;
-  // Mapping items container
-  ///QList<mdtFieldMapItem*> pvItems;
 };
 
 #endif  // #ifndef MDT_FIELD_MAP_H

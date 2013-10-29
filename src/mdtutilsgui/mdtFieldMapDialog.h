@@ -22,11 +22,9 @@
 #define MDT_FIELD_MAP_DIALOG_H
 
 #include "ui_mdtFieldMapDialog.h"
+#include "mdtFieldMap.h"
 #include <QDialog>
 #include <QWidget>
-
-class mdtFieldMap;
-///class mdtFieldMapItemDialog;
 
 /*! \brief Dialog to manage field mapping
  */
@@ -46,15 +44,12 @@ class mdtFieldMapDialog : public QDialog, Ui::mdtFieldMapDialog
 
   /*! \brief Set field map object
    *
-   * Given field map will be updated once dialog is accepted .
-   *
-   * \pre map must be a valid pointer .
    */
-  void setFieldMap(mdtFieldMap *map);
+  void setFieldMap(const mdtFieldMap &map);
 
-  /*! \brief
+  /*! \brief Get field map object
    */
-  ///mdtFieldMap fieldMap();
+  mdtFieldMap fieldMap() const;
 
  private slots:
 
@@ -74,6 +69,10 @@ class mdtFieldMapDialog : public QDialog, Ui::mdtFieldMapDialog
 
   Q_DISABLE_COPY(mdtFieldMapDialog);
 
+  /*! \brief Update the mapping table widget
+   */
+  void updateMappingTableView();
+
   /*! \brief
    */
   void updateSourcePreview();
@@ -82,9 +81,8 @@ class mdtFieldMapDialog : public QDialog, Ui::mdtFieldMapDialog
    */
   void updateDestinationPreview();
 
-  mdtFieldMap *pvFieldMap;
-  mdtFieldMap *pvInternalFieldMap;
-
+  mdtFieldMap pvFieldMap;
+  ///mdtFieldMap *pvInternalFieldMap;
 };
 
 #endif // #ifndef MDT_FIELD_MAP_DIALOG_H

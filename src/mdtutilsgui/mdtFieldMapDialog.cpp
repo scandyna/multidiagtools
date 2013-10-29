@@ -19,41 +19,60 @@
  **
  ****************************************************************************/
 #include "mdtFieldMapDialog.h"
+#include "mdtFieldMapItem.h"
 #include "mdtFieldMapItemDialog.h"
-#include "mdtFieldMap.h"
+#include <QStringList>
+#include <QTableWidgetItem>
+#include <QList>
 
 mdtFieldMapDialog::mdtFieldMapDialog(QWidget *parent) 
  : QDialog(parent)
 {
+  QStringList mappingViewHeader;
+
   setupUi(this);
   connect(pbAdd, SIGNAL(clicked()), this, SLOT(addMapItem()));
   connect(pbEdit, SIGNAL(clicked()), this, SLOT(editMapItem()));
   connect(pbRemove, SIGNAL(clicked()), this, SLOT(removeMapItem()));
+  // Setup mapping table view
+  mappingViewHeader << tr("Source field") << " -> " << tr("Destination field");
+  twMapping->setColumnCount(mappingViewHeader.size());
+  twMapping->setHorizontalHeaderLabels(mappingViewHeader);
+  twMapping->setSelectionMode(QTableWidget::SingleSelection);
+  twMapping->setSelectionBehavior(QTableWidget::SelectRows);
+  twMapping->setEditTriggers(QTableWidget::NoEditTriggers);
 }
 
 mdtFieldMapDialog::~mdtFieldMapDialog()
 {
 }
 
-void mdtFieldMapDialog::setFieldMap(mdtFieldMap *map)
+void mdtFieldMapDialog::setFieldMap(const mdtFieldMap &map)
 {
-  Q_ASSERT(map != 0);
-
   pvFieldMap = map;
-  ///pvInternalFieldMap.
 }
 
-/**
-mdtFieldMap mdtFieldMapDialog::fieldMap() 
+mdtFieldMap mdtFieldMapDialog::fieldMap() const
 {
+  return pvFieldMap;
 }
-*/
 
 void mdtFieldMapDialog::addMapItem()
 {
   mdtFieldMapItemDialog dialog(this);
+  mdtFieldMapItem *item;
 
-  dialog.exec();
+  // Setup dialog and show it
+  /// \todo Check if one field list is empty !!
+  dialog.setSourceFields(pvFieldMap.notMappedSourceFields(mdtFieldMap::ReferenceByName));
+  dialog.setDestinationFields(pvFieldMap.notMappedDestinationFields(mdtFieldMap::ReferenceByName));
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  item = new mdtFieldMapItem;
+  *item = dialog.mapItem();
+  pvFieldMap.addItem(item);
+  updateMappingTableView();
 }
 
 void mdtFieldMapDialog::editMapItem()
@@ -68,6 +87,27 @@ void mdtFieldMapDialog::removeMapItem()
   mdtFieldMapItemDialog dialog(this);
 
   dialog.exec();
+}
+
+void mdtFieldMapDialog::updateMappingTableView()
+{
+  QList<mdtFieldMapItem*> items;
+  mdtFieldMapItem *fmItem;
+  QTableWidgetItem *twSourceItem, *twDestinationItem;
+  int row;
+
+  items = pvFieldMap.items();
+  twMapping->setRowCount(items.size());
+  for(row = 0; row < items.size(); ++row){
+    fmItem = items.at(row);
+    Q_ASSERT(fmItem != 0);
+    twSourceItem = new QTableWidgetItem(fmItem->sourceFieldName());
+    twMapping->setItem(row, 0, twSourceItem);
+    twDestinationItem = new QTableWidgetItem(fmItem->fieldName());
+    twMapping->setItem(row, 2, twDestinationItem);
+  }
+  twMapping->resizeColumnsToContents();
+  twMapping->resizeRowsToContents();
 }
 
 void mdtFieldMapDialog::updateSourcePreview() 
