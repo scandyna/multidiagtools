@@ -58,11 +58,13 @@ class mdtFieldMapItemDialog : public QDialog, public Ui::mdtFieldMapItemDialog
    */
   void setSourceData(const QString & data);
 
-  /*! \brief Set map item to edit (will only be updated once the dialog is accepted)
-   *
-   * \pre item must be valid (not null) .
+  /*! \brief Set map item
    */
-  void setMapItem(mdtFieldMapItem *item);
+  void setMapItem(const mdtFieldMapItem & item);
+
+  /*! \brief Get map item
+   */
+  mdtFieldMapItem mapItem() const;
 
  public slots:
 
@@ -100,8 +102,9 @@ class mdtFieldMapItemDialog : public QDialog, public Ui::mdtFieldMapItemDialog
 
   Q_DISABLE_COPY(mdtFieldMapItemDialog);
 
-  mdtFieldMapItem pvEditMapItem;
-  mdtFieldMapItem *pvTargetMapItem;
+  ///mdtFieldMapItem pvEditMapItem;
+  ///mdtFieldMapItem pvTargetMapItem;
+  mdtFieldMapItem pvMapItem;
 };
 
 #endif // #ifndef MDTFIELDMAPITEMDIALOG_H

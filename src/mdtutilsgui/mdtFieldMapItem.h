@@ -123,14 +123,14 @@ class mdtFieldMapItem
    * If a source field start and end offsets are set,
    *  only the part from start to end is returned.
    */
-  QVariant destinationData(const QStringList &sourceRow);
+  QVariant destinationData(const QStringList &sourceRow) const;
 
   /*! \brief Get destination data from source data
    *
    * If a source field start and end offsets are set,
    *  only the part from start to end is returned.
    */
-  QVariant destinationData(const QString &sourceData);
+  QVariant destinationData(const QString &sourceData) const;
 
  private:
 

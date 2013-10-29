@@ -38,6 +38,8 @@ class mdtDataTableTest : public mdtTest
   void editDataTest();
 
   // Field map test
+  void fieldMapItemCopyTest();
+  void fieldMapCopyTest();
   void fieldMapTest();
 
   // CSV export/import tests

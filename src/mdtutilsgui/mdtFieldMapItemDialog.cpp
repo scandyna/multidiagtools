@@ -30,9 +30,9 @@ mdtFieldMapItemDialog::mdtFieldMapItemDialog(QWidget *parent)
  : QDialog(parent)
 {
   setupUi(this);
-  pvTargetMapItem = 0;
+  ///pvTargetMapItem = 0;
   // Setup edition map item
-  pvEditMapItem.setDataType(QVariant::String);
+  pvMapItem.setDataType(QVariant::String);
   // Setup start and end comboboxes
   connect(cbSourceField, SIGNAL(currentIndexChanged(int)), this, SLOT(setSourceField(int)));
   connect(cbDestinationField, SIGNAL(currentIndexChanged(int)), this, SLOT(setDestinationField(int)));
@@ -94,33 +94,47 @@ void mdtFieldMapItemDialog::setSourceData(const QString & data)
   updateDestinationPreview();
 }
 
-void mdtFieldMapItemDialog::setMapItem(mdtFieldMapItem *item) 
+void mdtFieldMapItemDialog::setMapItem(const mdtFieldMapItem & item) 
 {
-  Q_ASSERT(item != 0);
+  ///Q_ASSERT(item != 0);
 
+  pvMapItem = item;
+  /**
   pvTargetMapItem = item;
-  pvEditMapItem.setFieldIndex(item->fieldIndex());
-  pvEditMapItem.setFieldName(item->fieldName());
-  pvEditMapItem.setFieldDisplayText(item->fieldDisplayText());
-  pvEditMapItem.setSourceFieldIndex(item->sourceFieldIndex());
-  pvEditMapItem.setSourceFieldName(item->sourceFieldName());
-  pvEditMapItem.setSourceFieldDataStartOffset(item->sourceFieldDataStartOffset());
-  pvEditMapItem.setSourceFieldDataEndOffset(item->sourceFieldDataEndOffset());
-  pvEditMapItem.setDataType(item->dataType());
+  pvMapItem = pvTargetMapItem;
+  */
+  /**
+  pvMapItem.setFieldIndex(item->fieldIndex());
+  pvMapItem.setFieldName(item->fieldName());
+  pvMapItem.setFieldDisplayText(item->fieldDisplayText());
+  pvMapItem.setSourceFieldIndex(item->sourceFieldIndex());
+  pvMapItem.setSourceFieldName(item->sourceFieldName());
+  pvMapItem.setSourceFieldDataStartOffset(item->sourceFieldDataStartOffset());
+  pvMapItem.setSourceFieldDataEndOffset(item->sourceFieldDataEndOffset());
+  pvMapItem.setDataType(item->dataType());
+  */
+}
+
+mdtFieldMapItem mdtFieldMapItemDialog::mapItem() const
+{
+  return pvMapItem;
 }
 
 void mdtFieldMapItemDialog::accept()
 {
+  /**
   if(pvTargetMapItem != 0){
-    pvTargetMapItem->setFieldIndex(pvEditMapItem.fieldIndex());
-    pvTargetMapItem->setFieldName(pvEditMapItem.fieldName());
-    pvTargetMapItem->setFieldDisplayText(pvEditMapItem.fieldDisplayText());
-    pvTargetMapItem->setSourceFieldIndex(pvEditMapItem.sourceFieldIndex());
-    pvTargetMapItem->setSourceFieldName(pvEditMapItem.sourceFieldName());
-    pvTargetMapItem->setSourceFieldDataStartOffset(pvEditMapItem.sourceFieldDataStartOffset());
-    pvTargetMapItem->setSourceFieldDataEndOffset(pvEditMapItem.sourceFieldDataEndOffset());
-    pvTargetMapItem->setDataType(pvEditMapItem.dataType());
+    pvTargetMapItem->setFieldIndex(pvMapItem.fieldIndex());
+    pvTargetMapItem->setFieldName(pvMapItem.fieldName());
+    pvTargetMapItem->setFieldDisplayText(pvMapItem.fieldDisplayText());
+    pvTargetMapItem->setSourceFieldIndex(pvMapItem.sourceFieldIndex());
+    pvTargetMapItem->setSourceFieldName(pvMapItem.sourceFieldName());
+    pvTargetMapItem->setSourceFieldDataStartOffset(pvMapItem.sourceFieldDataStartOffset());
+    pvTargetMapItem->setSourceFieldDataEndOffset(pvMapItem.sourceFieldDataEndOffset());
+    pvTargetMapItem->setDataType(pvMapItem.dataType());
   }
+  */
+  ///pvTargetMapItem = pvMapItem;
   QDialog::accept();
 }
 
@@ -129,12 +143,12 @@ void mdtFieldMapItemDialog::setSourceField(int cbIndex)
   mdtFieldMapField field;
 
   if(cbIndex < 0){
-    pvEditMapItem.setSourceFieldIndex(-1);
-    pvEditMapItem.setSourceFieldName("");
+    pvMapItem.setSourceFieldIndex(-1);
+    pvMapItem.setSourceFieldName("");
   }else{
     field = cbSourceField->itemData(cbIndex).value<mdtFieldMapField>();
-    pvEditMapItem.setSourceFieldIndex(field.index);
-    pvEditMapItem.setSourceFieldName(field.name);
+    pvMapItem.setSourceFieldIndex(field.index);
+    pvMapItem.setSourceFieldName(field.name);
   }
 }
 
@@ -143,14 +157,14 @@ void mdtFieldMapItemDialog::setDestinationField(int cbIndex)
   mdtFieldMapField field;
 
   if(cbIndex < 0){
-    pvEditMapItem.setFieldIndex(-1);
-    pvEditMapItem.setFieldName("");
-    pvEditMapItem.setFieldDisplayText("");
+    pvMapItem.setFieldIndex(-1);
+    pvMapItem.setFieldName("");
+    pvMapItem.setFieldDisplayText("");
   }else{
     field = cbDestinationField->itemData(cbIndex).value<mdtFieldMapField>();
-    pvEditMapItem.setFieldIndex(field.index);
-    pvEditMapItem.setFieldName(field.name);
-    pvEditMapItem.setFieldDisplayText(field.displayText);
+    pvMapItem.setFieldIndex(field.index);
+    pvMapItem.setFieldName(field.name);
+    pvMapItem.setFieldDisplayText(field.displayText);
   }
 }
 
@@ -159,21 +173,21 @@ void mdtFieldMapItemDialog::updateDestinationPreview()
   QString sourceData, destinationData;
 
   sourceData = lbSourceData->text();
-  destinationData = pvEditMapItem.destinationData(sourceData).toString();
+  destinationData = pvMapItem.destinationData(sourceData).toString();
   lbDestinationData->setText(destinationData);
 }
 
 void mdtFieldMapItemDialog::setSourceDataStartOffset(int value)
 {
-  pvEditMapItem.setSourceFieldDataStartOffset(sbSourceStartOffset->value());
-  pvEditMapItem.setSourceFieldDataEndOffset(sbSourceStartOffset->value() + sbSourceSize->value() - 1);
+  pvMapItem.setSourceFieldDataStartOffset(sbSourceStartOffset->value());
+  pvMapItem.setSourceFieldDataEndOffset(sbSourceStartOffset->value() + sbSourceSize->value() - 1);
   updateDestinationPreview();
 }
 
 void mdtFieldMapItemDialog::setSourceDataEndOffset(int value)
 {
-  pvEditMapItem.setSourceFieldDataStartOffset(sbSourceStartOffset->value());
-  pvEditMapItem.setSourceFieldDataEndOffset(sbSourceStartOffset->value() + sbSourceSize->value() - 1);
+  pvMapItem.setSourceFieldDataStartOffset(sbSourceStartOffset->value());
+  pvMapItem.setSourceFieldDataEndOffset(sbSourceStartOffset->value() + sbSourceSize->value() - 1);
   updateDestinationPreview();
 }
 
@@ -182,11 +196,11 @@ void mdtFieldMapItemDialog::setSrcSplitParameterWidgetsEnabled(bool enable)
   sbSourceStartOffset->setEnabled(enable);
   sbSourceSize->setEnabled(enable);
   if(enable){
-    pvEditMapItem.setSourceFieldDataStartOffset(sbSourceStartOffset->value());
-    pvEditMapItem.setSourceFieldDataEndOffset(sbSourceStartOffset->value() + sbSourceSize->value() - 1);
+    pvMapItem.setSourceFieldDataStartOffset(sbSourceStartOffset->value());
+    pvMapItem.setSourceFieldDataEndOffset(sbSourceStartOffset->value() + sbSourceSize->value() - 1);
   }else{
-    pvEditMapItem.setSourceFieldDataStartOffset(-1);
-    pvEditMapItem.setSourceFieldDataEndOffset(-1);
+    pvMapItem.setSourceFieldDataStartOffset(-1);
+    pvMapItem.setSourceFieldDataEndOffset(-1);
   }
   updateDestinationPreview();
 }

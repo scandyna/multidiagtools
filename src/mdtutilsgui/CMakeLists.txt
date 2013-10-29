@@ -50,6 +50,7 @@ set (HEADER_FILES
           mdtDataTableItemDelegate.h
           mdtDataTableManager.h
           mdtDataTableModel.h
+          mdtFieldMapDialog.h
           mdtFieldMapItemDialog.h
           mdtSqlQueryWidget.h
           mdtItemsSelectorDialog.h
@@ -92,6 +93,7 @@ set (SOURCES_FILES
           mdtDataTableModel.cpp
           mdtFieldMap.cpp
           mdtFieldMapItem.cpp
+          mdtFieldMapDialog.cpp
           mdtFieldMapItemDialog.cpp
           mdtSqlQueryWidget.cpp
           mdtItemsSelectorDialog.cpp
@@ -122,6 +124,7 @@ set (FORM_FILES
           mdtSqlQueryWidget.ui
           mdtSqlWindow.ui
           mdtItemsSelectorDialog.ui
+          mdtFieldMapDialog.ui
           mdtFieldMapItemDialog.ui
     )
 

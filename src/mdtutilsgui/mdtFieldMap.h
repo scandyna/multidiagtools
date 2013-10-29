@@ -28,6 +28,8 @@
 #include <QList>
 #include <QHash>
 #include <QMultiHash>
+#include <QSharedDataPointer>
+#include <QSharedData>
 
 /*! \brief Basic container for fiel informations
  */
@@ -46,6 +48,24 @@ struct mdtFieldMapField
   QString displayText;
 };
 Q_DECLARE_METATYPE(mdtFieldMapField);
+
+/*
+ * mdtFieldMapData definition
+ */
+class mdtFieldMapData : public QSharedData
+{
+ public:
+ 
+  mdtFieldMapData();
+  mdtFieldMapData(const mdtFieldMapData &other);
+  ~mdtFieldMapData();
+
+  // Available fields container
+  QList<mdtFieldMapField> pvSourceFields;
+  QList<mdtFieldMapField> pvDestinationFields;
+  // Mapping items container
+  QList<mdtFieldMapItem*> pvItems;
+};
 
 /*! \brief Map fields between a source and a destination data set
  *
@@ -71,12 +91,36 @@ class mdtFieldMap
    */
   mdtFieldMap();
 
+  /*! \brief Copy constructor
+   */
+  mdtFieldMap(const mdtFieldMap &other);
+
   /*! \brief Destroy field map
    *
    * All items are deleted.
    *  Take care that items pointers will become invalid after destroying this object.
    */
   ~mdtFieldMap();
+
+  /*! \brief Set the list of source fields
+   */
+  void setSourceFields(const QList<mdtFieldMapField> &fields);
+
+  /*! \brief Get the list of source fields
+   */
+  const QList<mdtFieldMapField> &sourceFields() const;
+
+  /*! \brief Set the list of destination fields
+   *
+   * This can be used if destination fields is allready known .
+   *  If mdtFieldMapDialog is used, this fields are also displayed to the
+   *  user . For auto map generation, these fields are also needed .
+   */
+  void setDestinationFields(const QList<mdtFieldMapField> &fields);
+
+  /*! \brief Get the list of destination fields
+   */
+  const QList<mdtFieldMapField> &destinationFields() const;
 
   /*! \brief Add a item
    *
@@ -87,9 +131,9 @@ class mdtFieldMap
    */
   void addItem(mdtFieldMapItem *item);
 
-  /*! \brief Add a item
+  /*! \brief Get a list of all items
    */
-  
+  const QList<mdtFieldMapItem*> &items() const;
 
   /*! \brief Delete all items
    *
@@ -189,10 +233,15 @@ class mdtFieldMap
    */
   void insertDataIntoSourceString(QString &str, const QVariant &data, mdtFieldMapItem *item);
 
-  Q_DISABLE_COPY(mdtFieldMap);
+  ///Q_DISABLE_COPY(mdtFieldMap);
 
-  // Main container
-  QList<mdtFieldMapItem*> pvItems;
+  QSharedDataPointer<mdtFieldMapData> d;
+
+  // Available fields container
+  ///QList<mdtFieldMapField> pvSourceFields;
+  ///QList<mdtFieldMapField> pvDestinationFields;
+  // Mapping items container
+  ///QList<mdtFieldMapItem*> pvItems;
 };
 
 #endif  // #ifndef MDT_FIELD_MAP_H

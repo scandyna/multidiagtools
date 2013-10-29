@@ -19,10 +19,61 @@
  **
  ****************************************************************************/
 #include "mdtFieldMap.h"
+#include <QSharedData>
+#include <QSharedDataPointer>
 
-//#include <QDebug>
+#include <QDebug>
+
+
+/*
+ * mdtFieldMapData implementation
+ */
+
+mdtFieldMapData::mdtFieldMapData()
+{
+  qDebug() << "mdtFieldMapData::mdtFieldMapData()";
+}
+
+mdtFieldMapData::mdtFieldMapData(const mdtFieldMapData &other)
+{
+  qDebug() << "mdtFieldMapData::mdtFieldMapData(const mdtFieldMapData &other)";
+  qDebug() << "-> this : " << this << " - items:" << pvItems;
+  qDebug() << "-> other: " << &other << " - items: " << other.pvItems;
+  
+  int i;
+  mdtFieldMapItem *item;
+
+  if(&other != this){
+    pvSourceFields = other.pvSourceFields;
+    pvDestinationFields = other.pvDestinationFields;
+    qDeleteAll(pvItems);
+    pvItems.clear();
+    for(i = 0; i < other.pvItems.size(); ++i){
+      item = new mdtFieldMapItem;
+      *item = *other.pvItems.at(i);
+      pvItems.append(item);
+    }
+  }
+}
+
+mdtFieldMapData::~mdtFieldMapData()
+{
+  qDebug() << "mdtFieldMapData::~mdtFieldMapData() - this: " << this << " - items: " << pvItems;
+  qDeleteAll(pvItems);
+}
+
+
+/*
+ * mdtFieldMap implementation
+ */
 
 mdtFieldMap::mdtFieldMap()
+{
+  d = new mdtFieldMapData;
+}
+
+mdtFieldMap::mdtFieldMap(const mdtFieldMap &other)
+ : d(other.d)
 {
 }
 
@@ -31,19 +82,44 @@ mdtFieldMap::~mdtFieldMap()
   clear();
 }
 
+void mdtFieldMap::setSourceFields(const QList<mdtFieldMapField> &fields)
+{
+  d->pvSourceFields = fields;
+}
+
+const QList<mdtFieldMapField> &mdtFieldMap::sourceFields() const
+{
+  return d->pvSourceFields;
+}
+
+void mdtFieldMap::setDestinationFields(const QList<mdtFieldMapField> &fields)
+{
+  d->pvDestinationFields = fields;
+}
+
+const QList<mdtFieldMapField> &mdtFieldMap::destinationFields() const
+{
+  return d->pvDestinationFields;
+}
+
 void mdtFieldMap::addItem(mdtFieldMapItem *item)
 {
   Q_ASSERT(item != 0);
 
-  if(!pvItems.contains(item)){
-    pvItems.append(item);
+  if(!d->pvItems.contains(item)){
+    d->pvItems.append(item);
   }
+}
+
+const QList<mdtFieldMapItem*> &mdtFieldMap::items() const
+{
+  return d->pvItems;
 }
 
 void mdtFieldMap::clear()
 {
-  qDeleteAll(pvItems);
-  pvItems.clear();
+  qDeleteAll(d->pvItems);
+  d->pvItems.clear();
 }
 
 mdtFieldMapItem *mdtFieldMap::itemAtFieldIndex(int index) const
@@ -51,8 +127,8 @@ mdtFieldMapItem *mdtFieldMap::itemAtFieldIndex(int index) const
   int i;
   mdtFieldMapItem *item;
 
-  for(i = 0; i < pvItems.size(); ++i){
-    item = pvItems.at(i);
+  for(i = 0; i < d->pvItems.size(); ++i){
+    item = d->pvItems.at(i);
     Q_ASSERT(item != 0);
     if(item->fieldIndex() == index){
       return item;
@@ -67,8 +143,8 @@ mdtFieldMapItem *mdtFieldMap::itemAtFieldName(const QString &name) const
   int i;
   mdtFieldMapItem *item;
 
-  for(i = 0; i < pvItems.size(); ++i){
-    item = pvItems.at(i);
+  for(i = 0; i < d->pvItems.size(); ++i){
+    item = d->pvItems.at(i);
     Q_ASSERT(item != 0);
     if(item->fieldName() == name){
       return item;
@@ -83,8 +159,8 @@ mdtFieldMapItem *mdtFieldMap::itemAtDisplayText(const QString &text)
   int i;
   mdtFieldMapItem *item;
 
-  for(i = 0; i < pvItems.size(); ++i){
-    item = pvItems.at(i);
+  for(i = 0; i < d->pvItems.size(); ++i){
+    item = d->pvItems.at(i);
     Q_ASSERT(item != 0);
     if(item->fieldDisplayText() == text){
       return item;
@@ -113,8 +189,8 @@ QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldIndex(int index) const
   mdtFieldMapItem *item;
   int i;
 
-  for(i = 0; i < pvItems.size(); ++i){
-    item = pvItems.at(i);
+  for(i = 0; i < d->pvItems.size(); ++i){
+    item = d->pvItems.at(i);
     Q_ASSERT(item != 0);
     if(item->sourceFieldIndex() == index){
       items.append(item);
@@ -130,8 +206,8 @@ QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name)
   mdtFieldMapItem *item;
   int i;
 
-  for(i = 0; i < pvItems.size(); ++i){
-    item = pvItems.at(i);
+  for(i = 0; i < d->pvItems.size(); ++i){
+    item = d->pvItems.at(i);
     Q_ASSERT(item != 0);
     if(item->sourceFieldName() == name){
       items.append(item);
@@ -249,8 +325,8 @@ QHash<QString, QString> mdtFieldMap::displayTextsByFieldNames() const
   mdtFieldMapItem *item;
   int i;
 
-  for(i=0; i<pvItems.size(); ++i){
-    item = pvItems.at(i);
+  for(i=0; i < d->pvItems.size(); ++i){
+    item = d->pvItems.at(i);
     Q_ASSERT(item != 0);
     result.insert(item->fieldName(), item->fieldDisplayText());
   }

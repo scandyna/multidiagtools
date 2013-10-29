@@ -115,7 +115,7 @@ QVariant::Type mdtFieldMapItem::dataType() const
   return pvDataType;
 }
 
-QVariant mdtFieldMapItem::destinationData(const QStringList &sourceRow)
+QVariant mdtFieldMapItem::destinationData(const QStringList &sourceRow) const
 {
   ///QString src;
   ///QVariant data;
@@ -158,7 +158,7 @@ QVariant mdtFieldMapItem::destinationData(const QStringList &sourceRow)
   */
 }
 
-QVariant mdtFieldMapItem::destinationData(const QString &sourceData)
+QVariant mdtFieldMapItem::destinationData(const QString &sourceData) const
 {
   QVariant data;
 

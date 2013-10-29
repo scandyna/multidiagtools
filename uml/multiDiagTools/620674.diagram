@@ -10,7 +10,7 @@ classcanvas 128130 class_ref 631682 // mdtFieldMap
 end
 relationcanvas 128258 relation_ref 776322 // <directional composition>
   from ref 128130 z 2001 to ref 128002
-  role_a_pos 479 510 3000 no_role_b
-  multiplicity_a_pos 509 540 3000 no_multiplicity_b
+  role_a_pos 479 516 3000 no_role_b
+  multiplicity_a_pos 509 546 3000 no_multiplicity_b
 end
 end
