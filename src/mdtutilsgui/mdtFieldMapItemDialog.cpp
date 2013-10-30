@@ -61,10 +61,10 @@ void mdtFieldMapItemDialog::setSourceFields(const QList<mdtFieldMapField> & fiel
   for(i = 0; i < fields.size(); ++i){
     field = fields.at(i);
     var.setValue(field);
-    if(field.displayText.isEmpty()){
-      cbSourceField->addItem(field.name, var);
+    if(field.displayText().isEmpty()){
+      cbSourceField->addItem(field.name(), var);
     }else{
-      cbSourceField->addItem(field.displayText, var);
+      cbSourceField->addItem(field.displayText(), var);
     }
   }
 }
@@ -79,10 +79,10 @@ void mdtFieldMapItemDialog::setDestinationFields(const QList<mdtFieldMapField> &
   for(i = 0; i < fields.size(); ++i){
     field = fields.at(i);
     var.setValue(field);
-    if(field.displayText.isEmpty()){
-      cbDestinationField->addItem(field.name, var);
+    if(field.displayText().isEmpty()){
+      cbDestinationField->addItem(field.name(), var);
     }else{
-      cbDestinationField->addItem(field.displayText, var);
+      cbDestinationField->addItem(field.displayText(), var);
     }
   }
 }
@@ -147,9 +147,11 @@ void mdtFieldMapItemDialog::setSourceField(int cbIndex)
     pvMapItem.setSourceFieldName("");
   }else{
     field = cbSourceField->itemData(cbIndex).value<mdtFieldMapField>();
-    pvMapItem.setSourceFieldIndex(field.index);
-    pvMapItem.setSourceFieldName(field.name);
+    pvMapItem.setSourceFieldIndex(field.index());
+    pvMapItem.setSourceFieldName(field.name());
   }
+  lbSourceFieldName->setText(pvMapItem.sourceFieldName());
+  lbSourceFieldIndex->setText(QString::number(pvMapItem.sourceFieldIndex()));
 }
 
 void mdtFieldMapItemDialog::setDestinationField(int cbIndex)
@@ -162,10 +164,12 @@ void mdtFieldMapItemDialog::setDestinationField(int cbIndex)
     pvMapItem.setFieldDisplayText("");
   }else{
     field = cbDestinationField->itemData(cbIndex).value<mdtFieldMapField>();
-    pvMapItem.setFieldIndex(field.index);
-    pvMapItem.setFieldName(field.name);
-    pvMapItem.setFieldDisplayText(field.displayText);
+    pvMapItem.setFieldIndex(field.index());
+    pvMapItem.setFieldName(field.name());
+    pvMapItem.setFieldDisplayText(field.displayText());
   }
+  lbDestinationFieldName->setText(pvMapItem.fieldName());
+  lbDestinationFieldIndex->setText(QString::number(pvMapItem.fieldIndex()));
 }
 
 void mdtFieldMapItemDialog::updateDestinationPreview() 

@@ -1,22 +1,14 @@
 window_sizes 1280 1001 384 890 923 0
 diagrams
-  classdiagram_ref 607618 // mdtDataTableModel
-    723 738 100 4 0 0
-  active  classdiagram_ref 894210 // mdtFieldMapDialog
-    890 923 100 4 48 0
+  active  classdiagram_ref 620674 // mdtFieldMap
+    890 923 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1702146 // setDestinationFields
+selected operation_ref 1709570 // sqlField
 open
   classview_ref 286978 // mdtDatabase
-  attribute_ref 941186 // DestinationFields
-  attribute_ref 941314 // pvLastError
-  operation_ref 1206658 // dataForSourceFieldDisplayText
-  operation_ref 1694210 // sourceFields
-  operation_ref 1702146 // setDestinationFields
-  operation_ref 1694338 // destinationFields
-  operation_ref 1693954 // generateMappingByNames
-  operation_ref 1694466 // lastError
   operation_ref 1695234 // setDestinationData
+  operation_ref 1708802 // setIndex
+  operation_ref 1709058 // setDisplayText
 end
 end

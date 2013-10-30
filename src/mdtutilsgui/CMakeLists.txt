@@ -92,6 +92,7 @@ set (SOURCES_FILES
           mdtDataTableManager.cpp
           mdtDataTableModel.cpp
           mdtFieldMap.cpp
+          mdtFieldMapField.cpp
           mdtFieldMapItem.cpp
           mdtFieldMapDialog.cpp
           mdtFieldMapItemDialog.cpp

@@ -98,9 +98,9 @@ const QList<mdtFieldMapField> mdtFieldMap::notMappedSourceFields(mdtFieldMap::Fi
     field = d->pvSourceFields.at(i);
     switch(reference){
       case ReferenceByIndex:
-        itemCount = itemsAtSourceFieldIndex(field.index).size();
+        itemCount = itemsAtSourceFieldIndex(field.index()).size();
       case ReferenceByName:
-        itemCount = itemsAtSourceFieldName(field.name).size();
+        itemCount = itemsAtSourceFieldName(field.name()).size();
     }
     // If found, add it to result
     if(itemCount == 0){
@@ -133,9 +133,9 @@ const QList<mdtFieldMapField> mdtFieldMap::notMappedDestinationFields(mdtFieldMa
     field = d->pvDestinationFields.at(i);
     switch(reference){
       case ReferenceByIndex:
-        item = itemAtFieldIndex(field.index);
+        item = itemAtFieldIndex(field.index());
       case ReferenceByName:
-        item = itemAtFieldName(field.name);
+        item = itemAtFieldName(field.name());
     }
     // If found, add it to result
     if(item == 0){

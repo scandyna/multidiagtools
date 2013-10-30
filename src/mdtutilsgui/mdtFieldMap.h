@@ -22,6 +22,7 @@
 #define MDT_FIELD_MAP_H
 
 #include "mdtFieldMapItem.h"
+#include "mdtFieldMapField.h"
 #include <QString>
 #include <QStringList>
 #include <QVariant>
@@ -33,21 +34,21 @@
 
 /*! \brief Basic container for fiel informations
  */
-struct mdtFieldMapField
-{
+///struct mdtFieldMapField
+///{
   /*! \brief Index of the field (typically column index of a table model)
    */
-  int index;
+///  int index;
 
   /*! \brief Name of the field
    */
-  QString name;
+///  QString name;
 
   /*! \brief Text to display (instead of name)
    */
-  QString displayText;
-};
-Q_DECLARE_METATYPE(mdtFieldMapField);
+///  QString displayText;
+///};
+///Q_DECLARE_METATYPE(mdtFieldMapField);
 
 /*
  * mdtFieldMapData definition
@@ -55,7 +56,7 @@ Q_DECLARE_METATYPE(mdtFieldMapField);
 class mdtFieldMapData : public QSharedData
 {
  public:
- 
+
   mdtFieldMapData();
   mdtFieldMapData(const mdtFieldMapData &other);
   ~mdtFieldMapData();

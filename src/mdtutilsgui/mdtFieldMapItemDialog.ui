@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>523</width>
-    <height>217</height>
+    <width>526</width>
+    <height>282</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,30 +17,94 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="lbSourceField">
-       <property name="text">
-        <string>Source field</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
+      <layout class="QFormLayout" name="formLayout_3">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lbSourceField">
+         <property name="text">
+          <string>Source field</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="cbSourceField"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lbSourceFieldNameLabel">
+         <property name="text">
+          <string>Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="lbSourceFieldName">
+         <property name="text">
+          <string>name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="lbSourceFieldIndexLabel">
+         <property name="text">
+          <string>Column index:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="lbSourceFieldIndex">
+         <property name="text">
+          <string>index</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
-      <widget class="QComboBox" name="cbSourceField"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="lbDestinationField">
-       <property name="text">
-        <string>Destination field</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cbDestinationField"/>
+      <layout class="QFormLayout" name="formLayout_4">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lbDestinationField">
+         <property name="text">
+          <string>Destination field</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="cbDestinationField"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lbDestinationFieldNameLabel">
+         <property name="text">
+          <string>Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="lbDestinationFieldName">
+         <property name="text">
+          <string>name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="lbDestinationFieldIndexLabel">
+         <property name="text">
+          <string>Column index:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="lbDestinationFieldIndex">
+         <property name="text">
+          <string>index</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -84,13 +148,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QSpinBox" name="sbSourceStartOffset">
-            <property name="maximum">
-             <number>99</number>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="lbSourceSize">
             <property name="text">
@@ -101,7 +158,21 @@
           <item row="1" column="1">
            <widget class="QSpinBox" name="sbSourceSize"/>
           </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="sbSourceStartOffset">
+            <property name="maximum">
+             <number>99</number>
+            </property>
+           </widget>
+          </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

@@ -63,34 +63,34 @@ void mdtDataTableTest::sandbox()
   mdtFieldMapItem mapItem;
 
   // Fill source fields
-  field.index = 0;
-  field.name = "SRC01";
-  field.displayText = "Source 1";
+  field.setIndex(0);
+  field.setName("SRC01");
+  field.setDisplayText("Source 1");
   sourceFields << field;
-  field.index = 1;
-  field.name = "SRC02";
-  field.displayText = "";
+  field.setIndex(1);
+  field.setName("SRC02");
+  field.setDisplayText("");
   sourceFields << field;
-  field.index = 2;
-  field.name = "SRC03";
-  field.displayText = "Source 3";
+  field.setIndex(2);
+  field.setName("SRC03");
+  field.setDisplayText("Source 3");
   sourceFields << field;
   // Fill destination fields
-  field.index = 0;
-  field.name = "DEST01";
-  field.displayText = "Destination 1";
+  field.setIndex(0);
+  field.setName("DEST01");
+  field.setDisplayText("Destination 1");
   destinationFields << field;
-  field.index = 1;
-  field.name = "DEST02";
-  field.displayText = "";
+  field.setIndex(1);
+  field.setName("DEST02");
+  field.setDisplayText("");
   destinationFields << field;
-  field.index = 2;
-  field.name = "DEST03";
-  field.displayText = "Destination 3";
+  field.setIndex(2);
+  field.setName("DEST03");
+  field.setDisplayText("Destination 3");
   destinationFields << field;
-  field.index = 3;
-  field.name = "DEST04";
-  field.displayText = "Destination 4";
+  field.setIndex(3);
+  field.setName("DEST04");
+  field.setDisplayText("Destination 4");
   destinationFields << field;
 
   fieldMap.setSourceFields(sourceFields);
@@ -827,21 +827,21 @@ void mdtDataTableTest::fieldMapCopyTest()
 
   // Fill source fields
   sourceFields.clear();
-  field.name = "SRC01";
+  field.setName("SRC01");
   sourceFields << field;
-  field.name = "SRC02";
+  field.setName("SRC02");
   sourceFields << field;
-  field.name = "SRC03";
+  field.setName("SRC03");
   sourceFields << field;
-  field.name = "SRC04";
+  field.setName("SRC04");
   sourceFields << field;
   // Fill destination fields
   destinationFields.clear();
-  field.name = "DEST01";
+  field.setName("DEST01");
   destinationFields << field;
-  field.name = "DEST02";
+  field.setName("DEST02");
   destinationFields << field;
-  field.name = "DEST03";
+  field.setName("DEST03");
   destinationFields << field;
 
   // Begin with at 0
@@ -917,36 +917,36 @@ void mdtDataTableTest::fieldMapFieldsMappedFilterTest()
 
   // Fill source fields
   sourceFields.clear();
-  field.name = "SRC01";
+  field.setName("SRC01");
   sourceFields << field;
-  field.name = "SRC02";
+  field.setName("SRC02");
   sourceFields << field;
-  field.name = "SRC03";
+  field.setName("SRC03");
   sourceFields << field;
-  field.name = "SRC04";
+  field.setName("SRC04");
   sourceFields << field;
   // Fill destination fields
   destinationFields.clear();
-  field.name = "DEST01";
+  field.setName("DEST01");
   destinationFields << field;
-  field.name = "DEST02";
+  field.setName("DEST02");
   destinationFields << field;
-  field.name = "DEST03";
+  field.setName("DEST03");
   destinationFields << field;
 
   // Initial check - source fields
   map.setSourceFields(sourceFields);
   QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).size(), 4);
-  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(0).name, QString("SRC01"));
-  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(1).name, QString("SRC02"));
-  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(2).name, QString("SRC03"));
-  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(3).name, QString("SRC04"));
+  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(0).name(), QString("SRC01"));
+  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(1).name(), QString("SRC02"));
+  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(2).name(), QString("SRC03"));
+  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(3).name(), QString("SRC04"));
   // Initial check - destination fields
   map.setDestinationFields(destinationFields);
   QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).size(), 3);
-  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(0).name, QString("DEST01"));
-  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(1).name, QString("DEST02"));
-  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(2).name, QString("DEST03"));
+  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(0).name(), QString("DEST01"));
+  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(1).name(), QString("DEST02"));
+  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(2).name(), QString("DEST03"));
 
   // Create a map and check
   item = new mdtFieldMapItem;
@@ -954,12 +954,12 @@ void mdtDataTableTest::fieldMapFieldsMappedFilterTest()
   item->setFieldName("DEST01");
   map.addItem(item);
   QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).size(), 3);
-  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(0).name, QString("SRC02"));
-  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(1).name, QString("SRC03"));
-  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(2).name, QString("SRC04"));
+  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(0).name(), QString("SRC02"));
+  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(1).name(), QString("SRC03"));
+  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(2).name(), QString("SRC04"));
   QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).size(), 2);
-  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(0).name, QString("DEST02"));
-  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(1).name, QString("DEST03"));
+  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(0).name(), QString("DEST02"));
+  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(1).name(), QString("DEST03"));
 
 }
 
