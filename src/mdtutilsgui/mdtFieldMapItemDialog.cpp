@@ -96,23 +96,7 @@ void mdtFieldMapItemDialog::setSourceData(const QString & data)
 
 void mdtFieldMapItemDialog::setMapItem(const mdtFieldMapItem & item) 
 {
-  ///Q_ASSERT(item != 0);
-
   pvMapItem = item;
-  /**
-  pvTargetMapItem = item;
-  pvMapItem = pvTargetMapItem;
-  */
-  /**
-  pvMapItem.setFieldIndex(item->fieldIndex());
-  pvMapItem.setFieldName(item->fieldName());
-  pvMapItem.setFieldDisplayText(item->fieldDisplayText());
-  pvMapItem.setSourceFieldIndex(item->sourceFieldIndex());
-  pvMapItem.setSourceFieldName(item->sourceFieldName());
-  pvMapItem.setSourceFieldDataStartOffset(item->sourceFieldDataStartOffset());
-  pvMapItem.setSourceFieldDataEndOffset(item->sourceFieldDataEndOffset());
-  pvMapItem.setDataType(item->dataType());
-  */
 }
 
 mdtFieldMapItem mdtFieldMapItemDialog::mapItem() const
@@ -122,19 +106,6 @@ mdtFieldMapItem mdtFieldMapItemDialog::mapItem() const
 
 void mdtFieldMapItemDialog::accept()
 {
-  /**
-  if(pvTargetMapItem != 0){
-    pvTargetMapItem->setFieldIndex(pvMapItem.fieldIndex());
-    pvTargetMapItem->setFieldName(pvMapItem.fieldName());
-    pvTargetMapItem->setFieldDisplayText(pvMapItem.fieldDisplayText());
-    pvTargetMapItem->setSourceFieldIndex(pvMapItem.sourceFieldIndex());
-    pvTargetMapItem->setSourceFieldName(pvMapItem.sourceFieldName());
-    pvTargetMapItem->setSourceFieldDataStartOffset(pvMapItem.sourceFieldDataStartOffset());
-    pvTargetMapItem->setSourceFieldDataEndOffset(pvMapItem.sourceFieldDataEndOffset());
-    pvTargetMapItem->setDataType(pvMapItem.dataType());
-  }
-  */
-  ///pvTargetMapItem = pvMapItem;
   QDialog::accept();
 }
 
@@ -145,10 +116,12 @@ void mdtFieldMapItemDialog::setSourceField(int cbIndex)
   if(cbIndex < 0){
     pvMapItem.setSourceFieldIndex(-1);
     pvMapItem.setSourceFieldName("");
+    pvMapItem.setSourceFieldDisplayText("");
   }else{
     field = cbSourceField->itemData(cbIndex).value<mdtFieldMapField>();
     pvMapItem.setSourceFieldIndex(field.index());
     pvMapItem.setSourceFieldName(field.name());
+    pvMapItem.setSourceFieldDisplayText(field.displayText());
   }
   lbSourceFieldName->setText(pvMapItem.sourceFieldName());
   lbSourceFieldIndex->setText(QString::number(pvMapItem.sourceFieldIndex()));
@@ -159,17 +132,17 @@ void mdtFieldMapItemDialog::setDestinationField(int cbIndex)
   mdtFieldMapField field;
 
   if(cbIndex < 0){
-    pvMapItem.setFieldIndex(-1);
-    pvMapItem.setFieldName("");
-    pvMapItem.setFieldDisplayText("");
+    pvMapItem.setDestinationFieldIndex(-1);
+    pvMapItem.setDestinationFieldName("");
+    pvMapItem.setDestinationFieldDisplayText("");
   }else{
     field = cbDestinationField->itemData(cbIndex).value<mdtFieldMapField>();
-    pvMapItem.setFieldIndex(field.index());
-    pvMapItem.setFieldName(field.name());
-    pvMapItem.setFieldDisplayText(field.displayText());
+    pvMapItem.setDestinationFieldIndex(field.index());
+    pvMapItem.setDestinationFieldName(field.name());
+    pvMapItem.setDestinationFieldDisplayText(field.displayText());
   }
-  lbDestinationFieldName->setText(pvMapItem.fieldName());
-  lbDestinationFieldIndex->setText(QString::number(pvMapItem.fieldIndex()));
+  lbDestinationFieldName->setText(pvMapItem.destinationFieldName());
+  lbDestinationFieldIndex->setText(QString::number(pvMapItem.destinationFieldIndex()));
 }
 
 void mdtFieldMapItemDialog::updateDestinationPreview() 

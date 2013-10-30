@@ -4,11 +4,9 @@ diagrams
     890 923 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1709570 // sqlField
 open
   classview_ref 286978 // mdtDatabase
+  class_ref 625154 // mdtFieldMapItem
   operation_ref 1695234 // setDestinationData
-  operation_ref 1708802 // setIndex
-  operation_ref 1709058 // setDisplayText
 end
 end

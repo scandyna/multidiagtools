@@ -283,9 +283,9 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
     // Primary key is not in CSV file, generate a field and add to PK constraint list
     // Add primary key to field map
     mapItem = new mdtFieldMapItem;
-    mapItem->setFieldIndex(0);
-    mapItem->setFieldName("id_PK");
-    mapItem->setFieldDisplayText("id_PK");
+    mapItem->setDestinationFieldIndex(0);
+    mapItem->setDestinationFieldName("id_PK");
+    mapItem->setDestinationFieldDisplayText("id_PK");
     mapItem->setDataType(QVariant::Int);
     pvFieldMap.addItem(mapItem);
     // Create primary key field
@@ -309,8 +309,8 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
       if(mapItems.isEmpty()){
         // No mapping for this header item, generate one
         mapItem = new mdtFieldMapItem;
-        mapItem->setFieldName(getFieldName(header.at(csvFieldIndex)));
-        mapItem->setFieldDisplayText(header.at(csvFieldIndex));
+        mapItem->setDestinationFieldName(getFieldName(header.at(csvFieldIndex)));
+        mapItem->setDestinationFieldDisplayText(header.at(csvFieldIndex));
         mapItem->setSourceFieldName(header.at(csvFieldIndex));
         mapItem->setDataType(QVariant::String);
         pvFieldMap.addItem(mapItem);
@@ -322,9 +322,9 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
         mapItem = mapItems.at(i);
         Q_ASSERT(mapItem != 0);
         mapItem->setSourceFieldIndex(csvFieldIndex);
-        mapItem->setFieldIndex(modelFieldIndex);
+        mapItem->setDestinationFieldIndex(modelFieldIndex);
         field = QSqlField();
-        field.setName(mapItem->fieldName());
+        field.setName(mapItem->destinationFieldName());
         field.setType(mapItem->dataType());
         if(pkFields.contains(field.name())){
           table.addField(field, true);
@@ -443,8 +443,8 @@ void mdtDataTableManager::addFieldMapping(const QString &csvHeaderItem, const QS
     return;
   }
   item->setSourceFieldName(csvHeaderItem);
-  item->setFieldName(fieldName);
-  item->setFieldDisplayText(displayText);
+  item->setDestinationFieldName(fieldName);
+  item->setDestinationFieldDisplayText(displayText);
   item->setDataType(dataType);
   item->setSourceFieldDataStartOffset(csvDataItemStartOffset);
   item->setSourceFieldDataEndOffset(csvDataItemEndOffset);
@@ -490,7 +490,7 @@ void mdtDataTableManager::setDisplayTextsToModelHeader()
   for(i=0; i<pvModel->columnCount(); i++){
     mapItem = pvFieldMap.itemAtFieldIndex(i);
     if(mapItem != 0){
-      pvModel->setHeaderData(i, Qt::Horizontal, mapItem->fieldDisplayText());
+      pvModel->setHeaderData(i, Qt::Horizontal, mapItem->destinationFieldDisplayText());
     }
   }
 }

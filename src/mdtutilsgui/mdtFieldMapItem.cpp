@@ -19,70 +19,88 @@
  **
  ****************************************************************************/
 #include "mdtFieldMapItem.h"
+#include <QSqlField>
 
 //#include <QDebug>
 
 mdtFieldMapItem::mdtFieldMapItem()
 {
-  pvFieldIndex = -1;
-  pvSourceFieldIndex = -1;
   pvSourceFieldDataStartOffset = -1;
   pvSourceFieldDataEndOffset = -1;
-  pvDataType = QVariant::Invalid;
 }
 
 mdtFieldMapItem::~mdtFieldMapItem()
 {
 }
 
-void mdtFieldMapItem::setFieldIndex(int value)
+void mdtFieldMapItem::setDestinationFieldIndex(int value)
 {
-  pvFieldIndex = value;
+  pvDestinationField.setIndex(value);
 }
 
-int mdtFieldMapItem::fieldIndex() const
+int mdtFieldMapItem::destinationFieldIndex() const
 {
-  return pvFieldIndex;
+  return pvDestinationField.index();
 }
 
-void mdtFieldMapItem::setFieldName(const QString &value)
+void mdtFieldMapItem::setDestinationField(const mdtFieldMapField &field)
 {
-  pvFieldName = value;
+  pvDestinationField = field;
 }
 
-QString mdtFieldMapItem::fieldName() const
+void mdtFieldMapItem::setDestinationFieldName(const QString &value)
 {
-  return pvFieldName;
+  pvDestinationField.setName(value);
 }
 
-void mdtFieldMapItem::setFieldDisplayText(const QString &value)
+QString mdtFieldMapItem::destinationFieldName() const
 {
-  pvFieldDisplayText = value;
+  return pvDestinationField.name();
 }
 
-QString mdtFieldMapItem::fieldDisplayText() const
+void mdtFieldMapItem::setDestinationFieldDisplayText(const QString &value)
 {
-  return pvFieldDisplayText;
+  pvDestinationField.setDisplayText(value);
+}
+
+QString mdtFieldMapItem::destinationFieldDisplayText() const
+{
+  return pvDestinationField.displayText();
 }
 
 void mdtFieldMapItem::setSourceFieldIndex(int value)
 {
-  pvSourceFieldIndex = value;
+  pvSourceField.setIndex(value);
 }
 
 int mdtFieldMapItem::sourceFieldIndex() const
 {
-  return pvSourceFieldIndex;
+  return pvSourceField.index();
+}
+
+void mdtFieldMapItem::setSourceField(const mdtFieldMapField &field)
+{
+  pvSourceField = field;
 }
 
 void mdtFieldMapItem::setSourceFieldName(const QString &value)
 {
-  pvSourceFieldName = value;
+  pvSourceField.setName(value);
 }
 
 QString mdtFieldMapItem::sourceFieldName() const
 {
-  return pvSourceFieldName;
+  return pvSourceField.name();
+}
+
+void mdtFieldMapItem::setSourceFieldDisplayText(const QString &text)
+{
+  pvSourceField.setDisplayText(text);
+}
+
+QString mdtFieldMapItem::sourceFieldDisplayText() const
+{
+  return pvSourceField.displayText();
 }
 
 void mdtFieldMapItem::setSourceFieldDataStartOffset(int offset)
@@ -107,55 +125,24 @@ int mdtFieldMapItem::sourceFieldDataEndOffset() const
 
 void mdtFieldMapItem::setDataType(QVariant::Type type)
 {
-  pvDataType = type;
+  pvDestinationField.sqlField().setType(type);
 }
 
 QVariant::Type mdtFieldMapItem::dataType() const
 {
-  return pvDataType;
+  return pvDestinationField.sqlField().type();
 }
 
 QVariant mdtFieldMapItem::destinationData(const QStringList &sourceRow) const
 {
-  ///QString src;
-  ///QVariant data;
-
-  if(pvSourceFieldIndex < 0){
+  if(pvSourceField.index() < 0){
     return QVariant();
   }
-  if(pvSourceFieldIndex >= sourceRow.size()){
+  if(pvSourceField.index() >= sourceRow.size()){
     return QVariant();
   }
 
-  return destinationData(sourceRow.at(pvSourceFieldIndex));
-
-  /**
-  if((pvSourceFieldDataStartOffset < 0)&&(pvSourceFieldDataEndOffset < 0)){
-    src = sourceRow.at(pvSourceFieldIndex);
-    data = src;
-    data.convert(pvDataType);
-    return data;
-  }
-  if(pvSourceFieldDataStartOffset < 0){
-    src = sourceRow.at(pvSourceFieldIndex).left(pvSourceFieldDataEndOffset + 1);
-    data = src;
-    data.convert(pvDataType);
-    return data;
-  }
-  if(pvSourceFieldDataEndOffset < 0){
-    src = sourceRow.at(pvSourceFieldIndex);
-    src = src.right(src.size() - pvSourceFieldDataStartOffset);
-    data = src;
-    data.convert(pvDataType);
-    return data;
-  }
-  src = sourceRow.at(pvSourceFieldIndex);
-  src = src.mid(pvSourceFieldDataStartOffset, pvSourceFieldDataEndOffset - pvSourceFieldDataStartOffset + 1);
-  data = src;
-  data.convert(pvDataType);
-
-  return data;
-  */
+  return destinationData(sourceRow.at(pvSourceField.index()));
 }
 
 QVariant mdtFieldMapItem::destinationData(const QString &sourceData) const
@@ -164,21 +151,21 @@ QVariant mdtFieldMapItem::destinationData(const QString &sourceData) const
 
   if((pvSourceFieldDataStartOffset < 0)&&(pvSourceFieldDataEndOffset < 0)){
     data = sourceData;
-    data.convert(pvDataType);
+    data.convert(pvDestinationField.sqlField().type());
     return data;
   }
   if(pvSourceFieldDataStartOffset < 0){
     data = sourceData.left(pvSourceFieldDataEndOffset + 1);
-    data.convert(pvDataType);
+    data.convert(pvDestinationField.sqlField().type());
     return data;
   }
   if(pvSourceFieldDataEndOffset < 0){
     data = sourceData.mid(pvSourceFieldDataStartOffset, -1);
-    data.convert(pvDataType);
+    data.convert(pvDestinationField.sqlField().type());
     return data;
   }
   data = sourceData.mid(pvSourceFieldDataStartOffset, pvSourceFieldDataEndOffset - pvSourceFieldDataStartOffset + 1);
-  data.convert(pvDataType);
+  data.convert(pvDestinationField.sqlField().type());
 
   return data;
 }

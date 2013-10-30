@@ -69,6 +69,10 @@ class mdtFieldMapField
    */
   QSqlField sqlField() const;
 
+  /*! \brief Get SQL field object for update
+   */
+  QSqlField &sqlField();
+
  private:
 
   QSqlField pvSqlField;

@@ -21,6 +21,7 @@
 #ifndef MDT_FIELD_MAP_ITEM_H
 #define MDT_FIELD_MAP_ITEM_H
 
+#include "mdtFieldMapField.h"
 #include <QString>
 #include <QStringList>
 #include <QVariant>
@@ -47,29 +48,33 @@ class mdtFieldMapItem
 
   ~mdtFieldMapItem();
 
-  /*! \brief Set field index
+  /*! \brief Set destination field index
    */
-  void setFieldIndex(int value);
+  void setDestinationFieldIndex(int value);
 
-  /*! \brief Get field index
+  /*! \brief Get destination field index
    */
-  int fieldIndex() const;
+  int destinationFieldIndex() const;
 
-  /*! \brief Set field name
+  /*! \brief Set destination field
    */
-  void setFieldName(const QString &value);
+  void setDestinationField(const mdtFieldMapField &field);
 
-  /*! \brief Get field name
+  /*! \brief Set destination field name
    */
-  QString fieldName() const;
+  void setDestinationFieldName(const QString &value);
 
-  /*! \brief Set field display text
+  /*! \brief Get destination field name
    */
-  void setFieldDisplayText(const QString &value);
+  QString destinationFieldName() const;
 
-  /*! \brief Get field display text
+  /*! \brief Set destination field display text
    */
-  QString fieldDisplayText() const;
+  void setDestinationFieldDisplayText(const QString &value);
+
+  /*! \brief Get destination field display text
+   */
+  QString destinationFieldDisplayText() const;
 
   /*! \brief Set source field index
    */
@@ -79,6 +84,10 @@ class mdtFieldMapItem
    */
   int sourceFieldIndex() const;
 
+  /*! \brief Set source field
+   */
+  void setSourceField(const mdtFieldMapField &field);
+
   /*! \brief Set source field name
    */
   void setSourceFieldName(const QString &value);
@@ -86,6 +95,14 @@ class mdtFieldMapItem
   /*! \brief Get source field name
    */
   QString sourceFieldName() const;
+
+  /*! \brief Set source field display text
+   */
+  void setSourceFieldDisplayText(const QString &text);
+
+  /*! \brief Get source field display text
+   */
+  QString sourceFieldDisplayText() const;
 
   /*! \brief Set source data start offset
    *
@@ -134,14 +151,10 @@ class mdtFieldMapItem
 
  private:
 
-  int pvFieldIndex;
-  QString pvFieldName;
-  QString pvFieldDisplayText;
-  int pvSourceFieldIndex;
-  QString pvSourceFieldName;
+  mdtFieldMapField pvSourceField;
+  mdtFieldMapField pvDestinationField;
   int pvSourceFieldDataStartOffset;
   int pvSourceFieldDataEndOffset;
-  QVariant::Type pvDataType;
 };
 
 #endif  // #ifndef MDT_FIELD_MAP_ITEM_H

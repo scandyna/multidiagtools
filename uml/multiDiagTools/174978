@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 56
+  revision 57
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -7000,6 +7000,15 @@ ${inlines}
 	
 	idl_name_spec "get_${name}"
 	get_of_attribute attribute_ref 700930 // pvDataType
+      end
+
+      classrelation 1171202 // <directional composition>
+	relation 1159810 *-->
+	  a role_name "" multiplicity "2" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
+"
+	    classrelation_ref 1171202 // <directional composition>
+	  b parent class_ref 937218 // mdtFieldMapField
       end
     end
 

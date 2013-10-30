@@ -32,24 +32,6 @@
 #include <QSharedDataPointer>
 #include <QSharedData>
 
-/*! \brief Basic container for fiel informations
- */
-///struct mdtFieldMapField
-///{
-  /*! \brief Index of the field (typically column index of a table model)
-   */
-///  int index;
-
-  /*! \brief Name of the field
-   */
-///  QString name;
-
-  /*! \brief Text to display (instead of name)
-   */
-///  QString displayText;
-///};
-///Q_DECLARE_METATYPE(mdtFieldMapField);
-
 /*
  * mdtFieldMapData definition
  */
@@ -125,6 +107,14 @@ class mdtFieldMap
    */
   const QList<mdtFieldMapField> notMappedSourceFields(FieldReference_t reference) const;
 
+  /*! \brief Get the header of source fields
+   *
+   * The returned list is sorted by column indexes .
+   *  For fields that not have a display text set,
+   *   the field name is put into header .
+   */
+  const QStringList sourceHeader() const;
+
   /*! \brief Set the list of destination fields
    *
    * This can be used if destination fields is allready known .
@@ -141,14 +131,35 @@ class mdtFieldMap
    */
   const QList<mdtFieldMapField> notMappedDestinationFields(FieldReference_t reference) const;
 
+  /*! \brief Get the header of destination fields
+   *
+   * The returned list is sorted by column indexes .
+   *  For fields that not have a display text set,
+   *   the field name is put into header .
+   */
+  const QStringList destinationHeader() const;
+
   /*! \brief Add a item
    *
    * A item contains map informations
    *
    * \pre Item must be a valid pointer
+   *
    * \sa mdtFieldMapItem
    */
   void addItem(mdtFieldMapItem *item);
+
+  /*! \brief Remove item with given source field index
+   *
+   * If item was not found, nothing happens .
+   */
+  void removeItemAtSourceFieldIndex(int index);
+
+  /*! \brief Remove item with given destination field index
+   *
+   * If item was not found, nothing happens .
+   */
+  void removeItemAtDestinationFieldIndex(int index);
 
   /*! \brief Get a list of all items
    */

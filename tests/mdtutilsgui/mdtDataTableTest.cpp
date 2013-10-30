@@ -111,7 +111,7 @@ void mdtDataTableTest::sandbox()
   qDebug() << "-> source field data end   offset : " << mapItem.sourceFieldDataEndOffset();
   qDebug() << "-> destination field index : " << mapItem.fieldIndex();
   qDebug() << "-> destination field name : " << mapItem.fieldName();
-  qDebug() << "-> destination field D. text : " << mapItem.fieldDisplayText();
+  qDebug() << "-> destination field D. text : " << mapItem.destinationFieldDisplayText();
 
   mapItem = dialog.mapItem();
   qDebug() << "mapItem (B):";
@@ -121,7 +121,7 @@ void mdtDataTableTest::sandbox()
   qDebug() << "-> source field data end   offset : " << mapItem.sourceFieldDataEndOffset();
   qDebug() << "-> destination field index : " << mapItem.fieldIndex();
   qDebug() << "-> destination field name : " << mapItem.fieldName();
-  qDebug() << "-> destination field D. text : " << mapItem.fieldDisplayText();
+  qDebug() << "-> destination field D. text : " << mapItem.destinationFieldDisplayText();
   */
 
   QSKIP("Just a sanbox test", SkipAll);
@@ -610,22 +610,22 @@ void mdtDataTableTest::editDataTest()
   // Add a rows with valid data - method A4 - PK is not given in rows
   fieldMap.clear();
   mapItem = new mdtFieldMapItem;
-  mapItem->setFieldIndex(0);
-  mapItem->setFieldName("id_PK");
+  mapItem->setDestinationFieldIndex(0);
+  mapItem->setDestinationFieldName("id_PK");
   mapItem->setSourceFieldIndex(-1);
   mapItem->setSourceFieldName("id_PK");
   mapItem->setDataType(QVariant::Int);
   fieldMap.addItem(mapItem);
   mapItem = new mdtFieldMapItem;
-  mapItem->setFieldIndex(1);
-  mapItem->setFieldName("signal");
+  mapItem->setDestinationFieldIndex(1);
+  mapItem->setDestinationFieldName("signal");
   mapItem->setSourceFieldIndex(0);
   mapItem->setSourceFieldName("signal");
   mapItem->setDataType(QVariant::String);
   fieldMap.addItem(mapItem);
   mapItem = new mdtFieldMapItem;
-  mapItem->setFieldIndex(2);
-  mapItem->setFieldName("value");
+  mapItem->setDestinationFieldIndex(2);
+  mapItem->setDestinationFieldName("value");
   mapItem->setSourceFieldIndex(1);
   mapItem->setSourceFieldName("value");
   mapItem->setDataType(QVariant::Double);
@@ -660,34 +660,34 @@ void mdtDataTableTest::fieldMapItemCopyTest()
   QList<mdtFieldMapField> sourceFields, destinationFields;
 
   // Setup item1 and check
-  item1.setFieldIndex(1);
-  item1.setFieldName("DEST1");
-  item1.setFieldDisplayText("Destination 1");
+  item1.setDestinationFieldIndex(1);
+  item1.setDestinationFieldName("DEST1");
+  item1.setDestinationFieldDisplayText("Destination 1");
   item1.setSourceFieldIndex(11);
   item1.setSourceFieldName("SRC1");
   item1.setSourceFieldDataStartOffset(10);
   item1.setSourceFieldDataEndOffset(15);
   item1.setDataType(QVariant::Int);
-  QCOMPARE(item1.fieldIndex(), 1);
-  QCOMPARE(item1.fieldName(), QString("DEST1"));
-  QCOMPARE(item1.fieldDisplayText(), QString("Destination 1"));
+  QCOMPARE(item1.destinationFieldIndex(), 1);
+  QCOMPARE(item1.destinationFieldName(), QString("DEST1"));
+  QCOMPARE(item1.destinationFieldDisplayText(), QString("Destination 1"));
   QCOMPARE(item1.sourceFieldIndex(), 11);
   QCOMPARE(item1.sourceFieldName(), QString("SRC1"));
   QCOMPARE(item1.sourceFieldDataStartOffset(), 10);
   QCOMPARE(item1.sourceFieldDataEndOffset(), 15);
   QCOMPARE(item1.dataType(), QVariant::Int);
   // Setup item2 and check
-  item2.setFieldIndex(2);
-  item2.setFieldName("DEST2");
-  item2.setFieldDisplayText("Destination 2");
+  item2.setDestinationFieldIndex(2);
+  item2.setDestinationFieldName("DEST2");
+  item2.setDestinationFieldDisplayText("Destination 2");
   item2.setSourceFieldIndex(12);
   item2.setSourceFieldName("SRC2");
   item2.setSourceFieldDataStartOffset(20);
   item2.setSourceFieldDataEndOffset(25);
   item2.setDataType(QVariant::Int);
-  QCOMPARE(item2.fieldIndex(), 2);
-  QCOMPARE(item2.fieldName(), QString("DEST2"));
-  QCOMPARE(item2.fieldDisplayText(), QString("Destination 2"));
+  QCOMPARE(item2.destinationFieldIndex(), 2);
+  QCOMPARE(item2.destinationFieldName(), QString("DEST2"));
+  QCOMPARE(item2.destinationFieldDisplayText(), QString("Destination 2"));
   QCOMPARE(item2.sourceFieldIndex(), 12);
   QCOMPARE(item2.sourceFieldName(), QString("SRC2"));
   QCOMPARE(item2.sourceFieldDataStartOffset(), 20);
@@ -695,34 +695,34 @@ void mdtDataTableTest::fieldMapItemCopyTest()
   QCOMPARE(item2.dataType(), QVariant::Int);
   // Copy item1 -> item2 and check item2
   item2 = item1;
-  QCOMPARE(item2.fieldIndex(), 1);
-  QCOMPARE(item2.fieldName(), QString("DEST1"));
-  QCOMPARE(item2.fieldDisplayText(), QString("Destination 1"));
+  QCOMPARE(item2.destinationFieldIndex(), 1);
+  QCOMPARE(item2.destinationFieldName(), QString("DEST1"));
+  QCOMPARE(item2.destinationFieldDisplayText(), QString("Destination 1"));
   QCOMPARE(item2.sourceFieldIndex(), 11);
   QCOMPARE(item2.sourceFieldName(), QString("SRC1"));
   QCOMPARE(item2.sourceFieldDataStartOffset(), 10);
   QCOMPARE(item2.sourceFieldDataEndOffset(), 15);
   QCOMPARE(item2.dataType(), QVariant::Int);
   // Modify item1 and check that item2 contains they own data
-  item1.setFieldIndex(3);
-  item1.setFieldName("DEST3");
-  item1.setFieldDisplayText("Destination 3");
+  item1.setDestinationFieldIndex(3);
+  item1.setDestinationFieldName("DEST3");
+  item1.setDestinationFieldDisplayText("Destination 3");
   item1.setSourceFieldIndex(13);
   item1.setSourceFieldName("SRC3");
   item1.setSourceFieldDataStartOffset(30);
   item1.setSourceFieldDataEndOffset(35);
   item1.setDataType(QVariant::Int);
-  QCOMPARE(item1.fieldIndex(), 3);
-  QCOMPARE(item1.fieldName(), QString("DEST3"));
-  QCOMPARE(item1.fieldDisplayText(), QString("Destination 3"));
+  QCOMPARE(item1.destinationFieldIndex(), 3);
+  QCOMPARE(item1.destinationFieldName(), QString("DEST3"));
+  QCOMPARE(item1.destinationFieldDisplayText(), QString("Destination 3"));
   QCOMPARE(item1.sourceFieldIndex(), 13);
   QCOMPARE(item1.sourceFieldName(), QString("SRC3"));
   QCOMPARE(item1.sourceFieldDataStartOffset(), 30);
   QCOMPARE(item1.sourceFieldDataEndOffset(), 35);
   QCOMPARE(item1.dataType(), QVariant::Int);
-  QCOMPARE(item2.fieldIndex(), 1);
-  QCOMPARE(item2.fieldName(), QString("DEST1"));
-  QCOMPARE(item2.fieldDisplayText(), QString("Destination 1"));
+  QCOMPARE(item2.destinationFieldIndex(), 1);
+  QCOMPARE(item2.destinationFieldName(), QString("DEST1"));
+  QCOMPARE(item2.destinationFieldDisplayText(), QString("Destination 1"));
   QCOMPARE(item2.sourceFieldIndex(), 11);
   QCOMPARE(item2.sourceFieldName(), QString("SRC1"));
   QCOMPARE(item2.sourceFieldDataStartOffset(), 10);
@@ -743,9 +743,9 @@ void mdtDataTableTest::fieldMapCopyTest()
 
   // Setup map1 and check
   item = new mdtFieldMapItem;
-  item->setFieldIndex(11);
-  item->setFieldName("DEST11");
-  item->setFieldDisplayText("Destination 11");
+  item->setDestinationFieldIndex(11);
+  item->setDestinationFieldName("DEST11");
+  item->setDestinationFieldDisplayText("Destination 11");
   item->setSourceFieldIndex(111);
   item->setSourceFieldName("SRC11");
   item->setDataType(QVariant::String);
@@ -753,17 +753,17 @@ void mdtDataTableTest::fieldMapCopyTest()
   item = 0;
   item = map1.itemAtFieldIndex(11);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 11);
-  QCOMPARE(item->fieldName(), QString("DEST11"));
-  QCOMPARE(item->fieldDisplayText(), QString("Destination 11"));
+  QCOMPARE(item->destinationFieldIndex(), 11);
+  QCOMPARE(item->destinationFieldName(), QString("DEST11"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Destination 11"));
   QCOMPARE(item->sourceFieldIndex(), 111);
   QCOMPARE(item->sourceFieldName(), QString("SRC11"));
   QCOMPARE(item->dataType(), QVariant::String);
   // Setup map2 and check
   item = new mdtFieldMapItem;
-  item->setFieldIndex(21);
-  item->setFieldName("DEST21");
-  item->setFieldDisplayText("Destination 21");
+  item->setDestinationFieldIndex(21);
+  item->setDestinationFieldName("DEST21");
+  item->setDestinationFieldDisplayText("Destination 21");
   item->setSourceFieldIndex(211);
   item->setSourceFieldName("SRC21");
   item->setDataType(QVariant::String);
@@ -771,9 +771,9 @@ void mdtDataTableTest::fieldMapCopyTest()
   item = 0;
   item = map2.itemAtFieldIndex(21);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 21);
-  QCOMPARE(item->fieldName(), QString("DEST21"));
-  QCOMPARE(item->fieldDisplayText(), QString("Destination 21"));
+  QCOMPARE(item->destinationFieldIndex(), 21);
+  QCOMPARE(item->destinationFieldName(), QString("DEST21"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Destination 21"));
   QCOMPARE(item->sourceFieldIndex(), 211);
   QCOMPARE(item->sourceFieldName(), QString("SRC21"));
   QCOMPARE(item->dataType(), QVariant::String);
@@ -784,18 +784,18 @@ void mdtDataTableTest::fieldMapCopyTest()
   QVERIFY(item == 0);
   item = map2.itemAtFieldIndex(11);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 11);
-  QCOMPARE(item->fieldName(), QString("DEST11"));
-  QCOMPARE(item->fieldDisplayText(), QString("Destination 11"));
+  QCOMPARE(item->destinationFieldIndex(), 11);
+  QCOMPARE(item->destinationFieldName(), QString("DEST11"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Destination 11"));
   QCOMPARE(item->sourceFieldIndex(), 111);
   QCOMPARE(item->sourceFieldName(), QString("SRC11"));
   QCOMPARE(item->dataType(), QVariant::String);
   // Modify map1 and check that map2 is keeped untouched
   map1.clear();
   item = new mdtFieldMapItem;
-  item->setFieldIndex(13);
-  item->setFieldName("DEST13");
-  item->setFieldDisplayText("Destination 13");
+  item->setDestinationFieldIndex(13);
+  item->setDestinationFieldName("DEST13");
+  item->setDestinationFieldDisplayText("Destination 13");
   item->setSourceFieldIndex(113);
   item->setSourceFieldName("SRC13");
   item->setDataType(QVariant::String);
@@ -805,18 +805,18 @@ void mdtDataTableTest::fieldMapCopyTest()
   QVERIFY(item == 0);
   item = map1.itemAtFieldIndex(13);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 13);
-  QCOMPARE(item->fieldName(), QString("DEST13"));
-  QCOMPARE(item->fieldDisplayText(), QString("Destination 13"));
+  QCOMPARE(item->destinationFieldIndex(), 13);
+  QCOMPARE(item->destinationFieldName(), QString("DEST13"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Destination 13"));
   QCOMPARE(item->sourceFieldIndex(), 113);
   QCOMPARE(item->sourceFieldName(), QString("SRC13"));
   QCOMPARE(item->dataType(), QVariant::String);
   // Check that map2 is intact
   item = map2.itemAtFieldIndex(11);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 11);
-  QCOMPARE(item->fieldName(), QString("DEST11"));
-  QCOMPARE(item->fieldDisplayText(), QString("Destination 11"));
+  QCOMPARE(item->destinationFieldIndex(), 11);
+  QCOMPARE(item->destinationFieldName(), QString("DEST11"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Destination 11"));
   QCOMPARE(item->sourceFieldIndex(), 111);
   QCOMPARE(item->sourceFieldName(), QString("SRC11"));
   QCOMPARE(item->dataType(), QVariant::String);
@@ -851,12 +851,12 @@ void mdtDataTableTest::fieldMapCopyTest()
   QCOMPARE(map2.items().size(), 0);
   // Put data into map1
   item = new mdtFieldMapItem;
-  item->setFieldIndex(10);
+  item->setDestinationFieldIndex(10);
   map1.addItem(item);
   QCOMPARE(map1.items().size(), 1);
   item = map1.itemAtFieldIndex(10);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 10);
+  QCOMPARE(item->destinationFieldIndex(), 10);
   QCOMPARE(map1.sourceFields().size(), 0);
   QCOMPARE(map1.destinationFields().size(), 0);
   // Put data into map2
@@ -865,45 +865,45 @@ void mdtDataTableTest::fieldMapCopyTest()
   QCOMPARE(map2.sourceFields().size(), sourceFields.size());
   QCOMPARE(map2.destinationFields().size(), destinationFields.size());
   item = new mdtFieldMapItem;
-  item->setFieldIndex(20);
+  item->setDestinationFieldIndex(20);
   map2.addItem(item);
   QCOMPARE(map2.items().size(), 1);
   item = map2.itemAtFieldIndex(20);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 20);
+  QCOMPARE(item->destinationFieldIndex(), 20);
   // Copy map2 to map1 and check
   map1 = map2;
   QCOMPARE(map1.items().size(), 1);
   QCOMPARE(map2.items().size(), 1);
   item = map1.itemAtFieldIndex(20);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 20);
+  QCOMPARE(item->destinationFieldIndex(), 20);
   QCOMPARE(map1.sourceFields().size(), sourceFields.size());
   QCOMPARE(map1.destinationFields().size(), destinationFields.size());
   item = map2.itemAtFieldIndex(20);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 20);
+  QCOMPARE(item->destinationFieldIndex(), 20);
   QCOMPARE(map2.sourceFields().size(), sourceFields.size());
   QCOMPARE(map2.destinationFields().size(), destinationFields.size());
   // Modify map1
   item = new mdtFieldMapItem;
-  item->setFieldIndex(11);
+  item->setDestinationFieldIndex(11);
   map1.addItem(item);
   // Check map1
   QCOMPARE(map1.items().size(), 2);
   item = map1.itemAtFieldIndex(20);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 20);
+  QCOMPARE(item->destinationFieldIndex(), 20);
   item = map1.itemAtFieldIndex(11);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 11);
+  QCOMPARE(item->destinationFieldIndex(), 11);
   QCOMPARE(map1.sourceFields().size(), sourceFields.size());
   QCOMPARE(map1.destinationFields().size(), destinationFields.size());
   // Check map2 - must be untouched
   QCOMPARE(map2.items().size(), 1);
   item = map2.itemAtFieldIndex(20);
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 20);
+  QCOMPARE(item->destinationFieldIndex(), 20);
   QCOMPARE(map2.sourceFields().size(), sourceFields.size());
   QCOMPARE(map2.destinationFields().size(), destinationFields.size());
 }
@@ -951,7 +951,7 @@ void mdtDataTableTest::fieldMapFieldsMappedFilterTest()
   // Create a map and check
   item = new mdtFieldMapItem;
   item->setSourceFieldName("SRC01");
-  item->setFieldName("DEST01");
+  item->setDestinationFieldName("DEST01");
   map.addItem(item);
   QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).size(), 3);
   QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByName).at(0).name(), QString("SRC02"));
@@ -961,6 +961,62 @@ void mdtDataTableTest::fieldMapFieldsMappedFilterTest()
   QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(0).name(), QString("DEST02"));
   QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByName).at(1).name(), QString("DEST03"));
 
+}
+
+void mdtDataTableTest::fieldMapHeaderTest()
+{
+  mdtFieldMap map;
+  mdtFieldMapItem *item;
+  QStringList expectedSourceHeader, expectedDestinationHeader;
+
+  // Setup expected headers
+  expectedSourceHeader << "Source 1" << "Source 2" << "SRC3" << "Source 4" << "Source 5";
+  expectedDestinationHeader << "Destination 1" << "Destination 2" << "DEST3" << "Destination 4" << "Destination 5";
+
+  // Build the map
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(0);
+  item->setSourceFieldName("SRC1");
+  item->setSourceFieldDisplayText("Source 1");
+  item->setDestinationFieldIndex(0);
+  item->setDestinationFieldName("DEST1");
+  item->setDestinationFieldDisplayText("Destination 1");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(2);
+  item->setSourceFieldName("SRC3");
+  item->setSourceFieldDisplayText("");
+  item->setDestinationFieldIndex(2);
+  item->setDestinationFieldName("DEST3");
+  item->setDestinationFieldDisplayText("");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(1);
+  item->setSourceFieldName("SRC2");
+  item->setSourceFieldDisplayText("Source 2");
+  item->setDestinationFieldIndex(1);
+  item->setDestinationFieldName("DEST2");
+  item->setDestinationFieldDisplayText("Destination 2");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(4);
+  item->setSourceFieldName("SRC5");
+  item->setSourceFieldDisplayText("Source 5");
+  item->setDestinationFieldIndex(3);
+  item->setDestinationFieldName("DEST4");
+  item->setDestinationFieldDisplayText("Destination 4");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(3);
+  item->setSourceFieldName("SRC4");
+  item->setSourceFieldDisplayText("Source 4");
+  item->setDestinationFieldIndex(4);
+  item->setDestinationFieldName("DEST5");
+  item->setDestinationFieldDisplayText("Destination 5");
+  map.addItem(item);
+  // Check
+  QCOMPARE(map.sourceHeader(), expectedSourceHeader);
+  QCOMPARE(map.destinationHeader(), expectedDestinationHeader);
 }
 
 void mdtDataTableTest::fieldMapTest()
@@ -984,17 +1040,17 @@ void mdtDataTableTest::fieldMapTest()
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(0);
   item->setSourceFieldName("A");
-  item->setFieldIndex(0);
-  item->setFieldName("A");
-  item->setFieldDisplayText("A");
+  item->setDestinationFieldIndex(0);
+  item->setDestinationFieldName("A");
+  item->setDestinationFieldDisplayText("A");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(1);
   item->setSourceFieldName("B");
-  item->setFieldIndex(1);
-  item->setFieldName("B");
-  item->setFieldDisplayText("B");
+  item->setDestinationFieldIndex(1);
+  item->setDestinationFieldName("B");
+  item->setDestinationFieldDisplayText("B");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
@@ -1002,9 +1058,9 @@ void mdtDataTableTest::fieldMapTest()
   item->setSourceFieldName("Group1");
   item->setSourceFieldDataStartOffset(0);
   item->setSourceFieldDataEndOffset(1);
-  item->setFieldIndex(2);
-  item->setFieldName("Sub1Id");
-  item->setFieldDisplayText("Grp 1 ID");
+  item->setDestinationFieldIndex(2);
+  item->setDestinationFieldName("Sub1Id");
+  item->setDestinationFieldDisplayText("Grp 1 ID");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
@@ -1012,17 +1068,17 @@ void mdtDataTableTest::fieldMapTest()
   item->setSourceFieldName("Group1");
   item->setSourceFieldDataStartOffset(2);
   item->setSourceFieldDataEndOffset(-1);
-  item->setFieldIndex(3);
-  item->setFieldName("Sub1Name");
-  item->setFieldDisplayText("Grp 1 Name");
+  item->setDestinationFieldIndex(3);
+  item->setDestinationFieldName("Sub1Name");
+  item->setDestinationFieldDisplayText("Grp 1 Name");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(3);
   item->setSourceFieldName("C");
-  item->setFieldIndex(4);
-  item->setFieldName("C");
-  item->setFieldDisplayText("C");
+  item->setDestinationFieldIndex(4);
+  item->setDestinationFieldName("C");
+  item->setDestinationFieldDisplayText("C");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
@@ -1030,9 +1086,9 @@ void mdtDataTableTest::fieldMapTest()
   item->setSourceFieldName("Group2");
   item->setSourceFieldDataStartOffset(0);
   item->setSourceFieldDataEndOffset(2);
-  item->setFieldIndex(5);
-  item->setFieldName("Sub2Id");
-  item->setFieldDisplayText("Grp 2 ID");
+  item->setDestinationFieldIndex(5);
+  item->setDestinationFieldName("Sub2Id");
+  item->setDestinationFieldDisplayText("Grp 2 ID");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
@@ -1040,9 +1096,9 @@ void mdtDataTableTest::fieldMapTest()
   item->setSourceFieldName("Group2");
   item->setSourceFieldDataStartOffset(3);
   item->setSourceFieldDataEndOffset(7);
-  item->setFieldIndex(6);
-  item->setFieldName("Sub2Name");
-  item->setFieldDisplayText("Grp 2 Name");
+  item->setDestinationFieldIndex(6);
+  item->setDestinationFieldName("Sub2Name");
+  item->setDestinationFieldDisplayText("Grp 2 Name");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
@@ -1050,9 +1106,9 @@ void mdtDataTableTest::fieldMapTest()
   item->setSourceFieldName("Group2");
   item->setSourceFieldDataStartOffset(8);
   item->setSourceFieldDataEndOffset(15);
-  item->setFieldIndex(7);
-  item->setFieldName("Sub2Value");
-  item->setFieldDisplayText("Grp 2 Value");
+  item->setDestinationFieldIndex(7);
+  item->setDestinationFieldName("Sub2Value");
+  item->setDestinationFieldDisplayText("Grp 2 Value");
   item->setDataType(QVariant::String);
   map.addItem(item);
   // Check that fields are correctly mapped
@@ -1075,12 +1131,12 @@ void mdtDataTableTest::fieldMapTest()
   for(int i=0; i<modelHeader.size(); i++){
     item = map.itemAtFieldIndex(i);
     QVERIFY(item != 0);
-    QCOMPARE(item->fieldIndex(), i);
-    QCOMPARE(item->fieldName(), modelHeader.at(i));
+    QCOMPARE(item->destinationFieldIndex(), i);
+    QCOMPARE(item->destinationFieldName(), modelHeader.at(i));
     item = map.itemAtFieldName(modelHeader.at(i));
     QVERIFY(item != 0);
-    QCOMPARE(item->fieldIndex(), i);
-    QCOMPARE(item->fieldName(), modelHeader.at(i));
+    QCOMPARE(item->destinationFieldIndex(), i);
+    QCOMPARE(item->destinationFieldName(), modelHeader.at(i));
   }
   // Check map direct access
   QCOMPARE(map.sourceFieldNameAtFieldIndex(0), QString("A"));
@@ -1095,40 +1151,40 @@ void mdtDataTableTest::fieldMapTest()
   // Check Group1 split
   item = map.itemAtFieldName("Sub1Id");
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 2);
-  QCOMPARE(item->fieldName(), QString("Sub1Id"));
-  QCOMPARE(item->fieldDisplayText(), QString("Grp 1 ID"));
+  QCOMPARE(item->destinationFieldIndex(), 2);
+  QCOMPARE(item->destinationFieldName(), QString("Sub1Id"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Grp 1 ID"));
   QCOMPARE(item->sourceFieldIndex(), 2);
   QCOMPARE(item->sourceFieldName(), QString("Group1"));
   QCOMPARE(item->sourceFieldDataStartOffset(), 0);
   QCOMPARE(item->sourceFieldDataEndOffset(), 1);
   item = map.itemAtFieldName("Sub1Name");
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 3);
-  QCOMPARE(item->fieldName(), QString("Sub1Name"));
-  QCOMPARE(item->fieldDisplayText(), QString("Grp 1 Name"));
+  QCOMPARE(item->destinationFieldIndex(), 3);
+  QCOMPARE(item->destinationFieldName(), QString("Sub1Name"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Grp 1 Name"));
   QCOMPARE(item->sourceFieldIndex(), 2);
   QCOMPARE(item->sourceFieldName(), QString("Group1"));
   // Check Group2 split
   item = map.itemAtFieldName("Sub2Id");
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 5);
-  QCOMPARE(item->fieldName(), QString("Sub2Id"));
-  QCOMPARE(item->fieldDisplayText(), QString("Grp 2 ID"));
+  QCOMPARE(item->destinationFieldIndex(), 5);
+  QCOMPARE(item->destinationFieldName(), QString("Sub2Id"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Grp 2 ID"));
   QCOMPARE(item->sourceFieldIndex(), 4);
   QCOMPARE(item->sourceFieldName(), QString("Group2"));
   item = map.itemAtFieldName("Sub2Name");
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 6);
-  QCOMPARE(item->fieldName(), QString("Sub2Name"));
-  QCOMPARE(item->fieldDisplayText(), QString("Grp 2 Name"));
+  QCOMPARE(item->destinationFieldIndex(), 6);
+  QCOMPARE(item->destinationFieldName(), QString("Sub2Name"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Grp 2 Name"));
   QCOMPARE(item->sourceFieldIndex(), 4);
   QCOMPARE(item->sourceFieldName(), QString("Group2"));
   item = map.itemAtFieldName("Sub2Value");
   QVERIFY(item != 0);
-  QCOMPARE(item->fieldIndex(), 7);
-  QCOMPARE(item->fieldName(), QString("Sub2Value"));
-  QCOMPARE(item->fieldDisplayText(), QString("Grp 2 Value"));
+  QCOMPARE(item->destinationFieldIndex(), 7);
+  QCOMPARE(item->destinationFieldName(), QString("Sub2Value"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("Grp 2 Value"));
   QCOMPARE(item->sourceFieldIndex(), 4);
   QCOMPARE(item->sourceFieldName(), QString("Group2"));
   // Check data map
@@ -1150,91 +1206,91 @@ void mdtDataTableTest::fieldMapTest()
   // Build the map without specifing indexes
   item = new mdtFieldMapItem;
   item->setSourceFieldName("A");
-  item->setFieldName("a1");
-  item->setFieldDisplayText("A 1");
+  item->setDestinationFieldName("a1");
+  item->setDestinationFieldDisplayText("A 1");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldName("A");
-  item->setFieldName("a2");
-  item->setFieldDisplayText("A 2");
+  item->setDestinationFieldName("a2");
+  item->setDestinationFieldDisplayText("A 2");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldName("B");
-  item->setFieldName("b");
-  item->setFieldDisplayText("B");
+  item->setDestinationFieldName("b");
+  item->setDestinationFieldDisplayText("B");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldName("C");
-  item->setFieldName("c");
-  item->setFieldDisplayText("C");
+  item->setDestinationFieldName("c");
+  item->setDestinationFieldDisplayText("C");
   item->setDataType(QVariant::String);
   map.addItem(item);
   // Check the mapping
   item = map.itemAtFieldName("a1");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("A"));
-  QCOMPARE(item->fieldName(), QString("a1"));
-  QCOMPARE(item->fieldDisplayText(), QString("A 1"));
+  QCOMPARE(item->destinationFieldName(), QString("a1"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("A 1"));
   item = map.itemAtFieldName("a2");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("A"));
-  QCOMPARE(item->fieldName(), QString("a2"));
-  QCOMPARE(item->fieldDisplayText(), QString("A 2"));
+  QCOMPARE(item->destinationFieldName(), QString("a2"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("A 2"));
   item = map.itemAtFieldName("b");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("B"));
-  QCOMPARE(item->fieldName(), QString("b"));
-  QCOMPARE(item->fieldDisplayText(), QString("B"));
+  QCOMPARE(item->destinationFieldName(), QString("b"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("B"));
   item = map.itemAtFieldName("c");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("C"));
-  QCOMPARE(item->fieldName(), QString("c"));
-  QCOMPARE(item->fieldDisplayText(), QString("C"));
+  QCOMPARE(item->destinationFieldName(), QString("c"));
+  QCOMPARE(item->destinationFieldDisplayText(), QString("C"));
   // Update indexes
   item = map.itemAtFieldName("a1");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(1);
-  item->setFieldIndex(10);
+  item->setDestinationFieldIndex(10);
   item = map.itemAtFieldName("a2");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(1);
-  item->setFieldIndex(11);
+  item->setDestinationFieldIndex(11);
   item = map.itemAtFieldName("b");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(2);
-  item->setFieldIndex(12);
+  item->setDestinationFieldIndex(12);
   item = map.itemAtFieldName("c");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(3);
-  item->setFieldIndex(13);
+  item->setDestinationFieldIndex(13);
   // Check the mapping - search by field index
   item = map.itemAtFieldIndex(10);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 1);
   QCOMPARE(item->sourceFieldName(), QString("A"));
-  QCOMPARE(item->fieldIndex(), 10);
-  QCOMPARE(item->fieldName(), QString("a1"));
+  QCOMPARE(item->destinationFieldIndex(), 10);
+  QCOMPARE(item->destinationFieldName(), QString("a1"));
   item = map.itemAtFieldIndex(11);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 1);
   QCOMPARE(item->sourceFieldName(), QString("A"));
-  QCOMPARE(item->fieldIndex(), 11);
-  QCOMPARE(item->fieldName(), QString("a2"));
+  QCOMPARE(item->destinationFieldIndex(), 11);
+  QCOMPARE(item->destinationFieldName(), QString("a2"));
   item = map.itemAtFieldIndex(12);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 2);
   QCOMPARE(item->sourceFieldName(), QString("B"));
-  QCOMPARE(item->fieldIndex(), 12);
-  QCOMPARE(item->fieldName(), QString("b"));
+  QCOMPARE(item->destinationFieldIndex(), 12);
+  QCOMPARE(item->destinationFieldName(), QString("b"));
   item = map.itemAtFieldIndex(13);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 3);
   QCOMPARE(item->sourceFieldName(), QString("C"));
-  QCOMPARE(item->fieldIndex(), 13);
-  QCOMPARE(item->fieldName(), QString("c"));
+  QCOMPARE(item->destinationFieldIndex(), 13);
+  QCOMPARE(item->destinationFieldName(), QString("c"));
   // Check the mapping - search by source field index
   items = map.itemsAtSourceFieldIndex(1);
   QVERIFY(items.size() == 2);
@@ -1243,22 +1299,22 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(item->sourceFieldIndex(), 1);
   QCOMPARE(item->sourceFieldName(), QString("A"));
   // We don't know how items are ordered by field index
-  if(item->fieldIndex() == 10){
-    QCOMPARE(item->fieldName(), QString("a1"));
+  if(item->destinationFieldIndex() == 10){
+    QCOMPARE(item->destinationFieldName(), QString("a1"));
     item = items.at(1);
     QVERIFY(item != 0);
     QCOMPARE(item->sourceFieldIndex(), 1);
     QCOMPARE(item->sourceFieldName(), QString("A"));
-    QCOMPARE(item->fieldIndex(), 11);
-    QCOMPARE(item->fieldName(), QString("a2"));
-  }else if(item->fieldIndex() == 11){
-    QCOMPARE(item->fieldName(), QString("a2"));
+    QCOMPARE(item->destinationFieldIndex(), 11);
+    QCOMPARE(item->destinationFieldName(), QString("a2"));
+  }else if(item->destinationFieldIndex() == 11){
+    QCOMPARE(item->destinationFieldName(), QString("a2"));
     item = items.at(1);
     QVERIFY(item != 0);
     QCOMPARE(item->sourceFieldIndex(), 1);
     QCOMPARE(item->sourceFieldName(), QString("A"));
-    QCOMPARE(item->fieldIndex(), 10);
-    QCOMPARE(item->fieldName(), QString("a1"));
+    QCOMPARE(item->destinationFieldIndex(), 10);
+    QCOMPARE(item->destinationFieldName(), QString("a1"));
 
   }
   items = map.itemsAtSourceFieldIndex(2);
@@ -1267,16 +1323,16 @@ void mdtDataTableTest::fieldMapTest()
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 2);
   QCOMPARE(item->sourceFieldName(), QString("B"));
-  QCOMPARE(item->fieldIndex(), 12);
-  QCOMPARE(item->fieldName(), QString("b"));
+  QCOMPARE(item->destinationFieldIndex(), 12);
+  QCOMPARE(item->destinationFieldName(), QString("b"));
   items = map.itemsAtSourceFieldIndex(3);
   QVERIFY(items.size() == 1);
   item = items.at(0);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 3);
   QCOMPARE(item->sourceFieldName(), QString("C"));
-  QCOMPARE(item->fieldIndex(), 13);
-  QCOMPARE(item->fieldName(), QString("c"));
+  QCOMPARE(item->destinationFieldIndex(), 13);
+  QCOMPARE(item->destinationFieldName(), QString("c"));
   // Check display texts by field names
   displayTextsByFieldNames = map.displayTextsByFieldNames();
   QCOMPARE(displayTextsByFieldNames.size(), 4);

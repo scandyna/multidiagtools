@@ -60,3 +60,7 @@ QSqlField mdtFieldMapField::sqlField() const
   return pvSqlField;
 }
 
+QSqlField &mdtFieldMapField::sqlField()
+{
+  return pvSqlField;
+}

@@ -24,6 +24,8 @@
 #include <QStringList>
 #include <QTableWidgetItem>
 #include <QList>
+#include <QMap>
+#include <QModelIndex>
 
 mdtFieldMapDialog::mdtFieldMapDialog(QWidget *parent) 
  : QDialog(parent)
@@ -73,6 +75,8 @@ void mdtFieldMapDialog::addMapItem()
   *item = dialog.mapItem();
   pvFieldMap.addItem(item);
   updateMappingTableView();
+  updateSourcePreview();
+  updateDestinationPreview();
 }
 
 void mdtFieldMapDialog::editMapItem()
@@ -84,26 +88,50 @@ void mdtFieldMapDialog::editMapItem()
 
 void mdtFieldMapDialog::removeMapItem()
 {
-  mdtFieldMapItemDialog dialog(this);
+  QList<QTableWidgetItem*> selectedItems;
 
-  dialog.exec();
+  // Get selected items
+  selectedItems = twMapping->selectedItems();
+  if(selectedItems.isEmpty()){
+    return;
+  }
+  /// \todo complete: find a reliable relation between QTableWidget item and mdtFieldMap item.
+  ///         Best way could be to add a hidden column with source field index ?
+  ///         -> Or destination field index, because of splitting ??
 }
 
 void mdtFieldMapDialog::updateMappingTableView()
 {
   QList<mdtFieldMapItem*> items;
+  QMap<int, mdtFieldMapItem*> sortMap;
   mdtFieldMapItem *fmItem;
   QTableWidgetItem *twSourceItem, *twDestinationItem;
-  int row;
+  int row, i;
 
+  // Get map items and sort them by source field indexes
   items = pvFieldMap.items();
+  for(i = 0; i < items.size(); ++i){
+    fmItem = items.at(i);
+    Q_ASSERT(fmItem != 0);
+    sortMap.insert(fmItem->sourceFieldIndex(), fmItem);
+  }
+  items = sortMap.values();
+  // Update view
   twMapping->setRowCount(items.size());
   for(row = 0; row < items.size(); ++row){
     fmItem = items.at(row);
     Q_ASSERT(fmItem != 0);
-    twSourceItem = new QTableWidgetItem(fmItem->sourceFieldName());
+    if(fmItem->sourceFieldDisplayText().isEmpty()){
+      twSourceItem = new QTableWidgetItem(fmItem->sourceFieldName());
+    }else{
+      twSourceItem = new QTableWidgetItem(fmItem->sourceFieldDisplayText());
+    }
     twMapping->setItem(row, 0, twSourceItem);
-    twDestinationItem = new QTableWidgetItem(fmItem->fieldName());
+    if(fmItem->destinationFieldDisplayText().isEmpty()){
+      twDestinationItem = new QTableWidgetItem(fmItem->destinationFieldName());
+    }else{
+      twDestinationItem = new QTableWidgetItem(fmItem->destinationFieldDisplayText());
+    }
     twMapping->setItem(row, 2, twDestinationItem);
   }
   twMapping->resizeColumnsToContents();
@@ -112,9 +140,19 @@ void mdtFieldMapDialog::updateMappingTableView()
 
 void mdtFieldMapDialog::updateSourcePreview() 
 {
+  QStringList header;
+
+  header = pvFieldMap.sourceHeader();
+  twSourcePreview->setColumnCount(header.size());
+  twSourcePreview->setHorizontalHeaderLabels(header);
 }
 
 void mdtFieldMapDialog::updateDestinationPreview() 
 {
+  QStringList header;
+
+  header = pvFieldMap.destinationHeader();
+  twDestinationPreview->setColumnCount(header.size());
+  twDestinationPreview->setHorizontalHeaderLabels(header);
 }
 

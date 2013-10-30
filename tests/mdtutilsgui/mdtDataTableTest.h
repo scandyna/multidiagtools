@@ -41,6 +41,7 @@ class mdtDataTableTest : public mdtTest
   void fieldMapItemCopyTest();
   void fieldMapCopyTest();
   void fieldMapFieldsMappedFilterTest();
+  void fieldMapHeaderTest();
   void fieldMapTest();
 
   // CSV export/import tests
