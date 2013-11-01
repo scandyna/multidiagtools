@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtFieldMapItemDialog.h"
 #include "mdtFieldMapItem.h"
+#include "mdtFieldListEditionDialog.h"
 #include <QComboBox>
 #include <QVariant>
 #include <QLabel>
@@ -36,6 +37,7 @@ mdtFieldMapItemDialog::mdtFieldMapItemDialog(QWidget *parent)
   // Setup start and end comboboxes
   connect(cbSourceField, SIGNAL(currentIndexChanged(int)), this, SLOT(setSourceField(int)));
   connect(cbDestinationField, SIGNAL(currentIndexChanged(int)), this, SLOT(setDestinationField(int)));
+  connect(pbEditDestinationFieldList, SIGNAL(clicked()), this, SLOT(editDestinationFieldList()));
   // Setup splitting options
   sbSourceSize->setMinimum(1);
   sbSourceSize->setValue(10);
@@ -125,6 +127,27 @@ void mdtFieldMapItemDialog::setSourceField(int cbIndex)
   }
   lbSourceFieldName->setText(pvMapItem.sourceFieldName());
   lbSourceFieldIndex->setText(QString::number(pvMapItem.sourceFieldIndex()));
+}
+
+void mdtFieldMapItemDialog::editDestinationFieldList()
+{
+  int i;
+  mdtFieldMapField field;
+  QList<mdtFieldMapField> fields;
+  mdtFieldListEditionDialog dialog(this);
+
+  // Setup dialog and show
+  for(i = 0; i < cbDestinationField->count(); ++i){
+    field = cbDestinationField->itemData(i).value<mdtFieldMapField>();
+    fields.append(field);
+  }
+  dialog.setAvailableFields(fields, 100);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Store result back to combo box
+  fields = dialog.fields();
+  setDestinationFields(fields);
 }
 
 void mdtFieldMapItemDialog::setDestinationField(int cbIndex)

@@ -23,6 +23,7 @@
 
 #include <QSqlField>
 #include <QString>
+#include <QStringList>
 
 /*! \brief Container for information about field in field map
  *
@@ -32,6 +33,10 @@
 class mdtFieldMapField
 {
  public:
+
+  /*! \brief Constructor
+   */
+  mdtFieldMapField();
 
   /*! \brief Set column index
    */
@@ -73,11 +78,20 @@ class mdtFieldMapField
    */
   QSqlField &sqlField();
 
+  /*! \brief Check if str contains a illegal string
+   */
+  static bool strContainsIllegalString(const QString &str);
+
+  /*! \brief Get a field name with no illegal strings
+   */
+  static QString getFieldName(const QString &name, const QString &replaceBy = "_");
+
  private:
 
   QSqlField pvSqlField;
   int pvIndex;
   QString pvDisplayText;
+  static QStringList spvIllegalStrings;
 };
 Q_DECLARE_METATYPE(mdtFieldMapField);
 

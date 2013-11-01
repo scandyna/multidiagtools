@@ -28,6 +28,7 @@
 
 #include "mdtFieldMapDialog.h"
 #include "mdtFieldMapItemDialog.h"
+#include "mdtFieldListEditionDialog.h"
 
 #include "mdtSqlQueryWidget.h"
 #include "mdtSqlSchemaTable.h"
@@ -62,6 +63,8 @@ void mdtDataTableTest::sandbox()
   mdtFieldMap fieldMap;
   mdtFieldMapItem mapItem;
 
+  
+  
   // Fill source fields
   field.setIndex(0);
   field.setName("SRC01");
@@ -92,6 +95,20 @@ void mdtDataTableTest::sandbox()
   field.setName("DEST04");
   field.setDisplayText("Destination 4");
   destinationFields << field;
+
+  /**
+  mdtFieldListEditionDialog fldListDialog;
+  fldListDialog.setAvailableFields(destinationFields);
+  fldListDialog.exec();
+  
+  destinationFields = fldListDialog.fields();
+  for(int i = 0; i < destinationFields.size(); ++i){
+    field = destinationFields.at(i);
+    qDebug() << "Field idx " << field.index() << ": " << field.name() << " - " << field.displayText();
+  }
+  
+  return;
+  */
 
   fieldMap.setSourceFields(sourceFields);
   fieldMap.setDestinationFields(destinationFields);

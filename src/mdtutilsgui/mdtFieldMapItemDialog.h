@@ -78,6 +78,10 @@ class mdtFieldMapItemDialog : public QDialog, public Ui::mdtFieldMapItemDialog
    */
   void setSourceField(int cbIndex);
 
+  /*! \brief Edit destination fields list
+   */
+  void editDestinationFieldList();
+
   /*! \brief Set the destination field
    */
   void setDestinationField(int cbIndex);

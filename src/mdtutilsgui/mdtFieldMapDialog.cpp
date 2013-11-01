@@ -25,6 +25,7 @@
 #include <QTableWidgetItem>
 #include <QList>
 #include <QMap>
+#include <QMultiMap>
 #include <QModelIndex>
 
 mdtFieldMapDialog::mdtFieldMapDialog(QWidget *parent) 
@@ -66,7 +67,8 @@ void mdtFieldMapDialog::addMapItem()
 
   // Setup dialog and show it
   /// \todo Check if one field list is empty !!
-  dialog.setSourceFields(pvFieldMap.notMappedSourceFields(mdtFieldMap::ReferenceByName));
+  ///dialog.setSourceFields(pvFieldMap.notMappedSourceFields(mdtFieldMap::ReferenceByName));
+  dialog.setSourceFields(pvFieldMap.sourceFields());
   dialog.setDestinationFields(pvFieldMap.notMappedDestinationFields(mdtFieldMap::ReferenceByName));
   if(dialog.exec() != QDialog::Accepted){
     return;
@@ -103,18 +105,27 @@ void mdtFieldMapDialog::removeMapItem()
 void mdtFieldMapDialog::updateMappingTableView()
 {
   QList<mdtFieldMapItem*> items;
-  QMap<int, mdtFieldMapItem*> sortMap;
+  QMultiMap<int, mdtFieldMapItem*> sortMap;
   mdtFieldMapItem *fmItem;
   QTableWidgetItem *twSourceItem, *twDestinationItem;
   int row, i;
 
   // Get map items and sort them by source field indexes
   items = pvFieldMap.items();
+  i = items.size() - 1;
+  while(i >= 0){
+    fmItem = items.at(i);
+    Q_ASSERT(fmItem != 0);
+    sortMap.insert(fmItem->sourceFieldIndex(), fmItem);
+    --i;
+  }
+  /**
   for(i = 0; i < items.size(); ++i){
     fmItem = items.at(i);
     Q_ASSERT(fmItem != 0);
     sortMap.insert(fmItem->sourceFieldIndex(), fmItem);
   }
+  */
   items = sortMap.values();
   // Update view
   twMapping->setRowCount(items.size());

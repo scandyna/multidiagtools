@@ -19,6 +19,46 @@
  **
  ****************************************************************************/
 #include "mdtFieldMapField.h"
+#include "mdtError.h"
+
+QStringList mdtFieldMapField::spvIllegalStrings = QStringList();
+
+mdtFieldMapField::mdtFieldMapField()
+{
+  if(spvIllegalStrings.isEmpty()){
+    spvIllegalStrings.append(" ");
+    spvIllegalStrings.append("?");
+    spvIllegalStrings.append("+");
+    spvIllegalStrings.append("-");
+    spvIllegalStrings.append("*");
+    spvIllegalStrings.append("/");
+    spvIllegalStrings.append("\\");
+    spvIllegalStrings.append("'");
+    spvIllegalStrings.append("<");
+    spvIllegalStrings.append(">");
+    spvIllegalStrings.append("=");
+    spvIllegalStrings.append("~");
+    spvIllegalStrings.append("!");
+    spvIllegalStrings.append("`");
+    spvIllegalStrings.append("$");
+    spvIllegalStrings.append("(");
+    spvIllegalStrings.append(")");
+    spvIllegalStrings.append("[");
+    spvIllegalStrings.append("]");
+    spvIllegalStrings.append("{");
+    spvIllegalStrings.append("}");
+    spvIllegalStrings.append(".");
+    spvIllegalStrings.append(",");
+    spvIllegalStrings.append(":");
+    spvIllegalStrings.append(";");
+    spvIllegalStrings.append("&");
+    spvIllegalStrings.append("|");
+    spvIllegalStrings.append("#");
+    spvIllegalStrings.append("@");
+    spvIllegalStrings.append("%");
+    spvIllegalStrings.append("\"");
+  }
+}
 
 void mdtFieldMapField::setIndex(int value) 
 {
@@ -63,4 +103,37 @@ QSqlField mdtFieldMapField::sqlField() const
 QSqlField &mdtFieldMapField::sqlField()
 {
   return pvSqlField;
+}
+
+bool mdtFieldMapField::strContainsIllegalString(const QString &str)
+{
+  int i;
+
+  for(i = 0; i < spvIllegalStrings.size(); ++i){
+    if(str.contains(spvIllegalStrings.at(i))){
+      return true;
+    }
+  }
+
+  return false;
+}
+
+QString mdtFieldMapField::getFieldName(const QString &name, const QString &replaceBy)
+{
+  int i;
+  QString newName;
+  QString replace = replaceBy;
+
+  if(strContainsIllegalString(replaceBy)){
+    replace = "_";
+    mdtError e("Replacement string '" + replaceBy + "' contains illegal string. Using '_' instead.", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFieldMapField");
+    e.commit();
+  }
+  newName = name;
+  for(i = 0; i < spvIllegalStrings.size(); ++i){
+    newName.replace(spvIllegalStrings.at(i), replace);
+  }
+
+  return newName;
 }
