@@ -1053,6 +1053,21 @@ void mdtDataTableTest::fieldMapTest()
   // Build model fields and data
   modelHeader << "A" << "B" << "Sub1Id" << "Sub1Name" << "C" << "Sub2Id" << "Sub2Name" << "Sub2Value";
   modelRow << "A data" << "B data" << "12" << "Name 12" << "C data" << "123" << "Na123" << "Value123";
+  // Set fields by display texts
+  map.setSourceFieldsByDisplayTexts(csvHeader);
+  QCOMPARE(map.sourceFields().size(), csvHeader.size());
+  for(int i = 0; i < map.sourceFields().size(); ++i){
+    QCOMPARE(map.sourceFields().at(i).index(), i);
+    QCOMPARE(map.sourceFields().at(i).name(), csvHeader.at(i));
+    QCOMPARE(map.sourceFields().at(i).displayText(), csvHeader.at(i));
+  }
+  map.setDestinationFieldsByDisplayTexts(modelHeader);
+  QCOMPARE(map.destinationFields().size(), modelHeader.size());
+  for(int i = 0; i < map.destinationFields().size(); ++i){
+    QCOMPARE(map.destinationFields().at(i).index(), i);
+    QCOMPARE(map.destinationFields().at(i).name(), modelHeader.at(i));
+    QCOMPARE(map.destinationFields().at(i).displayText(), modelHeader.at(i));
+  }
   // Build the map
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(0);
@@ -1207,7 +1222,7 @@ void mdtDataTableTest::fieldMapTest()
   // Check data map
   QCOMPARE(modelHeader.size(), modelRow.size());
   for(int i=0; i<modelRow.size(); i++){
-    QCOMPARE(map.dataForFieldIndex(csvLine, i), QVariant(modelRow.at(i)));
+    QCOMPARE(map.dataForDestinationFieldIndex(csvLine, i), QVariant(modelRow.at(i)));
     QCOMPARE(map.dataForFieldName(csvLine, modelHeader.at(i)), QVariant(modelRow.at(i)));
   }
   QCOMPARE(map.dataForDisplayText(csvLine, "Grp 2 Name"), QVariant("Na123"));
@@ -1357,6 +1372,134 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(displayTextsByFieldNames.value("a2"), QString("A 2"));
   QCOMPARE(displayTextsByFieldNames.value("b"), QString("B"));
   QCOMPARE(displayTextsByFieldNames.value("c"), QString("C"));
+}
+
+void mdtDataTableTest::fieldMapAutoMapTest()
+{
+  QStringList sourceHeader;
+  QStringList destinationHeader;
+  mdtFieldMap map;
+
+  // Case 1 : set source fields, automapping must create destination fields and map them
+  sourceHeader << "A" << "B" << "C" << "D" << "E";
+  map.setSourceFieldsByDisplayTexts(sourceHeader);
+  map.generateMapping();
+  QCOMPARE(map.sourceFields().size(), sourceHeader.size());
+  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByIndex).size(), 0);
+  QCOMPARE(map.sourceHeader(), sourceHeader);
+  QCOMPARE(map.destinationFields().size(), sourceHeader.size());
+  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByIndex).size(), 0);
+  QCOMPARE(map.destinationHeader(), sourceHeader);
+  // Clear
+  map.clear();
+  QCOMPARE(map.items().size(), 0);
+  QCOMPARE(map.sourceFields().size(), 0);
+  QCOMPARE(map.destinationFields().size(), 0);
+  // Case 2 : set source fields and destination fields, automapping must map by name
+  sourceHeader.clear();
+  sourceHeader << "A" << "B" << "C" << "D" << "E";
+  destinationHeader.clear();
+  destinationHeader << "C" << "A" << "E";
+  map.setSourceFieldsByDisplayTexts(sourceHeader);
+  map.setDestinationFieldsByDisplayTexts(destinationHeader);
+  map.generateMapping();
+  // Check source fields
+  QCOMPARE(map.sourceFields().size(), sourceHeader.size());
+  QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByIndex).size(), 2);
+  ///QCOMPARE(map.sourceHeader(), sourceHeader);
+  // Check destination fields
+  QCOMPARE(map.destinationFields().size(), destinationHeader.size());
+  QCOMPARE(map.notMappedDestinationFields(mdtFieldMap::ReferenceByIndex).size(), 0);
+  QCOMPARE(map.destinationHeader(), destinationHeader);
+  QCOMPARE(map.items().size(), 3);
+  QVERIFY(map.items().at(0) != 0);
+  QCOMPARE(map.items().at(0)->sourceFieldIndex(), 0);
+  QCOMPARE(map.items().at(0)->sourceFieldName(), QString("A"));
+  QCOMPARE(map.items().at(0)->destinationFieldIndex(), 1);
+  QCOMPARE(map.items().at(0)->destinationFieldName(), QString("A"));
+  QVERIFY(map.items().at(1) != 0);
+  QCOMPARE(map.items().at(1)->sourceFieldIndex(), 2);
+  QCOMPARE(map.items().at(1)->sourceFieldName(), QString("C"));
+  QCOMPARE(map.items().at(1)->destinationFieldIndex(), 0);
+  QCOMPARE(map.items().at(1)->destinationFieldName(), QString("C"));
+  QVERIFY(map.items().at(2) != 0);
+  QCOMPARE(map.items().at(2)->sourceFieldIndex(), 4);
+  QCOMPARE(map.items().at(2)->sourceFieldName(), QString("E"));
+  QCOMPARE(map.items().at(2)->destinationFieldIndex(), 2);
+  QCOMPARE(map.items().at(2)->destinationFieldName(), QString("E"));
+  // Clear
+  map.clear();
+  QCOMPARE(map.items().size(), 0);
+  QCOMPARE(map.sourceFields().size(), 0);
+  QCOMPARE(map.destinationFields().size(), 0);
+}
+
+void mdtDataTableTest::fieldMapDataTest()
+{
+  QStringList sourceHeader;
+  QStringList destinationHeader;
+  mdtFieldMap map;
+  QList<QVariant> sourceRowData;
+  QList<QVariant> destinationRowData;
+
+  // Generate a simple mapping
+  sourceHeader << "A" << "B" << "C" << "D";
+  map.setSourceFieldsByDisplayTexts(sourceHeader);
+  map.generateMapping();
+  QCOMPARE(map.items().size(), 4);
+  // Check single item data
+  sourceRowData.clear();
+  sourceRowData << "a" << "b" << "c" << "d";
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 0), QVariant("a"));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 1), QVariant("b"));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 2), QVariant("c"));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 3), QVariant("d"));
+  sourceRowData.clear();
+  sourceRowData << 1 << 2 << 3 << 4;
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 0), QVariant(1));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 1), QVariant(2));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 2), QVariant(3));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 3), QVariant(4));
+  // Check row of data
+  sourceRowData.clear();
+  sourceRowData << "a" << "b" << "c" << "d";
+  destinationRowData = map.destinationDataRow(sourceRowData);
+  QCOMPARE(destinationRowData.size(), 4);
+  QCOMPARE(destinationRowData.at(0), QVariant("a"));
+  QCOMPARE(destinationRowData.at(1), QVariant("b"));
+  QCOMPARE(destinationRowData.at(2), QVariant("c"));
+  QCOMPARE(destinationRowData.at(3), QVariant("d"));
+  sourceRowData.clear();
+  sourceRowData << 1 << 2 << 3 << 4;
+  destinationRowData = map.destinationDataRow(sourceRowData);
+  QCOMPARE(destinationRowData.size(), 4);
+  QCOMPARE(destinationRowData.at(0), QVariant(1));
+  QCOMPARE(destinationRowData.at(1), QVariant(2));
+  QCOMPARE(destinationRowData.at(2), QVariant(3));
+  QCOMPARE(destinationRowData.at(3), QVariant(4));
+
+
+  // Set source fields and destination fields
+  sourceHeader.clear();
+  sourceHeader << "A" << "B" << "C" << "D";
+  destinationHeader.clear();
+  destinationHeader << "D" << "A" << "C";
+  map.setSourceFieldsByDisplayTexts(sourceHeader);
+  map.setDestinationFieldsByDisplayTexts(destinationHeader);
+  map.generateMapping();
+  QCOMPARE(map.items().size(), 3);
+  // Check single item data
+  sourceRowData.clear();
+  sourceRowData << "a" << "b" << "c" << "d";
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 0), QVariant("d"));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 1), QVariant("a"));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 2), QVariant("c"));
+  sourceRowData.clear();
+  sourceRowData << 1 << 2 << 3 << 4;
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 0), QVariant(4));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 1), QVariant(1));
+  QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 2), QVariant(3));
+
 }
 
 void mdtDataTableTest::csvExportTest()

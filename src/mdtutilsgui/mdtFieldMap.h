@@ -99,6 +99,18 @@ class mdtFieldMap
    */
   void setSourceFields(const QList<mdtFieldMapField> &fields);
 
+  /*! \brief Set source fields by display text
+   *
+   * Will create the source fields list .
+   *  Given display text list will be used for display text in fields .
+   *  Field names are get from display texts, but not allowed chars are replaced .
+   *  Indexing is also done .
+   *
+   * Note: it is not checked if a field name appeards more than one time,
+   *  you should care if data must be stored in a database table .
+   */
+  void setSourceFieldsByDisplayTexts(const QStringList &displayTexts);
+
   /*! \brief Get the list of source fields
    */
   const QList<mdtFieldMapField> &sourceFields() const;
@@ -107,7 +119,7 @@ class mdtFieldMap
    */
   const QList<mdtFieldMapField> notMappedSourceFields(FieldReference_t reference) const;
 
-  /*! \brief Get the header of source fields
+  /*! \brief Get the header of source fields that are mapped
    *
    * The returned list is sorted by column indexes .
    *  For fields that not have a display text set,
@@ -122,6 +134,18 @@ class mdtFieldMap
    *  user . For auto map generation, these fields are also needed .
    */
   void setDestinationFields(const QList<mdtFieldMapField> &fields);
+
+  /*! \brief Set destination fields by display text
+   *
+   * Will create the destination fields list .
+   *  Given display text list will be used for display text in fields .
+   *  Field names are get from display texts, but not allowed chars are replaced .
+   *  Indexing is also done .
+   *
+   * Note: it is not checked if a field name appeards more than one time,
+   *  you should care if data must be stored in a database table .
+   */
+  void setDestinationFieldsByDisplayTexts(const QStringList &displayTexts);
 
   /*! \brief Update the list of destination fields
    *
@@ -156,6 +180,16 @@ class mdtFieldMap
    * \sa mdtFieldMapItem
    */
   void addItem(mdtFieldMapItem *item);
+
+  /*! \brief Generate mapping
+   *
+   * Mapping we be done in 2 distinct ways, regarding allready existing destination fields:
+   *  - Not destination fields are set: a 1:1 mapping is done .
+   *  - Destination fields are set: mapping is done by field names, only for names that exists in both source and destination fields .
+   *
+   * Use notMappedSourceFields() and notMappedDestinationFields() to know wich fields are ignored .
+   */
+  void generateMapping();
 
   /*! \brief Remove a item
    *
@@ -227,13 +261,23 @@ class mdtFieldMap
    */
   QList<mdtFieldMapItem*> itemsAtSourceFieldName(const QString &name) const;
 
-  /*! \brief Get data for a given index in source data
+  /*! \brief Extract data for given destination field index in source data row
    *
-   * \param sourceData In above example, it's a line in CSV file.
-   * \param fieldIndex In above example, it's the model column index.
+   * \param sourceDataRow In above example, it's a line in CSV file.
+   * \param destinationFieldIndex In above example, it's the model column index.
    * \return Converted data, or invalid QVariant if index was not found, or on failed conversion.
    */
-  QVariant dataForFieldIndex(const QStringList &sourceData, int fieldIndex) const;
+  QVariant dataForDestinationFieldIndex(const QStringList &sourceDataRow, int destinationFieldIndex) const;
+
+  /*! \brief Extract data for given destination field index in source data row
+   *
+   * \overload QVariant dataForDestinationFieldIndex(const QStringList &sourceDataRow, int destinationFieldIndex) const;
+   */
+  QVariant dataForDestinationFieldIndex(const QList<QVariant> &sourceDataRow, int destinationFieldIndex) const;
+
+  /*! \brief Get destination data row for given source data row
+   */
+  QList<QVariant> destinationDataRow(const QList<QVariant> &sourceDataRow) const;
 
   /*! \brief Get data for a given field name in source data
    *

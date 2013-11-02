@@ -142,7 +142,7 @@ bool mdtDataTableModel::addRows(const QList<QStringList> &rows, const mdtFieldMa
   for(dataRowIndex=0; dataRowIndex<rows.size(); dataRowIndex++){
     // Add data of each column
     for(modelColumnIndex=0; modelColumnIndex<columnCount(); modelColumnIndex++){
-      data = fieldMap.dataForFieldIndex(rows.at(dataRowIndex), modelColumnIndex);
+      data = fieldMap.dataForDestinationFieldIndex(rows.at(dataRowIndex), modelColumnIndex);
       // If data is empty, it's possible that we have auto values
       if(data.isValid()){
         if(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data, role)){

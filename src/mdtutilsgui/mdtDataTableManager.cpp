@@ -277,17 +277,20 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
   }
   // Start creating fields
   pvAbort = false;
-  modelFieldIndex = 0;
+  ///modelFieldIndex = 0;
   // Create primary key
   if(pkFields.isEmpty()){
     // Primary key is not in CSV file, generate a field and add to PK constraint list
     // Add primary key to field map
+    /**
     mapItem = new mdtFieldMapItem;
     mapItem->setDestinationFieldIndex(0);
     mapItem->setDestinationFieldName("id_PK");
     mapItem->setDestinationFieldDisplayText("id_PK");
     mapItem->setDataType(QVariant::Int);
     pvFieldMap.addItem(mapItem);
+    */
+    modelFieldIndex = 1;
     // Create primary key field
     field = QSqlField();
     field.setName("id_PK");
@@ -301,6 +304,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
       Q_ASSERT(header.contains(pkFields.at(i)));
       ///pk.append(getFieldName(pkFields.at(i)));
     }
+    modelFieldIndex = 0;
   }
   // Create fields regarding field map
   for(csvFieldIndex = 0; csvFieldIndex < header.size(); ++csvFieldIndex){

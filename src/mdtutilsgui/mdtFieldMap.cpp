@@ -83,6 +83,20 @@ void mdtFieldMap::setSourceFields(const QList<mdtFieldMapField> &fields)
   d->pvSourceFields = fields;
 }
 
+void mdtFieldMap::setSourceFieldsByDisplayTexts(const QStringList &displayTexts)
+{
+  int i;
+
+  d->pvSourceFields.clear();
+  for(i = 0; i < displayTexts.size(); ++i){
+    mdtFieldMapField field;
+    field.setIndex(i);
+    field.setName(mdtFieldMapField::getFieldName(displayTexts.at(i), "_"));
+    field.setDisplayText(displayTexts.at(i));
+    d->pvSourceFields.append(field);
+  }
+}
+
 const QList<mdtFieldMapField> &mdtFieldMap::sourceFields() const
 {
   return d->pvSourceFields;
@@ -101,8 +115,10 @@ const QList<mdtFieldMapField> mdtFieldMap::notMappedSourceFields(mdtFieldMap::Fi
     switch(reference){
       case ReferenceByIndex:
         itemCount = itemsAtSourceFieldIndex(field.index()).size();
+        break;
       case ReferenceByName:
         itemCount = itemsAtSourceFieldName(field.name()).size();
+        break;
     }
     // If found, add it to result
     if(itemCount == 0){
@@ -148,6 +164,20 @@ void mdtFieldMap::setDestinationFields(const QList<mdtFieldMapField> &fields)
   d->pvDestinationFields = fields;
 }
 
+void mdtFieldMap::setDestinationFieldsByDisplayTexts(const QStringList &displayTexts)
+{
+  int i;
+
+  d->pvDestinationFields.clear();
+  for(i = 0; i < displayTexts.size(); ++i){
+    mdtFieldMapField field;
+    field.setIndex(i);
+    field.setName(mdtFieldMapField::getFieldName(displayTexts.at(i), "_"));
+    field.setDisplayText(displayTexts.at(i));
+    d->pvDestinationFields.append(field);
+  }
+}
+
 void mdtFieldMap::updateDestinationFields(const QList<mdtFieldMapField> &fields, mdtFieldMap::FieldReference_t reference)
 {
   mdtFieldMapItem *item;
@@ -188,8 +218,10 @@ const QList<mdtFieldMapField> mdtFieldMap::notMappedDestinationFields(mdtFieldMa
     switch(reference){
       case ReferenceByIndex:
         item = itemAtDestinationFieldIndex(field.index());
+        break;
       case ReferenceByName:
         item = itemAtFieldName(field.name());
+        break;
     }
     // If found, add it to result
     if(item == 0){
@@ -240,6 +272,39 @@ void mdtFieldMap::addItem(mdtFieldMapItem *item)
   }
 }
 
+void mdtFieldMap::generateMapping()
+{
+  int i, idx;
+  mdtFieldMapField field;
+  mdtFieldMapItem *item;
+
+  qDeleteAll(d->pvItems);
+  d->pvItems.clear();
+  // Case of empty destination fields
+  if(d->pvDestinationFields.isEmpty()){
+    for(i = 0; i < d->pvSourceFields.size(); ++i){
+      field = d->pvSourceFields.at(i);
+      d->pvDestinationFields.append(field);
+      item = new mdtFieldMapItem;
+      item->setSourceField(field);
+      item->setDestinationField(field);
+      d->pvItems.append(item);
+    }
+  }else{
+    // Case of existing destination fields
+    for(i = 0; i < d->pvSourceFields.size(); ++i){
+      field = d->pvSourceFields.at(i);
+      idx = indexOfFieldInList(field, d->pvDestinationFields, ReferenceByName);
+      if(idx > -1){
+        item = new mdtFieldMapItem;
+        item->setSourceField(field);
+        item->setDestinationField(d->pvDestinationFields.at(idx));
+        d->pvItems.append(item);
+      }
+    }
+  }
+}
+
 void mdtFieldMap::removeItem(mdtFieldMapItem *item)
 {
   if(d->pvItems.removeAll(item) < 1){
@@ -285,6 +350,8 @@ void mdtFieldMap::clear()
 {
   qDeleteAll(d->pvItems);
   d->pvItems.clear();
+  d->pvSourceFields.clear();
+  d->pvDestinationFields.clear();
 }
 
 mdtFieldMapItem *mdtFieldMap::itemAtDestinationFieldIndex(int index) const
@@ -382,14 +449,62 @@ QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name)
   return items;
 }
 
-QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int fieldIndex) const
+QVariant mdtFieldMap::dataForDestinationFieldIndex(const QStringList &sourceDataRow, int destinationFieldIndex) const
 {
-  mdtFieldMapItem *item = itemAtDestinationFieldIndex(fieldIndex);
+  mdtFieldMapItem *item = itemAtDestinationFieldIndex(destinationFieldIndex);
   if(item == 0){
     return QVariant();
   }
 
-  return item->destinationData(sourceData);
+  return item->destinationData(sourceDataRow);
+}
+
+QVariant mdtFieldMap::dataForDestinationFieldIndex(const QList<QVariant> &sourceDataRow, int destinationFieldIndex) const
+{
+  mdtFieldMapItem *item = itemAtDestinationFieldIndex(destinationFieldIndex);
+  if(item == 0){
+    return QVariant();
+  }
+  // If source field splitting is not used, we can return data directly
+  if((item->sourceFieldDataStartOffset() < 0)&&(item->sourceFieldDataEndOffset() < 0)){
+    Q_ASSERT(item->sourceFieldIndex() < sourceDataRow.size());
+    return sourceDataRow.at(item->sourceFieldIndex());
+  }
+  // We must convert data row to a string list and process it
+  QStringList strSourceDataRow;
+  for(int i = 0; i < sourceDataRow.size(); ++i){
+    strSourceDataRow.append(sourceDataRow.at(i).toString());
+  }
+
+  return item->destinationData(strSourceDataRow);
+}
+
+QList<QVariant> mdtFieldMap::destinationDataRow(const QList<QVariant> &sourceDataRow) const
+{
+  QList<QVariant> destinationRow;
+  mdtFieldMapItem *item;
+  int i;
+
+  // Pre-alloc destination row (we edit it later)
+  destinationRow.reserve(d->pvItems.size());
+  for(i = 0; i < d->pvItems.size(); ++i){
+    destinationRow.append(QVariant());
+  }
+  // Set destination data
+  for(i = 0; i < d->pvItems.size(); ++i){
+    item = d->pvItems.at(i);
+    Q_ASSERT(item != 0);
+    Q_ASSERT(item->sourceFieldIndex() < sourceDataRow.size());
+    Q_ASSERT(item->destinationFieldIndex() < destinationRow.size());
+    // If source field splitting is not used, we can directly store data
+    if((item->sourceFieldDataStartOffset() < 0)&&(item->sourceFieldDataEndOffset() < 0)){
+      destinationRow[item->destinationFieldIndex()] = sourceDataRow.at(item->sourceFieldIndex());
+    }else{
+      destinationRow[item->destinationFieldIndex()] = item->destinationData(sourceDataRow.at(item->sourceFieldIndex()).toString());
+    }
+  }
+
+  return destinationRow;
 }
 
 QVariant mdtFieldMap::dataForFieldName(const QStringList &sourceData, const QString &fieldName) const
@@ -398,7 +513,7 @@ QVariant mdtFieldMap::dataForFieldName(const QStringList &sourceData, const QStr
   if(item == 0){
     return QVariant();
   }
-  return dataForFieldIndex(sourceData, item->destinationFieldIndex());
+  return dataForDestinationFieldIndex(sourceData, item->destinationFieldIndex());
 }
 
 QVariant mdtFieldMap::dataForDisplayText(const QStringList &sourceData, const QString &displayText)
@@ -407,7 +522,7 @@ QVariant mdtFieldMap::dataForDisplayText(const QStringList &sourceData, const QS
   if(item == 0){
     return QVariant();
   }
-  return dataForFieldIndex(sourceData, item->destinationFieldIndex());
+  return dataForDestinationFieldIndex(sourceData, item->destinationFieldIndex());
 }
 
 QString mdtFieldMap::dataForSourceFieldIndex(const QList<QVariant> &data, int sourceFieldIndex)
