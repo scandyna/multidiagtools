@@ -123,6 +123,14 @@ class mdtFieldMap
    */
   void setDestinationFields(const QList<mdtFieldMapField> &fields);
 
+  /*! \brief Update the list of destination fields
+   *
+   * Will also update existing mapping .
+   *  Note: if a mapping item contains a destination filed that not
+   *   exists anymore in destination field list, the item will be removed .
+   */
+  void updateDestinationFields(const QList<mdtFieldMapField> &fields, FieldReference_t reference);
+
   /*! \brief Get the list of destination fields
    */
   const QList<mdtFieldMapField> &destinationFields() const;
@@ -149,6 +157,12 @@ class mdtFieldMap
    */
   void addItem(mdtFieldMapItem *item);
 
+  /*! \brief Remove a item
+   *
+   * Will also delete item if it was removed from items .
+   */
+  void removeItem(mdtFieldMapItem *item);
+
   /*! \brief Remove item with given source field index
    *
    * If item was not found, nothing happens .
@@ -171,12 +185,12 @@ class mdtFieldMap
    */
   void clear();
 
-  /*! \brief Get the item for a given index
+  /*! \brief Get the mapping item for a given destination field index
    *
    * \param index In above example, it's the model column index.
    * \return Pointer to item if found, else 0 (null pointer).
    */
-  mdtFieldMapItem *itemAtFieldIndex(int index) const;
+  mdtFieldMapItem *itemAtDestinationFieldIndex(int index) const;
 
   /*! \brief Get the item for a given filed name
    *
@@ -192,12 +206,12 @@ class mdtFieldMap
    */
   mdtFieldMapItem *itemAtDisplayText(const QString &text);
 
-  /*! \brief Get the source field name for a given field index
+  /*! \brief Get the source field name for a given destination field index
    *
    * \param index In above example, it's the model column index.
    * \return Source field name, or a empty string if field index was not found.
    */
-  QString sourceFieldNameAtFieldIndex(int index) const;
+  QString sourceFieldNameAtDestinationFieldIndex(int index) const;
 
   /*! \brief Get the items for given source index
    *
@@ -262,6 +276,22 @@ class mdtFieldMap
   /*! \brief Insert data into string regarding item's source data offsets
    */
   void insertDataIntoSourceString(QString &str, const QVariant &data, mdtFieldMapItem *item);
+
+  /*! \brief Check if field exists in list
+   */
+  bool fieldExistsInList(const mdtFieldMapField field, const QList<mdtFieldMapField> &list, FieldReference_t reference) const;
+
+  /*! \brief Get index (NOT field index) of a field in list
+   */
+  int indexOfFieldInList(const mdtFieldMapField field, const QList<mdtFieldMapField> &list, FieldReference_t reference) const;
+
+  /*! \brief Get index (NOT field index) of a field in list - Use field index as reference
+   */
+  int indexOfFieldInListByFieldIndex(const mdtFieldMapField field, const QList<mdtFieldMapField> &list) const;
+
+  /*! \brief Get index (NOT field index) of a field in list - Use field name as reference
+   */
+  int indexOfFieldInListByFieldName(const mdtFieldMapField field, const QList<mdtFieldMapField> &list) const;
 
   QSharedDataPointer<mdtFieldMapData> d;
 };

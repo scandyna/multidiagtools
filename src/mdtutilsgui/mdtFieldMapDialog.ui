@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>595</width>
-    <height>440</height>
+    <width>694</width>
+    <height>385</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,16 +36,16 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pbEdit">
+        <widget class="QPushButton" name="pbRemove">
          <property name="text">
-          <string>Edit</string>
+          <string>Remove</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pbRemove">
+        <widget class="QPushButton" name="pbEditDestinationFieldList">
          <property name="text">
-          <string>Remove</string>
+          <string>Destination fields ...</string>
          </property>
         </widget>
        </item>
@@ -74,7 +74,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableWidget" name="twSourcePreview"/>
+    <widget class="QTableWidget" name="twSourcePreview">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="lbDestinationPreview">
@@ -84,7 +91,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableWidget" name="twDestinationPreview"/>
+    <widget class="QTableWidget" name="twDestinationPreview">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

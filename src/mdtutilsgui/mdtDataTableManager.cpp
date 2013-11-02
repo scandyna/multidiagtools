@@ -456,6 +456,12 @@ void mdtDataTableManager::clearFieldMap()
   pvFieldMap.clear();
 }
 
+QStringList mdtDataTableManager::sourceHeader() const
+{
+  return pvFieldMap.sourceHeader();
+}
+
+/**
 QStringList mdtDataTableManager::csvHeader() const
 {
   QStringList header;
@@ -479,6 +485,7 @@ QStringList mdtDataTableManager::csvHeader() const
 
   return header;
 }
+*/
 
 void mdtDataTableManager::setDisplayTextsToModelHeader()
 {
@@ -488,7 +495,7 @@ void mdtDataTableManager::setDisplayTextsToModelHeader()
   mdtFieldMapItem *mapItem;
 
   for(i=0; i<pvModel->columnCount(); i++){
-    mapItem = pvFieldMap.itemAtFieldIndex(i);
+    mapItem = pvFieldMap.itemAtDestinationFieldIndex(i);
     if(mapItem != 0){
       pvModel->setHeaderData(i, Qt::Horizontal, mapItem->destinationFieldDisplayText());
     }

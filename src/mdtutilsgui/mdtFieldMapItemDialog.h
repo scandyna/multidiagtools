@@ -47,10 +47,17 @@ class mdtFieldMapItemDialog : public QDialog, public Ui::mdtFieldMapItemDialog
   ~mdtFieldMapItemDialog();
 
   /*! \brief Set source fields
+   *
+   * \pre fields must contain at least 1 item
    */
   void setSourceFields(const QList<mdtFieldMapField> & fields);
 
   /*! \brief Set destination fields
+   *
+   * \param fields List of available (possibly allready not used) fields.
+   *           These fields will populate the destination fields combobox .
+   *
+   * \pre fields must contain at least 1 item
    */
   void setDestinationFields(const QList<mdtFieldMapField> & fields);
 
@@ -78,10 +85,6 @@ class mdtFieldMapItemDialog : public QDialog, public Ui::mdtFieldMapItemDialog
    */
   void setSourceField(int cbIndex);
 
-  /*! \brief Edit destination fields list
-   */
-  void editDestinationFieldList();
-
   /*! \brief Set the destination field
    */
   void setDestinationField(int cbIndex);
@@ -106,8 +109,6 @@ class mdtFieldMapItemDialog : public QDialog, public Ui::mdtFieldMapItemDialog
 
   Q_DISABLE_COPY(mdtFieldMapItemDialog);
 
-  ///mdtFieldMapItem pvEditMapItem;
-  ///mdtFieldMapItem pvTargetMapItem;
   mdtFieldMapItem pvMapItem;
 };
 

@@ -60,6 +60,10 @@ class mdtFieldMapItem
    */
   void setDestinationField(const mdtFieldMapField &field);
 
+  /*! \brief Get destination field
+   */
+  mdtFieldMapField destinationField() const;
+
   /*! \brief Set destination field name
    */
   void setDestinationFieldName(const QString &value);
@@ -156,5 +160,6 @@ class mdtFieldMapItem
   int pvSourceFieldDataStartOffset;
   int pvSourceFieldDataEndOffset;
 };
+Q_DECLARE_METATYPE(mdtFieldMapItem*);
 
 #endif  // #ifndef MDT_FIELD_MAP_ITEM_H

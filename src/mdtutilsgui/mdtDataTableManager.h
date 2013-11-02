@@ -203,6 +203,10 @@ class mdtDataTableManager : public QObject
    */
   void clearFieldMap();
 
+  /*! \brief Get the source header
+   */
+  QStringList sourceHeader() const;
+
   /*! \brief Get the CSV file's headers
    *
    * During CSV import, internal field name are created,
@@ -212,7 +216,7 @@ class mdtDataTableManager : public QObject
    *
    * Note: will return headers only after importFromCsvFile() was called.
    */
-  QStringList csvHeader() const;
+  ///QStringList csvHeader() const;
 
   /*! \brief Set the display texts to model's header
    *

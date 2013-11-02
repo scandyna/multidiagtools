@@ -48,6 +48,11 @@ void mdtFieldMapItem::setDestinationField(const mdtFieldMapField &field)
   pvDestinationField = field;
 }
 
+mdtFieldMapField mdtFieldMapItem::destinationField() const
+{
+  return pvDestinationField;
+}
+
 void mdtFieldMapItem::setDestinationFieldName(const QString &value)
 {
   pvDestinationField.setName(value);

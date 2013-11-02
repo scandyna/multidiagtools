@@ -22,8 +22,9 @@
 #include <QSharedData>
 #include <QSharedDataPointer>
 #include <QMap>
+#include <QMutableListIterator>
 
-//#include <QDebug>
+#include <QDebug>
 
 
 /*
@@ -147,6 +148,28 @@ void mdtFieldMap::setDestinationFields(const QList<mdtFieldMapField> &fields)
   d->pvDestinationFields = fields;
 }
 
+void mdtFieldMap::updateDestinationFields(const QList<mdtFieldMapField> &fields, mdtFieldMap::FieldReference_t reference)
+{
+  mdtFieldMapItem *item;
+  int idx;
+
+  d->pvDestinationFields = fields;
+  QMutableListIterator<mdtFieldMapItem*> it(d->pvItems);
+  while(it.hasNext()){
+    it.next();
+    item = it.value();
+    Q_ASSERT(item != 0);
+    // Check if destination fields exists anymore and update
+    idx = indexOfFieldInList(item->destinationField(), fields, reference);
+    if(idx < 0){
+      it.remove();
+      delete item;
+    }else{
+      item->setDestinationField(fields.at(idx));
+    }
+  }
+}
+
 const QList<mdtFieldMapField> &mdtFieldMap::destinationFields() const
 {
   return d->pvDestinationFields;
@@ -164,7 +187,7 @@ const QList<mdtFieldMapField> mdtFieldMap::notMappedDestinationFields(mdtFieldMa
     field = d->pvDestinationFields.at(i);
     switch(reference){
       case ReferenceByIndex:
-        item = itemAtFieldIndex(field.index());
+        item = itemAtDestinationFieldIndex(field.index());
       case ReferenceByName:
         item = itemAtFieldName(field.name());
     }
@@ -217,6 +240,14 @@ void mdtFieldMap::addItem(mdtFieldMapItem *item)
   }
 }
 
+void mdtFieldMap::removeItem(mdtFieldMapItem *item)
+{
+  if(d->pvItems.removeAll(item) < 1){
+    return;
+  }
+  delete item;
+}
+
 void mdtFieldMap::removeItemAtSourceFieldIndex(int index)
 {
   int i;
@@ -224,7 +255,8 @@ void mdtFieldMap::removeItemAtSourceFieldIndex(int index)
   for(i = 0; i < d->pvItems.size(); ++i){
     Q_ASSERT(d->pvItems.at(i) != 0);
     if(d->pvItems.at(i)->sourceFieldIndex() == index){
-      d->pvItems.removeAt(i);
+      ///d->pvItems.removeAt(i);
+      removeItem(d->pvItems.at(i));
       break;
     }
   }
@@ -237,7 +269,8 @@ void mdtFieldMap::removeItemAtDestinationFieldIndex(int index)
   for(i = 0; i < d->pvItems.size(); ++i){
     Q_ASSERT(d->pvItems.at(i) != 0);
     if(d->pvItems.at(i)->destinationFieldIndex() == index){
-      d->pvItems.removeAt(i);
+      ///d->pvItems.removeAt(i);
+      removeItem(d->pvItems.at(i));
       break;
     }
   }
@@ -254,7 +287,7 @@ void mdtFieldMap::clear()
   d->pvItems.clear();
 }
 
-mdtFieldMapItem *mdtFieldMap::itemAtFieldIndex(int index) const
+mdtFieldMapItem *mdtFieldMap::itemAtDestinationFieldIndex(int index) const
 {
   int i;
   mdtFieldMapItem *item;
@@ -302,12 +335,12 @@ mdtFieldMapItem *mdtFieldMap::itemAtDisplayText(const QString &text)
   return 0;
 }
 
-QString mdtFieldMap::sourceFieldNameAtFieldIndex(int index) const
+QString mdtFieldMap::sourceFieldNameAtDestinationFieldIndex(int index) const
 {
   QString name;
   mdtFieldMapItem *item;
 
-  item = itemAtFieldIndex(index);
+  item = itemAtDestinationFieldIndex(index);
   if(item != 0){
     name = item->sourceFieldName();
   }
@@ -351,7 +384,7 @@ QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name)
 
 QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int fieldIndex) const
 {
-  mdtFieldMapItem *item = itemAtFieldIndex(fieldIndex);
+  mdtFieldMapItem *item = itemAtDestinationFieldIndex(fieldIndex);
   if(item == 0){
     return QVariant();
   }
@@ -453,4 +486,47 @@ void mdtFieldMap::insertDataIntoSourceString(QString &str, const QVariant &data,
     str.resize(end+1);
   }
   str.replace(start, end-start+1, strData);
+}
+
+bool mdtFieldMap::fieldExistsInList(const mdtFieldMapField field, const QList<mdtFieldMapField> &list, mdtFieldMap::FieldReference_t reference) const
+{
+  return (indexOfFieldInList(field, list, reference) > -1);
+}
+
+int mdtFieldMap::indexOfFieldInList(const mdtFieldMapField field, const QList<mdtFieldMapField> &list, mdtFieldMap::FieldReference_t reference) const
+{
+  switch(reference){
+    case ReferenceByIndex:
+      return indexOfFieldInListByFieldIndex(field, list);
+    case ReferenceByName:
+      return indexOfFieldInListByFieldName(field, list);
+  }
+
+  return -1;
+}
+
+int mdtFieldMap::indexOfFieldInListByFieldIndex(const mdtFieldMapField field, const QList<mdtFieldMapField> &list) const
+{
+  int i;
+
+  for(i = 0; i < list.size(); ++i){
+    if(list.at(i).index() == field.index()){
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+int mdtFieldMap::indexOfFieldInListByFieldName(const mdtFieldMapField field, const QList<mdtFieldMapField> &list) const
+{
+  int i;
+
+  for(i = 0; i < list.size(); ++i){
+    if(list.at(i).name() == field.name()){
+      return i;
+    }
+  }
+
+  return -1;
 }

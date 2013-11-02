@@ -768,7 +768,7 @@ void mdtDataTableTest::fieldMapCopyTest()
   item->setDataType(QVariant::String);
   map1.addItem(item);
   item = 0;
-  item = map1.itemAtFieldIndex(11);
+  item = map1.itemAtDestinationFieldIndex(11);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 11);
   QCOMPARE(item->destinationFieldName(), QString("DEST11"));
@@ -786,7 +786,7 @@ void mdtDataTableTest::fieldMapCopyTest()
   item->setDataType(QVariant::String);
   map2.addItem(item);
   item = 0;
-  item = map2.itemAtFieldIndex(21);
+  item = map2.itemAtDestinationFieldIndex(21);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 21);
   QCOMPARE(item->destinationFieldName(), QString("DEST21"));
@@ -797,9 +797,9 @@ void mdtDataTableTest::fieldMapCopyTest()
   // Copy map1 to map2 and check
   map2 = map1;
   item = 0;
-  item = map2.itemAtFieldIndex(21);
+  item = map2.itemAtDestinationFieldIndex(21);
   QVERIFY(item == 0);
-  item = map2.itemAtFieldIndex(11);
+  item = map2.itemAtDestinationFieldIndex(11);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 11);
   QCOMPARE(item->destinationFieldName(), QString("DEST11"));
@@ -818,9 +818,9 @@ void mdtDataTableTest::fieldMapCopyTest()
   item->setDataType(QVariant::String);
   map1.addItem(item);
   // Check back map1 (must have new data)
-  item = map1.itemAtFieldIndex(11);
+  item = map1.itemAtDestinationFieldIndex(11);
   QVERIFY(item == 0);
-  item = map1.itemAtFieldIndex(13);
+  item = map1.itemAtDestinationFieldIndex(13);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 13);
   QCOMPARE(item->destinationFieldName(), QString("DEST13"));
@@ -829,7 +829,7 @@ void mdtDataTableTest::fieldMapCopyTest()
   QCOMPARE(item->sourceFieldName(), QString("SRC13"));
   QCOMPARE(item->dataType(), QVariant::String);
   // Check that map2 is intact
-  item = map2.itemAtFieldIndex(11);
+  item = map2.itemAtDestinationFieldIndex(11);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 11);
   QCOMPARE(item->destinationFieldName(), QString("DEST11"));
@@ -871,7 +871,7 @@ void mdtDataTableTest::fieldMapCopyTest()
   item->setDestinationFieldIndex(10);
   map1.addItem(item);
   QCOMPARE(map1.items().size(), 1);
-  item = map1.itemAtFieldIndex(10);
+  item = map1.itemAtDestinationFieldIndex(10);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 10);
   QCOMPARE(map1.sourceFields().size(), 0);
@@ -885,19 +885,19 @@ void mdtDataTableTest::fieldMapCopyTest()
   item->setDestinationFieldIndex(20);
   map2.addItem(item);
   QCOMPARE(map2.items().size(), 1);
-  item = map2.itemAtFieldIndex(20);
+  item = map2.itemAtDestinationFieldIndex(20);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 20);
   // Copy map2 to map1 and check
   map1 = map2;
   QCOMPARE(map1.items().size(), 1);
   QCOMPARE(map2.items().size(), 1);
-  item = map1.itemAtFieldIndex(20);
+  item = map1.itemAtDestinationFieldIndex(20);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 20);
   QCOMPARE(map1.sourceFields().size(), sourceFields.size());
   QCOMPARE(map1.destinationFields().size(), destinationFields.size());
-  item = map2.itemAtFieldIndex(20);
+  item = map2.itemAtDestinationFieldIndex(20);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 20);
   QCOMPARE(map2.sourceFields().size(), sourceFields.size());
@@ -908,17 +908,17 @@ void mdtDataTableTest::fieldMapCopyTest()
   map1.addItem(item);
   // Check map1
   QCOMPARE(map1.items().size(), 2);
-  item = map1.itemAtFieldIndex(20);
+  item = map1.itemAtDestinationFieldIndex(20);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 20);
-  item = map1.itemAtFieldIndex(11);
+  item = map1.itemAtDestinationFieldIndex(11);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 11);
   QCOMPARE(map1.sourceFields().size(), sourceFields.size());
   QCOMPARE(map1.destinationFields().size(), destinationFields.size());
   // Check map2 - must be untouched
   QCOMPARE(map2.items().size(), 1);
-  item = map2.itemAtFieldIndex(20);
+  item = map2.itemAtDestinationFieldIndex(20);
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 20);
   QCOMPARE(map2.sourceFields().size(), sourceFields.size());
@@ -1146,7 +1146,7 @@ void mdtDataTableTest::fieldMapTest()
     }
   }
   for(int i=0; i<modelHeader.size(); i++){
-    item = map.itemAtFieldIndex(i);
+    item = map.itemAtDestinationFieldIndex(i);
     QVERIFY(item != 0);
     QCOMPARE(item->destinationFieldIndex(), i);
     QCOMPARE(item->destinationFieldName(), modelHeader.at(i));
@@ -1156,15 +1156,15 @@ void mdtDataTableTest::fieldMapTest()
     QCOMPARE(item->destinationFieldName(), modelHeader.at(i));
   }
   // Check map direct access
-  QCOMPARE(map.sourceFieldNameAtFieldIndex(0), QString("A"));
-  QCOMPARE(map.sourceFieldNameAtFieldIndex(1), QString("B"));
-  QCOMPARE(map.sourceFieldNameAtFieldIndex(2), QString("Group1"));
-  QCOMPARE(map.sourceFieldNameAtFieldIndex(3), QString("Group1"));
-  QCOMPARE(map.sourceFieldNameAtFieldIndex(4), QString("C"));
-  QCOMPARE(map.sourceFieldNameAtFieldIndex(5), QString("Group2"));
-  QCOMPARE(map.sourceFieldNameAtFieldIndex(6), QString("Group2"));
-  QCOMPARE(map.sourceFieldNameAtFieldIndex(7), QString("Group2"));
-  QCOMPARE(map.sourceFieldNameAtFieldIndex(8), QString(""));
+  QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(0), QString("A"));
+  QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(1), QString("B"));
+  QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(2), QString("Group1"));
+  QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(3), QString("Group1"));
+  QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(4), QString("C"));
+  QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(5), QString("Group2"));
+  QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(6), QString("Group2"));
+  QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(7), QString("Group2"));
+  QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(8), QString(""));
   // Check Group1 split
   item = map.itemAtFieldName("Sub1Id");
   QVERIFY(item != 0);
@@ -1284,25 +1284,25 @@ void mdtDataTableTest::fieldMapTest()
   item->setSourceFieldIndex(3);
   item->setDestinationFieldIndex(13);
   // Check the mapping - search by field index
-  item = map.itemAtFieldIndex(10);
+  item = map.itemAtDestinationFieldIndex(10);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 1);
   QCOMPARE(item->sourceFieldName(), QString("A"));
   QCOMPARE(item->destinationFieldIndex(), 10);
   QCOMPARE(item->destinationFieldName(), QString("a1"));
-  item = map.itemAtFieldIndex(11);
+  item = map.itemAtDestinationFieldIndex(11);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 1);
   QCOMPARE(item->sourceFieldName(), QString("A"));
   QCOMPARE(item->destinationFieldIndex(), 11);
   QCOMPARE(item->destinationFieldName(), QString("a2"));
-  item = map.itemAtFieldIndex(12);
+  item = map.itemAtDestinationFieldIndex(12);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 2);
   QCOMPARE(item->sourceFieldName(), QString("B"));
   QCOMPARE(item->destinationFieldIndex(), 12);
   QCOMPARE(item->destinationFieldName(), QString("b"));
-  item = map.itemAtFieldIndex(13);
+  item = map.itemAtDestinationFieldIndex(13);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 3);
   QCOMPARE(item->sourceFieldName(), QString("C"));
@@ -1425,7 +1425,8 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("value"));
   // Check CSV headers
-  csvHeader = manager.csvHeader();
+  ///csvHeader = manager.csvHeader();
+  csvHeader = manager.sourceHeader();
   QCOMPARE(csvHeader.size(), 3);
   QCOMPARE(csvHeader.at(0), QString("code_PK"));
   QCOMPARE(csvHeader.at(1), QString("signal"));
@@ -1452,7 +1453,8 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("value"));
   // Check CSV headers
-  csvHeader = manager.csvHeader();
+  ///csvHeader = manager.csvHeader();
+  csvHeader = manager.sourceHeader();
   QCOMPARE(csvHeader.size(), 2);
   QCOMPARE(csvHeader.at(0), QString("signal"));
   QCOMPARE(csvHeader.at(1), QString("value"));
@@ -1491,7 +1493,8 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->headerData(3, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(model->headerData(4, Qt::Horizontal), QVariant("value"));
   // Check CSV headers
-  csvHeader = manager.csvHeader();
+  ///csvHeader = manager.csvHeader();
+  csvHeader = manager.sourceHeader();
   QCOMPARE(csvHeader.size(), 3);
   QCOMPARE(csvHeader.at(0), QString("bin I/O"));
   QCOMPARE(csvHeader.at(1), QString("signal"));
@@ -1522,7 +1525,8 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->headerData(3, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(model->headerData(4, Qt::Horizontal), QVariant("Value"));
   // Check CSV headers
-  csvHeader = manager.csvHeader();
+  ///csvHeader = manager.csvHeader();
+  csvHeader = manager.sourceHeader();
   QCOMPARE(csvHeader.size(), 3);
   QCOMPARE(csvHeader.at(0), QString("bin I/O"));
   QCOMPARE(csvHeader.at(1), QString("signal"));

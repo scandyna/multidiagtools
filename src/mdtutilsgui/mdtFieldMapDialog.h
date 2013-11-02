@@ -44,6 +44,7 @@ class mdtFieldMapDialog : public QDialog, Ui::mdtFieldMapDialog
 
   /*! \brief Set field map object
    *
+   * \pre map must contain at least 1 source field .
    */
   void setFieldMap(const mdtFieldMap &map);
 
@@ -57,13 +58,13 @@ class mdtFieldMapDialog : public QDialog, Ui::mdtFieldMapDialog
    */
   void addMapItem();
 
-  /*! \brief Edit a mapping item
-   */
-  void editMapItem();
-
   /*! \brief Remove a mapping item
    */
   void removeMapItem();
+
+  /*! \brief Edit destination field list
+   */
+  void editDestinationFieldList();
 
  private:
 
@@ -73,16 +74,15 @@ class mdtFieldMapDialog : public QDialog, Ui::mdtFieldMapDialog
    */
   void updateMappingTableView();
 
-  /*! \brief
+  /*! \brief Update the source preview
    */
   void updateSourcePreview();
 
-  /*! \brief
+  /*! \brief Update the destination preview
    */
   void updateDestinationPreview();
 
   mdtFieldMap pvFieldMap;
-  ///mdtFieldMap *pvInternalFieldMap;
 };
 
 #endif // #ifndef MDT_FIELD_MAP_DIALOG_H
