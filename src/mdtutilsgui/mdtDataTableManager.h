@@ -25,6 +25,7 @@
 #include "mdtFieldMap.h"
 #include "mdtSqlDatabaseManager.h"
 #include "mdtSqlSchemaTable.h"
+#include "mdtFieldMapField.h"
 #include "mdtError.h"
 #include <QObject>
 #include <QMap>
@@ -40,6 +41,7 @@
 
 class mdtDataTableModel;
 class QWidget;
+class QAbstractTableModel;
 
 /*! \brief Create/manage data sets
  */
@@ -84,13 +86,17 @@ class mdtDataTableManager : public QObject
    */
   QDir dataSetDirectory() const;
 
+  /*! \brief Get dataset table name
+   */
+  const QString dataSetTableName() const;
+
   /*! \brief Remove unalowed chars and suffixe _tbl to name to give a table name
    */
   static QString getTableName(const QString &dataSetName);
 
   /*! \brief Remove unalowed chars to give a field name
    */
-  static QString getFieldName(const QString &columnName);
+  ///static QString getFieldName(const QString &columnName);
 
   /*! \brief Create database and table
    *
@@ -218,11 +224,19 @@ class mdtDataTableManager : public QObject
    */
   ///QStringList csvHeader() const;
 
+  /*! \brief Get database header
+   */
+  const QStringList databaseHeader() const;
+
+  /*! \brief Set database header to model
+   */
+  void setDatabaseHeaderToModel(QAbstractTableModel *model);
+
   /*! \brief Set the display texts to model's header
    *
    * \pre Model must be valid.
    */
-  void setDisplayTextsToModelHeader();
+  ///void setDisplayTextsToModelHeader();
 
   /*! \brief Get display texts referenced by field names
    *
@@ -255,6 +269,14 @@ class mdtDataTableManager : public QObject
    */
   static bool userChooseToOverwrite(const QDir &dir, const QString &fileName);
 
+  /*! \brief Commit some rows of data to database
+   *
+   * \param rows Rows of data to commit
+   * \param fields Destination fields
+   * \return True on success, errors are logged with mdtError system.
+   */
+  bool commitRowsToDatabase(const QList<QVariantList> &rows, const QList<mdtFieldMapField> &fields, int autoValuePkFieldCount);
+
   /*! \brief Commit some rows of data to model
    *
    * \param rows Rows of data to commit
@@ -262,6 +284,10 @@ class mdtDataTableManager : public QObject
    * \pre Model must be valid.
    */
   bool commitRowsToModel(const QList<QStringList> &rows);
+
+  /*! \brief Get SQL statement for insert using QSqlQuery bind values
+   */
+  const QString insertBindValuesPrepareStatement(const QList<mdtFieldMapField> &fields, int autoValuePkFieldCount) const;
 
   Q_DISABLE_COPY(mdtDataTableManager);
 
@@ -272,6 +298,8 @@ class mdtDataTableManager : public QObject
   mdtError pvLastError;
   // Database specific members
   mdtSqlDatabaseManager *pvDatabaseManager;
+  QString pvDataSetTableName;
+  QStringList pvDatabaseHeader;
   // CSV specific members
   QString pvCsvSeparator;
   QString pvCsvDataProtection;

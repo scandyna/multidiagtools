@@ -88,6 +88,11 @@ void mdtFieldMapItem::setSourceField(const mdtFieldMapField &field)
   pvSourceField = field;
 }
 
+mdtFieldMapField mdtFieldMapItem::sourceField() const
+{
+  return pvSourceField;
+}
+
 void mdtFieldMapItem::setSourceFieldName(const QString &value)
 {
   pvSourceField.setName(value);

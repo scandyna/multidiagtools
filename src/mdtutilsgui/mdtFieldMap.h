@@ -104,16 +104,24 @@ class mdtFieldMap
    * Will create the source fields list .
    *  Given display text list will be used for display text in fields .
    *  Field names are get from display texts, but not allowed chars are replaced .
-   *  Indexing is also done .
+   *  Indexing is also done , starting at given start field index .
    *
-   * Note: it is not checked if a field name appeards more than one time,
+   * Note: it is not checked if a field name appears more than one time,
    *  you should care if data must be stored in a database table .
+   *
+   * Field data type will be set to QVariant::String .
    */
-  void setSourceFieldsByDisplayTexts(const QStringList &displayTexts);
+  void setSourceFieldsByDisplayTexts(const QStringList &displayTexts, int startFieldIndex);
 
   /*! \brief Get the list of source fields
    */
   const QList<mdtFieldMapField> &sourceFields() const;
+
+  /*! \brief Get a list of source fields that are mapped
+   *
+   * The returned list is sorted by column indexes .
+   */
+  const QList<mdtFieldMapField> mappedSourceFields() const;
 
   /*! \brief Get a list of source fields that are not allready mapped
    */
@@ -140,12 +148,14 @@ class mdtFieldMap
    * Will create the destination fields list .
    *  Given display text list will be used for display text in fields .
    *  Field names are get from display texts, but not allowed chars are replaced .
-   *  Indexing is also done .
+   *  Indexing is also done , starting at given start field index .
    *
-   * Note: it is not checked if a field name appeards more than one time,
+   * Note: it is not checked if a field name appears more than one time,
    *  you should care if data must be stored in a database table .
+   *
+   * Field data type will be set to QVariant::String .
    */
-  void setDestinationFieldsByDisplayTexts(const QStringList &displayTexts);
+  void setDestinationFieldsByDisplayTexts(const QStringList &displayTexts, int startFieldIndex);
 
   /*! \brief Update the list of destination fields
    *
@@ -158,6 +168,12 @@ class mdtFieldMap
   /*! \brief Get the list of destination fields
    */
   const QList<mdtFieldMapField> &destinationFields() const;
+
+  /*! \brief Get a list of destination fields that are mapped
+   *
+   * The returned list is sorted by column indexes .
+   */
+  const QList<mdtFieldMapField> mappedDestinationFields() const;
 
   /*! \brief Get a list of destination fields that are not allready mapped
    */
@@ -231,14 +247,7 @@ class mdtFieldMap
    * \param name Technical field name.
    * \return Pointer to item if found, else 0 (null pointer).
    */
-  mdtFieldMapItem *itemAtFieldName(const QString &name) const;
-
-  /*! \brief Get the item for a given display text
-   *
-   * \param text In above example, it's the model header text.
-   * \return Pointer to item if found, else 0 (null pointer).
-   */
-  mdtFieldMapItem *itemAtDisplayText(const QString &text);
+  mdtFieldMapItem *itemAtDestinationFieldName(const QString &name) const;
 
   /*! \brief Get the source field name for a given destination field index
    *
@@ -275,39 +284,35 @@ class mdtFieldMap
    */
   QVariant dataForDestinationFieldIndex(const QList<QVariant> &sourceDataRow, int destinationFieldIndex) const;
 
-  /*! \brief Get destination data row for given source data row
-   */
-  QList<QVariant> destinationDataRow(const QList<QVariant> &sourceDataRow) const;
-
-  /*! \brief Get data for a given field name in source data
+  /*! \brief Extract data for given destination field name in source data row
    *
-   * \param sourceData In above example, it's a line in CSV file.
-   * \param fieldName Technical field name.
+   * \param sourceDataRow In above example, it's a line in CSV file.
+   * \param destinationFieldName Destination technical field name.
    * \return Converted data, or invalid QVariant if name was not found, or on failed conversion.
    */
-  QVariant dataForFieldName(const QStringList &sourceData, const QString &fieldName) const;
+  QVariant dataForDestinationFieldName(const QStringList &sourceDataRow, const QString &destinationFieldName) const;
 
-  /*! \brief Get data for a given field display text in source data
-   *
-   * \param sourceData In above example, it's a line in CSV file.
-   * \param displayText In above example, it's the model header text.
-   * \return Converted data, or invalid QVariant if index was not found, or on failed conversion.
+  /*! \brief Get destination data row for given source data row
    */
-  QVariant dataForDisplayText(const QStringList &sourceData, const QString &displayText);
+  const QList<QVariant> destinationDataRow(const QList<QVariant> &sourceDataRow) const;
+
+  /*! \brief Get destination data row for given source data row with (source row as QStringList version)
+   */
+  const QList<QVariant> destinationDataRow(const QStringList &sourceDataRow) const;
 
   /*! \brief Get source data for given source field index
    *
    * \param data In above example it's the data in model.
    * \param sourceFieldIndex In above example, it's the index in a CSV file's line.
    */
-  QString dataForSourceFieldIndex(const QList<QVariant> &data, int sourceFieldIndex);
+  ///QString dataForSourceFieldIndex(const QList<QVariant> &data, int sourceFieldIndex);
 
   /*! \brief Get source data for given source field name
    *
    * \param data In above example it's the data in model.
    * \param sourceFieldName In above example, it's the technical name of field in a CSV file's line.
    */
-  QString dataForSourceFieldName(const QList<QVariant> &data, const QString &sourceFieldName);
+  ///QString dataForSourceFieldName(const QList<QVariant> &data, const QString &sourceFieldName);
 
   /*! \brief Get display texts referenced by field names
    *

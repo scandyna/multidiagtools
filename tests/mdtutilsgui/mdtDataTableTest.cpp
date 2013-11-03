@@ -1054,19 +1054,21 @@ void mdtDataTableTest::fieldMapTest()
   modelHeader << "A" << "B" << "Sub1Id" << "Sub1Name" << "C" << "Sub2Id" << "Sub2Name" << "Sub2Value";
   modelRow << "A data" << "B data" << "12" << "Name 12" << "C data" << "123" << "Na123" << "Value123";
   // Set fields by display texts
-  map.setSourceFieldsByDisplayTexts(csvHeader);
+  map.setSourceFieldsByDisplayTexts(csvHeader, 0);
   QCOMPARE(map.sourceFields().size(), csvHeader.size());
   for(int i = 0; i < map.sourceFields().size(); ++i){
     QCOMPARE(map.sourceFields().at(i).index(), i);
     QCOMPARE(map.sourceFields().at(i).name(), csvHeader.at(i));
     QCOMPARE(map.sourceFields().at(i).displayText(), csvHeader.at(i));
+    QCOMPARE(map.sourceFields().at(i).sqlField().type(), QVariant::String);
   }
-  map.setDestinationFieldsByDisplayTexts(modelHeader);
+  map.setDestinationFieldsByDisplayTexts(modelHeader, 0);
   QCOMPARE(map.destinationFields().size(), modelHeader.size());
   for(int i = 0; i < map.destinationFields().size(); ++i){
     QCOMPARE(map.destinationFields().at(i).index(), i);
     QCOMPARE(map.destinationFields().at(i).name(), modelHeader.at(i));
     QCOMPARE(map.destinationFields().at(i).displayText(), modelHeader.at(i));
+    QCOMPARE(map.destinationFields().at(i).sqlField().type(), QVariant::String);
   }
   // Build the map
   item = new mdtFieldMapItem;
@@ -1165,7 +1167,7 @@ void mdtDataTableTest::fieldMapTest()
     QVERIFY(item != 0);
     QCOMPARE(item->destinationFieldIndex(), i);
     QCOMPARE(item->destinationFieldName(), modelHeader.at(i));
-    item = map.itemAtFieldName(modelHeader.at(i));
+    item = map.itemAtDestinationFieldName(modelHeader.at(i));
     QVERIFY(item != 0);
     QCOMPARE(item->destinationFieldIndex(), i);
     QCOMPARE(item->destinationFieldName(), modelHeader.at(i));
@@ -1181,7 +1183,7 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(7), QString("Group2"));
   QCOMPARE(map.sourceFieldNameAtDestinationFieldIndex(8), QString(""));
   // Check Group1 split
-  item = map.itemAtFieldName("Sub1Id");
+  item = map.itemAtDestinationFieldName("Sub1Id");
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 2);
   QCOMPARE(item->destinationFieldName(), QString("Sub1Id"));
@@ -1190,7 +1192,7 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(item->sourceFieldName(), QString("Group1"));
   QCOMPARE(item->sourceFieldDataStartOffset(), 0);
   QCOMPARE(item->sourceFieldDataEndOffset(), 1);
-  item = map.itemAtFieldName("Sub1Name");
+  item = map.itemAtDestinationFieldName("Sub1Name");
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 3);
   QCOMPARE(item->destinationFieldName(), QString("Sub1Name"));
@@ -1198,21 +1200,21 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(item->sourceFieldIndex(), 2);
   QCOMPARE(item->sourceFieldName(), QString("Group1"));
   // Check Group2 split
-  item = map.itemAtFieldName("Sub2Id");
+  item = map.itemAtDestinationFieldName("Sub2Id");
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 5);
   QCOMPARE(item->destinationFieldName(), QString("Sub2Id"));
   QCOMPARE(item->destinationFieldDisplayText(), QString("Grp 2 ID"));
   QCOMPARE(item->sourceFieldIndex(), 4);
   QCOMPARE(item->sourceFieldName(), QString("Group2"));
-  item = map.itemAtFieldName("Sub2Name");
+  item = map.itemAtDestinationFieldName("Sub2Name");
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 6);
   QCOMPARE(item->destinationFieldName(), QString("Sub2Name"));
   QCOMPARE(item->destinationFieldDisplayText(), QString("Grp 2 Name"));
   QCOMPARE(item->sourceFieldIndex(), 4);
   QCOMPARE(item->sourceFieldName(), QString("Group2"));
-  item = map.itemAtFieldName("Sub2Value");
+  item = map.itemAtDestinationFieldName("Sub2Value");
   QVERIFY(item != 0);
   QCOMPARE(item->destinationFieldIndex(), 7);
   QCOMPARE(item->destinationFieldName(), QString("Sub2Value"));
@@ -1223,14 +1225,16 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(modelHeader.size(), modelRow.size());
   for(int i=0; i<modelRow.size(); i++){
     QCOMPARE(map.dataForDestinationFieldIndex(csvLine, i), QVariant(modelRow.at(i)));
-    QCOMPARE(map.dataForFieldName(csvLine, modelHeader.at(i)), QVariant(modelRow.at(i)));
+    QCOMPARE(map.dataForDestinationFieldName(csvLine, modelHeader.at(i)), QVariant(modelRow.at(i)));
   }
-  QCOMPARE(map.dataForDisplayText(csvLine, "Grp 2 Name"), QVariant("Na123"));
+  ///QCOMPARE(map.dataForDisplayText(csvLine, "Grp 2 Name"), QVariant("Na123"));
   QCOMPARE(csvHeader.size(), csvLine.size());
+  /**
   for(int i=0; i<csvLine.size(); i++){
     QCOMPARE(map.dataForSourceFieldIndex(modelRow, i), csvLine.at(i));
     QCOMPARE(map.dataForSourceFieldName(modelRow, csvHeader.at(i)), csvLine.at(i));
   }
+  */
   /*
    * Check that index update works
    */
@@ -1261,40 +1265,40 @@ void mdtDataTableTest::fieldMapTest()
   item->setDataType(QVariant::String);
   map.addItem(item);
   // Check the mapping
-  item = map.itemAtFieldName("a1");
+  item = map.itemAtDestinationFieldName("a1");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("A"));
   QCOMPARE(item->destinationFieldName(), QString("a1"));
   QCOMPARE(item->destinationFieldDisplayText(), QString("A 1"));
-  item = map.itemAtFieldName("a2");
+  item = map.itemAtDestinationFieldName("a2");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("A"));
   QCOMPARE(item->destinationFieldName(), QString("a2"));
   QCOMPARE(item->destinationFieldDisplayText(), QString("A 2"));
-  item = map.itemAtFieldName("b");
+  item = map.itemAtDestinationFieldName("b");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("B"));
   QCOMPARE(item->destinationFieldName(), QString("b"));
   QCOMPARE(item->destinationFieldDisplayText(), QString("B"));
-  item = map.itemAtFieldName("c");
+  item = map.itemAtDestinationFieldName("c");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("C"));
   QCOMPARE(item->destinationFieldName(), QString("c"));
   QCOMPARE(item->destinationFieldDisplayText(), QString("C"));
   // Update indexes
-  item = map.itemAtFieldName("a1");
+  item = map.itemAtDestinationFieldName("a1");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(1);
   item->setDestinationFieldIndex(10);
-  item = map.itemAtFieldName("a2");
+  item = map.itemAtDestinationFieldName("a2");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(1);
   item->setDestinationFieldIndex(11);
-  item = map.itemAtFieldName("b");
+  item = map.itemAtDestinationFieldName("b");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(2);
   item->setDestinationFieldIndex(12);
-  item = map.itemAtFieldName("c");
+  item = map.itemAtDestinationFieldName("c");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(3);
   item->setDestinationFieldIndex(13);
@@ -1382,7 +1386,7 @@ void mdtDataTableTest::fieldMapAutoMapTest()
 
   // Case 1 : set source fields, automapping must create destination fields and map them
   sourceHeader << "A" << "B" << "C" << "D" << "E";
-  map.setSourceFieldsByDisplayTexts(sourceHeader);
+  map.setSourceFieldsByDisplayTexts(sourceHeader, 0);
   map.generateMapping();
   QCOMPARE(map.sourceFields().size(), sourceHeader.size());
   QCOMPARE(map.notMappedSourceFields(mdtFieldMap::ReferenceByIndex).size(), 0);
@@ -1400,8 +1404,8 @@ void mdtDataTableTest::fieldMapAutoMapTest()
   sourceHeader << "A" << "B" << "C" << "D" << "E";
   destinationHeader.clear();
   destinationHeader << "C" << "A" << "E";
-  map.setSourceFieldsByDisplayTexts(sourceHeader);
-  map.setDestinationFieldsByDisplayTexts(destinationHeader);
+  map.setSourceFieldsByDisplayTexts(sourceHeader, 0);
+  map.setDestinationFieldsByDisplayTexts(destinationHeader, 0);
   map.generateMapping();
   // Check source fields
   QCOMPARE(map.sourceFields().size(), sourceHeader.size());
@@ -1440,11 +1444,12 @@ void mdtDataTableTest::fieldMapDataTest()
   QStringList destinationHeader;
   mdtFieldMap map;
   QList<QVariant> sourceRowData;
+  QStringList sourceRowStringList;
   QList<QVariant> destinationRowData;
 
   // Generate a simple mapping
   sourceHeader << "A" << "B" << "C" << "D";
-  map.setSourceFieldsByDisplayTexts(sourceHeader);
+  map.setSourceFieldsByDisplayTexts(sourceHeader, 0);
   map.generateMapping();
   QCOMPARE(map.items().size(), 4);
   // Check single item data
@@ -1461,9 +1466,9 @@ void mdtDataTableTest::fieldMapDataTest()
   QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 2), QVariant(3));
   QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 3), QVariant(4));
   // Check row of data
-  sourceRowData.clear();
-  sourceRowData << "a" << "b" << "c" << "d";
-  destinationRowData = map.destinationDataRow(sourceRowData);
+  sourceRowStringList.clear();
+  sourceRowStringList << "a" << "b" << "c" << "d";
+  destinationRowData = map.destinationDataRow(sourceRowStringList);
   QCOMPARE(destinationRowData.size(), 4);
   QCOMPARE(destinationRowData.at(0), QVariant("a"));
   QCOMPARE(destinationRowData.at(1), QVariant("b"));
@@ -1478,14 +1483,13 @@ void mdtDataTableTest::fieldMapDataTest()
   QCOMPARE(destinationRowData.at(2), QVariant(3));
   QCOMPARE(destinationRowData.at(3), QVariant(4));
 
-
   // Set source fields and destination fields
   sourceHeader.clear();
   sourceHeader << "A" << "B" << "C" << "D";
   destinationHeader.clear();
   destinationHeader << "D" << "A" << "C";
-  map.setSourceFieldsByDisplayTexts(sourceHeader);
-  map.setDestinationFieldsByDisplayTexts(destinationHeader);
+  map.setSourceFieldsByDisplayTexts(sourceHeader, 0);
+  map.setDestinationFieldsByDisplayTexts(destinationHeader, 0);
   map.generateMapping();
   QCOMPARE(map.items().size(), 3);
   // Check single item data
@@ -1499,7 +1503,21 @@ void mdtDataTableTest::fieldMapDataTest()
   QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 0), QVariant(4));
   QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 1), QVariant(1));
   QCOMPARE(map.dataForDestinationFieldIndex(sourceRowData, 2), QVariant(3));
-
+  // Check row of data
+  sourceRowStringList.clear();
+  sourceRowStringList << "a" << "b" << "c" << "d";
+  destinationRowData = map.destinationDataRow(sourceRowStringList);
+  QCOMPARE(destinationRowData.size(), 3);
+  QCOMPARE(destinationRowData.at(0), QVariant("d"));
+  QCOMPARE(destinationRowData.at(1), QVariant("a"));
+  QCOMPARE(destinationRowData.at(2), QVariant("c"));
+  sourceRowData.clear();
+  sourceRowData << 1 << 2 << 3 << 4;
+  destinationRowData = map.destinationDataRow(sourceRowData);
+  QCOMPARE(destinationRowData.size(), 3);
+  QCOMPARE(destinationRowData.at(0), QVariant(4));
+  QCOMPARE(destinationRowData.at(1), QVariant(1));
+  QCOMPARE(destinationRowData.at(2), QVariant(3));
 }
 
 void mdtDataTableTest::csvExportTest()
@@ -1550,7 +1568,8 @@ void mdtDataTableTest::csvImportTest()
 {
   QTemporaryFile csvFile1, csvFile2, csvFile3;
   mdtDataTableManager manager;
-  mdtDataTableModel *model;
+  ///mdtDataTableModel *model;
+  QSqlTableModel *model;
   QStringList csvHeader;
 
   // Write CSV file that contains a primary key
@@ -1561,7 +1580,10 @@ void mdtDataTableTest::csvImportTest()
   // Configure manager and import CSV
   manager.setCsvFormat(";", "", "", '\0');
   QVERIFY(manager.importFromCsvFile(csvFile1.fileName(), mdtSqlDatabaseManager::OverwriteExisting, "", QStringList("code_PK")));
-  model = manager.model();
+  model = new QSqlTableModel(0, manager.database());
+  model->setTable(manager.dataSetTableName());
+  QVERIFY(model->select());
+  ///model = manager.model();
   QVERIFY(model != 0);
   // Check model's header
   QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("code_PK"));
@@ -1579,6 +1601,7 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->data(model->index(0, 0)), QVariant(1));
   QCOMPARE(model->data(model->index(0, 1)), QVariant("Temp. M1"));
   QCOMPARE(model->data(model->index(0, 2)), QVariant("125.0"));
+  delete model;
 
   // Write CSV file that contains no primary key
   QVERIFY(csvFile2.open());
@@ -1589,8 +1612,11 @@ void mdtDataTableTest::csvImportTest()
   manager.clearFieldMap();
   manager.setCsvFormat(";", "", "", '\0');
   QVERIFY(manager.importFromCsvFile(csvFile2.fileName(), mdtSqlDatabaseManager::OverwriteExisting));
-  model = manager.model();
+  ///model = manager.model();
+  model = new QSqlTableModel(0, manager.database());
   QVERIFY(model != 0);
+  model->setTable(manager.dataSetTableName());
+  QVERIFY(model->select());
   // Check model's header
   QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
   QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("signal"));
@@ -1606,6 +1632,7 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->data(model->index(0, 0)), QVariant(1));
   QCOMPARE(model->data(model->index(0, 1)), QVariant("Temp. M2"));
   QCOMPARE(model->data(model->index(0, 2)), QVariant("126.0"));
+  delete model;
 
   /*
    * Check field mapping
@@ -1623,8 +1650,11 @@ void mdtDataTableTest::csvImportTest()
   manager.addFieldMapping("bin I/O", "cpuState", "CPU state", QVariant::String, 1, 1);
   manager.addFieldMapping("value", "value", "Value", QVariant::Double);
   QVERIFY(manager.importFromCsvFile(csvFile3.fileName(), mdtSqlDatabaseManager::OverwriteExisting));
-  model = manager.model();
+  ///model = manager.model();
+  model = new QSqlTableModel(0, manager.database());
   QVERIFY(model != 0);
+  model->setTable(manager.dataSetTableName());
+  QVERIFY(model->select());
   // Check model's header. Note: we don't know in witch order field splitting is done
   QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
   if(model->headerData(1, Qt::Horizontal) == QVariant("powerState")){
@@ -1655,7 +1685,8 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->data(model->index(0, 3)), QVariant("Rpm M2"));
   QCOMPARE(model->data(model->index(0, 4)), QVariant(55.0));
   // Set display texts to model header
-  manager.setDisplayTextsToModelHeader();
+  ///manager.setDisplayTextsToModelHeader();
+  manager.setDatabaseHeaderToModel(model);
   // Check model's header. Note: we don't know in witch order field splitting is done
   QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
   if(model->headerData(1, Qt::Horizontal) == QVariant("Power state")){
@@ -1674,6 +1705,7 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(csvHeader.at(0), QString("bin I/O"));
   QCOMPARE(csvHeader.at(1), QString("signal"));
   QCOMPARE(csvHeader.at(2), QString("value"));
+  delete model;
 
   return;
 
@@ -1682,8 +1714,10 @@ void mdtDataTableTest::csvImportTest()
    */
   manager.clearFieldMap();
   manager.enableProgressDialog(true);
-  manager.setCsvFormat(";", "\"", "", '"', "\r\n", "ISO-8859-15");
+  ///manager.setCsvFormat(";", "\"", "", '"', "\r\n", "ISO-8859-15");
+  manager.setCsvFormat(";", "\"", "", '"', "\n", "ISO-8859-15");
   ///void addFieldMapping(const QString &csvHeaderItem, const QString &fieldName, const QString &displayText, QVariant::Type dataType, int csvDataItemStartOffset = -1, int csvDataItemEndOffset = -1);
+  /**
   manager.addFieldMapping("Logici 1", "digital1", "Logique 1", QVariant::String);
   manager.addFieldMapping("Logici 1", "fakeDJstate", "Fake DJ state", QVariant::String, 0, 0);
   manager.addFieldMapping("Logici 1", "fakeIRstate", "Fake IR state", QVariant::String, 1, 1);
@@ -1693,13 +1727,21 @@ void mdtDataTableTest::csvImportTest()
   manager.addFieldMapping("Logici 1", "fakePanto4state", "Fake panto 4 state", QVariant::String, 5, 5);
   manager.addFieldMapping("Logici 1", "fakePanto5state", "Fake panto 5 state", QVariant::String, 6, 6);
   manager.addFieldMapping("Logici 1", "fakePanto6state", "Fake panto 6 state", QVariant::String, 7, 7);
+  */
   
-  QVERIFY(manager.importFromCsvFile("/tmp/example_dwn.csv", mdtSqlDatabaseManager::AskUserIfExists));
+  ///QVERIFY(manager.importFromCsvFile("/tmp/example_dwn.csv", mdtSqlDatabaseManager::AskUserIfExists));
+  QVERIFY(manager.importFromCsvFile("/tmp/Records.csv", mdtSqlDatabaseManager::AskUserIfExists));
+  
+  model = new QSqlTableModel(0, manager.database());
+  QVERIFY(model != 0);
+  model->setTable(manager.dataSetTableName());
+  QVERIFY(model->select());
+  manager.setDatabaseHeaderToModel(model);
   ///manager.setCsvFormat(";", "\"", "", '"', "\r\n", "UTF-8");
   ///QVERIFY(manager.importFromCsvFile("/tmp/example_unicontrol.csv", mdtDataTableManager::AskUserIfExists));
   ///QVERIFY(manager.importFromCsvFile("/media/PS_MBS/example_dwn.csv", mdtDataTableManager::AskUserIfExists));
-  QVERIFY(manager.model() != 0);
-  manager.setDisplayTextsToModelHeader();
+  ///QVERIFY(manager.model() != 0);
+  ///manager.setDisplayTextsToModelHeader();
 
   ///QString sql;
   ///QSqlQueryModel qm;

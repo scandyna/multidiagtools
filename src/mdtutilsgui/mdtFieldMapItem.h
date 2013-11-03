@@ -92,6 +92,10 @@ class mdtFieldMapItem
    */
   void setSourceField(const mdtFieldMapField &field);
 
+  /*! \brief Get source field
+   */
+  mdtFieldMapField sourceField() const;
+
   /*! \brief Set source field name
    */
   void setSourceFieldName(const QString &value);
