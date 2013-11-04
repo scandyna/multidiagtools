@@ -20,11 +20,12 @@
  ****************************************************************************/
 #include "mdtClDatabaseSchema.h"
 #include "mdtSqlDatabaseManager.h"
-#include <QDir>
+#include "mdtDataTableManager.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlField>
 #include <QFileInfo>
+#include <QStringList>
 
 #include <QDebug>
 
@@ -41,15 +42,27 @@ mdtClDatabaseSchema::~mdtClDatabaseSchema()
   ///delete pvDatabaseManager;
 }
 
+bool mdtClDatabaseSchema::createSchemaSqlite(const QDir & startDirectory)
+{
+  if(!pvDatabaseManager->createDatabaseSqlite(startDirectory)){
+    return false;
+  }
+  return createSchemaSqlite();
+}
+
 bool mdtClDatabaseSchema::createSchemaSqlite(const QFileInfo & dbFileInfo) 
 {
-  QString sql;
-
-  pvTables.clear();
   if(!pvDatabaseManager->createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting)){
     return false;
   }
+  return createSchemaSqlite();
+}
 
+bool mdtClDatabaseSchema::createSchemaSqlite()
+{
+  Q_ASSERT(pvDatabaseManager->database().isOpen());
+
+  pvTables.clear();
   setupTables();
   if(!createTablesSqlite()){
     return false;
@@ -58,7 +71,6 @@ bool mdtClDatabaseSchema::createSchemaSqlite(const QFileInfo & dbFileInfo)
   qDebug() << "Table count: " << pvDatabaseManager->database().tables(QSql::Tables).size();
   qDebug() << "Tables: " << pvDatabaseManager->database().tables(QSql::Tables);
 
-  
   if(!createViews()){
     return false;
   }
@@ -66,6 +78,93 @@ bool mdtClDatabaseSchema::createSchemaSqlite(const QFileInfo & dbFileInfo)
   qDebug() << "View count: " << pvDatabaseManager->database().tables(QSql::Views).size();
   qDebug() << "Views: " << pvDatabaseManager->database().tables(QSql::Views);
 
+  return checkSchema();
+}
+
+bool mdtClDatabaseSchema::importDatabase(const QDir & startDirectory)
+{
+  Q_ASSERT(pvDatabaseManager->database().isOpen());
+
+  QFileInfo dbFileInfo;
+
+  // Let the user choose source database
+  dbFileInfo = pvDatabaseManager->chooseDatabaseSqlite(startDirectory);
+  if(dbFileInfo.fileName().isEmpty()){
+    return false;
+  }
+
+  return importDatabase(dbFileInfo);
+}
+
+bool mdtClDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
+{
+  Q_ASSERT(pvDatabaseManager->database().isOpen());
+
+  mdtSqlDatabaseManager sourceDbManager;
+  mdtDataTableManager tableManager;
+  QStringList sourceTables, destinationTables, ignoredTables;
+  int i;
+
+  // Open source database
+  if(!sourceDbManager.openDatabaseSqlite(sourceDbFileInfo, "import_db_connection")){
+    pvLastError = sourceDbManager.lastError();
+    return false;
+  }
+  // Check that it's not the current database
+  if(sourceDbManager.database().databaseName() == pvDatabaseManager->database().databaseName()){
+    pvLastError.setError("Selected source database is the same as current (destination) database.", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    pvLastError.commit();
+    return false;
+  }
+  // Get the list of source tables and check if we have all in current database
+  sourceTables = sourceDbManager.database().tables(QSql::Tables);
+  destinationTables = pvDatabaseManager->database().tables(QSql::Tables);
+  for(i = 0; i < sourceTables.size(); ++i){
+    if(!destinationTables.contains(sourceTables.at(i))){
+      pvLastError.setError("Table '" + sourceTables.at(i) + "' does not exists in current database - Will be ignored", mdtError::Warning);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+      pvLastError.commit();
+      ignoredTables.append(sourceTables.at(i));
+    }
+  }
+  // Remove ignored tables
+  for(i = 0; i < ignoredTables.size(); ++i){
+    sourceTables.removeAll(ignoredTables.at(i));
+  }
+  // We also remove the sqlite_sequence table
+  sourceTables.removeAll("sqlite_sequence");
+  // Copy tables
+  for(i = 0; i < sourceTables.size(); ++i){
+    if(!tableManager.copyTable(sourceTables.at(i), sourceTables.at(i), mdtSqlDatabaseManager::KeepExisting, sourceDbManager.database(), pvDatabaseManager->database())){
+      pvLastError = tableManager.lastError();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::checkSchema()
+{
+  Q_ASSERT(pvDatabaseManager->database().isOpen());
+
+  QStringList dbTables;
+  int i;
+
+  // We call setup methods to build the list of expected tables
+  pvTables.clear();
+  setupTables();
+  // Get database available tables and check
+  dbTables = pvDatabaseManager->database().tables();
+  for(i = 0; i < pvTables.size(); ++i){
+    if(!dbTables.contains(pvTables.at(i).tableName())){
+      pvLastError.setError("Table '" + pvTables.at(i).tableName() + "' is missing in database '" + pvDatabaseManager->database().databaseName() + "'.", mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+      pvLastError.commit();
+      return false;
+    }
+  }
 
   return true;
 }

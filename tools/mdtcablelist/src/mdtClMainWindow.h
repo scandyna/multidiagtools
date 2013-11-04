@@ -22,8 +22,10 @@
 #define MDT_CL_MAIN_WINDOW_H
 
 #include "ui_mdtClMainWindow.h"
+#include "mdtError.h"
 #include <QMainWindow>
 #include <QDir>
+#include <QString>
 
 class mdtSqlDatabaseManager;
 class mdtClVehicleTypeEditor;
@@ -49,6 +51,22 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   ~mdtClMainWindow();
 
  private slots:
+
+  /*! \brief Open a database
+   */
+  void openDatabase();
+
+  /*! \brief Close a database
+   */
+  void closeDatabase();
+
+  /*! \brief Create a new database
+   */
+  void createNewDatabase();
+
+  /*! \brief Import a database
+   */
+  void importDatabase();
 
   /*! \brief Edit vehicle types
    */
@@ -80,6 +98,18 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   bool openDatabaseSqlite();
 
+  /*! \brief Create a new Sqlite database
+   */
+  bool createDatabaseSqlite();
+
+  /*! \brief Import a Sqlite database into currently open database
+   */
+  bool importDatabaseSqlite();
+
+  /*! \brief Display a warning to the user
+   */
+  void displayWarning(const QString & text, const QString & informativeText = "");
+
   // Database members
   mdtSqlDatabaseManager *pvDatabaseManager;
   QDir pvWorkDirectory;
@@ -88,7 +118,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   mdtClUnitEditor *pvUnitEditor;
   mdtClArticleEditor *pvArticleEditor;
   // Actions
-  QAction *pvActEditVehicleType;
+  ///QAction *pvActEditVehicleType;
   QAction *pvActEditUnit;
   QAction *pvActEditArticle;
 };

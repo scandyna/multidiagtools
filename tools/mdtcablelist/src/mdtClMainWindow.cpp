@@ -24,7 +24,6 @@
 #include "mdtClVehicleTypeEditor.h"
 #include "mdtClUnitEditor.h"
 #include "mdtClArticleEditor.h"
-#include "mdtError.h"
 #include <QAction>
 #include <QMessageBox>
 #include <QApplication>
@@ -40,7 +39,7 @@ mdtClMainWindow::mdtClMainWindow()
   pvDatabaseManager->setForDialogParentWidget(this);
   /// \todo provisoire
   initWorkDirectory();
-  openDatabaseSqlite();
+  ///openDatabaseSqlite();
   // Editors - Will be setup on first call
   pvVehicleTypeEditor = 0;
   pvUnitEditor = 0;
@@ -51,6 +50,33 @@ mdtClMainWindow::mdtClMainWindow()
 
 mdtClMainWindow::~mdtClMainWindow()
 {
+}
+
+void mdtClMainWindow::openDatabase()
+{
+  openDatabaseSqlite();
+}
+
+void mdtClMainWindow::closeDatabase()
+{
+  /// \todo Check about data saving !!
+  delete pvVehicleTypeEditor;
+  pvVehicleTypeEditor = 0;
+  delete pvArticleEditor;
+  pvArticleEditor = 0;
+  delete pvUnitEditor;
+  pvUnitEditor = 0;
+  pvDatabaseManager->database().close();
+}
+
+void mdtClMainWindow::createNewDatabase()
+{
+  createDatabaseSqlite();
+}
+
+void mdtClMainWindow::importDatabase()
+{
+  importDatabaseSqlite();
 }
 
 void mdtClMainWindow::editVehicleType()
@@ -115,19 +141,24 @@ void mdtClMainWindow::editArticle()
 
 void mdtClMainWindow::createActions()
 {
+  // Open database
+  connect(actOpenDatabase, SIGNAL(triggered()), this, SLOT(openDatabase()));
+  // Close database
+  connect(actCloseDatabase, SIGNAL(triggered()), this, SLOT(closeDatabase()));
+  // Create new database
+  connect(actCreateNewDatabase, SIGNAL(triggered()), this, SLOT(createNewDatabase()));
+  // Import database
+  connect(actImportDatabase, SIGNAL(triggered()), this, SLOT(importDatabase()));
+
+  // Article edition
+  connect(actEditArticle, SIGNAL(triggered()), this, SLOT(editArticle()));
+  connect(pbEditArticle, SIGNAL(clicked()), this, SLOT(editArticle()));
   // Vehicle type edition
-  pvActEditVehicleType = new QAction(tr("Edit vehicle types"), this);
-  connect(pvActEditVehicleType, SIGNAL(triggered()), this, SLOT(editVehicleType()));
+  connect(actEditVehicleType, SIGNAL(triggered()), this, SLOT(editVehicleType()));
   connect(pbEditVehicleType, SIGNAL(clicked()), this, SLOT(editVehicleType()));
   // Unit edition
-  pvActEditUnit = new QAction(tr("Edit units"), this);
-  connect(pvActEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
+  connect(actEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
   connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
-  // Article edition
-  pvActEditArticle = new QAction(tr("Edit articles"), this);
-  connect(pvActEditArticle, SIGNAL(triggered()), this, SLOT(editArticle()));
-  connect(pbEditArticle, SIGNAL(clicked()), this, SLOT(editArticle()));
-
 }
 
 bool mdtClMainWindow::initWorkDirectory()
@@ -146,13 +177,16 @@ bool mdtClMainWindow::initWorkDirectory()
       return false;
     }
     if(!pvWorkDirectory.cd("mdtcablelist")){
-      QMessageBox msgBox(this);
+      ///QMessageBox msgBox(this);
       mdtError e(tr("Cannot create 'mdtcablelist' directory."), mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
       e.commit();
+      displayWarning(e.text());
+      /**
       msgBox.setText(e.text());
       msgBox.setIcon(QMessageBox::Critical);
       msgBox.exec();
+      */
       return false;
     }
   }
@@ -162,10 +196,25 @@ bool mdtClMainWindow::initWorkDirectory()
 
 bool mdtClMainWindow::openDatabaseSqlite()
 {
+  QFileInfo fileInfo;
+
+  // Check that no database is allready open
+  if(pvDatabaseManager->database().isOpen()){
+    displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
+    return false;
+  }
+  // Let the user choose a file
+  fileInfo = pvDatabaseManager->chooseDatabaseSqlite(pvWorkDirectory);
+  if(fileInfo.fileName().isEmpty()){
+    return false;
+  }
   /// \todo Mange, let user choose, etc...
-  QFileInfo fileInfo(pvWorkDirectory, "test01.sqlite");
+  ///QFileInfo fileInfo(pvWorkDirectory, "test01.sqlite");
+  // Open database
   if(!pvDatabaseManager->openDatabaseSqlite(fileInfo)){
+    displayWarning(pvDatabaseManager->lastError().text());
     /// \todo Dangerous !!
+    /**
     mdtClDatabaseSchema dbSchema(pvDatabaseManager);
     if(!dbSchema.createSchemaSqlite(fileInfo)){
       QMessageBox msgBox(this);
@@ -177,7 +226,62 @@ bool mdtClMainWindow::openDatabaseSqlite()
       msgBox.exec();
       return false;
     }
+    */
+    return false;
+  }
+  // Check that we have open a cable list schema
+  mdtClDatabaseSchema dbSchema(pvDatabaseManager);
+  if(!dbSchema.checkSchema()){
+    displayWarning(tr("Choosen file does not contain a valid cable list database."));
+    closeDatabase();
+    return false;
   }
 
   return true;
+}
+
+bool mdtClMainWindow::createDatabaseSqlite()
+{
+  // Check that no database is allready open
+  if(pvDatabaseManager->database().isOpen()){
+    displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
+    return false;
+  }
+  // Create database
+  mdtClDatabaseSchema dbSchema(pvDatabaseManager);
+
+  return dbSchema.createSchemaSqlite(pvWorkDirectory);
+}
+
+bool mdtClMainWindow::importDatabaseSqlite()
+{
+  // Check that we have currently a database open
+  if(!pvDatabaseManager->database().isOpen()){
+    displayWarning(tr("Cannot import a database."), tr("Please open a database and try again."));
+    return false;
+  }
+  /// \todo Save current edition !
+  /// \todo Create a backup from current database !
+  // Let the user a chance to cancel import
+  QMessageBox msgBox(this);
+  msgBox.setText(tr("You are about to import a database into current database."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return false;
+  }
+  // Import ...
+  mdtClDatabaseSchema dbSchema(pvDatabaseManager);
+
+  return dbSchema.importDatabase(pvWorkDirectory);
+}
+
+void mdtClMainWindow::displayWarning(const QString & text , const QString & informativeText)
+{
+  QMessageBox msgBox(this);
+  msgBox.setText(text);
+  msgBox.setInformativeText(informativeText);
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.exec();
 }

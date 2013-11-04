@@ -7,40 +7,52 @@
     <x>0</x>
     <y>0</y>
     <width>479</width>
-    <height>167</height>
+    <height>297</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="pbEditVehicleType">
-        <property name="text">
-         <string>Edit vehicle types</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pbEditArticle">
-        <property name="text">
-         <string>Edit articles</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pbEditUnit">
-        <property name="text">
-         <string>Edit units</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
+   <widget class="QPushButton" name="pbEditUnit">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>40</y>
+      <width>85</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Edit units</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbEditArticle">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>40</y>
+      <width>100</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Edit articles</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbEditVehicleType">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>137</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Edit vehicle types</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -51,8 +63,83 @@
      <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actOpenDatabase"/>
+    <addaction name="actCloseDatabase"/>
+    <addaction name="actCreateNewDatabase"/>
+    <addaction name="actImportDatabase"/>
+    <addaction name="separator"/>
+    <addaction name="ActQuit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Edition">
+    <property name="title">
+     <string>&amp;Edition</string>
+    </property>
+    <addaction name="actEditVehicleType"/>
+    <addaction name="separator"/>
+    <addaction name="actEditArticle"/>
+    <addaction name="separator"/>
+    <addaction name="actEditUnit"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Edition"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actOpenDatabase"/>
+  </widget>
+  <action name="actOpenDatabase">
+   <property name="text">
+    <string>&amp;Open a database</string>
+   </property>
+  </action>
+  <action name="actCreateNewDatabase">
+   <property name="text">
+    <string>Create a &amp;new database</string>
+   </property>
+  </action>
+  <action name="actImportDatabase">
+   <property name="text">
+    <string>&amp;Import a database</string>
+   </property>
+  </action>
+  <action name="ActQuit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actCloseDatabase">
+   <property name="text">
+    <string>&amp;Close database</string>
+   </property>
+  </action>
+  <action name="actEditVehicleType">
+   <property name="text">
+    <string>Edit &amp;vehicle types</string>
+   </property>
+  </action>
+  <action name="actEditArticle">
+   <property name="text">
+    <string>Edit &amp;articles</string>
+   </property>
+  </action>
+  <action name="actEditUnit">
+   <property name="text">
+    <string>Edit &amp;units</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

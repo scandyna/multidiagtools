@@ -26,6 +26,8 @@
 #include <QList>
 #include <QString>
 #include <QFileInfo>
+#include <QDir>
+#include <QSqlDatabase>
 
 class mdtSqlDatabaseManager;
 
@@ -44,8 +46,46 @@ class mdtClDatabaseSchema
   ~mdtClDatabaseSchema();
 
   /*! \brief Create schema using Sqlite
+   *
+   * Ask the user to enter a path and create schema .
+   * The startDirectory is used as directory to go when displaying the file dialog .
+   */
+  bool createSchemaSqlite(const QDir & startDirectory);
+
+  /*! \brief Create schema using Sqlite
    */
   bool createSchemaSqlite(const QFileInfo & dbFileInfo);
+
+  /*! \brief Create schema using Sqlite
+   *
+   * \pre A database must allready be open .
+   */
+  bool createSchemaSqlite();
+
+  /*! \brief Import a database
+   *
+   * Will ask the user to choose a source database and import it to currently open database .
+   * The startDirectory is used as directory to go when displaying the file dialog .
+   *
+   * \pre A database (witch is destination database) must allready be open .
+   */
+  bool importDatabase(const QDir & startDirectory);
+
+  /*! \brief Import a database
+   *
+   * Will import database given by sourceDbFileInfo into current open database .
+   *
+   * \pre A database (witch is destination database) must allready be open .
+   */
+  bool importDatabase(const QFileInfo sourceDbFileInfo);
+
+  /*! \brief Check validity of a schema
+   *
+   * \todo Current version only checks that all expected tables exists .
+   *
+   * \pre A database must allready be open .
+   */
+  bool checkSchema();
 
   private:
 

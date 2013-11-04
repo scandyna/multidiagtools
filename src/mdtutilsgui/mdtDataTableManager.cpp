@@ -34,7 +34,7 @@
 #include <QApplication>
 #include <QTextCodec>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtDataTableManager::mdtDataTableManager(QObject *parent, QSqlDatabase db)
  : QObject(parent)
@@ -417,19 +417,13 @@ bool mdtDataTableManager::copyTable(const QString & sourceTableName, const QStri
       destinationFieldIndex++;
     }
   }
-  qDebug() << "SRC header: " << pvFieldMap.sourceHeader();
-  qDebug() << "DST header: " << pvFieldMap.destinationHeader();
   sourceFields = pvFieldMap.mappedSourceFields();
-  for(i = 0; i < sourceFields.size(); ++i){
-    qDebug() << "SRC field: " << sourceFields.at(i).sqlField();
-  }
   // Create destination table
   pkFields = sourceDatabase.primaryIndex(sourceTableName);
   destinationFields = pvFieldMap.mappedDestinationFields();
   destinationTable.setTableName(destinationTableName);
   pvDataSetTableName = destinationTableName;
   for(i = 0; i < destinationFields.size(); ++i){
-    qDebug() << "DST field: " << destinationFields.at(i).sqlField();
     // Check if field is part of primary key and add it to database table
     if(pkFields.contains(destinationFields.at(i).name())){
       destinationTable.addField(destinationFields.at(i).sqlField(), true);
@@ -461,11 +455,10 @@ bool mdtDataTableManager::copyTable(const QString & sourceTableName, const QStri
     }
   }
   sql += "\n FROM '" + sourceTableName +"'";
-  qDebug() << "SQL: " << sql;
   QSqlQuery sourceDataQuery(sourceDatabase);
   if(!sourceDataQuery.exec(sql)){
     sqlError = sourceDataQuery.lastError();
-    pvLastError.setError(tr("Unable to get source data for copy."), mdtError::Error);
+    pvLastError.setError(tr("Unable to get source data from table '") + sourceTableName + tr("' for copy."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtDataTableManager");
     pvLastError.commit();
@@ -615,7 +608,6 @@ bool mdtDataTableManager::commitRowsToDatabase(const QList<QVariantList> &rows, 
   }
   // Prepare query for insertion
   sql = insertBindValuesPrepareStatement(fields, autoValuePkFieldName);
-  ///qDebug() << "sql: " << sql;
   if(!query.prepare(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot prepare query for insertion in database", mdtError::Error);
@@ -634,15 +626,9 @@ bool mdtDataTableManager::commitRowsToDatabase(const QList<QVariantList> &rows, 
       autoValuePkFieldCount = 1;
       query.bindValue(0, QVariant());
     }
-    /**
-    for(col = 0; col < autoValuePkFieldCount; ++col){
-      query.bindValue(col, QVariant());
-    }
-    */
     for(col = 0; col < rows.at(row).size(); ++col){
       query.bindValue(col + autoValuePkFieldCount, rows.at(row).at(col));
     }
-    ///qDebug() << "Bound: " << query.boundValues();
     // Execute query
     if(!query.exec()){
       sqlError = query.lastError();
@@ -672,11 +658,6 @@ const QString mdtDataTableManager::insertBindValuesPrepareStatement(const QList<
   int i;
 
   sql = "INSERT INTO " + pvDataSetTableName + " (";
-  /**
-  for(i = 0; i < autoValuePkFieldCount; ++i){
-    sql += "?,";
-  }
-  */
   if(!autoValuePkFieldName.isEmpty()){
     sql += autoValuePkFieldName + ",";
   }
@@ -692,11 +673,6 @@ const QString mdtDataTableManager::insertBindValuesPrepareStatement(const QList<
   if(!autoValuePkFieldName.isEmpty()){
     sql += "?,";
   }
-  /**
-  for(i = 0; i < autoValuePkFieldCount; ++i){
-    sql += "?,";
-  }
-  */
   for(i = 0; i < fields.size(); ++i){
     sql += "?";
     if(i < (fields.size() - 1)){

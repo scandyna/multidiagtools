@@ -679,6 +679,8 @@ void mdtDataTableTest::editDataTest()
   QCOMPARE(model->data(model->index(5, 2)), QVariant(123.2));
   QCOMPARE(model->data(model->index(6, 1)), QVariant("Temp. M4"));
   QCOMPARE(model->data(model->index(6, 2)), QVariant(89.7));
+
+  delete model;
 }
 
 void mdtDataTableTest::fieldMapItemCopyTest()
@@ -1803,10 +1805,8 @@ void mdtDataTableTest::copyTableTest()
   // Create temporary files
   QVERIFY(f1.open());
   QVERIFY(f2.open());
-  qDebug() << "f1: " << f1.fileName() << ", f2: " << f2.fileName();
   f1.close();
   f2.close();
-  qDebug() << "f1: " << f1.fileName() << ", f2: " << f2.fileName();
 
   // We give both tables the same name (copy from 2 distinct databases)
   sourceTableName = "test_tbl";
@@ -1830,8 +1830,6 @@ void mdtDataTableTest::copyTableTest()
   QVERIFY(dbManager.createDatabaseSqlite(fileInfo, mdtSqlDatabaseManager::OverwriteExisting, "source_db"));
   QVERIFY(dbManager.createTable(table, mdtSqlDatabaseManager::OverwriteExisting));
   db1 = dbManager.database();
-  qDebug() << "DB1 CNN: " << db1.connectionName();
-  qDebug() << "DB1 table: " << db1.tables();
   // Create descond database and table
   table.clear();
   table.setTableName(destinationTableName);
@@ -1856,8 +1854,6 @@ void mdtDataTableTest::copyTableTest()
   QVERIFY(dbManager.createDatabaseSqlite(fileInfo, mdtSqlDatabaseManager::OverwriteExisting, "destination_db"));
   QVERIFY(dbManager.createTable(table, mdtSqlDatabaseManager::OverwriteExisting));
   db2 = dbManager.database();
-  qDebug() << "DB2 CNN: " << db2.connectionName();
-  qDebug() << "DB2 tables: " << db2.tables();
   // Insert data into first database
   QVERIFY(db1.isOpen());
   query = new QSqlQuery(db1);
@@ -1876,12 +1872,8 @@ void mdtDataTableTest::copyTableTest()
   QVERIFY(tableManager.copyTable(sourceTableName, destinationTableName, mdtSqlDatabaseManager::KeepExisting, db1, db2));
   // Check copy
   QVERIFY(db2.isOpen());
-  qDebug() << "After copy, db2 tables: " << db2.tables();
-  qDebug() << "-> test_tbl: " << db2.record("test_tbl");
   query = new QSqlQuery(db2);
   sql = "SELECT Id_PK, Name, Alias FROM '" + destinationTableName + "'";
-  query->exec(sql);
-  qDebug() << query->lastError();
   QVERIFY(query->exec(sql));
   QVERIFY(query->next());
   QCOMPARE(query->record().count(), 3);
