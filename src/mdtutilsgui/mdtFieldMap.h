@@ -300,20 +300,6 @@ class mdtFieldMap
    */
   const QList<QVariant> destinationDataRow(const QStringList &sourceDataRow) const;
 
-  /*! \brief Get source data for given source field index
-   *
-   * \param data In above example it's the data in model.
-   * \param sourceFieldIndex In above example, it's the index in a CSV file's line.
-   */
-  ///QString dataForSourceFieldIndex(const QList<QVariant> &data, int sourceFieldIndex);
-
-  /*! \brief Get source data for given source field name
-   *
-   * \param data In above example it's the data in model.
-   * \param sourceFieldName In above example, it's the technical name of field in a CSV file's line.
-   */
-  ///QString dataForSourceFieldName(const QList<QVariant> &data, const QString &sourceFieldName);
-
   /*! \brief Get display texts referenced by field names
    *
    * \return QHash with fieldName as key and displayText as value.

@@ -55,6 +55,8 @@
 
 void mdtDataTableTest::sandbox()
 {
+  QSKIP("Just a sanbox test", SkipAll);
+
   mdtFieldMapItemDialog dialog;
   mdtFieldMapDialog fmDialog;
   QList<mdtFieldMapField> sourceFields;
@@ -141,7 +143,7 @@ void mdtDataTableTest::sandbox()
   qDebug() << "-> destination field D. text : " << mapItem.destinationFieldDisplayText();
   */
 
-  QSKIP("Just a sanbox test", SkipAll);
+  ///QSKIP("Just a sanbox test", SkipAll);
 
   QSqlDatabase db;
   QString sql;
@@ -234,7 +236,7 @@ void mdtDataTableTest::sandbox()
 void mdtDataTableTest::createDataSetTest()
 {
   mdtDataTableManager manager;
-  mdtDataTableModel *model;
+  QSqlTableModel *model;
   QTemporaryFile dbFile;
   QFileInfo fileInfo;
   QSqlField field;
@@ -273,8 +275,10 @@ void mdtDataTableTest::createDataSetTest()
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
   // Get model and check that columns exists
-  model = manager.model();
+  model = new QSqlTableModel(0, manager.database());
   QVERIFY(model != 0);
+  model->setTable(manager.dataSetTableName());
+  QVERIFY(model->select());
   QCOMPARE(model->tableName(), dataSetTableName);
   QCOMPARE(model->columnCount(), 3);
   QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
@@ -284,12 +288,15 @@ void mdtDataTableTest::createDataSetTest()
   QVERIFY(model->select());
   QCOMPARE(model->rowCount(), 0);
   manager.close();
+  delete model;
 
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(manager.database().isOpen());
   // Get model and check that columns exists
-  model = manager.model();
+  model = new QSqlTableModel(0, manager.database());
   QVERIFY(model != 0);
+  model->setTable(manager.dataSetTableName());
+  QVERIFY(model->select());
   QCOMPARE(model->tableName(), dataSetTableName);
   QCOMPARE(model->columnCount(), 3);
   QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
@@ -298,6 +305,7 @@ void mdtDataTableTest::createDataSetTest()
   // Check that data set is empty
   QVERIFY(model->select());
   QCOMPARE(model->rowCount(), 0);
+  delete model;
 }
 
 void mdtDataTableTest::editDataTest()
@@ -338,8 +346,10 @@ void mdtDataTableTest::editDataTest()
   dataSetTableName = manager.getTableName(dataSetName);
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, table, mdtSqlDatabaseManager::OverwriteExisting));
   // Get model and check that columns exists
-  model = manager.model();
+  model = new mdtDataTableModel(0, manager.database());
   QVERIFY(model != 0);
+  model->setTable(manager.dataSetTableName());
+  QVERIFY(model->select());
   QCOMPARE(model->columnCount(), 3);
   QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
   QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("signal"));
@@ -1568,7 +1578,6 @@ void mdtDataTableTest::csvImportTest()
 {
   QTemporaryFile csvFile1, csvFile2, csvFile3;
   mdtDataTableManager manager;
-  ///mdtDataTableModel *model;
   QSqlTableModel *model;
   QStringList csvHeader;
 
@@ -1583,14 +1592,12 @@ void mdtDataTableTest::csvImportTest()
   model = new QSqlTableModel(0, manager.database());
   model->setTable(manager.dataSetTableName());
   QVERIFY(model->select());
-  ///model = manager.model();
   QVERIFY(model != 0);
   // Check model's header
   QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("code_PK"));
   QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("value"));
   // Check CSV headers
-  ///csvHeader = manager.csvHeader();
   csvHeader = manager.sourceHeader();
   QCOMPARE(csvHeader.size(), 3);
   QCOMPARE(csvHeader.at(0), QString("code_PK"));
@@ -1612,7 +1619,6 @@ void mdtDataTableTest::csvImportTest()
   manager.clearFieldMap();
   manager.setCsvFormat(";", "", "", '\0');
   QVERIFY(manager.importFromCsvFile(csvFile2.fileName(), mdtSqlDatabaseManager::OverwriteExisting));
-  ///model = manager.model();
   model = new QSqlTableModel(0, manager.database());
   QVERIFY(model != 0);
   model->setTable(manager.dataSetTableName());
@@ -1622,7 +1628,6 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("value"));
   // Check CSV headers
-  ///csvHeader = manager.csvHeader();
   csvHeader = manager.sourceHeader();
   QCOMPARE(csvHeader.size(), 2);
   QCOMPARE(csvHeader.at(0), QString("signal"));
@@ -1650,7 +1655,6 @@ void mdtDataTableTest::csvImportTest()
   manager.addFieldMapping("bin I/O", "cpuState", "CPU state", QVariant::String, 1, 1);
   manager.addFieldMapping("value", "value", "Value", QVariant::Double);
   QVERIFY(manager.importFromCsvFile(csvFile3.fileName(), mdtSqlDatabaseManager::OverwriteExisting));
-  ///model = manager.model();
   model = new QSqlTableModel(0, manager.database());
   QVERIFY(model != 0);
   model->setTable(manager.dataSetTableName());
@@ -1666,7 +1670,6 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->headerData(3, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(model->headerData(4, Qt::Horizontal), QVariant("value"));
   // Check CSV headers
-  ///csvHeader = manager.csvHeader();
   csvHeader = manager.sourceHeader();
   QCOMPARE(csvHeader.size(), 3);
   QCOMPARE(csvHeader.at(0), QString("bin I/O"));
@@ -1685,7 +1688,6 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->data(model->index(0, 3)), QVariant("Rpm M2"));
   QCOMPARE(model->data(model->index(0, 4)), QVariant(55.0));
   // Set display texts to model header
-  ///manager.setDisplayTextsToModelHeader();
   manager.setDatabaseHeaderToModel(model);
   // Check model's header. Note: we don't know in witch order field splitting is done
   QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
@@ -1699,7 +1701,6 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(model->headerData(3, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(model->headerData(4, Qt::Horizontal), QVariant("Value"));
   // Check CSV headers
-  ///csvHeader = manager.csvHeader();
   csvHeader = manager.sourceHeader();
   QCOMPARE(csvHeader.size(), 3);
   QCOMPARE(csvHeader.at(0), QString("bin I/O"));
@@ -1756,8 +1757,9 @@ void mdtDataTableTest::csvImportTest()
   
   // View
   QTableView v;
-  v.setModel(manager.model());
+  ///v.setModel(manager.model());
   ///v.setModel(&qm);
+  v.setModel(model);
   v.setEditTriggers(QAbstractItemView::NoEditTriggers);
   v.resize(600, 600);
   v.setSortingEnabled(true);
@@ -1785,6 +1787,120 @@ void mdtDataTableTest::csvImportTest()
 
 }
 
+void mdtDataTableTest::copyTableTest()
+{
+  mdtDataTableManager tableManager;
+  mdtSqlDatabaseManager dbManager;
+  QSqlDatabase db1, db2;
+  QTemporaryFile f1, f2;
+  QFileInfo fileInfo;
+  QSqlField field;
+  mdtSqlSchemaTable table;
+  QString sourceTableName, destinationTableName;
+  QSqlQuery *query;
+  QString sql;
+
+  // Create temporary files
+  QVERIFY(f1.open());
+  QVERIFY(f2.open());
+  qDebug() << "f1: " << f1.fileName() << ", f2: " << f2.fileName();
+  f1.close();
+  f2.close();
+  qDebug() << "f1: " << f1.fileName() << ", f2: " << f2.fileName();
+
+  // We give both tables the same name (copy from 2 distinct databases)
+  sourceTableName = "test_tbl";
+  destinationTableName = "test_tbl";
+  // Create first database and table
+  table.clear();
+  table.setTableName(sourceTableName);
+  // Field PK
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Field alias
+  field = QSqlField();
+  field.setName("Alias");
+  field.setType(QVariant::String);
+  table.addField(field, false);
+  fileInfo.setFile(f1);
+  dbManager.setDatabase(db1);
+  QVERIFY(dbManager.createDatabaseSqlite(fileInfo, mdtSqlDatabaseManager::OverwriteExisting, "source_db"));
+  QVERIFY(dbManager.createTable(table, mdtSqlDatabaseManager::OverwriteExisting));
+  db1 = dbManager.database();
+  qDebug() << "DB1 CNN: " << db1.connectionName();
+  qDebug() << "DB1 table: " << db1.tables();
+  // Create descond database and table
+  table.clear();
+  table.setTableName(destinationTableName);
+  // Field PK
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Field name
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  table.addField(field, false);
+  // Field alias
+  field = QSqlField();
+  field.setName("Alias");
+  field.setType(QVariant::String);
+  table.addField(field, false);
+  fileInfo.setFile(f2);
+  dbManager.setDatabase(db2);
+  QVERIFY(dbManager.createDatabaseSqlite(fileInfo, mdtSqlDatabaseManager::OverwriteExisting, "destination_db"));
+  QVERIFY(dbManager.createTable(table, mdtSqlDatabaseManager::OverwriteExisting));
+  db2 = dbManager.database();
+  qDebug() << "DB2 CNN: " << db2.connectionName();
+  qDebug() << "DB2 tables: " << db2.tables();
+  // Insert data into first database
+  QVERIFY(db1.isOpen());
+  query = new QSqlQuery(db1);
+  sql = "INSERT INTO '" + sourceTableName + "' (Id_PK, Alias)";
+  sql += " VALUES (1, 'Alias 1')";
+  QVERIFY(query->exec(sql));
+  sql = "INSERT INTO '" + sourceTableName + "' (Id_PK, Alias)";
+  sql += " VALUES (2, 'Alias 2')";
+  QVERIFY(query->exec(sql));
+  sql = "INSERT INTO '" + sourceTableName + "' (Id_PK, Alias)";
+  sql += " VALUES (3, 'Alias 3')";
+  QVERIFY(query->exec(sql));
+  delete query;
+  // Copy
+  tableManager.clearFieldMap();
+  QVERIFY(tableManager.copyTable(sourceTableName, destinationTableName, mdtSqlDatabaseManager::KeepExisting, db1, db2));
+  // Check copy
+  QVERIFY(db2.isOpen());
+  qDebug() << "After copy, db2 tables: " << db2.tables();
+  qDebug() << "-> test_tbl: " << db2.record("test_tbl");
+  query = new QSqlQuery(db2);
+  sql = "SELECT Id_PK, Name, Alias FROM '" + destinationTableName + "'";
+  query->exec(sql);
+  qDebug() << query->lastError();
+  QVERIFY(query->exec(sql));
+  QVERIFY(query->next());
+  QCOMPARE(query->record().count(), 3);
+  QCOMPARE(query->record().value("Id_PK"), QVariant(1));
+  QCOMPARE(query->record().value("Name"), QVariant(""));
+  QCOMPARE(query->record().value("Alias"), QVariant("Alias 1"));
+  QVERIFY(query->next());
+  QCOMPARE(query->record().count(), 3);
+  QCOMPARE(query->record().value("Id_PK"), QVariant(2));
+  QCOMPARE(query->record().value("Name"), QVariant(""));
+  QCOMPARE(query->record().value("Alias"), QVariant("Alias 2"));
+  QVERIFY(query->next());
+  QCOMPARE(query->record().count(), 3);
+  QCOMPARE(query->record().value("Id_PK"), QVariant(3));
+  QCOMPARE(query->record().value("Name"), QVariant(""));
+  QCOMPARE(query->record().value("Alias"), QVariant("Alias 3"));
+  QVERIFY(!query->next());
+  delete query;
+}
 
 int main(int argc, char **argv)
 {

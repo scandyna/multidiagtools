@@ -46,6 +46,8 @@ class mdtFieldMapItem
    */
   mdtFieldMapItem();
 
+  /*! \brief Destructor
+   */
   ~mdtFieldMapItem();
 
   /*! \brief Set destination field index

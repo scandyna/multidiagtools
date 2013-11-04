@@ -39,7 +39,6 @@
 #include <QSqlField>
 #include <QSqlIndex>
 
-class mdtDataTableModel;
 class QWidget;
 class QAbstractTableModel;
 
@@ -68,7 +67,7 @@ class mdtDataTableManager : public QObject
 
   /*! \brief Close
    *
-   * Will delete internal model and close database.
+   * Will close database.
    */
   void close();
 
@@ -94,10 +93,6 @@ class mdtDataTableManager : public QObject
    */
   static QString getTableName(const QString &dataSetName);
 
-  /*! \brief Remove unalowed chars to give a field name
-   */
-  ///static QString getFieldName(const QString &columnName);
-
   /*! \brief Create database and table
    *
    * Internally, Sqlite is used to store data.
@@ -106,21 +101,11 @@ class mdtDataTableManager : public QObject
    *  Be avare when referencing pointer returned by model().
    *
    * \param dir Path or QDir object to directory in witch to store data.
+   * \param table Schema of the table to create .
    * \param name Name of the database, connection name (see QSqlDatabase) and file.
-   * \param primaryKey Contains fields that are part of the primary key.
-   *                    If a name is set with QSqlIndex::setName(), it will be used,
-   *                    else a name (tableName_PK) is generated.
-   * \param createPrimaryKeyFields If true, fields contained in primaryKey will be created, else only the constraint is added.
-   *        \todo NOT implemeted yet !!
-   * \param fields List of fields, excluding primary key, to create in table.
-   *                Note that only a fiew parameters of QSqlField are supported:
-   *                 - type: map QVariant type to Sqlite type
-   *                 - name: field's name
    * \param mode Behaviour to adopt during database/file creation.
    * \return True on success.
    */
-  ///bool createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields, create_mode_t mode);
-  ///bool createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, create_mode_t mode);
   bool createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, mdtSqlDatabaseManager::createMode_t mode);
 
   /*! \brief Get internal database instance
@@ -152,8 +137,8 @@ class mdtDataTableManager : public QObject
    * \return True on successfull export.
    * 
    * \todo Add: separator, data protection, escape char, EOL
+   * \todo Implement ...
    */
-  ///bool exportToCsvFile(const QString &filePath, create_mode_t mode);
   bool exportToCsvFile(const QString &filePath, mdtSqlDatabaseManager::createMode_t mode);
 
   /*! \brief Import a CSV file
@@ -168,8 +153,18 @@ class mdtDataTableManager : public QObject
    *                  If list is empty, one named id_PK will be created.
    * \pre All given CSV header items to use as part of primary key must exit in CSV file (See pkFields argument).
    */
-  ///bool importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir = QString(), const QStringList &pkFields = QStringList());
   bool importFromCsvFile(const QString &csvFilePath, mdtSqlDatabaseManager::createMode_t mode, const QString &dir = QString(), const QStringList &pkFields = QStringList());
+
+  /*! \brief Copy a source table to a destination table
+   *
+   * \param sourceTableName Name of the source table .
+   * \param destinationTableName Name of the destination table .
+   * \param mode Behaviour to adopt if destination table allready exists .
+   * \param sourceDatabase Instance of source database .
+   * \param destinationDatabase Instance of destination database .
+   * \return True on success, false if a error occured . Use lastError() to know what gone wrong in second case .
+   */
+  bool copyTable(const QString &sourceTableName, const QString & destinationTableName, mdtSqlDatabaseManager::createMode_t mode, QSqlDatabase sourceDatabase = QSqlDatabase(), QSqlDatabase destinationDatabase = QSqlDatabase());
 
   /*! \brief Add a mapping between CSV header part (item) and model field
    *
@@ -213,17 +208,6 @@ class mdtDataTableManager : public QObject
    */
   QStringList sourceHeader() const;
 
-  /*! \brief Get the CSV file's headers
-   *
-   * During CSV import, internal field name are created,
-   *  because some chars are not allowed in a database field name.
-   * Use this method to get the headers as readen in CSV file.
-   * The fields are returned ordered as in the model.
-   *
-   * Note: will return headers only after importFromCsvFile() was called.
-   */
-  ///QStringList csvHeader() const;
-
   /*! \brief Get database header
    */
   const QStringList databaseHeader() const;
@@ -232,26 +216,11 @@ class mdtDataTableManager : public QObject
    */
   void setDatabaseHeaderToModel(QAbstractTableModel *model);
 
-  /*! \brief Set the display texts to model's header
-   *
-   * \pre Model must be valid.
-   */
-  ///void setDisplayTextsToModelHeader();
-
   /*! \brief Get display texts referenced by field names
    *
    * \return QHash with fieldName as key and displayText as value.
    */
   QHash<QString, QString> displayTextsByFieldNames() const;
-
-  /*! \brief Get instance of current model
-   *
-   * Note that this pointer changes when some
-   *  of methods are called.
-   *
-   * \return Pointer to current model, or 0 if it was not set or manager is closed.
-   */
-  mdtDataTableModel *model();
 
  private slots:
 
@@ -275,25 +244,16 @@ class mdtDataTableManager : public QObject
    * \param fields Destination fields
    * \return True on success, errors are logged with mdtError system.
    */
-  bool commitRowsToDatabase(const QList<QVariantList> &rows, const QList<mdtFieldMapField> &fields, int autoValuePkFieldCount);
-
-  /*! \brief Commit some rows of data to model
-   *
-   * \param rows Rows of data to commit
-   * \return True on success, errors are logged with mdtErrro system.
-   * \pre Model must be valid.
-   */
-  bool commitRowsToModel(const QList<QStringList> &rows);
+  bool commitRowsToDatabase(const QList<QVariantList> &rows, const QList<mdtFieldMapField> &fields, const QString & autoValuePkFieldName);
 
   /*! \brief Get SQL statement for insert using QSqlQuery bind values
    */
-  const QString insertBindValuesPrepareStatement(const QList<mdtFieldMapField> &fields, int autoValuePkFieldCount) const;
+  const QString insertBindValuesPrepareStatement(const QList<mdtFieldMapField> &fields, const QString & autoValuePkFieldName) const;
 
   Q_DISABLE_COPY(mdtDataTableManager);
 
   QString pvDataSetName;
   QDir pvDataSetDirectory;
-  mdtDataTableModel *pvModel;
   mdtFieldMap pvFieldMap;
   mdtError pvLastError;
   // Database specific members

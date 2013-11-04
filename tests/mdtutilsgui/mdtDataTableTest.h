@@ -49,6 +49,9 @@ class mdtDataTableTest : public mdtTest
   // CSV export/import tests
   void csvExportTest();
   void csvImportTest();
+
+  // Table copy test
+  void copyTableTest();
 };
 
 #endif  // #ifndef MDT_DATA_TABLE_TEST_H
