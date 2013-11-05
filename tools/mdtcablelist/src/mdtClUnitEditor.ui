@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>603</width>
-    <height>133</height>
+    <width>619</width>
+    <height>159</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,13 +44,23 @@
        </widget>
       </item>
       <item row="1" column="0">
+       <widget class="QLabel" name="lb_Alias">
+        <property name="text">
+         <string>Alias</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="fld_Alias"/>
+      </item>
+      <item row="2" column="0">
        <widget class="QLabel" name="lb_Cabinet">
         <property name="text">
          <string>Cabinet</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="2" column="1">
        <widget class="QLineEdit" name="fld_Cabinet">
         <property name="maximumSize">
          <size>
@@ -60,14 +70,14 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="lb_Coordinate">
         <property name="text">
          <string>Location (or coordinate)</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="3" column="1">
        <widget class="QLineEdit" name="fld_Coordinate">
         <property name="maximumSize">
          <size>

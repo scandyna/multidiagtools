@@ -78,7 +78,11 @@ bool mdtClDatabaseSchema::createSchemaSqlite()
   qDebug() << "View count: " << pvDatabaseManager->database().tables(QSql::Views).size();
   qDebug() << "Views: " << pvDatabaseManager->database().tables(QSql::Views);
 
-  return checkSchema();
+  if(!checkSchema()){
+    return false;
+  }
+
+  return populateTables();
 }
 
 bool mdtClDatabaseSchema::importDatabase(const QDir & startDirectory)
@@ -136,6 +140,7 @@ bool mdtClDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   sourceTables.removeAll("sqlite_sequence");
   // Copy tables
   for(i = 0; i < sourceTables.size(); ++i){
+    tableManager.clearFieldMap();
     if(!tableManager.copyTable(sourceTables.at(i), sourceTables.at(i), mdtSqlDatabaseManager::KeepExisting, sourceDbManager.database(), pvDatabaseManager->database())){
       pvLastError = tableManager.lastError();
       return false;
@@ -231,6 +236,17 @@ bool mdtClDatabaseSchema::createViews()
     return false;
   }
   if(!createVehicleTypeUnitView()){
+    return false;
+  }
+  return true;
+}
+
+bool mdtClDatabaseSchema::populateTables()
+{
+  if(!populateLinkTypeTable()){
+    return false;
+  }
+  if(!populateLinkDirectionTable()){
     return false;
   }
   return true;
@@ -409,6 +425,24 @@ void mdtClDatabaseSchema::setupArticleTable()
   field.setName("DesignationIT");
   field.setType(QVariant::String);
   field.setLength(150);
+  table.addField(field, false);
+  // Manufacturer
+  field = QSqlField();
+  field.setName("Manufacturer");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  table.addField(field, false);
+  // Manufacturer type
+  field = QSqlField();
+  field.setName("ManufacturerType");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  table.addField(field, false);
+  // Manufacturer type
+  field = QSqlField();
+  field.setName("ManufacturerCode");
+  field.setType(QVariant::String);
+  field.setLength(100);
   table.addField(field, false);
   // Unit
   field = QSqlField();
@@ -850,15 +884,15 @@ void mdtClDatabaseSchema::setupLinkTable()
   field.setType(QVariant::Double);
   table.addField(field, false);
   // Indexes
-  table.addIndex("Direction_Id_FK_idx", true);
+  table.addIndex("Direction_Id_FK_idx", false);
   if(!table.addFieldToIndex("Direction_Id_FK_idx", "LinkDirection_Code_FK")){
     return;/// false;
   }
-  table.addIndex("Type_Id_FK_idx", true);
+  table.addIndex("Type_Id_FK_idx", false);
   if(!table.addFieldToIndex("Type_Id_FK_idx", "LinkType_Code_FK")){
     return;/// false;
   }
-  table.addIndex("ArticleLink_Id_FK_idx", true);
+  table.addIndex("ArticleLink_Id_FK_idx", false);
   if(!table.addFieldToIndex("ArticleLink_Id_FK_idx", "ArticleLink_Id_FK")){
     return;/// false;
   }
@@ -1130,6 +1164,9 @@ bool mdtClDatabaseSchema::createUnitView()
 
   sql = "CREATE VIEW Unit_view AS\n"\
         "SELECT\n"\
+        " VehicleType_tbl.Type,\n"\
+        " VehicleType_tbl.SubType,\n"\
+        " VehicleType_tbl.SeriesNumber,\n"\
         " Unit_tbl.Id_PK AS Unit_Id_PK ,\n"\
         " Unit_tbl.Coordinate ,\n"\
         " Unit_tbl.Cabinet ,\n"\
@@ -1142,7 +1179,11 @@ bool mdtClDatabaseSchema::createUnitView()
         " Article_tbl.DesignationIT\n"\
         "FROM Unit_tbl\n"\
         " LEFT JOIN Article_tbl\n"\
-        "  ON Unit_tbl.Article_Id_FK = Article_tbl.Id_PK";
+        "  ON Unit_tbl.Article_Id_FK = Article_tbl.Id_PK\n"\
+        " JOIN VehicleType_Unit_tbl\n"\
+        "  ON VehicleType_Unit_tbl.Unit_Id_FK = Unit_tbl.Id_PK\n"\
+        " JOIN VehicleType_tbl\n"\
+        "  ON VehicleType_tbl.Id_PK = VehicleType_Unit_tbl.VehicleType_Id_FK";
 
   return createView("Unit_view", sql);
 }
@@ -1328,4 +1369,104 @@ bool mdtClDatabaseSchema::createLinkListView()
         "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK";
 
   return createView("LinkList_view", sql);
+}
+
+bool mdtClDatabaseSchema::insertDataIntoTable(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
+{
+  QSqlQuery query(pvDatabaseManager->database());
+  QSqlError sqlError;
+  QString sql;
+  int i;
+
+  // Generate SQL statement
+  sql = "INSERT INTO '" + tableName + "' (";
+  for(i = 0; i < fields.size(); ++i){
+    sql += fields.at(i);
+    if(i < (fields.size() - 1)){
+      sql += ",";
+    }
+  }
+  sql += ") VALUES(";
+  for(i = 0; i < fields.size(); ++i){
+    sql += "?";
+    if(i < (fields.size() - 1)){
+      sql += ",";
+    }
+  }
+  sql += ")";
+  qDebug() << "INSERT SQL: " << sql;
+  // Prepare query for insertion
+  if(!query.prepare(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for insertion into table '" + tableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    pvLastError.commit();
+    return false;
+  }
+  // Bind values
+  for(i = 0; i < data.size(); ++i){
+    query.bindValue(i, data.at(i));
+  }
+  // Exec query
+  if(!query.exec()){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for insertion into table '" + tableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::populateLinkTypeTable()
+{
+  QStringList fields;
+  QList<QVariant> data;
+
+  fields << "Code_PK" << "NameEN" << "NameDE" << "NameFR" << "NameIT" << "ValueUnit";
+
+  // Cable link type
+  data << "CABLELINK" << "Cable link" << "Kabel Verbindung" << "Liaison cablée" << "Collegamento via cavo" << "Ohm";
+  if(!insertDataIntoTable("LinkType_tbl", fields, data)){
+    return false;
+  }
+  // Cable link type
+  data.clear();
+  data << "CONNECTION" << "Connection" << "Anschluss" << "Raccordement" << "Collegamento" << "Ohm";
+  if(!insertDataIntoTable("LinkType_tbl", fields, data)){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::populateLinkDirectionTable()
+{
+  QStringList fields;
+  QList<QVariant> data;
+
+  fields << "Code_PK" << "PictureAscii" << "NameEN" << "NameDE" << "NameFR" << "NameIT";
+
+  // Bidirectional
+  data << "BID" << "<-->" << "Bidirectional" << "Bidirektional" << "Bidirectionnel" << "Bidirezionale";
+  if(!insertDataIntoTable("LinkDirection_tbl", fields, data)){
+    return false;
+  }
+  // Start to end
+  data.clear();
+  data << "STE" << "-->" << "Start to end" << "Start zum Ende" << "Départ vers arrivée" << "Dall'inizio alla fine";
+  if(!insertDataIntoTable("LinkDirection_tbl", fields, data)){
+    return false;
+  }
+  // End to start
+  data.clear();
+  data << "ETS" << "-->" << "End to Start" << "Ende zum Start" << "Arrivée vers départ" << "Dall'fine alla inizio";
+  if(!insertDataIntoTable("LinkDirection_tbl", fields, data)){
+    return false;
+  }
+
+  return true;
 }

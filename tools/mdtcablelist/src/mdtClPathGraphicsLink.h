@@ -27,6 +27,7 @@
 #include <QSizeF>
 #include <QRectF>
 #include <QString>
+#include <QColor>
 
 class mdtClPathGraphicsConnection;
 class QPainter;
@@ -39,7 +40,16 @@ class mdtClPathGraphicsLink : public QGraphicsItem
 {
  public:
 
+  /*! \brief For QGraphicsView
+   */
   enum { Type = UserType + 2};
+
+  /*! \brief
+   */
+  enum linkType_t {
+                    CableLink,  /*! \brief Cable link */
+                    Connection  /*! \brief Connection */
+                  };
 
   /*! \brief Constructor
    */
@@ -48,6 +58,14 @@ class mdtClPathGraphicsLink : public QGraphicsItem
   /*! \brief Set text
    */
   void setText(const QString &text);
+
+  /*! \brief Set the link type
+   *
+   * This will affect the graphical representation of the link.
+   *
+   * \note : current version will only change color of the link ..
+   */
+  void setLinkType(linkType_t type);
 
   /*! \brief Get start connection
    */
@@ -88,6 +106,7 @@ class mdtClPathGraphicsLink : public QGraphicsItem
   QString pvText;
   QSizeF pvTextSize;
   QRectF pvBoundingRect;
+  QColor pvLinkColor;
 };
 
 #endif // #ifndef MDT_CL_PATH_GRAPHICS_LINK_H

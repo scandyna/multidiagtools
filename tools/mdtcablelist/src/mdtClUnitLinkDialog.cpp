@@ -401,13 +401,16 @@ void mdtClUnitLinkDialog::selectStartUnit()
   selectionDialog.setModel(&model, false);
   selectionDialog.setColumnHidden("Unit_Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_PK", true);
+  selectionDialog.setHeaderData("Vehicle", tr("Type"));
+  selectionDialog.setHeaderData("SubType", tr("Sub type"));
+  selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
   selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
   selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
   selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
   selectionDialog.addSelectionResultColumn("Unit_Id_PK");
   selectionDialog.addSelectionResultColumn("SchemaPosition");
   selectionDialog.addSelectionResultColumn("Cabinet");
-  selectionDialog.resize(700, 300);
+  selectionDialog.resize(800, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
@@ -439,13 +442,16 @@ void mdtClUnitLinkDialog::selectEndUnit()
   selectionDialog.setModel(&model, false);
   selectionDialog.setColumnHidden("Unit_Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_PK", true);
+  selectionDialog.setHeaderData("Type", tr("Vehicle"));
+  selectionDialog.setHeaderData("SubType", tr("Sub type"));
+  selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
   selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
   selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
   selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
   selectionDialog.addSelectionResultColumn("Unit_Id_PK");
   selectionDialog.addSelectionResultColumn("SchemaPosition");
   selectionDialog.addSelectionResultColumn("Cabinet");
-  selectionDialog.resize(700, 300);
+  selectionDialog.resize(800, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }

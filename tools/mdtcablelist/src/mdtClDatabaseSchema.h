@@ -25,6 +25,8 @@
 #include "mdtError.h"
 #include <QList>
 #include <QString>
+#include <QStringList>
+#include <QVariant>
 #include <QFileInfo>
 #include <QDir>
 #include <QSqlDatabase>
@@ -100,6 +102,10 @@ class mdtClDatabaseSchema
   /*! \brief
    */
   bool createViews();
+
+  /*! \brief Populate database with base data
+   */
+  bool populateTables();
 
   /*! \brief
    */
@@ -194,6 +200,18 @@ class mdtClDatabaseSchema
   /*! \brief
    */
   bool createLinkListView();
+
+  /*! \brief Insert data into a table
+   */
+  bool insertDataIntoTable(const QString & tableName, const QStringList & fields, const QList<QVariant> & data);
+
+  /*! \brief Populate LinkType table
+   */
+  bool populateLinkTypeTable();
+
+  /*! \brief Populate LinkType table
+   */
+  bool populateLinkDirectionTable();
 
   Q_DISABLE_COPY(mdtClDatabaseSchema);
 

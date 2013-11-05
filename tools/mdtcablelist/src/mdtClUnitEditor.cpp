@@ -887,6 +887,9 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   // Give fields a user friendly name
   widget->setHeaderData("SchemaPage", tr("Schema\npage"));
   widget->setHeaderData("UnitFunctionEN", tr("Unit\nfunction (ENG)"));
+  widget->setHeaderData("UnitFunctionFR", tr("Unit\nfunction (FRA)"));
+  widget->setHeaderData("UnitFunctionDE", tr("Unit\nfunction (DEU)"));
+  widget->setHeaderData("UnitFunctionIT", tr("Unit\nfunction (ITA)"));
   widget->setHeaderData("SignalName", tr("Signal name"));
   widget->setHeaderData("SwAddress", tr("SW address"));
   widget->setHeaderData("UnitConnectorName", tr("Unit\nconnector"));

@@ -34,7 +34,7 @@
 #include <QApplication>
 #include <QTextCodec>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtDataTableManager::mdtDataTableManager(QObject *parent, QSqlDatabase db)
  : QObject(parent)

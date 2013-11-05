@@ -150,7 +150,7 @@ QSqlQueryModel *mdtClUnit::modelForArticleConnectionSelection(const QVariant & u
 {
   QString sql;
 
-  sql = "SELECT "\
+  sql = "SELECT DISTINCT "\
         " ArticleConnection_tbl.Id_PK , "\
         " ArticleConnection_tbl.Article_Id_FK , "\
         " ArticleConnection_tbl.ArticleConnectorName , "\
@@ -572,7 +572,7 @@ bool mdtClUnit::addLink(const mdtClLinkData &data)
   sql = "INSERT INTO Link_tbl (ArticleLink_Id_FK, UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, "\
                               "SinceVersion, Modification, Identification, LinkDirection_Code_FK, "\
                               "LinkType_Code_FK, Value) "\
-        "VALUES (ArticleLink_Id_FK, :UnitConnectionStart_Id_FK, :UnitConnectionEnd_Id_FK, "\
+        "VALUES (:ArticleLink_Id_FK, :UnitConnectionStart_Id_FK, :UnitConnectionEnd_Id_FK, "\
                                ":SinceVersion, :Modification, :Identification, :LinkDirection_Code_FK, "\
                                ":LinkType_Code_FK, :Value)";
   if(!query.prepare(sql)){

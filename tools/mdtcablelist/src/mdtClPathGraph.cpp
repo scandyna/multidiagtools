@@ -279,8 +279,9 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
   QSqlQuery query(pvDatabase);
   QString str;
 
-  sql = "SELECT StartCabinet, StartSchemaPosition, StartUnitConnectorName, StartUnitContactName, "\
-        "EndCabinet, EndSchemaPosition, EndUnitConnectorName, EndUnitContactName, Identification "\
+  sql = "SELECT StartVehicleType, StartVehicleSubType, StartCabinet, StartSchemaPosition, StartUnitConnectorName, StartUnitContactName, "\
+        "EndVehicleType, EndVehicleSubType, EndCabinet, EndSchemaPosition, EndUnitConnectorName, EndUnitContactName, Identification, "\
+        "LinkType_Code_FK "\
         "FROM LinkList_view ";
   sql += " WHERE UnitConnectionStart_Id_FK = " + QString::number(startConnectionId);
   sql += " AND UnitConnectionEnd_Id_FK = " + QString::number(endConnectionId);
@@ -303,18 +304,28 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
   // Set start data
   str = query.value(0).toString() + "\n";
   str += query.value(1).toString() + "\n";
-  str += query.value(2).toString() + ";";
-  str += query.value(3).toString();
+  str += query.value(2).toString() + "\n";
+  str += query.value(3).toString() + "\n";
+  str += query.value(4).toString() + ";";
+  str += query.value(5).toString();
   startConnection->setText(str);
   // Set end data
-  str = query.value(4).toString() + "\n";
-  str += query.value(5).toString() + "\n";
-  str += query.value(6).toString() + ";";
-  str += query.value(7).toString();
+  str = query.value(6).toString() + "\n";
+  str += query.value(7).toString() + "\n";
+  str += query.value(8).toString() + "\n";
+  str += query.value(9).toString() + "\n";
+  str += query.value(10).toString() + ";";
+  str += query.value(11).toString();
   endConnection->setText(str);
   // Set link data
-  str = query.value(8).toString();
+  str = query.value(12).toString();
   link->setText(str);
+  str = query.value(13).toString();
+  if(str == "CONNECTION"){
+    link->setLinkType(mdtClPathGraphicsLink::Connection);
+  }else{
+    link->setLinkType(mdtClPathGraphicsLink::CableLink);
+  }
 
   return true;
 }

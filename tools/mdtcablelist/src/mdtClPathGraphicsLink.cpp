@@ -39,6 +39,7 @@ mdtClPathGraphicsLink::mdtClPathGraphicsLink(mdtClPathGraphicsConnection *startC
   pvEndConnection = endConnection;
   pvStartConnection->addLink(this);
   pvEndConnection->addLink(this);
+  pvLinkColor = Qt::black;
   adjust();
 }
 
@@ -62,6 +63,18 @@ void mdtClPathGraphicsLink::setText(const QString &text)
   pvTextSize.setWidth(width);
   pvTextSize.setHeight(height + space);
   updateBoundingRect();
+}
+
+void mdtClPathGraphicsLink::setLinkType(linkType_t type)
+{
+  switch(type){
+    case CableLink:
+      pvLinkColor = Qt::black;
+      break;
+    case Connection:
+      pvLinkColor = Qt::red;
+      break;
+  };
 }
 
 mdtClPathGraphicsConnection *mdtClPathGraphicsLink::startConnection() 
@@ -116,7 +129,7 @@ void mdtClPathGraphicsLink::paint(QPainter *painter, const QStyleOptionGraphicsI
   textRect.setX(pvStartPoint.x() + (line.dx() - pvTextSize.width()) / 2.0);
   textRect.setY(pvStartPoint.y() + line.dy() / 2.0 - pvTextSize.height());
   textRect.setSize(pvTextSize);
-  painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+  painter->setPen(QPen(pvLinkColor, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
   painter->drawLine(line);
   painter->drawText(textRect, Qt::AlignHCenter | Qt::TextDontClip, pvText);
 }
