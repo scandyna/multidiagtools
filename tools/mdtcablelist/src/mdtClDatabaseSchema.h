@@ -89,11 +89,15 @@ class mdtClDatabaseSchema
    */
   bool checkSchema();
 
-  private:
+  /*! \brief Get last error
+   */
+  mdtError lastError() const;
+
+ private:
 
   /*! \brief
    */
-  void setupTables();
+  bool setupTables();
 
   /*! \brief
    */
@@ -109,51 +113,51 @@ class mdtClDatabaseSchema
 
   /*! \brief
    */
-  void setupVehicleTypeTable();
+  bool setupVehicleTypeTable();
 
   /*! \brief
    */
-  void setupVehicleTypeUnitTable();
+  bool setupVehicleTypeUnitTable();
 
   /*! \brief
    */
-  void setupVehicleTypeLinkTable();
+  bool setupVehicleTypeLinkTable();
 
   /*! \brief
    */
-  void setupArticleTable();
+  bool setupArticleTable();
 
   /*! \brief
    */
-  void setupArticleComponentTable();
+  bool setupArticleComponentTable();
 
   /*! \brief
    */
-  void setupArticleConnectionTable();
+  bool setupArticleConnectionTable();
 
   /*! \brief
    */
-  void setupArticleLinkTable();
+  bool setupArticleLinkTable();
 
   /*! \brief
    */
-  void setupUnitTable();
+  bool setupUnitTable();
 
   /*! \brief
    */
-  void setupUnitConnectionTable();
+  bool setupUnitConnectionTable();
 
   /*! \brief
    */
-  void setupLinkTable();
+  bool setupLinkTable();
 
   /*! \brief
    */
-  void setupLinkDirectionTable();
+  bool setupLinkDirectionTable();
 
   /*! \brief
    */
-  void setupLinkTypeTable();
+  bool setupLinkTypeTable();
 
   /*! \brief Create a view
    *
@@ -188,6 +192,21 @@ class mdtClDatabaseSchema
   /*! \brief
    */
   bool createUnitConnectionView();
+
+  /*! \brief Create a view that joins article link table with unit connections
+   *
+   * When creating a article, witch is a model that can be re-used in units,
+   *  its possible to add links to this article. These links are added to ArticleLink_tbl.
+   *
+   * To find a path in the link table, article links must be followed.
+   *  This can be done by:
+   *   - Finding witch unit connection is linked to a article connection
+   *   - Finding links between these article connections in article link table
+   *   - Include the result in link list
+   *
+   * This view will give article links that are used by a unit connection .
+   */
+  bool createArticleLinkUnitConnectionView();
 
   /*! \brief
    */

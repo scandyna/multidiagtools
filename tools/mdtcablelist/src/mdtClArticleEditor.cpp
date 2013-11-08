@@ -256,7 +256,7 @@ void mdtClArticleEditor::editLink()
     return;
   }
   // Edit link
-  if(!art.editLink(widget->currentData("Id_PK") ,dialog.startConnectionId(), dialog.endConnectionId(), dialog.value().toDouble(), dialog.linkDirectionCode(), dialog.linkTypeCode())){
+  if(!art.editLink(widget->currentData("ArticleConnectionStart_Id_FK"), widget->currentData("ArticleConnectionEnd_Id_FK"), dialog.linkData())){
     QMessageBox msgBox;
     msgBox.setText(tr("Link insertion failed"));
     msgBox.setInformativeText(tr("Please see details for more informations"));
@@ -274,17 +274,27 @@ void mdtClArticleEditor::removeLinks()
   mdtSqlTableWidget *widget;
   mdtClArticle art(pvDatabase);
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  QStringList fields;
+  QList<QModelIndexList> indexes;
+  ///QModelIndexList indexes;
   QSqlError sqlError;
   int ret;
 
   widget = pvForm->sqlTableWidget("ArticleLink_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
+  fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK";
+  indexes = widget->indexListOfSelectedRowsByRowsList(fields);
+  if(indexes.size() < 1){
+    return;
+  }
+  /**
+  // Get selected rows
   indexes = widget->indexListOfSelectedRows("Id_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove links for current article."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));

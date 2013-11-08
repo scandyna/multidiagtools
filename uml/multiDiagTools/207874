@@ -1,6 +1,6 @@
 format 76
 "DatabaseConceptual" // mdttools::CableList::DatabaseConceptual
-  revision 8
+  revision 9
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -28,7 +28,7 @@ format 76
   
   classview 483842 "Conceptual"
     //class diagram settings
-    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
     //collaboration diagram settings
     show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
     //object diagram settings
@@ -112,6 +112,35 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+
+      classrelation 1177986 // Component (<association>)
+	relation 1166466 ----
+	  a role_name "Component" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1177986 // Component (<association>)
+	  b role_name "Composite" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1178114 // Composite (<association>)
+	  association_explicit_type "ArticleComponent_tbl"
+      end
+
+      classrelation 1178114 // Composite (<association>)
+	relation_ref 1166466 // <association>
+      end
+
+      classrelation 1178754 // <composition>
+	relation 1166850 *---
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1178754 // <composition>
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1178882 // <composition>
       end
     end
 
@@ -203,6 +232,18 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
+
+      classrelation 1179522 // <composition>
+	relation 1167234 *---
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1179522 // <composition>
+	  b role_name "" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1179650 // <composition>
+      end
     end
 
     class 764930 "ArticleConnection_tbl"
@@ -270,7 +311,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
 "
 	    classrelation_ref 989314 // <association>
-	  b role_name "" multiplicity "0..2" private
+	  b role_name "" multiplicity "0..*" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
 "
 	    classrelation_ref 989442 // <association>
@@ -294,6 +335,10 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+
+      classrelation 1179394 // <association>
+	relation_ref 1167106 // <association>
       end
     end
 
@@ -405,6 +450,10 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
+
+      classrelation 1179906 // <association>
+	relation_ref 1167362 // <association>
+      end
     end
 
     class 785282 "Link_tbl"
@@ -474,6 +523,10 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+
+      classrelation 1177858 // <association>
+	relation_ref 1166338 // <association>
       end
     end
 
@@ -592,6 +645,96 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
 "
 	    classrelation_ref 996866 // <association>
+	  association_explicit_type "VehicleType_Unit_tbl"
+      end
+
+      classrelation 1177730 // <association>
+	relation 1166338 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1177730 // <association>
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1177858 // <association>
+	  association_explicit_type "VehicleType_Link_tbl"
+      end
+    end
+
+    class 944130 "ArticleConnectionGroup_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1178882 // <composition>
+	relation_ref 1166850 // <composition>
+      end
+
+      classrelation 1179010 // <association>
+	relation 1166978 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1179010 // <association>
+	  b role_name "" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1179138 // <association>
+      end
+
+      classrelation 1179266 // <association>
+	relation 1167106 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1179266 // <association>
+	  b role_name "" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1179394 // <association>
+      end
+    end
+
+    class 944258 "UnitConnectionGroup_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1179138 // <association>
+	relation_ref 1166978 // <association>
+      end
+
+      classrelation 1179650 // <composition>
+	relation_ref 1167234 // <composition>
+      end
+
+      classrelation 1179778 // <association>
+	relation 1167362 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1179778 // <association>
+	  b role_name "" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1179906 // <association>
       end
     end
   end

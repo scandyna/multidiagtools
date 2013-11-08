@@ -232,19 +232,20 @@ bool mdtClArticle::addBridge(const QVariant & articleConnectionStartId, const QV
   return addLink(articleConnectionStartId, articleConnectionEndId, 0.0, "BID", "ARTBRIDGE");
 }
 
-bool mdtClArticle::editLink(const QVariant &linkId, const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value, const QVariant & directionCode, const QVariant & typeCode)
+bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtClLinkData &data)
 {
   QString sql;
   QSqlQuery query(pvDatabase);
 
   // Prepare query for edition
-  sql = "UPDATE ArticleLink_tbl \
-         SET ArticleConnectionStart_Id_FK = :ArticleConnectionStart_Id_FK ,\
-             ArticleConnectionEnd_Id_FK = :ArticleConnectionEnd_Id_FK ,\
-             Value = :Value ,\
-             LinkDirection_Code_FK = :LinkDirection_Code_FK ,\
-             LinkType_Code_FK = :LinkType_Code_FK\
-         WHERE Id_PK = " + linkId.toString();
+  sql = "UPDATE ArticleLink_tbl "\
+        " SET ArticleConnectionStart_Id_FK = :ArticleConnectionStart_Id_FK ,"\
+        "  ArticleConnectionEnd_Id_FK = :ArticleConnectionEnd_Id_FK ,"\
+        "  Value = :Value ,"\
+        "  LinkDirection_Code_FK = :LinkDirection_Code_FK ,"\
+        "  LinkType_Code_FK = :LinkType_Code_FK "\
+        " WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString() +\
+        " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
   if(!query.prepare(sql)){
     pvLastError = query.lastError();
     mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for link edition", mdtError::Error);
@@ -254,11 +255,11 @@ bool mdtClArticle::editLink(const QVariant &linkId, const QVariant & articleConn
     return false;
   }
   // Add values and execute query
-  query.bindValue(":ArticleConnectionStart_Id_FK", articleConnectionStartId);
-  query.bindValue(":ArticleConnectionEnd_Id_FK", articleConnectionEndId);
-  query.bindValue(":Value", value);
-  query.bindValue(":LinkDirection_Code_FK", directionCode);
-  query.bindValue(":LinkType_Code_FK", typeCode);
+  query.bindValue(":ArticleConnectionStart_Id_FK", data.articleConnectionStartId());
+  query.bindValue(":ArticleConnectionEnd_Id_FK", data.articleConnectionEndId());
+  query.bindValue(":Value", data.value());
+  query.bindValue(":LinkDirection_Code_FK", data.linkDirectionCode());
+  query.bindValue(":LinkType_Code_FK", data.linkTypeCode());
   if(!query.exec()){
     pvLastError = query.lastError();
     mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for link edition", mdtError::Error);
@@ -271,15 +272,44 @@ bool mdtClArticle::editLink(const QVariant &linkId, const QVariant & articleConn
   return true;
 }
 
-bool mdtClArticle::removeLink(const QVariant & linkId)
+bool mdtClArticle::removeLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId)
 {
-  QList<QVariant> idList;
+  QString sql;
+  QSqlQuery query(pvDatabase);
 
-  idList.append(linkId);
+  // Remove links
+  sql = "DELETE FROM ArticleLink_tbl ";
+  sql += " WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString();
+  sql += " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
+  if(!query.exec(sql)){
+    pvLastError = query.lastError();
+    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query to remove link Link_tbl", mdtError::Error);
+    e.setSystemError(pvLastError.number(), pvLastError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClArticle");
+    e.commit();
+    return false;
+  }
 
-  return removeLinks(idList);
+  return true;
 }
 
+bool mdtClArticle::removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows)
+{
+  int row;
+  QModelIndexList indexes;
+
+  for(row = 0; row < indexListOfSelectedRowsByRows.size(); ++row){
+    indexes = indexListOfSelectedRowsByRows.at(row);
+    Q_ASSERT(indexes.size() == 2);
+    if(!removeLink(indexes.at(0).data(), indexes.at(1).data())){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
 bool mdtClArticle::removeLinks(const QList<QVariant> &linkIdList)
 {
   int i;
@@ -312,7 +342,9 @@ bool mdtClArticle::removeLinks(const QList<QVariant> &linkIdList)
 
   return true;
 }
+*/
 
+/**
 bool mdtClArticle::removeLinks(const QModelIndexList & indexListOfSelectedRows)
 {
   int i;
@@ -325,3 +357,4 @@ bool mdtClArticle::removeLinks(const QModelIndexList & indexListOfSelectedRows)
 
   return removeLinks(idList);
 }
+*/

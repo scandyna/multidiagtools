@@ -40,6 +40,25 @@ bool mdtClLinkData::isValid()
   return true;
 }
 
+void mdtClLinkData::clear()
+{
+  pvArticleConnectionStartId.clear();
+  pvArticleConnectionEndId.clear();
+  pvUnitConnectionStartId.clear();
+  pvUnitConnectionEndId.clear();
+  pvSinceVersion.clear();
+  pvModification.clear();
+  pvIdentification.clear();
+  pvLinkDirectionCode.clear();
+  pvLinkTypeCode.clear();
+  pvValue.clear();
+  pvVehicleTypeStartIdList.clear();
+  pvVehicleTypeEndIdList.clear();
+  pvVehicleTypeStartEndIdList.clear();
+  pvErrorList.clear();
+}
+
+/**
 void mdtClLinkData::setArticleLinkId(const QVariant & value) 
 {
   pvArticleLinkId = value;
@@ -48,6 +67,27 @@ void mdtClLinkData::setArticleLinkId(const QVariant & value)
 QVariant mdtClLinkData::articleLinkId() const 
 {
   return pvArticleLinkId;
+}
+*/
+
+void mdtClLinkData::setArticleConnectionStartId(const QVariant & value)
+{
+  pvArticleConnectionStartId = value;
+}
+
+QVariant mdtClLinkData::articleConnectionStartId() const
+{
+  return pvArticleConnectionStartId;
+}
+
+void mdtClLinkData::setArticleConnectionEndId(const QVariant & value)
+{
+  pvArticleConnectionEndId = value;
+}
+
+QVariant mdtClLinkData::articleConnectionEndId() const
+{
+  return pvArticleConnectionEndId;
 }
 
 void mdtClLinkData::setUnitConnectionStartId(const QVariant & value) 

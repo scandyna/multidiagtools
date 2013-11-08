@@ -19,9 +19,8 @@
  **
  ****************************************************************************/
 #include "mdtSqlSchemaTable.h"
-#include "mdtError.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlSchemaTable::mdtSqlSchemaTable()
 {
@@ -101,6 +100,10 @@ bool mdtSqlSchemaTable::addFieldToIndex(const QString & indexName, const QString
   int i;
 
   if(!pvIndexes.contains(indexName)){
+    pvLastError.setError("Table '" + pvTableName + "' : cannot add field '" + fieldName + "' to index '" + indexName\
+                          + "' : index not found.", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+    pvLastError.commit();
     return false;
   }
   for(i = 0; i < pvFields.size(); ++i){
@@ -110,6 +113,10 @@ bool mdtSqlSchemaTable::addFieldToIndex(const QString & indexName, const QString
     }
   }
   if(field.name().isEmpty()){
+    pvLastError.setError("Table '" + pvTableName + "' : cannot add field '" + fieldName + "' to index '" + indexName\
+                          + "' : field not found in table.", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+    pvLastError.commit();
     return false;
   }
   pvIndexes[indexName].append(field);
@@ -136,9 +143,10 @@ bool mdtSqlSchemaTable::addFieldToForeignKey(const QString & foreignKeyName, con
   int i;
 
   if(!pvForeignKeys.contains(foreignKeyName)){
-    mdtError e("Foreign key named " + foreignKeyName + " not found", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
-    e.commit();
+    pvLastError.setError("Table '" + pvTableName + "' : cannot add field '" + fieldName + "' to foreign key '" + foreignKeyName\
+                          + "' : foreign key not found.", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+    pvLastError.commit();
     return false;
   }
   for(i = 0; i < pvFields.size(); ++i){
@@ -152,9 +160,10 @@ bool mdtSqlSchemaTable::addFieldToForeignKey(const QString & foreignKeyName, con
     */
   }
   if(field.name().isEmpty()){
-    mdtError e("Field named " + fieldName + " not found", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
-    e.commit();
+    pvLastError.setError("Table '" + pvTableName + "' : cannot add field '" + fieldName + "' to foreign key '" + foreignKeyName\
+                          + "' : field not found in table.", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+    pvLastError.commit();
     return false;
   }
   /**
@@ -218,6 +227,11 @@ QString mdtSqlSchemaTable::sqlForDropTable() const
   }
 
   return sql;
+}
+
+mdtError mdtSqlSchemaTable::lastError() const
+{
+  return pvLastError;
 }
 
 QString mdtSqlSchemaTable::sqlForCreateTableMySql() const

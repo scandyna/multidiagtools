@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_SCHEMA_TABLE_H
 #define MDT_SQL_SCHEMA_TABLE_H
 
+#include "mdtError.h"
 #include <QString>
 #include <QSqlField>
 #include <QSqlRecord>
@@ -131,6 +132,10 @@ class mdtSqlSchemaTable
    */
   QString sqlForDropTable() const;
 
+  /*! \brief Get last error
+   */
+  mdtError lastError() const;
+
  private:
 
   /*! \brief Build create table statement for Maria DB/MySQL
@@ -200,6 +205,7 @@ class mdtSqlSchemaTable
   QHash<QString, QSqlIndex> pvIndexes;
   QHash<QString, bool> pvIndexeAtIsUnique;
   QHash<QString, mdtSqlSchemaTableForeignKeyInfo> pvForeignKeys;
+  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_TABLE_H

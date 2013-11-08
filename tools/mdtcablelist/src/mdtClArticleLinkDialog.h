@@ -22,6 +22,7 @@
 #define MDT_CL_ARTICLE_LINK_DIALOG_H
 
 #include "ui_mdtClArticleLinkDialog.h"
+#include "mdtClLinkData.h"
 #include <QDialog>
 #include <QVariant>
 #include <QSqlDatabase>
@@ -85,6 +86,10 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   QVariant endConnectionId() const;
 
+  /*! \brief Get link data
+   */
+  mdtClLinkData linkData();
+
  private slots:
 
   /*! \brief Update some things when link type combobox index changed
@@ -131,11 +136,12 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   Q_DISABLE_COPY(mdtClArticleLinkDialog);
 
-  QVariant pvLinkTypeCode;
-  QVariant pvLinkDirectionCode;
-  double pvValue;
-  QVariant pvStartConnectionId;
-  QVariant pvEndConnectionId;
+  mdtClLinkData pvLinkData;
+  ///QVariant pvLinkTypeCode;
+  ///QVariant pvLinkDirectionCode;
+  ///double pvValue;
+  ///QVariant pvStartConnectionId;
+  ///QVariant pvEndConnectionId;
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvLinkTypeModel;
   QSqlQueryModel *pvLinkDirectionModel;

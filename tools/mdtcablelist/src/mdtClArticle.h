@@ -21,6 +21,7 @@
 #ifndef MDT_CL_ARTICLE_H
 #define MDT_CL_ARTICLE_H
 
+#include "mdtClLinkData.h"
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <QSqlError>
@@ -114,30 +115,25 @@ class mdtClArticle
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool editLink(const QVariant &linkId, const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value, const QVariant & directionCode, const QVariant & typeCode);
+  bool editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtClLinkData &data);
 
   /*! \brief Remove a signle link
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeLink(const QVariant & linkId);
+  bool removeLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
 
   /*! \brief Remove each link that is contained in linkIdList
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeLinks(const QList<QVariant> &linkIdList);
+  ///bool removeLinks(const QList<QVariant> &linkIdList);
 
-  /*! \brief Remove each link that is contained in selection
-   *
-   * This is usefull used together with mdtSqlTableWidget .
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
+  /*! \brief Remove each unit link that is contained in selection
    */
-  bool removeLinks(const QModelIndexList & indexListOfSelectedRows);
+  bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
 
  private:
 

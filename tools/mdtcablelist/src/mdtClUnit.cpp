@@ -512,7 +512,7 @@ mdtClLinkData mdtClUnit::getUnitLinkData(const QVariant &unitConnectionStartId, 
 
   // Setup and run query to get data in unit link view
   sql = "SELECT "\
-        "UnitConnectionStart_Id_FK , UnitConnectionEnd_Id_FK, ArticleLink_Id_FK, "\
+        "UnitConnectionStart_Id_FK , UnitConnectionEnd_Id_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK, "\
         "SinceVersion, Modification, Identification, Value, LinkType_Code_FK, LinkDirection_Code_FK ";
   sql += " FROM UnitLink_view ";
   sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
@@ -530,13 +530,14 @@ mdtClLinkData mdtClUnit::getUnitLinkData(const QVariant &unitConnectionStartId, 
   }
   data.setUnitConnectionStartId(query.value(0));
   data.setUnitConnectionEndId(query.value(1));
-  data.setArticleLinkId(query.value(2));
-  data.setSinceVersion(query.value(3));
-  data.setModification(query.value(4));
-  data.setIdentification(query.value(5));
-  data.setValue(query.value(6));
-  data.setLinkTypeCode(query.value(7));
-  data.setLinkDirectionCode(query.value(8));
+  data.setArticleConnectionStartId(query.value(2));
+  data.setArticleConnectionEndId(query.value(3));
+  data.setSinceVersion(query.value(4));
+  data.setModification(query.value(5));
+  data.setIdentification(query.value(6));
+  data.setValue(query.value(7));
+  data.setLinkTypeCode(query.value(8));
+  data.setLinkDirectionCode(query.value(9));
   // Setup and run query to get data in vehicles type table
   sql = "SELECT VehicleTypeStart_Id_FK, VehicleTypeEnd_Id_FK FROM VehicleType_Link_tbl ";
   sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
@@ -569,10 +570,11 @@ bool mdtClUnit::addLink(const mdtClLinkData &data)
   }
   QSqlQuery query(pvDatabase);
   // Prepare query for insertion in Link table
-  sql = "INSERT INTO Link_tbl (ArticleLink_Id_FK, UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, "\
+  sql = "INSERT INTO Link_tbl (UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, "\
+                              "ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK, "\
                               "SinceVersion, Modification, Identification, LinkDirection_Code_FK, "\
                               "LinkType_Code_FK, Value) "\
-        "VALUES (:ArticleLink_Id_FK, :UnitConnectionStart_Id_FK, :UnitConnectionEnd_Id_FK, "\
+        "VALUES (:UnitConnectionStart_Id_FK, :UnitConnectionEnd_Id_FK, :ArticleConnectionStart_Id_FK, :ArticleConnectionEnd_Id_FK, "\
                                ":SinceVersion, :Modification, :Identification, :LinkDirection_Code_FK, "\
                                ":LinkType_Code_FK, :Value)";
   if(!query.prepare(sql)){
@@ -585,7 +587,8 @@ bool mdtClUnit::addLink(const mdtClLinkData &data)
     return false;
   }
   // Add values and execute query
-  query.bindValue(":ArticleLink_Id_FK", data.articleLinkId());
+  query.bindValue(":ArticleConnectionStart_Id_FK", data.articleConnectionStartId());
+  query.bindValue(":ArticleConnectionEnd_Id_FK", data.articleConnectionEndId());
   query.bindValue(":UnitConnectionStart_Id_FK", data.unitConnectionStartId());
   query.bindValue(":UnitConnectionEnd_Id_FK", data.unitConnectionEndId());
   query.bindValue(":SinceVersion", data.sinceVersion());
@@ -652,7 +655,8 @@ bool mdtClUnit::editLink(const QVariant &unitConnectionStartId, const QVariant &
   }
   // Prepare query for Link table edition
   sql = "UPDATE Link_tbl SET "\
-        "ArticleLink_Id_FK = :ArticleLink_Id_FK , "\
+        "ArticleConnectionStart_Id_FK = :ArticleConnectionStart_Id_FK , "\
+        "ArticleConnectionEnd_Id_FK = :ArticleConnectionEnd_Id_FK , "\
         "UnitConnectionStart_Id_FK = :UnitConnectionStart_Id_FK , "\
         "UnitConnectionEnd_Id_FK = :UnitConnectionEnd_Id_FK , "\
         "SinceVersion = :SinceVersion , "\
@@ -673,7 +677,8 @@ bool mdtClUnit::editLink(const QVariant &unitConnectionStartId, const QVariant &
     return false;
   }
   // Add values and execute query
-  query.bindValue(":ArticleLink_Id_FK", data.articleLinkId());
+  query.bindValue(":ArticleConnectionStart_Id_FK", data.articleConnectionStartId());
+  query.bindValue(":ArticleConnectionEnd_Id_FK", data.articleConnectionEndId());
   query.bindValue(":UnitConnectionStart_Id_FK", data.unitConnectionStartId());
   query.bindValue(":UnitConnectionEnd_Id_FK", data.unitConnectionEndId());
   query.bindValue(":SinceVersion", data.sinceVersion());

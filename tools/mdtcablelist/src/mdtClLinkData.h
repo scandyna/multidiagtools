@@ -42,13 +42,33 @@ class mdtClLinkData
    */
   bool isValid();
 
+  /*! \brief Clear data
+   */
+  void clear();
+
   /*! \brief Set article link ID
    */
-  void setArticleLinkId(const QVariant & value);
+  ///void setArticleLinkId(const QVariant & value);
 
   /*! \brief Get article ID
    */
-  QVariant articleLinkId() const;
+  ///QVariant articleLinkId() const;
+
+  /*! \brief Set article connection start ID
+   */
+  void setArticleConnectionStartId(const QVariant & value);
+
+  /*! \brief Get article connection start ID
+   */
+  QVariant articleConnectionStartId() const;
+
+  /*! \brief Set article connection end ID
+   */
+  void setArticleConnectionEndId(const QVariant & value);
+
+  /*! \brief Get article connection end ID
+   */
+  QVariant articleConnectionEndId() const;
 
   /*! \brief Set unit connection start ID
    */
@@ -168,7 +188,9 @@ class mdtClLinkData
   bool checkVehicleTypes();
 
   ///QVariant pvLinkId;
-  QVariant pvArticleLinkId;
+  ///QVariant pvArticleLinkId;
+  QVariant pvArticleConnectionStartId;
+  QVariant pvArticleConnectionEndId;
   QVariant pvUnitConnectionStartId;
   QVariant pvUnitConnectionEndId;
   QVariant pvSinceVersion;

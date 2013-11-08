@@ -1,6 +1,6 @@
 format 76
 "DatabaseLogical" // mdttools::CableList::DatabaseLogical
-  revision 5
+  revision 7
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -44,7 +44,7 @@ format 76
     show_infonote default drawing_language default show_stereotype_properties default
     classdiagram 739586 "Logical"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-      size A4
+      size A3-Landscape
     end
 
     class 764674 "Article"
@@ -455,48 +455,6 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 815234 "Id_PK"
-	private explicit_type "int"
-	stereotype "PK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      classrelation 1016706 // <unidirectional association>
-	relation 1005570 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1016706 // <unidirectional association>
-	  b parent class_ref 765058 // ArticleConnection
-      end
-
-      attribute 815362 "ArticleConnectionStart_Id_FK"
-	private explicit_type "int"
-	stereotype "FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 815490 "ArticleConnectionEnd_Id_FK"
-	private explicit_type "int"
-	stereotype "FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
       classrelation 1016834 // <unidirectional association>
 	relation 1005698 --->
 	  a role_name "" private
@@ -508,7 +466,7 @@ ${inlines}
 
       attribute 815618 "UnitConnectionStart_Id_FK"
 	private explicit_type "int"
-	stereotype "FK"
+	stereotype "PK, FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -519,7 +477,7 @@ ${inlines}
 
       attribute 815746 "UnitConnectionEnd_Id_FK"
 	private explicit_type "int"
-	stereotype "FK"
+	stereotype "PK, FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -543,6 +501,38 @@ ${inlines}
 	private explicit_type "string"
 	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 963586 "ArticleConnectionStart_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 963714 "ArticleConnectionEnd_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 956802 "Identification"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
 	php_decl ""
@@ -596,6 +586,33 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+
+      classrelation 1181314 // <unidirectional association>
+	relation 1168770 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1181314 // <unidirectional association>
+	  b parent class_ref 765314 // UnitConnection
+      end
+
+      classrelation 1188354 // <unidirectional association>
+	relation 1175810 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1188354 // <unidirectional association>
+	  b parent class_ref 945154 // ArticleLink_tbl
+      end
+
+      classrelation 1188482 // <unidirectional association>
+	relation 1175938 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1188482 // <unidirectional association>
+	  b parent class_ref 945154 // ArticleLink_tbl
       end
     end
 
@@ -654,6 +671,485 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+    end
+
+    class 944386 "ArticleConnectionGroup_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 954498 "Id_PK"
+	private explicit_type "int"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 954626 "ArticleConnection_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1180034 // <unidirectional association>
+	relation 1167490 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1180034 // <unidirectional association>
+	  b parent class_ref 765058 // ArticleConnection
+      end
+    end
+
+    class 944514 "ArticleConnectionGroup_Article_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 954754 "Article_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1180162 // <unidirectional association>
+	relation 1167618 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1180162 // <unidirectional association>
+	  b parent class_ref 764674 // Article
+      end
+
+      classrelation 1180290 // <unidirectional association>
+	relation 1167746 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1180290 // <unidirectional association>
+	  b parent class_ref 944386 // ArticleConnectionGroup_tbl
+      end
+
+      attribute 955394 "ArticleConnectionGroup_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 944642 "ArticleComponent_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 954882 "Composite_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 955010 "Component_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1180418 // <unidirectional association>
+	relation 1167874 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1180418 // <unidirectional association>
+	  b parent class_ref 764674 // Article
+      end
+
+      attribute 955138 "ComponentQty"
+	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 955266 "ComponentQtyUnit"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1180546 // <unidirectional association>
+	relation 1168002 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1180546 // <unidirectional association>
+	  b parent class_ref 764674 // Article
+      end
+    end
+
+    class 944770 "VehicleType_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 955522 "Id_PK"
+	private explicit_type "int"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 955650 "Type"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 955778 "SubType"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 955906 "SeriesNumber"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 944898 "VehicleType_Unit_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 956034 "Unit_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1180674 // <unidirectional association>
+	relation 1168130 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1180674 // <unidirectional association>
+	  b parent class_ref 764802 // Unit
+      end
+
+      attribute 956162 "VehicleType_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1180802 // <unidirectional association>
+	relation 1168258 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1180802 // <unidirectional association>
+	  b parent class_ref 944770 // VehicleType_tbl
+      end
+    end
+
+    class 945026 "VehicleType_Link_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 956290 "VehicleTypeStart_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 956418 "VehicleTypeEnd_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 956546 "UnitConnectionStart_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 956674 "UnitConnectionEnd_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1180930 // <unidirectional association>
+	relation 1168386 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1180930 // <unidirectional association>
+	  b parent class_ref 944770 // VehicleType_tbl
+      end
+
+      classrelation 1181058 // <unidirectional association>
+	relation 1168514 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1181058 // <unidirectional association>
+	  b parent class_ref 805250 // Link_tbl
+      end
+
+      classrelation 1181186 // <unidirectional association>
+	relation 1168642 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1181186 // <unidirectional association>
+	  b parent class_ref 944770 // VehicleType_tbl
+      end
+    end
+
+    class 945154 "ArticleLink_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 956930 "ArticleConnectionStart_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 957058 "ArticleConnectionEnd_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 964098 "LinkType_Code_FK"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 964226 "LinkDirection_Code_FK"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1181570 // <unidirectional association>
+	relation 1169026 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1181570 // <unidirectional association>
+	  b parent class_ref 765058 // ArticleConnection
+      end
+
+      classrelation 1181698 // <unidirectional association>
+	relation 1169154 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1181698 // <unidirectional association>
+	  b parent class_ref 765058 // ArticleConnection
+      end
+
+      attribute 963842 "Identification"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 963970 "Value"
+	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1188610 // <unidirectional association>
+	relation 1176066 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1188610 // <unidirectional association>
+	  b parent class_ref 805378 // LinkType_tbl
+      end
+
+      classrelation 1188738 // <unidirectional association>
+	relation 1176194 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1188738 // <unidirectional association>
+	  b parent class_ref 805506 // LinkDirection_tbl
       end
     end
   end

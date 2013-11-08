@@ -249,8 +249,16 @@ bool mdtClMainWindow::createDatabaseSqlite()
   }
   // Create database
   mdtClDatabaseSchema dbSchema(pvDatabaseManager);
+  if(!dbSchema.createSchemaSqlite(pvWorkDirectory)){
+    QMessageBox msgBox(this);
+    msgBox.setText(tr("Database creation failed.") + "                ");
+    msgBox.setDetailedText(dbSchema.lastError().text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return false;
+  }
 
-  return dbSchema.createSchemaSqlite(pvWorkDirectory);
+  return true;
 }
 
 bool mdtClMainWindow::importDatabaseSqlite()

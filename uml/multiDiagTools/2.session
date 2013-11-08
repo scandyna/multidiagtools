@@ -1,12 +1,24 @@
-window_sizes 1280 1001 384 890 923 0
+window_sizes 1024 718 350 668 640 0
 diagrams
-  active  classdiagram_ref 620674 // mdtFieldMap
-    890 923 100 4 0 0
+  active  classdiagram_ref 739586 // Logical
+    668 640 68 17 154 314
 end
 show_stereotypes
+selected class_ref 765058 // ArticleConnection
 open
-  classview_ref 286978 // mdtDatabase
-  class_ref 625154 // mdtFieldMapItem
-  operation_ref 1695234 // setDestinationData
+  classview_ref 483842 // Conceptual
+  class_ref 765058 // ArticleConnection
+  class_ref 765314 // UnitConnection
+  attribute_ref 963586 // ArticleConnectionStart_Id_FK
+  attribute_ref 963714 // ArticleConnectionEnd_Id_FK
+  attribute_ref 956802 // Identification
+  class_ref 944386 // ArticleConnectionGroup_tbl
+  class_ref 944514 // ArticleConnectionGroup_Article_tbl
+  class_ref 944642 // ArticleComponent_tbl
+  class_ref 944770 // VehicleType_tbl
+  class_ref 944898 // VehicleType_Unit_tbl
+  class_ref 945026 // VehicleType_Link_tbl
+  attribute_ref 964098 // LinkType_Code_FK
+  attribute_ref 964226 // LinkDirection_Code_FK
 end
 end
