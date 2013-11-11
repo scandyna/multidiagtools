@@ -27,6 +27,7 @@
 
 // We need a sleep function
 #ifdef Q_OS_UNIX
+ #include <unistd.h>
  #define msleep(t) usleep(1000*t)
 #endif
 #ifdef Q_OS_WIN

@@ -8,7 +8,7 @@ default_target: all
 #=============================================================================
 # Special targets provided by cmake.
 
-# Disable implicit rules so canoncical targets will work.
+# Disable implicit rules so canonical targets will work.
 .SUFFIXES:
 
 # Remove some rules from gmake that .SUFFIXES does not remove.
@@ -35,11 +35,14 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
+# Escaping for special characters.
+EQUALS = =
+
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/philippe/programmation/multiDiagTools
+CMAKE_SOURCE_DIR = /home/philippe/programmation/multidiagtools/multidiagtools
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/philippe/programmation/multiDiagTools
+CMAKE_BINARY_DIR = /home/philippe/programmation/multidiagtools/multidiagtools
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -98,7 +101,7 @@ list_install_components/fast: list_install_components
 # Special rule for the target package
 package: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
-	cd /home/philippe/programmation/multiDiagTools && /usr/bin/cpack --config ./CPackConfig.cmake
+	cd /home/philippe/programmation/multidiagtools/multidiagtools && /usr/bin/cpack --config ./CPackConfig.cmake
 .PHONY : package
 
 # Special rule for the target package
@@ -108,7 +111,7 @@ package/fast: package
 # Special rule for the target package_source
 package_source:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
-	cd /home/philippe/programmation/multiDiagTools && /usr/bin/cpack --config ./CPackSourceConfig.cmake /home/philippe/programmation/multiDiagTools/CPackSourceConfig.cmake
+	cd /home/philippe/programmation/multidiagtools/multidiagtools && /usr/bin/cpack --config ./CPackSourceConfig.cmake /home/philippe/programmation/multidiagtools/multidiagtools/CPackSourceConfig.cmake
 .PHONY : package_source
 
 # Special rule for the target package_source
@@ -137,14 +140,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/philippe/programmation/multiDiagTools && $(CMAKE_COMMAND) -E cmake_progress_start /home/philippe/programmation/multiDiagTools/CMakeFiles /home/philippe/programmation/multiDiagTools/tests/CMakeFiles/progress.marks
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/philippe/programmation/multiDiagTools/CMakeFiles 0
+	cd /home/philippe/programmation/multidiagtools/multidiagtools && $(CMAKE_COMMAND) -E cmake_progress_start /home/philippe/programmation/multidiagtools/multidiagtools/CMakeFiles /home/philippe/programmation/multidiagtools/multidiagtools/tests/CMakeFiles/progress.marks
+	cd /home/philippe/programmation/multidiagtools/multidiagtools && $(MAKE) -f CMakeFiles/Makefile2 tests/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/philippe/programmation/multidiagtools/multidiagtools/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
+	cd /home/philippe/programmation/multidiagtools/multidiagtools && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
 .PHONY : clean
 
 # The main clean target
@@ -153,17 +156,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /home/philippe/programmation/multidiagtools/multidiagtools && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /home/philippe/programmation/multidiagtools/multidiagtools && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/philippe/programmation/multiDiagTools && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/philippe/programmation/multidiagtools/multidiagtools && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -192,6 +195,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/philippe/programmation/multiDiagTools && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/philippe/programmation/multidiagtools/multidiagtools && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
