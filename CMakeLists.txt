@@ -34,7 +34,7 @@ endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
 set(MDTLIB_VERSION_MINOR 3)
-set(MDTLIB_VERSION_MICRO 0)
+set(MDTLIB_VERSION_MICRO 1)
 
 # Library version suffix:
 #  Since version 0.2.8, naming convension has changed.

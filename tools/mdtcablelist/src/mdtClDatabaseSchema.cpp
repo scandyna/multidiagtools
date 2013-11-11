@@ -193,6 +193,9 @@ bool mdtClDatabaseSchema::setupTables()
   if(!setupArticleComponentTable()){
     return false;
   }
+  if(!setupArticleConnectorTable()){
+    return false;
+  }
   if(!setupArticleConnectionTable()){
     return false;
   }
@@ -244,6 +247,9 @@ bool mdtClDatabaseSchema::createViews()
     return false;
   }
   if(!createArticleComponentUsageView()){
+    return false;
+  }
+  if(!createArticleConnectionView()){
     return false;
   }
   if(!createArticleLinkView()){
@@ -329,38 +335,18 @@ bool mdtClDatabaseSchema::setupVehicleTypeUnitTable()
   QSqlField field;
 
   table.setTableName("VehicleType_Unit_tbl", "UTF8");
-  // Id_PK
-  /**
-  field.setName("Id_PK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
-  */
   // VehicleType_Id_FK
   field = QSqlField();
   field.setName("VehicleType_Id_FK");
   field.setType(QVariant::Int);
   field.setRequiredStatus(QSqlField::Required);
-  ///table.addField(field, false);
   table.addField(field, true);
   // Unit_Id_FK
   field = QSqlField();
   field.setName("Unit_Id_FK");
   field.setType(QVariant::Int);
   field.setRequiredStatus(QSqlField::Required);
-  ///table.addField(field, false);
   table.addField(field, true);
-  // Indexes
-  /**
-  table.addIndex("VehicleType_Id_FK_idx", false);
-  if(!table.addFieldToIndex("VehicleType_Id_FK_idx", "VehicleType_Id_FK")){
-    return;/// false;
-  }
-  table.addIndex("Unit_Id_FK_idx", false);
-  if(!table.addFieldToIndex("Unit_Id_FK_idx", "Unit_Id_FK")){
-    return;/// false;
-  }
-  */
   // Foreign keys
   table.addForeignKey("VehicleType_Id_FK_fk", "VehicleType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("VehicleType_Id_FK_fk", "VehicleType_Id_FK", "Id_PK")){
@@ -558,6 +544,47 @@ bool mdtClDatabaseSchema::setupArticleComponentTable()
   return true;
 }
 
+bool mdtClDatabaseSchema::setupArticleConnectorTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("ArticleConnector_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Article_Id_FK
+  field = QSqlField();
+  field.setName("Article_Id_FK");
+  field.setType(QVariant::Int);
+  field.setRequiredStatus(QSqlField::Required);
+  table.addField(field, false);
+  // Connector Name
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(30);
+  table.addField(field, false);
+  // Indexes
+  table.addIndex("Article_Id_FK_idx3", false);
+  if(!table.addFieldToIndex("Article_Id_FK_idx3", "Article_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("Article_Id_FK_fk3", "Article_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Article_Id_FK_fk3", "Article_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
 bool mdtClDatabaseSchema::setupArticleConnectionTable() 
 {
   mdtSqlSchemaTable table;
@@ -575,12 +602,19 @@ bool mdtClDatabaseSchema::setupArticleConnectionTable()
   field.setType(QVariant::Int);
   field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
+  // ArticleConnector_Id_FK
+  field = QSqlField();
+  field.setName("Connector_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
   // ArticleConnectorName
+  /**
   field = QSqlField();
   field.setName("ArticleConnectorName");
   field.setType(QVariant::String);
   field.setLength(30);
   table.addField(field, false);
+  */
   // ArticleContactName
   field = QSqlField();
   field.setName("ArticleContactName");
@@ -623,9 +657,19 @@ bool mdtClDatabaseSchema::setupArticleConnectionTable()
     pvLastError = table.lastError();
     return false;
   }
+  table.addIndex("ArticleConnector_Id_FK_idx", false);
+  if(!table.addFieldToIndex("ArticleConnector_Id_FK_idx", "Connector_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   // Foreign keys
   table.addForeignKey("Article_Id_FK_fk2", "Article_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Article_Id_FK_fk2", "Article_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("ArticleConnector_Id_FK_fk", "ArticleConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("ArticleConnector_Id_FK_fk", "Connector_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -641,13 +685,6 @@ bool mdtClDatabaseSchema::setupArticleLinkTable()
   QSqlField field;
 
   table.setTableName("ArticleLink_tbl", "UTF8");
-  // Id_PK
-  /**
-  field.setName("Id_PK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
-  */
   // ArticleConnectionStart_Id_FK
   field = QSqlField();
   field.setName("ArticleConnectionStart_Id_FK");
@@ -702,16 +739,6 @@ bool mdtClDatabaseSchema::setupArticleLinkTable()
     pvLastError = table.lastError();
     return false;
   }
-  /**
-  table.addIndex("ArticleConnectionStart_Id_FK_idx", false);
-  if(!table.addFieldToIndex("ArticleConnectionStart_Id_FK_idx", "ArticleConnectionStart_Id_FK")){
-    return;/// false;
-  }
-  table.addIndex("ArticleConnectionEnd_Id_FK_idx", false);
-  if(!table.addFieldToIndex("ArticleConnectionEnd_Id_FK_idx", "ArticleConnectionEnd_Id_FK")){
-    return;/// false;
-  }
-  */
   table.addIndex("LinkDirection_Code_FK_idx", false);
   if(!table.addFieldToIndex("LinkDirection_Code_FK_idx", "LinkDirection_Code_FK")){
     pvLastError = table.lastError();
@@ -944,13 +971,6 @@ bool mdtClDatabaseSchema::setupLinkTable()
   field.setName("UnitConnectionEnd_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, true);
-  // ArticleLink_Id_FK
-  /**
-  field = QSqlField();
-  field.setName("ArticleLink_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
-  */
   // ArticleConnectionStart_Id_FK
   field = QSqlField();
   field.setName("ArticleConnectionStart_Id_FK");
@@ -1008,12 +1028,6 @@ bool mdtClDatabaseSchema::setupLinkTable()
     pvLastError = table.lastError();
     return false;
   }
-  /**
-  table.addIndex("ArticleLink_Id_FK_idx", false);
-  if(!table.addFieldToIndex("ArticleLink_Id_FK_idx", "ArticleLink_Id_FK")){
-    return;/// false;
-  }
-  */
   table.addIndex("Link_ArticleLink_idx", false);
   if(!table.addFieldToIndex("Link_ArticleLink_idx", "ArticleConnectionStart_Id_FK")){
     pvLastError = table.lastError();
@@ -1034,12 +1048,6 @@ bool mdtClDatabaseSchema::setupLinkTable()
     pvLastError = table.lastError();
     return false;
   }
-  /**
-  table.addForeignKey("ArticleLink_Id_FK_fk", "ArticleLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("ArticleLink_Id_FK_fk", "ArticleLink_Id_FK", "Id_PK")){
-    return;/// false
-  }
-  */
   table.addForeignKey("Link_ArticleLink_fk", "ArticleLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Link_ArticleLink_fk", "ArticleConnectionStart_Id_FK", "ArticleConnectionStart_Id_FK")){
     pvLastError = table.lastError();
@@ -1204,7 +1212,6 @@ bool mdtClDatabaseSchema::createVehicleTypeUnitView()
         "Unit_tbl.Coordinate ,\n"\
         "Unit_tbl.Cabinet ,\n"\
         "Unit_tbl.SchemaPosition ,\n"\
-        /**"VehicleType_Unit_tbl.Id_PK AS VehicleType_Unit_Id_PK ,\n"\*/
         "VehicleType_Unit_tbl.VehicleType_Id_FK ,\n"\
         "VehicleType_Unit_tbl.Unit_Id_FK\n"\
         "FROM VehicleType_Unit_tbl\n"\
@@ -1258,13 +1265,27 @@ bool mdtClDatabaseSchema::createArticleComponentView()
   return createView("ArticleComponent_view", sql);
 }
 
+bool mdtClDatabaseSchema::createArticleConnectionView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW ArticleConnection_view AS\n"\
+        "SELECT\n"\
+        "ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
+        "ArticleConnection_tbl.*\n"\
+        "FROM ArticleConnection_tbl\n"\
+        " JOIN ArticleConnector_tbl\n"\
+        "  ON ArticleConnection_tbl.Connector_Id_FK = ArticleConnector_tbl.Id_PK";
+
+  return createView("ArticleConnection_view", sql);
+}
+
 bool mdtClDatabaseSchema::createArticleLinkView() 
 {
   QString sql;
 
   sql = "CREATE VIEW ArticleLink_view AS\n"\
         "SELECT\n"\
-        /**" ArticleLink_tbl.Id_PK ,\n"\*/
         " ArticleLink_tbl.LinkType_Code_FK ,\n"\
         " ArticleLink_tbl.LinkDirection_Code_FK ,\n"\
         " ArticleLink_tbl.ArticleConnectionStart_Id_FK ,\n"\
@@ -1276,28 +1297,32 @@ bool mdtClDatabaseSchema::createArticleLinkView()
         " LinkType_tbl.NameEN AS LinkTypeNameIT ,\n"\
         " ArticleLink_tbl.Value ,\n"\
         " LinkType_tbl.ValueUnit ,\n"\
-        " ACS.Article_Id_FK AS StartArticle_Id_FK ,\n"\
-        " ACS.ArticleConnectorName AS StartArticleConnectorName ,\n"\
-        " ACS.ArticleContactName AS StartArticleContactName ,\n"\
-        " ACS.IoType AS StartIoType ,\n"\
-        " ACS.FunctionEN AS StartFunctionEN ,\n"\
-        " ACS.FunctionEN AS StartFunctionFR ,\n"\
-        " ACS.FunctionEN AS StartFunctionDE ,\n"\
-        " ACS.FunctionEN AS StartFunctionIT ,\n"\
+        " ACNXS.Article_Id_FK AS StartArticle_Id_FK ,\n"\
+        " ACS.Name AS StartArticleConnectorName ,\n"\
+        " ACNXS.ArticleContactName AS StartArticleContactName ,\n"\
+        " ACNXS.IoType AS StartIoType ,\n"\
+        " ACNXS.FunctionEN AS StartFunctionEN ,\n"\
+        " ACNXS.FunctionEN AS StartFunctionFR ,\n"\
+        " ACNXS.FunctionEN AS StartFunctionDE ,\n"\
+        " ACNXS.FunctionEN AS StartFunctionIT ,\n"\
         " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
-        " ACE.Article_Id_FK AS EndArticle_Id_FK ,\n"\
-        " ACE.ArticleConnectorName AS EndArticleConnectorName ,\n"\
-        " ACE.ArticleContactName AS EndArticleContactName ,\n"\
-        " ACE.IoType AS EndIoType ,\n"\
-        " ACE.FunctionEN AS EndFunctionEN,\n"\
-        " ACE.FunctionEN AS EndFunctionFR,\n"\
-        " ACE.FunctionEN AS EndFunctionDE,\n"\
-        " ACE.FunctionEN AS EndFunctionIT\n"\
+        " ACNXE.Article_Id_FK AS EndArticle_Id_FK ,\n"\
+        " ACE.Name AS EndArticleConnectorName ,\n"\
+        " ACNXE.ArticleContactName AS EndArticleContactName ,\n"\
+        " ACNXE.IoType AS EndIoType ,\n"\
+        " ACNXE.FunctionEN AS EndFunctionEN,\n"\
+        " ACNXE.FunctionEN AS EndFunctionFR,\n"\
+        " ACNXE.FunctionEN AS EndFunctionDE,\n"\
+        " ACNXE.FunctionEN AS EndFunctionIT\n"\
         "FROM ArticleLink_tbl\n"\
-        " JOIN ArticleConnection_tbl ACS\n"\
-        "  ON ArticleLink_tbl.ArticleConnectionStart_Id_FK = ACS.Id_PK\n"\
-        " JOIN ArticleConnection_tbl ACE\n"\
-        "  ON ArticleLink_tbl.ArticleConnectionEnd_Id_FK = ACE.Id_PK\n"\
+        " JOIN ArticleConnection_tbl ACNXS\n"\
+        "  ON ArticleLink_tbl.ArticleConnectionStart_Id_FK = ACNXS.Id_PK\n"\
+        " JOIN ArticleConnection_tbl ACNXE\n"\
+        "  ON ArticleLink_tbl.ArticleConnectionEnd_Id_FK = ACNXE.Id_PK\n"\
+        " LEFT JOIN ArticleConnector_tbl ACS\n"\
+        "  ON ACNXS.Connector_Id_FK = ACS.Id_PK\n"\
+        " LEFT JOIN ArticleConnector_tbl ACE\n"\
+        "  ON ACNXE.Connector_Id_FK = ACE.Id_PK\n"\
         " JOIN LinkType_tbl\n"\
         "  ON LinkType_tbl.Code_PK = ArticleLink_tbl.LinkType_Code_FK\n"\
         " JOIN LinkDirection_tbl\n"\
@@ -1381,7 +1406,7 @@ bool mdtClDatabaseSchema::createUnitConnectionView()
         " UnitConnection_tbl.FunctionIT AS UnitFunctionIT,\n"\
         " UnitConnection_tbl.SignalName ,\n"\
         " UnitConnection_tbl.SwAddress ,\n"\
-        " ArticleConnection_tbl.ArticleConnectorName ,\n"\
+        " ArticleConnector_tbl.Name AS ArticleConnectorName ,\n"\
         " ArticleConnection_tbl.ArticleContactName ,\n"\
         " ArticleConnection_tbl.IoType ,\n"\
         " ArticleConnection_tbl.FunctionEN AS ArticleFunctionEN,\n"\
@@ -1390,7 +1415,9 @@ bool mdtClDatabaseSchema::createUnitConnectionView()
         " ArticleConnection_tbl.FunctionIT AS ArticleFunctionIT\n"\
         "FROM UnitConnection_tbl\n"\
         " LEFT JOIN ArticleConnection_tbl\n"\
-        "  ON UnitConnection_tbl.ArticleConnection_Id_FK = ArticleConnection_tbl.Id_PK";
+        "  ON UnitConnection_tbl.ArticleConnection_Id_FK = ArticleConnection_tbl.Id_PK\n"\
+        " LEFT JOIN ArticleConnector_tbl\n"\
+        "  ON ArticleConnection_tbl.Connector_Id_FK = ArticleConnector_tbl.Id_PK";
 
   return createView("UnitConnection_view", sql);
 }
@@ -1452,7 +1479,6 @@ bool mdtClDatabaseSchema::createUnitLinkView()
               " UCE.SwAddress AS EndSwAddress ,\n"\
               " LNK.UnitConnectionStart_Id_FK ,\n"\
               " LNK.UnitConnectionEnd_Id_FK ,\n"\
-              /**" Link_tbl.ArticleLink_Id_FK ,\n"\*/
               " UCS.Unit_Id_FK AS StartUnit_Id_FK ,\n"\
               " UCE.Unit_Id_FK AS EndUnit_Id_FK ,\n"\
               " LNK.LinkType_Code_FK ,\n"\

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtClUnitTest.h"
 #include "mdtApplication.h"
+#include "mdtClDatabaseSchema.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClLinkData.h"
 #include <QTest>
@@ -27,6 +28,27 @@
 #include <QVariant>
 #include <QPair>
 #include <QList>
+#include <QTemporaryFile>
+#include <QFileInfo>
+#include <QSqlDatabase>
+
+void mdtClUnitTest::initTestCase()
+{
+  QSqlDatabase db;
+
+  QTemporaryFile dbFile;
+  QFileInfo dbFileInfo;
+
+  /*
+   * Check Sqlite database creation
+   */
+  QVERIFY(dbFile.open());
+  dbFileInfo.setFile(dbFile);
+  mdtClDatabaseSchema schema(&pvDatabaseManager);
+  QVERIFY(schema.createSchemaSqlite(dbFileInfo));
+  QVERIFY(pvDatabaseManager.database().isOpen());
+  /// \todo Check that tables and views are created
+}
 
 void mdtClUnitTest::unitConnectionDataTest()
 {
@@ -91,6 +113,10 @@ void mdtClUnitTest::linkDataTest()
   QCOMPARE(data.vehicleTypeStartEndIdList().at(1).first, QVariant(3));
   QCOMPARE(data.vehicleTypeStartEndIdList().at(1).second, QVariant(12));
 
+}
+
+void mdtClUnitTest::cleanupTestCase()
+{
 }
 
 /*

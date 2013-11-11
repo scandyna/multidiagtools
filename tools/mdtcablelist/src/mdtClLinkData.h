@@ -46,14 +46,6 @@ class mdtClLinkData
    */
   void clear();
 
-  /*! \brief Set article link ID
-   */
-  ///void setArticleLinkId(const QVariant & value);
-
-  /*! \brief Get article ID
-   */
-  ///QVariant articleLinkId() const;
-
   /*! \brief Set article connection start ID
    */
   void setArticleConnectionStartId(const QVariant & value);
@@ -187,8 +179,6 @@ class mdtClLinkData
    */
   bool checkVehicleTypes();
 
-  ///QVariant pvLinkId;
-  ///QVariant pvArticleLinkId;
   QVariant pvArticleConnectionStartId;
   QVariant pvArticleConnectionEndId;
   QVariant pvUnitConnectionStartId;

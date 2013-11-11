@@ -58,18 +58,6 @@ void mdtClLinkData::clear()
   pvErrorList.clear();
 }
 
-/**
-void mdtClLinkData::setArticleLinkId(const QVariant & value) 
-{
-  pvArticleLinkId = value;
-}
-
-QVariant mdtClLinkData::articleLinkId() const 
-{
-  return pvArticleLinkId;
-}
-*/
-
 void mdtClLinkData::setArticleConnectionStartId(const QVariant & value)
 {
   pvArticleConnectionStartId = value;

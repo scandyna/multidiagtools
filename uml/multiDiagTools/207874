@@ -1,6 +1,6 @@
 format 76
 "DatabaseConceptual" // mdttools::CableList::DatabaseConceptual
-  revision 9
+  revision 10
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -137,8 +137,8 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 1178754 // <composition>
-	  b role_name "" multiplicity "0..*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1178882 // <composition>
       end
@@ -662,7 +662,7 @@ ${inlines}
       end
     end
 
-    class 944130 "ArticleConnectionGroup_tbl"
+    class 944130 "ArticleConnector"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -702,9 +702,13 @@ ${inlines}
 "
 	    classrelation_ref 1179394 // <association>
       end
+
+      classrelation 1195650 // <association>
+	relation_ref 1182978 // <association>
+      end
     end
 
-    class 944258 "UnitConnectionGroup_tbl"
+    class 944258 "UnitConnector"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -735,6 +739,78 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1179906 // <association>
+      end
+
+      classrelation 1195906 // <association>
+	relation_ref 1183106 // <association>
+      end
+    end
+
+    class 951810 "Connector"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1195522 // <association>
+	relation 1182978 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1195522 // <association>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1195650 // <association>
+      end
+
+      classrelation 1195778 // <association>
+	relation 1183106 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1195778 // <association>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1195906 // <association>
+      end
+
+      classrelation 1196034 // <composition>
+	relation 1183234 *---
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1196034 // <composition>
+	  b role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1196162 // <composition>
+      end
+    end
+
+    class 952066 "ConnectorContact"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1196162 // <composition>
+	relation_ref 1183234 // <composition>
       end
     end
   end

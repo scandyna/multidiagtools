@@ -26,10 +26,11 @@
 #include <QObject>
 #include <QVariant>
 #include "mdtSqlFormWindow.h"
+#include "mdtClEditor.h"
 
 /*! \brief Cable list's article editor
  */
-class mdtClArticleEditor : public QObject
+class mdtClArticleEditor : public mdtClEditor
 {
  Q_OBJECT
 
@@ -37,19 +38,15 @@ class mdtClArticleEditor : public QObject
 
   /*! \brief Contruct a article editor
    */
-  mdtClArticleEditor(QObject *parent = 0, QSqlDatabase db = QSqlDatabase());
+  mdtClArticleEditor(QObject *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
   ~mdtClArticleEditor();
 
-  /*! \brief Setup tables
-   */
-  bool setupTables();
-
   /*! \brief Get form object
    */
-  mdtSqlFormWindow *form();
+  ///mdtSqlFormWindow *form();
 
  private slots:
 
@@ -83,6 +80,10 @@ class mdtClArticleEditor : public QObject
 
  private:
 
+  /*! \brief Setup tables
+   */
+  bool setupTables();
+
   /*! \brief Get current Article ID
    *
    * Will return current ID from Article table.
@@ -111,8 +112,8 @@ class mdtClArticleEditor : public QObject
 
   Q_DISABLE_COPY(mdtClArticleEditor);
 
-  QSqlDatabase pvDatabase;
-  mdtSqlFormWindow *pvForm;
+  ///QSqlDatabase pvDatabase;
+  ///mdtSqlFormWindow *pvForm;
 };
 
 #endif  // #ifndef MDT_CL_ARTICLE_EDITOR_H

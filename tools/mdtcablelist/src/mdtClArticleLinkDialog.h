@@ -137,11 +137,6 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
   Q_DISABLE_COPY(mdtClArticleLinkDialog);
 
   mdtClLinkData pvLinkData;
-  ///QVariant pvLinkTypeCode;
-  ///QVariant pvLinkDirectionCode;
-  ///double pvValue;
-  ///QVariant pvStartConnectionId;
-  ///QVariant pvEndConnectionId;
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvLinkTypeModel;
   QSqlQueryModel *pvLinkDirectionModel;

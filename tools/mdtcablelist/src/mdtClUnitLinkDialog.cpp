@@ -82,7 +82,6 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   lbEndCabinet->clear();
   lbEndConnectorName->clear();
   lbEndContactName->clear();
-  ///pvValue = 0.0;
   lbUnit->clear();
 
 }

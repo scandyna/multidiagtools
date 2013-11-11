@@ -61,35 +61,41 @@ Note: ou stocker l'état ? dans Unit ?"
 note 132994 "Attention!
 1->* fonctionne pour plusieurs véhicules ??"
   xyzwh 887.8 73.7 2000 195 97
-classcanvas 134914 class_ref 944130 // ArticleConnectionGroup_tbl
+classcanvas 134914 class_ref 944130 // ArticleConnector
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 292.2 405.2 2000
 end
-classcanvas 135298 class_ref 944258 // UnitConnectionGroup_tbl
+classcanvas 135298 class_ref 944258 // UnitConnector
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 613.8 405.2 3005
 end
-note 136066 "A Connection group can be a terminal block or a connector"
-  xyzwh 416 274 2000 134 104
+classcanvas 136706 class_ref 951810 // Connector
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 421 296 2000
+end
+classcanvas 137090 class_ref 952066 // ConnectorContact
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 421 369 3011
+end
 relationcanvas 128386 relation_ref 949762 // <association>
   decenter_begin 100
   decenter_end 836
-  from ref 128130 z 2001 to point 867.1 213.8
-  line 128514 z 2001 to point 867.1 269.5
+  from ref 128130 z 2001 to point 867 213
+  line 128514 z 2001 to point 867 269
   line 128642 z 2001 to ref 128130
-  role_a_pos 787 249 3000 role_b_pos 786 187 3000
-  multiplicity_a_pos 785 281 3000 multiplicity_b_pos 786 218 3000
+  role_a_pos 781 252 3000 role_b_pos 781 189 3000
+  multiplicity_a_pos 781 282 3000 multiplicity_b_pos 781 219 3000
 end
 relationcanvas 128770 relation_ref 950018 // <association>
   decenter_begin 483
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 549 252 3000 multiplicity_b_pos 347 252 3000
+  multiplicity_a_pos 553 252 3000 multiplicity_b_pos 343 252 3000
 end
 relationcanvas 129026 relation_ref 950146 // <composition>
   from ref 128002 z 2001 to ref 128898
   no_role_a no_role_b
-  multiplicity_a_pos 233 487 3000 multiplicity_b_pos 260 296 3000
+  multiplicity_a_pos 237 488 3000 multiplicity_b_pos 265 295 3000
 end
 relationcanvas 129282 relation_ref 950402 // <composition>
   from ref 128130 z 2001 to ref 129154
@@ -113,12 +119,12 @@ relationcanvas 130306 relation_ref 978818 // <association>
 end
 relationcanvas 130562 relation_ref 978946 // <association>
   decenter_begin 209
-  decenter_end 876
-  from ref 129154 z 2001 to point 1070.6 497.9
-  line 130690 z 2001 to point 1067 542.9
+  decenter_end 875
+  from ref 129154 z 2001 to point 1070 497
+  line 130690 z 2001 to point 1067 542
   line 130818 z 2001 to ref 129154
-  role_a_pos 925 523 3000 role_b_pos 925 476 3000
-  multiplicity_a_pos 924 554 3000 multiplicity_b_pos 922 507 3000
+  role_a_pos 920 523 3000 role_b_pos 920 476 3000
+  multiplicity_a_pos 920 553 3000 multiplicity_b_pos 920 506 3000
 end
 relationcanvas 131458 relation_ref 979074 // <association>
   from ref 131330 z 2001 to ref 130050
@@ -136,50 +142,66 @@ relationcanvas 131970 relation_ref 985730 // <association>
   multiplicity_a_pos 549 237 3000 multiplicity_b_pos 170 168 3000
 end
 relationcanvas 133634 relation_ref 1166338 // <association>
-  from ref 131842 z 2001 to point 88.2 678.2
+  from ref 131842 z 2001 to point 88 678
   line 136578 z 2001 to ref 130050
   no_role_a no_role_b
   multiplicity_a_pos 335 687 3000 multiplicity_b_pos 52 177 3000
 end
 relationcanvas 134146 relation_ref 1166466 // <association>
-  decenter_begin 234
-  decenter_end 839
-  from ref 128002 z 2001 to point 190 224.4
-  line 134274 z 2001 to point 190 274.4
+  decenter_begin 232
+  decenter_end 837
+  from ref 128002 z 2001 to point 190 224
+  line 134274 z 2001 to point 190 274
   line 134402 z 2001 to ref 128002
-  role_a_pos 148 252 3000 role_b_pos 153 201 3000
-  multiplicity_a_pos 202 283 3000 multiplicity_b_pos 200 232 3000
+  role_a_pos 153 252 3000 role_b_pos 158 200 3000
+  multiplicity_a_pos 205 282 3000 multiplicity_b_pos 205 230 3000
 end
 relationcanvas 135426 relation_ref 1166850 // <composition>
   decenter_begin 893
   decenter_end 356
   from ref 128002 z 2001 to ref 134914
   no_role_a no_role_b
-  multiplicity_a_pos 324 382 3000 multiplicity_b_pos 288 296 3000
+  multiplicity_a_pos 306 382 3000 multiplicity_b_pos 306 295 3000
 end
 relationcanvas 135554 relation_ref 1166978 // <association>
   from ref 134914 z 3006 to ref 135298
   no_role_a no_role_b
-  multiplicity_a_pos 568 433 3000 multiplicity_b_pos 524 433 3000
+  multiplicity_a_pos 579 433 3000 multiplicity_b_pos 436 433 3000
 end
 relationcanvas 135682 relation_ref 1167106 // <association>
   from ref 134914 z 2001 to ref 128898
   no_role_a no_role_b
-  multiplicity_a_pos 303 508 3000 multiplicity_b_pos 331 442 3000
+  multiplicity_a_pos 258 488 3000 multiplicity_b_pos 297 453 3000
 end
 relationcanvas 135810 relation_ref 1167234 // <composition>
   decenter_begin 296
-  decenter_end 275
+  decenter_end 384
   from ref 128130 z 3006 to ref 135298
   no_role_a no_role_b
-  multiplicity_a_pos 624 382 3000 multiplicity_b_pos 604 294 3000
+  multiplicity_a_pos 623 382 3000 multiplicity_b_pos 608 295 3000
 end
 relationcanvas 135938 relation_ref 1167362 // <association>
   decenter_begin 407
-  decenter_end 87
+  decenter_end 86
   from ref 135298 z 3006 to ref 129154
   no_role_a no_role_b
-  multiplicity_a_pos 718 497 3000 multiplicity_b_pos 704 458 3000
+  multiplicity_a_pos 722 495 3000 multiplicity_b_pos 670 457 3000
+end
+relationcanvas 136834 relation_ref 1182978 // <association>
+  from ref 136706 z 2001 to ref 134914
+  no_role_a no_role_b
+  multiplicity_a_pos 350 382 3000 multiplicity_b_pos 415 344 3000
+end
+relationcanvas 136962 relation_ref 1183106 // <association>
+  decenter_end 75
+  from ref 136706 z 3006 to ref 135298
+  no_role_a no_role_b
+  multiplicity_a_pos 588 417 3000 multiplicity_b_pos 514 349 3000
+end
+relationcanvas 137218 relation_ref 1183234 // <composition>
+  from ref 136706 z 3012 to ref 137090
+  no_role_a no_role_b
+  multiplicity_a_pos 448 346 3000 no_multiplicity_b
 end
 line 129666 -_-_
   from ref 129538 z 2001 to ref 129154
@@ -193,8 +215,4 @@ line 132866 -_-_
   from ref 130050 z 2001 to ref 132738
 line 133250 -_-_
   from ref 128386 z 2002 to ref 132994
-line 136194 -_-_
-  from ref 134914 z 2001 to ref 136066
-line 136322 -_-_
-  from ref 135298 z 3006 to ref 136066
 end

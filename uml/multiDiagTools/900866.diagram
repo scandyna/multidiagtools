@@ -1,57 +1,45 @@
 format 76
 
-classcanvas 128002 class_ref 888194 // mdtClLinkData
+classcanvas 128002 class_ref 951682 // mdtClConnector
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 28 159 2000
+  xyz 366 370 2000
 end
-classcanvas 128130 class_ref 952706 // mdtClArticleConnectionData
+classcanvas 128130 class_ref 952450 // mdtClConnectorEditor
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 139 242 2000
+end
+classcanvas 128258 class_ref 952322 // mdtClEditor
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 523 120 2000
+  xyz 176 107 2005
 end
-classcanvas 128258 class_ref 952578 // mdtClConnectionData
+classcanvas 128514 class_ref 952578 // mdtClConnectionData
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 650 197 2006
+  xyz 505 107 2000
 end
-classcanvas 128514 class_ref 952834 // mdtClUnitConnectionData
+classcanvas 128898 class_ref 952962 // mdtClBase
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 502 292 2012
+  xyz 510 233 2005
 end
-note 129538 "A adapter dans code .."
-  xyzwh 527 547 2000 227 163
-relationcanvas 128386 relation_ref 1184514 // <generalisation>
-  from ref 128130 z 2007 to ref 128258
+relationcanvas 128386 relation_ref 1184386 // <generalisation>
+  from ref 128130 z 2006 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 128642 relation_ref 1184642 // <generalisation>
-  from ref 128514 z 2013 to ref 128258
+relationcanvas 128642 relation_ref 1185282 // <dependency>
+  decenter_begin 763
+  from ref 128002 z 2001 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 129026 relation_ref 1185026 // <directional composition>
-  decenter_begin 495
-  decenter_end 827
-  from ref 128002 z 2013 to ref 128514
-  role_a_pos 519 306 3000 no_role_b
-  multiplicity_a_pos 651 336 3000 no_multiplicity_b
+relationcanvas 128770 relation_ref 1185410 // <dependency>
+  from ref 128130 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 129154 relation_ref 1185154 // <directional composition>
-  from ref 128002 z 2013 to ref 128514
-  role_a_pos 386 307 3000 no_role_b
-  multiplicity_a_pos 525 337 3000 no_multiplicity_b
-end
-relationcanvas 129282 relation_ref 1184770 // <directional composition>
-  decenter_begin 116
-  decenter_end 104
-  from ref 128002 z 2001 to ref 128130
-  role_a_pos 373 133 3000 no_role_b
-  multiplicity_a_pos 527 163 3000 no_multiplicity_b
-end
-relationcanvas 129410 relation_ref 1184898 // <directional composition>
-  decenter_begin 192
-  decenter_end 446
-  from ref 128002 z 2001 to ref 128130
-  role_a_pos 455 133 3000 no_role_b
-  multiplicity_a_pos 602 163 3000 no_multiplicity_b
+relationcanvas 129026 relation_ref 1185794 // <generalisation>
+  decenter_begin 412
+  from ref 128002 z 2006 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

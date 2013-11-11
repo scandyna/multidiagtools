@@ -21,6 +21,7 @@
 #ifndef MDT_CL_ARTICLE_H
 #define MDT_CL_ARTICLE_H
 
+#include "mdtClBase.h"
 #include "mdtClLinkData.h"
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
@@ -31,7 +32,7 @@
 
 /*! \brief Helper class for Article and related tables edition
  */
-class mdtClArticle
+class mdtClArticle : public mdtClBase
 {
  public:
 
@@ -42,10 +43,6 @@ class mdtClArticle
   /*! \brief Destructor
    */
   ~mdtClArticle();
-
-  /*! \brief Get last error
-   */
-  const QSqlError &lastError() const;
 
   /*! \brief Get a model with articles for compononent selection
    *
@@ -124,21 +121,12 @@ class mdtClArticle
    */
   bool removeLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
 
-  /*! \brief Remove each link that is contained in linkIdList
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  ///bool removeLinks(const QList<QVariant> &linkIdList);
-
   /*! \brief Remove each unit link that is contained in selection
    */
   bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
 
  private:
 
-  QSqlDatabase pvDatabase;
-  QSqlError pvLastError;
   QSqlQueryModel *pvArticleModel;
 };
 

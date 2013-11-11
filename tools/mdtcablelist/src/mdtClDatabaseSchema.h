@@ -55,6 +55,8 @@ class mdtClDatabaseSchema
   bool createSchemaSqlite(const QDir & startDirectory);
 
   /*! \brief Create schema using Sqlite
+   *
+   * Will overwrite database if exists .
    */
   bool createSchemaSqlite(const QFileInfo & dbFileInfo);
 
@@ -131,6 +133,10 @@ class mdtClDatabaseSchema
    */
   bool setupArticleComponentTable();
 
+  /*! \brief Setup article connector table
+   */
+  bool setupArticleConnectorTable();
+
   /*! \brief
    */
   bool setupArticleConnectionTable();
@@ -176,6 +182,10 @@ class mdtClDatabaseSchema
   /*! \brief
    */
   bool createArticleComponentView();
+
+  /*! \brief Create article connection view
+   */
+  bool createArticleConnectionView();
 
   /*! \brief
    */

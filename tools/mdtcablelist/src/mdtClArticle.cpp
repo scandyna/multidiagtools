@@ -26,19 +26,14 @@
 #include <QDebug>
 
 mdtClArticle::mdtClArticle(QSqlDatabase db)
+ : mdtClBase(db)
 {
-  pvDatabase = db;
   pvArticleModel = new QSqlQueryModel;
 }
 
 mdtClArticle::~mdtClArticle()
 {
   delete pvArticleModel;
-}
-
-const QSqlError &mdtClArticle::lastError() const
-{
-  return pvLastError;
 }
 
 QSqlQueryModel *mdtClArticle::articleModelForComponentSelection(const QVariant &articleId)
@@ -53,7 +48,7 @@ QSqlQueryModel *mdtClArticle::articleModelForComponentSelection(const QVariant &
          " FROM ArticleComponent_tbl "\
          " WHERE Composite_Id_FK = " + articleId.toString() + " ) "\
          " ) ";
-  pvArticleModel->setQuery(sql, pvDatabase);
+  pvArticleModel->setQuery(sql, database());
 
   return pvArticleModel;
 }
@@ -61,17 +56,17 @@ QSqlQueryModel *mdtClArticle::articleModelForComponentSelection(const QVariant &
 bool mdtClArticle::addComponent(const QVariant &articleId, const QVariant &componentId, const QVariant &qty, const QVariant &qtyUnit)
 {
   QString sql;
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(database());
 
   // Prepare query for insertion
   sql = "INSERT INTO ArticleComponent_tbl (Composite_Id_FK, Component_Id_FK, ComponentQty, ComponentQtyUnit) "\
         "VALUES (:Composite_Id_FK, :Component_Id_FK, :ComponentQty, :ComponentQtyUnit)";
   if(!query.prepare(sql)){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for component inertion", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for component inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
   // Add values and execute query
@@ -80,11 +75,11 @@ bool mdtClArticle::addComponent(const QVariant &articleId, const QVariant &compo
   query.bindValue(":ComponentQty", qty);
   query.bindValue(":ComponentQtyUnit", qtyUnit);
   if(!query.exec()){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for component inertion", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for component inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
 
@@ -94,7 +89,7 @@ bool mdtClArticle::addComponent(const QVariant &articleId, const QVariant &compo
 bool mdtClArticle::editComponent(const QVariant &articleId, const QVariant &currentComponentId, const QVariant &newComponentId, const QVariant &qty, const QVariant &qtyUnit)
 {
   QString sql;
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(database());
 
   // Prepare query for edition
   sql = "UPDATE ArticleComponent_tbl "\
@@ -104,11 +99,11 @@ bool mdtClArticle::editComponent(const QVariant &articleId, const QVariant &curr
         "WHERE ( Composite_Id_FK = " + articleId.toString();
   sql += " AND   Component_Id_FK = " + currentComponentId.toString() + ")";
   if(!query.prepare(sql)){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for component edition", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for component edition", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
   // Add values and execute query
@@ -116,11 +111,11 @@ bool mdtClArticle::editComponent(const QVariant &articleId, const QVariant &curr
   query.bindValue(":ComponentQty", qty);
   query.bindValue(":ComponentQtyUnit", qtyUnit);
   if(!query.exec()){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for component edition", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for component edition", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
 
@@ -158,13 +153,13 @@ bool mdtClArticle::removeComponents(const QVariant &articleId, const QList<QVari
   }
   sql += " ) ";
   // Submit query
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(database());
   if(!query.exec(sql)){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for component deletion", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for component deletion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
 
@@ -186,17 +181,17 @@ bool mdtClArticle::removeComponents(const QVariant &articleId, const QModelIndex
 bool mdtClArticle::addLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value, const QVariant & directionCode, const QVariant & typeCode)
 {
   QString sql;
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(database());
 
   // Prepare query for insertion
   sql = "INSERT INTO ArticleLink_tbl (ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK, Value, LinkDirection_Code_FK, LinkType_Code_FK)\
                   VALUES (:ArticleConnectionStart_Id_FK, :ArticleConnectionEnd_Id_FK, :Value, :LinkDirection_Code_FK, :LinkType_Code_FK)";
   if(!query.prepare(sql)){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for link inertion", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for link insertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
   // Add values and execute query
@@ -206,11 +201,11 @@ bool mdtClArticle::addLink(const QVariant & articleConnectionStartId, const QVar
   query.bindValue(":LinkDirection_Code_FK", directionCode);
   query.bindValue(":LinkType_Code_FK", typeCode);
   if(!query.exec()){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for link inertion", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for link insertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
 
@@ -235,7 +230,7 @@ bool mdtClArticle::addBridge(const QVariant & articleConnectionStartId, const QV
 bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtClLinkData &data)
 {
   QString sql;
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(database());
 
   // Prepare query for edition
   sql = "UPDATE ArticleLink_tbl "\
@@ -247,11 +242,11 @@ bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVa
         " WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString() +\
         " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
   if(!query.prepare(sql)){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for link edition", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for link edition", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
   // Add values and execute query
@@ -261,11 +256,11 @@ bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVa
   query.bindValue(":LinkDirection_Code_FK", data.linkDirectionCode());
   query.bindValue(":LinkType_Code_FK", data.linkTypeCode());
   if(!query.exec()){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for link edition", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for link edition", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
 
@@ -275,18 +270,18 @@ bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVa
 bool mdtClArticle::removeLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId)
 {
   QString sql;
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(database());
 
   // Remove links
   sql = "DELETE FROM ArticleLink_tbl ";
   sql += " WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString();
   sql += " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
   if(!query.exec(sql)){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query to remove link Link_tbl", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to remove link", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
     return false;
   }
 
@@ -298,63 +293,17 @@ bool mdtClArticle::removeLinks(const QList<QModelIndexList> &indexListOfSelected
   int row;
   QModelIndexList indexes;
 
+  if(!beginTransaction()){
+    return false;
+  }
   for(row = 0; row < indexListOfSelectedRowsByRows.size(); ++row){
     indexes = indexListOfSelectedRowsByRows.at(row);
     Q_ASSERT(indexes.size() == 2);
     if(!removeLink(indexes.at(0).data(), indexes.at(1).data())){
+      rollbackTransaction();
       return false;
     }
   }
 
-  return true;
+  return commitTransaction();
 }
-
-/**
-bool mdtClArticle::removeLinks(const QList<QVariant> &linkIdList)
-{
-  int i;
-  QString sql;
-
-  if(linkIdList.size() < 1){
-    return true;
-  }
-  // Generate SQL
-  sql = "DELETE FROM ArticleLink_tbl ";
-  for(i = 0; i < linkIdList.size(); ++i){
-    if(i == 0){
-      sql += " WHERE ( ";
-    }else{
-      sql += " OR ";
-    }
-    sql += "Id_PK = " + linkIdList.at(i).toString();
-  }
-  sql += " ) ";
-  // Submit query
-  QSqlQuery query(pvDatabase);
-  if(!query.exec(sql)){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for link deletion", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticle");
-    e.commit();
-    return false;
-  }
-
-  return true;
-}
-*/
-
-/**
-bool mdtClArticle::removeLinks(const QModelIndexList & indexListOfSelectedRows)
-{
-  int i;
-  QString sql;
-  QList<QVariant> idList;
-
-  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
-    idList.append(indexListOfSelectedRows.at(i).data());
-  }
-
-  return removeLinks(idList);
-}
-*/

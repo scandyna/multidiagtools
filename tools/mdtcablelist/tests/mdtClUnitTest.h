@@ -22,6 +22,7 @@
 #define MDT_CL_UNIT_TEST_H
 
 #include "mdtTest.h"
+#include "mdtSqlDatabaseManager.h"
 
 class mdtClUnitTest : public mdtTest
 {
@@ -29,8 +30,17 @@ class mdtClUnitTest : public mdtTest
 
  private slots:
 
+  // Creates Database schema
+  void initTestCase();
+
   void unitConnectionDataTest();
   void linkDataTest();
+
+  void cleanupTestCase();
+
+ private:
+
+  mdtSqlDatabaseManager pvDatabaseManager;
 };
 
 

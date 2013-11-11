@@ -748,16 +748,6 @@ void mdtClUnitEditor::viewPath()
 QVariant mdtClUnitEditor::currentUnitId()
 {
   return pvForm->currentData("Unit_tbl", "Id_PK");
-  /**
-  QVariant var;
-
-  var = pvForm->currentData("Unit_tbl", "Id_PK");
-  if(!var.isValid()){
-    return -1;
-  }
-
-  return var.toInt();
-  */
 }
 
 bool mdtClUnitEditor::setupUnitTable()

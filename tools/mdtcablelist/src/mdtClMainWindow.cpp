@@ -123,7 +123,7 @@ void mdtClMainWindow::editArticle()
 {
   if(pvArticleEditor == 0){
     pvArticleEditor = new mdtClArticleEditor(this, pvDatabaseManager->database());
-    if(!pvArticleEditor->setupTables()){
+    if(!pvArticleEditor->setupAsWindow()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup article editor."));
       msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
@@ -136,7 +136,7 @@ void mdtClMainWindow::editArticle()
     }
   }
   Q_ASSERT(pvArticleEditor != 0);
-  pvArticleEditor->form()->show();
+  pvArticleEditor->show();
 }
 
 void mdtClMainWindow::createActions()

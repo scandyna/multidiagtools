@@ -153,11 +153,6 @@ bool mdtSqlSchemaTable::addFieldToForeignKey(const QString & foreignKeyName, con
     if(pvFields.at(i).name() == fieldName){
       field = pvFields.at(i);
     }
-    /**
-    if(pvFields.at(i).name() == referingFieldName){
-      referingField = pvFields.at(i);
-    }
-    */
   }
   if(field.name().isEmpty()){
     pvLastError.setError("Table '" + pvTableName + "' : cannot add field '" + fieldName + "' to foreign key '" + foreignKeyName\
@@ -166,14 +161,6 @@ bool mdtSqlSchemaTable::addFieldToForeignKey(const QString & foreignKeyName, con
     pvLastError.commit();
     return false;
   }
-  /**
-  if(referingField.name().isEmpty()){
-    mdtError e("Refering field named " + referingFieldName + " not found", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
-    e.commit();
-    return false;
-  }
-  */
   referingField.setName(referingFieldName);
   pvForeignKeys[foreignKeyName].fields.append(field);
   pvForeignKeys[foreignKeyName].referingFields.append(referingField);
@@ -320,15 +307,6 @@ QString mdtSqlSchemaTable::sqlForFieldsMySql() const
       }else{
         sql += " DEFAULT " + field.defaultValue().toString();
       }
-      /**
-      if(field.requiredStatus() != QSqlField::Required){
-        if(field.defaultValue().isNull()){
-          sql += " DEFAULT NULL";
-        }else{
-          sql += " DEFAULT " + field.defaultValue().toString();
-        }
-      }
-      */
     }
     if(i < (pvFields.size() - 1)){
       sql += ",\n";
@@ -360,15 +338,6 @@ QString mdtSqlSchemaTable::sqlForFieldsSqlite() const
       }else{
         sql += " DEFAULT " + field.defaultValue().toString();
       }
-      /**
-      if(field.requiredStatus() != QSqlField::Required){
-        if(field.defaultValue().isNull()){
-          sql += " DEFAULT NULL";
-        }else{
-          sql += " DEFAULT " + field.defaultValue().toString();
-        }
-      }
-      */
     }
     if(field.type() == QVariant::String){
       sql += sqlForCollateSqlite();
@@ -400,19 +369,6 @@ QString mdtSqlSchemaTable::sqlForPrimaryKey(const QString &delimiter) const
 
   return sql;
 }
-
-/**
-QString mdtSqlSchemaTable::sqlForIndexes()
-{
-  if(pvDriverName.trimmed() == "QMYSQL"){
-    return sqlForIndexesMySql();
-  }
-  if(pvDriverName.trimmed() == "QSQLITE"){
-    return sqlForIndexesSqlite();
-  }
-  return "";
-}
-*/
 
 QString mdtSqlSchemaTable::sqlForIndexesMySql() const
 {

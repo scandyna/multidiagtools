@@ -158,10 +158,6 @@ class mdtSqlSchemaTable
    */
   QString sqlForPrimaryKey(const QString &delimiter) const;
 
-  /*! \brief Get SQL statement for the indexes
-   */
-  ///QString sqlForIndexes();
-
   /*! \brief Get SQL statement for the indexes for Maria DB/MySQL
    */
   QString sqlForIndexesMySql() const;

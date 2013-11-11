@@ -63,7 +63,6 @@ mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db,
   lbStartContactName->clear();
   lbEndConnectorName->clear();
   lbEndContactName->clear();
-  ///pvValue = 0.0;
   lbUnit->clear();
 }
 
@@ -77,7 +76,6 @@ void mdtClArticleLinkDialog::setLinkTypeCode(const QVariant & code)
   int row;
   QVariant data;
 
-  ///pvLinkTypeCode = code;
   pvLinkData.setLinkTypeCode(code);
   for(row = 0; row < pvLinkTypeModel->rowCount(); ++row){
     index = pvLinkTypeModel->index(row, 0);
@@ -100,7 +98,6 @@ void mdtClArticleLinkDialog::setLinkDirectionCode(const QVariant & code)
   int row;
   QVariant data;
 
-  ///pvLinkDirectionCode = code;
   pvLinkData.setLinkDirectionCode(code);
   for(row = 0; row < pvLinkDirectionModel->rowCount(); ++row){
     index = pvLinkDirectionModel->index(row, 0);
@@ -119,7 +116,6 @@ QVariant mdtClArticleLinkDialog::linkDirectionCode() const
 
 void mdtClArticleLinkDialog::setValue(const QVariant & value)
 {
-  ///pvValue = value.toDouble();
   pvLinkData.setValue(value);
   sbValue->setValue(value.toDouble());
 }
@@ -131,7 +127,6 @@ QVariant mdtClArticleLinkDialog::value() const
 
 void mdtClArticleLinkDialog::setStartConnectionId(const QVariant & id)
 {
-  ///pvStartConnectionId = id;
   pvLinkData.setArticleConnectionStartId(id);
   displayCurrentSelectedStartConnection();
 }
@@ -143,7 +138,6 @@ QVariant mdtClArticleLinkDialog::startConnectionId() const
 
 void mdtClArticleLinkDialog::setEndConnectionId(const QVariant & id)
 {
-  ///pvEndConnectionId = id;
   pvLinkData.setArticleConnectionEndId(id);
   displayCurrentSelectedEndConnection();
 }
@@ -219,7 +213,6 @@ void mdtClArticleLinkDialog::selectStartConnection()
   }
   // Store result
   Q_ASSERT(dialog.selectionResult().size() == 1);
-  ///pvStartConnectionId = dialog.selectionResult().at(0);
   pvLinkData.setArticleConnectionStartId(dialog.selectionResult().at(0));
   // Update GUI
   displayCurrentSelectedStartConnection();
@@ -244,7 +237,6 @@ void mdtClArticleLinkDialog::selectEndConnection()
   }
   // Store result
   Q_ASSERT(dialog.selectionResult().size() == 1);
-  ///pvEndConnectionId = dialog.selectionResult().at(0);
   pvLinkData.setArticleConnectionEndId(dialog.selectionResult().at(0));
   // Update GUI
   displayCurrentSelectedEndConnection();
@@ -267,7 +259,6 @@ void mdtClArticleLinkDialog::accept()
     errorList << tr("Direction is not set");
   }
   // Store value
-  ///pvValue = sbValue->value();
   pvLinkData.setValue(sbValue->value());
   // Start and end connections are allready set afetr selection by user
   if(pvLinkData.articleConnectionStartId().isNull()){
@@ -297,13 +288,6 @@ void mdtClArticleLinkDialog::accept()
 void mdtClArticleLinkDialog::reject()
 {
   pvLinkData.clear();
-  /**
-  pvLinkTypeCode.clear();
-  pvLinkDirectionCode.clear();
-  pvValue = 0.0;
-  pvStartConnectionId.clear();
-  pvEndConnectionId.clear();
-  */
   QDialog::reject();
 }
 
@@ -314,12 +298,10 @@ void mdtClArticleLinkDialog::storeCurrentSelectedLinkType()
 
   row = cbLinkType->currentIndex();
   if(row < 0){
-    ///pvLinkTypeCode.clear();
     pvLinkData.setLinkTypeCode(QVariant());
     return;
   }
   index = pvLinkTypeModel->index(row, 0);
-  ///pvLinkTypeCode = pvLinkTypeModel->data(index);
   pvLinkData.setLinkTypeCode(pvLinkTypeModel->data(index));
 }
 
@@ -330,12 +312,10 @@ void mdtClArticleLinkDialog::storeCurrentSelectedLinkDirection()
 
   row = cbLinkDirection->currentIndex();
   if(row < 0){
-    ///pvLinkDirectionCode.clear();
     pvLinkData.setLinkDirectionCode(QVariant());
     return;
   }
   index = pvLinkDirectionModel->index(row, 0);
-  ///pvLinkDirectionCode = pvLinkDirectionModel->data(index);
   pvLinkData.setLinkDirectionCode(pvLinkDirectionModel->data(index));
 }
 

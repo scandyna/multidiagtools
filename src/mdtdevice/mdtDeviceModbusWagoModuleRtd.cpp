@@ -29,15 +29,22 @@ mdtDeviceModbusWagoModuleRtd::mdtDeviceModbusWagoModuleRtd(bool autoDeleteIos, m
 {
   // Set factory settings
   /// \todo Finish/correct
-  setIoCount(4);
+  ///setIoCount(4);
+  setIoCount(2);
+  /**
   setSensorType(0, Pt100);
   setSensorType(1, Pt100);
   setSensorType(2, Pt100);
   setSensorType(3, Pt100);
+  */
+  setSensorType(0, Pt100);
+  setSensorType(1, Pt1000);
   setProcessValueRepresentation(0, C2);
   setProcessValueRepresentation(1, C2);
+  /**
   setProcessValueRepresentation(2, C2);
   setProcessValueRepresentation(3, C2);
+  */
 }
 
 mdtDeviceModbusWagoModuleRtd::~mdtDeviceModbusWagoModuleRtd()
