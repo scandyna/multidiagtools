@@ -48,23 +48,12 @@
 mdtClArticleEditor::mdtClArticleEditor(QObject *parent, QSqlDatabase db)
  : mdtClEditor(parent, db)
 {
-  ///database() = db;
-  ///form() = new mdtSqlFormWindow;
 }
 
 mdtClArticleEditor::~mdtClArticleEditor()
 {
   delete form();
 }
-
-/**
-mdtSqlFormWindow *mdtClArticleEditor::form()
-{
-  Q_ASSERT(form() != 0);
-
-  return form();
-}
-*/
 
 void mdtClArticleEditor::addComponent()
 {

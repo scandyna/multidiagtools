@@ -22,6 +22,7 @@
 #include "mdtSqlDatabaseManager.h"
 #include "mdtClDatabaseSchema.h"
 #include "mdtClVehicleTypeEditor.h"
+#include "mdtClConnectorEditor.h"
 #include "mdtClUnitEditor.h"
 #include "mdtClArticleEditor.h"
 #include <QAction>
@@ -42,6 +43,7 @@ mdtClMainWindow::mdtClMainWindow()
   ///openDatabaseSqlite();
   // Editors - Will be setup on first call
   pvVehicleTypeEditor = 0;
+  pvConnectorEditor = 0;
   pvUnitEditor = 0;
   pvArticleEditor = 0;
 
@@ -62,6 +64,8 @@ void mdtClMainWindow::closeDatabase()
   /// \todo Check about data saving !!
   delete pvVehicleTypeEditor;
   pvVehicleTypeEditor = 0;
+  delete pvConnectorEditor;
+  pvConnectorEditor = 0;
   delete pvArticleEditor;
   pvArticleEditor = 0;
   delete pvUnitEditor;
@@ -97,6 +101,26 @@ void mdtClMainWindow::editVehicleType()
   }
   Q_ASSERT(pvVehicleTypeEditor != 0);
   pvVehicleTypeEditor->form()->show();
+}
+
+void mdtClMainWindow::editConnector()
+{
+  if(pvConnectorEditor == 0){
+    pvConnectorEditor = new mdtClConnectorEditor(this, pvDatabaseManager->database());
+    if(!pvConnectorEditor->setupAsWindow()){
+      QMessageBox msgBox(this);
+      msgBox.setText(tr("Cannot setup connector editor."));
+      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
+                                + qApp->applicationName() + tr(")"));
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.exec();
+      delete pvConnectorEditor;
+      pvConnectorEditor = 0;
+      return;
+    }
+  }
+  Q_ASSERT(pvConnectorEditor != 0);
+  pvConnectorEditor->show();
 }
 
 void mdtClMainWindow::editUnit()
@@ -156,6 +180,8 @@ void mdtClMainWindow::createActions()
   // Vehicle type edition
   connect(actEditVehicleType, SIGNAL(triggered()), this, SLOT(editVehicleType()));
   connect(pbEditVehicleType, SIGNAL(clicked()), this, SLOT(editVehicleType()));
+  // Connector editor
+  connect(actEditConnector, SIGNAL(triggered()), this, SLOT(editConnector()));
   // Unit edition
   connect(actEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
   connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));

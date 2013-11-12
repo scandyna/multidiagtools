@@ -30,6 +30,7 @@
 class mdtSqlDatabaseManager;
 class mdtClVehicleTypeEditor;
 class mdtClUnitEditor;
+class mdtClConnectorEditor;
 class mdtClArticleEditor;
 
 class QAction;
@@ -71,6 +72,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Edit vehicle types
    */
   void editVehicleType();
+
+  /*! \brief Edir connectors
+   */
+  void editConnector();
 
   /*! \brief Edit units
    */
@@ -115,6 +120,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   QDir pvWorkDirectory;
   // Editors
   mdtClVehicleTypeEditor *pvVehicleTypeEditor;
+  mdtClConnectorEditor *pvConnectorEditor;
   mdtClUnitEditor *pvUnitEditor;
   mdtClArticleEditor *pvArticleEditor;
   // Actions

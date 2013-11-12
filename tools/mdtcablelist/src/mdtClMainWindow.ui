@@ -80,6 +80,8 @@
     </property>
     <addaction name="actEditVehicleType"/>
     <addaction name="separator"/>
+    <addaction name="actEditConnector"/>
+    <addaction name="separator"/>
     <addaction name="actEditArticle"/>
     <addaction name="separator"/>
     <addaction name="actEditUnit"/>
@@ -138,6 +140,11 @@
   <action name="actEditUnit">
    <property name="text">
     <string>Edit &amp;units</string>
+   </property>
+  </action>
+  <action name="actEditConnector">
+   <property name="text">
+    <string>Edit &amp;connectors</string>
    </property>
   </action>
  </widget>

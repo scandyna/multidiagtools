@@ -125,6 +125,14 @@ class mdtClDatabaseSchema
    */
   bool setupVehicleTypeLinkTable();
 
+  /*! \brief Setup connector table
+   */
+  bool setupConnectorTable();
+
+  /*! \brief Setup Connector contact table
+   */
+  bool setupConnectorContactTable();
+
   /*! \brief
    */
   bool setupArticleTable();

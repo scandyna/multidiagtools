@@ -44,10 +44,6 @@ class mdtClArticleEditor : public mdtClEditor
    */
   ~mdtClArticleEditor();
 
-  /*! \brief Get form object
-   */
-  ///mdtSqlFormWindow *form();
-
  private slots:
 
   /*! \brief Add component
@@ -111,9 +107,6 @@ class mdtClArticleEditor : public mdtClEditor
   bool setupArticleLinkTable();
 
   Q_DISABLE_COPY(mdtClArticleEditor);
-
-  ///QSqlDatabase pvDatabase;
-  ///mdtSqlFormWindow *pvForm;
 };
 
 #endif  // #ifndef MDT_CL_ARTICLE_EDITOR_H

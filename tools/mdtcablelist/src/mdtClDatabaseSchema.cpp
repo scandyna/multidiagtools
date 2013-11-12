@@ -187,6 +187,12 @@ bool mdtClDatabaseSchema::setupTables()
   if(!setupVehicleTypeTable()){
     return false;
   }
+  if(!setupConnectorTable()){
+    return false;
+  }
+  if(!setupConnectorContactTable()){
+    return false;
+  }
   if(!setupArticleTable()){
     return false;
   }
@@ -418,6 +424,99 @@ bool mdtClDatabaseSchema::setupVehicleTypeLinkTable()
   }
   table.addForeignKey("VehicleTypeEnd_Id_FK_fk", "VehicleType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("VehicleTypeEnd_Id_FK_fk", "VehicleTypeEnd_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::setupConnectorTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("Connector_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Gender
+  field = QSqlField();
+  field.setName("Gender");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // ContactQty
+  field = QSqlField();
+  field.setName("ContactQty");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // Form
+  field = QSqlField();
+  field.setName("Form");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // Manufacturer
+  field = QSqlField();
+  field.setName("Manufacturer");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // ManufacturerConfigCode
+  field = QSqlField();
+  field.setName("ManufacturerConfigCode");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // ManufacturerArticleCode
+  field = QSqlField();
+  field.setName("ManufacturerArticleCode");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::setupConnectorContactTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("ConnectorContact_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Connector_Id_FK
+  field = QSqlField();
+  field.setName("Connector_Id_FK");
+  field.setType(QVariant::Int);
+  field.setRequiredStatus(QSqlField::Required);
+  table.addField(field, false);
+  // Name
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // Indexes
+  table.addIndex("Connector_Id_FK_idx", false);
+  if(!table.addFieldToIndex("Connector_Id_FK_idx", "Connector_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("Connector_Id_FK_fk", "Connector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Connector_Id_FK_fk", "Connector_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }

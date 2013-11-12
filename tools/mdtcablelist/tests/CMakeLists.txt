@@ -13,6 +13,7 @@ project (multidiagtools)
 set (TEST_HEADER_FILES
           ../src/mdtClEditor.h
           ../src/mdtClVehicleTypeEditor.h
+          ../src/mdtClConnectorEditor.h
           ../src/mdtClArticleEditor.h
           ../src/mdtClUnitEditor.h
           ../src/mdtClLinkEditor.h
@@ -32,6 +33,7 @@ set (TEST_SOURCES_FILES
           ../src/mdtClBase.cpp
           ../src/mdtClEditor.cpp
           ../src/mdtClVehicleTypeEditor.cpp
+          ../src/mdtClConnectorEditor.cpp
           ../src/mdtClArticleEditor.cpp
           ../src/mdtClUnit.cpp
           ../src/mdtClUnitEditor.cpp
@@ -58,6 +60,7 @@ set (TEST_SOURCES_FILES
 # Qt ui files
 set (TEST_FORM_FILES
           ../src/mdtClVehicleTypeEditor.ui
+          ../src/mdtClConnectorEditor.ui
           ../src/mdtClArticleEditor.ui
           ../src/mdtClUnitEditor.ui
           ../src/mdtClUnitConnectionDialog.ui
