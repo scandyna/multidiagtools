@@ -166,6 +166,191 @@ bool mdtClArticle::removeComponents(const QVariant &articleId, const QList<QVari
   return true;
 }
 
+QList<mdtClArticleConnectionData> mdtClArticle::connectorContactData(const QList<QVariant> & connectorContactIdList)
+{
+  QString sql;
+  QSqlQuery query(database());
+  QList<mdtClArticleConnectionData> dataList;
+  int i;
+
+  if(connectorContactIdList.isEmpty()){
+    return dataList;
+  }
+  // Setup query
+  sql = "SELECT Id_PK, Connector_Id_FK, Name "\
+        "FROM ConnectorContact_tbl ";
+  Q_ASSERT(connectorContactIdList.size() > 0);
+  sql += "WHERE Id_PK = " + connectorContactIdList.at(0).toString();
+  for(i = 1; i < connectorContactIdList.size(); ++i){
+    sql += " OR Id_PK = " + connectorContactIdList.at(i).toString();
+  }
+  // Exec query
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to get connection contacts data", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    return dataList;
+  }
+  // Get data
+  while(query.next()){
+    mdtClArticleConnectionData data;
+    data.setConnectionId(query.value(0));
+    data.setConnectorId(query.value(1));
+    data.setContactName(query.value(2));
+    dataList.append(data);
+  }
+
+  return dataList;
+}
+
+bool mdtClArticle::addConnection(const mdtClArticleConnectionData &data)
+{
+  QString sql;
+  QSqlQuery query(database());
+
+  // Prepare query for insertion
+  sql = "INSERT INTO ArticleConnection_tbl "\
+        "(Article_Id_FK, ArticleConnector_Id_FK, ArticleContactName, IoType, FunctionEN, FunctionFR, FunctionDE, FunctionIT) "\
+        "VALUES (:Article_Id_FK, :ArticleConnector_Id_FK, :ArticleContactName, :IoType, :FunctionEN, :FunctionFR, :FunctionDE, :FunctionIT)";
+  if(!query.prepare(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for connection inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":Article_Id_FK", data.articleId());
+  query.bindValue(":ArticleConnector_Id_FK", data.articleConnectorId());
+  query.bindValue(":ArticleContactName", data.contactName());
+  query.bindValue(":IoType", data.ioType());
+  query.bindValue(":FunctionEN", data.functionEN());
+  query.bindValue(":FunctionFR", data.functionFR());
+  query.bindValue(":FunctionDE", data.functionDE());
+  query.bindValue(":FunctionIT", data.functionIT());
+  if(!query.exec()){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for connection inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClArticle::addConnections(const QList<mdtClArticleConnectionData> & dataList, bool singleTransaction)
+{
+  int i;
+
+  if(singleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    if(!addConnection(dataList.at(i))){
+      if(singleTransaction){
+        rollbackTransaction();
+      }
+      return false;
+    }
+  }
+  if(singleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtClArticle::addConnector(const QList<mdtClArticleConnectionData> & dataList)
+{
+  QString sql;
+  QSqlQuery query(database());
+  QList<mdtClArticleConnectionData> connectionDataList;
+  QVariant articleConnectorId;
+  int i;
+
+  // We accept that calling this method without data is not a error
+  if(dataList.isEmpty()){
+    return true;
+  }
+  connectionDataList = dataList;
+
+#ifndef QT_NO_DEBUG
+  QVariant id;
+  Q_ASSERT(connectionDataList.size() > 0);
+  id = connectionDataList.at(0).articleId();
+  for(i = 0; i < connectionDataList.size(); ++i){
+    Q_ASSERT(connectionDataList.at(i).articleId() == id);
+    id = connectionDataList.at(i).articleId();
+  }
+#endif  // Q_DEBUG
+
+  // Because we add connector and get its ID for connections insertion, we use a transaction for the whole process
+  if(!beginTransaction()){
+    return false;
+  }
+  // Prepare query for insertion
+  sql = "INSERT INTO ArticleConnector_tbl "\
+        "(Article_Id_FK, Connector_Id_FK, Name) "\
+        "VALUES (:Article_Id_FK, :Connector_Id_FK, :Name) ";
+  if(!query.prepare(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for connector inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Add values and execute query
+  Q_ASSERT(connectionDataList.size() > 0);
+  query.bindValue(":Article_Id_FK", connectionDataList.at(0).articleId());
+  query.bindValue(":Connector_Id_FK", connectionDataList.at(0).connectorId());
+  query.bindValue(":Name", connectionDataList.at(0).connectorName());
+  if(!query.exec()){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for connector inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Get article connector ID and update data
+  articleConnectorId = query.lastInsertId();
+  if(articleConnectorId.isNull()){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot get article connector ID for connector inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    rollbackTransaction();
+    return false;
+  }
+  for(i = 0; i < connectionDataList.size(); ++i){
+    connectionDataList[i].setArticleConnectorId(articleConnectorId);
+  }
+  // Add connections
+  if(!addConnections(connectionDataList, false)){
+    rollbackTransaction();
+    return false;
+  }
+  // Commit
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
 bool mdtClArticle::removeComponents(const QVariant &articleId, const QModelIndexList & indexListOfSelectedRows)
 {
   int i;

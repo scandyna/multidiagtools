@@ -22,6 +22,7 @@
 #define MDT_CL_ARTICLE_H
 
 #include "mdtClBase.h"
+#include "mdtClArticleConnectionData.h"
 #include "mdtClLinkData.h"
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
@@ -81,6 +82,26 @@ class mdtClArticle : public mdtClBase
    *          To get reason of failure, use lastError() .
    */
   bool removeComponents(const QVariant &articleId, const QModelIndexList & indexListOfSelectedRows);
+
+  /*! \brief Get a list of connector contact data for given connector contact ID list
+   */
+  QList<mdtClArticleConnectionData> connectorContactData(const QList<QVariant> & connectorContactIdList);
+
+  /*! \brief Add a connection
+   */
+  bool addConnection(const mdtClArticleConnectionData &data);
+
+  /*! \brief Add many connections
+   *
+   * If single transaction is set, a transaction is used .
+   */
+  bool addConnections(const QList<mdtClArticleConnectionData> & dataList, bool singleTransaction);
+
+  /*! \brief Add a connector and its contacts
+   *
+   * \pre Each connection item must match the same article ID
+   */
+  bool addConnector(const QList<mdtClArticleConnectionData> & dataList);
 
   /*! \brief Add a record in Link table
    *

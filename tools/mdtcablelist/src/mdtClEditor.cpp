@@ -24,6 +24,7 @@
 #include "mdtSqlWindow.h"
 #include "mdtSqlFormDialog.h"
 #include "mdtSqlDialog.h"
+#include <QMessageBox>
 
 mdtClEditor::mdtClEditor(QObject *parent, QSqlDatabase db)
  : QObject(parent)
@@ -84,6 +85,11 @@ int mdtClEditor::exec()
   return pvFormDialog->exec();
 }
 
+mdtError mdtClEditor::lastError() const
+{
+  return pvLastError;
+}
+
 mdtSqlForm *mdtClEditor::form()
 {
   return pvForm;
@@ -95,4 +101,14 @@ mdtSqlWindow *mdtClEditor::sqlWindow()
     return 0;
   }
   return pvFormWindow->sqlWindow();
+}
+
+void mdtClEditor::displayLastError()
+{
+  QMessageBox msgBox;
+
+  msgBox.setText(pvLastError.text());
+  msgBox.setDetailedText(pvLastError.systemText());
+  msgBox.setIcon(pvLastError.levelIcon());
+  msgBox.exec();
 }

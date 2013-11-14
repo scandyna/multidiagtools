@@ -2,27 +2,28 @@ window_sizes 1280 1001 350 924 923 0
 diagrams
   classdiagram_ref 900994 // mdtClEditor
     739 738 100 4 0 0
-  classdiagram_ref 900866 // mdtClConnector
-    924 923 100 4 0 0
   active  classdiagram_ref 739586 // Logical
-    924 923 100 17 36 776
+    924 923 100 17 48 776
 end
 show_stereotypes
-selected classdiagram_ref 739586 // Logical
+selected attribute_ref 971650 // ConnectorName
 open
-  class_ref 951938 // Connector
+  classrelation_ref 1195394 // <unidirectional association>
+  classrelation_ref 960258 // <unidirectional association>
+  class_ref 951938 // Connector_tbl
   classrelation_ref 1198466 // pvDatabase (<unidirectional association>)
   attribute_ref 972290 // ConnectionId
   attribute_ref 971778 // ContactName
+  attribute_ref 992898 // FunctionFR
+  attribute_ref 993026 // FunctionDE
+  attribute_ref 993154 // FunctionIT
   operation_ref 1716994 // ConnectorId
-  operation_ref 1718402 // setConnectionId
   operation_ref 1718274 // ConnectionId
   operation_ref 1717378 // setConnectorName
-  operation_ref 1717634 // setContactName
+  attribute_ref 993282 // IoType
   operation_ref 1717890 // setArticleId
+  operation_ref 1734402 // setIoType
   operation_ref 1718146 // setUnitId
-  class_ref 951682 // mdtClConnector
-  class_ref 952450 // mdtClConnectorEditor
   class_ref 798722 // mdtClArticle
   classview_ref 490498 // Unit
 end

@@ -21,6 +21,7 @@
 #ifndef MDT_CL_EDITOR_H
 #define MDT_CL_EDITOR_H
 
+#include "mdtError.h"
 #include <QObject>
 #include <QSqlDatabase>
 
@@ -87,6 +88,10 @@ class mdtClEditor : public QObject
    */
   int exec();
 
+  /*! \brief Get last error
+   */
+  mdtError lastError() const;
+
  protected:
 
   /*! \brief Access form object
@@ -109,6 +114,12 @@ class mdtClEditor : public QObject
    * Must be re-implemented in subclass .
    */
   virtual bool setupTables() = 0;
+
+  /*! \brief Display last error in a message box
+   */
+  void displayLastError();
+
+  mdtError pvLastError;
 
  private:
 

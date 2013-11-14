@@ -34,6 +34,8 @@ set (TEST_SOURCES_FILES
           ../src/mdtClEditor.cpp
           ../src/mdtClVehicleTypeEditor.cpp
           ../src/mdtClConnectorEditor.cpp
+          ../src/mdtClConnectionData.cpp
+          ../src/mdtClArticleConnectionData.cpp
           ../src/mdtClArticleEditor.cpp
           ../src/mdtClUnit.cpp
           ../src/mdtClUnitEditor.cpp

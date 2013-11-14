@@ -660,6 +660,11 @@ bool mdtClDatabaseSchema::setupArticleConnectorTable()
   field.setType(QVariant::Int);
   field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
+  // Connector_Id_FK
+  field = QSqlField();
+  field.setName("Connector_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
   // Connector Name
   field = QSqlField();
   field.setName("Name");
@@ -672,9 +677,19 @@ bool mdtClDatabaseSchema::setupArticleConnectorTable()
     pvLastError = table.lastError();
     return false;
   }
+  table.addIndex("Connector_Id_FK_idx2", false);
+  if(!table.addFieldToIndex("Connector_Id_FK_idx2", "Connector_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   // Foreign keys
   table.addForeignKey("Article_Id_FK_fk3", "Article_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Article_Id_FK_fk3", "Article_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("Connector_Id_FK_fk2", "Connector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Connector_Id_FK_fk2", "Connector_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -703,7 +718,7 @@ bool mdtClDatabaseSchema::setupArticleConnectionTable()
   table.addField(field, false);
   // ArticleConnector_Id_FK
   field = QSqlField();
-  field.setName("Connector_Id_FK");
+  field.setName("ArticleConnector_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
   // ArticleConnectorName
@@ -757,7 +772,7 @@ bool mdtClDatabaseSchema::setupArticleConnectionTable()
     return false;
   }
   table.addIndex("ArticleConnector_Id_FK_idx", false);
-  if(!table.addFieldToIndex("ArticleConnector_Id_FK_idx", "Connector_Id_FK")){
+  if(!table.addFieldToIndex("ArticleConnector_Id_FK_idx", "ArticleConnector_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -768,7 +783,7 @@ bool mdtClDatabaseSchema::setupArticleConnectionTable()
     return false;
   }
   table.addForeignKey("ArticleConnector_Id_FK_fk", "ArticleConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("ArticleConnector_Id_FK_fk", "Connector_Id_FK", "Id_PK")){
+  if(!table.addFieldToForeignKey("ArticleConnector_Id_FK_fk", "ArticleConnector_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -1373,8 +1388,8 @@ bool mdtClDatabaseSchema::createArticleConnectionView()
         "ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
         "ArticleConnection_tbl.*\n"\
         "FROM ArticleConnection_tbl\n"\
-        " JOIN ArticleConnector_tbl\n"\
-        "  ON ArticleConnection_tbl.Connector_Id_FK = ArticleConnector_tbl.Id_PK";
+        " LEFT JOIN ArticleConnector_tbl\n"\
+        "  ON ArticleConnection_tbl.ArticleConnector_Id_FK = ArticleConnector_tbl.Id_PK";
 
   return createView("ArticleConnection_view", sql);
 }
@@ -1419,9 +1434,9 @@ bool mdtClDatabaseSchema::createArticleLinkView()
         " JOIN ArticleConnection_tbl ACNXE\n"\
         "  ON ArticleLink_tbl.ArticleConnectionEnd_Id_FK = ACNXE.Id_PK\n"\
         " LEFT JOIN ArticleConnector_tbl ACS\n"\
-        "  ON ACNXS.Connector_Id_FK = ACS.Id_PK\n"\
+        "  ON ACNXS.ArticleConnector_Id_FK = ACS.Id_PK\n"\
         " LEFT JOIN ArticleConnector_tbl ACE\n"\
-        "  ON ACNXE.Connector_Id_FK = ACE.Id_PK\n"\
+        "  ON ACNXE.ArticleConnector_Id_FK = ACE.Id_PK\n"\
         " JOIN LinkType_tbl\n"\
         "  ON LinkType_tbl.Code_PK = ArticleLink_tbl.LinkType_Code_FK\n"\
         " JOIN LinkDirection_tbl\n"\
@@ -1516,7 +1531,7 @@ bool mdtClDatabaseSchema::createUnitConnectionView()
         " LEFT JOIN ArticleConnection_tbl\n"\
         "  ON UnitConnection_tbl.ArticleConnection_Id_FK = ArticleConnection_tbl.Id_PK\n"\
         " LEFT JOIN ArticleConnector_tbl\n"\
-        "  ON ArticleConnection_tbl.Connector_Id_FK = ArticleConnector_tbl.Id_PK";
+        "  ON ArticleConnection_tbl.ArticleConnector_Id_FK = ArticleConnector_tbl.Id_PK";
 
   return createView("UnitConnection_view", sql);
 }
