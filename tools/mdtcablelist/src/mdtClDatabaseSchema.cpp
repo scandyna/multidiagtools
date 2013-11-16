@@ -1406,9 +1406,9 @@ bool mdtClDatabaseSchema::createArticleLinkView()
         " ArticleLink_tbl.ArticleConnectionEnd_Id_FK ,\n"\
         " ArticleLink_tbl.Identification ,\n"\
         " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
-        " LinkType_tbl.NameEN AS LinkTypeNameFR ,\n"\
-        " LinkType_tbl.NameEN AS LinkTypeNameDE ,\n"\
-        " LinkType_tbl.NameEN AS LinkTypeNameIT ,\n"\
+        " LinkType_tbl.NameFR AS LinkTypeNameFR ,\n"\
+        " LinkType_tbl.NameDE AS LinkTypeNameDE ,\n"\
+        " LinkType_tbl.NameIT AS LinkTypeNameIT ,\n"\
         " ArticleLink_tbl.Value ,\n"\
         " LinkType_tbl.ValueUnit ,\n"\
         " ACNXS.Article_Id_FK AS StartArticle_Id_FK ,\n"\
@@ -1416,18 +1416,18 @@ bool mdtClDatabaseSchema::createArticleLinkView()
         " ACNXS.ArticleContactName AS StartArticleContactName ,\n"\
         " ACNXS.IoType AS StartIoType ,\n"\
         " ACNXS.FunctionEN AS StartFunctionEN ,\n"\
-        " ACNXS.FunctionEN AS StartFunctionFR ,\n"\
-        " ACNXS.FunctionEN AS StartFunctionDE ,\n"\
-        " ACNXS.FunctionEN AS StartFunctionIT ,\n"\
+        " ACNXS.FunctionFR AS StartFunctionFR ,\n"\
+        " ACNXS.FunctionDE AS StartFunctionDE ,\n"\
+        " ACNXS.FunctionIT AS StartFunctionIT ,\n"\
         " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
         " ACNXE.Article_Id_FK AS EndArticle_Id_FK ,\n"\
         " ACE.Name AS EndArticleConnectorName ,\n"\
         " ACNXE.ArticleContactName AS EndArticleContactName ,\n"\
         " ACNXE.IoType AS EndIoType ,\n"\
         " ACNXE.FunctionEN AS EndFunctionEN,\n"\
-        " ACNXE.FunctionEN AS EndFunctionFR,\n"\
-        " ACNXE.FunctionEN AS EndFunctionDE,\n"\
-        " ACNXE.FunctionEN AS EndFunctionIT\n"\
+        " ACNXE.FunctionFR AS EndFunctionFR,\n"\
+        " ACNXE.FunctionDE AS EndFunctionDE,\n"\
+        " ACNXE.FunctionIT AS EndFunctionIT\n"\
         "FROM ArticleLink_tbl\n"\
         " JOIN ArticleConnection_tbl ACNXS\n"\
         "  ON ArticleLink_tbl.ArticleConnectionStart_Id_FK = ACNXS.Id_PK\n"\

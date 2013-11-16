@@ -57,8 +57,8 @@ mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db,
   cbLinkDirection->setCurrentIndex(-1);
   // Setup connections
   pvArticleConnectionModel = new QSqlQueryModel(this);
-  pvArticleConnectionModel->setQuery("SELECT Id_PK, ArticleConnectorName, ArticleContactName, IoType, FunctionEN \
-                                     FROM ArticleConnection_tbl WHERE Article_Id_FK = " + articleId.toString(), pvDatabase);
+  pvArticleConnectionModel->setQuery("SELECT Id_PK, ArticleConnectorName, ArticleContactName, IoType, FunctionEN, FunctionFR, FunctionDE, FunctionIT \
+                                     FROM ArticleConnection_view WHERE Article_Id_FK = " + articleId.toString(), pvDatabase);
   lbStartConnectorName->clear();
   lbStartContactName->clear();
   lbEndConnectorName->clear();
@@ -205,9 +205,12 @@ void mdtClArticleLinkDialog::selectStartConnection()
   dialog.setHeaderData("ArticleConnectorName", "Connector");
   dialog.setHeaderData("ArticleContactName", "Contact");
   dialog.setHeaderData("IoType", "I/O type");
-  dialog.setHeaderData("FunctionEN", "Function");
+  dialog.setHeaderData("FunctionEN", "Function\n(English)");
+  dialog.setHeaderData("FunctionFR", "Function\n(French)");
+  dialog.setHeaderData("FunctionDE", "Function\n(German)");
+  dialog.setHeaderData("FunctionIT", "Function\n(Italian)");
   dialog.addSelectionResultColumn("Id_PK");
-  dialog.resize(600, 400);
+  dialog.resize(800, 400);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
@@ -229,9 +232,12 @@ void mdtClArticleLinkDialog::selectEndConnection()
   dialog.setHeaderData("ArticleConnectorName", "Connector");
   dialog.setHeaderData("ArticleContactName", "Contact");
   dialog.setHeaderData("IoType", "I/O type");
-  dialog.setHeaderData("FunctionEN", "Function");
+  dialog.setHeaderData("FunctionEN", "Function\n(English)");
+  dialog.setHeaderData("FunctionFR", "Function\n(French)");
+  dialog.setHeaderData("FunctionDE", "Function\n(German)");
+  dialog.setHeaderData("FunctionIT", "Function\n(Italian)");
   dialog.addSelectionResultColumn("Id_PK");
-  dialog.resize(600, 400);
+  dialog.resize(800, 400);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }

@@ -74,7 +74,7 @@ class mdtClArticle : public mdtClBase
    */
   bool removeComponents(const QVariant &articleId, const QList<QVariant> &componentIdList);
 
-  /*! \brief Remove each link that is contained in selection
+  /*! \brief Remove each component that is contained in selection
    *
    * This is usefull used together with mdtSqlTableWidget .
    *
@@ -97,11 +97,46 @@ class mdtClArticle : public mdtClBase
    */
   bool addConnections(const QList<mdtClArticleConnectionData> & dataList, bool singleTransaction);
 
+  /*! \brief Remove a single connection
+   */
+  bool removeConnection(const QVariant & articleConnectionId);
+
+  /*! \brief Remove connections
+   */
+  bool removeConnections(const QList<QVariant> & articleConnectionIdList);
+
+  /*! \brief Remove each connection that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeConnections(const QModelIndexList & indexListOfSelectedRows);
+
+  /*! \brief Remove connections for a given article connector
+   *
+   * If single transaction is set, a transaction is used .
+   */
+  bool removeConnectorConnections(const QVariant & articleConnectorId);
+
+  /*! \brief Remove connections for a given list article connectors
+   */
+  bool removeConnectorsConnections(const QList<QVariant> & articleConnectorIdList);
+
   /*! \brief Add a connector and its contacts
    *
    * \pre Each connection item must match the same article ID
    */
   bool addConnector(const QList<mdtClArticleConnectionData> & dataList);
+
+  /*! \brief Remove a connector and all its contacts
+   */
+  bool removeConnector(const QVariant & articleConnectorId);
+
+  /*! \brief Remove a list of connectors and all related contacts
+   */
+  bool removeConnectors(const QList<QVariant> & articleConnectorIdList);
 
   /*! \brief Add a record in Link table
    *

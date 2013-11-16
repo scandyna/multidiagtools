@@ -15,6 +15,7 @@ set (TEST_HEADER_FILES
           ../src/mdtClVehicleTypeEditor.h
           ../src/mdtClConnectorEditor.h
           ../src/mdtClArticleEditor.h
+          ../src/mdtClArticleConnectionDialog.h
           ../src/mdtClUnitEditor.h
           ../src/mdtClLinkEditor.h
           ../src/mdtClUnitConnectionDialog.h
@@ -37,6 +38,7 @@ set (TEST_SOURCES_FILES
           ../src/mdtClConnectionData.cpp
           ../src/mdtClArticleConnectionData.cpp
           ../src/mdtClArticleEditor.cpp
+          ../src/mdtClArticleConnectionDialog.cpp
           ../src/mdtClUnit.cpp
           ../src/mdtClUnitEditor.cpp
           ../src/mdtClUnitConnectionData.cpp
@@ -64,6 +66,7 @@ set (TEST_FORM_FILES
           ../src/mdtClVehicleTypeEditor.ui
           ../src/mdtClConnectorEditor.ui
           ../src/mdtClArticleEditor.ui
+          ../src/mdtClArticleConnectionDialog.ui
           ../src/mdtClUnitEditor.ui
           ../src/mdtClUnitConnectionDialog.ui
           ../src/mdtClUnitLinkDialog.ui

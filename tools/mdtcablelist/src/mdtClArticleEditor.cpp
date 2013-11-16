@@ -29,6 +29,7 @@
 #include "mdtError.h"
 #include "mdtClArticleComponentDialog.h"
 #include "mdtClArticleConnectionData.h"
+#include "mdtClArticleConnectionDialog.h"
 #include "mdtClArticleLinkDialog.h"
 #include "mdtClArticle.h"
 #include <QSqlTableModel>
@@ -162,6 +163,75 @@ void mdtClArticleEditor::removeComponents()
   form()->select("ArticleComponent_view");
 }
 
+void mdtClArticleEditor::addConnection()
+{
+  QVariant articleId;
+  mdtClArticleConnectionData data;
+  mdtClArticleConnectionDialog dialog;
+  mdtClArticle art(database());
+  QSqlQueryModel model;
+  QString sql;
+
+  articleId = currentArticleId();
+  if(articleId.isNull()){
+    return;
+  }
+  // Setup and show dialog
+  sql = "SELECT Id_PK, Name FROM ArticleConnector_tbl WHERE Article_Id_FK = " + currentArticleId().toString();
+  model.setQuery(sql, database());
+  dialog.setArticleConnectorModel(&model);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Get and update data
+  data = dialog.data();
+  data.setArticleId(articleId);
+  // Add connection
+  if(!art.addConnection(data)){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  // Update connections table
+  form()->select("ArticleConnection_view");
+}
+
+void mdtClArticleEditor::removeConnections()
+{
+  mdtSqlTableWidget *widget;
+  mdtClArticle art(database());
+  QMessageBox msgBox;
+  QModelIndexList indexes;
+  QSqlError sqlError;
+  int ret;
+
+  widget = form()->sqlTableWidget("ArticleConnection_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  indexes = widget->indexListOfSelectedRows("Id_PK");
+  if(indexes.size() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove connections from current article."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  ret = msgBox.exec();
+  if(ret != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!art.removeConnections(indexes)){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  // Update component table
+  form()->select("ArticleConnection_view");
+}
+
 void mdtClArticleEditor::addConnector()
 {
   QVariant articleId;
@@ -211,13 +281,43 @@ void mdtClArticleEditor::addConnector()
   form()->select("ArticleConnection_view");
 }
 
+void mdtClArticleEditor::removeConnectors()
+{
+  QList<QVariant> articleConnectorIdList;
+  mdtClArticle art(database());
+  QMessageBox msgBox;
+
+  // Let user select article connectors
+  articleConnectorIdList = selectArticleConnectors();
+  if(articleConnectorIdList.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove connectors and all related connections from current article."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove connectors
+  if(!art.removeConnectors(articleConnectorIdList)){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  // Update connections table
+  form()->select("ArticleConnection_view");
+}
+
 void mdtClArticleEditor::addLink()
 {
   mdtClArticleLinkDialog dialog(0, database(), currentArticleId());
   mdtClArticle art(database());
 
   // Check if some connection exists
-  if(form()->rowCount("ArticleConnection_tbl") < 1){
+  if(form()->rowCount("ArticleConnection_view") < 1){
     QMessageBox msgBox;
     msgBox.setText(tr("There is no connection available for current article"));
     msgBox.setInformativeText(tr("You must add connections to be able to link them"));
@@ -449,6 +549,55 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
   return contactIds;
 }
 
+QList<QVariant> mdtClArticleEditor::selectArticleConnectors()
+{
+  QString sql;
+  QSqlQueryModel model;
+  QSqlError sqlError;
+  QVariant articleId;
+  QModelIndexList selectedItems;
+  QList<QVariant> articleConnectorIdList;
+  mdtSqlSelectionDialog selectionDialog;
+  int i;
+
+  // Get current article ID
+  articleId = currentArticleId();
+  if(articleId.isNull()){
+    return articleConnectorIdList;
+  }
+  // Setup model to list current article related connectors
+  sql = "SELECT Id_PK, Name FROM ArticleConnector_tbl WHERE Article_Id_FK = " + articleId.toString();
+  model.setQuery(sql, database());
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get to current article related connectors list."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    displayLastError();
+    return articleConnectorIdList;
+  }
+  if(model.rowCount() < 1){
+    return articleConnectorIdList;
+  }
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select connectors to remove.");
+  selectionDialog.setModel(&model, true);
+  selectionDialog.setColumnHidden("Id_PK", true);
+  ///selectionDialog.setHeaderData("", tr(""));
+  selectionDialog.addSelectionResultColumn("Id_PK");
+  selectionDialog.resize(500, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return articleConnectorIdList;
+  }
+  selectedItems = selectionDialog.selectionResults();
+  for(i = 0; i < selectedItems.size(); ++i){
+    articleConnectorIdList.append(selectedItems.at(i).data());
+  }
+
+  return articleConnectorIdList;
+}
+
 bool mdtClArticleEditor::setupArticleTable()
 {
   Q_ASSERT(form() != 0);
@@ -546,6 +695,9 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
 
   mdtSqlTableWidget *widget;
   QPushButton *pbAddConnector;
+  QPushButton *pbRemoveConnectors;
+  QPushButton *pbAddConnection;
+  QPushButton *pbRemoveConnections;
 
   if(!form()->addChildTable("ArticleConnection_view", tr("Connections"), database())){
     return false;
@@ -555,11 +707,11 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   }
   widget = form()->sqlTableWidget("ArticleConnection_view");
   Q_ASSERT(widget != 0);
-  ///widget->enableLocalEdition();
   // Hide technical fields
   widget->setColumnHidden("Id_PK", true);
   widget->setColumnHidden("Article_Id_FK", true);
   widget->setColumnHidden("Connector_Id_FK", true);
+  widget->setColumnHidden("ArticleConnector_Id_FK", true);
   // Set fields a user friendly name
   widget->setHeaderData("ArticleConnectorName", tr("Connector"));
   widget->setHeaderData("ArticleContactName", tr("Contact"));
@@ -569,6 +721,15 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   pbAddConnector = new QPushButton(tr("Add connector ..."));
   connect(pbAddConnector, SIGNAL(clicked()), this, SLOT(addConnector()));
   widget->addWidgetToLocalBar(pbAddConnector);
+  pbRemoveConnectors = new QPushButton(tr("Remove connectors"));
+  connect(pbRemoveConnectors, SIGNAL(clicked()), this, SLOT(removeConnectors()));
+  widget->addWidgetToLocalBar(pbRemoveConnectors);
+  pbAddConnection = new QPushButton(tr("Add connection ..."));
+  connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
+  widget->addWidgetToLocalBar(pbAddConnection);
+  pbRemoveConnections = new QPushButton(tr("Remove connections"));
+  connect(pbRemoveConnections, SIGNAL(clicked()), this, SLOT(removeConnections()));
+  widget->addWidgetToLocalBar(pbRemoveConnections);
   widget->addStretchToLocalBar();
 
   return true;
@@ -607,17 +768,26 @@ bool mdtClArticleEditor::setupArticleLinkTable()
   widget->setColumnHidden("UnitConnectionEnd_Id_FK", true);
   // Set fields a user friendly name
   widget->setHeaderData("SinceVersion", tr("Since\nversion"));
-  widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
+  widget->setHeaderData("LinkTypeNameEN", tr("Link type\n(English)"));
+  widget->setHeaderData("LinkTypeNameFR", tr("Link type\n(French)"));
+  widget->setHeaderData("LinkTypeNameDE", tr("Link type\n(German)"));
+  widget->setHeaderData("LinkTypeNameIT", tr("Link type\n(Italian)"));
   widget->setHeaderData("ValueUnit", tr("Unit"));
   widget->setHeaderData("StartArticleConnectorName", tr("Start\nconnector"));
   widget->setHeaderData("StartArticleContactName", tr("Start\ncontact"));
   widget->setHeaderData("StartIoType", tr("Start\nI/O type"));
-  widget->setHeaderData("StartFunctionEN", tr("Start\nFunction"));
+  widget->setHeaderData("StartFunctionEN", tr("Start\nFunction\n(English)"));
+  widget->setHeaderData("StartFunctionFR", tr("Start\nFunction\n(French)"));
+  widget->setHeaderData("StartFunctionDE", tr("Start\nFunction\n(German)"));
+  widget->setHeaderData("StartFunctionIT", tr("Start\nFunction\n(Italian)"));
   widget->setHeaderData("LinkDirectionPictureAscii", tr("Direction"));
   widget->setHeaderData("EndArticleConnectorName", tr("End\nconnector"));
   widget->setHeaderData("EndArticleContactName", tr("End\ncontact"));
   widget->setHeaderData("EndIoType", tr("End\nI/O type"));
-  widget->setHeaderData("EndFunctionEN", tr("End\nFunction"));
+  widget->setHeaderData("EndFunctionEN", tr("End\nFunction\n(English)"));
+  widget->setHeaderData("EndFunctionFR", tr("End\nFunction\n(French)"));
+  widget->setHeaderData("EndFunctionDE", tr("End\nFunction\n(German)"));
+  widget->setHeaderData("EndFunctionIT", tr("End\nFunction\n(Italian)"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add edition buttons

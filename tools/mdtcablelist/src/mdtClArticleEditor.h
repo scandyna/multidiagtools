@@ -63,9 +63,21 @@ class mdtClArticleEditor : public mdtClEditor
    */
   void removeComponents();
 
+  /*! \brief Add a connection
+   */
+  void addConnection();
+
+  /*! \brief Remove connections
+   */
+  void removeConnections();
+
   /*! \brief Add a connector
    */
   void addConnector();
+
+  /*! \brief Remove connectors
+   */
+  void removeConnectors();
 
   /*! \brief Add link
    */
@@ -102,6 +114,10 @@ class mdtClArticleEditor : public mdtClEditor
    * \return A list of selected connector contact IDs or a empty list if nothing was selected or error occured .
    */
   QList<QVariant> selectConnectorContacts(const QVariant &connectorId);
+
+  /*! \brief Select a list of article connectors
+   */
+  QList<QVariant> selectArticleConnectors();
 
   /*! \brief Setup Article table
    */
