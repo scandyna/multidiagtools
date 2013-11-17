@@ -21,25 +21,15 @@
 #ifndef MDT_CL_UNIT_CONNECTION_DATA_H
 #define MDT_CL_UNIT_CONNECTION_DATA_H
 
+#include "mdtClConnectionData.h"
+#include "mdtClArticleConnectionData.h"
 #include <QVariant>
 
 /*! \brief Container class that is used to exchange unit connection data
  */
-class mdtClUnitConnectionData
+class mdtClUnitConnectionData : public mdtClConnectionData
 {
  public:
-
-  /*! \brief Constructor
-   */
-  mdtClUnitConnectionData();
-
-  /*! \brief Destructor
-   */
-  ~mdtClUnitConnectionData();
-
-  /*! \brief Clear data
-   */
-  void clear();
 
   /*! \brief Check data validity
    *
@@ -49,14 +39,6 @@ class mdtClUnitConnectionData
    */
   bool isValid();
 
-  /*! \brief Set unit connection ID
-   */
-  void setId(const QVariant & id);
-
-  /*! \brief Get unit connection ID
-   */
-  QVariant id() const;
-
   /*! \brief Set unit ID
    */
   void setUnitId(const QVariant & id);
@@ -65,70 +47,6 @@ class mdtClUnitConnectionData
    */
   QVariant unitId() const;
 
-  /*! \brief Set article connection ID
-   */
-  void setArticleConnectionId(const QVariant & id);
-
-  /*! \brief Get article connection ID
-   */
-  QVariant articleConnectionId() const;
-
-  /*! \brief Set article connector name
-   */
-  void setArticleConnectorName(const QVariant &name);
-
-  /*! \brief Get article connector name
-   */
-  QVariant articleConnectorName() const;
-
-  /*! \brief Set article contact name
-   */
-  void setArticleContactName(const QVariant &name);
-
-  /*! \brief Get article contact name
-   */
-  QVariant articleContactName() const;
-
-  /*! \brief Set article I/O type
-   */
-  void setArticleIoType(const QVariant &ioType);
-
-  /*! \brief Get article I/O type
-   */
-  QVariant articleIoType() const;
-
-  /*! \brief Set article function EN
-   */
-  void setArticleFunctionEN(const QVariant &function);
-
-  /*! \brief Get article function EN
-   */
-  QVariant articleFunctionEN() const;
-
-  /*! \brief Set article function FR
-   */
-  void setArticleFunctionFR(const QVariant &function);
-
-  /*! \brief Get article function FR
-   */
-  QVariant articleFunctionFR() const;
-
-  /*! \brief Set article function DE
-   */
-  void setArticleFunctionDE(const QVariant &function);
-
-  /*! \brief Get article function DE
-   */
-  QVariant articleFunctionDE() const;
-
-  /*! \brief Set article function IT
-   */
-  void setArticleFunctionIT(const QVariant &function);
-
-  /*! \brief Get article function IT
-   */
-  QVariant articleFunctionIT() const;
-
   /*! \brief Set schema page
    */
   void setSchemaPage(const QVariant & schemaPage);
@@ -136,38 +54,6 @@ class mdtClUnitConnectionData
   /*! \brief Get schema page
    */
   QVariant schemaPage() const;
-
-  /*! \brief Set function (English)
-   */
-  void setFunctionEN(const QVariant & function);
-
-  /*! \brief Get function (English)
-   */
-  QVariant functionEN() const;
-
-  /*! \brief Set function (Frensh)
-   */
-  void setFunctionFR(const QVariant & function);
-
-  /*! \brief Get function (Frensh)
-   */
-  QVariant functionFR() const;
-
-  /*! \brief Set function (German)
-   */
-  void setFunctionDE(const QVariant & function);
-
-  /*! \brief Get function (German)
-   */
-  QVariant functionDE() const;
-
-  /*! \brief Set function (Italian)
-   */
-  void setFunctionIT(const QVariant & function);
-
-  /*! \brief Get function (Italian)
-   */
-  QVariant functionIT() const;
 
   /*! \brief Set signal name
    */
@@ -185,43 +71,36 @@ class mdtClUnitConnectionData
    */
   QVariant swAddress() const;
 
-  /*! \brief Set unit connector name
+  /*! \brief Set article connection data
    */
-  void setUnitConnectorName(const QVariant & name);
+  void setArticleConnectionData(const mdtClArticleConnectionData & data);
 
-  /*! \brief Get unit connector name
+  /*! \brief Copy article connection attributes to unit connection attributes
+   *
+   * Will copy some attributes from article connection data (set with setArticleConnectionData() )
+   *  to corresponding unit connection attributes .
    */
-  QVariant unitConnectorName() const;
+  void copyArticleConnectionAttributes();
 
-  /*! \brief Set unit contact name
+  /*! \brief Get article connection data
    */
-  void setUnitContactName(const QVariant & name);
+  const mdtClArticleConnectionData & articleConnectionData() const;
 
-  /*! \brief Get unit contact name
+  /*! \brief Get article connection data (for modifications)
    */
-  QVariant unitContactName() const;
+  mdtClArticleConnectionData & articleConnectionData();
 
  private:
 
-  QVariant pvId;
+  /*! \brief clear
+   */
+  void clearSub();
+
   QVariant pvUintId;
-  QVariant pvArticleConnectionId;
-  QVariant pvArticleConnectorName;
-  QVariant pvArticleContactName;
-  QVariant pvArticleIoType;
-  QVariant pvArticleFunctionEN;
-  QVariant pvArticleFunctionFR;
-  QVariant pvArticleFunctionDE;
-  QVariant pvArticleFunctionIT;
   QVariant pvSchemaPage;
-  QVariant pvFunctionEN;
-  QVariant pvFunctionFR;
-  QVariant pvFunctionDE;
-  QVariant pvFunctionIT;
   QVariant pvSignalName;
   QVariant pvSwAddress;
-  QVariant pvUnitConnectorName;
-  QVariant pvUnitContactName;
+  mdtClArticleConnectionData pvArticleConnectionData;
 };
 
 #endif  // #ifndef MDT_CL_UNIT_CONNECTION_DATA_H

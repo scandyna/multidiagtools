@@ -409,29 +409,38 @@ QString mdtSqlSchemaTable::sqlForIndexesSqlite() const
 {
   QString sql, indexSql;
   QSqlIndex index;
+  QHash<QString, QSqlIndex> uniqueIndexes;
   int i;
 
-  if(pvIndexes.isEmpty()){
-    return "";
-  }
+  // With Sqlite, only unique indexes must be taken into account
   QHashIterator<QString, QSqlIndex> it(pvIndexes);
   while(it.hasNext()){
     it.next();
-    index = it.value();
-    if(pvIndexeAtIsUnique.value(index.name())){
-      indexSql += "  UNIQUE (";
-      for(i = 0; i < index.count(); ++i){
-        indexSql += "'" + index.field(i).name() + "'";
-        if(i < (index.count() - 1)){
-          indexSql += ",";
-        }
-      }
-      if(it.hasNext()){
-        indexSql += "),\n";
-      }else{
-        indexSql += ")";
+    if(pvIndexeAtIsUnique.value(it.value().name())){
+      uniqueIndexes.insert(it.key(), it.value());
+    }
+  }
+  if(uniqueIndexes.isEmpty()){
+    return "";
+  }
+  QHashIterator<QString, QSqlIndex> it2(uniqueIndexes);
+  while(it2.hasNext()){
+    it2.next();
+    index = it2.value();
+    ///if(pvIndexeAtIsUnique.value(index.name())){
+    indexSql += "  UNIQUE (";
+    for(i = 0; i < index.count(); ++i){
+      indexSql += "'" + index.field(i).name() + "'";
+      if(i < (index.count() - 1)){
+        indexSql += ",";
       }
     }
+    if(it2.hasNext()){
+      indexSql += "),\n";
+    }else{
+      indexSql += ")";
+    }
+    ///}
   }
   if(!indexSql.trimmed().isEmpty()){
     sql = ",\n" + indexSql;

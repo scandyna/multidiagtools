@@ -46,67 +46,67 @@ void mdtClUnitConnectionDialog::setUnitId(const QVariant & id)
 
 void mdtClUnitConnectionDialog::setArticleConnectionId(const QVariant & id)
 {
-  pvData.setArticleConnectionId(id);
+  pvData.articleConnectionData().setConnectionId(id);
 }
 
 void mdtClUnitConnectionDialog::setData(const mdtClUnitConnectionData &data)
 {
   // Update GUI - Article connection data part
-  if(data.articleConnectorName().isNull()){
+  if(data.articleConnectionData().connectorName().isNull()){
     lbArticleConnectorName->setVisible(false);
     pbCopyConnectorName->setVisible(false);
   }else{
     lbArticleConnectorName->setVisible(true);
     pbCopyConnectorName->setVisible(true);
-    lbArticleConnectorName->setText(data.articleConnectorName().toString());
+    lbArticleConnectorName->setText(data.articleConnectionData().connectorName().toString());
   }
-  if(data.articleContactName().isNull()){
+  if(data.articleConnectionData().contactName().isNull()){
     lbArticleContactName->setVisible(false);
     pbCopyContactName->setVisible(false);
   }else{
     lbArticleContactName->setVisible(true);
     pbCopyContactName->setVisible(true);
-    lbArticleContactName->setText(data.articleContactName().toString());
+    lbArticleContactName->setText(data.articleConnectionData().contactName().toString());
   }
-  if(data.articleIoType().isNull()){
+  if(data.articleConnectionData().ioType().isNull()){
     lbArticleIoType->setVisible(false);
     lbArticleIoTypeLabel->setVisible(false);
   }else{
     lbArticleIoType->setVisible(true);
     lbArticleIoTypeLabel->setVisible(true);
-    lbArticleIoType->setText(data.articleIoType().toString());
+    lbArticleIoType->setText(data.articleConnectionData().ioType().toString());
   }
-  if(data.articleFunctionEN().isNull()){
+  if(data.articleConnectionData().functionEN().isNull()){
     lbArticleFunctionEN->setVisible(false);
     pbCopyFunctionEN->setVisible(false);
   }else{
     lbArticleFunctionEN->setVisible(true);
     pbCopyFunctionEN->setVisible(true);
-    lbArticleFunctionEN->setText(data.articleFunctionEN().toString());
+    lbArticleFunctionEN->setText(data.articleConnectionData().functionEN().toString());
   }
-  if(data.articleFunctionFR().isNull()){
+  if(data.articleConnectionData().functionFR().isNull()){
     lbArticleFunctionFR->setVisible(false);
     pbCopyFunctionFR->setVisible(false);
   }else{
     lbArticleFunctionFR->setVisible(true);
     pbCopyFunctionFR->setVisible(true);
-    lbArticleFunctionFR->setText(data.articleFunctionFR().toString());
+    lbArticleFunctionFR->setText(data.articleConnectionData().functionFR().toString());
   }
-  if(data.articleFunctionDE().isNull()){
+  if(data.articleConnectionData().functionDE().isNull()){
     lbArticleFunctionDE->setVisible(false);
     pbCopyFunctionDE->setVisible(false);
   }else{
     lbArticleFunctionDE->setVisible(true);
     pbCopyFunctionDE->setVisible(true);
-    lbArticleFunctionDE->setText(data.articleFunctionDE().toString());
+    lbArticleFunctionDE->setText(data.articleConnectionData().functionDE().toString());
   }
-  if(data.articleFunctionIT().isNull()){
+  if(data.articleConnectionData().functionIT().isNull()){
     lbArticleFunctionIT->setVisible(false);
     pbCopyFunctionIT->setVisible(false);
   }else{
     lbArticleFunctionIT->setVisible(true);
     pbCopyFunctionIT->setVisible(true);
-    lbArticleFunctionIT->setText(data.articleFunctionIT().toString());
+    lbArticleFunctionIT->setText(data.articleConnectionData().functionIT().toString());
   }
   // Update GUI - Unit connection data part
   leSchemaPage->setText(data.schemaPage().toString());
@@ -116,8 +116,8 @@ void mdtClUnitConnectionDialog::setData(const mdtClUnitConnectionData &data)
   leFunctionIT->setText(data.functionIT().toString());
   leSignalName->setText(data.signalName().toString());
   sbSwAddress->setValue(data.swAddress().toInt());
-  leUnitConnectorName->setText(data.unitConnectorName().toString());
-  leUnitContactName->setText(data.unitContactName().toString());
+  leUnitConnectorName->setText(data.connectorName().toString());
+  leUnitContactName->setText(data.contactName().toString());
   // Store data
   pvData = data;
 }
@@ -260,10 +260,10 @@ void mdtClUnitConnectionDialog::accept()
     pvData.setSwAddress(sbSwAddress->value());
   }
   if(!leUnitConnectorName->text().isEmpty()){
-    pvData.setUnitConnectorName(leUnitConnectorName->text());
+    pvData.setConnectorName(leUnitConnectorName->text());
   }
   if(!leUnitContactName->text().isEmpty()){
-    pvData.setUnitContactName(leUnitContactName->text());
+    pvData.setContactName(leUnitContactName->text());
   }
   QDialog::accept();
 }

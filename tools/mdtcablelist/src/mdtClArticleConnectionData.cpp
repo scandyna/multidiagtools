@@ -49,3 +49,10 @@ QVariant mdtClArticleConnectionData::ioType() const
 {
   return pvIoType;
 }
+
+void mdtClArticleConnectionData::clearSub()
+{
+  pvArticleId.clear();
+  pvArticleConnectorId.clear();
+  pvIoType.clear();
+}

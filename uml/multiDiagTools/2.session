@@ -1,16 +1,17 @@
-window_sizes 1280 1001 350 924 923 0
+window_sizes 1024 718 175 843 640 0
 diagrams
   classdiagram_ref 907778 // mdtClArticleConnectionDialog
     739 738 100 4 0 0
   active  classdiagram_ref 739586 // Logical
-    924 923 80 17 26 249
+    843 640 80 17 110 521
 end
 show_stereotypes
+selected attribute_ref 1006978 // Name
 open
   classview_ref 483842 // Conceptual
   attribute_ref 1007106 // UnitConnector_Id_FK
   attribute_ref 786818 // ArticleConnection_Id_FK
-  class_ref 972674 // UnitConnector_tbl
+  attribute_ref 1006978 // Name
   classrelation_ref 1198466 // pvDatabase (<unidirectional association>)
   operation_ref 1718146 // setUnitId
   operation_ref 1747714 // accept

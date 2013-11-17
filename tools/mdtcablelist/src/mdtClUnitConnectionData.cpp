@@ -20,33 +20,9 @@
  ****************************************************************************/
 #include "mdtClUnitConnectionData.h"
 
-mdtClUnitConnectionData::mdtClUnitConnectionData()
-{
-}
-
-mdtClUnitConnectionData::~mdtClUnitConnectionData()
-{
-}
-
-void mdtClUnitConnectionData::clear()
-{
-  pvId.clear();
-  pvUintId.clear();
-  pvArticleConnectionId.clear();
-  pvSchemaPage.clear();
-  pvFunctionEN.clear();
-  pvFunctionFR.clear();
-  pvFunctionDE.clear();
-  pvFunctionIT.clear();
-  pvSignalName.clear();
-  pvSwAddress.clear();
-  pvUnitConnectorName.clear();
-  pvUnitContactName.clear();
-}
-
 bool mdtClUnitConnectionData::isValid()
 {
-  if(pvId.isNull()){
+  if(connectionId().isNull()){
     return false;
   }
   if(pvUintId.isNull()){
@@ -54,16 +30,6 @@ bool mdtClUnitConnectionData::isValid()
   }
 
   return true;
-}
-
-void mdtClUnitConnectionData::setId(const QVariant & id)
-{
-  pvId = id;
-}
-
-QVariant mdtClUnitConnectionData::id() const
-{
-  return pvId;
 }
 
 void mdtClUnitConnectionData::setUnitId(const QVariant & id)
@@ -76,86 +42,6 @@ QVariant mdtClUnitConnectionData::unitId() const
   return pvUintId;
 }
 
-void mdtClUnitConnectionData::setArticleConnectionId(const QVariant & id)
-{
-  pvArticleConnectionId = id;
-}
-
-QVariant mdtClUnitConnectionData::articleConnectionId() const
-{
-  return pvArticleConnectionId;
-}
-
-void mdtClUnitConnectionData::setArticleConnectorName(const QVariant &name)
-{
-  pvArticleConnectorName = name;
-}
-
-QVariant mdtClUnitConnectionData::articleConnectorName() const
-{
-  return pvArticleConnectorName;
-}
-
-void mdtClUnitConnectionData::setArticleContactName(const QVariant &name)
-{
-  pvArticleContactName = name;
-}
-
-QVariant mdtClUnitConnectionData::articleContactName() const
-{
-  return pvArticleContactName;  
-}
-
-void mdtClUnitConnectionData::setArticleIoType(const QVariant &ioType)
-{
-  pvArticleIoType = ioType;
-}
-
-QVariant mdtClUnitConnectionData::articleIoType() const
-{
-  return pvArticleIoType;
-}
-
-void mdtClUnitConnectionData::setArticleFunctionEN(const QVariant &function)
-{
-  pvArticleFunctionEN = function;
-}
-
-QVariant mdtClUnitConnectionData::articleFunctionEN() const
-{
-  return pvArticleFunctionEN;
-}
-
-void mdtClUnitConnectionData::setArticleFunctionFR(const QVariant &function)
-{
-  pvArticleFunctionFR = function;
-}
-
-QVariant mdtClUnitConnectionData::articleFunctionFR() const
-{
-  return pvArticleFunctionFR;
-}
-
-void mdtClUnitConnectionData::setArticleFunctionDE(const QVariant &function)
-{
-  pvArticleFunctionDE = function;
-}
-
-QVariant mdtClUnitConnectionData::articleFunctionDE() const
-{
-  return pvArticleFunctionDE;
-}
-
-void mdtClUnitConnectionData::setArticleFunctionIT(const QVariant &function)
-{
-  pvArticleFunctionIT = function;
-}
-
-QVariant mdtClUnitConnectionData::articleFunctionIT() const
-{
-  return pvArticleFunctionIT;
-}
-
 void mdtClUnitConnectionData::setSchemaPage(const QVariant & schemaPage)
 {
   pvSchemaPage = schemaPage;
@@ -164,46 +50,6 @@ void mdtClUnitConnectionData::setSchemaPage(const QVariant & schemaPage)
 QVariant mdtClUnitConnectionData::schemaPage() const
 {
   return pvSchemaPage;
-}
-
-void mdtClUnitConnectionData::setFunctionEN(const QVariant & function)
-{
-  pvFunctionEN = function;
-}
-
-QVariant mdtClUnitConnectionData::functionEN() const
-{
-  return pvFunctionEN;
-}
-
-void mdtClUnitConnectionData::setFunctionFR(const QVariant & function)
-{
-  pvFunctionFR = function;
-}
-
-QVariant mdtClUnitConnectionData::functionFR() const
-{
-  return pvFunctionFR;
-}
-
-void mdtClUnitConnectionData::setFunctionDE(const QVariant & function)
-{
-  pvFunctionDE = function;
-}
-
-QVariant mdtClUnitConnectionData::functionDE() const
-{
-  return pvFunctionDE;
-}
-
-void mdtClUnitConnectionData::setFunctionIT(const QVariant & function)
-{
-  pvFunctionIT = function;
-}
-
-QVariant mdtClUnitConnectionData::functionIT() const
-{
-  return pvFunctionIT;
 }
 
 void mdtClUnitConnectionData::setSignalName(const QVariant & name)
@@ -226,22 +72,36 @@ QVariant mdtClUnitConnectionData::swAddress() const
   return pvSwAddress;
 }
 
-void mdtClUnitConnectionData::setUnitConnectorName(const QVariant & name)
+void mdtClUnitConnectionData::clearSub()
 {
-  pvUnitConnectorName = name;
+  pvUintId.clear();
+  pvSchemaPage.clear();
+  pvSignalName.clear();
+  pvSwAddress.clear();
+  pvArticleConnectionData.clear();
 }
 
-QVariant mdtClUnitConnectionData::unitConnectorName() const
+void mdtClUnitConnectionData::setArticleConnectionData(const mdtClArticleConnectionData & data)
 {
-  return pvUnitConnectorName;
+  pvArticleConnectionData = data;
 }
 
-void mdtClUnitConnectionData::setUnitContactName(const QVariant & name)
+void mdtClUnitConnectionData::copyArticleConnectionAttributes()
 {
-  pvUnitContactName = name;
+  setConnectorName(pvArticleConnectionData.connectorName());
+  setContactName(pvArticleConnectionData.contactName());
+  setFunctionEN(pvArticleConnectionData.functionEN());
+  setFunctionFR(pvArticleConnectionData.functionFR());
+  setFunctionDE(pvArticleConnectionData.functionDE());
+  setFunctionIT(pvArticleConnectionData.functionIT());
 }
 
-QVariant mdtClUnitConnectionData::unitContactName() const
+const mdtClArticleConnectionData & mdtClUnitConnectionData::articleConnectionData() const
 {
-  return pvUnitContactName;
+  return pvArticleConnectionData;
+}
+
+mdtClArticleConnectionData & mdtClUnitConnectionData::articleConnectionData()
+{
+  return pvArticleConnectionData;
 }

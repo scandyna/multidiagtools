@@ -983,6 +983,11 @@ bool mdtClDatabaseSchema::setupUnitConnectorTable()
   field.setName("Connector_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
+  // ArticleConnector_Id_FK
+  field = QSqlField();
+  field.setName("ArticleConnector_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
   // Connector Name
   field = QSqlField();
   field.setName("Name");
@@ -1000,6 +1005,15 @@ bool mdtClDatabaseSchema::setupUnitConnectorTable()
     pvLastError = table.lastError();
     return false;
   }
+  table.addIndex("ArticleConnector_Unit_idx", true);
+  if(!table.addFieldToIndex("ArticleConnector_Unit_idx", "ArticleConnector_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  if(!table.addFieldToIndex("ArticleConnector_Unit_idx", "Unit_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   // Foreign keys
   table.addForeignKey("Unit_Id_FK_fk3", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Unit_Id_FK_fk3", "Unit_Id_FK", "Id_PK")){
@@ -1008,6 +1022,11 @@ bool mdtClDatabaseSchema::setupUnitConnectorTable()
   }
   table.addForeignKey("Connector_Id_FK_fk3", "Connector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Connector_Id_FK_fk3", "Connector_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("ArticleConnector_Id_FK_fk2", "ArticleConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("ArticleConnector_Id_FK_fk2", "ArticleConnector_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -1607,10 +1626,10 @@ bool mdtClDatabaseSchema::createUnitConnectionView()
         "FROM UnitConnection_tbl\n"\
         " LEFT JOIN UnitConnector_tbl\n"\
         "  ON UnitConnector_tbl.Id_PK = UnitConnection_tbl.UnitConnector_Id_FK\n"\
-        " LEFT JOIN ArticleConnection_tbl\n"\
-        "  ON UnitConnection_tbl.ArticleConnection_Id_FK = ArticleConnection_tbl.Id_PK\n"\
         " LEFT JOIN ArticleConnector_tbl\n"\
-        "  ON ArticleConnection_tbl.ArticleConnector_Id_FK = ArticleConnector_tbl.Id_PK";
+        "  ON UnitConnector_tbl.ArticleConnector_Id_FK = ArticleConnector_tbl.Id_PK\n"\
+        " LEFT JOIN ArticleConnection_tbl\n"\
+        "  ON UnitConnection_tbl.ArticleConnection_Id_FK = ArticleConnection_tbl.Id_PK\n";
 
   return createView("UnitConnection_view", sql);
 }

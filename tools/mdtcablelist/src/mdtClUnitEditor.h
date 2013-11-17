@@ -25,8 +25,10 @@
 #include <QObject>
 #include <QModelIndex>
 #include <QVariant>
+#include <QList>
 #include "mdtSqlFormWindow.h"
 #include "mdtClEditor.h"
+#include "mdtClUnitConnectionData.h"
 
 /*! \brief Cable list's device editor
  */
@@ -43,10 +45,6 @@ class mdtClUnitEditor : public mdtClEditor
   /*! \brief Destructor
    */
   ~mdtClUnitEditor();
-
-  /*! \brief Get form object
-   */
-  ///mdtSqlFormWindow *form();
 
  private slots:
 
@@ -69,6 +67,14 @@ class mdtClUnitEditor : public mdtClEditor
   /*! \brief Remove components
    */
   void removeComponents();
+
+  /*! \brief Add a connector to unit connector table that is related to a article connector
+   */
+  void addConnector();
+
+  /*! \brief Add a connector to unit connector table
+   */
+  void addFreeConnector();
 
   /*! \brief Add a connection to unit connection table that is related to a article connection
    */
@@ -114,6 +120,32 @@ class mdtClUnitEditor : public mdtClEditor
    */
   QVariant currentUnitId();
 
+  /*! \brief Let user choose a connector (from Connector table)
+   */
+  QVariant selectConnector();
+
+  /*! \brief Select a connector assigned to current unit
+   */
+  QVariant selectUnitConnector();
+
+  /*! \brief Let user choose a connector from those that are related to current article
+   */
+  QVariant selectArticleConnector();
+
+  /*! \brief Let user choose connections from those that are related to given article connector
+   */
+  QList<QVariant> selectArticleConnections(const QVariant & articleConnectorId, bool allowMultipleSelection = true);
+
+  /*! \brief Let user choose a connection from those that are related to given article connector
+   */
+  QVariant selectArticleConnection(const QVariant & articleConnectorId);
+
+  /*! \brief Let user choose a connection from those that are related to current article
+   *
+   * \todo Obselete ?
+   */
+  ///mdtClUnitConnectionData selectArticleConnection(const QVariant & articleId);
+
   /*! \brief Setup tables
    */
   bool setupTables();
@@ -139,10 +171,6 @@ class mdtClUnitEditor : public mdtClEditor
   bool setupVehicleTable();
 
   Q_DISABLE_COPY(mdtClUnitEditor);
-
-  ///QSqlDatabase pvDatabase;
-  // Form object
-  ///mdtSqlFormWindow *pvForm;
 };
 
 #endif  // #ifndef

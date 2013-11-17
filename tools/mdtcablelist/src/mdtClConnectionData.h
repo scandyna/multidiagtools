@@ -29,6 +29,12 @@ class mdtClConnectionData
 {
  public:
 
+  /*! \brief Clear data
+   *
+   * Will also call clearSub() .
+   */
+  void clear();
+
   /*! \brief Set connector ID
    *
    * Note: do not confound with unit or article connector ID .
@@ -96,6 +102,14 @@ class mdtClConnectionData
   /*! \brief Get function IT
    */
   QVariant functionIT() const;
+
+ protected:
+
+  /*! \brief Clear subclass specific data
+   *
+   * This method is called by clear() .
+   */
+  virtual void clearSub() = 0;
 
  private:
 

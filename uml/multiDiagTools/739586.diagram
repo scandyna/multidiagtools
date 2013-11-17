@@ -2,15 +2,15 @@ format 76
 
 classcanvas 128002 class_ref 764674 // Article_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 1136.66 30.08 2000
+  xyz 1136.86 30.68 2000
 end
 classcanvas 128130 class_ref 764802 // Unit_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 487.54 47.68 2000
+  xyz 487.14 47.28 2000
 end
 classcanvas 128386 class_ref 765058 // ArticleConnection_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 1077.96 436.86 2000
+  xyz 1077.96 436.26 2000
 end
 classcanvas 128642 class_ref 765314 // UnitConnection_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -18,54 +18,54 @@ classcanvas 128642 class_ref 765314 // UnitConnection_tbl
 end
 classcanvas 129154 class_ref 805250 // Link_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 497.47 704.77 2000
+  xyz 497.87 704.37 2000
 end
 classcanvas 129538 class_ref 805378 // LinkType_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 101.9 983.64 2000
+  xyz 101.1 983.04 2000
 end
 classcanvas 129794 class_ref 805506 // LinkDirection_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 133.44 1073.04 2000
+  xyz 133.84 1073.04 2000
 end
 note 130818 "For terminal ranges:
 A UnitConnection (designed with Id_PK) can be a range of another UnitConnection (wich is also designed by UnitConnection_Id_FK)"
-  xyzwh 823.42 549.96 2000 219 135
+  xyzwh 823.62 549.56 2000 219 135
 classcanvas 131074 class_ref 944386 // ArticleConnector_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 1361.88 280.44 2006
+  xyz 1361.68 280.44 2006
 end
 classcanvas 131714 class_ref 944642 // ArticleComponent_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 1389.92 33.62 2000
+  xyz 1389.72 33.42 2000
 end
 classcanvas 132354 class_ref 944770 // VehicleType_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 70.16 278.52 2000
+  xyz 70.56 278.32 2000
 end
 classcanvas 132482 class_ref 944898 // VehicleType_Unit_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 18.86 84.7 2000
+  xyz 18.26 84.7 2000
 end
 classcanvas 132866 class_ref 945026 // VehicleType_Link_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 19.44 587.48 2000
+  xyz 19.04 587.68 2000
 end
 classcanvas 133762 class_ref 945154 // ArticleLink_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 1022.36 834.4 2000
+  xyz 1022.96 834.2 2000
 end
 classcanvas 135426 class_ref 951938 // Connector_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 859.4 84.4 2000
+  xyz 859.2 84.2 2000
 end
 classcanvas 135554 class_ref 952194 // ConnectorContact_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 860.1 279.5 2000
+  xyz 860.3 279.5 2000
 end
 classcanvas 135938 class_ref 972674 // UnitConnector_tbl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 323.8 271.6 2000
+  xyz 327.4 250.8 2000
 end
 relationcanvas 128258 relation_ref 949890 // <unidirectional association>
   decenter_begin 184
@@ -108,16 +108,16 @@ end
 relationcanvas 130050 relation_ref 1020674 // <unidirectional association>
   decenter_begin 629
   decenter_end 361
-  from ref 128130 z 2001 to point 790 139.5
-  line 130178 z 2001 to point 790 99.5
+  from ref 128130 z 2001 to point 790.2 139.6
+  line 130178 z 2001 to point 790.2 99.6
   line 130306 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 1020802 // <unidirectional association>
   decenter_begin 679
-  from ref 128642 z 2001 to point 799.1 588
-  line 130562 z 2001 to point 799.1 533.9
+  from ref 128642 z 2001 to point 799.6 588
+  line 130562 z 2001 to point 799.6 533
   line 130690 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -240,6 +240,12 @@ relationcanvas 136194 relation_ref 1205890 // <unidirectional association>
 end
 relationcanvas 136322 relation_ref 1206018 // <unidirectional association>
   from ref 128642 z 2001 to ref 135938
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 136450 relation_ref 1212546 // <unidirectional association>
+  decenter_begin 643
+  from ref 135938 z 2007 to ref 131074
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

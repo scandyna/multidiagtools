@@ -20,6 +20,19 @@
  ****************************************************************************/
 #include "mdtClConnectionData.h"
 
+void mdtClConnectionData::clear()
+{
+  clearSub();
+  pvConnectorId.clear();
+  pvConnectionId.clear();
+  pvConnectorName.clear();
+  pvContactName.clear();
+  pvFunctionEN.clear();
+  pvFunctionFR.clear();
+  pvFunctionDE.clear();
+  pvFunctionIT.clear();
+}
+
 void mdtClConnectionData::setConnectorId(const QVariant & id) 
 {
   pvConnectorId = id;

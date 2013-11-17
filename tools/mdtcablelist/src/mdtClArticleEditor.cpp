@@ -482,7 +482,7 @@ QVariant mdtClArticleEditor::selectConnector()
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get connectors list."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticleEditor");
     pvLastError.commit();
     displayLastError();
     return QVariant();

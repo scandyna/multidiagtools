@@ -48,10 +48,6 @@ class mdtClUnit : public mdtClBase
    */
   ~mdtClUnit();
 
-  /*! \brief Get last error occured
-   */
-  ///const QSqlError &lastError();
-
   /*! \brief Get a model with units for compononent selection
    *
    * Will setup a query model witch contains all units except unitId
@@ -83,9 +79,13 @@ class mdtClUnit : public mdtClBase
    */
   bool removeComponents(const QModelIndexList & indexListOfSelectedRows);
 
-  /*! \brief Get a model that contains a list of unsused article connections related to given unit ID
+  /*! \brief Get a model that contains a list of unsused article connectors related to given unit ID
    */
-  QSqlQueryModel *modelForArticleConnectionSelection(const QVariant & unitId, const QVariant &articleId);
+  QSqlQueryModel *modelForArticleConnectorSelection(const QVariant & unitId, const QVariant &articleId);
+
+  /*! \brief Get a model that contains a list of unsused article connections related to given unit ID and article connector ID
+   */
+  QSqlQueryModel *modelForArticleConnectionSelection(const QVariant & unitId, const QVariant & articleConnectorId);
 
   /*! \brief Return the number unit connections that are related to article connections
    *
@@ -93,18 +93,6 @@ class mdtClUnit : public mdtClBase
    *         On error, use lastError() to check what goes wrong.
    */
   int toUnitRelatedArticleConnectionCount(const QVariant & unitId);
-
-  /*! \brief
-   */
-  ///QList<QVariant> toUnitRelatedArticleConnectionIds(const QVariant & unitId);
-
-  /*! \brief
-   */
-  ///bool unitConnectionIsRelatedToArticleConnection(const QVariant & unitConnectionId);
-
-  /*! \brief
-   */
-  ///QVariant toUnitConnectionRelatedArticleConnectionData(const QVariant & unitConnectionId, const QString & field);
 
   /*! \brief
    */
@@ -135,12 +123,33 @@ class mdtClUnit : public mdtClBase
    */
   QString toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows);
 
+  /*! \brief Get a object with unit connector data for given unit connection ID (primary key)
+   *
+   * \return data, or empty data on error.
+   *          To get reason of failure, use lastError() .
+   */
+  mdtClUnitConnectionData getUnitConnectorData(const QVariant & unitConnectorId);
+
   /*! \brief Get a object with unit connection data for given unit connection ID (primary key)
    *
    * \return data, or empty data on error.
    *          To get reason of failure, use lastError() .
    */
   mdtClUnitConnectionData getUnitConnectionData(const QVariant & unitConnectionId);
+
+  /*! \brief Get article connector name for a given article connector ID
+   */
+  QVariant getArticleConnectorName(const QVariant & articleConnectorId);
+
+  /*! \brief Get article connection data
+   */
+  mdtClUnitConnectionData getArticleConnectionData(const QVariant & articleConnectionId, mdtClUnitConnectionData data = mdtClUnitConnectionData());
+
+  /*! \brief Add a connector based on article connector
+   *
+   * Note: will only add connector, not the connections .
+   */
+  bool addArticleConnector(const QVariant & unitId, const QVariant & articleConnectorId, const QVariant & name);
 
   /*! \brief Add a unit connection
    *
@@ -209,26 +218,13 @@ class mdtClUnit : public mdtClBase
    */
   bool removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, QSqlQuery &query);
 
-  /*! \brief Beginn manually a new transaction
-   */
-  ///bool beginTransaction();
-
-  /*! \brief Rollback manually a new transaction
-   */
-  ///bool rollbackTransaction();
-
-  /*! \brief Commit manually a new transaction
-   */
-  ///bool commitTransaction();
-
   Q_DISABLE_COPY(mdtClUnit);
 
-  ///QSqlDatabase pvDatabase;
   QSqlQueryModel *pvToUnitConnectionRelatedRangesModel;
   QSqlQueryModel *pvUnitModel;
+  QSqlQueryModel *pvArticleConnectorModel;
   QSqlQueryModel *pvArticleConnectionModel;
   QSqlQueryModel *pvUnitLinkModel;
-  ///QSqlError pvLastError;
 };
 
 #endif  // #ifndef MDT_CL_UNIT_H

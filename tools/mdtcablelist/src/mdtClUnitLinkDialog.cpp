@@ -175,9 +175,9 @@ QVariant mdtClUnitLinkDialog::endUnitId() const
 void mdtClUnitLinkDialog::setStartConnectionData(const mdtClUnitConnectionData &data)
 {
   pvStartConnectionData = data;
-  pvLinkData.setUnitConnectionStartId(pvStartConnectionData.id());
-  lbStartConnectorName->setText(pvStartConnectionData.unitConnectorName().toString());
-  lbStartContactName->setText(pvStartConnectionData.unitContactName().toString());
+  pvLinkData.setUnitConnectionStartId(pvStartConnectionData.connectionId());
+  lbStartConnectorName->setText(pvStartConnectionData.connectorName().toString());
+  lbStartContactName->setText(pvStartConnectionData.contactName().toString());
 }
 
 mdtClUnitConnectionData mdtClUnitLinkDialog::startConnectionData() const
@@ -188,9 +188,9 @@ mdtClUnitConnectionData mdtClUnitLinkDialog::startConnectionData() const
 void mdtClUnitLinkDialog::setEndConnectionData(const mdtClUnitConnectionData &data)
 {
   pvEndConnectionData = data;
-  pvLinkData.setUnitConnectionEndId(pvEndConnectionData.id());
-  lbEndConnectorName->setText(pvEndConnectionData.unitConnectorName().toString());
-  lbEndContactName->setText(pvEndConnectionData.unitContactName().toString());
+  pvLinkData.setUnitConnectionEndId(pvEndConnectionData.connectionId());
+  lbEndConnectorName->setText(pvEndConnectionData.connectorName().toString());
+  lbEndContactName->setText(pvEndConnectionData.contactName().toString());
 }
 
 mdtClUnitConnectionData mdtClUnitLinkDialog::endConnectionData() const

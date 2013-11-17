@@ -56,17 +56,16 @@ void mdtClUnitTest::unitConnectionDataTest()
 
   // Initial values
   QVERIFY(!data.isValid());
-  QVERIFY(!data.id().isValid());
+  QVERIFY(!data.connectionId().isValid());
 
   // Set/Get
-  data.setId(25);
-  QCOMPARE(data.id(), QVariant(25));
+  data.setConnectionId(25);
+  QCOMPARE(data.connectionId(), QVariant(25));
 }
 
 void mdtClUnitTest::linkDataTest()
 {
   mdtClLinkData data;
-  ///QList<QPair<QVariant, QVariant> > pairList;
   QList<QVariant> list;
 
   /*

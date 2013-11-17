@@ -53,6 +53,10 @@ class mdtClArticleConnectionData : public mdtClConnectionData
 
  private:
 
+  /*! \brief clear
+   */
+  void clearSub();
+
   QVariant pvArticleId;
   QVariant pvArticleConnectorId;
   QVariant pvIoType;

@@ -1,6 +1,6 @@
 format 76
 "DatabaseLogical" // mdttools::CableList::DatabaseLogical
-  revision 13
+  revision 14
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1374,6 +1374,17 @@ ${inlines}
 	idl_decl ""
       end
 
+      attribute 1013634 "ArticleConnector_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       classrelation 1218818 // <unidirectional association>
 	relation 1205890 --->
 	  a role_name "" private
@@ -1391,6 +1402,15 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+
+      classrelation 1225474 // <unidirectional association>
+	relation 1212546 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1225474 // <unidirectional association>
+	  b parent class_ref 944386 // ArticleConnector_tbl
       end
     end
   end

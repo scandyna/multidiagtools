@@ -308,6 +308,47 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
   /*
+   * Simple Sqlite Table:
+   *  - Storage engine is specified (must be ignored)
+   *  - Charset is specified
+   *  - A NON UNIQUE index is added (must be ignored)
+   *  - A UNIQUE index is added
+   */
+  st.clear();
+  st.setDriverName("QSQLITE");
+  st.setDatabaseName("sandbox");
+  st.setStorageEngineName("InnoDB");
+  st.setTableName("Client_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("NameU");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  st.addIndex("Index", false);
+  QVERIFY(st.addFieldToIndex("Index", "Name"));
+  st.addIndex("IndexU", true);
+  QVERIFY(st.addFieldToIndex("IndexU", "NameU"));
+  expectedSql  = "CREATE TABLE 'sandbox'.'Client_tbl' (\n";
+  expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  'Name' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
+  expectedSql += "  'NameU' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
+  expectedSql += "  UNIQUE ('NameU')\n";
+  expectedSql += ");\n";
+  QCOMPARE(st.sqlForCreateTable(), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql);
+
+  /*
    * Second table for Sqlite that is child of Client_tbl
    *  Note: we added a non existant foreing key (had a bug when more than one was declared)
    */
