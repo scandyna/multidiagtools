@@ -127,7 +127,7 @@ void mdtClMainWindow::editUnit()
 {
   if(pvUnitEditor == 0){
     pvUnitEditor = new mdtClUnitEditor(this, pvDatabaseManager->database());
-    if(!pvUnitEditor->setupTables()){
+    if(!pvUnitEditor->setupAsWindow()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup unit editor."));
       msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
@@ -140,7 +140,7 @@ void mdtClMainWindow::editUnit()
     }
   }
   Q_ASSERT(pvUnitEditor != 0);
-  pvUnitEditor->form()->show();
+  pvUnitEditor->show();
 }
 
 void mdtClMainWindow::editArticle()

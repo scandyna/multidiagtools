@@ -208,6 +208,9 @@ bool mdtClDatabaseSchema::setupTables()
   if(!setupUnitTable()){
     return false;
   }
+  if(!setupUnitConnectorTable()){
+    return false;
+  }
   if(!setupUnitConnectionTable()){
     return false;
   }
@@ -958,6 +961,62 @@ bool mdtClDatabaseSchema::setupUnitTable()
   return true;
 }
 
+bool mdtClDatabaseSchema::setupUnitConnectorTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("UnitConnector_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Unit_Id_FK
+  field = QSqlField();
+  field.setName("Unit_Id_FK");
+  field.setType(QVariant::Int);
+  field.setRequiredStatus(QSqlField::Required);
+  table.addField(field, false);
+  // Connector_Id_FK
+  field = QSqlField();
+  field.setName("Connector_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // Connector Name
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(30);
+  table.addField(field, false);
+  // Indexes
+  table.addIndex("Unit_Id_FK_idx3", false);
+  if(!table.addFieldToIndex("Unit_Id_FK_idx3", "Unit_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("Connector_Id_FK_idx3", false);
+  if(!table.addFieldToIndex("Connector_Id_FK_idx3", "Connector_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("Unit_Id_FK_fk3", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Unit_Id_FK_fk3", "Unit_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("Connector_Id_FK_fk3", "Connector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Connector_Id_FK_fk3", "Connector_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
 bool mdtClDatabaseSchema::setupUnitConnectionTable() 
 {
   mdtSqlSchemaTable table;
@@ -974,6 +1033,12 @@ bool mdtClDatabaseSchema::setupUnitConnectionTable()
   field.setName("Unit_Id_FK");
   field.setType(QVariant::Int);
   field.setRequiredStatus(QSqlField::Required);
+  table.addField(field, false);
+  // UnitConnector_Id_FK
+  field = QSqlField();
+  field.setName("UnitConnector_Id_FK");
+  field.setType(QVariant::Int);
+  ///field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
   // ArticleConnection_Id_FK
   field = QSqlField();
@@ -1027,11 +1092,13 @@ bool mdtClDatabaseSchema::setupUnitConnectionTable()
   field.setType(QVariant::Int);
   table.addField(field, false);
   // UnitConnectorName
+  /**
   field = QSqlField();
   field.setName("UnitConnectorName");
   field.setType(QVariant::String);
   field.setLength(30);
   table.addField(field, false);
+  */
   // UnitContactName
   field = QSqlField();
   field.setName("UnitContactName");
@@ -1053,6 +1120,11 @@ bool mdtClDatabaseSchema::setupUnitConnectionTable()
     pvLastError = table.lastError();
     return false;
   }
+  table.addIndex("UnitConnector_Id_FK_idx", false);
+  if(!table.addFieldToIndex("UnitConnector_Id_FK_idx", "UnitConnector_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   // Foreign keys
   table.addForeignKey("Unit_Id_FK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Unit_Id_FK_fk", "Unit_Id_FK", "Id_PK")){
@@ -1061,6 +1133,11 @@ bool mdtClDatabaseSchema::setupUnitConnectionTable()
   }
   table.addForeignKey("ArticleConnection_Id_FK_idx2", "ArticleConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("ArticleConnection_Id_FK_idx2", "ArticleConnection_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -1511,7 +1588,7 @@ bool mdtClDatabaseSchema::createUnitConnectionView()
         " UnitConnection_tbl.Id_PK AS UnitConnection_Id_PK ,\n"\
         " UnitConnection_tbl.Unit_Id_FK ,\n"\
         " UnitConnection_tbl.ArticleConnection_Id_FK,\n"\
-        " UnitConnection_tbl.UnitConnectorName ,\n"\
+        " UnitConnector_tbl.Name AS UnitConnectorName ,\n"\
         " UnitConnection_tbl.UnitContactName ,\n"\
         " UnitConnection_tbl.SchemaPage ,\n"\
         " UnitConnection_tbl.FunctionEN AS UnitFunctionEN,\n"\
@@ -1528,6 +1605,8 @@ bool mdtClDatabaseSchema::createUnitConnectionView()
         " ArticleConnection_tbl.FunctionDE AS ArticleFunctionDE,\n"\
         " ArticleConnection_tbl.FunctionIT AS ArticleFunctionIT\n"\
         "FROM UnitConnection_tbl\n"\
+        " LEFT JOIN UnitConnector_tbl\n"\
+        "  ON UnitConnector_tbl.Id_PK = UnitConnection_tbl.UnitConnector_Id_FK\n"\
         " LEFT JOIN ArticleConnection_tbl\n"\
         "  ON UnitConnection_tbl.ArticleConnection_Id_FK = ArticleConnection_tbl.Id_PK\n"\
         " LEFT JOIN ArticleConnector_tbl\n"\
@@ -1572,29 +1651,31 @@ bool mdtClDatabaseSchema::createUnitLinkView()
   selectSql = "SELECT\n"\
               " LNK.Identification ,\n"\
               " US.SchemaPosition AS StartSchemaPosition ,\n"\
-              " UCS.UnitConnectorName AS StartUnitConnectorName ,\n"\
-              " UCS.UnitContactName AS StartUnitContactName ,\n"\
+              /**" UCNXS.UnitConnectorName AS StartUnitConnectorName ,\n"\*/
+              " UCS.Name AS StartUnitConnectorName ,\n"\
+              " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
               " UE.SchemaPosition AS EndSchemaPosition ,\n"\
-              " UCE.UnitConnectorName AS EndUnitConnectorName ,\n"\
-              " UCE.UnitContactName AS EndUnitContactName ,\n"\
+              /**" UCNXE.UnitConnectorName AS EndUnitConnectorName ,\n"\*/
+              " UCE.Name AS EndUnitConnectorName ,\n"\
+              " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
               " LNK.SinceVersion ,\n"\
               " LNK.Modification ,\n"\
               " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
               " LNK.Value ,\n"\
               " LinkType_tbl.ValueUnit ,\n"\
               " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
-              " UCS.SchemaPage AS StartSchemaPage ,\n"\
-              " UCS.FunctionEN AS StartFunctionEN ,\n"\
-              " UCS.SignalName AS StartSignalName ,\n"\
-              " UCS.SwAddress AS StartSwAddress ,\n"\
-              " UCE.SchemaPage AS EndSchemaPage ,\n"\
-              " UCE.FunctionEN AS EndFunctionEN ,\n"\
-              " UCE.SignalName AS EndSignalName ,\n"\
-              " UCE.SwAddress AS EndSwAddress ,\n"\
+              " UCNXS.SchemaPage AS StartSchemaPage ,\n"\
+              " UCNXS.FunctionEN AS StartFunctionEN ,\n"\
+              " UCNXS.SignalName AS StartSignalName ,\n"\
+              " UCNXS.SwAddress AS StartSwAddress ,\n"\
+              " UCNXE.SchemaPage AS EndSchemaPage ,\n"\
+              " UCNXE.FunctionEN AS EndFunctionEN ,\n"\
+              " UCNXE.SignalName AS EndSignalName ,\n"\
+              " UCNXE.SwAddress AS EndSwAddress ,\n"\
               " LNK.UnitConnectionStart_Id_FK ,\n"\
               " LNK.UnitConnectionEnd_Id_FK ,\n"\
-              " UCS.Unit_Id_FK AS StartUnit_Id_FK ,\n"\
-              " UCE.Unit_Id_FK AS EndUnit_Id_FK ,\n"\
+              " UCNXS.Unit_Id_FK AS StartUnit_Id_FK ,\n"\
+              " UCNXE.Unit_Id_FK AS EndUnit_Id_FK ,\n"\
               " LNK.LinkType_Code_FK ,\n"\
               " LNK.LinkDirection_Code_FK ,\n"\
               " LNK.ArticleConnectionStart_Id_FK ,\n"\
@@ -1602,14 +1683,18 @@ bool mdtClDatabaseSchema::createUnitLinkView()
   sql = "CREATE VIEW UnitLink_view AS\n";
   sql += selectSql;
   sql +=  "FROM Link_tbl LNK\n"\
-          " JOIN UnitConnection_tbl UCS\n"\
-          "  ON LNK.UnitConnectionStart_Id_FK = UCS.Id_PK\n"\
-          " JOIN UnitConnection_tbl UCE\n"\
-          "  ON LNK.UnitConnectionEnd_Id_FK = UCE.Id_PK\n"\
+          " JOIN UnitConnection_tbl UCNXS\n"\
+          "  ON LNK.UnitConnectionStart_Id_FK = UCNXS.Id_PK\n"\
+          " JOIN UnitConnection_tbl UCNXE\n"\
+          "  ON LNK.UnitConnectionEnd_Id_FK = UCNXE.Id_PK\n"\
+          " LEFT JOIN UnitConnector_tbl UCS\n"\
+          "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+          " LEFT JOIN UnitConnector_tbl UCE\n"\
+          "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
           " JOIN Unit_tbl US\n"\
-          "  ON US.Id_PK = UCS.Unit_Id_FK\n"\
+          "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
           " JOIN Unit_tbl UE\n"\
-          "  ON UE.Id_PK = UCE.Unit_Id_FK\n"\
+          "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
           " JOIN LinkType_tbl\n"\
           "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
           " JOIN LinkDirection_tbl\n"\
@@ -1623,14 +1708,18 @@ bool mdtClDatabaseSchema::createUnitLinkView()
           " LEFT JOIN Link_tbl\n"\
           "  ON Link_tbl.ArticleConnectionStart_Id_FK = LNK.ArticleConnectionStart_Id_FK\n"\
           "  AND Link_tbl.ArticleConnectionEnd_Id_FK = LNK.ArticleConnectionEnd_Id_FK\n"\
-          " JOIN UnitConnection_tbl UCS\n"\
-          "  ON LNK.UnitConnectionStart_Id_FK = UCS.Id_PK\n"\
-          " JOIN UnitConnection_tbl UCE\n"\
-          "  ON LNK.UnitConnectionEnd_Id_FK = UCE.Id_PK\n"\
+          " JOIN UnitConnection_tbl UCNXS\n"\
+          "  ON LNK.UnitConnectionStart_Id_FK = UCNXS.Id_PK\n"\
+          " JOIN UnitConnection_tbl UCNXE\n"\
+          "  ON LNK.UnitConnectionEnd_Id_FK = UCNXE.Id_PK\n"\
+          " LEFT JOIN UnitConnector_tbl UCS\n"\
+          "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+          " LEFT JOIN UnitConnector_tbl UCE\n"\
+          "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
           " JOIN Unit_tbl US\n"\
-          "  ON US.Id_PK = UCS.Unit_Id_FK\n"\
+          "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
           " JOIN Unit_tbl UE\n"\
-          "  ON UE.Id_PK = UCE.Unit_Id_FK\n"\
+          "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
           " JOIN LinkType_tbl\n"\
           "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
           " JOIN LinkDirection_tbl\n"\
@@ -1676,8 +1765,9 @@ bool mdtClDatabaseSchema::createLinkListView()
               " US.SchemaPosition AS StartSchemaPosition,\n"\
               " US.Cabinet AS StartCabinet,\n"\
               " US.Coordinate AS StartCoordinate ,\n"\
-              " CS.UnitConnectorName AS StartUnitConnectorName ,\n"\
-              " CS.UnitContactName AS StartUnitContactName ,\n"\
+              /**" UCNXS.UnitConnectorName AS StartUnitConnectorName ,\n"\*/
+              " UCS.Name AS StartUnitConnectorName ,\n"\
+              " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
               " VE.Type AS EndVehicleType ,\n"\
               " VE.SubType AS EndVehicleSubType ,\n"\
               " VE.SeriesNumber AS EndVehicleSerie,\n"\
@@ -1685,19 +1775,24 @@ bool mdtClDatabaseSchema::createLinkListView()
               " UE.SchemaPosition AS EndSchemaPosition,\n"\
               " UE.Cabinet AS EndCabinet,\n"\
               " UE.Coordinate AS EndCoordinate ,\n"\
-              " CE.UnitConnectorName AS EndUnitConnectorName ,\n"\
-              " CE.UnitContactName AS EndUnitContactName\n";
+              /**" UCNXE.UnitConnectorName AS EndUnitConnectorName ,\n"\*/
+              " UCE.Name AS EndUnitConnectorName ,\n"\
+              " UCNXE.UnitContactName AS EndUnitContactName\n";
   sql = "CREATE VIEW LinkList_view AS\n";
   sql += selectSql;
   sql +=  "FROM Link_tbl LNK\n"\
-          " JOIN UnitConnection_tbl CS\n"\
-          "  ON CS.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
-          " JOIN UnitConnection_tbl CE\n"\
-          "  ON CE.Id_PK = LNK.UnitConnectionEnd_Id_FK\n"\
+          " JOIN UnitConnection_tbl UCNXS\n"\
+          "  ON UCNXS.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
+          " JOIN UnitConnection_tbl UCNXE\n"\
+          "  ON UCNXE.Id_PK = LNK.UnitConnectionEnd_Id_FK\n"\
+          " LEFT JOIN UnitConnector_tbl UCS\n"\
+          "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+          " LEFT JOIN UnitConnector_tbl UCE\n"\
+          "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
           " JOIN Unit_tbl US\n"\
-          "  ON US.Id_PK = CS.Unit_Id_FK\n"\
+          "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
           " JOIN Unit_tbl UE\n"\
-          "  ON UE.Id_PK = CE.Unit_Id_FK\n"\
+          "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
           " JOIN VehicleType_Link_tbl\n"\
           "  ON VehicleType_Link_tbl.UnitConnectionStart_Id_FK = LNK.UnitConnectionStart_Id_FK\n"\
           "  AND VehicleType_Link_tbl.UnitConnectionEnd_Id_FK = LNK.UnitConnectionEnd_Id_FK\n"\
@@ -1714,14 +1809,18 @@ bool mdtClDatabaseSchema::createLinkListView()
           " LEFT JOIN Link_tbl\n"\
           "  ON Link_tbl.ArticleConnectionStart_Id_FK = LNK.ArticleConnectionStart_Id_FK\n"\
           "  AND Link_tbl.ArticleConnectionEnd_Id_FK = LNK.ArticleConnectionEnd_Id_FK\n"\
-          " JOIN UnitConnection_tbl CS\n"\
-          "  ON LNK.UnitConnectionStart_Id_FK = CS.Id_PK\n"\
-          " JOIN UnitConnection_tbl CE\n"\
-          "  ON LNK.UnitConnectionEnd_Id_FK = CE.Id_PK\n"\
+          " JOIN UnitConnection_tbl UCNXS\n"\
+          "  ON LNK.UnitConnectionStart_Id_FK = UCNXS.Id_PK\n"\
+          " JOIN UnitConnection_tbl UCNXE\n"\
+          "  ON LNK.UnitConnectionEnd_Id_FK = UCNXE.Id_PK\n"\
+          " LEFT JOIN UnitConnector_tbl UCS\n"\
+          "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+          " LEFT JOIN UnitConnector_tbl UCE\n"\
+          "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
           " JOIN Unit_tbl US\n"\
-          "  ON US.Id_PK = CS.Unit_Id_FK\n"\
+          "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
           " JOIN Unit_tbl UE\n"\
-          "  ON UE.Id_PK = CE.Unit_Id_FK\n"\
+          "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
           " LEFT JOIN VehicleType_Link_tbl\n"\
           "  ON LNK.UnitConnectionStart_Id_FK = VehicleType_Link_tbl.UnitConnectionStart_Id_FK\n"\
           "  AND LNK.UnitConnectionEnd_Id_FK = VehicleType_Link_tbl.UnitConnectionEnd_Id_FK\n"\

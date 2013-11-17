@@ -23,6 +23,7 @@
 
 #include "mdtClUnitConnectionData.h"
 #include "mdtClLinkData.h"
+#include "mdtClBase.h"
 #include "mdtError.h"
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
@@ -35,7 +36,7 @@
 
 /*! \brief Helper class to mana unit and related data
  */
-class mdtClUnit
+class mdtClUnit : public mdtClBase
 {
  public:
 
@@ -49,7 +50,7 @@ class mdtClUnit
 
   /*! \brief Get last error occured
    */
-  const QSqlError &lastError();
+  ///const QSqlError &lastError();
 
   /*! \brief Get a model with units for compononent selection
    *
@@ -210,24 +211,24 @@ class mdtClUnit
 
   /*! \brief Beginn manually a new transaction
    */
-  bool beginTransaction();
+  ///bool beginTransaction();
 
   /*! \brief Rollback manually a new transaction
    */
-  bool rollbackTransaction();
+  ///bool rollbackTransaction();
 
   /*! \brief Commit manually a new transaction
    */
-  bool commitTransaction();
+  ///bool commitTransaction();
 
   Q_DISABLE_COPY(mdtClUnit);
 
-  QSqlDatabase pvDatabase;
+  ///QSqlDatabase pvDatabase;
   QSqlQueryModel *pvToUnitConnectionRelatedRangesModel;
   QSqlQueryModel *pvUnitModel;
   QSqlQueryModel *pvArticleConnectionModel;
   QSqlQueryModel *pvUnitLinkModel;
-  QSqlError pvLastError;
+  ///QSqlError pvLastError;
 };
 
 #endif  // #ifndef MDT_CL_UNIT_H

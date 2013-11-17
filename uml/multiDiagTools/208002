@@ -1,6 +1,6 @@
 format 76
 "DatabaseLogical" // mdttools::CableList::DatabaseLogical
-  revision 12
+  revision 13
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -47,7 +47,7 @@ format 76
       size A3-Landscape
     end
 
-    class 764674 "Article"
+    class 764674 "Article_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -91,7 +91,7 @@ ${inlines}
       end
     end
 
-    class 765058 "ArticleConnection"
+    class 765058 "ArticleConnection_tbl"
       visibility protected 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -118,7 +118,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 960258 // <unidirectional association>
-	  b parent class_ref 764674 // Article
+	  b parent class_ref 764674 // Article_tbl
       end
 
       attribute 785794 "Id_PK"
@@ -134,7 +134,7 @@ ${inlines}
 
       attribute 785922 "Article_Id_FK"
 	private explicit_type "int"
-	stereotype "PK, FK"
+	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -215,7 +215,7 @@ ${inlines}
       end
     end
 
-    class 764802 "Unit"
+    class 764802 "Unit_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -255,7 +255,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 959618 // <unidirectional association>
-	  b parent class_ref 764674 // Article
+	  b parent class_ref 764674 // Article_tbl
       end
 
       attribute 785026 "Article_Id_FK"
@@ -285,7 +285,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1031810 // <unidirectional association>
-	  b parent class_ref 764802 // Unit
+	  b parent class_ref 764802 // Unit_tbl
       end
 
       attribute 833026 "Coordinate"
@@ -309,7 +309,7 @@ ${inlines}
       end
     end
 
-    class 765314 "UnitConnection"
+    class 765314 "UnitConnection_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -332,9 +332,9 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 833282 "UnitConnection_Id_FK"
+      attribute 786562 "Unit_Id_FK"
 	private explicit_type "int"
-	stereotype "PK, FK"
+	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -343,10 +343,10 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 786562 "Unit_Id_FK"
+      attribute 1007106 "UnitConnector_Id_FK"
 	private explicit_type "int"
-	stereotype "PK, FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
 	php_decl ""
@@ -365,8 +365,9 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 786690 "UnitConnectorName"
-	private explicit_type "string"
+      attribute 833282 "UnitConnection_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -381,7 +382,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 960642 // <unidirectional association>
-	  b parent class_ref 764802 // Unit
+	  b parent class_ref 764802 // Unit_tbl
       end
 
       classrelation 961026 // <unidirectional association>
@@ -390,7 +391,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 961026 // <unidirectional association>
-	  b parent class_ref 765058 // ArticleConnection
+	  b parent class_ref 765058 // ArticleConnection_tbl
       end
 
       attribute 830466 "UnitContactName"
@@ -409,7 +410,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1031938 // <unidirectional association>
-	  b parent class_ref 765314 // UnitConnection
+	  b parent class_ref 765314 // UnitConnection_tbl
       end
 
       attribute 833410 "SchemaPage"
@@ -481,6 +482,15 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
+
+      classrelation 1218946 // <unidirectional association>
+	relation 1206018 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1218946 // <unidirectional association>
+	  b parent class_ref 972674 // UnitConnector_tbl
+      end
     end
 
     class 805250 "Link_tbl"
@@ -501,7 +511,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1016834 // <unidirectional association>
-	  b parent class_ref 765314 // UnitConnection
+	  b parent class_ref 765314 // UnitConnection_tbl
       end
 
       attribute 815618 "UnitConnectionStart_Id_FK"
@@ -634,7 +644,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1181314 // <unidirectional association>
-	  b parent class_ref 765314 // UnitConnection
+	  b parent class_ref 765314 // UnitConnection_tbl
       end
 
       classrelation 1188354 // <unidirectional association>
@@ -776,7 +786,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1195266 // <unidirectional association>
-	  b parent class_ref 764674 // Article
+	  b parent class_ref 764674 // Article_tbl
       end
 
       classrelation 1196418 // <unidirectional association>
@@ -830,7 +840,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1180418 // <unidirectional association>
-	  b parent class_ref 764674 // Article
+	  b parent class_ref 764674 // Article_tbl
       end
 
       attribute 955138 "ComponentQty"
@@ -859,7 +869,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1180546 // <unidirectional association>
-	  b parent class_ref 764674 // Article
+	  b parent class_ref 764674 // Article_tbl
       end
     end
 
@@ -948,7 +958,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1180674 // <unidirectional association>
-	  b parent class_ref 764802 // Unit
+	  b parent class_ref 764802 // Unit_tbl
       end
 
       attribute 956162 "VehicleType_Id_FK"
@@ -1118,7 +1128,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1181570 // <unidirectional association>
-	  b parent class_ref 765058 // ArticleConnection
+	  b parent class_ref 765058 // ArticleConnection_tbl
       end
 
       classrelation 1181698 // <unidirectional association>
@@ -1127,7 +1137,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1181698 // <unidirectional association>
-	  b parent class_ref 765058 // ArticleConnection
+	  b parent class_ref 765058 // ArticleConnection_tbl
       end
 
       attribute 963842 "Identification"
@@ -1299,6 +1309,81 @@ ${inlines}
       end
 
       attribute 971522 "Name"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 972674 "UnitConnector_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 1006594 "Id_PK"
+	private explicit_type "int"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 1006722 "Unit_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1218690 // <unidirectional association>
+	relation 1205762 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1218690 // <unidirectional association>
+	  b parent class_ref 764802 // Unit_tbl
+      end
+
+      attribute 1006850 "Connector_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 1218818 // <unidirectional association>
+	relation 1205890 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1218818 // <unidirectional association>
+	  b parent class_ref 951938 // Connector_tbl
+      end
+
+      attribute 1006978 "Name"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "

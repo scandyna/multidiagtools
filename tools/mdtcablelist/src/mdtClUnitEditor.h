@@ -26,10 +26,11 @@
 #include <QModelIndex>
 #include <QVariant>
 #include "mdtSqlFormWindow.h"
+#include "mdtClEditor.h"
 
 /*! \brief Cable list's device editor
  */
-class mdtClUnitEditor : public QObject
+class mdtClUnitEditor : public mdtClEditor
 {
  Q_OBJECT
 
@@ -37,21 +38,15 @@ class mdtClUnitEditor : public QObject
 
   /*! \brief Contruct a cable editor
    */
-  mdtClUnitEditor(QObject *parent = 0, QSqlDatabase db = QSqlDatabase());
+  mdtClUnitEditor(QObject *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
   ~mdtClUnitEditor();
 
-  /*! \brief Setup tables
-   *
-   * \param includeConnections If true, connection_tbl will be added as child widget.
-   */
-  bool setupTables();
-
   /*! \brief Get form object
    */
-  mdtSqlFormWindow *form();
+  ///mdtSqlFormWindow *form();
 
  private slots:
 
@@ -119,6 +114,10 @@ class mdtClUnitEditor : public QObject
    */
   QVariant currentUnitId();
 
+  /*! \brief Setup tables
+   */
+  bool setupTables();
+
   /*! \brief Setup Unit table and widget
    */
   bool setupUnitTable();
@@ -141,9 +140,9 @@ class mdtClUnitEditor : public QObject
 
   Q_DISABLE_COPY(mdtClUnitEditor);
 
-  QSqlDatabase pvDatabase;
+  ///QSqlDatabase pvDatabase;
   // Form object
-  mdtSqlFormWindow *pvForm;
+  ///mdtSqlFormWindow *pvForm;
 };
 
 #endif  // #ifndef

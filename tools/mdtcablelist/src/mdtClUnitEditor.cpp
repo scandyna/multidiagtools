@@ -51,49 +51,25 @@
 #include <QDebug>
 
 mdtClUnitEditor::mdtClUnitEditor(QObject *parent, QSqlDatabase db)
- : QObject(parent)
+ : mdtClEditor(parent, db)
 {
-  pvDatabase = db;
-  pvForm = new mdtSqlFormWindow;
+  ///database() = db;
+  ///form() = new mdtSqlFormWindow;
 }
 
 mdtClUnitEditor::~mdtClUnitEditor()
 {
-  delete pvForm;
+  ///delete form();
 }
 
-bool mdtClUnitEditor::setupTables()
-{
-  // Setup Unit table
-  if(!setupUnitTable()){
-    return false;
-  }
-  // Setup unit component table
-  if(!setupUnitComponentTable()){
-    return false;
-  }
-  // Setup connection table
-  if(!setupUnitConnectionTable()){
-    return false;
-  }
-  // Setup unit link table
-  if(!setupUnitLinkTable()){
-    return false;
-  }
-  // Setup VehicleType_Unit
-  if(!setupVehicleTable()){
-    return false;
-  }
-
-  return true;
-}
-
+/**
 mdtSqlFormWindow *mdtClUnitEditor::form()
 {
-  Q_ASSERT(pvForm != 0);
+  Q_ASSERT(form() != 0);
 
-  return pvForm;
+  return form();
 }
+*/
 
 void mdtClUnitEditor::assignVehicle()
 {
@@ -101,7 +77,7 @@ void mdtClUnitEditor::assignVehicle()
   QVariant unitId;
   QSqlError sqlError;
   QModelIndexList selectedVehicles;
-  mdtClUnitVehicleType uvt(pvDatabase);
+  mdtClUnitVehicleType uvt(database());
 
   // Get current unit ID
   unitId = currentUnitId();
@@ -131,7 +107,7 @@ void mdtClUnitEditor::assignVehicle()
     msgBox.exec();
     return;
   }
-  pvForm->select("Unit_VehicleType_view");
+  form()->select("Unit_VehicleType_view");
 }
 
 void mdtClUnitEditor::removeVehicleAssignation()
@@ -142,10 +118,10 @@ void mdtClUnitEditor::removeVehicleAssignation()
   QMessageBox msgBox;
   mdtSqlTableWidget *vehicleTypeWidget;
   QModelIndexList indexes;
-  mdtClUnitVehicleType uvt(pvDatabase);
+  mdtClUnitVehicleType uvt(database());
 
   // Get vehicle widget
-  vehicleTypeWidget = pvForm->sqlTableWidget("Unit_VehicleType_view");
+  vehicleTypeWidget = form()->sqlTableWidget("Unit_VehicleType_view");
   Q_ASSERT(vehicleTypeWidget != 0);
   Q_ASSERT(vehicleTypeWidget->selectionModel() != 0);
   // Get current unit ID
@@ -179,12 +155,12 @@ void mdtClUnitEditor::removeVehicleAssignation()
     msgBox.exec();
     return;
   }
-  pvForm->select("Unit_VehicleType_view");
+  form()->select("Unit_VehicleType_view");
 }
 
 void mdtClUnitEditor::setBaseArticle()
 {
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlQueryModel model;
   int ret;
@@ -211,7 +187,7 @@ void mdtClUnitEditor::setBaseArticle()
     return;
   }
   // If a base article  is allready set, we let choose the user between unset it or choose a new one
-  if(pvForm->currentData("Unit_tbl", "Article_Id_FK").toInt() > 0){
+  if(form()->currentData("Unit_tbl", "Article_Id_FK").toInt() > 0){
     QMessageBox msgBox;
     msgBox.setText(tr("A base article allready exist."));
     msgBox.setInformativeText(tr("Please choose a action."));
@@ -223,7 +199,7 @@ void mdtClUnitEditor::setBaseArticle()
     msgBox.setWindowTitle(tr("Unit base article affectation"));
     msgBox.exec();
     if(msgBox.clickedButton() == pbUnsetBaseArticle){
-      pvForm->setCurrentData("Unit_tbl", "Article_Id_FK", QVariant());
+      form()->setCurrentData("Unit_tbl", "Article_Id_FK", QVariant());
       return;
     }
     if(msgBox.clickedButton() != pbSetBaseArticle){
@@ -232,7 +208,7 @@ void mdtClUnitEditor::setBaseArticle()
   }
   // Setup article selection dialog and show it to user
   sql = "SELECT * FROM Article_tbl;";
-  model.setQuery(sql, pvDatabase);
+  model.setQuery(sql, database());
   selectionDialog.setMessage("Please select article");
   selectionDialog.setModel(&model);
   ///selectionDialog.setColumnHidden("Id_PK", true);
@@ -247,7 +223,7 @@ void mdtClUnitEditor::setBaseArticle()
   if(selectedItem.size() != 1){
     return;
   }
-  if(!pvForm->setCurrentData("Unit_tbl", "Article_Id_FK", selectedItem.at(0))){
+  if(!form()->setCurrentData("Unit_tbl", "Article_Id_FK", selectedItem.at(0))){
     return;
   }
 }
@@ -256,7 +232,7 @@ void mdtClUnitEditor::addComponent()
 {
   mdtSqlSelectionDialog dialog;
   QSqlQueryModel *unitModel;
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(database());
 
   if(currentUnitId().isNull()){
     return;
@@ -291,19 +267,18 @@ void mdtClUnitEditor::addComponent()
     return;
   }
   // Update component table
-  pvForm->select("UnitComponent_view");
+  form()->select("UnitComponent_view");
 }
 
 void mdtClUnitEditor::removeComponents()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(database());
   QMessageBox msgBox;
   QModelIndexList indexes;
-  QSqlError sqlError;
   int ret;
 
-  widget = pvForm->sqlTableWidget("UnitComponent_view");
+  widget = form()->sqlTableWidget("UnitComponent_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
   indexes = widget->indexListOfSelectedRows("UnitComponent_Id_PK");
@@ -322,25 +297,20 @@ void mdtClUnitEditor::removeComponents()
   }
   // Delete seleced rows
   if(!unit.removeComponents(indexes)){
-    sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Components removing failed."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   // Update component table
-  pvForm->select("UnitComponent_view");
+  form()->select("UnitComponent_view");
 }
 
 void mdtClUnitEditor::addConnection()
 {
   QSqlError sqlError;
-  mdtClUnitConnectionDialog connectionDialog(0, pvDatabase);
+  mdtClUnitConnectionDialog connectionDialog(0, database());
   mdtSqlSelectionDialog selectionDialog;
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(database());
   QVariant unitId, articleIdFk;
   QSqlQueryModel *queryModel;
   QList<QVariant> selectedItem;
@@ -352,7 +322,7 @@ void mdtClUnitEditor::addConnection()
   if(unitId.isNull()){
     return;
   }
-  articleIdFk = pvForm->currentData("Unit_tbl", "Article_Id_FK");
+  articleIdFk = form()->currentData("Unit_tbl", "Article_Id_FK");
   // Get qeury model for article connection selection
   queryModel = unit.modelForArticleConnectionSelection(unitId, articleIdFk);
   Q_ASSERT(queryModel != 0);
@@ -418,24 +388,18 @@ void mdtClUnitEditor::addConnection()
   }
   // Add connection
   if(!unit.addUnitConnection(connectionDialog.data())){
-    sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Connection adding failed."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   // Update connections view
-  pvForm->select("UnitConnection_view");
+  form()->select("UnitConnection_view");
 }
 
 void mdtClUnitEditor::addFreeConnection()
 {
-  QSqlError sqlError;
-  mdtClUnitConnectionDialog dialog(0, pvDatabase);
-  mdtClUnit unit(pvDatabase);
+  mdtClUnitConnectionDialog dialog(0, database());
+  mdtClUnit unit(database());
 
   if(currentUnitId().isNull()){
     return;
@@ -447,28 +411,22 @@ void mdtClUnitEditor::addFreeConnection()
   }
   // Add connection
   if(!unit.addUnitConnection(dialog.data())){
-    sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Connection adding failed."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   // Update connections view
-  pvForm->select("UnitConnection_view");
+  form()->select("UnitConnection_view");
 }
 
 void mdtClUnitEditor::editConnection()
 {
   mdtSqlTableWidget *widget;
-  QSqlError sqlError;
-  mdtClUnitConnectionDialog dialog(0, pvDatabase);
-  mdtClUnit unit(pvDatabase);
+  mdtClUnitConnectionDialog dialog(0, database());
+  mdtClUnit unit(database());
   mdtClUnitConnectionData data;
 
-  widget = pvForm->sqlTableWidget("UnitConnection_view");
+  widget = form()->sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
 
   // Get current item's data
@@ -483,29 +441,23 @@ void mdtClUnitEditor::editConnection()
   }
   // Edit connection
   if(!unit.editUnitConnection(dialog.data())){
-    sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Connection edition failed."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   // Update connections view
-  pvForm->select("UnitConnection_view");
+  form()->select("UnitConnection_view");
 }
 
 void mdtClUnitEditor::removeConnections()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(database());
   QMessageBox msgBox;
   QModelIndexList indexes;
-  QSqlError sqlError;
   QString linksMsg;
 
-  widget = pvForm->sqlTableWidget("UnitConnection_view");
+  widget = form()->sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
   indexes = widget->indexListOfSelectedRows("UnitConnection_Id_PK");
@@ -535,27 +487,22 @@ void mdtClUnitEditor::removeConnections()
   }
   // Delete seleced rows
   if(!unit.removeUnitConnections(indexes)){
-    sqlError = unit.lastError();
-    ///QMessageBox msgBox;
-    msgBox.setText(tr("Connections removing failed."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   // Update connections table
-  pvForm->select("UnitConnection_view");
+  form()->select("UnitConnection_view");
 }
 
 void mdtClUnitEditor::addLink()
 {
   mdtSqlFormWidget *widget;
-  mdtClUnitLinkDialog dialog(0, pvDatabase);
+  mdtClUnitLinkDialog dialog(0, database());
   QVariant unitId;
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(database());
 
-  widget = pvForm->sqlFormWidget("Unit_tbl");
+  widget = form()->sqlFormWidget("Unit_tbl");
   Q_ASSERT(widget != 0);
   // Setup and show dialog
   unitId = currentUnitId();
@@ -574,33 +521,28 @@ void mdtClUnitEditor::addLink()
   qDebug() << "Editor, vhcs: " << dialog.linkData().vehicleTypeStartEndIdList();
   // Add link
   if(!unit.addLink(dialog.linkData())){
-    QSqlError sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Link adding failed.           "));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   // Update links view
-  pvForm->select("UnitLink_view");
+  form()->select("UnitLink_view");
 }
 
 void mdtClUnitEditor::editLink()
 {
   mdtSqlFormWidget *unitWidget;
   mdtSqlTableWidget *linkWidget;
-  mdtClUnitLinkDialog dialog(0, pvDatabase);
+  mdtClUnitLinkDialog dialog(0, database());
   QVariant unitId, startConnectionId, endConnectionId;
   mdtClUnitConnectionData startConnectionData;
   mdtClUnitConnectionData endConnectionData;
   mdtClLinkData linkData;
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(database());
 
-  unitWidget = pvForm->sqlFormWidget("Unit_tbl");
+  unitWidget = form()->sqlFormWidget("Unit_tbl");
   Q_ASSERT(unitWidget != 0);
-  linkWidget = pvForm->sqlTableWidget("UnitLink_view");
+  linkWidget = form()->sqlTableWidget("UnitLink_view");
   Q_ASSERT(linkWidget != 0);
   // Get connection IDs
   startConnectionId = linkWidget->currentData("UnitConnectionStart_Id_FK");
@@ -615,35 +557,20 @@ void mdtClUnitEditor::editLink()
   // Get current link data
   startConnectionData = unit.getUnitConnectionData(startConnectionId);
   if(!startConnectionData.isValid()){
-    QSqlError sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Cannot get data for start connection."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   endConnectionData = unit.getUnitConnectionData(endConnectionId);
   if(!endConnectionData.isValid()){
-    QSqlError sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Cannot get data for end connection."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   linkData = unit.getUnitLinkData(startConnectionId, endConnectionId);
   if(!linkData.isValid()){
-    QSqlError sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Cannot get data for link."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   // Setup and show dialog
@@ -663,29 +590,24 @@ void mdtClUnitEditor::editLink()
   }
   // Add link
   if(!unit.editLink(startConnectionId, endConnectionId, dialog.linkData())){
-    QSqlError sqlError = unit.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Link edition failed.           "));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   // Update links view
-  pvForm->select("UnitLink_view");
+  form()->select("UnitLink_view");
 }
 
 void mdtClUnitEditor::removeLinks()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(database());
   QMessageBox msgBox;
   QList<QModelIndexList> indexes;
   QSqlError sqlError;
   QStringList fields;
 
-  widget = pvForm->sqlTableWidget("UnitLink_view");
+  widget = form()->sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
   fields << "UnitConnectionStart_Id_FK" << "UnitConnectionEnd_Id_FK";
@@ -704,26 +626,21 @@ void mdtClUnitEditor::removeLinks()
   }
   // Delete seleced rows
   if(!unit.removeLinks(indexes)){
-    QSqlError sqlError = unit.lastError();
-    ///QMessageBox msgBox;
-    msgBox.setText(tr("Link removing failed.           "));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = unit.lastError();
+    displayLastError();
     return;
   }
   // Update connections view
-  pvForm->select("UnitLink_view");
+  form()->select("UnitLink_view");
 }
 
 void mdtClUnitEditor::viewPath()
 {
-  mdtClPathGraphDialog dialog(0, pvDatabase);
+  mdtClPathGraphDialog dialog(0, database());
   mdtSqlTableWidget *widget;
   QVariant startConnectionId;
 
-  widget = pvForm->sqlTableWidget("UnitLink_view");
+  widget = form()->sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
   // Get selected row
   startConnectionId = widget->currentData("UnitConnectionStart_Id_FK");
@@ -747,11 +664,39 @@ void mdtClUnitEditor::viewPath()
 
 QVariant mdtClUnitEditor::currentUnitId()
 {
-  return pvForm->currentData("Unit_tbl", "Id_PK");
+  return form()->currentData("Unit_tbl", "Id_PK");
+}
+
+bool mdtClUnitEditor::setupTables()
+{
+  // Setup Unit table
+  if(!setupUnitTable()){
+    return false;
+  }
+  // Setup unit component table
+  if(!setupUnitComponentTable()){
+    return false;
+  }
+  // Setup connection table
+  if(!setupUnitConnectionTable()){
+    return false;
+  }
+  // Setup unit link table
+  if(!setupUnitLinkTable()){
+    return false;
+  }
+  // Setup VehicleType_Unit
+  if(!setupVehicleTable()){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtClUnitEditor::setupUnitTable()
 {
+  Q_ASSERT(sqlWindow() != 0);
+
   Ui::mdtClUnitEditor ue;
   QSqlTableModel *unitModel;
   QDataWidgetMapper *baseArticleMapper;
@@ -759,24 +704,24 @@ bool mdtClUnitEditor::setupUnitTable()
   mdtSqlRelation *baseArticleRelation;
 
   // Setup main form widget
-  ue.setupUi(pvForm->mainSqlWidget());
+  ue.setupUi(form()->mainSqlWidget());
   connect(ue.pbSetBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
-  connect(this, SIGNAL(unitEdited()), pvForm->mainSqlWidget(), SIGNAL(dataEdited()));
+  connect(this, SIGNAL(unitEdited()), form()->mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
-  if(!pvForm->setTable("Unit_tbl", "Units", pvDatabase)){
+  if(!form()->setTable("Unit_tbl", "Units", database())){
     return false;
   }
-  pvForm->sqlWindow()->enableNavigation();
-  pvForm->sqlWindow()->enableEdition();
-  pvForm->sqlWindow()->resize(800, 500);
-  pvForm->sqlWindow()->setWindowTitle(tr("Unit edition"));
+  sqlWindow()->enableNavigation();
+  sqlWindow()->enableEdition();
+  sqlWindow()->resize(800, 500);
+  sqlWindow()->setWindowTitle(tr("Unit edition"));
   /*
    * Setup base article widget mapping
    */
-  unitModel = pvForm->model("Unit_tbl");
+  unitModel = form()->model("Unit_tbl");
   Q_ASSERT(unitModel != 0);
   // Setup base article model
-  baseArticleModel = new QSqlTableModel(this, pvDatabase);
+  baseArticleModel = new QSqlTableModel(this, database());
   baseArticleModel->setTable("Article_tbl");
   if(!baseArticleModel->select()){
     return false;
@@ -794,11 +739,11 @@ bool mdtClUnitEditor::setupUnitTable()
   if(!baseArticleRelation->addRelation("Article_Id_FK", "Id_PK", false)){
     return false;
   }
-  connect(pvForm->mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseArticleRelation, SLOT(setParentCurrentIndex(int)));
+  connect(form()->mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseArticleRelation, SLOT(setParentCurrentIndex(int)));
   connect(baseArticleRelation, SIGNAL(childModelFilterApplied()), baseArticleMapper, SLOT(toFirst()));
   connect(baseArticleRelation, SIGNAL(childModelIsEmpty()), baseArticleMapper, SLOT(revert()));
   // Force a update
-  pvForm->mainSqlWidget()->setCurrentIndex(pvForm->mainSqlWidget()->currentRow());
+  form()->mainSqlWidget()->setCurrentIndex(form()->mainSqlWidget()->currentRow());
 
   return true;
 }
@@ -809,13 +754,13 @@ bool mdtClUnitEditor::setupUnitComponentTable()
   QPushButton *pbAddComponent;
   QPushButton *pbRemoveComponents;
 
-  if(!pvForm->addChildTable("UnitComponent_view", tr("Components"), pvDatabase)){
+  if(!form()->addChildTable("UnitComponent_view", tr("Components"), database())){
     return false;
   }
-  if(!pvForm->addRelation("Id_PK", "UnitComponent_view", "Unit_Id_PK")){
+  if(!form()->addRelation("Id_PK", "UnitComponent_view", "Unit_Id_PK")){
     return false;
   }
-  widget = pvForm->sqlTableWidget("UnitComponent_view");
+  widget = form()->sqlTableWidget("UnitComponent_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("Unit_Id_PK", true);
@@ -848,13 +793,13 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   QPushButton *pbEditConnection;
   QPushButton *pbRemoveConnection;
 
-  if(!pvForm->addChildTable("UnitConnection_view", tr("Connections"), pvDatabase)){
+  if(!form()->addChildTable("UnitConnection_view", tr("Connections"), database())){
     return false;
   }
-  if(!pvForm->addRelation("Id_PK", "UnitConnection_view", "Unit_Id_FK")){
+  if(!form()->addRelation("Id_PK", "UnitConnection_view", "Unit_Id_FK")){
     return false;
   }
-  widget = pvForm->sqlTableWidget("UnitConnection_view");
+  widget = form()->sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
   // Add the Add and remove buttons
   pbAddConnection = new QPushButton(tr("Add connection ..."));
@@ -876,10 +821,10 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->setColumnHidden("ArticleConnection_Id_FK", true);
   // Give fields a user friendly name
   widget->setHeaderData("SchemaPage", tr("Schema\npage"));
-  widget->setHeaderData("UnitFunctionEN", tr("Unit\nfunction (ENG)"));
-  widget->setHeaderData("UnitFunctionFR", tr("Unit\nfunction (FRA)"));
-  widget->setHeaderData("UnitFunctionDE", tr("Unit\nfunction (DEU)"));
-  widget->setHeaderData("UnitFunctionIT", tr("Unit\nfunction (ITA)"));
+  widget->setHeaderData("UnitFunctionEN", tr("Unit\nfunction\n(English)"));
+  widget->setHeaderData("UnitFunctionFR", tr("Unit\nfunction\n(French)"));
+  widget->setHeaderData("UnitFunctionDE", tr("Unit\nfunction\n(German)"));
+  widget->setHeaderData("UnitFunctionIT", tr("Unit\nfunction\n(Italian)"));
   widget->setHeaderData("SignalName", tr("Signal name"));
   widget->setHeaderData("SwAddress", tr("SW address"));
   widget->setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
@@ -887,7 +832,10 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
   widget->setHeaderData("ArticleContactName", tr("Article\ncontact"));
   widget->setHeaderData("IoType", tr("I/O type"));
-  widget->setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
+  widget->setHeaderData("ArticleFunctionEN", tr("Article\nfunction\n(English)"));
+  widget->setHeaderData("ArticleFunctionFR", tr("Article\nfunction\n(French)"));
+  widget->setHeaderData("ArticleFunctionDE", tr("Article\nfunction\n(German)"));
+  widget->setHeaderData("ArticleFunctionIT", tr("Article\nfunction\n(Italian)"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
 
@@ -902,16 +850,16 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   QPushButton *pbRemoveLinks;
   QPushButton *pbViewPath;
 
-  if(!pvForm->addChildTable("UnitLink_view", tr("Links"), pvDatabase)){
+  if(!form()->addChildTable("UnitLink_view", tr("Links"), database())){
     return false;
   }
-  if(!pvForm->addRelation("Id_PK", "UnitLink_view", "StartUnit_Id_FK")){
+  if(!form()->addRelation("Id_PK", "UnitLink_view", "StartUnit_Id_FK")){
     return false;
   }
-  if(!pvForm->addRelation("Id_PK", "UnitLink_view", "EndUnit_Id_FK", "OR")){
+  if(!form()->addRelation("Id_PK", "UnitLink_view", "EndUnit_Id_FK", "OR")){
     return false;
   }
-  widget = pvForm->sqlTableWidget("UnitLink_view");
+  widget = form()->sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
   // Add the Add and remove buttons
   pbAddLink = new QPushButton(tr("Add link ..."));
@@ -971,15 +919,15 @@ bool mdtClUnitEditor::setupVehicleTable()
   mdtSqlTableWidget *widget;
 
   // Add vehicle type table
-  if(!pvForm->addChildTable("Unit_VehicleType_view", tr("Vehicles"), pvDatabase)){
+  if(!form()->addChildTable("Unit_VehicleType_view", tr("Vehicles"), database())){
     return false;
   }
   // Setup Unit <-> VehicleType relation
-  if(!pvForm->addRelation("Id_PK", "Unit_VehicleType_view", "Unit_Id_FK")){
+  if(!form()->addRelation("Id_PK", "Unit_VehicleType_view", "Unit_Id_FK")){
     return false;
   }
   // Get widget to continue setup
-  widget = pvForm->sqlTableWidget("Unit_VehicleType_view");
+  widget = form()->sqlTableWidget("Unit_VehicleType_view");
   Q_ASSERT(widget != 0);
   // Hide relation fields and PK
   widget->setColumnHidden("Id_PK", true);

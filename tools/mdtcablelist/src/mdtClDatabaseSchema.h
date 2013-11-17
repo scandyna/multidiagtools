@@ -157,6 +157,10 @@ class mdtClDatabaseSchema
    */
   bool setupUnitTable();
 
+  /*! \brief Setup unit connector table
+   */
+  bool setupUnitConnectorTable();
+
   /*! \brief
    */
   bool setupUnitConnectionTable();
