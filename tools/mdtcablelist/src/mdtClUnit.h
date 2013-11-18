@@ -48,6 +48,14 @@ class mdtClUnit : public mdtClBase
    */
   ~mdtClUnit();
 
+  /*! \brief Get SQL statement for article connection linked to a unit connector selection
+   *
+   * List all article connections that are related to given unit connector,
+   *  and that are not allready used in given unit .
+   */
+  QString sqlForArticleConnectionLinkedToUnitConnectorSelection(const QVariant & unitConnectorId, const QVariant & unitId) const;
+
+
   /*! \brief Get a model with units for compononent selection
    *
    * Will setup a query model witch contains all units except unitId

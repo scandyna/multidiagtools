@@ -128,6 +128,11 @@ class mdtClUnitEditor : public mdtClEditor
    */
   QVariant selectUnitConnector();
 
+  /*! \brief Let user select a article connection related to a unit connector
+   */
+  QVariant selectArticleConnectionLinkedToUnitConnector(const QVariant & unitConnectorId, const QVariant & unitId);
+  
+  
   /*! \brief Let user choose a connector from those that are related to current article
    */
   QVariant selectArticleConnector();

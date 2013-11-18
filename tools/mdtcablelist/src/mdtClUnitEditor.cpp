@@ -454,7 +454,8 @@ void mdtClUnitEditor::addConnection()
   data = unit.getUnitConnectorData(unitConnectorId);
   // If connector is based on a article connector, let user choose article connection
   if(!data.articleConnectionData().connectorId().isNull()){
-    articleConnectionId = selectArticleConnection(data.articleConnectionData().connectorId());
+    ///articleConnectionId = selectArticleConnection(data.articleConnectionData().connectorId());
+    articleConnectionId = selectArticleConnectionLinkedToUnitConnector(unitConnectorId, unitId);
     if(articleConnectionId.isNull()){
       return;
     }
@@ -828,6 +829,52 @@ QVariant mdtClUnitEditor::selectUnitConnector()
 
   return selectionDialog.selectionResult().at(0);
 }
+
+QVariant mdtClUnitEditor::selectArticleConnectionLinkedToUnitConnector(const QVariant & unitConnectorId, const QVariant & unitId)
+{
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlError sqlError;
+  QSqlQueryModel model;
+  mdtClUnit unit(database());
+  QString sql;
+  QString msg;
+
+  if((unitConnectorId.isNull())||(unitId.isNull())){
+    return QVariant();
+  }
+  // Setup model
+  sql = unit.sqlForArticleConnectionLinkedToUnitConnectorSelection(unitConnectorId, unitId);
+  model.setQuery(sql, database());
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get list of article connections related to unit connector."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitEditor");
+    pvLastError.commit();
+    displayLastError();
+    return QVariant();
+  }
+  // Setup and show dialog
+  msg = tr("Selected connector is based on a article connector.\n");
+  msg += tr("Please select a article based connection to use.");
+  selectionDialog.setMessage(msg);
+  selectionDialog.setModel(&model, false);
+  selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.setColumnHidden("Unit_Id_FK", true);
+  selectionDialog.setColumnHidden("UnitConnector_Id_PK", true);
+  selectionDialog.setColumnHidden("ArticleConnector_Id_PK", true);
+  selectionDialog.setColumnHidden("ArticleConnection_Id_PK", true);
+  ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
+  selectionDialog.addSelectionResultColumn("ArticleConnection_Id_PK");
+  selectionDialog.resize(700, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
+}
+
 
 QVariant mdtClUnitEditor::selectArticleConnector()
 {

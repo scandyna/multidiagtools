@@ -45,6 +45,37 @@ mdtClUnit::~mdtClUnit()
   delete pvUnitLinkModel;
 }
 
+QString mdtClUnit::sqlForArticleConnectionLinkedToUnitConnectorSelection(const QVariant & unitConnectorId, const QVariant & unitId) const
+{
+  QString sql;
+
+  sql = "SELECT"\
+        " UnitConnector_tbl.Id_PK AS UnitConnector_Id_PK,"\
+        " UnitConnector_tbl.Unit_Id_FK,"\
+        " ArticleConnector_tbl.Id_PK AS ArticleConnector_Id_PK,"\
+        " ArticleConnector_tbl.Name AS ArticleConnectorName,"\
+        " ArticleConnection_tbl.Id_PK AS ArticleConnection_Id_PK,"\
+        " ArticleConnection_tbl.ArticleContactName,"\
+        " ArticleConnection_tbl.IoType,"\
+        " ArticleConnection_tbl.FunctionEN,"\
+        " ArticleConnection_tbl.FunctionFR,"\
+        " ArticleConnection_tbl.FunctionDE,"\
+        " ArticleConnection_tbl.FunctionIT "\
+        "FROM UnitConnector_tbl "\
+        " JOIN ArticleConnector_tbl"\
+        "  ON ArticleConnector_tbl.Id_PK = UnitConnector_tbl.ArticleConnector_Id_FK "\
+        " JOIN ArticleConnection_tbl"\
+        "  ON ArticleConnection_tbl.ArticleConnector_Id_FK = ArticleConnector_tbl.Id_PK "\
+        "WHERE UnitConnector_Id_PK = " + unitConnectorId.toString();
+  sql += " AND ArticleConnection_Id_PK NOT IN ("\
+         "  SELECT ArticleConnection_Id_FK"\
+         "  FROM UnitConnection_tbl"\
+         "  WHERE Unit_Id_FK = " + unitId.toString();
+  sql += "  AND ArticleConnection_Id_FK IS NOT NULL)";
+
+  return sql;
+}
+
 QSqlQueryModel *mdtClUnit::unitModelForComponentSelection(const QVariant &unitId)
 {
   QString sql;
