@@ -1,12 +1,12 @@
-window_sizes 1280 1001 182 1092 923 0
+window_sizes 1024 718 182 836 640 0
 diagrams
   classdiagram_ref 907778 // mdtClArticleConnectionDialog
     739 738 100 4 0 0
   active  classdiagram_ref 739586 // Logical
-    1092 923 80 17 0 229
+    836 640 80 17 60 441
 end
 show_stereotypes
-selected attribute_ref 833282 // UnitConnection_Id_FK
+selected classdiagram_ref 739330 // Conceptual
 open
   classview_ref 483842 // Conceptual
   attribute_ref 1007106 // UnitConnector_Id_FK

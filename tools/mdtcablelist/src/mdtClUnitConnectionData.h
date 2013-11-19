@@ -47,6 +47,14 @@ class mdtClUnitConnectionData : public mdtClConnectionData
    */
   QVariant unitId() const;
 
+  /*! \brief Set unit connector ID
+   */
+  void setUnitConnectorId(const QVariant & id);
+
+  /*! \brief Get unit connector ID
+   */
+  QVariant unitConnectorId() const;
+
   /*! \brief Set schema page
    */
   void setSchemaPage(const QVariant & schemaPage);
@@ -97,6 +105,7 @@ class mdtClUnitConnectionData : public mdtClConnectionData
   void clearSub();
 
   QVariant pvUintId;
+  QVariant pvUnitConnectorId;
   QVariant pvSchemaPage;
   QVariant pvSignalName;
   QVariant pvSwAddress;

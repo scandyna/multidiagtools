@@ -42,6 +42,16 @@ QVariant mdtClUnitConnectionData::unitId() const
   return pvUintId;
 }
 
+void mdtClUnitConnectionData::setUnitConnectorId(const QVariant & id)
+{
+  pvUnitConnectorId = id;
+}
+
+QVariant mdtClUnitConnectionData::unitConnectorId() const
+{
+  return pvUnitConnectorId;
+}
+
 void mdtClUnitConnectionData::setSchemaPage(const QVariant & schemaPage)
 {
   pvSchemaPage = schemaPage;
@@ -75,6 +85,7 @@ QVariant mdtClUnitConnectionData::swAddress() const
 void mdtClUnitConnectionData::clearSub()
 {
   pvUintId.clear();
+  pvUnitConnectorId.clear();
   pvSchemaPage.clear();
   pvSignalName.clear();
   pvSwAddress.clear();

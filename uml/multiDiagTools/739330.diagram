@@ -100,17 +100,17 @@ end
 relationcanvas 129282 relation_ref 950402 // <composition>
   from ref 128130 z 2001 to ref 129154
   no_role_a no_role_b
-  multiplicity_a_pos 764 459 3000 multiplicity_b_pos 684 294 3000
+  multiplicity_a_pos 769 461 3000 multiplicity_b_pos 687 295 3000
 end
 relationcanvas 129410 relation_ref 950658 // <association>
   from ref 128898 z 2001 to ref 129154
   no_role_a no_role_b
-  multiplicity_a_pos 703 526 3000 multiplicity_b_pos 374 534 3000
+  multiplicity_a_pos 707 527 3000 multiplicity_b_pos 363 536 3000
 end
 relationcanvas 130178 relation_ref 978690 // <association>
   from ref 129154 z 2001 to ref 130050
   no_role_a no_role_b
-  multiplicity_a_pos 460 667 3000 multiplicity_b_pos 702 553 3000
+  multiplicity_a_pos 454 669 3000 multiplicity_b_pos 706 554 3000
 end
 relationcanvas 130306 relation_ref 978818 // <association>
   from ref 128898 z 2001 to ref 130050
@@ -148,7 +148,7 @@ relationcanvas 133634 relation_ref 1166338 // <association>
   multiplicity_a_pos 335 687 3000 multiplicity_b_pos 52 177 3000
 end
 relationcanvas 134146 relation_ref 1166466 // <association>
-  decenter_begin 232
+  decenter_begin 231
   decenter_end 837
   from ref 128002 z 2001 to point 190 224
   line 134274 z 2001 to point 190 274

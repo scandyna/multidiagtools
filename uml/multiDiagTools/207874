@@ -1,6 +1,6 @@
 format 76
 "DatabaseConceptual" // mdttools::CableList::DatabaseConceptual
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -735,7 +735,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
 "
 	    classrelation_ref 1179778 // <association>
-	  b role_name "" multiplicity "0..1" private
+	  b role_name "" multiplicity "1" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1179906 // <association>

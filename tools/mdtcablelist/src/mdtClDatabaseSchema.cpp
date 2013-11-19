@@ -1057,7 +1057,7 @@ bool mdtClDatabaseSchema::setupUnitConnectionTable()
   field = QSqlField();
   field.setName("UnitConnector_Id_FK");
   field.setType(QVariant::Int);
-  ///field.setRequiredStatus(QSqlField::Required);
+  field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
   // ArticleConnection_Id_FK
   field = QSqlField();

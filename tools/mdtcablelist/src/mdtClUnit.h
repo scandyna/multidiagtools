@@ -55,6 +55,25 @@ class mdtClUnit : public mdtClBase
    */
   QString sqlForArticleConnectionLinkedToUnitConnectorSelection(const QVariant & unitConnectorId, const QVariant & unitId) const;
 
+  /*! \brief Get unit connection data for given unit connection ID
+   *
+   * Will also get unit connector data and article connector + connection data if unit connection is based on article connection .
+   */
+  mdtClUnitConnectionData getConnectionDataByUnitConnectionId(const QVariant & unitConnectionId);
+
+  /*! \brief Get unit connection data for given article connection ID and unit ID
+   *
+   * \sa getConnectionDataByUnitConnectionId()
+   */
+  mdtClUnitConnectionData getConnectionDataByArticleConnectionId(const QVariant & articleConnectionId, const QVariant & unitId);
+
+  /*! \brief Get article connection data
+   *
+   * Will get article connection data and article connector data .
+   */
+  mdtClUnitConnectionData getArticleConnectionData(const QVariant & articleConnectionId, mdtClUnitConnectionData data = mdtClUnitConnectionData());
+
+
 
   /*! \brief Get a model with units for compononent selection
    *
@@ -149,9 +168,6 @@ class mdtClUnit : public mdtClBase
    */
   QVariant getArticleConnectorName(const QVariant & articleConnectorId);
 
-  /*! \brief Get article connection data
-   */
-  mdtClUnitConnectionData getArticleConnectionData(const QVariant & articleConnectionId, mdtClUnitConnectionData data = mdtClUnitConnectionData());
 
   /*! \brief Add a connector based on article connector
    *
@@ -225,6 +241,41 @@ class mdtClUnit : public mdtClBase
   /*! \brief Remove a link from vehicle type table
    */
   bool removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, QSqlQuery &query);
+
+
+  /*! \brief Fill unit connection data part
+   *
+   * This method is used by getConnectionDataByUnitConnectionId() and getConnectionDataByArticleConnectionId() .
+   */
+  bool fillUnitConnectionDataPart(mdtClUnitConnectionData & data, const QVariant & unitConnectionId);
+
+  /*! \brief Fill unit connector data part
+   *
+   * This method is used by getConnectionDataByUnitConnectionId() and getConnectionDataByArticleConnectionId() .
+   */
+  bool fillUnitConnectorDataPart(mdtClUnitConnectionData & data, const QVariant & unitConnectorId);
+
+  /*! \brief Fill article connection data part
+   *
+   * This method is used by getConnectionDataByUnitConnectionId() and getConnectionDataByArticleConnectionId() .
+   */
+  bool fillArticleConnectionDataPart(mdtClUnitConnectionData & data, const QVariant & articleConnectionId);
+
+  /*! \brief Fill article connector data part
+   *
+   * This method is used by getConnectionDataByUnitConnectionId() and getConnectionDataByArticleConnectionId() .
+   */
+  bool fillArticleConnectorDataPart(mdtClUnitConnectionData & data, const QVariant & articleConnectorId);
+
+
+  /*! \brief Get SQL statement for unit connection data
+   *
+   * SQL statement will list all unit connection data, unit connector data .
+   *  If unit connection is based on a article connection, article connector and connection data is also joined
+   *
+   * This method is used by getConnectionDataByUnitConnectionId() and getConnectionDataByArticleConnectionId() .
+   */
+  ///QString sqlForUnitConnectionData() const;
 
   Q_DISABLE_COPY(mdtClUnit);
 
