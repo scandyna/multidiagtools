@@ -500,7 +500,7 @@ void mdtClUnitLinkDialog::selectStartConnection()
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
   // Get connection data and update
-  data = unit.getUnitConnectionData(result.at(0));
+  data = unit.getConnectionDataByUnitConnectionId(result.at(0));
   setStartConnectionData(data);
 }
 
@@ -540,7 +540,7 @@ void mdtClUnitLinkDialog::selectEndConnection()
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
   // Get connection data and update
-  data = unit.getUnitConnectionData(result.at(0));
+  data = unit.getConnectionDataByUnitConnectionId(result.at(0));
   setEndConnectionData(data);
 }
 

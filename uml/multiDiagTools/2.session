@@ -1,9 +1,9 @@
-window_sizes 1024 718 182 836 640 0
+window_sizes 1024 718 181 837 640 0
 diagrams
   classdiagram_ref 907778 // mdtClArticleConnectionDialog
     739 738 100 4 0 0
   active  classdiagram_ref 739586 // Logical
-    836 640 80 17 60 441
+    837 640 80 17 24 240
 end
 show_stereotypes
 selected classdiagram_ref 739330 // Conceptual

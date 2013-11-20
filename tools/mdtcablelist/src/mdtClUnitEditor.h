@@ -68,13 +68,17 @@ class mdtClUnitEditor : public mdtClEditor
    */
   void removeComponents();
 
-  /*! \brief Add a connector to unit connector table that is related to a article connector
+  /*! \brief Add a free connector (based on nothing) to unit connector table
    */
   void addConnector();
 
-  /*! \brief Add a connector to unit connector table
+  /*! \brief Add a connector based on a one from Connector_tbl to unit connector table
    */
-  void addFreeConnector();
+  void addConnectorBasedConnector();
+
+  /*! \brief Add a connector based on article connector to unit connector table
+   */
+  void addArticleConnectorBasedConnector();
 
   /*! \brief Add a connection to unit connection table that is related to a article connection
    */
@@ -122,7 +126,11 @@ class mdtClUnitEditor : public mdtClEditor
 
   /*! \brief Let user choose a connector (from Connector table)
    */
-  QVariant selectConnector();
+  QVariant selectBaseConnector();
+
+  /*! \brief Let user select connections related to a connector from Connector_tbl
+   */
+  QList<QVariant> selectBaseConnectorContactIdList(const QVariant & connectorId);
 
   /*! \brief Select a connector assigned to current unit
    */
@@ -131,25 +139,10 @@ class mdtClUnitEditor : public mdtClEditor
   /*! \brief Let user select a article connection related to a unit connector
    */
   QVariant selectArticleConnectionLinkedToUnitConnector(const QVariant & unitConnectorId, const QVariant & unitId);
-  
-  
+
   /*! \brief Let user choose a connector from those that are related to current article
    */
   QVariant selectArticleConnector();
-
-  /*! \brief Let user choose connections from those that are related to given article connector
-   */
-  QList<QVariant> selectArticleConnections(const QVariant & articleConnectorId, bool allowMultipleSelection = true);
-
-  /*! \brief Let user choose a connection from those that are related to given article connector
-   */
-  QVariant selectArticleConnection(const QVariant & articleConnectorId);
-
-  /*! \brief Let user choose a connection from those that are related to current article
-   *
-   * \todo Obselete ?
-   */
-  ///mdtClUnitConnectionData selectArticleConnection(const QVariant & articleId);
 
   /*! \brief Setup tables
    */
