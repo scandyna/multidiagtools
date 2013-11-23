@@ -31,7 +31,7 @@ mdtClUnit::mdtClUnit(QSqlDatabase db)
 {
   pvToUnitConnectionRelatedRangesModel = new QSqlQueryModel;
   pvUnitModel = new QSqlQueryModel;
-  pvArticleConnectorModel = 0;
+  ///pvArticleConnectorModel = 0;
   pvUnitLinkModel = 0;
 }
 
@@ -39,8 +39,40 @@ mdtClUnit::~mdtClUnit()
 {
   delete pvToUnitConnectionRelatedRangesModel;
   delete pvUnitModel;
-  delete pvArticleConnectorModel;
+  ///delete pvArticleConnectorModel;
   delete pvUnitLinkModel;
+}
+
+QString mdtClUnit::sqlForArticleConnectorSelection(const QVariant & articleId, const QVariant & unitId) const
+{
+  QString sql;
+
+  sql = "SELECT DISTINCT "\
+        " Id_PK, Name "\
+        "FROM ArticleConnector_tbl "\
+        "WHERE Article_Id_FK = " + articleId.toString();
+  sql += " AND Id_PK NOT IN ( "\
+         " SELECT ArticleConnector_Id_FK "\
+         " FROM UnitConnector_tbl "\
+         " WHERE ( Unit_Id_FK = " + unitId.toString() + " ) "\
+         " AND ( ArticleConnector_Id_FK IS NOT NULL ) )";
+
+  return sql;
+}
+
+QString mdtClUnit::sqlForArticleConnectionLinkedToArticleConnectorSelection(const QVariant & articleConnectorId, const QVariant & unitId) const
+{
+  QString sql;
+
+  sql = "SELECT * FROM ArticleConnection_tbl ";
+  sql += "WHERE ArticleConnector_Id_FK = " + articleConnectorId.toString();
+  sql += " AND Id_PK NOT IN ("\
+         "  SELECT ArticleConnection_Id_FK"\
+         "  FROM UnitConnection_tbl"\
+         "  WHERE Unit_Id_FK = " + unitId.toString();
+  sql += "  AND ArticleConnection_Id_FK IS NOT NULL)";
+
+  return sql;
 }
 
 QString mdtClUnit::sqlForArticleConnectionLinkedToUnitConnectorSelection(const QVariant & unitConnectorId, const QVariant & unitId) const
@@ -348,6 +380,7 @@ bool mdtClUnit::removeComponents(const QModelIndexList & indexListOfSelectedRows
   return removeComponents(idList);
 }
 
+/**
 QSqlQueryModel *mdtClUnit::modelForArticleConnectorSelection(const QVariant & unitId, const QVariant &articleId)
 {
   QString sql;
@@ -376,6 +409,7 @@ QSqlQueryModel *mdtClUnit::modelForArticleConnectorSelection(const QVariant & un
 
   return pvArticleConnectorModel;
 }
+*/
 
 int mdtClUnit::toUnitRelatedArticleConnectionCount(const QVariant & unitId)
 {
@@ -511,6 +545,7 @@ QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QMode
   return toUnitRelatedLinksListStr(unitId, idList);
 }
 
+/**
 QVariant mdtClUnit::getArticleConnectorName(const QVariant & articleConnectorId)
 {
   QString sql;
@@ -532,6 +567,7 @@ QVariant mdtClUnit::getArticleConnectorName(const QVariant & articleConnectorId)
 
   return query.value(0);
 }
+*/
 
 bool mdtClUnit::addConnector(const QVariant & unitId, const QVariant & baseConnectorId, const QVariant & articleConnectorId, const QVariant & name)
 {

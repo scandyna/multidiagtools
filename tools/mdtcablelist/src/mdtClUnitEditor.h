@@ -144,6 +144,10 @@ class mdtClUnitEditor : public mdtClEditor
    */
   QVariant selectArticleConnector();
 
+  /*! \brief Select article connections related to given article connector ID
+   */
+  QList<QVariant> selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId);
+
   /*! \brief Setup tables
    */
   bool setupTables();

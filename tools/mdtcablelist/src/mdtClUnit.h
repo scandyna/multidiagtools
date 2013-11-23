@@ -48,6 +48,20 @@ class mdtClUnit : public mdtClBase
    */
   ~mdtClUnit();
 
+  /*! \brief Get SQL statement for article connector selection
+   *
+   * List all article connectors for given articleId wich are not
+   *  used by given unitId .
+   */
+  QString sqlForArticleConnectorSelection(const QVariant & articleId, const QVariant & unitId) const;
+
+  /*! \brief Get SQL statement for article connection selection
+   *
+   * List all article connections for a given article connector ID,
+   *  and that are not used by a given unit ID .
+   */
+  QString sqlForArticleConnectionLinkedToArticleConnectorSelection(const QVariant & articleConnectorId, const QVariant & unitId) const;
+
   /*! \brief Get SQL statement for article connection linked to a unit connector selection
    *
    * List all article connections that are related to given unit connector,
@@ -119,7 +133,7 @@ class mdtClUnit : public mdtClBase
 
   /*! \brief Get a model that contains a list of unsused article connectors related to given unit ID
    */
-  QSqlQueryModel *modelForArticleConnectorSelection(const QVariant & unitId, const QVariant &articleId);
+  ///QSqlQueryModel *modelForArticleConnectorSelection(const QVariant & unitId, const QVariant &articleId);
 
   /*! \brief Return the number unit connections that are related to article connections
    *
@@ -159,7 +173,7 @@ class mdtClUnit : public mdtClBase
 
   /*! \brief Get article connector name for a given article connector ID
    */
-  QVariant getArticleConnectorName(const QVariant & articleConnectorId);
+  ///QVariant getArticleConnectorName(const QVariant & articleConnectorId);
 
 
   /*! \brief Add a unit connector
@@ -275,7 +289,7 @@ class mdtClUnit : public mdtClBase
 
   QSqlQueryModel *pvToUnitConnectionRelatedRangesModel;
   QSqlQueryModel *pvUnitModel;
-  QSqlQueryModel *pvArticleConnectorModel;
+  ///QSqlQueryModel *pvArticleConnectorModel;
   QSqlQueryModel *pvUnitLinkModel;
 };
 

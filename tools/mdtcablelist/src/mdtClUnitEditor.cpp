@@ -375,9 +375,13 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
 {
   QVariant unitId;
   QVariant connectorName;
+  mdtClUnitConnectionData connectorData;
   QVariant articleConnectorId;
+  QList<QVariant> articleConnectionList;
+  QList<mdtClUnitConnectionData> connectionDataList;
   mdtClUnit unit(database());
   QInputDialog dialog;
+  int i;
 
   // Get unit ID
   unitId = currentUnitId();
@@ -389,8 +393,11 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
   if(articleConnectorId.isNull()){
     return;
   }
+  // Get article connector data
+  connectorData = unit.getArticleConnectorData(articleConnectorId);
   // Set connector name
-  connectorName = unit.getArticleConnectorName(articleConnectorId);
+  ///connectorName = unit.getArticleConnectorName(articleConnectorId);
+  connectorName = connectorData.articleConnectionData().connectorName();
   dialog.setLabelText(tr("Connector name:"));
   dialog.setTextValue(connectorName.toString());
   if(dialog.exec() != QDialog::Accepted){
@@ -400,8 +407,19 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
   if(connectorName.isNull()){
     return;
   }
+  connectorData.setConnectorName(connectorName);
+  // Select article connections to use
+  articleConnectionList = selectByArticleConnectorIdArticleConnectionIdList(articleConnectorId, unitId);
+  if(articleConnectionList.isEmpty()){
+    return;
+  }
+  // Get connections data
+  for(i = 0; i < articleConnectionList.size(); ++i){
+    connectionDataList.append(unit.getArticleConnectionData(articleConnectionList.at(i)));
+    connectionDataList[i].copyArticleConnectionAttributes();
+  }
   // Add connector
-  if(!unit.addConnector(unitId, QVariant(), articleConnectorId, connectorName)){
+  if(!unit.addConnector(unitId, QVariant(), articleConnectorId, connectorName, connectionDataList)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
@@ -901,14 +919,14 @@ QVariant mdtClUnitEditor::selectArticleConnectionLinkedToUnitConnector(const QVa
   return selectionDialog.selectionResult().at(0);
 }
 
-
 QVariant mdtClUnitEditor::selectArticleConnector()
 {
   Q_ASSERT(form() != 0);
 
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
-  QSqlQueryModel *model;
+  QSqlQueryModel model;
+  QString sql;
   mdtClUnit unit(database());
   QVariant unitId;
   QVariant articleId;
@@ -923,9 +941,9 @@ QVariant mdtClUnitEditor::selectArticleConnector()
     return QVariant();
   }
   // Setup model to show available connectors
-  model = unit.modelForArticleConnectorSelection(unitId, articleId);
-  Q_ASSERT(model != 0);
-  sqlError = model->lastError();
+  sql = unit.sqlForArticleConnectorSelection(articleId, unitId);
+  model.setQuery(sql, database());
+  sqlError = model.lastError();
   if(sqlError.isValid()){
     pvLastError = unit.lastError();
     displayLastError();
@@ -933,10 +951,8 @@ QVariant mdtClUnitEditor::selectArticleConnector()
   }
   // Setup and show dialog
   selectionDialog.setMessage("Please select a connector.");
-  selectionDialog.setModel(model, false);
-  ///selectionDialog.setColumnHidden("Id_PK", true);
-  ///selectionDialog.setHeaderData("SubType", tr("Variant"));
-  ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
+  selectionDialog.setModel(&model, false);
+  selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.addSelectionResultColumn("Id_PK");
   selectionDialog.resize(500, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
@@ -945,6 +961,54 @@ QVariant mdtClUnitEditor::selectArticleConnector()
   Q_ASSERT(selectionDialog.selectionResult().size() == 1);
 
   return selectionDialog.selectionResult().at(0);
+}
+
+QList<QVariant> mdtClUnitEditor::selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId)
+{
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlError sqlError;
+  QSqlQueryModel model;
+  mdtClUnit unit(database());
+  QString sql;
+  QModelIndexList selectedItems;
+  QList<QVariant> idList;
+  int i;
+
+  if((articleConnectorId.isNull())||(unitId.isNull())){
+    return idList;
+  }
+  // Setup model to show available article connections
+  sql = unit.sqlForArticleConnectionLinkedToArticleConnectorSelection(articleConnectorId, unitId);
+  model.setQuery(sql, database());
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError = unit.lastError();
+    displayLastError();
+    return idList;
+  }
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select article connections to use.");
+  selectionDialog.setModel(&model, true);
+  selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.setColumnHidden("Article_Id_FK", true);
+  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
+  selectionDialog.setHeaderData("ArticleContactName", tr("Contact"));
+  selectionDialog.setHeaderData("IoType", tr("I/O type"));
+  selectionDialog.setHeaderData("FunctionEN", tr("Function\n(English)"));
+  selectionDialog.setHeaderData("FunctionFR", tr("Function\n(French)"));
+  selectionDialog.setHeaderData("FunctionDE", tr("Function\n(German)"));
+  selectionDialog.setHeaderData("FunctionIT", tr("Function\n(Italian)"));
+  selectionDialog.addSelectionResultColumn("Id_PK");
+  selectionDialog.resize(700, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return idList;
+  }
+  selectedItems = selectionDialog.selectionResults();
+  for(i = 0; i < selectedItems.size(); ++i){
+    idList.append(selectedItems.at(i).data());
+  }
+
+  return idList;
 }
 
 bool mdtClUnitEditor::setupTables()
