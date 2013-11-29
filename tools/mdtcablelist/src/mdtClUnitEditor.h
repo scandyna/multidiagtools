@@ -80,13 +80,23 @@ class mdtClUnitEditor : public mdtClEditor
    */
   void addArticleConnectorBasedConnector();
 
-  /*! \brief Add a connection to unit connection table that is related to a article connection
+  /*! \brief Remove a connector
+   */
+  void removeConnector();
+
+  /*! \brief Add a connection
+   *
+   * Will let user choose to start from a (unit) connector or not
    */
   void addConnection();
 
+  /*! \brief Add a connection based on a article connection
+   */
+  void addArticleConnectionBasedConnection();
+
   /*! \brief Add a connection to unit connection table
    */
-  void addFreeConnection();
+  ///void addFreeConnection();
 
   /*! \brief Edit a connection
    */
@@ -130,7 +140,11 @@ class mdtClUnitEditor : public mdtClEditor
 
   /*! \brief Let user select connections related to a connector from Connector_tbl
    */
-  QList<QVariant> selectBaseConnectorContactIdList(const QVariant & connectorId);
+  QList<QVariant> selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection = true);
+
+  /*! \brief Let user select a connection related to a connector from Connector_tbl
+   */
+  QVariant selectBaseConnectorContactId(const QVariant & connectorId);
 
   /*! \brief Select a connector assigned to current unit
    */
@@ -146,7 +160,19 @@ class mdtClUnitEditor : public mdtClEditor
 
   /*! \brief Select article connections related to given article connector ID
    */
-  QList<QVariant> selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId);
+  QList<QVariant> selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection = true);
+
+  /*! \brief Select a article connection related to given article connector ID
+   */
+  QVariant selectByArticleConnectorIdArticleConnectionId(const QVariant & articleConnectorId, const QVariant & unitId);
+
+  /*! \brief Select article connections related to given article ID
+   */
+  QList<QVariant> selectByArticleIdArticleConnectionIdList(const QVariant & articleId, const QVariant & unitId, bool multiSelection = true);
+
+  /*! \brief Select a article connection related to given article ID
+   */
+  QVariant selectByArticleIdArticleConnectionId(const QVariant & articleId, const QVariant & unitId);
 
   /*! \brief Setup tables
    */

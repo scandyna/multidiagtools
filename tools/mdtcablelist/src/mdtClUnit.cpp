@@ -31,7 +31,6 @@ mdtClUnit::mdtClUnit(QSqlDatabase db)
 {
   pvToUnitConnectionRelatedRangesModel = new QSqlQueryModel;
   pvUnitModel = new QSqlQueryModel;
-  ///pvArticleConnectorModel = 0;
   pvUnitLinkModel = 0;
 }
 
@@ -39,7 +38,6 @@ mdtClUnit::~mdtClUnit()
 {
   delete pvToUnitConnectionRelatedRangesModel;
   delete pvUnitModel;
-  ///delete pvArticleConnectorModel;
   delete pvUnitLinkModel;
 }
 
@@ -66,6 +64,21 @@ QString mdtClUnit::sqlForArticleConnectionLinkedToArticleConnectorSelection(cons
 
   sql = "SELECT * FROM ArticleConnection_tbl ";
   sql += "WHERE ArticleConnector_Id_FK = " + articleConnectorId.toString();
+  sql += " AND Id_PK NOT IN ("\
+         "  SELECT ArticleConnection_Id_FK"\
+         "  FROM UnitConnection_tbl"\
+         "  WHERE Unit_Id_FK = " + unitId.toString();
+  sql += "  AND ArticleConnection_Id_FK IS NOT NULL)";
+
+  return sql;
+}
+
+QString mdtClUnit::sqlForArticleConnectionLinkedToArticleSelection(const QVariant & articleId, const QVariant & unitId) const
+{
+  QString sql;
+
+  sql = "SELECT * FROM ArticleConnection_tbl ";
+  sql += "WHERE Article_Id_FK = " + articleId.toString();
   sql += " AND Id_PK NOT IN ("\
          "  SELECT ArticleConnection_Id_FK"\
          "  FROM UnitConnection_tbl"\
@@ -106,9 +119,9 @@ QString mdtClUnit::sqlForArticleConnectionLinkedToUnitConnectorSelection(const Q
   return sql;
 }
 
-mdtClUnitConnectionData mdtClUnit::getBaseConnectorContactData(const QVariant & contactId)
+mdtClUnitConnectionData mdtClUnit::getBaseConnectorContactData(const QVariant & contactId, mdtClUnitConnectionData data)
 {
-  mdtClUnitConnectionData data;
+  ///mdtClUnitConnectionData data;
   QString sql;
   QSqlError sqlError;
   QSqlRecord rec;
@@ -280,6 +293,47 @@ mdtClUnitConnectionData mdtClUnit::getArticleConnectorData(const QVariant & arti
   return data;
 }
 
+mdtClUnitConnectionData mdtClUnit::getUnitConnectorDataByArticleConnectorId(const QVariant & articleConnectorId, const QVariant & unitId, mdtClUnitConnectionData data)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+  QVariant unitConnectorId;
+
+  if(articleConnectorId.isNull()){
+    pvLastError.setError("Trying to get unit connector data for a NULL article connector ID", mdtError::Warning);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
+    pvLastError.commit();
+    return data;
+  }
+  if(unitId.isNull()){
+    pvLastError.setError("Trying to get unit connector data for a NULL unit ID", mdtError::Warning);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
+    pvLastError.commit();
+    return data;
+  }
+  // Find the unit connactor ID
+  sql = "SELECT Id_PK FROM UnitConnector_tbl ";
+  sql += " WHERE ArticleConnector_Id_FK = " + articleConnectorId.toString();
+  sql += " AND Unit_Id_FK = " + unitId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to get unit connector ID from article connector ID", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
+    pvLastError.commit();
+    return data;
+  }
+  if(query.next()){
+    unitConnectorId = query.value(0);
+    if(!unitConnectorId.isNull()){
+      data = getUnitConnectorData(unitConnectorId, data);
+    }
+  }
+
+  return data;
+}
+
 QSqlQueryModel *mdtClUnit::unitModelForComponentSelection(const QVariant &unitId)
 {
   QString sql;
@@ -379,37 +433,6 @@ bool mdtClUnit::removeComponents(const QModelIndexList & indexListOfSelectedRows
 
   return removeComponents(idList);
 }
-
-/**
-QSqlQueryModel *mdtClUnit::modelForArticleConnectorSelection(const QVariant & unitId, const QVariant &articleId)
-{
-  QString sql;
-  QSqlError sqlError;
-
-  if(pvArticleConnectorModel == 0){
-    pvArticleConnectorModel = new QSqlQueryModel;
-  }
-  sql = "SELECT DISTINCT "\
-        " Id_PK, Name "\
-        "FROM ArticleConnector_tbl "\
-        "WHERE Article_Id_FK = " + articleId.toString();
-  sql += " AND Id_PK NOT IN ( "\
-         " SELECT ArticleConnector_Id_FK "\
-         " FROM UnitConnector_tbl "\
-         " WHERE ( Unit_Id_FK = " + unitId.toString() + " ) "\
-         " AND ( ArticleConnector_Id_FK IS NOT NULL ) )";
-  pvArticleConnectorModel->setQuery(sql, database());
-  sqlError = pvArticleConnectorModel->lastError();
-  if(sqlError.isValid()){
-    pvLastError.setError("Cannot execute query for article connector selection", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
-    pvLastError.commit();
-  }
-
-  return pvArticleConnectorModel;
-}
-*/
 
 int mdtClUnit::toUnitRelatedArticleConnectionCount(const QVariant & unitId)
 {
@@ -545,30 +568,6 @@ QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QMode
   return toUnitRelatedLinksListStr(unitId, idList);
 }
 
-/**
-QVariant mdtClUnit::getArticleConnectorName(const QVariant & articleConnectorId)
-{
-  QString sql;
-  QSqlError sqlError;
-  QSqlQuery query(database());
-
-  sql = "SELECT Name FROM ArticleConnector_tbl WHERE Id_PK = " + articleConnectorId.toString();
-  if(!query.exec(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query to get article connector name", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
-    pvLastError.commit();
-    return QVariant();
-  }
-  if(!query.next()){
-    return QVariant();
-  }
-
-  return query.value(0);
-}
-*/
-
 bool mdtClUnit::addConnector(const QVariant & unitId, const QVariant & baseConnectorId, const QVariant & articleConnectorId, const QVariant & name)
 {
   QString sql;
@@ -657,31 +656,17 @@ bool mdtClUnit::addConnector(const QVariant & unitId, const QVariant & baseConne
   return true;
 }
 
-/**
-bool mdtClUnit::addArticleConnector(const QVariant & unitId, const QVariant & articleConnectorId, const QVariant & name)
+bool mdtClUnit::removeConnector(const QVariant & unitConnectorId)
 {
-  QString sql;
   QSqlError sqlError;
+  QString sql;
   QSqlQuery query(database());
 
-  // Prepare query for insertion
-  sql = "INSERT INTO UnitConnector_tbl (Unit_Id_FK, ArticleConnector_Id_FK, Name) "\
-        "VALUES (:Unit_Id_FK, :ArticleConnector_Id_FK, :Name)";
-  if(!query.prepare(sql)){
+  sql = "DELETE FROM UnitConnector_tbl WHERE Id_PK = " + unitConnectorId.toString();
+  // Submit query
+  if(!query.exec(sql)){
     sqlError = query.lastError();
-    pvLastError.setError("Cannot prepare query for article connector inertion", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
-    pvLastError.commit();
-    return false;
-  }
-  // Add values and execute query
-  query.bindValue(":Unit_Id_FK", unitId);
-  query.bindValue(":ArticleConnector_Id_FK", articleConnectorId);
-  query.bindValue(":Name", name);
-  if(!query.exec()){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query for article connector inertion", mdtError::Error);
+    pvLastError.setError("Cannot execute query for unit connector deletion", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
     pvLastError.commit();
@@ -690,7 +675,6 @@ bool mdtClUnit::addArticleConnector(const QVariant & unitId, const QVariant & ar
 
   return true;
 }
-*/
 
 bool mdtClUnit::addUnitConnection(const mdtClUnitConnectionData & data)
 {
@@ -746,14 +730,17 @@ bool mdtClUnit::editUnitConnection(const mdtClUnitConnectionData & data)
   // Prepare query for insertion
   sql = "UPDATE UnitConnection_tbl "\
         " SET Unit_Id_FK = :Unit_Id_FK , "\
+        "  UnitConnector_Id_FK = :UnitConnector_Id_FK , "\
         "  ArticleConnection_Id_FK = :ArticleConnection_Id_FK , "\
         "  IsATestPoint = :IsATestPoint , "\
         "  SchemaPage = :SchemaPage , "\
-        "  FunctionEN = :FunctionEN , "\
         "  SignalName = :SignalName , "\
         "  SwAddress = :SwAddress , "\
-        "  UnitConnectorName = :UnitConnectorName , "\
-        "  UnitContactName = :UnitContactName "\
+        "  UnitContactName = :UnitContactName , "\
+        "  FunctionEN = :FunctionEN , "\
+        "  FunctionFR = :FunctionFR , "\
+        "  FunctionDE = :FunctionDE , "\
+        "  FunctionIT = :FunctionIT "\
         "WHERE Id_PK = " + data.connectionId().toString();
   if(!query.prepare(sql)){
     sqlError = query.lastError();
@@ -768,11 +755,14 @@ bool mdtClUnit::editUnitConnection(const mdtClUnitConnectionData & data)
   query.bindValue(":ArticleConnection_Id_FK", data.articleConnectionData().connectionId());
   query.bindValue(":IsATestPoint", QVariant());   /// \todo Implement
   query.bindValue(":SchemaPage", data.schemaPage());
-  query.bindValue(":FunctionEN", data.functionEN());
   query.bindValue(":SignalName", data.signalName());
   query.bindValue(":SwAddress", data.swAddress());
-  query.bindValue(":UnitConnectorName", data.connectorName());
+  query.bindValue(":UnitConnector_Id_FK", data.unitConnectorId());
   query.bindValue(":UnitContactName", data.contactName());
+  query.bindValue(":FunctionEN", data.functionEN());
+  query.bindValue(":FunctionFR", data.functionFR());
+  query.bindValue(":FunctionDE", data.functionDE());
+  query.bindValue(":FunctionIT", data.functionIT());
   if(!query.exec()){
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query for connection update", mdtError::Error);

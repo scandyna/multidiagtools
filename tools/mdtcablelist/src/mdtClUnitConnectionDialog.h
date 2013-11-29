@@ -81,6 +81,10 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
    */
   void copyFunctionIT();
 
+  /*! \brief Select unit connector
+   */
+  void selectUnitConnector();
+
   /*! \brief Copy article connector name to unit connector name
    */
   void copyConnectorName();

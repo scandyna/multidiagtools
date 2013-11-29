@@ -36,6 +36,8 @@ class QDataWidgetMapper;
 class mdtClLinkEditor;
 
 /*! \brief Cable list's link editor
+ * 
+ * \todo Should be obselete !
  */
 class mdtClLinkEditor : public QObject
 {
