@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_FORM_H
 #define MDT_SQL_FORM_H
 
+#include "mdtError.h"
 #include <QObject>
 #include <QString>
 #include <QSqlDatabase>
@@ -138,7 +139,11 @@ class mdtSqlForm : public QObject
    *
    * \return A valid QSqlError if table was found and a error occured.
    */
-  QSqlError lastError(const QString &tableName);
+  QSqlError lastSqlError(const QString &tableName);
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const;
 
   /*! \brief Get the row count for given table name
    *
@@ -209,6 +214,7 @@ class mdtSqlForm : public QObject
 
   QHash<QString, mdtSqlRelation*> pvRelationsByChildTableName;
   mdtSqlFormWidget *pvMainSqlWidget;
+  mdtError pvLastError;
 };
 
 #endif  // #ifndef MDT_SQL_FORM_H

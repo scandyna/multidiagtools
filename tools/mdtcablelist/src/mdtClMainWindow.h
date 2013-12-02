@@ -85,6 +85,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editArticle();
 
+  /*! \brief Create a test connection cable
+   */
+  void createTestConnectionCable();
+
  private:
 
   Q_DISABLE_COPY(mdtClMainWindow);

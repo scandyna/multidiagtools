@@ -27,6 +27,7 @@ set (TEST_HEADER_FILES
           ../src/mdtClArticleLinkDialog.h
           ../src/mdtClPathGraphDialog.h
           ../src/mdtClMainWindow.h
+          ../src/mdtCcTestConnectionCableEditor.h
    )
 
 # Source files
@@ -59,6 +60,8 @@ set (TEST_SOURCES_FILES
           ../src/mdtClPathGraphDialog.cpp
           ../src/mdtClDatabaseSchema.cpp
           ../src/mdtClMainWindow.cpp
+          ../src/mdtCcTestConnectionCable.cpp
+          ../src/mdtCcTestConnectionCableEditor.cpp
     )
 
 # Qt ui files

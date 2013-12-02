@@ -24,6 +24,7 @@
 #include "mdtError.h"
 #include <QObject>
 #include <QSqlDatabase>
+#include <QString>
 
 class mdtSqlWindow;
 class mdtSqlFormWindow;
@@ -87,6 +88,10 @@ class mdtClEditor : public QObject
    * \pre Setup must be done as dialog (see setupAsDialog() ) .
    */
   int exec();
+
+  /*! \brief Select given tableName
+   */
+  bool select(const QString & tableName);
 
   /*! \brief Get last error
    */

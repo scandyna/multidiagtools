@@ -1,6 +1,6 @@
 format 76
 "mdttools" // mdttools
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -27,6 +27,8 @@ format 76
   show_infonote default drawing_language default show_stereotype_properties default
   
   package_ref 188034 // CableList
+
+  package_ref 227586 // CableChecker
 
   classview 267138 "mdtPortTerm"
     //class diagram settings

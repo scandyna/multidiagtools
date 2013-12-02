@@ -86,8 +86,21 @@
     <addaction name="separator"/>
     <addaction name="actEditUnit"/>
    </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Test</string>
+    </property>
+    <widget class="QMenu" name="menuConnection_Cable">
+     <property name="title">
+      <string>Connection Cable</string>
+     </property>
+     <addaction name="actCreateTestConnectionCable"/>
+    </widget>
+    <addaction name="menuConnection_Cable"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edition"/>
+   <addaction name="menuTest"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -145,6 +158,11 @@
   <action name="actEditConnector">
    <property name="text">
     <string>Edit &amp;connectors</string>
+   </property>
+  </action>
+  <action name="actCreateTestConnectionCable">
+   <property name="text">
+    <string>Create</string>
    </property>
   </action>
  </widget>

@@ -50,6 +50,8 @@
 
 #include <QDebug>
 
+/// \todo Replace form()->select() by select() , witch is defined in mdtClEditor, and is type bool .
+
 mdtClUnitEditor::mdtClUnitEditor(QObject *parent, QSqlDatabase db)
  : mdtClEditor(parent, db)
 {
@@ -887,7 +889,8 @@ QList<QVariant> mdtClUnitEditor::selectBaseConnectorContactIdList(const QVariant
     return idList;
   }
   // Setup model to show available connectors
-  sql = "SELECT * FROM ConnectorContact_tbl";
+  sql = "SELECT * FROM ConnectorContact_tbl ";
+  sql += " WHERE Connector_Id_FK = " + connectorId.toString();
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){

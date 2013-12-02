@@ -1,19 +1,25 @@
-window_sizes 1024 718 207 811 640 0
+window_sizes 1280 1001 329 945 923 0
 diagrams
   classdiagram_ref 907778 // mdtClArticleConnectionDialog
     739 738 100 4 0 0
-  active  classdiagram_ref 739586 // Logical
+  classdiagram_ref 739586 // Logical
     811 640 80 17 0 297
+  classdiagram_ref 914306 // Conceptual
+    631 738 100 4 0 0
+  active  classdiagram_ref 914434 // mdtCcTestConnectionCable
+    945 923 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 739330 // Conceptual
+selected class_ref 894850 // mdtClPathGraph
 open
-  classview_ref 483842 // Conceptual
-  attribute_ref 1007106 // UnitConnector_Id_FK
-  attribute_ref 786818 // ArticleConnection_Id_FK
-  attribute_ref 1006978 // Name
-  classrelation_ref 1198466 // pvDatabase (<unidirectional association>)
-  operation_ref 1718146 // setUnitId
-  operation_ref 1747714 // accept
+  classview_ref 549506 // mdtClEditor
+  classview_ref 490498 // Unit
+  classview_ref 503554 // Link
+  deploymentview_ref 448386 // mdtClConnectionData
+  classview_ref 556546 // mdtClPathGraph
+  class_ref 979202 // TestConnectionCable
+  class_ref 979330 // mdtCcTestConnectionCable
+  attribute_ref 1020546 // pvDatabase
+  deploymentview_ref 376450 // mdtCableList
 end
 end

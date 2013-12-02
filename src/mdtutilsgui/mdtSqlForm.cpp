@@ -23,7 +23,6 @@
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
-#include "mdtError.h"
 #include <QSqlTableModel>
 #include <QSqlError>
 #include <QList>
@@ -58,10 +57,11 @@ bool mdtSqlForm::setTable(const QString &tableName, const QString &userFriendlyT
   model->setTable(tableName);
   if(!model->select()){
     QSqlError sqlError = model->lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table '" + tableName + "'", mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    pvLastError.setError(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
+    ///mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table '" + tableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return false;
   }
   // Setup main widget
@@ -82,9 +82,10 @@ bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFrie
 
   // Check that main table was set
   if(pvMainSqlWidget->model() == 0){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot add child table '" + tableName + "' because no main table was set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    pvLastError.setError(tr("Cannot add child table '") + tableName + tr("' because no main table was set"), mdtError::Error);
+    ///mdtError e(MDT_DATABASE_ERROR, "Cannot add child table '" + tableName + "' because no main table was set", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return false;
   }
   Q_ASSERT(pvMainSqlWidget->model() != 0);
@@ -93,10 +94,11 @@ bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFrie
   model->setTable(tableName);
   if(!model->select()){
     QSqlError sqlError = model->lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table '" + tableName + "'", mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    pvLastError.setError(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
+    ///mdtError e(MDT_DATABASE_ERROR, "Unable to select data in table '" + tableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     delete model;
     return false;
   }
@@ -125,9 +127,10 @@ bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &chil
   // Find relation that contains child table
   relation = pvRelationsByChildTableName.value(childTableName, 0);
   if(relation == 0){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot find relation that contains child table '" + childTableName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    ///mdtError e(MDT_DATABASE_ERROR, "Cannot find relation that contains child table '" + childTableName + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot find relation that contains child table '") + childTableName + tr("'"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return false;
   }
   // Add relation
@@ -199,28 +202,35 @@ bool mdtSqlForm::select(const QString &tableName)
 
   m = model(tableName);
   if(m == 0){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    pvLastError.setError(tr("Cannot find model that acts on table '") + tableName + tr("'"), mdtError::Error);
+    ///mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return false;
   }
 
   return m->select();
 }
 
-QSqlError mdtSqlForm::lastError(const QString &tableName)
+QSqlError mdtSqlForm::lastSqlError(const QString &tableName)
 {
   QSqlTableModel *m;
 
   m = model(tableName);
   if(m == 0){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    ///mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot find model that acts on table '") + tableName + tr("'"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return QSqlError();
   }
 
   return m->lastError();
+}
+
+mdtError mdtSqlForm::lastError() const
+{
+  return pvLastError;
 }
 
 int mdtSqlForm::rowCount(const QString &tableName)
@@ -229,9 +239,10 @@ int mdtSqlForm::rowCount(const QString &tableName)
 
   m = model(tableName);
   if(m == 0){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    ///mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot find model that acts on table '") + tableName + tr("'"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return -1;
   }
 
@@ -245,9 +256,10 @@ int mdtSqlForm::currentRow(const QString &tableName)
   // Find SQL widget
   w = sqlWidget(tableName);
   if(w == 0){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    ///mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot find SQL widget acting on table '") + tableName + tr("'"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return -1;
   }
 
@@ -261,9 +273,10 @@ bool mdtSqlForm::setCurrentData(const QString &tableName, const QString &fieldNa
   // Find SQL widget
   w = sqlWidget(tableName);
   if(w == 0){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    ///mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot find SQL widget acting on table '") + tableName + tr("'"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return false;
   }
 
@@ -277,9 +290,10 @@ QVariant mdtSqlForm::currentData(const QString &tableName, const QString &fieldN
   // Find SQL widget
   w = sqlWidget(tableName);
   if(w == 0){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    ///mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot find SQL widget acting on table '") + tableName + tr("'"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return QVariant();
   }
 
@@ -293,9 +307,10 @@ QVariant mdtSqlForm::data(const QString &tableName, int row, const QString &fiel
   // Find SQL widget
   w = sqlWidget(tableName);
   if(w == 0){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlForm");
-    e.commit();
+    ///mdtError e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot find SQL widget acting on table '") + tableName + tr("'"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
     return QVariant();
   }
 

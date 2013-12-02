@@ -25,6 +25,7 @@
 #include "mdtClConnectorEditor.h"
 #include "mdtClUnitEditor.h"
 #include "mdtClArticleEditor.h"
+#include "mdtCcTestConnectionCableEditor.h"
 #include <QAction>
 #include <QMessageBox>
 #include <QApplication>
@@ -163,6 +164,13 @@ void mdtClMainWindow::editArticle()
   pvArticleEditor->show();
 }
 
+void mdtClMainWindow::createTestConnectionCable()
+{
+  mdtCcTestConnectionCableEditor editor(this, pvDatabaseManager->database());
+
+  editor.createCable();
+}
+
 void mdtClMainWindow::createActions()
 {
   // Open database
@@ -185,6 +193,9 @@ void mdtClMainWindow::createActions()
   // Unit edition
   connect(actEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
   connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
+
+  // Test connection cable
+  connect(actCreateTestConnectionCable, SIGNAL(triggered()), this, SLOT(createTestConnectionCable()));
 }
 
 bool mdtClMainWindow::initWorkDirectory()

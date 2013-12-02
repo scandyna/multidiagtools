@@ -85,6 +85,22 @@ int mdtClEditor::exec()
   return pvFormDialog->exec();
 }
 
+bool mdtClEditor::select(const QString & tableName)
+{
+  if(pvForm == 0){
+    pvLastError.setError(tr("Cannot call select because form was not set."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClEditor");
+    pvLastError.commit();
+    return false;
+  }
+  if(!pvForm->select(tableName)){
+    pvLastError = pvForm->lastError();
+    return false;
+  }
+
+  return true;
+}
+
 mdtError mdtClEditor::lastError() const
 {
   return pvLastError;
