@@ -21,6 +21,7 @@
 #ifndef MDT_CL_PATH_GRAPH_H
 #define MDT_CL_PATH_GRAPH_H
 
+#include "mdtError.h"
 #include <QSqlDatabase>
 #include <QQueue>
 #include <QPair>
@@ -125,6 +126,10 @@ class mdtClPathGraph
    */
   const QStringList &lastErrorMessage() const;
 
+  /*! \brief Get last error
+   */
+  mdtError lastError() const;
+
  private:
 
   /*! \brief Create a new graphics connection item
@@ -145,6 +150,7 @@ class mdtClPathGraph
   mdtClPathGraphPrivate::graph_t pvGraph;
   QHash<int, mdtClPathGraphPrivate::vertex_t> pvGraphVertices;
   QStringList pvLastErrorMessage;
+  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_CL_PATH_GRAPH_H

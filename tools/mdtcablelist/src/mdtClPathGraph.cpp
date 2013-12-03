@@ -21,7 +21,6 @@
 #include "mdtClPathGraph.h"
 #include "mdtClPathGraphicsConnection.h"
 #include "mdtClPathGraphicsLink.h"
-#include "mdtError.h"
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -249,6 +248,11 @@ const QStringList &mdtClPathGraph::lastErrorMessage() const
 {
   Q_ASSERT(pvLastErrorMessage.size() == 3);
   return pvLastErrorMessage;
+}
+
+mdtError mdtClPathGraph::lastError() const
+{
+  return pvLastError;
 }
 
 mdtClPathGraphicsConnection *mdtClPathGraph::newConnectionItem(int id, mdtClPathGraphicsConnection *itemForNextPos, bool reverse)

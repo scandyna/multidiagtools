@@ -31,6 +31,10 @@ class mdtCcTestConnectionCable : public mdtClBase
 {
  public:
 
+  /*! \brief Constructor
+   */
+  mdtCcTestConnectionCable(QSqlDatabase db);
+
   /*! \brief Get SQL statement for start unit connector selection
    *
    * \param dutUnitId ID of unit that will become the DUT (Device Under Test)

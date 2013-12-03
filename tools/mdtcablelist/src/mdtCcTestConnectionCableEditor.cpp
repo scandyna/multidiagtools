@@ -35,7 +35,25 @@ mdtCcTestConnectionCableEditor::mdtCcTestConnectionCableEditor(QObject *parent, 
 
 void mdtCcTestConnectionCableEditor::createCable()
 {
-  qDebug() << "Selected DUT: " << selectDutUnitId();
+  QVariant dutUnitId;
+  QVariant testNodeId;
+  QVariant dutStartConnectorId;
+
+  // Let user choose DUT unit and test node
+  dutUnitId = selectDutUnitId();
+  if(dutUnitId.isNull()){
+    return;
+  }
+  testNodeId = selectTestNode();
+  if(testNodeId.isNull()){
+    return;
+  }
+  // Select a start connector
+  dutStartConnectorId = selectStartConnectorId(dutUnitId);
+  if(dutStartConnectorId.isNull()){
+    return;
+  }
+  qDebug() << "Selected DUT: " << dutUnitId << " , Test node: " << testNodeId;
 }
 
 QVariant mdtCcTestConnectionCableEditor::selectDutUnitId()
@@ -46,7 +64,7 @@ QVariant mdtCcTestConnectionCableEditor::selectDutUnitId()
   QString sql;
 
   // Setup model to show available connectors
-  sql = "SELECT * FROM Unit_tbl ";
+  sql = "SELECT * FROM VehicleType_Unit_view ";
   model.setQuery(sql, pvDatabase);
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -60,12 +78,47 @@ QVariant mdtCcTestConnectionCableEditor::selectDutUnitId()
   // Setup and show dialog
   selectionDialog.setMessage("Please select unit to test.");
   selectionDialog.setModel(&model, false);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  ///selectionDialog.setColumnHidden("Connector_Id_FK", true);
+  selectionDialog.setColumnHidden("Unit_Id_FK", true);
+  selectionDialog.setColumnHidden("VehicleType_Id_FK", true);
   ///selectionDialog.setHeaderData("SubType", tr("Variant"));
   ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
+  selectionDialog.addSelectionResultColumn("Unit_Id_FK");
+  selectionDialog.resize(750, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
+}
+
+QVariant mdtCcTestConnectionCableEditor::selectTestNode()
+{
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlError sqlError;
+  QSqlQueryModel model;
+  QString sql;
+
+  // Setup model to show available connectors
+  sql = "SELECT * FROM VehicleType_tbl ";
+  model.setQuery(sql, pvDatabase);
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get test node list."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCableEditor");
+    pvLastError.commit();
+    ///displayLastError();
+    return QVariant();
+  }
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select test node to use.");
+  selectionDialog.setModel(&model, false);
+  selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.setHeaderData("SubType", tr("Variant"));
+  selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
   selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(500, 300);
+  selectionDialog.resize(600, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return QVariant();
   }
@@ -76,6 +129,39 @@ QVariant mdtCcTestConnectionCableEditor::selectDutUnitId()
 
 QVariant mdtCcTestConnectionCableEditor::selectStartConnectorId(const QVariant & dutUnitId) 
 {
+  mdtCcTestConnectionCable tcc(pvDatabase);
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlError sqlError;
+  QSqlQueryModel model;
+  QString sql;
+
+  // Setup model to show available connectors
+  sql = tcc.sqlForStartConnectorSelection(dutUnitId);
+  model.setQuery(sql, pvDatabase);
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get unit connector list."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCableEditor");
+    pvLastError.commit();
+    ///displayLastError();
+    return QVariant();
+  }
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select a connector to test.");
+  selectionDialog.setModel(&model, false);
+  selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.setColumnHidden("Unit_Id_FK", true);
+  selectionDialog.setColumnHidden("Connector_Id_FK", true);
+  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
+  selectionDialog.addSelectionResultColumn("Id_PK");
+  selectionDialog.resize(500, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
 }
 
 QList<QVariant> mdtCcTestConnectionCableEditor::selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList) 

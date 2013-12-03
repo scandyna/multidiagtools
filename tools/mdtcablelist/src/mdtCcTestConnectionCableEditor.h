@@ -52,6 +52,10 @@ class mdtCcTestConnectionCableEditor : public QObject
    */
   QVariant selectDutUnitId();
 
+  /*! \brief Select test node to use
+   */
+  QVariant selectTestNode();
+
   /*! \brief Select start connector
    */
   QVariant selectStartConnectorId(const QVariant & dutUnitId);

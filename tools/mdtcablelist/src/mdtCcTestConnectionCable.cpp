@@ -20,7 +20,18 @@
  ****************************************************************************/
 #include "mdtCcTestConnectionCable.h"
 
+mdtCcTestConnectionCable::mdtCcTestConnectionCable(QSqlDatabase db)
+ : mdtClBase(db)
+{
+}
+
 QString mdtCcTestConnectionCable::sqlForStartConnectorSelection(const QVariant & dutUnitId) const
 {
+  QString sql;
+
+  sql = "SELECT * FROM UnitConnector_tbl ";
+  sql += " WHERE Unit_Id_FK = " + dutUnitId.toString();
+
+  return sql;
 }
 

@@ -1,13 +1,9 @@
-window_sizes 1280 1001 329 945 923 0
+window_sizes 1024 718 329 689 640 0
 diagrams
   classdiagram_ref 907778 // mdtClArticleConnectionDialog
     739 738 100 4 0 0
-  classdiagram_ref 739586 // Logical
-    811 640 80 17 0 297
-  classdiagram_ref 914306 // Conceptual
-    631 738 100 4 0 0
-  active  classdiagram_ref 914434 // mdtCcTestConnectionCable
-    945 923 100 4 0 0
+  active  classdiagram_ref 739586 // Logical
+    689 640 80 17 0 143
 end
 show_stereotypes
 selected class_ref 894850 // mdtClPathGraph
