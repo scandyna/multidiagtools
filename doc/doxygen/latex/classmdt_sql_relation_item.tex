@@ -78,7 +78,11 @@ QVariant \hyperlink{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b
 void \hyperlink{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{setCopyParentToChildOnInsertion} (bool enable)
 \begin{DoxyCompactList}\small\item\em Set copyParentToChildOnInsertion flag. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}{copyParentToChildOnInsertion} () const 
-\begin{DoxyCompactList}\small\item\em Set copyParentToChildOnInsertion flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set copyParentToChildOnInsertion flag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}{setRelationOperatorWithPreviousItem} (const QString \&operatorWithPreviousItem)
+\begin{DoxyCompactList}\small\item\em Set relation operator with previous item. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_sql_relation_item_aad30a0f5b83e6efb0c43d87648369c11}{relationOperatorWithPreviousItem} () const 
+\begin{DoxyCompactList}\small\item\em Get relation operator with previous item. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -107,7 +111,7 @@ Set copyParentToChildOnInsertion flag.
 \end{DoxySeeAlso}
 
 
-Definition at line 116 of file mdtSqlRelationItem.cpp.
+Definition at line 117 of file mdtSqlRelationItem.cpp.
 
 \hypertarget{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}{
 \index{mdtSqlRelationItem@{mdtSqlRelationItem}!dataProtection@{dataProtection}}
@@ -128,7 +132,7 @@ Typical data protections are:
 \item nothing for numeric type 
 \end{DoxyItemize}
 
-Definition at line 96 of file mdtSqlRelationItem.cpp.
+Definition at line 97 of file mdtSqlRelationItem.cpp.
 
 \hypertarget{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}{
 \index{mdtSqlRelationItem@{mdtSqlRelationItem}!nameProtection@{nameProtection}}
@@ -145,7 +149,27 @@ Get table/field protection.
 
 Typical name protection is ` 
 
-Definition at line 91 of file mdtSqlRelationItem.cpp.
+Definition at line 92 of file mdtSqlRelationItem.cpp.
+
+\hypertarget{classmdt_sql_relation_item_aad30a0f5b83e6efb0c43d87648369c11}{
+\index{mdtSqlRelationItem@{mdtSqlRelationItem}!relationOperatorWithPreviousItem@{relationOperatorWithPreviousItem}}
+\index{relationOperatorWithPreviousItem@{relationOperatorWithPreviousItem}!mdtSqlRelationItem@{mdtSqlRelationItem}}
+\subsubsection[{relationOperatorWithPreviousItem}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtSqlRelationItem::relationOperatorWithPreviousItem (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_sql_relation_item_aad30a0f5b83e6efb0c43d87648369c11}
+
+
+Get relation operator with previous item. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}{setRelationOperatorWithPreviousItem()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 127 of file mdtSqlRelationItem.cpp.
 
 \hypertarget{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{
 \index{mdtSqlRelationItem@{mdtSqlRelationItem}!setCopyParentToChildOnInsertion@{setCopyParentToChildOnInsertion}}
@@ -164,7 +188,24 @@ Usually, a parent/child relation is based on a primary key in parent table and f
 
 By default, this flag is false. 
 
-Definition at line 111 of file mdtSqlRelationItem.cpp.
+Definition at line 112 of file mdtSqlRelationItem.cpp.
+
+\hypertarget{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}{
+\index{mdtSqlRelationItem@{mdtSqlRelationItem}!setRelationOperatorWithPreviousItem@{setRelationOperatorWithPreviousItem}}
+\index{setRelationOperatorWithPreviousItem@{setRelationOperatorWithPreviousItem}!mdtSqlRelationItem@{mdtSqlRelationItem}}
+\subsubsection[{setRelationOperatorWithPreviousItem}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelationItem::setRelationOperatorWithPreviousItem (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{operatorWithPreviousItem}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}
+
+
+Set relation operator with previous item. 
+
+For most of cases, the relation operator between items is AND, that is the default. For some cases, it can be usefull to have a OR operator between 2 relation items. On this case, specify this here. 
+
+Definition at line 122 of file mdtSqlRelationItem.cpp.
 
 \hypertarget{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}{
 \index{mdtSqlRelationItem@{mdtSqlRelationItem}!valueForNoDataFilter@{valueForNoDataFilter}}
@@ -185,7 +226,7 @@ Typical values are:
 \item -\/1 for numeric field 
 \end{DoxyItemize}
 
-Definition at line 106 of file mdtSqlRelationItem.cpp.
+Definition at line 107 of file mdtSqlRelationItem.cpp.
 
 
 

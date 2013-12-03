@@ -91,129 +91,141 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QMap&gt;</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QVariant&gt;</span>
 <a name="l00031"></a>00031 
-<a name="l00062"></a><a class="code" href="classmdt_device_ios.html">00062</a> <span class="keyword">class </span><a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> : <span class="keyword">public</span> QObject
-<a name="l00063"></a>00063 {
-<a name="l00064"></a>00064  Q_OBJECT
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066  <span class="keyword">public</span>:
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a>(QObject *parent = 0);
-<a name="l00069"></a>00069   ~<a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a>();
-<a name="l00070"></a>00070 
-<a name="l00078"></a>00078   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#af771f8080ce4a7260baa0acccacae0e1" title="Set the auto delete flag.">setAutoDeleteIos</a>(<span class="keywordtype">bool</span> autoDelete);
-<a name="l00079"></a>00079 
-<a name="l00084"></a>00084   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0" title="Delete all I/O objects.">deleteIos</a>();
+<a name="l00032"></a>00032 <span class="keyword">class </span><a class="code" href="classmdt_device_ios_segment.html" title="Store a segment of device I/O list.">mdtDeviceIosSegment</a>;
+<a name="l00033"></a>00033 
+<a name="l00082"></a><a class="code" href="classmdt_device_ios.html">00082</a> <span class="keyword">class </span><a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> : <span class="keyword">public</span> QObject
+<a name="l00083"></a>00083 {
+<a name="l00084"></a>00084  Q_OBJECT
 <a name="l00085"></a>00085 
-<a name="l00090"></a>00090   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a0e2683630eff9410003a36ae5af76b52" title="Add a analog input.">addAnalogInput</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *ai);
-<a name="l00091"></a>00091 
-<a name="l00097"></a>00097   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a70a3d979ec5d44297e8195e37596d5bc" title="Get analog input at given address.">analogInputAt</a>(<span class="keywordtype">int</span> address);
+<a name="l00086"></a>00086  <span class="keyword">public</span>:
+<a name="l00087"></a>00087 
+<a name="l00094"></a><a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd">00094</a>   <span class="keyword">enum</span> <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd" title="Adress access type.">addressAccess_t</a> {
+<a name="l00095"></a><a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dda69811abe027fb5c9c22cf99034ef626b">00095</a>                         <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dda69811abe027fb5c9c22cf99034ef626b">Read</a> ,  
+<a name="l00096"></a><a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dda29a5b11f060f7fce671b9ced4bb4ef7a">00096</a>                         <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dda29a5b11f060f7fce671b9ced4bb4ef7a">Write</a>   
+<a name="l00097"></a>00097                        };
 <a name="l00098"></a>00098 
-<a name="l00106"></a>00106   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#ae31753e23d7ab14073f852dca85c2f9e" title="Get analog input with a given short label.">analogInputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort);
-<a name="l00107"></a>00107 
-<a name="l00112"></a>00112   <span class="keyword">const</span> QList&lt;mdtAnalogIo*&gt; <a class="code" href="classmdt_device_ios.html#aab70f76d2107f0a9324a9b9d4db21532" title="Get a list containing all analog inputs.">analogInputs</a>() <span class="keyword">const</span>;
-<a name="l00113"></a>00113 
-<a name="l00116"></a>00116   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a42f0f52b4bf81c3ef2f89c6512fbbf89" title="Get address of the first analog input.">analogInputsFirstAddress</a>() <span class="keyword">const</span>;
-<a name="l00117"></a>00117 
-<a name="l00120"></a>00120   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a904069e2e641c92291226ea2524eadb3" title="Get the number of analog inputs.">analogInputsCount</a>() <span class="keyword">const</span>;
+<a name="l00101"></a>00101   <a class="code" href="classmdt_device_ios.html#a44939a10d66421069bdd4b8717e2798c" title="Constructor.">mdtDeviceIos</a>(QObject *parent = 0);
+<a name="l00102"></a>00102 
+<a name="l00105"></a>00105   <a class="code" href="classmdt_device_ios.html#a8e1e02aeecd2617a8696ba625192bd19" title="Destructor.">~mdtDeviceIos</a>();
+<a name="l00106"></a>00106 
+<a name="l00114"></a>00114   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#af771f8080ce4a7260baa0acccacae0e1" title="Set the auto delete flag.">setAutoDeleteIos</a>(<span class="keywordtype">bool</span> autoDelete);
+<a name="l00115"></a>00115 
+<a name="l00120"></a>00120   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0" title="Delete all I/O objects.">deleteIos</a>();
 <a name="l00121"></a>00121 
-<a name="l00124"></a>00124   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs.">setAnalogInputsValue</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> &amp;value);
-<a name="l00125"></a>00125 
-<a name="l00130"></a>00130   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#aeed1140ed869866a6edc738d3b2a6d0b" title="Add a analog output.">addAnalogOutput</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *ao);
-<a name="l00131"></a>00131 
-<a name="l00137"></a>00137   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a74385f332753cedb68ae4133c97384be" title="Get analog output at given address for read access.">analogOutputAtAddressRead</a>(<span class="keywordtype">int</span> address);
-<a name="l00138"></a>00138 
-<a name="l00144"></a>00144   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a968999a1021a96504805248e2ce04382" title="Get analog output at given address for write access.">analogOutputAtAddressWrite</a>(<span class="keywordtype">int</span> address);
-<a name="l00145"></a>00145 
-<a name="l00153"></a>00153   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#aab2b2b1f8c887eb9f439cf495ec95fbd" title="Get analog output with a given short label.">analogOutputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort);
-<a name="l00154"></a>00154 
-<a name="l00159"></a>00159   <span class="keyword">const</span> QList&lt;mdtAnalogIo*&gt; <a class="code" href="classmdt_device_ios.html#aa4ddc48f9e3258adc7222ef3481a518e" title="Get a list containing all analog outputs.">analogOutputs</a>() <span class="keyword">const</span>;
-<a name="l00160"></a>00160 
-<a name="l00163"></a>00163   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a48b6a6c583dec30ccb1b782e79d14dbb" title="Get address for read access of the first analog output.">analogOutputsFirstAddressRead</a>() <span class="keyword">const</span>;
-<a name="l00164"></a>00164 
-<a name="l00167"></a>00167   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a5be4b1e87f1392a9d69127371c049ea9" title="Get address for write access of the first analog output.">analogOutputsFirstAddressWrite</a>() <span class="keyword">const</span>;
-<a name="l00168"></a>00168 
-<a name="l00171"></a>00171   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a8b9b14c4968e5aaae60ac7f91f77e06c" title="Get the number of analog outputs.">analogOutputsCount</a>() <span class="keyword">const</span>;
-<a name="l00172"></a>00172 
-<a name="l00175"></a>00175   QList&lt;int&gt; <a class="code" href="classmdt_device_ios.html#afc343f9733f297ee6359455f15308341" title="Get all analog outputs values in device specific format sorted by address for write access...">analogOutputsValuesIntByAddressWrite</a>() <span class="keyword">const</span>;
-<a name="l00176"></a>00176 
-<a name="l00179"></a>00179   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs.">setAnalogOutputsValue</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> &amp;value);
-<a name="l00180"></a>00180 
-<a name="l00185"></a>00185   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a023571f5d77bd0874c08b53890a56381" title="Add a digital input.">addDigitalInput</a>(<a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *di);
-<a name="l00186"></a>00186 
-<a name="l00192"></a>00192   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#a78f68d0efeac0a23628f133121f28df8" title="Get digital input at given address.">digitalInputAt</a>(<span class="keywordtype">int</span> address);
-<a name="l00193"></a>00193 
-<a name="l00201"></a>00201   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#abcde6de5a0ca6d642af04c21250d6555" title="Get digital input with a given short label.">digitalInputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort);
+<a name="l00127"></a>00127   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a0e2683630eff9410003a36ae5af76b52" title="Add a analog input.">addAnalogInput</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *ai);
+<a name="l00128"></a>00128 
+<a name="l00133"></a>00133   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a776dc0508f88f8ea206801fc7472bfb2" title="Add a list of analog inputs.">addAnalogInputs</a>(<span class="keyword">const</span> QList&lt;mdtAnalogIo*&gt; &amp; aiList);
+<a name="l00134"></a>00134 
+<a name="l00140"></a>00140   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a70a3d979ec5d44297e8195e37596d5bc" title="Get analog input at given address.">analogInputAt</a>(<span class="keywordtype">int</span> address);
+<a name="l00141"></a>00141 
+<a name="l00149"></a>00149   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#ae31753e23d7ab14073f852dca85c2f9e" title="Get analog input with a given short label.">analogInputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort);
+<a name="l00150"></a>00150 
+<a name="l00156"></a>00156   <span class="keyword">const</span> QList&lt;mdtAnalogIo*&gt; <a class="code" href="classmdt_device_ios.html#aab70f76d2107f0a9324a9b9d4db21532" title="Get a list containing all analog inputs.">analogInputs</a>() <span class="keyword">const</span>;
+<a name="l00157"></a>00157 
+<a name="l00160"></a>00160   <span class="keyword">const</span> QList&lt;mdtDeviceIosSegment*&gt; &amp;<a class="code" href="classmdt_device_ios.html#a71a1b9cdbc524e4d0094ab37575defc1" title="Get a list of all analog inputs segments.">analogInputsSegments</a>() <span class="keyword">const</span>;
+<a name="l00161"></a>00161 
+<a name="l00164"></a>00164   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a904069e2e641c92291226ea2524eadb3" title="Get the number of analog inputs.">analogInputsCount</a>() <span class="keyword">const</span>;
+<a name="l00165"></a>00165 
+<a name="l00168"></a>00168   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs.">setAnalogInputsValue</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> &amp;value);
+<a name="l00169"></a>00169 
+<a name="l00181"></a>00181   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#aa0e736fa9663fa133cbf337d5a4b90e2" title="Add a analog output.">addAnalogOutput</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *ao, <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd" title="Adress access type.">addressAccess_t</a> sortSegmentsBy = <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dda29a5b11f060f7fce671b9ced4bb4ef7a">Write</a>);
+<a name="l00182"></a>00182 
+<a name="l00187"></a>00187   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#acde9cd81580041c5a9bcb5e3f7ee5592" title="Add a list of analog outputs.">addAnalogOutputs</a>(<span class="keyword">const</span> QList&lt;mdtAnalogIo*&gt; &amp; aoList, <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd" title="Adress access type.">addressAccess_t</a> sortSegmentsBy = <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dda29a5b11f060f7fce671b9ced4bb4ef7a">Write</a>);
+<a name="l00188"></a>00188 
+<a name="l00194"></a>00194   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a74385f332753cedb68ae4133c97384be" title="Get analog output at given address for read access.">analogOutputAtAddressRead</a>(<span class="keywordtype">int</span> address);
+<a name="l00195"></a>00195 
+<a name="l00201"></a>00201   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a968999a1021a96504805248e2ce04382" title="Get analog output at given address for write access.">analogOutputAtAddressWrite</a>(<span class="keywordtype">int</span> address);
 <a name="l00202"></a>00202 
-<a name="l00207"></a>00207   <span class="keyword">const</span> QList&lt;mdtDigitalIo*&gt; <a class="code" href="classmdt_device_ios.html#adb2cbcd4adcee1e9434634694ee1ae24" title="Get a list containing all digital inputs.">digitalInputs</a>() <span class="keyword">const</span>;
-<a name="l00208"></a>00208 
-<a name="l00211"></a>00211   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a24e300fab861c054e6c61511fcff76c4" title="Get address of the first digital input.">digitalInputsFirstAddress</a>() <span class="keyword">const</span>;
-<a name="l00212"></a>00212 
-<a name="l00215"></a>00215   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a8d6306c16a25c82d6d8002020f4dc16a" title="Get the number of digital inputs.">digitalInputsCount</a>() <span class="keyword">const</span>;
-<a name="l00216"></a>00216 
-<a name="l00219"></a>00219   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs.">setDigitalInputsValue</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> &amp;value);
-<a name="l00220"></a>00220 
-<a name="l00225"></a>00225   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#af1f41d3c60f1030fb303436820417d14" title="Add a digital output.">addDigitalOutput</a>(<a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *dout);
-<a name="l00226"></a>00226 
-<a name="l00232"></a>00232   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#a87647e98e2574a1e5f7c8780f9c33b13" title="Get digital output at given address for read access.">digitalOutputAtAddressRead</a>(<span class="keywordtype">int</span> address);
+<a name="l00210"></a>00210   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#aab2b2b1f8c887eb9f439cf495ec95fbd" title="Get analog output with a given short label.">analogOutputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort);
+<a name="l00211"></a>00211 
+<a name="l00216"></a>00216   <span class="keyword">const</span> QList&lt;mdtAnalogIo*&gt; <a class="code" href="classmdt_device_ios.html#aa4ddc48f9e3258adc7222ef3481a518e" title="Get a list containing all analog outputs.">analogOutputs</a>() <span class="keyword">const</span>;
+<a name="l00217"></a>00217 
+<a name="l00220"></a>00220   <span class="keyword">const</span> QList&lt;mdtDeviceIosSegment*&gt; &amp;<a class="code" href="classmdt_device_ios.html#afc425a36dd8942a507d993993bc141a9" title="Get a list of all analog inputs segments.">analogOutputsSegments</a>() <span class="keyword">const</span>;
+<a name="l00221"></a>00221 
+<a name="l00224"></a>00224   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a8b9b14c4968e5aaae60ac7f91f77e06c" title="Get the number of analog outputs.">analogOutputsCount</a>() <span class="keyword">const</span>;
+<a name="l00225"></a>00225 
+<a name="l00228"></a>00228   QList&lt;int&gt; <a class="code" href="classmdt_device_ios.html#afc343f9733f297ee6359455f15308341" title="Get all analog outputs values in device specific format sorted by address for write access...">analogOutputsValuesIntByAddressWrite</a>() <span class="keyword">const</span>;
+<a name="l00229"></a>00229 
+<a name="l00232"></a>00232   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs.">setAnalogOutputsValue</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> &amp;value);
 <a name="l00233"></a>00233 
-<a name="l00239"></a>00239   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#af50bc664e381265b93b1e8faf7f883b7" title="Get digital output at given address for write access.">digitalOutputAtAddressWrite</a>(<span class="keywordtype">int</span> address);
+<a name="l00239"></a>00239   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a023571f5d77bd0874c08b53890a56381" title="Add a digital input.">addDigitalInput</a>(<a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *di);
 <a name="l00240"></a>00240 
-<a name="l00248"></a>00248   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#acecc7f9abb21613fed90212eef4d4dda" title="Get digital output with a given short label.">digitalOutputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort);
-<a name="l00249"></a>00249 
-<a name="l00254"></a>00254   <span class="keyword">const</span> QList&lt;mdtDigitalIo*&gt; <a class="code" href="classmdt_device_ios.html#a74418e6be28a2017140f102484f0df31" title="Get a list containing all digital outputs.">digitalOutputs</a>() <span class="keyword">const</span>;
-<a name="l00255"></a>00255 
-<a name="l00258"></a>00258   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#af5683713bafa419f199ac756b769c9b7" title="Get address for read access of the first digital output.">digitalOutputsFirstAddressRead</a>() <span class="keyword">const</span>;
-<a name="l00259"></a>00259 
-<a name="l00262"></a>00262   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#af1e9a9ae2e49a031b74571c6386c785a" title="Get address for write access of the first digital output.">digitalOutputsFirstAddressWrite</a>() <span class="keyword">const</span>;
-<a name="l00263"></a>00263 
-<a name="l00266"></a>00266   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a81041e03a387fdcdc2638527b27a0ff6" title="Get the number of digital outputs.">digitalOutputsCount</a>() <span class="keyword">const</span>;
-<a name="l00267"></a>00267 
-<a name="l00270"></a>00270   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs.">setDigitalOutputsValue</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> &amp;value);
-<a name="l00271"></a>00271 
-<a name="l00274"></a>00274   QList&lt;bool&gt; <a class="code" href="classmdt_device_ios.html#a67388ae8181a19da07f7b74320a516e3" title="Get all digital outputs states sorted by address for write access.">digitalOutputsStatesByAddressWrite</a>() <span class="keyword">const</span>;
-<a name="l00275"></a>00275 
-<a name="l00276"></a>00276  <span class="keyword">public</span> slots:
-<a name="l00277"></a>00277 
-<a name="l00290"></a>00290   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#ab1a738a2305998aa0c8966d092db1c40" title="Update (G)UI&#39;s value for a set of analog inputs.">updateAnalogInputValues</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;values, <span class="keywordtype">int</span> firstAddress, <span class="keywordtype">int</span> n);
-<a name="l00291"></a>00291 
-<a name="l00304"></a>00304   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a750075dc8a318e8a6feea2e0720e5586" title="Update (G)UI&#39;s value for a set of analog outputs.">updateAnalogOutputValues</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;values, <span class="keywordtype">int</span> firstAddressRead, <span class="keywordtype">int</span> n);
-<a name="l00305"></a>00305 
-<a name="l00308"></a>00308   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs.">setAnalogOutputsEnabled</a>(<span class="keywordtype">bool</span> enabled);
-<a name="l00309"></a>00309 
-<a name="l00318"></a>00318   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a349253f24f42bdbc012812120405ae06" title="Update (G)UI&#39;s state for a set of digital inputs.">updateDigitalInputValues</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;values, <span class="keywordtype">int</span> firstAddress, <span class="keywordtype">int</span> n);
-<a name="l00319"></a>00319 
-<a name="l00328"></a>00328   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a130769d03889ccdb7649dfcc605730b9" title="Update (G)UI&#39;s state for a set of digital outputs.">updateDigitalOutputValues</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;values, <span class="keywordtype">int</span> firstAddressRead, <span class="keywordtype">int</span> n);
-<a name="l00329"></a>00329 
-<a name="l00332"></a>00332   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs.">setDigitalOutputsEnabled</a>(<span class="keywordtype">bool</span> enabled);
-<a name="l00333"></a>00333 
-<a name="l00334"></a>00334  <span class="keyword">private</span>:
-<a name="l00335"></a>00335 
-<a name="l00336"></a>00336   Q_DISABLE_COPY(<a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a>);
-<a name="l00337"></a>00337 
-<a name="l00338"></a>00338   <span class="keywordtype">bool</span> pvAutoDeleteIos;
-<a name="l00339"></a>00339   <span class="comment">// Analog inputs members</span>
-<a name="l00340"></a>00340   QList&lt;mdtAnalogIo*&gt; pvAnalogInputs;
-<a name="l00341"></a>00341   QMap&lt;int, mdtAnalogIo*&gt; pvAnalogInputsByAddressRead;
-<a name="l00342"></a>00342   <span class="keywordtype">int</span> pvAnalogInputsFirstAddressRead;
-<a name="l00343"></a>00343   <span class="comment">// Analog outputs members</span>
-<a name="l00344"></a>00344   QList&lt;mdtAnalogIo*&gt; pvAnalogOutputs;
-<a name="l00345"></a>00345   QMap&lt;int, mdtAnalogIo*&gt; pvAnalogOutputsByAddressRead;
-<a name="l00346"></a>00346   QMap&lt;int, mdtAnalogIo*&gt; pvAnalogOutputsByAddressWrite;
-<a name="l00347"></a>00347   <span class="keywordtype">int</span> pvAnalogOutputsFirstAddressRead;
-<a name="l00348"></a>00348   <span class="keywordtype">int</span> pvAnalogOutputsFirstAddressWrite;
-<a name="l00349"></a>00349   <span class="comment">// Digital inputs members</span>
-<a name="l00350"></a>00350   QList&lt;mdtDigitalIo*&gt; pvDigitalInputs;
-<a name="l00351"></a>00351   QMap&lt;int, mdtDigitalIo*&gt; pvDigitalInputsByAddressRead;
-<a name="l00352"></a>00352   <span class="keywordtype">int</span> pvDigitalInputsFirstAddressRead;
-<a name="l00353"></a>00353   <span class="comment">// Digital outputs members</span>
-<a name="l00354"></a>00354   QList&lt;mdtDigitalIo*&gt; pvDigitalOutputs;
-<a name="l00355"></a>00355   QMap&lt;int, mdtDigitalIo*&gt; pvDigitalOutputsByAddressRead;
-<a name="l00356"></a>00356   QMap&lt;int, mdtDigitalIo*&gt; pvDigitalOutputsByAddressWrite;
-<a name="l00357"></a>00357   <span class="keywordtype">int</span> pvDigitalOutputsFirstAddressRead;
-<a name="l00358"></a>00358   <span class="keywordtype">int</span> pvDigitalOutputsFirstAddressWrite;
-<a name="l00359"></a>00359 };
-<a name="l00360"></a>00360 
-<a name="l00361"></a>00361 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_IOS_H</span>
+<a name="l00245"></a>00245   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a470c27db1fefa6cd2a4a690bb0ff04f5" title="Add a list of digital inputs.">addDigitalInputs</a>(<span class="keyword">const</span> QList&lt;mdtDigitalIo*&gt; &amp; diList);
+<a name="l00246"></a>00246 
+<a name="l00252"></a>00252   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#a78f68d0efeac0a23628f133121f28df8" title="Get digital input at given address.">digitalInputAt</a>(<span class="keywordtype">int</span> address);
+<a name="l00253"></a>00253 
+<a name="l00261"></a>00261   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#abcde6de5a0ca6d642af04c21250d6555" title="Get digital input with a given short label.">digitalInputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort);
+<a name="l00262"></a>00262 
+<a name="l00267"></a>00267   <span class="keyword">const</span> QList&lt;mdtDigitalIo*&gt; <a class="code" href="classmdt_device_ios.html#adb2cbcd4adcee1e9434634694ee1ae24" title="Get a list containing all digital inputs.">digitalInputs</a>() <span class="keyword">const</span>;
+<a name="l00268"></a>00268 
+<a name="l00271"></a>00271   <span class="keyword">const</span> QList&lt;mdtDeviceIosSegment*&gt; &amp;<a class="code" href="classmdt_device_ios.html#adc81519c2e6edc7fe54663c77d6eb503" title="Get a list of all digital inputs segments.">digitalInputsSegments</a>() <span class="keyword">const</span>;
+<a name="l00272"></a>00272 
+<a name="l00275"></a>00275   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a8d6306c16a25c82d6d8002020f4dc16a" title="Get the number of digital inputs.">digitalInputsCount</a>() <span class="keyword">const</span>;
+<a name="l00276"></a>00276 
+<a name="l00279"></a>00279   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs.">setDigitalInputsValue</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> &amp;value);
+<a name="l00280"></a>00280 
+<a name="l00292"></a>00292   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#afb202474ccc9b0ca58385b84283fecd4" title="Add a digital output.">addDigitalOutput</a>(<a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *dout, <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd" title="Adress access type.">addressAccess_t</a> sortSegmentsBy = <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dda29a5b11f060f7fce671b9ced4bb4ef7a">Write</a>);
+<a name="l00293"></a>00293 
+<a name="l00298"></a>00298   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#adf6a8efe1f82a9cfeea12afce6d58a5d" title="Add a list of digital outputs.">addDigitalOutputs</a>(<span class="keyword">const</span> QList&lt;mdtDigitalIo*&gt; &amp; doList, <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd" title="Adress access type.">addressAccess_t</a> sortSegmentsBy = <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dda29a5b11f060f7fce671b9ced4bb4ef7a">Write</a>);
+<a name="l00299"></a>00299 
+<a name="l00305"></a>00305   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#a87647e98e2574a1e5f7c8780f9c33b13" title="Get digital output at given address for read access.">digitalOutputAtAddressRead</a>(<span class="keywordtype">int</span> address);
+<a name="l00306"></a>00306 
+<a name="l00312"></a>00312   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#af50bc664e381265b93b1e8faf7f883b7" title="Get digital output at given address for write access.">digitalOutputAtAddressWrite</a>(<span class="keywordtype">int</span> address);
+<a name="l00313"></a>00313 
+<a name="l00321"></a>00321   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device_ios.html#acecc7f9abb21613fed90212eef4d4dda" title="Get digital output with a given short label.">digitalOutputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort);
+<a name="l00322"></a>00322 
+<a name="l00327"></a>00327   <span class="keyword">const</span> QList&lt;mdtDigitalIo*&gt; <a class="code" href="classmdt_device_ios.html#a74418e6be28a2017140f102484f0df31" title="Get a list containing all digital outputs.">digitalOutputs</a>() <span class="keyword">const</span>;
+<a name="l00328"></a>00328 
+<a name="l00331"></a>00331   <span class="keyword">const</span> QList&lt;mdtDeviceIosSegment*&gt; &amp;<a class="code" href="classmdt_device_ios.html#ad2b06fe61d71150ac57d77e9bfc7894b" title="Get a list of all digital outputs segments.">digitalOutputsSegments</a>() <span class="keyword">const</span>;
+<a name="l00332"></a>00332 
+<a name="l00335"></a>00335   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_ios.html#a81041e03a387fdcdc2638527b27a0ff6" title="Get the number of digital outputs.">digitalOutputsCount</a>() <span class="keyword">const</span>;
+<a name="l00336"></a>00336 
+<a name="l00339"></a>00339   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs.">setDigitalOutputsValue</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> &amp;value);
+<a name="l00340"></a>00340 
+<a name="l00343"></a>00343   QList&lt;bool&gt; <a class="code" href="classmdt_device_ios.html#a67388ae8181a19da07f7b74320a516e3" title="Get all digital outputs states sorted by address for write access.">digitalOutputsStatesByAddressWrite</a>() <span class="keyword">const</span>;
+<a name="l00344"></a>00344 
+<a name="l00350"></a>00350   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a100ce7dcaecb7ee9a1a3e68f75cdac73" title="Set a default short label for each I/O.">setIosDefaultLabelShort</a>();
+<a name="l00351"></a>00351 
+<a name="l00352"></a>00352  <span class="keyword">public</span> slots:
+<a name="l00353"></a>00353 
+<a name="l00383"></a>00383   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#addeff0a2dab646a49170f8be10cc46fb" title="Update (G)UI&#39;s value for a set of analog inputs.">updateAnalogInputValues</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;values, <span class="keyword">const</span> <span class="keywordtype">int</span> firstAddress, <span class="keyword">const</span> <span class="keywordtype">int</span> n, <span class="keywordtype">bool</span> matchAddresses);
+<a name="l00384"></a>00384 
+<a name="l00418"></a>00418   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a3aee92ecadda601d9482aeb6419f0bb8" title="Update (G)UI&#39;s value for a set of analog outputs.">updateAnalogOutputValues</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;values, <span class="keywordtype">int</span> firstAddress, <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd" title="Adress access type.">addressAccess_t</a> firstAddressAccess, <span class="keywordtype">int</span> n, <span class="keywordtype">bool</span> matchAddresses);
+<a name="l00419"></a>00419 
+<a name="l00422"></a>00422   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs.">setAnalogOutputsEnabled</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00423"></a>00423 
+<a name="l00453"></a>00453   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#ae994a3ef4d4f101ac185308e4afc05cb" title="Update (G)UI&#39;s value for a set of digital inputs.">updateDigitalInputValues</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;values, <span class="keywordtype">int</span> firstAddress, <span class="keywordtype">int</span> n, <span class="keywordtype">bool</span> matchAddresses);
+<a name="l00454"></a>00454 
+<a name="l00488"></a>00488   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a06642814dbbb525dff7d1a7e603f57ac" title="Update (G)UI&#39;s value for a set of digital outputs.">updateDigitalOutputValues</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;values, <span class="keywordtype">int</span> firstAddress, <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd" title="Adress access type.">addressAccess_t</a> firstAddressAccess, <span class="keywordtype">int</span> n, <span class="keywordtype">bool</span> matchAddresses);
+<a name="l00489"></a>00489 
+<a name="l00492"></a>00492   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs.">setDigitalOutputsEnabled</a>(<span class="keywordtype">bool</span> enabled);
+<a name="l00493"></a>00493 
+<a name="l00494"></a>00494  <span class="keyword">private</span>:
+<a name="l00495"></a>00495 
+<a name="l00496"></a>00496   Q_DISABLE_COPY(<a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a>);
+<a name="l00497"></a>00497 
+<a name="l00498"></a>00498   <span class="keywordtype">bool</span> pvAutoDeleteIos;
+<a name="l00499"></a>00499   <span class="comment">// Analog inputs members</span>
+<a name="l00500"></a>00500   QList&lt;mdtAnalogIo*&gt; pvAnalogInputs;
+<a name="l00501"></a>00501   QMap&lt;int, mdtAnalogIo*&gt; pvAnalogInputsByAddressRead;
+<a name="l00502"></a>00502   QList&lt;mdtDeviceIosSegment*&gt; pvAnalogInputsSegments;
+<a name="l00503"></a>00503   <span class="comment">// Analog outputs members</span>
+<a name="l00504"></a>00504   QList&lt;mdtAnalogIo*&gt; pvAnalogOutputs;
+<a name="l00505"></a>00505   QMap&lt;int, mdtAnalogIo*&gt; pvAnalogOutputsByAddressRead;
+<a name="l00506"></a>00506   QMap&lt;int, mdtAnalogIo*&gt; pvAnalogOutputsByAddressWrite;
+<a name="l00507"></a>00507   QList&lt;mdtDeviceIosSegment*&gt; pvAnalogOutputsSegments;
+<a name="l00508"></a>00508   <span class="comment">// Digital inputs members</span>
+<a name="l00509"></a>00509   QList&lt;mdtDigitalIo*&gt; pvDigitalInputs;
+<a name="l00510"></a>00510   QMap&lt;int, mdtDigitalIo*&gt; pvDigitalInputsByAddressRead;
+<a name="l00511"></a>00511   QList&lt;mdtDeviceIosSegment*&gt; pvDigitalInputsSegments;
+<a name="l00512"></a>00512   <span class="comment">// Digital outputs members</span>
+<a name="l00513"></a>00513   QList&lt;mdtDigitalIo*&gt; pvDigitalOutputs;
+<a name="l00514"></a>00514   QMap&lt;int, mdtDigitalIo*&gt; pvDigitalOutputsByAddressRead;
+<a name="l00515"></a>00515   QMap&lt;int, mdtDigitalIo*&gt; pvDigitalOutputsByAddressWrite;
+<a name="l00516"></a>00516   QList&lt;mdtDeviceIosSegment*&gt; pvDigitalOutputsSegments;
+<a name="l00517"></a>00517 };
+<a name="l00518"></a>00518 
+<a name="l00519"></a>00519 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_IOS_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -230,7 +242,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

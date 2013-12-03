@@ -1,3 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor." alt="" coords="7,5,105,35"/>
+<area shape="rect" id="node1" href="$classmdt_sql_database_manager.html" title="Helper class to create and open (connect to) database." alt="" coords="7,5,175,35"/>
 </map>

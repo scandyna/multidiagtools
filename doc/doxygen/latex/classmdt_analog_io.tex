@@ -51,10 +51,15 @@ void {\bfseries rangeChangedForUi} (double min, double max)}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}{
-{\bfseries mdtAnalogIo} (QObject $\ast$parent=0)}
+\hyperlink{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}{mdtAnalogIo} (QObject $\ast$parent=0)}
 \label{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_analog_io_a7ec3c075b1d49c2d0917c09e4950b856}{
+\hyperlink{classmdt_analog_io_a7ec3c075b1d49c2d0917c09e4950b856}{$\sim$mdtAnalogIo} ()}
+\label{classmdt_analog_io_a7ec3c075b1d49c2d0917c09e4950b856}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}{
 void \hyperlink{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}{setUnit} (const QString \&unit)}
 \label{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}
@@ -65,10 +70,8 @@ QString \hyperlink{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{unit} (
 \label{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}
 
 \begin{DoxyCompactList}\small\item\em Get unit. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}{setRange} (double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false)
+bool \hyperlink{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}{setRange} (double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false, bool scaleFromMinToMax=true, double conversionFactor=1.0)
 \begin{DoxyCompactList}\small\item\em Specify the range of values and bits decode parameters. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_analog_io_a2263d9b0bf2c1b998386c590866f06e8}{setEncodeBitSettings} (int intValueBitsCount, int intValueLsbIndex)
-\begin{DoxyCompactList}\small\item\em Set the bits encode parammeters. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{
 double \hyperlink{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{minimum} () const }
 \label{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}
@@ -93,39 +96,7 @@ Definition at line 35 of file mdtAnalogIo.h.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_analog_io_a2263d9b0bf2c1b998386c590866f06e8}{
-\index{mdtAnalogIo@{mdtAnalogIo}!setEncodeBitSettings@{setEncodeBitSettings}}
-\index{setEncodeBitSettings@{setEncodeBitSettings}!mdtAnalogIo@{mdtAnalogIo}}
-\subsubsection[{setEncodeBitSettings}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAnalogIo::setEncodeBitSettings (
-\begin{DoxyParamCaption}
-\item[{int}]{intValueBitsCount, }
-\item[{int}]{intValueLsbIndex}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_analog_io_a2263d9b0bf2c1b998386c590866f06e8}
-
-
-Set the bits encode parammeters. 
-
-On many analog output module, it is possible to set a value, and read it. It can happen that the bitmap differs between write and read (f.ex. Wago 750-\/550). In such case, a alternate bits count and lsb index can be set here.
-
-Note that \hyperlink{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}{setRange()} will overwrite thiese settings.
-
-
-\begin{DoxyParams}{Parameters}
-{\em intValueBitsCount} & Number of bits used for the value, including sign bit. (has only effect when using valueInt() ). \\
-\hline
-{\em intValueLsbIndex} & Index of first bit to use for value extraction. (has only effect when using valueInt() ).\\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-true on success. Some checks are done, and if one fails, false is returned and the previous settingsare used for conversion. 
-\end{DoxyReturn}
-
-
-Definition at line 120 of file mdtAnalogIo.cpp.
-
-\hypertarget{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}{
+\hypertarget{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}{
 \index{mdtAnalogIo@{mdtAnalogIo}!setRange@{setRange}}
 \index{setRange@{setRange}!mdtAnalogIo@{mdtAnalogIo}}
 \subsubsection[{setRange}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAnalogIo::setRange (
@@ -134,10 +105,12 @@ Definition at line 120 of file mdtAnalogIo.cpp.
 \item[{double}]{max, }
 \item[{int}]{intValueBitsCount, }
 \item[{int}]{intValueLsbIndex = {\ttfamily 0}, }
-\item[{bool}]{intValueSigned = {\ttfamily false}}
+\item[{bool}]{intValueSigned = {\ttfamily false}, }
+\item[{bool}]{scaleFromMinToMax = {\ttfamily true}, }
+\item[{double}]{conversionFactor = {\ttfamily 1.0}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}
+\label{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}
 
 
 Specify the range of values and bits decode parameters. 
@@ -153,9 +126,16 @@ Take example of Wago 750-\/457:
 \item Value is scaled from -\/10 V to 10 V
 \end{DoxyItemize}
 
-In this example, this method must be called with min = -\/10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 and intValueSigned = true .
+In this example, this method must be called with min = -\/10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 , intValueSigned = true , scaleFromMinToMax = true , conversionFactor = 1.0 .
 
-Note that some analog output hardware use a different resolution for read and write (f.ex. Wago 750-\/550). In such case, you can set parameters for reading here, and use \hyperlink{classmdt_analog_io_a2263d9b0bf2c1b998386c590866f06e8}{setEncodeBitSettings()} for alternate parameters for write.
+Here is another example with Wago 750-\/464 with Pt100 sensor and normal format:
+\begin{DoxyItemize}
+\item Value is encoded in 16 bits
+\item Scaling is allready done by device
+\item Value represents 0.1°C per digit -\/$>$ we have to apply a conversion factor of 0.1
+\end{DoxyItemize}
+
+In this example, this method must be called with min = -\/200.0 , max = 850.0 , intValueBitsCount = 16 , intValueLsbIndex = 0 , intValueSigned = true , scaleFromMinToMax = false , conversionFactor = 0.1 .
 
 
 \begin{DoxyParams}{Parameters}
@@ -163,11 +143,20 @@ Note that some analog output hardware use a different resolution for read and wr
 \hline
 {\em max} & Maximum value to display (f.ex. 10V, or 20mA) \\
 \hline
-{\em intValueBitsCount} & Number of bits used for the value, including sign bit. (has only effect when using \hyperlink{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}{setValueInt()} ). \\
+{\em intValueBitsCount} & Number of bits used for the value, including sign bit. \\
 \hline
-{\em intValueLsbIndex} & Index of first bit to use for value extraction. (has only effect when using \hyperlink{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}{setValueInt()} ). \\
+{\em intValueLsbIndex} & Index of first bit to use for value extraction. \\
 \hline
-{\em intValueSigned} & If true, decoded value is considered as signed value, i.e. the most significant bit is the sign. (has only effect when using \hyperlink{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}{setValueInt()} ).\\
+{\em intValueSigned} & If true, decoded value is considered as signed value, i.e. the most significant bit is the sign. \\
+\hline
+{\em scaleFromMinToMax} & If true, given value INT will be scaled from min to max regarding LSB. LSB is determined from intValueBitsCount . \\
+\hline
+{\em conversionFactor} & This factor is applied as follow (min, max scaling is ignored in this example):
+\begin{DoxyItemize}
+\item ValueDouble = valueInt $\ast$ LSB $\ast$ conversionFactor
+\item ValueInt = valueDouble / (LSB $\ast$ conversionFactor)\par
+ LSB is determined from intValueBitsCount .
+\end{DoxyItemize}\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -182,7 +171,7 @@ Note for UI developpers:
 \item The signal \hyperlink{classmdt_abstract_io_a0241183736b9bc3abb021868b9bf4273}{valueChangedForUi()} is emited 
 \end{DoxyItemize}
 
-Definition at line 60 of file mdtAnalogIo.cpp.
+Definition at line 61 of file mdtAnalogIo.cpp.
 
 \hypertarget{classmdt_analog_io_aa2c2fb87d67aad7bbba1b488cc8c1df2}{
 \index{mdtAnalogIo@{mdtAnalogIo}!setValue@{setValue}}
@@ -207,7 +196,7 @@ Reimplemented from \hyperlink{classmdt_abstract_io_a3f5fc9ed13c2ec2aad0987cd15d9
 
 
 
-Definition at line 181 of file mdtAnalogIo.cpp.
+Definition at line 143 of file mdtAnalogIo.cpp.
 
 \hypertarget{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}{
 \index{mdtAnalogIo@{mdtAnalogIo}!setValueInt@{setValueInt}}
@@ -224,7 +213,7 @@ Definition at line 181 of file mdtAnalogIo.cpp.
 
 Set the integer value. 
 
-Will calculate the real value depending on resolution and update display. The resolution is set with \hyperlink{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}{setRange()} (intValueBitsCount parameter)
+Will calculate the real value depending on resolution and update display. The resolution is set with \hyperlink{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}{setRange()} (intValueBitsCount parameter)
 
 The \hyperlink{classmdt_abstract_io_a43feaa62996af78f64aea084122f1370}{valueChanged()} signal is emitted.
 
@@ -242,7 +231,7 @@ Note for UI developpers:
 \item The signal \hyperlink{classmdt_abstract_io_a0241183736b9bc3abb021868b9bf4273}{valueChangedForUi()} is emited 
 \end{DoxyItemize}
 
-Definition at line 170 of file mdtAnalogIo.cpp.
+Definition at line 132 of file mdtAnalogIo.cpp.
 
 
 

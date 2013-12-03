@@ -119,6 +119,10 @@ QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set copyParentToChildOnInsertion flag.  <a href="#aa9826f0e86d7ba7acf046012bbf8a38f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation_item.html#a959affdf96c2d4882028270f9ae7cf00">copyParentToChildOnInsertion</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set copyParentToChildOnInsertion flag.  <a href="#a959affdf96c2d4882028270f9ae7cf00"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation_item.html#a00fd905a9b9e7d3f33ac73df0f1e8901">setRelationOperatorWithPreviousItem</a> (const QString &amp;operatorWithPreviousItem)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set relation operator with previous item.  <a href="#a00fd905a9b9e7d3f33ac73df0f1e8901"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_relation_item.html#aad30a0f5b83e6efb0c43d87648369c11">relationOperatorWithPreviousItem</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get relation operator with previous item.  <a href="#aad30a0f5b83e6efb0c43d87648369c11"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Keep informations about a parent/child SQL relation. </p>
@@ -142,7 +146,7 @@ QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Set copyParentToChildOnInsertion flag. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_sql_relation_item.html#aa9826f0e86d7ba7acf046012bbf8a38f" title="Set copyParentToChildOnInsertion flag.">setCopyParentToChildOnInsertion()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00116">116</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00117">117</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
 
 </div>
 </div>
@@ -167,7 +171,7 @@ QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <li>nothing for numeric type </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00096">96</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
 
 </div>
 </div>
@@ -188,7 +192,28 @@ QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Get table/field protection. </p>
 <p>Typical name protection is ` </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00091">91</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aad30a0f5b83e6efb0c43d87648369c11"></a><!-- doxytag: member="mdtSqlRelationItem::relationOperatorWithPreviousItem" ref="aad30a0f5b83e6efb0c43d87648369c11" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString mdtSqlRelationItem::relationOperatorWithPreviousItem </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get relation operator with previous item. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_sql_relation_item.html#a00fd905a9b9e7d3f33ac73df0f1e8901" title="Set relation operator with previous item.">setRelationOperatorWithPreviousItem()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00127">127</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
 
 </div>
 </div>
@@ -211,7 +236,29 @@ QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Usually, a parent/child relation is based on a primary key in parent table and foreing key (that refers to parent PK) in child model. When inserting a new record in child table, parent table's primary key must be copied into foreing key fields in child table. Set this flag to true to enable this behaviour (see <a class="el" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels.">mdtSqlRelation</a> for more details).</p>
 <p>By default, this flag is false. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00112">112</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a00fd905a9b9e7d3f33ac73df0f1e8901"></a><!-- doxytag: member="mdtSqlRelationItem::setRelationOperatorWithPreviousItem" ref="a00fd905a9b9e7d3f33ac73df0f1e8901" args="(const QString &amp;operatorWithPreviousItem)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSqlRelationItem::setRelationOperatorWithPreviousItem </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>operatorWithPreviousItem</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set relation operator with previous item. </p>
+<p>For most of cases, the relation operator between items is AND, that is the default. For some cases, it can be usefull to have a OR operator between 2 relation items. On this case, specify this here. </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00122">122</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
 
 </div>
 </div>
@@ -236,7 +283,7 @@ QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <li>-1 for numeric field </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00106">106</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_sql_relation_item_8cpp_source.html">mdtSqlRelationItem.cpp</a>.</p>
 
 </div>
 </div>
@@ -259,7 +306,7 @@ QVariant::Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:48 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

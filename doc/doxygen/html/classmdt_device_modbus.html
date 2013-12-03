@@ -106,6 +106,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper method for register service.  <a href="#a89d41c6b33a3dd2a92a0956d8e6b3b14"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const QList&lt; int &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d">registerValues</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper method for register service.  <a href="#a83cb2a28111653fbcbbe748f7a1a2e3d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#a4128420bde679c3666bdf8954a221a53">setRegisterValues</a> (int startAddress, QList&lt; int &gt; &amp;values)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper method for register service.  <a href="#a4128420bde679c3666bdf8954a221a53"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#aa2a024793ae2a5e81c7e92260a70cd9e">readAnalogInput</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
@@ -133,7 +135,7 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#aad3ce85a19307e3056b940da99fe512b">writeDigitalOutputs</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write all digital outputs to physical device.  <a href="#aad3ce85a19307e3056b940da99fe512b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#a3b83b926ed1f9c3bdf7024de2745c285">queriesSequence</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">}  <a href="#a3b83b926ed1f9c3bdf7024de2745c285"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence of queries to send periodically.  <a href="#a3b83b926ed1f9c3bdf7024de2745c285"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ecbac63c29b229ab01f5fdb26008c95"></a><!-- doxytag: member="mdtDeviceModbus::pvTcpPortManager" ref="a9ecbac63c29b229ab01f5fdb26008c95" args="" -->
@@ -204,14 +206,9 @@ Protected Attributes</h2></td></tr>
 <dd>
 Internal port manager not runnig and port must be closed before calling this method. </dd></dl>
 
-<p><p>if(!pvTcpPortManager-&gt;openPort()){ continue; }</p>
-<p>pvTcpPortManager-&gt;closePort();</p>
-<p>pvTcpPortManager-&gt;closePort(); </p>
-</p>
-
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus_wago.html#a12ad1f1ef34b16be5903d1d6232a7c6d">mdtDeviceModbusWago</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00066">66</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00067">67</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -247,7 +244,7 @@ Internal port manager not runnig and port must be closed before calling this met
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>address and n must be &gt; 0 </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_modbus_tcp_port_manager.html#ab5e780409492b5f56326a870bc4262ec" title="Helper method for register service.">mdtModbusTcpPortManager::getRegisterValues()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00098">98</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -265,12 +262,19 @@ Internal port manager not runnig and port must be closed before calling this met
 </div>
 <div class="memdoc">
 
-<p>} </p>
-<p>void mdtDeviceModbus::onStateChanged(int state) { if(pvIos == 0){ return; } if(state == Ready){ if(getAnalogInputs(500) &lt; 0){ return; } if(getAnalogOutputs(500) &lt; 0){ return; } if(getDigitalInputs(500) &lt; 0){ return; } if(getDigitalOutputs(500) &lt; 0){ return; } } </p>
+<p>Sequence of queries to send periodically. </p>
+<p>This method is called from <a class="el" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05" title="Queries to send periodically.">runQueries()</a>.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if all queries are sent successfully.</dd></dl>
+<p>Subclass notes:<br/>
+</p>
+<ul>
+<li>This default implementation does nothing and allways returns false.</li>
+<li>This method can be reimplemented periodic queries must be sent to device. </li>
+</ul>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00318">318</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00293">293</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -307,7 +311,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00330">330</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00305">305</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -342,7 +346,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00347">347</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00322">322</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -377,7 +381,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00364">364</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00339">339</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -410,7 +414,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00381">381</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00356">356</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -445,7 +449,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#af128b606050035abaf8d049bb2227015">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00432">432</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00407">407</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -480,7 +484,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00449">449</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00424">424</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -515,7 +519,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00466">466</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00441">441</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -550,7 +554,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00483">483</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00458">458</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -572,7 +576,43 @@ transaction must be a valid pointer. </dd></dl>
 <p>Return result set by <a class="el" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues()</a>. Note that values are keeped until next call of <a class="el" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues()</a>.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_modbus_tcp_port_manager.html#a99a13b5250a8523aa63869991581e56a" title="Helper method for register service.">mdtModbusTcpPortManager::registerValues()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00103">103</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4128420bde679c3666bdf8954a221a53"></a><!-- doxytag: member="mdtDeviceModbus::setRegisterValues" ref="a4128420bde679c3666bdf8954a221a53" args="(int startAddress, QList&lt; int &gt; &amp;values)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtDeviceModbus::setRegisterValues </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startAddress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QList&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>values</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Helper method for register service. </p>
+<p>Usefull to set register values (f.ex. configurations regsisters, ...).</p>
+<p>Note: to set analog I/O values, the <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> API should be used.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>startAddress must be &gt;= 0 </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_modbus_tcp_port_manager.html#a746211413dfafb987a93145c9fa4876f" title="Helper method for register service.">mdtModbusTcpPortManager::setRegisterValues()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00102">102</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -616,7 +656,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00398">398</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00373">373</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -651,7 +691,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00415">415</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00390">390</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -697,7 +737,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00500">500</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00475">475</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -732,7 +772,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00517">517</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00492">492</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -755,7 +795,7 @@ transaction must be a valid pointer. </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

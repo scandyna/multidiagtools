@@ -87,6 +87,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_d_s
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e">getNewTransaction</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181">handleDeviceError</a>(const QList&lt; QVariant &gt; &amp;decodedValues)</td><td><a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637">handleDeviceSpecificError</a>(int errNum, const QString &amp;errText, const QList&lt; QString &gt; &amp;deviceSpecificTexts)</td><td><a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a></td><td><code> [protected, virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a8887a1142d3d3be673c18cf3376e7af4">isReady</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa">logDeviceError</a>(int errNum, const QString &amp;errText, const QList&lt; QString &gt; &amp;deviceSpecificTexts, mdtError::level_t level)</td><td><a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a6d501791e7243358cc61b144254b80db">mdtDevice</a>(QObject *parent=0)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_d_s_o1000_a.html#a3c4cd1418250864589284a3540353fdb">mdtDeviceDSO1000A</a>(QObject *parent=0)</td><td><a class="el" href="classmdt_device_d_s_o1000_a.html">mdtDeviceDSO1000A</a></td><td></td></tr>
@@ -125,6 +126,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_d_s
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d">stateChanged</a>(int state)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c">statusMessageChanged</a>(const QString &amp;message, const QString &amp;details, int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407">stop</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a6def09a050cbf3521b615e8300c42f66">wait</a>(int ms)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_scpi.html#aefd45e58d01aed9a165bb2c2dd98198c">waitOperationComplete</a>(int timeout, int interval)</td><td><a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ab937015c1a319b7234442a4cc29a02a8">waitTransactionDone</a>(int id)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f">writeAnalogOutput</a>(int value, mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
@@ -149,7 +151,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_d_s
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

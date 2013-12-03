@@ -11,22 +11,29 @@ Container for a set of I/O's.
 
 {\ttfamily \#include $<$mdtDeviceIos.h$>$}
 
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dd}{addressAccess\_\-t} \{ \hyperlink{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dda69811abe027fb5c9c22cf99034ef626b}{Read}, 
+\hyperlink{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dda29a5b11f060f7fce671b9ced4bb4ef7a}{Write}
+ \}
+\begin{DoxyCompactList}\small\item\em Adress access type. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_device_ios_ab1a738a2305998aa0c8966d092db1c40}{updateAnalogInputValues} (const QList$<$ QVariant $>$ \&values, int firstAddress, int n)
+void \hyperlink{classmdt_device_ios_addeff0a2dab646a49170f8be10cc46fb}{updateAnalogInputValues} (const QList$<$ QVariant $>$ \&values, const int firstAddress, const int n, bool matchAddresses)
 \begin{DoxyCompactList}\small\item\em Update (G)UI's value for a set of analog inputs. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_ios_a750075dc8a318e8a6feea2e0720e5586}{updateAnalogOutputValues} (const QList$<$ QVariant $>$ \&values, int firstAddressRead, int n)
+void \hyperlink{classmdt_device_ios_a3aee92ecadda601d9482aeb6419f0bb8}{updateAnalogOutputValues} (const QList$<$ QVariant $>$ \&values, int firstAddress, \hyperlink{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dd}{addressAccess\_\-t} firstAddressAccess, int n, bool matchAddresses)
 \begin{DoxyCompactList}\small\item\em Update (G)UI's value for a set of analog outputs. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_ae266924a427fbc896e5f9774890ec91f}{
 void \hyperlink{classmdt_device_ios_ae266924a427fbc896e5f9774890ec91f}{setAnalogOutputsEnabled} (bool enabled)}
 \label{classmdt_device_ios_ae266924a427fbc896e5f9774890ec91f}
 
 \begin{DoxyCompactList}\small\item\em Enable/disable (G)UI's analog outputs. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_ios_a349253f24f42bdbc012812120405ae06}{updateDigitalInputValues} (const QList$<$ QVariant $>$ \&values, int firstAddress, int n)
-\begin{DoxyCompactList}\small\item\em Update (G)UI's state for a set of digital inputs. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_ios_a130769d03889ccdb7649dfcc605730b9}{updateDigitalOutputValues} (const QList$<$ QVariant $>$ \&values, int firstAddressRead, int n)
-\begin{DoxyCompactList}\small\item\em Update (G)UI's state for a set of digital outputs. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ios_ae994a3ef4d4f101ac185308e4afc05cb}{updateDigitalInputValues} (const QList$<$ QVariant $>$ \&values, int firstAddress, int n, bool matchAddresses)
+\begin{DoxyCompactList}\small\item\em Update (G)UI's value for a set of digital inputs. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ios_a06642814dbbb525dff7d1a7e603f57ac}{updateDigitalOutputValues} (const QList$<$ QVariant $>$ \&values, int firstAddress, \hyperlink{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dd}{addressAccess\_\-t} firstAddressAccess, int n, bool matchAddresses)
+\begin{DoxyCompactList}\small\item\em Update (G)UI's value for a set of digital outputs. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_ab1d98b31f7845c0015ac16728038d2db}{
 void \hyperlink{classmdt_device_ios_ab1d98b31f7845c0015ac16728038d2db}{setDigitalOutputsEnabled} (bool enabled)}
 \label{classmdt_device_ios_ab1d98b31f7845c0015ac16728038d2db}
@@ -36,27 +43,34 @@ void \hyperlink{classmdt_device_ios_ab1d98b31f7845c0015ac16728038d2db}{setDigita
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classmdt_device_ios_a44939a10d66421069bdd4b8717e2798c}{
-{\bfseries mdtDeviceIos} (QObject $\ast$parent=0)}
+\hyperlink{classmdt_device_ios_a44939a10d66421069bdd4b8717e2798c}{mdtDeviceIos} (QObject $\ast$parent=0)}
 \label{classmdt_device_ios_a44939a10d66421069bdd4b8717e2798c}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_ios_a8e1e02aeecd2617a8696ba625192bd19}{
+\hyperlink{classmdt_device_ios_a8e1e02aeecd2617a8696ba625192bd19}{$\sim$mdtDeviceIos} ()}
+\label{classmdt_device_ios_a8e1e02aeecd2617a8696ba625192bd19}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_ios_af771f8080ce4a7260baa0acccacae0e1}{setAutoDeleteIos} (bool autoDelete)
 \begin{DoxyCompactList}\small\item\em Set the auto delete flag. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_ios_a272fc1fa86e1b66e6af0e58b130939e0}{deleteIos} ()
 \begin{DoxyCompactList}\small\item\em Delete all I/O objects. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_ios_a0e2683630eff9410003a36ae5af76b52}{addAnalogInput} (\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ai)
 \begin{DoxyCompactList}\small\item\em Add a analog input. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ios_a776dc0508f88f8ea206801fc7472bfb2}{addAnalogInputs} (const QList$<$ \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ \&aiList)
+\begin{DoxyCompactList}\small\item\em Add a list of analog inputs. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_a70a3d979ec5d44297e8195e37596d5bc}{analogInputAt} (int address)
 \begin{DoxyCompactList}\small\item\em Get analog input at given address. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_ae31753e23d7ab14073f852dca85c2f9e}{analogInputWithLabelShort} (const QString \&labelShort)
 \begin{DoxyCompactList}\small\item\em Get analog input with a given short label. \end{DoxyCompactList}\item 
 const QList$<$ \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ \hyperlink{classmdt_device_ios_aab70f76d2107f0a9324a9b9d4db21532}{analogInputs} () const 
 \begin{DoxyCompactList}\small\item\em Get a list containing all analog inputs. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_ios_a42f0f52b4bf81c3ef2f89c6512fbbf89}{
-int \hyperlink{classmdt_device_ios_a42f0f52b4bf81c3ef2f89c6512fbbf89}{analogInputsFirstAddress} () const }
-\label{classmdt_device_ios_a42f0f52b4bf81c3ef2f89c6512fbbf89}
+\hypertarget{classmdt_device_ios_a71a1b9cdbc524e4d0094ab37575defc1}{
+const QList$<$ \hyperlink{classmdt_device_ios_segment}{mdtDeviceIosSegment} $\ast$ $>$ \& \hyperlink{classmdt_device_ios_a71a1b9cdbc524e4d0094ab37575defc1}{analogInputsSegments} () const }
+\label{classmdt_device_ios_a71a1b9cdbc524e4d0094ab37575defc1}
 
-\begin{DoxyCompactList}\small\item\em Get address of the first analog input. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Get a list of all analog inputs segments. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_a904069e2e641c92291226ea2524eadb3}{
 int \hyperlink{classmdt_device_ios_a904069e2e641c92291226ea2524eadb3}{analogInputsCount} () const }
 \label{classmdt_device_ios_a904069e2e641c92291226ea2524eadb3}
@@ -67,8 +81,10 @@ void \hyperlink{classmdt_device_ios_aeaa1a401ec975a67f87c62d4abae65ee}{setAnalog
 \label{classmdt_device_ios_aeaa1a401ec975a67f87c62d4abae65ee}
 
 \begin{DoxyCompactList}\small\item\em Set a value and validity for all analog inputs. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_ios_aeed1140ed869866a6edc738d3b2a6d0b}{addAnalogOutput} (\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ao)
+void \hyperlink{classmdt_device_ios_aa0e736fa9663fa133cbf337d5a4b90e2}{addAnalogOutput} (\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ao, \hyperlink{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dd}{addressAccess\_\-t} sortSegmentsBy=Write)
 \begin{DoxyCompactList}\small\item\em Add a analog output. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ios_acde9cd81580041c5a9bcb5e3f7ee5592}{addAnalogOutputs} (const QList$<$ \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ \&aoList, \hyperlink{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dd}{addressAccess\_\-t} sortSegmentsBy=Write)
+\begin{DoxyCompactList}\small\item\em Add a list of analog outputs. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_a74385f332753cedb68ae4133c97384be}{analogOutputAtAddressRead} (int address)
 \begin{DoxyCompactList}\small\item\em Get analog output at given address for read access. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_a968999a1021a96504805248e2ce04382}{analogOutputAtAddressWrite} (int address)
@@ -77,16 +93,11 @@ void \hyperlink{classmdt_device_ios_aeed1140ed869866a6edc738d3b2a6d0b}{addAnalog
 \begin{DoxyCompactList}\small\item\em Get analog output with a given short label. \end{DoxyCompactList}\item 
 const QList$<$ \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ \hyperlink{classmdt_device_ios_aa4ddc48f9e3258adc7222ef3481a518e}{analogOutputs} () const 
 \begin{DoxyCompactList}\small\item\em Get a list containing all analog outputs. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_ios_a48b6a6c583dec30ccb1b782e79d14dbb}{
-int \hyperlink{classmdt_device_ios_a48b6a6c583dec30ccb1b782e79d14dbb}{analogOutputsFirstAddressRead} () const }
-\label{classmdt_device_ios_a48b6a6c583dec30ccb1b782e79d14dbb}
+\hypertarget{classmdt_device_ios_afc425a36dd8942a507d993993bc141a9}{
+const QList$<$ \hyperlink{classmdt_device_ios_segment}{mdtDeviceIosSegment} $\ast$ $>$ \& \hyperlink{classmdt_device_ios_afc425a36dd8942a507d993993bc141a9}{analogOutputsSegments} () const }
+\label{classmdt_device_ios_afc425a36dd8942a507d993993bc141a9}
 
-\begin{DoxyCompactList}\small\item\em Get address for read access of the first analog output. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_ios_a5be4b1e87f1392a9d69127371c049ea9}{
-int \hyperlink{classmdt_device_ios_a5be4b1e87f1392a9d69127371c049ea9}{analogOutputsFirstAddressWrite} () const }
-\label{classmdt_device_ios_a5be4b1e87f1392a9d69127371c049ea9}
-
-\begin{DoxyCompactList}\small\item\em Get address for write access of the first analog output. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Get a list of all analog inputs segments. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_a8b9b14c4968e5aaae60ac7f91f77e06c}{
 int \hyperlink{classmdt_device_ios_a8b9b14c4968e5aaae60ac7f91f77e06c}{analogOutputsCount} () const }
 \label{classmdt_device_ios_a8b9b14c4968e5aaae60ac7f91f77e06c}
@@ -104,17 +115,19 @@ void \hyperlink{classmdt_device_ios_a5d3edb5c95163dbe88ab5f17b6175f2b}{setAnalog
 \begin{DoxyCompactList}\small\item\em Set a value and validity for all analog outputs. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_ios_a023571f5d77bd0874c08b53890a56381}{addDigitalInput} (\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$di)
 \begin{DoxyCompactList}\small\item\em Add a digital input. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ios_a470c27db1fefa6cd2a4a690bb0ff04f5}{addDigitalInputs} (const QList$<$ \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ $>$ \&diList)
+\begin{DoxyCompactList}\small\item\em Add a list of digital inputs. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_a78f68d0efeac0a23628f133121f28df8}{digitalInputAt} (int address)
 \begin{DoxyCompactList}\small\item\em Get digital input at given address. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_abcde6de5a0ca6d642af04c21250d6555}{digitalInputWithLabelShort} (const QString \&labelShort)
 \begin{DoxyCompactList}\small\item\em Get digital input with a given short label. \end{DoxyCompactList}\item 
 const QList$<$ \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ $>$ \hyperlink{classmdt_device_ios_adb2cbcd4adcee1e9434634694ee1ae24}{digitalInputs} () const 
 \begin{DoxyCompactList}\small\item\em Get a list containing all digital inputs. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_ios_a24e300fab861c054e6c61511fcff76c4}{
-int \hyperlink{classmdt_device_ios_a24e300fab861c054e6c61511fcff76c4}{digitalInputsFirstAddress} () const }
-\label{classmdt_device_ios_a24e300fab861c054e6c61511fcff76c4}
+\hypertarget{classmdt_device_ios_adc81519c2e6edc7fe54663c77d6eb503}{
+const QList$<$ \hyperlink{classmdt_device_ios_segment}{mdtDeviceIosSegment} $\ast$ $>$ \& \hyperlink{classmdt_device_ios_adc81519c2e6edc7fe54663c77d6eb503}{digitalInputsSegments} () const }
+\label{classmdt_device_ios_adc81519c2e6edc7fe54663c77d6eb503}
 
-\begin{DoxyCompactList}\small\item\em Get address of the first digital input. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Get a list of all digital inputs segments. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_a8d6306c16a25c82d6d8002020f4dc16a}{
 int \hyperlink{classmdt_device_ios_a8d6306c16a25c82d6d8002020f4dc16a}{digitalInputsCount} () const }
 \label{classmdt_device_ios_a8d6306c16a25c82d6d8002020f4dc16a}
@@ -125,8 +138,10 @@ void \hyperlink{classmdt_device_ios_a136d4a817fbd14c375ff068c436f3eeb}{setDigita
 \label{classmdt_device_ios_a136d4a817fbd14c375ff068c436f3eeb}
 
 \begin{DoxyCompactList}\small\item\em Set a value and validity for all digital inputs. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_ios_af1f41d3c60f1030fb303436820417d14}{addDigitalOutput} (\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$dout)
+void \hyperlink{classmdt_device_ios_afb202474ccc9b0ca58385b84283fecd4}{addDigitalOutput} (\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$dout, \hyperlink{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dd}{addressAccess\_\-t} sortSegmentsBy=Write)
 \begin{DoxyCompactList}\small\item\em Add a digital output. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ios_adf6a8efe1f82a9cfeea12afce6d58a5d}{addDigitalOutputs} (const QList$<$ \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ $>$ \&doList, \hyperlink{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dd}{addressAccess\_\-t} sortSegmentsBy=Write)
+\begin{DoxyCompactList}\small\item\em Add a list of digital outputs. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_a87647e98e2574a1e5f7c8780f9c33b13}{digitalOutputAtAddressRead} (int address)
 \begin{DoxyCompactList}\small\item\em Get digital output at given address for read access. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_af50bc664e381265b93b1e8faf7f883b7}{digitalOutputAtAddressWrite} (int address)
@@ -135,16 +150,11 @@ void \hyperlink{classmdt_device_ios_af1f41d3c60f1030fb303436820417d14}{addDigita
 \begin{DoxyCompactList}\small\item\em Get digital output with a given short label. \end{DoxyCompactList}\item 
 const QList$<$ \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ $>$ \hyperlink{classmdt_device_ios_a74418e6be28a2017140f102484f0df31}{digitalOutputs} () const 
 \begin{DoxyCompactList}\small\item\em Get a list containing all digital outputs. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_ios_af5683713bafa419f199ac756b769c9b7}{
-int \hyperlink{classmdt_device_ios_af5683713bafa419f199ac756b769c9b7}{digitalOutputsFirstAddressRead} () const }
-\label{classmdt_device_ios_af5683713bafa419f199ac756b769c9b7}
+\hypertarget{classmdt_device_ios_ad2b06fe61d71150ac57d77e9bfc7894b}{
+const QList$<$ \hyperlink{classmdt_device_ios_segment}{mdtDeviceIosSegment} $\ast$ $>$ \& \hyperlink{classmdt_device_ios_ad2b06fe61d71150ac57d77e9bfc7894b}{digitalOutputsSegments} () const }
+\label{classmdt_device_ios_ad2b06fe61d71150ac57d77e9bfc7894b}
 
-\begin{DoxyCompactList}\small\item\em Get address for read access of the first digital output. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_ios_af1e9a9ae2e49a031b74571c6386c785a}{
-int \hyperlink{classmdt_device_ios_af1e9a9ae2e49a031b74571c6386c785a}{digitalOutputsFirstAddressWrite} () const }
-\label{classmdt_device_ios_af1e9a9ae2e49a031b74571c6386c785a}
-
-\begin{DoxyCompactList}\small\item\em Get address for write access of the first digital output. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Get a list of all digital outputs segments. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_a81041e03a387fdcdc2638527b27a0ff6}{
 int \hyperlink{classmdt_device_ios_a81041e03a387fdcdc2638527b27a0ff6}{digitalOutputsCount} () const }
 \label{classmdt_device_ios_a81041e03a387fdcdc2638527b27a0ff6}
@@ -159,7 +169,9 @@ void \hyperlink{classmdt_device_ios_a5685ba4a6cee6fad1555dc9b51d1d932}{setDigita
 QList$<$ bool $>$ \hyperlink{classmdt_device_ios_a67388ae8181a19da07f7b74320a516e3}{digitalOutputsStatesByAddressWrite} () const }
 \label{classmdt_device_ios_a67388ae8181a19da07f7b74320a516e3}
 
-\begin{DoxyCompactList}\small\item\em Get all digital outputs states sorted by address for write access. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get all digital outputs states sorted by address for write access. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ios_a100ce7dcaecb7ee9a1a3e68f75cdac73}{setIosDefaultLabelShort} ()
+\begin{DoxyCompactList}\small\item\em Set a default short label for each I/O. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -187,10 +199,56 @@ Note: if a address is changed by accessing directly by \hyperlink{classmdt_analo
 \begin{DoxyItemize}
 \item \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$analogIn = new \hyperlink{classmdt_analog_io}{mdtAnalogIo};
 \item analogIn-\/$>$setAddress(25);
-\item ios.addAnalogInput(analogIn); 
+\item ios.addAnalogInput(analogIn);
 \end{DoxyItemize}
 
-Definition at line 62 of file mdtDeviceIos.h.
+For some devices it's possible to read/write multiple I/O's in one query (f.ex. I/O systems communicating with MODBUS). To use this functionnality, this I/O container provide a solution to get values for several I/O's. Because addresses of all I/O's that will be stored in this container are not necessarily contiguous, the concept of segment is used. For example: ADDRESS$|$0$|$1$|$2$|$5$|$6$|$ . Here, we have 2 segments: $|$0$|$1$|$2$|$ and $|$5$|$6$|$ . If we would write all I/O's present in this example, we could do it with 2 queries (1 per segment). To set/get data for segments, the folowing methods can be used:
+\begin{DoxyItemize}
+\item \hyperlink{classmdt_device_ios_a71a1b9cdbc524e4d0094ab37575defc1}{analogInputsSegments()}
+\item \hyperlink{classmdt_device_ios_afc425a36dd8942a507d993993bc141a9}{analogOutputsSegments()}
+\item \hyperlink{classmdt_device_ios_adc81519c2e6edc7fe54663c77d6eb503}{digitalInputsSegments()}
+\item \hyperlink{classmdt_device_ios_ad2b06fe61d71150ac57d77e9bfc7894b}{digitalOutputsSegments()}
+\end{DoxyItemize}
+
+Some helper methods are also available:
+\begin{DoxyItemize}
+\item \hyperlink{classmdt_device_ios_addeff0a2dab646a49170f8be10cc46fb}{updateAnalogInputValues()}
+\item \hyperlink{classmdt_device_ios_a3aee92ecadda601d9482aeb6419f0bb8}{updateAnalogOutputValues()}
+\item \hyperlink{classmdt_device_ios_ae994a3ef4d4f101ac185308e4afc05cb}{updateDigitalInputValues()}
+\item \hyperlink{classmdt_device_ios_a06642814dbbb525dff7d1a7e603f57ac}{updateDigitalOutputValues()} 
+\end{DoxyItemize}
+
+Definition at line 82 of file mdtDeviceIos.h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dd}{
+\index{mdtDeviceIos@{mdtDeviceIos}!addressAccess\_\-t@{addressAccess\_\-t}}
+\index{addressAccess\_\-t@{addressAccess\_\-t}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{addressAccess\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtDeviceIos::addressAccess\_\-t}}}
+\label{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dd}
+
+
+Adress access type. 
+
+It can happen that a I/O must be accessed by 2 different addresses for write (set) and read (get). A typical example is MODBUS. \begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{Read@{Read}!mdtDeviceIos@{mdtDeviceIos}}\index{mdtDeviceIos@{mdtDeviceIos}!Read@{Read}}\item[{\em 
+\hypertarget{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dda69811abe027fb5c9c22cf99034ef626b}{
+Read}
+\label{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dda69811abe027fb5c9c22cf99034ef626b}
+}]Considere the read access address \index{Write@{Write}!mdtDeviceIos@{mdtDeviceIos}}\index{mdtDeviceIos@{mdtDeviceIos}!Write@{Write}}\item[{\em 
+\hypertarget{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dda29a5b11f060f7fce671b9ced4bb4ef7a}{
+Write}
+\label{classmdt_device_ios_a72fc3fdcd905d669b1e90496e808d6dda29a5b11f060f7fce671b9ced4bb4ef7a}
+}]Considere the write access address \end{description}
+\end{Desc}
+
+
+
+Definition at line 94 of file mdtDeviceIos.h.
 
 
 
@@ -209,31 +267,82 @@ Definition at line 62 of file mdtDeviceIos.h.
 Add a analog input. 
 
 \begin{DoxyPrecond}{Precondition}
-ai must be a valid pointer 
+ao must be a valid pointer allready be stored 
+
+No I/O with same address must be set as double 
 \end{DoxyPrecond}
 
 
-Definition at line 81 of file mdtDeviceIos.cpp.
+Definition at line 98 of file mdtDeviceIos.cpp.
 
-\hypertarget{classmdt_device_ios_aeed1140ed869866a6edc738d3b2a6d0b}{
+\hypertarget{classmdt_device_ios_a776dc0508f88f8ea206801fc7472bfb2}{
+\index{mdtDeviceIos@{mdtDeviceIos}!addAnalogInputs@{addAnalogInputs}}
+\index{addAnalogInputs@{addAnalogInputs}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{addAnalogInputs}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::addAnalogInputs (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtAnalogIo} $\ast$ $>$ \&}]{aiList}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_a776dc0508f88f8ea206801fc7472bfb2}
+
+
+Add a list of analog inputs. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_ios_a0e2683630eff9410003a36ae5af76b52}{addAnalogInput()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 139 of file mdtDeviceIos.cpp.
+
+\hypertarget{classmdt_device_ios_aa0e736fa9663fa133cbf337d5a4b90e2}{
 \index{mdtDeviceIos@{mdtDeviceIos}!addAnalogOutput@{addAnalogOutput}}
 \index{addAnalogOutput@{addAnalogOutput}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{addAnalogOutput}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::addAnalogOutput (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtAnalogIo} $\ast$}]{ao}
+\item[{{\bf mdtAnalogIo} $\ast$}]{ao, }
+\item[{{\bf mdtDeviceIos::addressAccess\_\-t}}]{sortSegmentsBy = {\ttfamily Write}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_device_ios_aeed1140ed869866a6edc738d3b2a6d0b}
+\label{classmdt_device_ios_aa0e736fa9663fa133cbf337d5a4b90e2}
 
 
 Add a analog output. 
 
+
+\begin{DoxyParams}{Parameters}
+{\em sortSegmentsBy} & Output will be added to a segment. sortSegmentsBy gives the address access to consider. Note: if device maps addresses for read and write access in the same order, but just with a offset, this parameter is not important (The address set in \hyperlink{classmdt_analog_io}{mdtAnalogIo} object are not changed).\\
+\hline
+\end{DoxyParams}
 \begin{DoxyPrecond}{Precondition}
-ao must be a valid pointer 
+ao must be a valid pointer allready be stored 
+
+No I/O with same address must be set as double 
 \end{DoxyPrecond}
 
 
-Definition at line 139 of file mdtDeviceIos.cpp.
+Definition at line 193 of file mdtDeviceIos.cpp.
+
+\hypertarget{classmdt_device_ios_acde9cd81580041c5a9bcb5e3f7ee5592}{
+\index{mdtDeviceIos@{mdtDeviceIos}!addAnalogOutputs@{addAnalogOutputs}}
+\index{addAnalogOutputs@{addAnalogOutputs}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{addAnalogOutputs}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::addAnalogOutputs (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtAnalogIo} $\ast$ $>$ \&}]{aoList, }
+\item[{{\bf addressAccess\_\-t}}]{sortSegmentsBy = {\ttfamily Write}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_acde9cd81580041c5a9bcb5e3f7ee5592}
+
+
+Add a list of analog outputs. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_ios_aa0e736fa9663fa133cbf337d5a4b90e2}{addAnalogOutput()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 251 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a023571f5d77bd0874c08b53890a56381}{
 \index{mdtDeviceIos@{mdtDeviceIos}!addDigitalInput@{addDigitalInput}}
@@ -249,31 +358,82 @@ Definition at line 139 of file mdtDeviceIos.cpp.
 Add a digital input. 
 
 \begin{DoxyPrecond}{Precondition}
-di must be a valid pointer 
+ao must be a valid pointer allready be stored 
+
+No I/O with same address must be set as double 
 \end{DoxyPrecond}
 
 
-Definition at line 226 of file mdtDeviceIos.cpp.
+Definition at line 325 of file mdtDeviceIos.cpp.
 
-\hypertarget{classmdt_device_ios_af1f41d3c60f1030fb303436820417d14}{
+\hypertarget{classmdt_device_ios_a470c27db1fefa6cd2a4a690bb0ff04f5}{
+\index{mdtDeviceIos@{mdtDeviceIos}!addDigitalInputs@{addDigitalInputs}}
+\index{addDigitalInputs@{addDigitalInputs}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{addDigitalInputs}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::addDigitalInputs (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtDigitalIo} $\ast$ $>$ \&}]{diList}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_a470c27db1fefa6cd2a4a690bb0ff04f5}
+
+
+Add a list of digital inputs. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_ios_a023571f5d77bd0874c08b53890a56381}{addDigitalInput()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 368 of file mdtDeviceIos.cpp.
+
+\hypertarget{classmdt_device_ios_afb202474ccc9b0ca58385b84283fecd4}{
 \index{mdtDeviceIos@{mdtDeviceIos}!addDigitalOutput@{addDigitalOutput}}
 \index{addDigitalOutput@{addDigitalOutput}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{addDigitalOutput}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::addDigitalOutput (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtDigitalIo} $\ast$}]{dout}
+\item[{{\bf mdtDigitalIo} $\ast$}]{dout, }
+\item[{{\bf addressAccess\_\-t}}]{sortSegmentsBy = {\ttfamily Write}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_device_ios_af1f41d3c60f1030fb303436820417d14}
+\label{classmdt_device_ios_afb202474ccc9b0ca58385b84283fecd4}
 
 
 Add a digital output. 
 
+
+\begin{DoxyParams}{Parameters}
+{\em sortSegmentsBy} & Output will be added to a segment. sortSegmentsBy gives the address access to consider. Note: if device maps addresses for read and write access in the same order, but just with a offset, this parameter is not important (The address set in \hyperlink{classmdt_analog_io}{mdtAnalogIo} object are not changed).\\
+\hline
+\end{DoxyParams}
 \begin{DoxyPrecond}{Precondition}
-dout must be a valid pointer 
+ao must be a valid pointer allready be stored 
+
+No I/O with same address must be set as double 
 \end{DoxyPrecond}
 
 
-Definition at line 282 of file mdtDeviceIos.cpp.
+Definition at line 422 of file mdtDeviceIos.cpp.
+
+\hypertarget{classmdt_device_ios_adf6a8efe1f82a9cfeea12afce6d58a5d}{
+\index{mdtDeviceIos@{mdtDeviceIos}!addDigitalOutputs@{addDigitalOutputs}}
+\index{addDigitalOutputs@{addDigitalOutputs}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{addDigitalOutputs}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::addDigitalOutputs (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtDigitalIo} $\ast$ $>$ \&}]{doList, }
+\item[{{\bf addressAccess\_\-t}}]{sortSegmentsBy = {\ttfamily Write}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_adf6a8efe1f82a9cfeea12afce6d58a5d}
+
+
+Add a list of digital outputs. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_ios_afb202474ccc9b0ca58385b84283fecd4}{addDigitalOutput()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 479 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a70a3d979ec5d44297e8195e37596d5bc}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogInputAt@{analogInputAt}}
@@ -290,7 +450,7 @@ Get analog input at given address.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 93 of file mdtDeviceIos.cpp.
+Definition at line 149 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_aab70f76d2107f0a9324a9b9d4db21532}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogInputs@{analogInputs}}
@@ -305,9 +465,9 @@ Definition at line 93 of file mdtDeviceIos.cpp.
 
 Get a list containing all analog inputs. 
 
-Note: the returned list is not sorted 
+Note: the returned list is not sorted. for grouped queries, see \hyperlink{classmdt_device_ios_a71a1b9cdbc524e4d0094ab37575defc1}{analogInputsSegments()} and \hyperlink{classmdt_device_ios_addeff0a2dab646a49170f8be10cc46fb}{updateAnalogInputValues()} 
 
-Definition at line 112 of file mdtDeviceIos.cpp.
+Definition at line 168 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_ae31753e23d7ab14073f852dca85c2f9e}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogInputWithLabelShort@{analogInputWithLabelShort}}
@@ -324,7 +484,7 @@ Get analog input with a given short label.
 
 If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. 
 
-Definition at line 98 of file mdtDeviceIos.cpp.
+Definition at line 154 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a74385f332753cedb68ae4133c97384be}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogOutputAtAddressRead@{analogOutputAtAddressRead}}
@@ -341,7 +501,7 @@ Get analog output at given address for read access.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 157 of file mdtDeviceIos.cpp.
+Definition at line 261 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a968999a1021a96504805248e2ce04382}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogOutputAtAddressWrite@{analogOutputAtAddressWrite}}
@@ -358,7 +518,7 @@ Get analog output at given address for write access.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 162 of file mdtDeviceIos.cpp.
+Definition at line 266 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_aa4ddc48f9e3258adc7222ef3481a518e}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogOutputs@{analogOutputs}}
@@ -375,7 +535,7 @@ Get a list containing all analog outputs.
 
 Note: the returned list is not sorted 
 
-Definition at line 181 of file mdtDeviceIos.cpp.
+Definition at line 285 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_aab2b2b1f8c887eb9f439cf495ec95fbd}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogOutputWithLabelShort@{analogOutputWithLabelShort}}
@@ -392,7 +552,7 @@ Get analog output with a given short label.
 
 If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. 
 
-Definition at line 167 of file mdtDeviceIos.cpp.
+Definition at line 271 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a272fc1fa86e1b66e6af0e58b130939e0}{
 \index{mdtDeviceIos@{mdtDeviceIos}!deleteIos@{deleteIos}}
@@ -409,7 +569,7 @@ Delete all I/O objects.
 
 Will free all stored I/O objects. 
 
-Definition at line 55 of file mdtDeviceIos.cpp.
+Definition at line 70 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a78f68d0efeac0a23628f133121f28df8}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalInputAt@{digitalInputAt}}
@@ -426,7 +586,7 @@ Get digital input at given address.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 238 of file mdtDeviceIos.cpp.
+Definition at line 378 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_adb2cbcd4adcee1e9434634694ee1ae24}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalInputs@{digitalInputs}}
@@ -443,7 +603,7 @@ Get a list containing all digital inputs.
 
 Note: the returned list is not sorted 
 
-Definition at line 257 of file mdtDeviceIos.cpp.
+Definition at line 397 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_abcde6de5a0ca6d642af04c21250d6555}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalInputWithLabelShort@{digitalInputWithLabelShort}}
@@ -460,7 +620,7 @@ Get digital input with a given short label.
 
 If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. 
 
-Definition at line 243 of file mdtDeviceIos.cpp.
+Definition at line 383 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a87647e98e2574a1e5f7c8780f9c33b13}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalOutputAtAddressRead@{digitalOutputAtAddressRead}}
@@ -477,7 +637,7 @@ Get digital output at given address for read access.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 300 of file mdtDeviceIos.cpp.
+Definition at line 489 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_af50bc664e381265b93b1e8faf7f883b7}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalOutputAtAddressWrite@{digitalOutputAtAddressWrite}}
@@ -494,7 +654,7 @@ Get digital output at given address for write access.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 305 of file mdtDeviceIos.cpp.
+Definition at line 494 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a74418e6be28a2017140f102484f0df31}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalOutputs@{digitalOutputs}}
@@ -511,7 +671,7 @@ Get a list containing all digital outputs.
 
 Note: the returned list is not sorted 
 
-Definition at line 324 of file mdtDeviceIos.cpp.
+Definition at line 513 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_acecc7f9abb21613fed90212eef4d4dda}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalOutputWithLabelShort@{digitalOutputWithLabelShort}}
@@ -528,7 +688,7 @@ Get digital output with a given short label.
 
 If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. 
 
-Definition at line 310 of file mdtDeviceIos.cpp.
+Definition at line 499 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_af771f8080ce4a7260baa0acccacae0e1}{
 \index{mdtDeviceIos@{mdtDeviceIos}!setAutoDeleteIos@{setAutoDeleteIos}}
@@ -547,19 +707,37 @@ If true, all internal I/O's will be deleted when this object is deleted.
 
 By default, this flag is true. 
 
-Definition at line 50 of file mdtDeviceIos.cpp.
+Definition at line 65 of file mdtDeviceIos.cpp.
 
-\hypertarget{classmdt_device_ios_ab1a738a2305998aa0c8966d092db1c40}{
+\hypertarget{classmdt_device_ios_a100ce7dcaecb7ee9a1a3e68f75cdac73}{
+\index{mdtDeviceIos@{mdtDeviceIos}!setIosDefaultLabelShort@{setIosDefaultLabelShort}}
+\index{setIosDefaultLabelShort@{setIosDefaultLabelShort}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{setIosDefaultLabelShort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::setIosDefaultLabelShort (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_a100ce7dcaecb7ee9a1a3e68f75cdac73}
+
+
+Set a default short label for each I/O. 
+
+Default short label is the I/O type suffixed with his number (AI1, AI2, AO1, DI1, DO1, ...) 
+
+Definition at line 553 of file mdtDeviceIos.cpp.
+
+\hypertarget{classmdt_device_ios_addeff0a2dab646a49170f8be10cc46fb}{
 \index{mdtDeviceIos@{mdtDeviceIos}!updateAnalogInputValues@{updateAnalogInputValues}}
 \index{updateAnalogInputValues@{updateAnalogInputValues}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{updateAnalogInputValues}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::updateAnalogInputValues (
 \begin{DoxyParamCaption}
 \item[{const QList$<$ QVariant $>$ \&}]{values, }
-\item[{int}]{firstAddress, }
-\item[{int}]{n}
+\item[{const int}]{firstAddress, }
+\item[{const int}]{n, }
+\item[{bool}]{matchAddresses}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_device_ios_ab1a738a2305998aa0c8966d092db1c40}
+\label{classmdt_device_ios_addeff0a2dab646a49170f8be10cc46fb}
 
 
 Update (G)UI's value for a set of analog inputs. 
@@ -568,106 +746,191 @@ Update (G)UI's value for a set of analog inputs.
 \begin{DoxyParams}{Parameters}
 {\em values} & The values of inputs, must be sorted by address, ascending. If a value is invalid, concerned input will be set invalid. \\
 \hline
-{\em firstAddress} & Address of first inputs to update. If $<$ 0, the internal first address is considered. \\
+{\em firstAddress} & Address of first input to update:
+\begin{DoxyItemize}
+\item firstAddress $<$ 0 : the I/O in container that has the lowest address will fix the first address.
+\item firstAddress $>$= 0 : will be token as first address.
+\end{DoxyItemize}\\
 \hline
-{\em n} & Quantity of inputs to update. If $<$ 0, the internal quantity is considered.\\
+{\em n} & Maximum quantity of inputs to update (can be $<$ values size). If $<$ 0, the maximum possible values to store is determined between list size and the internal quantity of inputs. Note: this limit was introduced for conveniance during MODBUS decoding.\\
+\hline
+{\em matchAddresses} & If true, first index of values will be considered as first address , and only I/O's for witch address match will be updated. For example, if we have following I/O's addresses in container: 0,1,2,5,6 and we give 4 values:
+\begin{DoxyItemize}
+\item If firstAddress = 2 and matchAddresses is set : I/O's with address 2, 5 and 6 will be updated with values at index 0 and 3 (by giving firstAddress = 2, addresses are considered 2,3,4,5, so only 2 values will be updated).
+\item If firstAddress = -\/1 and matchAddresses is set : I/O's with address 0, 1 and 2 will be updated (4th value must match address 3 that not exit in container, so only 3 values will be updated).
+\item If firstAddress = 2 and matchAddresses not set : I/O's with address 2, 5 and 6 will be updated (only 3 values).
+\item If firstAddress = -\/1 and matchAddresses not set : I/O's with address 0, 1, 2 and 5 will be updated (all 4 values).
+\end{DoxyItemize}\\
 \hline
 \end{DoxyParams}
 Note:
 \begin{DoxyItemize}
 \item If one value is invalid, concerned input will be set invalid.
-\item Regarding on internal values type (double, int, ...), conversions will be done by internal \hyperlink{classmdt_analog_io}{mdtAnalogIo}. 
+\item Regarding on internal values type (double, int, ...), conversions will be done by internal \hyperlink{classmdt_analog_io}{mdtAnalogIo}.
 \end{DoxyItemize}
 
-Definition at line 369 of file mdtDeviceIos.cpp.
+\begin{DoxyPrecond}{Precondition}
+n must be $<$= values size 
+\end{DoxyPrecond}
 
-\hypertarget{classmdt_device_ios_a750075dc8a318e8a6feea2e0720e5586}{
+
+Definition at line 585 of file mdtDeviceIos.cpp.
+
+\hypertarget{classmdt_device_ios_a3aee92ecadda601d9482aeb6419f0bb8}{
 \index{mdtDeviceIos@{mdtDeviceIos}!updateAnalogOutputValues@{updateAnalogOutputValues}}
 \index{updateAnalogOutputValues@{updateAnalogOutputValues}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{updateAnalogOutputValues}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::updateAnalogOutputValues (
 \begin{DoxyParamCaption}
 \item[{const QList$<$ QVariant $>$ \&}]{values, }
-\item[{int}]{firstAddressRead, }
-\item[{int}]{n}
+\item[{int}]{firstAddress, }
+\item[{{\bf addressAccess\_\-t}}]{firstAddressAccess, }
+\item[{int}]{n, }
+\item[{bool}]{matchAddresses}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_device_ios_a750075dc8a318e8a6feea2e0720e5586}
+\label{classmdt_device_ios_a3aee92ecadda601d9482aeb6419f0bb8}
 
 
 Update (G)UI's value for a set of analog outputs. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em values} & The values of outputs, must be sorted by address, ascending. If a value is invalid, concerned output will be set invalid. \\
+{\em values} & The values of outputs, must be sorted by address, ascending. If a value is invalid, concerned outputs will be set invalid. \\
 \hline
-{\em firstAddressRead} & Address (for device read access) of first output to update. If $<$ 0, the internal first address is considered. \\
+{\em firstAddress} & Address of first output to update:
+\begin{DoxyItemize}
+\item firstAddress $<$ 0 : the I/O in container that has the lowest address will fix the first address.
+\item firstAddress $>$= 0 : will be token as first address.
+\end{DoxyItemize}\\
 \hline
-{\em n} & Quantity of outputs to update. If $<$ 0, the internal quantity is considered.\\
+{\em firstAddressAccess} & Tell here if given firstAddress is supposed for read or write access. Note: f.ex: by decoding a MODBUS PDU, we update I/O's of this container once we had read states from device, here the address access will also be Read.\\
+\hline
+{\em n} & Maximum quantity of outputs to update (can be $<$ values size). If $<$ 0, the maximum possible values to store is determined between list size and the internal quantity of outputs. Note: this limit was introduced for conveniance during MODBUS decoding.\\
+\hline
+{\em matchAddresses} & If true, first index of values will be considered as first address , and only I/O's for witch address match will be updated. For example, if we have following I/O's addresses in container: 0,1,2,5,6 and we give 4 values:
+\begin{DoxyItemize}
+\item If firstAddress = 2 and matchAddresses is set : I/O's with address 2, 5 and 6 will be updated with values at index 0 and 3 (by giving firstAddress = 2, addresses are considered 2,3,4,5, so only 2 values will be updated).
+\item If firstAddress = -\/1 and matchAddresses is set : I/O's with address 0, 1 and 2 will be updated (4th value must match address 3 that not exit in container, so only 3 values will be updated).
+\item If firstAddress = 2 and matchAddresses not set : I/O's with address 2, 5 and 6 will be updated (only 3 values).
+\item If firstAddress = -\/1 and matchAddresses not set : I/O's with address 0, 1, 2 and 5 will be updated (all 4 values).
+\end{DoxyItemize}\\
 \hline
 \end{DoxyParams}
 Note:
 \begin{DoxyItemize}
 \item If one value is invalid, concerned output will be set invalid.
-\item Regarding on internal values type (double, int, ...), conversions will be done by internal \hyperlink{classmdt_analog_io}{mdtAnalogIo}. 
+\item Regarding on internal values type (double, int, ...), conversions will be done by internal \hyperlink{classmdt_analog_io}{mdtAnalogIo}.
 \end{DoxyItemize}
 
-Definition at line 410 of file mdtDeviceIos.cpp.
+\begin{DoxyPrecond}{Precondition}
+n must be $<$= values size 
+\end{DoxyPrecond}
 
-\hypertarget{classmdt_device_ios_a349253f24f42bdbc012812120405ae06}{
+
+Definition at line 669 of file mdtDeviceIos.cpp.
+
+\hypertarget{classmdt_device_ios_ae994a3ef4d4f101ac185308e4afc05cb}{
 \index{mdtDeviceIos@{mdtDeviceIos}!updateDigitalInputValues@{updateDigitalInputValues}}
 \index{updateDigitalInputValues@{updateDigitalInputValues}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{updateDigitalInputValues}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::updateDigitalInputValues (
 \begin{DoxyParamCaption}
 \item[{const QList$<$ QVariant $>$ \&}]{values, }
 \item[{int}]{firstAddress, }
-\item[{int}]{n}
+\item[{int}]{n, }
+\item[{bool}]{matchAddresses}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_device_ios_a349253f24f42bdbc012812120405ae06}
+\label{classmdt_device_ios_ae994a3ef4d4f101ac185308e4afc05cb}
 
 
-Update (G)UI's state for a set of digital inputs. 
+Update (G)UI's value for a set of digital inputs. 
 
 
 \begin{DoxyParams}{Parameters}
 {\em values} & The values of inputs, must be sorted by address, ascending. If a value is invalid, concerned input will be set invalid. \\
 \hline
-{\em firstAddress} & Address of first input to update. If $<$ 0, the internal first address is considered. \\
+{\em firstAddress} & Address of first input to update:
+\begin{DoxyItemize}
+\item firstAddress $<$ 0 : the I/O in container that has the lowest address will fix the first address.
+\item firstAddress $>$= 0 : will be token as first address.
+\end{DoxyItemize}\\
 \hline
-{\em n} & Quantity of inputs to update. If $<$ 0, the internal quantity is considered. \\
+{\em n} & Maximum quantity of inputs to update (can be $<$ values size). If $<$ 0, the maximum possible values to store is determined between list size and the internal quantity of inputs. Note: this limit was introduced for conveniance during MODBUS decoding.\\
+\hline
+{\em matchAddresses} & If true, first index of values will be considered as first address , and only I/O's for witch address match will be updated. For example, if we have following I/O's addresses in container: 0,1,2,5,6 and we give 4 values:
+\begin{DoxyItemize}
+\item If firstAddress = 2 and matchAddresses is set : I/O's with address 2, 5 and 6 will be updated with values at index 0 and 3 (by giving firstAddress = 2, addresses are considered 2,3,4,5, so only 2 values will be updated).
+\item If firstAddress = -\/1 and matchAddresses is set : I/O's with address 0, 1 and 2 will be updated (4th value must match address 3 that not exit in container, so only 3 values will be updated).
+\item If firstAddress = 2 and matchAddresses not set : I/O's with address 2, 5 and 6 will be updated (only 3 values).
+\item If firstAddress = -\/1 and matchAddresses not set : I/O's with address 0, 1, 2 and 5 will be updated (all 4 values).
+\end{DoxyItemize}\\
 \hline
 \end{DoxyParams}
+Note:
+\begin{DoxyItemize}
+\item If one value is invalid, concerned input will be set invalid.
+\item Regarding on internal values type (double, int, ...), conversions will be done by internal \hyperlink{classmdt_analog_io}{mdtAnalogIo}.
+\end{DoxyItemize}
+
+\begin{DoxyPrecond}{Precondition}
+n must be $<$= values size 
+\end{DoxyPrecond}
 
 
-Definition at line 461 of file mdtDeviceIos.cpp.
+Definition at line 786 of file mdtDeviceIos.cpp.
 
-\hypertarget{classmdt_device_ios_a130769d03889ccdb7649dfcc605730b9}{
+\hypertarget{classmdt_device_ios_a06642814dbbb525dff7d1a7e603f57ac}{
 \index{mdtDeviceIos@{mdtDeviceIos}!updateDigitalOutputValues@{updateDigitalOutputValues}}
 \index{updateDigitalOutputValues@{updateDigitalOutputValues}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{updateDigitalOutputValues}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::updateDigitalOutputValues (
 \begin{DoxyParamCaption}
 \item[{const QList$<$ QVariant $>$ \&}]{values, }
-\item[{int}]{firstAddressRead, }
-\item[{int}]{n}
+\item[{int}]{firstAddress, }
+\item[{{\bf addressAccess\_\-t}}]{firstAddressAccess, }
+\item[{int}]{n, }
+\item[{bool}]{matchAddresses}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_device_ios_a130769d03889ccdb7649dfcc605730b9}
+\label{classmdt_device_ios_a06642814dbbb525dff7d1a7e603f57ac}
 
 
-Update (G)UI's state for a set of digital outputs. 
+Update (G)UI's value for a set of digital outputs. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em values} & The values of outputs, must be sorted by address, ascending. If a value is invalid, concerned output will be set invalid. \\
+{\em values} & The values of outputs, must be sorted by address, ascending. If a value is invalid, concerned outputs will be set invalid. \\
 \hline
-{\em firstAddressRead} & Address (for device read access) of first output to update. If $<$ 0, the internal first address is considered. \\
+{\em firstAddress} & Address of first output to update:
+\begin{DoxyItemize}
+\item firstAddress $<$ 0 : the I/O in container that has the lowest address will fix the first address.
+\item firstAddress $>$= 0 : will be token as first address.
+\end{DoxyItemize}\\
 \hline
-{\em n} & Quantity of outputs to update. If $<$ 0, the internal quantity is considered. \\
+{\em firstAddressAccess} & Tell here if given firstAddress is supposed for read or write access. Note: f.ex: by decoding a MODBUS PDU, we update I/O's of this container once we had read states from device, here the address access will also be Read.\\
+\hline
+{\em n} & Maximum quantity of outputs to update (can be $<$ values size). If $<$ 0, the maximum possible values to store is determined between list size and the internal quantity of outputs. Note: this limit was introduced for conveniance during MODBUS decoding.\\
+\hline
+{\em matchAddresses} & If true, first index of values will be considered as first address , and only I/O's for witch address match will be updated. For example, if we have following I/O's addresses in container: 0,1,2,5,6 and we give 4 values:
+\begin{DoxyItemize}
+\item If firstAddress = 2 and matchAddresses is set : I/O's with address 2, 5 and 6 will be updated with values at index 0 and 3 (by giving firstAddress = 2, addresses are considered 2,3,4,5, so only 2 values will be updated).
+\item If firstAddress = -\/1 and matchAddresses is set : I/O's with address 0, 1 and 2 will be updated (4th value must match address 3 that not exit in container, so only 3 values will be updated).
+\item If firstAddress = 2 and matchAddresses not set : I/O's with address 2, 5 and 6 will be updated (only 3 values).
+\item If firstAddress = -\/1 and matchAddresses not set : I/O's with address 0, 1, 2 and 5 will be updated (all 4 values).
+\end{DoxyItemize}\\
 \hline
 \end{DoxyParams}
+Note:
+\begin{DoxyItemize}
+\item If one value is invalid, concerned output will be set invalid.
+\item Regarding on internal values type (double, int, ...), conversions will be done by internal \hyperlink{classmdt_analog_io}{mdtAnalogIo}.
+\end{DoxyItemize}
+
+\begin{DoxyPrecond}{Precondition}
+n must be $<$= values size 
+\end{DoxyPrecond}
 
 
-Definition at line 495 of file mdtDeviceIos.cpp.
+Definition at line 870 of file mdtDeviceIos.cpp.
 
 
 

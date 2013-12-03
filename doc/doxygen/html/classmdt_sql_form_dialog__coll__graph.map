@@ -1,6 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_sql_form.html" title="Base class for high level SQL widgets API." alt="" coords="15,208,108,237"/>
-<area shape="rect" id="node4" href="$classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model." alt="" coords="5,101,139,131"/>
-<area shape="rect" id="node6" href="$classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="73,5,225,35"/>
-<area shape="rect" id="node8" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor." alt="" coords="155,155,253,184"/>
+<area shape="rect" id="node2" href="$classmdt_sql_form.html" title="Base class for high level SQL widgets API." alt="" coords="93,208,187,237"/>
+<area shape="rect" id="node4" href="$classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="5,101,77,131"/>
+<area shape="rect" id="node6" href="$classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model." alt="" coords="115,101,248,131"/>
+<area shape="rect" id="node8" href="$classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="177,5,329,35"/>
+<area shape="rect" id="node10" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor." alt="" coords="249,155,348,184"/>
 </map>

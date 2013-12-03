@@ -1,0 +1,124 @@
+\hypertarget{classmdt_field_map_item_dialog}{
+\section{mdtFieldMapItemDialog Class Reference}
+\label{classmdt_field_map_item_dialog}\index{mdtFieldMapItemDialog@{mdtFieldMapItemDialog}}
+}
+
+
+A dialog to setup a field map item.  
+
+
+
+
+{\ttfamily \#include $<$mdtFieldMapItemDialog.h$>$}
+
+
+
+Collaboration diagram for mdtFieldMapItemDialog:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{classmdt_field_map_item_dialog__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_field_map_item_dialog_a43b775a21d170f8d801f7c493cfdcdcc}{
+void {\bfseries accept} ()}
+\label{classmdt_field_map_item_dialog_a43b775a21d170f8d801f7c493cfdcdcc}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_field_map_item_dialog_ac745bae9c7ce26f72aa081bc54ac5f22}{
+\hyperlink{classmdt_field_map_item_dialog_ac745bae9c7ce26f72aa081bc54ac5f22}{mdtFieldMapItemDialog} (QWidget $\ast$parent=0)}
+\label{classmdt_field_map_item_dialog_ac745bae9c7ce26f72aa081bc54ac5f22}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_item_dialog_a12f195eeceb6729557a9e05835b7ca3f}{
+\hyperlink{classmdt_field_map_item_dialog_a12f195eeceb6729557a9e05835b7ca3f}{$\sim$mdtFieldMapItemDialog} ()}
+\label{classmdt_field_map_item_dialog_a12f195eeceb6729557a9e05835b7ca3f}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_field_map_item_dialog_a97e6808b1c3b3bb5748a0fcc98a439c9}{setSourceFields} (const QList$<$ \hyperlink{classmdt_field_map_field}{mdtFieldMapField} $>$ \&fields)
+\begin{DoxyCompactList}\small\item\em Set source fields. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_field_map_item_dialog_a0fe47b3b9634d292936dfe4e0a4df36e}{setDestinationFields} (const QList$<$ \hyperlink{classmdt_field_map_field}{mdtFieldMapField} $>$ \&fields)
+\begin{DoxyCompactList}\small\item\em Set destination fields. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_item_dialog_a0e047487ba8b45d2e1ef8bfb9f78c8a6}{
+void \hyperlink{classmdt_field_map_item_dialog_a0e047487ba8b45d2e1ef8bfb9f78c8a6}{setSourceData} (const QString \&data)}
+\label{classmdt_field_map_item_dialog_a0e047487ba8b45d2e1ef8bfb9f78c8a6}
+
+\begin{DoxyCompactList}\small\item\em Set source data (used for preview) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_item_dialog_a9f0ff77de969dade822684f63ed52595}{
+void \hyperlink{classmdt_field_map_item_dialog_a9f0ff77de969dade822684f63ed52595}{setMapItem} (const \hyperlink{classmdt_field_map_item}{mdtFieldMapItem} \&item)}
+\label{classmdt_field_map_item_dialog_a9f0ff77de969dade822684f63ed52595}
+
+\begin{DoxyCompactList}\small\item\em Set map item. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_item_dialog_a37dd9e2cf50228e1f12c59f052b55e85}{
+\hyperlink{classmdt_field_map_item}{mdtFieldMapItem} \hyperlink{classmdt_field_map_item_dialog_a37dd9e2cf50228e1f12c59f052b55e85}{mapItem} () const }
+\label{classmdt_field_map_item_dialog_a37dd9e2cf50228e1f12c59f052b55e85}
+
+\begin{DoxyCompactList}\small\item\em Get map item. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A dialog to setup a field map item. 
+
+Definition at line 35 of file mdtFieldMapItemDialog.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_field_map_item_dialog_a0fe47b3b9634d292936dfe4e0a4df36e}{
+\index{mdtFieldMapItemDialog@{mdtFieldMapItemDialog}!setDestinationFields@{setDestinationFields}}
+\index{setDestinationFields@{setDestinationFields}!mdtFieldMapItemDialog@{mdtFieldMapItemDialog}}
+\subsubsection[{setDestinationFields}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFieldMapItemDialog::setDestinationFields (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtFieldMapField} $>$ \&}]{fields}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_item_dialog_a0fe47b3b9634d292936dfe4e0a4df36e}
+
+
+Set destination fields. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fields} & List of available (possibly allready not used) fields. These fields will populate the destination fields combobox .\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+fields must contain at least 1 item 
+\end{DoxyPrecond}
+
+
+Definition at line 73 of file mdtFieldMapItemDialog.cpp.
+
+\hypertarget{classmdt_field_map_item_dialog_a97e6808b1c3b3bb5748a0fcc98a439c9}{
+\index{mdtFieldMapItemDialog@{mdtFieldMapItemDialog}!setSourceFields@{setSourceFields}}
+\index{setSourceFields@{setSourceFields}!mdtFieldMapItemDialog@{mdtFieldMapItemDialog}}
+\subsubsection[{setSourceFields}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFieldMapItemDialog::setSourceFields (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtFieldMapField} $>$ \&}]{fields}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_item_dialog_a97e6808b1c3b3bb5748a0fcc98a439c9}
+
+
+Set source fields. 
+
+\begin{DoxyPrecond}{Precondition}
+fields must contain at least 1 item 
+\end{DoxyPrecond}
+
+
+Definition at line 53 of file mdtFieldMapItemDialog.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtFieldMapItemDialog.h\item 
+src/mdtutilsgui/mdtFieldMapItemDialog.cpp\end{DoxyCompactItemize}

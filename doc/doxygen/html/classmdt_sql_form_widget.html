@@ -116,6 +116,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_widget.html#ace4f7fad749a4efe1233b61d071b3926">mapFormWidgets</a> (const QString &amp;firstWidgetInTabOrder=QString())</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Map widgets to matching database fields.  <a href="#ace4f7fad749a4efe1233b61d071b3926"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QWidgetList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_widget.html#a92648a10dd7e830faca0989007c49b6e">mappedWidgets</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of mapped widgets.  <a href="#a92648a10dd7e830faca0989007c49b6e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_widget.html#a9588fdc58b30440077b8dcfa3a2fb3c0">currentRow</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current row.  <a href="#a9588fdc58b30440077b8dcfa3a2fb3c0"></a><br/></td></tr>
 </table>
@@ -128,7 +130,7 @@ Public Member Functions</h2></td></tr>
 <p>Internally, <a class="el" href="classmdt_sql_data_widget_mapper.html" title="DataWidget mapper.">mdtSqlDataWidgetMapper</a> is used together with <a class="el" href="classmdt_sql_field_handler.html" title="Handle events between a SQL field and a edition widget.">mdtSqlFieldHandler</a>. Errors and user interactions are handled by this class.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor.">mdtSqlWindow</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8h_source.html#l00066">66</a> of file <a class="el" href="mdt_sql_form_widget_8h_source.html">mdtSqlFormWidget.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8h_source.html#l00067">67</a> of file <a class="el" href="mdt_sql_form_widget_8h_source.html">mdtSqlFormWidget.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a9588fdc58b30440077b8dcfa3a2fb3c0"></a><!-- doxytag: member="mdtSqlFormWidget::currentRow" ref="a9588fdc58b30440077b8dcfa3a2fb3c0" args="() const " -->
 <div class="memitem">
@@ -149,7 +151,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">mdtAbstractSqlWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -169,7 +171,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Map widgets to matching database fields. </p>
-<p>Will parse all child widgets found in layout, extract widgets that have a fld_ prefix as object name. For each of them, corresponding field will be searched in model (database).</p>
+<p>Will parse all child widgets found in layout (and contained widgets layouts), extract widgets that have a fld_ prefix as object name. For each of them, corresponding field will be searched in model (database).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">firstWidgetInTabOrder</td><td>It's possible to specify the object name of the first widget in tab order. This is then used by insertion to give this widget the focus.</td></tr>
@@ -181,11 +183,32 @@ Public Member Functions</h2></td></tr>
 Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model.">setModel()</a> before using this method. </dd></dl>
 
 <p><p>disconnect(this, SIGNAL(<a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604" title="Emitted when select() or setQuery() was called on (parent) model.">modelSelected()</a>), pvWidgetMapper, SLOT(<a class="el" href="classmdt_sql_form_widget.html#a4bb7ddf419e845de2d1a7c1ef95e48a8" title="Set first record as current record.">toFirst()</a>));</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000069">Todo:</a></b></dt><dd>Check redoundances with onCurrentIndexChanged() </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000084">Todo:</a></b></dt><dd>Check redoundances with onCurrentIndexChanged() </dd></dl>
 <p>connect(this, SIGNAL(<a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604" title="Emitted when select() or setQuery() was called on (parent) model.">modelSelected()</a>), pvWidgetMapper, SLOT(<a class="el" href="classmdt_sql_form_widget.html#a4bb7ddf419e845de2d1a7c1ef95e48a8" title="Set first record as current record.">toFirst()</a>)); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00051">51</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a92648a10dd7e830faca0989007c49b6e"></a><!-- doxytag: member="mdtSqlFormWidget::mappedWidgets" ref="a92648a10dd7e830faca0989007c49b6e" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QWidgetList mdtSqlFormWidget::mappedWidgets </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list of mapped widgets. </p>
+<p>Note: the list is built at each call of this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00129">129</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -208,7 +231,7 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:48 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

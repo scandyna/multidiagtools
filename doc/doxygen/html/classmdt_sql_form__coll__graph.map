@@ -1,4 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model." alt="" coords="15,85,148,115"/>
-<area shape="rect" id="node4" href="$classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="5,5,157,35"/>
+<area shape="rect" id="node2" href="$classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="5,85,77,115"/>
+<area shape="rect" id="node4" href="$classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model." alt="" coords="101,85,235,115"/>
+<area shape="rect" id="node6" href="$classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="92,5,244,35"/>
 </map>

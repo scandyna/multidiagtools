@@ -72,6 +72,8 @@ void \hyperlink{classmdt_sql_form_widget_a982e8e8347ec4f98bf3df6980997a2db}{setC
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_form_widget_ace4f7fad749a4efe1233b61d071b3926}{mapFormWidgets} (const QString \&firstWidgetInTabOrder=QString())
 \begin{DoxyCompactList}\small\item\em Map widgets to matching database fields. \end{DoxyCompactList}\item 
+QWidgetList \hyperlink{classmdt_sql_form_widget_a92648a10dd7e830faca0989007c49b6e}{mappedWidgets} () const 
+\begin{DoxyCompactList}\small\item\em Get a list of mapped widgets. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_sql_form_widget_a9588fdc58b30440077b8dcfa3a2fb3c0}{currentRow} () const 
 \begin{DoxyCompactList}\small\item\em Get the current row. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -94,7 +96,7 @@ Internally, \hyperlink{classmdt_sql_data_widget_mapper}{mdtSqlDataWidgetMapper} 
 \end{DoxySeeAlso}
 
 
-Definition at line 66 of file mdtSqlFormWidget.h.
+Definition at line 67 of file mdtSqlFormWidget.h.
 
 
 
@@ -118,7 +120,7 @@ Implements \hyperlink{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf
 
 
 
-Definition at line 130 of file mdtSqlFormWidget.cpp.
+Definition at line 146 of file mdtSqlFormWidget.cpp.
 
 \hypertarget{classmdt_sql_form_widget_ace4f7fad749a4efe1233b61d071b3926}{
 \index{mdtSqlFormWidget@{mdtSqlFormWidget}!mapFormWidgets@{mapFormWidgets}}
@@ -133,7 +135,7 @@ Definition at line 130 of file mdtSqlFormWidget.cpp.
 
 Map widgets to matching database fields. 
 
-Will parse all child widgets found in layout, extract widgets that have a fld\_\- prefix as object name. For each of them, corresponding field will be searched in model (database).
+Will parse all child widgets found in layout (and contained widgets layouts), extract widgets that have a fld\_\- prefix as object name. For each of them, corresponding field will be searched in model (database).
 
 
 \begin{DoxyParams}{Parameters}
@@ -150,14 +152,31 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 disconnect(this, SIGNAL(\hyperlink{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}{modelSelected()}), pvWidgetMapper, SLOT(\hyperlink{classmdt_sql_form_widget_a4bb7ddf419e845de2d1a7c1ef95e48a8}{toFirst()}));
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000069}{Todo}]Check redoundances with onCurrentIndexChanged() \end{Desc}
+\item[\hyperlink{todo__todo000084}{Todo}]Check redoundances with onCurrentIndexChanged() \end{Desc}
 
 
 connect(this, SIGNAL(\hyperlink{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}{modelSelected()}), pvWidgetMapper, SLOT(\hyperlink{classmdt_sql_form_widget_a4bb7ddf419e845de2d1a7c1ef95e48a8}{toFirst()})); 
 
 
 
-Definition at line 51 of file mdtSqlFormWidget.cpp.
+Definition at line 52 of file mdtSqlFormWidget.cpp.
+
+\hypertarget{classmdt_sql_form_widget_a92648a10dd7e830faca0989007c49b6e}{
+\index{mdtSqlFormWidget@{mdtSqlFormWidget}!mappedWidgets@{mappedWidgets}}
+\index{mappedWidgets@{mappedWidgets}!mdtSqlFormWidget@{mdtSqlFormWidget}}
+\subsubsection[{mappedWidgets}]{\setlength{\rightskip}{0pt plus 5cm}QWidgetList mdtSqlFormWidget::mappedWidgets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_sql_form_widget_a92648a10dd7e830faca0989007c49b6e}
+
+
+Get a list of mapped widgets. 
+
+Note: the list is built at each call of this method. 
+
+Definition at line 129 of file mdtSqlFormWidget.cpp.
 
 
 

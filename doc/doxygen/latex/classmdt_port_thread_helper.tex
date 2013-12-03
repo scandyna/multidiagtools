@@ -145,7 +145,7 @@ Will call:
 \item \hyperlink{classmdt_port_thread_helper_a08f1395dda714880d62a24687821eba1}{restoreCurrentWriteFrameToPool()}; 
 \end{DoxyItemize}
 
-Definition at line 46 of file mdtPortThreadHelper.cpp.
+Definition at line 47 of file mdtPortThreadHelper.cpp.
 
 
 
@@ -165,7 +165,7 @@ Get current read frame.
 
 Can return a null pointer. 
 
-Definition at line 327 of file mdtPortThreadHelper.cpp.
+Definition at line 328 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a7b7f97c9add6cc0344cb674804ac584d}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!currentWriteFrame@{currentWriteFrame}}
@@ -182,7 +182,7 @@ Get current write frame.
 
 Can return a null pointer. 
 
-Definition at line 337 of file mdtPortThreadHelper.cpp.
+Definition at line 338 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_aed853f4cedc143c62e7dad5e38ff4b8c}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!getNewFrameRead@{getNewFrameRead}}
@@ -202,7 +202,7 @@ This is a helper method to get a new frame in port's read frames pool.
 It can hapen that the read frames pool is empty. In this case, a error will be generated in the \hyperlink{classmdt_error}{mdtError} log system, and notified with ReadPoolEmpty error. This method will also block ( sleep ) until a frame is available in read pool.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000032}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
+\item[\hyperlink{todo__todo000046}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
 
 
 Note about port mutex handling:\par
@@ -223,7 +223,7 @@ If this method returns true, \hyperlink{classmdt_port_thread_helper_a36445798b09
 \end{DoxyPostcond}
 
 
-Definition at line 179 of file mdtPortThreadHelper.cpp.
+Definition at line 180 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a596b0616e64c089d5c877d86b0a75e9d}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!getNewFrameWrite@{getNewFrameWrite}}
@@ -263,7 +263,7 @@ If this method returns true, \hyperlink{classmdt_port_thread_helper_a7b7f97c9add
 \end{DoxySeeAlso}
 
 
-Definition at line 291 of file mdtPortThreadHelper.cpp.
+Definition at line 292 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a53d0eacc7048cf32566785a7fb527458}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!handleCommonReadErrors@{handleCommonReadErrors}}
@@ -306,7 +306,7 @@ If frame is null, a UnhandledError is returned.
 \end{DoxyPostcond}
 
 
-Definition at line 69 of file mdtPortThreadHelper.cpp.
+Definition at line 70 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a92d8912aa908f18bd9b4d528c68b72aa}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!handleCommonReadWriteErrors@{handleCommonReadWriteErrors}}
@@ -335,7 +335,7 @@ Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e9229
 \end{DoxyPrecond}
 
 
-Definition at line 161 of file mdtPortThreadHelper.cpp.
+Definition at line 162 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a84871009b6128912f7d3869b14e37aa2}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!handleCommonWriteErrors@{handleCommonWriteErrors}}
@@ -375,7 +375,7 @@ Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e9229
 \end{DoxyPrecond}
 
 
-Definition at line 119 of file mdtPortThreadHelper.cpp.
+Definition at line 120 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a751006665ed9f110ade8ced5264a5f50}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!newFrameReaden@{newFrameReaden}}
@@ -409,7 +409,7 @@ Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e9229
 \end{DoxyPrecond}
 
 
-Definition at line 342 of file mdtPortThreadHelper.cpp.
+Definition at line 343 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a78007ee41a04ffde474087a80858c0ce}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!readProcessBegin@{readProcessBegin}}
@@ -443,7 +443,7 @@ Reimplemented in \hyperlink{classmdt_port_thread_helper_port_a0404d78ce7372c4732
 
 
 
-Definition at line 349 of file mdtPortThreadHelper.cpp.
+Definition at line 350 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_ac531bd67a8469e414fea4e5b16214d80}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!restoreCurrentReadFrameToPool@{restoreCurrentReadFrameToPool}}
@@ -473,7 +473,7 @@ Port's readFramesPool queue must not allready contain currentReadFrame.
 \end{DoxyPrecond}
 
 
-Definition at line 230 of file mdtPortThreadHelper.cpp.
+Definition at line 231 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a08f1395dda714880d62a24687821eba1}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!restoreCurrentWriteFrameToPool@{restoreCurrentWriteFrameToPool}}
@@ -503,7 +503,7 @@ Port's writeFramesPool queue must not allready contain currentWriteFrame.
 \end{DoxyPrecond}
 
 
-Definition at line 309 of file mdtPortThreadHelper.cpp.
+Definition at line 310 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!setPort@{setPort}}
@@ -523,7 +523,7 @@ port must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 52 of file mdtPortThreadHelper.cpp.
+Definition at line 53 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!setThread@{setThread}}
@@ -543,7 +543,7 @@ thread must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 59 of file mdtPortThreadHelper.cpp.
+Definition at line 60 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_aec690fd203fa4dcaba36b5db781daabf}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!submitCurrentReadFrame@{submitCurrentReadFrame}}
@@ -578,7 +578,7 @@ Port's readenFrames queue must not allready contain currentReadFrame.
 \end{DoxyPrecond}
 
 
-Definition at line 214 of file mdtPortThreadHelper.cpp.
+Definition at line 215 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_ac433a4db4cbc8d6749a5f9fe4867b894}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!submitReadenData@{submitReadenData}}
@@ -621,7 +621,7 @@ data must be valid.
 \end{DoxyPrecond}
 
 
-Definition at line 243 of file mdtPortThreadHelper.cpp.
+Definition at line 244 of file mdtPortThreadHelper.cpp.
 
 \hypertarget{classmdt_port_thread_helper_a80df5929776f6c617b96f2184e2bc96d}{
 \index{mdtPortThreadHelper@{mdtPortThreadHelper}!writeProcessBegin@{writeProcessBegin}}

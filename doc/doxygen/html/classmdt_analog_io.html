@@ -103,17 +103,19 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>rangeChangedForUi</b>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affcdf039a10023b495cf49a5f476f829"></a><!-- doxytag: member="mdtAnalogIo::mdtAnalogIo" ref="affcdf039a10023b495cf49a5f476f829" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>mdtAnalogIo</b> (QObject *parent=0)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#affcdf039a10023b495cf49a5f476f829">mdtAnalogIo</a> (QObject *parent=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ec3c075b1d49c2d0917c09e4950b856"></a><!-- doxytag: member="mdtAnalogIo::~mdtAnalogIo" ref="a7ec3c075b1d49c2d0917c09e4950b856" args="()" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a7ec3c075b1d49c2d0917c09e4950b856">~mdtAnalogIo</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb4cd82bee1ac1e77148c8621b1c66fa"></a><!-- doxytag: member="mdtAnalogIo::setUnit" ref="afb4cd82bee1ac1e77148c8621b1c66fa" args="(const QString &amp;unit)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#afb4cd82bee1ac1e77148c8621b1c66fa">setUnit</a> (const QString &amp;unit)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the unit (V, A, °C, ...) <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a126d5b9bf4a0bb9ce9f2ff6a010fef0e"></a><!-- doxytag: member="mdtAnalogIo::unit" ref="a126d5b9bf4a0bb9ce9f2ff6a010fef0e" args="() const " -->
 QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a126d5b9bf4a0bb9ce9f2ff6a010fef0e">unit</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unit. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#ab5733c8d4f49da6e6d4f11f1e1aa9555">setRange</a> (double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the range of values and bits decode parameters.  <a href="#ab5733c8d4f49da6e6d4f11f1e1aa9555"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a2263d9b0bf2c1b998386c590866f06e8">setEncodeBitSettings</a> (int intValueBitsCount, int intValueLsbIndex)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the bits encode parammeters.  <a href="#a2263d9b0bf2c1b998386c590866f06e8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a026624e890e4f2084c88377a6e4f1b47">setRange</a> (double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false, bool scaleFromMinToMax=true, double conversionFactor=1.0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the range of values and bits decode parameters.  <a href="#a026624e890e4f2084c88377a6e4f1b47"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd2b8cb33d5d42abf23672ad7675825e"></a><!-- doxytag: member="mdtAnalogIo::minimum" ref="acd2b8cb33d5d42abf23672ad7675825e" args="() const " -->
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#acd2b8cb33d5d42abf23672ad7675825e">minimum</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the minimum value of the range. <br/></td></tr>
@@ -129,48 +131,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 
 <p>Definition at line <a class="el" href="mdt_analog_io_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_analog_io_8h_source.html">mdtAnalogIo.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a2263d9b0bf2c1b998386c590866f06e8"></a><!-- doxytag: member="mdtAnalogIo::setEncodeBitSettings" ref="a2263d9b0bf2c1b998386c590866f06e8" args="(int intValueBitsCount, int intValueLsbIndex)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtAnalogIo::setEncodeBitSettings </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>intValueBitsCount</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>intValueLsbIndex</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the bits encode parammeters. </p>
-<p>On many analog output module, it is possible to set a value, and read it. It can happen that the bitmap differs between write and read (f.ex. Wago 750-550). In such case, a alternate bits count and lsb index can be set here.</p>
-<p>Note that <a class="el" href="classmdt_analog_io.html#ab5733c8d4f49da6e6d4f11f1e1aa9555" title="Specify the range of values and bits decode parameters.">setRange()</a> will overwrite thiese settings.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">intValueBitsCount</td><td>Number of bits used for the value, including sign bit. (has only effect when using valueInt() ). </td></tr>
-    <tr><td class="paramname">intValueLsbIndex</td><td>Index of first bit to use for value extraction. (has only effect when using valueInt() ).</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>true on success. Some checks are done, and if one fails, false is returned and the previous settingsare used for conversion. </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00120">120</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab5733c8d4f49da6e6d4f11f1e1aa9555"></a><!-- doxytag: member="mdtAnalogIo::setRange" ref="ab5733c8d4f49da6e6d4f11f1e1aa9555" args="(double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false)" -->
+<a class="anchor" id="a026624e890e4f2084c88377a6e4f1b47"></a><!-- doxytag: member="mdtAnalogIo::setRange" ref="a026624e890e4f2084c88377a6e4f1b47" args="(double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false, bool scaleFromMinToMax=true, double conversionFactor=1.0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -202,7 +163,19 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>intValueSigned</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>intValueSigned</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>scaleFromMinToMax</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>conversionFactor</em> = <code>1.0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -222,15 +195,28 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <li>Value is encoded in 12 bits, from b3 to b14 + 1 sign bit, b15</li>
 <li>Value is scaled from -10 V to 10 V</li>
 </ul>
-<p>In this example, this method must be called with min = -10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 and intValueSigned = true .</p>
-<p>Note that some analog output hardware use a different resolution for read and write (f.ex. Wago 750-550). In such case, you can set parameters for reading here, and use <a class="el" href="classmdt_analog_io.html#a2263d9b0bf2c1b998386c590866f06e8" title="Set the bits encode parammeters.">setEncodeBitSettings()</a> for alternate parameters for write.</p>
+<p>In this example, this method must be called with min = -10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 , intValueSigned = true , scaleFromMinToMax = true , conversionFactor = 1.0 .</p>
+<p>Here is another example with Wago 750-464 with Pt100 sensor and normal format:</p>
+<ul>
+<li>Value is encoded in 16 bits</li>
+<li>Scaling is allready done by device</li>
+<li>Value represents 0.1°C per digit -&gt; we have to apply a conversion factor of 0.1</li>
+</ul>
+<p>In this example, this method must be called with min = -200.0 , max = 850.0 , intValueBitsCount = 16 , intValueLsbIndex = 0 , intValueSigned = true , scaleFromMinToMax = false , conversionFactor = 0.1 .</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">min</td><td>Minimum value to display (f.ex. 0V, or 4mA) </td></tr>
     <tr><td class="paramname">max</td><td>Maximum value to display (f.ex. 10V, or 20mA) </td></tr>
-    <tr><td class="paramname">intValueBitsCount</td><td>Number of bits used for the value, including sign bit. (has only effect when using <a class="el" href="classmdt_analog_io.html#a2b1fb3fd25580c4e470f1962f7640750" title="Set the integer value.">setValueInt()</a> ). </td></tr>
-    <tr><td class="paramname">intValueLsbIndex</td><td>Index of first bit to use for value extraction. (has only effect when using <a class="el" href="classmdt_analog_io.html#a2b1fb3fd25580c4e470f1962f7640750" title="Set the integer value.">setValueInt()</a> ). </td></tr>
-    <tr><td class="paramname">intValueSigned</td><td>If true, decoded value is considered as signed value, i.e. the most significant bit is the sign. (has only effect when using <a class="el" href="classmdt_analog_io.html#a2b1fb3fd25580c4e470f1962f7640750" title="Set the integer value.">setValueInt()</a> ).</td></tr>
+    <tr><td class="paramname">intValueBitsCount</td><td>Number of bits used for the value, including sign bit. </td></tr>
+    <tr><td class="paramname">intValueLsbIndex</td><td>Index of first bit to use for value extraction. </td></tr>
+    <tr><td class="paramname">intValueSigned</td><td>If true, decoded value is considered as signed value, i.e. the most significant bit is the sign. </td></tr>
+    <tr><td class="paramname">scaleFromMinToMax</td><td>If true, given value INT will be scaled from min to max regarding LSB. LSB is determined from intValueBitsCount . </td></tr>
+    <tr><td class="paramname">conversionFactor</td><td>This factor is applied as follow (min, max scaling is ignored in this example):<ul>
+<li>ValueDouble = valueInt * LSB * conversionFactor</li>
+<li>ValueInt = valueDouble / (LSB * conversionFactor)<br/>
+ LSB is determined from intValueBitsCount .</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -242,7 +228,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <li>The signal <a class="el" href="classmdt_abstract_io.html#a0241183736b9bc3abb021868b9bf4273" title="This signal is emitted whenever the value is changed.">valueChangedForUi()</a> is emited </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -276,7 +262,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_io.html#a3f5fc9ed13c2ec2aad0987cd15d95e31">mdtAbstractIo</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00181">181</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00143">143</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -312,7 +298,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <div class="memdoc">
 
 <p>Set the integer value. </p>
-<p>Will calculate the real value depending on resolution and update display. The resolution is set with <a class="el" href="classmdt_analog_io.html#ab5733c8d4f49da6e6d4f11f1e1aa9555" title="Specify the range of values and bits decode parameters.">setRange()</a> (intValueBitsCount parameter)</p>
+<p>Will calculate the real value depending on resolution and update display. The resolution is set with <a class="el" href="classmdt_analog_io.html#a026624e890e4f2084c88377a6e4f1b47" title="Specify the range of values and bits decode parameters.">setRange()</a> (intValueBitsCount parameter)</p>
 <p>The <a class="el" href="classmdt_abstract_io.html#a43feaa62996af78f64aea084122f1370" title="This signal is emitted whenever the value is changed.">valueChanged()</a> signal is emitted.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -327,7 +313,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <li>The signal <a class="el" href="classmdt_abstract_io.html#a0241183736b9bc3abb021868b9bf4273" title="This signal is emitted whenever the value is changed.">valueChangedForUi()</a> is emited </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00170">170</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -350,7 +336,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:47 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

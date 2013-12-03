@@ -1,4 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_data_table_model.html" title="mdtDataTableModel" alt="" coords="5,5,144,35"/>
-<area shape="rect" id="node4" href="$classmdt_field_map.html" title="Map fields between a source and a destination data set." alt="" coords="168,5,264,35"/>
+<area shape="rect" id="node2" href="$classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="19,5,91,35"/>
+<area shape="rect" id="node6" href="$classmdt_sql_database_manager.html" title="Helper class to create and open (connect to) database." alt="" coords="92,101,260,131"/>
+<area shape="rect" id="node4" href="$classmdt_field_map.html" title="Map fields between a source and a destination data set." alt="" coords="284,101,380,131"/>
 </map>

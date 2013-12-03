@@ -86,6 +86,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
   <tr bgcolor="#f0f0f0"><td><b>getDigitalOutputValue</b>(const QString &amp;labelShort, bool queryDevice, bool waitOnReply) (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e">getNewTransaction</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14">getRegisterValues</a>(int address, int n)</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a8887a1142d3d3be673c18cf3376e7af4">isReady</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a6d501791e7243358cc61b144254b80db">mdtDevice</a>(QObject *parent=0)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtDeviceModbus</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a>)</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus.html#ac547788aa95d46c00ddb1342eb46ef93">modbusTcpPortManager</a>()</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td></td></tr>
@@ -119,10 +120,12 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a93abbc706a1e6601ce947eee5e50fba6">setDigitalOutputValue</a>(mdtDigitalIo *digitalOutput)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2">setIos</a>(mdtDeviceIos *ios, bool autoOutputUpdate=false)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518">setName</a>(const QString &amp;name)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device_modbus.html#a4128420bde679c3666bdf8954a221a53">setRegisterValues</a>(int startAddress, QList&lt; int &gt; &amp;values)</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7">start</a>(int queryInterval)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d">stateChanged</a>(int state)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c">statusMessageChanged</a>(const QString &amp;message, const QString &amp;details, int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407">stop</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a6def09a050cbf3521b615e8300c42f66">wait</a>(int ms)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ab937015c1a319b7234442a4cc29a02a8">waitTransactionDone</a>(int id)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus.html#ac63297a31205759622f341525c34251f">writeAnalogOutput</a>(int value, mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td><code> [protected, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus.html#a87af02c83cede03d6ee988c678e0fc00">writeAnalogOutputs</a>(mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td><code> [protected, virtual]</code></td></tr>
@@ -145,7 +148,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -44,7 +44,7 @@ void \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{setPare
 \begin{DoxyCompactList}\small\item\em Set the parent model. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{setChildModel} (QSqlTableModel $\ast$model)
 \begin{DoxyCompactList}\small\item\em Set the child model. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_relation_a58b5bcc41f6d3ecac9287672e96553bc}{addRelation} (const QString \&parentFieldName, const QString \&childFieldName, bool copyParentToChildOnInsertion)
+bool \hyperlink{classmdt_sql_relation_a5980d1df4582971666ffe1c1d7639799}{addRelation} (const QString \&parentFieldName, const QString \&childFieldName, bool copyParentToChildOnInsertion, const QString \&operatorWithPreviousItem=\char`\"{}AND\char`\"{})
 \begin{DoxyCompactList}\small\item\em Add a relation. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_relation_a01469fb1baf7327ca6ddbcd1595e0d7c}{clear} ()
 \begin{DoxyCompactList}\small\item\em Clear relations. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -58,7 +58,7 @@ This is usefull to create data/details forms.
 Typical usage:
 \begin{DoxyItemize}
 \item Set the parent and child models, using \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{setParentModel()} and \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{setChildModel()}
-\item Add parent/child tables fields that must match with \hyperlink{classmdt_sql_relation_a58b5bcc41f6d3ecac9287672e96553bc}{addRelation()}
+\item Add parent/child tables fields that must match with \hyperlink{classmdt_sql_relation_a5980d1df4582971666ffe1c1d7639799}{addRelation()}
 \item Connect the parent view's currentXyChanged() signal to \hyperlink{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{setParentCurrentIndex()} slot. If you use a QTableView, this signal is in its selectionModel(). For QDataWidgetMapper, the currentIndexChanged() signal is directly available.
 \item If a QDataWidgetMapper is used directly on a child model, connect \hyperlink{classmdt_sql_relation_a86656619d8156638ebfbde2b334d40e2}{childModelFilterApplied()} signal to QDataWidgetMapper's toFirst() slot. 
 \end{DoxyItemize}
@@ -68,17 +68,18 @@ Definition at line 46 of file mdtSqlRelation.h.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_relation_a58b5bcc41f6d3ecac9287672e96553bc}{
+\hypertarget{classmdt_sql_relation_a5980d1df4582971666ffe1c1d7639799}{
 \index{mdtSqlRelation@{mdtSqlRelation}!addRelation@{addRelation}}
 \index{addRelation@{addRelation}!mdtSqlRelation@{mdtSqlRelation}}
 \subsubsection[{addRelation}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRelation::addRelation (
 \begin{DoxyParamCaption}
 \item[{const QString \&}]{parentFieldName, }
 \item[{const QString \&}]{childFieldName, }
-\item[{bool}]{copyParentToChildOnInsertion}
+\item[{bool}]{copyParentToChildOnInsertion, }
+\item[{const QString \&}]{operatorWithPreviousItem = {\ttfamily \char`\"{}AND\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_sql_relation_a58b5bcc41f6d3ecac9287672e96553bc}
+\label{classmdt_sql_relation_a5980d1df4582971666ffe1c1d7639799}
 
 
 Add a relation. 
@@ -94,6 +95,8 @@ Note that this method will fetch some information about fields in parent and chi
 {\em childFieldName} & Field of child model to use in relation (usually FK) \\
 \hline
 {\em copyParentToChildOnInsertion} & If true, data from parent model will be copied to child model for this fields. (See \hyperlink{classmdt_sql_relation_item}{mdtSqlRelationItem} for details). \\
+\hline
+{\em operatorWithPreviousItem} & Most of cases, the operator between multiple relation items is AND. If another is needed (f.ex. OR), specify it here. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -149,7 +152,7 @@ Clear relations.
 
 Will clear all added relations and references to parent and child models. (will not delete models). 
 
-Definition at line 99 of file mdtSqlRelation.cpp.
+Definition at line 100 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{
 \index{mdtSqlRelation@{mdtSqlRelation}!setChildModel@{setChildModel}}
@@ -194,7 +197,7 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 133 of file mdtSqlRelation.cpp.
+Definition at line 134 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_a4381f7f5bd39337fa5cbccf9b87ff0f6}{
 \index{mdtSqlRelation@{mdtSqlRelation}!setParentCurrentIndex@{setParentCurrentIndex}}
@@ -216,7 +219,7 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 121 of file mdtSqlRelation.cpp.
+Definition at line 122 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{
 \index{mdtSqlRelation@{mdtSqlRelation}!setParentCurrentIndex@{setParentCurrentIndex}}
@@ -242,7 +245,7 @@ if(index $<$ 0)\{ return; \}
 
 
 
-Definition at line 107 of file mdtSqlRelation.cpp.
+Definition at line 108 of file mdtSqlRelation.cpp.
 
 \hypertarget{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{
 \index{mdtSqlRelation@{mdtSqlRelation}!setParentModel@{setParentModel}}

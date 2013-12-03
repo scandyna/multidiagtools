@@ -161,7 +161,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00099"></a>00099   }
 <a name="l00100"></a>00100   <span class="comment">// Check that data are available</span>
 <a name="l00101"></a>00101   <span class="keywordflow">if</span>(pvAsciiData.size() &lt; 1){
-<a name="l00102"></a>00102     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data (after clean)&quot;</span>, mdtError::Error);
+<a name="l00102"></a>00102     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data (after clean)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00103"></a>00103     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecAscii&quot;</span>);
 <a name="l00104"></a>00104     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00105"></a>00105     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -178,7 +178,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00116"></a>00116   }
 <a name="l00117"></a>00117   <span class="comment">// Check data length</span>
 <a name="l00118"></a>00118   <span class="keywordflow">if</span>(pvAsciiData.size() &lt;= pvEofSeq.size()){
-<a name="l00119"></a>00119     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is smaller than End Of Frame Sequence&quot;</span> , mdtError::Error);
+<a name="l00119"></a>00119     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is smaller than End Of Frame Sequence&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00120"></a>00120     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00121"></a>00121     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00122"></a>00122     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -204,7 +204,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -68,20 +68,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <!-- doxytag: class="mdtError" -->
+<p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> contains informations about a error that occured  
+ <a href="classmdt_error.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="mdt_error_8h_source.html">mdtError.h</a>&gt;</code></p>
+
 <p><a href="classmdt_error-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>level_t</b> { <b>NoError</b> =  0x00, 
-<b>Info</b> =  0x01, 
-<b>Warning</b> =  0x02, 
-<b>Error</b> =  0x04
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">level_t</a> { <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb">NoError</a> =  0x00, 
+<a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc">Info</a> =  0x01, 
+<a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">Warning</a> =  0x02, 
+<a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">Error</a> =  0x04
  }</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error level.  <a href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a377c175cc8e1aeae543cae2ecc5ca87b"></a><!-- doxytag: member="mdtError::mdtError" ref="a377c175cc8e1aeae543cae2ecc5ca87b" args="(int number, const QString &amp;text, level_t level)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a377c175cc8e1aeae543cae2ecc5ca87b">mdtError</a> (int number, const QString &amp;text, level_t level)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78824dc8c0029107949baaf28c4a9df5"></a><!-- doxytag: member="mdtError::mdtError" ref="a78824dc8c0029107949baaf28c4a9df5" args="()" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a78824dc8c0029107949baaf28c4a9df5">mdtError</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a377c175cc8e1aeae543cae2ecc5ca87b">mdtError</a> (int number, const QString &amp;text, <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">level_t</a> level)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct new error.  <a href="#a377c175cc8e1aeae543cae2ecc5ca87b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a775542a251ef746f3433e7d790a48d85"></a><!-- doxytag: member="mdtError::mdtError" ref="a775542a251ef746f3433e7d790a48d85" args="(const QString &amp;text, level_t level)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a775542a251ef746f3433e7d790a48d85">mdtError</a> (const QString &amp;text, <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">level_t</a> level)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct new error. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a> (const QString &amp;text, <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">level_t</a> level)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set error.  <a href="#a8e7961a665841c1b052116e4dd2eb855"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fa7eb879fe7b26c4a4f0bd55fe29ffa"></a><!-- doxytag: member="mdtError::clear" ref="a9fa7eb879fe7b26c4a4f0bd55fe29ffa" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a9fa7eb879fe7b26c4a4f0bd55fe29ffa">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49254fdb566fee1a4adafe6a3694befc"></a><!-- doxytag: member="mdtError::setSystemError" ref="a49254fdb566fee1a4adafe6a3694befc" args="(int number, const QString &amp;text)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a> (int number, const QString &amp;text)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add system returned error (for example, errno) <br/></td></tr>
@@ -90,21 +106,31 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3cccf7c7f7d4bdabdcb4e60794bb9cb"></a><!-- doxytag: member="mdtError::commit" ref="ad3cccf7c7f7d4bdabdcb4e60794bb9cb" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send error to output. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad233adb8efe4180b85f584c5afdd49fc"></a><!-- doxytag: member="mdtError::number" ref="ad233adb8efe4180b85f584c5afdd49fc" args="() const " -->
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc">number</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error number. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc">number</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error number.  <a href="#ad233adb8efe4180b85f584c5afdd49fc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8630bb6b21b70edfe3d13eaff82a1baf"></a><!-- doxytag: member="mdtError::text" ref="a8630bb6b21b70edfe3d13eaff82a1baf" args="() const " -->
 QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf">text</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error text. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d8382d3008de890689df415deb7766e"></a><!-- doxytag: member="mdtError::level" ref="a8d8382d3008de890689df415deb7766e" args="() const " -->
-level_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a8d8382d3008de890689df415deb7766e">level</a> () const </td></tr>
+<a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">level_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a8d8382d3008de890689df415deb7766e">level</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error level  level_t. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac5a7cec9a5d4364f9331c80e1eafe99"></a><!-- doxytag: member="mdtError::levelIcon" ref="aac5a7cec9a5d4364f9331c80e1eafe99" args="() const " -->
+QMessageBox::Icon&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#aac5a7cec9a5d4364f9331c80e1eafe99">levelIcon</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Map the level to a QMessageBox Icon. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1be3f45cd56b3142f50c288df9f53204"></a><!-- doxytag: member="mdtError::systemNumber" ref="a1be3f45cd56b3142f50c288df9f53204" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a1be3f45cd56b3142f50c288df9f53204">systemNumber</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error number returned from system if available. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6cd449e657f321b86d234269b5e92cda"></a><!-- doxytag: member="mdtError::systemText" ref="a6cd449e657f321b86d234269b5e92cda" args="() const " -->
 QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a6cd449e657f321b86d234269b5e92cda">systemText</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error text returned from system, if available. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a28d22c0b9341faacfef22a7deae2da3c">systemErrorString</a> (QObject *obj=0) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error number and text from system, if available.  <a href="#a28d22c0b9341faacfef22a7deae2da3c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ef108a0502df7875f1b54bbb2a8919d"></a><!-- doxytag: member="mdtError::setInformativeText" ref="a8ef108a0502df7875f1b54bbb2a8919d" args="(const QString &amp;text)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a8ef108a0502df7875f1b54bbb2a8919d">setInformativeText</a> (const QString &amp;text)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set informative text. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adcc1905f585c327cec8a2e31af616651"></a><!-- doxytag: member="mdtError::informativeText" ref="adcc1905f585c327cec8a2e31af616651" args="() const " -->
+QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#adcc1905f585c327cec8a2e31af616651">informativeText</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get informative text. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abff9bc71ff554f6f6189be88b0afa731"></a><!-- doxytag: member="mdtError::functionName" ref="abff9bc71ff554f6f6189be88b0afa731" args="() const " -->
 QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#abff9bc71ff554f6f6189be88b0afa731">functionName</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error source function. <br/></td></tr>
@@ -116,9 +142,147 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error source line. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="mdt_error_8h_source.html#l00053">53</a> of file <a class="el" href="mdt_error_8h_source.html">mdtError.h</a>.</p>
-</div><hr/><h2>Member Function Documentation</h2>
+<div class="textblock"><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> contains informations about a error that occured </p>
+<p>Currently, a <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> contains several informations:</p>
+<ul>
+<li>text (mandatory) : a description of the error that occured . Access: <a class="el" href="classmdt_error.html#a775542a251ef746f3433e7d790a48d85" title="Construct new error.">mdtError(const QString&amp;, level_t)</a> , <a class="el" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf" title="Error text.">text()</a> .</li>
+<li>level (mandatory) : the severity of the error . Access: <a class="el" href="classmdt_error.html#a775542a251ef746f3433e7d790a48d85" title="Construct new error.">mdtError(const QString&amp;, level_t)</a> , <a class="el" href="classmdt_error.html#a8d8382d3008de890689df415deb7766e" title="Error level  level_t.">level()</a> , <a class="el" href="classmdt_error.html#aac5a7cec9a5d4364f9331c80e1eafe99" title="Map the level to a QMessageBox Icon.">levelIcon()</a> .</li>
+<li>systemNumber (optional) : error number returned by a system (or other library) call . Access: <a class="el" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError()</a> , <a class="el" href="classmdt_error.html#a1be3f45cd56b3142f50c288df9f53204" title="Error number returned from system if available.">systemNumber()</a> , <a class="el" href="classmdt_error.html#a28d22c0b9341faacfef22a7deae2da3c" title="Error number and text from system, if available.">systemErrorString()</a> .</li>
+<li>systemText (optional) : error text number returned by a system (or other library) call . Access: <a class="el" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError()</a> , <a class="el" href="classmdt_error.html#a6cd449e657f321b86d234269b5e92cda" title="Error text returned from system, if available.">systemText()</a> , <a class="el" href="classmdt_error.html#a28d22c0b9341faacfef22a7deae2da3c" title="Error number and text from system, if available.">systemErrorString()</a> .</li>
+<li>informativeText (optional) : can be used the same way than QMessageBox . Access : <a class="el" href="classmdt_error.html#a8ef108a0502df7875f1b54bbb2a8919d" title="Set informative text.">setInformativeText()</a> , <a class="el" href="classmdt_error.html#adcc1905f585c327cec8a2e31af616651" title="Get informative text.">informativeText()</a> .</li>
+</ul>
+<p>number : currently used with mdt_error_t enum, but it seems that this is not a good idea, and this will change once a better one is found ...</p>
+<p>This class contains the information of a error. To just put it to standard defined outputs, use <a class="el" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit()</a> .</p>
+<p>Note: no copy constrctor/operator are defined, because only primitve and copiable objects are used, but a <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> can be copied . </p>
+
+<p>Definition at line <a class="el" href="mdt_error_8h_source.html#l00084">84</a> of file <a class="el" href="mdt_error_8h_source.html">mdtError.h</a>.</p>
+</div><hr/><h2>Member Enumeration Documentation</h2>
+<a class="anchor" id="a5c8b1a040e2feaa848f6201d6b6f0cd7"></a><!-- doxytag: member="mdtError::level_t" ref="a5c8b1a040e2feaa848f6201d6b6f0cd7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">mdtError::level_t</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Error level. </p>
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb"></a><!-- doxytag: member="NoError" ref="a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb" args="" -->NoError</em>&nbsp;</td><td>
+<p>No error . </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc"></a><!-- doxytag: member="Info" ref="a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc" args="" -->Info</em>&nbsp;</td><td>
+<p>Just a information, application continues to work in normal way . </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8"></a><!-- doxytag: member="Warning" ref="a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8" args="" -->Warning</em>&nbsp;</td><td>
+<p>Error that could be handled </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260"></a><!-- doxytag: member="Error" ref="a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260" args="" -->Error</em>&nbsp;</td><td>
+<p>Error that was not handled </p>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mdt_error_8h_source.html#l00090">90</a> of file <a class="el" href="mdt_error_8h_source.html">mdtError.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a377c175cc8e1aeae543cae2ecc5ca87b"></a><!-- doxytag: member="mdtError::mdtError" ref="a377c175cc8e1aeae543cae2ecc5ca87b" args="(int number, const QString &amp;text, level_t level)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mdtError::mdtError </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">mdtError::level_t</a>&#160;</td>
+          <td class="paramname"><em>level</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Construct new error. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>If no good idea falls in for the usage of number , this constrctor should become obselete . </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00034">34</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ad233adb8efe4180b85f584c5afdd49fc"></a><!-- doxytag: member="mdtError::number" ref="ad233adb8efe4180b85f584c5afdd49fc" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtError::number </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Error number. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>If no good idea falls in for the usage of number , this method should become obselete . </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00113">113</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8e7961a665841c1b052116e4dd2eb855"></a><!-- doxytag: member="mdtError::setError" ref="a8e7961a665841c1b052116e4dd2eb855" args="(const QString &amp;text, level_t level)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtError::setError </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">level_t</a>&#160;</td>
+          <td class="paramname"><em>level</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set error. </p>
+<p>Will also clear current error . </p>
+
+<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00058">58</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a8dd3203e11b308e6c2701d7f075af885"></a><!-- doxytag: member="mdtError::setSource" ref="a8dd3203e11b308e6c2701d7f075af885" args="(const QString &amp;filePath, int fileLine, const QString &amp;className, const QString &amp;functionName)" -->
 <div class="memitem">
 <div class="memproto">
@@ -161,7 +325,29 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Add the source of error</p>
 <p>It's possible to use the helper macro MDT_ERROR_SET_SRC() </p>
 
-<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00063">63</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00096">96</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a28d22c0b9341faacfef22a7deae2da3c"></a><!-- doxytag: member="mdtError::systemErrorString" ref="a28d22c0b9341faacfef22a7deae2da3c" args="(QObject *obj=0) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString mdtError::systemErrorString </td>
+          <td>(</td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>obj</em> = <code>0</code></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Error number and text from system, if available. </p>
+<p>If obj is set, translation is used. (We not want to use the static QObject::tr() ). </p>
+
+<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00153">153</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
 
 </div>
 </div>
@@ -184,7 +370,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

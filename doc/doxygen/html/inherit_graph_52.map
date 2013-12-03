@@ -1,3 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_sql_field_handler.html" title="Handle events between a SQL field and a edition widget." alt="" coords="5,5,141,35"/>
+<area shape="rect" id="node1" href="$classmdt_sql_data_validator.html" title="Helper class for data validation." alt="" coords="7,5,148,35"/>
+<area shape="rect" id="node3" href="$classmdt_sql_form_widget_data_validator.html" title="mdtSqlFormWidgetDataValidator" alt="" coords="197,5,411,35"/>
 </map>

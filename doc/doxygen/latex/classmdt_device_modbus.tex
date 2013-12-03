@@ -22,8 +22,7 @@ Inheritance diagram for mdtDeviceModbus:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceModbus:
-\nopagebreak
+Collaboration diagram for mdtDeviceModbus:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -53,6 +52,8 @@ Collaboration diagram for mdtDeviceModbus:
 bool \hyperlink{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d8e6b3b14}{getRegisterValues} (int address, int n)
 \begin{DoxyCompactList}\small\item\em Helper method for register service. \end{DoxyCompactList}\item 
 const QList$<$ int $>$ \& \hyperlink{classmdt_device_modbus_a83cb2a28111653fbcbbe748f7a1a2e3d}{registerValues} () const 
+\begin{DoxyCompactList}\small\item\em Helper method for register service. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_modbus_a4128420bde679c3666bdf8954a221a53}{setRegisterValues} (int startAddress, QList$<$ int $>$ \&values)
 \begin{DoxyCompactList}\small\item\em Helper method for register service. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -82,7 +83,7 @@ int \hyperlink{classmdt_device_modbus_a6950c10fc521b193fb3c754223879694}{writeDi
 int \hyperlink{classmdt_device_modbus_aad3ce85a19307e3056b940da99fe512b}{writeDigitalOutputs} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
 \begin{DoxyCompactList}\small\item\em Write all digital outputs to physical device. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745c285}{queriesSequence} ()
-\begin{DoxyCompactList}\small\item\em \} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Sequence of queries to send periodically. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -151,19 +152,11 @@ Internal port manager not runnig and port must be closed before calling this met
 \end{DoxyPrecond}
 
 
-if(!pvTcpPortManager-\/$>$openPort())\{ continue; \}
-
-pvTcpPortManager-\/$>$closePort();
-
-pvTcpPortManager-\/$>$closePort(); 
-
-
-
 Reimplemented in \hyperlink{classmdt_device_modbus_wago_a12ad1f1ef34b16be5903d1d6232a7c6d}{mdtDeviceModbusWago}.
 
 
 
-Definition at line 66 of file mdtDeviceModbus.cpp.
+Definition at line 67 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d8e6b3b14}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!getRegisterValues@{getRegisterValues}}
@@ -194,7 +187,7 @@ address and n must be $>$ 0
 \end{DoxySeeAlso}
 
 
-Definition at line 98 of file mdtDeviceModbus.cpp.
+Definition at line 92 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745c285}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!queriesSequence@{queriesSequence}}
@@ -207,15 +200,25 @@ Definition at line 98 of file mdtDeviceModbus.cpp.
 \label{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745c285}
 
 
-\} 
+Sequence of queries to send periodically. 
 
-void mdtDeviceModbus::onStateChanged(int state) \{ if(pvIos == 0)\{ return; \} if(state == Ready)\{ if(getAnalogInputs(500) $<$ 0)\{ return; \} if(getAnalogOutputs(500) $<$ 0)\{ return; \} if(getDigitalInputs(500) $<$ 0)\{ return; \} if(getDigitalOutputs(500) $<$ 0)\{ return; \} \} 
+This method is called from \hyperlink{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}{runQueries()}.
+
+\begin{DoxyReturn}{Returns}
+true if all queries are sent successfully.
+\end{DoxyReturn}
+Subclass notes:\par
+
+\begin{DoxyItemize}
+\item This default implementation does nothing and allways returns false.
+\item This method can be reimplemented periodic queries must be sent to device. 
+\end{DoxyItemize}
 
 Reimplemented from \hyperlink{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}{mdtDevice}.
 
 
 
-Definition at line 318 of file mdtDeviceModbus.cpp.
+Definition at line 293 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70cd9e}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogInput@{readAnalogInput}}
@@ -257,7 +260,7 @@ Reimplemented from \hyperlink{classmdt_device_acecf7934ce29b3a957accb0f4c98c746}
 
 
 
-Definition at line 330 of file mdtDeviceModbus.cpp.
+Definition at line 305 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef6f92}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogInputs@{readAnalogInputs}}
@@ -295,7 +298,7 @@ Reimplemented from \hyperlink{classmdt_device_a40674e7bf0c367bb3edb407d73a5bd8e}
 
 
 
-Definition at line 347 of file mdtDeviceModbus.cpp.
+Definition at line 322 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849e322}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogOutput@{readAnalogOutput}}
@@ -333,7 +336,7 @@ Reimplemented from \hyperlink{classmdt_device_a7934063c3f41a742515f1232c9598c2a}
 
 
 
-Definition at line 364 of file mdtDeviceModbus.cpp.
+Definition at line 339 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b62b0b}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogOutputs@{readAnalogOutputs}}
@@ -369,7 +372,7 @@ Reimplemented from \hyperlink{classmdt_device_ab0232ac83c38bc93d3bc2aa91d94c291}
 
 
 
-Definition at line 381 of file mdtDeviceModbus.cpp.
+Definition at line 356 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c501f9}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalInput@{readDigitalInput}}
@@ -407,7 +410,7 @@ Reimplemented from \hyperlink{classmdt_device_af128b606050035abaf8d049bb2227015}
 
 
 
-Definition at line 432 of file mdtDeviceModbus.cpp.
+Definition at line 407 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62b132}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalInputs@{readDigitalInputs}}
@@ -445,7 +448,7 @@ Reimplemented from \hyperlink{classmdt_device_a150e3abae6db5bf1ad11017bf2b76c14}
 
 
 
-Definition at line 449 of file mdtDeviceModbus.cpp.
+Definition at line 424 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a13a334ac86135751893f37064d8f548d}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalOutput@{readDigitalOutput}}
@@ -483,7 +486,7 @@ Reimplemented from \hyperlink{classmdt_device_a1faee6ab31b094731211ea0943544501}
 
 
 
-Definition at line 466 of file mdtDeviceModbus.cpp.
+Definition at line 441 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a8915a036472bff0f356756992c1eae51}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalOutputs@{readDigitalOutputs}}
@@ -521,7 +524,7 @@ Reimplemented from \hyperlink{classmdt_device_aac038c24c3b91757584bdf0d09fb8b02}
 
 
 
-Definition at line 483 of file mdtDeviceModbus.cpp.
+Definition at line 458 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a83cb2a28111653fbcbbe748f7a1a2e3d}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!registerValues@{registerValues}}
@@ -543,7 +546,38 @@ Return result set by \hyperlink{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d
 \end{DoxySeeAlso}
 
 
-Definition at line 103 of file mdtDeviceModbus.cpp.
+Definition at line 97 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_a4128420bde679c3666bdf8954a221a53}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!setRegisterValues@{setRegisterValues}}
+\index{setRegisterValues@{setRegisterValues}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{setRegisterValues}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbus::setRegisterValues (
+\begin{DoxyParamCaption}
+\item[{int}]{startAddress, }
+\item[{QList$<$ int $>$ \&}]{values}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_a4128420bde679c3666bdf8954a221a53}
+
+
+Helper method for register service. 
+
+Usefull to set register values (f.ex. configurations regsisters, ...).
+
+Note: to set analog I/O values, the \hyperlink{classmdt_device}{mdtDevice} API should be used.
+
+\begin{DoxyReturn}{Returns}
+True on success. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+startAddress must be $>$= 0 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_modbus_tcp_port_manager_a746211413dfafb987a93145c9fa4876f}{mdtModbusTcpPortManager::setRegisterValues()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 102 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_ac63297a31205759622f341525c34251f}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeAnalogOutput@{writeAnalogOutput}}
@@ -582,7 +616,7 @@ Reimplemented from \hyperlink{classmdt_device_ae764634bba2b321ac2b4731c0353e45f}
 
 
 
-Definition at line 398 of file mdtDeviceModbus.cpp.
+Definition at line 373 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a87af02c83cede03d6ee988c678e0fc00}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeAnalogOutputs@{writeAnalogOutputs}}
@@ -620,7 +654,7 @@ Reimplemented from \hyperlink{classmdt_device_abc52b797df29945bf0a6358aab1b7245}
 
 
 
-Definition at line 415 of file mdtDeviceModbus.cpp.
+Definition at line 390 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a6950c10fc521b193fb3c754223879694}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeDigitalOutput@{writeDigitalOutput}}
@@ -661,7 +695,7 @@ Reimplemented from \hyperlink{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}
 
 
 
-Definition at line 500 of file mdtDeviceModbus.cpp.
+Definition at line 475 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_aad3ce85a19307e3056b940da99fe512b}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeDigitalOutputs@{writeDigitalOutputs}}
@@ -699,7 +733,7 @@ Reimplemented from \hyperlink{classmdt_device_aa9e8ae7b4ff2455b4105d280d8523fc1}
 
 
 
-Definition at line 517 of file mdtDeviceModbus.cpp.
+Definition at line 492 of file mdtDeviceModbus.cpp.
 
 
 

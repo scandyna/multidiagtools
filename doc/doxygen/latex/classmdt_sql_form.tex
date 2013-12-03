@@ -22,11 +22,12 @@ Inheritance diagram for mdtSqlForm:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtSqlForm:\nopagebreak
+Collaboration diagram for mdtSqlForm:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=214pt]{classmdt_sql_form__coll__graph}
+\includegraphics[width=259pt]{classmdt_sql_form__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -48,7 +49,7 @@ bool \hyperlink{classmdt_sql_form_a8a3c5c3fa87da8a1b45c287e08f069c1}{setTable} (
 \begin{DoxyCompactList}\small\item\em Set the main (or parent) table of the form. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_sql_form_a75710fca8759142a5cebb53fa4184906}{addChildTable} (const QString \&tableName, const QString \&userFriendlyTableName=\char`\"{}\char`\"{}, QSqlDatabase db=QSqlDatabase())
 \begin{DoxyCompactList}\small\item\em Add a child table to the form. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_form_a69ad7e92c8a4042ea9808a0a97d2bf65}{addRelation} (const QString \&parentFieldName, const QString \&childTableName, const QString \&childFieldName)
+bool \hyperlink{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}{addRelation} (const QString \&parentFieldName, const QString \&childTableName, const QString \&childFieldName, const QString \&operatorWithPreviousItem=\char`\"{}AND\char`\"{})
 \begin{DoxyCompactList}\small\item\em Add a relation between main table and a child table. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} $\ast$ \hyperlink{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{sqlWidget} (const QString \&tableName)
 \begin{DoxyCompactList}\small\item\em Get instance of the stored SQL widget related to a table name. \end{DoxyCompactList}\item 
@@ -66,8 +67,13 @@ QSqlTableModel $\ast$ \hyperlink{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f
 \begin{DoxyCompactList}\small\item\em Get model that acts on given table name. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_form_ae9a1f8c03e5ac8ccd01fa804356abd01}{select} (const QString \&tableName)
 \begin{DoxyCompactList}\small\item\em Call select on model that acts on given table name. \end{DoxyCompactList}\item 
-QSqlError \hyperlink{classmdt_sql_form_a1f6896b7e5aca10669bf17609c04e0af}{lastError} (const QString \&tableName)
+QSqlError \hyperlink{classmdt_sql_form_ac9d704fa1a47bf59ae04f2945ec7ebc3}{lastSqlError} (const QString \&tableName)
 \begin{DoxyCompactList}\small\item\em Get last error of model that acts on tableName. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{
+\hyperlink{classmdt_error}{mdtError} \hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{lastError} () const }
+\label{classmdt_sql_form_a04724293298421c404e93c58015cda5e}
+
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}{rowCount} (const QString \&tableName)
 \begin{DoxyCompactList}\small\item\em Get the row count for given table name. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}{currentRow} (const QString \&tableName)
@@ -111,7 +117,7 @@ You should not use this class directly, but better one of its derivate.
 \end{DoxySeeAlso}
 
 
-Definition at line 56 of file mdtSqlForm.h.
+Definition at line 57 of file mdtSqlForm.h.
 
 
 
@@ -145,19 +151,26 @@ True on success, false if given table name does not exist or on some other error
 \end{DoxyReturn}
 
 
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot add child table '\char`\"{} + tableName + \char`\"{}' because no main table was set\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error});
+
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Unable to select data in table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
+
+
+
 Definition at line 77 of file mdtSqlForm.cpp.
 
-\hypertarget{classmdt_sql_form_a69ad7e92c8a4042ea9808a0a97d2bf65}{
+\hypertarget{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}{
 \index{mdtSqlForm@{mdtSqlForm}!addRelation@{addRelation}}
 \index{addRelation@{addRelation}!mdtSqlForm@{mdtSqlForm}}
 \subsubsection[{addRelation}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::addRelation (
 \begin{DoxyParamCaption}
 \item[{const QString \&}]{parentFieldName, }
 \item[{const QString \&}]{childTableName, }
-\item[{const QString \&}]{childFieldName}
+\item[{const QString \&}]{childFieldName, }
+\item[{const QString \&}]{operatorWithPreviousItem = {\ttfamily \char`\"{}AND\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_sql_form_a69ad7e92c8a4042ea9808a0a97d2bf65}
+\label{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}
 
 
 Add a relation between main table and a child table. 
@@ -167,7 +180,11 @@ True on succes, false if childTableName or a field does not exit.
 \end{DoxyReturn}
 
 
-Definition at line 121 of file mdtSqlForm.cpp.
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot find relation that contains child table '\char`\"{} + childTableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
+
+
+
+Definition at line 123 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}{
 \index{mdtSqlForm@{mdtSqlForm}!currentData@{currentData}}
@@ -190,7 +207,11 @@ Current value, or a invalid QVariant on error (f.ex. table or field not found).
 \end{DoxyReturn}
 
 
-Definition at line 273 of file mdtSqlForm.cpp.
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot find SQL widget acting on table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
+
+
+
+Definition at line 286 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}{
 \index{mdtSqlForm@{mdtSqlForm}!currentRow@{currentRow}}
@@ -214,7 +235,11 @@ Current row, or value $<$ 0 on error (f.ex. table not found).
 \end{DoxyReturn}
 
 
-Definition at line 241 of file mdtSqlForm.cpp.
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot find SQL widget acting on table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
+
+
+
+Definition at line 252 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{
 \index{mdtSqlForm@{mdtSqlForm}!data@{data}}
@@ -238,17 +263,21 @@ Current value, or a invalid QVariant on error (f.ex. table, row or field not fou
 \end{DoxyReturn}
 
 
-Definition at line 289 of file mdtSqlForm.cpp.
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot find SQL widget acting on table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
 
-\hypertarget{classmdt_sql_form_a1f6896b7e5aca10669bf17609c04e0af}{
-\index{mdtSqlForm@{mdtSqlForm}!lastError@{lastError}}
-\index{lastError@{lastError}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{lastError}]{\setlength{\rightskip}{0pt plus 5cm}QSqlError mdtSqlForm::lastError (
+
+
+Definition at line 303 of file mdtSqlForm.cpp.
+
+\hypertarget{classmdt_sql_form_ac9d704fa1a47bf59ae04f2945ec7ebc3}{
+\index{mdtSqlForm@{mdtSqlForm}!lastSqlError@{lastSqlError}}
+\index{lastSqlError@{lastSqlError}!mdtSqlForm@{mdtSqlForm}}
+\subsubsection[{lastSqlError}]{\setlength{\rightskip}{0pt plus 5cm}QSqlError mdtSqlForm::lastSqlError (
 \begin{DoxyParamCaption}
 \item[{const QString \&}]{tableName}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_sql_form_a1f6896b7e5aca10669bf17609c04e0af}
+\label{classmdt_sql_form_ac9d704fa1a47bf59ae04f2945ec7ebc3}
 
 
 Get last error of model that acts on tableName. 
@@ -258,7 +287,11 @@ A valid QSqlError if table was found and a error occured.
 \end{DoxyReturn}
 
 
-Definition at line 211 of file mdtSqlForm.cpp.
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot find model that acts on table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
+
+
+
+Definition at line 215 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{
 \index{mdtSqlForm@{mdtSqlForm}!mainSqlWidget@{mainSqlWidget}}
@@ -280,7 +313,7 @@ Returns a valid object.
 \end{DoxyPostcond}
 
 
-Definition at line 42 of file mdtSqlForm.cpp.
+Definition at line 41 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}{
 \index{mdtSqlForm@{mdtSqlForm}!model@{model}}
@@ -300,7 +333,7 @@ QSqlTableModel object or a null pointer if table was not found.
 \end{DoxyReturn}
 
 
-Definition at line 184 of file mdtSqlForm.cpp.
+Definition at line 187 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}{
 \index{mdtSqlForm@{mdtSqlForm}!rowCount@{rowCount}}
@@ -322,7 +355,11 @@ Row count, or value $<$ 0 on error (f.ex. table not found).
 \end{DoxyReturn}
 
 
-Definition at line 226 of file mdtSqlForm.cpp.
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot find model that acts on table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
+
+
+
+Definition at line 236 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_ae9a1f8c03e5ac8ccd01fa804356abd01}{
 \index{mdtSqlForm@{mdtSqlForm}!select@{select}}
@@ -338,11 +375,15 @@ Definition at line 226 of file mdtSqlForm.cpp.
 Call select on model that acts on given table name. 
 
 \begin{DoxyReturn}{Returns}
-True on success, false if tableName was not found or other error. On failure, the last error is avaliable with \hyperlink{classmdt_sql_form_a1f6896b7e5aca10669bf17609c04e0af}{lastError()} 
+True on success, false if tableName was not found or other error. On failure, the last error is avaliable with \hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{lastError()} 
 \end{DoxyReturn}
 
 
-Definition at line 196 of file mdtSqlForm.cpp.
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot find model that acts on table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
+
+
+
+Definition at line 199 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{
 \index{mdtSqlForm@{mdtSqlForm}!setCurrentData@{setCurrentData}}
@@ -362,7 +403,11 @@ Set (update) data of current row (record) for given table and field name.
 
 Note that SQL widget related to given tableName is searched at each request. If several access to setCurrentData is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{sqlWidget()} , and call his \hyperlink{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{setCurrentData()} method. 
 
-Definition at line 257 of file mdtSqlForm.cpp.
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot find SQL widget acting on table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
+
+
+
+Definition at line 269 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_a8a3c5c3fa87da8a1b45c287e08f069c1}{
 \index{mdtSqlForm@{mdtSqlForm}!setTable@{setTable}}
@@ -395,7 +440,11 @@ True on success, false if given table name does not exist or on some other error
 \end{DoxyReturn}
 
 
-Definition at line 49 of file mdtSqlForm.cpp.
+\hyperlink{classmdt_error}{mdtError} e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Unable to select data in table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); 
+
+
+
+Definition at line 48 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{
 \index{mdtSqlForm@{mdtSqlForm}!sqlWidget@{sqlWidget}}
@@ -414,7 +463,7 @@ Returns a null pointer if widget related to tableName was not found.
 
 This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. 
 
-Definition at line 143 of file mdtSqlForm.cpp.
+Definition at line 146 of file mdtSqlForm.cpp.
 
 
 

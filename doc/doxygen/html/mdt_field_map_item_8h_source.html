@@ -83,62 +83,77 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00021"></a>00021 <span class="preprocessor">#ifndef MDT_FIELD_MAP_ITEM_H</span>
 <a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_FIELD_MAP_ITEM_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QVariant&gt;</span>
-<a name="l00026"></a>00026 
-<a name="l00031"></a><a class="code" href="classmdt_field_map_item.html">00031</a> <span class="keyword">class </span><a class="code" href="classmdt_field_map_item.html" title="Provide informations for mdtFieldMap.">mdtFieldMapItem</a>
-<a name="l00032"></a>00032 {
-<a name="l00033"></a>00033  <span class="keyword">public</span>:
-<a name="l00034"></a>00034 
-<a name="l00045"></a>00045   <a class="code" href="classmdt_field_map_item.html#a36e1f695842b8ba275f535db80fc8033" title="Create a item with default parameters.">mdtFieldMapItem</a>();
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047   ~<a class="code" href="classmdt_field_map_item.html" title="Provide informations for mdtFieldMap.">mdtFieldMapItem</a>();
+<a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtFieldMapField.h&quot;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QString&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QStringList&gt;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QVariant&gt;</span>
+<a name="l00028"></a>00028 
+<a name="l00033"></a><a class="code" href="classmdt_field_map_item.html">00033</a> <span class="keyword">class </span><a class="code" href="classmdt_field_map_item.html" title="Provide informations for mdtFieldMap.">mdtFieldMapItem</a>
+<a name="l00034"></a>00034 {
+<a name="l00035"></a>00035  <span class="keyword">public</span>:
+<a name="l00036"></a>00036 
+<a name="l00047"></a>00047   <a class="code" href="classmdt_field_map_item.html#a36e1f695842b8ba275f535db80fc8033" title="Create a item with default parameters.">mdtFieldMapItem</a>();
 <a name="l00048"></a>00048 
-<a name="l00051"></a>00051   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a6a6d6aca3e86afc048f429f91c6e9fb2" title="Set field index.">setFieldIndex</a>(<span class="keywordtype">int</span> value);
+<a name="l00051"></a>00051   <a class="code" href="classmdt_field_map_item.html#a8b0a74671b7ade65d8d17274727b2269" title="Destructor.">~mdtFieldMapItem</a>();
 <a name="l00052"></a>00052 
-<a name="l00055"></a>00055   <span class="keywordtype">int</span> <a class="code" href="classmdt_field_map_item.html#a9fbc43268f0fa7f0ade4a03cc73dbe05" title="Get field index.">fieldIndex</a>() <span class="keyword">const</span>;
+<a name="l00055"></a>00055   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#af49fa592e62430611222450aa8e60549" title="Set destination field index.">setDestinationFieldIndex</a>(<span class="keywordtype">int</span> value);
 <a name="l00056"></a>00056 
-<a name="l00059"></a>00059   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a02c24ce624a4c53a794bf02f98815cf4" title="Set field name.">setFieldName</a>(<span class="keyword">const</span> QString &amp;value);
+<a name="l00059"></a>00059   <span class="keywordtype">int</span> <a class="code" href="classmdt_field_map_item.html#ac5fc1ed4a1ef485d4d6727603b247000" title="Get destination field index.">destinationFieldIndex</a>() <span class="keyword">const</span>;
 <a name="l00060"></a>00060 
-<a name="l00063"></a>00063   QString <a class="code" href="classmdt_field_map_item.html#aae5a1bb7f4e3177688b96cac29887ef9" title="Get field name.">fieldName</a>() <span class="keyword">const</span>;
+<a name="l00063"></a>00063   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a4bbd4dba1292f825d96c3eef232620fc" title="Set destination field.">setDestinationField</a>(<span class="keyword">const</span> <a class="code" href="classmdt_field_map_field.html" title="Container for information about field in field map.">mdtFieldMapField</a> &amp;field);
 <a name="l00064"></a>00064 
-<a name="l00067"></a>00067   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a6a4785553c29487a6de07eaca54d5d31" title="Set field display text.">setFieldDisplayText</a>(<span class="keyword">const</span> QString &amp;value);
+<a name="l00067"></a>00067   <a class="code" href="classmdt_field_map_field.html" title="Container for information about field in field map.">mdtFieldMapField</a> <a class="code" href="classmdt_field_map_item.html#a1a76d3726880571895c5d90f9082c0cf" title="Get destination field.">destinationField</a>() <span class="keyword">const</span>;
 <a name="l00068"></a>00068 
-<a name="l00071"></a>00071   QString <a class="code" href="classmdt_field_map_item.html#a50eae227257c34aabc4cc3e08a75e8d7" title="Get field display text.">fieldDisplayText</a>() <span class="keyword">const</span>;
+<a name="l00071"></a>00071   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#afd58131972b117c56b73f4466d7b508f" title="Set destination field name.">setDestinationFieldName</a>(<span class="keyword">const</span> QString &amp;value);
 <a name="l00072"></a>00072 
-<a name="l00075"></a>00075   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a6417b5e9d5cabba4744550e69869b0da" title="Set source field index.">setSourceFieldIndex</a>(<span class="keywordtype">int</span> value);
+<a name="l00075"></a>00075   QString <a class="code" href="classmdt_field_map_item.html#a0950eb6ad45c1e1c3068f8c27e0363e8" title="Get destination field name.">destinationFieldName</a>() <span class="keyword">const</span>;
 <a name="l00076"></a>00076 
-<a name="l00079"></a>00079   <span class="keywordtype">int</span> <a class="code" href="classmdt_field_map_item.html#a008cc7bc43612f6df87ba62e14aed6ab" title="Get source field index.">sourceFieldIndex</a>() <span class="keyword">const</span>;
+<a name="l00079"></a>00079   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a3378daa266d132501e6a3feb9cf6ebf8" title="Set destination field display text.">setDestinationFieldDisplayText</a>(<span class="keyword">const</span> QString &amp;value);
 <a name="l00080"></a>00080 
-<a name="l00083"></a>00083   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a5cd708ef0209f51503b110883b564415" title="Set source field name.">setSourceFieldName</a>(<span class="keyword">const</span> QString &amp;value);
+<a name="l00083"></a>00083   QString <a class="code" href="classmdt_field_map_item.html#a8ea2ad8c7b3fdf22a140560a4fc93094" title="Get destination field display text.">destinationFieldDisplayText</a>() <span class="keyword">const</span>;
 <a name="l00084"></a>00084 
-<a name="l00087"></a>00087   QString <a class="code" href="classmdt_field_map_item.html#a6b9da63e50d0b174879a74ea235cea55" title="Get source field name.">sourceFieldName</a>() <span class="keyword">const</span>;
+<a name="l00087"></a>00087   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a6417b5e9d5cabba4744550e69869b0da" title="Set source field index.">setSourceFieldIndex</a>(<span class="keywordtype">int</span> value);
 <a name="l00088"></a>00088 
-<a name="l00093"></a>00093   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#ac23aca5ff0d06f77e63206cd5519311b" title="Set source data start offset.">setSourceFieldDataStartOffset</a>(<span class="keywordtype">int</span> offset);
-<a name="l00094"></a>00094 
-<a name="l00097"></a>00097   <span class="keywordtype">int</span> <a class="code" href="classmdt_field_map_item.html#a03e8193593c5296056896cacc1511b35" title="Get source data start offset.">sourceFieldDataStartOffset</a>() <span class="keyword">const</span>;
-<a name="l00098"></a>00098 
-<a name="l00103"></a>00103   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a1f3ce5708a258078d8a8ced713bc99f8" title="Set source data end offset.">setSourceFieldDataEndOffset</a>(<span class="keywordtype">int</span> offset);
+<a name="l00091"></a>00091   <span class="keywordtype">int</span> <a class="code" href="classmdt_field_map_item.html#a008cc7bc43612f6df87ba62e14aed6ab" title="Get source field index.">sourceFieldIndex</a>() <span class="keyword">const</span>;
+<a name="l00092"></a>00092 
+<a name="l00095"></a>00095   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#aebc97db4285cd4c5181082eb57fa5c1f" title="Set source field.">setSourceField</a>(<span class="keyword">const</span> <a class="code" href="classmdt_field_map_field.html" title="Container for information about field in field map.">mdtFieldMapField</a> &amp;field);
+<a name="l00096"></a>00096 
+<a name="l00099"></a>00099   <a class="code" href="classmdt_field_map_field.html" title="Container for information about field in field map.">mdtFieldMapField</a> <a class="code" href="classmdt_field_map_item.html#ac5d68caf99c007635c16dcc1f0ffff6c" title="Get source field.">sourceField</a>() <span class="keyword">const</span>;
+<a name="l00100"></a>00100 
+<a name="l00103"></a>00103   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a5cd708ef0209f51503b110883b564415" title="Set source field name.">setSourceFieldName</a>(<span class="keyword">const</span> QString &amp;value);
 <a name="l00104"></a>00104 
-<a name="l00107"></a>00107   <span class="keywordtype">int</span> <a class="code" href="classmdt_field_map_item.html#a71d1c69b8bc027f0af52275e5ad16248" title="Get source data end offset.">sourceFieldDataEndOffset</a>() <span class="keyword">const</span>;
+<a name="l00107"></a>00107   QString <a class="code" href="classmdt_field_map_item.html#a6b9da63e50d0b174879a74ea235cea55" title="Get source field name.">sourceFieldName</a>() <span class="keyword">const</span>;
 <a name="l00108"></a>00108 
-<a name="l00111"></a>00111   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a38126faa3f0bbdddadaa79c95b26d42c" title="Set data type.">setDataType</a>(QVariant::Type type);
+<a name="l00111"></a>00111   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a8d0280fb0fac71b77958924e000eb4e5" title="Set source field display text.">setSourceFieldDisplayText</a>(<span class="keyword">const</span> QString &amp;text);
 <a name="l00112"></a>00112 
-<a name="l00115"></a>00115   QVariant::Type <a class="code" href="classmdt_field_map_item.html#a99e7d2031b825c6258340e28429c6d7d" title="Get data type.">dataType</a>() <span class="keyword">const</span>;
+<a name="l00115"></a>00115   QString <a class="code" href="classmdt_field_map_item.html#aec5bcf5e13a51d91773c66a421c3599f" title="Get source field display text.">sourceFieldDisplayText</a>() <span class="keyword">const</span>;
 <a name="l00116"></a>00116 
-<a name="l00117"></a>00117  <span class="keyword">private</span>:
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119   <span class="keywordtype">int</span> pvFieldIndex;
-<a name="l00120"></a>00120   QString pvFieldName;
-<a name="l00121"></a>00121   QString pvFieldDisplayText;
-<a name="l00122"></a>00122   <span class="keywordtype">int</span> pvSourceFieldIndex;
-<a name="l00123"></a>00123   QString pvSourceFieldName;
-<a name="l00124"></a>00124   <span class="keywordtype">int</span> pvSourceFieldDataStartOffset;
-<a name="l00125"></a>00125   <span class="keywordtype">int</span> pvSourceFieldDataEndOffset;
-<a name="l00126"></a>00126   QVariant::Type pvDataType;
-<a name="l00127"></a>00127 };
-<a name="l00128"></a>00128 
-<a name="l00129"></a>00129 <span class="preprocessor">#endif  // #ifndef MDT_FIELD_MAP_ITEM_H</span>
+<a name="l00121"></a>00121   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#ac23aca5ff0d06f77e63206cd5519311b" title="Set source data start offset.">setSourceFieldDataStartOffset</a>(<span class="keywordtype">int</span> offset);
+<a name="l00122"></a>00122 
+<a name="l00125"></a>00125   <span class="keywordtype">int</span> <a class="code" href="classmdt_field_map_item.html#a03e8193593c5296056896cacc1511b35" title="Get source data start offset.">sourceFieldDataStartOffset</a>() <span class="keyword">const</span>;
+<a name="l00126"></a>00126 
+<a name="l00131"></a>00131   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a1f3ce5708a258078d8a8ced713bc99f8" title="Set source data end offset.">setSourceFieldDataEndOffset</a>(<span class="keywordtype">int</span> offset);
+<a name="l00132"></a>00132 
+<a name="l00135"></a>00135   <span class="keywordtype">int</span> <a class="code" href="classmdt_field_map_item.html#a71d1c69b8bc027f0af52275e5ad16248" title="Get source data end offset.">sourceFieldDataEndOffset</a>() <span class="keyword">const</span>;
+<a name="l00136"></a>00136 
+<a name="l00139"></a>00139   <span class="keywordtype">void</span> <a class="code" href="classmdt_field_map_item.html#a38126faa3f0bbdddadaa79c95b26d42c" title="Set data type.">setDataType</a>(QVariant::Type type);
+<a name="l00140"></a>00140 
+<a name="l00143"></a>00143   QVariant::Type <a class="code" href="classmdt_field_map_item.html#a99e7d2031b825c6258340e28429c6d7d" title="Get data type.">dataType</a>() <span class="keyword">const</span>;
+<a name="l00144"></a>00144 
+<a name="l00153"></a>00153   QVariant <a class="code" href="classmdt_field_map_item.html#a7a9e05642484dabc844cbbf1bf1b01ee" title="Get destination data from source row.">destinationData</a>(<span class="keyword">const</span> QStringList &amp;sourceRow) <span class="keyword">const</span>;
+<a name="l00154"></a>00154 
+<a name="l00160"></a>00160   QVariant <a class="code" href="classmdt_field_map_item.html#a7a9e05642484dabc844cbbf1bf1b01ee" title="Get destination data from source row.">destinationData</a>(<span class="keyword">const</span> QString &amp;sourceData) <span class="keyword">const</span>;
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162  <span class="keyword">private</span>:
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164   <a class="code" href="classmdt_field_map_field.html" title="Container for information about field in field map.">mdtFieldMapField</a> pvSourceField;
+<a name="l00165"></a>00165   <a class="code" href="classmdt_field_map_field.html" title="Container for information about field in field map.">mdtFieldMapField</a> pvDestinationField;
+<a name="l00166"></a>00166   <span class="keywordtype">int</span> pvSourceFieldDataStartOffset;
+<a name="l00167"></a>00167   <span class="keywordtype">int</span> pvSourceFieldDataEndOffset;
+<a name="l00168"></a>00168 };
+<a name="l00169"></a>00169 Q_DECLARE_METATYPE(<a class="code" href="classmdt_field_map_item.html" title="Provide informations for mdtFieldMap.">mdtFieldMapItem</a>*);
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171 <span class="preprocessor">#endif  // #ifndef MDT_FIELD_MAP_ITEM_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -155,7 +170,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

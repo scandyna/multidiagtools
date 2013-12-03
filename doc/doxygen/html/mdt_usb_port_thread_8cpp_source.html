@@ -165,7 +165,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00105"></a>00105       }
 <a name="l00106"></a>00106     }<span class="keywordflow">else</span>{
 <a name="l00107"></a>00107       <span class="comment">// Here, we hope that caller knows what hi is doing - simply restore frame to pool</span>
-<a name="l00108"></a>00108       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Loosing a control transfer response frame&quot;</span>, mdtError::Warning);
+<a name="l00108"></a>00108       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Loosing a control transfer response frame&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00109"></a>00109       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortThread&quot;</span>);
 <a name="l00110"></a>00110       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00111"></a>00111       <a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().enqueue(<a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;controlResponseFrames().dequeue());
@@ -250,7 +250,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00196"></a>00196     maxReadTransfers--;
 <a name="l00197"></a>00197   }
 <a name="l00198"></a>00198   <span class="keyword">delete</span>[] buffer;
-<a name="l00199"></a>00199   <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;No short packet received after maxReadTransfers&quot;</span>, mdtError::Error);
+<a name="l00199"></a>00199   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;No short packet received after maxReadTransfers&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00200"></a>00200   MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortThread&quot;</span>);
 <a name="l00201"></a>00201   e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00202"></a>00202 
@@ -489,7 +489,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

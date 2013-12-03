@@ -1,0 +1,1642 @@
+\hypertarget{classmdt_device_modbus_wago_module}{
+\section{mdtDeviceModbusWagoModule Class Reference}
+\label{classmdt_device_modbus_wago_module}\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+}
+
+
+Helper class for Wago modules detection and setup.  
+
+
+
+
+{\ttfamily \#include $<$mdtDeviceModbusWagoModule.h$>$}
+
+
+
+Inheritance diagram for mdtDeviceModbusWagoModule:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=250pt]{classmdt_device_modbus_wago_module__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtDeviceModbusWagoModule:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classmdt_device_modbus_wago_module__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25}{type\_\-t} \{ \par
+\hyperlink{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25aa195556cb75e827f16f81e9f09908660}{Unknown}, 
+\hyperlink{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25a70609836e6ef603f912da6084adf3c9d}{AnalogInputs}, 
+\hyperlink{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25a38c67b211155faa87f52767c60134f33}{AnalogOutputs}, 
+\hyperlink{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25aee246eb286603d48008177621980eda4}{DigitalInputs}, 
+\par
+\hyperlink{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25ace992008f0003a8ee2106872b6a410a3}{DigitalOutputs}, 
+\hyperlink{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25adbe63d8313a77922b9a7808a5321fdb7}{DigitalInputsOutputs}
+ \}
+\begin{DoxyCompactList}\small\item\em Module type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_device_modbus_wago_module_a888f4d413d3bde075733ddbba4ae7d96}{mdtDeviceModbusWagoModule} (bool autoDeleteIos, \hyperlink{classmdt_device_modbus_wago}{mdtDeviceModbusWago} $\ast$device)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+virtual \hyperlink{classmdt_device_modbus_wago_module_af47e8774515e5960ffb87bc6ec81cea2}{$\sim$mdtDeviceModbusWagoModule} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_a7f874ff01aa984101b1d867c781eba67}{clear} (bool forceDeleteIos=false)
+\begin{DoxyCompactList}\small\item\em Clear I/O module. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_modbus_wago_module_adf7431cd4d41d7839b42cc21badeabc5}{setupFromRegisterWord} (quint16 word)
+\begin{DoxyCompactList}\small\item\em Setup module. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_device_modbus_wago_module_ac7d9da94e7d4c06e288a346ac123c711}{updateAddresses} (int firstAiAddress, int firstAoAddressRead, int firstAoAddressWrite, int firstDiAddress, int firstDoAddressRead, int firstDoAddressWrite)
+\begin{DoxyCompactList}\small\item\em Update addresses of the module. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a502dc2388ecf0531786c09964b4f7566}{
+int \hyperlink{classmdt_device_modbus_wago_module_a502dc2388ecf0531786c09964b4f7566}{firstAiAddress} () const }
+\label{classmdt_device_modbus_wago_module_a502dc2388ecf0531786c09964b4f7566}
+
+\begin{DoxyCompactList}\small\item\em Get first address of module's analog inputs process image. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a79e994d8cbcb222eced1b70a553ca33b}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a79e994d8cbcb222eced1b70a553ca33b}{lastAiAddress} () const }
+\label{classmdt_device_modbus_wago_module_a79e994d8cbcb222eced1b70a553ca33b}
+
+\begin{DoxyCompactList}\small\item\em Get last address of module's analog inputs process image. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a9a76569563743da0a493766658528bb6}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a9a76569563743da0a493766658528bb6}{nextModuleFirstAiAddress} () const }
+\label{classmdt_device_modbus_wago_module_a9a76569563743da0a493766658528bb6}
+
+\begin{DoxyCompactList}\small\item\em Get first address for next module in analog inputs process image. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_acd623a8d9956fd79c11c01879afdc73c}{
+int \hyperlink{classmdt_device_modbus_wago_module_acd623a8d9956fd79c11c01879afdc73c}{firstAoAddressRead} () const }
+\label{classmdt_device_modbus_wago_module_acd623a8d9956fd79c11c01879afdc73c}
+
+\begin{DoxyCompactList}\small\item\em Get first address of module's analog outputs process image for read access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a268157e43f93ae76f2950b98160a3a53}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a268157e43f93ae76f2950b98160a3a53}{lastAoAddressRead} () const }
+\label{classmdt_device_modbus_wago_module_a268157e43f93ae76f2950b98160a3a53}
+
+\begin{DoxyCompactList}\small\item\em Get last address of module's analog outputs process image for read access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a76d102ba44dfc0777c8dbb5446665353}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a76d102ba44dfc0777c8dbb5446665353}{nextModuleFirstAoAddressRead} () const }
+\label{classmdt_device_modbus_wago_module_a76d102ba44dfc0777c8dbb5446665353}
+
+\begin{DoxyCompactList}\small\item\em Get first address for next module in analog outputs process image for read access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_af8b6d9549c820869b09a77ae01e9bf3f}{
+int \hyperlink{classmdt_device_modbus_wago_module_af8b6d9549c820869b09a77ae01e9bf3f}{firstAoAddressWrite} () const }
+\label{classmdt_device_modbus_wago_module_af8b6d9549c820869b09a77ae01e9bf3f}
+
+\begin{DoxyCompactList}\small\item\em Get first address of module's analog outputs process image for write access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a28f969d1c4fa51a85ee335e44ff012b7}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a28f969d1c4fa51a85ee335e44ff012b7}{lastAoAddressWrite} () const }
+\label{classmdt_device_modbus_wago_module_a28f969d1c4fa51a85ee335e44ff012b7}
+
+\begin{DoxyCompactList}\small\item\em Get last address of module's analog outputs process image for write access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a51b519af4518c16be937fa55b458bf8e}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a51b519af4518c16be937fa55b458bf8e}{nextModuleFirstAoAddressWrite} () const }
+\label{classmdt_device_modbus_wago_module_a51b519af4518c16be937fa55b458bf8e}
+
+\begin{DoxyCompactList}\small\item\em Get first address for next module in digital outputs process image for write access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a2229734519a6168e459115a87c7caa5c}{
+int \hyperlink{classmdt_device_modbus_wago_module_a2229734519a6168e459115a87c7caa5c}{firstDiAddress} () const }
+\label{classmdt_device_modbus_wago_module_a2229734519a6168e459115a87c7caa5c}
+
+\begin{DoxyCompactList}\small\item\em Get first address of module's digital inputs process image. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_af39bda468cf9fa967aaa5c052ae14d81}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_af39bda468cf9fa967aaa5c052ae14d81}{lastDiAddress} () const }
+\label{classmdt_device_modbus_wago_module_af39bda468cf9fa967aaa5c052ae14d81}
+
+\begin{DoxyCompactList}\small\item\em Get last address of module's digital inputs process image. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_ad789bd289b2969f4c8291dd4f5c543c0}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_ad789bd289b2969f4c8291dd4f5c543c0}{nextModuleFirstDiAddress} () const }
+\label{classmdt_device_modbus_wago_module_ad789bd289b2969f4c8291dd4f5c543c0}
+
+\begin{DoxyCompactList}\small\item\em Get first address for next module in digital inputs process image. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_ac7279bc692cba522a5e06abfec5012a9}{
+int \hyperlink{classmdt_device_modbus_wago_module_ac7279bc692cba522a5e06abfec5012a9}{firstDoAddressRead} () const }
+\label{classmdt_device_modbus_wago_module_ac7279bc692cba522a5e06abfec5012a9}
+
+\begin{DoxyCompactList}\small\item\em Get first address of module's digital outputs process image for read access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a842c9dcad712703dfa9e5736a1e3c215}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a842c9dcad712703dfa9e5736a1e3c215}{lastDoAddressRead} () const }
+\label{classmdt_device_modbus_wago_module_a842c9dcad712703dfa9e5736a1e3c215}
+
+\begin{DoxyCompactList}\small\item\em Get last address of module's digital outputs process image for read access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_aa2efef403e1f92e8e4a8195d7568b116}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_aa2efef403e1f92e8e4a8195d7568b116}{nextModuleFirstDoAddressRead} () const }
+\label{classmdt_device_modbus_wago_module_aa2efef403e1f92e8e4a8195d7568b116}
+
+\begin{DoxyCompactList}\small\item\em Get first address for next module in digital outputs process image for read access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a31165c5734801029ea530be8774da5de}{
+int \hyperlink{classmdt_device_modbus_wago_module_a31165c5734801029ea530be8774da5de}{firstDoAddressWrite} () const }
+\label{classmdt_device_modbus_wago_module_a31165c5734801029ea530be8774da5de}
+
+\begin{DoxyCompactList}\small\item\em Get first address of module's digital outputs process image for write access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a32cdbdcebb5b6d00dac2d1aaefff8fb6}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a32cdbdcebb5b6d00dac2d1aaefff8fb6}{lastDoAddressWrite} () const }
+\label{classmdt_device_modbus_wago_module_a32cdbdcebb5b6d00dac2d1aaefff8fb6}
+
+\begin{DoxyCompactList}\small\item\em Get last address of module's digital outputs process image for write access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a2417c543a08a9804b0ec5b4dc9dfe4cd}{
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a2417c543a08a9804b0ec5b4dc9dfe4cd}{nextModuleFirstDoAddressWrite} () const }
+\label{classmdt_device_modbus_wago_module_a2417c543a08a9804b0ec5b4dc9dfe4cd}
+
+\begin{DoxyCompactList}\small\item\em Get first address for next module in digital outputs process image for write access. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a755946efd8ea4ee13d8f6fe4fb6ea05f}{
+const QList$<$ \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ \& \hyperlink{classmdt_device_modbus_wago_module_a755946efd8ea4ee13d8f6fe4fb6ea05f}{analogInputs} ()}
+\label{classmdt_device_modbus_wago_module_a755946efd8ea4ee13d8f6fe4fb6ea05f}
+
+\begin{DoxyCompactList}\small\item\em Access internal analog inputs. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a61ed3d50d5ad17324a6bf9d7c2cd1df5}{
+const QList$<$ \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ \& \hyperlink{classmdt_device_modbus_wago_module_a61ed3d50d5ad17324a6bf9d7c2cd1df5}{analogOutputs} ()}
+\label{classmdt_device_modbus_wago_module_a61ed3d50d5ad17324a6bf9d7c2cd1df5}
+
+\begin{DoxyCompactList}\small\item\em Access internal analog outputs. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_ad9f9289c7f23f00c6d4d25b576a5c440}{
+const QList$<$ \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ $>$ \& \hyperlink{classmdt_device_modbus_wago_module_ad9f9289c7f23f00c6d4d25b576a5c440}{digitalInputs} ()}
+\label{classmdt_device_modbus_wago_module_ad9f9289c7f23f00c6d4d25b576a5c440}
+
+\begin{DoxyCompactList}\small\item\em Access internal digital inputs. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a9d249d400b5e7f54e8fa7e0cc370eda2}{
+const QList$<$ \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ $>$ \& \hyperlink{classmdt_device_modbus_wago_module_a9d249d400b5e7f54e8fa7e0cc370eda2}{digitalOutputs} ()}
+\label{classmdt_device_modbus_wago_module_a9d249d400b5e7f54e8fa7e0cc370eda2}
+
+\begin{DoxyCompactList}\small\item\em Access internal digital outputs. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_a32a3ee554941240682fb1b166c1217ff}{
+\hyperlink{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25}{type\_\-t} \hyperlink{classmdt_device_modbus_wago_module_a32a3ee554941240682fb1b166c1217ff}{type} () const }
+\label{classmdt_device_modbus_wago_module_a32a3ee554941240682fb1b166c1217ff}
+
+\begin{DoxyCompactList}\small\item\em Get module type. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_module_ab694800ebccf308beb9eeb9a789b0442}{partNumber} () const 
+\begin{DoxyCompactList}\small\item\em QString typeText() const;. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_device_modbus_wago_module_acac6ca0c286f50adbd62d055339131f9}{partNumberText} () const 
+\begin{DoxyCompactList}\small\item\em Get text version of part number. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_module_ac67ae134628f958027965933d14cb30b}{
+QString \hyperlink{classmdt_device_modbus_wago_module_ac67ae134628f958027965933d14cb30b}{deviceName} ()}
+\label{classmdt_device_modbus_wago_module_ac67ae134628f958027965933d14cb30b}
+
+\begin{DoxyCompactList}\small\item\em Get device name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_device_modbus_wago_module_aec3bf9299744d0263339d7d419955154}{addAnalogInput} (\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$aio)
+\begin{DoxyCompactList}\small\item\em Add a analog input. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_a382ba4bf293bce7c63ee861aebb71b4e}{addAnalogOutput} (\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$aio)
+\begin{DoxyCompactList}\small\item\em Add a analog output. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_aaca2ca0616e03c49bc84b3277ec79f4a}{addDigitalInput} (\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$dio)
+\begin{DoxyCompactList}\small\item\em Add a digital input. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_a575536bfe7381d7c6ece4552923b0129}{addDigitalOutput} (\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$dio)
+\begin{DoxyCompactList}\small\item\em Add a digital output. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_ad803f3aa8d9777feaa5cdb3a4cccd316}{addRegisters} (int channelCount, int firstAddressRead, int firstAddressWrite)
+\begin{DoxyCompactList}\small\item\em Add registers. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_a4c972b61d55abfc249c02fbe7b3dbb9c}{clearRegisters} ()
+\begin{DoxyCompactList}\small\item\em Clear registers. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_module_a335047318b1be765a12002bdbd04988b}{channelCountRegisters} () const 
+\begin{DoxyCompactList}\small\item\em Get number of channels regarding registers. \end{DoxyCompactList}\item 
+quint8 \hyperlink{classmdt_device_modbus_wago_module_abe92a4c761a0ccf4d31312eda0521b11}{statusByte} (int channel) const 
+\begin{DoxyCompactList}\small\item\em Get the status byte for given channel. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_aba44d9749bb81fe2659699ae3c50842c}{setControlByte} (int channel, quint8 byte)
+\begin{DoxyCompactList}\small\item\em Set the control byte for given channel. \end{DoxyCompactList}\item 
+quint8 \hyperlink{classmdt_device_modbus_wago_module_a668b35f8174b6a04cb703ef0e9b56128}{controlByte} (int channel) const 
+\begin{DoxyCompactList}\small\item\em Get the control byte for given channel. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_a614e6c3b3b0e832202eb0a1082f53b0a}{setRegisterDataWord} (int channel, quint16 word)
+\begin{DoxyCompactList}\small\item\em Set register data word for given channel. \end{DoxyCompactList}\item 
+quint16 \hyperlink{classmdt_device_modbus_wago_module_a0f0ce9200c967775834b05649f8e499d}{registerDataWord} (int channel) const 
+\begin{DoxyCompactList}\small\item\em Get register data word for given channel. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_ab1b83fbb869c62c46e21cdac54ff9458}{setRegisterDataBytes} (int channel, quint8 byteD1, quint8 byteD0)
+\begin{DoxyCompactList}\small\item\em Set register data bytes for given channel. \end{DoxyCompactList}\item 
+quint8 \hyperlink{classmdt_device_modbus_wago_module_ae22ec3a2a0adf8407ff3c1eaeed602e6}{registerDataByteD1} (int channel)
+\begin{DoxyCompactList}\small\item\em Get register data byte D1 or D3 or ... \end{DoxyCompactList}\item 
+quint8 \hyperlink{classmdt_device_modbus_wago_module_add5a97b94ef36520b90501f6325f40cb}{registerDataByteD0} (int channel)
+\begin{DoxyCompactList}\small\item\em Get register data byte D0 or D2 or ... \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_modbus_wago_module_aa775cffab72f7ed7cd92a48d26da3225}{readRegisters} (int firstChannel, int lastChannel, bool needDeviceSetupState)
+\begin{DoxyCompactList}\small\item\em Read register bytes for given range of channels. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_modbus_wago_module_a8fe809c91ccbf05f77c189fbaba12b91}{writeRegisters} (int firstChannel, int lastChannel, bool needDeviceSetupState)
+\begin{DoxyCompactList}\small\item\em Write register bytes for given range of channels. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_modbus_wago_module_a90bd4625c8b1efcd34cd56b31dc2f72c}{readStatusBytes} (int firstChannel, int lastChannel, bool needDeviceSetupState)
+\begin{DoxyCompactList}\small\item\em Read status byte for given range of channels. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_modbus_wago_module_a92cf3b411849e57c1d392ffa1b2e2ce6}{writeControlBytes} (int firstChannel, int lastChannel, bool needDeviceSetupState)
+\begin{DoxyCompactList}\small\item\em Write control byte for given range of channels. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_ab74adb7084ef031d51c91d4ce80e08db}{wait} (int ms)
+\begin{DoxyCompactList}\small\item\em Wait some time. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_a6b5af2c05f5428d0866a2f5301c07055}{analogInputValueMin} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get the min value of a range of analog inputs. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_a306b6b993c58f9c02defda97c3300e21}{analogOutputValueMin} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get the min value of a range of analog outputs. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_ae4f0670b0657ace4af5bdc7eb80d7f71}{analogInputValueMax} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get the max value of a range of analog inputs. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_a736fe244944e4180d4fd9d35d5ad08d0}{analogOutputValueMax} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get the max value of a range of analog outputs. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_modbus_wago_module_aec715d2707c556ead4690d82ee9c8307}{analogInputValueBitsCount} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get the number of bits (including sign bit) used to represent a value of analog inputs. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a4c24b14835ab4f57caf342513bc88a02}{analogOutputValueBitsCount} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get the number of bits (including sign bit) used to represent a value of analog outputs. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_modbus_wago_module_ab17c99ea4bdaa05fa1c2006d23c936e5}{analogInputValueLsbIndex} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get index of the first bit (LSB) that represents the value of analog inputs. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a36876268b29010f7dc096c5e092e7240}{analogOutputValueLsbIndex} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get index of the first bit (LSB) that represents the value of analog outputs. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_aead7f379126d8fb570a179dff857040f}{analogInputValueSigned} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Check if a analog inputs returns a signed value or not. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_a9a0e0e145ea269221042c6b5af26850c}{analogOutputValueSigned} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Check if a analog outputs returns a signed value or not. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_acabe25371f651f5f224abf89277be5f8}{analogInputValueScaledFromMinToMax} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Check if analog input's value is scaled from minimum to maximum. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_af2af1897221c28d03424c387f247e139}{analogOutputValueScaledFromMinToMax} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Check if analog output's value is scaled from minimum to maximum. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_a3567f225c332d4ce7dcc3cb724b8ad1f}{analogInputValueConversionFactor} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get analog input's conversion factor. \end{DoxyCompactList}\item 
+virtual QVariant \hyperlink{classmdt_device_modbus_wago_module_a8ce8e6ddebbf16db6bc2edbb7ef5d786}{analogOutputValueConversionFactor} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get analog output's conversion factor. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a67b7c04870074112f45e99d8aa12879a}{analogInputsCount} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Get number of analog inputs. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_modbus_wago_module_ab97fe52c4538a80ccdf5fa1b04c119b6}{analogOutputsCount} (int partNumber) const 
+\begin{DoxyCompactList}\small\item\em Get number of analog outputs. \end{DoxyCompactList}\item 
+virtual QString \hyperlink{classmdt_device_modbus_wago_module_adbf2b96c5ab43a1693b5d656f84e893d}{analogInputUnit} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get unit of a analog inputs (V, A, ...) \end{DoxyCompactList}\item 
+virtual QString \hyperlink{classmdt_device_modbus_wago_module_a239892e92ee3f062e1000301766877aa}{analogOutputUnit} (int partNumber, int channel) const 
+\begin{DoxyCompactList}\small\item\em Get unit of a analog outputs (V, A, ...) \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_module_aec8434b67b73b60f218e0fe4abe0e553}{digitalInputsProcessImageSize} (quint16 word) const 
+\begin{DoxyCompactList}\small\item\em Get size of digital inputs process image. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_modbus_wago_module_a96ae9148d769fec6905d360c5262d0eb}{digitalInputsCount} (quint16 word) const 
+\begin{DoxyCompactList}\small\item\em Get the number of digital inputs. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_wago_module_a40513e96468455295608a788eb1d8cac}{digitalOutputsProcessImageSize} (quint16 word) const 
+\begin{DoxyCompactList}\small\item\em Get size of digital outputs process image. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_modbus_wago_module_ac425538b1ae0be825929d58a9713c788}{digitalOutputsCount} (quint16 word) const 
+\begin{DoxyCompactList}\small\item\em Get the number of digital outputs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Helper class for Wago modules detection and setup. 
+
+Definition at line 35 of file mdtDeviceModbusWagoModule.h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!type\_\-t@{type\_\-t}}
+\index{type\_\-t@{type\_\-t}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{type\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtDeviceModbusWagoModule::type\_\-t}}}
+\label{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25}
+
+
+Module type. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{Unknown@{Unknown}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!Unknown@{Unknown}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25aa195556cb75e827f16f81e9f09908660}{
+Unknown}
+\label{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25aa195556cb75e827f16f81e9f09908660}
+}]Unknown module type \index{AnalogInputs@{AnalogInputs}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!AnalogInputs@{AnalogInputs}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25a70609836e6ef603f912da6084adf3c9d}{
+AnalogInputs}
+\label{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25a70609836e6ef603f912da6084adf3c9d}
+}]Analog inputs module \index{AnalogOutputs@{AnalogOutputs}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!AnalogOutputs@{AnalogOutputs}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25a38c67b211155faa87f52767c60134f33}{
+AnalogOutputs}
+\label{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25a38c67b211155faa87f52767c60134f33}
+}]Analog outputs module \index{DigitalInputs@{DigitalInputs}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!DigitalInputs@{DigitalInputs}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25aee246eb286603d48008177621980eda4}{
+DigitalInputs}
+\label{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25aee246eb286603d48008177621980eda4}
+}]Digital inputs module \index{DigitalOutputs@{DigitalOutputs}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!DigitalOutputs@{DigitalOutputs}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25ace992008f0003a8ee2106872b6a410a3}{
+DigitalOutputs}
+\label{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25ace992008f0003a8ee2106872b6a410a3}
+}]Digital outputs module \index{DigitalInputsOutputs@{DigitalInputsOutputs}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!DigitalInputsOutputs@{DigitalInputsOutputs}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25adbe63d8313a77922b9a7808a5321fdb7}{
+DigitalInputsOutputs}
+\label{classmdt_device_modbus_wago_module_a2d8f6895b2a031c953bd91c2f65a1a25adbe63d8313a77922b9a7808a5321fdb7}
+}]Module with digital inputs and outputs \end{description}
+\end{Desc}
+
+
+
+Definition at line 41 of file mdtDeviceModbusWagoModule.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_device_modbus_wago_module_a888f4d413d3bde075733ddbba4ae7d96}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{mdtDeviceModbusWagoModule}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceModbusWagoModule::mdtDeviceModbusWagoModule (
+\begin{DoxyParamCaption}
+\item[{bool}]{autoDeleteIos, }
+\item[{{\bf mdtDeviceModbusWago} $\ast$}]{device}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_module_a888f4d413d3bde075733ddbba4ae7d96}
+
+
+Constructor. 
+
+The module will have all addresses set to 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em autoDeleteIos} & If true, internally created I/O's are deleted when this object is destroyed \\
+\hline
+{\em device} & Pointer to device (used for register service access) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+device must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 30 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_af47e8774515e5960ffb87bc6ec81cea2}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!$\sim$mdtDeviceModbusWagoModule@{$\sim$mdtDeviceModbusWagoModule}}
+\index{$\sim$mdtDeviceModbusWagoModule@{$\sim$mdtDeviceModbusWagoModule}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{$\sim$mdtDeviceModbusWagoModule}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceModbusWagoModule::$\sim$mdtDeviceModbusWagoModule (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_af47e8774515e5960ffb87bc6ec81cea2}
+
+
+Destructor. 
+
+If autoDeleteIos is true, internal I/O's are deleted 
+
+Definition at line 46 of file mdtDeviceModbusWagoModule.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_device_modbus_wago_module_aec3bf9299744d0263339d7d419955154}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!addAnalogInput@{addAnalogInput}}
+\index{addAnalogInput@{addAnalogInput}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{addAnalogInput}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::addAnalogInput (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtAnalogIo} $\ast$}]{aio}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_aec3bf9299744d0263339d7d419955154}
+
+
+Add a analog input. 
+
+\begin{DoxyPrecond}{Precondition}
+aio must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 308 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a382ba4bf293bce7c63ee861aebb71b4e}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!addAnalogOutput@{addAnalogOutput}}
+\index{addAnalogOutput@{addAnalogOutput}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{addAnalogOutput}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::addAnalogOutput (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtAnalogIo} $\ast$}]{aio}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a382ba4bf293bce7c63ee861aebb71b4e}
+
+
+Add a analog output. 
+
+\begin{DoxyPrecond}{Precondition}
+aio must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 315 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_aaca2ca0616e03c49bc84b3277ec79f4a}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!addDigitalInput@{addDigitalInput}}
+\index{addDigitalInput@{addDigitalInput}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{addDigitalInput}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::addDigitalInput (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtDigitalIo} $\ast$}]{dio}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_aaca2ca0616e03c49bc84b3277ec79f4a}
+
+
+Add a digital input. 
+
+\begin{DoxyPrecond}{Precondition}
+dio must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 322 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a575536bfe7381d7c6ece4552923b0129}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!addDigitalOutput@{addDigitalOutput}}
+\index{addDigitalOutput@{addDigitalOutput}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{addDigitalOutput}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::addDigitalOutput (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtDigitalIo} $\ast$}]{dio}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a575536bfe7381d7c6ece4552923b0129}
+
+
+Add a digital output. 
+
+\begin{DoxyPrecond}{Precondition}
+dio must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 329 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ad803f3aa8d9777feaa5cdb3a4cccd316}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!addRegisters@{addRegisters}}
+\index{addRegisters@{addRegisters}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{addRegisters}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::addRegisters (
+\begin{DoxyParamCaption}
+\item[{int}]{channelCount, }
+\item[{int}]{firstAddressRead, }
+\item[{int}]{firstAddressWrite}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_ad803f3aa8d9777feaa5cdb3a4cccd316}
+
+
+Add registers. 
+
+Will add control byte, status byte and register data for given channelCount 
+
+pvRegisterDataWords.append(QPair$<$int, quint16$>$(currentAddressRead, 0)); ///\begin{Desc}
+\item[\hyperlink{todo__todo000009}{Todo}]Gag avec adresses !! \end{Desc}
+
+
+++currentAddressRead; 
+
+
+
+Definition at line 336 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a67b7c04870074112f45e99d8aa12879a}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogInputsCount@{analogInputsCount}}
+\index{analogInputsCount@{analogInputsCount}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogInputsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::analogInputsCount (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a67b7c04870074112f45e99d8aa12879a}
+
+
+Get number of analog inputs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of I/O's or -\/1 for unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 786 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_adbf2b96c5ab43a1693b5d656f84e893d}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogInputUnit@{analogInputUnit}}
+\index{analogInputUnit@{analogInputUnit}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogInputUnit}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtDeviceModbusWagoModule::analogInputUnit (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_adbf2b96c5ab43a1693b5d656f84e893d}
+
+
+Get unit of a analog inputs (V, A, ...) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Unit of module, or a empty string for unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 818 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_aec715d2707c556ead4690d82ee9c8307}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogInputValueBitsCount@{analogInputValueBitsCount}}
+\index{analogInputValueBitsCount@{analogInputValueBitsCount}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogInputValueBitsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::analogInputValueBitsCount (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_aec715d2707c556ead4690d82ee9c8307}
+
+
+Get the number of bits (including sign bit) used to represent a value of analog inputs. 
+
+The resolution of each analog module is not the same. For example, the 750-\/457 has a resolution of 13 bits.
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bits count used for value, or -\/1 for a unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 666 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a3567f225c332d4ce7dcc3cb724b8ad1f}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogInputValueConversionFactor@{analogInputValueConversionFactor}}
+\index{analogInputValueConversionFactor@{analogInputValueConversionFactor}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogInputValueConversionFactor}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogInputValueConversionFactor (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a3567f225c332d4ce7dcc3cb724b8ad1f}
+
+
+Get analog input's conversion factor. 
+
+For example, RTD module 750-\/464 has a conversion factor of 0.1 for channel configured as Pt100
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 464 if module is a 750-\/464). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Scale factor for given input. For a unknown module, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 762 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ab17c99ea4bdaa05fa1c2006d23c936e5}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogInputValueLsbIndex@{analogInputValueLsbIndex}}
+\index{analogInputValueLsbIndex@{analogInputValueLsbIndex}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogInputValueLsbIndex}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::analogInputValueLsbIndex (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_ab17c99ea4bdaa05fa1c2006d23c936e5}
+
+
+Get index of the first bit (LSB) that represents the value of analog inputs. 
+
+Some modules have bits used for other purprose than value. At exemple, for module 750-\/457, the LSB index is 3.
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of LSB of value, or -\/1 for unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 690 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ae4f0670b0657ace4af5bdc7eb80d7f71}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogInputValueMax@{analogInputValueMax}}
+\index{analogInputValueMax@{analogInputValueMax}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogInputValueMax}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogInputValueMax (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_ae4f0670b0657ace4af5bdc7eb80d7f71}
+
+
+Get the max value of a range of analog inputs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The max. value in floating format. If partNumber is unknow, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 642 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a6b5af2c05f5428d0866a2f5301c07055}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogInputValueMin@{analogInputValueMin}}
+\index{analogInputValueMin@{analogInputValueMin}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogInputValueMin}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogInputValueMin (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a6b5af2c05f5428d0866a2f5301c07055}
+
+
+Get the min value of a range of analog inputs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The min. value in floating format. If partNumber is unknow, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 618 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_acabe25371f651f5f224abf89277be5f8}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogInputValueScaledFromMinToMax@{analogInputValueScaledFromMinToMax}}
+\index{analogInputValueScaledFromMinToMax@{analogInputValueScaledFromMinToMax}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogInputValueScaledFromMinToMax}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogInputValueScaledFromMinToMax (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_acabe25371f651f5f224abf89277be5f8}
+
+
+Check if analog input's value is scaled from minimum to maximum. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if module's representation is scaled from minimum to maximum, false if not. For a unknown module, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 738 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_aead7f379126d8fb570a179dff857040f}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogInputValueSigned@{analogInputValueSigned}}
+\index{analogInputValueSigned@{analogInputValueSigned}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogInputValueSigned}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogInputValueSigned (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_aead7f379126d8fb570a179dff857040f}
+
+
+Check if a analog inputs returns a signed value or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if module's representation is signed, false if not. For a unknown module, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 714 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ab97fe52c4538a80ccdf5fa1b04c119b6}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogOutputsCount@{analogOutputsCount}}
+\index{analogOutputsCount@{analogOutputsCount}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogOutputsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::analogOutputsCount (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_ab97fe52c4538a80ccdf5fa1b04c119b6}
+
+
+Get number of analog outputs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 457 if module is a 750-\/457). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of I/O's or -\/1 for unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 802 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a239892e92ee3f062e1000301766877aa}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogOutputUnit@{analogOutputUnit}}
+\index{analogOutputUnit@{analogOutputUnit}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogOutputUnit}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtDeviceModbusWagoModule::analogOutputUnit (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a239892e92ee3f062e1000301766877aa}
+
+
+Get unit of a analog outputs (V, A, ...) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 550 if module is a 750-\/550). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Unit of module, or a empty string for unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 832 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a4c24b14835ab4f57caf342513bc88a02}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogOutputValueBitsCount@{analogOutputValueBitsCount}}
+\index{analogOutputValueBitsCount@{analogOutputValueBitsCount}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogOutputValueBitsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::analogOutputValueBitsCount (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a4c24b14835ab4f57caf342513bc88a02}
+
+
+Get the number of bits (including sign bit) used to represent a value of analog outputs. 
+
+The resolution of each analog module is not the same. For example, the 750-\/550 has a resolution of 12 bits.
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 550 if module is a 750-\/550). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bits count used for value, or -\/1 for a unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 680 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a8ce8e6ddebbf16db6bc2edbb7ef5d786}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogOutputValueConversionFactor@{analogOutputValueConversionFactor}}
+\index{analogOutputValueConversionFactor@{analogOutputValueConversionFactor}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogOutputValueConversionFactor}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogOutputValueConversionFactor (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a8ce8e6ddebbf16db6bc2edbb7ef5d786}
+
+
+Get analog output's conversion factor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 550 if module is a 750-\/550). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Scale factor for given output. For a unknown module, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 776 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a36876268b29010f7dc096c5e092e7240}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogOutputValueLsbIndex@{analogOutputValueLsbIndex}}
+\index{analogOutputValueLsbIndex@{analogOutputValueLsbIndex}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogOutputValueLsbIndex}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::analogOutputValueLsbIndex (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a36876268b29010f7dc096c5e092e7240}
+
+
+Get index of the first bit (LSB) that represents the value of analog outputs. 
+
+Some modules have bits used for other purprose than value. At exemple, for module 750-\/550, the LSB index is 3.
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 550 if module is a 750-\/550). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of LSB of value, or -\/1 for unknown module. 
+\end{DoxyReturn}
+
+
+Definition at line 704 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a736fe244944e4180d4fd9d35d5ad08d0}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogOutputValueMax@{analogOutputValueMax}}
+\index{analogOutputValueMax@{analogOutputValueMax}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogOutputValueMax}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogOutputValueMax (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a736fe244944e4180d4fd9d35d5ad08d0}
+
+
+Get the max value of a range of analog outputs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 550 if module is a 750-\/550). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The max. value in floating format. If partNumber is unknow, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 656 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a306b6b993c58f9c02defda97c3300e21}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogOutputValueMin@{analogOutputValueMin}}
+\index{analogOutputValueMin@{analogOutputValueMin}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogOutputValueMin}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogOutputValueMin (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a306b6b993c58f9c02defda97c3300e21}
+
+
+Get the min value of a range of analog outputs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 550 if module is a 750-\/550). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The min. value in floating format. If partNumber is unknow, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 632 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_af2af1897221c28d03424c387f247e139}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogOutputValueScaledFromMinToMax@{analogOutputValueScaledFromMinToMax}}
+\index{analogOutputValueScaledFromMinToMax@{analogOutputValueScaledFromMinToMax}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogOutputValueScaledFromMinToMax}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogOutputValueScaledFromMinToMax (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_af2af1897221c28d03424c387f247e139}
+
+
+Check if analog output's value is scaled from minimum to maximum. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 550 if module is a 750-\/550). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if module's representation is scaled from minimum to maximum, false if not. For a unknown module, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 752 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a9a0e0e145ea269221042c6b5af26850c}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!analogOutputValueSigned@{analogOutputValueSigned}}
+\index{analogOutputValueSigned@{analogOutputValueSigned}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{analogOutputValueSigned}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtDeviceModbusWagoModule::analogOutputValueSigned (
+\begin{DoxyParamCaption}
+\item[{int}]{partNumber, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a9a0e0e145ea269221042c6b5af26850c}
+
+
+Check if a analog outputs returns a signed value or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em partNumber} & The right part of Wago part number (f.ex. 550 if module is a 750-\/550). \\
+\hline
+{\em channel} & Some special module supports different data per channel, so channel must be given here \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if module's representation is signed, false if not. For a unknown module, a invalid QVariant is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 728 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a335047318b1be765a12002bdbd04988b}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!channelCountRegisters@{channelCountRegisters}}
+\index{channelCountRegisters@{channelCountRegisters}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{channelCountRegisters}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::channelCountRegisters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a335047318b1be765a12002bdbd04988b}
+
+
+Get number of channels regarding registers. 
+
+During I/O detection or channel count setup, register count can be incoherent with I/O count.
+
+This method will return channel count only regarding number of control/status/data register sizes. 
+
+Definition at line 361 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a7f874ff01aa984101b1d867c781eba67}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!clear@{clear}}
+\index{clear@{clear}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::clear (
+\begin{DoxyParamCaption}
+\item[{bool}]{forceDeleteIos = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_module_a7f874ff01aa984101b1d867c781eba67}
+
+
+Clear I/O module. 
+
+If autoDeleteIos is set, memory is freed for internal I/O (\hyperlink{classmdt_abstract_io}{mdtAbstractIo} pointers will also become invalid)
+
+Note that all addresses will be reset to 0 after a clear.
+
+
+\begin{DoxyParams}{Parameters}
+{\em forceDeleteIos} & Will delete I/O's undependant of autoDeleteIos flag. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 51 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a4c972b61d55abfc249c02fbe7b3dbb9c}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!clearRegisters@{clearRegisters}}
+\index{clearRegisters@{clearRegisters}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{clearRegisters}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::clearRegisters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a4c972b61d55abfc249c02fbe7b3dbb9c}
+
+
+Clear registers. 
+
+Will remove control bytes, status bytes and data registers. 
+
+Definition at line 354 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a668b35f8174b6a04cb703ef0e9b56128}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!controlByte@{controlByte}}
+\index{controlByte@{controlByte}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{controlByte}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtDeviceModbusWagoModule::controlByte (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a668b35f8174b6a04cb703ef0e9b56128}
+
+
+Get the control byte for given channel. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_modbus_wago_module_aba44d9749bb81fe2659699ae3c50842c}{setControlByte()} 
+\end{DoxySeeAlso}
+\begin{DoxyPrecond}{Precondition}
+channel must be in a valid range 
+\end{DoxyPrecond}
+
+
+Definition at line 385 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a96ae9148d769fec6905d360c5262d0eb}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!digitalInputsCount@{digitalInputsCount}}
+\index{digitalInputsCount@{digitalInputsCount}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{digitalInputsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::digitalInputsCount (
+\begin{DoxyParamCaption}
+\item[{quint16}]{word}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a96ae9148d769fec6905d360c5262d0eb}
+
+
+Get the number of digital inputs. 
+
+This implementation returns value from \hyperlink{classmdt_device_modbus_wago_module_aec8434b67b73b60f218e0fe4abe0e553}{digitalInputsProcessImageSize()} . This method can be re-\/implemented for special modules. 
+
+Definition at line 852 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_aec8434b67b73b60f218e0fe4abe0e553}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!digitalInputsProcessImageSize@{digitalInputsProcessImageSize}}
+\index{digitalInputsProcessImageSize@{digitalInputsProcessImageSize}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{digitalInputsProcessImageSize}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::digitalInputsProcessImageSize (
+\begin{DoxyParamCaption}
+\item[{quint16}]{word}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_aec8434b67b73b60f218e0fe4abe0e553}
+
+
+Get size of digital inputs process image. 
+
+For common digital inputs modules, this will match with the number of digital inputs. For special modules that have status/iformation mapped in porecess image, these are also include in the result.
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & The identification word (see Wago fieldbus coupler doc, part of register 0x2030 for details). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Digital inputs process image size \mbox{[}bits\mbox{]} or -\/1 on unknown description. 
+\end{DoxyReturn}
+
+
+Definition at line 842 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ac425538b1ae0be825929d58a9713c788}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!digitalOutputsCount@{digitalOutputsCount}}
+\index{digitalOutputsCount@{digitalOutputsCount}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{digitalOutputsCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::digitalOutputsCount (
+\begin{DoxyParamCaption}
+\item[{quint16}]{word}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_ac425538b1ae0be825929d58a9713c788}
+
+
+Get the number of digital outputs. 
+
+This implementation returns value from \hyperlink{classmdt_device_modbus_wago_module_a40513e96468455295608a788eb1d8cac}{digitalOutputsProcessImageSize()} . This method can be re-\/implemented for special modules. 
+
+Definition at line 867 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a40513e96468455295608a788eb1d8cac}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!digitalOutputsProcessImageSize@{digitalOutputsProcessImageSize}}
+\index{digitalOutputsProcessImageSize@{digitalOutputsProcessImageSize}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{digitalOutputsProcessImageSize}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::digitalOutputsProcessImageSize (
+\begin{DoxyParamCaption}
+\item[{quint16}]{word}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a40513e96468455295608a788eb1d8cac}
+
+
+Get size of digital outputs process image. 
+
+For common digital outputs modules, this will match with the number of digital outputs. For special modules that have status/iformation mapped in porecess image, these are also include in the result.
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & The identification word (see Wago fieldbus coupler doc, part of register 0x2030 for details). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Digital outputs process image size \mbox{[}bits\mbox{]} or -\/1 on unknown description. 
+\end{DoxyReturn}
+
+
+Definition at line 857 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ab694800ebccf308beb9eeb9a789b0442}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!partNumber@{partNumber}}
+\index{partNumber@{partNumber}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{partNumber}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbusWagoModule::partNumber (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_module_ab694800ebccf308beb9eeb9a789b0442}
+
+
+QString typeText() const;. 
+
+Get module's part number
+
+Part number is the 3 last digits of wago article number. F.ex. : for the 750-\/457 , this method will return 457. Note: part number is only available for analog I/O module. 
+
+Definition at line 288 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_acac6ca0c286f50adbd62d055339131f9}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!partNumberText@{partNumberText}}
+\index{partNumberText@{partNumberText}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{partNumberText}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtDeviceModbusWagoModule::partNumberText (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_modbus_wago_module_acac6ca0c286f50adbd62d055339131f9}
+
+
+Get text version of part number. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_modbus_wago_module_ab694800ebccf308beb9eeb9a789b0442}{partNumber()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 293 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_aa775cffab72f7ed7cd92a48d26da3225}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!readRegisters@{readRegisters}}
+\index{readRegisters@{readRegisters}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{readRegisters}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbusWagoModule::readRegisters (
+\begin{DoxyParamCaption}
+\item[{int}]{firstChannel, }
+\item[{int}]{lastChannel, }
+\item[{bool}]{needDeviceSetupState}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_aa775cffab72f7ed7cd92a48d26da3225}
+
+
+Read register bytes for given range of channels. 
+
+Will read status (Sx) and data (Dx) bytes from physical module and update internally cached values.
+
+Note: this method will not send a specific query. For this, control byte must be setup regarding specific module and sent to device with \hyperlink{classmdt_device_modbus_wago_module_a92cf3b411849e57c1d392ffa1b2e2ce6}{writeControlBytes()} first.
+
+\begin{DoxyPrecond}{Precondition}
+firstChannel and lastChannel must be in a valid range
+\end{DoxyPrecond}
+\begin{Desc}
+\item[\hyperlink{todo__todo000010}{Todo}]Implement needDeviceSetupState \end{Desc}
+
+
+if(needDeviceSetupState \&\& (pvDevice-\/$>$currentState() != mdtPortManager::Setup))\{ \}
+
+registersCount = pvRegisterDataWords.at(lastChannel).first -\/ startAddress + 1; ///\begin{Desc}
+\item[\hyperlink{todo__todo000011}{Todo}]Change to status byte of last channel + 1...... \end{Desc}
+
+
+pvRegisterDataWords\mbox{[}channel\mbox{]}.second = pvDevice-\/$>$registerValues().at(i + 1);
+
+Q\_\-ASSERT(pvDevice-\/$>$registerValues().size() == (lastChannel + 1)); for(channel = firstChannel; channel $<$= lastChannel; channel += 2)\{ pvStatusBytes\mbox{[}channel\mbox{]}.second = pvDevice-\/$>$registerValues().at(channel) \& 0x00FF; pvRegisterDataWords\mbox{[}channel\mbox{]}.second = pvDevice-\/$>$registerValues().at(channel + 1); \}
+
+
+
+Definition at line 433 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a90bd4625c8b1efcd34cd56b31dc2f72c}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!readStatusBytes@{readStatusBytes}}
+\index{readStatusBytes@{readStatusBytes}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{readStatusBytes}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbusWagoModule::readStatusBytes (
+\begin{DoxyParamCaption}
+\item[{int}]{firstChannel, }
+\item[{int}]{lastChannel, }
+\item[{bool}]{needDeviceSetupState}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a90bd4625c8b1efcd34cd56b31dc2f72c}
+
+
+Read status byte for given range of channels. 
+
+Will read status byte (Sx) from physical module and update internally cached value.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_modbus_wago_module_abe92a4c761a0ccf4d31312eda0521b11}{statusByte()} 
+\end{DoxySeeAlso}
+\begin{DoxyPrecond}{Precondition}
+firstChannel and lastChannel must be in a valid range
+\end{DoxyPrecond}
+\begin{Desc}
+\item[\hyperlink{todo__todo000013}{Todo}]Implement needDeviceSetupState \end{Desc}
+
+
+Q\_\-ASSERT(lastChannel $<$ pvRegisterDataWords.size());
+
+if(needDeviceSetupState \&\& (pvDevice-\/$>$currentState() != mdtPortManager::Setup))\{ \}
+
+
+
+Definition at line 533 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_add5a97b94ef36520b90501f6325f40cb}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!registerDataByteD0@{registerDataByteD0}}
+\index{registerDataByteD0@{registerDataByteD0}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{registerDataByteD0}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtDeviceModbusWagoModule::registerDataByteD0 (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_add5a97b94ef36520b90501f6325f40cb}
+
+
+Get register data byte D0 or D2 or ... 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_modbus_wago_module_ab1b83fbb869c62c46e21cdac54ff9458}{setRegisterDataBytes()}
+\end{DoxySeeAlso}
+\begin{DoxyPrecond}{Precondition}
+channel must be in a valid range 
+\end{DoxyPrecond}
+
+
+return (pvRegisterDataWords.at(channel).second \& 0x00FF); 
+
+
+
+Definition at line 424 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ae22ec3a2a0adf8407ff3c1eaeed602e6}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!registerDataByteD1@{registerDataByteD1}}
+\index{registerDataByteD1@{registerDataByteD1}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{registerDataByteD1}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtDeviceModbusWagoModule::registerDataByteD1 (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_ae22ec3a2a0adf8407ff3c1eaeed602e6}
+
+
+Get register data byte D1 or D3 or ... 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_modbus_wago_module_ab1b83fbb869c62c46e21cdac54ff9458}{setRegisterDataBytes()}
+\end{DoxySeeAlso}
+\begin{DoxyPrecond}{Precondition}
+channel must be in a valid range 
+\end{DoxyPrecond}
+
+
+return (pvRegisterDataWords.at(channel).second $>$$>$ 8); 
+
+
+
+Definition at line 416 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a0f0ce9200c967775834b05649f8e499d}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!registerDataWord@{registerDataWord}}
+\index{registerDataWord@{registerDataWord}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{registerDataWord}]{\setlength{\rightskip}{0pt plus 5cm}quint16 mdtDeviceModbusWagoModule::registerDataWord (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a0f0ce9200c967775834b05649f8e499d}
+
+
+Get register data word for given channel. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_modbus_wago_module_a614e6c3b3b0e832202eb0a1082f53b0a}{setRegisterDataWord()} 
+\end{DoxySeeAlso}
+
+
+return pvRegisterDataWords.at(channel).second; 
+
+
+
+Definition at line 400 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_aba44d9749bb81fe2659699ae3c50842c}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!setControlByte@{setControlByte}}
+\index{setControlByte@{setControlByte}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{setControlByte}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::setControlByte (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{quint8}]{byte}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_aba44d9749bb81fe2659699ae3c50842c}
+
+
+Set the control byte for given channel. 
+
+For channel 0, control byte C0 is set, for channel 1, control byte C1 is set , ...
+
+See Wago documentation about register communication for details.
+
+Note: this method set only the cached control byte, to set value to physical module, use \hyperlink{classmdt_device_modbus_wago_module_a92cf3b411849e57c1d392ffa1b2e2ce6}{writeControlBytes()}.
+
+\begin{DoxyPrecond}{Precondition}
+channel must be in a valid range 
+\end{DoxyPrecond}
+
+
+Definition at line 376 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ab1b83fbb869c62c46e21cdac54ff9458}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!setRegisterDataBytes@{setRegisterDataBytes}}
+\index{setRegisterDataBytes@{setRegisterDataBytes}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{setRegisterDataBytes}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::setRegisterDataBytes (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{quint8}]{byteD1, }
+\item[{quint8}]{byteD0}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_ab1b83fbb869c62c46e21cdac54ff9458}
+
+
+Set register data bytes for given channel. 
+
+For channel 0, byteD0 is set to byte D0, byteD1 to byte D1, for channel 1, byteD0 to byte D2, byteD1 to byte D3, ...
+
+See Wago documentation about register communication for details.
+
+Note: this method only set cached register data bytes, to set them to physical module, use \hyperlink{classmdt_device_modbus_wago_module_a8fe809c91ccbf05f77c189fbaba12b91}{writeRegisters()} .
+
+\begin{DoxyPrecond}{Precondition}
+channel must be in a valid range 
+\end{DoxyPrecond}
+
+
+Definition at line 408 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a614e6c3b3b0e832202eb0a1082f53b0a}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!setRegisterDataWord@{setRegisterDataWord}}
+\index{setRegisterDataWord@{setRegisterDataWord}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{setRegisterDataWord}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::setRegisterDataWord (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{quint16}]{word}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a614e6c3b3b0e832202eb0a1082f53b0a}
+
+
+Set register data word for given channel. 
+
+For channel 0, register data bytes D0 and D1 are set, for channel 1, register data bytes D2 and D3 are set, ...
+
+See Wago documentation about register communication for details.
+
+Note: this method only set cached register data bytes, to set them to physical module, use \hyperlink{classmdt_device_modbus_wago_module_a8fe809c91ccbf05f77c189fbaba12b91}{writeRegisters()} .
+
+\begin{DoxyPrecond}{Precondition}
+channel must be in a valid range 
+\end{DoxyPrecond}
+
+
+pvRegisterDataWords\mbox{[}channel\mbox{]}.second = word; 
+
+
+
+Definition at line 392 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_adf7431cd4d41d7839b42cc21badeabc5}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!setupFromRegisterWord@{setupFromRegisterWord}}
+\index{setupFromRegisterWord@{setupFromRegisterWord}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{setupFromRegisterWord}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbusWagoModule::setupFromRegisterWord (
+\begin{DoxyParamCaption}
+\item[{quint16}]{word}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_module_adf7431cd4d41d7839b42cc21badeabc5}
+
+
+Setup module. 
+
+During I/O detection, the fieldbus coupler give a word for each module attached on its KBUS. This word contains several informations such as a part number (for analog I/O module) or flag bits (for digital I/O module).
+
+This method will use this word do create internally I/O's based on \hyperlink{classmdt_abstract_io}{mdtAbstractIo} and setup them on the base of known parameters (range, type, etc...).
+
+Note that no absolute addressing is done at this step. Call \hyperlink{classmdt_device_modbus_wago_module_ac7d9da94e7d4c06e288a346ac123c711}{updateAddresses()} for this.
+
+Some special modules need to communicate with fieldbus coupler to access register service. To get setup during I/O detection, use getSpecialModuleSetup() instead of this method.\begin{Desc}
+\item[\hyperlink{todo__todo000015}{Todo}]Adapt\end{Desc}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em word} & Word that contains I/O informations. \\
+\hline
+\end{DoxyParams}
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000008}{Todo}]Implement \end{Desc}
+
+
+
+
+Definition at line 74 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_abe92a4c761a0ccf4d31312eda0521b11}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!statusByte@{statusByte}}
+\index{statusByte@{statusByte}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{statusByte}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtDeviceModbusWagoModule::statusByte (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_abe92a4c761a0ccf4d31312eda0521b11}
+
+
+Get the status byte for given channel. 
+
+For channel 0, status byte S0 is returned, for channel 1, status byte S1 , ...
+
+See Wago documentation about register communication for details.
+
+Note: this method returns only the cached status byte, to get value from physical module, use \hyperlink{classmdt_device_modbus_wago_module_a90bd4625c8b1efcd34cd56b31dc2f72c}{readStatusBytes()} first.
+
+\begin{DoxyPrecond}{Precondition}
+channel must be in a valid range 
+\end{DoxyPrecond}
+
+
+Definition at line 369 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ac7d9da94e7d4c06e288a346ac123c711}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!updateAddresses@{updateAddresses}}
+\index{updateAddresses@{updateAddresses}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{updateAddresses}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::updateAddresses (
+\begin{DoxyParamCaption}
+\item[{int}]{firstAiAddress, }
+\item[{int}]{firstAoAddressRead, }
+\item[{int}]{firstAoAddressWrite, }
+\item[{int}]{firstDiAddress, }
+\item[{int}]{firstDoAddressRead, }
+\item[{int}]{firstDoAddressWrite}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_ac7d9da94e7d4c06e288a346ac123c711}
+
+
+Update addresses of the module. 
+
+If no I/O was set, this method will store given addresses. This can be usefull for some special modules witch needs to communicate with fieldbus during setup.
+
+However, the normal way is to stup the module with \hyperlink{classmdt_device_modbus_wago_module_adf7431cd4d41d7839b42cc21badeabc5}{setupFromRegisterWord()} first, then call this method to address I/Os.
+
+This default implementation will address all present I/Os in a linear way.
+
+
+\begin{DoxyParams}{Parameters}
+{\em firstAiAddress} & First address in the analog inputs process image. \\
+\hline
+{\em firstAoAddressRead} & First address in the analog outputs process image for read access. \\
+\hline
+{\em firstAoAddressWrite} & First address in the analog outputs process image for write access. \\
+\hline
+{\em firstDiAddress} & First address in the digital inputs process image. \\
+\hline
+{\em firstDoAddressRead} & First address in the digital outputs process image for read access. \\
+\hline
+{\em firstDoAddressWrite} & First address in the digital outputs process image for write access. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 94 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_ab74adb7084ef031d51c91d4ce80e08db}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!wait@{wait}}
+\index{wait@{wait}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModule::wait (
+\begin{DoxyParamCaption}
+\item[{int}]{ms}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_ab74adb7084ef031d51c91d4ce80e08db}
+
+
+Wait some time. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_a6def09a050cbf3521b615e8300c42f66}{mdtDevice::wait()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 611 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a92cf3b411849e57c1d392ffa1b2e2ce6}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!writeControlBytes@{writeControlBytes}}
+\index{writeControlBytes@{writeControlBytes}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{writeControlBytes}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbusWagoModule::writeControlBytes (
+\begin{DoxyParamCaption}
+\item[{int}]{firstChannel, }
+\item[{int}]{lastChannel, }
+\item[{bool}]{needDeviceSetupState}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a92cf3b411849e57c1d392ffa1b2e2ce6}
+
+
+Write control byte for given range of channels. 
+
+Will write cached control byte (Cx) to physical module.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_modbus_wago_module_aba44d9749bb81fe2659699ae3c50842c}{setControlByte()} 
+\end{DoxySeeAlso}
+\begin{DoxyPrecond}{Precondition}
+firstChannel and lastChannel must be in a valid range
+\end{DoxyPrecond}
+\begin{Desc}
+\item[\hyperlink{todo__todo000014}{Todo}]Implement needDeviceSetupState \end{Desc}
+
+
+Q\_\-ASSERT(lastChannel $<$ pvRegisterDataWords.size());
+
+if(needDeviceSetupState \&\& (pvDevice-\/$>$currentState() != mdtPortManager::Setup))\{ \}
+
+
+
+Definition at line 577 of file mdtDeviceModbusWagoModule.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a8fe809c91ccbf05f77c189fbaba12b91}{
+\index{mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}!writeRegisters@{writeRegisters}}
+\index{writeRegisters@{writeRegisters}!mdtDeviceModbusWagoModule@{mdtDeviceModbusWagoModule}}
+\subsubsection[{writeRegisters}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbusWagoModule::writeRegisters (
+\begin{DoxyParamCaption}
+\item[{int}]{firstChannel, }
+\item[{int}]{lastChannel, }
+\item[{bool}]{needDeviceSetupState}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_modbus_wago_module_a8fe809c91ccbf05f77c189fbaba12b91}
+
+
+Write register bytes for given range of channels. 
+
+Will write cached control (Cx) and data (Dx) bytes to physical module.
+
+\begin{DoxyPrecond}{Precondition}
+firstChannel and lastChannel must be in a valid range
+\end{DoxyPrecond}
+\begin{Desc}
+\item[\hyperlink{todo__todo000012}{Todo}]Implement needDeviceSetupState \end{Desc}
+
+
+if(needDeviceSetupState \&\& (pvDevice-\/$>$currentState() != mdtPortManager::Setup))\{ \}
+
+values.append(pvRegisterDataWords.at(i).second); 
+
+
+
+Definition at line 493 of file mdtDeviceModbusWagoModule.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtdevice/mdtDeviceModbusWagoModule.h\item 
+src/mdtdevice/mdtDeviceModbusWagoModule.cpp\end{DoxyCompactItemize}

@@ -1,0 +1,125 @@
+\hypertarget{classmdt_field_map_field}{
+\section{mdtFieldMapField Class Reference}
+\label{classmdt_field_map_field}\index{mdtFieldMapField@{mdtFieldMapField}}
+}
+
+
+Container for information about field in field map.  
+
+
+
+
+{\ttfamily \#include $<$mdtFieldMapField.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_field_map_field_af2ba29d63e03cea7c71f3f6367133b33}{
+\hyperlink{classmdt_field_map_field_af2ba29d63e03cea7c71f3f6367133b33}{mdtFieldMapField} ()}
+\label{classmdt_field_map_field_af2ba29d63e03cea7c71f3f6367133b33}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_field_a7cb5833082c2b7d531b1f67db2dc0060}{
+void \hyperlink{classmdt_field_map_field_a7cb5833082c2b7d531b1f67db2dc0060}{setIndex} (int value)}
+\label{classmdt_field_map_field_a7cb5833082c2b7d531b1f67db2dc0060}
+
+\begin{DoxyCompactList}\small\item\em Set column index. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_field_a73bef09966745b3192abfa93ed83b51b}{
+int \hyperlink{classmdt_field_map_field_a73bef09966745b3192abfa93ed83b51b}{index} () const }
+\label{classmdt_field_map_field_a73bef09966745b3192abfa93ed83b51b}
+
+\begin{DoxyCompactList}\small\item\em Get column index. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_field_ae5aa003e043f4ebec34f5670e1640eb6}{
+void \hyperlink{classmdt_field_map_field_ae5aa003e043f4ebec34f5670e1640eb6}{setDisplayText} (const QString \&text)}
+\label{classmdt_field_map_field_ae5aa003e043f4ebec34f5670e1640eb6}
+
+\begin{DoxyCompactList}\small\item\em Set text that will be displayed in header. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_field_a3ee55b810bd6127bb88a32a7c753b1e7}{
+QString \hyperlink{classmdt_field_map_field_a3ee55b810bd6127bb88a32a7c753b1e7}{displayText} () const }
+\label{classmdt_field_map_field_a3ee55b810bd6127bb88a32a7c753b1e7}
+
+\begin{DoxyCompactList}\small\item\em Get text that will be displayed in header. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_field_map_field_adaf71b43697a9239907d142385125b10}{setName} (const QString \&name)
+\begin{DoxyCompactList}\small\item\em Set field name. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_field_map_field_ab9d17f7703f24baad1e3932978fde338}{name} () const 
+\begin{DoxyCompactList}\small\item\em Get field name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_field_a11b5595b1eed08f9136640d9cbe5e978}{
+void \hyperlink{classmdt_field_map_field_a11b5595b1eed08f9136640d9cbe5e978}{setSqlField} (const QSqlField \&field)}
+\label{classmdt_field_map_field_a11b5595b1eed08f9136640d9cbe5e978}
+
+\begin{DoxyCompactList}\small\item\em Set SQL field. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_field_a1b168eb4dab3157936d520fb7ad38b76}{
+QSqlField \hyperlink{classmdt_field_map_field_a1b168eb4dab3157936d520fb7ad38b76}{sqlField} () const }
+\label{classmdt_field_map_field_a1b168eb4dab3157936d520fb7ad38b76}
+
+\begin{DoxyCompactList}\small\item\em Get SQL field. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_field_a955292b902bb21f14f1c0226b084c7cb}{
+QSqlField \& \hyperlink{classmdt_field_map_field_a955292b902bb21f14f1c0226b084c7cb}{sqlField} ()}
+\label{classmdt_field_map_field_a955292b902bb21f14f1c0226b084c7cb}
+
+\begin{DoxyCompactList}\small\item\em Get SQL field object for update. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_field_map_field_a60ced1a765132203bab6e113cca39081}{
+static bool \hyperlink{classmdt_field_map_field_a60ced1a765132203bab6e113cca39081}{strContainsIllegalString} (const QString \&str)}
+\label{classmdt_field_map_field_a60ced1a765132203bab6e113cca39081}
+
+\begin{DoxyCompactList}\small\item\em Check if str contains a illegal string. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_map_field_acf48382ebd702dae541a9a448c9005a3}{
+static QString \hyperlink{classmdt_field_map_field_acf48382ebd702dae541a9a448c9005a3}{getFieldName} (const QString \&name, const QString \&replaceBy=\char`\"{}\_\-\char`\"{})}
+\label{classmdt_field_map_field_acf48382ebd702dae541a9a448c9005a3}
+
+\begin{DoxyCompactList}\small\item\em Get a field name with no illegal strings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Container for information about field in field map. 
+
+Internally, in QSqlField object contains most of field attributes. Those not aviable in QSqlField are also stored separatly. 
+
+Definition at line 33 of file mdtFieldMapField.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_field_map_field_ab9d17f7703f24baad1e3932978fde338}{
+\index{mdtFieldMapField@{mdtFieldMapField}!name@{name}}
+\index{name@{name}!mdtFieldMapField@{mdtFieldMapField}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtFieldMapField::name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_field_map_field_ab9d17f7703f24baad1e3932978fde338}
+
+
+Get field name. 
+
+Comes from sqlField 
+
+Definition at line 88 of file mdtFieldMapField.cpp.
+
+\hypertarget{classmdt_field_map_field_adaf71b43697a9239907d142385125b10}{
+\index{mdtFieldMapField@{mdtFieldMapField}!setName@{setName}}
+\index{setName@{setName}!mdtFieldMapField@{mdtFieldMapField}}
+\subsubsection[{setName}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFieldMapField::setName (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{name}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_field_adaf71b43697a9239907d142385125b10}
+
+
+Set field name. 
+
+Is stored in sqlField 
+
+Definition at line 83 of file mdtFieldMapField.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtFieldMapField.h\item 
+src/mdtutilsgui/mdtFieldMapField.cpp\end{DoxyCompactItemize}

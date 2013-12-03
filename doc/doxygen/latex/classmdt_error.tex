@@ -2,23 +2,46 @@
 \section{mdtError Class Reference}
 \label{classmdt_error}\index{mdtError@{mdtError}}
 }
+
+
+\hyperlink{classmdt_error}{mdtError} contains informations about a error that occured  
+
+
+
+
+{\ttfamily \#include $<$mdtError.h$>$}
+
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum {\bfseries level\_\-t} \{ {\bfseries NoError} =  0x00, 
-{\bfseries Info} =  0x01, 
-{\bfseries Warning} =  0x02, 
-{\bfseries Error} =  0x04
+enum \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} \{ \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb}{NoError} =  0x00, 
+\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc}{Info} =  0x01, 
+\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}{Warning} =  0x02, 
+\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{Error} =  0x04
  \}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Error level. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{
-\hyperlink{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{mdtError} (int number, const QString \&text, level\_\-t level)}
-\label{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}
+\hypertarget{classmdt_error_a78824dc8c0029107949baaf28c4a9df5}{
+\hyperlink{classmdt_error_a78824dc8c0029107949baaf28c4a9df5}{mdtError} ()}
+\label{classmdt_error_a78824dc8c0029107949baaf28c4a9df5}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{mdtError} (int number, const QString \&text, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} level)
+\begin{DoxyCompactList}\small\item\em Construct new error. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a775542a251ef746f3433e7d790a48d85}{
+\hyperlink{classmdt_error_a775542a251ef746f3433e7d790a48d85}{mdtError} (const QString \&text, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} level)}
+\label{classmdt_error_a775542a251ef746f3433e7d790a48d85}
 
 \begin{DoxyCompactList}\small\item\em Construct new error. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}{setError} (const QString \&text, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} level)
+\begin{DoxyCompactList}\small\item\em Set error. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}{
+void \hyperlink{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}{clear} ()}
+\label{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}
+
+\begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{
 void \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{setSystemError} (int number, const QString \&text)}
 \label{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}
@@ -31,10 +54,7 @@ void \hyperlink{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{commit} ()}
 \label{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}
 
 \begin{DoxyCompactList}\small\item\em Send error to output. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}{
-int \hyperlink{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}{number} () const }
-\label{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}
-
+int \hyperlink{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}{number} () const 
 \begin{DoxyCompactList}\small\item\em Error number. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{
 QString \hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text} () const }
@@ -42,10 +62,15 @@ QString \hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text} () co
 
 \begin{DoxyCompactList}\small\item\em Error text. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_error_a8d8382d3008de890689df415deb7766e}{
-level\_\-t \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level} () const }
+\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level} () const }
 \label{classmdt_error_a8d8382d3008de890689df415deb7766e}
 
 \begin{DoxyCompactList}\small\item\em Error level  level\_\-t. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}{
+QMessageBox::Icon \hyperlink{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}{levelIcon} () const }
+\label{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}
+
+\begin{DoxyCompactList}\small\item\em Map the level to a QMessageBox Icon. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}{
 int \hyperlink{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}{systemNumber} () const }
 \label{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}
@@ -56,6 +81,18 @@ QString \hyperlink{classmdt_error_a6cd449e657f321b86d234269b5e92cda}{systemText}
 \label{classmdt_error_a6cd449e657f321b86d234269b5e92cda}
 
 \begin{DoxyCompactList}\small\item\em Error text returned from system, if available. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{systemErrorString} (QObject $\ast$obj=0) const 
+\begin{DoxyCompactList}\small\item\em Error number and text from system, if available. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}{
+void \hyperlink{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}{setInformativeText} (const QString \&text)}
+\label{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}
+
+\begin{DoxyCompactList}\small\item\em Set informative text. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_adcc1905f585c327cec8a2e31af616651}{
+QString \hyperlink{classmdt_error_adcc1905f585c327cec8a2e31af616651}{informativeText} () const }
+\label{classmdt_error_adcc1905f585c327cec8a2e31af616651}
+
+\begin{DoxyCompactList}\small\item\em Get informative text. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}{
 QString \hyperlink{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}{functionName} () const }
 \label{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}
@@ -74,13 +111,127 @@ int \hyperlink{classmdt_error_a7f5a9ac5e896ba24009bcadddcfe79cb}{fileLine} () co
 
 
 \subsection{Detailed Description}
+\hyperlink{classmdt_error}{mdtError} contains informations about a error that occured 
+
+Currently, a \hyperlink{classmdt_error}{mdtError} contains several informations:
+\begin{DoxyItemize}
+\item text (mandatory) : a description of the error that occured . Access: \hyperlink{classmdt_error_a775542a251ef746f3433e7d790a48d85}{mdtError(const QString\&, level\_\-t)} , \hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text()} .
+\item level (mandatory) : the severity of the error . Access: \hyperlink{classmdt_error_a775542a251ef746f3433e7d790a48d85}{mdtError(const QString\&, level\_\-t)} , \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level()} , \hyperlink{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}{levelIcon()} .
+\item systemNumber (optional) : error number returned by a system (or other library) call . Access: \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{setSystemError()} , \hyperlink{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}{systemNumber()} , \hyperlink{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{systemErrorString()} .
+\item systemText (optional) : error text number returned by a system (or other library) call . Access: \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{setSystemError()} , \hyperlink{classmdt_error_a6cd449e657f321b86d234269b5e92cda}{systemText()} , \hyperlink{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{systemErrorString()} .
+\item informativeText (optional) : can be used the same way than QMessageBox . Access : \hyperlink{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}{setInformativeText()} , \hyperlink{classmdt_error_adcc1905f585c327cec8a2e31af616651}{informativeText()} .
+\end{DoxyItemize}
+
+number : currently used with mdt\_\-error\_\-t enum, but it seems that this is not a good idea, and this will change once a better one is found ...
+
+This class contains the information of a error. To just put it to standard defined outputs, use \hyperlink{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{commit()} .
+
+Note: no copy constrctor/operator are defined, because only primitve and copiable objects are used, but a \hyperlink{classmdt_error}{mdtError} can be copied . 
+
+Definition at line 84 of file mdtError.h.
 
 
-Definition at line 53 of file mdtError.h.
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{
+\index{mdtError@{mdtError}!level\_\-t@{level\_\-t}}
+\index{level\_\-t@{level\_\-t}!mdtError@{mdtError}}
+\subsubsection[{level\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtError::level\_\-t}}}
+\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}
+
+
+Error level. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{NoError@{NoError}!mdtError@{mdtError}}\index{mdtError@{mdtError}!NoError@{NoError}}\item[{\em 
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb}{
+NoError}
+\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb}
+}]No error . \index{Info@{Info}!mdtError@{mdtError}}\index{mdtError@{mdtError}!Info@{Info}}\item[{\em 
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc}{
+Info}
+\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc}
+}]Just a information, application continues to work in normal way . \index{Warning@{Warning}!mdtError@{mdtError}}\index{mdtError@{mdtError}!Warning@{Warning}}\item[{\em 
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}{
+Warning}
+\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}
+}]Error that could be handled \index{Error@{Error}!mdtError@{mdtError}}\index{mdtError@{mdtError}!Error@{Error}}\item[{\em 
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{
+Error}
+\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}
+}]Error that was not handled \end{description}
+\end{Desc}
+
+
+
+Definition at line 90 of file mdtError.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{
+\index{mdtError@{mdtError}!mdtError@{mdtError}}
+\index{mdtError@{mdtError}!mdtError@{mdtError}}
+\subsubsection[{mdtError}]{\setlength{\rightskip}{0pt plus 5cm}mdtError::mdtError (
+\begin{DoxyParamCaption}
+\item[{int}]{number, }
+\item[{const QString \&}]{text, }
+\item[{{\bf mdtError::level\_\-t}}]{level}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}
+
+
+Construct new error. 
+
+\begin{Desc}
+\item[\hyperlink{deprecated__deprecated000001}{Deprecated}]If no good idea falls in for the usage of number , this constrctor should become obselete . \end{Desc}
+
+
+Definition at line 34 of file mdtError.cpp.
 
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}{
+\index{mdtError@{mdtError}!number@{number}}
+\index{number@{number}!mdtError@{mdtError}}
+\subsubsection[{number}]{\setlength{\rightskip}{0pt plus 5cm}int mdtError::number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}
+
+
+Error number. 
+
+\begin{Desc}
+\item[\hyperlink{deprecated__deprecated000002}{Deprecated}]If no good idea falls in for the usage of number , this method should become obselete . \end{Desc}
+
+
+Definition at line 113 of file mdtError.cpp.
+
+\hypertarget{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}{
+\index{mdtError@{mdtError}!setError@{setError}}
+\index{setError@{setError}!mdtError@{mdtError}}
+\subsubsection[{setError}]{\setlength{\rightskip}{0pt plus 5cm}void mdtError::setError (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text, }
+\item[{{\bf level\_\-t}}]{level}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}
+
+
+Set error. 
+
+Will also clear current error . 
+
+Definition at line 58 of file mdtError.cpp.
+
 \hypertarget{classmdt_error_a8dd3203e11b308e6c2701d7f075af885}{
 \index{mdtError@{mdtError}!setSource@{setSource}}
 \index{setSource@{setSource}!mdtError@{mdtError}}
@@ -103,7 +254,24 @@ Add the source of error
 
 It's possible to use the helper macro MDT\_\-ERROR\_\-SET\_\-SRC() 
 
-Definition at line 63 of file mdtError.cpp.
+Definition at line 96 of file mdtError.cpp.
+
+\hypertarget{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{
+\index{mdtError@{mdtError}!systemErrorString@{systemErrorString}}
+\index{systemErrorString@{systemErrorString}!mdtError@{mdtError}}
+\subsubsection[{systemErrorString}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtError::systemErrorString (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{obj = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}
+
+
+Error number and text from system, if available. 
+
+If obj is set, translation is used. (We not want to use the static QObject::tr() ). 
+
+Definition at line 153 of file mdtError.cpp.
 
 
 

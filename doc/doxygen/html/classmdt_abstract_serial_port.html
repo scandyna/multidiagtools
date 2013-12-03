@@ -207,7 +207,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000053">Todo:</a></b></dt><dd>Comment this class </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000067">Todo:</a></b></dt><dd>Comment this class </dd></dl>
 <p>Interface class for serial port</p>
 <p>This is a abstract class used to build system specific implementation.<br/>
  The subclass should have <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a> as name, so it will be compatible with several classes (f.ex. <a class="el" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a>).<br/>
@@ -257,7 +257,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Configured baud rate, or 0 on error.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The rate should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The rate should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195">mdtSerialPort</a>.</p>
 
@@ -417,7 +417,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Configured data bits count or 0 on error.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The data bits count should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The data bits count should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#a65c92bdb5543c1fe0034169ffc88d09f">mdtSerialPort</a>.</p>
 
@@ -487,7 +487,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if RTS/CTS flow control is enabled (and no error occured).</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The RTS/CTS flow control should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The RTS/CTS flow control should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#a9315ed0c7854a09716a4585efb0094c7">mdtSerialPort</a>.</p>
 
@@ -511,7 +511,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if Xon/Xoff flow control is enabled (and no error occured).</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The Xon/Xoff flow control should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The Xon/Xoff flow control should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#a8d3e3eb1d2272129b8b97377dff1d5d4">mdtSerialPort</a>.</p>
 
@@ -532,7 +532,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <div class="memdoc">
 
 <p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000054">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000068">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
 <p>Get the control (modem line) signal states and update member flags</p>
 <p>This method must be re-implemented in plateform specific subclass. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
@@ -556,7 +556,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <div class="memdoc">
 
 <p>Map the system defined UART type to internal one. </p>
-<p>In this class, the UART type is defined in sp_uart_type_t enum. The subclass must map the system's internal type to sp_uart_type_t. On error (f.ex. by system calls), the method should use the <a class="el" href="classmdt_error.html">mdtError</a> system, and set the UART type to UT_UNKNOW. Note that the precondition must be checked with Q_ASSERT(<a class="el" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen()</a>)</p>
+<p>In this class, the UART type is defined in sp_uart_type_t enum. The subclass must map the system's internal type to sp_uart_type_t. On error (f.ex. by system calls), the method should use the <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system, and set the UART type to UT_UNKNOW. Note that the precondition must be checked with Q_ASSERT(<a class="el" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen()</a>)</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be open before this call. </dd></dl>
 
 </div>
@@ -579,7 +579,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Configured parity or NoParity on error.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The parity check should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The parity check should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#a98938e2c51d1888236b920903f99050a">mdtSerialPort</a>.</p>
 
@@ -650,7 +650,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if baud rate is supported and could be set.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The rate should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The rate should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351">mdtSerialPort</a>.</p>
 
@@ -675,7 +675,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if data bits count is supported and could be set.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The data bits count should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The data bits count should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#af39774b2d3c4121623253740660a0389">mdtSerialPort</a>.</p>
 
@@ -730,7 +730,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if RTS/CTS flow control is supported and could be set.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The RTS/CTS flow control should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The RTS/CTS flow control should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#a175785be0dfe124254484822b7b8832e">mdtSerialPort</a>.</p>
 
@@ -771,7 +771,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if Xon/Xoff flow control is supported and could be set.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The Xon/Xoff flow control should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The Xon/Xoff flow control should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#a34e2ac7b0d3cb7a6fb65756cbca2ce48">mdtSerialPort</a>.</p>
 
@@ -796,7 +796,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if parity check is supported and could be set.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The parity check should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The parity check should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#ae435f052a87dcd0b1829f1577bb5e58d">mdtSerialPort</a>.</p>
 
@@ -851,7 +851,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if stop bits count is supported and could be set.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The stop bits count should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The stop bits count should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#a9471ebff90de41decee977566dd1571f">mdtSerialPort</a>.</p>
 
@@ -875,7 +875,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Configured stop bits count or -1 on error.</dd></dl>
 <p>Subclass notes:<br/>
- This method must be implemented in subclass. The stop bits count should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
+ This method must be implemented in subclass. The stop bits count should be get with system call (f.ex. tgetattr() on POSIX). The <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system should be used (on error) to keep trace in logfile. </p>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#a163a83bdcac2c81a5c6b097c4afde41f">mdtSerialPort</a>.</p>
 
@@ -952,7 +952,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

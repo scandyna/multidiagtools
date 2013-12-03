@@ -361,7 +361,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode a array of ASCII values. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000058">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000074">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
 
 <p><p>qDebug() &lt;&lt; "Data: " &lt;&lt; items;</p>
 <p>qDebug() &lt;&lt; "Values: " &lt;&lt; pvValues; </p>
@@ -387,7 +387,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode a array of BYTE values. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000059">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000075">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
 
 <p><p>int len = data.size()-1; // Last item is the term char</p>
 <p>qDebug() &lt;&lt; "data[" &lt;&lt; i &lt;&lt; "]: " &lt;&lt; (qint8)data.at(i) &lt;&lt; " ,  0x" &lt;&lt; hex &lt;&lt; (qint8)data.at(i) &lt;&lt; " , flt: " &lt;&lt; (double)data.at(i)/127.0; </p>
@@ -442,7 +442,7 @@ Protected Member Functions</h2></td></tr>
 <p>This method returns a QVariant. QVariant's internal data is converted to double. If value is not valid, the QVariant is cleared, so it is possible to check this with QVariant::isValid().</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> that contains data of type Double if decode and conversion to double could be done, else a invalid mdtValue.QVariant <a class="el" href="classmdt_frame_codec_scpi.html#ad2d7b41d0b3413074d770c5f512bee12" title="Decode a signle value in double floating format.">decodeSingleValueDouble(const QByteArray &amp;data)</a>;</dd></dl>
 <p>QVariant <a class="el" href="classmdt_frame_codec_scpi.html#ad2d7b41d0b3413074d770c5f512bee12" title="Decode a signle value in double floating format.">mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray &amp;data)</a> { QVariant value;</p>
-<p>Store raw data in local QString constainer pvAsciiData = data; Remove white spaces at begin and end <a class="el" href="classmdt_frame_codec_ascii.html#a0e8b9664e1451400e1b955c5180c0de8" title="Remove whitespaces at begin and end of data frame.">trim()</a>; remove EofSeq if(!removeEofSeq()){ return value; } Case of no data if(pvAsciiData.size() &lt; 1){ <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning); MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi"); e.commit(); return value; } Convert and check value = pvAsciiData; if(value.canConvert(QVariant::Double)){ if(value.convert(QVariant::Double)){ value.setValue(checkFloatingValueValidity(value.toDouble())); return value; /return checkFloatingValueValidity(value.toDouble()); } }</p>
+<p>Store raw data in local QString constainer pvAsciiData = data; Remove white spaces at begin and end <a class="el" href="classmdt_frame_codec_ascii.html#a0e8b9664e1451400e1b955c5180c0de8" title="Remove whitespaces at begin and end of data frame.">trim()</a>; remove EofSeq if(!removeEofSeq()){ return value; } Case of no data if(pvAsciiData.size() &lt; 1){ <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>); MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi"); e.commit(); return value; } Convert and check value = pvAsciiData; if(value.canConvert(QVariant::Double)){ if(value.convert(QVariant::Double)){ value.setValue(checkFloatingValueValidity(value.toDouble())); return value; /return checkFloatingValueValidity(value.toDouble()); } }</p>
 <p>return QVariant(); } </p>
 
 <p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00149">149</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
@@ -485,7 +485,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if decode could be done.</dd></dl>
-<p>Errors are logged with the <a class="el" href="classmdt_error.html">mdtError</a> system. </p>
+<p>Errors are logged with the <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system. </p>
 
 <p><p>double fltValue;</p>
 <p>fltValue = value.toDouble(); Check about Nan if(qAbs(fltValue - pvNan) &lt;= FLT_EPSILON){ value.clear(); }else{ Check about -OL and OL if((fltValue &lt;= (pvNinfinity+FLT_EPSILON))||(fltValue &gt;= (pvInfinity-FLT_EPSILON))){ value.clear(); } }</p>
@@ -515,7 +515,7 @@ Protected Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

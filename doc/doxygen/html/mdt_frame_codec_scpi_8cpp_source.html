@@ -176,7 +176,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00160"></a>00160   }
 <a name="l00161"></a>00161   <span class="comment">// Case of no data</span>
 <a name="l00162"></a>00162   <span class="keywordflow">if</span>(pvAsciiData.size() &lt; 1){
-<a name="l00163"></a>00163     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data&quot;</span> , mdtError::Warning);
+<a name="l00163"></a>00163     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00164"></a>00164     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00165"></a>00165     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00166"></a>00166     <span class="keywordflow">return</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a>();
@@ -233,7 +233,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00233"></a>00233   }
 <a name="l00234"></a>00234   <span class="comment">// Case of no data</span>
 <a name="l00235"></a>00235   <span class="keywordflow">if</span>(pvAsciiData.size() &lt; 1){
-<a name="l00236"></a>00236     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data&quot;</span> , mdtError::Warning);
+<a name="l00236"></a>00236     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame contains no data&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00237"></a>00237     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00238"></a>00238     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00239"></a>00239     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -241,7 +241,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00241"></a>00241   <span class="comment">// Separate &lt;function&gt; &lt;parameters&gt;</span>
 <a name="l00242"></a>00242   pvNodes = pvAsciiData.split(<span class="charliteral">&#39; &#39;</span>, QString::SkipEmptyParts);
 <a name="l00243"></a>00243   <span class="keywordflow">if</span>(pvNodes.size() &lt; 1){
-<a name="l00244"></a>00244     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected min. 1)&quot;</span> , mdtError::Warning);
+<a name="l00244"></a>00244     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected min. 1)&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00245"></a>00245     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00246"></a>00246     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00247"></a>00247     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -249,7 +249,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00249"></a>00249   <span class="comment">// Ad function to result</span>
 <a name="l00250"></a>00250   pvValues.append(pvNodes.at(0));
 <a name="l00251"></a>00251   <span class="keywordflow">if</span>(pvValues.at(0).type() != QVariant::String){
-<a name="l00252"></a>00252     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Function is not a string&quot;</span> , mdtError::Warning);
+<a name="l00252"></a>00252     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Function is not a string&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00253"></a>00253     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00254"></a>00254     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00255"></a>00255     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -257,7 +257,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00257"></a>00257   <span class="comment">// Separate parameters</span>
 <a name="l00258"></a>00258   <span class="keywordflow">if</span>(pvNodes.size() &gt; 1){
 <a name="l00259"></a>00259     <span class="keywordflow">if</span>(pvNodes.size() != 2){
-<a name="l00260"></a>00260       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected 2)&quot;</span> , mdtError::Warning);
+<a name="l00260"></a>00260       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected 2)&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00261"></a>00261       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00262"></a>00262       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00263"></a>00263       <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -318,7 +318,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00319"></a>00319   <span class="comment">// Separate YYYY and V</span>
 <a name="l00320"></a>00320   pvNodes = pvAsciiData.split(<span class="charliteral">&#39;.&#39;</span>, QString::SkipEmptyParts);
 <a name="l00321"></a>00321   <span class="keywordflow">if</span>(pvNodes.size() != 2){
-<a name="l00322"></a>00322     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected 2)&quot;</span> , mdtError::Warning);
+<a name="l00322"></a>00322     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Unexpected amount of space separated elements (expected 2)&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00323"></a>00323     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00324"></a>00324     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00325"></a>00325     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -326,7 +326,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00327"></a>00327   <span class="comment">// Convert and store version</span>
 <a name="l00328"></a>00328   value = pvNodes.at(0);
 <a name="l00329"></a>00329   <span class="keywordflow">if</span>(!value.convert(QVariant::Int)){
-<a name="l00330"></a>00330     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Version has wrong format (expected YYYY.V)&quot;</span> , mdtError::Warning);
+<a name="l00330"></a>00330     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Version has wrong format (expected YYYY.V)&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00331"></a>00331     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00332"></a>00332     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00333"></a>00333     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -334,7 +334,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00335"></a>00335   pvValues.append(value);
 <a name="l00336"></a>00336   value = pvNodes.at(1);
 <a name="l00337"></a>00337   <span class="keywordflow">if</span>(!value.convert(QVariant::Int)){
-<a name="l00338"></a>00338     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Version has wrong format (expected YYYY.V)&quot;</span> , mdtError::Warning);
+<a name="l00338"></a>00338     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Version has wrong format (expected YYYY.V)&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00339"></a>00339     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00340"></a>00340     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00341"></a>00341     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -366,7 +366,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00367"></a>00367   pvNodes = <a class="code" href="namespacemdt_algorithms.html#a28d7d5eb9578936c950039fa2f86a1bf" title="Split a string reagrding a separator and data protection.">mdtAlgorithms::splitString</a>(pvAsciiData, <span class="stringliteral">&quot;,&quot;</span>, <span class="stringliteral">&quot;\&quot;&quot;</span>);
 <a name="l00368"></a>00368   <span class="comment">// Store result in data list</span>
 <a name="l00369"></a>00369   <span class="keywordflow">if</span>(pvNodes.size() != 2){
-<a name="l00370"></a>00370     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;data contains not an error&quot;</span> , mdtError::Warning);
+<a name="l00370"></a>00370     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;data contains not an error&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00371"></a>00371     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00372"></a>00372     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00373"></a>00373     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -397,14 +397,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00398"></a>00398   pvValues.clear();
 <a name="l00399"></a>00399   <span class="comment">// If string length is &lt; 3: shure: not an IEEE block</span>
 <a name="l00400"></a>00400   <span class="keywordflow">if</span>(data.size() &lt; 3){
-<a name="l00401"></a>00401     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is not a IEEE block (length &lt; 2)&quot;</span> , mdtError::Warning);
+<a name="l00401"></a>00401     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is not a IEEE block (length &lt; 2)&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00402"></a>00402     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00403"></a>00403     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00404"></a>00404     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00405"></a>00405   }
 <a name="l00406"></a>00406   <span class="comment">// If first char is not a #, we have not a IEEE block</span>
 <a name="l00407"></a>00407   <span class="keywordflow">if</span>(data.at(0) != <span class="charliteral">&#39;#&#39;</span>){
-<a name="l00408"></a>00408     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is not a IEEE block (beginns not with #)&quot;</span> , mdtError::Warning);
+<a name="l00408"></a>00408     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Frame is not a IEEE block (beginns not with #)&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00409"></a>00409     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00410"></a>00410     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00411"></a>00411     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -412,14 +412,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00413"></a>00413   <span class="comment">// Get the header length</span>
 <a name="l00414"></a>00414   headerSize = data.mid(1, 1).toInt(&amp;ok);
 <a name="l00415"></a>00415   <span class="keywordflow">if</span>(!ok){
-<a name="l00416"></a>00416     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Cannot get header length in IEEE block&quot;</span> , mdtError::Warning);
+<a name="l00416"></a>00416     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Cannot get header length in IEEE block&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00417"></a>00417     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00418"></a>00418     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00419"></a>00419     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00420"></a>00420   }
 <a name="l00421"></a>00421   <span class="comment">// Check that enough bytes are available</span>
 <a name="l00422"></a>00422   <span class="keywordflow">if</span>(data.size() &lt; (headerSize+2)){
-<a name="l00423"></a>00423     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data&quot;</span> , mdtError::Warning);
+<a name="l00423"></a>00423     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00424"></a>00424     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00425"></a>00425     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00426"></a>00426     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -427,13 +427,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00428"></a>00428   <span class="comment">// Get data length</span>
 <a name="l00429"></a>00429   dataSize = data.mid(2, headerSize).toInt(&amp;ok);
 <a name="l00430"></a>00430   <span class="keywordflow">if</span>(!ok){
-<a name="l00431"></a>00431     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Cannot get data length in IEEE block&quot;</span> , mdtError::Warning);
+<a name="l00431"></a>00431     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Cannot get data length in IEEE block&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00432"></a>00432     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00433"></a>00433     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00434"></a>00434     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00435"></a>00435   }
 <a name="l00436"></a>00436   <span class="keywordflow">if</span>(dataSize &lt; 1){
-<a name="l00437"></a>00437     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data (info from header)&quot;</span> , mdtError::Warning);
+<a name="l00437"></a>00437     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data (info from header)&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00438"></a>00438     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00439"></a>00439     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00440"></a>00440     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -445,7 +445,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00446"></a>00446     dataSize = data.size()-headerSize-2;
 <a name="l00447"></a>00447   }
 <a name="l00448"></a>00448   <span class="keywordflow">if</span>(dataSize &lt; 1){
-<a name="l00449"></a>00449     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data (info from header)&quot;</span> , mdtError::Warning);
+<a name="l00449"></a>00449     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;IEEE block contains no data (info from header)&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00450"></a>00450     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00451"></a>00451     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00452"></a>00452     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -457,7 +457,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00458"></a>00458   <span class="keywordflow">if</span>(format == <a class="code" href="classmdt_frame_codec_scpi.html#a0562eccf33d8cf62e7a73a748a70c475a957445cd510a5c4e6964e9b79e73af4d">ASCII</a>){
 <a name="l00459"></a>00459     <span class="keywordflow">return</span> <a class="code" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100" title="Decode a array of ASCII values.">decodeIEEEdataAscii</a>(data.mid(headerSize+2, dataSize));
 <a name="l00460"></a>00460   }
-<a name="l00461"></a>00461   <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Data format not implemented yet, sorry&quot;</span> , mdtError::Warning);
+<a name="l00461"></a>00461   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_FRAME_DECODE_ERROR, <span class="stringliteral">&quot;Data format not implemented yet, sorry&quot;</span> , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00462"></a>00462   MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtFrameCodecScpi&quot;</span>);
 <a name="l00463"></a>00463   e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00464"></a>00464   <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -518,7 +518,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

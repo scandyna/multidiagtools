@@ -1,5 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_port_thread_helper.html" title="Helper class for mdtPortThread and subclasses." alt="" coords="5,32,152,61"/>
-<area shape="rect" id="node3" href="$classmdt_port_thread_helper_port.html" title="Helper class for mdtPortThread and subclasses." alt="" coords="208,5,379,35"/>
-<area shape="rect" id="node5" href="$classmdt_port_thread_helper_socket.html" title="Help the usage of QTcpSocket&#39;s asynchrone API." alt="" coords="200,59,387,88"/>
+<area shape="rect" id="node1" href="$classmdt_port_term.html" title="Mini port treminal." alt="" coords="5,5,104,35"/>
 </map>

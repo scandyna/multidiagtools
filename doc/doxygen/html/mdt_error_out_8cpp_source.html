@@ -96,8 +96,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00034"></a>00034 mdtErrorOut::mdtErrorOut()
 <a name="l00035"></a>00035 {
 <a name="l00036"></a>00036   <span class="comment">// Default log levels</span>
-<a name="l00037"></a>00037   pvLogLevelsMask = (mdtError::Info | mdtError::Warning | mdtError::Error);
-<a name="l00038"></a>00038   pvDialogLevelsMask = (mdtError::Warning | mdtError::Error);
+<a name="l00037"></a>00037   pvLogLevelsMask = (<a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc">mdtError::Info</a> | <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a> | <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00038"></a>00038   pvDialogLevelsMask = (<a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a> | <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00039"></a>00039   qRegisterMetaType&lt;mdtError&gt;();
 <a name="l00040"></a>00040   <span class="comment">// Logger</span>
 <a name="l00041"></a>00041   pvLogger = <span class="keyword">new</span> <a class="code" href="classmdt_error_out_logger.html" title="Put errors in the log file.">mdtErrorOutLogger</a>;
@@ -128,7 +128,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00067"></a>00067     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00068"></a>00068   }
 <a name="l00069"></a>00069   <span class="comment">// Make connection for the dialog output</span>
-<a name="l00070"></a>00070   connect(<a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>(), SIGNAL(sigShowDialog(<a class="code" href="classmdt_error.html">mdtError</a>)), <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>(), SLOT(showDialog(<a class="code" href="classmdt_error.html">mdtError</a>)));
+<a name="l00070"></a>00070   connect(<a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>(), SIGNAL(sigShowDialog(<a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>)), <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>(), SLOT(showDialog(<a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>)));
 <a name="l00071"></a>00071 
 <a name="l00072"></a>00072   <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00073"></a>00073 }
@@ -151,7 +151,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00090"></a>00090   <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvDialogLevelsMask = mask;
 <a name="l00091"></a>00091 }
 <a name="l00092"></a>00092 
-<a name="l00093"></a><a class="code" href="classmdt_error_out.html#aeb562e93216b34e7b73aa69f42065895">00093</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#aeb562e93216b34e7b73aa69f42065895" title="Add a error to the error output system.">mdtErrorOut::addError</a>(<a class="code" href="classmdt_error.html">mdtError</a> &amp;error)
+<a name="l00093"></a><a class="code" href="classmdt_error_out.html#aeb562e93216b34e7b73aa69f42065895">00093</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#aeb562e93216b34e7b73aa69f42065895" title="Add a error to the error output system.">mdtErrorOut::addError</a>(<a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> &amp;error)
 <a name="l00094"></a>00094 {
 <a name="l00095"></a>00095   Q_ASSERT(<a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>() != 0);
 <a name="l00096"></a>00096 
@@ -176,13 +176,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00115"></a>00115     lineBegin += <span class="stringliteral">&quot; &quot;</span>;
 <a name="l00116"></a>00116     <span class="comment">// Set the level</span>
 <a name="l00117"></a>00117     <span class="keywordflow">switch</span>(error.<a class="code" href="classmdt_error.html#a8d8382d3008de890689df415deb7766e" title="Error level  level_t.">level</a>()){
-<a name="l00118"></a>00118       <span class="keywordflow">case</span> mdtError::Info:
+<a name="l00118"></a>00118       <span class="keywordflow">case</span> <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc">mdtError::Info</a>:
 <a name="l00119"></a>00119         lineBegin += <span class="stringliteral">&quot;[Info]&quot;</span>;
 <a name="l00120"></a>00120         <span class="keywordflow">break</span>;
-<a name="l00121"></a>00121       <span class="keywordflow">case</span> mdtError::Warning:
+<a name="l00121"></a>00121       <span class="keywordflow">case</span> <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>:
 <a name="l00122"></a>00122         lineBegin += <span class="stringliteral">&quot;[Warning]&quot;</span>;
 <a name="l00123"></a>00123         <span class="keywordflow">break</span>;
-<a name="l00124"></a>00124       <span class="keywordflow">case</span> mdtError::Error:
+<a name="l00124"></a>00124       <span class="keywordflow">case</span> <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>:
 <a name="l00125"></a>00125         lineBegin += <span class="stringliteral">&quot;[Error]&quot;</span>;
 <a name="l00126"></a>00126         <span class="keywordflow">break</span>;
 <a name="l00127"></a>00127       <span class="keywordflow">default</span>:
@@ -258,7 +258,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00197"></a>00197   <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvLogger-&gt;<a class="code" href="classmdt_error_out_logger.html#a2f7158e61fd961e35f589bb2d1f51e03" title="Set the maximum log file size [Byte] before backup.">setLogFileMaxSize</a>(maxSize);
 <a name="l00198"></a>00198 }
 <a name="l00199"></a>00199 
-<a name="l00200"></a>00200 <span class="keywordtype">void</span> mdtErrorOut::showDialog(<a class="code" href="classmdt_error.html">mdtError</a> error)
+<a name="l00200"></a>00200 <span class="keywordtype">void</span> mdtErrorOut::showDialog(<a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> error)
 <a name="l00201"></a>00201 {
 <a name="l00202"></a>00202   QString msg, num;
 <a name="l00203"></a>00203 
@@ -290,202 +290,190 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00229"></a>00229     <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvDialog.setDetailedText(msg);
 <a name="l00230"></a>00230   }
 <a name="l00231"></a>00231   <span class="comment">// Set the icon</span>
-<a name="l00232"></a>00232   <span class="keywordflow">switch</span>(error.<a class="code" href="classmdt_error.html#a8d8382d3008de890689df415deb7766e" title="Error level  level_t.">level</a>()){
-<a name="l00233"></a>00233     <span class="keywordflow">case</span> mdtError::Info:
-<a name="l00234"></a>00234       <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvDialog.setIcon(QMessageBox::Information);
-<a name="l00235"></a>00235       <span class="keywordflow">break</span>;
-<a name="l00236"></a>00236     <span class="keywordflow">case</span> mdtError::Warning:
-<a name="l00237"></a>00237       <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvDialog.setIcon(QMessageBox::Warning);
-<a name="l00238"></a>00238       <span class="keywordflow">break</span>;
-<a name="l00239"></a>00239     <span class="keywordflow">case</span> mdtError::Error:
-<a name="l00240"></a>00240       <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvDialog.setIcon(QMessageBox::Critical);
-<a name="l00241"></a>00241       <span class="keywordflow">break</span>;
-<a name="l00242"></a>00242     <span class="keywordflow">default</span>:
-<a name="l00243"></a>00243       <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvDialog.setIcon(QMessageBox::NoIcon);
-<a name="l00244"></a>00244   }
-<a name="l00245"></a>00245   <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvDialog.exec();
-<a name="l00246"></a>00246 }
-<a name="l00247"></a>00247 
-<a name="l00248"></a>00248 <span class="comment">/*</span>
-<a name="l00249"></a>00249 <span class="comment"> * ** Logger class **</span>
-<a name="l00250"></a>00250 <span class="comment"> */</span>
-<a name="l00251"></a>00251 
-<a name="l00252"></a>00252 <span class="comment">/*</span>
-<a name="l00253"></a>00253 <span class="comment"> * Note: 2012.07.12</span>
-<a name="l00254"></a>00254 <span class="comment"> * Had a strange problem by using QFile in this class, so I rewrote this part with ANCI C calls (fopen, fclose, ...)</span>
-<a name="l00255"></a>00255 <span class="comment"> * On Linux, all worked Ok.</span>
-<a name="l00256"></a>00256 <span class="comment"> * On Wine, with MinGW, the symtom was:</span>
-<a name="l00257"></a>00257 <span class="comment"> *  - Write a error (open, write, close): Ok</span>
-<a name="l00258"></a>00258 <span class="comment"> *  - Write a new error: (same calls): Nok, the first error was overwritten !?</span>
-<a name="l00259"></a>00259 <span class="comment"> *  - Write a new error: (same calls): Ok, second error was keeped, and new appended !?</span>
-<a name="l00260"></a>00260 <span class="comment"> * After replacing QFile by C calls, all worked fine.</span>
-<a name="l00261"></a>00261 <span class="comment"> * Platform: Wine, MinGW32, Qt 4.8.2</span>
-<a name="l00262"></a>00262 <span class="comment"> */</span>
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264 mdtErrorOutLogger::mdtErrorOutLogger(QObject *parent)
-<a name="l00265"></a>00265  : QThread(parent)
-<a name="l00266"></a>00266 {
-<a name="l00267"></a>00267   pvMutex = <span class="keyword">new</span> QMutex;
-<a name="l00268"></a>00268   Q_ASSERT(pvMutex != 0);
-<a name="l00269"></a>00269   <span class="comment">// Set the maximum log file size before backup</span>
-<a name="l00270"></a>00270   pvLogFileMaxSize = 20000000;
-<a name="l00271"></a>00271 }
-<a name="l00272"></a>00272 
-<a name="l00273"></a>00273 mdtErrorOutLogger::~mdtErrorOutLogger()
-<a name="l00274"></a>00274 {
-<a name="l00275"></a>00275   wait();
-<a name="l00276"></a>00276   <span class="keyword">delete</span> pvMutex;
-<a name="l00277"></a>00277   <span class="comment">// Delete log file if it is empty</span>
-<a name="l00278"></a>00278   QFileInfo fileInfo(pvLogFilePath);
-<a name="l00279"></a>00279   <span class="keywordflow">if</span>(fileInfo.exists()){
-<a name="l00280"></a>00280     <span class="keywordflow">if</span>(fileInfo.size() == 0){
-<a name="l00281"></a>00281       <span class="keywordflow">if</span>(!QFile::remove(fileInfo.absoluteFilePath())){
-<a name="l00282"></a>00282         qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::~mdtErrorOutLogger(): cannot remove log file &quot;</span> &lt;&lt; pvLogFilePath;
-<a name="l00283"></a>00283       }
-<a name="l00284"></a>00284     }
-<a name="l00285"></a>00285   }
-<a name="l00286"></a>00286 }
-<a name="l00287"></a>00287 
-<a name="l00288"></a><a class="code" href="classmdt_error_out_logger.html#a6e68b905a6c1f9452523b8a0e336ce1e">00288</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_error_out_logger.html#a6e68b905a6c1f9452523b8a0e336ce1e" title="Set the log file path.">mdtErrorOutLogger::setLogFilePath</a>(<span class="keyword">const</span> QString &amp;path)
-<a name="l00289"></a>00289 {
-<a name="l00290"></a>00290   FILE *f;
-<a name="l00291"></a>00291 
-<a name="l00292"></a>00292   pvMutex-&gt;lock();
-<a name="l00293"></a>00293   pvLogFilePath = path;
-<a name="l00294"></a>00294   <span class="comment">// Check if file can be open for write</span>
-<a name="l00295"></a>00295   f = fopen(pvLogFilePath.toStdString().c_str(), <span class="stringliteral">&quot;a&quot;</span>);
-<a name="l00296"></a>00296   <span class="keywordflow">if</span>(f == 0){
-<a name="l00297"></a>00297     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::setLogFilePath(): unabble to open log file &#39;&quot;</span> &lt;&lt; pvLogFilePath &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span>;
-<a name="l00298"></a>00298     qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00299"></a>00299     pvMutex-&gt;unlock();
-<a name="l00300"></a>00300     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00301"></a>00301   }
-<a name="l00302"></a>00302   <span class="comment">// Write ok, close and return</span>
-<a name="l00303"></a>00303   <span class="keywordflow">if</span>(fclose(f) != 0){
-<a name="l00304"></a>00304     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::setLogFilePath(): fclose call failed&quot;</span>;
-<a name="l00305"></a>00305     qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00306"></a>00306     pvMutex-&gt;unlock();
-<a name="l00307"></a>00307     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00308"></a>00308   }
-<a name="l00309"></a>00309   pvMutex-&gt;unlock();
-<a name="l00310"></a>00310 
-<a name="l00311"></a>00311   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00312"></a>00312 }
+<a name="l00232"></a>00232   <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvDialog.setIcon(error.<a class="code" href="classmdt_error.html#aac5a7cec9a5d4364f9331c80e1eafe99" title="Map the level to a QMessageBox Icon.">levelIcon</a>());
+<a name="l00248"></a>00248   <a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>()-&gt;pvDialog.exec();
+<a name="l00249"></a>00249 }
+<a name="l00250"></a>00250 
+<a name="l00251"></a>00251 <span class="comment">/*</span>
+<a name="l00252"></a>00252 <span class="comment"> * ** Logger class **</span>
+<a name="l00253"></a>00253 <span class="comment"> */</span>
+<a name="l00254"></a>00254 
+<a name="l00255"></a>00255 <span class="comment">/*</span>
+<a name="l00256"></a>00256 <span class="comment"> * Note: 2012.07.12</span>
+<a name="l00257"></a>00257 <span class="comment"> * Had a strange problem by using QFile in this class, so I rewrote this part with ANCI C calls (fopen, fclose, ...)</span>
+<a name="l00258"></a>00258 <span class="comment"> * On Linux, all worked Ok.</span>
+<a name="l00259"></a>00259 <span class="comment"> * On Wine, with MinGW, the symtom was:</span>
+<a name="l00260"></a>00260 <span class="comment"> *  - Write a error (open, write, close): Ok</span>
+<a name="l00261"></a>00261 <span class="comment"> *  - Write a new error: (same calls): Nok, the first error was overwritten !?</span>
+<a name="l00262"></a>00262 <span class="comment"> *  - Write a new error: (same calls): Ok, second error was keeped, and new appended !?</span>
+<a name="l00263"></a>00263 <span class="comment"> * After replacing QFile by C calls, all worked fine.</span>
+<a name="l00264"></a>00264 <span class="comment"> * Platform: Wine, MinGW32, Qt 4.8.2</span>
+<a name="l00265"></a>00265 <span class="comment"> */</span>
+<a name="l00266"></a>00266 
+<a name="l00267"></a>00267 mdtErrorOutLogger::mdtErrorOutLogger(QObject *parent)
+<a name="l00268"></a>00268  : QThread(parent)
+<a name="l00269"></a>00269 {
+<a name="l00270"></a>00270   pvMutex = <span class="keyword">new</span> QMutex;
+<a name="l00271"></a>00271   Q_ASSERT(pvMutex != 0);
+<a name="l00272"></a>00272   <span class="comment">// Set the maximum log file size before backup</span>
+<a name="l00273"></a>00273   pvLogFileMaxSize = 20000000;
+<a name="l00274"></a>00274 }
+<a name="l00275"></a>00275 
+<a name="l00276"></a>00276 mdtErrorOutLogger::~mdtErrorOutLogger()
+<a name="l00277"></a>00277 {
+<a name="l00278"></a>00278   wait();
+<a name="l00279"></a>00279   <span class="keyword">delete</span> pvMutex;
+<a name="l00280"></a>00280   <span class="comment">// Delete log file if it is empty</span>
+<a name="l00281"></a>00281   QFileInfo fileInfo(pvLogFilePath);
+<a name="l00282"></a>00282   <span class="keywordflow">if</span>(fileInfo.exists()){
+<a name="l00283"></a>00283     <span class="keywordflow">if</span>(fileInfo.size() == 0){
+<a name="l00284"></a>00284       <span class="keywordflow">if</span>(!QFile::remove(fileInfo.absoluteFilePath())){
+<a name="l00285"></a>00285         qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::~mdtErrorOutLogger(): cannot remove log file &quot;</span> &lt;&lt; pvLogFilePath;
+<a name="l00286"></a>00286       }
+<a name="l00287"></a>00287     }
+<a name="l00288"></a>00288   }
+<a name="l00289"></a>00289 }
+<a name="l00290"></a>00290 
+<a name="l00291"></a><a class="code" href="classmdt_error_out_logger.html#a6e68b905a6c1f9452523b8a0e336ce1e">00291</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_error_out_logger.html#a6e68b905a6c1f9452523b8a0e336ce1e" title="Set the log file path.">mdtErrorOutLogger::setLogFilePath</a>(<span class="keyword">const</span> QString &amp;path)
+<a name="l00292"></a>00292 {
+<a name="l00293"></a>00293   FILE *f;
+<a name="l00294"></a>00294 
+<a name="l00295"></a>00295   pvMutex-&gt;lock();
+<a name="l00296"></a>00296   pvLogFilePath = path;
+<a name="l00297"></a>00297   <span class="comment">// Check if file can be open for write</span>
+<a name="l00298"></a>00298   f = fopen(pvLogFilePath.toStdString().c_str(), <span class="stringliteral">&quot;a&quot;</span>);
+<a name="l00299"></a>00299   <span class="keywordflow">if</span>(f == 0){
+<a name="l00300"></a>00300     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::setLogFilePath(): unabble to open log file &#39;&quot;</span> &lt;&lt; pvLogFilePath &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span>;
+<a name="l00301"></a>00301     qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00302"></a>00302     pvMutex-&gt;unlock();
+<a name="l00303"></a>00303     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00304"></a>00304   }
+<a name="l00305"></a>00305   <span class="comment">// Write ok, close and return</span>
+<a name="l00306"></a>00306   <span class="keywordflow">if</span>(fclose(f) != 0){
+<a name="l00307"></a>00307     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::setLogFilePath(): fclose call failed&quot;</span>;
+<a name="l00308"></a>00308     qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00309"></a>00309     pvMutex-&gt;unlock();
+<a name="l00310"></a>00310     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00311"></a>00311   }
+<a name="l00312"></a>00312   pvMutex-&gt;unlock();
 <a name="l00313"></a>00313 
-<a name="l00314"></a><a class="code" href="classmdt_error_out_logger.html#ac0d0bcca2d181c722f2ee5d024de5d57">00314</a> QString <a class="code" href="classmdt_error_out_logger.html#ac0d0bcca2d181c722f2ee5d024de5d57" title="Get log file path.">mdtErrorOutLogger::logFilePath</a>()
-<a name="l00315"></a>00315 {
-<a name="l00316"></a>00316   QString path;
-<a name="l00317"></a>00317 
-<a name="l00318"></a>00318   pvMutex-&gt;lock();
-<a name="l00319"></a>00319   path = pvLogFilePath;
-<a name="l00320"></a>00320   pvMutex-&gt;unlock();
-<a name="l00321"></a>00321 
-<a name="l00322"></a>00322   <span class="keywordflow">return</span> path;
-<a name="l00323"></a>00323 }
+<a name="l00314"></a>00314   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00315"></a>00315 }
+<a name="l00316"></a>00316 
+<a name="l00317"></a><a class="code" href="classmdt_error_out_logger.html#ac0d0bcca2d181c722f2ee5d024de5d57">00317</a> QString <a class="code" href="classmdt_error_out_logger.html#ac0d0bcca2d181c722f2ee5d024de5d57" title="Get log file path.">mdtErrorOutLogger::logFilePath</a>()
+<a name="l00318"></a>00318 {
+<a name="l00319"></a>00319   QString path;
+<a name="l00320"></a>00320 
+<a name="l00321"></a>00321   pvMutex-&gt;lock();
+<a name="l00322"></a>00322   path = pvLogFilePath;
+<a name="l00323"></a>00323   pvMutex-&gt;unlock();
 <a name="l00324"></a>00324 
-<a name="l00325"></a><a class="code" href="classmdt_error_out_logger.html#a4ba2f6f02c9c22171c4d04a8065aafd8">00325</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out_logger.html#a4ba2f6f02c9c22171c4d04a8065aafd8" title="Add a line to the log file.">mdtErrorOutLogger::putData</a>(QString data)
-<a name="l00326"></a>00326 {
-<a name="l00327"></a>00327   pvMutex-&gt;lock();
-<a name="l00328"></a>00328   pvDataToWrite &lt;&lt; data;
-<a name="l00329"></a>00329   pvMutex-&gt;unlock();
-<a name="l00330"></a>00330 
-<a name="l00331"></a>00331   <span class="keywordflow">if</span>(!isRunning()){
-<a name="l00332"></a>00332     start();
-<a name="l00333"></a>00333   }
-<a name="l00334"></a>00334 }
-<a name="l00335"></a>00335 
-<a name="l00336"></a><a class="code" href="classmdt_error_out_logger.html#a2f7158e61fd961e35f589bb2d1f51e03">00336</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out_logger.html#a2f7158e61fd961e35f589bb2d1f51e03" title="Set the maximum log file size [Byte] before backup.">mdtErrorOutLogger::setLogFileMaxSize</a>(qint64 maxSize)
-<a name="l00337"></a>00337 {
-<a name="l00338"></a>00338   pvMutex-&gt;lock();
-<a name="l00339"></a>00339   pvLogFileMaxSize = maxSize;
-<a name="l00340"></a>00340   pvMutex-&gt;unlock();
-<a name="l00341"></a>00341 }
-<a name="l00342"></a>00342 
-<a name="l00343"></a>00343 <span class="keywordtype">void</span> mdtErrorOutLogger::run()
-<a name="l00344"></a>00344 {
-<a name="l00345"></a>00345   <span class="keywordtype">int</span> dataToWriteCount;
-<a name="l00346"></a>00346   QString data;
-<a name="l00347"></a>00347   qint64 logFileSize;
-<a name="l00348"></a>00348   qint64 logFileMaxSize;
-<a name="l00349"></a>00349   QString <a class="code" href="classmdt_error_out_logger.html#ac0d0bcca2d181c722f2ee5d024de5d57" title="Get log file path.">logFilePath</a>;
-<a name="l00350"></a>00350   QString backupName;
-<a name="l00351"></a>00351   FILE *logFile;
-<a name="l00352"></a>00352   qint64 written;
-<a name="l00353"></a>00353 
-<a name="l00354"></a>00354   <span class="keywordflow">while</span>(1){
-<a name="l00355"></a>00355     <span class="comment">// Check how many lines are to write and get a line</span>
-<a name="l00356"></a>00356     pvMutex-&gt;lock();
-<a name="l00357"></a>00357     dataToWriteCount = pvDataToWrite.size();
-<a name="l00358"></a>00358     logFileMaxSize = pvLogFileMaxSize;
-<a name="l00359"></a>00359     <span class="keywordflow">if</span>(dataToWriteCount &gt; 0){
-<a name="l00360"></a>00360       data = pvDataToWrite.takeFirst();
-<a name="l00361"></a>00361     }
-<a name="l00362"></a>00362     logFilePath = pvLogFilePath;
-<a name="l00363"></a>00363     pvMutex-&gt;unlock();
-<a name="l00364"></a>00364     <span class="keywordflow">if</span>(dataToWriteCount &lt; 1){
-<a name="l00365"></a>00365       <span class="keywordflow">break</span>;
-<a name="l00366"></a>00366     }
-<a name="l00367"></a>00367     <span class="comment">// Write the data</span>
-<a name="l00368"></a>00368     logFileSize = 0;
-<a name="l00369"></a>00369     logFile = fopen(logFilePath.toStdString().c_str(), <span class="stringliteral">&quot;a&quot;</span>);
-<a name="l00370"></a>00370     <span class="keywordflow">if</span>(logFile == 0){
-<a name="l00371"></a>00371       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): unabble to open log file &#39;&quot;</span> &lt;&lt; logFilePath &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span>;
-<a name="l00372"></a>00372       qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00373"></a>00373       <span class="keywordflow">break</span>;
-<a name="l00374"></a>00374     }
-<a name="l00375"></a>00375     written = fwrite(data.toStdString().c_str(), 1, data.size(), logFile);
-<a name="l00376"></a>00376     <span class="keywordflow">if</span>(written &lt; data.size()){
-<a name="l00377"></a>00377       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): fwrite could not write all data&quot;</span>;
-<a name="l00378"></a>00378     }
-<a name="l00379"></a>00379     <span class="keywordflow">if</span>(fflush(logFile) &lt; 0){
-<a name="l00380"></a>00380       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): ffluh call failed&quot;</span>;
-<a name="l00381"></a>00381       qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00382"></a>00382     }
-<a name="l00383"></a>00383     <span class="comment">// Get log file size</span>
-<a name="l00384"></a>00384     rewind(logFile);
-<a name="l00385"></a>00385     <span class="keywordflow">if</span>(fseek(logFile, 0L, SEEK_END) != 0){
-<a name="l00386"></a>00386       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): fseek call failed&quot;</span>;
-<a name="l00387"></a>00387       qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00388"></a>00388     }<span class="keywordflow">else</span>{
-<a name="l00389"></a>00389       logFileSize = ftell(logFile);
-<a name="l00390"></a>00390       <span class="keywordflow">if</span>(logFileSize &lt; 0){
-<a name="l00391"></a>00391         qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): ftell call failed&quot;</span>;
-<a name="l00392"></a>00392         qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00393"></a>00393         logFileSize = 0;
-<a name="l00394"></a>00394       }
-<a name="l00395"></a>00395     }
-<a name="l00396"></a>00396     <span class="keywordflow">if</span>(fclose(logFile) &lt; 0){
-<a name="l00397"></a>00397       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): fclose call failed&quot;</span>;
-<a name="l00398"></a>00398       qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00399"></a>00399     }
-<a name="l00400"></a>00400     <span class="comment">// Make backups</span>
-<a name="l00401"></a>00401     <span class="keywordflow">if</span>(logFileSize &gt; logFileMaxSize){
-<a name="l00402"></a>00402       <span class="comment">// We make it simple, with just 1 backup file</span>
-<a name="l00403"></a>00403       backupName = <a class="code" href="classmdt_error_out_logger.html#ac0d0bcca2d181c722f2ee5d024de5d57" title="Get log file path.">logFilePath</a>;
-<a name="l00404"></a>00404       backupName += <span class="stringliteral">&quot;.bak&quot;</span>;
-<a name="l00405"></a>00405       <span class="comment">// Check if backup exists, and remove if true</span>
-<a name="l00406"></a>00406       logFile = fopen(backupName.toStdString().c_str(), <span class="stringliteral">&quot;r&quot;</span>);
-<a name="l00407"></a>00407       <span class="keywordflow">if</span>(logFile != 0){
-<a name="l00408"></a>00408         <span class="keywordflow">if</span>(<span class="keyword">remove</span>(backupName.toStdString().c_str()) != 0){
-<a name="l00409"></a>00409           qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): remove call failed&quot;</span>;
-<a name="l00410"></a>00410           qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00411"></a>00411           fclose(logFile);
-<a name="l00412"></a>00412           <span class="keywordflow">break</span>;
-<a name="l00413"></a>00413         }
-<a name="l00414"></a>00414         <span class="keywordflow">if</span>(fclose(logFile) &lt; 0){
-<a name="l00415"></a>00415           qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): fclose call failed&quot;</span>;
-<a name="l00416"></a>00416           qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00417"></a>00417         }
-<a name="l00418"></a>00418       }
-<a name="l00419"></a>00419       <span class="comment">// Rename log file to backup name</span>
-<a name="l00420"></a>00420       <span class="keywordflow">if</span>(rename(logFilePath.toStdString().c_str(), backupName.toStdString().c_str()) != 0){
-<a name="l00421"></a>00421         qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): rename call failed&quot;</span>;
-<a name="l00422"></a>00422         qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
-<a name="l00423"></a>00423         <span class="keywordflow">break</span>;
-<a name="l00424"></a>00424       }
-<a name="l00425"></a>00425     }
-<a name="l00426"></a>00426   }
-<a name="l00427"></a>00427 }
+<a name="l00325"></a>00325   <span class="keywordflow">return</span> path;
+<a name="l00326"></a>00326 }
+<a name="l00327"></a>00327 
+<a name="l00328"></a><a class="code" href="classmdt_error_out_logger.html#a4ba2f6f02c9c22171c4d04a8065aafd8">00328</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out_logger.html#a4ba2f6f02c9c22171c4d04a8065aafd8" title="Add a line to the log file.">mdtErrorOutLogger::putData</a>(QString data)
+<a name="l00329"></a>00329 {
+<a name="l00330"></a>00330   pvMutex-&gt;lock();
+<a name="l00331"></a>00331   pvDataToWrite &lt;&lt; data;
+<a name="l00332"></a>00332   pvMutex-&gt;unlock();
+<a name="l00333"></a>00333 
+<a name="l00334"></a>00334   <span class="keywordflow">if</span>(!isRunning()){
+<a name="l00335"></a>00335     start();
+<a name="l00336"></a>00336   }
+<a name="l00337"></a>00337 }
+<a name="l00338"></a>00338 
+<a name="l00339"></a><a class="code" href="classmdt_error_out_logger.html#a2f7158e61fd961e35f589bb2d1f51e03">00339</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out_logger.html#a2f7158e61fd961e35f589bb2d1f51e03" title="Set the maximum log file size [Byte] before backup.">mdtErrorOutLogger::setLogFileMaxSize</a>(qint64 maxSize)
+<a name="l00340"></a>00340 {
+<a name="l00341"></a>00341   pvMutex-&gt;lock();
+<a name="l00342"></a>00342   pvLogFileMaxSize = maxSize;
+<a name="l00343"></a>00343   pvMutex-&gt;unlock();
+<a name="l00344"></a>00344 }
+<a name="l00345"></a>00345 
+<a name="l00346"></a>00346 <span class="keywordtype">void</span> mdtErrorOutLogger::run()
+<a name="l00347"></a>00347 {
+<a name="l00348"></a>00348   <span class="keywordtype">int</span> dataToWriteCount;
+<a name="l00349"></a>00349   QString data;
+<a name="l00350"></a>00350   qint64 logFileSize;
+<a name="l00351"></a>00351   qint64 logFileMaxSize;
+<a name="l00352"></a>00352   QString <a class="code" href="classmdt_error_out_logger.html#ac0d0bcca2d181c722f2ee5d024de5d57" title="Get log file path.">logFilePath</a>;
+<a name="l00353"></a>00353   QString backupName;
+<a name="l00354"></a>00354   FILE *logFile;
+<a name="l00355"></a>00355   qint64 written;
+<a name="l00356"></a>00356 
+<a name="l00357"></a>00357   <span class="keywordflow">while</span>(1){
+<a name="l00358"></a>00358     <span class="comment">// Check how many lines are to write and get a line</span>
+<a name="l00359"></a>00359     pvMutex-&gt;lock();
+<a name="l00360"></a>00360     dataToWriteCount = pvDataToWrite.size();
+<a name="l00361"></a>00361     logFileMaxSize = pvLogFileMaxSize;
+<a name="l00362"></a>00362     <span class="keywordflow">if</span>(dataToWriteCount &gt; 0){
+<a name="l00363"></a>00363       data = pvDataToWrite.takeFirst();
+<a name="l00364"></a>00364     }
+<a name="l00365"></a>00365     logFilePath = pvLogFilePath;
+<a name="l00366"></a>00366     pvMutex-&gt;unlock();
+<a name="l00367"></a>00367     <span class="keywordflow">if</span>(dataToWriteCount &lt; 1){
+<a name="l00368"></a>00368       <span class="keywordflow">break</span>;
+<a name="l00369"></a>00369     }
+<a name="l00370"></a>00370     <span class="comment">// Write the data</span>
+<a name="l00371"></a>00371     logFileSize = 0;
+<a name="l00372"></a>00372     logFile = fopen(logFilePath.toStdString().c_str(), <span class="stringliteral">&quot;a&quot;</span>);
+<a name="l00373"></a>00373     <span class="keywordflow">if</span>(logFile == 0){
+<a name="l00374"></a>00374       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): unabble to open log file &#39;&quot;</span> &lt;&lt; logFilePath &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span>;
+<a name="l00375"></a>00375       qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00376"></a>00376       <span class="keywordflow">break</span>;
+<a name="l00377"></a>00377     }
+<a name="l00378"></a>00378     written = fwrite(data.toStdString().c_str(), 1, data.size(), logFile);
+<a name="l00379"></a>00379     <span class="keywordflow">if</span>(written &lt; data.size()){
+<a name="l00380"></a>00380       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): fwrite could not write all data&quot;</span>;
+<a name="l00381"></a>00381     }
+<a name="l00382"></a>00382     <span class="keywordflow">if</span>(fflush(logFile) &lt; 0){
+<a name="l00383"></a>00383       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): ffluh call failed&quot;</span>;
+<a name="l00384"></a>00384       qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00385"></a>00385     }
+<a name="l00386"></a>00386     <span class="comment">// Get log file size</span>
+<a name="l00387"></a>00387     rewind(logFile);
+<a name="l00388"></a>00388     <span class="keywordflow">if</span>(fseek(logFile, 0L, SEEK_END) != 0){
+<a name="l00389"></a>00389       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): fseek call failed&quot;</span>;
+<a name="l00390"></a>00390       qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00391"></a>00391     }<span class="keywordflow">else</span>{
+<a name="l00392"></a>00392       logFileSize = ftell(logFile);
+<a name="l00393"></a>00393       <span class="keywordflow">if</span>(logFileSize &lt; 0){
+<a name="l00394"></a>00394         qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): ftell call failed&quot;</span>;
+<a name="l00395"></a>00395         qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00396"></a>00396         logFileSize = 0;
+<a name="l00397"></a>00397       }
+<a name="l00398"></a>00398     }
+<a name="l00399"></a>00399     <span class="keywordflow">if</span>(fclose(logFile) &lt; 0){
+<a name="l00400"></a>00400       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): fclose call failed&quot;</span>;
+<a name="l00401"></a>00401       qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00402"></a>00402     }
+<a name="l00403"></a>00403     <span class="comment">// Make backups</span>
+<a name="l00404"></a>00404     <span class="keywordflow">if</span>(logFileSize &gt; logFileMaxSize){
+<a name="l00405"></a>00405       <span class="comment">// We make it simple, with just 1 backup file</span>
+<a name="l00406"></a>00406       backupName = <a class="code" href="classmdt_error_out_logger.html#ac0d0bcca2d181c722f2ee5d024de5d57" title="Get log file path.">logFilePath</a>;
+<a name="l00407"></a>00407       backupName += <span class="stringliteral">&quot;.bak&quot;</span>;
+<a name="l00408"></a>00408       <span class="comment">// Check if backup exists, and remove if true</span>
+<a name="l00409"></a>00409       logFile = fopen(backupName.toStdString().c_str(), <span class="stringliteral">&quot;r&quot;</span>);
+<a name="l00410"></a>00410       <span class="keywordflow">if</span>(logFile != 0){
+<a name="l00411"></a>00411         <span class="keywordflow">if</span>(<span class="keyword">remove</span>(backupName.toStdString().c_str()) != 0){
+<a name="l00412"></a>00412           qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): remove call failed&quot;</span>;
+<a name="l00413"></a>00413           qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00414"></a>00414           fclose(logFile);
+<a name="l00415"></a>00415           <span class="keywordflow">break</span>;
+<a name="l00416"></a>00416         }
+<a name="l00417"></a>00417         <span class="keywordflow">if</span>(fclose(logFile) &lt; 0){
+<a name="l00418"></a>00418           qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): fclose call failed&quot;</span>;
+<a name="l00419"></a>00419           qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00420"></a>00420         }
+<a name="l00421"></a>00421       }
+<a name="l00422"></a>00422       <span class="comment">// Rename log file to backup name</span>
+<a name="l00423"></a>00423       <span class="keywordflow">if</span>(rename(logFilePath.toStdString().c_str(), backupName.toStdString().c_str()) != 0){
+<a name="l00424"></a>00424         qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtErrorOutLogger::run(): rename call failed&quot;</span>;
+<a name="l00425"></a>00425         qDebug() &lt;&lt; <span class="stringliteral">&quot;-&gt; System returned error : &quot;</span> &lt;&lt; errno &lt;&lt; strerror(errno);
+<a name="l00426"></a>00426         <span class="keywordflow">break</span>;
+<a name="l00427"></a>00427       }
+<a name="l00428"></a>00428     }
+<a name="l00429"></a>00429   }
+<a name="l00430"></a>00430 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -502,7 +490,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

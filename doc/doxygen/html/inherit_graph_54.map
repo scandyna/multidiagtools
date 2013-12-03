@@ -1,5 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_sql_form.html" title="Base class for high level SQL widgets API." alt="" coords="5,32,99,61"/>
-<area shape="rect" id="node3" href="$classmdt_sql_form_dialog.html" title="SQL form dialog." alt="" coords="152,5,283,35"/>
-<area shape="rect" id="node5" href="$classmdt_sql_form_window.html" title="SQL form window." alt="" coords="148,59,287,88"/>
+<area shape="rect" id="node1" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor." alt="" coords="7,5,105,35"/>
 </map>

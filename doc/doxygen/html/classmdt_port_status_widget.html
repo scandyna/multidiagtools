@@ -107,6 +107,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the custom widget.  <a href="#a108227f8f64dd69edd2dcdca2b52b8a0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314">setPermanentText</a> (const QString &amp;text)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the permanent text.  <a href="#a1b7fd23b45d75ccc106242026f3f8314"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_status_widget.html#accb5d24aeec502ad00b36d253d7e139f">clearMessage</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear current message.  <a href="#accb5d24aeec502ad00b36d253d7e139f"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Helper class to display port/device state and messages. </p>
@@ -139,6 +141,28 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>One custom widget can be added. </p>
 
 <p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="accb5d24aeec502ad00b36d253d7e139f"></a><!-- doxytag: member="mdtPortStatusWidget::clearMessage" ref="accb5d24aeec502ad00b36d253d7e139f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortStatusWidget::clearMessage </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clear current message. </p>
+<p>Clear message showed with <a class="el" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81" title="Used to show a message and details.">showMessage()</a></p>
+<p>After calling this method, netx call of <a class="el" href="classmdt_port_status_widget.html#a489b587cd7be7dd6ae6f2782565553bf" title="Set state.">setState()</a> will update text. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00155">155</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -257,7 +281,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Set state. </p>
 <p>States are defined in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> </p>
 
-<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00155">155</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00165">165</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -293,19 +317,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memdoc">
 
 <p>Used to show a message and details. </p>
+<p>Note: calling this slot with a empty message has the same effect than <a class="el" href="classmdt_port_status_widget.html#accb5d24aeec502ad00b36d253d7e139f" title="Clear current message.">clearMessage()</a> .</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">message</td><td>Message to show </td></tr>
+    <tr><td class="paramname">message</td><td>Message to show. </td></tr>
     <tr><td class="paramname">details</td><td>Details to show </td></tr>
     <tr><td class="paramname">timeout</td><td>If &gt; 0, message will be cleared after timeout [ms] </td></tr>
   </table>
   </dd>
 </dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>Implement details ! </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Todo:</a></b></dt><dd>Implement details ! </dd></dl>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00167">167</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_status_widget_8cpp_source.html#l00177">177</a> of file <a class="el" href="mdt_port_status_widget_8cpp_source.html">mdtPortStatusWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -328,7 +353,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

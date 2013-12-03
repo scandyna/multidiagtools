@@ -22,8 +22,7 @@ Inheritance diagram for mdtUsbPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtUsbPortManager:
-\nopagebreak
+Collaboration diagram for mdtUsbPortManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -382,7 +381,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 Subclass notes:\par
  This method can be reimplemented in subclass if needed. Typically usefull if a frame ID must be generated for each request (f.ex. bTag on USBTMC). A frame must be taken from port's request frames pool with mdtAbstractPort::controlFramesPool() dequeue() method (see Qt's QQueue documentation for more details on dequeue() ), then added to port's request queue with mdtAbstractPort::addControlRequest() . If protocol supports frame identification (like USBTMC's bTag), it should be returned here and incremented. 
 
-\hyperlink{classmdt_port_manager_a3107b7121dfe5b9686d9b3b3a48a0af0}{lockPortMutex()}; if(port-\/$>$controlFramesPool().size() $<$ 1)\{ \hyperlink{classmdt_port_manager_a882e6bf95dac9cd4ab8cc93ecc524874}{unlockPortMutex()}; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-PORT\_\-IO\_\-ERROR, \char`\"{}No frame available in control frames pool\char`\"{}, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtUsbPortManager\char`\"{}); e.commit(); return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693}{mdtAbstractPort::WritePoolEmpty}; \}
+\hyperlink{classmdt_port_manager_a3107b7121dfe5b9686d9b3b3a48a0af0}{lockPortMutex()}; if(port-\/$>$controlFramesPool().size() $<$ 1)\{ \hyperlink{classmdt_port_manager_a882e6bf95dac9cd4ab8cc93ecc524874}{unlockPortMutex()}; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-PORT\_\-IO\_\-ERROR, \char`\"{}No frame available in control frames pool\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtUsbPortManager\char`\"{}); e.commit(); return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693}{mdtAbstractPort::WritePoolEmpty}; \}
 
 
 
@@ -440,7 +439,7 @@ This method can return if timeout occurs, or for other reason depending on speci
 True if Ok, false on timeout
 \end{DoxyReturn}
 \begin{Desc}
-\item[\hyperlink{todo__todo000040}{Todo}]Adapt using internal timeouts + errors system \end{Desc}
+\item[\hyperlink{todo__todo000054}{Todo}]Adapt using internal timeouts + errors system \end{Desc}
 
 
 int maxIter;

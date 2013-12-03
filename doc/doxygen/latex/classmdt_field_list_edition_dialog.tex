@@ -1,0 +1,67 @@
+\hypertarget{classmdt_field_list_edition_dialog}{
+\section{mdtFieldListEditionDialog Class Reference}
+\label{classmdt_field_list_edition_dialog}\index{mdtFieldListEditionDialog@{mdtFieldListEditionDialog}}
+}
+
+
+Dialog that provides field list edition.  
+
+
+
+
+{\ttfamily \#include $<$mdtFieldListEditionDialog.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_field_list_edition_dialog_a02c3cefeff70eedb41ff5caa2a52d5e4}{
+\hyperlink{classmdt_field_list_edition_dialog_a02c3cefeff70eedb41ff5caa2a52d5e4}{mdtFieldListEditionDialog} (QWidget $\ast$parent=0)}
+\label{classmdt_field_list_edition_dialog_a02c3cefeff70eedb41ff5caa2a52d5e4}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_list_edition_dialog_a39b7995b9ea9d7343ae09b2272b39b26}{
+\hyperlink{classmdt_field_list_edition_dialog_a39b7995b9ea9d7343ae09b2272b39b26}{$\sim$mdtFieldListEditionDialog} ()}
+\label{classmdt_field_list_edition_dialog_a39b7995b9ea9d7343ae09b2272b39b26}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_field_list_edition_dialog_a9eea066d1862f978c00e038471a95fff}{setAvailableFields} (const QList$<$ \hyperlink{classmdt_field_map_field}{mdtFieldMapField} $>$ \&fields, int startFieldIndex)
+\begin{DoxyCompactList}\small\item\em Set the list of available fields. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_field_list_edition_dialog_a10de0f00e5639bd3f2442f25423557ec}{
+const QList$<$ \hyperlink{classmdt_field_map_field}{mdtFieldMapField} $>$ \& \hyperlink{classmdt_field_list_edition_dialog_a10de0f00e5639bd3f2442f25423557ec}{fields} () const }
+\label{classmdt_field_list_edition_dialog_a10de0f00e5639bd3f2442f25423557ec}
+
+\begin{DoxyCompactList}\small\item\em Get the list of fields. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Dialog that provides field list edition. 
+
+Definition at line 32 of file mdtFieldListEditionDialog.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_field_list_edition_dialog_a9eea066d1862f978c00e038471a95fff}{
+\index{mdtFieldListEditionDialog@{mdtFieldListEditionDialog}!setAvailableFields@{setAvailableFields}}
+\index{setAvailableFields@{setAvailableFields}!mdtFieldListEditionDialog@{mdtFieldListEditionDialog}}
+\subsubsection[{setAvailableFields}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFieldListEditionDialog::setAvailableFields (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtFieldMapField} $>$ \&}]{fields, }
+\item[{int}]{startFieldIndex}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_list_edition_dialog_a9eea066d1862f978c00e038471a95fff}
+
+
+Set the list of available fields. 
+
+Note: here, given fields must have contigous column indexes, \char`\"{}holes\char`\"{} are not handled . 
+
+Definition at line 54 of file mdtFieldListEditionDialog.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtFieldListEditionDialog.h\item 
+src/mdtutilsgui/mdtFieldListEditionDialog.cpp\end{DoxyCompactItemize}

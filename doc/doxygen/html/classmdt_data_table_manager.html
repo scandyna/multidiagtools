@@ -61,7 +61,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
@@ -78,31 +77,32 @@ Collaboration diagram for mdtDataTableManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_data_table_manager__coll__graph.png" border="0" usemap="#mdt_data_table_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_data_table_manager_coll__map" id="mdt_data_table_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_data_table_model.html" title="mdtDataTableModel" alt="" coords="5,5,144,35"/><area shape="rect" id="node4" href="classmdt_field_map.html" title="Map fields between a source and a destination data set." alt="" coords="168,5,264,35"/></map>
+<area shape="rect" id="node2" href="classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="19,5,91,35"/><area shape="rect" id="node6" href="classmdt_sql_database_manager.html" title="Helper class to create and open (connect to) database." alt="" coords="92,101,260,131"/><area shape="rect" id="node4" href="classmdt_field_map.html" title="Map fields between a source and a destination data set." alt="" coords="284,101,380,131"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_data_table_manager-members.html">List of all members.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8">create_mode_t</a> { <a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8aa6a9a7bbd0b4003b3fb560b40b80912d">OverwriteExisting</a>, 
-<a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8acfd291caff4d096492815d1709b7a3fe">KeepExisting</a>, 
-<a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8a8d950620af815a15cfefe6843a848f78">FailIfExists</a>, 
-<a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8a6f1c53b5c2a4fb195fb6c8fa1a536e8c">AskUserIfExists</a>
- }</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dataset creation mode.  <a href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae63e559f597ae48a36e149afde3a8396"></a><!-- doxytag: member="mdtDataTableManager::mdtDataTableManager" ref="ae63e559f597ae48a36e149afde3a8396" args="(QObject *parent=0, QSqlDatabase db=QSqlDatabase())" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtDataTableManager</b> (QObject *parent=0, QSqlDatabase db=QSqlDatabase())</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a3a1c225b1aeedad8fc89b126147971ca">~mdtDataTableManager</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Note: this will delete internal model. Be avare when referencing pointer returned by <a class="el" href="classmdt_data_table_manager.html#a4033591be8c92f6806363515bad9413f" title="Get instance of current model.">model()</a>.  <a href="#a3a1c225b1aeedad8fc89b126147971ca"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a1c225b1aeedad8fc89b126147971ca"></a><!-- doxytag: member="mdtDataTableManager::~mdtDataTableManager" ref="a3a1c225b1aeedad8fc89b126147971ca" args="()" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a3a1c225b1aeedad8fc89b126147971ca">~mdtDataTableManager</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Note: this will delete internal model. Be avare when referencing pointer returned by model(). <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaeff001bf9a44f890078f5c6f434ec05"></a><!-- doxytag: member="mdtDataTableManager::lastError" ref="aaeff001bf9a44f890078f5c6f434ec05" args="() const " -->
+<a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#aaeff001bf9a44f890078f5c6f434ec05">lastError</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a368e82d3128e0c5098e09a9555bd65aa">close</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close.  <a href="#a368e82d3128e0c5098e09a9555bd65aa"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a1e19b3f34c1b0a91bcae4396731efc57">setDataSetDirectory</a> (const QDir &amp;dir)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dataset directory.  <a href="#a1e19b3f34c1b0a91bcae4396731efc57"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QDir&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a8fa0924a76e8f3fec9617f690cc4e148">dataSetDirectory</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set dataset directory.  <a href="#a8fa0924a76e8f3fec9617f690cc4e148"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a6d07e713a18c4d1d3f0c005dd9f77ade">createDataSet</a> (const QDir &amp;dir, const QString &amp;name, const QSqlIndex &amp;primaryKey, bool createPrimaryKeyFields, const QList&lt; QSqlField &gt; &amp;fields, <a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8">create_mode_t</a> mode)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create database and table.  <a href="#a6d07e713a18c4d1d3f0c005dd9f77ade"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affcbb25ab7308527885c4f3f703e7440"></a><!-- doxytag: member="mdtDataTableManager::dataSetTableName" ref="affcbb25ab7308527885c4f3f703e7440" args="() const " -->
+const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#affcbb25ab7308527885c4f3f703e7440">dataSetTableName</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get dataset table name. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#ae813c6c4323a1949d489a24c07e914fa">createDataSet</a> (const QDir &amp;dir, const QString &amp;name, <a class="el" href="classmdt_sql_schema_table.html">mdtSqlSchemaTable</a> &amp;table, <a class="el" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418">mdtSqlDatabaseManager::createMode_t</a> mode)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create database and table.  <a href="#ae813c6c4323a1949d489a24c07e914fa"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9026c9d3d102246af243b68c815fba04"></a><!-- doxytag: member="mdtDataTableManager::database" ref="a9026c9d3d102246af243b68c815fba04" args="() const " -->
 QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a9026c9d3d102246af243b68c815fba04">database</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get internal database instance. <br/></td></tr>
@@ -110,94 +110,38 @@ QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable progress dialog.  <a href="#a139611cc21836438053226b1d7576201"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a755ea0471525645157f4d4843b6a4e8a">setCsvFormat</a> (const QString &amp;separator, const QString &amp;dataProtection, const QString &amp;comment, const QChar &amp;escapeChar, QByteArray eol=&quot;\n&quot;, const QByteArray &amp;encoding=&quot;UTF-8&quot;)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set CSV import/export format.  <a href="#a755ea0471525645157f4d4843b6a4e8a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#ac2da29f8f8920eed8cca78aa6cc0d8da">exportToCsvFile</a> (const QString &amp;filePath, <a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8">create_mode_t</a> mode)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Export data to a CSV file.  <a href="#ac2da29f8f8920eed8cca78aa6cc0d8da"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#aac9ba371ee9e6d111fb7544bb9241161">importFromCsvFile</a> (const QString &amp;csvFilePath, <a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8">create_mode_t</a> mode, const QString &amp;dir=QString(), const QStringList &amp;pkFields=QStringList())</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Import a CSV file.  <a href="#aac9ba371ee9e6d111fb7544bb9241161"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#abe733f071ca77579522823598e79dd9a">exportToCsvFile</a> (const QString &amp;filePath, <a class="el" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418">mdtSqlDatabaseManager::createMode_t</a> mode)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Export data to a CSV file.  <a href="#abe733f071ca77579522823598e79dd9a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a668cc3d94e6aa5dab406a0fd319351af">importFromCsvFile</a> (const QString &amp;csvFilePath, <a class="el" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418">mdtSqlDatabaseManager::createMode_t</a> mode, const QString &amp;dir=QString(), const QStringList &amp;pkFields=QStringList())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Import a CSV file.  <a href="#a668cc3d94e6aa5dab406a0fd319351af"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a5c8aaf4f42a50bd0c216ef29adc9d79f">copyTable</a> (const QString &amp;sourceTableName, const QString &amp;destinationTableName, <a class="el" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418">mdtSqlDatabaseManager::createMode_t</a> mode, QSqlDatabase sourceDatabase=QSqlDatabase(), QSqlDatabase destinationDatabase=QSqlDatabase())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a source table to a destination table.  <a href="#a5c8aaf4f42a50bd0c216ef29adc9d79f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a2b38e6a8157183fcbce0770d12e9aa9d">addFieldMapping</a> (const QString &amp;csvHeaderItem, const QString &amp;fieldName, const QString &amp;displayText, QVariant::Type dataType, int csvDataItemStartOffset=-1, int csvDataItemEndOffset=-1)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a mapping between CSV header part (item) and model field.  <a href="#a2b38e6a8157183fcbce0770d12e9aa9d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a10c9f9d57d6c35fa5721906c79376ec4">clearFieldMap</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear fields mapping.  <a href="#a10c9f9d57d6c35fa5721906c79376ec4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a785fbce3537e9e75ecdd49d29a6e8959">csvHeader</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the CSV file's headers.  <a href="#a785fbce3537e9e75ecdd49d29a6e8959"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a87e9b26f462165c93a64f8ac6080b13d">setDisplayTextsToModelHeader</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the display texts to model's header.  <a href="#a87e9b26f462165c93a64f8ac6080b13d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5cafc38a5570c51757dbac7e8c2fd978"></a><!-- doxytag: member="mdtDataTableManager::sourceHeader" ref="a5cafc38a5570c51757dbac7e8c2fd978" args="() const " -->
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a5cafc38a5570c51757dbac7e8c2fd978">sourceHeader</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the source header. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0edc657a7dbcfcf251e6ce27560d40e5"></a><!-- doxytag: member="mdtDataTableManager::databaseHeader" ref="a0edc657a7dbcfcf251e6ce27560d40e5" args="() const " -->
+const QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a0edc657a7dbcfcf251e6ce27560d40e5">databaseHeader</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get database header. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba44e2b905b6fc959306ca9b5a786d84"></a><!-- doxytag: member="mdtDataTableManager::setDatabaseHeaderToModel" ref="aba44e2b905b6fc959306ca9b5a786d84" args="(QAbstractTableModel *model)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#aba44e2b905b6fc959306ca9b5a786d84">setDatabaseHeaderToModel</a> (QAbstractTableModel *model)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set database header to model. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#ac8884e4e2d58c6f7e3db180aca5a2772">displayTextsByFieldNames</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get display texts referenced by field names.  <a href="#ac8884e4e2d58c6f7e3db180aca5a2772"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_data_table_model.html">mdtDataTableModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a4033591be8c92f6806363515bad9413f">model</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get instance of current model.  <a href="#a4033591be8c92f6806363515bad9413f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba53817fb6bd1df5850f53424708ffba"></a><!-- doxytag: member="mdtDataTableManager::getTableName" ref="aba53817fb6bd1df5850f53424708ffba" args="(const QString &amp;dataSetName)" -->
 static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#aba53817fb6bd1df5850f53424708ffba">getTableName</a> (const QString &amp;dataSetName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove unalowed chars and suffixe _tbl to name to give a table name. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1536b620cfabb8b76e0f5b840cd30bd3"></a><!-- doxytag: member="mdtDataTableManager::getFieldName" ref="a1536b620cfabb8b76e0f5b840cd30bd3" args="(const QString &amp;columnName)" -->
-static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a1536b620cfabb8b76e0f5b840cd30bd3">getFieldName</a> (const QString &amp;columnName)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove unalowed chars to give a field name. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Create/manage data sets. </p>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8h_source.html#l00044">44</a> of file <a class="el" href="mdt_data_table_manager_8h_source.html">mdtDataTableManager.h</a>.</p>
-</div><hr/><h2>Member Enumeration Documentation</h2>
-<a class="anchor" id="a2bccf081737f3237ecdbe346dba559a8"></a><!-- doxytag: member="mdtDataTableManager::create_mode_t" ref="a2bccf081737f3237ecdbe346dba559a8" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8">mdtDataTableManager::create_mode_t</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Dataset creation mode. </p>
-<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="a2bccf081737f3237ecdbe346dba559a8aa6a9a7bbd0b4003b3fb560b40b80912d"></a><!-- doxytag: member="OverwriteExisting" ref="a2bccf081737f3237ecdbe346dba559a8aa6a9a7bbd0b4003b3fb560b40b80912d" args="" -->OverwriteExisting</em>&nbsp;</td><td>
-<p>If file/database allready exists, it will be overwritten </p>
-</td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a2bccf081737f3237ecdbe346dba559a8acfd291caff4d096492815d1709b7a3fe"></a><!-- doxytag: member="KeepExisting" ref="a2bccf081737f3237ecdbe346dba559a8acfd291caff4d096492815d1709b7a3fe" args="" -->KeepExisting</em>&nbsp;</td><td>
-<p>If file/database allready exists, it will simply be open </p>
-</td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a2bccf081737f3237ecdbe346dba559a8a8d950620af815a15cfefe6843a848f78"></a><!-- doxytag: member="FailIfExists" ref="a2bccf081737f3237ecdbe346dba559a8a8d950620af815a15cfefe6843a848f78" args="" -->FailIfExists</em>&nbsp;</td><td>
-<p>If file/database allready exists, create method will fail </p>
-</td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a2bccf081737f3237ecdbe346dba559a8a6f1c53b5c2a4fb195fb6c8fa1a536e8c"></a><!-- doxytag: member="AskUserIfExists" ref="a2bccf081737f3237ecdbe346dba559a8a6f1c53b5c2a4fb195fb6c8fa1a536e8c" args="" -->AskUserIfExists</em>&nbsp;</td><td>
-<p>If file/database allready exists, a dialog box will ask the user if it must be overwritten or not </p>
-</td></tr>
-</table>
-</dd>
-</dl>
-
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8h_source.html#l00052">52</a> of file <a class="el" href="mdt_data_table_manager_8h_source.html">mdtDataTableManager.h</a>.</p>
-
-</div>
-</div>
-<hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a3a1c225b1aeedad8fc89b126147971ca"></a><!-- doxytag: member="mdtDataTableManager::~mdtDataTableManager" ref="a3a1c225b1aeedad8fc89b126147971ca" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mdtDataTableManager::~mdtDataTableManager </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Note: this will delete internal model. Be avare when referencing pointer returned by <a class="el" href="classmdt_data_table_manager.html#a4033591be8c92f6806363515bad9413f" title="Get instance of current model.">model()</a>. </p>
-
-<p><p>delete pvModel; </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
-
-</div>
-</div>
-<hr/><h2>Member Function Documentation</h2>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8h_source.html#l00047">47</a> of file <a class="el" href="mdt_data_table_manager_8h_source.html">mdtDataTableManager.h</a>.</p>
+</div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a2b38e6a8157183fcbce0770d12e9aa9d"></a><!-- doxytag: member="mdtDataTableManager::addFieldMapping" ref="a2b38e6a8157183fcbce0770d12e9aa9d" args="(const QString &amp;csvHeaderItem, const QString &amp;fieldName, const QString &amp;displayText, QVariant::Type dataType, int csvDataItemStartOffset=&#45;1, int csvDataItemEndOffset=&#45;1)" -->
 <div class="memitem">
 <div class="memproto">
@@ -256,7 +200,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <li>Display text is the CSV header item.</li>
 <li>One field is created in model for one CSV header item (column).</li>
 </ul>
-<p>If some of this default behaviour is not what is needed for some fields, it's possible to add a mapping with this method befor calling <a class="el" href="classmdt_data_table_manager.html#aac9ba371ee9e6d111fb7544bb9241161" title="Import a CSV file.">importFromCsvFile()</a>.</p>
+<p>If some of this default behaviour is not what is needed for some fields, it's possible to add a mapping with this method befor calling <a class="el" href="classmdt_data_table_manager.html#a668cc3d94e6aa5dab406a0fd319351af" title="Import a CSV file.">importFromCsvFile()</a>.</p>
 <p>It's also possible to split a CSV header item to many model fields. To do this, add several mapping with same csvHeaderItem, but using each time another fieldName. To know wich part of a CSV data item must be stored in witch field, csvDataItemStartOffset and csvDataItemEndOffset must be specified.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -273,7 +217,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <dd>
 <a class="el" href="classmdt_field_map_item.html" title="Provide informations for mdtFieldMap.">mdtFieldMapItem</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00482">482</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00512">512</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -294,11 +238,92 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Clear fields mapping. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_data_table_manager.html#a2b38e6a8157183fcbce0770d12e9aa9d" title="Add a mapping between CSV header part (item) and model field.">addFieldMapping()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00502">502</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00532">532</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6d07e713a18c4d1d3f0c005dd9f77ade"></a><!-- doxytag: member="mdtDataTableManager::createDataSet" ref="a6d07e713a18c4d1d3f0c005dd9f77ade" args="(const QDir &amp;dir, const QString &amp;name, const QSqlIndex &amp;primaryKey, bool createPrimaryKeyFields, const QList&lt; QSqlField &gt; &amp;fields, create_mode_t mode)" -->
+<a class="anchor" id="a368e82d3128e0c5098e09a9555bd65aa"></a><!-- doxytag: member="mdtDataTableManager::close" ref="a368e82d3128e0c5098e09a9555bd65aa" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDataTableManager::close </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Close. </p>
+<p>Will close database. </p>
+
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00058">58</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5c8aaf4f42a50bd0c216ef29adc9d79f"></a><!-- doxytag: member="mdtDataTableManager::copyTable" ref="a5c8aaf4f42a50bd0c216ef29adc9d79f" args="(const QString &amp;sourceTableName, const QString &amp;destinationTableName, mdtSqlDatabaseManager::createMode_t mode, QSqlDatabase sourceDatabase=QSqlDatabase(), QSqlDatabase destinationDatabase=QSqlDatabase())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtDataTableManager::copyTable </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>sourceTableName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>destinationTableName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418">mdtSqlDatabaseManager::createMode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSqlDatabase&#160;</td>
+          <td class="paramname"><em>sourceDatabase</em> = <code>QSqlDatabase()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSqlDatabase&#160;</td>
+          <td class="paramname"><em>destinationDatabase</em> = <code>QSqlDatabase()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Copy a source table to a destination table. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sourceTableName</td><td>Name of the source table . </td></tr>
+    <tr><td class="paramname">destinationTableName</td><td>Name of the destination table . </td></tr>
+    <tr><td class="paramname">mode</td><td>Behaviour to adopt if destination table allready exists . </td></tr>
+    <tr><td class="paramname">sourceDatabase</td><td>Instance of source database . </td></tr>
+    <tr><td class="paramname">destinationDatabase</td><td>Instance of destination database . </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false if a error occured . Use <a class="el" href="classmdt_data_table_manager.html#aaeff001bf9a44f890078f5c6f434ec05" title="Get last error.">lastError()</a> to know what gone wrong in second case . </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00370">370</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae813c6c4323a1949d489a24c07e914fa"></a><!-- doxytag: member="mdtDataTableManager::createDataSet" ref="ae813c6c4323a1949d489a24c07e914fa" args="(const QDir &amp;dir, const QString &amp;name, mdtSqlSchemaTable &amp;table, mdtSqlDatabaseManager::createMode_t mode)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -317,25 +342,13 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const QSqlIndex &amp;&#160;</td>
-          <td class="paramname"><em>primaryKey</em>, </td>
+          <td class="paramtype"><a class="el" href="classmdt_sql_schema_table.html">mdtSqlSchemaTable</a> &amp;&#160;</td>
+          <td class="paramname"><em>table</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>createPrimaryKeyFields</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QList&lt; QSqlField &gt; &amp;&#160;</td>
-          <td class="paramname"><em>fields</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8">create_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418">mdtSqlDatabaseManager::createMode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>
@@ -349,53 +362,19 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 <p>Create database and table. </p>
 <p>Internally, Sqlite is used to store data.</p>
-<p>Note: this will delete internal model and create a new one. Be avare when referencing pointer returned by <a class="el" href="classmdt_data_table_manager.html#a4033591be8c92f6806363515bad9413f" title="Get instance of current model.">model()</a>.</p>
+<p>Note: this will delete internal model and create a new one. Be avare when referencing pointer returned by model().</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">dir</td><td>Path or QDir object to directory in witch to store data. </td></tr>
+    <tr><td class="paramname">table</td><td>Schema of the table to create . </td></tr>
     <tr><td class="paramname">name</td><td>Name of the database, connection name (see QSqlDatabase) and file. </td></tr>
-    <tr><td class="paramname">primaryKey</td><td>Contains fields that are part of the primary key. If a name is set with QSqlIndex::setName(), it will be used, else a name (tableName_PK) is generated. </td></tr>
-    <tr><td class="paramname">createPrimaryKeyFields</td><td>If true, fields contained in primaryKey will be created, else only the constraint is added. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000063">Todo:</a></b></dt><dd>NOT implemeted yet !! </dd></dl>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">fields</td><td>List of fields, excluding primary key, to create in table. Note that only a fiew parameters of QSqlField are supported:<ul>
-<li>type: map QVariant type to Sqlite type</li>
-<li>name: field's name </li>
-</ul>
-</td></tr>
     <tr><td class="paramname">mode</td><td>Behaviour to adopt during database/file creation. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a785fbce3537e9e75ecdd49d29a6e8959"></a><!-- doxytag: member="mdtDataTableManager::csvHeader" ref="a785fbce3537e9e75ecdd49d29a6e8959" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QStringList mdtDataTableManager::csvHeader </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get the CSV file's headers. </p>
-<p>During CSV import, internal field name are created, because some chars are not allowed in a database field name. Use this method to get the headers as readen in CSV file. The fields are returned ordered as in the model.</p>
-<p>Note: will return headers only after <a class="el" href="classmdt_data_table_manager.html#aac9ba371ee9e6d111fb7544bb9241161" title="Import a CSV file.">importFromCsvFile()</a> was called. </p>
-
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00507">507</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00124">124</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -414,9 +393,9 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <div class="memdoc">
 
 <p>Set dataset directory. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000062">Todo:</a></b></dt><dd>Not used yet. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000078">Todo:</a></b></dt><dd>Not used yet. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00067">67</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -437,7 +416,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Get display texts referenced by field names. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>QHash with fieldName as key and displayText as value. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00546">546</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00561">561</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -459,11 +438,11 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Enable/disable progress dialog. </p>
 <p>If progress dialog is enabled, some methods will show her progress in a dialog. </p>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00251">251</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00159">159</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac2da29f8f8920eed8cca78aa6cc0d8da"></a><!-- doxytag: member="mdtDataTableManager::exportToCsvFile" ref="ac2da29f8f8920eed8cca78aa6cc0d8da" args="(const QString &amp;filePath, create_mode_t mode)" -->
+<a class="anchor" id="abe733f071ca77579522823598e79dd9a"></a><!-- doxytag: member="mdtDataTableManager::exportToCsvFile" ref="abe733f071ca77579522823598e79dd9a" args="(const QString &amp;filePath, mdtSqlDatabaseManager::createMode_t mode)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -476,7 +455,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8">create_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418">mdtSqlDatabaseManager::createMode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>
@@ -497,13 +476,15 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull export.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000064">Todo:</a></b></dt><dd>Add: separator, data protection, escape char, EOL </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000079">Todo:</a></b></dt><dd><p class="startdd">Add: separator, data protection, escape char, EOL </p>
+<p class="enddd">Implement ... </p>
+</dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00275">275</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aac9ba371ee9e6d111fb7544bb9241161"></a><!-- doxytag: member="mdtDataTableManager::importFromCsvFile" ref="aac9ba371ee9e6d111fb7544bb9241161" args="(const QString &amp;csvFilePath, create_mode_t mode, const QString &amp;dir=QString(), const QStringList &amp;pkFields=QStringList())" -->
+<a class="anchor" id="a668cc3d94e6aa5dab406a0fd319351af"></a><!-- doxytag: member="mdtDataTableManager::importFromCsvFile" ref="a668cc3d94e6aa5dab406a0fd319351af" args="(const QString &amp;csvFilePath, mdtSqlDatabaseManager::createMode_t mode, const QString &amp;dir=QString(), const QStringList &amp;pkFields=QStringList())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -516,7 +497,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classmdt_data_table_manager.html#a2bccf081737f3237ecdbe346dba559a8">create_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418">mdtSqlDatabaseManager::createMode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>, </td>
         </tr>
         <tr>
@@ -541,7 +522,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <div class="memdoc">
 
 <p>Import a CSV file. </p>
-<p>Note: this will delete internal model and create a new one. Be avare when referencing pointer returned by <a class="el" href="classmdt_data_table_manager.html#a4033591be8c92f6806363515bad9413f" title="Get instance of current model.">model()</a>.</p>
+<p>Note: this will delete internal model and create a new one. Be avare when referencing pointer returned by model().</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">csvFilePath</td><td>Path to the CSV file. </td></tr>
@@ -553,29 +534,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>All given CSV header items to use as part of primary key must exit in CSV file (See pkFields argument). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00280">280</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4033591be8c92f6806363515bad9413f"></a><!-- doxytag: member="mdtDataTableManager::model" ref="a4033591be8c92f6806363515bad9413f" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmdt_data_table_model.html">mdtDataTableModel</a> * mdtDataTableManager::model </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get instance of current model. </p>
-<p>Note that this pointer changes when some of methods are called.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to current model, or 0 if it was not set. </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00551">551</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00188">188</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -641,7 +600,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00256">256</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00164">164</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -668,30 +627,9 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if directory exists. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000061">Todo:</a></b></dt><dd>Not used yet. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000077">Todo:</a></b></dt><dd>Not used yet. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00054">54</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a87e9b26f462165c93a64f8ac6080b13d"></a><!-- doxytag: member="mdtDataTableManager::setDisplayTextsToModelHeader" ref="a87e9b26f462165c93a64f8ac6080b13d" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtDataTableManager::setDisplayTextsToModelHeader </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the display texts to model's header. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be valid. </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00531">531</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -714,7 +652,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

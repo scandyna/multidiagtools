@@ -284,7 +284,7 @@ Definition at line 391 of file mdtFrameCodecScpi.cpp.
 Decode a array of ASCII values. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000058}{Todo}]Not implemented yet \end{Desc}
+\item[\hyperlink{todo__todo000074}{Todo}]Not implemented yet \end{Desc}
 
 
 qDebug() $<$$<$ \char`\"{}Data: \char`\"{} $<$$<$ items;
@@ -309,7 +309,7 @@ Definition at line 467 of file mdtFrameCodecScpi.cpp.
 Decode a array of BYTE values. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000059}{Todo}]Not implemented yet \end{Desc}
+\item[\hyperlink{todo__todo000075}{Todo}]Not implemented yet \end{Desc}
 
 
 int len = data.size()-\/1; // Last item is the term char
@@ -361,7 +361,7 @@ A \hyperlink{classmdt_value}{mdtValue} that contains data of type Double if deco
 \end{DoxyReturn}
 QVariant \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray \&data)} \{ QVariant value;
 
-Store raw data in local QString constainer pvAsciiData = data; Remove white spaces at begin and end \hyperlink{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{trim()}; remove EofSeq if(!removeEofSeq())\{ return value; \} Case of no data if(pvAsciiData.size() $<$ 1)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-FRAME\_\-DECODE\_\-ERROR, \char`\"{}Frame contains no data\char`\"{} , mdtError::Warning); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtFrameCodecScpi\char`\"{}); e.commit(); return value; \} Convert and check value = pvAsciiData; if(value.canConvert(QVariant::Double))\{ if(value.convert(QVariant::Double))\{ value.setValue(checkFloatingValueValidity(value.toDouble())); return value; /return checkFloatingValueValidity(value.toDouble()); \} \}
+Store raw data in local QString constainer pvAsciiData = data; Remove white spaces at begin and end \hyperlink{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{trim()}; remove EofSeq if(!removeEofSeq())\{ return value; \} Case of no data if(pvAsciiData.size() $<$ 1)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-FRAME\_\-DECODE\_\-ERROR, \char`\"{}Frame contains no data\char`\"{} , \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}{mdtError::Warning}); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtFrameCodecScpi\char`\"{}); e.commit(); return value; \} Convert and check value = pvAsciiData; if(value.canConvert(QVariant::Double))\{ if(value.convert(QVariant::Double))\{ value.setValue(checkFloatingValueValidity(value.toDouble())); return value; /return checkFloatingValueValidity(value.toDouble()); \} \}
 
 return QVariant(); \} 
 

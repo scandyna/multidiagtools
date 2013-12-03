@@ -129,6 +129,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set default column to select.  <a href="#a3b3d79485206f7f3468e125e38bd24f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17d60fda061030fdfe15be5445eadc76"></a><!-- doxytag: member="mdtSqlTableWidget::setDefaultColumnToSelect" ref="a17d60fda061030fdfe15be5445eadc76" args="(const QString &amp;fieldName)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setDefaultColumnToSelect</b> (const QString &amp;fieldName)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QList&lt; QModelIndexList &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_widget.html#af28a5a54efb31c29734fb5b2d7f0e2fa">indexListOfSelectedRowsByRowsList</a> (const QList&lt; int &gt; &amp;columnList)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of currently selected indexes in a list of rows.  <a href="#af28a5a54efb31c29734fb5b2d7f0e2fa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5abe02dacc9fd8c0c33c27dbc5216d1b"></a><!-- doxytag: member="mdtSqlTableWidget::indexListOfSelectedRowsByRowsList" ref="a5abe02dacc9fd8c0c33c27dbc5216d1b" args="(const QStringList &amp;fieldList)" -->
+QList&lt; QModelIndexList &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>indexListOfSelectedRowsByRowsList</b> (const QStringList &amp;fieldList)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QModelIndexList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_widget.html#a9a43d9a5d2e63189f17d2bce7159e510">indexListOfSelectedRows</a> (const QList&lt; int &gt; &amp;columnList)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of currently selected indexes.  <a href="#a9a43d9a5d2e63189f17d2bce7159e510"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QModelIndexList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_widget.html#abe241fe0b24552b5403cb15593e18cdd">indexListOfSelectedRows</a> (const QStringList &amp;fieldList)</td></tr>
@@ -216,29 +220,6 @@ QModelIndexList&#160;</td><td class="memItemRight" valign="bottom"><b>indexListO
 
 </div>
 </div>
-<a class="anchor" id="a9a43d9a5d2e63189f17d2bce7159e510"></a><!-- doxytag: member="mdtSqlTableWidget::indexListOfSelectedRows" ref="a9a43d9a5d2e63189f17d2bce7159e510" args="(const QList&lt; int &gt; &amp;columnList)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QModelIndexList mdtSqlTableWidget::indexListOfSelectedRows </td>
-          <td>(</td>
-          <td class="paramtype">const QList&lt; int &gt; &amp;&#160;</td>
-          <td class="paramname"><em>columnList</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get a list of currently selected indexes. </p>
-<p>Will return a list of indexes that contains only coulumns specified by columnList. This alos works for multiple rows selection.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model.">setModel()</a> before using this method. </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00284">284</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="abe241fe0b24552b5403cb15593e18cdd"></a><!-- doxytag: member="mdtSqlTableWidget::indexListOfSelectedRows" ref="abe241fe0b24552b5403cb15593e18cdd" args="(const QStringList &amp;fieldList)" -->
 <div class="memitem">
 <div class="memproto">
@@ -260,7 +241,54 @@ QModelIndexList&#160;</td><td class="memItemRight" valign="bottom"><b>indexListO
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
 <p>This is a variant for single column. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00322">322</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00378">378</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9a43d9a5d2e63189f17d2bce7159e510"></a><!-- doxytag: member="mdtSqlTableWidget::indexListOfSelectedRows" ref="a9a43d9a5d2e63189f17d2bce7159e510" args="(const QList&lt; int &gt; &amp;columnList)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QModelIndexList mdtSqlTableWidget::indexListOfSelectedRows </td>
+          <td>(</td>
+          <td class="paramtype">const QList&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>columnList</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list of currently selected indexes. </p>
+<p>Will return a list of indexes that contains only coulumns specified by columnList. This alos works for multiple rows selection.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model.">setModel()</a> before using this method. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00340">340</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af28a5a54efb31c29734fb5b2d7f0e2fa"></a><!-- doxytag: member="mdtSqlTableWidget::indexListOfSelectedRowsByRowsList" ref="af28a5a54efb31c29734fb5b2d7f0e2fa" args="(const QList&lt; int &gt; &amp;columnList)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mdtSqlTableWidget::indexListOfSelectedRowsByRowsList </td>
+          <td>(</td>
+          <td class="paramtype">const QList&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>columnList</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list of currently selected indexes in a list of rows. </p>
+<p>Will return a list of indexes that contains only coulumns specified by columnList. This alos works for multiple rows selection.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model.">setModel()</a> before using this method.</dd></dl>
+<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00284">284</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -318,7 +346,7 @@ QModelIndexList&#160;</td><td class="memItemRight" valign="bottom"><b>indexListO
 
 <p>Implements <a class="el" href="classmdt_abstract_sql_widget.html#a619725b15f305e216ba9ce9dc0ab9e3c">mdtAbstractSqlWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00345">345</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00401">401</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -422,7 +450,7 @@ QModelIndexList&#160;</td><td class="memItemRight" valign="bottom"><b>indexListO
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:48 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

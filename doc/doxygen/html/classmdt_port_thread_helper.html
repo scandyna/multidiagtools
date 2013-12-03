@@ -184,7 +184,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="classmdt_port_thread_helper.html#a08f1395dda714880d62a24687821eba1" title="Restore current write frame to pool.">restoreCurrentWriteFrameToPool()</a>; </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -206,7 +206,7 @@ Protected Attributes</h2></td></tr>
 <p>Get current read frame. </p>
 <p>Can return a null pointer. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00327">327</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00328">328</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -227,7 +227,7 @@ Protected Attributes</h2></td></tr>
 <p>Get current write frame. </p>
 <p>Can return a null pointer. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00337">337</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00338">338</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -247,8 +247,8 @@ Protected Attributes</h2></td></tr>
 
 <p>Get a new frame for reading data from port. </p>
 <p>This is a helper method to get a new frame in port's read frames pool.</p>
-<p>It can hapen that the read frames pool is empty. In this case, a error will be generated in the <a class="el" href="classmdt_error.html">mdtError</a> log system, and notified with ReadPoolEmpty error. This method will also block ( sleep ) until a frame is available in read pool.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000032">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
+<p>It can hapen that the read frames pool is empty. In this case, a error will be generated in the <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> log system, and notified with ReadPoolEmpty error. This method will also block ( sleep ) until a frame is available in read pool.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000046">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
 <p>Note about port mutex handling:<br/>
  The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.</p>
 <p>Note: internally, currentReadFrame is updated.</p>
@@ -258,7 +258,7 @@ Protected Attributes</h2></td></tr>
 Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6c9d2cb2e9e922942236068bf634b0b" title="Set the thread instance.">setThread()</a>. </dd></dl>
 <dl class="post"><dt><b>Postcondition:</b></dt><dd>If this method returns true, <a class="el" href="classmdt_port_thread_helper.html#a36445798b093f4e7463c353677d816d5" title="Get current read frame.">currentReadFrame()</a> will return a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00179">179</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00180">180</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -289,7 +289,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 <dl class="post"><dt><b>Postcondition:</b></dt><dd>If this method returns true, <a class="el" href="classmdt_port_thread_helper.html#a7b7f97c9add6cc0344cb674804ac584d" title="Get current write frame.">currentWriteFrame()</a> will return a valid pointer. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00291">291</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00292">292</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -325,7 +325,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6c9d2cb2e9e922942236068bf634b0b" title="Set the thread instance.">setThread()</a>. </dd></dl>
 <dl class="post"><dt><b>Postcondition:</b></dt><dd>If frame is null, a UnhandledError is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00069">69</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -352,7 +352,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 <dd>
 Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6c9d2cb2e9e922942236068bf634b0b" title="Set the thread instance.">setThread()</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00162">162</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -387,7 +387,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 <dd>
 Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6c9d2cb2e9e922942236068bf634b0b" title="Set the thread instance.">setThread()</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00119">119</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00120">120</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -438,7 +438,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 <p>Calls <a class="el" href="classmdt_port_thread.html#a30bdd11ef16d4f3321921c9d9b26399d" title="Emit the errorOccured() signal if new error is different from current.">mdtPortThread::notifyError()</a> </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6c9d2cb2e9e922942236068bf634b0b" title="Set the thread instance.">setThread()</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00342">342</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00343">343</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -481,7 +481,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 
 <p>Reimplemented in <a class="el" href="classmdt_port_thread_helper_port.html#a0404d78ce7372c4732e48197d4e88e3c">mdtPortThreadHelperPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00349">349</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00350">350</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -509,7 +509,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 <dd>
 Port's readFramesPool queue must not allready contain currentReadFrame. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00230">230</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00231">231</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -537,7 +537,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 <dd>
 Port's writeFramesPool queue must not allready contain currentWriteFrame. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00309">309</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00310">310</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -559,7 +559,7 @@ Port's writeFramesPool queue must not allready contain currentWriteFrame. </dd><
 <p>Set the port instance. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -581,7 +581,7 @@ Port's writeFramesPool queue must not allready contain currentWriteFrame. </dd><
 <p>Set the thread instance. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>thread must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -616,7 +616,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 <dd>
 Port's readenFrames queue must not allready contain currentReadFrame. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00214">214</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00215">215</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -670,7 +670,7 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 <dd>
 data must be valid. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00243">243</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00244">244</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
 </div>
 </div>
@@ -712,7 +712,7 @@ data must be valid. </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

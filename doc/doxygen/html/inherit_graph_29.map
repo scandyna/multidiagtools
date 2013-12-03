@@ -1,3 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_items_selector_dialog.html" title="Provide the user a dialog in witch he can choose items." alt="" coords="5,5,168,35"/>
+<area shape="rect" id="node1" href="$classmdt_frame.html" title="Provide an array of bytes." alt="" coords="7,85,87,115"/>
+<area shape="rect" id="node3" href="$classmdt_frame_ascii.html" title="mdtFrameAscii" alt="" coords="156,5,265,35"/>
+<area shape="rect" id="node5" href="$classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame." alt="" coords="136,59,285,88"/>
+<area shape="rect" id="node7" href="$classmdt_frame_usb_control.html" title="USB Control frame." alt="" coords="137,112,284,141"/>
+<area shape="rect" id="node9" href="$classmdt_frame_usb_tmc.html" title="USBTMC frame." alt="" coords="145,165,276,195"/>
 </map>

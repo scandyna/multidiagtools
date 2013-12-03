@@ -52,7 +52,9 @@ void \hyperlink{classmdt_port_status_widget_ac14c1207abd242248538815542cb9068}{a
 void \hyperlink{classmdt_port_status_widget_a108227f8f64dd69edd2dcdca2b52b8a0}{removeCustomWidget} ()
 \begin{DoxyCompactList}\small\item\em Remove the custom widget. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_status_widget_a1b7fd23b45d75ccc106242026f3f8314}{setPermanentText} (const QString \&text)
-\begin{DoxyCompactList}\small\item\em Set the permanent text. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set the permanent text. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_status_widget_accb5d24aeec502ad00b36d253d7e139f}{clearMessage} ()
+\begin{DoxyCompactList}\small\item\em Clear current message. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -87,6 +89,25 @@ Add a custom widget.
 One custom widget can be added. 
 
 Definition at line 130 of file mdtPortStatusWidget.cpp.
+
+\hypertarget{classmdt_port_status_widget_accb5d24aeec502ad00b36d253d7e139f}{
+\index{mdtPortStatusWidget@{mdtPortStatusWidget}!clearMessage@{clearMessage}}
+\index{clearMessage@{clearMessage}!mdtPortStatusWidget@{mdtPortStatusWidget}}
+\subsubsection[{clearMessage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortStatusWidget::clearMessage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_status_widget_accb5d24aeec502ad00b36d253d7e139f}
+
+
+Clear current message. 
+
+Clear message showed with \hyperlink{classmdt_port_status_widget_a8fce28ddb290512f5681cf800ac17b81}{showMessage()}
+
+After calling this method, netx call of \hyperlink{classmdt_port_status_widget_a489b587cd7be7dd6ae6f2782565553bf}{setState()} will update text. 
+
+Definition at line 155 of file mdtPortStatusWidget.cpp.
 
 \hypertarget{classmdt_port_status_widget_a8e87596be48b5cfda6703c42655b2f25}{
 \index{mdtPortStatusWidget@{mdtPortStatusWidget}!enableTxRxLeds@{enableTxRxLeds}}
@@ -164,7 +185,7 @@ Set state.
 
 States are defined in \hyperlink{classmdt_port_manager}{mdtPortManager} 
 
-Definition at line 155 of file mdtPortStatusWidget.cpp.
+Definition at line 165 of file mdtPortStatusWidget.cpp.
 
 \hypertarget{classmdt_port_status_widget_a8fce28ddb290512f5681cf800ac17b81}{
 \index{mdtPortStatusWidget@{mdtPortStatusWidget}!showMessage@{showMessage}}
@@ -181,9 +202,11 @@ Definition at line 155 of file mdtPortStatusWidget.cpp.
 
 Used to show a message and details. 
 
+Note: calling this slot with a empty message has the same effect than \hyperlink{classmdt_port_status_widget_accb5d24aeec502ad00b36d253d7e139f}{clearMessage()} .
+
 
 \begin{DoxyParams}{Parameters}
-{\em message} & Message to show \\
+{\em message} & Message to show. \\
 \hline
 {\em details} & Details to show \\
 \hline
@@ -193,12 +216,12 @@ Used to show a message and details.
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000028}{Todo}]Implement details ! \end{Desc}
+\item[\hyperlink{todo__todo000042}{Todo}]Implement details ! \end{Desc}
 
 
 
 
-Definition at line 167 of file mdtPortStatusWidget.cpp.
+Definition at line 177 of file mdtPortStatusWidget.cpp.
 
 
 

@@ -86,6 +86,13 @@ void {\bfseries setDefaultColumnToSelect} (const QString \&fieldName)}
 \label{classmdt_sql_table_widget_a17d60fda061030fdfe15be5445eadc76}
 
 \item 
+QList$<$ QModelIndexList $>$ \hyperlink{classmdt_sql_table_widget_af28a5a54efb31c29734fb5b2d7f0e2fa}{indexListOfSelectedRowsByRowsList} (const QList$<$ int $>$ \&columnList)
+\begin{DoxyCompactList}\small\item\em Get a list of currently selected indexes in a list of rows. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_table_widget_a5abe02dacc9fd8c0c33c27dbc5216d1b}{
+QList$<$ QModelIndexList $>$ {\bfseries indexListOfSelectedRowsByRowsList} (const QStringList \&fieldList)}
+\label{classmdt_sql_table_widget_a5abe02dacc9fd8c0c33c27dbc5216d1b}
+
+\item 
 QModelIndexList \hyperlink{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}{indexListOfSelectedRows} (const QList$<$ int $>$ \&columnList)
 \begin{DoxyCompactList}\small\item\em Get a list of currently selected indexes. \end{DoxyCompactList}\item 
 QModelIndexList \hyperlink{classmdt_sql_table_widget_abe241fe0b24552b5403cb15593e18cdd}{indexListOfSelectedRows} (const QStringList \&fieldList)
@@ -178,28 +185,6 @@ Reimplemented from \hyperlink{classmdt_abstract_sql_widget_a4ad94a530c77292d122d
 
 Definition at line 144 of file mdtSqlTableWidget.cpp.
 
-\hypertarget{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}{
-\index{mdtSqlTableWidget@{mdtSqlTableWidget}!indexListOfSelectedRows@{indexListOfSelectedRows}}
-\index{indexListOfSelectedRows@{indexListOfSelectedRows}!mdtSqlTableWidget@{mdtSqlTableWidget}}
-\subsubsection[{indexListOfSelectedRows}]{\setlength{\rightskip}{0pt plus 5cm}QModelIndexList mdtSqlTableWidget::indexListOfSelectedRows (
-\begin{DoxyParamCaption}
-\item[{const QList$<$ int $>$ \&}]{columnList}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}
-
-
-Get a list of currently selected indexes. 
-
-Will return a list of indexes that contains only coulumns specified by columnList. This alos works for multiple rows selection.
-
-\begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
-\end{DoxyPrecond}
-
-
-Definition at line 284 of file mdtSqlTableWidget.cpp.
-
 \hypertarget{classmdt_sql_table_widget_abe241fe0b24552b5403cb15593e18cdd}{
 \index{mdtSqlTableWidget@{mdtSqlTableWidget}!indexListOfSelectedRows@{indexListOfSelectedRows}}
 \index{indexListOfSelectedRows@{indexListOfSelectedRows}!mdtSqlTableWidget@{mdtSqlTableWidget}}
@@ -222,7 +207,51 @@ This is an overloaded member function, provided for convenience. It differs from
 
 This is a variant for single column. 
 
-Definition at line 322 of file mdtSqlTableWidget.cpp.
+Definition at line 378 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!indexListOfSelectedRows@{indexListOfSelectedRows}}
+\index{indexListOfSelectedRows@{indexListOfSelectedRows}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{indexListOfSelectedRows}]{\setlength{\rightskip}{0pt plus 5cm}QModelIndexList mdtSqlTableWidget::indexListOfSelectedRows (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ int $>$ \&}]{columnList}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}
+
+
+Get a list of currently selected indexes. 
+
+Will return a list of indexes that contains only coulumns specified by columnList. This alos works for multiple rows selection.
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 340 of file mdtSqlTableWidget.cpp.
+
+\hypertarget{classmdt_sql_table_widget_af28a5a54efb31c29734fb5b2d7f0e2fa}{
+\index{mdtSqlTableWidget@{mdtSqlTableWidget}!indexListOfSelectedRowsByRowsList@{indexListOfSelectedRowsByRowsList}}
+\index{indexListOfSelectedRowsByRowsList@{indexListOfSelectedRowsByRowsList}!mdtSqlTableWidget@{mdtSqlTableWidget}}
+\subsubsection[{indexListOfSelectedRowsByRowsList}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlTableWidget::indexListOfSelectedRowsByRowsList (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ int $>$ \&}]{columnList}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_table_widget_af28a5a54efb31c29734fb5b2d7f0e2fa}
+
+
+Get a list of currently selected indexes in a list of rows. 
+
+Will return a list of indexes that contains only coulumns specified by columnList. This alos works for multiple rows selection.
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method.
+\end{DoxyPrecond}
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. 
+
+Definition at line 284 of file mdtSqlTableWidget.cpp.
 
 \hypertarget{classmdt_sql_table_widget_ae1eefd42d91ea36fa4244d7f265d7222}{
 \index{mdtSqlTableWidget@{mdtSqlTableWidget}!setColumnHidden@{setColumnHidden}}
@@ -268,7 +297,7 @@ Implements \hyperlink{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab
 
 
 
-Definition at line 345 of file mdtSqlTableWidget.cpp.
+Definition at line 401 of file mdtSqlTableWidget.cpp.
 
 \hypertarget{classmdt_sql_table_widget_a3b3d79485206f7f3468e125e38bd24f9}{
 \index{mdtSqlTableWidget@{mdtSqlTableWidget}!setDefaultColumnToSelect@{setDefaultColumnToSelect}}

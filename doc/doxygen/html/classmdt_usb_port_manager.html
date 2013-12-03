@@ -475,7 +475,7 @@ Protected Slots</h2></td></tr>
 <p>Subclass notes:<br/>
  This method can be reimplemented in subclass if needed. Typically usefull if a frame ID must be generated for each request (f.ex. bTag on USBTMC). A frame must be taken from port's request frames pool with mdtAbstractPort::controlFramesPool() dequeue() method (see Qt's QQueue documentation for more details on dequeue() ), then added to port's request queue with mdtAbstractPort::addControlRequest() . If protocol supports frame identification (like USBTMC's bTag), it should be returned here and incremented. </p>
 
-<p><p><a class="el" href="classmdt_port_manager.html#a3107b7121dfe5b9686d9b3b3a48a0af0" title="Lock the port&#39;s mutex.">lockPortMutex()</a>; if(port-&gt;controlFramesPool().size() &lt; 1){ <a class="el" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex()</a>; <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_PORT_IO_ERROR, "No frame available in control frames pool", mdtError::Error); MDT_ERROR_SET_SRC(e, "mdtUsbPortManager"); e.commit(); return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693">mdtAbstractPort::WritePoolEmpty</a>; }</p>
+<p><p><a class="el" href="classmdt_port_manager.html#a3107b7121dfe5b9686d9b3b3a48a0af0" title="Lock the port&#39;s mutex.">lockPortMutex()</a>; if(port-&gt;controlFramesPool().size() &lt; 1){ <a class="el" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex()</a>; <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_PORT_IO_ERROR, "No frame available in control frames pool", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); MDT_ERROR_SET_SRC(e, "mdtUsbPortManager"); e.commit(); return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693">mdtAbstractPort::WritePoolEmpty</a>; }</p>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00236">236</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
@@ -529,7 +529,7 @@ Protected Slots</h2></td></tr>
 <p>Internally, a couple of sleep and process event are called, so Qt's event loop will not be broken.</p>
 <p>This method can return if timeout occurs, or for other reason depending on specific port (port timeout, read canceled, ...).</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if Ok, false on timeout</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000040">Todo:</a></b></dt><dd>Adapt using internal timeouts + errors system </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000054">Todo:</a></b></dt><dd>Adapt using internal timeouts + errors system </dd></dl>
 
 <p><p>int maxIter;</p>
 <p>if(timeout == 0){ timeout = adjustedReadTimeout(timeout, false); }else{ timeout = adjustedReadTimeout(timeout); } maxIter = timeout / 50;</p>
@@ -560,7 +560,7 @@ Protected Slots</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:51 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -213,7 +213,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00171"></a>00171   pvOperationCompleteTimer-&gt;start();
 <a name="l00172"></a>00172   <span class="keywordflow">while</span>(!pvOperationComplete){
 <a name="l00173"></a>00173     <span class="comment">// Check that port manager is not about to close or in error</span>
-<a name="l00174"></a>00174     <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;isReady()){
+<a name="l00174"></a>00174     <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_device.html#a8887a1142d3d3be673c18cf3376e7af4" title="Check if device is ready.">isReady</a>()){
 <a name="l00175"></a>00175       pvOperationCompleteTimer-&gt;stop();
 <a name="l00176"></a>00176       <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00177"></a>00177     }
@@ -261,14 +261,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00220"></a>00220 
 <a name="l00221"></a>00221   <span class="comment">// Check decoded values</span>
 <a name="l00222"></a>00222   <span class="keywordflow">if</span>(decodedValues.size() &lt; 2){
-<a name="l00223"></a>00223     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: unexpected size of values (excpected min. 2)&quot;</span>, mdtError::Error);
+<a name="l00223"></a>00223     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: unexpected size of values (excpected min. 2)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00224"></a>00224     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceScpi&quot;</span>);
 <a name="l00225"></a>00225     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00226"></a>00226     <span class="keywordflow">return</span>;
 <a name="l00227"></a>00227   }
 <a name="l00228"></a>00228   <span class="comment">// Get error number</span>
 <a name="l00229"></a>00229   <span class="keywordflow">if</span>(decodedValues.at(0).type() != QVariant::Int){
-<a name="l00230"></a>00230     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: values contains not a error (First value must be type int)&quot;</span>, mdtError::Error);
+<a name="l00230"></a>00230     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: values contains not a error (First value must be type int)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00231"></a>00231     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceScpi&quot;</span>);
 <a name="l00232"></a>00232     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00233"></a>00233     <span class="keywordflow">return</span>;
@@ -279,7 +279,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00238"></a>00238   }
 <a name="l00239"></a>00239   <span class="comment">// Get error message</span>
 <a name="l00240"></a>00240   <span class="keywordflow">if</span>(decodedValues.at(1).type() != QVariant::String){
-<a name="l00241"></a>00241     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: values contains not a error (Second value must be type string)&quot;</span>, mdtError::Error);
+<a name="l00241"></a>00241     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: values contains not a error (Second value must be type string)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00242"></a>00242     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceScpi&quot;</span>);
 <a name="l00243"></a>00243     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00244"></a>00244     <span class="keywordflow">return</span>;
@@ -296,7 +296,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00255"></a>00255     <span class="comment">// Standard SCPI errors</span>
 <a name="l00256"></a>00256     <span class="keywordflow">switch</span>(errNum){
 <a name="l00257"></a>00257       <span class="keywordflow">default</span>:
-<a name="l00258"></a>00258         <a class="code" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa" title="Log a device error with mdtError system.">logDeviceError</a>(errNum, errText, deviceSpecificTexts, mdtError::Error);
+<a name="l00258"></a>00258         <a class="code" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa" title="Log a device error with mdtError system.">logDeviceError</a>(errNum, errText, deviceSpecificTexts, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00259"></a>00259     }
 <a name="l00260"></a>00260   }
 <a name="l00261"></a>00261 
@@ -306,10 +306,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00265"></a>00265 {
 <a name="l00266"></a>00266   <span class="comment">// In this implementation, we only log error as warning.</span>
 <a name="l00267"></a>00267   <span class="comment">// The specific subclass should re-implement this method, and handle error.</span>
-<a name="l00268"></a>00268   <a class="code" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa" title="Log a device error with mdtError system.">logDeviceError</a>(errNum, errText, deviceSpecificTexts, mdtError::Warning);
+<a name="l00268"></a>00268   <a class="code" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa" title="Log a device error with mdtError system.">logDeviceError</a>(errNum, errText, deviceSpecificTexts, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00269"></a>00269 }
 <a name="l00270"></a>00270 
-<a name="l00271"></a><a class="code" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa">00271</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa" title="Log a device error with mdtError system.">mdtDeviceScpi::logDeviceError</a>(<span class="keywordtype">int</span> errNum, <span class="keyword">const</span> QString &amp;errText, <span class="keyword">const</span> QList&lt;QString&gt; &amp;deviceSpecificTexts, mdtError::level_t level)
+<a name="l00271"></a><a class="code" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa">00271</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa" title="Log a device error with mdtError system.">mdtDeviceScpi::logDeviceError</a>(<span class="keywordtype">int</span> errNum, <span class="keyword">const</span> QString &amp;errText, <span class="keyword">const</span> QList&lt;QString&gt; &amp;deviceSpecificTexts, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7" title="Error level.">mdtError::level_t</a> level)
 <a name="l00272"></a>00272 {
 <a name="l00273"></a>00273   QString specificTexts;
 <a name="l00274"></a>00274   QString message;
@@ -329,7 +329,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00288"></a>00288   <span class="keywordflow">if</span>(specificTexts.size() &gt; 0){
 <a name="l00289"></a>00289     message += <span class="stringliteral">&quot; , details: &quot;</span> + specificTexts;
 <a name="l00290"></a>00290   }
-<a name="l00291"></a>00291   <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, message, level);
+<a name="l00291"></a>00291   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, message, level);
 <a name="l00292"></a>00292   MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceScpi&quot;</span>);
 <a name="l00293"></a>00293   e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00294"></a>00294 }
@@ -368,7 +368,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

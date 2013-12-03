@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00051"></a>00051   <a class="code" href="classmdt_frame_usb_tmc.html" title="USBTMC frame.">mdtFrameUsbTmc</a> *usbtmcReadFrame = <span class="keyword">static_cast&lt;</span><a class="code" href="classmdt_frame_usb_tmc.html" title="USBTMC frame.">mdtFrameUsbTmc</a>*<span class="keyword">&gt;</span>(threadHelper.<a class="code" href="classmdt_port_thread_helper.html#a36445798b093f4e7463c353677d816d5" title="Get current read frame.">currentReadFrame</a>());
 <a name="l00052"></a>00052 
 <a name="l00053"></a>00053   <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00054"></a>00054     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_PORT_IO_ERROR, <span class="stringliteral">&quot;Non running thread wants to check about errors&quot;</span>, mdtError::Warning);
+<a name="l00054"></a>00054     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_PORT_IO_ERROR, <span class="stringliteral">&quot;Non running thread wants to check about errors&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00055"></a>00055     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtPortThread&quot;</span>);
 <a name="l00056"></a>00056     e.commit();
 <a name="l00057"></a>00057   }
@@ -238,7 +238,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00177"></a>00177   <a class="code" href="classmdt_frame_usb_tmc.html" title="USBTMC frame.">mdtFrameUsbTmc</a> *usbtmcWriteFrame = <span class="keyword">static_cast&lt;</span><a class="code" href="classmdt_frame_usb_tmc.html" title="USBTMC frame.">mdtFrameUsbTmc</a>*<span class="keyword">&gt;</span>(threadHelper.<a class="code" href="classmdt_port_thread_helper.html#a7b7f97c9add6cc0344cb674804ac584d" title="Get current write frame.">currentWriteFrame</a>());
 <a name="l00178"></a>00178 
 <a name="l00179"></a>00179   <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00180"></a>00180     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_PORT_IO_ERROR, <span class="stringliteral">&quot;Non running thread wants to check about errors&quot;</span>, mdtError::Warning);
+<a name="l00180"></a>00180     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_PORT_IO_ERROR, <span class="stringliteral">&quot;Non running thread wants to check about errors&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00181"></a>00181     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtPortThread&quot;</span>);
 <a name="l00182"></a>00182     e.commit();
 <a name="l00183"></a>00183   }
@@ -383,7 +383,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00323"></a>00323   <span class="keywordflow">while</span>(1){
 <a name="l00324"></a>00324     <span class="comment">// Check maxTry</span>
 <a name="l00325"></a>00325     <span class="keywordflow">if</span>(maxTry &lt; 1){
-<a name="l00326"></a>00326       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_OUT still pending after 5 try&quot;</span>, mdtError::Warning);
+<a name="l00326"></a>00326       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_OUT still pending after 5 try&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00327"></a>00327       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00328"></a>00328       e.commit();
 <a name="l00329"></a>00329       <a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().enqueue(ctlFrame);
@@ -412,7 +412,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00352"></a>00352   <span class="keywordflow">while</span>(1){
 <a name="l00353"></a>00353     <span class="comment">// Check maxTry</span>
 <a name="l00354"></a>00354     <span class="keywordflow">if</span>(maxTry &lt; 1){
-<a name="l00355"></a>00355       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_OUT_STATUS still pending after 5 try&quot;</span>, mdtError::Warning);
+<a name="l00355"></a>00355       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_OUT_STATUS still pending after 5 try&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00356"></a>00356       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00357"></a>00357       e.commit();
 <a name="l00358"></a>00358       <a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().enqueue(ctlFrame);
@@ -464,7 +464,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00404"></a>00404   }
 <a name="l00405"></a>00405   <span class="comment">// more than 1 frame available should only happen if device had a control response queued</span>
 <a name="l00406"></a>00406   <span class="keywordflow">if</span>(<a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;controlResponseFrames().size() != 1){
-<a name="l00407"></a>00407     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_OUT returned unexpected amount of response frames&quot;</span>, mdtError::Error);
+<a name="l00407"></a>00407     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_OUT returned unexpected amount of response frames&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00408"></a>00408     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00409"></a>00409     e.commit();
 <a name="l00410"></a>00410     <span class="comment">// Restore frames and abort</span>
@@ -477,7 +477,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00417"></a>00417   ctlFrame = <a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().dequeue();
 <a name="l00418"></a>00418   Q_ASSERT(ctlFrame != 0);
 <a name="l00419"></a>00419   <span class="keywordflow">if</span>(ctlFrame-&gt;size() != 2){
-<a name="l00420"></a>00420     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_OUT returned unexpected response size (expected 2, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, mdtError::Error);
+<a name="l00420"></a>00420     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_OUT returned unexpected response size (expected 2, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00421"></a>00421     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00422"></a>00422     e.commit();
 <a name="l00423"></a>00423     <span class="comment">// Restore frame and abort</span>
@@ -513,7 +513,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00453"></a>00453   }
 <a name="l00454"></a>00454   <span class="comment">// more than 1 frame available should only happen if device had a control response queued</span>
 <a name="l00455"></a>00455   <span class="keywordflow">if</span>(<a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;controlResponseFrames().size() != 1){
-<a name="l00456"></a>00456     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_OUT_STATUS returned unexpected amount of response frames&quot;</span>, mdtError::Error);
+<a name="l00456"></a>00456     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_OUT_STATUS returned unexpected amount of response frames&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00457"></a>00457     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00458"></a>00458     e.commit();
 <a name="l00459"></a>00459     <span class="comment">// Restore frames and abort</span>
@@ -526,7 +526,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00466"></a>00466   ctlFrame = <a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().dequeue();
 <a name="l00467"></a>00467   Q_ASSERT(ctlFrame != 0);
 <a name="l00468"></a>00468   <span class="keywordflow">if</span>(ctlFrame-&gt;size() != 8){
-<a name="l00469"></a>00469     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_OUT_STATUS returned unexpected response size (expected 8, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, mdtError::Error);
+<a name="l00469"></a>00469     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_OUT_STATUS returned unexpected response size (expected 8, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00470"></a>00470     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00471"></a>00471     e.commit();
 <a name="l00472"></a>00472     <span class="comment">// Restore frame and abort</span>
@@ -589,7 +589,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00573"></a>00573     }
 <a name="l00574"></a>00574     <span class="comment">// more than 1 frame available should only happen if device had a control response queued</span>
 <a name="l00575"></a>00575     <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().size() != 1){
-<a name="l00576"></a>00576       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN returned unexpected amount of responses&quot;</span>, mdtError::Error);
+<a name="l00576"></a>00576       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN returned unexpected amount of responses&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00577"></a>00577       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00578"></a>00578       e.commit();
 <a name="l00585"></a>00585       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>;
@@ -597,7 +597,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00587"></a>00587     Q_ASSERT(port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().size() == 1);
 <a name="l00588"></a>00588     ctlFrame = port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().dequeue();
 <a name="l00589"></a>00589     <span class="keywordflow">if</span>(ctlFrame-&gt;size() != 2){
-<a name="l00590"></a>00590       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN returned unexpected response size (expected 2, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, mdtError::Error);
+<a name="l00590"></a>00590       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN returned unexpected response size (expected 2, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00591"></a>00591       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00592"></a>00592       e.commit();
 <a name="l00593"></a>00593       <span class="comment">// Restore frames and abort</span>
@@ -613,7 +613,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00608"></a>00608     maxTry--;
 <a name="l00609"></a>00609   }
 <a name="l00610"></a>00610   <span class="keywordflow">if</span>(maxTry &lt; 1){
-<a name="l00611"></a>00611     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN still pending after 10 try&quot;</span>, mdtError::Warning);
+<a name="l00611"></a>00611     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN still pending after 10 try&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00612"></a>00612     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00613"></a>00613     e.commit();
 <a name="l00614"></a>00614     <span class="comment">// Continue working (possibly, nothing was to abort)</span>
@@ -654,14 +654,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00671"></a>00671     }
 <a name="l00672"></a>00672     <span class="comment">// more than 1 frame available should only happen if device had a control response queued</span>
 <a name="l00673"></a>00673     <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().size() != 1){
-<a name="l00674"></a>00674       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS returned unexpected amount of responses&quot;</span>, mdtError::Error);
+<a name="l00674"></a>00674       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS returned unexpected amount of responses&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00675"></a>00675       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00676"></a>00676       e.commit();
 <a name="l00683"></a>00683       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>;
 <a name="l00684"></a>00684     }
 <a name="l00685"></a>00685     ctlFrame = port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().dequeue();
 <a name="l00686"></a>00686     <span class="keywordflow">if</span>(ctlFrame-&gt;size() != 8){
-<a name="l00687"></a>00687       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS returned unexpected response size (expected 8, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, mdtError::Error);
+<a name="l00687"></a>00687       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS returned unexpected response size (expected 8, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00688"></a>00688       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00689"></a>00689       e.commit();
 <a name="l00690"></a>00690       <span class="comment">// restore frames and abort</span>
@@ -687,7 +687,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00720"></a>00720     maxTry--;
 <a name="l00721"></a>00721   }
 <a name="l00722"></a>00722   <span class="keywordflow">if</span>(maxTry &lt; 1){
-<a name="l00723"></a>00723     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS still pending after 10 try&quot;</span>, mdtError::Warning);
+<a name="l00723"></a>00723     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS still pending after 10 try&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00724"></a>00724     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00725"></a>00725     e.commit();
 <a name="l00726"></a>00726   }
@@ -737,7 +737,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00776"></a>00776   <span class="keywordflow">while</span>(1){
 <a name="l00777"></a>00777     <span class="comment">// Check maxTry</span>
 <a name="l00778"></a>00778     <span class="keywordflow">if</span>(maxTry &lt; 1){
-<a name="l00779"></a>00779       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN still pending after 5 try&quot;</span>, mdtError::Warning);
+<a name="l00779"></a>00779       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN still pending after 5 try&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00780"></a>00780       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00781"></a>00781       e.commit();
 <a name="l00782"></a>00782       <a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().enqueue(ctlFrame);
@@ -776,7 +776,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00815"></a>00815   <span class="keywordflow">while</span>(1){
 <a name="l00816"></a>00816     <span class="comment">// Check maxTry</span>
 <a name="l00817"></a>00817     <span class="keywordflow">if</span>(maxTry &lt; 1){
-<a name="l00818"></a>00818       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS still pending after 5 try&quot;</span>, mdtError::Warning);
+<a name="l00818"></a>00818       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS still pending after 5 try&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l00819"></a>00819       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00820"></a>00820       e.commit();
 <a name="l00821"></a>00821       <a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>().enqueue(ctlFrame);
@@ -833,7 +833,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00872"></a>00872   }
 <a name="l00873"></a>00873   <span class="comment">// more than 1 frame available should only happen if device had a control response queued</span>
 <a name="l00874"></a>00874   <span class="keywordflow">if</span>(<a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;controlResponseFrames().size() != 1){
-<a name="l00875"></a>00875     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN returned unexpected amount of response frames&quot;</span>, mdtError::Error);
+<a name="l00875"></a>00875     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN returned unexpected amount of response frames&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00876"></a>00876     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00877"></a>00877     e.commit();
 <a name="l00878"></a>00878     <span class="comment">// Restore frames and abort</span>
@@ -846,7 +846,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00885"></a>00885   ctlFrame = <a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().dequeue();
 <a name="l00886"></a>00886   Q_ASSERT(ctlFrame != 0);
 <a name="l00887"></a>00887   <span class="keywordflow">if</span>(ctlFrame-&gt;size() != 2){
-<a name="l00888"></a>00888     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN returned unexpected response size (expected 2, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, mdtError::Error);
+<a name="l00888"></a>00888     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;INITIATE_ABORT_BULK_IN returned unexpected response size (expected 2, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00889"></a>00889     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00890"></a>00890     e.commit();
 <a name="l00891"></a>00891     <span class="comment">// Restore frame and abort</span>
@@ -882,7 +882,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00921"></a>00921   }
 <a name="l00922"></a>00922   <span class="comment">// more than 1 frame available should only happen if device had a control response queued</span>
 <a name="l00923"></a>00923   <span class="keywordflow">if</span>(<a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;controlResponseFrames().size() != 1){
-<a name="l00924"></a>00924     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS returned unexpected amount of response frames&quot;</span>, mdtError::Error);
+<a name="l00924"></a>00924     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS returned unexpected amount of response frames&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00925"></a>00925     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00926"></a>00926     e.commit();
 <a name="l00927"></a>00927     <span class="comment">// Restore frames and abort</span>
@@ -895,7 +895,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00934"></a>00934   ctlFrame = <a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62" title="Get USB port instance.">usbPort</a>()-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().dequeue();
 <a name="l00935"></a>00935   Q_ASSERT(ctlFrame != 0);
 <a name="l00936"></a>00936   <span class="keywordflow">if</span>(ctlFrame-&gt;size() != 8){
-<a name="l00937"></a>00937     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS returned unexpected response size (expected 8, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, mdtError::Error);
+<a name="l00937"></a>00937     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;CHECK_ABORT_BULK_IN_STATUS returned unexpected response size (expected 8, received &quot;</span> + QString::number(ctlFrame-&gt;size()) + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l00938"></a>00938     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l00939"></a>00939     e.commit();
 <a name="l00940"></a>00940     <span class="comment">// Restore frame and abort</span>
@@ -1154,17 +1154,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01226"></a>01226       <span class="comment">// Check if complete</span>
 <a name="l01227"></a>01227       <span class="keywordflow">if</span>(!usbtmcFrame-&gt;isComplete()){
 <a name="l01228"></a>01228         ok = <span class="keyword">false</span>;
-<a name="l01229"></a>01229         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Receive a uncomplete frame, will be aborted&quot;</span>, mdtError::Warning);
+<a name="l01229"></a>01229         <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Receive a uncomplete frame, will be aborted&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
 <a name="l01230"></a>01230         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l01231"></a>01231         e.commit();
 <a name="l01232"></a>01232       }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(!usbtmcFrame-&gt;bTagOk()){ <span class="comment">// Check bTag/bTagInverse coherence</span>
 <a name="l01233"></a>01233         ok = <span class="keyword">false</span>;
-<a name="l01234"></a>01234         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Receive a frame with incoherent bTag/bTagInverse, will be aborted&quot;</span>, mdtError::Error);
+<a name="l01234"></a>01234         <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Receive a frame with incoherent bTag/bTagInverse, will be aborted&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l01235"></a>01235         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l01236"></a>01236         e.commit();
 <a name="l01237"></a>01237       }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(!usbtmcFrame-&gt;MsgIDsupported()){ <span class="comment">// Check if MsgID is supported</span>
 <a name="l01238"></a>01238         ok = <span class="keyword">false</span>;
-<a name="l01239"></a>01239         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Receive a frame with unsupported MsgID, will be aborted&quot;</span>, mdtError::Error);
+<a name="l01239"></a>01239         <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Receive a frame with unsupported MsgID, will be aborted&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l01240"></a>01240         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l01241"></a>01241         e.commit();
 <a name="l01242"></a>01242       }
@@ -1192,7 +1192,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01265"></a>01265         <span class="comment">// Check if bTag was expected</span>
 <a name="l01266"></a>01266         qDebug() &lt;&lt; <span class="stringliteral">&quot;USBTMCTHD (2): current readFrame&#39;s bTag: &quot;</span> &lt;&lt; usbtmcFrame-&gt;bTag() &lt;&lt; <span class="stringliteral">&quot; , expectedBulkInbTags: &quot;</span> &lt;&lt; port-&gt;<a class="code" href="classmdt_usb_port.html#a0ad07939f4709240b0c79c501edc9498" title="Get list of expeced incomming bTags.">expectedBulkInbTags</a>();
 <a name="l01267"></a>01267         <span class="keywordflow">if</span>(!port-&gt;<a class="code" href="classmdt_usb_port.html#a0ad07939f4709240b0c79c501edc9498" title="Get list of expeced incomming bTags.">expectedBulkInbTags</a>().contains(usbtmcFrame-&gt;bTag())){
-<a name="l01268"></a>01268           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Receive a frame with unexpeced bTag, will be skipped&quot;</span>, mdtError::Error);
+<a name="l01268"></a>01268           <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Receive a frame with unexpeced bTag, will be skipped&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
 <a name="l01269"></a>01269           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbtmcPortThread&quot;</span>);
 <a name="l01270"></a>01270           e.commit();
 <a name="l01271"></a>01271           <span class="comment">// Remove frame and put back to pool</span>
@@ -1234,7 +1234,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 11 2013 20:08:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
