@@ -97,6 +97,7 @@
      <addaction name="actCreateTestConnectionCable"/>
     </widget>
     <addaction name="menuConnection_Cable"/>
+    <addaction name="actEditTestNode"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edition"/>
@@ -163,6 +164,11 @@
   <action name="actCreateTestConnectionCable">
    <property name="text">
     <string>Create</string>
+   </property>
+  </action>
+  <action name="actEditTestNode">
+   <property name="text">
+    <string>Test node edition</string>
    </property>
   </action>
  </widget>

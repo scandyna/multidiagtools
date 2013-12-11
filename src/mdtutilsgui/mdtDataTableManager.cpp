@@ -334,6 +334,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
       if(!commitRowsToDatabase(rows, fields, autoValuePkFieldName)){
         csvFile.close();
         close();
+        pvLastError.commit();
         return false;
       }
       // Update progress dialog
@@ -351,6 +352,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
   if(!commitRowsToDatabase(rows, fields, autoValuePkFieldName)){
     csvFile.close();
     close();
+    pvLastError.commit();
     return false;
   }
   csvFile.close();
@@ -385,6 +387,7 @@ bool mdtDataTableManager::copyTable(const QString & sourceTableName, const QStri
   QList<QVariantList> rows;
   QString sql;
   QSqlError sqlError;
+  QString errorText;
 
   // Build source fields list
   record = sourceDatabase.record(sourceTableName);
@@ -484,6 +487,10 @@ bool mdtDataTableManager::copyTable(const QString & sourceTableName, const QStri
     if(lineCount > 100){
       if(!commitRowsToDatabase(rows, destinationFields, "")){
         close();
+        errorText = pvLastError.text();
+        errorText += " (Source table: " + sourceTableName + " , destination table: " + destinationTableName + ")";
+        pvLastError.updateText(errorText);
+        pvLastError.commit();
         return false;
       }
       // Update progress dialog
@@ -499,6 +506,10 @@ bool mdtDataTableManager::copyTable(const QString & sourceTableName, const QStri
   }
   // Commit last lines
   if(!commitRowsToDatabase(rows, destinationFields, "")){
+    errorText = pvLastError.text();
+    errorText += " (Source table: " + sourceTableName + " , destination table: " + destinationTableName + ")";
+    pvLastError.updateText(errorText);
+    pvLastError.commit();
     close();
     return false;
   }
@@ -635,7 +646,7 @@ bool mdtDataTableManager::commitRowsToDatabase(const QList<QVariantList> &rows, 
       pvLastError.setError("Cannot execute query for insertion in database", mdtError::Error);
       pvLastError.setSystemError(sqlError.number(), sqlError.text());
       MDT_ERROR_SET_SRC(pvLastError, "mdtDataTableManager");
-      pvLastError.commit();
+      ///pvLastError.commit();
       db.rollback();
       return false;
     }

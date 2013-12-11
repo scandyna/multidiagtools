@@ -19,10 +19,27 @@
  **
  ****************************************************************************/
 #include "mdtCcTestConnectionCable.h"
+#include "mdtClPathGraph.h"
+#include <QSqlQuery>
+#include <QSqlError>
+
+#include <QDebug>
 
 mdtCcTestConnectionCable::mdtCcTestConnectionCable(QSqlDatabase db)
  : mdtClBase(db)
 {
+}
+
+QString mdtCcTestConnectionCable::sqlForTestNodeSelection()
+{
+  QString sql;
+
+  sql = "SELECT * ";
+  sql += " FROM TestNode_tbl ";
+  sql += " JOIN VehicleType_tbl ";
+  sql += "  ON VehicleType_tbl.Id_PK = TestNode_tbl.VehicleType_Id_FK_PK";
+
+  return sql;
 }
 
 QString mdtCcTestConnectionCable::sqlForStartConnectorSelection(const QVariant & dutUnitId) const
@@ -35,3 +52,85 @@ QString mdtCcTestConnectionCable::sqlForStartConnectorSelection(const QVariant &
   return sql;
 }
 
+QString mdtCcTestConnectionCable::sqlForUnitConnectorSelectionFromUnitConnectorIdList(const QList<QVariant> & connectorIdList) const
+{
+  QString sql;
+  int i;
+
+  if(connectorIdList.isEmpty()){
+    return sql;
+  }
+  sql = "SELECT * FROM UnitConnector_tbl WHERE Id_PK = " + connectorIdList.at(0).toString();
+  for(i = 1; i < connectorIdList.size(); ++i){
+    sql += " OR Id_PK = " + connectorIdList.at(i).toString();
+  }
+
+  return sql;
+}
+
+QList<QVariant> mdtCcTestConnectionCable::getToUnitConnectorRelatedUnitConnectionIdList(const QVariant & unitConnectorId)
+{
+  QList<QVariant> connectionIdList;
+  QString sql;
+  QSqlQuery query(database());
+  QSqlError sqlError;
+
+  sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE UnitConnector_Id_FK = " + unitConnectorId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to get unit connection ID list", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return connectionIdList;
+  }
+  while(query.next()){
+    connectionIdList.append(query.value(0));
+  }
+
+  return connectionIdList;
+}
+
+QList<QVariant> mdtCcTestConnectionCable::getToUnitConnectionLinkedUnitConnectorIdList(const QVariant & fromUnitConnectionId)
+{
+  Q_ASSERT(!fromUnitConnectionId.isNull());
+
+  QList<QVariant> unitConnectionIdList;
+  QList<QVariant> unitConnectorIdList;
+  mdtClPathGraph graph(database());
+  QString sql;
+  QSqlQuery query(database());
+  QSqlError sqlError;
+  QVariant id;
+  int i;
+
+  if(!graph.loadLinkList()){
+    pvLastError = graph.lastError();
+    return unitConnectorIdList;
+  }
+  unitConnectionIdList = graph.getLinkedConnectionIdList(fromUnitConnectionId);
+  if(unitConnectionIdList.isEmpty()){
+    return unitConnectorIdList;
+  }
+  // Get list of connector ID for each connection
+  sql = "SELECT UnitConnector_Id_FK FROM UnitConnection_tbl WHERE Id_PK = " + unitConnectionIdList.at(0).toString();
+  for(i = 1; i < unitConnectionIdList.size(); ++i){
+    sql += " OR Id_PK = " + unitConnectionIdList.at(i).toString();
+  }
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to get unit connection ID list", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return unitConnectorIdList;
+  }
+  while(query.next()){
+    id = query.value(0);
+    if((!id.isNull())&&(!unitConnectorIdList.contains(id))){
+      unitConnectorIdList.append(id);
+    }
+  }
+
+  return unitConnectorIdList;
+}

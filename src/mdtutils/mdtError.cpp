@@ -62,6 +62,11 @@ void mdtError::setError(const QString &text, level_t level)
   pvLevel = level;
 }
 
+void mdtError::updateText(const QString & text)
+{
+  pvText = text;
+}
+
 void mdtError::clear()
 {
   pvNumber = 0;

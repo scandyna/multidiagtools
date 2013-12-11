@@ -24,6 +24,7 @@
 #include "mdtClBase.h"
 #include <QString>
 #include <QVariant>
+#include <QList>
 
 /*! \brief Helper class for test connection cable edition
  */
@@ -35,11 +36,27 @@ class mdtCcTestConnectionCable : public mdtClBase
    */
   mdtCcTestConnectionCable(QSqlDatabase db);
 
+  /*! \brief Get SQL statement for test node selection
+   */
+  QString sqlForTestNodeSelection();
+
   /*! \brief Get SQL statement for start unit connector selection
    *
    * \param dutUnitId ID of unit that will become the DUT (Device Under Test)
    */
   QString sqlForStartConnectorSelection(const QVariant & dutUnitId) const;
+
+  /*! \brief Get SQL statement for unit connector selection for given unit connector ID list
+   */
+  QString sqlForUnitConnectorSelectionFromUnitConnectorIdList(const QList<QVariant> & connectorIdList) const;
+
+  /*! \brief Get a list of unit connections IDs related to given unit connector ID
+   */
+  QList<QVariant> getToUnitConnectorRelatedUnitConnectionIdList(const QVariant & unitConnectorId);
+
+  /*! \brief Get a list of unit connectors that are linked to given unit connection
+   */
+  QList<QVariant> getToUnitConnectionLinkedUnitConnectorIdList(const QVariant & fromUnitConnectionId);
 
  private:
 

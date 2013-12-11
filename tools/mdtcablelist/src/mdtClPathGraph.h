@@ -26,6 +26,7 @@
 #include <QQueue>
 #include <QPair>
 #include <QVariant>
+#include <QList>
 #include <QStringList>
 #include <QHash>
 #include <boost/config.hpp>
@@ -108,6 +109,10 @@ class mdtClPathGraph
    */
   bool loadLinkList();
 
+  /*! \brief Get a list of unit connections IDs that are linked to a given connection
+   */
+  QList<QVariant> getLinkedConnectionIdList(const QVariant & fromConnectionId);
+
   /*! \brief Draw the graphic representation starting from a connection
    */
   bool drawPath(const QVariant & fromConnectionId);
@@ -123,8 +128,10 @@ class mdtClPathGraph
    *  and last the detailedText .
    *
    * \post Returned list has allways a size of 3 (detailedText can simply contain a empty string)
+   * 
+   * \todo Should become Obselete .
    */
-  const QStringList &lastErrorMessage() const;
+  QStringList lastErrorMessage() const;
 
   /*! \brief Get last error
    */
@@ -149,7 +156,6 @@ class mdtClPathGraph
   QGraphicsScene *pvGraphicsScene;
   mdtClPathGraphPrivate::graph_t pvGraph;
   QHash<int, mdtClPathGraphPrivate::vertex_t> pvGraphVertices;
-  QStringList pvLastErrorMessage;
   mdtError pvLastError;
 };
 

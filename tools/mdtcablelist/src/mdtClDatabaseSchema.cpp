@@ -140,13 +140,25 @@ bool mdtClDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   }
   // We also remove the sqlite_sequence table
   sourceTables.removeAll("sqlite_sequence");
+  // We also ignore some type tables
+  sourceTables.removeAll("LinkDirection_tbl");
+  sourceTables.removeAll("LinkType_tbl");
+  sourceTables.removeAll("TestNodeUnitType_tbl");
   // Copy tables
+  if(!pvDatabaseManager->setForeignKeysEnabled(false)){
+    pvLastError = pvDatabaseManager->lastError();
+    return false;
+  }
   for(i = 0; i < sourceTables.size(); ++i){
     tableManager.clearFieldMap();
     if(!tableManager.copyTable(sourceTables.at(i), sourceTables.at(i), mdtSqlDatabaseManager::KeepExisting, sourceDbManager.database(), pvDatabaseManager->database())){
       pvLastError = tableManager.lastError();
       return false;
     }
+  }
+  if(!pvDatabaseManager->setForeignKeysEnabled(true)){
+    pvLastError = pvDatabaseManager->lastError();
+    return false;
   }
 
   return true;
@@ -232,6 +244,16 @@ bool mdtClDatabaseSchema::setupTables()
   if(!setupVehicleTypeLinkTable()){
     return false;
   }
+  /// \todo Move to test tool when created
+  if(!setupTestNodeTable()){
+    return false;
+  }
+  if(!setupTestNodeUnitTypeTable()){
+    return false;
+  }
+  if(!setupTestNodeUnitTable()){
+    return false;
+  }
   return true;
 }
 
@@ -297,6 +319,9 @@ bool mdtClDatabaseSchema::populateTables()
     return false;
   }
   if(!populateLinkDirectionTable()){
+    return false;
+  }
+  if(!populateTestNodeUnitTypeTable()){
     return false;
   }
   return true;
@@ -1057,7 +1082,7 @@ bool mdtClDatabaseSchema::setupUnitConnectionTable()
   field = QSqlField();
   field.setName("UnitConnector_Id_FK");
   field.setType(QVariant::Int);
-  field.setRequiredStatus(QSqlField::Required);
+  ///field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
   // ArticleConnection_Id_FK
   field = QSqlField();
@@ -1370,6 +1395,129 @@ bool mdtClDatabaseSchema::setupLinkTypeTable()
   field.setName("ValueUnit");
   field.setType(QVariant::String);
   field.setLength(10);
+  table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::setupTestNodeTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestNode_tbl", "UTF8");
+  // VehicleType_Id_FK_PK
+  field.setName("VehicleType_Id_FK_PK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // NodeId
+  field = QSqlField();
+  field.setName("NodeId");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // Indexes
+  table.addIndex("VehicleType_Id_FK_PK_idx", false);
+  if(!table.addFieldToIndex("VehicleType_Id_FK_PK_idx", "VehicleType_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys - None (cannot add FK to table of another database)
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::setupTestNodeUnitTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestNodeUnit_tbl", "UTF8");
+  // Unit_Id_FK_PK
+  field.setName("Unit_Id_FK_PK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // TestNode_Id_FK
+  field = QSqlField();
+  field.setName("TestNode_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // Type_Code_FK
+  field = QSqlField();
+  field.setName("Type_Code_FK");
+  field.setType(QVariant::String);
+  field.setLength(10);
+  table.addField(field, false);
+  // Indexes
+  table.addIndex("Unit_Id_FK_PK_idx", false);
+  if(!table.addFieldToIndex("Unit_Id_FK_PK_idx", "Unit_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("TestNode_Id_FK_idx", false);
+  if(!table.addFieldToIndex("TestNode_Id_FK_idx", "TestNode_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("Type_Code_FK_idx", false);
+  if(!table.addFieldToIndex("Type_Code_FK_idx", "Type_Code_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys - No FK to Unit_tbl, because it will be in another database
+  table.addForeignKey("TestNode_Id_FK_fk", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestNode_Id_FK_fk", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("Type_Code_FK_fk", "TestNodeUnitType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Type_Code_FK_fk", "Type_Code_FK", "Code_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::setupTestNodeUnitTypeTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestNodeUnitType_tbl", "UTF8");
+  // Code_PK
+  field.setName("Code_PK");
+  field.setType(QVariant::String);
+  field.setLength(10);
+  table.addField(field, true);
+  // NameEN
+  field = QSqlField();
+  field.setName("NameEN");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // NameFR
+  field = QSqlField();
+  field.setName("NameFR");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // NameDE
+  field = QSqlField();
+  field.setName("NameDE");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // NameIT
+  field = QSqlField();
+  field.setName("NameIT");
+  field.setType(QVariant::String);
+  field.setLength(50);
   table.addField(field, false);
 
   pvTables.append(table);
@@ -1851,10 +1999,103 @@ bool mdtClDatabaseSchema::createLinkListView()
   return createView("LinkList_view", sql);
 }
 
-bool mdtClDatabaseSchema::insertDataIntoTable(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
+bool mdtClDatabaseSchema::pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData)
 {
   QSqlQuery query(pvDatabaseManager->database());
   QSqlError sqlError;
+  QString sql;
+  QString dp;
+
+  if(pkData.type() == QVariant::String){
+    dp = "'";
+  }
+  sql = "SELECT " + pkField + " FROM '" + tableName + "' WHERE " + pkField + " = " + dp + pkData.toString() + dp;
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to check if data exists in table '" + tableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    pvLastError.commit();
+    return false;
+  }
+  if(query.next()){
+    return true;
+  }
+
+  return false;
+}
+
+bool mdtClDatabaseSchema::insertDataIntoTable(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
+{
+  Q_ASSERT(fields.size() > 0);
+  Q_ASSERT(data.size() == fields.size());
+
+  QSqlQuery query(pvDatabaseManager->database());
+  QSqlError sqlError;
+  QString sql;
+  int i;
+  bool pkExists;
+
+  /**
+  // Generate SQL statement
+  sql = "INSERT INTO '" + tableName + "' (";
+  for(i = 0; i < fields.size(); ++i){
+    sql += fields.at(i);
+    if(i < (fields.size() - 1)){
+      sql += ",";
+    }
+  }
+  sql += ") VALUES(";
+  for(i = 0; i < fields.size(); ++i){
+    sql += "?";
+    if(i < (fields.size() - 1)){
+      sql += ",";
+    }
+  }
+  sql += ")";
+  */
+  pkExists = pkExistsInTable(tableName, fields.at(0), data.at(0));
+  ///pkExists = true;
+  if(pkExists){
+    sql = sqlForDataEdition(tableName, fields, data);
+  }else{
+    sql = sqlForDataInsertion(tableName, fields, data);
+  }
+  qDebug() << "INSERT SQL: " << sql;
+  // Prepare query for insertion
+  if(!query.prepare(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for insertion into table '" + tableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    pvLastError.commit();
+    return false;
+  }
+  // Bind values
+  if(pkExists){
+    i = 1;
+  }else{
+    i = 0;
+  }
+  for(i = i; i < data.size(); ++i){
+    qDebug() << "i: " << i << " , data: " << data.at(i);
+    query.bindValue(i, data.at(i));
+  }
+  // Exec query
+  if(!query.exec()){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for insertion into table '" + tableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+QString mdtClDatabaseSchema::sqlForDataInsertion(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
+{
   QString sql;
   int i;
 
@@ -1874,31 +2115,36 @@ bool mdtClDatabaseSchema::insertDataIntoTable(const QString & tableName, const Q
     }
   }
   sql += ")";
-  qDebug() << "INSERT SQL: " << sql;
-  // Prepare query for insertion
-  if(!query.prepare(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot prepare query for insertion into table '" + tableName + "'", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
-    pvLastError.commit();
-    return false;
-  }
-  // Bind values
-  for(i = 0; i < data.size(); ++i){
-    query.bindValue(i, data.at(i));
-  }
-  // Exec query
-  if(!query.exec()){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query for insertion into table '" + tableName + "'", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
-    pvLastError.commit();
-    return false;
-  }
 
-  return true;
+  return sql;
+}
+
+QString mdtClDatabaseSchema::sqlForDataEdition(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
+{
+  Q_ASSERT(fields.size() > 0);
+  Q_ASSERT(data.size() == fields.size());
+
+  QString sql;
+  QVariant pkData;
+  QString dp;
+  int i;
+
+  pkData = data.at(0);
+  if(pkData.type() == QVariant::String){
+    dp = "'";
+  }
+  // Generate SQL statement
+  sql = "UPDATE '" + tableName + "' SET\n";
+  for(i = 1; i < fields.size(); ++i){
+    sql += fields.at(i) + " = :" + fields.at(i);
+    if(i < (fields.size() - 1)){
+      sql += ",";
+    }
+    sql += "\n";
+  }
+  sql += " WHERE " + fields.at(0) + " = " + dp + pkData.toString() + dp;
+
+  return sql;
 }
 
 bool mdtClDatabaseSchema::populateLinkTypeTable()
@@ -1945,6 +2191,28 @@ bool mdtClDatabaseSchema::populateLinkDirectionTable()
   data.clear();
   data << "ETS" << "-->" << "End to Start" << "Ende zum Start" << "Arrivée vers départ" << "Dall'fine alla inizio";
   if(!insertDataIntoTable("LinkDirection_tbl", fields, data)){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::populateTestNodeUnitTypeTable()
+{
+  QStringList fields;
+  QList<QVariant> data;
+
+  fields << "Code_PK" << "NameEN" << "NameFR" << "NameDE" << "NameIT";
+
+  // Bus coupling relay
+  data << "BUSCPLREL" << "Bus coupling relay" << "Relai de couplage de bus" << "Bus Koppelrelais" << "Relè di accoppiamento bus";
+  if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Channel relay
+  data.clear();
+  data << "CHANELREL" << "Channel relay" << "Relai de canal" << "Kanal-Relais" << "Relè della Manica";
+  if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
     return false;
   }
 

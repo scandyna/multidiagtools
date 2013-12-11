@@ -114,6 +114,12 @@ class mdtError
    */
   void setError(const QString &text, level_t level);
 
+  /*! \brief Update error text
+   *
+   * Will set error text, but does not clear error .
+   */
+  void updateText(const QString & text);
+
   /*! \brief Clear
    */
   void clear();

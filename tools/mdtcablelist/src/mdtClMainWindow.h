@@ -32,6 +32,7 @@ class mdtClVehicleTypeEditor;
 class mdtClUnitEditor;
 class mdtClConnectorEditor;
 class mdtClArticleEditor;
+class mdtTtTestNodeEditor;
 
 class QAction;
 
@@ -85,6 +86,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editArticle();
 
+  /*! \brief Edit test node
+   */
+  void editTestNode();
+
   /*! \brief Create a test connection cable
    */
   void createTestConnectionCable();
@@ -127,10 +132,8 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   mdtClConnectorEditor *pvConnectorEditor;
   mdtClUnitEditor *pvUnitEditor;
   mdtClArticleEditor *pvArticleEditor;
-  // Actions
-  ///QAction *pvActEditVehicleType;
-  QAction *pvActEditUnit;
-  QAction *pvActEditArticle;
+  mdtTtTestNodeEditor *pvTestNodeEditor;
+
 };
 
 #endif // #ifndef MDT_CL_MAIN_WINDOW_H

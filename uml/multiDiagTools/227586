@@ -1,6 +1,6 @@
 format 76
-"CableChecker" // mdttools::CableChecker
-  revision 1
+"TestTool" // mdttools::TestTool
+  revision 2
   modified_by 2 "philippe"
   // class settings
   //class diagram settings

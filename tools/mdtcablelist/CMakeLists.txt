@@ -26,6 +26,7 @@ set (HEADER_FILES
           src/mdtClPathGraphDialog.h
           src/mdtClMainWindow.h
           src/mdtCcTestConnectionCableEditor.h
+          src/mdtTtTestNodeEditor.h
     )
 
 # Source files
@@ -62,6 +63,7 @@ set (SOURCES_FILES
           src/mdtClMainWindow.cpp
           src/mdtCcTestConnectionCable.cpp
           src/mdtCcTestConnectionCableEditor.cpp
+          src/mdtTtTestNodeEditor.cpp
     )
 
 # Qt ui files
@@ -80,6 +82,7 @@ set (FORM_FILES
           src/mdtClArticleLinkDialog.ui
           src/mdtClPathGraphDialog.ui
           src/mdtClMainWindow.ui
+          src/mdtTtTestNodeEditor.ui
     )
 
 # Fichiers à traiter par le compilateur moc

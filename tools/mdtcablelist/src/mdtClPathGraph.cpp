@@ -68,7 +68,6 @@ mdtClPathGraph::mdtClPathGraph(QSqlDatabase db)
   pvDatabase = db;
   pvLinkListModel = new QSqlQueryModel;
   pvGraphicsScene = new QGraphicsScene;
-  pvLastErrorMessage << "" << "" << ""; 
 }
 
 mdtClPathGraph::~mdtClPathGraph()
@@ -97,15 +96,11 @@ bool mdtClPathGraph::loadLinkList()
   pvLinkListModel->setQuery(sql, pvDatabase);
   sqlError = pvLinkListModel->lastError();
   if(sqlError.isValid()){
-    pvLastErrorMessage.clear();
-    pvLastErrorMessage << QObject::tr("Cannot load link list from database.");
-    pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
-    pvLastErrorMessage << sqlError.text();
-    Q_ASSERT(pvLastErrorMessage.size() == 3);
-    mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0), mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
-    e.commit();
+    pvLastError.setError(QObject::tr("Cannot load link list from database."), mdtError::Error);
+    pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClPathGraph");
+    pvLastError.commit();
     return false;
   }
   // Build the graph
@@ -114,14 +109,11 @@ bool mdtClPathGraph::loadLinkList()
     index = pvLinkListModel->index(row, 0);
     data = pvLinkListModel->data(index);
     if(data.isNull()){
-      pvLastErrorMessage.clear();
-      pvLastErrorMessage << QObject::tr("Cannot load link list from database.");
-      pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
-      pvLastErrorMessage << QObject::tr("UnitConnectionStart_Id_FK returned a NULL value.");
-      Q_ASSERT(pvLastErrorMessage.size() == 3);
-      mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0) + " " + pvLastErrorMessage.at(2), mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
-      e.commit();
+      pvLastError.setError(QObject::tr("Cannot load link list from database."), mdtError::Error);
+      pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
+      pvLastError.setSystemError(-1, QObject::tr("UnitConnectionStart_Id_FK returned a NULL value."));
+      MDT_ERROR_SET_SRC(pvLastError, "mdtClPathGraph");
+      pvLastError.commit();
       return false;
     }
     startConnectionId = data.toInt();
@@ -138,14 +130,11 @@ bool mdtClPathGraph::loadLinkList()
     index = pvLinkListModel->index(row, 1);
     data = pvLinkListModel->data(index);
     if(data.isNull()){
-      pvLastErrorMessage.clear();
-      pvLastErrorMessage << QObject::tr("Cannot load link list from database.");
-      pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
-      pvLastErrorMessage << QObject::tr("UnitConnectionEnd_Id_FK returned a NULL value.");
-      Q_ASSERT(pvLastErrorMessage.size() == 3);
-      mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0) + " " + pvLastErrorMessage.at(2), mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
-      e.commit();
+      pvLastError.setError(QObject::tr("Cannot load link list from database."), mdtError::Error);
+      pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
+      pvLastError.setSystemError(-1, QObject::tr("UnitConnectionEnd_Id_FK returned a NULL value."));
+      MDT_ERROR_SET_SRC(pvLastError, "mdtClPathGraph");
+      pvLastError.commit();
       return false;
     }
     endConnectionId = data.toInt();
@@ -173,6 +162,45 @@ bool mdtClPathGraph::loadLinkList()
   return true;
 }
 
+QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromConnectionId)
+{
+  QList<QVariant> connectionIdList;
+  mdtClPathGraphEdgeData edge;
+  mdtClPathGraphVisitor visitor(&pvEdgeQueue);
+  vertex_t vertex;
+
+  // Check if we have requested connection ID in the graph
+  if(!pvGraphVertices.contains(fromConnectionId.toInt())){
+    pvLastError.setError(QObject::tr("Cannot get list of linked connections."), mdtError::Error);
+    pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
+    pvLastError.setSystemError(-1, QObject::tr("Start connection ID not found") + " (ID: " + fromConnectionId.toString() + ").");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClPathGraph");
+    pvLastError.commit();
+    return connectionIdList;
+  }
+  vertex = pvGraphVertices.value(fromConnectionId.toInt());
+  // Clear previous results
+  pvEdgeQueue.clear();
+  // Proceed BFS
+  breadth_first_search(pvGraph, vertex, boost::visitor(visitor));
+  // Get connections
+  while(!pvEdgeQueue.isEmpty()){
+    edge = pvEdgeQueue.dequeue();
+    Q_ASSERT(!edge.startConnectionId.isNull());
+    Q_ASSERT(!edge.endConnectionId.isNull());
+    if(!edge.isComplement){
+      if(!connectionIdList.contains(edge.startConnectionId)){
+        connectionIdList.append(edge.startConnectionId);
+      }
+      if(!connectionIdList.contains(edge.endConnectionId)){
+        connectionIdList.append(edge.endConnectionId);
+      }
+    }
+  }
+
+  return connectionIdList;
+}
+
 bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
 {
   mdtClPathGraphEdgeData edge;
@@ -184,14 +212,11 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
 
   // Check if we have requested connection ID in the graph
   if(!pvGraphVertices.contains(fromConnectionId.toInt())){
-    pvLastErrorMessage.clear();
-    pvLastErrorMessage << QObject::tr("Cannot draw requested path.");
-    pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
-    pvLastErrorMessage << QObject::tr("Start connection ID not found") + " (ID: " + fromConnectionId.toString() + ").";
-    Q_ASSERT(pvLastErrorMessage.size() == 3);
-    mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0) + " " + pvLastErrorMessage.at(2), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
-    e.commit();
+    pvLastError.setError(QObject::tr("Cannot draw requested path."), mdtError::Error);
+    pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
+    pvLastError.setSystemError(-1, QObject::tr("Start connection ID not found") + " (ID: " + fromConnectionId.toString() + ").");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClPathGraph");
+    pvLastError.commit();
     return false;
   }
   vertex = pvGraphVertices.value(fromConnectionId.toInt());
@@ -244,10 +269,13 @@ void mdtClPathGraph::attachView(QGraphicsView *view)
   view->setScene(pvGraphicsScene);
 }
 
-const QStringList &mdtClPathGraph::lastErrorMessage() const
+QStringList mdtClPathGraph::lastErrorMessage() const
 {
-  Q_ASSERT(pvLastErrorMessage.size() == 3);
-  return pvLastErrorMessage;
+  QStringList errorList;
+
+  errorList << pvLastError.text() << pvLastError.informativeText() << pvLastError.systemText();
+  Q_ASSERT(errorList.size() == 3);
+  return errorList;
 }
 
 mdtError mdtClPathGraph::lastError() const
@@ -291,15 +319,11 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
   sql += " AND UnitConnectionEnd_Id_FK = " + QString::number(endConnectionId);
   if(!query.exec(sql)){
     sqlError = query.lastError();
-    pvLastErrorMessage.clear();
-    pvLastErrorMessage << QObject::tr("Cannot get connections informations from database.");
-    pvLastErrorMessage << QObject::tr("Plese see details for more informations.");
-    pvLastErrorMessage << sqlError.text();
-    Q_ASSERT(pvLastErrorMessage.size() == 3);
-    mdtError e(MDT_DATABASE_ERROR, pvLastErrorMessage.at(0), mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClPathGraph");
-    e.commit();
+    pvLastError.setError(QObject::tr("Cannot get connections informations from database."), mdtError::Error);
+    pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClPathGraph");
+    pvLastError.commit();
     startConnection->setText("??");
     endConnection->setText("??");
     return false;

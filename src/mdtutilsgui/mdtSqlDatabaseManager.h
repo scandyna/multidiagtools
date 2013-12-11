@@ -70,6 +70,10 @@ class mdtSqlDatabaseManager : public QObject
    */
   QSqlDatabase database();
 
+  /*! \brief Enable/disable foreing keys constraint
+   */
+  bool setForeignKeysEnabled(bool enable);
+
   /*! \brief Set the parent widget for dialogs
    *
    * In interactive mode, some dialogs will be displayed.

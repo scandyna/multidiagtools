@@ -1,0 +1,99 @@
+format 76
+
+classcanvas 128002 class_ref 992642 // TestNode_tbl
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 42 439 2000
+end
+classcanvas 128130 class_ref 992770 // TestNodeUnit_tbl
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 486.8 430.2 2000
+end
+classcanvas 128258 class_ref 992898 // TestNodeUnitType_tbl
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 518.6 635 2000
+end
+packagecanvas 128386 
+  package_ref 208002 // DatabaseLogical
+   show_context_mode uml  xyzwh 17.5 45.6 2000 1146 274
+end
+classcanvas 128514 class_ref 764802 // Unit_tbl
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 640.4 135.4 2010
+end
+classcanvas 129282 class_ref 944770 // VehicleType_tbl
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 60.4 158.8 2005
+end
+classcanvas 129410 class_ref 944898 // VehicleType_Unit_tbl
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 306.2 173.4 2016
+end
+classcanvas 130306 class_ref 765314 // UnitConnection_tbl
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 931.6 74.5 2016
+end
+note 130946 "TestConnection_Id_FK is the connection on the test node that is (possibly not directly) linked to DUT. This link helps to find witch TestNodeUnit (typically a channel relay) to use for a given connection in a fast way."
+  xyzwh 855.8 566.2 2000 269 151
+note 131330 "Bus and TestConnection_Id_FK are filled by a function (not directly by user)."
+  xyzwh 185.2 549 2000 229 134
+relationcanvas 128642 relation_ref 1020674 // <unidirectional association>
+  from ref 128514 z 2011 to point 610.2 135.2
+  line 128770 z 2011 to point 610.2 165.2
+  line 128898 z 2011 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 1168130 // <unidirectional association>
+  from ref 129410 z 2017 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 1168258 // <unidirectional association>
+  from ref 129410 z 2017 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 1233154 // <unidirectional association>
+  from ref 128002 z 2006 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 1233282 // <unidirectional association>
+  from ref 128130 z 2011 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 1233410 // <unidirectional association>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 1233538 // <unidirectional association>
+  from ref 128130 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 950530 // <unidirectional association>
+  from ref 130306 z 2017 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 1020802 // <unidirectional association>
+  from ref 130306 z 2017 to point 886.1 77.7
+  line 130690 z 2017 to point 886.1 114.8
+  line 130818 z 2017 to ref 130306
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131202 relation_ref 1240066 // <unidirectional association>
+  decenter_begin 968
+  decenter_end 931
+  from ref 128130 z 2017 to ref 130306
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 131074 -_-_
+  from ref 130946 z 2001 to ref 128130
+line 131458 -_-_
+  from ref 131330 z 2001 to ref 128130
+end

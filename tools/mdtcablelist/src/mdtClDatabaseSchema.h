@@ -173,6 +173,24 @@ class mdtClDatabaseSchema
    */
   bool setupLinkDirectionTable();
 
+  /*! \brief Setup test node table
+   *
+   * \todo Move to test tool when created
+   */
+  bool setupTestNodeTable();
+
+  /*! \brief Setup test node unit table
+   *
+   * \todo Move to test tool when created
+   */
+  bool setupTestNodeUnitTable();
+
+  /*! \brief Setup test node unit type table
+   *
+   * \todo Move to test tool when created
+   */
+  bool setupTestNodeUnitTypeTable();
+
   /*! \brief
    */
   bool setupLinkTypeTable();
@@ -242,9 +260,23 @@ class mdtClDatabaseSchema
    */
   bool createLinkListView();
 
+  /*! \brief Check if given PK data exists in given table name
+   */
+  bool pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData);
+
   /*! \brief Insert data into a table
+   *
+   * Note: first field must be primary key
    */
   bool insertDataIntoTable(const QString & tableName, const QStringList & fields, const QList<QVariant> & data);
+
+  /*! \brief Get SQL statement for data insertion
+   */
+  QString sqlForDataInsertion(const QString & tableName, const QStringList & fields, const QList<QVariant> & data);
+
+  /*! \brief Get SQL statement for data edition
+   */
+  QString sqlForDataEdition(const QString & tableName, const QStringList & fields, const QList<QVariant> & data);
 
   /*! \brief Populate LinkType table
    */
@@ -253,6 +285,12 @@ class mdtClDatabaseSchema
   /*! \brief Populate LinkType table
    */
   bool populateLinkDirectionTable();
+
+  /*! \brief Populate TestNodeUnitType table
+   *
+   * \todo Move to test tool when created
+   */
+  bool populateTestNodeUnitTypeTable();
 
   Q_DISABLE_COPY(mdtClDatabaseSchema);
 

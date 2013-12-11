@@ -50,6 +50,51 @@ QSqlDatabase mdtSqlDatabaseManager::database()
   return pvDatabase;
 }
 
+bool mdtSqlDatabaseManager::setForeignKeysEnabled(bool enable)
+{
+  QString sql;
+
+  // Check that database is open
+  if(!pvDatabase.isOpen()){
+    if(enable){
+      pvLastError.setError(tr("Cannot enable foreign keys contraint, because database is closed."), mdtError::Error);
+    }else{
+      pvLastError.setError(tr("Cannot disable foreign keys contraint, because database is closed."), mdtError::Error);
+    }
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+    pvLastError.commit();
+    return false;
+  }
+  // Build query
+  QSqlQuery query(pvDatabase);
+  if(pvDatabase.driverName() == "QSQLITE"){
+    if(enable){
+      sql = "PRAGMA foreign_keys = ON";
+    }else{
+      sql = "PRAGMA foreign_keys = OFF";
+    }
+  }else{
+    if(enable){
+      pvLastError.setError(tr("Cannot enable foreign keys contraint, because database type is not supported."), mdtError::Error);
+    }else{
+      pvLastError.setError(tr("Cannot disable foreign keys contraint, because database type is not supported."), mdtError::Error);
+    }
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+    pvLastError.commit();
+    return false;
+  }
+  // Exec query
+  if(!query.exec(sql)){
+    pvLastError.setError(tr("Cannot enable/disable foreign keys support on database '") + pvDatabaseName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
 void mdtSqlDatabaseManager::setForDialogParentWidget(QWidget *widget) 
 {
   pvForDialogParentWidget = widget;
@@ -135,6 +180,11 @@ bool mdtSqlDatabaseManager::openDatabaseSqlite(const QFileInfo & fileInfo, const
   Q_ASSERT(pvDatabase.isValid());
   Q_ASSERT(pvDatabase.isOpen());
   // Enable foreign key support
+  if(!setForeignKeysEnabled(true)){
+    /// \todo Close here ??
+    return false;
+  }
+  /**
   QSqlQuery query(pvDatabase);
   if(!query.exec("PRAGMA foreign_keys = ON")){
     pvLastError.setError(tr("Cannot enable foreign keys support on database '") + pvDatabaseName + "'", mdtError::Error);
@@ -143,6 +193,7 @@ bool mdtSqlDatabaseManager::openDatabaseSqlite(const QFileInfo & fileInfo, const
     pvLastError.commit();
     return false;
   }
+  */
 
   return true;
 }
