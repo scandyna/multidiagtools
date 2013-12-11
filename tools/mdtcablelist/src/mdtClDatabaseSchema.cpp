@@ -310,6 +310,9 @@ bool mdtClDatabaseSchema::createViews()
   if(!createVehicleTypeUnitView()){
     return false;
   }
+  if(!createTestNodeUnitView()){
+    return false;
+  }
   return true;
 }
 
@@ -1451,6 +1454,17 @@ bool mdtClDatabaseSchema::setupTestNodeUnitTable()
   field.setType(QVariant::String);
   field.setLength(10);
   table.addField(field, false);
+  // TestConnection_Id_FK
+  field = QSqlField();
+  field.setName("TestConnection_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // (Measure) Bus
+  field = QSqlField();
+  field.setName("Bus");
+  field.setType(QVariant::String);
+  field.setLength(30);
+  table.addField(field, false);
   // Indexes
   table.addIndex("Unit_Id_FK_PK_idx", false);
   if(!table.addFieldToIndex("Unit_Id_FK_PK_idx", "Unit_Id_FK_PK")){
@@ -1467,6 +1481,11 @@ bool mdtClDatabaseSchema::setupTestNodeUnitTable()
     pvLastError = table.lastError();
     return false;
   }
+  table.addIndex("TestConnection_Id_FK_idx", false);
+  if(!table.addFieldToIndex("TestConnection_Id_FK_idx", "TestConnection_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   // Foreign keys - No FK to Unit_tbl, because it will be in another database
   table.addForeignKey("TestNode_Id_FK_fk", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestNode_Id_FK_fk", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
@@ -1475,6 +1494,11 @@ bool mdtClDatabaseSchema::setupTestNodeUnitTable()
   }
   table.addForeignKey("Type_Code_FK_fk", "TestNodeUnitType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Type_Code_FK_fk", "Type_Code_FK", "Code_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestConnection_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestConnection_Id_FK_fk", "TestConnection_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -1556,6 +1580,42 @@ bool mdtClDatabaseSchema::createView(const QString & viewName, const QString & s
   ///qDebug() << "View " << viewName << " created (DONE)";
 
   return true;
+}
+
+bool mdtClDatabaseSchema::createTestNodeUnitView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestNodeUnit_view AS\n"\
+        "SELECT\n"\
+        "TestNodeUnit_tbl.Unit_Id_FK_PK,\n"\
+        "TestNodeUnit_tbl.TestNode_Id_FK,\n"\
+        "TestNodeUnit_tbl.Type_Code_FK,\n"\
+        "TestNodeUnit_tbl.TestConnection_Id_FK,\n"\
+        "Unit_tbl.SchemaPosition,\n"\
+        "TestNodeUnit_tbl.Bus,\n"\
+        "UnitConnector_tbl.Name AS UnitConnectorName,\n"\
+        "UnitConnection_tbl.UnitContactName,\n"\
+        "UnitConnection_tbl.SignalName,\n"\
+        "UnitConnection_tbl.FunctionEN,\n"\
+        "UnitConnection_tbl.FunctionFR,\n"\
+        "UnitConnection_tbl.FunctionDE,\n"\
+        "UnitConnection_tbl.FunctionIT,\n"\
+        "TestNodeUnitType_tbl.NameEN,\n"\
+        "TestNodeUnitType_tbl.NameFR,\n"\
+        "TestNodeUnitType_tbl.NameDE,\n"\
+        "TestNodeUnitType_tbl.NameIT\n"\
+        "FROM TestNodeUnit_tbl\n"\
+        " JOIN Unit_tbl\n"\
+        "  ON Unit_tbl.Id_PK = TestNodeUnit_tbl.Unit_Id_FK_PK\n"\
+        " JOIN UnitConnection_tbl\n"\
+        "  ON UnitConnection_tbl.Id_PK = TestNodeUnit_tbl.TestConnection_Id_FK\n"\
+        " JOIN UnitConnector_tbl\n"\
+        "  ON UnitConnector_tbl.Id_PK = UnitConnection_tbl.UnitConnector_Id_FK\n"\
+        " JOIN TestNodeUnitType_tbl\n"\
+        "  ON TestNodeUnitType_tbl.Code_PK = TestNodeUnit_tbl.Type_Code_FK";
+
+  return createView("TestNodeUnit_view", sql);
 }
 
 bool mdtClDatabaseSchema::createVehicleTypeUnitView() 

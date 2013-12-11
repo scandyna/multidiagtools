@@ -24,9 +24,11 @@
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlRelation.h"
+#include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
+#include <QTableView>
 #include <QDataWidgetMapper>
 #include <QVariant>
 #include <QString>
@@ -69,6 +71,9 @@ void mdtTtTestNodeEditor::setBaseVehicleType()
 bool mdtTtTestNodeEditor::setupTables()
 {
   if(!setupTestNodeTable()){
+    return false;
+  }
+  if(!setupTestNodeUnitTable()){
     return false;
   }
   return true;
@@ -123,6 +128,43 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
   connect(baseVehicleTypeRelation, SIGNAL(childModelIsEmpty()), baseVehicleTypeMapper, SLOT(revert()));
   // Force a update
   form()->mainSqlWidget()->setCurrentIndex(form()->mainSqlWidget()->currentRow());
+
+  return true;
+}
+
+bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
+{
+  mdtSqlTableWidget *widget;
+
+  if(!form()->addChildTable("TestNodeUnit_view", tr("Units"), database())){
+    return false;
+  }
+  if(!form()->addRelation("VehicleType_Id_FK_PK", "TestNodeUnit_view", "TestNode_Id_FK")){
+    return false;
+  }
+  widget = form()->sqlTableWidget("TestNodeUnit_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  widget->setColumnHidden("Unit_Id_FK_PK", true);
+  widget->setColumnHidden("TestNode_Id_FK", true);
+  ///widget->setColumnHidden("Type_Code_FK", true);
+  widget->setColumnHidden("TestConnection_Id_FK", true);
+  widget->setColumnHidden("", true);
+  // Set fields a user friendly name
+  widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  widget->setHeaderData("UnitConnectorName", tr("Connector"));
+  widget->setHeaderData("UnitContactName", tr("Contact"));
+  widget->setHeaderData("SignalName", tr("Signal name"));
+  widget->setHeaderData("FunctionEN", tr("Function (ENG)"));
+  widget->setHeaderData("FunctionFR", tr("Function (FRA)"));
+  widget->setHeaderData("FunctionDE", tr("Function (DEU)"));
+  widget->setHeaderData("FunctionIT", tr("Function (ITA)"));
+  widget->setHeaderData("NameEN", tr("Type (ENG)"));
+  widget->setHeaderData("NameFR", tr("Type (FRA)"));
+  widget->setHeaderData("NameDE", tr("Type (DEU)"));
+  widget->setHeaderData("NameIT", tr("Type (ITA)"));
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
 
   return true;
 }

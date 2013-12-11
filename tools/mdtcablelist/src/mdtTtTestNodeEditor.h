@@ -52,6 +52,10 @@ class mdtTtTestNodeEditor : public mdtClEditor
    */
   bool setupTestNodeTable();
 
+  /*! \brief Setup TestNodeUnit table
+   */
+  bool setupTestNodeUnitTable();
+
   Q_DISABLE_COPY(mdtTtTestNodeEditor);
 };
 

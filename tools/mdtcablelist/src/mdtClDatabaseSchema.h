@@ -201,6 +201,19 @@ class mdtClDatabaseSchema
    */
   bool createView(const QString & viewName, const QString & sql);
 
+  /*! \brief Create test node unit view
+   *
+   * TestNodeUnit is a unit with additionnal informations that
+   *  simplify the generation of test sequences and test cables .
+   *  TestConnection ID is not directly linked to a TestNodeUnit,
+   *  but is the connection of a test node that is related to this TestNodeUnit .
+   *  (F.ex. we could know that K1 is a channel relay, that is on BUSA,
+   *   and that it is related to pin a1 from X1 connector of the test node) .
+   *
+   * \todo Move to test tool when created
+   */
+  bool createTestNodeUnitView();
+
   /*! \brief
    */
   bool createVehicleTypeUnitView();

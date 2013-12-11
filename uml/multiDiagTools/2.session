@@ -1,15 +1,16 @@
-window_sizes 1280 1001 329 945 923 0
+window_sizes 1024 718 329 689 640 0
 diagrams
   classdiagram_ref 907778 // mdtClArticleConnectionDialog
     739 738 100 4 0 0
   classdiagram_ref 914434 // mdtCcTestConnectionCable
     756 738 100 4 0 0
   active  classdiagram_ref 927874 // TestNode
-    945 923 80 18 0 0
+    689 640 80 18 36 55
 end
 show_stereotypes
-selected classdiagram_ref 934530 // mdtTtTestNodeEditor
+selected classdiagram_ref 739586 // Logical
 open
+  classview_ref 483970 // Logical
   classview_ref 549762 // mdtClBase
   classview_ref 549506 // mdtClEditor
   class_ref 992642 // TestNode_tbl
