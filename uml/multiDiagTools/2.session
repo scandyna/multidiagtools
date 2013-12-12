@@ -4,8 +4,10 @@ diagrams
     739 738 100 4 0 0
   classdiagram_ref 914434 // mdtCcTestConnectionCable
     756 738 100 4 0 0
-  active  classdiagram_ref 927874 // TestNode
-    689 640 80 18 36 55
+  classdiagram_ref 927874 // TestNode
+    689 640 80 18 79 27
+  active  classdiagram_ref 739586 // Logical
+    689 640 100 17 180 292
 end
 show_stereotypes
 selected classdiagram_ref 739586 // Logical

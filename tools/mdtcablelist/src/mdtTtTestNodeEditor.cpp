@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTtTestNodeEditor.h"
+#include "mdtTtTestNode.h"
 #include "ui_mdtTtTestNodeEditor.h"
 #include "mdtSqlForm.h"
 #include "mdtSqlFormWidget.h"
@@ -32,6 +33,8 @@
 #include <QDataWidgetMapper>
 #include <QVariant>
 #include <QString>
+#include <QPushButton>
+#include <QSqlError>
 
 #include <QDebug>
 
@@ -66,6 +69,209 @@ void mdtTtTestNodeEditor::setBaseVehicleType()
   if(!form()->setCurrentData("TestNode_tbl", "VehicleType_Id_FK_PK", vehicleTypeId)){
     return;
   }
+}
+
+void mdtTtTestNodeEditor::addUnits()
+{
+  mdtTtTestNode tn(database());
+  QVariant baseVehicleTypeId;
+  QVariant typeCode;
+  QVariant firstUnitId;
+  QVariant firstUnitConnectionId;
+  QList<QVariant> unitConnectionIdList;
+  QList<QVariant> unitIdList;
+
+  // Get base vehicle type ID
+  baseVehicleTypeId = form()->currentData("TestNode_tbl", "VehicleType_Id_FK_PK");
+  if(baseVehicleTypeId.isNull()){
+    return;
+  }
+  qDebug() << "VHTID: " << baseVehicleTypeId;
+  // Get test node unit type
+  typeCode = selectTestNodeUnitType();
+  if(typeCode.isNull()){
+    return;
+  }
+  qDebug() << "Type: " << typeCode;
+  // Select a unit that is part of those we want to use as test node unit
+  firstUnitId = selectUnitToUseAsTestNode(baseVehicleTypeId);
+  if(firstUnitId.isNull()){
+    return;
+  }
+  qDebug() << "Firs unit ID: " << firstUnitId;
+  // Select connection ID that is linked to a BUS
+  firstUnitConnectionId = selectUnitConnection(firstUnitId);
+  if(firstUnitConnectionId.isNull()){
+    return;
+  }
+  qDebug() << "CNN ID: " << firstUnitConnectionId;
+  // Get related units
+  unitConnectionIdList = tn.getIdListOfUnitConnectionsLinkedToUnitConnectionId(firstUnitConnectionId);
+  if(unitConnectionIdList.isEmpty()){
+    displayLastError();
+    return;
+  }
+  unitIdList = tn.getIdListOfUnitIdForUnitConnectionIdList(unitConnectionIdList);
+  if(unitIdList.isEmpty()){
+    displayLastError();
+    return;
+  }
+  qDebug() << "Found units: " << unitIdList;
+  // Select the units to really use
+  unitIdList = selectUnitIdList(unitIdList);
+  if(unitIdList.isEmpty()){
+    return;
+  }
+  qDebug() << "Selected units: " << unitIdList;
+}
+
+QVariant mdtTtTestNodeEditor::selectTestNodeUnitType()
+{
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlError sqlError;
+  QSqlQueryModel model;
+  QString sql;
+  QString msg;
+
+  // Setup model
+  sql = "SELECT * FROM TestNodeUnitType_tbl";
+  model.setQuery(sql, database());
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get list test node unit types."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeEditor");
+    pvLastError.commit();
+    displayLastError();
+    return QVariant();
+  }
+  // Setup and show dialog
+  msg = tr("Select the type for units that will be linked.");
+  selectionDialog.setMessage(msg);
+  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setColumnHidden("", true);
+  ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
+  selectionDialog.addSelectionResultColumn("Code_PK");
+  selectionDialog.resize(700, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
+}
+
+QVariant mdtTtTestNodeEditor::selectUnitToUseAsTestNode(const QVariant & vehicleTypeId)
+{
+  Q_ASSERT(!vehicleTypeId.isNull());
+
+  mdtTtTestNode tn(database());
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlError sqlError;
+  QSqlQueryModel model;
+  QString sql;
+  QString msg;
+
+  // Setup model
+  sql = tn.sqlForUnitSelection(vehicleTypeId);
+  model.setQuery(sql, database());
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get list of units."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeEditor");
+    pvLastError.commit();
+    displayLastError();
+    return QVariant();
+  }
+  // Setup and show dialog
+  msg = tr("Select a unit that is in group of those to use.");
+  selectionDialog.setMessage(msg);
+  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setColumnHidden("", true);
+  ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
+  selectionDialog.addSelectionResultColumn("Unit_Id");
+  selectionDialog.resize(700, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
+}
+
+QVariant mdtTtTestNodeEditor::selectUnitConnection(const QVariant & unitId)
+{
+  mdtTtTestNode tn(database());
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlError sqlError;
+  QSqlQueryModel model;
+  QString sql;
+  QString msg;
+
+  // Setup model
+  sql = tn.sqlForUnitConnectionSelection(unitId);
+  model.setQuery(sql, database());
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get list of unit connections."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeEditor");
+    pvLastError.commit();
+    displayLastError();
+    return QVariant();
+  }
+  // Setup and show dialog
+  msg = tr("Select a connection that is linked to a bus.");
+  selectionDialog.setMessage(msg);
+  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setColumnHidden("", true);
+  ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
+  selectionDialog.addSelectionResultColumn("UnitConnection_Id");
+  selectionDialog.resize(700, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
+}
+
+QList<QVariant> mdtTtTestNodeEditor::selectUnitIdList(const QList<QVariant> & unitIdList)
+{
+  mdtTtTestNode tn(database());
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlError sqlError;
+  QSqlQueryModel model;
+  QString sql;
+  QString msg;
+  QList<QVariant> selectedUnitIdList;
+
+  // Setup model
+  sql = tn.sqlForUnitSelectionByUnitIdList(unitIdList);
+  model.setQuery(sql, database());
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get list of units."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeEditor");
+    pvLastError.commit();
+    displayLastError();
+    return selectedUnitIdList;
+  }
+  // Setup and show dialog
+  msg = tr("Select units to use.");
+  selectionDialog.setMessage(msg);
+  selectionDialog.setModel(&model, true);
+  ///selectionDialog.setColumnHidden("", true);
+  ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
+  selectionDialog.addSelectionResultColumn("Unit_Id");
+  selectionDialog.resize(700, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return selectedUnitIdList;
+  }
+
+  return selectedUnitIdList;
 }
 
 bool mdtTtTestNodeEditor::setupTables()
@@ -135,6 +341,7 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
 bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
 {
   mdtSqlTableWidget *widget;
+  QPushButton *pbAddUnit;
 
   if(!form()->addChildTable("TestNodeUnit_view", tr("Units"), database())){
     return false;
@@ -165,6 +372,11 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   widget->setHeaderData("NameIT", tr("Type (ITA)"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
+  // Add buttons
+  pbAddUnit = new QPushButton(tr("Add units ..."));
+  connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addUnits()));
+  widget->addWidgetToLocalBar(pbAddUnit);
+  widget->addStretchToLocalBar();
 
   return true;
 }

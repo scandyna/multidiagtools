@@ -23,6 +23,7 @@
 
 #include "mdtClEditor.h"
 #include <QSqlDatabase>
+#include <QList>
 
 /*! \brief This class provides a test node editor
  */
@@ -42,7 +43,27 @@ class mdtTtTestNodeEditor : public mdtClEditor
    */
   void setBaseVehicleType();
 
+  /*! \brief Add test node units
+   */
+  void addUnits();
+
  private:
+
+  /*! \brief Select a TestNodeUnit type
+   */
+  QVariant selectTestNodeUnitType();
+
+  /*! \brief Select a unit to use
+   */
+  QVariant selectUnitToUseAsTestNode(const QVariant & vehicleTypeId);
+
+  /*! \brief Select a unit connection
+   */
+  QVariant selectUnitConnection(const QVariant & unitId);
+
+  /*! \brief Select a list of unit IDs from given unit ID list
+   */
+  QList<QVariant> selectUnitIdList(const QList<QVariant> & unitIdList);
 
   /*! \brief Setup tables
    */

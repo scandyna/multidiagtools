@@ -1,6 +1,6 @@
 format 76
 "Program" // mdttools::TestTool::Program
-  revision 3
+  revision 4
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -76,6 +76,23 @@ ${inlines}
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1776002 "sqlForUnitSelection"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "vehicleTypeId" type class_ref 161154 // QVariant
+	  param in name "TestNodeId" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -510,6 +527,30 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 999554 // mdtTtTestNodeEditor
+      end
+    end
+
+    artifact 643970 "mdtTtTestNode"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 999426 // mdtTtTestNode
       end
     end
   end

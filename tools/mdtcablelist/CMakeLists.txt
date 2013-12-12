@@ -64,6 +64,7 @@ set (SOURCES_FILES
           src/mdtCcTestConnectionCable.cpp
           src/mdtCcTestConnectionCableEditor.cpp
           src/mdtTtTestNodeEditor.cpp
+          src/mdtTtTestNode.cpp
     )
 
 # Qt ui files
