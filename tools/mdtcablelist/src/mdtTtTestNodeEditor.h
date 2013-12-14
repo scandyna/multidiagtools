@@ -47,6 +47,10 @@ class mdtTtTestNodeEditor : public mdtClEditor
    */
   void addUnits();
 
+  /*! \brief Remove test node units
+   */
+  void removeUnits();
+
  private:
 
   /*! \brief Select a TestNodeUnit type
@@ -64,6 +68,27 @@ class mdtTtTestNodeEditor : public mdtClEditor
   /*! \brief Select a list of unit IDs from given unit ID list
    */
   QList<QVariant> selectUnitIdList(const QList<QVariant> & unitIdList);
+
+  /*! \brief Ask the user to give a BUS name
+   */
+  QVariant getBusName();
+
+  /*! \brief Assign a unit connection as test connection to a unit
+   *
+   * Will search unit connections linked to given testNodeUnitId,
+   *  starting from unit connections that are part of test node unit,
+   *   but ignoring those given in busSideTestNodeUnitConnectionIdList .
+   *
+   * If more than one connection is found, the user cann choose witch one to use .
+   *  \todo Selection is not implemented now .
+   */
+  bool assignTestConnectionToTestNodeUnit(const QVariant & testNodeUnitId, const QList<QVariant> & busSideTestNodeUnitConnectionIdList);
+
+  /*! \brief Assign a unit connection as test connection to a list of units
+   *
+   * \sa assignTestConnectionToTestNodeUnit()
+   */
+  bool assignTestConnectionToTestNodeUnitLits(const QList<QVariant> & testNodeUnitIdList, const QList<QVariant> & busSideTestNodeUnitConnectionIdList);
 
   /*! \brief Setup tables
    */

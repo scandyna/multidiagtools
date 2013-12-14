@@ -35,6 +35,9 @@
 #include <QString>
 #include <QPushButton>
 #include <QSqlError>
+#include <QModelIndex>
+#include <QInputDialog>
+#include <QMessageBox>
 
 #include <QDebug>
 
@@ -76,6 +79,7 @@ void mdtTtTestNodeEditor::addUnits()
   mdtTtTestNode tn(database());
   QVariant baseVehicleTypeId;
   QVariant typeCode;
+  QVariant busName;
   QVariant firstUnitId;
   QVariant firstUnitConnectionId;
   QList<QVariant> unitConnectionIdList;
@@ -99,6 +103,12 @@ void mdtTtTestNodeEditor::addUnits()
     return;
   }
   qDebug() << "Firs unit ID: " << firstUnitId;
+  // Get bus name
+  busName = getBusName();
+  if(busName.isNull()){
+    return;
+  }
+  qDebug() << "Bus name: " << busName;
   // Select connection ID that is linked to a BUS
   firstUnitConnectionId = selectUnitConnection(firstUnitId);
   if(firstUnitConnectionId.isNull()){
@@ -108,11 +118,13 @@ void mdtTtTestNodeEditor::addUnits()
   // Get related units
   unitConnectionIdList = tn.getIdListOfUnitConnectionsLinkedToUnitConnectionId(firstUnitConnectionId);
   if(unitConnectionIdList.isEmpty()){
+    pvLastError = tn.lastError();
     displayLastError();
     return;
   }
   unitIdList = tn.getIdListOfUnitIdForUnitConnectionIdList(unitConnectionIdList);
   if(unitIdList.isEmpty()){
+    pvLastError = tn.lastError();
     displayLastError();
     return;
   }
@@ -123,6 +135,51 @@ void mdtTtTestNodeEditor::addUnits()
     return;
   }
   qDebug() << "Selected units: " << unitIdList;
+  // Add test node unit
+  if(!tn.addTestNodeUnits(unitIdList, baseVehicleTypeId, typeCode, busName)){
+    pvLastError = tn.lastError();
+    displayLastError();
+    return;
+  }
+  // Assign test connection to each test node unit
+  if(!assignTestConnectionToTestNodeUnitLits(unitIdList, unitConnectionIdList)){
+    displayLastError();
+  }
+  // Update TestNodeUnit_view
+  form()->select("TestNodeUnit_view");
+}
+
+void mdtTtTestNodeEditor::removeUnits()
+{
+  mdtSqlTableWidget *widget;
+  mdtTtTestNode tn(database());
+  QMessageBox msgBox;
+  QModelIndexList indexes;
+
+  widget = form()->sqlTableWidget("TestNodeUnit_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  indexes = widget->indexListOfSelectedRows("Unit_Id_FK_PK");
+  if(indexes.size() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove unit assignations."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!tn.removeTestNodeUnits(indexes)){
+    pvLastError = tn.lastError();
+    displayLastError();
+    return;
+  }
+  // Update TestNodeUnit_view
+  form()->select("TestNodeUnit_view");
 }
 
 QVariant mdtTtTestNodeEditor::selectTestNodeUnitType()
@@ -245,7 +302,9 @@ QList<QVariant> mdtTtTestNodeEditor::selectUnitIdList(const QList<QVariant> & un
   QSqlQueryModel model;
   QString sql;
   QString msg;
+  QModelIndexList selectedItems;
   QList<QVariant> selectedUnitIdList;
+  int i;
 
   // Setup model
   sql = tn.sqlForUnitSelectionByUnitIdList(unitIdList);
@@ -270,8 +329,81 @@ QList<QVariant> mdtTtTestNodeEditor::selectUnitIdList(const QList<QVariant> & un
   if(selectionDialog.exec() != QDialog::Accepted){
     return selectedUnitIdList;
   }
+  selectedItems = selectionDialog.selectionResults();
+  for(i = 0; i < selectedItems.size(); ++i){
+    selectedUnitIdList.append(selectedItems.at(i).data());
+  }
 
   return selectedUnitIdList;
+}
+
+QVariant mdtTtTestNodeEditor::getBusName()
+{
+  QInputDialog dialog;
+
+  dialog.setLabelText(tr("Bus name:"));
+  if(dialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+
+  return dialog.textValue().trimmed();
+}
+
+bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnit(const QVariant & testNodeUnitId, const QList<QVariant> & busSideTestNodeUnitConnectionIdList)
+{
+  mdtTtTestNode tn(database());
+  QList<QVariant> testNodeUnitConnectionIdList;
+  QList<QVariant> linkedConnectionIdList;
+  QVariant testNodeUnitConnectionId;
+  QVariant linkedConnectionId;
+  int i;
+
+  // Get all unit connections that are part of given unit
+  testNodeUnitConnectionIdList = tn.getIdListOfUnitConnectionsPartOfUnit(testNodeUnitId);
+  if(testNodeUnitConnectionIdList.isEmpty()){
+    pvLastError = tn.lastError();
+    return false;
+  }
+  qDebug() << "All unit connections: " << testNodeUnitConnectionIdList;
+  // Remove connections that are on bus side
+  for(i = 0; i < busSideTestNodeUnitConnectionIdList.size(); ++i){
+    testNodeUnitConnectionIdList.removeAll(busSideTestNodeUnitConnectionIdList.at(i));
+  }
+  qDebug() << "Unit connections: " << testNodeUnitConnectionIdList;
+  if(testNodeUnitConnectionIdList.isEmpty()){
+    pvLastError = tn.lastError();
+    return false;
+  }
+  /// \todo Let user choose witch one to use
+  testNodeUnitConnectionId = testNodeUnitConnectionIdList.at(0);
+  // Find linked connections
+  linkedConnectionIdList = tn.getIdListOfUnitConnectionsLinkedToUnitConnectionId(testNodeUnitConnectionId);
+  if(linkedConnectionIdList.isEmpty()){
+    pvLastError = tn.lastError();
+    return false;
+  }
+  /// \todo Let user choose if more than one connection was found
+  linkedConnectionId = linkedConnectionIdList.at(0);
+  // Edit test node unit
+  if(!tn.setTestConnection(testNodeUnitId, linkedConnectionId)){
+    pvLastError = tn.lastError();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnitLits(const QList<QVariant> & testNodeUnitIdList, const QList<QVariant> & busSideTestNodeUnitConnectionIdList)
+{
+  int i;
+
+  for(i = 0; i < testNodeUnitIdList.size(); ++i){
+    if(!assignTestConnectionToTestNodeUnit(testNodeUnitIdList.at(i), busSideTestNodeUnitConnectionIdList)){
+      return false;
+    }
+  }
+
+  return true;
 }
 
 bool mdtTtTestNodeEditor::setupTables()
@@ -342,6 +474,7 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddUnit;
+  QPushButton *pbRemoveUnit;
 
   if(!form()->addChildTable("TestNodeUnit_view", tr("Units"), database())){
     return false;
@@ -376,6 +509,9 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   pbAddUnit = new QPushButton(tr("Add units ..."));
   connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addUnits()));
   widget->addWidgetToLocalBar(pbAddUnit);
+  pbRemoveUnit = new QPushButton(tr("Remove units"));
+  connect(pbRemoveUnit, SIGNAL(clicked()), this, SLOT(removeUnits()));
+  widget->addWidgetToLocalBar(pbRemoveUnit);
   widget->addStretchToLocalBar();
 
   return true;

@@ -137,3 +137,158 @@ QList<QVariant> mdtTtTestNode::getIdListOfUnitIdForUnitConnectionIdList(const QL
 
   return unitIdList;
 }
+
+QList<QVariant> mdtTtTestNode::getIdListOfUnitConnectionsPartOfUnit(const QVariant & unitId)
+{
+  QList<QVariant> unitConnectionIdList;
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+
+  sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + unitId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to get unit connections from given unit", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return unitConnectionIdList;
+  }
+  while(query.next()){
+    unitConnectionIdList.append(query.value(0));
+  }
+
+  return unitConnectionIdList;
+}
+
+bool mdtTtTestNode::addTestNodeUnit(const QVariant & UnitId, const QVariant & TestNodeId , const QVariant & typeCode, const QVariant & busName)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+
+  // Prepare query for insertion
+  sql = "INSERT INTO TestNodeUnit_tbl (Unit_Id_FK_PK, TestNode_Id_FK, Type_Code_FK, Bus) "\
+        "VALUES (:Unit_Id_FK_PK, :TestNode_Id_FK, :Type_Code_FK, :Bus)";
+  if(!query.prepare(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for test node unit inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":Unit_Id_FK_PK", UnitId);
+  query.bindValue(":TestNode_Id_FK", TestNodeId);
+  query.bindValue(":Type_Code_FK", typeCode);
+  query.bindValue(":Bus", busName);
+  if(!query.exec()){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for test node unit inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTestNode::addTestNodeUnits(const QList<QVariant> & unitIdList, const QVariant & testNodeId , const QVariant & typeCode, const QVariant & busName)
+{
+  int i;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  for(i = 0; i < unitIdList.size(); ++i){
+    if(!addTestNodeUnit(unitIdList.at(i), testNodeId, typeCode, busName)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTestNode::removeTestNodeUnits(const QList<QVariant> & TestNodeIdList)
+{
+  int i;
+  QSqlError sqlError;
+  QString sql;
+
+  if(TestNodeIdList.size() < 1){
+    return true;
+  }
+  // Generate SQL
+  sql = "DELETE FROM TestNodeUnit_tbl ";
+  for(i = 0; i < TestNodeIdList.size(); ++i){
+    if(i == 0){
+      sql += " WHERE ( ";
+    }else{
+      sql += " OR ";
+    }
+    sql += " Unit_Id_FK_PK = " + TestNodeIdList.at(i).toString();
+  }
+  sql += " ) ";
+  // Submit query
+  QSqlQuery query(database());
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for test node unit deletion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTestNode::removeTestNodeUnits(const QModelIndexList & indexListOfSelectedRows)
+{
+  int i;
+  QList<QVariant> idList;
+
+  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
+    idList.append(indexListOfSelectedRows.at(i).data());
+  }
+
+  return removeTestNodeUnits(idList);
+}
+
+bool mdtTtTestNode::setTestConnection(const QVariant & testNodeUnitId, const QVariant & testConnectionId)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+
+  // Prepare query for edition
+  sql = "UPDATE TestNodeUnit_tbl "\
+        " SET TestConnection_Id_FK = :TestConnection_Id_FK "\
+        "WHERE Unit_Id_FK_PK = " + testNodeUnitId.toString();
+  if(!query.prepare(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for test node update to set test connection", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":TestConnection_Id_FK", testConnectionId);
+  if(!query.exec()){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for test node update to set test connection", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}

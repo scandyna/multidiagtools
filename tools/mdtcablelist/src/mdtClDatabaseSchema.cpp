@@ -1608,9 +1608,9 @@ bool mdtClDatabaseSchema::createTestNodeUnitView()
         "FROM TestNodeUnit_tbl\n"\
         " JOIN Unit_tbl\n"\
         "  ON Unit_tbl.Id_PK = TestNodeUnit_tbl.Unit_Id_FK_PK\n"\
-        " JOIN UnitConnection_tbl\n"\
+        " LEFT JOIN UnitConnection_tbl\n"\
         "  ON UnitConnection_tbl.Id_PK = TestNodeUnit_tbl.TestConnection_Id_FK\n"\
-        " JOIN UnitConnector_tbl\n"\
+        " LEFT JOIN UnitConnector_tbl\n"\
         "  ON UnitConnector_tbl.Id_PK = UnitConnection_tbl.UnitConnector_Id_FK\n"\
         " JOIN TestNodeUnitType_tbl\n"\
         "  ON TestNodeUnitType_tbl.Code_PK = TestNodeUnit_tbl.Type_Code_FK";
