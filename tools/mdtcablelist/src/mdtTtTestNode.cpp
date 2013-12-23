@@ -161,6 +161,29 @@ QList<QVariant> mdtTtTestNode::getIdListOfUnitConnectionsPartOfUnit(const QVaria
   return unitConnectionIdList;
 }
 
+QList<QVariant> mdtTtTestNode::getChannelTestConnectionIdList(const QVariant & testNodeId, const QVariant & busName)
+{
+  QList<QVariant> testConnectionIdList;
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+
+  sql = "SELECT TestConnection_Id_FK FROM TestNodeUnit_tbl WHERE TestNode_Id_FK = " + testNodeId.toString() + " AND Bus = '" + busName.toString() + "'";
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to get channel test connections", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return testConnectionIdList;
+  }
+  while(query.next()){
+    testConnectionIdList.append(query.value(0));
+  }
+
+  return testConnectionIdList;
+}
+
 bool mdtTtTestNode::addTestNodeUnit(const QVariant & UnitId, const QVariant & TestNodeId , const QVariant & typeCode, const QVariant & busName)
 {
   QString sql;

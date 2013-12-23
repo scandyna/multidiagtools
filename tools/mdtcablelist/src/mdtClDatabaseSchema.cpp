@@ -2225,6 +2225,12 @@ bool mdtClDatabaseSchema::populateLinkTypeTable()
   if(!insertDataIntoTable("LinkType_tbl", fields, data)){
     return false;
   }
+  // Test link type
+  data.clear();
+  data << "TESTLINK" << "Test link" << "Test Verbindung" << "Liaison de test" << "Collegamento test" << "Ohm";
+  if(!insertDataIntoTable("LinkType_tbl", fields, data)){
+    return false;
+  }
 
   return true;
 }

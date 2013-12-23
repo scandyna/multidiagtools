@@ -163,7 +163,7 @@ class mdtClLinkData
    *
    * To get the list, use vehicleTypeStartEndIdList() .
    * 
-   * \todo Check if actions should be done by dialog ?
+   * \todo Check if actions should be done by dialog ? <- No, is used in other places ..
    */
   bool buildVehicleTypeStartEndIdList();
 

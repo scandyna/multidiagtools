@@ -189,10 +189,10 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromC
     Q_ASSERT(!edge.startConnectionId.isNull());
     Q_ASSERT(!edge.endConnectionId.isNull());
     if(!edge.isComplement){
-      if(!connectionIdList.contains(edge.startConnectionId)){
+      if((edge.startConnectionId != fromConnectionId)&&(!connectionIdList.contains(edge.startConnectionId))){
         connectionIdList.append(edge.startConnectionId);
       }
-      if(!connectionIdList.contains(edge.endConnectionId)){
+      if((edge.endConnectionId != fromConnectionId)&&(!connectionIdList.contains(edge.endConnectionId))){
         connectionIdList.append(edge.endConnectionId);
       }
     }

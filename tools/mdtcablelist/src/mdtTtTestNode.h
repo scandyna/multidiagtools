@@ -64,6 +64,10 @@ class mdtTtTestNode : public mdtClBase
    */
   QList<QVariant> getIdListOfUnitConnectionsPartOfUnit(const QVariant & unitId);
 
+  /*! \brief Get a list of channel test connections for given bus name and node ID
+   */
+  QList<QVariant> getChannelTestConnectionIdList(const QVariant & testNodeId, const QVariant & busName);
+
   /*! \brief Add a test node unit
    */
   bool addTestNodeUnit(const QVariant & UnitId, const QVariant & TestNodeId , const QVariant & typeCode, const QVariant & busName);

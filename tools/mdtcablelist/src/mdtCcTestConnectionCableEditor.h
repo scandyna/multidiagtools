@@ -48,9 +48,13 @@ class mdtCcTestConnectionCableEditor : public QObject
 
  private:
 
+  /*! \brief Select vehicle that contains unit to test
+   */
+  QVariant selectDutVehicleId();
+
   /*! \brief Select unit to test
    */
-  QVariant selectDutUnitId();
+  QVariant selectDutUnitId(const QVariant & vehicleId);
 
   /*! \brief Select test node to use
    */

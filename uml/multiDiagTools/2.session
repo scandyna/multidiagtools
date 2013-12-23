@@ -1,21 +1,21 @@
-window_sizes 1024 718 329 689 640 0
+window_sizes 1280 1001 329 945 923 0
 diagrams
   classdiagram_ref 907778 // mdtClArticleConnectionDialog
     739 738 100 4 0 0
   classdiagram_ref 914434 // mdtCcTestConnectionCable
     756 738 100 4 0 0
-  active  classdiagram_ref 927874 // TestNode
-    689 640 80 18 72 100
+  classdiagram_ref 927874 // TestNode
+    689 640 80 18 0 6
+  active  classdiagram_ref 739586 // Logical
+    945 923 100 17 312 4
 end
 show_stereotypes
-selected classdiagram_ref 739586 // Logical
+selected classdiagram_ref 901122 // mdtClConnectionData
 open
   classview_ref 483970 // Logical
-  classview_ref 549762 // mdtClBase
-  classview_ref 549506 // mdtClEditor
-  class_ref 992642 // TestNode_tbl
-  class_ref 992770 // TestNodeUnit_tbl
-  class_ref 992898 // TestNodeUnitType_tbl
+  classview_ref 549634 // mdtClConnectionData
+  classview_ref 503554 // Link
+  classview_ref 569730 // TestTool
   class_ref 999426 // mdtTtTestNode
   class_ref 999554 // mdtTtTestNodeEditor
   classview_ref 563074 // mdtTbCoupler
