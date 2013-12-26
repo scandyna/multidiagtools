@@ -1,6 +1,6 @@
 format 76
 "DatabaseLogical" // mdttools::TestTool::DatabaseLogical
-  revision 8
+  revision 9
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -266,7 +266,7 @@ ${inlines}
       size A4-Landscape
     end
 
-    class 1006210 "Test_tbl"
+    class 1006210 "TestItem_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -447,10 +447,10 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1259906 // <unidirectional association>
-	  b parent class_ref 1006210 // Test_tbl
+	  b parent class_ref 1006210 // TestItem_tbl
       end
 
-      attribute 1042818 "Test_Id_FK"
+      attribute 1042818 "TestItem_Id_FK"
 	private explicit_type "int"
 	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};

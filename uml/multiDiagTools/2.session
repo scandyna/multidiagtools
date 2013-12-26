@@ -1,4 +1,4 @@
-window_sizes 1024 718 178 840 640 0
+window_sizes 1024 718 319 699 640 0
 diagrams
   classdiagram_ref 907778 // mdtClArticleConnectionDialog
     739 738 100 4 0 0
@@ -9,7 +9,7 @@ diagrams
   classdiagram_ref 947586 // TestCable
     756 738 90 18 0 0
   active  classdiagram_ref 941058 // Test
-    840 640 90 18 163 3
+    699 640 90 18 163 0
 end
 show_stereotypes
 selected classdiagram_ref 739586 // Logical
@@ -18,6 +18,7 @@ open
   
   package_ref 227714 // DatabaseConceptual
   attribute_ref 1058050 // TestLinkBusB_Id_FK
+  class_ref 1006722 // TestNodeUnitSetup_tbl
   class_ref 1013506 // TestCable_tbl
   attribute_ref 1058178 // Id_PK
   attribute_ref 1051266 // TestCable_Id_FK

@@ -254,10 +254,13 @@ bool mdtClDatabaseSchema::setupTables()
   if(!setupTestNodeUnitTable()){
     return false;
   }
-  if(!(setupTestCableTable())){
+  if(!setupTestCableTable()){
     return false;
   }
-  if(!(setupTestLinkTable())){
+  if(!setupTestLinkTable()){
+    return false;
+  }
+  if(!setupTestItemTable()){
     return false;
   }
   return true;
@@ -317,6 +320,9 @@ bool mdtClDatabaseSchema::createViews()
     return false;
   }
   if(!createTestNodeUnitView()){
+    return false;
+  }
+  if(!createTestLinkView()){
     return false;
   }
   return true;
@@ -1647,6 +1653,60 @@ bool mdtClDatabaseSchema::setupTestLinkTable()
   return true;
 }
 
+bool mdtClDatabaseSchema::setupTestItemTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestItem_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // TestLinkBusA_Id_FK
+  field = QSqlField();
+  field.setName("TestLinkBusA_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // TestLinkBusB_Id_FK
+  field = QSqlField();
+  field.setName("TestLinkBusB_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // ExpectedValue
+  field = QSqlField();
+  field.setName("ExpectedValue");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // Indexes
+  table.addIndex("TestLinkBusA_Id_FK_idx", false);
+  if(!table.addFieldToIndex("TestLinkBusA_Id_FK_idx", "TestLinkBusA_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("TestLinkBusB_Id_FK_idx", false);
+  if(!table.addFieldToIndex("TestLinkBusB_Id_FK_idx", "TestLinkBusB_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("TestLinkBusA_Id_FK_fk", "TestLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestLinkBusA_Id_FK_fk", "TestLinkBusA_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestLinkBusB_Id_FK_fk", "TestLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestLinkBusB_Id_FK_fk", "TestLinkBusB_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
 bool mdtClDatabaseSchema::createView(const QString & viewName, const QString & sql) 
 {
   QSqlQuery query(pvDatabaseManager->database());
@@ -2155,6 +2215,50 @@ bool mdtClDatabaseSchema::createLinkListView()
           "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK";
 
   return createView("LinkList_view", sql);
+}
+
+bool mdtClDatabaseSchema::createTestLinkView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestLink_view AS\n"\
+        "SELECT\n"\
+        " LNK.TestConnection_Id_FK,\n"\
+        " LNK.DutConnection_Id_FK,\n"\
+        " VTN.Type AS TestNodeType,\n"\
+        " VTN.SubType AS TestNodeSubType,\n"\
+        " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
+        " TN.NodeId,\n"\
+        " TNU.Bus,\n"\
+        " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
+        " UCT.Name AS TestConnectorName,\n"\
+        " UCNXT.UnitContactName AS TestContactName,\n"\
+        " LNK.Identification AS TestLinkIdentification,\n"\
+        " LNK.Value AS TestLinkValue,\n"\
+        " UD.SchemaPosition AS DutUnitSchemaPosition,\n"\
+        " UCD.Name AS DutConnectorName,\n"\
+        " UCNXD.UnitContactName AS DutContactName\n"\
+        "FROM TestLink_tbl LNK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.TestConnection_Id_FK = LNK.TestConnection_Id_FK\n"\
+        " JOIN Unit_tbl UTNU\n"\
+        "  ON UTNU.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+        " JOIN VehicleType_tbl VTN\n"\
+        "  ON VTN.Id_PK = TN.VehicleType_Id_FK_PK\n"\
+        " JOIN UnitConnection_tbl UCNXT\n"\
+        "  ON UCNXT.Id_PK = LNK.TestConnection_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCT\n"\
+        "  ON UCT.Id_PK = UCNXT.UnitConnector_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXD\n"\
+        "  ON UCNXD.Id_PK = LNK.DutConnection_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCD\n"\
+        "  ON UCD.Id_PK = UCNXD.UnitConnector_Id_FK\n"\
+        " JOIN Unit_tbl UD\n"\
+        "  ON UD.Id_PK = UCNXD.Unit_Id_FK\n";
+
+  return createView("TestLink_view", sql);
 }
 
 bool mdtClDatabaseSchema::pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData)

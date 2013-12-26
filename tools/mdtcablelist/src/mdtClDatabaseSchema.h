@@ -203,6 +203,12 @@ class mdtClDatabaseSchema
    */
   bool setupTestLinkTable();
 
+  /*! \brief Setup test item table
+   *
+   * \todo Move to test tool when created
+   */
+  bool setupTestItemTable();
+
   /*! \brief
    */
   bool setupLinkTypeTable();
@@ -284,6 +290,12 @@ class mdtClDatabaseSchema
   /*! \brief
    */
   bool createLinkListView();
+
+  /*! \brief Create test link view
+   *
+   * \todo Move to test tool when created
+   */
+  bool createTestLinkView();
 
   /*! \brief Check if given PK data exists in given table name
    */
