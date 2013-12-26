@@ -254,6 +254,12 @@ bool mdtClDatabaseSchema::setupTables()
   if(!setupTestNodeUnitTable()){
     return false;
   }
+  if(!(setupTestCableTable())){
+    return false;
+  }
+  if(!(setupTestLinkTable())){
+    return false;
+  }
   return true;
 }
 
@@ -1543,6 +1549,98 @@ bool mdtClDatabaseSchema::setupTestNodeUnitTypeTable()
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::setupTestCableTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestCable_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Identification
+  field = QSqlField();
+  field.setName("Identification");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtClDatabaseSchema::setupTestLinkTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestLink_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // TestConnection_Id_FK
+  field = QSqlField();
+  field.setName("TestConnection_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // DutConnection_Id_FK
+  field = QSqlField();
+  field.setName("DutConnection_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // TestCable_Id_FK
+  field = QSqlField();
+  field.setName("TestCable_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // Identification
+  field = QSqlField();
+  field.setName("Identification");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // Value
+  field = QSqlField();
+  field.setName("Value");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // Indexes
+  /**
+  table.addIndex("TestConnection_Id_FK_idx2", false);
+  if(!table.addFieldToIndex("TestConnection_Id_FK_idx2", "TestConnection_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  */
+  table.addIndex("TestCable_Id_FK_idx", false);
+  if(!table.addFieldToIndex("TestCable_Id_FK_idx", "TestCable_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys - No FK to UnitConnection_tbl, because it will be in another database
+  /**
+  table.addForeignKey("TestConnection_Id_FK_fk2", "TestNodeUnit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestConnection_Id_FK_fk2", "TestConnection_Id_FK", "TestConnection_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  */
+  table.addForeignKey("TestCable_Id_FK_fk", "TestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestCable_Id_FK_fk", "TestCable_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
 
   pvTables.append(table);
 

@@ -193,6 +193,20 @@ void mdtClMainWindow::createTestConnectionCable()
   editor.createCable();
 }
 
+void mdtClMainWindow::connectTestCable()
+{
+  mdtCcTestConnectionCableEditor editor(this, pvDatabaseManager->database());
+
+  editor.connectTestCable();
+}
+
+void mdtClMainWindow::disconnectTestCable()
+{
+  mdtCcTestConnectionCableEditor editor(this, pvDatabaseManager->database());
+
+  editor.disconnectTestCable();
+}
+
 void mdtClMainWindow::createActions()
 {
   // Open database
@@ -218,6 +232,8 @@ void mdtClMainWindow::createActions()
 
   // Test connection cable
   connect(actCreateTestConnectionCable, SIGNAL(triggered()), this, SLOT(createTestConnectionCable()));
+  connect(actConnectTestCable, SIGNAL(triggered()), this, SLOT(connectTestCable()));
+  connect(actDisconnectTestCable, SIGNAL(triggered()), this, SLOT(disconnectTestCable()));
   // Test node edition
   connect(actEditTestNode, SIGNAL(triggered()), this, SLOT(editTestNode()));
 }

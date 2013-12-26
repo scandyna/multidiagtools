@@ -22,6 +22,7 @@
 #define MDT_CC_TEST_CONNECTION_CABLE_H
 
 #include "mdtClBase.h"
+#include "mdtClLinkData.h"
 #include <QString>
 #include <QVariant>
 #include <QList>
@@ -55,6 +56,10 @@ class mdtCcTestConnectionCable : public mdtClBase
   /*! \brief Get SQL statement for unit connector selection for given unit connector ID list
    */
   QString sqlForUnitConnectorSelectionFromUnitConnectorIdList(const QList<QVariant> & connectorIdList) const;
+
+  /*! \brief Get SQL statement for test cable selection
+   */
+  QString sqlForTestCableSelection();
 
   /*! \brief Load link list
    *
@@ -104,11 +109,39 @@ class mdtCcTestConnectionCable : public mdtClBase
    */
   QList<QVariant> getToUnitConnectionIdListLinkedUnitConnectionIdListPartOfUnitConnectorList(QList<QVariant> & fromUnitConnectionIdList, const QList<QVariant> & unitConnectorIdList);
 
+  /*! \brief Create a test cable
+   */
+  bool createTestCable(const QVariant & nodeId, const QList<QVariant> & busAtestConnectionIdList, const QList<QVariant> & busAdutConnectionIdList, const QList<QVariant> & busBtestConnectionIdList, const QList<QVariant> & busBdutConnectionIdList);
+
   /*! \brief Add links in link table
    *
    * \pre dutConnectionIdList size must be <= testConnectionIdList
    */
-  bool addLinks(const QVariant & nodeId, const QList<QVariant> & testConnectionIdList, const QVariant & dutVehicleId, const QList<QVariant> & dutConnectionIdList);
+  bool addLinks(const QVariant & nodeId, const QVariant & testCableId, const QList<QVariant> & testConnectionIdList, const QList<QVariant> & dutConnectionIdList);
+
+  /*! \brief Add a cable into test cable table
+   */
+  bool addCable(const QVariant & identification);
+
+  /*! \brief Add a link into test link table
+   */
+  bool addLink(const QVariant & testConnectionId, const QVariant & dutConnectionId, const QVariant & testCableId, const QVariant & identification, const QVariant & value);
+
+  /*! \brief Connect a test cable
+   */
+  bool connectTestCable(const QVariant & testCableId, const QVariant & testNodeId, const QVariant & dutVehicleTypeId);
+
+  /*! \brief Get test link data
+   */
+  ///mdtClLinkData getTestLinkData(const QVariant & testLinkId);
+
+  /*! \brief Get test link data for given test cable ID
+   */
+  QList<mdtClLinkData> getTestLinkDataByTestCableId(const QVariant & testCableId);
+
+  /*! \brief Disconnect a test cable
+   */
+  bool disconnectTestCable(const QVariant & testCableId);
 
  private:
 

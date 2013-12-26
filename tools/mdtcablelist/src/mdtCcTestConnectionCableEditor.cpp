@@ -117,12 +117,62 @@ void mdtCcTestConnectionCableEditor::createCable()
     return;
   }
   // Add links to link table
-  if(!tcc.addLinks(testNodeId, busAtestConnectionIdList, dutVehicleId, dutStartConnectionIdList)){
+  if(!tcc.createTestCable(testNodeId, busAtestConnectionIdList, dutStartConnectionIdList, busBtestConnectionIdList, dutEndConnectionIdList)){
+    return;
+  }
+  /**
+  if(!tcc.addLinks(testNodeId, busAtestConnectionIdList, dutStartConnectionIdList)){
     pvLastError = tcc.lastError();
     return;
   }
-  if(!tcc.addLinks(testNodeId, busBtestConnectionIdList, dutVehicleId, dutEndConnectionIdList)){
+  if(!tcc.addLinks(testNodeId, busBtestConnectionIdList, dutEndConnectionIdList)){
     pvLastError = tcc.lastError();
+    return;
+  }
+  */
+}
+
+void mdtCcTestConnectionCableEditor::connectTestCable()
+{
+  mdtCcTestConnectionCable tcc(pvDatabase);
+  QVariant testCableId;
+  QVariant dutVehicleId;
+  QVariant testNodeId;
+
+  // Let user choose a test cable to use
+  testCableId = selectTestCable();
+  if(testCableId.isNull()){
+    return;
+  }
+  qDebug() << "Selected test cable: " << testCableId;
+  // Let user choose test node
+  testNodeId = selectTestNode();
+  if(testNodeId.isNull()){
+    return;
+  }
+  // Let user choose DUT vehiclke type
+  dutVehicleId = selectDutVehicleId();
+  if(dutVehicleId.isNull()){
+    return;
+  }
+  // Connect test cable
+  if(!tcc.connectTestCable(testCableId, testNodeId, dutVehicleId)){
+    return;
+  }
+}
+
+void mdtCcTestConnectionCableEditor::disconnectTestCable()
+{
+  mdtCcTestConnectionCable tcc(pvDatabase);
+  QVariant testCableId;
+
+  // Let user choose a test cable to disconnect
+  testCableId = selectTestCable();
+  if(testCableId.isNull()){
+    return;
+  }
+  // Connect test cable
+  if(!tcc.disconnectTestCable(testCableId)){
     return;
   }
 }
@@ -228,6 +278,41 @@ QVariant mdtCcTestConnectionCableEditor::selectTestNode()
   selectionDialog.setHeaderData("SubType", tr("Variant"));
   selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
   selectionDialog.addSelectionResultColumn("VehicleType_Id_FK_PK");
+  selectionDialog.resize(600, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
+}
+
+QVariant mdtCcTestConnectionCableEditor::selectTestCable()
+{
+  mdtCcTestConnectionCable tcc(pvDatabase);
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlError sqlError;
+  QSqlQueryModel model;
+  QString sql;
+
+  // Setup model to show available test nodes
+  sql = tcc.sqlForTestCableSelection();
+  model.setQuery(sql, pvDatabase);
+  sqlError = model.lastError();
+  if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get test cable list."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCableEditor");
+    pvLastError.commit();
+    ///displayLastError();
+    return QVariant();
+  }
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select test cable to use.");
+  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setColumnHidden("Id_PK", true);
+  ///selectionDialog.setHeaderData("", tr(""));
+  selectionDialog.addSelectionResultColumn("Id_PK");
   selectionDialog.resize(600, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return QVariant();

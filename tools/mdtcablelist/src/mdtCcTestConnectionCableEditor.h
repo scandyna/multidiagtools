@@ -46,6 +46,14 @@ class mdtCcTestConnectionCableEditor : public QObject
    */
   void createCable();
 
+  /*! \brief Connect a test cable
+   */
+  void connectTestCable();
+
+  /*! \brief Disconnect a test cable
+   */
+  void disconnectTestCable();
+
  private:
 
   /*! \brief Select vehicle that contains unit to test
@@ -59,6 +67,10 @@ class mdtCcTestConnectionCableEditor : public QObject
   /*! \brief Select test node to use
    */
   QVariant selectTestNode();
+
+  /*! \brief Select test cable to use
+   */
+  QVariant selectTestCable();
 
   /*! \brief Select start connector
    */

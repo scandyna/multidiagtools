@@ -191,6 +191,18 @@ class mdtClDatabaseSchema
    */
   bool setupTestNodeUnitTypeTable();
 
+  /*! \brief Setup test cable table
+   *
+   * \todo Move to test tool when created
+   */
+  bool setupTestCableTable();
+
+  /*! \brief Setup test link table
+   *
+   * \todo Move to test tool when created
+   */
+  bool setupTestLinkTable();
+
   /*! \brief
    */
   bool setupLinkTypeTable();

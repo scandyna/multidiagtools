@@ -94,6 +94,14 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void createTestConnectionCable();
 
+  /*! \brief Connect a test cable
+   */
+  void connectTestCable();
+
+  /*! \brief Disconnect a test cable
+   */
+  void disconnectTestCable();
+
  private:
 
   Q_DISABLE_COPY(mdtClMainWindow);

@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtCcTestConnectionCable.h"
 #include "mdtClPathGraph.h"
-#include "mdtClLinkData.h"
 #include "mdtClUnit.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -73,6 +72,15 @@ QString mdtCcTestConnectionCable::sqlForUnitConnectorSelectionFromUnitConnectorI
   for(i = 1; i < connectorIdList.size(); ++i){
     sql += " OR Id_PK = " + connectorIdList.at(i).toString();
   }
+
+  return sql;
+}
+
+QString mdtCcTestConnectionCable::sqlForTestCableSelection()
+{
+  QString sql;
+
+  sql = "SELECT * FROM TestCable_tbl";
 
   return sql;
 }
@@ -258,6 +266,181 @@ QList<QVariant> mdtCcTestConnectionCable::getToUnitConnectionIdListLinkedUnitCon
   return unitConnectionIdList;
 }
 
+bool mdtCcTestConnectionCable::createTestCable(const QVariant & nodeId, const QList<QVariant> & busAtestConnectionIdList, const QList<QVariant> & busAdutConnectionIdList, const QList<QVariant> & busBtestConnectionIdList, const QList<QVariant> & busBdutConnectionIdList)
+{
+  QString sql;
+  QSqlQuery query(database());
+  QSqlError sqlError;
+  QVariant testCableId;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  // Add test cable
+  if(!addCable("A test cable beta")){
+    rollbackTransaction();
+    return false;
+  }
+  // Get freshly inserted test cable ID
+  sql = "SELECT Id_PK FROM TestCable_tbl";
+  if(!query.exec(sql)){
+    rollbackTransaction();
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to get test cable ID for test links insertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return false;
+  }
+  testCableId = query.lastInsertId();
+  if(testCableId.isNull()){
+    rollbackTransaction();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot get test cable ID for test links inertion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return false;
+  }
+  // Add BUSA links
+  if(!addLinks(nodeId, testCableId, busAtestConnectionIdList, busAdutConnectionIdList)){
+    rollbackTransaction();
+    return false;
+  }
+  // Add BUSB links
+  if(!addLinks(nodeId, testCableId, busBtestConnectionIdList, busBdutConnectionIdList)){
+    rollbackTransaction();
+    return false;
+  }
+  // Commit transaction
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtCcTestConnectionCable::addLinks(const QVariant & nodeId, const QVariant & testCableId, const QList<QVariant> & testConnectionIdList, const QList<QVariant> & dutConnectionIdList)
+{
+  Q_ASSERT(dutConnectionIdList.size() <= testConnectionIdList.size());
+
+  int i;
+
+  // Add test links
+  for(i = 0; i < dutConnectionIdList.size(); ++i){
+    qDebug() << "Adding link from test connection " << testConnectionIdList.at(i) << " -> dut connection " << dutConnectionIdList.at(i);
+    if(!addLink(testConnectionIdList.at(i), dutConnectionIdList.at(i), testCableId, "...", 0.1)){
+      return false;
+    }
+    qDebug() << "->Link added";
+  }
+
+  return true;
+}
+
+bool mdtCcTestConnectionCable::addCable(const QVariant & identification)
+{
+  QString sql;
+  QSqlQuery query(database());
+  QSqlError sqlError;
+
+  // Prepare query for insertion
+  sql = "INSERT INTO TestCable_tbl (Identification) "\
+        "VALUES (:Identification)";
+  if(!query.prepare(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for inertion into TestCable_tbl", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":Identification", identification);
+  if(!query.exec()){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for inertion into TestCable_tbl", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtCcTestConnectionCable::addLink(const QVariant & testConnectionId, const QVariant & dutConnectionId, const QVariant & testCableId, const QVariant & identification, const QVariant & value)
+{
+  QString sql;
+  QSqlQuery query(database());
+  QSqlError sqlError;
+
+  // Prepare query for insertion
+  sql = "INSERT INTO TestLink_tbl (TestConnection_Id_FK, DutConnection_Id_FK, TestCable_Id_FK, Identification, Value) "\
+        "VALUES (:TestConnection_Id_FK, :DutConnection_Id_FK, :TestCable_Id_FK, :Identification, :Value)";
+  if(!query.prepare(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for inertion into TestLink_tbl", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return false;
+  }
+  // Add values and execute query
+  query.bindValue(":TestConnection_Id_FK", testConnectionId);
+  query.bindValue(":DutConnection_Id_FK", dutConnectionId);
+  query.bindValue(":TestCable_Id_FK", testCableId);
+  query.bindValue(":Identification", identification);
+  query.bindValue(":Value", value);
+  if(!query.exec()){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for inertion into TestLink_tbl", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+/**
+mdtClLinkData mdtCcTestConnectionCable::getTestLinkData(const QVariant & testLinkId)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+  mdtClLinkData data;
+
+  // Setup and run query to get data in test link table
+  sql = "SELECT "\
+        "TestConnection_Id_FK , DutConnection_Id_FK, TestCable_Id_FK, Identification, Value ";
+  sql += " FROM TestLink_tbl ";
+  sql += " WHERE Id_PK = " + testLinkId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot get test link data", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return data;
+  }
+  if(!query.next()){
+    return data;
+  }
+  data.setUnitConnectionStartId(query.value(0));
+  data.setUnitConnectionEndId(query.value(1));
+  data.setIdentification(query.value(3));
+  data.setValue(query.value(4));
+  data.setLinkTypeCode("TESTLINK");
+  data.setLinkDirectionCode("BID");
+
+  return data;
+}
+*/
+
+
+/**
 bool mdtCcTestConnectionCable::addLinks(const QVariant & nodeId, const QList<QVariant> & testConnectionIdList, const QVariant & dutVehicleId, const QList<QVariant> & dutConnectionIdList)
 {
   Q_ASSERT(dutConnectionIdList.size() <= testConnectionIdList.size());
@@ -286,6 +469,98 @@ bool mdtCcTestConnectionCable::addLinks(const QVariant & nodeId, const QList<QVa
       return false;
     }
     qDebug() << "->Link added";
+  }
+
+  return true;
+}
+*/
+
+QList<mdtClLinkData> mdtCcTestConnectionCable::getTestLinkDataByTestCableId(const QVariant & testCableId)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+  QList<mdtClLinkData> dataList;
+
+  // Setup and run query to get data in test link table
+  sql = "SELECT "\
+        "TestConnection_Id_FK , DutConnection_Id_FK, TestCable_Id_FK, Identification, Value ";
+  sql += " FROM TestLink_tbl ";
+  sql += " WHERE TestCable_Id_FK = " + testCableId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot get test link data", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCable");
+    pvLastError.commit();
+    return dataList;
+  }
+  while(query.next()){
+    mdtClLinkData data;
+    data.setUnitConnectionStartId(query.value(0));
+    data.setUnitConnectionEndId(query.value(1));
+    data.setIdentification(query.value(3));
+    data.setValue(query.value(4));
+    data.setLinkTypeCode("TESTLINK");
+    data.setLinkDirectionCode("BID");
+    dataList.append(data);
+  }
+
+  return dataList;
+}
+
+bool mdtCcTestConnectionCable::connectTestCable(const QVariant & testCableId, const QVariant & testNodeId, const QVariant & dutVehicleTypeId)
+{
+  QList<mdtClLinkData> testLinkDataList;
+  mdtClLinkData data;
+  mdtClUnit unit(database());
+  int i;
+
+  // Get link data for given cable
+  testLinkDataList = getTestLinkDataByTestCableId(testCableId);
+  if(testLinkDataList.isEmpty()){
+    return false;
+  }
+  // Add each link
+  for(i = 0; i < testLinkDataList.size(); ++i){
+    data = testLinkDataList.at(i);
+    data.addVehicleTypeStartId(testNodeId);
+    data.addVehicleTypeEndId(dutVehicleTypeId);
+    if(!data.buildVehicleTypeStartEndIdList()){
+      qDebug() << "Cannot build vehicle list";
+      return false;
+    }
+    qDebug() << "VHC lst: " << data.vehicleTypeStartEndIdList();
+    if(!unit.addLink(data)){
+      pvLastError = unit.lastError();
+      return false;
+    }
+    qDebug() << "->Link added";
+  }
+
+  return true;
+}
+
+bool mdtCcTestConnectionCable::disconnectTestCable(const QVariant & testCableId)
+{
+  QList<mdtClLinkData> testLinkDataList;
+  mdtClLinkData data;
+  mdtClUnit unit(database());
+  int i;
+
+  // Get link data for given cable
+  testLinkDataList = getTestLinkDataByTestCableId(testCableId);
+  if(testLinkDataList.isEmpty()){
+    return false;
+  }
+  // Remove each link
+  for(i = 0; i < testLinkDataList.size(); ++i){
+    data = testLinkDataList.at(i);
+    if(!unit.removeLink(data.unitConnectionStartId(), data.unitConnectionEndId())){
+      pvLastError = unit.lastError();
+      return false;
+    }
+    qDebug() << "->Link removed";
   }
 
   return true;
