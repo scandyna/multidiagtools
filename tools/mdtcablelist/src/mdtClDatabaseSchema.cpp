@@ -337,6 +337,12 @@ bool mdtClDatabaseSchema::createViews()
   if(!createTestItemNodeUnitSetupView()){
     return false;
   }
+  if(!createTestItemNodeView()){
+    return false;
+  }
+  if(!createTestItemNodeUnitView()){
+    return false;
+  }
   return true;
 }
 
@@ -2443,6 +2449,59 @@ bool mdtClDatabaseSchema::createTestItemNodeUnitSetupView()
         "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n";
 
   return createView("TestItemNodeUnitSetup_view", sql);
+}
+
+bool mdtClDatabaseSchema::createTestItemNodeView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestItemNode_view AS\n"\
+        "SELECT DISTINCT\n"\
+        " TI.Test_Id_FK,\n"\
+        " TN.VehicleType_Id_FK_PK AS TestNode_Id_FK,\n"\
+        " TN.NodeId\n"\
+        "FROM TestItem_tbl TI\n"\
+        " JOIN TestLink_tbl LNKA\n"\
+        "  ON LNKA.Id_PK = TI.TestLinkBusA_Id_FK\n"\
+        " JOIN TestLink_tbl LNKB\n"\
+        "  ON LNKB.Id_PK = TI.TestLinkBusB_Id_FK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.TestConnection_Id_FK = LNKA.TestConnection_Id_FK\n"\
+        "  OR TNU.TestConnection_Id_FK = LNKB.TestConnection_Id_FK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK";
+
+  return createView("TestItemNode_view", sql);
+}
+
+bool mdtClDatabaseSchema::createTestItemNodeUnitView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestItemNodeUnit_view AS\n"\
+        "SELECT\n"\
+        " TI.Id_PK,\n"\
+        " TI.Test_Id_FK,\n"\
+        " TNU.Unit_Id_FK_PK,\n"\
+        " U.SchemaPosition,\n"\
+        " TNU.Bus,\n"\
+        " TNU.Type_Code_FK,\n"\
+        " TN.VehicleType_Id_FK_PK AS TestNode_Id_FK,\n"\
+        " TN.NodeId\n"\
+        "FROM TestItem_tbl TI\n"\
+        " JOIN TestLink_tbl LNKA\n"\
+        "  ON LNKA.Id_PK = TI.TestLinkBusA_Id_FK\n"\
+        " JOIN TestLink_tbl LNKB\n"\
+        "  ON LNKB.Id_PK = TI.TestLinkBusB_Id_FK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.TestConnection_Id_FK = LNKA.TestConnection_Id_FK\n"\
+        "  OR TNU.TestConnection_Id_FK = LNKB.TestConnection_Id_FK\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK";
+
+  return createView("TestItemNodeUnit_view", sql);
 }
 
 bool mdtClDatabaseSchema::pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>451</width>
-    <height>67</height>
+    <width>518</width>
+    <height>101</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,6 +41,13 @@
       <widget class="QPushButton" name="pbRemoveTestItem">
        <property name="text">
         <string>Remove test item ...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbGenerateNodeUnitSetup">
+       <property name="text">
+        <string>Generate test node unit setup</string>
        </property>
       </widget>
      </item>

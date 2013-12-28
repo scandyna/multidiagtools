@@ -85,6 +85,25 @@ void mdtTtTestEditor::removeTestItem()
 {
 }
 
+void mdtTtTestEditor::generateTestNodeUnitSetupList()
+{
+  mdtTtTest t(database());
+  QVariant testId;
+
+  // Get current test ID
+  testId = form()->currentData("Test_tbl", "Id_PK");
+  if(testId.isNull()){
+    return;
+  }
+  if(!t.generateTestNodeUnitSetup(testId)){
+    pvLastError = t.lastError();
+    displayLastError();
+    return;
+  }
+  // Update GUI
+  form()->select("TestItemNodeUnitSetup_view");
+}
+
 QVariant mdtTtTestEditor::selectTestLink(const QString & msg)
 {
   mdtSqlSelectionDialog selectionDialog;
@@ -130,6 +149,9 @@ bool mdtTtTestEditor::setupTables()
   if(!setupTestNodeUnitSetupTable()){
     return false;
   }
+  if(!setupTestNodeTable()){
+    return false;
+  }
   return true;
 }
 
@@ -141,6 +163,7 @@ bool mdtTtTestEditor::setupTestTable()
   te.setupUi(form()->mainSqlWidget());
   connect(te.pbAddTestItem, SIGNAL(clicked()), this, SLOT(addTestItem()));
   connect(te.pbRemoveTestItem, SIGNAL(clicked()), this, SLOT(removeTestItem()));
+  connect(te.pbGenerateNodeUnitSetup, SIGNAL(clicked()), this, SLOT(generateTestNodeUnitSetupList()));
   // Setup form
   if(!form()->setTable("Test_tbl", "Test", database())){
     return false;
@@ -201,3 +224,25 @@ bool mdtTtTestEditor::setupTestNodeUnitSetupTable()
   return true;
 }
 
+bool mdtTtTestEditor::setupTestNodeTable()
+{
+  mdtSqlTableWidget *widget;
+
+  if(!form()->addChildTable("TestItemNode_view", tr("Used nodes"), database())){
+    return false;
+  }
+  if(!form()->addRelation("Id_PK", "TestItemNode_view", "Test_Id_FK")){
+    return false;
+  }
+  widget = form()->sqlTableWidget("TestItemNode_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  ///widget->setColumnHidden("", true);
+  // Set fields a user friendly name
+  ///widget->setHeaderData("", tr(""));
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
+  // Add buttons
+
+  return true;
+}

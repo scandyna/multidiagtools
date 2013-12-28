@@ -321,6 +321,18 @@ class mdtClDatabaseSchema
    */
   bool createTestItemNodeUnitSetupView();
 
+  /*! \brief Create view to get nodes used by a test item
+   *
+   * \todo Move to test tool when created
+   */
+  bool createTestItemNodeView();
+
+  /*! \brief Create view to get node units used by a test item
+   *
+   * \todo Move to test tool when created
+   */
+  bool createTestItemNodeUnitView();
+
   /*! \brief Check if given PK data exists in given table name
    */
   bool pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData);

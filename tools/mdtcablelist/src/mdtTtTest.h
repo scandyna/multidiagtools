@@ -23,6 +23,7 @@
 
 #include "mdtClBase.h"
 #include <QVariant>
+#include <QList>
 
 /*! \brief Helper class for test edition
  */
@@ -34,9 +35,37 @@ class mdtTtTest : public mdtClBase
    */
   mdtTtTest(QSqlDatabase db);
 
+  /*! \brief Get a list of test item IDs for given test ID
+   */
+  QList<QVariant> getListOfTestItemIdListByTestId(const QVariant & testId);
+
+  /*! \brief Get a list of node IDs (database keys) for given test ID
+   */
+  QList<QVariant> getListOfUsedNodeIdListByTestId(const QVariant & testId);
+
+  /*! \brief Get a list of used node unit IDs for given test ID
+   *
+   * If given type is not null, only matching test node unit will be returned
+   */
+  QList<QVariant> getListOfUsedNodeUnitIdListByTestId(const QVariant & testId, const QVariant & type);
+
+  /*! \brief Get a list of unused node unit IDs for given test ID
+   *
+   * If given type is not null, only matching test node unit will be returned
+   */
+  QList<QVariant> getListOfUnusedNodeUnitIdListByTestId(const QVariant & testId, const QVariant & type);
+
   /*! \brief Add a test item
    */
   bool addTestItem(const QVariant & testId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId, const QVariant & expectedValue);
+
+  /*! \brief Add a test node unit setup
+   */
+  bool addTestNodeUnitSetup(const QVariant & testItemId, const QVariant & testNodeUnitId, const QVariant & state);
+
+  /*! \brief Generate test node unit setup for given test ID
+   */
+  bool generateTestNodeUnitSetup(const QVariant & testId);
 
  private:
 
