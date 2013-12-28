@@ -100,6 +100,7 @@
     </widget>
     <addaction name="menuConnection_Cable"/>
     <addaction name="actEditTestNode"/>
+    <addaction name="actEditTest"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edition"/>
@@ -181,6 +182,11 @@
   <action name="actDisconnectTestCable">
    <property name="text">
     <string>&amp;Disconnect test cable</string>
+   </property>
+  </action>
+  <action name="actEditTest">
+   <property name="text">
+    <string>&amp;Test edition</string>
    </property>
   </action>
  </widget>
