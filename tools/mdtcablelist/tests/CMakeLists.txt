@@ -30,6 +30,7 @@ set (TEST_HEADER_FILES
           ../src/mdtCcTestConnectionCableEditor.h
           ../src/mdtTtTestNodeEditor.h
           ../src/mdtTtTestEditor.h
+          ../src/mdtTtTestItemEditor.h
    )
 
 # Source files
@@ -68,6 +69,8 @@ set (TEST_SOURCES_FILES
           ../src/mdtTtTestNode.cpp
           ../src/mdtTtTestEditor.cpp
           ../src/mdtTtTest.cpp
+          ../src/mdtTtTestItemEditor.cpp
+          ../src/mdtTtTestItem.cpp
     )
 
 # Qt ui files
@@ -88,6 +91,7 @@ set (TEST_FORM_FILES
           ../src/mdtClMainWindow.ui
           ../src/mdtTtTestNodeEditor.ui
           ../src/mdtTtTestEditor.ui
+          ../src/mdtTtTestItemEditor.ui
     )
 
 # Access to project's include files

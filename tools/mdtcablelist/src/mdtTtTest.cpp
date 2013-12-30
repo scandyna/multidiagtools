@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTtTest.h"
+#include "mdtTtTestItem.h"
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>
@@ -83,6 +84,7 @@ QList<QVariant> mdtTtTest::getListOfUsedNodeIdListByTestId(const QVariant & test
   return nodeIdList;
 }
 
+/**
 QList<QVariant> mdtTtTest::getListOfUsedNodeUnitIdListByTestItemId(const QVariant & testItemId, const QVariant & type)
 {
   QString sql;
@@ -113,6 +115,7 @@ QList<QVariant> mdtTtTest::getListOfUsedNodeUnitIdListByTestItemId(const QVarian
 
   return nodeUnitIdList;
 }
+*/
 
 QList<QVariant> mdtTtTest::getListOfUnusedNodeUnitIdListByTestId(const QVariant & testId, const QVariant & type)
 {
@@ -227,6 +230,7 @@ bool mdtTtTest::removeTestItems(const QModelIndexList & indexListOfSelectedRows)
   return true;
 }
 
+/**
 bool mdtTtTest::addTestNodeUnitSetup(const QVariant & testItemId, const QVariant & testNodeUnitId, const QVariant & state)
 {
   QString sql;
@@ -259,11 +263,14 @@ bool mdtTtTest::addTestNodeUnitSetup(const QVariant & testItemId, const QVariant
 
   return true;
 }
+*/
 
+/**
 bool mdtTtTest::generateTestNodeUnitSetupForTestItem(const QVariant & testItemId)
 {
   Q_ASSERT(!testItemId.isNull());
 
+  mdtTtTestItem ti(database());
   QList<QVariant> usedTestNodeUnitIdList;
   QString sql;
   QSqlError sqlError;
@@ -273,7 +280,8 @@ bool mdtTtTest::generateTestNodeUnitSetupForTestItem(const QVariant & testItemId
   int i;
 
   // Get list of used channel relays
-  usedTestNodeUnitIdList = getListOfUsedNodeUnitIdListByTestItemId(testItemId, "CHANELREL");
+  ///usedTestNodeUnitIdList = getListOfUsedNodeUnitIdListByTestItemId(testItemId, "CHANELREL");
+  usedTestNodeUnitIdList = ti.getUsedNodeUnitIdList(testItemId, "CHANELREL");
   if(usedTestNodeUnitIdList.isEmpty()){
     return false;
   }
@@ -293,9 +301,11 @@ bool mdtTtTest::generateTestNodeUnitSetupForTestItem(const QVariant & testItemId
 
   return true;
 }
+*/
 
 bool mdtTtTest::generateTestNodeUnitSetupForTest(const QVariant & testId)
 {
+  mdtTtTestItem ti(database());
   QList<QVariant> usedTestNodeUnitIdList;
   ///QList<QVariant> unusedTestNodeUnitIdList;
   QString sql;
@@ -335,7 +345,7 @@ bool mdtTtTest::generateTestNodeUnitSetupForTest(const QVariant & testId)
   while(query.next()){
     // Get test item data
     testItemId = query.value(0);
-    if(!generateTestNodeUnitSetupForTestItem(testItemId)){
+    if(!ti.generateTestNodeUnitSetup(testItemId)){
       return false;
     }
     /**
@@ -372,6 +382,7 @@ bool mdtTtTest::generateTestNodeUnitSetupForTest(const QVariant & testId)
   return true;
 }
 
+/**
 bool mdtTtTest::removeTestNodeUnitSetup(const QVariant & tnusId)
 {
   QSqlError sqlError;
@@ -404,3 +415,4 @@ bool mdtTtTest::removeTestNodeUnitSetups(const QModelIndexList & indexListOfSele
 
   return true;
 }
+*/

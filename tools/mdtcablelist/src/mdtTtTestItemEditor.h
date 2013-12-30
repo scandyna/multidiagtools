@@ -18,68 +18,61 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_EDITOR_H
-#define MDT_TT_TEST_EDITOR_H
+#ifndef MDT_TT_TEST_ITEM_EDITOR_H
+#define MDT_TT_TEST_ITEM_EDITOR_H
+
 
 #include "mdtClEditor.h"
 
-/*! \brief Editor fot tests
+/*! \brief Test item editor
  */
-class mdtTtTestEditor : public mdtClEditor
+class mdtTtTestItemEditor : public mdtClEditor
 {
  Q_OBJECT
 
- public:
+  public:
 
   /*! \brief Constructor
    */
-  mdtTtTestEditor(QObject *parent, QSqlDatabase db);
+  mdtTtTestItemEditor(QObject *parent, QSqlDatabase db);
 
- public slots:
+ private slots:
 
-  /*! \brief Add a test item
+  /*! \brief Set test link
    */
-  void addTestItem();
-
-  /*! \brief Remove a test item
-   */
-  void removeTestItem();
+  void setTestLink();
 
   /*! \brief Generate test nodue unit setup
    */
-  void generateTestNodeUnitSetupList();
+  void generateTestNodeUnitSetup();
 
   /*! \brief Remove test node unit setup
    */
-  ///void removeTestNodeUnitSetup();
+  void removeTestNodeUnitSetup();
 
  private:
 
   /*! \brief Select a test link
    */
-  ///QVariant selectTestLink(const QString & msg);
+  QVariant selectTestLink(const QString & bus);
 
-  /*! \brief Setup tables
+  /*! \brief Setup all tables
    */
   bool setupTables();
 
-  /*! \brief Setup test table
+  /*! \brief Setup test item table
    */
-  bool setupTestTable();
+  bool setupTestItemTable();
 
   /*! \brief Setup test link table
    */
   bool setupTestLinkTable();
 
-  /*! \brief Setup used nodes table
-   */
-  bool setupTestNodeTable();
-
   /*! \brief Setup test node unit setup table
    */
   bool setupTestNodeUnitSetupTable();
 
-  Q_DISABLE_COPY(mdtTtTestEditor);
+  Q_DISABLE_COPY(mdtTtTestItemEditor);
 };
 
-#endif // #ifndef MDT_TT_TEST_EDITOR_H
+#endif // #ifndef MDT_TT_TEST_ITEM_EDITOR_H

@@ -1,4 +1,4 @@
-window_sizes 1024 718 244 774 640 0
+window_sizes 1024 718 350 668 640 0
 diagrams
   classdiagram_ref 907778 // mdtClArticleConnectionDialog
     739 738 100 4 0 0
@@ -9,12 +9,12 @@ diagrams
   classdiagram_ref 947586 // TestCable
     756 738 90 18 0 0
   active  classdiagram_ref 941058 // Test
-    774 640 80 3 120 0
+    668 640 80 3 144 28
   classdiagram_ref 934402 // mdtTtTestNode
     668 738 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 954114 // mdtTtTest
+selected classdiagram_ref 960898 // mdtTtTestItemEditor
 open
   classview_ref 483970 // Logical
   
@@ -30,6 +30,8 @@ open
   class_ref 1020418 // Test_tbl
   class_ref 1026946 // mdtTtTest
   operation_ref 1783426 // setupTestTable
+  class_ref 1033602 // mdtTtTestItem
+  class_ref 1033730 // mdtTtTestItemEditor
   deploymentview_ref 376450 // mdtCableList
 end
 end

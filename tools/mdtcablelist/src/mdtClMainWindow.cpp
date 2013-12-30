@@ -28,6 +28,7 @@
 #include "mdtCcTestConnectionCableEditor.h"
 #include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestEditor.h"
+#include "mdtTtTestItemEditor.h"
 #include <QAction>
 #include <QMessageBox>
 #include <QApplication>
@@ -51,6 +52,7 @@ mdtClMainWindow::mdtClMainWindow()
   pvArticleEditor = 0;
   pvTestNodeEditor = 0;
   pvTestEditor = 0;
+  pvTestItemEditor = 0;
 
   createActions();
 }
@@ -208,6 +210,26 @@ void mdtClMainWindow::editTest()
   pvTestEditor->show();
 }
 
+void mdtClMainWindow::editTestItem()
+{
+  if(pvTestItemEditor == 0){
+    pvTestItemEditor = new mdtTtTestItemEditor(this, pvDatabaseManager->database());
+    if(!pvTestItemEditor->setupAsWindow()){
+      QMessageBox msgBox(this);
+      msgBox.setText(tr("Cannot setup test item editor."));
+      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
+                                + qApp->applicationName() + tr(")"));
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.exec();
+      delete pvTestItemEditor;
+      pvTestItemEditor = 0;
+      return;
+    }
+  }
+  Q_ASSERT(pvTestItemEditor != 0);
+  pvTestItemEditor->show();
+}
+
 void mdtClMainWindow::createTestConnectionCable()
 {
   mdtCcTestConnectionCableEditor editor(this, pvDatabaseManager->database());
@@ -260,6 +282,9 @@ void mdtClMainWindow::createActions()
   connect(actEditTestNode, SIGNAL(triggered()), this, SLOT(editTestNode()));
   // Test edition
   connect(actEditTest, SIGNAL(triggered()), this, SLOT(editTest()));
+  // Test item edition
+  connect(actEditTestItem, SIGNAL(triggered()), this, SLOT(editTestItem()));
+
 }
 
 bool mdtClMainWindow::initWorkDirectory()
