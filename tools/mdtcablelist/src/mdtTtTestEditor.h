@@ -49,6 +49,10 @@ class mdtTtTestEditor : public mdtClEditor
    */
   void generateTestNodeUnitSetupList();
 
+  /*! \brief Remove test node unit setup
+   */
+  void removeTestNodeUnitSetup();
+
  private:
 
   /*! \brief Select a test link

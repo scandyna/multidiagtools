@@ -24,6 +24,7 @@
 #include "mdtClBase.h"
 #include <QVariant>
 #include <QList>
+#include <QModelIndex>
 
 /*! \brief Helper class for test edition
  */
@@ -43,11 +44,11 @@ class mdtTtTest : public mdtClBase
    */
   QList<QVariant> getListOfUsedNodeIdListByTestId(const QVariant & testId);
 
-  /*! \brief Get a list of used node unit IDs for given test ID
+  /*! \brief Get a list of used node unit IDs for given test item ID
    *
    * If given type is not null, only matching test node unit will be returned
    */
-  QList<QVariant> getListOfUsedNodeUnitIdListByTestId(const QVariant & testId, const QVariant & type);
+  QList<QVariant> getListOfUsedNodeUnitIdListByTestItemId(const QVariant & testItemId, const QVariant & type);
 
   /*! \brief Get a list of unused node unit IDs for given test ID
    *
@@ -59,13 +60,33 @@ class mdtTtTest : public mdtClBase
    */
   bool addTestItem(const QVariant & testId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId, const QVariant & expectedValue);
 
+  /*! \brief Remove a test item
+   */
+  bool removeTestItem(const QVariant & testItemId);
+
+  /*! \brief Remove test items
+   */
+  bool removeTestItems(const QModelIndexList & indexListOfSelectedRows);
+
   /*! \brief Add a test node unit setup
    */
   bool addTestNodeUnitSetup(const QVariant & testItemId, const QVariant & testNodeUnitId, const QVariant & state);
 
+  /*! \brief Generate test node unit setup for given test item ID
+   */
+  bool generateTestNodeUnitSetupForTestItem(const QVariant & testItemId);
+
   /*! \brief Generate test node unit setup for given test ID
    */
-  bool generateTestNodeUnitSetup(const QVariant & testId);
+  bool generateTestNodeUnitSetupForTest(const QVariant & testId);
+
+  /*! \brief Remove test node unit setup
+   */
+  bool removeTestNodeUnitSetup(const QVariant & tnusId);
+
+  /*! \brief Remove test node unit setup
+   */
+  bool removeTestNodeUnitSetups(const QModelIndexList & indexListOfSelectedRows);
 
  private:
 

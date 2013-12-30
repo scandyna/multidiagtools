@@ -1,6 +1,6 @@
 format 76
 "DatabaseLogical" // mdttools::TestTool::DatabaseLogical
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   // class settings
   //class diagram settings

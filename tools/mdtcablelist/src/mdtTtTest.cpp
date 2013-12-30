@@ -83,7 +83,7 @@ QList<QVariant> mdtTtTest::getListOfUsedNodeIdListByTestId(const QVariant & test
   return nodeIdList;
 }
 
-QList<QVariant> mdtTtTest::getListOfUsedNodeUnitIdListByTestId(const QVariant & testId, const QVariant & type)
+QList<QVariant> mdtTtTest::getListOfUsedNodeUnitIdListByTestItemId(const QVariant & testItemId, const QVariant & type)
 {
   QString sql;
   QSqlError sqlError;
@@ -92,7 +92,7 @@ QList<QVariant> mdtTtTest::getListOfUsedNodeUnitIdListByTestId(const QVariant & 
   QList<QVariant> nodeUnitIdList;
 
   // Setup and run query to get data in unit link view
-  sql = "SELECT Unit_Id_FK_PK FROM TestItemNodeUnit_view WHERE Test_Id_FK = " + testId.toString();
+  sql = "SELECT Unit_Id_FK_PK FROM TestItemNodeUnit_view WHERE Id_PK = " + testItemId.toString();
   if(!type.isNull()){
     sql += " AND Type_Code_FK = '" + type.toString() + "' ";
   }
@@ -194,6 +194,39 @@ bool mdtTtTest::addTestItem(const QVariant & testId, const QVariant & testLinkBu
   return true;
 }
 
+bool mdtTtTest::removeTestItem(const QVariant & testItemId)
+{
+  QSqlError sqlError;
+  QString sql;
+  QSqlQuery query(database());
+
+  sql = "DELETE FROM TestItem_tbl WHERE Id_PK = " + testItemId.toString();
+  // Submit query
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for test item deletion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTest::removeTestItems(const QModelIndexList & indexListOfSelectedRows)
+{
+  int row;
+
+  for(row = 0; row < indexListOfSelectedRows.size(); ++row){
+    if(!removeTestItem(indexListOfSelectedRows.at(row).data())){
+      return false;
+    }
+  }
+
+  return true;
+}
+
 bool mdtTtTest::addTestNodeUnitSetup(const QVariant & testItemId, const QVariant & testNodeUnitId, const QVariant & state)
 {
   QString sql;
@@ -227,10 +260,44 @@ bool mdtTtTest::addTestNodeUnitSetup(const QVariant & testItemId, const QVariant
   return true;
 }
 
-bool mdtTtTest::generateTestNodeUnitSetup(const QVariant & testId)
+bool mdtTtTest::generateTestNodeUnitSetupForTestItem(const QVariant & testItemId)
 {
-  ///QList<QVariant> usedTestNodeUnitIdList;
-  QList<QVariant> unusedTestNodeUnitIdList;
+  Q_ASSERT(!testItemId.isNull());
+
+  QList<QVariant> usedTestNodeUnitIdList;
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+  ///QVariant testItemId;
+  QVariant nodeUnitId;
+  int i;
+
+  // Get list of used channel relays
+  usedTestNodeUnitIdList = getListOfUsedNodeUnitIdListByTestItemId(testItemId, "CHANELREL");
+  if(usedTestNodeUnitIdList.isEmpty()){
+    return false;
+  }
+  // Add setup for used node units
+  for(i = 0; i < usedTestNodeUnitIdList.size(); ++i){
+    nodeUnitId = usedTestNodeUnitIdList.at(i);
+    if(nodeUnitId.isNull()){
+      pvLastError.setError("Try to add a setup for a NULL test node ID", mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+      pvLastError.commit();
+      return false;
+    }
+    if(!addTestNodeUnitSetup(testItemId, nodeUnitId, true)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTest::generateTestNodeUnitSetupForTest(const QVariant & testId)
+{
+  QList<QVariant> usedTestNodeUnitIdList;
+  ///QList<QVariant> unusedTestNodeUnitIdList;
   QString sql;
   QSqlError sqlError;
   QSqlQuery query(database());
@@ -245,15 +312,18 @@ bool mdtTtTest::generateTestNodeUnitSetup(const QVariant & testId)
     return false;
   }
   */
+/**
   // Get list of unused channel relays
   unusedTestNodeUnitIdList = getListOfUnusedNodeUnitIdListByTestId(testId, "CHANELREL");
   if(unusedTestNodeUnitIdList.isEmpty()){
     return false;
   }
-  ///qDebug() << "Used REL: " << usedTestNodeUnitIdList;
+  qDebug() << "Used REL: " << usedTestNodeUnitIdList;
   qDebug() << "Unused REL: " << unusedTestNodeUnitIdList;
+  */
   // Get test items for given test ID
-  sql = "SELECT Id_PK, Unit_Id_FK_PK FROM TestItemNodeUnit_view WHERE Test_Id_FK = " + testId.toString();
+  ///sql = "SELECT Id_PK, Unit_Id_FK_PK FROM TestItemNodeUnit_view WHERE Test_Id_FK = " + testId.toString();
+  sql = "SELECT Id_PK FROM TestItem_tbl WHERE Test_Id_FK = " + testId.toString();
   if(!query.exec(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot get list of test items", mdtError::Error);
@@ -265,6 +335,10 @@ bool mdtTtTest::generateTestNodeUnitSetup(const QVariant & testId)
   while(query.next()){
     // Get test item data
     testItemId = query.value(0);
+    if(!generateTestNodeUnitSetupForTestItem(testItemId)){
+      return false;
+    }
+    /**
     nodeUnitId = query.value(1);
     if((testItemId.isNull())||(nodeUnitId.isNull())){
       return false;
@@ -273,13 +347,58 @@ bool mdtTtTest::generateTestNodeUnitSetup(const QVariant & testId)
     if(!addTestNodeUnitSetup(testItemId, nodeUnitId, true)){
       return false;
     }
+    */
+    /**
+    // Add setup for used node units
+    for(i = 0; i < usedTestNodeUnitIdList.size(); ++i){
+      nodeUnitId = usedTestNodeUnitIdList.at(i);
+      if(!addTestNodeUnitSetup(testItemId, nodeUnitId, true)){
+        return false;
+      }
+    }
+    */
     // Add a setup for each unused node unit
+    /**
     for(i = 0; i < unusedTestNodeUnitIdList.size(); ++i){
       nodeUnitId = unusedTestNodeUnitIdList.at(i);
       // Add setup for unused node unit
       if(!addTestNodeUnitSetup(testItemId, nodeUnitId, false)){
         return false;
       }
+    }
+    */
+  }
+
+  return true;
+}
+
+bool mdtTtTest::removeTestNodeUnitSetup(const QVariant & tnusId)
+{
+  QSqlError sqlError;
+  QString sql;
+  QSqlQuery query(database());
+
+  sql = "DELETE FROM TestNodeUnitSetup_tbl WHERE Id_PK = " + tnusId.toString();
+  // Submit query
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for test node unit setup deletion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTest::removeTestNodeUnitSetups(const QModelIndexList & indexListOfSelectedRows)
+{
+  int row;
+
+  for(row = 0; row < indexListOfSelectedRows.size(); ++row){
+    if(!removeTestNodeUnitSetup(indexListOfSelectedRows.at(row).data())){
+      return false;
     }
   }
 

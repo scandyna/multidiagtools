@@ -79,10 +79,41 @@ void mdtTtTestEditor::addTestItem()
   }
   // Update GUI
   form()->select("TestItemLink_view");
+  form()->select("TestItemNode_view");
 }
 
 void mdtTtTestEditor::removeTestItem() 
 {
+  mdtSqlTableWidget *widget;
+  mdtTtTest t(database());
+  QMessageBox msgBox;
+  QModelIndexList indexes;
+
+  widget = form()->sqlTableWidget("TestItemLink_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  indexes = widget->indexListOfSelectedRows("TestItemId");
+  if(indexes.size() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove selected test items."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!t.removeTestItems(indexes)){
+    pvLastError = t.lastError();
+    displayLastError();
+    return;
+  }
+  // Update connections table
+  form()->select("TestItemLink_view");
+  form()->select("TestItemNode_view");
 }
 
 void mdtTtTestEditor::generateTestNodeUnitSetupList()
@@ -95,12 +126,45 @@ void mdtTtTestEditor::generateTestNodeUnitSetupList()
   if(testId.isNull()){
     return;
   }
-  if(!t.generateTestNodeUnitSetup(testId)){
+  if(!t.generateTestNodeUnitSetupForTest(testId)){
     pvLastError = t.lastError();
     displayLastError();
     return;
   }
   // Update GUI
+  form()->select("TestItemNodeUnitSetup_view");
+}
+
+void mdtTtTestEditor::removeTestNodeUnitSetup()
+{
+  mdtSqlTableWidget *widget;
+  mdtTtTest t(database());
+  QMessageBox msgBox;
+  QModelIndexList indexes;
+
+  widget = form()->sqlTableWidget("TestItemNodeUnitSetup_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  indexes = widget->indexListOfSelectedRows("Id_PK");
+  if(indexes.size() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove selected setup items."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!t.removeTestNodeUnitSetups(indexes)){
+    pvLastError = t.lastError();
+    displayLastError();
+    return;
+  }
+  // Update connections table
   form()->select("TestItemNodeUnitSetup_view");
 }
 
@@ -204,6 +268,7 @@ bool mdtTtTestEditor::setupTestLinkTable()
 bool mdtTtTestEditor::setupTestNodeUnitSetupTable() 
 {
   mdtSqlTableWidget *widget;
+  QPushButton *pbRemoveTestNodeUnitSetup;
 
   if(!form()->addChildTable("TestItemNodeUnitSetup_view", tr("Node unit setup"), database())){
     return false;
@@ -220,6 +285,10 @@ bool mdtTtTestEditor::setupTestNodeUnitSetupTable()
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons
+  pbRemoveTestNodeUnitSetup = new QPushButton(tr("Remove setup item"));
+  connect(pbRemoveTestNodeUnitSetup, SIGNAL(clicked()), this, SLOT(removeTestNodeUnitSetup()));
+  widget->addWidgetToLocalBar(pbRemoveTestNodeUnitSetup);
+  widget->addStretchToLocalBar();
 
   return true;
 }

@@ -2436,6 +2436,7 @@ bool mdtClDatabaseSchema::createTestItemNodeUnitSetupView()
         " TI.Test_Id_FK,\n"\
         " TNUS.Id_PK,\n"\
         " TNUS.TestItem_Id_FK,\n"\
+        " U.SchemaPosition,\n"\
         " TNUS.State,\n"\
         " TNUS.Value,\n"\
         " TNU.Bus,\n"\
@@ -2445,6 +2446,8 @@ bool mdtClDatabaseSchema::createTestItemNodeUnitSetupView()
         "  ON TI.Id_PK = TNUS.TestItem_Id_FK\n"\
         " JOIN TestNodeUnit_tbl TNU\n"\
         "  ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
         " JOIN TestNode_tbl TN\n"\
         "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n";
 
