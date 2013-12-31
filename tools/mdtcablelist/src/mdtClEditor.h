@@ -26,7 +26,7 @@
 #include <QSqlDatabase>
 #include <QString>
 
-class mdtSqlWindow;
+class mdtSqlWindowOld;
 class mdtSqlFormWindow;
 class mdtSqlFormDialog;
 class mdtSqlFormOld;
@@ -112,7 +112,7 @@ class mdtClEditor : public QObject
    *
    * Will return a valid pointer only after setupAsWindow() was called .
    */
-  mdtSqlWindow *sqlWindow();
+  mdtSqlWindowOld *sqlWindow();
 
   /*! \brief Setup tables
    *

@@ -21,12 +21,12 @@
 #ifndef MDT_TT_TEST_ITEM_EDITOR_H
 #define MDT_TT_TEST_ITEM_EDITOR_H
 
-
-#include "mdtClEditor.h"
+///#include "mdtClEditor.h"
+#include "mdtSqlForm.h"
 
 /*! \brief Test item editor
  */
-class mdtTtTestItemEditor : public mdtClEditor
+class mdtTtTestItemEditor : public mdtSqlForm
 {
  Q_OBJECT
 
@@ -34,7 +34,12 @@ class mdtTtTestItemEditor : public mdtClEditor
 
   /*! \brief Constructor
    */
-  mdtTtTestItemEditor(QObject *parent, QSqlDatabase db);
+  ///mdtTtTestItemEditor(QObject *parent, QSqlDatabase db);
+  mdtTtTestItemEditor(QWidget *parent, QSqlDatabase db);
+
+  /*! \brief Setup all tables
+   */
+  bool setupTables();
 
  private slots:
 
@@ -55,10 +60,6 @@ class mdtTtTestItemEditor : public mdtClEditor
   /*! \brief Select a test link
    */
   QVariant selectTestLink(const QString & bus);
-
-  /*! \brief Setup all tables
-   */
-  bool setupTables();
 
   /*! \brief Setup test item table
    */

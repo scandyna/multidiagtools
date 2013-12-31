@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtClTerminalBlockEditor.h"
 #include "ui_mdtClTerminalBlockEditor.h"
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
@@ -98,7 +98,7 @@ bool mdtClTerminalBlockEditor::setupTables()
   return true;
 }
 
-void mdtClTerminalBlockEditor::setupUi(mdtSqlWindow *window)
+void mdtClTerminalBlockEditor::setupUi(mdtSqlWindowOld *window)
 {
   Q_ASSERT(window != 0);
 

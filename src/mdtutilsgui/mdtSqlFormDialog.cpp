@@ -19,14 +19,14 @@
  **
  ****************************************************************************/
 #include "mdtSqlFormDialog.h"
-#include "mdtSqlDialog.h"
+#include "mdtSqlDialogOld.h"
 #include "mdtAbstractSqlWidget.h"
 #include "mdtSqlFormWidget.h"
 
 mdtSqlFormDialog::mdtSqlFormDialog(QObject *parent)
  : mdtSqlFormOld(parent)
 {
-  pvSqlDialog = new mdtSqlDialog;
+  pvSqlDialog = new mdtSqlDialogOld;
   pvSqlDialog->setSqlWidget(mainSqlWidget());
 }
 
@@ -35,7 +35,7 @@ mdtSqlFormDialog::~mdtSqlFormDialog()
   delete pvSqlDialog;
 }
 
-mdtSqlDialog *mdtSqlFormDialog::sqlDialog()
+mdtSqlDialogOld *mdtSqlFormDialog::sqlDialog()
 {
   Q_ASSERT(pvSqlDialog != 0);
 

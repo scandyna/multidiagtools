@@ -29,8 +29,8 @@
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSortFilterProxyModel.h"
-#include "mdtSqlWindow.h"
-#include "mdtSqlDialog.h"
+#include "mdtSqlWindowOld.h"
+#include "mdtSqlDialogOld.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
 #include "mdtSqlFormOld.h"
 #include "mdtSqlFormWindow.h"
@@ -537,7 +537,7 @@ void mdtDatabaseTest::relationsTest()
   mdtSqlFormWidget *clientWidget;
   mdtSqlTableWidget *addressWidget;
   Ui::mdtSqlFormWidgetTestForm form;
-  mdtSqlWindow window;
+  mdtSqlWindowOld window;
   QSqlQuery q(pvDb);
 
   // We start with a empty table
@@ -759,7 +759,7 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
 void mdtDatabaseTest::sqlFormWidgetTest()
 {
   mdtSqlFormWidget *sqlFormWidget;
-  mdtSqlWindow window;
+  mdtSqlWindowOld window;
   Ui::mdtSqlFormWidgetTestForm form;
   QSqlTableModel model;
   QLineEdit *leFirstName = 0;
@@ -1035,7 +1035,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
 void mdtDatabaseTest::sqlTableWidgetTest()
 {
   mdtSqlTableWidget *sqlTableWidget;
-  mdtSqlWindow window;
+  mdtSqlWindowOld window;
   QSqlTableModel model;
   ///QWidget *w;
   ///int rowCount;
@@ -1169,7 +1169,7 @@ void mdtDatabaseTest::sortFilterProxyModelTest()
 
 void mdtDatabaseTest::sqlDialogTest()
 {
-  mdtSqlDialog dialog;
+  mdtSqlDialogOld dialog;
   QSqlTableModel parentModel;
   mdtSqlFormWidget *sqlFormWidget;
   Ui::mdtSqlFormWidgetTestForm form;

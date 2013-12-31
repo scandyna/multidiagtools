@@ -98,6 +98,7 @@ endif(Boost_FOUND)
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutils")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
 include_directories("${PROJECT_SOURCE_DIR}/src/qt-solutions/qtsingleapplication")
 # NOTE: Support Windows pas terminé
 if(UNIX)
@@ -135,6 +136,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 
 # * mdtutilsgui *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
+
+# * mdtdatabase *
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
 
 # NOTE: Support Windows pas terminé
 if(UNIX)

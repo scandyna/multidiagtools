@@ -1,15 +1,11 @@
-window_sizes 1280 1001 350 924 923 0
+window_sizes 1024 718 350 668 640 0
 diagrams
-  active  classdiagram_ref 967426 // mdtSqlForm
-    924 923 90 3 200 0
+  active  classdiagram_ref 941058 // Test
+    668 640 100 3 216 0
 end
 show_stereotypes
-selected operation_ref 1800834 // displayLastError
+selected classdiagram_ref 941058 // Test
 open
-  classrelation_ref 1294722 // pvMainSqlWidget (<directional composition>)
-  operation_ref 1800450 // setMainFilter
-  operation_ref 1800578 // database
-  class_ref 1040514 // mdtSqlWindow
-  class_ref 1040642 // mdtSqlDialog
+  classview_ref 569730 // TestTool
 end
 end

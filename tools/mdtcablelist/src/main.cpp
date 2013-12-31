@@ -23,7 +23,7 @@
 #include <QObject>
 #include <QLocale>
 #include <QSqlDatabase>
-#include "mdtSqlWindow.h"
+///#include "mdtSqlWindow.h"
 
 #include "mdtClLinkEditor.h"
 #include "mdtClTerminalBlockEditor.h"
@@ -48,16 +48,16 @@ int main(int argc, char **argv)
   QString password;
   bool ok;
   int retVal;
-  mdtSqlWindow vehicleTypeEditorWindow;
+  ///mdtSqlWindow vehicleTypeEditorWindow;
   ///mdtClVehicleTypeEditor *vehicleTypeEditor;
   ///mdtClArticleEditor *articleEditor;
   ///mdtClUnitEditor *unitEditor;
   // Terminal block editor
-  mdtSqlWindow terminalBlockEditorWindow;
+  ///mdtSqlWindow terminalBlockEditorWindow;
   mdtClTerminalBlockEditor *terminalBlockEditor;
   // Link editor
   mdtClLinkEditor *linkEditor;
-  mdtSqlWindow linkEditorWindow;
+  ///mdtSqlWindow linkEditorWindow;
 
   // Init app, we allow multiple instances
   if(!app.init()){

@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtClLinkEditor.h"
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
@@ -104,7 +104,7 @@ bool mdtClLinkEditor::setupTables()
   return true;
 }
 
-void mdtClLinkEditor::setupUi(mdtSqlWindow *window)
+void mdtClLinkEditor::setupUi(mdtSqlWindowOld *window)
 {
   Q_ASSERT(window != 0);
 

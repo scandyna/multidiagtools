@@ -24,7 +24,7 @@
 #include "mdtSqlFormWindow.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 
 mdtClConnectorEditor::mdtClConnectorEditor(QObject *parent, QSqlDatabase db)
  : mdtClEditor(parent, db)

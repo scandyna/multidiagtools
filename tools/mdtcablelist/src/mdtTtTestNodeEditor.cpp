@@ -23,7 +23,7 @@
 #include "ui_mdtTtTestNodeEditor.h"
 #include "mdtSqlFormOld.h"
 #include "mdtSqlFormWidget.h"
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"

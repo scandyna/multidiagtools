@@ -18,28 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_DIALOG_H
-#define MDT_SQL_DIALOG_H
+#ifndef MDT_SQL_WINDOW_OLD_H
+#define MDT_SQL_WINDOW_OLD_H
 
 #include <QWidget>
-#include <QDialog>
-#include <QString>
-#include <QVariant>
-#include <QList>
-#include <QPair>
+#include <QMainWindow>
+#include "ui_mdtSqlWindow.h"
 
 class mdtAbstractSqlWidget;
+class QAction;
+class QCloseEvent;
 class QTabWidget;
-class QVBoxLayout;
-class QPushButton;
 
-/*! \brief Dialog for a database table view/editor
+/*! \brief Main window for a database table view/editor
  *
  * This class offers some functionnality for the GUI part.
+ *  Based on QMainWindow, it displays a menu, toolbar and a status bar.
  *
  * It was designed to work with a subclass of mdtAbstractSqlWidget.
  */
-class mdtSqlDialog : public QDialog
+class mdtSqlWindowOld : public QMainWindow, public Ui::mdtSqlWindow
 {
  Q_OBJECT
 
@@ -49,19 +47,19 @@ class mdtSqlDialog : public QDialog
    *
    * Will construct a empty window.
    *  Use setSqlWidget() to set central widget,
-   *  setCurrentRow() to edit a existing row,
-   *  insertRow() to create and edit a new row.
+   *  enableNavigation() to build navigaton bar
+   *  and enableEdition() to add edition buttons.
    */
-  mdtSqlDialog(QWidget *parent = 0);
+  mdtSqlWindowOld(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 
   /*! \brief Destructor
    */
-  ~mdtSqlDialog();
+  ~mdtSqlWindowOld();
 
   /*! \brief Set form/table view/editor
    *
    * Will make some signal/slot connection,
-   *  then place sqlWidget in central area of dialog.
+   *  then place sqlWidget as QMainWindow's central widget.
    *
    * \pre sqlWidget must be a valid pointer.
    */
@@ -72,52 +70,58 @@ class mdtSqlDialog : public QDialog
    * \param widget Will be added to the childs tab
    * \param label Will be displayed in tab of tab widget
    *
-   * \pre Parent (main) widget must be set with setSqlWidget() before using this method
+   * \pre Parent widget must be set with setSqlWidget() before using this method
    * \pre widget must be a valid pointer
    */
-  void addChildWidget(QWidget *widget, const QString & label);
+  void addChildWidget(QWidget *widget, const QString &label);
 
-  /*! \brief Set row (record) to edit (in main table)
+  /*! \brief Enable navigation
    *
-   * \pre Parent (main) widget must be set with setSqlWidget() before using this method
-   */
-  void setCurrentRow(int row);
-
-  /*! \brief Set the first record that matches given criteria as row (record) to edit (in main table)
+   * Will build a navigation bar
+   *  with |<< < > >>| buttons.
    *
-   * \param fieldName Field that must contain searched value
-   * \param matchData Value that must matche
-   * \return True if matching record was found
-   * \pre Parent (main) widget must be set with setSqlWidget() before using this method
+   * \pre sqlWidget must be set with setSqlWidget() before call this method.
    */
-  bool setCurrentRow(const QString & fieldName, const QVariant & matchData);
+  void enableNavigation();
 
-  /*! \brief Not implemented yet
+  /*! \brief Disable navigation
    *
-   * \todo Implement in mdtAbstractSqlWidget and here
+   * \sa enableNavigation()
    */
-  bool setCurrentRow(const QList<QPair<QString, QVariant> > & matchList);
+  void disableNavigation();
 
- public slots:
-
-  /*! \brief Overloads QDialog::accept()
+  /*! \brief Enable edition
+   *
+   * Will add insert/revert/save/delete buttons.
+   *
+   * \pre sqlWidget must be set with setSqlWidget() before call this method.
    */
-  void accept();
+  void enableEdition();
 
-  /*! \brief Overloads QDialog::reject()
+  /*! \brief Disable edition
+   *
+   * \sa enableEdition()
    */
-  void reject();
+  void disableEdition();
 
  private:
 
-  Q_DISABLE_COPY(mdtSqlDialog);
+  /*! \brief Give a chance to the user to save data before close
+   */
+  void closeEvent(QCloseEvent *event);
 
-  mdtAbstractSqlWidget *pvMainSqlWidget;
-  QVBoxLayout *pvMainLayout;
-  int pvCentralWidgetIndexInMainLayout;
-  QPushButton *pbSubmit;
-  QPushButton *pbRevert;
+  QAction *actSubmit;
+  QAction *actRevert;
+  QAction *actInsert;
+  QAction *actRemove;
+  QAction *actNavToFirst;
+  QAction *actNavToLast;
+  QAction *actNavToPrevious;
+  QAction *actNavToNext;
   QTabWidget *pvChildsTabWidget;
+  mdtAbstractSqlWidget *pvMainSqlWidget;
+
+  Q_DISABLE_COPY(mdtSqlWindowOld);
 };
 
-#endif  // #ifndef MDT_SQL_DIALOG_H
+#endif  // #ifndef MDT_SQL_WINDOW_H

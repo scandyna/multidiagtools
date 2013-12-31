@@ -21,7 +21,7 @@
 #include "mdtClUnitEditor.h"
 #include "mdtClUnit.h"
 #include "ui_mdtClUnitEditor.h"
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"

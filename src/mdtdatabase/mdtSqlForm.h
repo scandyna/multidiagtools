@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,10 +18,11 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_FORM_OLD_H
-#define MDT_SQL_FORM_OLD_H
+#ifndef MDT_SQL_FORM_H
+#define MDT_SQL_FORM_H
 
 #include "mdtError.h"
+#include <QWidget>
 #include <QObject>
 #include <QString>
 #include <QSqlDatabase>
@@ -33,7 +34,8 @@ class mdtSqlFormWidget;
 class mdtSqlTableWidget;
 class mdtSqlRelation;
 class QSqlTableModel;
-
+class QTabWidget;
+class QVBoxLayout;
 
 /*! \brief Base class for high level SQL widgets API
  *
@@ -47,26 +49,26 @@ class QSqlTableModel;
  *  configure them, handle memory, ...).
  *
  * This class was made to have less code for common database GUI.
- *
- * You should not use this class directly, but better one
- *  of its derivate.
- *
- * \sa mdtSqlFormWindow
- * \sa mdtSqlFormDialog
  */
-class mdtSqlFormOld : public QObject
+class mdtSqlForm : public QWidget
 {
  Q_OBJECT
 
  public:
 
   /*! \brief Constructor
+   *
+   * Given database will be used whenn
+   *  adding new tables with setMainTable(const QString&, const QString&)
+   *  and addChildTable(const QString&, const QString&) .
+   *
+   * database() will also return this version .
    */
-  mdtSqlFormOld(QObject *parent = 0);
+  mdtSqlForm(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
-  virtual ~mdtSqlFormOld();
+  virtual ~mdtSqlForm();
 
   /*! \brief Get the main SQL widget
    *
@@ -84,13 +86,39 @@ class mdtSqlFormOld : public QObject
    *
    * \param tableName Table on witch the form must act.
    * \param userFriendlyTableName If set, will be used at places that are visible from user.
+   * \return True on success,
+   *          false if given table name does not exist or on some other errors (database not open, access privileges, ...)
+   */
+  bool setMainTable(const QString &tableName, const QString &userFriendlyTableName);
+
+  /*! \brief Set the main (or parent) table of the form
+   *
+   * Note: be shure that your Ui::setupUi() was called on widget
+   *        returned by mainSqlWidget() before.
+   *
+   * This method is only useful if different tables have to act on different databases .
+   *
+   * \param tableName Table on witch the form must act.
+   * \param userFriendlyTableName If set, will be used at places that are visible from user.
    * \param db Database to use (pass a QSqlDatabase() if only one database is used).
    * \return True on success,
    *          false if given table name does not exist or on some other errors (database not open, access privileges, ...)
    */
-  bool setTable(const QString &tableName, const QString &userFriendlyTableName = "", QSqlDatabase db = QSqlDatabase());
+  bool setMainTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db);
 
   /*! \brief Add a child table to the form
+   *
+   * \param tableName Table on witch the new (internally created) widget must act.
+   * \param userFriendlyTableName If set, will be used at places that are visible from user.
+   * \return True on success,
+   *          false if given table name does not exist or on some other errors (database not open, access privileges, ...).
+   *          False can also be returned if main table was not set (see setTable() ).
+   */
+  bool addChildTable(const QString &tableName, const QString &userFriendlyTableName);
+
+  /*! \brief Add a child table to the form
+   *
+   * This method is only useful if different tables have to act on different databases .
    *
    * \param tableName Table on witch the new (internally created) widget must act.
    * \param userFriendlyTableName If set, will be used at places that are visible from user.
@@ -99,7 +127,7 @@ class mdtSqlFormOld : public QObject
    *          false if given table name does not exist or on some other errors (database not open, access privileges, ...).
    *          False can also be returned if main table was not set (see setTable() ).
    */
-  virtual bool addChildTable(const QString &tableName, const QString &userFriendlyTableName = "", QSqlDatabase db = QSqlDatabase());
+  bool addChildTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db);
 
   /*! \brief Add a relation between main table and a child table
    *
@@ -122,11 +150,29 @@ class mdtSqlFormOld : public QObject
    */
   mdtSqlTableWidget *sqlTableWidget(const QString &tableName);
 
+  /*! \brief Get database that was given by constructor
+   */
+  QSqlDatabase database();
+
+  /*! \brief Get database that acts on given table name
+   *
+   * \return QSqlDatabase object that acts on given table,
+   *          or database() if table was not found .
+   */
+  QSqlDatabase database(const QString &tableName);
+
   /*! \brief Get model that acts on given table name
    *
    * \return QSqlTableModel object or a null pointer if table was not found.
    */
   QSqlTableModel *model(const QString &tableName);
+
+  /*! \brief Call select on model that acts on main table name
+   *
+   * \return True on success, false on error.
+   *          On failure, the last error is avaliable with lastError()
+   */
+  bool select();
 
   /*! \brief Call select on model that acts on given table name
    *
@@ -135,15 +181,28 @@ class mdtSqlFormOld : public QObject
    */
   bool select(const QString &tableName);
 
+  /*! \brief Set main table's filter
+   *
+   * \param fieldName Field that must match data
+   * \param matchData Match data
+   *
+   * Internally, a SQL statement is generated linke: fieldName = matchData
+   */
+  bool setMainTableFilter(const QString & fieldName, const QVariant & matchData);
+
   /*! \brief Get last error of model that acts on tableName
    *
    * \return A valid QSqlError if table was found and a error occured.
    */
-  QSqlError lastSqlError(const QString &tableName);
+  ///QSqlError lastSqlError(const QString &tableName);
 
   /*! \brief Get last error
    */
   mdtError lastError() const;
+
+  /*! \brief Display last error in a message box
+   */
+  void displayLastError();
 
   /*! \brief Get the row count for given table name
    *
@@ -202,19 +261,25 @@ class mdtSqlFormOld : public QObject
    */
   QVariant data(const QString &tableName, int row, const QString &fieldName);
 
+  /*! \brief Setup tables
+   *
+   * Must be re-implemented in subclass, default implementation does nothing .
+   */
+  virtual bool setupTables();
+
  protected:
 
-  /*! \brief Add given child widget
-   */
-  virtual void addChildWidget(mdtAbstractSqlWidget *widget) = 0;
+  mdtError pvLastError;
 
  private:
 
-  Q_DISABLE_COPY(mdtSqlFormOld);
+  Q_DISABLE_COPY(mdtSqlForm);
 
   QHash<QString, mdtSqlRelation*> pvRelationsByChildTableName;
   mdtSqlFormWidget *pvMainSqlWidget;
-  mdtError pvLastError;
+  QTabWidget *pvChildsTabWidget;
+  QVBoxLayout *pvMainLayout;
+  QSqlDatabase pvDatabase;
 };
 
 #endif  // #ifndef MDT_SQL_FORM_H

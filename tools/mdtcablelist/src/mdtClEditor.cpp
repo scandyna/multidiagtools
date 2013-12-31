@@ -21,9 +21,9 @@
 #include "mdtClEditor.h"
 #include "mdtSqlFormOld.h"
 #include "mdtSqlFormWindow.h"
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 #include "mdtSqlFormDialog.h"
-#include "mdtSqlDialog.h"
+#include "mdtSqlDialogOld.h"
 #include <QMessageBox>
 
 mdtClEditor::mdtClEditor(QObject *parent, QSqlDatabase db)
@@ -111,7 +111,7 @@ mdtSqlFormOld *mdtClEditor::form()
   return pvForm;
 }
 
-mdtSqlWindow *mdtClEditor::sqlWindow()
+mdtSqlWindowOld *mdtClEditor::sqlWindow()
 {
   if(pvFormWindow == 0){
     return 0;

@@ -21,12 +21,12 @@
 #include "mdtSqlFormWindow.h"
 #include "mdtAbstractSqlWidget.h"
 #include "mdtSqlFormWidget.h"
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 
 mdtSqlFormWindow::mdtSqlFormWindow(QObject *parent)
  : mdtSqlFormOld(parent)
 {
-  pvSqlWindow = new mdtSqlWindow;
+  pvSqlWindow = new mdtSqlWindowOld;
   pvSqlWindow->setSqlWidget(mainSqlWidget());
 }
 
@@ -35,7 +35,7 @@ mdtSqlFormWindow::~mdtSqlFormWindow()
   delete pvSqlWindow;
 }
 
-mdtSqlWindow *mdtSqlFormWindow::sqlWindow()
+mdtSqlWindowOld *mdtSqlFormWindow::sqlWindow()
 {
   Q_ASSERT(pvSqlWindow != 0);
 

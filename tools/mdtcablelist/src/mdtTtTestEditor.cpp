@@ -24,10 +24,11 @@
 #include "mdtTtTestItemEditor.h"
 #include "mdtSqlFormOld.h"
 #include "mdtSqlFormWidget.h"
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtSqlDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -87,10 +88,29 @@ void mdtTtTestEditor::addTestItem()
 
 void mdtTtTestEditor::editTestItem()
 {
-  mdtTtTestItemEditor tie(this, database());
+  mdtTtTestItemEditor *tie;
+  mdtSqlDialog dialog;
+  QVariant currentTestItemId;
 
-  tie.setupAsDialog();
-  tie.exec();
+  currentTestItemId = form()->currentData("TestItemLink_view", "TestItemId");
+  if(currentTestItemId.isNull()){
+    return;
+  }
+  tie = new mdtTtTestItemEditor(0, database());
+  if(!tie->setupTables()){
+    pvLastError = tie->lastError();
+    displayLastError();
+    return;
+  }
+  tie->setMainTableFilter("Id_PK", currentTestItemId);
+  dialog.setSqlForm(tie);
+  dialog.resize(700, 400);
+  dialog.enableEdition();
+  dialog.exec();
+  // Update connections table
+  form()->select("TestItemLink_view");
+  form()->select("TestItemNode_view");
+  form()->select("TestItemNodeUnitSetup_view");
 }
 
 void mdtTtTestEditor::removeTestItem() 

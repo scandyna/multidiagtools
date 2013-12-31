@@ -25,7 +25,7 @@
 #include <QString>
 #include <QSqlDatabase>
 
-class mdtSqlDialog;
+class mdtSqlDialogOld;
 class mdtAbstractSqlWidget;
 
 /*! \brief SQL form dialog
@@ -41,6 +41,8 @@ class mdtAbstractSqlWidget;
  * Setting up the Ui is the first thing to do.
  *
  * Once done, use mdtSqlForm methods to continue setup.
+ * 
+ * \todo Obselete this class
  */
 class mdtSqlFormDialog : public mdtSqlFormOld
 {
@@ -60,7 +62,7 @@ class mdtSqlFormDialog : public mdtSqlFormOld
    *
    * \post Returns a valid object.
    */
-  mdtSqlDialog *sqlDialog();
+  mdtSqlDialogOld *sqlDialog();
 
   /*! \brief Show the dialog
    */
@@ -74,7 +76,7 @@ class mdtSqlFormDialog : public mdtSqlFormOld
 
   Q_DISABLE_COPY(mdtSqlFormDialog);
 
-  mdtSqlDialog *pvSqlDialog;
+  mdtSqlDialogOld *pvSqlDialog;
 };
 
 #endif  // #ifndef MDT_SQL_FORM_DIALOG_H

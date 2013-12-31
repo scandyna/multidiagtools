@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtClMainWindow.h"
+#include "mdtSqlWindow.h"
 #include "mdtSqlDatabaseManager.h"
 #include "mdtClDatabaseSchema.h"
 #include "mdtClVehicleTypeEditor.h"
@@ -53,6 +54,7 @@ mdtClMainWindow::mdtClMainWindow()
   pvTestNodeEditor = 0;
   pvTestEditor = 0;
   pvTestItemEditor = 0;
+  pvTestItemEditorWindow = 0;
 
   createActions();
 }
@@ -213,8 +215,8 @@ void mdtClMainWindow::editTest()
 void mdtClMainWindow::editTestItem()
 {
   if(pvTestItemEditor == 0){
-    pvTestItemEditor = new mdtTtTestItemEditor(this, pvDatabaseManager->database());
-    if(!pvTestItemEditor->setupAsWindow()){
+    pvTestItemEditor = new mdtTtTestItemEditor(0, pvDatabaseManager->database());
+    if(!pvTestItemEditor->setupTables()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup test item editor."));
       msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
@@ -225,9 +227,16 @@ void mdtClMainWindow::editTestItem()
       pvTestItemEditor = 0;
       return;
     }
+    pvTestItemEditorWindow = new mdtSqlWindow(this);
+    pvTestItemEditorWindow->setSqlForm(pvTestItemEditor);
+    pvTestItemEditorWindow->resize(800, 500);
+    pvTestItemEditorWindow->enableNavigation();
+    pvTestItemEditorWindow->enableEdition();
   }
   Q_ASSERT(pvTestItemEditor != 0);
-  pvTestItemEditor->show();
+  Q_ASSERT(pvTestItemEditorWindow != 0);
+  pvTestItemEditor->select();
+  pvTestItemEditorWindow->show();
 }
 
 void mdtClMainWindow::createTestConnectionCable()

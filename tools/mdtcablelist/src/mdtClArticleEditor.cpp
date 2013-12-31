@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtClArticleEditor.h"
 #include "ui_mdtClArticleEditor.h"
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtAbstractSqlWidget.h"

@@ -103,6 +103,7 @@ QT4_WRAP_CPP(MDT_CL_SANDBOX_MOC "mdtClSandbox.h" ${TEST_HEADER_FILES})
 add_executable(mdtclsandbox "mdtClSandbox.cpp" ${TEST_SOURCES_FILES} ${MDT_CL_SANDBOX_MOC})
 target_link_libraries(mdtclsandbox "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclsandbox "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdttest")
 
 # mdtClUnit
@@ -110,4 +111,5 @@ QT4_WRAP_CPP(TEST_MOC "mdtClUnitTest.h" ${TEST_HEADER_FILES})
 add_executable(mdtclunittest "mdtClUnitTest.cpp" ${TEST_SOURCES_FILES} ${TEST_MOC})
 target_link_libraries(mdtclunittest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclunittest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdttest")

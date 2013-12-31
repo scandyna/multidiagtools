@@ -25,7 +25,7 @@
 #include <QObject>
 #include <QSqlError>
 
-class mdtSqlWindow;
+class mdtSqlWindowOld;
 class mdtSqlFormWidget;
 class mdtSqlTableWidget;
 class mdtSqlRelation;
@@ -58,7 +58,7 @@ class mdtClTerminalBlockEditor : public QObject
    *
    * \pre window must be a valid pointer
    */
-  void setupUi(mdtSqlWindow *window);
+  void setupUi(mdtSqlWindowOld *window);
 
  private slots:
 

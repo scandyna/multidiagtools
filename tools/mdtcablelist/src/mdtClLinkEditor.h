@@ -26,7 +26,7 @@
 #include <QObject>
 #include <QVariant>
 
-class mdtSqlWindow;
+class mdtSqlWindowOld;
 class mdtSqlFormWidget;
 class mdtSqlTableWidget;
 class mdtSqlRelation;
@@ -63,7 +63,7 @@ class mdtClLinkEditor : public QObject
    *
    * \pre window must be a valid pointer
    */
-  void setupUi(mdtSqlWindow *window);
+  void setupUi(mdtSqlWindowOld *window);
 
  private slots:
 

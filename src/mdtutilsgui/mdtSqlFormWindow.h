@@ -25,7 +25,7 @@
 #include <QString>
 #include <QSqlDatabase>
 
-class mdtSqlWindow;
+class mdtSqlWindowOld;
 
 /*! \brief SQL form window
  *
@@ -40,6 +40,8 @@ class mdtSqlWindow;
  * Setting up the Ui is the first thing to do.
  *
  * Once done, use mdtSqlForm methods to continue setup.
+ * 
+ * \todo Obselete this class
  */
 class mdtSqlFormWindow : public mdtSqlFormOld
 {
@@ -59,7 +61,7 @@ class mdtSqlFormWindow : public mdtSqlFormOld
    *
    * \post Returns a valid object.
    */
-  mdtSqlWindow *sqlWindow();
+  mdtSqlWindowOld *sqlWindow();
 
   /*! \brief Show the form
    */
@@ -73,7 +75,7 @@ class mdtSqlFormWindow : public mdtSqlFormOld
 
   Q_DISABLE_COPY(mdtSqlFormWindow);
 
-  mdtSqlWindow *pvSqlWindow;
+  mdtSqlWindowOld *pvSqlWindow;
 };
 
 #endif  // #ifndef MDT_SQL_FORM_WINDOW_H

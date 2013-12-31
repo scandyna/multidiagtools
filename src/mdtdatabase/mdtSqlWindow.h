@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,17 +25,18 @@
 #include <QMainWindow>
 #include "ui_mdtSqlWindow.h"
 
-class mdtAbstractSqlWidget;
+///class mdtAbstractSqlWidget;
 class QAction;
 class QCloseEvent;
-class QTabWidget;
+///class QTabWidget;
+class mdtSqlForm;
 
 /*! \brief Main window for a database table view/editor
  *
  * This class offers some functionnality for the GUI part.
  *  Based on QMainWindow, it displays a menu, toolbar and a status bar.
  *
- * It was designed to work with a subclass of mdtAbstractSqlWidget.
+ * It was designed to work with a subclass of mdtSqlForm .
  */
 class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
 {
@@ -63,7 +64,13 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    *
    * \pre sqlWidget must be a valid pointer.
    */
-  void setSqlWidget(mdtAbstractSqlWidget *sqlWidget);
+  ///void setSqlWidget(mdtAbstractSqlWidget *sqlWidget);
+
+  /*! \brief Set the SQL form
+   *
+   * \pre form must be a valid pointer .
+   */
+  void setSqlForm(mdtSqlForm *form);
 
   /*! \brief Add a child (details) widget
    *
@@ -73,14 +80,14 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    * \pre Parent widget must be set with setSqlWidget() before using this method
    * \pre widget must be a valid pointer
    */
-  void addChildWidget(QWidget *widget, const QString &label);
+  ///void addChildWidget(QWidget *widget, const QString &label);
 
   /*! \brief Enable navigation
    *
    * Will build a navigation bar
    *  with |<< < > >>| buttons.
    *
-   * \pre sqlWidget must be set with setSqlWidget() before call this method.
+   * \pre Form must be set with setSqlForm() before call this method.
    */
   void enableNavigation();
 
@@ -94,7 +101,7 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    *
    * Will add insert/revert/save/delete buttons.
    *
-   * \pre sqlWidget must be set with setSqlWidget() before call this method.
+   * \pre Form must be set with setSqlForm() before call this method.
    */
   void enableEdition();
 
@@ -118,8 +125,9 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
   QAction *actNavToLast;
   QAction *actNavToPrevious;
   QAction *actNavToNext;
-  QTabWidget *pvChildsTabWidget;
-  mdtAbstractSqlWidget *pvMainSqlWidget;
+  ///QTabWidget *pvChildsTabWidget;
+  ///mdtAbstractSqlWidget *pvMainSqlWidget;
+  mdtSqlForm *pvForm;
 
   Q_DISABLE_COPY(mdtSqlWindow);
 };

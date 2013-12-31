@@ -35,6 +35,7 @@ class mdtClArticleEditor;
 class mdtTtTestNodeEditor;
 class mdtTtTestEditor;
 class mdtTtTestItemEditor;
+class mdtSqlWindow;
 
 class QAction;
 
@@ -153,6 +154,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   mdtTtTestNodeEditor *pvTestNodeEditor;
   mdtTtTestEditor *pvTestEditor;
   mdtTtTestItemEditor *pvTestItemEditor;
+  mdtSqlWindow *pvTestItemEditorWindow;
 };
 
 #endif // #ifndef MDT_CL_MAIN_WINDOW_H

@@ -111,6 +111,7 @@ add_executable (mdtcablelist${MDTLIB_VERSION_SUFFIX} ${GUI_TYPE} ${SOURCES_FILES
 # Libraries to link
 target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 
 # Install targets

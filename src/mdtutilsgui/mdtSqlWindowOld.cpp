@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlWindow.h"
+#include "mdtSqlWindowOld.h"
 #include "mdtAbstractSqlWidget.h"
 #include <QAction>
 #include <QCloseEvent>
@@ -28,7 +28,7 @@
 
 #include <QDebug>
 
-mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
+mdtSqlWindowOld::mdtSqlWindowOld(QWidget *parent, Qt::WindowFlags flags)
  : QMainWindow(parent, flags)
 {
   actSubmit = 0;
@@ -49,11 +49,11 @@ mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
   setCentralWidget(widget);
 }
 
-mdtSqlWindow::~mdtSqlWindow()
+mdtSqlWindowOld::~mdtSqlWindowOld()
 {
 }
 
-void mdtSqlWindow::setSqlWidget(mdtAbstractSqlWidget *sqlWidget)
+void mdtSqlWindowOld::setSqlWidget(mdtAbstractSqlWidget *sqlWidget)
 {
   Q_ASSERT(sqlWidget != 0);
 
@@ -61,7 +61,7 @@ void mdtSqlWindow::setSqlWidget(mdtAbstractSqlWidget *sqlWidget)
   centralWidget()->layout()->addWidget(pvMainSqlWidget);
 }
 
-void mdtSqlWindow::addChildWidget(QWidget *widget, const QString &label)
+void mdtSqlWindowOld::addChildWidget(QWidget *widget, const QString &label)
 {
   Q_ASSERT(widget != 0);
 
@@ -74,7 +74,7 @@ void mdtSqlWindow::addChildWidget(QWidget *widget, const QString &label)
   pvChildsTabWidget->addTab(widget, label);
 }
 
-void mdtSqlWindow::enableNavigation()
+void mdtSqlWindowOld::enableNavigation()
 {
   Q_ASSERT(pvMainSqlWidget != 0);
 
@@ -104,13 +104,13 @@ void mdtSqlWindow::enableNavigation()
   tlbMain->addAction(actNavToLast);
 }
 
-void mdtSqlWindow::disableNavigation()
+void mdtSqlWindowOld::disableNavigation()
 {
   // Remove actions from toolbar
   /// \todo Possible ?
 }
 
-void mdtSqlWindow::enableEdition()
+void mdtSqlWindowOld::enableEdition()
 {
   Q_ASSERT(pvMainSqlWidget != 0);
 
@@ -150,11 +150,11 @@ void mdtSqlWindow::enableEdition()
   tlbMain->addAction(actRemove);
 }
 
-void mdtSqlWindow::disableEdition()
+void mdtSqlWindowOld::disableEdition()
 {
 }
 
-void mdtSqlWindow::closeEvent(QCloseEvent *event)
+void mdtSqlWindowOld::closeEvent(QCloseEvent *event)
 {
   Q_ASSERT(event != 0);
 
