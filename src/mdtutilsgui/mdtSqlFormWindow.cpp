@@ -24,7 +24,7 @@
 #include "mdtSqlWindow.h"
 
 mdtSqlFormWindow::mdtSqlFormWindow(QObject *parent)
- : mdtSqlForm(parent)
+ : mdtSqlFormOld(parent)
 {
   pvSqlWindow = new mdtSqlWindow;
   pvSqlWindow->setSqlWidget(mainSqlWidget());

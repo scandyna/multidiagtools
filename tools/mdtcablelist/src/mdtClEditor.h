@@ -29,7 +29,7 @@
 class mdtSqlWindow;
 class mdtSqlFormWindow;
 class mdtSqlFormDialog;
-class mdtSqlForm;
+class mdtSqlFormOld;
 class QWidget;
 
 /*! \brief Base class for editors
@@ -106,7 +106,7 @@ class mdtClEditor : public QObject
    * \sa setupAsWindow()
    * \sa setupAsDialog()
    */
-  mdtSqlForm *form();
+  mdtSqlFormOld *form();
 
   /*! \brief Access SQL window object
    *
@@ -130,7 +130,7 @@ class mdtClEditor : public QObject
 
   Q_DISABLE_COPY(mdtClEditor);
 
-  mdtSqlForm *pvForm;
+  mdtSqlFormOld *pvForm;
   mdtSqlFormWindow *pvFormWindow;
   mdtSqlFormDialog *pvFormDialog;
   QSqlDatabase pvDatabase;

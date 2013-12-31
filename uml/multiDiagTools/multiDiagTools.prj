@@ -1,6 +1,6 @@
 format 76
 "multiDiagTools"
-  revision 17
+  revision 18
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -44,6 +44,8 @@ format 76
   package_ref 128002 // mdtutils
 
   package_ref 174978 // mdtutilsgui
+
+  package_ref 234498 // mdtdatabase
 
   package_ref 168322 // mdtport
 

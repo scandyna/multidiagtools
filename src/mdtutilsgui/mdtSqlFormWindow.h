@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_FORM_WINDOW_H
 #define MDT_SQL_FORM_WINDOW_H
 
-#include "mdtSqlForm.h"
+#include "mdtSqlFormOld.h"
 #include <QString>
 #include <QSqlDatabase>
 
@@ -41,7 +41,7 @@ class mdtSqlWindow;
  *
  * Once done, use mdtSqlForm methods to continue setup.
  */
-class mdtSqlFormWindow : public mdtSqlForm
+class mdtSqlFormWindow : public mdtSqlFormOld
 {
  Q_OBJECT
 

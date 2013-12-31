@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_FORM_DIALOG_H
 #define MDT_SQL_FORM_DIALOG_H
 
-#include "mdtSqlForm.h"
+#include "mdtSqlFormOld.h"
 #include <QString>
 #include <QSqlDatabase>
 
@@ -42,7 +42,7 @@ class mdtAbstractSqlWidget;
  *
  * Once done, use mdtSqlForm methods to continue setup.
  */
-class mdtSqlFormDialog : public mdtSqlForm
+class mdtSqlFormDialog : public mdtSqlFormOld
 {
  Q_OBJECT
 

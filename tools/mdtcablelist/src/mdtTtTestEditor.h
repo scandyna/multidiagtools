@@ -41,6 +41,10 @@ class mdtTtTestEditor : public mdtClEditor
    */
   void addTestItem();
 
+  /*! \brief Edit a test item
+   */
+  void editTestItem();
+
   /*! \brief Remove a test item
    */
   void removeTestItem();

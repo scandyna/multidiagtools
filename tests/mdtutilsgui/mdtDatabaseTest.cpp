@@ -32,7 +32,7 @@
 #include "mdtSqlWindow.h"
 #include "mdtSqlDialog.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
-#include "mdtSqlForm.h"
+#include "mdtSqlFormOld.h"
 #include "mdtSqlFormWindow.h"
 #include "mdtSqlFormDialog.h"
 #include "mdtSqlSelectionDialog.h"

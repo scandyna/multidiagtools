@@ -21,7 +21,8 @@
 #include "mdtTtTestEditor.h"
 #include "ui_mdtTtTestEditor.h"
 #include "mdtTtTest.h"
-#include "mdtSqlForm.h"
+#include "mdtTtTestItemEditor.h"
+#include "mdtSqlFormOld.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlRelation.h"
@@ -82,6 +83,14 @@ void mdtTtTestEditor::addTestItem()
   // Update GUI
   form()->select("TestItemLink_view");
   form()->select("TestItemNode_view");
+}
+
+void mdtTtTestEditor::editTestItem()
+{
+  mdtTtTestItemEditor tie(this, database());
+
+  tie.setupAsDialog();
+  tie.exec();
 }
 
 void mdtTtTestEditor::removeTestItem() 
@@ -172,42 +181,6 @@ void mdtTtTestEditor::removeTestNodeUnitSetup()
 }
 */
 
-/**
-QVariant mdtTtTestEditor::selectTestLink(const QString & msg)
-{
-  mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
-  QString sql;
-
-  // Setup model
-  sql = "SELECT * FROM TestLink_view";
-  model.setQuery(sql, database());
-  sqlError = model.lastError();
-  if(sqlError.isValid()){
-    pvLastError.setError(tr("Unable to get list of test links."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestEditor");
-    pvLastError.commit();
-    displayLastError();
-    return QVariant();
-  }
-  // Setup and show dialog
-  selectionDialog.setMessage(msg);
-  selectionDialog.setModel(&model, false);
-  ///selectionDialog.setColumnHidden("", true);
-  ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
-  selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(700, 300);
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return QVariant();
-  }
-  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
-
-  return selectionDialog.selectionResult().at(0);
-}
-*/
-
 bool mdtTtTestEditor::setupTables() 
 {
   if(!setupTestTable()){
@@ -251,6 +224,7 @@ bool mdtTtTestEditor::setupTestTable()
 bool mdtTtTestEditor::setupTestLinkTable() 
 {
   mdtSqlTableWidget *widget;
+  QPushButton *pbEditTestItem;
 
   if(!form()->addChildTable("TestItemLink_view", tr("Links"), database())){
     return false;
@@ -261,12 +235,29 @@ bool mdtTtTestEditor::setupTestLinkTable()
   widget = form()->sqlTableWidget("TestItemLink_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
-  ///widget->setColumnHidden("", true);
+  widget->setColumnHidden("Test_Id_FK", true);
+  widget->setColumnHidden("TestLinkBusA_Id_FK", true);
+  widget->setColumnHidden("TestLinkBusB_Id_FK", true);
   // Set fields a user friendly name
-  ///widget->setHeaderData("", tr(""));
+  widget->setHeaderData("ExpectedValue", tr("Value\nExpected"));
+  widget->setHeaderData("TestConnectorNameBusA", tr("Test\nConnector\nBus A"));
+  widget->setHeaderData("TestConnectorNameBusB", tr("Test\nConnector\nBus B"));
+  widget->setHeaderData("TestContactNameBusA", tr("Test\nContact\nBus A"));
+  widget->setHeaderData("TestContactNameBusB", tr("Test\nContact\nBus B"));
+  widget->setHeaderData("DutUnitSchemaPositionBusA", tr("DUT BUS A"));
+  widget->setHeaderData("DutUnitSchemaPositionBusB", tr("DUT BUS B"));
+  widget->setHeaderData("DutConnectorNameBusA", tr("DUT\nConnector\nBus A"));
+  widget->setHeaderData("DutConnectorNameBusB", tr("DUT\nConnector\nBus B"));
+  widget->setHeaderData("DutContactNameBusA", tr("DUT\nContact\nBus A"));
+  widget->setHeaderData("DutContactNameBusB", tr("DUT\nContact\nBus B"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons
+  pbEditTestItem = new QPushButton(tr("Edit item"));
+  connect(pbEditTestItem, SIGNAL(clicked()), this, SLOT(editTestItem()));
+  widget->addWidgetToLocalBar(pbEditTestItem);
+  widget->addStretchToLocalBar();
+
 
   return true;
 }

@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtClEditor.h"
-#include "mdtSqlForm.h"
+#include "mdtSqlFormOld.h"
 #include "mdtSqlFormWindow.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlFormDialog.h"
@@ -106,7 +106,7 @@ mdtError mdtClEditor::lastError() const
   return pvLastError;
 }
 
-mdtSqlForm *mdtClEditor::form()
+mdtSqlFormOld *mdtClEditor::form()
 {
   return pvForm;
 }

@@ -54,7 +54,7 @@ class QSqlTableModel;
  * \sa mdtSqlFormWindow
  * \sa mdtSqlFormDialog
  */
-class mdtSqlForm : public QObject
+class mdtSqlFormOld : public QObject
 {
  Q_OBJECT
 
@@ -62,11 +62,11 @@ class mdtSqlForm : public QObject
 
   /*! \brief Constructor
    */
-  mdtSqlForm(QObject *parent = 0);
+  mdtSqlFormOld(QObject *parent = 0);
 
   /*! \brief Destructor
    */
-  virtual ~mdtSqlForm();
+  virtual ~mdtSqlFormOld();
 
   /*! \brief Get the main SQL widget
    *
@@ -210,7 +210,7 @@ class mdtSqlForm : public QObject
 
  private:
 
-  Q_DISABLE_COPY(mdtSqlForm);
+  Q_DISABLE_COPY(mdtSqlFormOld);
 
   QHash<QString, mdtSqlRelation*> pvRelationsByChildTableName;
   mdtSqlFormWidget *pvMainSqlWidget;

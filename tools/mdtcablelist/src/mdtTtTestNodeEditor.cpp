@@ -21,7 +21,7 @@
 #include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestNode.h"
 #include "ui_mdtTtTestNodeEditor.h"
-#include "mdtSqlForm.h"
+#include "mdtSqlFormOld.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlRelation.h"

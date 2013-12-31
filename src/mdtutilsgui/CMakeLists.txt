@@ -66,7 +66,7 @@ set (HEADER_FILES
           mdtSortFilterProxyModel.h
           mdtSqlDataValidator.h
           mdtSqlFormWidgetDataValidator.h
-          mdtSqlForm.h
+          mdtSqlFormOld.h
           mdtSqlFormWindow.h
           mdtSqlFormDialog.h
           mdtSqlDatabaseManager.h
@@ -112,7 +112,7 @@ set (SOURCES_FILES
           mdtSortFilterProxyModel.cpp
           mdtSqlDataValidator.cpp
           mdtSqlFormWidgetDataValidator.cpp
-          mdtSqlForm.cpp
+          mdtSqlFormOld.cpp
           mdtSqlFormWindow.cpp
           mdtSqlFormDialog.cpp
           mdtSqlSchemaTable.cpp

@@ -21,7 +21,7 @@
 #include "mdtTtTestItemEditor.h"
 #include "ui_mdtTtTestItemEditor.h"
 #include "mdtTtTestItem.h"
-#include "mdtSqlForm.h"
+#include "mdtSqlFormOld.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlRelation.h"
@@ -213,9 +213,21 @@ bool mdtTtTestItemEditor::setupTestLinkTable()
   widget = form()->sqlTableWidget("TestItemLink_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
-  ///widget->setColumnHidden("", true);
+  widget->setColumnHidden("Test_Id_FK", true);
+  widget->setColumnHidden("TestLinkBusA_Id_FK", true);
+  widget->setColumnHidden("TestLinkBusB_Id_FK", true);
   // Set fields a user friendly name
-  ///widget->setHeaderData("", tr(""));
+  widget->setHeaderData("ExpectedValue", tr("Value\nExpected"));
+  widget->setHeaderData("TestConnectorNameBusA", tr("Test\nConnector\nBus A"));
+  widget->setHeaderData("TestConnectorNameBusB", tr("Test\nConnector\nBus B"));
+  widget->setHeaderData("TestContactNameBusA", tr("Test\nContact\nBus A"));
+  widget->setHeaderData("TestContactNameBusB", tr("Test\nContact\nBus B"));
+  widget->setHeaderData("DutUnitSchemaPositionBusA", tr("DUT BUS A"));
+  widget->setHeaderData("DutUnitSchemaPositionBusB", tr("DUT BUS B"));
+  widget->setHeaderData("DutConnectorNameBusA", tr("DUT\nConnector\nBus A"));
+  widget->setHeaderData("DutConnectorNameBusB", tr("DUT\nConnector\nBus B"));
+  widget->setHeaderData("DutContactNameBusA", tr("DUT\nContact\nBus A"));
+  widget->setHeaderData("DutContactNameBusB", tr("DUT\nContact\nBus B"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons
