@@ -1,6 +1,6 @@
 format 76
 "mdtdatabase" // mdtdatabase
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -79,11 +79,12 @@ ${inlines}
 
       operation 1797122 "mdtSqlForm"
 	public explicit_return_type ""
-	nparams 1
+	nparams 2
 	  param in name "parent" type class_ref 316162 // QWidget
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
 "
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
 {
   ${body}}
 "
@@ -97,6 +98,17 @@ ${inlines}
 	abstract force_body_gen cpp_virtual public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 1800706 "setupTables"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -396,17 +408,6 @@ ${inlines}
 "
 	    classrelation_ref 1294850 // pvLastError (<directional composition>)
 	  b parent class_ref 182402 // mdtError
-      end
-
-      operation 1800706 "setupTables"
-	abstract cpp_virtual protected explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
       end
     end
 

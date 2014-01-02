@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,6 +30,8 @@
 #include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestEditor.h"
 #include "mdtTtTestItemEditor.h"
+#include "mdtTtCableChecker.h"
+#include "mdtTtCableCheckerWindow.h"
 #include <QAction>
 #include <QMessageBox>
 #include <QApplication>
@@ -52,9 +54,13 @@ mdtClMainWindow::mdtClMainWindow()
   pvUnitEditor = 0;
   pvArticleEditor = 0;
   pvTestNodeEditor = 0;
+  pvTestConnectionCableEditor = 0;
+  pvTestConnectionCableEditorWindow = 0;
   pvTestEditor = 0;
   pvTestItemEditor = 0;
   pvTestItemEditorWindow = 0;
+  pvCableChecker = 0;
+  pvCableCheckerWindow = 0;
 
   createActions();
 }
@@ -172,6 +178,33 @@ void mdtClMainWindow::editArticle()
   pvArticleEditor->show();
 }
 
+void mdtClMainWindow::editTestConnectionCable()
+{
+  if(pvTestConnectionCableEditor == 0){
+    pvTestConnectionCableEditor = new mdtCcTestConnectionCableEditor(0, pvDatabaseManager->database());
+    if(!pvTestConnectionCableEditor->setupTables()){
+      QMessageBox msgBox(this);
+      msgBox.setText(tr("Cannot setup test connection cable editor."));
+      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
+                                + qApp->applicationName() + tr(")"));
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.exec();
+      delete pvTestConnectionCableEditor;
+      pvTestConnectionCableEditor = 0;
+      return;
+    }
+    pvTestConnectionCableEditorWindow = new mdtSqlWindow(this);
+    pvTestConnectionCableEditorWindow->setSqlForm(pvTestConnectionCableEditor);
+    pvTestConnectionCableEditorWindow->resize(800, 500);
+    pvTestConnectionCableEditorWindow->enableNavigation();
+    pvTestConnectionCableEditorWindow->enableEdition();
+  }
+  Q_ASSERT(pvTestConnectionCableEditor != 0);
+  Q_ASSERT(pvTestConnectionCableEditorWindow != 0);
+  pvTestConnectionCableEditor->select();
+  pvTestConnectionCableEditorWindow->show();
+}
+
 void mdtClMainWindow::editTestNode()
 {
   if(pvTestNodeEditor == 0){
@@ -239,6 +272,32 @@ void mdtClMainWindow::editTestItem()
   pvTestItemEditorWindow->show();
 }
 
+void mdtClMainWindow::runCableChecker()
+{
+  if(pvCableChecker == 0){
+    pvCableChecker = new mdtTtCableChecker(0, pvDatabaseManager->database());
+    if(!pvCableChecker->setupTables()){
+      QMessageBox msgBox(this);
+      msgBox.setText(tr("Cannot setup test item editor."));
+      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
+                                + qApp->applicationName() + tr(")"));
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.exec();
+      delete pvCableChecker;
+      pvCableChecker = 0;
+      return;
+    }
+    pvCableCheckerWindow = new mdtTtCableCheckerWindow(this);
+    pvCableCheckerWindow->setCableChecker(pvCableChecker);
+    pvCableCheckerWindow->resize(800, 500);
+  }
+  Q_ASSERT(pvCableChecker != 0);
+  Q_ASSERT(pvCableCheckerWindow != 0);
+  pvCableChecker->select();
+  pvCableCheckerWindow->show();
+}
+
+/**
 void mdtClMainWindow::createTestConnectionCable()
 {
   mdtCcTestConnectionCableEditor editor(this, pvDatabaseManager->database());
@@ -259,6 +318,7 @@ void mdtClMainWindow::disconnectTestCable()
 
   editor.disconnectTestCable();
 }
+*/
 
 void mdtClMainWindow::createActions()
 {
@@ -284,15 +344,20 @@ void mdtClMainWindow::createActions()
   connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
 
   // Test connection cable
+  connect(actEditTestConnectionCable, SIGNAL(triggered()), this, SLOT(editTestConnectionCable()));
+  /**
   connect(actCreateTestConnectionCable, SIGNAL(triggered()), this, SLOT(createTestConnectionCable()));
   connect(actConnectTestCable, SIGNAL(triggered()), this, SLOT(connectTestCable()));
   connect(actDisconnectTestCable, SIGNAL(triggered()), this, SLOT(disconnectTestCable()));
+  */
   // Test node edition
   connect(actEditTestNode, SIGNAL(triggered()), this, SLOT(editTestNode()));
   // Test edition
   connect(actEditTest, SIGNAL(triggered()), this, SLOT(editTest()));
   // Test item edition
   connect(actEditTestItem, SIGNAL(triggered()), this, SLOT(editTestItem()));
+  // Cable checker
+  connect(actCableChecker, SIGNAL(triggered()), this, SLOT(runCableChecker()));
 
 }
 

@@ -1,6 +1,6 @@
 format 76
 "Program" // mdttools::TestTool::Program
-  revision 6
+  revision 9
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -26,7 +26,7 @@ format 76
   package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
   show_infonote default drawing_language default show_stereotype_properties default
   
-  classview 576258 "TestNode"
+  classview 576258 "TestTool"
     //class diagram settings
     draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
     //collaboration diagram settings
@@ -374,14 +374,6 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 1287298 // <generalisation>
-	relation 1274370 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1287298 // <generalisation>
-	  b parent class_ref 952962 // mdtClBase
-      end
-
       operation 1789954 "mdtTtTestItem"
 	public explicit_return_type ""
 	nparams 1
@@ -396,6 +388,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 1308290 // <generalisation>
+	relation 1295362 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1308290 // <generalisation>
+	  b parent class_ref 952962 // mdtClBase
       end
     end
 
@@ -417,18 +417,10 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 1287426 // <generalisation>
-	relation 1274498 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1287426 // <generalisation>
-	  b parent class_ref 952322 // mdtClEditor
-      end
-
       operation 1790082 "mdtTtTestItemEditor"
 	public explicit_return_type ""
 	nparams 2
-	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "parent" type class_ref 316162 // QWidget
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
 "
@@ -505,6 +497,14 @@ ${inlines}
 	    classrelation_ref 1287554 // <dependency>
 	  b parent class_ref 1033858 // Ui::mdtTtTestItemEditor
       end
+
+      classrelation 1308418 // <generalisation>
+	relation 1295490 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1308418 // <generalisation>
+	  b parent class_ref 1040386 // mdtSqlForm
+      end
     end
 
     class 1033858 "Ui::mdtTtTestItemEditor"
@@ -521,6 +521,50 @@ ${inlines}
       explicit_switch_type ""
       
     end
+
+    classdiagram 980738 "mdtTtTestResult"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 1053698 "mdtTtTestResult"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1315074 // <generalisation>
+	relation 1302146 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1315074 // <generalisation>
+	  b parent class_ref 952962 // mdtClBase
+      end
+
+      operation 1813890 "mdtTtTestResult"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
   end
 
   classview 556418 "mdtCcTestConnectionCable"
@@ -541,7 +585,7 @@ ${inlines}
     show_infonote default drawing_language default show_stereotype_properties default
     associated_deployment_view deploymentview_ref 454914 // mdtCcTestConnectionCable
     classdiagram 914434 "mdtCcTestConnectionCable"
-      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      draw_all_relations no hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
@@ -591,7 +635,7 @@ ${inlines}
       end
     end
 
-    class 979586 "mdtCcTestConnectionCableEditor"
+    class 979586 "mdtTtTestConnectionCableEditor"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -604,14 +648,6 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 1232386 // <generalisation>
-	relation 1219458 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1232386 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
       classrelation 1232514 // <dependency>
 	relation 1219586 -_->
 	  a default
@@ -620,26 +656,27 @@ ${inlines}
 	  b parent class_ref 979458 // mdtClUnitEditor
       end
 
-      attribute 1020546 "pvDatabase"
-	private type class_ref 405122 // QSqlDatabase
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      operation 1755522 "mdtCcTestConnectionCableEditor"
+      operation 1755522 "mdtTtTestConnectionCableEditor"
 	public explicit_return_type ""
 	nparams 2
-	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "parent" type class_ref 316162 // QWidget
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
 {
   ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1807362 "setupTables"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -707,6 +744,14 @@ ${inlines}
 	    classrelation_ref 1232642 // <dependency>
 	  b parent class_ref 979330 // mdtCcTestConnectionCable
       end
+
+      classrelation 1308546 // <generalisation>
+	relation 1295618 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1308546 // <generalisation>
+	  b parent class_ref 1040386 // mdtSqlForm
+      end
     end
   end
 
@@ -758,7 +803,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 979586 // mdtCcTestConnectionCableEditor
+	class_ref 979586 // mdtTtTestConnectionCableEditor
       end
     end
   end
@@ -988,6 +1033,323 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 1033730 // mdtTtTestItemEditor
+      end
+    end
+
+    artifact 663810 "mdtTtTestResult"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 1053698 // mdtTtTestResult
+      end
+    end
+  end
+
+  classview 589314 "mdtTtCableChecker"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    associated_deployment_view deploymentview_ref 467970 // mdtTtCableChecker
+    classdiagram 974210 "mdtTtCableChecker"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 1053954 "Ui::mdtTtCableChecker"
+      visibility protected 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    class 1047170 "mdtTtCableChecker"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 1814530 "mdtTtCableChecker"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 316162 // QWidget
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1315330 // <generalisation>
+	relation 1302402 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1315330 // <generalisation>
+	  b parent class_ref 1040386 // mdtSqlForm
+      end
+
+      classrelation 1315458 // <dependency>
+	relation 1302530 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 1315458 // <dependency>
+	  b parent class_ref 1053954 // Ui::mdtTtCableChecker
+      end
+
+      operation 1814658 "setupTables"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1814786 "setupTestResultTable"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1814914 "setupTestResultItemTable"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1315586 // <dependency>
+	relation 1302658 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 1315586 // <dependency>
+	  b parent class_ref 1026946 // mdtTtTest
+      end
+
+      classrelation 1315714 // <dependency>
+	relation 1302786 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 1315714 // <dependency>
+	  b parent class_ref 1053698 // mdtTtTestResult
+      end
+
+      classrelation 1315842 // <dependency>
+	relation 1302914 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 1315842 // <dependency>
+	  b parent class_ref 309378 // mdtDeviceU3606A
+      end
+
+      classrelation 1315970 // <dependency>
+	relation 1303042 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 1315970 // <dependency>
+	  b parent class_ref 532226 // mdtDeviceModbusWago
+      end
+    end
+
+    classdiagram 980866 "mdtTtCableCheckerWindow"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 1054082 "mdtTtCableCheckerWindow"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1316098 // <generalisation>
+	relation 1303170 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1316098 // <generalisation>
+	  b parent class_ref 552450 // QMainWindow
+      end
+
+      operation 1815042 "mdtTtCableCheckerWindow"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1316226 // <generalisation>
+	relation 1303298 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1316226 // <generalisation>
+	  b parent class_ref 1054210 // Ui::mdtTtCableCheckerWindow
+      end
+
+      operation 1815170 "setCableChecker"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cc" type class_ref 1047170 // mdtTtCableChecker
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 1054210 "Ui::mdtTtCableCheckerWindow"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+  end
+
+  deploymentview 467970 "mdtTtCableChecker"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 663938 "mdtTtCableChecker"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 1047170 // mdtTtCableChecker
+      end
+    end
+
+    artifact 664066 "mdtTtCableCheckerWindow"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 1054082 // mdtTtCableCheckerWindow
       end
     end
   end

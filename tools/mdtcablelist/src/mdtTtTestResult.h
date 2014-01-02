@@ -18,62 +18,40 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_ITEM_EDITOR_H
-#define MDT_TT_TEST_ITEM_EDITOR_H
+#ifndef MDT_TT_TEST_RESULT_H
+#define MDT_TT_TEST_RESULT_H
 
-///#include "mdtClEditor.h"
-#include "mdtSqlForm.h"
+#include "mdtClBase.h"
+#include <QSqlDatabase>
+#include <QVariant>
 
-/*! \brief Test item editor
+/*! \brief Helper class to manipulate test result data
  */
-class mdtTtTestItemEditor : public mdtSqlForm
+class mdtTtTestResult : public mdtClBase
 {
- Q_OBJECT
-
-  public:
+ public:
 
   /*! \brief Constructor
    */
-  ///mdtTtTestItemEditor(QObject *parent, QSqlDatabase db);
-  mdtTtTestItemEditor(QWidget *parent, QSqlDatabase db);
+  mdtTtTestResult(QSqlDatabase db);
 
-  /*! \brief Setup all tables
+  /*! \brief Set base test
+   *
+   * Will also add a test result item for each test item .
    */
-  bool setupTables();
+  bool setBaseTest(const QVariant & testResultId, const QVariant & testId);
 
- private slots:
-
-  /*! \brief Set test link
+  /*! \brief Add a test result item
    */
-  void setTestLink();
+  bool addItem(const QVariant & testResultId, const QVariant & testItemId);
 
-  /*! \brief Generate test nodue unit setup
+  /*! \brief Add a test result items based on given test ID
    */
-  void generateTestNodeUnitSetup();
-
-  /*! \brief Remove test node unit setup
-   */
-  void removeTestNodeUnitSetup();
+  bool addItemsByTestId(const QVariant & testResultId, const QVariant & testId);
 
  private:
 
-  /*! \brief Select a test link
-   */
-  QVariant selectTestLink(const QString & bus);
-
-  /*! \brief Setup test item table
-   */
-  bool setupTestItemTable();
-
-  /*! \brief Setup test link table
-   */
-  bool setupTestLinkTable();
-
-  /*! \brief Setup test node unit setup table
-   */
-  bool setupTestNodeUnitSetupTable();
-
-  Q_DISABLE_COPY(mdtTtTestItemEditor);
+  Q_DISABLE_COPY(mdtTtTestResult);
 };
 
-#endif // #ifndef MDT_TT_TEST_ITEM_EDITOR_H
+#endif // #ifndef MDT_TT_TEST_RESULT_H

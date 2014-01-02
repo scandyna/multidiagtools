@@ -25,10 +25,8 @@
 #include <QMainWindow>
 #include "ui_mdtSqlWindow.h"
 
-///class mdtAbstractSqlWidget;
 class QAction;
 class QCloseEvent;
-///class QTabWidget;
 class mdtSqlForm;
 
 /*! \brief Main window for a database table view/editor
@@ -57,30 +55,11 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    */
   ~mdtSqlWindow();
 
-  /*! \brief Set form/table view/editor
-   *
-   * Will make some signal/slot connection,
-   *  then place sqlWidget as QMainWindow's central widget.
-   *
-   * \pre sqlWidget must be a valid pointer.
-   */
-  ///void setSqlWidget(mdtAbstractSqlWidget *sqlWidget);
-
   /*! \brief Set the SQL form
    *
    * \pre form must be a valid pointer .
    */
   void setSqlForm(mdtSqlForm *form);
-
-  /*! \brief Add a child (details) widget
-   *
-   * \param widget Will be added to the childs tab
-   * \param label Will be displayed in tab of tab widget
-   *
-   * \pre Parent widget must be set with setSqlWidget() before using this method
-   * \pre widget must be a valid pointer
-   */
-  ///void addChildWidget(QWidget *widget, const QString &label);
 
   /*! \brief Enable navigation
    *
@@ -125,8 +104,6 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
   QAction *actNavToLast;
   QAction *actNavToPrevious;
   QAction *actNavToNext;
-  ///QTabWidget *pvChildsTabWidget;
-  ///mdtAbstractSqlWidget *pvMainSqlWidget;
   mdtSqlForm *pvForm;
 
   Q_DISABLE_COPY(mdtSqlWindow);

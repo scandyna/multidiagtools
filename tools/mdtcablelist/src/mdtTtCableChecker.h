@@ -18,24 +18,29 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_ITEM_EDITOR_H
-#define MDT_TT_TEST_ITEM_EDITOR_H
+#ifndef MDT_TT_CABLE_CHECKER_H
+#define MDT_TT_CABLE_CHECKER_H
 
-///#include "mdtClEditor.h"
 #include "mdtSqlForm.h"
+#include <QSqlDatabase>
+#include <QVariant>
 
-/*! \brief Test item editor
+class mdtTtTest;
+class mdtTtTestResult;
+class mdtDeviceModbusWago;
+class QWidget;
+
+/*! \brief Cable checker class
  */
-class mdtTtTestItemEditor : public mdtSqlForm
+class mdtTtCableChecker : public mdtSqlForm
 {
  Q_OBJECT
 
-  public:
+ public:
 
   /*! \brief Constructor
    */
-  ///mdtTtTestItemEditor(QObject *parent, QSqlDatabase db);
-  mdtTtTestItemEditor(QWidget *parent, QSqlDatabase db);
+  mdtTtCableChecker(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Setup all tables
    */
@@ -43,37 +48,31 @@ class mdtTtTestItemEditor : public mdtSqlForm
 
  private slots:
 
-  /*! \brief Set test link
+  /*! \brief Select the test on witch this test result is based
    */
-  void setTestLink();
+  void setBaseTest();
 
-  /*! \brief Generate test nodue unit setup
+  /*! \brief Remove test result
+   *
+   * Will also remove all related items
    */
-  void generateTestNodeUnitSetup();
-
-  /*! \brief Remove test node unit setup
-   */
-  void removeTestNodeUnitSetup();
+  void removeTestResult();
 
  private:
 
-  /*! \brief Select a test link
+  /*! \brief Select base test
    */
-  QVariant selectTestLink(const QString & bus);
+  QVariant selectBaseTest();
 
-  /*! \brief Setup test item table
+  /*! \brief Setup test result table
    */
-  bool setupTestItemTable();
+  bool setupTestResultTable();
 
-  /*! \brief Setup test link table
+  /*! \brief Setup test result item table
    */
-  bool setupTestLinkTable();
+  bool setupTestResultItemTable();
 
-  /*! \brief Setup test node unit setup table
-   */
-  bool setupTestNodeUnitSetupTable();
-
-  Q_DISABLE_COPY(mdtTtTestItemEditor);
+  Q_DISABLE_COPY(mdtTtCableChecker);
 };
 
-#endif // #ifndef MDT_TT_TEST_ITEM_EDITOR_H
+#endif // #ifndef MDTTTCABLECHECKER_H

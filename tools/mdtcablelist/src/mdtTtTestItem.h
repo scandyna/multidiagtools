@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -41,6 +41,10 @@ class mdtTtTestItem : public mdtClBase
    */
   QList<QVariant> getUsedNodeUnitIdList(const QVariant & testItemId, const QVariant & type);
 
+  /*! \brief Get list of test node unit setup for given test item ID
+   */
+  QList<QVariant> getTestNodeUnitSetupIdList(const QVariant & testItemId);
+
   /*! \brief Set test link
    */
   bool setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId);
@@ -60,6 +64,10 @@ class mdtTtTestItem : public mdtClBase
   /*! \brief Remove test node unit setup
    */
   bool removeTestNodeUnitSetups(const QModelIndexList & indexListOfSelectedRows);
+
+  /*! \brief Remove all test node unit setup for given test item ID
+   */
+  bool removeTestNodeUnitSetupsForTestItemId(const QVariant & testItemId);
 
  private:
 

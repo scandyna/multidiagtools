@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -55,13 +55,17 @@ class mdtTtTestEditor : public mdtClEditor
 
   /*! \brief Remove test node unit setup
    */
-  ///void removeTestNodeUnitSetup();
+  void removeTestNodeUnitSetup();
 
  private:
 
+  /*! \brief Select a test cable
+   */
+  QVariant selectTestCable();
+
   /*! \brief Select a test link
    */
-  ///QVariant selectTestLink(const QString & msg);
+  QVariant selectTestLink(const QVariant & cableId, const QString & bus);
 
   /*! \brief Setup tables
    */
@@ -73,7 +77,7 @@ class mdtTtTestEditor : public mdtClEditor
 
   /*! \brief Setup test link table
    */
-  bool setupTestLinkTable();
+  bool setupTestItemTable();
 
   /*! \brief Setup used nodes table
    */

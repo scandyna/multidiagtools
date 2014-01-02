@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -111,7 +111,7 @@ QList<QVariant> mdtTtTest::getListOfUnusedNodeUnitIdListByTestId(const QVariant 
   sql += " AND Unit_Id_FK_PK NOT IN (";
   sql += " SELECT Unit_Id_FK_PK FROM TestItemNodeUnit_view WHERE Test_Id_FK = " + testId.toString();
   sql += ")";
-  qDebug() << "SQL: " << sql;
+  ///qDebug() << "SQL: " << sql;
   if(!query.exec(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot get list of unused node units", mdtError::Error);
@@ -130,27 +130,94 @@ QList<QVariant> mdtTtTest::getListOfUnusedNodeUnitIdListByTestId(const QVariant 
   return nodeUnitIdList;
 }
 
+QVariant mdtTtTest::getNextSequenceNumber(const QVariant & testId)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+  QVariant lastNumber;
+
+  sql = "SELECT SequenceNumber FROM TestItem_tbl WHERE Test_Id_FK = " + testId.toString() + " ORDER BY SequenceNumber ASC";
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot get list of seuqnec number", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    pvLastError.commit();
+    return QVariant();
+  }
+  if(!query.last()){
+    return 1;
+  }
+  lastNumber = query.value(0);
+  if(lastNumber.isNull()){
+    return 1;
+  }
+
+  return lastNumber.toInt() + 1;
+}
+
+QList<QVariant> mdtTtTest::getTestNodeUnitSetupIdList(const QVariant & testId)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+  QList<QVariant> tnusIdList;
+  QVariant id;
+
+  // Setup and run query to get data in unit link view
+  sql = "SELECT Id_PK FROM TestItemNodeUnitSetup_view WHERE Test_Id_FK = " + testId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot get list of node unit setup", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    pvLastError.commit();
+    return tnusIdList;
+  }
+  while(query.next()){
+    id = query.value(0);
+    if((!id.isNull())&&(!tnusIdList.contains(id))){
+      tnusIdList.append(id);
+    }
+  }
+
+  return tnusIdList;
+}
+
 bool mdtTtTest::addTestItem(const QVariant & testId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId, const QVariant & expectedValue)
 {
   QString sql;
   QSqlError sqlError;
   QSqlQuery query(database());
+  QVariant sequenceNumber;
 
+  if(!beginTransaction()){
+    return false;
+  }
   // Prepare query for edition
-  sql = "INSERT INTO TestItem_tbl (Test_Id_FK, TestLinkBusA_Id_FK, TestLinkBusB_Id_FK, ExpectedValue) "\
-        "VALUES (:Test_Id_FK, :TestLinkBusA_Id_FK, :TestLinkBusB_Id_FK, :ExpectedValue)";
+  sql = "INSERT INTO TestItem_tbl (Test_Id_FK, TestLinkBusA_Id_FK, TestLinkBusB_Id_FK, SequenceNumber, ExpectedValue) "\
+        "VALUES (:Test_Id_FK, :TestLinkBusA_Id_FK, :TestLinkBusB_Id_FK, :SequenceNumber, :ExpectedValue)";
   if(!query.prepare(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot prepare query for test item insertion", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
     pvLastError.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Get sequence number
+  sequenceNumber = getNextSequenceNumber(testId);
+  if(sequenceNumber.isNull()){
+    rollbackTransaction();
     return false;
   }
   // Add values and execute query
   query.bindValue(":Test_Id_FK", testId);
   query.bindValue(":TestLinkBusA_Id_FK", testLinkBusAId);
   query.bindValue(":TestLinkBusB_Id_FK", testLinkBusBId);
+  query.bindValue(":SequenceNumber", sequenceNumber);
   query.bindValue(":ExpectedValue", expectedValue);
   if(!query.exec()){
     sqlError = query.lastError();
@@ -158,6 +225,10 @@ bool mdtTtTest::addTestItem(const QVariant & testId, const QVariant & testLinkBu
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
     pvLastError.commit();
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
     return false;
   }
 
@@ -197,17 +268,13 @@ bool mdtTtTest::removeTestItems(const QModelIndexList & indexListOfSelectedRows)
   return true;
 }
 
-bool mdtTtTest::generateTestNodeUnitSetupForTest(const QVariant & testId)
+bool mdtTtTest::generateTestNodeUnitSetup(const QVariant & testId)
 {
   mdtTtTestItem ti(database());
-  QList<QVariant> usedTestNodeUnitIdList;
-  ///QList<QVariant> unusedTestNodeUnitIdList;
   QString sql;
   QSqlError sqlError;
   QSqlQuery query(database());
   QVariant testItemId;
-  QVariant nodeUnitId;
-  int i;
 
   // Get test items for given test ID
   sql = "SELECT Id_PK FROM TestItem_tbl WHERE Test_Id_FK = " + testId.toString();

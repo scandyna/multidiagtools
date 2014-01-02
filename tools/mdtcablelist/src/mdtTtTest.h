@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -50,6 +50,14 @@ class mdtTtTest : public mdtClBase
    */
   QList<QVariant> getListOfUnusedNodeUnitIdListByTestId(const QVariant & testId, const QVariant & type);
 
+  /*! \brief Get next sequence number for a given test
+   */
+  QVariant getNextSequenceNumber(const QVariant & testId);
+
+  /*! \brief Get list of test node unit setup for given test ID
+   */
+  QList<QVariant> getTestNodeUnitSetupIdList(const QVariant & testId);
+
   /*! \brief Add a test item
    */
   bool addTestItem(const QVariant & testId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId, const QVariant & expectedValue);
@@ -64,7 +72,7 @@ class mdtTtTest : public mdtClBase
 
   /*! \brief Generate test node unit setup for given test ID
    */
-  bool generateTestNodeUnitSetupForTest(const QVariant & testId);
+  bool generateTestNodeUnitSetup(const QVariant & testId);
 
  private:
 

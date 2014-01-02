@@ -90,18 +90,11 @@
     <property name="title">
      <string>Test</string>
     </property>
-    <widget class="QMenu" name="menuConnection_Cable">
-     <property name="title">
-      <string>Connection Cable</string>
-     </property>
-     <addaction name="actCreateTestConnectionCable"/>
-     <addaction name="actConnectTestCable"/>
-     <addaction name="actDisconnectTestCable"/>
-    </widget>
-    <addaction name="menuConnection_Cable"/>
     <addaction name="actEditTestNode"/>
     <addaction name="actEditTest"/>
     <addaction name="actEditTestItem"/>
+    <addaction name="actEditTestConnectionCable"/>
+    <addaction name="actCableChecker"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edition"/>
@@ -193,6 +186,16 @@
   <action name="actEditTestItem">
    <property name="text">
     <string>Test &amp;item edition</string>
+   </property>
+  </action>
+  <action name="actEditTestConnectionCable">
+   <property name="text">
+    <string>Test connection cable edition</string>
+   </property>
+  </action>
+  <action name="actCableChecker">
+   <property name="text">
+    <string>&amp;Cable checker</string>
    </property>
   </action>
  </widget>

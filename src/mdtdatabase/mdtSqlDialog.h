@@ -77,46 +77,6 @@ class mdtSqlDialog : public QDialog
    */
   void disableEdition();
 
-  /*! \brief Set form/table view/editor
-   *
-   * Will make some signal/slot connection,
-   *  then place sqlWidget in central area of dialog.
-   *
-   * \pre sqlWidget must be a valid pointer.
-   */
-  ///void setSqlWidget(mdtAbstractSqlWidget *sqlWidget);
-
-  /*! \brief Add a child (details) widget
-   *
-   * \param widget Will be added to the childs tab
-   * \param label Will be displayed in tab of tab widget
-   *
-   * \pre Parent (main) widget must be set with setSqlWidget() before using this method
-   * \pre widget must be a valid pointer
-   */
-  ///void addChildWidget(QWidget *widget, const QString & label);
-
-  /*! \brief Set row (record) to edit (in main table)
-   *
-   * \pre Parent (main) widget must be set with setSqlWidget() before using this method
-   */
-  ///void setCurrentRow(int row);
-
-  /*! \brief Set the first record that matches given criteria as row (record) to edit (in main table)
-   *
-   * \param fieldName Field that must contain searched value
-   * \param matchData Value that must matche
-   * \return True if matching record was found
-   * \pre Parent (main) widget must be set with setSqlWidget() before using this method
-   */
-  ///bool setCurrentRow(const QString & fieldName, const QVariant & matchData);
-
-  /*! \brief Not implemented yet
-   *
-   * \todo Implement in mdtAbstractSqlWidget and here
-   */
-  ///bool setCurrentRow(const QList<QPair<QString, QVariant> > & matchList);
-
  public slots:
 
   /*! \brief Overloads QDialog::accept()
@@ -131,12 +91,9 @@ class mdtSqlDialog : public QDialog
 
   Q_DISABLE_COPY(mdtSqlDialog);
 
-  ///mdtAbstractSqlWidget *pvMainSqlWidget;
   QVBoxLayout *pvMainLayout;
-  ///int pvCentralWidgetIndexInMainLayout;
   QPushButton *pbSubmit;
   QPushButton *pbRevert;
-  ///QTabWidget *pvChildsTabWidget;
   mdtSqlForm *pvForm;
 };
 

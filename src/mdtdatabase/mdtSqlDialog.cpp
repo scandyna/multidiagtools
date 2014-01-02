@@ -35,8 +35,6 @@ mdtSqlDialog::mdtSqlDialog(QWidget *parent)
   pvMainLayout = new QVBoxLayout;
   QHBoxLayout *buttonsLayout = new QHBoxLayout;
 
-  ///pvMainSqlWidget = 0;
-  ///pvChildsTabWidget = 0;
   pvForm = 0;
   // Setup save/cancel buttons
   pbSubmit = new QPushButton(tr("Save"));
@@ -49,13 +47,9 @@ mdtSqlDialog::mdtSqlDialog(QWidget *parent)
   // Setup button box
   QDialogButtonBox *buttonBox = new QDialogButtonBox;
   buttonBox->addButton(QDialogButtonBox::Close);
-  ///buttonBox->addButton(QDialogButtonBox::Cancel);
   connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
   connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
   buttonsLayout->addWidget(buttonBox);
-  // Set the layout index for central widget position
-  ///pvCentralWidgetIndexInMainLayout = 0;
-
   // Setup layout
   pvMainLayout->addLayout(buttonsLayout);
   setLayout(pvMainLayout);
@@ -63,8 +57,6 @@ mdtSqlDialog::mdtSqlDialog(QWidget *parent)
 
 mdtSqlDialog::~mdtSqlDialog()
 {
-  qDebug() << "mdtSqlDialog::~mdtSqlDialog() ...";
-  qDebug() << "mdtSqlDialog::~mdtSqlDialog() DONE";
 }
 
 void mdtSqlDialog::setSqlForm(mdtSqlForm *form)
@@ -103,60 +95,6 @@ void mdtSqlDialog::disableEdition()
   Q_ASSERT(widget != 0);
 
 }
-
-/**
-void mdtSqlDialog::setSqlWidget(mdtAbstractSqlWidget *sqlWidget)
-{
-  Q_ASSERT(sqlWidget != 0);
-
-  pvMainSqlWidget = sqlWidget;
-  pvMainLayout->insertWidget(pvCentralWidgetIndexInMainLayout, pvMainSqlWidget);
-  // As default, functions are disabled
-  pbSubmit->setEnabled(false);
-  pbRevert->setEnabled(false);
-  // Connect buttons enable/disable
-  connect(pvMainSqlWidget, SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
-  connect(pvMainSqlWidget, SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
-  // Connect buttons triggers
-  connect(pbSubmit, SIGNAL(clicked()), pvMainSqlWidget, SLOT(submit()));
-  connect(pbRevert, SIGNAL(clicked()), pvMainSqlWidget, SLOT(revert()));
-}
-*/
-
-/**
-void mdtSqlDialog::addChildWidget(QWidget *widget, const QString & label)
-{
-  Q_ASSERT(widget != 0);
-
-  // Setup tab widget if needed
-  if(pvChildsTabWidget == 0){
-    pvChildsTabWidget = new QTabWidget;
-    pvMainLayout->insertWidget(pvCentralWidgetIndexInMainLayout + 1, pvChildsTabWidget);
-  }
-  Q_ASSERT(pvChildsTabWidget != 0);
-  pvChildsTabWidget->addTab(widget, label);
-}
-*/
-/**
-void mdtSqlDialog::setCurrentRow(int row)
-{
-  Q_ASSERT(pvMainSqlWidget != 0);
-
-  pvMainSqlWidget->setCurrentIndex(row);
-}
-
-bool mdtSqlDialog::setCurrentRow(const QString & fieldName, const QVariant & matchData)
-{
-  Q_ASSERT(pvMainSqlWidget != 0);
-
-  return pvMainSqlWidget->setCurrentRecord(fieldName, matchData);
-}
-
-bool mdtSqlDialog::setCurrentRow(const QList<QPair<QString, QVariant> > & matchList)
-{
-  return false;
-}
-*/
 
 void mdtSqlDialog::accept()
 {

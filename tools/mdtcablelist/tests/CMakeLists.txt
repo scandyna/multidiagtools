@@ -31,6 +31,8 @@ set (TEST_HEADER_FILES
           ../src/mdtTtTestNodeEditor.h
           ../src/mdtTtTestEditor.h
           ../src/mdtTtTestItemEditor.h
+          ../src/mdtTtCableChecker.h
+          ../src/mdtTtCableCheckerWindow.h
    )
 
 # Source files
@@ -71,6 +73,9 @@ set (TEST_SOURCES_FILES
           ../src/mdtTtTest.cpp
           ../src/mdtTtTestItemEditor.cpp
           ../src/mdtTtTestItem.cpp
+          ../src/mdtTtTestResult.cpp
+          ../src/mdtTtCableChecker.cpp
+          ../src/mdtTtCableCheckerWindow.cpp
     )
 
 # Qt ui files
@@ -92,6 +97,9 @@ set (TEST_FORM_FILES
           ../src/mdtTtTestNodeEditor.ui
           ../src/mdtTtTestEditor.ui
           ../src/mdtTtTestItemEditor.ui
+          ../src/mdtCcTestConnectionCableEditor.ui
+          ../src/mdtTtCableChecker.ui
+          ../src/mdtTtCableCheckerWindow.ui
     )
 
 # Access to project's include files

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -36,6 +36,9 @@ class mdtTtTestNodeEditor;
 class mdtTtTestEditor;
 class mdtTtTestItemEditor;
 class mdtSqlWindow;
+class mdtCcTestConnectionCableEditor;
+class mdtTtCableChecker;
+class mdtTtCableCheckerWindow;
 
 class QAction;
 
@@ -93,6 +96,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editTestNode();
 
+  /*! \brief Edit test connection cable
+   */
+  void editTestConnectionCable();
+
   /*! \brief Edit test
    */
   void editTest();
@@ -101,17 +108,21 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editTestItem();
 
+  /*! \brief Run cable checker
+   */
+  void runCableChecker();
+
   /*! \brief Create a test connection cable
    */
-  void createTestConnectionCable();
+  ///void createTestConnectionCable();
 
   /*! \brief Connect a test cable
    */
-  void connectTestCable();
+  ///void connectTestCable();
 
   /*! \brief Disconnect a test cable
    */
-  void disconnectTestCable();
+  ///void disconnectTestCable();
 
  private:
 
@@ -152,9 +163,17 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   mdtClUnitEditor *pvUnitEditor;
   mdtClArticleEditor *pvArticleEditor;
   mdtTtTestNodeEditor *pvTestNodeEditor;
+  // Test connection cable editor
+  mdtCcTestConnectionCableEditor *pvTestConnectionCableEditor;
+  mdtSqlWindow *pvTestConnectionCableEditorWindow;
+  // Test editor
   mdtTtTestEditor *pvTestEditor;
+  // Test item editor
   mdtTtTestItemEditor *pvTestItemEditor;
   mdtSqlWindow *pvTestItemEditorWindow;
+  // Cable checker
+  mdtTtCableChecker *pvCableChecker;
+  mdtTtCableCheckerWindow *pvCableCheckerWindow;
 };
 
 #endif // #ifndef MDT_CL_MAIN_WINDOW_H

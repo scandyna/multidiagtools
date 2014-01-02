@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -221,6 +221,18 @@ class mdtClDatabaseSchema
    */
   bool setupTestNodeUnitSetupTable();
 
+  /*! \brief Setup test result table
+   *
+   * \todo Move to test tool when created
+   */
+  bool setupTestResultTable();
+
+  /*! \brief Setup test result item table
+   *
+   * \todo Move to test tool when created
+   */
+  bool setupTestResultItemTable();
+
   /*! \brief
    */
   bool setupLinkTypeTable();
@@ -313,7 +325,7 @@ class mdtClDatabaseSchema
    *
    * \todo Move to test tool when created
    */
-  bool createTestItemLinkView();
+  bool createTestItemView();
 
   /*! \brief Create test item node unit view
    *
@@ -326,6 +338,12 @@ class mdtClDatabaseSchema
    * \todo Move to test tool when created
    */
   bool createTestItemNodeView();
+
+  /*! \brief Create view to get test result item
+   *
+   * \todo Move to test tool when created
+   */
+  bool createTestResultItemView();
 
   /*! \brief Create view to get node units used by a test item
    *

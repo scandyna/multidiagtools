@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,25 +19,43 @@
  **
  ****************************************************************************/
 #include "mdtCcTestConnectionCableEditor.h"
+#include "ui_mdtCcTestConnectionCableEditor.h"
 #include "mdtCcTestConnectionCable.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtTtTestNode.h"
+#include "mdtSqlFormWidget.h"
+#include "mdtSqlRelation.h"
+#include "mdtSqlTableWidget.h"
 #include <QSqlQueryModel>
+#include <QTableView>
 #include <QSqlError>
 #include <QString>
+#include <QPushButton>
+#include <QModelIndex>
 
 #include <QDebug>
 
-mdtCcTestConnectionCableEditor::mdtCcTestConnectionCableEditor(QObject *parent, QSqlDatabase db)
- : QObject(parent)
+mdtCcTestConnectionCableEditor::mdtCcTestConnectionCableEditor(QWidget *parent, QSqlDatabase db)
+ : mdtSqlForm(parent, db)
 {
-  pvDatabase = db;
 }
 
-void mdtCcTestConnectionCableEditor::createCable()
+bool mdtCcTestConnectionCableEditor::setupTables()
 {
-  mdtCcTestConnectionCable tcc(pvDatabase);
-  mdtTtTestNode tn(pvDatabase);
+  if(!setupTestCableTable()){
+    return false;
+  }
+  if(!setupTestLinkTable()){
+    return false;
+  }
+  return true;
+}
+
+void mdtCcTestConnectionCableEditor::generateLinks()
+{
+  mdtCcTestConnectionCable tcc(database());
+  mdtTtTestNode tn(database());
+  QVariant cableId;
   QVariant dutVehicleId;
   QVariant dutUnitId;
   QVariant testNodeId;
@@ -51,6 +69,11 @@ void mdtCcTestConnectionCableEditor::createCable()
   QList<QVariant> idList;
   int i, k;
 
+  // Get cable ID
+  cableId = currentData("TestCable_tbl", "Id_PK");
+  if(cableId.isNull()){
+    return;
+  }
   // Let user choose DUT unit and test node
   dutVehicleId = selectDutVehicleId();
   if(dutVehicleId.isNull()){
@@ -117,24 +140,60 @@ void mdtCcTestConnectionCableEditor::createCable()
     return;
   }
   // Add links to link table
+  /**
   if(!tcc.createTestCable(testNodeId, busAtestConnectionIdList, dutStartConnectionIdList, busBtestConnectionIdList, dutEndConnectionIdList)){
     return;
   }
-  /**
-  if(!tcc.addLinks(testNodeId, busAtestConnectionIdList, dutStartConnectionIdList)){
-    pvLastError = tcc.lastError();
-    return;
-  }
-  if(!tcc.addLinks(testNodeId, busBtestConnectionIdList, dutEndConnectionIdList)){
-    pvLastError = tcc.lastError();
-    return;
-  }
   */
+  if(!tcc.addLinks(testNodeId, cableId, busAtestConnectionIdList, dutStartConnectionIdList)){
+    pvLastError = tcc.lastError();
+    return;
+  }
+  if(!tcc.addLinks(testNodeId, cableId, busBtestConnectionIdList, dutEndConnectionIdList)){
+    pvLastError = tcc.lastError();
+    return;
+  }
+  // Update GUI
+  select("TestLink_view");
 }
 
+void mdtCcTestConnectionCableEditor::removeLinks()
+{
+  mdtSqlTableWidget *widget;
+  mdtCcTestConnectionCable tcc(database());
+  QMessageBox msgBox;
+  QModelIndexList indexes;
+
+  widget = sqlTableWidget("TestLink_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  indexes = widget->indexListOfSelectedRows("Id_PK");
+  if(indexes.size() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove selected links."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!tcc.removeData("TestLink_tbl", "Id_PK", indexes)){
+    pvLastError = tcc.lastError();
+    displayLastError();
+    return;
+  }
+  // Update GUI
+  select("TestLink_view");
+}
+
+/**
 void mdtCcTestConnectionCableEditor::connectTestCable()
 {
-  mdtCcTestConnectionCable tcc(pvDatabase);
+  mdtCcTestConnectionCable tcc(database());
   QVariant testCableId;
   QVariant dutVehicleId;
   QVariant testNodeId;
@@ -160,10 +219,12 @@ void mdtCcTestConnectionCableEditor::connectTestCable()
     return;
   }
 }
+*/
 
+/**
 void mdtCcTestConnectionCableEditor::disconnectTestCable()
 {
-  mdtCcTestConnectionCable tcc(pvDatabase);
+  mdtCcTestConnectionCable tcc(database());
   QVariant testCableId;
 
   // Let user choose a test cable to disconnect
@@ -176,6 +237,7 @@ void mdtCcTestConnectionCableEditor::disconnectTestCable()
     return;
   }
 }
+*/
 
 QVariant mdtCcTestConnectionCableEditor::selectDutVehicleId()
 {
@@ -186,7 +248,7 @@ QVariant mdtCcTestConnectionCableEditor::selectDutVehicleId()
 
   // Setup model to show available connectors
   sql = "SELECT * FROM VehicleType_tbl ";
-  model.setQuery(sql, pvDatabase);
+  model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get vhicle type list."), mdtError::Error);
@@ -222,7 +284,7 @@ QVariant mdtCcTestConnectionCableEditor::selectDutUnitId(const QVariant & vehicl
 
   // Setup model to show available connectors
   sql = "SELECT * FROM VehicleType_Unit_view WHERE VehicleType_Id_FK = " + vehicleId.toString();
-  model.setQuery(sql, pvDatabase);
+  model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get unit list."), mdtError::Error);
@@ -251,7 +313,7 @@ QVariant mdtCcTestConnectionCableEditor::selectDutUnitId(const QVariant & vehicl
 
 QVariant mdtCcTestConnectionCableEditor::selectTestNode()
 {
-  mdtCcTestConnectionCable tcc(pvDatabase);
+  mdtCcTestConnectionCable tcc(database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
@@ -260,7 +322,7 @@ QVariant mdtCcTestConnectionCableEditor::selectTestNode()
   // Setup model to show available test nodes
   ///sql = "SELECT * FROM TestNode_tbl ";
   sql = tcc.sqlForTestNodeSelection();
-  model.setQuery(sql, pvDatabase);
+  model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get test node list."), mdtError::Error);
@@ -289,7 +351,7 @@ QVariant mdtCcTestConnectionCableEditor::selectTestNode()
 
 QVariant mdtCcTestConnectionCableEditor::selectTestCable()
 {
-  mdtCcTestConnectionCable tcc(pvDatabase);
+  mdtCcTestConnectionCable tcc(database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
@@ -297,7 +359,7 @@ QVariant mdtCcTestConnectionCableEditor::selectTestCable()
 
   // Setup model to show available test nodes
   sql = tcc.sqlForTestCableSelection();
-  model.setQuery(sql, pvDatabase);
+  model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get test cable list."), mdtError::Error);
@@ -324,7 +386,7 @@ QVariant mdtCcTestConnectionCableEditor::selectTestCable()
 
 QVariant mdtCcTestConnectionCableEditor::selectStartConnectorId(const QVariant & dutUnitId) 
 {
-  mdtCcTestConnectionCable tcc(pvDatabase);
+  mdtCcTestConnectionCable tcc(database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
@@ -332,7 +394,7 @@ QVariant mdtCcTestConnectionCableEditor::selectStartConnectorId(const QVariant &
 
   // Setup model to show available connectors
   sql = tcc.sqlForStartConnectorSelection(dutUnitId);
-  model.setQuery(sql, pvDatabase);
+  model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get unit connector list."), mdtError::Error);
@@ -361,7 +423,7 @@ QVariant mdtCcTestConnectionCableEditor::selectStartConnectorId(const QVariant &
 
 QList<QVariant> mdtCcTestConnectionCableEditor::selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList) 
 {
-  mdtCcTestConnectionCable tcc(pvDatabase);
+  mdtCcTestConnectionCable tcc(database());
   mdtSqlSelectionDialog selectionDialog;
   QModelIndexList selectedItems;
   QList<QVariant> idList;
@@ -372,7 +434,7 @@ QList<QVariant> mdtCcTestConnectionCableEditor::selectEndConnectorIdList(const Q
 
   // Setup model to show available connectors
   sql = tcc.sqlForUnitConnectorSelectionFromUnitConnectorIdList(unitConnectorIdList);
-  model.setQuery(sql, pvDatabase);
+  model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get unit connector list."), mdtError::Error);
@@ -402,3 +464,64 @@ QList<QVariant> mdtCcTestConnectionCableEditor::selectEndConnectorIdList(const Q
   return idList;  
 }
 
+bool mdtCcTestConnectionCableEditor::setupTestCableTable()
+{
+  Ui::mdtCcTestConnectionCableEditor tcce;
+
+  // Setup main form widget
+  tcce.setupUi(mainSqlWidget());
+  // Setup form
+  if(!setMainTable("TestCable_tbl", "Test cable", database())){
+    return false;
+  }
+  // Force a update
+  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+
+  return true;
+}
+
+bool mdtCcTestConnectionCableEditor::setupTestLinkTable()
+{
+  mdtSqlTableWidget *widget;
+  QPushButton *pbGenerateLinks;
+  QPushButton *pbRemoveLinks;
+
+  if(!addChildTable("TestLink_view", tr("Links"), database())){
+    return false;
+  }
+  if(!addRelation("Id_PK", "TestLink_view", "TestCable_Id_FK")){
+    return false;
+  }
+  widget = sqlTableWidget("TestLink_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("TestCable_Id_FK", true);
+  widget->setColumnHidden("TestConnection_Id_FK", true);
+  widget->setColumnHidden("DutConnection_Id_FK", true);
+  // Set fields a user friendly name
+  widget->setHeaderData("TestNodeType", tr("Test node\nType"));
+  widget->setHeaderData("TestNodeSubType", tr("Test node\nSub type"));
+  widget->setHeaderData("TestNodeSeriesNumber", tr("Test node\nSerie"));
+  widget->setHeaderData("NodeId", tr("Test node\nNode ID"));
+  widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nUnit"));
+  widget->setHeaderData("TestConnectorName", tr("Test\nConnector"));
+  widget->setHeaderData("TestContactName", tr("Test\nContact"));
+  widget->setHeaderData("TestLinkIdentification", tr("Identification"));
+  widget->setHeaderData("TestLinkValue", tr("R [Ohm]"));
+  widget->setHeaderData("DutUnitSchemaPosition", tr("DUT"));
+  widget->setHeaderData("DutConnectorName", tr("DUT\nConnector"));
+  widget->setHeaderData("DutContactName", tr("DUT\nContact"));
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
+  // Add buttons
+  pbGenerateLinks = new QPushButton(tr("Generate links ..."));
+  connect(pbGenerateLinks, SIGNAL(clicked()), this, SLOT(generateLinks()));
+  widget->addWidgetToLocalBar(pbGenerateLinks);
+  pbRemoveLinks = new QPushButton(tr("Remove links ..."));
+  connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
+  widget->addWidgetToLocalBar(pbRemoveLinks);
+  widget->addStretchToLocalBar();
+
+  return true;
+}

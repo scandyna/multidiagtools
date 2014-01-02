@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,7 +23,10 @@
 
 #include "mdtError.h"
 #include <QSqlDatabase>
-
+#include <QString>
+#include <QStringList>
+#include <QModelIndex>
+#include <QVariant>
 
 /*! \brief Base class for helper class
  *
@@ -52,6 +55,33 @@ class mdtClBase
    */
   mdtError lastError();
 
+  /*! \brief Remove data from given table
+   *
+   * This method can be used with result of mdtSqlTableWidget::indexListOfSelectedRows()
+   *  (the indexes part) .
+   *
+   * \param tableName Name of table in witch data must be removed .
+   * \param fields List of fields. Be shure that this list matches exactly with given indexes .
+   * \param indexes In each index, the column will be used to find field name, and data is used for row condition .
+   */
+  bool removeData(const QString & tableName, const QStringList & fields, const QModelIndexList & indexes);
+
+  /*! \brief Remove data from given table
+   *
+   * \overload removeData(const QString &, const QStringList &, const QModelIndexList &)
+   *
+   * This method works for a single field .
+   */
+  bool removeData(const QString & tableName, const QString & fieldName, const QModelIndexList & indexes);
+
+  /*! \brief Remove data from given table
+   *
+   * \param tableName Name of table in witch data must be removed .
+   * \param fieldName Name of field that contains delete condition .
+   * \param matchData Data that match delete condition .
+   */
+  bool removeData(const QString & tableName, const QString & fieldName, const QVariant & matchData);
+
  protected:
 
   /*! \brief Beginn manually a new transaction
@@ -71,6 +101,10 @@ class mdtClBase
    * On error, false is returned and error is available with lastError() .
    */
   bool commitTransaction();
+
+  /*! \brief Get SQL data delimiter for given data type
+   */
+  QString sqlDataDelimiter(QVariant::Type type);
 
   mdtError pvLastError;
 

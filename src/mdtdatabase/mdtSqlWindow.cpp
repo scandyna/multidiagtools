@@ -42,33 +42,12 @@ mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
   actNavToPrevious = 0;
   actNavToNext = 0;
   setupUi(this);
-  /**
-  pvChildsTabWidget = 0;
-  pvMainSqlWidget = 0;
-  */
-  /**
-  // Setup central widget, on witch we can put perent widget and childs widgets tab widget.
-  QWidget *widget = new QWidget;
-  QVBoxLayout *layout = new QVBoxLayout;
-  widget->setLayout(layout);
-  setCentralWidget(widget);
-  */
   pvForm = 0;
 }
 
 mdtSqlWindow::~mdtSqlWindow()
 {
 }
-
-/**
-void mdtSqlWindow::setSqlWidget(mdtAbstractSqlWidget *sqlWidget)
-{
-  Q_ASSERT(sqlWidget != 0);
-
-  pvMainSqlWidget = sqlWidget;
-  centralWidget()->layout()->addWidget(pvMainSqlWidget);
-}
-*/
 
 void mdtSqlWindow::setSqlForm(mdtSqlForm *form)
 {
@@ -78,24 +57,8 @@ void mdtSqlWindow::setSqlForm(mdtSqlForm *form)
   setCentralWidget(pvForm);
 }
 
-/**
-void mdtSqlWindow::addChildWidget(QWidget *widget, const QString &label)
-{
-  Q_ASSERT(widget != 0);
-
-  // Setup tab widget if needed
-  if(pvChildsTabWidget == 0){
-    pvChildsTabWidget = new QTabWidget;
-    centralWidget()->layout()->addWidget(pvChildsTabWidget);
-  }
-  Q_ASSERT(pvChildsTabWidget != 0);
-  pvChildsTabWidget->addTab(widget, label);
-}
-*/
-
 void mdtSqlWindow::enableNavigation()
 {
-  ///Q_ASSERT(pvMainSqlWidget != 0);
   Q_ASSERT(pvForm != 0);
 
   mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
@@ -135,7 +98,6 @@ void mdtSqlWindow::disableNavigation()
 
 void mdtSqlWindow::enableEdition()
 {
-  ///Q_ASSERT(pvMainSqlWidget != 0);
   Q_ASSERT(pvForm != 0);
 
   mdtSqlFormWidget *widget = pvForm->mainSqlWidget();

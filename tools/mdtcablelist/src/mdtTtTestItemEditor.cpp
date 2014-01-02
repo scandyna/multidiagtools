@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,6 +37,7 @@
 #include <QModelIndex>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QList>
 
 #include <QDebug>
 
@@ -95,24 +96,50 @@ void mdtTtTestItemEditor::setTestLink()
     return;
   }
   // Update GUI
-  select("TestItemLink_view");
+  select("TestItem_view");
+  // Update setup
+  generateTestNodeUnitSetup();
 }
 
 void mdtTtTestItemEditor::generateTestNodeUnitSetup()
 {
   mdtTtTestItem ti(database());
   QVariant testItemId;
+  QList<QVariant> setupIdList;
 
   // Get current test ID
+  qDebug() << "Get testItemId ...";
   testItemId = currentData("TestItem_tbl", "Id_PK");
   if(testItemId.isNull()){
     return;
   }
+  qDebug() << "-> testItemId: " << testItemId;
+  qDebug() << "Get setupIdList ...";
+  // Warn user if some setup allready exists
+  setupIdList = ti.getTestNodeUnitSetupIdList(testItemId);
+  qDebug() << "-> setupIdList: " << setupIdList;
+  if(!setupIdList.isEmpty()){
+    QString text;
+    QMessageBox msgBox;
+    text = tr("Setups will be generated for current test item. ");
+    text += tr("Some setups allready exists, and they will be deleted if you continue.");
+    msgBox.setText(text);
+    msgBox.setInformativeText(tr("Do you want to continue ?"));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::No);
+    if(msgBox.exec() != QMessageBox::Yes){
+      return;
+    }
+  }
+  // Generate setup
+  qDebug() << "Generate ...";
   if(!ti.generateTestNodeUnitSetup(testItemId)){
     pvLastError = ti.lastError();
     displayLastError();
     return;
   }
+  qDebug() << "-> DONE";
   // Update GUI
   select("TestItemNodeUnitSetup_view");
 }
@@ -164,7 +191,7 @@ QVariant mdtTtTestItemEditor::selectTestLink(const QString & bus)
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get list of test links."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestEditor");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItemEditor");
     pvLastError.commit();
     displayLastError();
     return QVariant();
@@ -207,20 +234,23 @@ bool mdtTtTestItemEditor::setupTestLinkTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbSetTestLink;
 
-  if(!addChildTable("TestItemLink_view", tr("Link"), database())){
+  if(!addChildTable("TestItem_view", tr("Link"), database())){
     return false;
   }
-  if(!addRelation("Id_PK", "TestItemLink_view", "TestItemId")){
+  if(!addRelation("Id_PK", "TestItem_view", "Id_PK")){
     return false;
   }
-  widget = sqlTableWidget("TestItemLink_view");
+  widget = sqlTableWidget("TestItem_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
+  widget->setColumnHidden("Id_PK", true);
   widget->setColumnHidden("Test_Id_FK", true);
   widget->setColumnHidden("TestLinkBusA_Id_FK", true);
   widget->setColumnHidden("TestLinkBusB_Id_FK", true);
+  widget->setColumnHidden("SequenceNumber", true);
+  widget->setColumnHidden("ExpectedValue", true);
   // Set fields a user friendly name
-  widget->setHeaderData("ExpectedValue", tr("Value\nExpected"));
+  ///widget->setHeaderData("ExpectedValue", tr("Value\nExpected"));
   widget->setHeaderData("TestConnectorNameBusA", tr("Test\nConnector\nBus A"));
   widget->setHeaderData("TestConnectorNameBusB", tr("Test\nConnector\nBus B"));
   widget->setHeaderData("TestContactNameBusA", tr("Test\nContact\nBus A"));

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,18 +21,18 @@
 #ifndef MDT_CC_TEST_CONNECTION_CABLE_EDITOR_H
 #define MDT_CC_TEST_CONNECTION_CABLE_EDITOR_H
 
-#include "mdtError.h"
+///#include "mdtError.h"
+#include "mdtSqlForm.h"
 #include <QObject>
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QList>
 
+class QWidget;
+
 /*! \brief Class for test connection cable edition
- *
- * Note: visualisation of cables is not provided here,
- *        use unit editor for this .
  */
-class mdtCcTestConnectionCableEditor : public QObject
+class mdtCcTestConnectionCableEditor : public mdtSqlForm
 {
  Q_OBJECT
 
@@ -40,19 +40,33 @@ class mdtCcTestConnectionCableEditor : public QObject
 
   /*! \brief Constructor
    */
-  mdtCcTestConnectionCableEditor(QObject *parent, QSqlDatabase db);
+  mdtCcTestConnectionCableEditor(QWidget *parent, QSqlDatabase db);
+
+  /*! \brief Setup all tables
+   */
+  bool setupTables();
 
   /*! \brief Create a test connection cable
    */
-  void createCable();
+  ///void createCable();
 
   /*! \brief Connect a test cable
    */
-  void connectTestCable();
+  ///void connectTestCable();
 
   /*! \brief Disconnect a test cable
    */
-  void disconnectTestCable();
+  ///void disconnectTestCable();
+
+ private slots:
+
+  /*! \brief Generate links
+   */
+  void generateLinks();
+
+  /*! \brief Remove links
+   */
+  void removeLinks();
 
  private:
 
@@ -80,10 +94,15 @@ class mdtCcTestConnectionCableEditor : public QObject
    */
   QList<QVariant> selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList);
 
-  Q_DISABLE_COPY(mdtCcTestConnectionCableEditor);
+  /*! \brief Setup test cable table
+   */
+  bool setupTestCableTable();
 
-  QSqlDatabase pvDatabase;
-  mdtError pvLastError;
+  /*! \brief Setup test link table
+   */
+  bool setupTestLinkTable();
+
+  Q_DISABLE_COPY(mdtCcTestConnectionCableEditor);
 };
 
 #endif // #ifndef MDT_CC_TEST_CONNECTION_CABLE_EDITOR_H

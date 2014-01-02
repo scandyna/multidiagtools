@@ -18,62 +18,36 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_ITEM_EDITOR_H
-#define MDT_TT_TEST_ITEM_EDITOR_H
+#ifndef MDT_TT_CABLE_CHECKER_WINDOW_H
+#define MDT_TT_CABLE_CHECKER_WINDOW_H
 
-///#include "mdtClEditor.h"
-#include "mdtSqlForm.h"
+#include "ui_mdtTtCableCheckerWindow.h"
+#include <QMainWindow>
 
-/*! \brief Test item editor
+class mdtTtCableChecker;
+class QWidget;
+
+/*! \brief Cable check window
  */
-class mdtTtTestItemEditor : public mdtSqlForm
+class mdtTtCableCheckerWindow : public QMainWindow, Ui::mdtTtCableCheckerWindow
 {
  Q_OBJECT
 
-  public:
+ public:
 
   /*! \brief Constructor
    */
-  ///mdtTtTestItemEditor(QObject *parent, QSqlDatabase db);
-  mdtTtTestItemEditor(QWidget *parent, QSqlDatabase db);
+  mdtTtCableCheckerWindow(QWidget *parent = 0);
 
-  /*! \brief Setup all tables
+  /*! \brief Set cable checker object
    */
-  bool setupTables();
-
- private slots:
-
-  /*! \brief Set test link
-   */
-  void setTestLink();
-
-  /*! \brief Generate test nodue unit setup
-   */
-  void generateTestNodeUnitSetup();
-
-  /*! \brief Remove test node unit setup
-   */
-  void removeTestNodeUnitSetup();
+  void setCableChecker(mdtTtCableChecker *cc);
 
  private:
 
-  /*! \brief Select a test link
-   */
-  QVariant selectTestLink(const QString & bus);
+  Q_DISABLE_COPY(mdtTtCableCheckerWindow);
 
-  /*! \brief Setup test item table
-   */
-  bool setupTestItemTable();
-
-  /*! \brief Setup test link table
-   */
-  bool setupTestLinkTable();
-
-  /*! \brief Setup test node unit setup table
-   */
-  bool setupTestNodeUnitSetupTable();
-
-  Q_DISABLE_COPY(mdtTtTestItemEditor);
+  mdtTtCableChecker *pvCableChecker;
 };
 
-#endif // #ifndef MDT_TT_TEST_ITEM_EDITOR_H
+#endif // #ifndef MDT_TT_CABLE_CHECKER_WINDOW_H

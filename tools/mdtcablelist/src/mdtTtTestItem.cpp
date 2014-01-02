@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -62,6 +62,34 @@ QList<QVariant> mdtTtTestItem::getUsedNodeUnitIdList(const QVariant & testItemId
   return nodeUnitIdList;
 }
 
+QList<QVariant> mdtTtTestItem::getTestNodeUnitSetupIdList(const QVariant & testItemId)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+  QList<QVariant> tnusIdList;
+  QVariant id;
+
+  // Setup and run query to get data in unit link view
+  sql = "SELECT Id_PK FROM TestItemNodeUnitSetup_view WHERE TestItem_Id_FK = " + testItemId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot get list of node unit setup", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+    pvLastError.commit();
+    return tnusIdList;
+  }
+  while(query.next()){
+    id = query.value(0);
+    if((!id.isNull())&&(!tnusIdList.contains(id))){
+      tnusIdList.append(id);
+    }
+  }
+
+  return tnusIdList;
+}
+
 bool mdtTtTestItem::setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId)
 {
   QString sql;
@@ -108,23 +136,42 @@ bool mdtTtTestItem::generateTestNodeUnitSetup(const QVariant & testItemId)
   QVariant nodeUnitId;
   int i;
 
+  qDebug() << "TI: begin transaction ...";
+  if(!beginTransaction()){
+    return false;
+  }
+  qDebug() << "TI: removing old setup ...";
+  // Remove allready existing setups
+  if(!removeTestNodeUnitSetupsForTestItemId(testItemId)){
+    rollbackTransaction();
+    return false;
+  }
+  qDebug() << "TI: get list of channel relays ...";
   // Get list of used channel relays
   usedTestNodeUnitIdList = getUsedNodeUnitIdList(testItemId, "CHANELREL");
   if(usedTestNodeUnitIdList.isEmpty()){
+    rollbackTransaction();
     return false;
   }
   // Add setup for used node units
   for(i = 0; i < usedTestNodeUnitIdList.size(); ++i){
     nodeUnitId = usedTestNodeUnitIdList.at(i);
+    qDebug() << "TI: adding setup for unit ID " << nodeUnitId << " ...";
     if(nodeUnitId.isNull()){
       pvLastError.setError("Try to add a setup for a NULL test node ID", mdtError::Error);
       MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
       pvLastError.commit();
+      rollbackTransaction();
       return false;
     }
     if(!addTestNodeUnitSetup(testItemId, nodeUnitId, true)){
+      rollbackTransaction();
       return false;
     }
+  }
+  qDebug() << "TI: commit transaction ...";
+  if(!commitTransaction()){
+    return false;
   }
 
   return true;
@@ -191,6 +238,26 @@ bool mdtTtTestItem::removeTestNodeUnitSetups(const QModelIndexList & indexListOf
     if(!removeTestNodeUnitSetup(indexListOfSelectedRows.at(row).data())){
       return false;
     }
+  }
+
+  return true;
+}
+
+bool mdtTtTestItem::removeTestNodeUnitSetupsForTestItemId(const QVariant & testItemId)
+{
+  QSqlError sqlError;
+  QString sql;
+  QSqlQuery query(database());
+
+  sql = "DELETE FROM TestNodeUnitSetup_tbl WHERE TestItem_Id_FK = " + testItemId.toString();
+  // Submit query
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for test node unit setup deletion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+    pvLastError.commit();
+    return false;
   }
 
   return true;
