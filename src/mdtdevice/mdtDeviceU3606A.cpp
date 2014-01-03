@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -36,7 +36,7 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
   portManager()->config().setReadTimeout(30000);
   portManager()->config().setWriteFrameSize(512);
   portManager()->config().setWriteQueueSize(1);
-  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
+  connect(pvUsbtmcPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
 }
 
 mdtDeviceU3606A::~mdtDeviceU3606A()

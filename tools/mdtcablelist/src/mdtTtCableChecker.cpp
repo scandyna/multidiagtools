@@ -22,11 +22,17 @@
 #include "ui_mdtTtCableChecker.h"
 #include "mdtTtTest.h"
 #include "mdtTtTestResult.h"
+#include "mdtDevice.h"
 #include "mdtDeviceModbusWago.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtDeviceU3606A.h"
+#include "mdtDeviceInfo.h"
+#include "mdtPortStatusWidget.h"
+#include "mdtPortManager.h"
+#include "mdtAbstractPort.h"
 #include <QTableView>
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
@@ -34,18 +40,32 @@
 #include <QSqlError>
 #include <QPushButton>
 #include <QStringList>
-#include <QString>
+///#include <QString>
 #include <QList>
 ///#include <QItemSelectionModel>
 #include <QMessageBox>
 ///#include <QInputDialog>
 #include <QWidget>
 #include <QDataWidgetMapper>
+#include <QLabel>
+#include <QGridLayout>
+#include <QVBoxLayout>
+
+using namespace mdtTtCableCheckerPrivate;
+
+struct mdtTtCableCheckerPrivate::deviceStatusWidget
+{
+  QLabel *label;
+  mdtPortStatusWidget *statusWidget;
+};
+
 
 
 mdtTtCableChecker::mdtTtCableChecker(QWidget *parent, QSqlDatabase db)
  : mdtSqlForm(parent, db)
 {
+  pvMultimeter = 0;
+  pvDeviceStatusWidgetsLayout = 0;
 }
 
 bool mdtTtCableChecker::setupTables()
@@ -56,6 +76,7 @@ bool mdtTtCableChecker::setupTables()
   if(!setupTestResultItemTable()){
     return false;
   }
+  createMultimeter();
   return true;
 }
 
@@ -121,6 +142,17 @@ void mdtTtCableChecker::removeTestResult()
   ///form()->select("TestItem_view");
 }
 
+void mdtTtCableChecker::runTest()
+{
+  if(!connectToInstruments()){
+    displayLastError();
+    return;
+  }
+  // Setup multimeter as Ohmmeter
+  
+  /// \todo Tester absence de tension
+}
+
 QVariant mdtTtCableChecker::selectBaseTest()
 {
   mdtSqlSelectionDialog selectionDialog;
@@ -166,7 +198,7 @@ bool mdtTtCableChecker::setupTestResultTable()
   // Setup main form widget
   cc.setupUi(mainSqlWidget());
   // Setup form
-  if(!setMainTable("TestResult_tbl", "Test result", database())){
+  if(!setMainTable("TestResult_tbl", "Test result"/*, database()*/)){
     return false;
   }
   /*
@@ -204,7 +236,7 @@ bool mdtTtCableChecker::setupTestResultItemTable()
 {
   mdtSqlTableWidget *widget;
 
-  if(!addChildTable("TestResultItem_view", tr("Test result items"), database())){
+  if(!addChildTable("TestResultItem_view", tr("Test result items") /*,database()*/)){
     return false;
   }
   if(!addRelation("Id_PK", "TestResultItem_view", "TestResult_Id_FK")){
@@ -248,3 +280,70 @@ bool mdtTtCableChecker::setupTestResultItemTable()
   return true;
 }
 
+void mdtTtCableChecker::createMultimeter()
+{
+  pvMultimeter = new mdtDeviceU3606A;
+  pvMultimeter->setName("U3606A");
+  addDeviceStatusWidget(pvMultimeter, "U3606A");
+}
+
+bool mdtTtCableChecker::connectToInstruments()
+{
+  Q_ASSERT(pvMultimeter != 0);
+
+  if(pvMultimeter->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
+    pvLastError.setError(tr("Cannot connect to U3606A"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+void mdtTtCableChecker::addDeviceStatusWidget(mdtDevice *device, const QString & label)
+{
+  Q_ASSERT(device != 0);
+
+  deviceStatusWidget *dsw;
+  int row;
+
+  // Create status widget page, if needed
+  if(pvDeviceStatusWidgetsLayout == 0){
+    QWidget *w = new QWidget;
+    QVBoxLayout *l = new QVBoxLayout;
+    pvDeviceStatusWidgetsLayout = new QGridLayout;
+    l->addLayout(pvDeviceStatusWidgetsLayout);
+    l->addStretch();
+    w->setLayout(l);
+    addChildWidget(w, tr("Instruments states"));
+  }
+  Q_ASSERT(pvDeviceStatusWidgetsLayout != 0);
+  // Create status widget
+  dsw = new deviceStatusWidget;
+  dsw->label = new QLabel(label);
+  dsw->statusWidget = new mdtPortStatusWidget;
+  pvDeviceStatusWidgets.insert(device, dsw);
+  // Layout status widget and label
+  row = pvDeviceStatusWidgetsLayout->rowCount();
+  pvDeviceStatusWidgetsLayout->addWidget(dsw->label, row, 0, Qt::AlignVCenter);
+  pvDeviceStatusWidgetsLayout->addWidget(dsw->statusWidget, row, 1, Qt::AlignVCenter);
+  // make connections
+  connect(device, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), dsw->statusWidget, SLOT(showMessage(const QString&, const QString&, int)));
+  Q_ASSERT(device->portManager() != 0);
+  connect(device->portManager(), SIGNAL(stateChangedForUi(int, const QString&, int, bool)), dsw->statusWidget, SLOT(setState(int, const QString&, int, bool)));
+  device->portManager()->notifyCurrentState();
+}
+
+void mdtTtCableChecker::removeDeviceStatusWidget(mdtDevice *device)
+{
+  deviceStatusWidget *dsw;
+
+  dsw = pvDeviceStatusWidgets.value(device, 0);
+  if(dsw != 0){
+    delete dsw->label;
+    delete dsw->statusWidget;
+    delete dsw;
+    pvDeviceStatusWidgets.remove(device);
+  }
+}

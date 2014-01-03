@@ -1300,6 +1300,7 @@ void mdtUsbPort::pvClose()
   pvMessageInFramesPool.clear();
   qDeleteAll(pvMessageInFrames);
   pvMessageInFrames.clear();
+  pvExpectedBulkInbTags.clear();
 }
 
 mdtAbstractPort::error_t mdtUsbPort::pvSetup()

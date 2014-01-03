@@ -112,6 +112,8 @@ add_executable(mdtclsandbox "mdtClSandbox.cpp" ${TEST_SOURCES_FILES} ${MDT_CL_SA
 target_link_libraries(mdtclsandbox "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclsandbox "mdtdevice${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdtclsandbox "mdtdport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdttest")
 
 # mdtClUnit
@@ -120,4 +122,6 @@ add_executable(mdtclunittest "mdtClUnitTest.cpp" ${TEST_SOURCES_FILES} ${TEST_MO
 target_link_libraries(mdtclunittest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclunittest "mdtdevice${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdtclunittest "mdtdport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdttest")

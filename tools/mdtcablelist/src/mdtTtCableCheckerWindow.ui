@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Cable checker</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
@@ -48,6 +48,8 @@
    <addaction name="actRemove"/>
    <addaction name="separator"/>
    <addaction name="actSetTest"/>
+   <addaction name="separator"/>
+   <addaction name="actRunTest"/>
   </widget>
   <action name="actSave">
    <property name="text">
@@ -67,6 +69,11 @@
   <action name="actRemove">
    <property name="text">
     <string>Delete</string>
+   </property>
+  </action>
+  <action name="actRunTest">
+   <property name="text">
+    <string>Run test (complete)</string>
    </property>
   </action>
  </widget>

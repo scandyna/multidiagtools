@@ -28,6 +28,7 @@
 #include <QSqlDatabase>
 #include <QHash>
 #include <QSqlError>
+#include <QIcon>
 
 class mdtAbstractSqlWidget;
 class mdtSqlFormWidget;
@@ -48,7 +49,14 @@ class QVBoxLayout;
  *  but they need several code (creating objects,
  *  configure them, handle memory, ...).
  *
- * This class was made to have less code for common database GUI.
+ * This class was made to have less code for common database GUI .
+ *
+ * The mainSqlWidget is based on a mdtSqlFormWidget , and is placed
+ *  on the upper part of the form .
+ *  When adding child table with addChildTable() , a instance of mdtSqlTableWidget is created,
+ *  and placed to a QTabWidget .
+ *  It is also possible to add a non database related widget, using addChildWidget() .
+ *  In this case, the given widget is simply added to the internal QTabWidget .
  */
 class mdtSqlForm : public QWidget
 {
@@ -128,6 +136,15 @@ class mdtSqlForm : public QWidget
    *          False can also be returned if main table was not set (see setTable() ).
    */
   bool addChildTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db);
+
+  /*! \brief Add a widget to the internal QTabWidget
+   *
+   * Can be used if a widget that is not related to a database table must be placed
+   *  in the QTabWidget .
+   *
+   * Note: the given widget will be reparented, and also deleted when the form is destroyed .
+   */
+  void addChildWidget(QWidget *widget, const QString & label, const QIcon & icon = QIcon());
 
   /*! \brief Add a relation between main table and a child table
    *

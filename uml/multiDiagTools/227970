@@ -1,6 +1,6 @@
 format 76
 "Program" // mdttools::TestTool::Program
-  revision 9
+  revision 10
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -564,7 +564,6 @@ ${inlines}
 	
       end
     end
-
   end
 
   classview 556418 "mdtCcTestConnectionCable"
@@ -1201,20 +1200,156 @@ ${inlines}
 	  b parent class_ref 1053698 // mdtTtTestResult
       end
 
-      classrelation 1315842 // <dependency>
-	relation 1302914 -_->
-	  a default
-	    cpp default "#include in source"
-	    classrelation_ref 1315842 // <dependency>
+      classrelation 1322754 // pvModbusIoNodes (<directional composition>)
+	relation 1309826 *-->
+	  a role_name "pvModbusIoNodes" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1322754 // pvModbusIoNodes (<directional composition>)
+	  b parent class_ref 532226 // mdtDeviceModbusWago
+      end
+
+      classrelation 1322882 // pvMultimeter (<directional composition>)
+	relation 1309954 *-->
+	  a role_name "pvMultimeter" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1322882 // pvMultimeter (<directional composition>)
 	  b parent class_ref 309378 // mdtDeviceU3606A
       end
 
-      classrelation 1315970 // <dependency>
-	relation 1303042 -_->
-	  a default
-	    cpp default "#include in source"
-	    classrelation_ref 1315970 // <dependency>
-	  b parent class_ref 532226 // mdtDeviceModbusWago
+      classrelation 1323010 // pvDeviceStatusWidgets (<directional composition>)
+	relation 1310082 *-->
+	  a role_name "pvDeviceStatusWidgets" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1323010 // pvDeviceStatusWidgets (<directional composition>)
+	  b parent class_ref 558978 // mdtPortStatusWidget
+      end
+
+      operation 1821698 "createInstruments"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1821826 "removeInstruments"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1821954 "createMultimeter"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1822082 "removeMultimeter"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1822210 "createIoNode"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "nodeId" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1822338 "removeIoNode"
+	private explicit_return_type "bool"
+	nparams 1
+	  param in name "nodeId" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1822466 "addDeviceStatusWidget"
+	private explicit_return_type "void"
+	nparams 2
+	  param in name "device" type class_ref 309250 // mdtDevice
+	  param in name "label" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1822594 "removeDeviceStatusWidget"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "device" type class_ref 309250 // mdtDevice
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 

@@ -131,17 +131,27 @@ bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFrie
   if(!userFriendlyTableName.isEmpty()){
     widget->setUserFriendlyTableName(userFriendlyTableName);
   }
+  // Add child widget to main widget and tab
+  pvMainSqlWidget->addChildWidget(widget, relation);
+  addChildWidget(widget, widget->userFriendlyTableName());
+
+  return true;
+}
+
+void mdtSqlForm::addChildWidget(QWidget *widget, const QString & label, const QIcon & icon)
+{
   // Setup tab widget if needed
   if(pvChildsTabWidget == 0){
     pvChildsTabWidget = new QTabWidget;
     pvMainLayout->addWidget(pvChildsTabWidget);
   }
   Q_ASSERT(pvChildsTabWidget != 0);
-  // Add child widget to main widget and tab
-  pvMainSqlWidget->addChildWidget(widget, relation);
-  pvChildsTabWidget->addTab(widget, widget->userFriendlyTableName());
-
-  return true;
+  // Add widget
+  if(icon.isNull()){
+    pvChildsTabWidget->addTab(widget, label);
+  }else{
+    pvChildsTabWidget->addTab(widget, icon, label);
+  }
 }
 
 bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &childTableName, const QString &childFieldName, const QString &operatorWithPreviousItem)

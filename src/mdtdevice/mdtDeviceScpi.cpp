@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -78,6 +78,10 @@ mdtAbstractPort::error_t mdtDeviceScpi::connectToDevice(const mdtDeviceInfo &dev
   ///device = devInfo;
   ///device.setVendorId(0x0957);
   ///device.setProductId(0x4d18);
+  // Stop port manager if it is running
+  if(!pvUsbtmcPortManager->isClosed()){
+    pvUsbtmcPortManager->stop();
+  }
   // Scan for ports having a USBTMC device attached
   port = 0;
   ports = pvUsbtmcPortManager->scan();

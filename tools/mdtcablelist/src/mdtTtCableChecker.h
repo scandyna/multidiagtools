@@ -24,11 +24,20 @@
 #include "mdtSqlForm.h"
 #include <QSqlDatabase>
 #include <QVariant>
+#include <QString>
+#include <QMap>
 
 class mdtTtTest;
 class mdtTtTestResult;
+class mdtDevice;
 class mdtDeviceModbusWago;
+class mdtDeviceU3606A;
 class QWidget;
+class QGridLayout;
+namespace mdtTtCableCheckerPrivate
+{
+  struct deviceStatusWidget;
+}
 
 /*! \brief Cable checker class
  */
@@ -58,6 +67,10 @@ class mdtTtCableChecker : public mdtSqlForm
    */
   void removeTestResult();
 
+  /*! \brief Run complete test
+   */
+  void runTest();
+
  private:
 
   /*! \brief Select base test
@@ -72,7 +85,29 @@ class mdtTtCableChecker : public mdtSqlForm
    */
   bool setupTestResultItemTable();
 
+  /*! \brief Create multimeter
+   */
+  void createMultimeter();
+
+
+  /*! \brief Connect to instruments
+   */
+  bool connectToInstruments();
+
+  /*! \brief Add device status widget
+   */
+  void addDeviceStatusWidget(mdtDevice *device, const QString & label);
+
+  /*! \brief remove a device status widget
+   */
+  void removeDeviceStatusWidget(mdtDevice *device);
+
   Q_DISABLE_COPY(mdtTtCableChecker);
+
+  mdtDeviceU3606A *pvMultimeter;
+  // Device status widgets page
+  QGridLayout *pvDeviceStatusWidgetsLayout;
+  QMap<mdtDevice*, mdtTtCableCheckerPrivate::deviceStatusWidget*> pvDeviceStatusWidgets;
 };
 
 #endif // #ifndef MDTTTCABLECHECKER_H

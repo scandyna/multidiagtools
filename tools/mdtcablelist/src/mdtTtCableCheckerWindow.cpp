@@ -58,6 +58,7 @@ void mdtTtCableCheckerWindow::setCableChecker(mdtTtCableChecker *cc)
   ///connect(actRemove, SIGNAL(triggered()), fw, SLOT(remove()));
   connect(actSetTest, SIGNAL(triggered()), pvCableChecker, SLOT(setBaseTest()));
   connect(actRemove, SIGNAL(triggered()), pvCableChecker, SLOT(removeTestResult()));
+  connect(actRunTest, SIGNAL(triggered()), pvCableChecker, SLOT(runTest()));
 
 }
 
