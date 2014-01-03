@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,6 +26,7 @@
 #include "mdtPortManager.h"
 #include "mdtDeviceInfo.h"
 #include "mdtValue.h"
+#include "mdtError.h"
 #include <QVariant>
 
 #include <QObject>
@@ -136,6 +137,17 @@ class mdtDevice : public QObject
    */
   void setIos(mdtDeviceIos *ios, bool autoOutputUpdate = false);
 
+  /*! \brief Get the I/Os container
+   *
+   * Will return a null pointer if I/Os was not set with setIos() .
+   *
+   * Depending on subclass implementation, the I/Os container
+   *  cann be set automatically, and can be deleted whenn device is destroyed.
+   *
+   * In this base class, I/Os container is not deleted .
+   */
+  mdtDeviceIos *ios();
+
   /*! \brief Set back to ready state timeout
    *
    * After some event (device disconnected, response timeout, ...)
@@ -193,6 +205,12 @@ class mdtDevice : public QObject
    * \pre Port manager must be set before using this method
    */
   void wait(int ms);
+
+  /*! \brief Get last error
+   *
+   * \todo Not completly used currently, must be implemented in this class + subclasses .
+   */
+  mdtError lastError() const;
 
   /*! \brief Get analog input value
    *
@@ -559,12 +577,16 @@ class mdtDevice : public QObject
 
  protected:
 
+  /*! \brief Get last error for write access
+   */
+  mdtError & lastErrorW();
+
   /*! \brief Read one analog input on physical device
    *
    * This is the device specific implementation to send the query.
    *  If device handled by subclass has analog inputs, this method should be implemented.
    *
-   * This method is called from getAnalogInput().
+   * This method is called from getAnalogInputValue() .
    *
    * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details).
@@ -578,7 +600,7 @@ class mdtDevice : public QObject
    * This is the device specific implementation to send the query.
    *  If device handled by subclass has analog inputs, this method should be implemented.
    *
-   * This method is called from getAnalogInputs().
+   * This method is called from getAnalogInputs() .
    *
    * \param transaction Contains:
    *                      - ioCount : number of I/Os to get
@@ -795,7 +817,7 @@ class mdtDevice : public QObject
    */
   bool waitTransactionDone(int id);
 
-  mdtDeviceIos *pvIos;    // I/O's container
+  ///mdtDeviceIos *pvIos;    // I/O's container
 
  signals:
 
@@ -881,6 +903,8 @@ class mdtDevice : public QObject
   bool pvAutoQueryEnabled;  // Flag used for state handling
   int pvBackToReadyStateTimeout;
   QTimer *pvBackToReadyStateTimer;
+  mdtDeviceIos *pvIos;    // I/O's container
+  mdtError pvLastError;
 };
 
 #endif  // #ifndef MDT_DEVICE_H

@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a>  </div>
+<a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">mdtSqlForm Class Reference</div>  </div>
 </div>
@@ -72,13 +72,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
  <a href="classmdt_sql_form.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mdt_sql_form_8h_source.html">mdtSqlForm.h</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mdtSqlForm:</div>
-<div class="dyncontent">
-<div class="center"><img src="classmdt_sql_form__inherit__graph.png" border="0" usemap="#mdt_sql_form_inherit__map" alt="Inheritance graph"/></div>
-<map name="mdt_sql_form_inherit__map" id="mdt_sql_form_inherit__map">
-<area shape="rect" id="node3" href="classmdt_sql_form_dialog.html" title="SQL form dialog." alt="" coords="5,83,136,112"/><area shape="rect" id="node5" href="classmdt_sql_form_window.html" title="SQL form window." alt="" coords="160,83,299,112"/></map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtSqlForm:</div>
 <div class="dyncontent">
@@ -91,35 +84,49 @@ Collaboration diagram for mdtSqlForm:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeaddb68cb5bb5035128377954d4721d3"></a><!-- doxytag: member="mdtSqlForm::mdtSqlForm" ref="aeaddb68cb5bb5035128377954d4721d3" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#aeaddb68cb5bb5035128377954d4721d3">mdtSqlForm</a> (QObject *parent=0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a607993f0d35207668c0f220d77bd9298">mdtSqlForm</a> (QWidget *parent, QSqlDatabase db)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a607993f0d35207668c0f220d77bd9298"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4538979323566433a20bb71118525a5"></a><!-- doxytag: member="mdtSqlForm::~mdtSqlForm" ref="ab4538979323566433a20bb71118525a5" args="()" -->
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#ab4538979323566433a20bb71118525a5">~mdtSqlForm</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_form_widget.html">mdtSqlFormWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5">mainSqlWidget</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the main SQL widget.  <a href="#a857fc9370e2054408ae8b42e8deedbf5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a8a3c5c3fa87da8a1b45c287e08f069c1">setTable</a> (const QString &amp;tableName, const QString &amp;userFriendlyTableName=&quot;&quot;, QSqlDatabase db=QSqlDatabase())</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the main (or parent) table of the form.  <a href="#a8a3c5c3fa87da8a1b45c287e08f069c1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a75710fca8759142a5cebb53fa4184906">addChildTable</a> (const QString &amp;tableName, const QString &amp;userFriendlyTableName=&quot;&quot;, QSqlDatabase db=QSqlDatabase())</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child table to the form.  <a href="#a75710fca8759142a5cebb53fa4184906"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#ab03dd80e9de62362dd77161ef6bd6fc2">setMainTable</a> (const QString &amp;tableName, const QString &amp;userFriendlyTableName)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the main (or parent) table of the form.  <a href="#ab03dd80e9de62362dd77161ef6bd6fc2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#ac2de4ee6f27d7411c2404771585204ae">setMainTable</a> (const QString &amp;tableName, const QString &amp;userFriendlyTableName, QSqlDatabase db)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the main (or parent) table of the form.  <a href="#ac2de4ee6f27d7411c2404771585204ae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a3504a54f26777ed38efce5cc151a1dbf">addChildTable</a> (const QString &amp;tableName, const QString &amp;userFriendlyTableName)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child table to the form.  <a href="#a3504a54f26777ed38efce5cc151a1dbf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a2a3af0bab78caee638b89aecdc1a2f62">addChildTable</a> (const QString &amp;tableName, const QString &amp;userFriendlyTableName, QSqlDatabase db)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child table to the form.  <a href="#a2a3af0bab78caee638b89aecdc1a2f62"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a86174e002c2dd5496ab74a7eb67c614c">addChildWidget</a> (QWidget *widget, const QString &amp;label, const QIcon &amp;icon=QIcon())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a widget to the internal QTabWidget.  <a href="#a86174e002c2dd5496ab74a7eb67c614c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#ab9bb1b548b71ef4e8547846b6aedec66">addRelation</a> (const QString &amp;parentFieldName, const QString &amp;childTableName, const QString &amp;childFieldName, const QString &amp;operatorWithPreviousItem=&quot;AND&quot;)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a relation between main table and a child table.  <a href="#ab9bb1b548b71ef4e8547846b6aedec66"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_sql_widget.html">mdtAbstractSqlWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a345555605914bf8198d093abdd3cda1e">sqlWidget</a> (const QString &amp;tableName)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get instance of the stored SQL widget related to a table name.  <a href="#a345555605914bf8198d093abdd3cda1e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_sql_widget.html">mdtAbstractSqlWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a1ea800b795e3ead97e6a0452ab305d65">sqlWidget</a> (const QString &amp;tableName)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get instance of the stored SQL widget related to a table name.  <a href="#a1ea800b795e3ead97e6a0452ab305d65"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59dc3afec69c8b6a18ed7fccb42c70ad"></a><!-- doxytag: member="mdtSqlForm::sqlFormWidget" ref="a59dc3afec69c8b6a18ed7fccb42c70ad" args="(const QString &amp;tableName)" -->
 <a class="el" href="classmdt_sql_form_widget.html">mdtSqlFormWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>sqlFormWidget</b> (const QString &amp;tableName)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a17f32077fb7cc33139c3dc26a8d011"></a><!-- doxytag: member="mdtSqlForm::sqlTableWidget" ref="a6a17f32077fb7cc33139c3dc26a8d011" args="(const QString &amp;tableName)" -->
 <a class="el" href="classmdt_sql_table_widget.html">mdtSqlTableWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>sqlTableWidget</b> (const QString &amp;tableName)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8423f91a1f8a6fa7408cd61be86a89c"></a><!-- doxytag: member="mdtSqlForm::database" ref="ac8423f91a1f8a6fa7408cd61be86a89c" args="()" -->
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c">database</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get database that was given by constructor. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#aa9c2ce2607760a8ebebf3d88779637d4">database</a> (const QString &amp;tableName)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get database that acts on given table name.  <a href="#aa9c2ce2607760a8ebebf3d88779637d4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QSqlTableModel *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#ac3f257a2711f66b3cdd811804c0f11b0">model</a> (const QString &amp;tableName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get model that acts on given table name.  <a href="#ac3f257a2711f66b3cdd811804c0f11b0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a2a2f564fe934cc8997b07f90abb771e1">select</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call select on model that acts on main table name.  <a href="#a2a2f564fe934cc8997b07f90abb771e1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#ae9a1f8c03e5ac8ccd01fa804356abd01">select</a> (const QString &amp;tableName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call select on model that acts on given table name.  <a href="#ae9a1f8c03e5ac8ccd01fa804356abd01"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QSqlError&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#ac9d704fa1a47bf59ae04f2945ec7ebc3">lastSqlError</a> (const QString &amp;tableName)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error of model that acts on tableName.  <a href="#ac9d704fa1a47bf59ae04f2945ec7ebc3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04724293298421c404e93c58015cda5e"></a><!-- doxytag: member="mdtSqlForm::lastError" ref="a04724293298421c404e93c58015cda5e" args="() const " -->
-<a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a04724293298421c404e93c58015cda5e">lastError</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#abfc6d7f49debf02f5016923cbd422f2f">setMainTableFilter</a> (const QString &amp;fieldName, const QVariant &amp;matchData)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set main table's filter.  <a href="#abfc6d7f49debf02f5016923cbd422f2f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a04724293298421c404e93c58015cda5e">lastError</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error of model that acts on tableName.  <a href="#a04724293298421c404e93c58015cda5e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7521d231f24663ee1d2acb904387353b"></a><!-- doxytag: member="mdtSqlForm::displayLastError" ref="a7521d231f24663ee1d2acb904387353b" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a7521d231f24663ee1d2acb904387353b">displayLastError</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Display last error in a message box. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a7d50c271fc506764ed20dd88914d0ddc">rowCount</a> (const QString &amp;tableName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the row count for given table name.  <a href="#a7d50c271fc506764ed20dd88914d0ddc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a855de08e9ddb3f7898ef4ceb0b0331f9">currentRow</a> (const QString &amp;tableName)</td></tr>
@@ -130,11 +137,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current data for given table and field name.  <a href="#aca283557b7e2586779cb5c498d388f14"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a0c27d6a9ecbf0589f313c7193c632a62">data</a> (const QString &amp;tableName, int row, const QString &amp;fieldName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data for given table , row and field name.  <a href="#a0c27d6a9ecbf0589f313c7193c632a62"></a><br/></td></tr>
-<tr><td colspan="2"><h2><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab84800b7913120c5a89d86f7d3eee8c1"></a><!-- doxytag: member="mdtSqlForm::addChildWidget" ref="ab84800b7913120c5a89d86f7d3eee8c1" args="(mdtAbstractSqlWidget *widget)=0" -->
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#ab84800b7913120c5a89d86f7d3eee8c1">addChildWidget</a> (<a class="el" href="classmdt_abstract_sql_widget.html">mdtAbstractSqlWidget</a> *widget)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add given child widget. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a27fe6e45aa5d4d7782aad9833e6de20b">setupTables</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup tables.  <a href="#a27fe6e45aa5d4d7782aad9833e6de20b"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc24e8dedd1249a29708347fdff560fd"></a><!-- doxytag: member="mdtSqlForm::pvLastError" ref="afc24e8dedd1249a29708347fdff560fd" args="" -->
+<a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastError</b></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Base class for high level SQL widgets API. </p>
@@ -145,15 +153,46 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <li><a class="el" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels.">mdtSqlRelation</a></li>
 </ul>
 <p>They help to deal with several common problems, but they need several code (creating objects, configure them, handle memory, ...).</p>
-<p>This class was made to have less code for common database GUI.</p>
-<p>You should not use this class directly, but better one of its derivate.</p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_sql_form_window.html" title="SQL form window.">mdtSqlFormWindow</a> </dd>
-<dd>
-<a class="el" href="classmdt_sql_form_dialog.html" title="SQL form dialog.">mdtSqlFormDialog</a> </dd></dl>
+<p>This class was made to have less code for common database GUI .</p>
+<p>The mainSqlWidget is based on a <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model.">mdtSqlFormWidget</a> , and is placed on the upper part of the form . When adding child table with <a class="el" href="classmdt_sql_form.html#a3504a54f26777ed38efce5cc151a1dbf" title="Add a child table to the form.">addChildTable()</a> , a instance of <a class="el" href="classmdt_sql_table_widget.html" title="Table view based SQL widget.">mdtSqlTableWidget</a> is created, and placed to a QTabWidget . It is also possible to add a non database related widget, using <a class="el" href="classmdt_sql_form.html#a86174e002c2dd5496ab74a7eb67c614c" title="Add a widget to the internal QTabWidget.">addChildWidget()</a> . In this case, the given widget is simply added to the internal QTabWidget . </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8h_source.html#l00057">57</a> of file <a class="el" href="mdt_sql_form_8h_source.html">mdtSqlForm.h</a>.</p>
-</div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a75710fca8759142a5cebb53fa4184906"></a><!-- doxytag: member="mdtSqlForm::addChildTable" ref="a75710fca8759142a5cebb53fa4184906" args="(const QString &amp;tableName, const QString &amp;userFriendlyTableName=&quot;&quot;, QSqlDatabase db=QSqlDatabase())" -->
+<p>Definition at line <a class="el" href="mdt_sql_form_8h_source.html#l00061">61</a> of file <a class="el" href="mdt_sql_form_8h_source.html">mdtSqlForm.h</a>.</p>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a607993f0d35207668c0f220d77bd9298"></a><!-- doxytag: member="mdtSqlForm::mdtSqlForm" ref="a607993f0d35207668c0f220d77bd9298" args="(QWidget *parent, QSqlDatabase db)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mdtSqlForm::mdtSqlForm </td>
+          <td>(</td>
+          <td class="paramtype">QWidget *&#160;</td>
+          <td class="paramname"><em>parent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSqlDatabase&#160;</td>
+          <td class="paramname"><em>db</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor. </p>
+<p>Given database will be used whenn adding new tables with <a class="el" href="classmdt_sql_form.html#ab03dd80e9de62362dd77161ef6bd6fc2" title="Set the main (or parent) table of the form.">setMainTable(const QString&amp;, const QString&amp;)</a> and <a class="el" href="classmdt_sql_form.html#a3504a54f26777ed38efce5cc151a1dbf" title="Add a child table to the form.">addChildTable(const QString&amp;, const QString&amp;)</a> .</p>
+<p><a class="el" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor.">database()</a> will also return this version . </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a3504a54f26777ed38efce5cc151a1dbf"></a><!-- doxytag: member="mdtSqlForm::addChildTable" ref="a3504a54f26777ed38efce5cc151a1dbf" args="(const QString &amp;tableName, const QString &amp;userFriendlyTableName)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -167,18 +206,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>userFriendlyTableName</em> = <code>&quot;&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QSqlDatabase&#160;</td>
-          <td class="paramname"><em>db</em> = <code>QSqlDatabase()</code>&#160;</td>
+          <td class="paramname"><em>userFriendlyTableName</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td><code> [virtual]</code></td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -189,17 +222,98 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
   <table class="params">
     <tr><td class="paramname">tableName</td><td>Table on witch the new (internally created) widget must act. </td></tr>
     <tr><td class="paramname">userFriendlyTableName</td><td>If set, will be used at places that are visible from user. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false if given table name does not exist or on some other errors (database not open, access privileges, ...). False can also be returned if main table was not set (see setTable() ). </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2a3af0bab78caee638b89aecdc1a2f62"></a><!-- doxytag: member="mdtSqlForm::addChildTable" ref="a2a3af0bab78caee638b89aecdc1a2f62" args="(const QString &amp;tableName, const QString &amp;userFriendlyTableName, QSqlDatabase db)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSqlForm::addChildTable </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>tableName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>userFriendlyTableName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSqlDatabase&#160;</td>
+          <td class="paramname"><em>db</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add a child table to the form. </p>
+<p>This method is only useful if different tables have to act on different databases .</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableName</td><td>Table on witch the new (internally created) widget must act. </td></tr>
+    <tr><td class="paramname">userFriendlyTableName</td><td>If set, will be used at places that are visible from user. </td></tr>
     <tr><td class="paramname">db</td><td>Database to use (pass a QSqlDatabase() if only one database is used). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false if given table name does not exist or on some other errors (database not open, access privileges, ...). False can also be returned if main table was not set (see <a class="el" href="classmdt_sql_form.html#a8a3c5c3fa87da8a1b45c287e08f069c1" title="Set the main (or parent) table of the form.">setTable()</a> ). </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false if given table name does not exist or on some other errors (database not open, access privileges, ...). False can also be returned if main table was not set (see setTable() ). </dd></dl>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Cannot add child table '" + tableName + "' because no main table was set", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</p>
-<p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Unable to select data in table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+</div>
+</div>
+<a class="anchor" id="a86174e002c2dd5496ab74a7eb67c614c"></a><!-- doxytag: member="mdtSqlForm::addChildWidget" ref="a86174e002c2dd5496ab74a7eb67c614c" args="(QWidget *widget, const QString &amp;label, const QIcon &amp;icon=QIcon())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSqlForm::addChildWidget </td>
+          <td>(</td>
+          <td class="paramtype">QWidget *&#160;</td>
+          <td class="paramname"><em>widget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QIcon &amp;&#160;</td>
+          <td class="paramname"><em>icon</em> = <code>QIcon()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add a widget to the internal QTabWidget. </p>
+<p>Can be used if a widget that is not related to a database table must be placed in the QTabWidget .</p>
+<p>Note: the given widget will be reparented, and also deleted when the form is destroyed . </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00141">141</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -243,10 +357,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <p>Add a relation between main table and a child table. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on succes, false if childTableName or a field does not exit. </dd></dl>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Cannot find relation that contains child table '" + childTableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00123">123</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00157">157</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -276,13 +387,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <div class="memdoc">
 
 <p>Get current data for given table and field name. </p>
-<p>Note that SQL widget related to given tableName is searched at each request. If several access to currentData is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a345555605914bf8198d093abdd3cda1e" title="Get instance of the stored SQL widget related to a table name.">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#aca283557b7e2586779cb5c498d388f14" title="Get current data for given table and field name.">currentData()</a> method.</p>
+<p>Note that SQL widget related to given tableName is searched at each request. If several access to currentData is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a1ea800b795e3ead97e6a0452ab305d65" title="Get instance of the stored SQL widget related to a table name.">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#aca283557b7e2586779cb5c498d388f14" title="Get current data for given table and field name.">currentData()</a> method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Current value, or a invalid QVariant on error (f.ex. table or field not found). </dd></dl>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00286">286</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00399">399</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -303,13 +411,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 
 <p>Get the current row of given table name. </p>
 <p>Current row can be the currently selected row (case of a table view), or simply the current row that is displayed in a form view.</p>
-<p>Note that SQL widget related to given tableName is searched at each request. If several access to currentRow is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a345555605914bf8198d093abdd3cda1e" title="Get instance of the stored SQL widget related to a table name.">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#a855de08e9ddb3f7898ef4ceb0b0331f9" title="Get the current row of given table name.">currentRow()</a> method.</p>
+<p>Note that SQL widget related to given tableName is searched at each request. If several access to currentRow is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a1ea800b795e3ead97e6a0452ab305d65" title="Get instance of the stored SQL widget related to a table name.">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#a855de08e9ddb3f7898ef4ceb0b0331f9" title="Get the current row of given table name.">currentRow()</a> method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Current row, or value &lt; 0 on error (f.ex. table not found). </dd></dl>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00252">252</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00367">367</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -345,22 +450,19 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <div class="memdoc">
 
 <p>Get data for given table , row and field name. </p>
-<p>Note that SQL widget related to given tableName is searched at each request. If several access to data is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a345555605914bf8198d093abdd3cda1e" title="Get instance of the stored SQL widget related to a table name.">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#a0c27d6a9ecbf0589f313c7193c632a62" title="Get data for given table , row and field name.">data()</a> method.</p>
+<p>Note that SQL widget related to given tableName is searched at each request. If several access to data is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a1ea800b795e3ead97e6a0452ab305d65" title="Get instance of the stored SQL widget related to a table name.">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#a0c27d6a9ecbf0589f313c7193c632a62" title="Get data for given table , row and field name.">data()</a> method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Current value, or a invalid QVariant on error (f.ex. table, row or field not found). </dd></dl>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00303">303</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00415">415</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac9d704fa1a47bf59ae04f2945ec7ebc3"></a><!-- doxytag: member="mdtSqlForm::lastSqlError" ref="ac9d704fa1a47bf59ae04f2945ec7ebc3" args="(const QString &amp;tableName)" -->
+<a class="anchor" id="aa9c2ce2607760a8ebebf3d88779637d4"></a><!-- doxytag: member="mdtSqlForm::database" ref="aa9c2ce2607760a8ebebf3d88779637d4" args="(const QString &amp;tableName)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QSqlError mdtSqlForm::lastSqlError </td>
+          <td class="memname">QSqlDatabase mdtSqlForm::database </td>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>tableName</em></td><td>)</td>
@@ -370,13 +472,35 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div>
 <div class="memdoc">
 
+<p>Get database that acts on given table name. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>QSqlDatabase object that acts on given table, or <a class="el" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor.">database()</a> if table was not found . </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00225">225</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a04724293298421c404e93c58015cda5e"></a><!-- doxytag: member="mdtSqlForm::lastError" ref="a04724293298421c404e93c58015cda5e" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_error.html">mdtError</a> mdtSqlForm::lastError </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
 <p>Get last error of model that acts on tableName. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>A valid QSqlError if table was found and a error occured. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A valid QSqlError if table was found and a error occured.QSqlError lastSqlError(const QString &amp;tableName);</dd></dl>
+<p>Get last error</p>
+<p>QSqlError mdtSqlForm::lastSqlError(const QString &amp;tableName) { QSqlTableModel *m;</p>
+<p>m = model(tableName); if(m == 0){ /mdtError e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); pvLastError.setError(tr("Cannot find model that acts on table '") + tableName + tr("'"), <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm"); pvLastError.commit(); return QSqlError(); }</p>
+<p>return m-&gt;<a class="el" href="classmdt_sql_form.html#a04724293298421c404e93c58015cda5e" title="Get last error of model that acts on tableName.">lastError()</a>; } </p>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00215">215</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00337">337</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -398,7 +522,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <p>Use this method to get the widget to give as argument to setupUi() method of your Ui widget.</p>
 <dl class="post"><dt><b>Postcondition:</b></dt><dd>Returns a valid object. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -420,7 +544,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <p>Get model that acts on given table name. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>QSqlTableModel object or a null pointer if table was not found. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00187">187</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00237">237</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -443,10 +567,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <p>Note that SQL widget related to given tableName is searched at each request. If several access to rowCount is needed, it can be better to get a pointer to related model with <a class="el" href="classmdt_sql_form.html#ac3f257a2711f66b3cdd811804c0f11b0" title="Get model that acts on given table name.">model()</a> , and call his <a class="el" href="classmdt_sql_form.html#a7d50c271fc506764ed20dd88914d0ddc" title="Get the row count for given table name.">rowCount()</a> method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Row count, or value &lt; 0 on error (f.ex. table not found). </dd></dl>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00236">236</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00352">352</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -466,12 +587,30 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <div class="memdoc">
 
 <p>Call select on model that acts on given table name. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false if tableName was not found or other error. On failure, the last error is avaliable with <a class="el" href="classmdt_sql_form.html#a04724293298421c404e93c58015cda5e" title="Get last error.">lastError()</a> </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false if tableName was not found or other error. On failure, the last error is avaliable with <a class="el" href="classmdt_sql_form.html#a04724293298421c404e93c58015cda5e" title="Get last error of model that acts on tableName.">lastError()</a> </dd></dl>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Cannot find model that acts on table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00264">264</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00199">199</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+</div>
+</div>
+<a class="anchor" id="a2a2f564fe934cc8997b07f90abb771e1"></a><!-- doxytag: member="mdtSqlForm::select" ref="a2a2f564fe934cc8997b07f90abb771e1" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSqlForm::select </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Call select on model that acts on main table name. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false on error. On failure, the last error is avaliable with <a class="el" href="classmdt_sql_form.html#a04724293298421c404e93c58015cda5e" title="Get last error of model that acts on tableName.">lastError()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00249">249</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -513,21 +652,18 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <div class="memdoc">
 
 <p>Set (update) data of current row (record) for given table and field name. </p>
-<p>Note that SQL widget related to given tableName is searched at each request. If several access to setCurrentData is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a345555605914bf8198d093abdd3cda1e" title="Get instance of the stored SQL widget related to a table name.">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#aa377e70f4a2e865b0b696957c0fca766" title="Set (update) data of current row (record) for given table and field name.">setCurrentData()</a> method. </p>
+<p>Note that SQL widget related to given tableName is searched at each request. If several access to setCurrentData is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a1ea800b795e3ead97e6a0452ab305d65" title="Get instance of the stored SQL widget related to a table name.">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#aa377e70f4a2e865b0b696957c0fca766" title="Set (update) data of current row (record) for given table and field name.">setCurrentData()</a> method. </p>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Cannot find SQL widget acting on table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00269">269</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00383">383</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8a3c5c3fa87da8a1b45c287e08f069c1"></a><!-- doxytag: member="mdtSqlForm::setTable" ref="a8a3c5c3fa87da8a1b45c287e08f069c1" args="(const QString &amp;tableName, const QString &amp;userFriendlyTableName=&quot;&quot;, QSqlDatabase db=QSqlDatabase())" -->
+<a class="anchor" id="ab03dd80e9de62362dd77161ef6bd6fc2"></a><!-- doxytag: member="mdtSqlForm::setMainTable" ref="ab03dd80e9de62362dd77161ef6bd6fc2" args="(const QString &amp;tableName, const QString &amp;userFriendlyTableName)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtSqlForm::setTable </td>
+          <td class="memname">bool mdtSqlForm::setMainTable </td>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>tableName</em>, </td>
@@ -536,13 +672,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>userFriendlyTableName</em> = <code>&quot;&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QSqlDatabase&#160;</td>
-          <td class="paramname"><em>db</em> = <code>QSqlDatabase()</code>&#160;</td>
+          <td class="paramname"><em>userFriendlyTableName</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -559,25 +689,129 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
   <table class="params">
     <tr><td class="paramname">tableName</td><td>Table on witch the form must act. </td></tr>
     <tr><td class="paramname">userFriendlyTableName</td><td>If set, will be used at places that are visible from user. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false if given table name does not exist or on some other errors (database not open, access privileges, ...) </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac2de4ee6f27d7411c2404771585204ae"></a><!-- doxytag: member="mdtSqlForm::setMainTable" ref="ac2de4ee6f27d7411c2404771585204ae" args="(const QString &amp;tableName, const QString &amp;userFriendlyTableName, QSqlDatabase db)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSqlForm::setMainTable </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>tableName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>userFriendlyTableName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSqlDatabase&#160;</td>
+          <td class="paramname"><em>db</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the main (or parent) table of the form. </p>
+<p>Note: be shure that your Ui::setupUi() was called on widget returned by <a class="el" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget.">mainSqlWidget()</a> before.</p>
+<p>This method is only useful if different tables have to act on different databases .</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableName</td><td>Table on witch the form must act. </td></tr>
+    <tr><td class="paramname">userFriendlyTableName</td><td>If set, will be used at places that are visible from user. </td></tr>
     <tr><td class="paramname">db</td><td>Database to use (pass a QSqlDatabase() if only one database is used). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false if given table name does not exist or on some other errors (database not open, access privileges, ...) </dd></dl>
 
-<p><p><a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DATABASE_ERROR, "Unable to select data in table '" + tableName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a345555605914bf8198d093abdd3cda1e"></a><!-- doxytag: member="mdtSqlForm::sqlWidget" ref="a345555605914bf8198d093abdd3cda1e" args="(const QString &amp;tableName)" -->
+<a class="anchor" id="abfc6d7f49debf02f5016923cbd422f2f"></a><!-- doxytag: member="mdtSqlForm::setMainTableFilter" ref="abfc6d7f49debf02f5016923cbd422f2f" args="(const QString &amp;fieldName, const QVariant &amp;matchData)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mdtSqlForm::sqlWidget </td>
+          <td class="memname">bool mdtSqlForm::setMainTableFilter </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>fieldName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>matchData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set main table's filter. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fieldName</td><td>Field that must match data </td></tr>
+    <tr><td class="paramname">matchData</td><td>Match data</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Internally, a SQL statement is generated linke: fieldName = matchData </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00279">279</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a27fe6e45aa5d4d7782aad9833e6de20b"></a><!-- doxytag: member="mdtSqlForm::setupTables" ref="a27fe6e45aa5d4d7782aad9833e6de20b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSqlForm::setupTables </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Setup tables. </p>
+<p>Must be re-implemented in subclass, default implementation does nothing . </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00431">431</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1ea800b795e3ead97e6a0452ab305d65"></a><!-- doxytag: member="mdtSqlForm::sqlWidget" ref="a1ea800b795e3ead97e6a0452ab305d65" args="(const QString &amp;tableName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_sql_widget.html">mdtAbstractSqlWidget</a> * mdtSqlForm::sqlWidget </td>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>tableName</em></td><td>)</td>
@@ -588,16 +822,15 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <div class="memdoc">
 
 <p>Get instance of the stored SQL widget related to a table name. </p>
-<p>Returns a null pointer if widget related to tableName was not found.</p>
-<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+<p>Returns a null pointer if widget related to tableName was not found. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00179">179</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_form_8h_source.html">mdtSqlForm.h</a></li>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_form_8h_source.html">mdtSqlForm.h</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -614,7 +847,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

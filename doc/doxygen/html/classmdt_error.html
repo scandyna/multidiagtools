@@ -95,6 +95,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct new error. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a> (const QString &amp;text, <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7">level_t</a> level)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set error.  <a href="#a8e7961a665841c1b052116e4dd2eb855"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#ace38a9600c19ddf3628d46b1a6a7b414">updateText</a> (const QString &amp;text)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update error text.  <a href="#ace38a9600c19ddf3628d46b1a6a7b414"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fa7eb879fe7b26c4a4f0bd55fe29ffa"></a><!-- doxytag: member="mdtError::clear" ref="a9fa7eb879fe7b26c4a4f0bd55fe29ffa" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a9fa7eb879fe7b26c4a4f0bd55fe29ffa">clear</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear. <br/></td></tr>
@@ -247,7 +249,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Error number. </p>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>If no good idea falls in for the usage of number , this method should become obselete . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00113">113</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00118">118</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
 
 </div>
 </div>
@@ -325,7 +327,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Add the source of error</p>
 <p>It's possible to use the helper macro MDT_ERROR_SET_SRC() </p>
 
-<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00096">96</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00101">101</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
 
 </div>
 </div>
@@ -347,7 +349,29 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Error number and text from system, if available. </p>
 <p>If obj is set, translation is used. (We not want to use the static QObject::tr() ). </p>
 
-<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00153">153</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00158">158</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ace38a9600c19ddf3628d46b1a6a7b414"></a><!-- doxytag: member="mdtError::updateText" ref="ace38a9600c19ddf3628d46b1a6a7b414" args="(const QString &amp;text)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtError::updateText </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Update error text. </p>
+<p>Will set error text, but does not clear error . </p>
+
+<p>Definition at line <a class="el" href="mdt_error_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_error_8cpp_source.html">mdtError.cpp</a>.</p>
 
 </div>
 </div>
@@ -370,7 +394,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:48 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

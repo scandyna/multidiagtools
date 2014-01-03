@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtDevice.h"
-#include "mdtError.h"
 #include "mdtAnalogIo.h"
 #include "mdtDeviceIosSegment.h"
 #include "mdtPortManager.h"
@@ -109,6 +108,11 @@ void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
   }
 }
 
+mdtDeviceIos *mdtDevice::ios()
+{
+  return pvIos;
+}
+
 void mdtDevice::setBackToReadyStateTimeout(int timeout)
 {
   pvBackToReadyStateTimeout = timeout;
@@ -147,6 +151,11 @@ void mdtDevice::wait(int ms)
   Q_ASSERT(portManager() != 0);
 
   portManager()->wait(ms);
+}
+
+mdtError mdtDevice::lastError() const
+{
+  return pvLastError;
 }
 
 mdtValue mdtDevice::getAnalogInputValue(mdtAnalogIo *analogInput, bool queryDevice, bool waitOnReply)
@@ -959,6 +968,11 @@ bool mdtDevice::queriesSequence()
 
 void mdtDevice::decodeReadenFrame(mdtPortTransaction *transaction)
 {
+}
+
+mdtError & mdtDevice::lastErrorW()
+{
+  return pvLastError;
 }
 
 int mdtDevice::readAnalogInput(mdtPortTransaction *transaction)

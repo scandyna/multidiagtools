@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -104,6 +104,36 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    */
   QByteArray sendQuery(const QByteArray &query);
 
+  /*! \brief Send data on port
+   *
+   * At first, this method waits until the ready state is set calling isReady() , a frame is available in port's write frames pool,
+   *  and until a transaction is possible (see waitTransactionPossible() ).
+   *  This wait will not break event loop, so no GUI freeze occurs.
+   *  If port manager is stopped during this wait (unhandled error, stop request),
+   *  this method returns.
+   *
+   * Then, data contained in transaction will be passed to the mdtPort's write queue by copy.
+   *  This method returns immediatly after enqueue,
+   *  and don't wait until data was written.
+   *
+   * \param transaction Transaction used to send data. Following members are used by this method:
+   *                     - id : transaction will be added to pending transactions with this id,
+   *                            and currentTransactionId will be set with it.
+   *                     - data : will be sent to port.
+   *                     - isQueryReplyMode : if true, the transaction will be keeped in transactions done queue
+   *                                          until readenFrame() or readenFrames() is called.
+   *                                          Note: it's possible to force keeping all incomming data (wich also owerwrite this flag)
+   *                                           by setting the global keepTransactionsDone flag.
+   *
+   * \return bTag on success or value < 0 on error.
+   *          In this implementation, the only possible error is mdtAbstractPort::WriteCanceled,
+   *          witch typically occurs when port manager stops.
+   *          Note: on failure, the transaction is restored to pool.
+   * \pre Port must be set with setPort() before use of this method.
+   * \pre transaction must be a valid pointer, and not allready exists in transactions pending or transactions done queue.
+   */
+  int sendData(mdtPortTransaction *transaction);
+
   /*! \brief Write data by copy
    *
    * At first, this method waits until the ready state is set calling isReady() , a frame is available in port's write frames pool,
@@ -184,7 +214,7 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
   /*! \brief Not usable here
    */
-  int sendData(mdtPortTransaction *transaction);
+  ///int sendData(mdtPortTransaction *transaction);
 
   /*! \brief Not usable here
    */

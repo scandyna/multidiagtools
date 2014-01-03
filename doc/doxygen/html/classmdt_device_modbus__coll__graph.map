@@ -1,15 +1,16 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="13,568,99,597"/>
-<area shape="rect" id="node4" href="$classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="5,472,107,501"/>
-<area shape="rect" id="node6" href="$classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?" alt="" coords="123,568,288,597"/>
-<area shape="rect" id="node8" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="147,472,264,501"/>
-<area shape="rect" id="node10" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager." alt="" coords="312,568,499,597"/>
-<area shape="rect" id="node12" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="347,472,464,501"/>
-<area shape="rect" id="node14" href="$classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="120,360,317,389"/>
-<area shape="rect" id="node16" href="$classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="196,183,319,212"/>
-<area shape="rect" id="node18" href="$classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="96,5,171,35"/>
-<area shape="rect" id="node21" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="428,360,535,389"/>
-<area shape="rect" id="node23" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="357,183,475,212"/>
-<area shape="rect" id="node25" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="363,5,469,35"/>
-<area shape="rect" id="node27" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="559,360,649,389"/>
+<area shape="rect" id="node2" href="$classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="101,568,187,597"/>
+<area shape="rect" id="node4" href="$classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="5,472,77,501"/>
+<area shape="rect" id="node6" href="$classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="101,472,203,501"/>
+<area shape="rect" id="node8" href="$classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?" alt="" coords="211,568,376,597"/>
+<area shape="rect" id="node10" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="235,472,352,501"/>
+<area shape="rect" id="node12" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager." alt="" coords="400,568,587,597"/>
+<area shape="rect" id="node14" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="435,472,552,501"/>
+<area shape="rect" id="node16" href="$classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="208,360,405,389"/>
+<area shape="rect" id="node18" href="$classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="284,183,407,212"/>
+<area shape="rect" id="node20" href="$classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="184,5,259,35"/>
+<area shape="rect" id="node23" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="516,360,623,389"/>
+<area shape="rect" id="node25" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="445,183,563,212"/>
+<area shape="rect" id="node27" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="451,5,557,35"/>
+<area shape="rect" id="node29" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="647,360,737,389"/>
 </map>

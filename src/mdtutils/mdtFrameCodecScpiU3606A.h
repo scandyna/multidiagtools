@@ -57,9 +57,13 @@ class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi
    */
   measure_type_t measureType() const;
 
+  /*! \brief Get measure unit
+   */
+  QString measureUnit() const;
+
   /*! \brief Get the measure range
    */
-  mdtValue range() const;
+  mdtValue measureRange() const;
 
   /*! \brief Get the measure resolution
    */
@@ -68,7 +72,7 @@ class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi
  private:
 
   measure_type_t pvMeasureType;
-  mdtValue pvRange;
+  mdtValue pvMeasureRange;
   mdtValue pvResolution;
 };
 

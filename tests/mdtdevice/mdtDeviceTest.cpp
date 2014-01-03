@@ -30,6 +30,7 @@
 #include "mdtDeviceModbusWagoModuleRtd.h"
 #include "mdtDeviceScpi.h"
 #include "mdtDeviceU3606A.h"
+#include "mdtFrameCodecScpiU3606A.h"
 #include "mdtDeviceDSO1000A.h"
 #include "mdtDeviceWindow.h"
 #include "mdtPortInfo.h"
@@ -2299,8 +2300,6 @@ void mdtDeviceTest::U3606ATest()
 {
   mdtDeviceU3606A d;
   mdtDeviceInfo devInfo;
-  mdtAnalogIo *ai;
-  mdtDeviceIos ios;
   mdtDeviceIosWidget *iosw;
   mdtDeviceWindow dw;
 
@@ -2310,42 +2309,36 @@ void mdtDeviceTest::U3606ATest()
   }
 
   /*
-   * Setup I/O's
-   */
-
-  // Analog inputs
-  ai = new mdtAnalogIo;
-  ai->setAddress(0);
-  ai->setLabelShort("Voltage");
-  ai->setUnit("[V]");
-  //ai->setDetails("Module type: KL3001");
-  ai->setRange(0.0, 1000.0, 32);
-  ios.addAnalogInput(ai);
-
-  /*
    * Setup devie
    */
 
+  QVERIFY(d.ios() != 0);
+
   // Setup I/O's widget
   iosw = new mdtDeviceIosWidget;
-  iosw->setDeviceIos(&ios);
+  iosw->setDeviceIos(d.ios());
 
-  // Setup device
-  d.setIos(&ios, true);
+  // Setup device window
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
-  ///dw.statusWidget()->setStateBusyText("Query running ...");
-  ///dw.statusWidget()->setStateBusyColor(mdtLed::Green);
   QVERIFY(d.portManager()->writeThread() != 0);
   QVERIFY(d.portManager()->readThread() != 0);
   dw.statusWidget()->enableTxRxLeds(d.portManager()->writeThread(), d.portManager()->readThread());
   dw.show();
 
-  ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-
   // Check generic command
   QVERIFY(d.sendCommand("*CLS\n") >= 0);
   QVERIFY(d.sendCommand("*RST\n") >= 0);
+
+  // Set and get device setup
+  QVERIFY(d.sendCommand("CONF:VOLT 10, 0.001\n") >= 0);
+  QVERIFY(d.getMeasureConfiguration() == mdtFrameCodecScpiU3606A::MT_VOLTAGE_DC);
+  QVERIFY(d.ios()->analogInputWithLabelShort("MEASURE") != 0);
+  QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->minimum() , 0.0);
+  QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->maximum() , 10.0);
+  
+  ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+
   
   // Enable bits in Status Byte Register
   QVERIFY(d.sendCommand("*SRE 255\n") >= 0);
@@ -2387,7 +2380,7 @@ void mdtDeviceTest::U3606ATest()
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   d.checkDeviceError();
   
-  d.start(500);
+  d.start(100);
   QTest::qWait(5000);
   
   while(dw.isVisible()){

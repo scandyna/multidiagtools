@@ -22,6 +22,8 @@
 #include "mdtError.h"
 #include <cfloat>
 
+#include <QDebug>
+
 mdtFrameCodecScpiU3606A::mdtFrameCodecScpiU3606A()
 {
   pvMeasureType = MT_UNKNOW;
@@ -35,7 +37,7 @@ bool mdtFrameCodecScpiU3606A::decodeConfigure(const QByteArray &data)
   // Clear previous results
   pvValues.clear();
   pvMeasureType = MT_UNKNOW;
-  pvRange.clear();
+  pvMeasureRange.clear();
   pvResolution.clear();
 
   // Extract <function> and <parameters>
@@ -47,7 +49,7 @@ bool mdtFrameCodecScpiU3606A::decodeConfigure(const QByteArray &data)
   // Decode <function>
   pvNodes = pvValues.at(0).toString().split(':', QString::SkipEmptyParts);
   if(pvNodes.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Function part contains no data", mdtError::Error);
+    mdtError e("Function part contains no data", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpiU3606A");
     e.commit();
     return false;
@@ -97,15 +99,22 @@ bool mdtFrameCodecScpiU3606A::decodeConfigure(const QByteArray &data)
   }
   // Get <parameters>
   if(pvValues.size() == 3){
+    pvMeasureRange = pvValues.at(1).value<mdtValue>();
+    pvResolution = pvValues.at(2).value<mdtValue>();
+  }
+  /**
+  if(pvValues.size() == 3){
     value = pvValues.at(1);
+    qDebug() << "mdtFrameCodecScpiU3606A::decodeConfigure() - value: " << value;
     if(value.convert(QVariant::Double)){
-      pvRange = checkFloatingValueValidity(value.toDouble());
+      pvMeasureRange = checkFloatingValueValidity(value.toDouble());
     }
     value = pvValues.at(2);
     if(value.convert(QVariant::Double)){
       pvResolution = checkFloatingValueValidity(value.toDouble());
     }
   }
+  */
 
   return true;
 }
@@ -115,9 +124,37 @@ mdtFrameCodecScpiU3606A::measure_type_t mdtFrameCodecScpiU3606A::measureType() c
   return pvMeasureType;
 }
 
-mdtValue mdtFrameCodecScpiU3606A::range() const
+QString mdtFrameCodecScpiU3606A::measureUnit() const
 {
-  return pvRange;
+  switch(pvMeasureType){
+    case MT_UNKNOW:
+      return "";
+    case MT_VOLTAGE_DC:
+    case MT_VOLTAGE_AC:
+      return "V";
+    case MT_CURRENT_DC:
+    case MT_CURRENT_AC:
+      return "A";
+    case MT_RESISTANCE:
+    case MT_CONTINUITY:
+    case MT_LRESISTANCE:
+      return "Ohm";
+    case MT_CAPACITANCE:
+      return "uF";
+    case MT_DIODE:
+      return "V";
+    case MT_FREQUENCY:
+      return "Hz";
+    case MT_PWIDTH:
+    case MT_DCYCLE:
+      return "s";
+  }
+  return "";
+}
+
+mdtValue mdtFrameCodecScpiU3606A::measureRange() const
+{
+  return pvMeasureRange;
 }
 
 mdtValue mdtFrameCodecScpiU3606A::resolution() const

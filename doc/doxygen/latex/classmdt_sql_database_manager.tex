@@ -13,8 +13,7 @@ Helper class to create and open (connect to) database.
 
 
 
-Collaboration diagram for mdtSqlDatabaseManager:
-\nopagebreak
+Collaboration diagram for mdtSqlDatabaseManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -53,6 +52,11 @@ QSqlDatabase \hyperlink{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e
 \label{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}
 
 \begin{DoxyCompactList}\small\item\em Get current database object. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}{
+bool \hyperlink{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}{setForeignKeysEnabled} (bool enable)}
+\label{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}
+
+\begin{DoxyCompactList}\small\item\em Enable/disable foreing keys constraint. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_database_manager_a3da56635b2a4db98b768e5846e15fa83}{setForDialogParentWidget} (QWidget $\ast$widget)
 \begin{DoxyCompactList}\small\item\em Set the parent widget for dialogs. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_sql_database_manager_a7fb8458fb9fc10216c8dfbbeb2c3dc50}{
@@ -62,10 +66,7 @@ void \hyperlink{classmdt_sql_database_manager_a3da56635b2a4db98b768e5846e15fa83}
 \begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
 QFileInfo \hyperlink{classmdt_sql_database_manager_ae6459276d25c6d3733b284249c1f1ab4}{chooseDatabaseSqlite} (const QDir \&startDirectory=QDir())
 \begin{DoxyCompactList}\small\item\em Let the user choose a Sqlite database file. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}{
-bool \hyperlink{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}{openDatabaseSqlite} (const QFileInfo \&fileInfo, const QString \&connectionName=QString())}
-\label{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}
-
+bool \hyperlink{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}{openDatabaseSqlite} (const QFileInfo \&fileInfo, const QString \&connectionName=QString())
 \begin{DoxyCompactList}\small\item\em Open a sqlite database. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_database_manager_a536f140060edf7721d8f0589f4d7de0d}{openDatabaseSqlite} (const QDir \&startDirectory=QDir(), const QString \&connectionName=QString())
 \begin{DoxyCompactList}\small\item\em Open a sqlite database. \end{DoxyCompactList}\item 
@@ -140,7 +141,7 @@ Let the user choose a Sqlite database file.
 
 The startDirectory is used as directory to go when displaying the file dialog 
 
-Definition at line 63 of file mdtSqlDatabaseManager.cpp.
+Definition at line 108 of file mdtSqlDatabaseManager.cpp.
 
 \hypertarget{classmdt_sql_database_manager_ac9c9cac0342cc3a66e4c3510da8f97c9}{
 \index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!createDatabaseSqlite@{createDatabaseSqlite}}
@@ -158,7 +159,7 @@ Ask the user to give a path and create a Sqlite database.
 
 The startDirectory is used as directory to go when displaying the file dialog 
 
-Definition at line 168 of file mdtSqlDatabaseManager.cpp.
+Definition at line 219 of file mdtSqlDatabaseManager.cpp.
 
 \hypertarget{classmdt_sql_database_manager_ae2c4622505d90610d3990dd682662678}{
 \index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!createDatabaseSqlite@{createDatabaseSqlite}}
@@ -177,7 +178,7 @@ Create a Sqlite database.
 
 Note: a open connection to database will not be closed by this method. The caller must close existing connection to target database explicitly before overwrite the same. 
 
-Definition at line 202 of file mdtSqlDatabaseManager.cpp.
+Definition at line 253 of file mdtSqlDatabaseManager.cpp.
 
 \hypertarget{classmdt_sql_database_manager_afe78562023f6b8d530a24a9362587ed5}{
 \index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!createTable@{createTable}}
@@ -195,7 +196,7 @@ Create a table.
 
 Will also setup database specific thing (like driver name) on table. 
 
-Definition at line 323 of file mdtSqlDatabaseManager.cpp.
+Definition at line 374 of file mdtSqlDatabaseManager.cpp.
 
 \hypertarget{classmdt_sql_database_manager_a536f140060edf7721d8f0589f4d7de0d}{
 \index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!openDatabaseSqlite@{openDatabaseSqlite}}
@@ -213,7 +214,33 @@ Open a sqlite database.
 
 Will ask the user to choose a file and try to open it . The startDirectory is used as directory to go when displaying the file dialog . 
 
-Definition at line 150 of file mdtSqlDatabaseManager.cpp.
+Definition at line 201 of file mdtSqlDatabaseManager.cpp.
+
+\hypertarget{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}{
+\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!openDatabaseSqlite@{openDatabaseSqlite}}
+\index{openDatabaseSqlite@{openDatabaseSqlite}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
+\subsubsection[{openDatabaseSqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlDatabaseManager::openDatabaseSqlite (
+\begin{DoxyParamCaption}
+\item[{const QFileInfo \&}]{fileInfo, }
+\item[{const QString \&}]{connectionName = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}
+
+
+Open a sqlite database. 
+
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000084}{Todo}]Close here ?? \end{Desc}
+
+
+QSqlQuery query(pvDatabase); if(!query.exec(\char`\"{}PRAGMA foreign\_\-keys = ON\char`\"{}))\{ pvLastError.setError(tr(\char`\"{}Cannot enable foreign keys support on database '\char`\"{}) + pvDatabaseName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); MDT\_\-ERROR\_\-SET\_\-SRC(pvLastError, \char`\"{}mdtSqlDatabaseManager\char`\"{}); pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text()); pvLastError.commit(); return false; \}
+
+
+
+Definition at line 127 of file mdtSqlDatabaseManager.cpp.
 
 \hypertarget{classmdt_sql_database_manager_a3da56635b2a4db98b768e5846e15fa83}{
 \index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!setForDialogParentWidget@{setForDialogParentWidget}}
@@ -230,7 +257,7 @@ Set the parent widget for dialogs.
 
 In interactive mode, some dialogs will be displayed. If widget is set, dialogs will be created as parent of it. 
 
-Definition at line 53 of file mdtSqlDatabaseManager.cpp.
+Definition at line 98 of file mdtSqlDatabaseManager.cpp.
 
 
 

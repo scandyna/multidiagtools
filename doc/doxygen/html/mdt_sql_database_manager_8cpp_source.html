@@ -112,409 +112,448 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00050"></a>00050   <span class="keywordflow">return</span> pvDatabase;
 <a name="l00051"></a>00051 }
 <a name="l00052"></a>00052 
-<a name="l00053"></a><a class="code" href="classmdt_sql_database_manager.html#a3da56635b2a4db98b768e5846e15fa83">00053</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_database_manager.html#a3da56635b2a4db98b768e5846e15fa83" title="Set the parent widget for dialogs.">mdtSqlDatabaseManager::setForDialogParentWidget</a>(QWidget *widget) 
+<a name="l00053"></a><a class="code" href="classmdt_sql_database_manager.html#a40638df04f9e6eb3c5cee399a5543ffd">00053</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a40638df04f9e6eb3c5cee399a5543ffd" title="Enable/disable foreing keys constraint.">mdtSqlDatabaseManager::setForeignKeysEnabled</a>(<span class="keywordtype">bool</span> enable)
 <a name="l00054"></a>00054 {
-<a name="l00055"></a>00055   pvForDialogParentWidget = widget;
-<a name="l00056"></a>00056 }
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="classmdt_sql_database_manager.html#a7fb8458fb9fc10216c8dfbbeb2c3dc50">00058</a> <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> <a class="code" href="classmdt_sql_database_manager.html#a7fb8458fb9fc10216c8dfbbeb2c3dc50" title="Get last error.">mdtSqlDatabaseManager::lastError</a>()<span class="keyword"> const </span>
-<a name="l00059"></a>00059 <span class="keyword"></span>{
-<a name="l00060"></a>00060   <span class="keywordflow">return</span> pvLastError;
-<a name="l00061"></a>00061 }
-<a name="l00062"></a>00062 
-<a name="l00063"></a><a class="code" href="classmdt_sql_database_manager.html#ae6459276d25c6d3733b284249c1f1ab4">00063</a> QFileInfo <a class="code" href="classmdt_sql_database_manager.html#ae6459276d25c6d3733b284249c1f1ab4" title="Let the user choose a Sqlite database file.">mdtSqlDatabaseManager::chooseDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory) 
-<a name="l00064"></a>00064 {
-<a name="l00065"></a>00065   QFileDialog dialog(pvForDialogParentWidget);
-<a name="l00066"></a>00066   QFileInfo fileInfo;
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <span class="comment">// Setup and show dialog</span>
-<a name="l00069"></a>00069   dialog.setAcceptMode(QFileDialog::AcceptOpen);
-<a name="l00070"></a>00070   dialog.setDirectory(startDirectory);
-<a name="l00071"></a>00071   dialog.setNameFilter(tr(<span class="stringliteral">&quot;(Sqlite) Database file (*.sqlite)&quot;</span>));
-<a name="l00072"></a>00072   dialog.setFileMode(QFileDialog::ExistingFile);
-<a name="l00073"></a>00073   <span class="keywordflow">if</span>(dialog.exec() != QDialog::Accepted){
-<a name="l00074"></a>00074     <span class="keywordflow">return</span> fileInfo;
-<a name="l00075"></a>00075   }
-<a name="l00076"></a>00076   Q_ASSERT(dialog.selectedFiles().size() == 1);
-<a name="l00077"></a>00077   fileInfo.setFile(dialog.selectedFiles().at(0));
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   <span class="keywordflow">return</span> fileInfo;
-<a name="l00080"></a>00080 }
-<a name="l00081"></a>00081 
-<a name="l00082"></a><a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273">00082</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">mdtSqlDatabaseManager::openDatabaseSqlite</a>(<span class="keyword">const</span> QFileInfo &amp; fileInfo, <span class="keyword">const</span> QString &amp; connectionName) 
-<a name="l00083"></a>00083 {
-<a name="l00084"></a>00084   <span class="comment">// Check if database is allready open</span>
-<a name="l00085"></a>00085   <span class="keywordflow">if</span>(databaseIsOpen(<span class="keyword">false</span>)){
-<a name="l00086"></a>00086     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00087"></a>00087   }
-<a name="l00088"></a>00088   Q_ASSERT(!pvDatabase.isOpen());
-<a name="l00089"></a>00089   <span class="comment">// Check if file exists</span>
-<a name="l00090"></a>00090   <span class="keywordflow">if</span>(!fileInfo.exists()){
-<a name="l00091"></a>00091     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;File &#39;&quot;</span>) + fileInfo.fileName() + tr(<span class="stringliteral">&quot;&#39; does not exists.&quot;</span>) + <span class="stringliteral">&quot;\n&quot;</span>\
-<a name="l00092"></a>00092                            + tr(<span class="stringliteral">&quot;Directory: &#39;&quot;</span>) + fileInfo.absoluteDir().path() + tr(<span class="stringliteral">&quot;&#39;.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00093"></a>00093     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00094"></a>00094     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00095"></a>00095     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00096"></a>00096   }
-<a name="l00097"></a>00097   <span class="comment">// Store the database name</span>
-<a name="l00098"></a>00098   pvDatabaseName = fileInfo.absoluteFilePath();
-<a name="l00099"></a>00099   <span class="comment">// Try to open database</span>
-<a name="l00100"></a>00100   <span class="keywordflow">if</span>(connectionName.isEmpty()){
-<a name="l00101"></a>00101     <span class="keywordflow">if</span>(QSqlDatabase::contains()){
-<a name="l00102"></a>00102       pvDatabase = <a class="code" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5" title="Get current database object.">QSqlDatabase::database</a>();
-<a name="l00103"></a>00103     }<span class="keywordflow">else</span>{
-<a name="l00104"></a>00104       pvDatabase = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>);
-<a name="l00105"></a>00105     }
-<a name="l00106"></a>00106   }<span class="keywordflow">else</span>{
-<a name="l00107"></a>00107     <span class="keywordflow">if</span>(QSqlDatabase::contains(connectionName)){
-<a name="l00108"></a>00108       pvDatabase = <a class="code" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5" title="Get current database object.">QSqlDatabase::database</a>(connectionName);
-<a name="l00109"></a>00109     }<span class="keywordflow">else</span>{
-<a name="l00110"></a>00110       pvDatabase = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>, connectionName);
-<a name="l00111"></a>00111     }
-<a name="l00112"></a>00112   }
-<a name="l00113"></a>00113   <span class="keywordflow">if</span>(!pvDatabase.isValid()){
-<a name="l00114"></a>00114     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Cannot create database connection (probably plugin/driver problem)&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00115"></a>00115     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00116"></a>00116     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-<a name="l00117"></a>00117     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00118"></a>00118     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00119"></a>00119   }
-<a name="l00120"></a>00120   <span class="keywordflow">if</span>(pvDatabase.driverName() != <span class="stringliteral">&quot;QSQLITE&quot;</span>){
-<a name="l00121"></a>00121     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Requested connection allready exists but is not for Sqlite.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00122"></a>00122     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00123"></a>00123     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00124"></a>00124     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00125"></a>00125   }
-<a name="l00126"></a>00126   pvDatabase.setDatabaseName(pvDatabaseName);
-<a name="l00127"></a>00127   <span class="keywordflow">if</span>(!pvDatabase.open()){
-<a name="l00128"></a>00128     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Cannot open database &#39;&quot;</span>) + pvDatabaseName + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00129"></a>00129     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00130"></a>00130     pvLastError.<a class="code" href="classmdt_error.html#a8ef108a0502df7875f1b54bbb2a8919d" title="Set informative text.">setInformativeText</a>(tr(<span class="stringliteral">&quot;Check that you have write access to directory &#39;&quot;</span>) + fileInfo.absoluteDir().path() + tr(<span class="stringliteral">&quot;&#39;.&quot;</span>));
-<a name="l00131"></a>00131     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-<a name="l00132"></a>00132     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00133"></a>00133     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00134"></a>00134   }
-<a name="l00135"></a>00135   Q_ASSERT(pvDatabase.isValid());
-<a name="l00136"></a>00136   Q_ASSERT(pvDatabase.isOpen());
-<a name="l00137"></a>00137   <span class="comment">// Enable foreign key support</span>
-<a name="l00138"></a>00138   QSqlQuery query(pvDatabase);
-<a name="l00139"></a>00139   <span class="keywordflow">if</span>(!query.exec(<span class="stringliteral">&quot;PRAGMA foreign_keys = ON&quot;</span>)){
-<a name="l00140"></a>00140     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot enable foreign keys support on database &#39;&quot;</span>) + pvDatabaseName + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00141"></a>00141     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00142"></a>00142     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-<a name="l00143"></a>00143     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00144"></a>00144     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00145"></a>00145   }
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00148"></a>00148 }
-<a name="l00149"></a>00149 
-<a name="l00150"></a><a class="code" href="classmdt_sql_database_manager.html#a536f140060edf7721d8f0589f4d7de0d">00150</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">mdtSqlDatabaseManager::openDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory, <span class="keyword">const</span> QString &amp; connectionName) 
-<a name="l00151"></a>00151 {
-<a name="l00152"></a>00152   QFileInfo fileInfo;
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154   <span class="comment">// Check if database is allready open</span>
-<a name="l00155"></a>00155   <span class="keywordflow">if</span>(databaseIsOpen(<span class="keyword">true</span>)){
-<a name="l00156"></a>00156     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00055"></a>00055   QString sql;
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057   <span class="comment">// Check that database is open</span>
+<a name="l00058"></a>00058   <span class="keywordflow">if</span>(!pvDatabase.isOpen()){
+<a name="l00059"></a>00059     <span class="keywordflow">if</span>(enable){
+<a name="l00060"></a>00060       pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot enable foreign keys contraint, because database is closed.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00061"></a>00061     }<span class="keywordflow">else</span>{
+<a name="l00062"></a>00062       pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot disable foreign keys contraint, because database is closed.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00063"></a>00063     }
+<a name="l00064"></a>00064     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00065"></a>00065     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00066"></a>00066     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00067"></a>00067   }
+<a name="l00068"></a>00068   <span class="comment">// Build query</span>
+<a name="l00069"></a>00069   QSqlQuery query(pvDatabase);
+<a name="l00070"></a>00070   <span class="keywordflow">if</span>(pvDatabase.driverName() == <span class="stringliteral">&quot;QSQLITE&quot;</span>){
+<a name="l00071"></a>00071     <span class="keywordflow">if</span>(enable){
+<a name="l00072"></a>00072       sql = <span class="stringliteral">&quot;PRAGMA foreign_keys = ON&quot;</span>;
+<a name="l00073"></a>00073     }<span class="keywordflow">else</span>{
+<a name="l00074"></a>00074       sql = <span class="stringliteral">&quot;PRAGMA foreign_keys = OFF&quot;</span>;
+<a name="l00075"></a>00075     }
+<a name="l00076"></a>00076   }<span class="keywordflow">else</span>{
+<a name="l00077"></a>00077     <span class="keywordflow">if</span>(enable){
+<a name="l00078"></a>00078       pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot enable foreign keys contraint, because database type is not supported.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00079"></a>00079     }<span class="keywordflow">else</span>{
+<a name="l00080"></a>00080       pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot disable foreign keys contraint, because database type is not supported.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00081"></a>00081     }
+<a name="l00082"></a>00082     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00083"></a>00083     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00084"></a>00084     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00085"></a>00085   }
+<a name="l00086"></a>00086   <span class="comment">// Exec query</span>
+<a name="l00087"></a>00087   <span class="keywordflow">if</span>(!query.exec(sql)){
+<a name="l00088"></a>00088     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot enable/disable foreign keys support on database &#39;&quot;</span>) + pvDatabaseName + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00089"></a>00089     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00090"></a>00090     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+<a name="l00091"></a>00091     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00092"></a>00092     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00093"></a>00093   }
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00096"></a>00096 }
+<a name="l00097"></a>00097 
+<a name="l00098"></a><a class="code" href="classmdt_sql_database_manager.html#a3da56635b2a4db98b768e5846e15fa83">00098</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_database_manager.html#a3da56635b2a4db98b768e5846e15fa83" title="Set the parent widget for dialogs.">mdtSqlDatabaseManager::setForDialogParentWidget</a>(QWidget *widget) 
+<a name="l00099"></a>00099 {
+<a name="l00100"></a>00100   pvForDialogParentWidget = widget;
+<a name="l00101"></a>00101 }
+<a name="l00102"></a>00102 
+<a name="l00103"></a><a class="code" href="classmdt_sql_database_manager.html#a7fb8458fb9fc10216c8dfbbeb2c3dc50">00103</a> <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> <a class="code" href="classmdt_sql_database_manager.html#a7fb8458fb9fc10216c8dfbbeb2c3dc50" title="Get last error.">mdtSqlDatabaseManager::lastError</a>()<span class="keyword"> const </span>
+<a name="l00104"></a>00104 <span class="keyword"></span>{
+<a name="l00105"></a>00105   <span class="keywordflow">return</span> pvLastError;
+<a name="l00106"></a>00106 }
+<a name="l00107"></a>00107 
+<a name="l00108"></a><a class="code" href="classmdt_sql_database_manager.html#ae6459276d25c6d3733b284249c1f1ab4">00108</a> QFileInfo <a class="code" href="classmdt_sql_database_manager.html#ae6459276d25c6d3733b284249c1f1ab4" title="Let the user choose a Sqlite database file.">mdtSqlDatabaseManager::chooseDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory) 
+<a name="l00109"></a>00109 {
+<a name="l00110"></a>00110   QFileDialog dialog(pvForDialogParentWidget);
+<a name="l00111"></a>00111   QFileInfo fileInfo;
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113   <span class="comment">// Setup and show dialog</span>
+<a name="l00114"></a>00114   dialog.setAcceptMode(QFileDialog::AcceptOpen);
+<a name="l00115"></a>00115   dialog.setDirectory(startDirectory);
+<a name="l00116"></a>00116   dialog.setNameFilter(tr(<span class="stringliteral">&quot;(Sqlite) Database file (*.sqlite)&quot;</span>));
+<a name="l00117"></a>00117   dialog.setFileMode(QFileDialog::ExistingFile);
+<a name="l00118"></a>00118   <span class="keywordflow">if</span>(dialog.exec() != QDialog::Accepted){
+<a name="l00119"></a>00119     <span class="keywordflow">return</span> fileInfo;
+<a name="l00120"></a>00120   }
+<a name="l00121"></a>00121   Q_ASSERT(dialog.selectedFiles().size() == 1);
+<a name="l00122"></a>00122   fileInfo.setFile(dialog.selectedFiles().at(0));
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124   <span class="keywordflow">return</span> fileInfo;
+<a name="l00125"></a>00125 }
+<a name="l00126"></a>00126 
+<a name="l00127"></a><a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273">00127</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">mdtSqlDatabaseManager::openDatabaseSqlite</a>(<span class="keyword">const</span> QFileInfo &amp; fileInfo, <span class="keyword">const</span> QString &amp; connectionName) 
+<a name="l00128"></a>00128 {
+<a name="l00129"></a>00129   <span class="comment">// Check if database is allready open</span>
+<a name="l00130"></a>00130   <span class="keywordflow">if</span>(databaseIsOpen(<span class="keyword">false</span>)){
+<a name="l00131"></a>00131     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00132"></a>00132   }
+<a name="l00133"></a>00133   Q_ASSERT(!pvDatabase.isOpen());
+<a name="l00134"></a>00134   <span class="comment">// Check if file exists</span>
+<a name="l00135"></a>00135   <span class="keywordflow">if</span>(!fileInfo.exists()){
+<a name="l00136"></a>00136     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;File &#39;&quot;</span>) + fileInfo.fileName() + tr(<span class="stringliteral">&quot;&#39; does not exists.&quot;</span>) + <span class="stringliteral">&quot;\n&quot;</span>\
+<a name="l00137"></a>00137                            + tr(<span class="stringliteral">&quot;Directory: &#39;&quot;</span>) + fileInfo.absoluteDir().path() + tr(<span class="stringliteral">&quot;&#39;.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00138"></a>00138     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00139"></a>00139     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00140"></a>00140     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00141"></a>00141   }
+<a name="l00142"></a>00142   <span class="comment">// Store the database name</span>
+<a name="l00143"></a>00143   pvDatabaseName = fileInfo.absoluteFilePath();
+<a name="l00144"></a>00144   <span class="comment">// Try to open database</span>
+<a name="l00145"></a>00145   <span class="keywordflow">if</span>(connectionName.isEmpty()){
+<a name="l00146"></a>00146     <span class="keywordflow">if</span>(QSqlDatabase::contains()){
+<a name="l00147"></a>00147       pvDatabase = <a class="code" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5" title="Get current database object.">QSqlDatabase::database</a>();
+<a name="l00148"></a>00148     }<span class="keywordflow">else</span>{
+<a name="l00149"></a>00149       pvDatabase = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>);
+<a name="l00150"></a>00150     }
+<a name="l00151"></a>00151   }<span class="keywordflow">else</span>{
+<a name="l00152"></a>00152     <span class="keywordflow">if</span>(QSqlDatabase::contains(connectionName)){
+<a name="l00153"></a>00153       pvDatabase = <a class="code" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5" title="Get current database object.">QSqlDatabase::database</a>(connectionName);
+<a name="l00154"></a>00154     }<span class="keywordflow">else</span>{
+<a name="l00155"></a>00155       pvDatabase = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>, connectionName);
+<a name="l00156"></a>00156     }
 <a name="l00157"></a>00157   }
-<a name="l00158"></a>00158   <span class="comment">// Let the user choose the sqlite file</span>
-<a name="l00159"></a>00159   fileInfo = <a class="code" href="classmdt_sql_database_manager.html#ae6459276d25c6d3733b284249c1f1ab4" title="Let the user choose a Sqlite database file.">chooseDatabaseSqlite</a>(startDirectory);
-<a name="l00160"></a>00160   <span class="keywordflow">if</span>(fileInfo.fileName().isEmpty()){
-<a name="l00161"></a>00161     pvLastError.<a class="code" href="classmdt_error.html#a9fa7eb879fe7b26c4a4f0bd55fe29ffa" title="Clear.">clear</a>();
-<a name="l00162"></a>00162     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00163"></a>00163   }
-<a name="l00164"></a>00164   <span class="comment">// Try to open database</span>
-<a name="l00165"></a>00165   <span class="keywordflow">return</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">openDatabaseSqlite</a>(fileInfo, connectionName);
-<a name="l00166"></a>00166 }
-<a name="l00167"></a>00167 
-<a name="l00168"></a><a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9">00168</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">mdtSqlDatabaseManager::createDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory, <span class="keyword">const</span> QString &amp; connectionName) 
-<a name="l00169"></a>00169 {
-<a name="l00170"></a>00170   QFileDialog dialog(pvForDialogParentWidget);
-<a name="l00171"></a>00171   QFileInfo fileInfo;
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173   <span class="comment">// Check if database is allready open</span>
-<a name="l00174"></a>00174   <span class="keywordflow">if</span>(databaseIsOpen(<span class="keyword">true</span>)){
-<a name="l00175"></a>00175     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00176"></a>00176   }
-<a name="l00177"></a>00177   <span class="comment">// Setup and show dialog</span>
-<a name="l00178"></a>00178   dialog.setAcceptMode(QFileDialog::AcceptSave);
-<a name="l00179"></a>00179   dialog.setDirectory(startDirectory);
-<a name="l00180"></a>00180   dialog.setNameFilter(tr(<span class="stringliteral">&quot;(Sqlite) Database file (*.sqlite)&quot;</span>));
-<a name="l00181"></a>00181   dialog.setConfirmOverwrite(<span class="keyword">true</span>);
-<a name="l00182"></a>00182   <span class="keywordflow">if</span>(dialog.exec() != QDialog::Accepted){
-<a name="l00183"></a>00183     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00184"></a>00184   }
-<a name="l00185"></a>00185   Q_ASSERT(dialog.selectedFiles().size() == 1);
-<a name="l00186"></a>00186   fileInfo.setFile(dialog.selectedFiles().at(0));
-<a name="l00187"></a>00187   <span class="comment">// Create database</span>
-<a name="l00188"></a>00188   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">createDatabaseSqlite</a>(fileInfo, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d">OverwriteExisting</a>, connectionName)){
-<a name="l00189"></a>00189     QMessageBox msgBox(pvForDialogParentWidget);
-<a name="l00190"></a>00190     msgBox.setText(pvLastError.<a class="code" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf" title="Error text.">text</a>());
-<a name="l00191"></a>00191     msgBox.setInformativeText(pvLastError.<a class="code" href="classmdt_error.html#adcc1905f585c327cec8a2e31af616651" title="Get informative text.">informativeText</a>());
-<a name="l00192"></a>00192     msgBox.setDetailedText(pvLastError.<a class="code" href="classmdt_error.html#a28d22c0b9341faacfef22a7deae2da3c" title="Error number and text from system, if available.">systemErrorString</a>(&amp;msgBox));
-<a name="l00193"></a>00193     msgBox.setIcon(pvLastError.<a class="code" href="classmdt_error.html#aac5a7cec9a5d4364f9331c80e1eafe99" title="Map the level to a QMessageBox Icon.">levelIcon</a>());
-<a name="l00194"></a>00194     msgBox.setWindowTitle(tr(<span class="stringliteral">&quot;Error during database creation.&quot;</span>));
-<a name="l00195"></a>00195     msgBox.exec();
-<a name="l00196"></a>00196     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00197"></a>00197   }
-<a name="l00198"></a>00198 
-<a name="l00199"></a>00199   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00200"></a>00200 }
-<a name="l00201"></a>00201 
-<a name="l00202"></a><a class="code" href="classmdt_sql_database_manager.html#ae2c4622505d90610d3990dd682662678">00202</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">mdtSqlDatabaseManager::createDatabaseSqlite</a>(<span class="keyword">const</span> QFileInfo &amp; fileInfo, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418" title="Creation mode.">createMode_t</a> createMode, <span class="keyword">const</span> QString &amp; connectionName) 
-<a name="l00203"></a>00203 {
-<a name="l00204"></a>00204   QFile file;
-<a name="l00205"></a>00205 
-<a name="l00206"></a>00206   <span class="comment">// Check if directory exists</span>
-<a name="l00207"></a>00207   <span class="keywordflow">if</span>(!fileInfo.absoluteDir().exists()){
-<a name="l00208"></a>00208     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Directory &#39;&quot;</span>) + fileInfo.absoluteDir().path() + tr(<span class="stringliteral">&quot;&#39; does not exists.&quot;</span>) , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00209"></a>00209     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00210"></a>00210     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00211"></a>00211     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00212"></a>00212   }
-<a name="l00213"></a>00213   <span class="comment">// Store the database name</span>
-<a name="l00214"></a>00214   pvDatabaseName = fileInfo.absoluteFilePath();
-<a name="l00215"></a>00215   <span class="comment">/*</span>
-<a name="l00216"></a>00216 <span class="comment">   * If database that was requested with connectionName (or maybe default) is allready open,</span>
-<a name="l00217"></a>00217 <span class="comment">   *  we can only success for KeepExisting mode.</span>
-<a name="l00218"></a>00218 <span class="comment">   * We cannot simply close the database (it&#39;s possibly used somewhere by the application).</span>
-<a name="l00219"></a>00219 <span class="comment">   * This can happen if caller forgot to close connection, or give a wrong connection name.</span>
-<a name="l00220"></a>00220 <span class="comment">   */</span>
-<a name="l00221"></a>00221   <span class="keywordflow">if</span>(pvDatabase.isOpen()){
-<a name="l00222"></a>00222     <span class="comment">// We are allready connected to the database that we want to create</span>
-<a name="l00223"></a>00223     <span class="keywordflow">switch</span>(createMode){
-<a name="l00224"></a>00224       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069">KeepExisting</a>:
-<a name="l00225"></a>00225         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00226"></a>00226       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a">FailIfExists</a>:
-<a name="l00227"></a>00227       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d">OverwriteExisting</a>:
-<a name="l00228"></a>00228       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6">AskUserIfExists</a>:
-<a name="l00229"></a>00229         pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Current database handle is allready open, &quot;</span>\
-<a name="l00230"></a>00230                                 <span class="stringliteral">&quot;must be closed before a new database can be created &quot;</span>\
-<a name="l00231"></a>00231                                 <span class="stringliteral">&quot;(connection name: &quot;</span>) + pvDatabase.connectionName() + tr(<span class="stringliteral">&quot;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00232"></a>00232         MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00233"></a>00233         pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00234"></a>00234         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00235"></a>00235     }
-<a name="l00236"></a>00236   }
-<a name="l00237"></a>00237   Q_ASSERT(!pvDatabase.isOpen());
-<a name="l00238"></a>00238   <span class="comment">// Here, we know that database is not open, now check if file exists</span>
-<a name="l00239"></a>00239   <span class="keywordflow">if</span>(fileInfo.exists()){
-<a name="l00240"></a>00240     <span class="keywordflow">switch</span>(createMode){
-<a name="l00241"></a>00241       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069">KeepExisting</a>:
-<a name="l00242"></a>00242         <span class="keywordflow">break</span>;
-<a name="l00243"></a>00243       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a">FailIfExists</a>:
-<a name="l00244"></a>00244         pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Database &#39;&quot;</span>) + fileInfo.fileName() + tr(<span class="stringliteral">&quot;&#39; allready exists&quot;</span>) , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00245"></a>00245         MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00246"></a>00246         pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00247"></a>00247         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00248"></a>00248       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d">OverwriteExisting</a>:
-<a name="l00249"></a>00249         file.setFileName(fileInfo.absoluteFilePath());
-<a name="l00250"></a>00250         <span class="keywordflow">if</span>(!file.resize(0)){
-<a name="l00251"></a>00251           pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;File truncate failed for file &#39;&quot;</span>) + fileInfo.absoluteFilePath() + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00252"></a>00252           MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00253"></a>00253           pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(file.error(), file.errorString());
-<a name="l00254"></a>00254           pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00255"></a>00255           <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00256"></a>00256         }
-<a name="l00257"></a>00257         <span class="keywordflow">break</span>;
-<a name="l00258"></a>00258       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6">AskUserIfExists</a>:
-<a name="l00259"></a>00259         <span class="keywordflow">if</span>(userChooseToOverwriteFile(fileInfo)){
-<a name="l00260"></a>00260           file.setFileName(fileInfo.absoluteFilePath());
-<a name="l00261"></a>00261           <span class="keywordflow">if</span>(!file.resize(0)){
-<a name="l00262"></a>00262             pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;File truncate failed for file &#39;&quot;</span>) + fileInfo.absoluteFilePath() + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00263"></a>00263             MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00264"></a>00264             pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(file.error(), file.errorString());
-<a name="l00265"></a>00265             pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00266"></a>00266             <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00267"></a>00267           }
-<a name="l00268"></a>00268         }
-<a name="l00269"></a>00269         <span class="keywordflow">break</span>;
-<a name="l00270"></a>00270     }
-<a name="l00271"></a>00271   }
-<a name="l00272"></a>00272   <span class="comment">// Try to open database</span>
-<a name="l00273"></a>00273   <span class="keywordflow">if</span>(connectionName.isEmpty()){
-<a name="l00274"></a>00274     <span class="keywordflow">if</span>(QSqlDatabase::contains()){
-<a name="l00275"></a>00275       pvDatabase = <a class="code" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5" title="Get current database object.">QSqlDatabase::database</a>();
-<a name="l00276"></a>00276     }<span class="keywordflow">else</span>{
-<a name="l00277"></a>00277       pvDatabase = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>);
-<a name="l00278"></a>00278     }
-<a name="l00279"></a>00279   }<span class="keywordflow">else</span>{
-<a name="l00280"></a>00280     <span class="keywordflow">if</span>(QSqlDatabase::contains(connectionName)){
-<a name="l00281"></a>00281       pvDatabase = <a class="code" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5" title="Get current database object.">QSqlDatabase::database</a>(connectionName);
-<a name="l00282"></a>00282     }<span class="keywordflow">else</span>{
-<a name="l00283"></a>00283       pvDatabase = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>, connectionName);
-<a name="l00284"></a>00284     }
-<a name="l00285"></a>00285   }
-<a name="l00286"></a>00286   <span class="keywordflow">if</span>(!pvDatabase.isValid()){
-<a name="l00287"></a>00287     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Cannot create database connection (probably plugin/driver problem)&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00288"></a>00288     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00289"></a>00289     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-<a name="l00290"></a>00290     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00291"></a>00291     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00292"></a>00292   }
-<a name="l00293"></a>00293   <span class="keywordflow">if</span>(pvDatabase.driverName() != <span class="stringliteral">&quot;QSQLITE&quot;</span>){
-<a name="l00294"></a>00294     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Requested connection allready exists but is not for Sqlite.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00295"></a>00295     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00296"></a>00296     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00297"></a>00297     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00298"></a>00298   }
-<a name="l00299"></a>00299   pvDatabase.setDatabaseName(pvDatabaseName);
-<a name="l00300"></a>00300   <span class="keywordflow">if</span>(!pvDatabase.open()){
-<a name="l00301"></a>00301     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Cannot open database &#39;&quot;</span>) + pvDatabaseName + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00302"></a>00302     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00303"></a>00303     pvLastError.<a class="code" href="classmdt_error.html#a8ef108a0502df7875f1b54bbb2a8919d" title="Set informative text.">setInformativeText</a>(tr(<span class="stringliteral">&quot;Check that you have write access to directory &#39;&quot;</span>) + fileInfo.absoluteDir().path() + tr(<span class="stringliteral">&quot;&#39;.&quot;</span>));
-<a name="l00304"></a>00304     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-<a name="l00305"></a>00305     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00306"></a>00306     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00307"></a>00307   }
-<a name="l00308"></a>00308   Q_ASSERT(pvDatabase.isValid());
-<a name="l00309"></a>00309   Q_ASSERT(pvDatabase.isOpen());
-<a name="l00310"></a>00310   <span class="comment">// Enable foreign key support</span>
-<a name="l00311"></a>00311   QSqlQuery query(pvDatabase);
-<a name="l00312"></a>00312   <span class="keywordflow">if</span>(!query.exec(<span class="stringliteral">&quot;PRAGMA foreign_keys = ON&quot;</span>)){
-<a name="l00313"></a>00313     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot enable foreign keys support on database &#39;&quot;</span>) + pvDatabaseName + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00314"></a>00314     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00315"></a>00315     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-<a name="l00316"></a>00316     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00317"></a>00317     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00318"></a>00318   }
-<a name="l00319"></a>00319 
-<a name="l00320"></a>00320   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00321"></a>00321 }
-<a name="l00322"></a>00322 
-<a name="l00323"></a><a class="code" href="classmdt_sql_database_manager.html#afe78562023f6b8d530a24a9362587ed5">00323</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#afe78562023f6b8d530a24a9362587ed5" title="Create a table.">mdtSqlDatabaseManager::createTable</a>(<a class="code" href="classmdt_sql_schema_table.html" title="Helper class that generate SQL table creation string.">mdtSqlSchemaTable</a> &amp; table, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418" title="Creation mode.">createMode_t</a> createMode) 
-<a name="l00324"></a>00324 {
-<a name="l00325"></a>00325   QString sql;
-<a name="l00326"></a>00326   QSqlError sqlError;
-<a name="l00327"></a>00327 
-<a name="l00328"></a>00328   <span class="keywordflow">if</span>(!pvDatabase.isOpen()){
-<a name="l00329"></a>00329     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot create table because database is closed.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00330"></a>00330     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00331"></a>00331     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00332"></a>00332     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00333"></a>00333   }
-<a name="l00334"></a>00334   QSqlQuery query(pvDatabase);
-<a name="l00335"></a>00335   table.<a class="code" href="classmdt_sql_schema_table.html#a3518d03c95486589222610b69abe6ee8" title="Set the driver name.">setDriverName</a>(pvDatabase.driverName());
-<a name="l00336"></a>00336   <span class="comment">// Check if table allready exists</span>
-<a name="l00337"></a>00337   <span class="keywordflow">if</span>(pvDatabase.tables().contains(table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>())){
-<a name="l00338"></a>00338     <span class="keywordflow">switch</span>(createMode){
-<a name="l00339"></a>00339       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069">KeepExisting</a>:
-<a name="l00340"></a>00340         pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Table &#39;&quot;</span>) + table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>()\
-<a name="l00341"></a>00341                              + tr(<span class="stringliteral">&quot;&#39; allready exists and choose is to keep it.&quot;</span>) + <span class="stringliteral">&quot;\n&quot;</span>\
-<a name="l00342"></a>00342                              + tr(<span class="stringliteral">&quot;It is possible that the structure does not match expected one.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
-<a name="l00343"></a>00343         MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00344"></a>00344         pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00345"></a>00345         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00346"></a>00346       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a">FailIfExists</a>:
-<a name="l00347"></a>00347         pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Table &#39;&quot;</span>) + table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>() + tr(<span class="stringliteral">&quot;&#39; allready exists.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00348"></a>00348         MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00349"></a>00349         pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00350"></a>00350         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00351"></a>00351       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6">AskUserIfExists</a>:
-<a name="l00352"></a>00352         <span class="keywordflow">if</span>(!userChooseToOverwriteTable(table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>())){
-<a name="l00353"></a>00353           <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00354"></a>00354         }
-<a name="l00355"></a>00355         <span class="keywordflow">break</span>;
-<a name="l00356"></a>00356       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d">OverwriteExisting</a>:
-<a name="l00357"></a>00357         sql = table.<a class="code" href="classmdt_sql_schema_table.html#a35fd4ed657f48013747973fef78be345" title="Get SQL statement for table deleteion.">sqlForDropTable</a>();
-<a name="l00358"></a>00358         <span class="keywordflow">if</span>(!query.exec(sql)){
-<a name="l00359"></a>00359           sqlError = query.lastError();
-<a name="l00360"></a>00360           pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot drop table &#39;&quot;</span>) + table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>() + tr(<span class="stringliteral">&quot;&#39;&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00361"></a>00361           MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00362"></a>00362           pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(sqlError.number(), sqlError.text());
-<a name="l00363"></a>00363           pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00364"></a>00364           <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00365"></a>00365         }
-<a name="l00366"></a>00366         <span class="keywordflow">break</span>;
-<a name="l00367"></a>00367     }
-<a name="l00368"></a>00368   }
-<a name="l00369"></a>00369   <span class="comment">// Create table</span>
-<a name="l00370"></a>00370   sql = table.<a class="code" href="classmdt_sql_schema_table.html#a8a072145d85a6a2c183e01aaa6d91a5d" title="Get SQL statement for table creation.">sqlForCreateTable</a>();
-<a name="l00371"></a>00371   <span class="keywordflow">if</span>(!query.exec(sql)){
-<a name="l00372"></a>00372     sqlError = query.lastError();
-<a name="l00373"></a>00373     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot create table &#39;&quot;</span>) + table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>() + tr(<span class="stringliteral">&quot;&#39;&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00374"></a>00374     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00375"></a>00375     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(sqlError.number(), sqlError.text());
-<a name="l00376"></a>00376     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00377"></a>00377     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00378"></a>00378   }
-<a name="l00379"></a>00379 
-<a name="l00380"></a>00380   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00381"></a>00381 }
-<a name="l00382"></a>00382 
-<a name="l00383"></a>00383 <span class="keywordtype">bool</span> mdtSqlDatabaseManager::userChooseToOverwriteTable(<span class="keyword">const</span> QString &amp;tableName)
-<a name="l00384"></a>00384 {
-<a name="l00385"></a>00385   QMessageBox msgBox(pvForDialogParentWidget);
-<a name="l00386"></a>00386   QString info;
-<a name="l00387"></a>00387   <span class="keywordtype">int</span> retVal;
-<a name="l00388"></a>00388 
-<a name="l00389"></a>00389   msgBox.setText(tr(<span class="stringliteral">&quot;A table allready exists in database.&quot;</span>));
-<a name="l00390"></a>00390   info = tr(<span class="stringliteral">&quot;Table: &quot;</span>) + tableName + <span class="stringliteral">&quot;\n&quot;</span>;
-<a name="l00391"></a>00391   info += tr(<span class="stringliteral">&quot;\nDo you want to overwrite this table ?&quot;</span>);
-<a name="l00392"></a>00392   msgBox.setInformativeText(info);
-<a name="l00393"></a>00393   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-<a name="l00394"></a>00394   msgBox.setDefaultButton(QMessageBox::No);
-<a name="l00395"></a>00395   msgBox.setIcon(QMessageBox::Question);
-<a name="l00396"></a>00396   retVal = msgBox.exec();
-<a name="l00397"></a>00397   <span class="keywordflow">if</span>(retVal == QMessageBox::Yes){
-<a name="l00398"></a>00398     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00399"></a>00399   }
-<a name="l00400"></a>00400 
-<a name="l00401"></a>00401   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00402"></a>00402 }
-<a name="l00403"></a>00403 
-<a name="l00404"></a>00404 <span class="keywordtype">bool</span> mdtSqlDatabaseManager::userChooseToOverwriteFile(<span class="keyword">const</span> QFileInfo &amp;fileInfo)
-<a name="l00405"></a>00405 {
-<a name="l00406"></a>00406   QMessageBox msgBox(pvForDialogParentWidget);
-<a name="l00407"></a>00407   QString info;
-<a name="l00408"></a>00408   <span class="keywordtype">int</span> retVal;
-<a name="l00409"></a>00409 
-<a name="l00410"></a>00410   msgBox.setText(tr(<span class="stringliteral">&quot;A file allready exists in destination directory.&quot;</span>));
-<a name="l00411"></a>00411   info = tr(<span class="stringliteral">&quot;File: &quot;</span>) + fileInfo.fileName() + <span class="stringliteral">&quot;\n&quot;</span>;
-<a name="l00412"></a>00412   info += tr(<span class="stringliteral">&quot;Directory: &quot;</span>) + fileInfo.absoluteDir().path() + <span class="stringliteral">&quot;\n&quot;</span>;
-<a name="l00413"></a>00413   info += tr(<span class="stringliteral">&quot;\nDo you want to overwrite this file ?&quot;</span>);
-<a name="l00414"></a>00414   msgBox.setInformativeText(info);
-<a name="l00415"></a>00415   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-<a name="l00416"></a>00416   msgBox.setDefaultButton(QMessageBox::No);
-<a name="l00417"></a>00417   msgBox.setIcon(QMessageBox::Question);
-<a name="l00418"></a>00418   retVal = msgBox.exec();
-<a name="l00419"></a>00419   <span class="keywordflow">if</span>(retVal == QMessageBox::Yes){
-<a name="l00420"></a>00420     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00421"></a>00421   }
-<a name="l00422"></a>00422 
-<a name="l00423"></a>00423   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00424"></a>00424 }
-<a name="l00425"></a>00425 
-<a name="l00426"></a>00426 <span class="keywordtype">bool</span> mdtSqlDatabaseManager::databaseIsOpen(<span class="keywordtype">bool</span> askUser)
-<a name="l00427"></a>00427 {
-<a name="l00428"></a>00428   QString text;
-<a name="l00429"></a>00429 
-<a name="l00430"></a>00430   <span class="keywordflow">if</span>(!pvDatabase.isOpen()){
-<a name="l00431"></a>00431     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00432"></a>00432   }
-<a name="l00433"></a>00433   text = tr(<span class="stringliteral">&quot;Current database handle is allready open, must be closed before a new database can be created &quot;</span>\
-<a name="l00434"></a>00434             <span class="stringliteral">&quot;(connection name: &quot;</span>) + pvDatabase.connectionName() + tr(<span class="stringliteral">&quot;).&quot;</span>);
-<a name="l00435"></a>00435   <span class="keywordflow">if</span>(askUser){
-<a name="l00436"></a>00436     QMessageBox msgBox(pvForDialogParentWidget);
-<a name="l00437"></a>00437     msgBox.setText(text);
-<a name="l00438"></a>00438     msgBox.setInformativeText(tr(<span class="stringliteral">&quot;Do you want to close currently open database handle ?&quot;</span>));
-<a name="l00439"></a>00439     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-<a name="l00440"></a>00440     msgBox.setDefaultButton(QMessageBox::No);
-<a name="l00441"></a>00441     msgBox.setIcon(QMessageBox::Question);
-<a name="l00442"></a>00442     msgBox.setWindowTitle(tr(<span class="stringliteral">&quot;Database handle allready open&quot;</span>));
-<a name="l00443"></a>00443     <span class="keywordflow">if</span>(msgBox.exec() == QMessageBox::Yes){
-<a name="l00444"></a>00444       pvDatabase.close();
-<a name="l00445"></a>00445     }
-<a name="l00446"></a>00446   }
-<a name="l00447"></a>00447   <span class="keywordflow">if</span>(pvDatabase.isOpen()){
-<a name="l00448"></a>00448     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(text, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00449"></a>00449     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
-<a name="l00450"></a>00450     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00451"></a>00451     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00452"></a>00452   }
-<a name="l00453"></a>00453 
-<a name="l00454"></a>00454   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00455"></a>00455 }
+<a name="l00158"></a>00158   <span class="keywordflow">if</span>(!pvDatabase.isValid()){
+<a name="l00159"></a>00159     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Cannot create database connection (probably plugin/driver problem)&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00160"></a>00160     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00161"></a>00161     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+<a name="l00162"></a>00162     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00163"></a>00163     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00164"></a>00164   }
+<a name="l00165"></a>00165   <span class="keywordflow">if</span>(pvDatabase.driverName() != <span class="stringliteral">&quot;QSQLITE&quot;</span>){
+<a name="l00166"></a>00166     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Requested connection allready exists but is not for Sqlite.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00167"></a>00167     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00168"></a>00168     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00169"></a>00169     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00170"></a>00170   }
+<a name="l00171"></a>00171   pvDatabase.setDatabaseName(pvDatabaseName);
+<a name="l00172"></a>00172   <span class="keywordflow">if</span>(!pvDatabase.open()){
+<a name="l00173"></a>00173     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Cannot open database &#39;&quot;</span>) + pvDatabaseName + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00174"></a>00174     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00175"></a>00175     pvLastError.<a class="code" href="classmdt_error.html#a8ef108a0502df7875f1b54bbb2a8919d" title="Set informative text.">setInformativeText</a>(tr(<span class="stringliteral">&quot;Check that you have write access to directory &#39;&quot;</span>) + fileInfo.absoluteDir().path() + tr(<span class="stringliteral">&quot;&#39;.&quot;</span>));
+<a name="l00176"></a>00176     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+<a name="l00177"></a>00177     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00178"></a>00178     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00179"></a>00179   }
+<a name="l00180"></a>00180   Q_ASSERT(pvDatabase.isValid());
+<a name="l00181"></a>00181   Q_ASSERT(pvDatabase.isOpen());
+<a name="l00182"></a>00182   <span class="comment">// Enable foreign key support</span>
+<a name="l00183"></a>00183   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_database_manager.html#a40638df04f9e6eb3c5cee399a5543ffd" title="Enable/disable foreing keys constraint.">setForeignKeysEnabled</a>(<span class="keyword">true</span>)){
+<a name="l00185"></a>00185     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00186"></a>00186   }
+<a name="l00198"></a>00198   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00199"></a>00199 }
+<a name="l00200"></a>00200 
+<a name="l00201"></a><a class="code" href="classmdt_sql_database_manager.html#a536f140060edf7721d8f0589f4d7de0d">00201</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">mdtSqlDatabaseManager::openDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory, <span class="keyword">const</span> QString &amp; connectionName) 
+<a name="l00202"></a>00202 {
+<a name="l00203"></a>00203   QFileInfo fileInfo;
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205   <span class="comment">// Check if database is allready open</span>
+<a name="l00206"></a>00206   <span class="keywordflow">if</span>(databaseIsOpen(<span class="keyword">true</span>)){
+<a name="l00207"></a>00207     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00208"></a>00208   }
+<a name="l00209"></a>00209   <span class="comment">// Let the user choose the sqlite file</span>
+<a name="l00210"></a>00210   fileInfo = <a class="code" href="classmdt_sql_database_manager.html#ae6459276d25c6d3733b284249c1f1ab4" title="Let the user choose a Sqlite database file.">chooseDatabaseSqlite</a>(startDirectory);
+<a name="l00211"></a>00211   <span class="keywordflow">if</span>(fileInfo.fileName().isEmpty()){
+<a name="l00212"></a>00212     pvLastError.<a class="code" href="classmdt_error.html#a9fa7eb879fe7b26c4a4f0bd55fe29ffa" title="Clear.">clear</a>();
+<a name="l00213"></a>00213     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00214"></a>00214   }
+<a name="l00215"></a>00215   <span class="comment">// Try to open database</span>
+<a name="l00216"></a>00216   <span class="keywordflow">return</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">openDatabaseSqlite</a>(fileInfo, connectionName);
+<a name="l00217"></a>00217 }
+<a name="l00218"></a>00218 
+<a name="l00219"></a><a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9">00219</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">mdtSqlDatabaseManager::createDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory, <span class="keyword">const</span> QString &amp; connectionName) 
+<a name="l00220"></a>00220 {
+<a name="l00221"></a>00221   QFileDialog dialog(pvForDialogParentWidget);
+<a name="l00222"></a>00222   QFileInfo fileInfo;
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224   <span class="comment">// Check if database is allready open</span>
+<a name="l00225"></a>00225   <span class="keywordflow">if</span>(databaseIsOpen(<span class="keyword">true</span>)){
+<a name="l00226"></a>00226     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00227"></a>00227   }
+<a name="l00228"></a>00228   <span class="comment">// Setup and show dialog</span>
+<a name="l00229"></a>00229   dialog.setAcceptMode(QFileDialog::AcceptSave);
+<a name="l00230"></a>00230   dialog.setDirectory(startDirectory);
+<a name="l00231"></a>00231   dialog.setNameFilter(tr(<span class="stringliteral">&quot;(Sqlite) Database file (*.sqlite)&quot;</span>));
+<a name="l00232"></a>00232   dialog.setConfirmOverwrite(<span class="keyword">true</span>);
+<a name="l00233"></a>00233   <span class="keywordflow">if</span>(dialog.exec() != QDialog::Accepted){
+<a name="l00234"></a>00234     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00235"></a>00235   }
+<a name="l00236"></a>00236   Q_ASSERT(dialog.selectedFiles().size() == 1);
+<a name="l00237"></a>00237   fileInfo.setFile(dialog.selectedFiles().at(0));
+<a name="l00238"></a>00238   <span class="comment">// Create database</span>
+<a name="l00239"></a>00239   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">createDatabaseSqlite</a>(fileInfo, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d">OverwriteExisting</a>, connectionName)){
+<a name="l00240"></a>00240     QMessageBox msgBox(pvForDialogParentWidget);
+<a name="l00241"></a>00241     msgBox.setText(pvLastError.<a class="code" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf" title="Error text.">text</a>());
+<a name="l00242"></a>00242     msgBox.setInformativeText(pvLastError.<a class="code" href="classmdt_error.html#adcc1905f585c327cec8a2e31af616651" title="Get informative text.">informativeText</a>());
+<a name="l00243"></a>00243     msgBox.setDetailedText(pvLastError.<a class="code" href="classmdt_error.html#a28d22c0b9341faacfef22a7deae2da3c" title="Error number and text from system, if available.">systemErrorString</a>(&amp;msgBox));
+<a name="l00244"></a>00244     msgBox.setIcon(pvLastError.<a class="code" href="classmdt_error.html#aac5a7cec9a5d4364f9331c80e1eafe99" title="Map the level to a QMessageBox Icon.">levelIcon</a>());
+<a name="l00245"></a>00245     msgBox.setWindowTitle(tr(<span class="stringliteral">&quot;Error during database creation.&quot;</span>));
+<a name="l00246"></a>00246     msgBox.exec();
+<a name="l00247"></a>00247     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00248"></a>00248   }
+<a name="l00249"></a>00249 
+<a name="l00250"></a>00250   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00251"></a>00251 }
+<a name="l00252"></a>00252 
+<a name="l00253"></a><a class="code" href="classmdt_sql_database_manager.html#ae2c4622505d90610d3990dd682662678">00253</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">mdtSqlDatabaseManager::createDatabaseSqlite</a>(<span class="keyword">const</span> QFileInfo &amp; fileInfo, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418" title="Creation mode.">createMode_t</a> createMode, <span class="keyword">const</span> QString &amp; connectionName) 
+<a name="l00254"></a>00254 {
+<a name="l00255"></a>00255   QFile file;
+<a name="l00256"></a>00256 
+<a name="l00257"></a>00257   <span class="comment">// Check if directory exists</span>
+<a name="l00258"></a>00258   <span class="keywordflow">if</span>(!fileInfo.absoluteDir().exists()){
+<a name="l00259"></a>00259     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Directory &#39;&quot;</span>) + fileInfo.absoluteDir().path() + tr(<span class="stringliteral">&quot;&#39; does not exists.&quot;</span>) , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00260"></a>00260     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00261"></a>00261     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00262"></a>00262     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00263"></a>00263   }
+<a name="l00264"></a>00264   <span class="comment">// Store the database name</span>
+<a name="l00265"></a>00265   pvDatabaseName = fileInfo.absoluteFilePath();
+<a name="l00266"></a>00266   <span class="comment">/*</span>
+<a name="l00267"></a>00267 <span class="comment">   * If database that was requested with connectionName (or maybe default) is allready open,</span>
+<a name="l00268"></a>00268 <span class="comment">   *  we can only success for KeepExisting mode.</span>
+<a name="l00269"></a>00269 <span class="comment">   * We cannot simply close the database (it&#39;s possibly used somewhere by the application).</span>
+<a name="l00270"></a>00270 <span class="comment">   * This can happen if caller forgot to close connection, or give a wrong connection name.</span>
+<a name="l00271"></a>00271 <span class="comment">   */</span>
+<a name="l00272"></a>00272   <span class="keywordflow">if</span>(pvDatabase.isOpen()){
+<a name="l00273"></a>00273     <span class="comment">// We are allready connected to the database that we want to create</span>
+<a name="l00274"></a>00274     <span class="keywordflow">switch</span>(createMode){
+<a name="l00275"></a>00275       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069">KeepExisting</a>:
+<a name="l00276"></a>00276         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00277"></a>00277       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a">FailIfExists</a>:
+<a name="l00278"></a>00278       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d">OverwriteExisting</a>:
+<a name="l00279"></a>00279       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6">AskUserIfExists</a>:
+<a name="l00280"></a>00280         pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Current database handle is allready open, &quot;</span>\
+<a name="l00281"></a>00281                                 <span class="stringliteral">&quot;must be closed before a new database can be created &quot;</span>\
+<a name="l00282"></a>00282                                 <span class="stringliteral">&quot;(connection name: &quot;</span>) + pvDatabase.connectionName() + tr(<span class="stringliteral">&quot;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00283"></a>00283         MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00284"></a>00284         pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00285"></a>00285         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00286"></a>00286     }
+<a name="l00287"></a>00287   }
+<a name="l00288"></a>00288   Q_ASSERT(!pvDatabase.isOpen());
+<a name="l00289"></a>00289   <span class="comment">// Here, we know that database is not open, now check if file exists</span>
+<a name="l00290"></a>00290   <span class="keywordflow">if</span>(fileInfo.exists()){
+<a name="l00291"></a>00291     <span class="keywordflow">switch</span>(createMode){
+<a name="l00292"></a>00292       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069">KeepExisting</a>:
+<a name="l00293"></a>00293         <span class="keywordflow">break</span>;
+<a name="l00294"></a>00294       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a">FailIfExists</a>:
+<a name="l00295"></a>00295         pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Database &#39;&quot;</span>) + fileInfo.fileName() + tr(<span class="stringliteral">&quot;&#39; allready exists&quot;</span>) , <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00296"></a>00296         MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00297"></a>00297         pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00298"></a>00298         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00299"></a>00299       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d">OverwriteExisting</a>:
+<a name="l00300"></a>00300         file.setFileName(fileInfo.absoluteFilePath());
+<a name="l00301"></a>00301         <span class="keywordflow">if</span>(!file.resize(0)){
+<a name="l00302"></a>00302           pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;File truncate failed for file &#39;&quot;</span>) + fileInfo.absoluteFilePath() + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00303"></a>00303           MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00304"></a>00304           pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(file.error(), file.errorString());
+<a name="l00305"></a>00305           pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00306"></a>00306           <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00307"></a>00307         }
+<a name="l00308"></a>00308         <span class="keywordflow">break</span>;
+<a name="l00309"></a>00309       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6">AskUserIfExists</a>:
+<a name="l00310"></a>00310         <span class="keywordflow">if</span>(userChooseToOverwriteFile(fileInfo)){
+<a name="l00311"></a>00311           file.setFileName(fileInfo.absoluteFilePath());
+<a name="l00312"></a>00312           <span class="keywordflow">if</span>(!file.resize(0)){
+<a name="l00313"></a>00313             pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;File truncate failed for file &#39;&quot;</span>) + fileInfo.absoluteFilePath() + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00314"></a>00314             MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00315"></a>00315             pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(file.error(), file.errorString());
+<a name="l00316"></a>00316             pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00317"></a>00317             <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00318"></a>00318           }
+<a name="l00319"></a>00319         }
+<a name="l00320"></a>00320         <span class="keywordflow">break</span>;
+<a name="l00321"></a>00321     }
+<a name="l00322"></a>00322   }
+<a name="l00323"></a>00323   <span class="comment">// Try to open database</span>
+<a name="l00324"></a>00324   <span class="keywordflow">if</span>(connectionName.isEmpty()){
+<a name="l00325"></a>00325     <span class="keywordflow">if</span>(QSqlDatabase::contains()){
+<a name="l00326"></a>00326       pvDatabase = <a class="code" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5" title="Get current database object.">QSqlDatabase::database</a>();
+<a name="l00327"></a>00327     }<span class="keywordflow">else</span>{
+<a name="l00328"></a>00328       pvDatabase = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>);
+<a name="l00329"></a>00329     }
+<a name="l00330"></a>00330   }<span class="keywordflow">else</span>{
+<a name="l00331"></a>00331     <span class="keywordflow">if</span>(QSqlDatabase::contains(connectionName)){
+<a name="l00332"></a>00332       pvDatabase = <a class="code" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5" title="Get current database object.">QSqlDatabase::database</a>(connectionName);
+<a name="l00333"></a>00333     }<span class="keywordflow">else</span>{
+<a name="l00334"></a>00334       pvDatabase = QSqlDatabase::addDatabase(<span class="stringliteral">&quot;QSQLITE&quot;</span>, connectionName);
+<a name="l00335"></a>00335     }
+<a name="l00336"></a>00336   }
+<a name="l00337"></a>00337   <span class="keywordflow">if</span>(!pvDatabase.isValid()){
+<a name="l00338"></a>00338     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Cannot create database connection (probably plugin/driver problem)&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00339"></a>00339     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00340"></a>00340     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+<a name="l00341"></a>00341     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00342"></a>00342     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00343"></a>00343   }
+<a name="l00344"></a>00344   <span class="keywordflow">if</span>(pvDatabase.driverName() != <span class="stringliteral">&quot;QSQLITE&quot;</span>){
+<a name="l00345"></a>00345     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Requested connection allready exists but is not for Sqlite.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00346"></a>00346     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00347"></a>00347     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00348"></a>00348     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00349"></a>00349   }
+<a name="l00350"></a>00350   pvDatabase.setDatabaseName(pvDatabaseName);
+<a name="l00351"></a>00351   <span class="keywordflow">if</span>(!pvDatabase.open()){
+<a name="l00352"></a>00352     pvLastError = <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a>(tr(<span class="stringliteral">&quot;Cannot open database &#39;&quot;</span>) + pvDatabaseName + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00353"></a>00353     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00354"></a>00354     pvLastError.<a class="code" href="classmdt_error.html#a8ef108a0502df7875f1b54bbb2a8919d" title="Set informative text.">setInformativeText</a>(tr(<span class="stringliteral">&quot;Check that you have write access to directory &#39;&quot;</span>) + fileInfo.absoluteDir().path() + tr(<span class="stringliteral">&quot;&#39;.&quot;</span>));
+<a name="l00355"></a>00355     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+<a name="l00356"></a>00356     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00357"></a>00357     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00358"></a>00358   }
+<a name="l00359"></a>00359   Q_ASSERT(pvDatabase.isValid());
+<a name="l00360"></a>00360   Q_ASSERT(pvDatabase.isOpen());
+<a name="l00361"></a>00361   <span class="comment">// Enable foreign key support</span>
+<a name="l00362"></a>00362   QSqlQuery query(pvDatabase);
+<a name="l00363"></a>00363   <span class="keywordflow">if</span>(!query.exec(<span class="stringliteral">&quot;PRAGMA foreign_keys = ON&quot;</span>)){
+<a name="l00364"></a>00364     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot enable foreign keys support on database &#39;&quot;</span>) + pvDatabaseName + <span class="stringliteral">&quot;&#39;&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00365"></a>00365     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00366"></a>00366     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+<a name="l00367"></a>00367     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00368"></a>00368     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00369"></a>00369   }
+<a name="l00370"></a>00370 
+<a name="l00371"></a>00371   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00372"></a>00372 }
+<a name="l00373"></a>00373 
+<a name="l00374"></a><a class="code" href="classmdt_sql_database_manager.html#afe78562023f6b8d530a24a9362587ed5">00374</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#afe78562023f6b8d530a24a9362587ed5" title="Create a table.">mdtSqlDatabaseManager::createTable</a>(<a class="code" href="classmdt_sql_schema_table.html" title="Helper class that generate SQL table creation string.">mdtSqlSchemaTable</a> &amp; table, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418" title="Creation mode.">createMode_t</a> createMode) 
+<a name="l00375"></a>00375 {
+<a name="l00376"></a>00376   QString sql;
+<a name="l00377"></a>00377   QSqlError sqlError;
+<a name="l00378"></a>00378 
+<a name="l00379"></a>00379   <span class="keywordflow">if</span>(!pvDatabase.isOpen()){
+<a name="l00380"></a>00380     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot create table because database is closed.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00381"></a>00381     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00382"></a>00382     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00383"></a>00383     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00384"></a>00384   }
+<a name="l00385"></a>00385   QSqlQuery query(pvDatabase);
+<a name="l00386"></a>00386   table.<a class="code" href="classmdt_sql_schema_table.html#a3518d03c95486589222610b69abe6ee8" title="Set the driver name.">setDriverName</a>(pvDatabase.driverName());
+<a name="l00387"></a>00387   <span class="comment">// Check if table allready exists</span>
+<a name="l00388"></a>00388   <span class="keywordflow">if</span>(pvDatabase.tables().contains(table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>())){
+<a name="l00389"></a>00389     <span class="keywordflow">switch</span>(createMode){
+<a name="l00390"></a>00390       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069">KeepExisting</a>:
+<a name="l00391"></a>00391         pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Table &#39;&quot;</span>) + table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>()\
+<a name="l00392"></a>00392                              + tr(<span class="stringliteral">&quot;&#39; allready exists and choose is to keep it.&quot;</span>) + <span class="stringliteral">&quot;\n&quot;</span>\
+<a name="l00393"></a>00393                              + tr(<span class="stringliteral">&quot;It is possible that the structure does not match expected one.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);
+<a name="l00394"></a>00394         MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00395"></a>00395         pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00396"></a>00396         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00397"></a>00397       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a">FailIfExists</a>:
+<a name="l00398"></a>00398         pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Table &#39;&quot;</span>) + table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>() + tr(<span class="stringliteral">&quot;&#39; allready exists.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00399"></a>00399         MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00400"></a>00400         pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00401"></a>00401         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00402"></a>00402       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6">AskUserIfExists</a>:
+<a name="l00403"></a>00403         <span class="keywordflow">if</span>(!userChooseToOverwriteTable(table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>())){
+<a name="l00404"></a>00404           <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00405"></a>00405         }
+<a name="l00406"></a>00406         <span class="keywordflow">break</span>;
+<a name="l00407"></a>00407       <span class="keywordflow">case</span> <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d">OverwriteExisting</a>:
+<a name="l00408"></a>00408         sql = table.<a class="code" href="classmdt_sql_schema_table.html#a35fd4ed657f48013747973fef78be345" title="Get SQL statement for table deleteion.">sqlForDropTable</a>();
+<a name="l00409"></a>00409         <span class="keywordflow">if</span>(!query.exec(sql)){
+<a name="l00410"></a>00410           sqlError = query.lastError();
+<a name="l00411"></a>00411           pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot drop table &#39;&quot;</span>) + table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>() + tr(<span class="stringliteral">&quot;&#39;&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00412"></a>00412           MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00413"></a>00413           pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(sqlError.number(), sqlError.text());
+<a name="l00414"></a>00414           pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00415"></a>00415           <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00416"></a>00416         }
+<a name="l00417"></a>00417         <span class="keywordflow">break</span>;
+<a name="l00418"></a>00418     }
+<a name="l00419"></a>00419   }
+<a name="l00420"></a>00420   <span class="comment">// Create table</span>
+<a name="l00421"></a>00421   sql = table.<a class="code" href="classmdt_sql_schema_table.html#a8a072145d85a6a2c183e01aaa6d91a5d" title="Get SQL statement for table creation.">sqlForCreateTable</a>();
+<a name="l00422"></a>00422   <span class="keywordflow">if</span>(!query.exec(sql)){
+<a name="l00423"></a>00423     sqlError = query.lastError();
+<a name="l00424"></a>00424     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(tr(<span class="stringliteral">&quot;Cannot create table &#39;&quot;</span>) + table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name.">tableName</a>() + tr(<span class="stringliteral">&quot;&#39;&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00425"></a>00425     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00426"></a>00426     pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(sqlError.number(), sqlError.text());
+<a name="l00427"></a>00427     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00428"></a>00428     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00429"></a>00429   }
+<a name="l00430"></a>00430 
+<a name="l00431"></a>00431   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00432"></a>00432 }
+<a name="l00433"></a>00433 
+<a name="l00434"></a>00434 <span class="keywordtype">bool</span> mdtSqlDatabaseManager::userChooseToOverwriteTable(<span class="keyword">const</span> QString &amp;tableName)
+<a name="l00435"></a>00435 {
+<a name="l00436"></a>00436   QMessageBox msgBox(pvForDialogParentWidget);
+<a name="l00437"></a>00437   QString info;
+<a name="l00438"></a>00438   <span class="keywordtype">int</span> retVal;
+<a name="l00439"></a>00439 
+<a name="l00440"></a>00440   msgBox.setText(tr(<span class="stringliteral">&quot;A table allready exists in database.&quot;</span>));
+<a name="l00441"></a>00441   info = tr(<span class="stringliteral">&quot;Table: &quot;</span>) + tableName + <span class="stringliteral">&quot;\n&quot;</span>;
+<a name="l00442"></a>00442   info += tr(<span class="stringliteral">&quot;\nDo you want to overwrite this table ?&quot;</span>);
+<a name="l00443"></a>00443   msgBox.setInformativeText(info);
+<a name="l00444"></a>00444   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+<a name="l00445"></a>00445   msgBox.setDefaultButton(QMessageBox::No);
+<a name="l00446"></a>00446   msgBox.setIcon(QMessageBox::Question);
+<a name="l00447"></a>00447   retVal = msgBox.exec();
+<a name="l00448"></a>00448   <span class="keywordflow">if</span>(retVal == QMessageBox::Yes){
+<a name="l00449"></a>00449     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00450"></a>00450   }
+<a name="l00451"></a>00451 
+<a name="l00452"></a>00452   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00453"></a>00453 }
+<a name="l00454"></a>00454 
+<a name="l00455"></a>00455 <span class="keywordtype">bool</span> mdtSqlDatabaseManager::userChooseToOverwriteFile(<span class="keyword">const</span> QFileInfo &amp;fileInfo)
+<a name="l00456"></a>00456 {
+<a name="l00457"></a>00457   QMessageBox msgBox(pvForDialogParentWidget);
+<a name="l00458"></a>00458   QString info;
+<a name="l00459"></a>00459   <span class="keywordtype">int</span> retVal;
+<a name="l00460"></a>00460 
+<a name="l00461"></a>00461   msgBox.setText(tr(<span class="stringliteral">&quot;A file allready exists in destination directory.&quot;</span>));
+<a name="l00462"></a>00462   info = tr(<span class="stringliteral">&quot;File: &quot;</span>) + fileInfo.fileName() + <span class="stringliteral">&quot;\n&quot;</span>;
+<a name="l00463"></a>00463   info += tr(<span class="stringliteral">&quot;Directory: &quot;</span>) + fileInfo.absoluteDir().path() + <span class="stringliteral">&quot;\n&quot;</span>;
+<a name="l00464"></a>00464   info += tr(<span class="stringliteral">&quot;\nDo you want to overwrite this file ?&quot;</span>);
+<a name="l00465"></a>00465   msgBox.setInformativeText(info);
+<a name="l00466"></a>00466   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+<a name="l00467"></a>00467   msgBox.setDefaultButton(QMessageBox::No);
+<a name="l00468"></a>00468   msgBox.setIcon(QMessageBox::Question);
+<a name="l00469"></a>00469   retVal = msgBox.exec();
+<a name="l00470"></a>00470   <span class="keywordflow">if</span>(retVal == QMessageBox::Yes){
+<a name="l00471"></a>00471     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00472"></a>00472   }
+<a name="l00473"></a>00473 
+<a name="l00474"></a>00474   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00475"></a>00475 }
+<a name="l00476"></a>00476 
+<a name="l00477"></a>00477 <span class="keywordtype">bool</span> mdtSqlDatabaseManager::databaseIsOpen(<span class="keywordtype">bool</span> askUser)
+<a name="l00478"></a>00478 {
+<a name="l00479"></a>00479   QString text;
+<a name="l00480"></a>00480 
+<a name="l00481"></a>00481   <span class="keywordflow">if</span>(!pvDatabase.isOpen()){
+<a name="l00482"></a>00482     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00483"></a>00483   }
+<a name="l00484"></a>00484   text = tr(<span class="stringliteral">&quot;Current database handle is allready open, must be closed before a new database can be created &quot;</span>\
+<a name="l00485"></a>00485             <span class="stringliteral">&quot;(connection name: &quot;</span>) + pvDatabase.connectionName() + tr(<span class="stringliteral">&quot;).&quot;</span>);
+<a name="l00486"></a>00486   <span class="keywordflow">if</span>(askUser){
+<a name="l00487"></a>00487     QMessageBox msgBox(pvForDialogParentWidget);
+<a name="l00488"></a>00488     msgBox.setText(text);
+<a name="l00489"></a>00489     msgBox.setInformativeText(tr(<span class="stringliteral">&quot;Do you want to close currently open database handle ?&quot;</span>));
+<a name="l00490"></a>00490     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+<a name="l00491"></a>00491     msgBox.setDefaultButton(QMessageBox::No);
+<a name="l00492"></a>00492     msgBox.setIcon(QMessageBox::Question);
+<a name="l00493"></a>00493     msgBox.setWindowTitle(tr(<span class="stringliteral">&quot;Database handle allready open&quot;</span>));
+<a name="l00494"></a>00494     <span class="keywordflow">if</span>(msgBox.exec() == QMessageBox::Yes){
+<a name="l00495"></a>00495       pvDatabase.close();
+<a name="l00496"></a>00496     }
+<a name="l00497"></a>00497   }
+<a name="l00498"></a>00498   <span class="keywordflow">if</span>(pvDatabase.isOpen()){
+<a name="l00499"></a>00499     pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error.">setError</a>(text, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00500"></a>00500     MDT_ERROR_SET_SRC(pvLastError, <span class="stringliteral">&quot;mdtSqlDatabaseManager&quot;</span>);
+<a name="l00501"></a>00501     pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00502"></a>00502     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00503"></a>00503   }
+<a name="l00504"></a>00504 
+<a name="l00505"></a>00505   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00506"></a>00506 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -531,7 +570,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

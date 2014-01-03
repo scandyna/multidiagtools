@@ -26,6 +26,17 @@
 #include "mdtFrameCodecScpiU3606A.h"
 
 /*! \brief Representation of a Agilent U3606A
+ *
+ * The U3606A has following I/Os
+ *
+ *  <table border="1" cellpadding="5">
+ *   <tr><th>Type</th><th>Address</th><th>Label short</th><th>Description</th></tr>
+ *   <tr><td>Analog input</td><td>0</td><td>MEASURE</td><td>Represent the measurement part</td></tr>
+ *   <tr><td>Analog input</td><td>1</td><td>SENSEU</td><td>Represent the voltage sense of the source part</td></tr>
+ *   <tr><td>Analog input</td><td>2</td><td>SENSEI</td><td>Represent the current sense of the source part</td></tr>
+ *   <tr><td>Analog output</td><td>0</td><td>SOURCE</td><td>Represent the source part</td></tr>
+ *  </table>
+ *
  */
 class mdtDeviceU3606A : public mdtDeviceScpi
 {
@@ -33,7 +44,14 @@ class mdtDeviceU3606A : public mdtDeviceScpi
 
  public:
 
+  /*! \brief Constructor
+   *
+   * Will create the needed codec, I/Os and configure internal port manager .
+   */
   mdtDeviceU3606A(QObject *parent = 0);
+
+  /*! \brief Destructor
+   */
   ~mdtDeviceU3606A();
 
   /*! \brief Search and connect to physical device.
@@ -48,6 +66,17 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * \return A error listed in mdtAbstractPort::error_t (NoError on success)
    */
   mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+
+  /*! \brief Get the measure configuration
+   *
+   * Will get the device current measure configuration
+   *  by sending the CONF? query .
+   *
+   * Internal analog measure input is also updated with device's range and unit .
+   *
+   * By error, unknown measure type is returned .
+   */
+  mdtFrameCodecScpiU3606A::measure_type_t getMeasureConfiguration();
 
  public slots:
 
@@ -90,6 +119,12 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    *  - This method can be reimplemented periodic queries must be sent to device.
    */
   bool queriesSequence();
+
+  /*! \brief Update the measure I/O setup in internal container
+   *
+   * This method is called when a QT_CONF reply was decoded .
+   */
+  void updateMeasureSetup();
 
   /*! \brief Handle device's specific error
    *

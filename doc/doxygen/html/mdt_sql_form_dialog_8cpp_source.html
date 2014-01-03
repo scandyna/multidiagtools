@@ -81,15 +81,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00019"></a>00019 <span class="comment"> **</span>
 <a name="l00020"></a>00020 <span class="comment"> ****************************************************************************/</span>
 <a name="l00021"></a>00021 <span class="preprocessor">#include &quot;mdtSqlFormDialog.h&quot;</span>
-<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;mdtSqlDialog.h&quot;</span>
+<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;mdtSqlDialogOld.h&quot;</span>
 <a name="l00023"></a>00023 <span class="preprocessor">#include &quot;mdtAbstractSqlWidget.h&quot;</span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtSqlFormWidget.h&quot;</span>
 <a name="l00025"></a>00025 
 <a name="l00026"></a><a class="code" href="classmdt_sql_form_dialog.html#af60a25c2654f0af7c62df42854af4bb1">00026</a> <a class="code" href="classmdt_sql_form_dialog.html#af60a25c2654f0af7c62df42854af4bb1" title="Constructor.">mdtSqlFormDialog::mdtSqlFormDialog</a>(QObject *parent)
-<a name="l00027"></a>00027  : <a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API.">mdtSqlForm</a>(parent)
+<a name="l00027"></a>00027  : <a class="code" href="classmdt_sql_form_old.html" title="Base class for high level SQL widgets API.">mdtSqlFormOld</a>(parent)
 <a name="l00028"></a>00028 {
-<a name="l00029"></a>00029   pvSqlDialog = <span class="keyword">new</span> <a class="code" href="classmdt_sql_dialog.html" title="Dialog for a database table view/editor.">mdtSqlDialog</a>;
-<a name="l00030"></a>00030   pvSqlDialog-&gt;<a class="code" href="classmdt_sql_dialog.html#ab9a9ef2972c37349411dff111adf1d25" title="Set form/table view/editor.">setSqlWidget</a>(<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget.">mainSqlWidget</a>());
+<a name="l00029"></a>00029   pvSqlDialog = <span class="keyword">new</span> <a class="code" href="classmdt_sql_dialog_old.html" title="Dialog for a database table view/editor.">mdtSqlDialogOld</a>;
+<a name="l00030"></a>00030   pvSqlDialog-&gt;<a class="code" href="classmdt_sql_dialog_old.html#ab164a92148ee8c41687f8ec461199924" title="Set form/table view/editor.">setSqlWidget</a>(<a class="code" href="classmdt_sql_form_old.html#a18b6cc0c5fd84699a54f374580a2380e" title="Get the main SQL widget.">mainSqlWidget</a>());
 <a name="l00031"></a>00031 }
 <a name="l00032"></a>00032 
 <a name="l00033"></a><a class="code" href="classmdt_sql_form_dialog.html#ac75cd78f6fc2ccac75a6d6fab6922a5e">00033</a> <a class="code" href="classmdt_sql_form_dialog.html#ac75cd78f6fc2ccac75a6d6fab6922a5e" title="Destructor.">mdtSqlFormDialog::~mdtSqlFormDialog</a>()
@@ -97,7 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00035"></a>00035   <span class="keyword">delete</span> pvSqlDialog;
 <a name="l00036"></a>00036 }
 <a name="l00037"></a>00037 
-<a name="l00038"></a><a class="code" href="classmdt_sql_form_dialog.html#a473170aea40ee8264f96c23fa05b60f1">00038</a> <a class="code" href="classmdt_sql_dialog.html" title="Dialog for a database table view/editor.">mdtSqlDialog</a> *<a class="code" href="classmdt_sql_form_dialog.html#a473170aea40ee8264f96c23fa05b60f1" title="Access SQL window instance.">mdtSqlFormDialog::sqlDialog</a>()
+<a name="l00038"></a><a class="code" href="classmdt_sql_form_dialog.html#a9496867a9d00cf436055cf358c78dfbb">00038</a> <a class="code" href="classmdt_sql_dialog_old.html" title="Dialog for a database table view/editor.">mdtSqlDialogOld</a> *<a class="code" href="classmdt_sql_form_dialog.html#a9496867a9d00cf436055cf358c78dfbb" title="Access SQL window instance.">mdtSqlFormDialog::sqlDialog</a>()
 <a name="l00039"></a>00039 {
 <a name="l00040"></a>00040   Q_ASSERT(pvSqlDialog != 0);
 <a name="l00041"></a>00041 
@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00051"></a>00051 {
 <a name="l00052"></a>00052   Q_ASSERT(widget != 0);
 <a name="l00053"></a>00053 
-<a name="l00054"></a>00054   pvSqlDialog-&gt;<a class="code" href="classmdt_sql_dialog.html#a323e18adf50cd510a1be3e939b936bdb" title="Add a child (details) widget.">addChildWidget</a>(widget, widget-&gt;<a class="code" href="classmdt_abstract_sql_widget.html#a8207edaf31a7d988db5b86a4099ad4eb" title="Get the user friendly table name.">userFriendlyTableName</a>());
+<a name="l00054"></a>00054   pvSqlDialog-&gt;<a class="code" href="classmdt_sql_dialog_old.html#a009ae8ce4b25cd143fd19b0d680c2aa1" title="Add a child (details) widget.">addChildWidget</a>(widget, widget-&gt;<a class="code" href="classmdt_abstract_sql_widget.html#a8207edaf31a7d988db5b86a4099ad4eb" title="Get the user friendly table name.">userFriendlyTableName</a>());
 <a name="l00055"></a>00055 }
 <a name="l00056"></a>00056 
 </pre></div></div>
@@ -132,7 +132,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

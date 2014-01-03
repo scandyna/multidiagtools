@@ -107,6 +107,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a command to device.  <a href="#af6abc4a3693fc386a12f346f57282c11"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#acbbb8539c54034989b2ea6f6071e90bf">sendQuery</a> (const QByteArray &amp;query)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a query to device.  <a href="#acbbb8539c54034989b2ea6f6071e90bf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a205901666c797055bee1902bd1e1e09c">sendData</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data on port.  <a href="#a205901666c797055bee1902bd1e1e09c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a6d566c68ddeb7c7ca14b5c70ae784efc">sendData</a> (const QByteArray &amp;data)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#a6d566c68ddeb7c7ca14b5c70ae784efc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b">sendReadRequest</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
@@ -187,14 +189,14 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Called by the thread whenn a frame was readen. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000056">Todo:</a></b></dt><dd>On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. &lt;- Should be done in thread.. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000060">Todo:</a></b></dt><dd>On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. &lt;- Should be done in thread.. </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000057">Todo:</a></b></dt><dd>Check ID coherence ? Should be a assertion ? </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000061">Todo:</a></b></dt><dd>Check ID coherence ? Should be a assertion ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00278">278</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00346">346</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -275,6 +277,46 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a205901666c797055bee1902bd1e1e09c"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendData" ref="a205901666c797055bee1902bd1e1e09c" args="(mdtPortTransaction *transaction)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtUsbtmcPortManager::sendData </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *&#160;</td>
+          <td class="paramname"><em>transaction</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Send data on port. </p>
+<p>At first, this method waits until the ready state is set calling <a class="el" href="classmdt_usbtmc_port_manager.html#a0b90ceb0bbf424222ec878a355d206d7" title="Check if port manager is ready.">isReady()</a> , a frame is available in port's write frames pool, and until a transaction is possible (see <a class="el" href="classmdt_port_manager.html#ac04a12f8aa20ba04695083afce45a6cc" title="Wait until transaction pending queue has less than maximum possible items.">waitTransactionPossible()</a> ). This wait will not break event loop, so no GUI freeze occurs. If port manager is stopped during this wait (unhandled error, stop request), this method returns.</p>
+<p>Then, data contained in transaction will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">transaction</td><td>Transaction used to send data. Following members are used by this method:<ul>
+<li>id : transaction will be added to pending transactions with this id, and currentTransactionId will be set with it.</li>
+<li>data : will be sent to port.</li>
+<li>isQueryReplyMode : if true, the transaction will be keeped in transactions done queue until <a class="el" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac" title="Get data by frame ID.">readenFrame()</a> or <a class="el" href="classmdt_port_manager.html#addd5dcae9644cea42a9871205af41796" title="Get all readen data.">readenFrames()</a> is called. Note: it's possible to force keeping all incomming data (wich also owerwrite this flag) by setting the global keepTransactionsDone flag.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success or value &lt; 0 on error. In this implementation, the only possible error is <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a>, witch typically occurs when port manager stops. Note: on failure, the transaction is restored to pool. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd>
+<dd>
+transaction must be a valid pointer, and not allready exists in transactions pending or transactions done queue. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#ad98399edba146af5cf32a9002094385c">mdtPortManager</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a6d566c68ddeb7c7ca14b5c70ae784efc"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendData" ref="a6d566c68ddeb7c7ca14b5c70ae784efc" args="(const QByteArray &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
@@ -303,7 +345,7 @@ Public Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a> (&lt; 0). </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00190">190</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -323,7 +365,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Send a query to device. </p>
-<p>Will wait until it's possible to write. See <a class="el" href="classmdt_usbtmc_port_manager.html#a6d566c68ddeb7c7ca14b5c70ae784efc" title="Write data by copy.">sendData()</a> and <a class="el" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b" title="Send a read request to device.">sendReadRequest()</a> for details (used internally).</p>
+<p>Will wait until it's possible to write. See <a class="el" href="classmdt_usbtmc_port_manager.html#a205901666c797055bee1902bd1e1e09c" title="Send data on port.">sendData()</a> and <a class="el" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b" title="Send a read request to device.">sendReadRequest()</a> for details (used internally).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">query</td><td>Query to send. </td></tr>
@@ -363,9 +405,13 @@ Public Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a> (&lt; 0). On failure, the transaction is restored to pool. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be set </dd>
 <dd>
-transaction must be a valid pointer </dd></dl>
+transaction must be a valid pointer</dd></dl>
+<p>int <a class="el" href="classmdt_usbtmc_port_manager.html#a6d566c68ddeb7c7ca14b5c70ae784efc" title="Write data by copy.">mdtUsbtmcPortManager::sendData(const QByteArray &amp;data)</a> { Q_ASSERT(pvPort != 0);</p>
+<p><a class="el" href="classmdt_frame_usb_tmc.html" title="USBTMC frame.">mdtFrameUsbTmc</a> *frame;</p>
+<p>Wait until we can write while(1){ If port manager was stopped, we return if(<a class="el" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed()</a>){ return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a>; } if(<a class="el" href="classmdt_usbtmc_port_manager.html#a0b90ceb0bbf424222ec878a355d206d7" title="Check if port manager is ready.">isReady()</a>){ <a class="el" href="classmdt_port_manager.html#a3107b7121dfe5b9686d9b3b3a48a0af0" title="Lock the port&#39;s mutex.">lockPortMutex()</a>; if(pvPort-&gt;writeFramesPool().size() &gt; 0){ frame = dynamic_cast&lt;mdtFrameUsbTmc*&gt; (pvPort-&gt;writeFramesPool().dequeue()); Q_ASSERT(frame != 0); Here we are ready to write - we keep port mutext locked break; } <a class="el" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex()</a>; } QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents); } if(!waitTransactionPossible()){ <a class="el" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex()</a>; return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a>; } We are ready to write Q_ASSERT(frame != 0); frame-&gt;clear(); frame-&gt;clearSub(); Store data and add frame to write queue frame-&gt;setWaitAnAnswer(false); frame-&gt;setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT); Increment bTag and enshure it's in correct range (1-255) incrementCurrentTransactionId(1, 255); frame-&gt;setbTag(<a class="el" href="classmdt_port_manager.html#a19abf29c8948cde0337d67c9722c25aa" title="Get the current transaction ID.">currentTransactionId()</a>); frame-&gt;setMessageData(data); frame-&gt;setEOM(true); frame-&gt;encode(); pvPort-&gt;addFrameToWrite(frame); <a class="el" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex()</a>;</p>
+<p>return <a class="el" href="classmdt_port_manager.html#a19abf29c8948cde0337d67c9722c25aa" title="Get the current transaction ID.">currentTransactionId()</a>; } </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00185">185</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00253">253</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -392,10 +438,10 @@ transaction must be a valid pointer </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000058">Todo:</a></b></dt><dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000062">Todo:</a></b></dt><dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 if write queue is full. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00238">238</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00306">306</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -415,12 +461,12 @@ transaction must be a valid pointer </dd></dl>
 
 <p>Send a READ_STATUS_BYTE request thru the control endpoint. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success or WriteQueueEmpty on error.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000055">Todo:</a></b></dt><dd>finish ! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000059">Todo:</a></b></dt><dd>finish ! </dd></dl>
 
 <p><p>m.sendControlRequest(f); End Sandbox ! </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00250">250</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00318">318</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -443,7 +489,7 @@ transaction must be a valid pointer </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:51 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

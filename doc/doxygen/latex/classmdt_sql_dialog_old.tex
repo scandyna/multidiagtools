@@ -1,0 +1,217 @@
+\hypertarget{classmdt_sql_dialog_old}{
+\section{mdtSqlDialogOld Class Reference}
+\label{classmdt_sql_dialog_old}\index{mdtSqlDialogOld@{mdtSqlDialogOld}}
+}
+
+
+Dialog for a database table view/editor.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlDialogOld.h$>$}
+
+
+
+Collaboration diagram for mdtSqlDialogOld:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classmdt_sql_dialog_old__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_dialog_old_a8fb8b8a8cd090c10c8c7d7f718de6198}{
+void \hyperlink{classmdt_sql_dialog_old_a8fb8b8a8cd090c10c8c7d7f718de6198}{accept} ()}
+\label{classmdt_sql_dialog_old_a8fb8b8a8cd090c10c8c7d7f718de6198}
+
+\begin{DoxyCompactList}\small\item\em Overloads QDialog::accept() \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_dialog_old_adb9be20150730eca0a1e14df3ba9f05a}{
+void \hyperlink{classmdt_sql_dialog_old_adb9be20150730eca0a1e14df3ba9f05a}{reject} ()}
+\label{classmdt_sql_dialog_old_adb9be20150730eca0a1e14df3ba9f05a}
+
+\begin{DoxyCompactList}\small\item\em Overloads QDialog::reject() \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_sql_dialog_old_a09d803b8fdeda106f5e09c74cd083777}{mdtSqlDialogOld} (QWidget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_dialog_old_ad94d87750cbe3f4b8d90ad486e0ae2dd}{
+\hyperlink{classmdt_sql_dialog_old_ad94d87750cbe3f4b8d90ad486e0ae2dd}{$\sim$mdtSqlDialogOld} ()}
+\label{classmdt_sql_dialog_old_ad94d87750cbe3f4b8d90ad486e0ae2dd}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_dialog_old_ab164a92148ee8c41687f8ec461199924}{setSqlWidget} (\hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} $\ast$sqlWidget)
+\begin{DoxyCompactList}\small\item\em Set form/table view/editor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_dialog_old_a009ae8ce4b25cd143fd19b0d680c2aa1}{addChildWidget} (QWidget $\ast$widget, const QString \&label)
+\begin{DoxyCompactList}\small\item\em Add a child (details) widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_dialog_old_aa632b9e478abfd39fb619017ad858588}{setCurrentRow} (int row)
+\begin{DoxyCompactList}\small\item\em Set row (record) to edit (in main table) \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_dialog_old_a8a037786d182ce5c521a09f98c32cbeb}{setCurrentRow} (const QString \&fieldName, const QVariant \&matchData)
+\begin{DoxyCompactList}\small\item\em Set the first record that matches given criteria as row (record) to edit (in main table) \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_dialog_old_a658d4a0a9bc97cb8a354a5b2157ab1a0}{setCurrentRow} (const QList$<$ QPair$<$ QString, QVariant $>$ $>$ \&matchList)
+\begin{DoxyCompactList}\small\item\em Not implemented yet. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Dialog for a database table view/editor. 
+
+This class offers some functionnality for the GUI part.
+
+It was designed to work with a subclass of \hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget}. 
+
+Definition at line 42 of file mdtSqlDialogOld.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_dialog_old_a09d803b8fdeda106f5e09c74cd083777}{
+\index{mdtSqlDialogOld@{mdtSqlDialogOld}!mdtSqlDialogOld@{mdtSqlDialogOld}}
+\index{mdtSqlDialogOld@{mdtSqlDialogOld}!mdtSqlDialogOld@{mdtSqlDialogOld}}
+\subsubsection[{mdtSqlDialogOld}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlDialogOld::mdtSqlDialogOld (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_dialog_old_a09d803b8fdeda106f5e09c74cd083777}
+
+
+Constructor. 
+
+Will construct a empty window. Use \hyperlink{classmdt_sql_dialog_old_ab164a92148ee8c41687f8ec461199924}{setSqlWidget()} to set central widget, \hyperlink{classmdt_sql_dialog_old_aa632b9e478abfd39fb619017ad858588}{setCurrentRow()} to edit a existing row, insertRow() to create and edit a new row. 
+
+Definition at line 31 of file mdtSqlDialogOld.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_dialog_old_a009ae8ce4b25cd143fd19b0d680c2aa1}{
+\index{mdtSqlDialogOld@{mdtSqlDialogOld}!addChildWidget@{addChildWidget}}
+\index{addChildWidget@{addChildWidget}!mdtSqlDialogOld@{mdtSqlDialogOld}}
+\subsubsection[{addChildWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDialogOld::addChildWidget (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{widget, }
+\item[{const QString \&}]{label}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_dialog_old_a009ae8ce4b25cd143fd19b0d680c2aa1}
+
+
+Add a child (details) widget. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em widget} & Will be added to the childs tab \\
+\hline
+{\em label} & Will be displayed in tab of tab widget\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Parent (main) widget must be set with \hyperlink{classmdt_sql_dialog_old_ab164a92148ee8c41687f8ec461199924}{setSqlWidget()} before using this method 
+
+widget must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 80 of file mdtSqlDialogOld.cpp.
+
+\hypertarget{classmdt_sql_dialog_old_a658d4a0a9bc97cb8a354a5b2157ab1a0}{
+\index{mdtSqlDialogOld@{mdtSqlDialogOld}!setCurrentRow@{setCurrentRow}}
+\index{setCurrentRow@{setCurrentRow}!mdtSqlDialogOld@{mdtSqlDialogOld}}
+\subsubsection[{setCurrentRow}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlDialogOld::setCurrentRow (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ QPair$<$ QString, QVariant $>$ $>$ \&}]{matchList}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_dialog_old_a658d4a0a9bc97cb8a354a5b2157ab1a0}
+
+
+Not implemented yet. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000085}{Todo}]Implement in \hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} and here \end{Desc}
+
+
+Definition at line 107 of file mdtSqlDialogOld.cpp.
+
+\hypertarget{classmdt_sql_dialog_old_a8a037786d182ce5c521a09f98c32cbeb}{
+\index{mdtSqlDialogOld@{mdtSqlDialogOld}!setCurrentRow@{setCurrentRow}}
+\index{setCurrentRow@{setCurrentRow}!mdtSqlDialogOld@{mdtSqlDialogOld}}
+\subsubsection[{setCurrentRow}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlDialogOld::setCurrentRow (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fieldName, }
+\item[{const QVariant \&}]{matchData}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_dialog_old_a8a037786d182ce5c521a09f98c32cbeb}
+
+
+Set the first record that matches given criteria as row (record) to edit (in main table) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fieldName} & Field that must contain searched value \\
+\hline
+{\em matchData} & Value that must matche \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if matching record was found 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Parent (main) widget must be set with \hyperlink{classmdt_sql_dialog_old_ab164a92148ee8c41687f8ec461199924}{setSqlWidget()} before using this method 
+\end{DoxyPrecond}
+
+
+Definition at line 100 of file mdtSqlDialogOld.cpp.
+
+\hypertarget{classmdt_sql_dialog_old_aa632b9e478abfd39fb619017ad858588}{
+\index{mdtSqlDialogOld@{mdtSqlDialogOld}!setCurrentRow@{setCurrentRow}}
+\index{setCurrentRow@{setCurrentRow}!mdtSqlDialogOld@{mdtSqlDialogOld}}
+\subsubsection[{setCurrentRow}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDialogOld::setCurrentRow (
+\begin{DoxyParamCaption}
+\item[{int}]{row}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_dialog_old_aa632b9e478abfd39fb619017ad858588}
+
+
+Set row (record) to edit (in main table) 
+
+\begin{DoxyPrecond}{Precondition}
+Parent (main) widget must be set with \hyperlink{classmdt_sql_dialog_old_ab164a92148ee8c41687f8ec461199924}{setSqlWidget()} before using this method 
+\end{DoxyPrecond}
+
+
+Definition at line 93 of file mdtSqlDialogOld.cpp.
+
+\hypertarget{classmdt_sql_dialog_old_ab164a92148ee8c41687f8ec461199924}{
+\index{mdtSqlDialogOld@{mdtSqlDialogOld}!setSqlWidget@{setSqlWidget}}
+\index{setSqlWidget@{setSqlWidget}!mdtSqlDialogOld@{mdtSqlDialogOld}}
+\subsubsection[{setSqlWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDialogOld::setSqlWidget (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtAbstractSqlWidget} $\ast$}]{sqlWidget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_dialog_old_ab164a92148ee8c41687f8ec461199924}
+
+
+Set form/table view/editor. 
+
+Will make some signal/slot connection, then place sqlWidget in central area of dialog.
+
+\begin{DoxyPrecond}{Precondition}
+sqlWidget must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 63 of file mdtSqlDialogOld.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlDialogOld.h\item 
+src/mdtutilsgui/mdtSqlDialogOld.cpp\end{DoxyCompactItemize}

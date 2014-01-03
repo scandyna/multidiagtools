@@ -22,7 +22,8 @@ Inheritance diagram for mdtDeviceU3606A:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceU3606A:\nopagebreak
+Collaboration diagram for mdtDeviceU3606A:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -40,19 +41,55 @@ void \hyperlink{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{onSta
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}{
-{\bfseries mdtDeviceU3606A} (QObject $\ast$parent=0)}
-\label{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}
+\hyperlink{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}{mdtDeviceU3606A} (QObject $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_u3606_a_a7d2fb26475e72cce95ca6be384d569b7}{
+\hyperlink{classmdt_device_u3606_a_a7d2fb26475e72cce95ca6be384d569b7}{$\sim$mdtDeviceU3606A} ()}
+\label{classmdt_device_u3606_a_a7d2fb26475e72cce95ca6be384d569b7}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
-\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004}{mdtFrameCodecScpiU3606A::measure\_\-type\_\-t} \hyperlink{classmdt_device_u3606_a_a8732ec3f4a04a191585191e1ba4f190d}{getMeasureConfiguration} ()
+\begin{DoxyCompactList}\small\item\em Get the measure configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Representation of a Agilent U3606A. 
 
-Definition at line 30 of file mdtDeviceU3606A.h.
+The U3606A has following I/Os
+
+\begin{TabularC}{4}
+\hline
+Type&Address&Label short&Description \\\cline{1-4}
+Analog input&0&MEASURE&Represent the measurement part \\\cline{1-4}
+Analog input&1&SENSEU&Represent the voltage sense of the source part \\\cline{1-4}
+Analog input&2&SENSEI&Represent the current sense of the source part \\\cline{1-4}
+Analog output&0&SOURCE&Represent the source part \\\cline{1-4}
+\end{TabularC}
+
+
+Definition at line 41 of file mdtDeviceU3606A.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}{
+\index{mdtDeviceU3606A@{mdtDeviceU3606A}!mdtDeviceU3606A@{mdtDeviceU3606A}}
+\index{mdtDeviceU3606A@{mdtDeviceU3606A}!mdtDeviceU3606A@{mdtDeviceU3606A}}
+\subsubsection[{mdtDeviceU3606A}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceU3606A::mdtDeviceU3606A (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}
+
+
+Constructor. 
+
+Will create the needed codec, I/Os and configure internal port manager . 
+
+Definition at line 31 of file mdtDeviceU3606A.cpp.
 
 
 
@@ -86,7 +123,28 @@ Reimplemented from \hyperlink{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348
 
 
 
-Definition at line 47 of file mdtDeviceU3606A.cpp.
+Definition at line 71 of file mdtDeviceU3606A.cpp.
+
+\hypertarget{classmdt_device_u3606_a_a8732ec3f4a04a191585191e1ba4f190d}{
+\index{mdtDeviceU3606A@{mdtDeviceU3606A}!getMeasureConfiguration@{getMeasureConfiguration}}
+\index{getMeasureConfiguration@{getMeasureConfiguration}!mdtDeviceU3606A@{mdtDeviceU3606A}}
+\subsubsection[{getMeasureConfiguration}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFrameCodecScpiU3606A::measure\_\-type\_\-t} mdtDeviceU3606A::getMeasureConfiguration (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_u3606_a_a8732ec3f4a04a191585191e1ba4f190d}
+
+
+Get the measure configuration. 
+
+Will get the device current measure configuration by sending the CONF? query .
+
+Internal analog measure input is also updated with device's range and unit .
+
+By error, unknown measure type is returned . 
+
+Definition at line 83 of file mdtDeviceU3606A.cpp.
 
 
 

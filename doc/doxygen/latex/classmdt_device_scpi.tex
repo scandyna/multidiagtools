@@ -22,7 +22,8 @@ Inheritance diagram for mdtDeviceScpi:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceScpi:\nopagebreak
+Collaboration diagram for mdtDeviceScpi:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -120,7 +121,7 @@ Definition at line 32 of file mdtDeviceScpi.cpp.
 Query device about error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000019}{Todo}]Buggy, review !\end{Desc}
+\item[\hyperlink{todo__todo000023}{Todo}]Buggy, review !\end{Desc}
 
 
 Will send the SYST:ERR? and return.
@@ -137,7 +138,7 @@ transaction-\/$>$setType(MDT\_\-FC\_\-SCPI\_\-ERR);
 
 
 
-Definition at line 189 of file mdtDeviceScpi.cpp.
+Definition at line 193 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!connectToDevice@{connectToDevice}}
@@ -171,7 +172,7 @@ device = devInfo; device.setVendorId(0x0957); device.setProductId(0x4d18);
 if(\hyperlink{classmdt_device_scpi_a7dc5ab8856a766a45bcc7e9cba0f54ca}{portManager()}-\/$>$openPort())\{ if(\hyperlink{classmdt_device_scpi_a7dc5ab8856a766a45bcc7e9cba0f54ca}{portManager()}-\/$>$\hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start()})\{ retVal = \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError}; \}else\{ retVal = \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError}; \} \}else\{ retVal = \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError}; \}
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000018}{Todo}]Add DeviceNotFound error ? \end{Desc}
+\item[\hyperlink{todo__todo000022}{Todo}]Add DeviceNotFound error ? \end{Desc}
 
 
 
@@ -200,7 +201,7 @@ Definition at line 68 of file mdtDeviceScpi.cpp.
 Handle device error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000020}{Todo}]Buggy, review !\end{Desc}
+\item[\hyperlink{todo__todo000024}{Todo}]Buggy, review !\end{Desc}
 
 
 This method is called from subclass's decodeReadenFrame(mdtPortTransaction) method when a frame of type MDT\_\-FC\_\-SCPI\_\-ERR was received.
@@ -219,7 +220,7 @@ If internal codec has $<$ 2 values, \hyperlink{classmdt_device_scpi_af1cc7d9c998
 \end{DoxyPostcond}
 
 
-Definition at line 214 of file mdtDeviceScpi.cpp.
+Definition at line 218 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_af1cc7d9c99832fa3a7b3c5764588c637}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!handleDeviceSpecificError@{handleDeviceSpecificError}}
@@ -237,7 +238,7 @@ Definition at line 214 of file mdtDeviceScpi.cpp.
 Handle device's specific error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000021}{Todo}]Buggy, review !\end{Desc}
+\item[\hyperlink{todo__todo000025}{Todo}]Buggy, review !\end{Desc}
 
 
 This method is called from \hyperlink{classmdt_device_scpi_a16b6b0c77b1078da285f9d8d9ba52181}{handleDeviceError()}.
@@ -258,7 +259,7 @@ Internal codec has at least 2 values.
 \end{DoxyPrecond}
 
 
-Definition at line 264 of file mdtDeviceScpi.cpp.
+Definition at line 268 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_a00d25c16acb20c909210bc5278f713fa}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!logDeviceError@{logDeviceError}}
@@ -287,7 +288,7 @@ Log a device error with \hyperlink{classmdt_error}{mdtError} system.
 \end{DoxyParams}
 
 
-Definition at line 271 of file mdtDeviceScpi.cpp.
+Definition at line 275 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_ad98f24870f597c31d8788ab4f5bc53fc}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!sendCommand@{sendCommand}}
@@ -318,7 +319,7 @@ bTag on success, or a error $<$ 0 (see mdtUsbtmcPortManager::writeData() for det
 \end{DoxyReturn}
 
 
-Definition at line 140 of file mdtDeviceScpi.cpp.
+Definition at line 144 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_a96df8073c8838cc819bf38ed330b076b}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!sendQuery@{sendQuery}}
@@ -349,7 +350,7 @@ Result as string (empty string on error) Note that \hyperlink{classmdt_frame_cod
 \end{DoxyReturn}
 
 
-Definition at line 145 of file mdtDeviceScpi.cpp.
+Definition at line 149 of file mdtDeviceScpi.cpp.
 
 \hypertarget{classmdt_device_scpi_aefd45e58d01aed9a165bb2c2dd98198c}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!waitOperationComplete@{waitOperationComplete}}
@@ -385,7 +386,7 @@ maxIter = timeout / interval;
 
 
 
-Definition at line 150 of file mdtDeviceScpi.cpp.
+Definition at line 154 of file mdtDeviceScpi.cpp.
 
 
 

@@ -13,8 +13,7 @@ Helper class for Wago modules detection and setup.
 
 
 
-Inheritance diagram for mdtDeviceModbusWagoModule:
-\nopagebreak
+Inheritance diagram for mdtDeviceModbusWagoModule:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -472,7 +471,7 @@ Add registers.
 Will add control byte, status byte and register data for given channelCount 
 
 pvRegisterDataWords.append(QPair$<$int, quint16$>$(currentAddressRead, 0)); ///\begin{Desc}
-\item[\hyperlink{todo__todo000009}{Todo}]Gag avec adresses !! \end{Desc}
+\item[\hyperlink{todo__todo000013}{Todo}]Gag avec adresses !! \end{Desc}
 
 
 ++currentAddressRead; 
@@ -1224,13 +1223,13 @@ Note: this method will not send a specific query. For this, control byte must be
 firstChannel and lastChannel must be in a valid range
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000010}{Todo}]Implement needDeviceSetupState \end{Desc}
+\item[\hyperlink{todo__todo000014}{Todo}]Implement needDeviceSetupState \end{Desc}
 
 
 if(needDeviceSetupState \&\& (pvDevice-\/$>$currentState() != mdtPortManager::Setup))\{ \}
 
 registersCount = pvRegisterDataWords.at(lastChannel).first -\/ startAddress + 1; ///\begin{Desc}
-\item[\hyperlink{todo__todo000011}{Todo}]Change to status byte of last channel + 1...... \end{Desc}
+\item[\hyperlink{todo__todo000015}{Todo}]Change to status byte of last channel + 1...... \end{Desc}
 
 
 pvRegisterDataWords\mbox{[}channel\mbox{]}.second = pvDevice-\/$>$registerValues().at(i + 1);
@@ -1265,7 +1264,7 @@ Will read status byte (Sx) from physical module and update internally cached val
 firstChannel and lastChannel must be in a valid range
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000013}{Todo}]Implement needDeviceSetupState \end{Desc}
+\item[\hyperlink{todo__todo000017}{Todo}]Implement needDeviceSetupState \end{Desc}
 
 
 Q\_\-ASSERT(lastChannel $<$ pvRegisterDataWords.size());
@@ -1460,7 +1459,7 @@ This method will use this word do create internally I/O's based on \hyperlink{cl
 Note that no absolute addressing is done at this step. Call \hyperlink{classmdt_device_modbus_wago_module_ac7d9da94e7d4c06e288a346ac123c711}{updateAddresses()} for this.
 
 Some special modules need to communicate with fieldbus coupler to access register service. To get setup during I/O detection, use getSpecialModuleSetup() instead of this method.\begin{Desc}
-\item[\hyperlink{todo__todo000015}{Todo}]Adapt\end{Desc}
+\item[\hyperlink{todo__todo000019}{Todo}]Adapt\end{Desc}
 
 
 
@@ -1471,7 +1470,7 @@ Some special modules need to communicate with fieldbus coupler to access registe
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000008}{Todo}]Implement \end{Desc}
+\item[\hyperlink{todo__todo000012}{Todo}]Implement \end{Desc}
 
 
 
@@ -1591,7 +1590,7 @@ Will write cached control byte (Cx) to physical module.
 firstChannel and lastChannel must be in a valid range
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000014}{Todo}]Implement needDeviceSetupState \end{Desc}
+\item[\hyperlink{todo__todo000018}{Todo}]Implement needDeviceSetupState \end{Desc}
 
 
 Q\_\-ASSERT(lastChannel $<$ pvRegisterDataWords.size());
@@ -1623,7 +1622,7 @@ Will write cached control (Cx) and data (Dx) bytes to physical module.
 firstChannel and lastChannel must be in a valid range
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000012}{Todo}]Implement needDeviceSetupState \end{Desc}
+\item[\hyperlink{todo__todo000016}{Todo}]Implement needDeviceSetupState \end{Desc}
 
 
 if(needDeviceSetupState \&\& (pvDevice-\/$>$currentState() != mdtPortManager::Setup))\{ \}

@@ -298,7 +298,7 @@ QList&lt; <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> * &gt
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Port manager base class. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000037">Todo:</a></b></dt><dd>Port manager has no raison to inherit QThread -&gt; make it inherit QObject </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000041">Todo:</a></b></dt><dd>Port manager has no raison to inherit QThread -&gt; make it inherit QObject </dd></dl>
 <p>Manages a port based on <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> an several threads based on <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>. The goal is to hide the complexity of the port API.</p>
 <p>Example: </p>
 <div class="fragment"><pre class="fragment"> <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> m;
@@ -359,7 +359,7 @@ QList&lt; <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> * &gt
 <p>Depending on application, it's possible to use a event approach, or also a blocking approach with wait methods.</p>
 <p>Some protocols support frame identifier (like MODBUS/TCP, USBTMC, or others), and other don't (for example raw bytes transfert on a serial port). For this reason, the concept of transactions is aodpted here. A transaction is based on <a class="el" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> class. It was introduced for protocols that support identification, and can store some other meta data, usefull to decode a reply.</p>
 <p>This base class can be used directly for ports that supports raw transfers. For specific protocol, it can be subclassed.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000038">Todo:</a></b></dt><dd>Document init, open, close, ...</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Todo:</a></b></dt><dd>Document init, open, close, ...</dd></dl>
 <p>Now, we can see the data transfer workflow:</p>
 <ul>
 <li>1) Wait until it's possible to send some data with waitOnWriteReady()</li>
@@ -945,7 +945,7 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>This variant will add data to transactions done queue. If pending transactions queue contains <a class="el" href="classmdt_port_manager.html#a19abf29c8948cde0337d67c9722c25aa" title="Get the current transaction ID.">currentTransactionId()</a>, it will be removed.</p>
 <p>For subclass that handle frames with IDs, this method must be reimplemented. The normal way is to get the frame in pending queue with <a class="el" href="classmdt_port_manager.html#a18478707a9be7638b06cde48ced48297" title="Take pending transaction matching id.">transactionPending()</a>. For frames with ID that not exists in pending queue, it must be choosen to discard them, or adopt another behaviour.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000036">Todo:</a></b></dt><dd>A méditer: </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000040">Todo:</a></b></dt><dd>A méditer: </dd></dl>
 <p>- Lock le mutex</p>
 <ul>
 <li>Prendre les frames disponibles (-&gt; sdans une liste ...)</li>
@@ -1161,9 +1161,9 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>Will try to open port defined with <a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a" title="Set port name.">setPortName()</a> or <a class="el" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo()</a></p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000039">Todo:</a></b></dt><dd>Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Todo:</a></b></dt><dd>Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000035">Todo:</a></b></dt><dd>Handle and/or display error &lt;- Note: no graphical dialog here ! Or.. yes ? </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000039">Todo:</a></b></dt><dd>Handle and/or display error &lt;- Note: no graphical dialog here ! Or.. yes ? </dd></dl>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00603">603</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
@@ -1605,7 +1605,7 @@ transaction must be a valid pointer, and not allready exists in transactions pen
 <p>Subclass notes:<br/>
  This method can be reimplemented in subclass if needed. Typically usefull if some encoding is needed before the frame is submitted to port. A frame must be taken from port's write frames pool with <a class="el" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">mdtAbstractPort::writeFramesPool()</a> dequeue() method (see Qt's QQueue documentation for more details on dequeue() ), then added to port's write queue with <a class="el" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d" title="Add a frame to write.">mdtAbstractPort::addFrameToWrite()</a> . If protocol supports frame identification (like MODBUS's transaction ID or USBTMC's bTag), it should be returned here and incremented using <a class="el" href="classmdt_port_manager.html#a4d009936a0a5130f3bfecb69fee4ce42" title="Increment current transaction ID.">incrementCurrentTransactionId()</a>. </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_modbus_tcp_port_manager.html#a208a3b2522795974836fd8aef406725a">mdtModbusTcpPortManager</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_modbus_tcp_port_manager.html#a208a3b2522795974836fd8aef406725a">mdtModbusTcpPortManager</a>, and <a class="el" href="classmdt_usbtmc_port_manager.html#a205901666c797055bee1902bd1e1e09c">mdtUsbtmcPortManager</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00319">319</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
@@ -2173,7 +2173,7 @@ onTransactionTimeoutOccured() </dd>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

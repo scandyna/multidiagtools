@@ -85,7 +85,7 @@ Collaboration diagram for mdtDeviceScpi:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_device_scpi__coll__graph.png" border="0" usemap="#mdt_device_scpi_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_device_scpi_coll__map" id="mdt_device_scpi_coll__map">
-<area shape="rect" id="node2" href="classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="155,648,241,677"/><area shape="rect" id="node4" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="147,552,249,581"/><area shape="rect" id="node6" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="265,648,427,677"/><area shape="rect" id="node8" href="classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API." alt="" coords="275,552,417,581"/><area shape="rect" id="node10" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="287,472,405,501"/><area shape="rect" id="node12" href="classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="61,360,258,389"/><area shape="rect" id="node14" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="137,183,259,212"/><area shape="rect" id="node16" href="classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="37,5,111,35"/><area shape="rect" id="node19" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="369,360,475,389"/><area shape="rect" id="node21" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="298,183,415,212"/><area shape="rect" id="node23" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="303,5,410,35"/><area shape="rect" id="node25" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="499,360,590,389"/></map>
+<area shape="rect" id="node2" href="classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="155,648,241,677"/><area shape="rect" id="node4" href="classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="53,552,125,581"/><area shape="rect" id="node6" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="149,552,250,581"/><area shape="rect" id="node8" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="265,648,427,677"/><area shape="rect" id="node10" href="classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API." alt="" coords="275,552,417,581"/><area shape="rect" id="node12" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="287,472,405,501"/><area shape="rect" id="node14" href="classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="61,360,258,389"/><area shape="rect" id="node16" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="137,183,259,212"/><area shape="rect" id="node18" href="classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="37,5,111,35"/><area shape="rect" id="node21" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="369,360,475,389"/><area shape="rect" id="node23" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="298,183,415,212"/><area shape="rect" id="node25" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="303,5,410,35"/><area shape="rect" id="node27" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="499,360,590,389"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_device_scpi-members.html">List of all members.</a></p>
@@ -169,7 +169,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Query device about error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
 <p>Will send the SYST:ERR? and return.</p>
 <p>Subclass notes:<br/>
  The SYST:ERR? query is sent to device. A new transaction is initalized, with type MDT_FC_SCPI_ERR. When subclass receives such transaction type, it should call <a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181" title="Handle device error.">handleDeviceError()</a> without decoding frame.</p>
@@ -178,7 +178,7 @@ Protected Attributes</h2></td></tr>
 <p><p>transaction-&gt;setType(MDT_FC_SCPI_ERR); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00189">189</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00193">193</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -210,7 +210,7 @@ Protected Attributes</h2></td></tr>
 <p><p><a class="el" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> device;</p>
 <p>device = devInfo; device.setVendorId(0x0957); device.setProductId(0x4d18);</p>
 <p>if(<a class="el" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager()</a>-&gt;openPort()){ if(<a class="el" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager()</a>-&gt;<a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7" title="Start periodic device querying.">start()</a>){ retVal = <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>; }else{ retVal = <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>; } }else{ retVal = <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>; }</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>.</p>
@@ -237,7 +237,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Handle device error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
 <p>This method is called from subclass's decodeReadenFrame(mdtPortTransaction) method when a frame of type MDT_FC_SCPI_ERR was received.</p>
 <p>Errors &lt;= 0 are handled directly. If error is &gt; 0, <a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637" title="Handle device&#39;s specific error.">handleDeviceSpecificError()</a> is called.</p>
 <p>See the SCPI99 standard for more details.</p>
@@ -249,7 +249,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="post"><dt><b>Postcondition:</b></dt><dd>If internal codec has &lt; 2 values, <a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637" title="Handle device&#39;s specific error.">handleDeviceSpecificError()</a> is not called. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00214">214</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00218">218</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -285,7 +285,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Handle device's specific error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
 <p>This method is called from <a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181" title="Handle device error.">handleDeviceError()</a>.</p>
 <p>This default implementation simply log the error (with <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -298,7 +298,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Internal codec has at least 2 values. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00264">264</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00268">268</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -349,7 +349,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00271">271</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00275">275</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -380,7 +380,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success, or a error &lt; 0 (see mdtUsbtmcPortManager::writeData() for details). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00140">140</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00144">144</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -411,7 +411,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Result as string (empty string on error) Note that <a class="el" href="classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;">mdtFrameCodecScpi</a> can be helpful to decode returned result. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00149">149</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -455,7 +455,7 @@ Protected Attributes</h2></td></tr>
 <p>maxIter = timeout / interval; </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00150">150</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00154">154</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -478,7 +478,7 @@ Protected Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:48 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

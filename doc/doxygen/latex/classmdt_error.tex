@@ -37,6 +37,8 @@ enum \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} \{
 \begin{DoxyCompactList}\small\item\em Construct new error. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}{setError} (const QString \&text, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} level)
 \begin{DoxyCompactList}\small\item\em Set error. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_error_ace38a9600c19ddf3628d46b1a6a7b414}{updateText} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Update error text. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}{
 void \hyperlink{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}{clear} ()}
 \label{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}
@@ -212,7 +214,7 @@ Error number.
 \item[\hyperlink{deprecated__deprecated000002}{Deprecated}]If no good idea falls in for the usage of number , this method should become obselete . \end{Desc}
 
 
-Definition at line 113 of file mdtError.cpp.
+Definition at line 118 of file mdtError.cpp.
 
 \hypertarget{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}{
 \index{mdtError@{mdtError}!setError@{setError}}
@@ -254,7 +256,7 @@ Add the source of error
 
 It's possible to use the helper macro MDT\_\-ERROR\_\-SET\_\-SRC() 
 
-Definition at line 96 of file mdtError.cpp.
+Definition at line 101 of file mdtError.cpp.
 
 \hypertarget{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{
 \index{mdtError@{mdtError}!systemErrorString@{systemErrorString}}
@@ -271,7 +273,24 @@ Error number and text from system, if available.
 
 If obj is set, translation is used. (We not want to use the static QObject::tr() ). 
 
-Definition at line 153 of file mdtError.cpp.
+Definition at line 158 of file mdtError.cpp.
+
+\hypertarget{classmdt_error_ace38a9600c19ddf3628d46b1a6a7b414}{
+\index{mdtError@{mdtError}!updateText@{updateText}}
+\index{updateText@{updateText}!mdtError@{mdtError}}
+\subsubsection[{updateText}]{\setlength{\rightskip}{0pt plus 5cm}void mdtError::updateText (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_error_ace38a9600c19ddf3628d46b1a6a7b414}
+
+
+Update error text. 
+
+Will set error text, but does not clear error . 
+
+Definition at line 65 of file mdtError.cpp.
 
 
 

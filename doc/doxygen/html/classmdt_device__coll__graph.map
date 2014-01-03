@@ -1,3 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="5,5,107,35"/>
+<area shape="rect" id="node2" href="$classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="5,5,77,35"/>
+<area shape="rect" id="node4" href="$classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="101,5,203,35"/>
 </map>

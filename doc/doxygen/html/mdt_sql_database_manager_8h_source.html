@@ -114,40 +114,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00068"></a>00068 
 <a name="l00071"></a>00071   QSqlDatabase <a class="code" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5" title="Get current database object.">database</a>();
 <a name="l00072"></a>00072 
-<a name="l00078"></a>00078   <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_database_manager.html#a3da56635b2a4db98b768e5846e15fa83" title="Set the parent widget for dialogs.">setForDialogParentWidget</a>(QWidget *widget);
-<a name="l00079"></a>00079 
-<a name="l00082"></a>00082   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> <a class="code" href="classmdt_sql_database_manager.html#a7fb8458fb9fc10216c8dfbbeb2c3dc50" title="Get last error.">lastError</a>() <span class="keyword">const</span>;
+<a name="l00075"></a>00075   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a40638df04f9e6eb3c5cee399a5543ffd" title="Enable/disable foreing keys constraint.">setForeignKeysEnabled</a>(<span class="keywordtype">bool</span> enable);
+<a name="l00076"></a>00076 
+<a name="l00082"></a>00082   <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_database_manager.html#a3da56635b2a4db98b768e5846e15fa83" title="Set the parent widget for dialogs.">setForDialogParentWidget</a>(QWidget *widget);
 <a name="l00083"></a>00083 
-<a name="l00088"></a>00088   QFileInfo <a class="code" href="classmdt_sql_database_manager.html#ae6459276d25c6d3733b284249c1f1ab4" title="Let the user choose a Sqlite database file.">chooseDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory = QDir());
-<a name="l00089"></a>00089 
-<a name="l00092"></a>00092   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">openDatabaseSqlite</a>(<span class="keyword">const</span> QFileInfo &amp; fileInfo, <span class="keyword">const</span> QString &amp; connectionName = QString());
+<a name="l00086"></a>00086   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> <a class="code" href="classmdt_sql_database_manager.html#a7fb8458fb9fc10216c8dfbbeb2c3dc50" title="Get last error.">lastError</a>() <span class="keyword">const</span>;
+<a name="l00087"></a>00087 
+<a name="l00092"></a>00092   QFileInfo <a class="code" href="classmdt_sql_database_manager.html#ae6459276d25c6d3733b284249c1f1ab4" title="Let the user choose a Sqlite database file.">chooseDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory = QDir());
 <a name="l00093"></a>00093 
-<a name="l00099"></a>00099   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">openDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory = QDir(), <span class="keyword">const</span> QString &amp; connectionName = QString());
-<a name="l00100"></a>00100 
-<a name="l00105"></a>00105   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">createDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory = QDir(), <span class="keyword">const</span> QString &amp; connectionName = QString());
-<a name="l00106"></a>00106 
-<a name="l00112"></a>00112   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">createDatabaseSqlite</a>(<span class="keyword">const</span> QFileInfo &amp; fileInfo, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418" title="Creation mode.">createMode_t</a> createMode, <span class="keyword">const</span> QString &amp; connectionName = QString());
-<a name="l00113"></a>00113 
-<a name="l00118"></a>00118   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#afe78562023f6b8d530a24a9362587ed5" title="Create a table.">createTable</a>(<a class="code" href="classmdt_sql_schema_table.html" title="Helper class that generate SQL table creation string.">mdtSqlSchemaTable</a> &amp; table, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418" title="Creation mode.">createMode_t</a> createMode);
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120  <span class="keyword">private</span>:
-<a name="l00121"></a>00121 
-<a name="l00124"></a>00124   <span class="keywordtype">bool</span> userChooseToOverwriteTable(<span class="keyword">const</span> QString &amp;tableName);
+<a name="l00096"></a>00096   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">openDatabaseSqlite</a>(<span class="keyword">const</span> QFileInfo &amp; fileInfo, <span class="keyword">const</span> QString &amp; connectionName = QString());
+<a name="l00097"></a>00097 
+<a name="l00103"></a>00103   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273" title="Open a sqlite database.">openDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory = QDir(), <span class="keyword">const</span> QString &amp; connectionName = QString());
+<a name="l00104"></a>00104 
+<a name="l00109"></a>00109   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">createDatabaseSqlite</a>(<span class="keyword">const</span> QDir &amp; startDirectory = QDir(), <span class="keyword">const</span> QString &amp; connectionName = QString());
+<a name="l00110"></a>00110 
+<a name="l00116"></a>00116   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9" title="Ask the user to give a path and create a Sqlite database.">createDatabaseSqlite</a>(<span class="keyword">const</span> QFileInfo &amp; fileInfo, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418" title="Creation mode.">createMode_t</a> createMode, <span class="keyword">const</span> QString &amp; connectionName = QString());
+<a name="l00117"></a>00117 
+<a name="l00122"></a>00122   <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_database_manager.html#afe78562023f6b8d530a24a9362587ed5" title="Create a table.">createTable</a>(<a class="code" href="classmdt_sql_schema_table.html" title="Helper class that generate SQL table creation string.">mdtSqlSchemaTable</a> &amp; table, <a class="code" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418" title="Creation mode.">createMode_t</a> createMode);
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124  <span class="keyword">private</span>:
 <a name="l00125"></a>00125 
-<a name="l00128"></a>00128   <span class="keywordtype">bool</span> userChooseToOverwriteFile(<span class="keyword">const</span> QFileInfo &amp;fileInfo);
+<a name="l00128"></a>00128   <span class="keywordtype">bool</span> userChooseToOverwriteTable(<span class="keyword">const</span> QString &amp;tableName);
 <a name="l00129"></a>00129 
-<a name="l00138"></a>00138   <span class="keywordtype">bool</span> databaseIsOpen(<span class="keywordtype">bool</span> askUser);
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_database_manager.html" title="Helper class to create and open (connect to) database.">mdtSqlDatabaseManager</a>);
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142   QSqlDatabase pvDatabase;
-<a name="l00143"></a>00143   QString pvDatabaseName;
-<a name="l00144"></a>00144   QWidget *pvForDialogParentWidget;
-<a name="l00145"></a>00145   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> pvLastError;
-<a name="l00146"></a>00146 };
-<a name="l00147"></a>00147 
-<a name="l00148"></a>00148 
-<a name="l00149"></a>00149 <span class="preprocessor">#endif // #ifndef MDT_SQL_DATABASE_MANAGER_H</span>
+<a name="l00132"></a>00132   <span class="keywordtype">bool</span> userChooseToOverwriteFile(<span class="keyword">const</span> QFileInfo &amp;fileInfo);
+<a name="l00133"></a>00133 
+<a name="l00142"></a>00142   <span class="keywordtype">bool</span> databaseIsOpen(<span class="keywordtype">bool</span> askUser);
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_database_manager.html" title="Helper class to create and open (connect to) database.">mdtSqlDatabaseManager</a>);
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146   QSqlDatabase pvDatabase;
+<a name="l00147"></a>00147   QString pvDatabaseName;
+<a name="l00148"></a>00148   QWidget *pvForDialogParentWidget;
+<a name="l00149"></a>00149   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> pvLastError;
+<a name="l00150"></a>00150 };
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153 <span class="preprocessor">#endif // #ifndef MDT_SQL_DATABASE_MANAGER_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -164,7 +166,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

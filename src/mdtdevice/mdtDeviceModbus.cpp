@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -107,7 +107,7 @@ bool mdtDeviceModbus::setRegisterValues(int startAddress, QList<int> &values)
 void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
-  if(pvIos == 0){
+  if(ios() == 0){
     return;
   }
 
@@ -135,8 +135,8 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         transaction->digitalIo()->setEnabled(true);
       }else{
         // Transaction contains first I/O address (for read access) and qty of I/Os
-        pvIos->updateDigitalOutputValues(pvCodec->values(), transaction->address(), mdtDeviceIos::Read , transaction->ioCount(), true);
-        pvIos->setDigitalOutputsEnabled(true);
+        ios()->updateDigitalOutputValues(pvCodec->values(), transaction->address(), mdtDeviceIos::Read , transaction->ioCount(), true);
+        ios()->setDigitalOutputsEnabled(true);
       }
       break;
     case 0x02:  // Read discrete inputs
@@ -155,7 +155,7 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         }
       }else{
         // Transaction contains first I/O address and qty of I/Os
-        pvIos->updateDigitalInputValues(pvCodec->values(), transaction->address(), transaction->ioCount(), true);
+        ios()->updateDigitalInputValues(pvCodec->values(), transaction->address(), transaction->ioCount(), true);
       }
       break;
     case 0x03:  // Read holding registers
@@ -176,8 +176,8 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         transaction->analogIo()->setEnabled(true);
       }else{
         // Multiple I/O reply
-        pvIos->updateAnalogOutputValues(pvCodec->values(), transaction->address(), mdtDeviceIos::Read, transaction->ioCount(), true);
-        pvIos->setAnalogOutputsEnabled(true);
+        ios()->updateAnalogOutputValues(pvCodec->values(), transaction->address(), mdtDeviceIos::Read, transaction->ioCount(), true);
+        ios()->setAnalogOutputsEnabled(true);
       }
       break;
     case 0x04:  // Read input registers
@@ -197,7 +197,7 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
         }
       }else{
         // Multiple I/O reply
-        pvIos->updateAnalogInputValues(pvCodec->values(), transaction->address(), transaction->ioCount(), true);
+        ios()->updateAnalogInputValues(pvCodec->values(), transaction->address(), transaction->ioCount(), true);
       }
       break;
     case 0x05:  // Write single coil reply
@@ -254,15 +254,15 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
           // Qty of outputs set
           var = pvCodec->values().at(1);
           if((!var.isValid())||(var.type() != QVariant::Int)||(var.toInt() != transaction->ioCount())){
-            pvIos->setDigitalOutputsValue(mdtValue());
+            ios()->setDigitalOutputsValue(mdtValue());
           }
         }else{
-          pvIos->setDigitalOutputsValue(mdtValue());
+          ios()->setDigitalOutputsValue(mdtValue());
         }
       }else{
-        pvIos->setDigitalOutputsValue(mdtValue());
+        ios()->setDigitalOutputsValue(mdtValue());
       }
-      pvIos->setDigitalOutputsEnabled(true);
+      ios()->setDigitalOutputsEnabled(true);
     case 0x10:  // Write multiple registers reply
       // Check validitiy and update
       if(pvCodec->values().size() == 2){
@@ -272,15 +272,15 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
           // Qty of outputs set
           var = pvCodec->values().at(1);
           if((!var.isValid())||(var.type() != QVariant::Int)||(var.toInt() != transaction->ioCount())){
-            pvIos->setAnalogOutputsValue(mdtValue());
+            ios()->setAnalogOutputsValue(mdtValue());
           }
         }else{
-          pvIos->setAnalogOutputsValue(mdtValue());
+          ios()->setAnalogOutputsValue(mdtValue());
         }
       }else{
-        pvIos->setAnalogOutputsValue(mdtValue());
+        ios()->setAnalogOutputsValue(mdtValue());
       }
-      pvIos->setAnalogOutputsEnabled(true);
+      ios()->setAnalogOutputsEnabled(true);
       break;
     default:
       /// \todo Handle errors !
@@ -304,7 +304,7 @@ bool mdtDeviceModbus::queriesSequence()
 
 int mdtDeviceModbus::readAnalogInput(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -321,7 +321,7 @@ int mdtDeviceModbus::readAnalogInput(mdtPortTransaction *transaction)
 
 int mdtDeviceModbus::readAnalogInputs(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -338,7 +338,7 @@ int mdtDeviceModbus::readAnalogInputs(mdtPortTransaction *transaction)
 
 int mdtDeviceModbus::readAnalogOutput(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -355,7 +355,7 @@ int mdtDeviceModbus::readAnalogOutput(mdtPortTransaction *transaction)
 
 int mdtDeviceModbus::readAnalogOutputs(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -372,7 +372,7 @@ int mdtDeviceModbus::readAnalogOutputs(mdtPortTransaction *transaction)
 
 int mdtDeviceModbus::writeAnalogOutput(int value, mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -389,13 +389,13 @@ int mdtDeviceModbus::writeAnalogOutput(int value, mdtPortTransaction *transactio
 
 int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  pdu = pvCodec->encodeWriteMultipleRegisters(transaction->address(), pvIos->analogOutputsValuesIntByAddressWrite());
+  pdu = pvCodec->encodeWriteMultipleRegisters(transaction->address(), ios()->analogOutputsValuesIntByAddressWrite());
   if(pdu.isEmpty()){
     return -1;
   }
@@ -406,7 +406,7 @@ int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction)
 
 int mdtDeviceModbus::readDigitalInput(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -423,7 +423,7 @@ int mdtDeviceModbus::readDigitalInput(mdtPortTransaction *transaction)
 
 int mdtDeviceModbus::readDigitalInputs(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -440,7 +440,7 @@ int mdtDeviceModbus::readDigitalInputs(mdtPortTransaction *transaction)
 
 int mdtDeviceModbus::readDigitalOutput(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -457,7 +457,7 @@ int mdtDeviceModbus::readDigitalOutput(mdtPortTransaction *transaction)
 
 int mdtDeviceModbus::readDigitalOutputs(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -474,7 +474,7 @@ int mdtDeviceModbus::readDigitalOutputs(mdtPortTransaction *transaction)
 
 int mdtDeviceModbus::writeDigitalOutput(bool state, mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
@@ -491,13 +491,13 @@ int mdtDeviceModbus::writeDigitalOutput(bool state, mdtPortTransaction *transact
 
 int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
 
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  pdu = pvCodec->encodeWriteMultipleCoils(transaction->address(), pvIos->digitalOutputsStatesByAddressWrite());
+  pdu = pvCodec->encodeWriteMultipleCoils(transaction->address(), ios()->digitalOutputsStatesByAddressWrite());
   if(pdu.isEmpty()){
     return -1;
   }

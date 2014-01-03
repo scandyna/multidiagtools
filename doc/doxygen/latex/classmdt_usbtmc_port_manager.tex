@@ -49,6 +49,8 @@ int \hyperlink{classmdt_usbtmc_port_manager_af6abc4a3693fc386a12f346f57282c11}{s
 \begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
 QByteArray \hyperlink{classmdt_usbtmc_port_manager_acbbb8539c54034989b2ea6f6071e90bf}{sendQuery} (const QByteArray \&query)
 \begin{DoxyCompactList}\small\item\em Send a query to device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_port_manager_a205901666c797055bee1902bd1e1e09c}{sendData} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Send data on port. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_usbtmc_port_manager_a6d566c68ddeb7c7ca14b5c70ae784efc}{sendData} (const QByteArray \&data)
 \begin{DoxyCompactList}\small\item\em Write data by copy. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_usbtmc_port_manager_a2920bdd6b189f198f132de9e5555a78b}{sendReadRequest} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
@@ -132,11 +134,11 @@ Definition at line 68 of file mdtUsbtmcPortManager.cpp.
 Called by the thread whenn a frame was readen. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000056}{Todo}]On complete frame, check bTag/bTagInverse, and INITIATE\_\-CLEAR on error. $<$-\/ Should be done in thread.. \end{Desc}
+\item[\hyperlink{todo__todo000060}{Todo}]On complete frame, check bTag/bTagInverse, and INITIATE\_\-CLEAR on error. $<$-\/ Should be done in thread.. \end{Desc}
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000057}{Todo}]Check ID coherence ? Should be a assertion ? \end{Desc}
+\item[\hyperlink{todo__todo000061}{Todo}]Check ID coherence ? Should be a assertion ? \end{Desc}
 
 
 
@@ -145,7 +147,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6
 
 
 
-Definition at line 278 of file mdtUsbtmcPortManager.cpp.
+Definition at line 346 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a0b90ceb0bbf424222ec878a355d206d7}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!isReady@{isReady}}
@@ -223,6 +225,49 @@ bTag on success, or a error $<$ 0 (see mdtUsbtmcPortManager::writeData() for det
 
 Definition at line 106 of file mdtUsbtmcPortManager.cpp.
 
+\hypertarget{classmdt_usbtmc_port_manager_a205901666c797055bee1902bd1e1e09c}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendData@{sendData}}
+\index{sendData@{sendData}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{sendData}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbtmcPortManager::sendData (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_usbtmc_port_manager_a205901666c797055bee1902bd1e1e09c}
+
+
+Send data on port. 
+
+At first, this method waits until the ready state is set calling \hyperlink{classmdt_usbtmc_port_manager_a0b90ceb0bbf424222ec878a355d206d7}{isReady()} , a frame is available in port's write frames pool, and until a transaction is possible (see \hyperlink{classmdt_port_manager_ac04a12f8aa20ba04695083afce45a6cc}{waitTransactionPossible()} ). This wait will not break event loop, so no GUI freeze occurs. If port manager is stopped during this wait (unhandled error, stop request), this method returns.
+
+Then, data contained in transaction will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Transaction used to send data. Following members are used by this method:
+\begin{DoxyItemize}
+\item id : transaction will be added to pending transactions with this id, and currentTransactionId will be set with it.
+\item data : will be sent to port.
+\item isQueryReplyMode : if true, the transaction will be keeped in transactions done queue until \hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{readenFrame()} or \hyperlink{classmdt_port_manager_addd5dcae9644cea42a9871205af41796}{readenFrames()} is called. Note: it's possible to force keeping all incomming data (wich also owerwrite this flag) by setting the global keepTransactionsDone flag.
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bTag on success or value $<$ 0 on error. In this implementation, the only possible error is \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f}{mdtAbstractPort::WriteCanceled}, witch typically occurs when port manager stops. Note: on failure, the transaction is restored to pool. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
+
+transaction must be a valid pointer, and not allready exists in transactions pending or transactions done queue. 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_port_manager_ad98399edba146af5cf32a9002094385c}{mdtPortManager}.
+
+
+
+Definition at line 138 of file mdtUsbtmcPortManager.cpp.
+
 \hypertarget{classmdt_usbtmc_port_manager_a6d566c68ddeb7c7ca14b5c70ae784efc}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendData@{sendData}}
 \index{sendData@{sendData}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
@@ -255,7 +300,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 138 of file mdtUsbtmcPortManager.cpp.
+Definition at line 190 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_acbbb8539c54034989b2ea6f6071e90bf}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendQuery@{sendQuery}}
@@ -270,7 +315,7 @@ Definition at line 138 of file mdtUsbtmcPortManager.cpp.
 
 Send a query to device. 
 
-Will wait until it's possible to write. See \hyperlink{classmdt_usbtmc_port_manager_a6d566c68ddeb7c7ca14b5c70ae784efc}{sendData()} and \hyperlink{classmdt_usbtmc_port_manager_a2920bdd6b189f198f132de9e5555a78b}{sendReadRequest()} for details (used internally).
+Will wait until it's possible to write. See \hyperlink{classmdt_usbtmc_port_manager_a205901666c797055bee1902bd1e1e09c}{sendData()} and \hyperlink{classmdt_usbtmc_port_manager_a2920bdd6b189f198f132de9e5555a78b}{sendReadRequest()} for details (used internally).
 
 
 \begin{DoxyParams}{Parameters}
@@ -312,11 +357,17 @@ bTag ID on success or \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8ba
 \begin{DoxyPrecond}{Precondition}
 port must be set 
 
-transaction must be a valid pointer 
+transaction must be a valid pointer
 \end{DoxyPrecond}
+int \hyperlink{classmdt_usbtmc_port_manager_a6d566c68ddeb7c7ca14b5c70ae784efc}{mdtUsbtmcPortManager::sendData(const QByteArray \&data)} \{ Q\_\-ASSERT(pvPort != 0);
 
+\hyperlink{classmdt_frame_usb_tmc}{mdtFrameUsbTmc} $\ast$frame;
 
-Definition at line 185 of file mdtUsbtmcPortManager.cpp.
+Wait until we can write while(1)\{ If port manager was stopped, we return if(\hyperlink{classmdt_port_manager_aeecbec49376838ab3547729636166d97}{isClosed()})\{ return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f}{mdtAbstractPort::WriteCanceled}; \} if(\hyperlink{classmdt_usbtmc_port_manager_a0b90ceb0bbf424222ec878a355d206d7}{isReady()})\{ \hyperlink{classmdt_port_manager_a3107b7121dfe5b9686d9b3b3a48a0af0}{lockPortMutex()}; if(pvPort-\/$>$writeFramesPool().size() $>$ 0)\{ frame = dynamic\_\-cast$<$mdtFrameUsbTmc$\ast$$>$ (pvPort-\/$>$writeFramesPool().dequeue()); Q\_\-ASSERT(frame != 0); Here we are ready to write -\/ we keep port mutext locked break; \} \hyperlink{classmdt_port_manager_a882e6bf95dac9cd4ab8cc93ecc524874}{unlockPortMutex()}; \} QCoreApplication::processEvents(QEventLoop::AllEvents $|$ QEventLoop::WaitForMoreEvents); \} if(!waitTransactionPossible())\{ \hyperlink{classmdt_port_manager_a882e6bf95dac9cd4ab8cc93ecc524874}{unlockPortMutex()}; return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f}{mdtAbstractPort::WriteCanceled}; \} We are ready to write Q\_\-ASSERT(frame != 0); frame-\/$>$clear(); frame-\/$>$clearSub(); Store data and add frame to write queue frame-\/$>$setWaitAnAnswer(false); frame-\/$>$setMsgID(mdtFrameUsbTmc::DEV\_\-DEP\_\-MSG\_\-OUT); Increment bTag and enshure it's in correct range (1-\/255) incrementCurrentTransactionId(1, 255); frame-\/$>$setbTag(\hyperlink{classmdt_port_manager_a19abf29c8948cde0337d67c9722c25aa}{currentTransactionId()}); frame-\/$>$setMessageData(data); frame-\/$>$setEOM(true); frame-\/$>$encode(); pvPort-\/$>$addFrameToWrite(frame); \hyperlink{classmdt_port_manager_a882e6bf95dac9cd4ab8cc93ecc524874}{unlockPortMutex()};
+
+return \hyperlink{classmdt_port_manager_a19abf29c8948cde0337d67c9722c25aa}{currentTransactionId()}; \} 
+
+Definition at line 253 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_ab1604a1c8f2e9192714d039dbf9a5158}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadRequest@{sendReadRequest}}
@@ -339,13 +390,13 @@ USBTMC standard need that a read request is sent to device before we can read an
 \hline
 \end{DoxyParams}
 \begin{Desc}
-\item[\hyperlink{todo__todo000058}{Todo}]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. \end{Desc}
+\item[\hyperlink{todo__todo000062}{Todo}]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. \end{Desc}
 \begin{DoxyReturn}{Returns}
 bTag ID on success or value $<$ 0 if write queue is full. 
 \end{DoxyReturn}
 
 
-Definition at line 238 of file mdtUsbtmcPortManager.cpp.
+Definition at line 306 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a7bcc280bd4a26ed523832550b1e61553}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadStatusByteRequest@{sendReadStatusByteRequest}}
@@ -364,14 +415,14 @@ Send a READ\_\-STATUS\_\-BYTE request thru the control endpoint.
 bTag on success or WriteQueueEmpty on error.
 \end{DoxyReturn}
 \begin{Desc}
-\item[\hyperlink{todo__todo000055}{Todo}]finish ! \end{Desc}
+\item[\hyperlink{todo__todo000059}{Todo}]finish ! \end{Desc}
 
 
 m.sendControlRequest(f); End Sandbox ! 
 
 
 
-Definition at line 250 of file mdtUsbtmcPortManager.cpp.
+Definition at line 318 of file mdtUsbtmcPortManager.cpp.
 
 
 

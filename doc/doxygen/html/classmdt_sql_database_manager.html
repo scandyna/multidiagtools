@@ -104,6 +104,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54755f29b7cd87746e34a107e60241c5"></a><!-- doxytag: member="mdtSqlDatabaseManager::database" ref="a54755f29b7cd87746e34a107e60241c5" args="()" -->
 QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_database_manager.html#a54755f29b7cd87746e34a107e60241c5">database</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current database object. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40638df04f9e6eb3c5cee399a5543ffd"></a><!-- doxytag: member="mdtSqlDatabaseManager::setForeignKeysEnabled" ref="a40638df04f9e6eb3c5cee399a5543ffd" args="(bool enable)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_database_manager.html#a40638df04f9e6eb3c5cee399a5543ffd">setForeignKeysEnabled</a> (bool enable)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable foreing keys constraint. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_database_manager.html#a3da56635b2a4db98b768e5846e15fa83">setForDialogParentWidget</a> (QWidget *widget)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the parent widget for dialogs.  <a href="#a3da56635b2a4db98b768e5846e15fa83"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fb8458fb9fc10216c8dfbbeb2c3dc50"></a><!-- doxytag: member="mdtSqlDatabaseManager::lastError" ref="a7fb8458fb9fc10216c8dfbbeb2c3dc50" args="() const " -->
@@ -111,9 +114,8 @@ QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QFileInfo&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_database_manager.html#ae6459276d25c6d3733b284249c1f1ab4">chooseDatabaseSqlite</a> (const QDir &amp;startDirectory=QDir())</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Let the user choose a Sqlite database file.  <a href="#ae6459276d25c6d3733b284249c1f1ab4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a336b722f66e13c5c9b09575642f7b273"></a><!-- doxytag: member="mdtSqlDatabaseManager::openDatabaseSqlite" ref="a336b722f66e13c5c9b09575642f7b273" args="(const QFileInfo &amp;fileInfo, const QString &amp;connectionName=QString())" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273">openDatabaseSqlite</a> (const QFileInfo &amp;fileInfo, const QString &amp;connectionName=QString())</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a sqlite database. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273">openDatabaseSqlite</a> (const QFileInfo &amp;fileInfo, const QString &amp;connectionName=QString())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a sqlite database.  <a href="#a336b722f66e13c5c9b09575642f7b273"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_database_manager.html#a536f140060edf7721d8f0589f4d7de0d">openDatabaseSqlite</a> (const QDir &amp;startDirectory=QDir(), const QString &amp;connectionName=QString())</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a sqlite database.  <a href="#a536f140060edf7721d8f0589f4d7de0d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_database_manager.html#ac9c9cac0342cc3a66e4c3510da8f97c9">createDatabaseSqlite</a> (const QDir &amp;startDirectory=QDir(), const QString &amp;connectionName=QString())</td></tr>
@@ -181,7 +183,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Let the user choose a Sqlite database file. </p>
 <p>The startDirectory is used as directory to go when displaying the file dialog </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00063">63</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00108">108</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -213,7 +215,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Ask the user to give a path and create a Sqlite database. </p>
 <p>The startDirectory is used as directory to go when displaying the file dialog </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00168">168</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00219">219</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -251,7 +253,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Create a Sqlite database. </p>
 <p>Note: a open connection to database will not be closed by this method. The caller must close existing connection to target database explicitly before overwrite the same. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00202">202</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00253">253</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -283,7 +285,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Create a table. </p>
 <p>Will also setup database specific thing (like driver name) on table. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00323">323</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00374">374</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -315,7 +317,42 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Open a sqlite database. </p>
 <p>Will ask the user to choose a file and try to open it . The startDirectory is used as directory to go when displaying the file dialog . </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00150">150</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00201">201</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a336b722f66e13c5c9b09575642f7b273"></a><!-- doxytag: member="mdtSqlDatabaseManager::openDatabaseSqlite" ref="a336b722f66e13c5c9b09575642f7b273" args="(const QFileInfo &amp;fileInfo, const QString &amp;connectionName=QString())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSqlDatabaseManager::openDatabaseSqlite </td>
+          <td>(</td>
+          <td class="paramtype">const QFileInfo &amp;&#160;</td>
+          <td class="paramname"><em>fileInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>connectionName</em> = <code>QString()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open a sqlite database. </p>
+
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000084">Todo:</a></b></dt><dd>Close here ?? </dd></dl>
+<p>QSqlQuery query(pvDatabase); if(!query.exec("PRAGMA foreign_keys = ON")){ pvLastError.setError(tr("Cannot enable foreign keys support on database '") + pvDatabaseName + "'", <a class="el" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>); MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager"); pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text()); pvLastError.commit(); return false; }</p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00127">127</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -337,7 +374,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Set the parent widget for dialogs. </p>
 <p>In interactive mode, some dialogs will be displayed. If widget is set, dialogs will be created as parent of it. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00098">98</a> of file <a class="el" href="mdt_sql_database_manager_8cpp_source.html">mdtSqlDatabaseManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -360,7 +397,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

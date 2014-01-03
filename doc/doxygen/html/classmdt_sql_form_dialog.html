@@ -66,7 +66,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">mdtSqlFormDialog Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtSqlFormDialog" --><!-- doxytag: inherits="mdtSqlForm" -->
+<!-- doxytag: class="mdtSqlFormDialog" --><!-- doxytag: inherits="mdtSqlFormOld" -->
 <p>SQL form dialog.  
  <a href="classmdt_sql_form_dialog.html#details">More...</a></p>
 
@@ -76,14 +76,14 @@ Inheritance diagram for mdtSqlFormDialog:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_sql_form_dialog__inherit__graph.png" border="0" usemap="#mdt_sql_form_dialog_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_sql_form_dialog_inherit__map" id="mdt_sql_form_dialog_inherit__map">
-<area shape="rect" id="node2" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API." alt="" coords="24,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_sql_form_old.html" title="Base class for high level SQL widgets API." alt="" coords="15,5,127,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtSqlFormDialog:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_sql_form_dialog__coll__graph.png" border="0" usemap="#mdt_sql_form_dialog_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_sql_form_dialog_coll__map" id="mdt_sql_form_dialog_coll__map">
-<area shape="rect" id="node2" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API." alt="" coords="93,208,187,237"/><area shape="rect" id="node4" href="classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="5,101,77,131"/><area shape="rect" id="node6" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model." alt="" coords="115,101,248,131"/><area shape="rect" id="node8" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="177,5,329,35"/><area shape="rect" id="node10" href="classmdt_sql_dialog.html" title="Dialog for a database table view/editor." alt="" coords="249,155,348,184"/></map>
+<area shape="rect" id="node2" href="classmdt_sql_form_old.html" title="Base class for high level SQL widgets API." alt="" coords="84,208,196,237"/><area shape="rect" id="node4" href="classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="5,101,77,131"/><area shape="rect" id="node6" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model." alt="" coords="120,101,253,131"/><area shape="rect" id="node8" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="184,5,336,35"/><area shape="rect" id="node10" href="classmdt_sql_dialog_old.html" title="Dialog for a database table view/editor." alt="" coords="249,155,369,184"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_sql_form_dialog-members.html">List of all members.</a></p>
@@ -96,8 +96,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac75cd78f6fc2ccac75a6d6fab6922a5e"></a><!-- doxytag: member="mdtSqlFormDialog::~mdtSqlFormDialog" ref="ac75cd78f6fc2ccac75a6d6fab6922a5e" args="()" -->
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_dialog.html#ac75cd78f6fc2ccac75a6d6fab6922a5e">~mdtSqlFormDialog</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_dialog.html">mdtSqlDialog</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_dialog.html#a473170aea40ee8264f96c23fa05b60f1">sqlDialog</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Access SQL window instance.  <a href="#a473170aea40ee8264f96c23fa05b60f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_dialog_old.html">mdtSqlDialogOld</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_dialog.html#a9496867a9d00cf436055cf358c78dfbb">sqlDialog</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Access SQL window instance.  <a href="#a9496867a9d00cf436055cf358c78dfbb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc0e9db0da2b1e27d7f5853ecc465c1a"></a><!-- doxytag: member="mdtSqlFormDialog::exec" ref="abc0e9db0da2b1e27d7f5853ecc465c1a" args="()" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_dialog.html#abc0e9db0da2b1e27d7f5853ecc465c1a">exec</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Show the dialog. <br/></td></tr>
@@ -107,16 +107,17 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>This class is part of the high level SQL GUI API.</p>
 <p>The main table's GUI is based on a <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model.">mdtSqlFormWidget</a>. This widget is created by constructor, and needs a widget that contains the data widgets (see <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model.">mdtSqlFormWidget</a> for details). To attach your Ui (typically created with Qt Designer), call your setupUi() on widget returned by sqlFormWidget() .</p>
 <p>Setting up the Ui is the first thing to do.</p>
-<p>Once done, use <a class="el" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API.">mdtSqlForm</a> methods to continue setup. </p>
+<p>Once done, use <a class="el" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API.">mdtSqlForm</a> methods to continue setup.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000089">Todo:</a></b></dt><dd>Obselete this class </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_dialog_8h_source.html#l00045">45</a> of file <a class="el" href="mdt_sql_form_dialog_8h_source.html">mdtSqlFormDialog.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_dialog_8h_source.html#l00047">47</a> of file <a class="el" href="mdt_sql_form_dialog_8h_source.html">mdtSqlFormDialog.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a473170aea40ee8264f96c23fa05b60f1"></a><!-- doxytag: member="mdtSqlFormDialog::sqlDialog" ref="a473170aea40ee8264f96c23fa05b60f1" args="()" -->
+<a class="anchor" id="a9496867a9d00cf436055cf358c78dfbb"></a><!-- doxytag: member="mdtSqlFormDialog::sqlDialog" ref="a9496867a9d00cf436055cf358c78dfbb" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmdt_sql_dialog.html">mdtSqlDialog</a> * mdtSqlFormDialog::sqlDialog </td>
+          <td class="memname"><a class="el" href="classmdt_sql_dialog_old.html">mdtSqlDialogOld</a> * mdtSqlFormDialog::sqlDialog </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -151,7 +152,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

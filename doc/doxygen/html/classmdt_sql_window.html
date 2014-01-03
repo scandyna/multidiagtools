@@ -76,7 +76,7 @@ Collaboration diagram for mdtSqlWindow:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_sql_window__coll__graph.png" border="0" usemap="#mdt_sql_window_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_sql_window_coll__map" id="mdt_sql_window_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="5,5,157,35"/></map>
+<area shape="rect" id="node2" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API." alt="" coords="51,181,144,211"/><area shape="rect" id="node4" href="classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="5,85,77,115"/><area shape="rect" id="node6" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model." alt="" coords="101,85,235,115"/><area shape="rect" id="node8" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="92,5,244,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_sql_window-members.html">List of all members.</a></p>
@@ -88,10 +88,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a050588d255a48722438421b754b808f3"></a><!-- doxytag: member="mdtSqlWindow::~mdtSqlWindow" ref="a050588d255a48722438421b754b808f3" args="()" -->
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_window.html#a050588d255a48722438421b754b808f3">~mdtSqlWindow</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_window.html#ac9246abfa0ccb7c721ee233d5928230d">setSqlWidget</a> (<a class="el" href="classmdt_abstract_sql_widget.html">mdtAbstractSqlWidget</a> *sqlWidget)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set form/table view/editor.  <a href="#ac9246abfa0ccb7c721ee233d5928230d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_window.html#aa2e3c5e6cd07caf71f957b2d50775b6c">addChildWidget</a> (QWidget *widget, const QString &amp;label)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child (details) widget.  <a href="#aa2e3c5e6cd07caf71f957b2d50775b6c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_window.html#ad9a237b7bea72d92a4743f09c28e38ae">setSqlForm</a> (<a class="el" href="classmdt_sql_form.html">mdtSqlForm</a> *form)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the SQL form.  <a href="#ad9a237b7bea72d92a4743f09c28e38ae"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_window.html#a6d4d853c8c64a99ff2e396b99ea63a87">enableNavigation</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable navigation.  <a href="#a6d4d853c8c64a99ff2e396b99ea63a87"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_window.html#a961d587d63b0997a10db6728773a108f">disableNavigation</a> ()</td></tr>
@@ -104,9 +102,9 @@ Public Member Functions</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Main window for a database table view/editor. </p>
 <p>This class offers some functionnality for the GUI part. Based on QMainWindow, it displays a menu, toolbar and a status bar.</p>
-<p>It was designed to work with a subclass of <a class="el" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a>. </p>
+<p>It was designed to work with a subclass of <a class="el" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API.">mdtSqlForm</a> . </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_window_8h_source.html#l00040">40</a> of file <a class="el" href="mdt_sql_window_8h_source.html">mdtSqlWindow.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_window_8h_source.html#l00039">39</a> of file <a class="el" href="mdt_sql_window_8h_source.html">mdtSqlWindow.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a8624cc7a7a454e759c753c2faddd46e6"></a><!-- doxytag: member="mdtSqlWindow::mdtSqlWindow" ref="a8624cc7a7a454e759c753c2faddd46e6" args="(QWidget *parent=0, Qt::WindowFlags flags=0)" -->
 <div class="memitem">
@@ -134,54 +132,13 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Constructor. </p>
-<p>Will construct a empty window. Use <a class="el" href="classmdt_sql_window.html#ac9246abfa0ccb7c721ee233d5928230d" title="Set form/table view/editor.">setSqlWidget()</a> to set central widget, <a class="el" href="classmdt_sql_window.html#a6d4d853c8c64a99ff2e396b99ea63a87" title="Enable navigation.">enableNavigation()</a> to build navigaton bar and <a class="el" href="classmdt_sql_window.html#a42d1283a05eddd2a48af74cf764ef240" title="Enable edition.">enableEdition()</a> to add edition buttons. </p>
+<p>Will construct a empty window. Use setSqlWidget() to set central widget, <a class="el" href="classmdt_sql_window.html#a6d4d853c8c64a99ff2e396b99ea63a87" title="Enable navigation.">enableNavigation()</a> to build navigaton bar and <a class="el" href="classmdt_sql_window.html#a42d1283a05eddd2a48af74cf764ef240" title="Enable edition.">enableEdition()</a> to add edition buttons. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00031">31</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00033">33</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aa2e3c5e6cd07caf71f957b2d50775b6c"></a><!-- doxytag: member="mdtSqlWindow::addChildWidget" ref="aa2e3c5e6cd07caf71f957b2d50775b6c" args="(QWidget *widget, const QString &amp;label)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtSqlWindow::addChildWidget </td>
-          <td>(</td>
-          <td class="paramtype">QWidget *&#160;</td>
-          <td class="paramname"><em>widget</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>label</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Add a child (details) widget. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">widget</td><td>Will be added to the childs tab </td></tr>
-    <tr><td class="paramname">label</td><td>Will be displayed in tab of tab widget</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Parent widget must be set with <a class="el" href="classmdt_sql_window.html#ac9246abfa0ccb7c721ee233d5928230d" title="Set form/table view/editor.">setSqlWidget()</a> before using this method </dd>
-<dd>
-widget must be a valid pointer </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a629fa57fcdde0e4db0fc93efd84c9123"></a><!-- doxytag: member="mdtSqlWindow::disableEdition" ref="a629fa57fcdde0e4db0fc93efd84c9123" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -199,7 +156,7 @@ widget must be a valid pointer </dd></dl>
 <p>Disable edition. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_sql_window.html#a42d1283a05eddd2a48af74cf764ef240" title="Enable edition.">enableEdition()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00153">153</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00142">142</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -220,10 +177,10 @@ widget must be a valid pointer </dd></dl>
 <p>Disable navigation. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_sql_window.html#a6d4d853c8c64a99ff2e396b99ea63a87" title="Enable navigation.">enableNavigation()</a> </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000088">Todo:</a></b></dt><dd>Possible ? </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Possible ? </dd></dl>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -243,12 +200,12 @@ widget must be a valid pointer </dd></dl>
 
 <p>Enable edition. </p>
 <p>Will add insert/revert/save/delete buttons.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>sqlWidget must be set with <a class="el" href="classmdt_sql_window.html#ac9246abfa0ccb7c721ee233d5928230d" title="Set form/table view/editor.">setSqlWidget()</a> before call this method. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Form must be set with <a class="el" href="classmdt_sql_window.html#ad9a237b7bea72d92a4743f09c28e38ae" title="Set the SQL form.">setSqlForm()</a> before call this method. </dd></dl>
 
 <p><p>actRevert-&gt;setShortcut(QKeySequence::Undo); actRemove-&gt;setShortcut(QKeySequence::Delete); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00113">113</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00099">99</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -268,38 +225,37 @@ widget must be a valid pointer </dd></dl>
 
 <p>Enable navigation. </p>
 <p>Will build a navigation bar with |&lt;&lt; &lt; &gt; &gt;&gt;| buttons.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>sqlWidget must be set with <a class="el" href="classmdt_sql_window.html#ac9246abfa0ccb7c721ee233d5928230d" title="Set form/table view/editor.">setSqlWidget()</a> before call this method. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Form must be set with <a class="el" href="classmdt_sql_window.html#ad9a237b7bea72d92a4743f09c28e38ae" title="Set the SQL form.">setSqlForm()</a> before call this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac9246abfa0ccb7c721ee233d5928230d"></a><!-- doxytag: member="mdtSqlWindow::setSqlWidget" ref="ac9246abfa0ccb7c721ee233d5928230d" args="(mdtAbstractSqlWidget *sqlWidget)" -->
+<a class="anchor" id="ad9a237b7bea72d92a4743f09c28e38ae"></a><!-- doxytag: member="mdtSqlWindow::setSqlForm" ref="ad9a237b7bea72d92a4743f09c28e38ae" args="(mdtSqlForm *form)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtSqlWindow::setSqlWidget </td>
+          <td class="memname">void mdtSqlWindow::setSqlForm </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmdt_abstract_sql_widget.html">mdtAbstractSqlWidget</a> *&#160;</td>
-          <td class="paramname"><em>sqlWidget</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classmdt_sql_form.html">mdtSqlForm</a> *&#160;</td>
+          <td class="paramname"><em>form</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Set form/table view/editor. </p>
-<p>Will make some signal/slot connection, then place sqlWidget as QMainWindow's central widget.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>sqlWidget must be a valid pointer. </dd></dl>
+<p>Set the SQL form. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>form must be a valid pointer . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_window_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_window_8h_source.html">mdtSqlWindow.h</a></li>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_window_8h_source.html">mdtSqlWindow.h</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_window_8cpp_source.html">mdtSqlWindow.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -316,7 +272,7 @@ widget must be a valid pointer </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:48 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

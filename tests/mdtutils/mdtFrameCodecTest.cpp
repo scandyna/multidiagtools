@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -398,7 +398,7 @@ void mdtFrameCodecTest::scpiU3606ATest()
 
   // Ihnitial states
   QVERIFY(f.measureType() == mdtFrameCodecScpiU3606A::MT_UNKNOW);
-  QVERIFY(!f.range().isValid());
+  QVERIFY(!f.measureRange().isValid());
   QVERIFY(!f.resolution().isValid());
 
   ///QVERIFY(f.values().size() == 1);
@@ -409,9 +409,9 @@ void mdtFrameCodecTest::scpiU3606ATest()
   data = "VOLT +1.000000E+01,+1.000000E-06\n";
   QVERIFY(f.decodeConfigure(data));
   QVERIFY(f.measureType() == mdtFrameCodecScpiU3606A::MT_VOLTAGE_DC);
-  QVERIFY(f.range().isValid());
-  ///QCOMPARE(f.range().toDouble(), 10.0);
-  QCOMPARE(f.range().valueDouble(), 10.0);
+  QVERIFY(f.measureRange().isValid());
+  ///QCOMPARE(f.measureRange().toDouble(), 10.0);
+  QCOMPARE(f.measureRange().valueDouble(), 10.0);
   QVERIFY(f.resolution().isValid());
   ///QCOMPARE(f.resolution().toDouble(), 1e-6);
   QCOMPARE(f.resolution().valueDouble(), 1e-6);
@@ -420,9 +420,9 @@ void mdtFrameCodecTest::scpiU3606ATest()
   data = "VOLT:DC +1.000000E+01,+1.000000E-06\n";
   QVERIFY(f.decodeConfigure(data));
   QVERIFY(f.measureType() == mdtFrameCodecScpiU3606A::MT_VOLTAGE_DC);
-  QVERIFY(f.range().isValid());
-  ///QCOMPARE(f.range().toDouble(), 10.0);
-  QCOMPARE(f.range().valueDouble(), 10.0);
+  QVERIFY(f.measureRange().isValid());
+  ///QCOMPARE(f.measureRange().toDouble(), 10.0);
+  QCOMPARE(f.measureRange().valueDouble(), 10.0);
   QVERIFY(f.resolution().isValid());
   ///QCOMPARE(f.resolution().toDouble(), 1e-6);
   QCOMPARE(f.resolution().valueDouble(), 1e-6);
@@ -431,9 +431,9 @@ void mdtFrameCodecTest::scpiU3606ATest()
   data = "VOLT:AC +1.000000E+01,+1.000000E-06\n";
   QVERIFY(f.decodeConfigure(data));
   QVERIFY(f.measureType() == mdtFrameCodecScpiU3606A::MT_VOLTAGE_AC);
-  QVERIFY(f.range().isValid());
-  ///QCOMPARE(f.range().toDouble(), 10.0);
-  QCOMPARE(f.range().valueDouble(), 10.0);
+  QVERIFY(f.measureRange().isValid());
+  ///QCOMPARE(f.measureRange().toDouble(), 10.0);
+  QCOMPARE(f.measureRange().valueDouble(), 10.0);
   QVERIFY(f.resolution().isValid());
   ///QCOMPARE(f.resolution().toDouble(), 1e-6);
   QCOMPARE(f.resolution().valueDouble(), 1e-6);
@@ -442,9 +442,9 @@ void mdtFrameCodecTest::scpiU3606ATest()
   data = " CURR +1.000000E-01,+1.000000E-05\n";
   QVERIFY(f.decodeConfigure(data));
   QVERIFY(f.measureType() == mdtFrameCodecScpiU3606A::MT_CURRENT_DC);
-  QVERIFY(f.range().isValid());
-  ///QCOMPARE(f.range().toDouble(), 0.1);
-  QCOMPARE(f.range().valueDouble(), 0.1);
+  QVERIFY(f.measureRange().isValid());
+  ///QCOMPARE(f.measureRange().toDouble(), 0.1);
+  QCOMPARE(f.measureRange().valueDouble(), 0.1);
   QVERIFY(f.resolution().isValid());
   ///QCOMPARE(f.resolution().toDouble(), 1e-5);
   QCOMPARE(f.resolution().valueDouble(), 1e-5);
@@ -453,9 +453,9 @@ void mdtFrameCodecTest::scpiU3606ATest()
   data = " CURR:DC +1.000000E-01,+1.000000E-05\n";
   QVERIFY(f.decodeConfigure(data));
   QVERIFY(f.measureType() == mdtFrameCodecScpiU3606A::MT_CURRENT_DC);
-  QVERIFY(f.range().isValid());
-  ///QCOMPARE(f.range().toDouble(), 0.1);
-  QCOMPARE(f.range().valueDouble(), 0.1);
+  QVERIFY(f.measureRange().isValid());
+  ///QCOMPARE(f.measureRange().toDouble(), 0.1);
+  QCOMPARE(f.measureRange().valueDouble(), 0.1);
   QVERIFY(f.resolution().isValid());
   ///QCOMPARE(f.resolution().toDouble(), 1e-5);
   QCOMPARE(f.resolution().valueDouble(), 1e-5);
@@ -464,9 +464,9 @@ void mdtFrameCodecTest::scpiU3606ATest()
   data = " CURR:AC +1.000000E-01,+1.000000E-05\n";
   QVERIFY(f.decodeConfigure(data));
   QVERIFY(f.measureType() == mdtFrameCodecScpiU3606A::MT_CURRENT_AC);
-  QVERIFY(f.range().isValid());
-  ///QCOMPARE(f.range().toDouble(), 0.1);
-  QCOMPARE(f.range().valueDouble(), 0.1);
+  QVERIFY(f.measureRange().isValid());
+  ///QCOMPARE(f.measureRange().toDouble(), 0.1);
+  QCOMPARE(f.measureRange().valueDouble(), 0.1);
   QVERIFY(f.resolution().isValid());
   ///QCOMPARE(f.resolution().toDouble(), 1e-5);
   QCOMPARE(f.resolution().valueDouble(), 1e-5);
@@ -475,7 +475,7 @@ void mdtFrameCodecTest::scpiU3606ATest()
   data = "VOLT:AC\n";
   QVERIFY(f.decodeConfigure(data));
   QVERIFY(f.measureType() == mdtFrameCodecScpiU3606A::MT_VOLTAGE_AC);
-  QVERIFY(!f.range().isValid());
+  QVERIFY(!f.measureRange().isValid());
   QVERIFY(!f.resolution().isValid());
 
   // Calibration secure string

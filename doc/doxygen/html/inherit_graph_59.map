@@ -1,3 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels." alt="" coords="7,5,116,35"/>
+<area shape="rect" id="node1" href="$classmdt_sql_form_old.html" title="Base class for high level SQL widgets API." alt="" coords="7,32,119,61"/>
+<area shape="rect" id="node3" href="$classmdt_sql_form_dialog.html" title="SQL form dialog." alt="" coords="173,5,304,35"/>
+<area shape="rect" id="node5" href="$classmdt_sql_form_window.html" title="SQL form window." alt="" coords="169,59,308,88"/>
 </map>

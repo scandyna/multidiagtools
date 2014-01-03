@@ -22,11 +22,12 @@ Inheritance diagram for mdtFrameCodecScpiU3606A:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtFrameCodecScpiU3606A:\nopagebreak
+Collaboration diagram for mdtFrameCodecScpiU3606A:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=284pt]{classmdt_frame_codec_scpi_u3606_a__coll__graph}
+\includegraphics[width=303pt]{classmdt_frame_codec_scpi_u3606_a__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Types}
@@ -54,19 +55,21 @@ enum \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{
-bool \hyperlink{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{decodeConfigure} (const QByteArray \&data)}
-\label{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}
-
+bool \hyperlink{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{decodeConfigure} (const QByteArray \&data)
 \begin{DoxyCompactList}\small\item\em Decode CONFigure? reply. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_frame_codec_scpi_u3606_a_a590c72641f56e0f0db6547244b3643ef}{
 \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004}{measure\_\-type\_\-t} \hyperlink{classmdt_frame_codec_scpi_u3606_a_a590c72641f56e0f0db6547244b3643ef}{measureType} () const }
 \label{classmdt_frame_codec_scpi_u3606_a_a590c72641f56e0f0db6547244b3643ef}
 
 \begin{DoxyCompactList}\small\item\em Get the measure type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_frame_codec_scpi_u3606_a_a6e4c7f1703cd8505560a7ec7b0fe3fe7}{
-\hyperlink{classmdt_value}{mdtValue} \hyperlink{classmdt_frame_codec_scpi_u3606_a_a6e4c7f1703cd8505560a7ec7b0fe3fe7}{range} () const }
-\label{classmdt_frame_codec_scpi_u3606_a_a6e4c7f1703cd8505560a7ec7b0fe3fe7}
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a866b905ad811baa00342d2a33174f69b}{
+QString \hyperlink{classmdt_frame_codec_scpi_u3606_a_a866b905ad811baa00342d2a33174f69b}{measureUnit} () const }
+\label{classmdt_frame_codec_scpi_u3606_a_a866b905ad811baa00342d2a33174f69b}
+
+\begin{DoxyCompactList}\small\item\em Get measure unit. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a068f91a459ddefa33e79ace763fc87fa}{
+\hyperlink{classmdt_value}{mdtValue} \hyperlink{classmdt_frame_codec_scpi_u3606_a_a068f91a459ddefa33e79ace763fc87fa}{measureRange} () const }
+\label{classmdt_frame_codec_scpi_u3606_a_a068f91a459ddefa33e79ace763fc87fa}
 
 \begin{DoxyCompactList}\small\item\em Get the measure range. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_frame_codec_scpi_u3606_a_a4b2d46f6256bd804c85200a2bc1d4dda}{
@@ -154,6 +157,30 @@ MT\_\-DCYCLE}
 
 
 Definition at line 34 of file mdtFrameCodecScpiU3606A.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{
+\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!decodeConfigure@{decodeConfigure}}
+\index{decodeConfigure@{decodeConfigure}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}
+\subsubsection[{decodeConfigure}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpiU3606A::decodeConfigure (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}
+
+
+Decode CONFigure? reply. 
+
+
+
+if(pvValues.size() == 3)\{ value = pvValues.at(1); qDebug() $<$$<$ \char`\"{}mdtFrameCodecScpiU3606A::decodeConfigure() -\/ value: \char`\"{} $<$$<$ value; if(value.convert(QVariant::Double))\{ pvMeasureRange = checkFloatingValueValidity(value.toDouble()); \} value = pvValues.at(2); if(value.convert(QVariant::Double))\{ pvResolution = checkFloatingValueValidity(value.toDouble()); \} \}
+
+
+
+Definition at line 32 of file mdtFrameCodecScpiU3606A.cpp.
 
 
 

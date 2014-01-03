@@ -83,36 +83,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00021"></a>00021 <span class="preprocessor">#ifndef MDT_SQL_FORM_WINDOW_H</span>
 <a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_SQL_FORM_WINDOW_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtSqlForm.h&quot;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtSqlFormOld.h&quot;</span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QString&gt;</span>
 <a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QSqlDatabase&gt;</span>
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">class </span><a class="code" href="classmdt_sql_window.html" title="Main window for a database table view/editor.">mdtSqlWindow</a>;
+<a name="l00028"></a>00028 <span class="keyword">class </span><a class="code" href="classmdt_sql_window_old.html" title="Main window for a database table view/editor.">mdtSqlWindowOld</a>;
 <a name="l00029"></a>00029 
-<a name="l00044"></a><a class="code" href="classmdt_sql_form_window.html">00044</a> <span class="keyword">class </span><a class="code" href="classmdt_sql_form_window.html" title="SQL form window.">mdtSqlFormWindow</a> : <span class="keyword">public</span> <a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API.">mdtSqlForm</a>
-<a name="l00045"></a>00045 {
-<a name="l00046"></a>00046  Q_OBJECT
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048  <span class="keyword">public</span>:
+<a name="l00046"></a><a class="code" href="classmdt_sql_form_window.html">00046</a> <span class="keyword">class </span><a class="code" href="classmdt_sql_form_window.html" title="SQL form window.">mdtSqlFormWindow</a> : <span class="keyword">public</span> <a class="code" href="classmdt_sql_form_old.html" title="Base class for high level SQL widgets API.">mdtSqlFormOld</a>
+<a name="l00047"></a>00047 {
+<a name="l00048"></a>00048  Q_OBJECT
 <a name="l00049"></a>00049 
-<a name="l00052"></a>00052   <a class="code" href="classmdt_sql_form_window.html#a67149a8239b5918ef269d5ff0473813e" title="Constructor.">mdtSqlFormWindow</a>(QObject *parent = 0);
-<a name="l00053"></a>00053 
-<a name="l00056"></a>00056   <a class="code" href="classmdt_sql_form_window.html#a3399ae1660eeca90ccbf2132858d78c6" title="Destructor.">~mdtSqlFormWindow</a>();
-<a name="l00057"></a>00057 
-<a name="l00062"></a>00062   <a class="code" href="classmdt_sql_window.html" title="Main window for a database table view/editor.">mdtSqlWindow</a> *<a class="code" href="classmdt_sql_form_window.html#a5e2a976427f9bd5903176054014b4e92" title="Access SQL window instance.">sqlWindow</a>();
-<a name="l00063"></a>00063 
-<a name="l00066"></a>00066   <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_window.html#a659782b4223406d694f0bcd702f7c017" title="Show the form.">show</a>();
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068  <span class="keyword">private</span>:
+<a name="l00050"></a>00050  <span class="keyword">public</span>:
+<a name="l00051"></a>00051 
+<a name="l00054"></a>00054   <a class="code" href="classmdt_sql_form_window.html#a67149a8239b5918ef269d5ff0473813e" title="Constructor.">mdtSqlFormWindow</a>(QObject *parent = 0);
+<a name="l00055"></a>00055 
+<a name="l00058"></a>00058   <a class="code" href="classmdt_sql_form_window.html#a3399ae1660eeca90ccbf2132858d78c6" title="Destructor.">~mdtSqlFormWindow</a>();
+<a name="l00059"></a>00059 
+<a name="l00064"></a>00064   <a class="code" href="classmdt_sql_window_old.html" title="Main window for a database table view/editor.">mdtSqlWindowOld</a> *<a class="code" href="classmdt_sql_form_window.html#aa6960d4e87ff0ec12536a859ff72d9b4" title="Access SQL window instance.">sqlWindow</a>();
+<a name="l00065"></a>00065 
+<a name="l00068"></a>00068   <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_window.html#a659782b4223406d694f0bcd702f7c017" title="Show the form.">show</a>();
 <a name="l00069"></a>00069 
-<a name="l00072"></a>00072   <span class="keywordtype">void</span> addChildWidget(<a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a> *widget);
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_form_window.html" title="SQL form window.">mdtSqlFormWindow</a>);
+<a name="l00070"></a>00070  <span class="keyword">private</span>:
+<a name="l00071"></a>00071 
+<a name="l00074"></a>00074   <span class="keywordtype">void</span> addChildWidget(<a class="code" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a> *widget);
 <a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <a class="code" href="classmdt_sql_window.html" title="Main window for a database table view/editor.">mdtSqlWindow</a> *pvSqlWindow;
-<a name="l00077"></a>00077 };
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079 <span class="preprocessor">#endif  // #ifndef MDT_SQL_FORM_WINDOW_H</span>
+<a name="l00076"></a>00076   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_form_window.html" title="SQL form window.">mdtSqlFormWindow</a>);
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078   <a class="code" href="classmdt_sql_window_old.html" title="Main window for a database table view/editor.">mdtSqlWindowOld</a> *pvSqlWindow;
+<a name="l00079"></a>00079 };
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081 <span class="preprocessor">#endif  // #ifndef MDT_SQL_FORM_WINDOW_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -129,7 +129,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Dec 3 2013 03:37:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

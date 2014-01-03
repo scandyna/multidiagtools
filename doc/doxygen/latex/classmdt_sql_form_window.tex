@@ -27,7 +27,7 @@ Collaboration diagram for mdtSqlFormWindow:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=360pt]{classmdt_sql_form_window__coll__graph}
+\includegraphics[width=366pt]{classmdt_sql_form_window__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -43,7 +43,7 @@ Collaboration diagram for mdtSqlFormWindow:
 \label{classmdt_sql_form_window_a3399ae1660eeca90ccbf2132858d78c6}
 
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_sql_window}{mdtSqlWindow} $\ast$ \hyperlink{classmdt_sql_form_window_a5e2a976427f9bd5903176054014b4e92}{sqlWindow} ()
+\hyperlink{classmdt_sql_window_old}{mdtSqlWindowOld} $\ast$ \hyperlink{classmdt_sql_form_window_aa6960d4e87ff0ec12536a859ff72d9b4}{sqlWindow} ()
 \begin{DoxyCompactList}\small\item\em Access SQL window instance. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_form_window_a659782b4223406d694f0bcd702f7c017}{show} ()
 \begin{DoxyCompactList}\small\item\em Show the form. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -58,9 +58,13 @@ The main table's GUI is based on a \hyperlink{classmdt_sql_form_widget}{mdtSqlFo
 
 Setting up the Ui is the first thing to do.
 
-Once done, use \hyperlink{classmdt_sql_form}{mdtSqlForm} methods to continue setup. 
+Once done, use \hyperlink{classmdt_sql_form}{mdtSqlForm} methods to continue setup.
 
-Definition at line 44 of file mdtSqlFormWindow.h.
+\begin{Desc}
+\item[\hyperlink{todo__todo000091}{Todo}]Obselete this class \end{Desc}
+
+
+Definition at line 46 of file mdtSqlFormWindow.h.
 
 
 
@@ -80,21 +84,21 @@ Show the form.
 
 
 
-pvSqlWindow-\/$>$setWindowTitle(\hyperlink{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{mainSqlWidget()}-\/$>$userFriendlyTableName()); 
+pvSqlWindow-\/$>$setWindowTitle(\hyperlink{classmdt_sql_form_old_a18b6cc0c5fd84699a54f374580a2380e}{mainSqlWidget()}-\/$>$userFriendlyTableName()); 
 
 
 
 Definition at line 45 of file mdtSqlFormWindow.cpp.
 
-\hypertarget{classmdt_sql_form_window_a5e2a976427f9bd5903176054014b4e92}{
+\hypertarget{classmdt_sql_form_window_aa6960d4e87ff0ec12536a859ff72d9b4}{
 \index{mdtSqlFormWindow@{mdtSqlFormWindow}!sqlWindow@{sqlWindow}}
 \index{sqlWindow@{sqlWindow}!mdtSqlFormWindow@{mdtSqlFormWindow}}
-\subsubsection[{sqlWindow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtSqlWindow} $\ast$ mdtSqlFormWindow::sqlWindow (
+\subsubsection[{sqlWindow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtSqlWindowOld} $\ast$ mdtSqlFormWindow::sqlWindow (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_sql_form_window_a5e2a976427f9bd5903176054014b4e92}
+\label{classmdt_sql_form_window_aa6960d4e87ff0ec12536a859ff72d9b4}
 
 
 Access SQL window instance. 
