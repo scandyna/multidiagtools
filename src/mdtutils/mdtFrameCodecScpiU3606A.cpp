@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -102,19 +102,6 @@ bool mdtFrameCodecScpiU3606A::decodeConfigure(const QByteArray &data)
     pvMeasureRange = pvValues.at(1).value<mdtValue>();
     pvResolution = pvValues.at(2).value<mdtValue>();
   }
-  /**
-  if(pvValues.size() == 3){
-    value = pvValues.at(1);
-    qDebug() << "mdtFrameCodecScpiU3606A::decodeConfigure() - value: " << value;
-    if(value.convert(QVariant::Double)){
-      pvMeasureRange = checkFloatingValueValidity(value.toDouble());
-    }
-    value = pvValues.at(2);
-    if(value.convert(QVariant::Double)){
-      pvResolution = checkFloatingValueValidity(value.toDouble());
-    }
-  }
-  */
 
   return true;
 }

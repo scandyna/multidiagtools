@@ -20,8 +20,8 @@
  ****************************************************************************/
 #include "mdtTtCableChecker.h"
 #include "ui_mdtTtCableChecker.h"
+///#include "mdtTtTestModel.h"
 #include "mdtTtTest.h"
-#include "mdtTtTestResult.h"
 #include "mdtDevice.h"
 #include "mdtDeviceModbusWago.h"
 #include "mdtSqlFormWidget.h"
@@ -29,6 +29,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtDeviceU3606A.h"
+#include "mdtFrameCodecScpiU3606A.h"
 #include "mdtDeviceInfo.h"
 #include "mdtPortStatusWidget.h"
 #include "mdtPortManager.h"
@@ -80,31 +81,33 @@ bool mdtTtCableChecker::setupTables()
   return true;
 }
 
-void mdtTtCableChecker::setBaseTest()
+void mdtTtCableChecker::setTestModel()
 {
-  mdtTtTestResult tr(database());
+  mdtTtTest t(database());
   QVariant testResultId;
   QVariant baseTestId;
 
   // Get current test result ID
-  testResultId = currentData("TestResult_tbl", "Id_PK");
+  testResultId = currentData("Test_tbl", "Id_PK");
   if(testResultId.isNull()){
     return;
   }
-  // Select a base test
-  baseTestId = selectBaseTest();
+  // Select a test model
+  baseTestId = selectTestModel();
   if(baseTestId.isNull()){
     return;
   }
-  // Set base test
-  if(!tr.setBaseTest(testResultId, baseTestId)){
+  // Set test model
+  if(!t.setTestModel(testResultId, baseTestId)){
+    pvLastError = t.lastError();
+    displayLastError();
     return;
   }
   // Force a update
   mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   /**
-  if(!setCurrentData("TestResult_tbl", "Test_Id_FK", baseTestId)){
+  if(!setCurrentData("Test_tbl", "TestModel_Id_FK", baseTestId)){
     return;
   }
   */
@@ -112,12 +115,12 @@ void mdtTtCableChecker::setBaseTest()
 
 void mdtTtCableChecker::removeTestResult()
 {
-  mdtTtTestResult t(database());
+  mdtTtTest t(database());
   QMessageBox msgBox;
   QVariant testResultId;
 
   // Get current test result ID
-  testResultId = currentData("TestResult_tbl", "Id_PK");
+  testResultId = currentData("Test_tbl", "Id_PK");
   if(testResultId.isNull()){
     return;
   }
@@ -131,7 +134,7 @@ void mdtTtCableChecker::removeTestResult()
     return;
   }
   // Delete test result items
-  if(!t.removeData("TestResultItem_tbl", "TestResult_Id_FK", testResultId)){
+  if(!t.removeData("TestItem_tbl", "Test_Id_FK", testResultId)){
     pvLastError = t.lastError();
     displayLastError();
     return;
@@ -148,12 +151,20 @@ void mdtTtCableChecker::runTest()
     displayLastError();
     return;
   }
-  // Setup multimeter as Ohmmeter
-  
   /// \todo Tester absence de tension
+  
+  // Setup multimeter as Ohmmeter
+  pvMultimeter->sendCommand("CONF:RES 100, 1e-3");
+  if(pvMultimeter->getMeasureConfiguration() != mdtFrameCodecScpiU3606A::MT_RESISTANCE){
+    pvLastError.setError(tr("Setup U3606A as ohmmeter failed"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+    pvLastError.commit();
+    displayLastError();
+    return;
+  }
 }
 
-QVariant mdtTtCableChecker::selectBaseTest()
+QVariant mdtTtCableChecker::selectTestModel()
 {
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
@@ -161,7 +172,7 @@ QVariant mdtTtCableChecker::selectBaseTest()
   QString sql;
 
   // Setup model
-  sql = "SELECT * FROM Test_tbl";
+  sql = "SELECT * FROM TestModel_tbl";
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -187,7 +198,7 @@ QVariant mdtTtCableChecker::selectBaseTest()
   return selectionDialog.selectionResult().at(0);
 }
 
-bool mdtTtCableChecker::setupTestResultTable() 
+bool mdtTtCableChecker::setupTestTable() 
 {
   Ui::mdtTtCableChecker cc;
   QSqlTableModel *testResultModel;
@@ -198,17 +209,17 @@ bool mdtTtCableChecker::setupTestResultTable()
   // Setup main form widget
   cc.setupUi(mainSqlWidget());
   // Setup form
-  if(!setMainTable("TestResult_tbl", "Test result"/*, database()*/)){
+  if(!setMainTable("Test_tbl", "Test result"/*, database()*/)){
     return false;
   }
   /*
    * Setup base test widget mapping
    */
-  testResultModel = model("TestResult_tbl");
+  testResultModel = model("Test_tbl");
   Q_ASSERT(testResultModel != 0);
   // Setup base test model
   baseTestModel = new QSqlTableModel(this, database());
-  baseTestModel->setTable("Test_tbl");
+  baseTestModel->setTable("TestModel_tbl");
   if(!baseTestModel->select()){
     return false;
   }
@@ -220,7 +231,7 @@ bool mdtTtCableChecker::setupTestResultTable()
   baseTestRelation = new mdtSqlRelation(this);
   baseTestRelation->setParentModel(testResultModel);
   baseTestRelation->setChildModel(baseTestModel);
-  if(!baseTestRelation->addRelation("Test_Id_FK", "Id_PK", false)){
+  if(!baseTestRelation->addRelation("TestModel_Id_FK", "Id_PK", false)){
     return false;
   }
   connect(mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseTestRelation, SLOT(setParentCurrentIndex(int)));
@@ -232,23 +243,23 @@ bool mdtTtCableChecker::setupTestResultTable()
   return true;
 }
 
-bool mdtTtCableChecker::setupTestResultItemTable() 
+bool mdtTtCableChecker::setupTestItemTable() 
 {
   mdtSqlTableWidget *widget;
 
-  if(!addChildTable("TestResultItem_view", tr("Test result items") /*,database()*/)){
+  if(!addChildTable("TestItem_view", tr("Test result items") /*,database()*/)){
     return false;
   }
-  if(!addRelation("Id_PK", "TestResultItem_view", "TestResult_Id_FK")){
+  if(!addRelation("Id_PK", "TestItem_view", "Test_Id_FK")){
     return false;
   }
-  widget = sqlTableWidget("TestResultItem_view");
+  widget = sqlTableWidget("TestItem_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("TestModel_Id_FK", true);
   widget->setColumnHidden("Test_Id_FK", true);
-  widget->setColumnHidden("TestResult_Id_FK", true);
-  widget->setColumnHidden("TestItem_Id_FK", true);
+  widget->setColumnHidden("TestModelItem_Id_FK", true);
   widget->setColumnHidden("TestConnectorNameBusA", true);
   widget->setColumnHidden("TestContactNameBusA", true);
   widget->setColumnHidden("TestConnectorNameBusB", true);

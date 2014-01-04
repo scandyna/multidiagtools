@@ -18,38 +18,40 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_ITEM_EDITOR_H
-#define MDT_TT_TEST_ITEM_EDITOR_H
+#ifndef MDT_TT_TEST_MODEL_EDITOR_H
+#define MDT_TT_TEST_MODEL_EDITOR_H
 
-///#include "mdtClEditor.h"
-#include "mdtSqlForm.h"
+#include "mdtClEditor.h"
 
-/*! \brief Test item editor
+/*! \brief Editor fot tests
  */
-class mdtTtTestItemEditor : public mdtSqlForm
+class mdtTtTestModelEditor : public mdtClEditor
 {
  Q_OBJECT
 
-  public:
+ public:
 
   /*! \brief Constructor
    */
-  ///mdtTtTestItemEditor(QObject *parent, QSqlDatabase db);
-  mdtTtTestItemEditor(QWidget *parent, QSqlDatabase db);
+  mdtTtTestModelEditor(QObject *parent, QSqlDatabase db);
 
-  /*! \brief Setup all tables
+ public slots:
+
+  /*! \brief Add a test item
    */
-  bool setupTables();
+  void addTestItem();
 
- private slots:
-
-  /*! \brief Set test link
+  /*! \brief Edit a test item
    */
-  void setTestLink();
+  void editTestItem();
+
+  /*! \brief Remove a test item
+   */
+  void removeTestItem();
 
   /*! \brief Generate test nodue unit setup
    */
-  void generateTestNodeUnitSetup();
+  void generateTestNodeUnitSetupList();
 
   /*! \brief Remove test node unit setup
    */
@@ -57,23 +59,35 @@ class mdtTtTestItemEditor : public mdtSqlForm
 
  private:
 
+  /*! \brief Select a test cable
+   */
+  QVariant selectTestCable();
+
   /*! \brief Select a test link
    */
-  QVariant selectTestLink(const QString & bus);
+  QVariant selectTestLink(const QVariant & cableId, const QString & bus);
 
-  /*! \brief Setup test item table
+  /*! \brief Setup tables
    */
-  bool setupTestItemTable();
+  bool setupTables();
+
+  /*! \brief Setup test table
+   */
+  bool setupTestTable();
 
   /*! \brief Setup test link table
    */
-  bool setupTestLinkTable();
+  bool setupTestItemTable();
+
+  /*! \brief Setup used nodes table
+   */
+  bool setupTestNodeTable();
 
   /*! \brief Setup test node unit setup table
    */
   bool setupTestNodeUnitSetupTable();
 
-  Q_DISABLE_COPY(mdtTtTestItemEditor);
+  Q_DISABLE_COPY(mdtTtTestModelEditor);
 };
 
-#endif // #ifndef MDT_TT_TEST_ITEM_EDITOR_H
+#endif // #ifndef MDT_TT_TEST_MODEL_EDITOR_H

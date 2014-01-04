@@ -1,17 +1,15 @@
-window_sizes 1280 1001 428 846 923 0
+window_sizes 1280 1001 323 951 923 0
 diagrams
-  classdiagram_ref 941058 // Test
-    590 640 90 3 108 61
-  classdiagram_ref 980738 // mdtTtTestResult
-    676 738 100 4 0 0
-  active  classdiagram_ref 974210 // mdtTtCableChecker
-    846 923 100 4 0 0
+  active  classdiagram_ref 941058 // Test
+    951 923 90 3 96 61
+  classdiagram_ref 927874 // TestNode
+    760 738 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 1822594 // removeDeviceStatusWidget
+selected classdiagram_ref 974210 // mdtTtCableChecker
 open
   classview_ref 569730 // TestTool
-  class_ref 1053698 // mdtTtTestResult
+  class_ref 1053698 // mdtTtTest
   class_ref 979586 // mdtTtTestConnectionCableEditor
   class_ref 1053954 // Ui::mdtTtCableChecker
   class_ref 1047170 // mdtTtCableChecker

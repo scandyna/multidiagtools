@@ -28,8 +28,8 @@
 #include "mdtClArticleEditor.h"
 #include "mdtCcTestConnectionCableEditor.h"
 #include "mdtTtTestNodeEditor.h"
-#include "mdtTtTestEditor.h"
-#include "mdtTtTestItemEditor.h"
+#include "mdtTtTestModelEditor.h"
+#include "mdtTtTestModelItemEditor.h"
 #include "mdtTtCableChecker.h"
 #include "mdtTtCableCheckerWindow.h"
 #include <QAction>
@@ -228,7 +228,7 @@ void mdtClMainWindow::editTestNode()
 void mdtClMainWindow::editTest()
 {
   if(pvTestEditor == 0){
-    pvTestEditor = new mdtTtTestEditor(this, pvDatabaseManager->database());
+    pvTestEditor = new mdtTtTestModelEditor(this, pvDatabaseManager->database());
     if(!pvTestEditor->setupAsWindow()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup test editor."));
@@ -248,7 +248,7 @@ void mdtClMainWindow::editTest()
 void mdtClMainWindow::editTestItem()
 {
   if(pvTestItemEditor == 0){
-    pvTestItemEditor = new mdtTtTestItemEditor(0, pvDatabaseManager->database());
+    pvTestItemEditor = new mdtTtTestModelItemEditor(0, pvDatabaseManager->database());
     if(!pvTestItemEditor->setupTables()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup test item editor."));

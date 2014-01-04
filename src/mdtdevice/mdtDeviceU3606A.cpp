@@ -111,23 +111,25 @@ mdtFrameCodecScpiU3606A::measure_type_t mdtDeviceU3606A::getMeasureConfiguration
   return pvCodec->measureType();
 }
 
+mdtValue mdtDeviceU3606A::getMeasureValue()
+{
+  return getAnalogInputValue(0, true, true);
+}
+
 void mdtDeviceU3606A::onStateChanged(int state)
 {
   qDebug() << "mdtDeviceU3606A::onStateChanged() ...";
 }
 
-/// \todo Update to mdtValue
 void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
 
   bool ok;
 
-  qDebug() << "mdtDeviceU3606A::decodeReadenFrame() , ID: " << transaction->id();
-  
-  ///setStateReady();
+  ///qDebug() << "mdtDeviceU3606A::decodeReadenFrame() , ID: " << transaction->id();
+
   switch(transaction->type()){
-    ///case MDT_FC_SCPI_VALUE:
     case mdtFrameCodecScpi::QT_VALUE:
       if(transaction->analogIo() == 0){
         lastErrorW().setError(tr("Device ") + name() + tr(": received value response from device but no I/O was affected to query"), mdtError::Warning);
@@ -136,7 +138,6 @@ void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction *transaction)
       }else{
         ok = pvCodec->decodeValues(transaction->data());
         if(ok && (pvCodec->values().size() == 1)){
-          ///transaction->analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
           transaction->analogIo()->setValue(pvCodec->values().at(0).value<mdtValue>(), false);
         }else{
           transaction->analogIo()->setValue(mdtValue(), false);
@@ -149,11 +150,9 @@ void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction *transaction)
         MDT_ERROR_SET_SRC(lastErrorW(), "mdtDeviceU3606A");
         lastErrorW().commit();
       }else{
-        ///transaction->analogIo()->setValue(pvCodec->decodeSingleValueDouble(transaction->data()).toDouble(), false);
         transaction->analogIo()->setValue(pvCodec->decodeSingleValueDouble(transaction->data()), false);
       }
       break;
-    ///case MDT_FC_SCPI_ERR:
     case mdtFrameCodecScpi::QT_ERR:
       ok = pvCodec->decodeError(transaction->data());
       if(!ok){
@@ -212,45 +211,11 @@ int mdtDeviceU3606A::readAnalogInput(mdtPortTransaction *transaction)
     return bTag;
   }
   // Remember query type.
-  ///transaction->setType(MDT_FC_SCPI_VALUE);
   transaction->setType(mdtFrameCodecScpi::QT_SINGLE_VALUE_FLT);
   // Send read request
   bTag = pvUsbtmcPortManager->sendReadRequest(transaction);
 
   return bTag;
-
-  /// \todo Add resolution and limits (min/max)
-  /// \todo Handle type (Ampere, Voltage, Resistance, AC/DC, ...)
-  ///setStateBusy();
-  // Wait until data can be sent
-  /**
-  if(!pvUsbtmcPortManager->waitOnWriteReady()){
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  */
-  // Send query
-  ///bTag = pvUsbtmcPortManager->writeData("MEAS:VOLT:DC?\n");
-  /**
-  bTag = pvUsbtmcPortManager->sendData("MEAS:VOLT:DC?\n");
-  if(bTag < 0){
-    return bTag;
-  }
-  */
-  // Wait until more data can be sent
-  /**
-  if(!pvUsbtmcPortManager->waitOnWriteReady()){
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  */
-  // Remember query type.
-  ///transaction->setType(MDT_FC_SCPI_VALUE);
-  /**
-  transaction->setType(mdtFrameCodecScpi::QT_SINGLE_VALUE_FLT);
-  // Send read request
-  bTag = pvUsbtmcPortManager->sendReadRequest(transaction);
-
-  return bTag;
-  */
 }
 
 bool mdtDeviceU3606A::queriesSequence()

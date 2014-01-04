@@ -33,8 +33,8 @@ class mdtClUnitEditor;
 class mdtClConnectorEditor;
 class mdtClArticleEditor;
 class mdtTtTestNodeEditor;
-class mdtTtTestEditor;
-class mdtTtTestItemEditor;
+class mdtTtTestModelEditor;
+class mdtTtTestModelItemEditor;
 class mdtSqlWindow;
 class mdtCcTestConnectionCableEditor;
 class mdtTtCableChecker;
@@ -167,9 +167,9 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   mdtCcTestConnectionCableEditor *pvTestConnectionCableEditor;
   mdtSqlWindow *pvTestConnectionCableEditorWindow;
   // Test editor
-  mdtTtTestEditor *pvTestEditor;
+  mdtTtTestModelEditor *pvTestEditor;
   // Test item editor
-  mdtTtTestItemEditor *pvTestItemEditor;
+  mdtTtTestModelItemEditor *pvTestItemEditor;
   mdtSqlWindow *pvTestItemEditorWindow;
   // Cable checker
   mdtTtCableChecker *pvCableChecker;

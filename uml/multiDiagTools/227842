@@ -1,6 +1,6 @@
 format 76
 "DatabaseLogical" // mdttools::TestTool::DatabaseLogical
-  revision 13
+  revision 14
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -266,7 +266,7 @@ ${inlines}
       size A3
     end
 
-    class 1006210 "TestItem_tbl"
+    class 1006210 "TestModelItem_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -398,7 +398,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1274114 // <unidirectional association>
-	  b parent class_ref 1020418 // Test_tbl
+	  b parent class_ref 1020418 // TestModel_tbl
       end
     end
 
@@ -477,7 +477,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1259906 // <unidirectional association>
-	  b parent class_ref 1006210 // TestItem_tbl
+	  b parent class_ref 1006210 // TestModelItem_tbl
       end
 
       attribute 1042818 "TestItem_Id_FK"
@@ -677,7 +677,7 @@ ${inlines}
       end
     end
 
-    class 1020162 "TestResultItem_tbl"
+    class 1020162 "TestItem_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -759,7 +759,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1273986 // <unidirectional association>
-	  b parent class_ref 1020290 // TestResult_tbl
+	  b parent class_ref 1020290 // Test_tbl
       end
 
       attribute 1066626 "MeasuredValue"
@@ -788,11 +788,11 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1301506 // <unidirectional association>
-	  b parent class_ref 1006210 // TestItem_tbl
+	  b parent class_ref 1006210 // TestModelItem_tbl
       end
     end
 
-    class 1020290 "TestResult_tbl"
+    class 1020290 "Test_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -863,11 +863,11 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1301378 // <unidirectional association>
-	  b parent class_ref 1020418 // Test_tbl
+	  b parent class_ref 1020418 // TestModel_tbl
       end
     end
 
-    class 1020418 "Test_tbl"
+    class 1020418 "TestModel_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

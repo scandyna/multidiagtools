@@ -24,6 +24,7 @@
 #include "mdtDeviceScpi.h"
 #include "mdtUsbtmcPortManager.h"
 #include "mdtFrameCodecScpiU3606A.h"
+#include "mdtValue.h"
 
 /*! \brief Representation of a Agilent U3606A
  *
@@ -77,6 +78,12 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * By error, unknown measure type is returned .
    */
   mdtFrameCodecScpiU3606A::measure_type_t getMeasureConfiguration();
+
+  /*! \brief Get measure value
+   *
+   * This is similar to call getAnalogInputValue("MEASURE", true, true) .
+   */
+  mdtValue getMeasureValue();
 
  public slots:
 

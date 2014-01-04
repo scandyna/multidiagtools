@@ -207,13 +207,13 @@ class mdtClDatabaseSchema
    *
    * \todo Move to test tool when created
    */
-  bool setupTestTable();
+  bool setupTestModelTable();
 
   /*! \brief Setup test item table
    *
    * \todo Move to test tool when created
    */
-  bool setupTestItemTable();
+  bool setupTestModelItemTable();
 
   /*! \brief Setup test node unit setup table
    *
@@ -225,13 +225,13 @@ class mdtClDatabaseSchema
    *
    * \todo Move to test tool when created
    */
-  bool setupTestResultTable();
+  bool setupTestTable();
 
   /*! \brief Setup test result item table
    *
    * \todo Move to test tool when created
    */
-  bool setupTestResultItemTable();
+  bool setupTestItemTable();
 
   /*! \brief
    */
@@ -325,31 +325,31 @@ class mdtClDatabaseSchema
    *
    * \todo Move to test tool when created
    */
-  bool createTestItemView();
+  bool createTestModelItemView();
 
   /*! \brief Create test item node unit view
    *
    * \todo Move to test tool when created
    */
-  bool createTestItemNodeUnitSetupView();
+  bool createTestModelItemNodeUnitSetupView();
 
   /*! \brief Create view to get nodes used by a test item
    *
    * \todo Move to test tool when created
    */
-  bool createTestItemNodeView();
+  bool createTestModelItemNodeView();
 
   /*! \brief Create view to get test result item
    *
    * \todo Move to test tool when created
    */
-  bool createTestResultItemView();
+  bool createTestItemView();
 
   /*! \brief Create view to get node units used by a test item
    *
    * \todo Move to test tool when created
    */
-  bool createTestItemNodeUnitView();
+  bool createTestModelItemNodeUnitView();
 
   /*! \brief Check if given PK data exists in given table name
    */

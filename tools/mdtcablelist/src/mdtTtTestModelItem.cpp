@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtTtTestItem.h"
+#include "mdtTtTestModelItem.h"
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>
@@ -26,12 +26,12 @@
 
 #include <QDebug>
 
-mdtTtTestItem::mdtTtTestItem(QSqlDatabase db)
+mdtTtTestModelItem::mdtTtTestModelItem(QSqlDatabase db)
  : mdtClBase(db)
 {
 }
 
-QList<QVariant> mdtTtTestItem::getUsedNodeUnitIdList(const QVariant & testItemId, const QVariant & type)
+QList<QVariant> mdtTtTestModelItem::getUsedNodeUnitIdList(const QVariant & testItemId, const QVariant & type)
 {
   QString sql;
   QSqlError sqlError;
@@ -40,7 +40,7 @@ QList<QVariant> mdtTtTestItem::getUsedNodeUnitIdList(const QVariant & testItemId
   QList<QVariant> nodeUnitIdList;
 
   // Setup and run query to get data in unit link view
-  sql = "SELECT Unit_Id_FK_PK FROM TestItemNodeUnit_view WHERE Id_PK = " + testItemId.toString();
+  sql = "SELECT Unit_Id_FK_PK FROM TestModelItemNodeUnit_view WHERE Id_PK = " + testItemId.toString();
   if(!type.isNull()){
     sql += " AND Type_Code_FK = '" + type.toString() + "' ";
   }
@@ -62,7 +62,7 @@ QList<QVariant> mdtTtTestItem::getUsedNodeUnitIdList(const QVariant & testItemId
   return nodeUnitIdList;
 }
 
-QList<QVariant> mdtTtTestItem::getTestNodeUnitSetupIdList(const QVariant & testItemId)
+QList<QVariant> mdtTtTestModelItem::getTestNodeUnitSetupIdList(const QVariant & testItemId)
 {
   QString sql;
   QSqlError sqlError;
@@ -71,12 +71,12 @@ QList<QVariant> mdtTtTestItem::getTestNodeUnitSetupIdList(const QVariant & testI
   QVariant id;
 
   // Setup and run query to get data in unit link view
-  sql = "SELECT Id_PK FROM TestItemNodeUnitSetup_view WHERE TestItem_Id_FK = " + testItemId.toString();
+  sql = "SELECT Id_PK FROM TestModelItemNodeUnitSetup_view WHERE TestModelItem_Id_FK = " + testItemId.toString();
   if(!query.exec(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot get list of node unit setup", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelItem");
     pvLastError.commit();
     return tnusIdList;
   }
@@ -90,14 +90,14 @@ QList<QVariant> mdtTtTestItem::getTestNodeUnitSetupIdList(const QVariant & testI
   return tnusIdList;
 }
 
-bool mdtTtTestItem::setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId)
+bool mdtTtTestModelItem::setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId)
 {
   QString sql;
   QSqlError sqlError;
   QSqlQuery query(database());
 
   // Prepare query for edition
-  sql = "UPDATE TestItem_tbl "\
+  sql = "UPDATE TestModelItem_tbl "\
         "SET TestLinkBusA_Id_FK = :TestLinkBusA_Id_FK, "\
         "    TestLinkBusB_Id_FK = :TestLinkBusB_Id_FK "\
         "WHERE Id_PK = " + testItemId.toString();
@@ -105,7 +105,7 @@ bool mdtTtTestItem::setTestLink(const QVariant & testItemId, const QVariant & te
     sqlError = query.lastError();
     pvLastError.setError("Cannot prepare query for test link edition", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelItem");
     pvLastError.commit();
     return false;
   }
@@ -116,7 +116,7 @@ bool mdtTtTestItem::setTestLink(const QVariant & testItemId, const QVariant & te
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query for test link edition", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelItem");
     pvLastError.commit();
     return false;
   }
@@ -124,7 +124,7 @@ bool mdtTtTestItem::setTestLink(const QVariant & testItemId, const QVariant & te
   return true;
 }
 
-bool mdtTtTestItem::generateTestNodeUnitSetup(const QVariant & testItemId)
+bool mdtTtTestModelItem::generateTestNodeUnitSetup(const QVariant & testItemId)
 {
   Q_ASSERT(!testItemId.isNull());
 
@@ -159,7 +159,7 @@ bool mdtTtTestItem::generateTestNodeUnitSetup(const QVariant & testItemId)
     qDebug() << "TI: adding setup for unit ID " << nodeUnitId << " ...";
     if(nodeUnitId.isNull()){
       pvLastError.setError("Try to add a setup for a NULL test node ID", mdtError::Error);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelItem");
       pvLastError.commit();
       rollbackTransaction();
       return false;
@@ -177,32 +177,32 @@ bool mdtTtTestItem::generateTestNodeUnitSetup(const QVariant & testItemId)
   return true;
 }
 
-bool mdtTtTestItem::addTestNodeUnitSetup(const QVariant & testItemId, const QVariant & testNodeUnitId, const QVariant & state)
+bool mdtTtTestModelItem::addTestNodeUnitSetup(const QVariant & testItemId, const QVariant & testNodeUnitId, const QVariant & state)
 {
   QString sql;
   QSqlError sqlError;
   QSqlQuery query(database());
 
   // Prepare query for edition
-  sql = "INSERT INTO TestNodeUnitSetup_tbl (TestItem_Id_FK, TestNodeUnit_Id_FK, State) "\
-        "VALUES (:TestItem_Id_FK, :TestNodeUnit_Id_FK, :State)";
+  sql = "INSERT INTO TestNodeUnitSetup_tbl (TestModelItem_Id_FK, TestNodeUnit_Id_FK, State) "\
+        "VALUES (:TestModelItem_Id_FK, :TestNodeUnit_Id_FK, :State)";
   if(!query.prepare(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot prepare query for test node setupinsertion", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelItem");
     pvLastError.commit();
     return false;
   }
   // Add values and execute query
-  query.bindValue(":TestItem_Id_FK", testItemId);
+  query.bindValue(":TestModelItem_Id_FK", testItemId);
   query.bindValue(":TestNodeUnit_Id_FK", testNodeUnitId);
   query.bindValue(":State", state);
   if(!query.exec()){
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query for test node setup insertion", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelItem");
     pvLastError.commit();
     return false;
   }
@@ -210,7 +210,7 @@ bool mdtTtTestItem::addTestNodeUnitSetup(const QVariant & testItemId, const QVar
   return true;
 }
 
-bool mdtTtTestItem::removeTestNodeUnitSetup(const QVariant & tnusId)
+bool mdtTtTestModelItem::removeTestNodeUnitSetup(const QVariant & tnusId)
 {
   QSqlError sqlError;
   QString sql;
@@ -222,7 +222,7 @@ bool mdtTtTestItem::removeTestNodeUnitSetup(const QVariant & tnusId)
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query for test node unit setup deletion", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelItem");
     pvLastError.commit();
     return false;
   }
@@ -230,7 +230,7 @@ bool mdtTtTestItem::removeTestNodeUnitSetup(const QVariant & tnusId)
   return true;
 }
 
-bool mdtTtTestItem::removeTestNodeUnitSetups(const QModelIndexList & indexListOfSelectedRows)
+bool mdtTtTestModelItem::removeTestNodeUnitSetups(const QModelIndexList & indexListOfSelectedRows)
 {
   int row;
 
@@ -243,19 +243,19 @@ bool mdtTtTestItem::removeTestNodeUnitSetups(const QModelIndexList & indexListOf
   return true;
 }
 
-bool mdtTtTestItem::removeTestNodeUnitSetupsForTestItemId(const QVariant & testItemId)
+bool mdtTtTestModelItem::removeTestNodeUnitSetupsForTestItemId(const QVariant & testItemId)
 {
   QSqlError sqlError;
   QString sql;
   QSqlQuery query(database());
 
-  sql = "DELETE FROM TestNodeUnitSetup_tbl WHERE TestItem_Id_FK = " + testItemId.toString();
+  sql = "DELETE FROM TestNodeUnitSetup_tbl WHERE TestModelItem_Id_FK = " + testItemId.toString();
   // Submit query
   if(!query.exec(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query for test node unit setup deletion", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestItem");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelItem");
     pvLastError.commit();
     return false;
   }

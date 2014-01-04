@@ -201,55 +201,6 @@ int mdtUsbtmcPortManager::sendData(const QByteArray &data)
   return sendData(transaction);
 }
 
-/**
-int mdtUsbtmcPortManager::sendData(const QByteArray &data)
-{
-  Q_ASSERT(pvPort != 0);
-
-  mdtFrameUsbTmc *frame;
-
-  // Wait until we can write
-  while(1){
-    // If port manager was stopped, we return
-    if(isClosed()){
-      return mdtAbstractPort::WriteCanceled;
-    }
-    if(isReady()){
-      lockPortMutex();
-      if(pvPort->writeFramesPool().size() > 0){
-        frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
-        Q_ASSERT(frame != 0);
-        // Here we are ready to write - we keep port mutext locked
-        break;
-      }
-      unlockPortMutex();
-    }
-    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
-  }
-  if(!waitTransactionPossible()){
-    unlockPortMutex();
-    return mdtAbstractPort::WriteCanceled;
-  }
-  // We are ready to write
-  Q_ASSERT(frame != 0);
-  frame->clear();
-  frame->clearSub();
-  // Store data and add frame to write queue
-  frame->setWaitAnAnswer(false);
-  frame->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  // Increment bTag and enshure it's in correct range (1-255)
-  incrementCurrentTransactionId(1, 255);
-  frame->setbTag(currentTransactionId());
-  frame->setMessageData(data);
-  frame->setEOM(true);
-  frame->encode();
-  pvPort->addFrameToWrite(frame);
-  unlockPortMutex();
-
-  return currentTransactionId();
-}
-*/
-
 int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
 {
   Q_ASSERT(pvPort != 0);
@@ -423,13 +374,6 @@ void mdtUsbtmcPortManager::onThreadsErrorOccured(int error)
       mdtUsbPortManager::onThreadsErrorOccured(error);
   }
 }
-
-/**
-int mdtUsbtmcPortManager::sendData(mdtPortTransaction *transaction)
-{
-  return mdtAbstractPort::UnhandledError;
-}
-*/
 
 int mdtUsbtmcPortManager::sendData(const QByteArray &data, bool queryReplyMode)
 {

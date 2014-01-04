@@ -214,10 +214,6 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
   /*! \brief Not usable here
    */
-  ///int sendData(mdtPortTransaction *transaction);
-
-  /*! \brief Not usable here
-   */
   int sendData(const QByteArray &data, bool queryReplyMode);
 
   // Diseable copy

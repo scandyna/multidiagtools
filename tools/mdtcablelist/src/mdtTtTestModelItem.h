@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_ITEM_H
-#define MDT_TT_TEST_ITEM_H
+#ifndef MDT_TT_TEST_MODEL_ITEM_H
+#define MDT_TT_TEST_MODEL_ITEM_H
 
 #include "mdtClBase.h"
 #include <QVariant>
@@ -27,13 +27,13 @@
 
 /*! \brief Helper class for test item edition
  */
-class mdtTtTestItem : public mdtClBase
+class mdtTtTestModelItem : public mdtClBase
 {
  public:
 
   /*! \brief Coinstructor
    */
-  mdtTtTestItem(QSqlDatabase db);
+  mdtTtTestModelItem(QSqlDatabase db);
 
   /*! \brief Get a list of used node unit IDs for given test item ID
    *
@@ -71,7 +71,7 @@ class mdtTtTestItem : public mdtClBase
 
  private:
 
-  Q_DISABLE_COPY(mdtTtTestItem);
+  Q_DISABLE_COPY(mdtTtTestModelItem);
 };
 
-#endif // #ifndef MDTTTTESTITEM_H
+#endif // #ifndef MDT_TT_TEST_MODEL_ITEM_H

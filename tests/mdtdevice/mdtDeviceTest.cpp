@@ -2336,7 +2336,9 @@ void mdtDeviceTest::U3606ATest()
   QVERIFY(d.ios()->analogInputWithLabelShort("MEASURE") != 0);
   QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->minimum() , 0.0);
   QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->maximum() , 10.0);
-  
+
+  // Try helper methods
+  QVERIFY(d.getMeasureValue().isValid());
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
   

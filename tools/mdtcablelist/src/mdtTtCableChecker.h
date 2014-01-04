@@ -57,9 +57,9 @@ class mdtTtCableChecker : public mdtSqlForm
 
  private slots:
 
-  /*! \brief Select the test on witch this test result is based
+  /*! \brief Select the test model on witch this test is based
    */
-  void setBaseTest();
+  void setTestModel();
 
   /*! \brief Remove test result
    *
@@ -73,17 +73,17 @@ class mdtTtCableChecker : public mdtSqlForm
 
  private:
 
-  /*! \brief Select base test
+  /*! \brief Select test model
    */
-  QVariant selectBaseTest();
+  QVariant selectTestModel();
 
   /*! \brief Setup test result table
    */
-  bool setupTestResultTable();
+  bool setupTestTable();
 
   /*! \brief Setup test result item table
    */
-  bool setupTestResultItemTable();
+  bool setupTestItemTable();
 
   /*! \brief Create multimeter
    */

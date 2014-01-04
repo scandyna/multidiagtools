@@ -42,7 +42,7 @@ void mdtTtCableCheckerWindow::setCableChecker(mdtTtCableChecker *cc)
   fw = pvCableChecker->mainSqlWidget();
   Q_ASSERT(fw != 0);
   // As default, functions are disabled
-  actNew->setEnabled(false);
+  ///actNew->setEnabled(false);
   ///actSubmit->setEnabled(false);
   ///actRevert->setEnabled(false);
   actSave->setEnabled(false);
@@ -56,7 +56,7 @@ void mdtTtCableCheckerWindow::setCableChecker(mdtTtCableChecker *cc)
   connect(actSave, SIGNAL(triggered()), fw, SLOT(submit()));
   ///connect(actRevert, SIGNAL(triggered()), fw, SLOT(revert()));
   ///connect(actRemove, SIGNAL(triggered()), fw, SLOT(remove()));
-  connect(actSetTest, SIGNAL(triggered()), pvCableChecker, SLOT(setBaseTest()));
+  connect(actSetTest, SIGNAL(triggered()), pvCableChecker, SLOT(setTestModel()));
   connect(actRemove, SIGNAL(triggered()), pvCableChecker, SLOT(removeTestResult()));
   connect(actRunTest, SIGNAL(triggered()), pvCableChecker, SLOT(runTest()));
 

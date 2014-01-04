@@ -1,6 +1,6 @@
 format 76
 "Program" // mdttools::TestTool::Program
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -181,12 +181,12 @@ ${inlines}
       
     end
 
-    classdiagram 954114 "mdtTtTest"
+    classdiagram 954114 "mdtTtTestModel"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 1026946 "mdtTtTest"
+    class 1026946 "mdtTtTestModel"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -207,7 +207,7 @@ ${inlines}
 	  b parent class_ref 952962 // mdtClBase
       end
 
-      operation 1782530 "mdtTtTest"
+      operation 1782530 "mdtTtTestModel"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "db" type class_ref 405122 // QSqlDatabase
@@ -224,12 +224,12 @@ ${inlines}
       end
     end
 
-    classdiagram 954242 "mdtTtTestEditor"
+    classdiagram 954242 "mdtTtTestModelEditor"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 1027074 "mdtTtTestEditor"
+    class 1027074 "mdtTtTestModelEditor"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -250,7 +250,7 @@ ${inlines}
 	  b parent class_ref 952322 // mdtClEditor
       end
 
-      operation 1782658 "mdtTtTestEditor"
+      operation 1782658 "mdtTtTestModelEditor"
 	public explicit_return_type ""
 	nparams 2
 	  param in name "parent" type class_ref 138626 // QObject
@@ -356,12 +356,12 @@ ${inlines}
       end
     end
 
-    classdiagram 960770 "mdtTtTestItem"
+    classdiagram 960770 "mdtTtTestModelItem"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 1033602 "mdtTtTestItem"
+    class 1033602 "mdtTtTestModelItem"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -374,7 +374,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      operation 1789954 "mdtTtTestItem"
+      operation 1789954 "mdtTtTestModelItem"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "db" type class_ref 405122 // QSqlDatabase
@@ -399,12 +399,12 @@ ${inlines}
       end
     end
 
-    classdiagram 960898 "mdtTtTestItemEditor"
+    classdiagram 960898 "mdtTtTestModelItemEditor"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 1033730 "mdtTtTestItemEditor"
+    class 1033730 "mdtTtTestModelItemEditor"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -417,7 +417,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      operation 1790082 "mdtTtTestItemEditor"
+      operation 1790082 "mdtTtTestModelItemEditor"
 	public explicit_return_type ""
 	nparams 2
 	  param in name "parent" type class_ref 316162 // QWidget
@@ -522,12 +522,12 @@ ${inlines}
       
     end
 
-    classdiagram 980738 "mdtTtTestResult"
+    classdiagram 980738 "mdtTtTest"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 1053698 "mdtTtTestResult"
+    class 1053698 "mdtTtTest"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -548,7 +548,7 @@ ${inlines}
 	  b parent class_ref 952962 // mdtClBase
       end
 
-      operation 1813890 "mdtTtTestResult"
+      operation 1813890 "mdtTtTest"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "db" type class_ref 405122 // QSqlDatabase
@@ -959,7 +959,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 1027074 // mdtTtTestEditor
+	class_ref 1027074 // mdtTtTestModelEditor
       end
     end
 
@@ -983,7 +983,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 1026946 // mdtTtTest
+	class_ref 1026946 // mdtTtTestModel
       end
     end
 
@@ -1007,7 +1007,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 1033602 // mdtTtTestItem
+	class_ref 1033602 // mdtTtTestModelItem
       end
     end
 
@@ -1031,7 +1031,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 1033730 // mdtTtTestItemEditor
+	class_ref 1033730 // mdtTtTestModelItemEditor
       end
     end
 
@@ -1055,7 +1055,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 1053698 // mdtTtTestResult
+	class_ref 1053698 // mdtTtTest
       end
     end
   end
@@ -1189,7 +1189,7 @@ ${inlines}
 	  a default
 	    cpp default "#include in source"
 	    classrelation_ref 1315586 // <dependency>
-	  b parent class_ref 1026946 // mdtTtTest
+	  b parent class_ref 1026946 // mdtTtTestModel
       end
 
       classrelation 1315714 // <dependency>
@@ -1197,7 +1197,7 @@ ${inlines}
 	  a default
 	    cpp default "#include in source"
 	    classrelation_ref 1315714 // <dependency>
-	  b parent class_ref 1053698 // mdtTtTestResult
+	  b parent class_ref 1053698 // mdtTtTest
       end
 
       classrelation 1322754 // pvModbusIoNodes (<directional composition>)

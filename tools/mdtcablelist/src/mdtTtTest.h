@@ -22,11 +22,10 @@
 #define MDT_TT_TEST_H
 
 #include "mdtClBase.h"
+#include <QSqlDatabase>
 #include <QVariant>
-#include <QList>
-#include <QModelIndex>
 
-/*! \brief Helper class for test edition
+/*! \brief Helper class to manipulate test result data
  */
 class mdtTtTest : public mdtClBase
 {
@@ -36,43 +35,19 @@ class mdtTtTest : public mdtClBase
    */
   mdtTtTest(QSqlDatabase db);
 
-  /*! \brief Get a list of test item IDs for given test ID
-   */
-  QList<QVariant> getListOfTestItemIdListByTestId(const QVariant & testId);
-
-  /*! \brief Get a list of node IDs (database keys) for given test ID
-   */
-  QList<QVariant> getListOfUsedNodeIdListByTestId(const QVariant & testId);
-
-  /*! \brief Get a list of unused node unit IDs for given test ID
+  /*! \brief Set test model
    *
-   * If given type is not null, only matching test node unit will be returned
+   * Will also add a test item for each test item .
    */
-  QList<QVariant> getListOfUnusedNodeUnitIdListByTestId(const QVariant & testId, const QVariant & type);
-
-  /*! \brief Get next sequence number for a given test
-   */
-  QVariant getNextSequenceNumber(const QVariant & testId);
-
-  /*! \brief Get list of test node unit setup for given test ID
-   */
-  QList<QVariant> getTestNodeUnitSetupIdList(const QVariant & testId);
+  bool setTestModel(const QVariant & testResultId, const QVariant & testId);
 
   /*! \brief Add a test item
    */
-  bool addTestItem(const QVariant & testId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId, const QVariant & expectedValue);
+  bool addItem(const QVariant & testResultId, const QVariant & testItemId);
 
-  /*! \brief Remove a test item
+  /*! \brief Add a test items based on given test ID
    */
-  bool removeTestItem(const QVariant & testItemId);
-
-  /*! \brief Remove test items
-   */
-  bool removeTestItems(const QModelIndexList & indexListOfSelectedRows);
-
-  /*! \brief Generate test node unit setup for given test ID
-   */
-  bool generateTestNodeUnitSetup(const QVariant & testId);
+  bool addItemsByTestId(const QVariant & testResultId, const QVariant & testId);
 
  private:
 
