@@ -327,7 +327,7 @@ class mdtClDatabaseSchema
    */
   bool createTestModelItemView();
 
-  /*! \brief Create test item node unit view
+  /*! \brief Create test model item node unit view
    *
    * \todo Move to test tool when created
    */
@@ -344,6 +344,12 @@ class mdtClDatabaseSchema
    * \todo Move to test tool when created
    */
   bool createTestItemView();
+
+  /*! \brief Create test item node unit view
+   *
+   * \todo Move to test tool when created
+   */
+  bool createTestItemNodeUnitSetupView();
 
   /*! \brief Create view to get node units used by a test item
    *

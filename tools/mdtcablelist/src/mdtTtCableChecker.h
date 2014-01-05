@@ -32,6 +32,7 @@ class mdtTtTestResult;
 class mdtDevice;
 class mdtDeviceModbusWago;
 class mdtDeviceU3606A;
+class QObject;
 class QWidget;
 class QGridLayout;
 namespace mdtTtCableCheckerPrivate
@@ -50,6 +51,10 @@ class mdtTtCableChecker : public mdtSqlForm
   /*! \brief Constructor
    */
   mdtTtCableChecker(QWidget *parent, QSqlDatabase db);
+
+  /*! \brief Destructor
+   */
+  ~mdtTtCableChecker();
 
   /*! \brief Setup all tables
    */
@@ -108,6 +113,8 @@ class mdtTtCableChecker : public mdtSqlForm
   // Device status widgets page
   QGridLayout *pvDeviceStatusWidgetsLayout;
   QMap<mdtDevice*, mdtTtCableCheckerPrivate::deviceStatusWidget*> pvDeviceStatusWidgets;
+  // Test helper object
+  mdtTtTest *pvTest;
 };
 
 #endif // #ifndef MDTTTCABLECHECKER_H

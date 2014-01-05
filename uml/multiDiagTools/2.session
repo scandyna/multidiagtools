@@ -1,14 +1,14 @@
-window_sizes 1280 1001 323 951 923 0
+window_sizes 1024 718 323 695 640 0
 diagrams
   active  classdiagram_ref 941058 // Test
-    951 923 90 3 96 61
+    695 640 90 3 312 131
   classdiagram_ref 927874 // TestNode
     760 738 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 974210 // mdtTtCableChecker
+selected attribute_ref 1042818 // TestModelItem_Id_FK
 open
-  classview_ref 569730 // TestTool
+  class_ref 1006722 // TestNodeUnitSetup_tbl
   class_ref 1053698 // mdtTtTest
   class_ref 979586 // mdtTtTestConnectionCableEditor
   class_ref 1053954 // Ui::mdtTtCableChecker

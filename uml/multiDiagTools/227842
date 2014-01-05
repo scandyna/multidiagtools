@@ -1,6 +1,6 @@
 format 76
 "DatabaseLogical" // mdttools::TestTool::DatabaseLogical
-  revision 14
+  revision 15
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -266,6 +266,41 @@ ${inlines}
       size A3
     end
 
+    class 1020418 "TestModel_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 1067394 "Id_PK"
+	private explicit_type "int"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 1067650 "DesignationEN"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
     class 1006210 "TestModelItem_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -290,7 +325,7 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 1067522 "Test_Id_FK"
+      attribute 1067522 "TestModel_Id_FK"
 	private explicit_type "int"
 	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -480,7 +515,7 @@ ${inlines}
 	  b parent class_ref 1006210 // TestModelItem_tbl
       end
 
-      attribute 1042818 "TestItem_Id_FK"
+      attribute 1042818 "TestModelItem_Id_FK"
 	private explicit_type "int"
 	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -701,7 +736,7 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 1065346 "TestResult_Id_FK"
+      attribute 1065346 "Test_Id_FK"
 	private explicit_type "int"
 	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -712,7 +747,7 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 1074306 "TestItem_Id_FK"
+      attribute 1074306 "TestModelItem_Id_FK"
 	private explicit_type "int"
 	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -864,41 +899,6 @@ ${inlines}
 "
 	    classrelation_ref 1301378 // <unidirectional association>
 	  b parent class_ref 1020418 // TestModel_tbl
-      end
-    end
-
-    class 1020418 "TestModel_tbl"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      attribute 1067394 "Id_PK"
-	private explicit_type "int"
-	stereotype "PK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 1067650 "DesignationEN"
-	private explicit_type "string"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
       end
     end
   end

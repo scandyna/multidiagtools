@@ -34,6 +34,7 @@
 #include "mdtPortStatusWidget.h"
 #include "mdtPortManager.h"
 #include "mdtAbstractPort.h"
+#include "mdtValue.h"
 #include <QTableView>
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
@@ -67,14 +68,20 @@ mdtTtCableChecker::mdtTtCableChecker(QWidget *parent, QSqlDatabase db)
 {
   pvMultimeter = 0;
   pvDeviceStatusWidgetsLayout = 0;
+  pvTest = new mdtTtTest(db);
+}
+
+mdtTtCableChecker::~mdtTtCableChecker()
+{
+  delete pvTest;
 }
 
 bool mdtTtCableChecker::setupTables()
 {
-  if(!setupTestResultTable()){
+  if(!setupTestTable()){
     return false;
   }
-  if(!setupTestResultItemTable()){
+  if(!setupTestItemTable()){
     return false;
   }
   createMultimeter();
@@ -147,6 +154,24 @@ void mdtTtCableChecker::removeTestResult()
 
 void mdtTtCableChecker::runTest()
 {
+  QVariant testId;
+  QVariant testItemId;
+  QList<QVariant> testItemIdList;
+  int i;
+  mdtValue expectedValue;
+  mdtValue measuredValue;
+
+  // Get current test ID
+  testId = currentData("Test_tbl", "Id_PK");
+  if(testId.isNull()){
+    return;
+  }
+  // Get items for current test
+  testItemIdList = pvTest->getTestItemIdListForTestId(testId);
+  if(testItemIdList.isEmpty()){
+    return;
+  }
+  // Connect to instruments
   if(!connectToInstruments()){
     displayLastError();
     return;
@@ -159,6 +184,29 @@ void mdtTtCableChecker::runTest()
     pvLastError.setError(tr("Setup U3606A as ohmmeter failed"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
     pvLastError.commit();
+    displayLastError();
+    return;
+  }
+  // Run items
+  for(i = 0; i < testItemIdList.size(); ++i){
+    testItemId = testItemIdList.at(i);
+    qDebug() << "Running item " << testItemId;
+    /// \todo Setup coupling nodes
+    qDebug() << "Setup coupling nodes ...";
+    // Measure value
+    qDebug() << "Running measure ...";
+    measuredValue = pvMultimeter->getMeasureValue();
+    qDebug() << "-> DONE: " << measuredValue;
+    // Store value
+    if(!pvTest->setMeasuredValue(testItemId, measuredValue)){
+      pvLastError = pvTest->lastError();
+      displayLastError();
+      return;
+    }
+  }
+  // Save results to database
+  if(!pvTest->submitTestItemSqlModelData()){
+    pvLastError = pvTest->lastError();
     displayLastError();
     return;
   }
@@ -246,6 +294,7 @@ bool mdtTtCableChecker::setupTestTable()
 bool mdtTtCableChecker::setupTestItemTable() 
 {
   mdtSqlTableWidget *widget;
+  QSqlTableModel *m;
 
   if(!addChildTable("TestItem_view", tr("Test result items") /*,database()*/)){
     return false;
@@ -287,6 +336,14 @@ bool mdtTtCableChecker::setupTestItemTable()
   widget->addWidgetToLocalBar(pbSetTestLink);
   widget->addStretchToLocalBar();
   */
+  // Register model to test helper object
+  m = model("TestItem_view");
+  Q_ASSERT(m != 0);
+  if(!pvTest->setTestItemSqlModel(m)){
+    pvLastError = pvTest->lastError();
+    displayLastError();
+    return false;
+  }
 
   return true;
 }

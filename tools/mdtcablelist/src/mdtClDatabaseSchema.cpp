@@ -11,7 +11,7 @@
  **
  ** multiDiagTools is distributed in the hope that it will be useful,
  ** but WITHOUT ANY WARRANTY; without even the implied warranty of
- ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** MERCHANTABILITY or FITNESS FOR A PARTMICULAR PURPOSE.  See the
  ** GNU Lesser General Public License for more details.
  **
  ** You should have received a copy of the GNU Lesser General Public License
@@ -350,6 +350,9 @@ bool mdtClDatabaseSchema::createViews()
     return false;
   }
   if(!createTestItemView()){
+    return false;
+  }
+  if(!createTestItemNodeUnitSetupView()){
     return false;
   }
   return true;
@@ -2509,12 +2512,12 @@ bool mdtClDatabaseSchema::createTestModelItemView()
 
   sql = "CREATE VIEW TestModelItem_view AS\n"\
         "SELECT\n"\
-        " TI.Id_PK,\n"\
-        " TI.TestModel_Id_FK,\n"\
-        " TI.TestLinkBusA_Id_FK,\n"\
-        " TI.TestLinkBusB_Id_FK,\n"\
-        " TI.SequenceNumber,\n"\
-        " TI.ExpectedValue,\n"\
+        " TMI.Id_PK,\n"\
+        " TMI.TestModel_Id_FK,\n"\
+        " TMI.TestLinkBusA_Id_FK,\n"\
+        " TMI.TestLinkBusB_Id_FK,\n"\
+        " TMI.SequenceNumber,\n"\
+        " TMI.ExpectedValue,\n"\
         " UCTA.Name AS TestConnectorNameBusA,\n"\
         " UCNXTA.UnitContactName AS TestContactNameBusA,\n"\
         " UDA.SchemaPosition AS DutUnitSchemaPositionBusA,\n"\
@@ -2525,9 +2528,9 @@ bool mdtClDatabaseSchema::createTestModelItemView()
         " UDB.SchemaPosition AS DutUnitSchemaPositionBusB,\n"\
         " UCDB.Name AS DutConnectorNameBusB,\n"\
         " UCNXDB.UnitContactName AS DutContactNameBusB\n"\
-        "FROM TestModelItem_tbl TI\n"\
+        "FROM TestModelItem_tbl TMI\n"\
         " LEFT JOIN TestLink_tbl LNKA\n"\
-        "  ON LNKA.Id_PK = TI.TestLinkBusA_Id_FK\n"\
+        "  ON LNKA.Id_PK = TMI.TestLinkBusA_Id_FK\n"\
         " LEFT JOIN UnitConnection_tbl UCNXTA\n"\
         "  ON UCNXTA.Id_PK = LNKA.TestConnection_Id_FK\n"\
         " LEFT JOIN UnitConnector_tbl UCTA\n"\
@@ -2539,7 +2542,7 @@ bool mdtClDatabaseSchema::createTestModelItemView()
         " LEFT JOIN Unit_tbl UDA\n"\
         "  ON UDA.Id_PK = UCNXDA.Unit_Id_FK\n"\
         " LEFT JOIN TestLink_tbl LNKB\n"\
-        "  ON LNKB.Id_PK = TI.TestLinkBusB_Id_FK\n"\
+        "  ON LNKB.Id_PK = TMI.TestLinkBusB_Id_FK\n"\
         " LEFT JOIN UnitConnection_tbl UCNXTB\n"\
         "  ON UCNXTB.Id_PK = LNKB.TestConnection_Id_FK\n"\
         " LEFT JOIN UnitConnector_tbl UCTB\n"\
@@ -2561,18 +2564,18 @@ bool mdtClDatabaseSchema::createTestModelItemNodeUnitSetupView()
 
   sql = "CREATE VIEW TestModelItemNodeUnitSetup_view AS\n"\
         "SELECT\n"\
-        " TI.TestModel_Id_FK,\n"\
+        " TMI.TestModel_Id_FK,\n"\
         " TNUS.Id_PK,\n"\
         " TNUS.TestModelItem_Id_FK,\n"\
-        " TI.SequenceNumber,\n"\
+        " TMI.SequenceNumber,\n"\
         " U.SchemaPosition,\n"\
         " TNUS.State,\n"\
         " TNUS.Value,\n"\
         " TNU.Bus,\n"\
         " TN.NodeId\n"\
         "FROM TestNodeUnitSetup_tbl TNUS\n"\
-        " JOIN TestModelItem_tbl TI\n"\
-        "  ON TI.Id_PK = TNUS.TestModelItem_Id_FK\n"\
+        " JOIN TestModelItem_tbl TMI\n"\
+        "  ON TMI.Id_PK = TNUS.TestModelItem_Id_FK\n"\
         " JOIN TestNodeUnit_tbl TNU\n"\
         "  ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK\n"\
         " JOIN Unit_tbl U\n"\
@@ -2590,14 +2593,14 @@ bool mdtClDatabaseSchema::createTestModelItemNodeView()
 
   sql = "CREATE VIEW TestModelItemNode_view AS\n"\
         "SELECT DISTINCT\n"\
-        " TI.TestModel_Id_FK,\n"\
+        " TMI.TestModel_Id_FK,\n"\
         " TN.VehicleType_Id_FK_PK AS TestNode_Id_FK,\n"\
         " TN.NodeId\n"\
-        "FROM TestModelItem_tbl TI\n"\
+        "FROM TestModelItem_tbl TMI\n"\
         " JOIN TestLink_tbl LNKA\n"\
-        "  ON LNKA.Id_PK = TI.TestLinkBusA_Id_FK\n"\
+        "  ON LNKA.Id_PK = TMI.TestLinkBusA_Id_FK\n"\
         " JOIN TestLink_tbl LNKB\n"\
-        "  ON LNKB.Id_PK = TI.TestLinkBusB_Id_FK\n"\
+        "  ON LNKB.Id_PK = TMI.TestLinkBusB_Id_FK\n"\
         " JOIN TestNodeUnit_tbl TNU\n"\
         "  ON TNU.TestConnection_Id_FK = LNKA.TestConnection_Id_FK\n"\
         "  OR TNU.TestConnection_Id_FK = LNKB.TestConnection_Id_FK\n"\
@@ -2613,19 +2616,19 @@ bool mdtClDatabaseSchema::createTestModelItemNodeUnitView()
 
   sql = "CREATE VIEW TestModelItemNodeUnit_view AS\n"\
         "SELECT\n"\
-        " TI.Id_PK,\n"\
-        " TI.TestModel_Id_FK,\n"\
+        " TMI.Id_PK,\n"\
+        " TMI.TestModel_Id_FK,\n"\
         " TNU.Unit_Id_FK_PK,\n"\
         " U.SchemaPosition,\n"\
         " TNU.Bus,\n"\
         " TNU.Type_Code_FK,\n"\
         " TN.VehicleType_Id_FK_PK AS TestNode_Id_FK,\n"\
         " TN.NodeId\n"\
-        "FROM TestModelItem_tbl TI\n"\
+        "FROM TestModelItem_tbl TMI\n"\
         " JOIN TestLink_tbl LNKA\n"\
-        "  ON LNKA.Id_PK = TI.TestLinkBusA_Id_FK\n"\
+        "  ON LNKA.Id_PK = TMI.TestLinkBusA_Id_FK\n"\
         " JOIN TestLink_tbl LNKB\n"\
-        "  ON LNKB.Id_PK = TI.TestLinkBusB_Id_FK\n"\
+        "  ON LNKB.Id_PK = TMI.TestLinkBusB_Id_FK\n"\
         " JOIN TestNodeUnit_tbl TNU\n"\
         "  ON TNU.TestConnection_Id_FK = LNKA.TestConnection_Id_FK\n"\
         "  OR TNU.TestConnection_Id_FK = LNKB.TestConnection_Id_FK\n"\
@@ -2646,8 +2649,8 @@ bool mdtClDatabaseSchema::createTestItemView()
         " TRI.Id_PK,\n"\
         " TRI.Test_Id_FK,\n"\
         " TRI.TestModelItem_Id_FK,\n"\
-        " TI.SequenceNumber,\n"\
-        " TI.ExpectedValue,\n"\
+        " TMI.SequenceNumber,\n"\
+        " TMI.ExpectedValue,\n"\
         " TRI.MeasuredValue,\n"\
         " TRI.Result,\n"\
         " UCTA.Name AS TestConnectorNameBusA,\n"\
@@ -2661,10 +2664,10 @@ bool mdtClDatabaseSchema::createTestItemView()
         " UCDB.Name AS DutConnectorNameBusB,\n"\
         " UCNXDB.UnitContactName AS DutContactNameBusB\n"\
         "FROM TestItem_tbl TRI\n"\
-        " JOIN TestModelItem_tbl TI\n"\
-        "  ON TI.Id_PK = TRI.TestModelItem_Id_FK\n"\
+        " JOIN TestModelItem_tbl TMI\n"\
+        "  ON TMI.Id_PK = TRI.TestModelItem_Id_FK\n"\
         " LEFT JOIN TestLink_tbl LNKA\n"\
-        "  ON LNKA.Id_PK = TI.TestLinkBusA_Id_FK\n"\
+        "  ON LNKA.Id_PK = TMI.TestLinkBusA_Id_FK\n"\
         " LEFT JOIN UnitConnection_tbl UCNXTA\n"\
         "  ON UCNXTA.Id_PK = LNKA.TestConnection_Id_FK\n"\
         " LEFT JOIN UnitConnector_tbl UCTA\n"\
@@ -2676,7 +2679,7 @@ bool mdtClDatabaseSchema::createTestItemView()
         " LEFT JOIN Unit_tbl UDA\n"\
         "  ON UDA.Id_PK = UCNXDA.Unit_Id_FK\n"\
         " LEFT JOIN TestLink_tbl LNKB\n"\
-        "  ON LNKB.Id_PK = TI.TestLinkBusB_Id_FK\n"\
+        "  ON LNKB.Id_PK = TMI.TestLinkBusB_Id_FK\n"\
         " LEFT JOIN UnitConnection_tbl UCNXTB\n"\
         "  ON UCNXTB.Id_PK = LNKB.TestConnection_Id_FK\n"\
         " LEFT JOIN UnitConnector_tbl UCTB\n"\
@@ -2690,6 +2693,40 @@ bool mdtClDatabaseSchema::createTestItemView()
         "ORDER BY SequenceNumber ASC";
 
   return createView("TestItem_view", sql);
+}
+
+bool mdtClDatabaseSchema::createTestItemNodeUnitSetupView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestItemNodeUnitSetup_view AS\n"\
+        "SELECT\n"\
+        " TI.Id_PK,\n"\
+        " TI.Test_Id_FK,\n"\
+        " TI.TestModelItem_Id_FK,\n"\
+        " TMI.TestModel_Id_FK,\n"\
+        /*" TNUS.Id_PK,\n"\*/
+        /*" TNUS.TestModelItem_Id_FK,\n"\*/
+        " TMI.SequenceNumber,\n"\
+        " U.SchemaPosition,\n"\
+        " TNUS.State,\n"\
+        " TNUS.Value,\n"\
+        " TNU.Bus,\n"\
+        " TN.NodeId\n"\
+        "FROM TestItem_tbl TI\n"\
+        " JOIN TestModelItem_tbl TMI\n"\
+        "  ON TMI.Id_PK = TI.TestModelItem_Id_FK\n"\
+        " JOIN TestNodeUnitSetup_tbl TNUS\n"\
+        "  ON TNUS.TestModelItem_Id_FK = TMI.Id_PK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+        "ORDER BY SequenceNumber ASC";
+
+  return createView("TestItemNodeUnitSetup_view", sql);
 }
 
 bool mdtClDatabaseSchema::pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData)
@@ -2854,7 +2891,7 @@ bool mdtClDatabaseSchema::populateLinkTypeTable()
   }
   // Cable link type
   data.clear();
-  data << "CONNECTION" << "Connection" << "Anschluss" << "Raccordement" << "Collegamento" << "Ohm";
+  data << "CONNECTMION" << "Connection" << "Anschluss" << "Raccordement" << "Collegamento" << "Ohm";
   if(!insertDataIntoTable("LinkType_tbl", fields, data)){
     return false;
   }

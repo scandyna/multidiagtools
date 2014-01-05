@@ -34,6 +34,10 @@
  *  dedicated classes helps for interaction with database .
  *
  * This class is a base that regroups common methods .
+ *
+ * \todo Should inherit QObject, because:
+ *   - Use of tr()
+ *   - Use QObject::destroyed() signal (see mdtTtTest for a typical usecase)
  */
 class mdtClBase
 {
