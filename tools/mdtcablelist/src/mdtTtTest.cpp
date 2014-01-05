@@ -114,31 +114,46 @@ QList<QVariant> mdtTtTest::getTestItemIdListForTestId(const QVariant & testId)
   return testItemIdList;
 }
 
-/**
-QStringList mdtTtTest::getNodeUnitsToEnable(const QVariant & testItemId)
+QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId)
 {
+  QList<mdtTtTestNodeUnitSetupData> dataList;
   QString sql;
   QSqlError sqlError;
   QSqlQuery query(database());
-  QStringList unitList;
 
-  sql = "SELECT State FROM TestItem_view WHERE Test_Id_FK = " + testId.toString();
-  sql += " ORDER BY SequenceNumber ASC";
+  /// \todo Test node ID PK missing !
+  // Note: in this view, Id_PK is the ID of test item
+  sql = "SELECT "\
+        " Id_PK AS TestItemId,"\
+        " TestModelItem_Id_FK,"\
+        " SchemaPosition,"\
+        " State,"\
+        " Value,"\
+        " NodeId ";
+  sql += " FROM TestItemNodeUnitSetup_view WHERE Id_PK = " + testItemId.toString();
   if(!query.exec(sql)){
     sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query to get test items", mdtError::Error);
+    pvLastError.setError("Cannot execute query to get test node unit setup.", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
     pvLastError.commit();
-    return testItemIdList;
+    return dataList;
   }
   while(query.next()){
-    unitList.append(query.value(0).toString());
+    mdtTtTestNodeUnitSetupData data;
+    data.setId(QVariant()); /// \todo Implement !
+    data.setTestItemId(query.value(0));
+    data.setTestModelItemId(query.value(1));
+    data.setSchemaPosition(query.value(2));
+    data.setState(query.value(3));
+    data.setValue(query.value(4));
+    data.setNodeId(query.value(5));
+    dataList.append(data);
   }
 
-  return unitList;
+  return dataList;
 }
-*/
+
 
 bool mdtTtTest::setTestModel(const QVariant & testResultId, const QVariant & testId)
 {

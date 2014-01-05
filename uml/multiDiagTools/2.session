@@ -1,15 +1,16 @@
-window_sizes 1024 718 323 695 640 0
+window_sizes 1024 718 253 765 640 0
 diagrams
-  active  classdiagram_ref 941058 // Test
-    695 640 90 3 312 131
-  classdiagram_ref 927874 // TestNode
-    760 738 100 18 0 0
+  active  classdiagram_ref 987394 // mdtTtTestNodeUnitSetupData
+    765 640 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 1042818 // TestModelItem_Id_FK
+selected classdiagram_ref 987394 // mdtTtTestNodeUnitSetupData
 open
   class_ref 1006722 // TestNodeUnitSetup_tbl
   class_ref 1053698 // mdtTtTest
+  attribute_ref 1087362 // Id
+  attribute_ref 1088130 // schemaPosition
+  attribute_ref 1088002 // NodeId
   class_ref 979586 // mdtTtTestConnectionCableEditor
   class_ref 1053954 // Ui::mdtTtCableChecker
   class_ref 1047170 // mdtTtCableChecker

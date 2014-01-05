@@ -23,6 +23,7 @@
 
 #include "mdtClBase.h"
 #include "mdtValue.h"
+#include "mdtTtTestNodeUnitSetupData.h"
 #include <QSqlDatabase>
 #include <QModelIndex>
 #include <QVariant>
@@ -66,9 +67,9 @@ class mdtTtTest : public mdtClBase
    */
   QList<QVariant> getTestItemIdListForTestId(const QVariant & testId);
 
-  /*! \brief Get test node units that must be enabled
+  /*! \brief Get test node unit setups for a given test item ID
    */
-  ///QStringList getNodeUnitsToEnable(const QVariant & testItemId);
+  QList<mdtTtTestNodeUnitSetupData> getNodeUnitSetupList(const QVariant & testItemId);
 
   /*! \brief Set test model
    *

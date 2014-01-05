@@ -35,6 +35,7 @@
 #include "mdtPortManager.h"
 #include "mdtAbstractPort.h"
 #include "mdtValue.h"
+#include "mdtTtTestNodeUnitSetupData.h"
 #include <QTableView>
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
@@ -193,6 +194,10 @@ void mdtTtCableChecker::runTest()
     qDebug() << "Running item " << testItemId;
     /// \todo Setup coupling nodes
     qDebug() << "Setup coupling nodes ...";
+    if(!setupNodes(testItemId)){
+      displayLastError();
+      return;
+    }
     // Measure value
     qDebug() << "Running measure ...";
     measuredValue = pvMultimeter->getMeasureValue();
@@ -365,6 +370,27 @@ bool mdtTtCableChecker::connectToInstruments()
     pvLastError.commit();
     return false;
   }
+
+  return true;
+}
+
+bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
+{
+  QList<mdtTtTestNodeUnitSetupData> setupDataList;
+  mdtTtTestNodeUnitSetupData setupData;
+  int i;
+
+  // Get setup data
+  setupDataList = pvTest->getNodeUnitSetupList(testItemId);
+  // Set all node outputs to OFF
+  qDebug() << "Setting node units OFF ...";
+  // Setup all specified node units
+  for(i = 0; i < setupDataList.size(); ++i){
+    setupData = setupDataList.at(i);
+    /// \todo Check data validity !
+    qDebug() << "Setup node ID " << setupData.nodeId().toInt() << " , enable unit " << setupData.schemaPosition().toString();
+  }
+  qDebug() << "Sending queries to nodes ...";
 
   return true;
 }

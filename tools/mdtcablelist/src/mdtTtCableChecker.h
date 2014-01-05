@@ -94,6 +94,9 @@ class mdtTtCableChecker : public mdtSqlForm
    */
   void createMultimeter();
 
+  /*! \brief Setup nodes
+   */
+  bool setupNodes(const QVariant & testItemId);
 
   /*! \brief Connect to instruments
    */

@@ -76,6 +76,7 @@ set (TEST_SOURCES_FILES
           ../src/mdtTtTest.cpp
           ../src/mdtTtCableChecker.cpp
           ../src/mdtTtCableCheckerWindow.cpp
+          ../src/mdtTtTestNodeUnitSetupData.cpp
     )
 
 # Qt ui files
