@@ -114,7 +114,53 @@ QList<QVariant> mdtTtTest::getTestItemIdListForTestId(const QVariant & testId)
   return testItemIdList;
 }
 
-QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId)
+QList<QVariant> mdtTtTest::getNodeIdListForTestId(const QVariant & testId)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+  QList<QVariant> nodeIdList;
+
+  sql = "SELECT DISTINCT NodeId FROM TestItemNodeUnitSetup_view WHERE Test_Id_FK = " + testId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to get test nodeId list", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    pvLastError.commit();
+    return nodeIdList;
+  }
+  while(query.next()){
+    nodeIdList.append(query.value(0));
+  }
+
+  return nodeIdList;
+}
+
+QList<QVariant> mdtTtTest::getNodeIdListForTestItemId(const QVariant & testItemId)
+{
+  QString sql;
+  QSqlError sqlError;
+  QSqlQuery query(database());
+  QList<QVariant> nodeIdList;
+
+  sql = "SELECT DISTINCT NodeId FROM TestItemNodeUnitSetup_view WHERE Id_PK = " + testItemId.toString();
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query to get test nodeId list", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    pvLastError.commit();
+    return nodeIdList;
+  }
+  while(query.next()){
+    nodeIdList.append(query.value(0));
+  }
+
+  return nodeIdList;
+}
+
+QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId, const QVariant & nodeId)
 {
   QList<mdtTtTestNodeUnitSetupData> dataList;
   QString sql;
@@ -130,7 +176,8 @@ QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant
         " State,"\
         " Value,"\
         " NodeId ";
-  sql += " FROM TestItemNodeUnitSetup_view WHERE Id_PK = " + testItemId.toString();
+  sql += " FROM TestItemNodeUnitSetup_view ";
+  sql += " WHERE Id_PK = " + testItemId.toString() + " AND NodeId = " + nodeId.toString();
   if(!query.exec(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query to get test node unit setup.", mdtError::Error);

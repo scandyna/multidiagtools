@@ -1,6 +1,6 @@
 format 76
 "mdtdevice" // mdtdevice
-  revision 48
+  revision 49
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -273,6 +273,28 @@ ${inlines}
 	  b parent class_ref 309250 // mdtDevice
       end
 
+      classrelation 611970 // pvTcpPortManager (<directional composition>)
+	relation 604674 *-->
+	  a role_name "pvTcpPortManager" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 611970 // pvTcpPortManager (<directional composition>)
+	  b parent class_ref 511746 // mdtModbusTcpPortManager
+      end
+
+      classrelation 612098 // pvCodec (<directional composition>)
+	relation 604802 *-->
+	  a role_name "pvCodec" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 612098 // pvCodec (<directional composition>)
+	  b parent class_ref 269826 // mdtFrameCodecModbus
+      end
+
+      classrelation 620034 // <association>
+	relation_ref 612610 // <association>
+      end
+
       operation 992002 "mdtDeviceModbus"
 	public explicit_return_type ""
 	nparams 1
@@ -300,66 +322,36 @@ ${inlines}
 	
       end
 
-      classrelation 611970 // pvTcpPortManager (<directional composition>)
-	relation 604674 *-->
-	  a role_name "pvTcpPortManager" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+      operation 1837442 "connectToDevice"
+	public explicit_return_type "mdtAbstractPort::error_t"
+	nparams 4
+	  param in name "scanResult" explicit_type "QList<mdtPortInfo*>"
+	  param in name "hardwareNodeId" explicit_type "int"
+	  param in name "bitsCount" explicit_type "int"
+	  param in name "startFrom" explicit_type "int"
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 611970 // pvTcpPortManager (<directional composition>)
-	  b parent class_ref 511746 // mdtModbusTcpPortManager
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      classrelation 612098 // pvCodec (<directional composition>)
-	relation 604802 *-->
-	  a role_name "pvCodec" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+      operation 1837698 "connectToDevice"
+	abstract cpp_virtual public explicit_return_type "mdtAbstractPort::error_t"
+	nparams 1
+	  param in name "portInfo" type class_ref 498434 // mdtPortInfo
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 612098 // pvCodec (<directional composition>)
-	  b parent class_ref 269826 // mdtFrameCodecModbus
-      end
-
-      classrelation 620034 // <association>
-	relation_ref 612610 // <association>
-      end
-
-      attribute 638722 "pvAnalogInputs"
-	private explicit_type "QMap<quint16,quint16>"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 638850 "pvAnalogOutputs"
-	private explicit_type "QMap<quint16,quint16>"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 638594 "pvDigitalInputs"
-	private explicit_type "QMap<quint16,bool>"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 638466 "pvDigitalOutputs"
-	private explicit_type "QMap<quint16,bool>"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
+	
+	
+	
+	
       end
 
       operation 1565442 "getRegisterValues"
@@ -2357,7 +2349,12 @@ ${namespace_end}"
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
     associated_deployment_view deploymentview_ref 415618 // mdtDeviceModbusWago
-    classdiagram 839426 "mdtDeviceModbusWago"
+    classdiagram 994050 "mdtDeviceModbusWago"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A3
+    end
+
+    classdiagram 839426 "mdtDeviceModbusWagoAndModules"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A3
     end
@@ -2404,6 +2401,22 @@ ${inlines}
 	
       end
 
+      operation 1837826 "connectToDevice"
+	cpp_virtual public explicit_return_type "mdtAbstractPort::error_t"
+	nparams 1
+	  param in name "portInfo" type class_ref 498434 // mdtPortInfo
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       classrelation 626562 // <generalisation>
 	relation 619138 ---|>
 	  a public
@@ -2434,6 +2447,26 @@ ${inlines}
 "
 	    classrelation_ref 1086082 // pvModules (<directional composition>)
 	  b parent class_ref 874498 // mdtDeviceModbusWagoModule
+      end
+
+      operation 1837570 "connectToDevice"
+	public explicit_return_type "mdtAbstractPort::error_t"
+	nparams 4
+	  param in name "scanResult" explicit_type "QList<mdtPortInfo*>"
+	  param in name "hardwareNodeId" explicit_type "int"
+	  param in name "bitsCount" explicit_type "int"
+	  param in name "startFrom" explicit_type "int"
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 

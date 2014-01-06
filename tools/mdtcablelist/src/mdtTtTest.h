@@ -67,9 +67,24 @@ class mdtTtTest : public mdtClBase
    */
   QList<QVariant> getTestItemIdListForTestId(const QVariant & testId);
 
-  /*! \brief Get test node unit setups for a given test item ID
+  /*! \brief Get list of NodeId used by given test ID
+   *
+   * Note: returns NodeId field from TestNode_tbl .
    */
-  QList<mdtTtTestNodeUnitSetupData> getNodeUnitSetupList(const QVariant & testItemId);
+  QList<QVariant> getNodeIdListForTestId(const QVariant & testId);
+
+  /*! \brief Get list of NodeId used by given test item ID
+   *
+   * Note: returns NodeId field from TestNode_tbl .
+   */
+  QList<QVariant> getNodeIdListForTestItemId(const QVariant & testItemId);
+
+  /*! \brief Get test node unit setups for a given test item ID and nodeId
+   *
+   * \param testItemId Primary key of TestItem_tbl
+   * \param nodeId NodeId from TestNode_tbl
+   */
+  QList<mdtTtTestNodeUnitSetupData> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & nodeId);
 
   /*! \brief Set test model
    *

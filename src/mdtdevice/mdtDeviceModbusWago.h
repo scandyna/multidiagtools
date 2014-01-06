@@ -38,19 +38,27 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
 
  public:
 
+  /*! \brief Constructor
+   */
   mdtDeviceModbusWago(QObject *parent = 0);
 
+  /*! \brief Destructor
+   */
   ~mdtDeviceModbusWago();
+
+  /*! \brief Connect to physical device
+   *
+   * This method can be reimplemented in subclass if specific
+   *  tasks must be done during connection .
+   *
+   * \param portInfo mdtPortInfo object . The portName attribute of portInfo must contain host:port format (or ip:port) .
+   * \return A error listed in mdtAbstractPort::error_t (NoError on success) .
+   */
+  mdtAbstractPort::error_t connectToDevice(const mdtPortInfo & portInfo);
 
   /*! \brief Search and connect to physical device.
    *
-   * Will scan available ports and open the first port that
-   *  has device attached maching request.
-   *
-   * Note: in current version, only Wago 750 system is supported.
-   *
-   * \param devInfo Requested device's informations (can be empty, no information is used in current version).
-   * \return A error listed in mdtAbstractPort::error_t (NoError on success)
+   * \sa mdtDeviceModbus::connectToDevice(const mdtDeviceInfo&) .
    */
   mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
 
@@ -59,6 +67,12 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * Work as mdtDeviceModbus::connectToDevice() , but checks that device is a Wago 750 fieldbus coupler.
    */
   mdtAbstractPort::error_t connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom = 0);
+
+  /*! \brief Search and connect to physical device.
+   *
+   * See mdtDeviceModbus::connectToDevice(const QList<int>&) .
+   */
+  mdtAbstractPort::error_t connectToDevice(const QList<int> & existingHwNodeIdList);
 
   /*! \brief Check if device is a Wago 750 series
    */

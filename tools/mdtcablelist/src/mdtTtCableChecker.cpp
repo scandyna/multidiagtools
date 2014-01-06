@@ -44,7 +44,6 @@
 #include <QPushButton>
 #include <QStringList>
 ///#include <QString>
-#include <QList>
 ///#include <QItemSelectionModel>
 #include <QMessageBox>
 ///#include <QInputDialog>
@@ -360,6 +359,10 @@ void mdtTtCableChecker::createMultimeter()
   addDeviceStatusWidget(pvMultimeter, "U3606A");
 }
 
+void mdtTtCableChecker::createIoNodes()
+{
+}
+
 bool mdtTtCableChecker::connectToInstruments()
 {
   Q_ASSERT(pvMultimeter != 0);
@@ -381,7 +384,7 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
   int i;
 
   // Get setup data
-  setupDataList = pvTest->getNodeUnitSetupList(testItemId);
+  setupDataList = pvTest->getNodeUnitSetupList(testItemId, 26);
   // Set all node outputs to OFF
   qDebug() << "Setting node units OFF ...";
   // Setup all specified node units

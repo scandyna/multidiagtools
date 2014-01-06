@@ -175,9 +175,18 @@ void mdtModbusIoTool::connectToNode()
     showStatusMessage(tr("Please disconnect before reconnect"), 3000);
     return;
   }
-  expectedHwNodeAddresses.append(sbHwNodeId->value());
+  ///expectedHwNodeAddresses.append(sbHwNodeId->value());
   // Update GUI state
   setStateConnectingToNode();
+  
+  // Try to find and connect to device
+  pvDeviceModbusWago->setHardwareNodeId(sbHwNodeId->value(), 8, 0);
+  if(pvDeviceModbusWago->connectToDevice(expectedHwNodeAddresses) != mdtAbstractPort::NoError){
+    pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
+    setStateConnectingToNodeFinished();
+    return;
+  }
+  /**
   // Scan looking in chache file first
   portInfoList = m->scan(m->readScanResult(), 100, expectedHwNodeAddresses, 8, 0);
   // Try to connect ...
@@ -199,6 +208,8 @@ void mdtModbusIoTool::connectToNode()
     qDeleteAll(portInfoList);
     portInfoList.clear();
   }
+  */
+  
   showStatusMessage(tr("I/O detection ..."));
   if(!pvDeviceModbusWago->detectIos(pvDeviceIos)){
     QString details = tr("This probably caused by presence of a unsupported module.");

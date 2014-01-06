@@ -26,6 +26,7 @@
 #include <QVariant>
 #include <QString>
 #include <QMap>
+#include <QList>
 
 class mdtTtTest;
 class mdtTtTestResult;
@@ -94,6 +95,10 @@ class mdtTtCableChecker : public mdtSqlForm
    */
   void createMultimeter();
 
+  /*! \brief Create I/O nodes
+   */
+  void createIoNodes();
+
   /*! \brief Setup nodes
    */
   bool setupNodes(const QVariant & testItemId);
@@ -113,6 +118,7 @@ class mdtTtCableChecker : public mdtSqlForm
   Q_DISABLE_COPY(mdtTtCableChecker);
 
   mdtDeviceU3606A *pvMultimeter;
+  QList<mdtDeviceModbusWago*> pvModbusIoNodes;
   // Device status widgets page
   QGridLayout *pvDeviceStatusWidgetsLayout;
   QMap<mdtDevice*, mdtTtCableCheckerPrivate::deviceStatusWidget*> pvDeviceStatusWidgets;
