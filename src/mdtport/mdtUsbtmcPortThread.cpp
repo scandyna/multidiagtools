@@ -1263,7 +1263,7 @@ void mdtUsbtmcPortThread::run()
         }
       }else{
         // Check if bTag was expected
-        qDebug() << "USBTMCTHD (2): current readFrame's bTag: " << usbtmcFrame->bTag() << " , expectedBulkInbTags: " << port->expectedBulkInbTags();
+        ///qDebug() << "USBTMCTHD (2): current readFrame's bTag: " << usbtmcFrame->bTag() << " , expectedBulkInbTags: " << port->expectedBulkInbTags();
         if(!port->expectedBulkInbTags().contains(usbtmcFrame->bTag())){
           mdtError e(MDT_USB_IO_ERROR, "Receive a frame with unexpeced bTag, will be skipped", mdtError::Error);
           MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
@@ -1279,7 +1279,7 @@ void mdtUsbtmcPortThread::run()
         }else{
           ///expectedBulkInbTags.removeOne(usbtmcFrame->bTag()); /// \bug Port manager should remove it when it has removed frame !!
           // Simply emit signal, port manager will take the frame and remove bTag from expectedBulkInbTags list when port mutext is unlocked
-          qDebug() << "emit newFrameReaden() - bTag: " << usbtmcFrame->bTag();
+          ///qDebug() << "emit newFrameReaden() - bTag: " << usbtmcFrame->bTag();
           emit(newFrameReaden());
         }
       }

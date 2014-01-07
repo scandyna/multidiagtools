@@ -604,15 +604,15 @@ void mdtDeviceTest::deviceIosTest()
 
   // Check analog inputs
   QCOMPARE(ios.analogInputsCount(), 2);
-  QVERIFY(ios.analogInputAt(10) != 0);
-  QCOMPARE(ios.analogInputAt(10)->address() , 10);
+  QVERIFY(ios.analogInputAtAddress(10) != 0);
+  QCOMPARE(ios.analogInputAtAddress(10)->address() , 10);
   QVERIFY(ios.analogInputWithLabelShort("AI10") != 0);
   QCOMPARE(ios.analogInputWithLabelShort("AI10")->address(), 10);
   QCOMPARE(ios.analogInputWithLabelShort("AI10")->labelShort(), QString("AI10"));
-  QVERIFY(ios.analogInputAt(11) == 0);
-  QVERIFY(ios.analogInputAt(12) != 0);
-  QCOMPARE(ios.analogInputAt(12)->address() , 12);
-  ios.analogInputAt(12)->setLabelShort("Temp. M12");
+  QVERIFY(ios.analogInputAtAddress(11) == 0);
+  QVERIFY(ios.analogInputAtAddress(12) != 0);
+  QCOMPARE(ios.analogInputAtAddress(12)->address() , 12);
+  ios.analogInputAtAddress(12)->setLabelShort("Temp. M12");
   QVERIFY(ios.analogInputWithLabelShort("") == 0);
   QVERIFY(ios.analogInputWithLabelShort("Temp. M12") != 0);
   QCOMPARE(ios.analogInputWithLabelShort("Temp. M12")->address(), 12);
@@ -623,33 +623,33 @@ void mdtDeviceTest::deviceIosTest()
   values.clear();
   values << 1.0 << 12.5;
   ios.updateAnalogInputValues(values, -1, -1, false);
-  QCOMPARE(ios.analogInputAt(10)->value().valueDouble() , 1.0);
-  QCOMPARE(ios.analogInputAt(12)->value().valueDouble() , 12.5);
+  QCOMPARE(ios.analogInputAtAddress(10)->value().valueDouble() , 1.0);
+  QCOMPARE(ios.analogInputAtAddress(12)->value().valueDouble() , 12.5);
   values.clear();
   values << 2.0 << 3.0;
   ios.updateAnalogInputValues(values, -1, 1, false);
-  QCOMPARE(ios.analogInputAt(10)->value().valueDouble() , 2.0);
-  QCOMPARE(ios.analogInputAt(12)->value().valueDouble() , 12.5);
+  QCOMPARE(ios.analogInputAtAddress(10)->value().valueDouble() , 2.0);
+  QCOMPARE(ios.analogInputAtAddress(12)->value().valueDouble() , 12.5);
   values.clear();
   values << 4.0 << 5.0;
   ios.updateAnalogInputValues(values, 10, -1, false);
-  QCOMPARE(ios.analogInputAt(10)->value().valueDouble() , 4.0);
-  QCOMPARE(ios.analogInputAt(12)->value().valueDouble() , 5.0);
+  QCOMPARE(ios.analogInputAtAddress(10)->value().valueDouble() , 4.0);
+  QCOMPARE(ios.analogInputAtAddress(12)->value().valueDouble() , 5.0);
   values.clear();
   values << 6.0 << 7.0;
   ios.updateAnalogInputValues(values, 10, 1, false);
-  QCOMPARE(ios.analogInputAt(10)->value().valueDouble() , 6.0);
-  QCOMPARE(ios.analogInputAt(12)->value().valueDouble() , 5.0);
+  QCOMPARE(ios.analogInputAtAddress(10)->value().valueDouble() , 6.0);
+  QCOMPARE(ios.analogInputAtAddress(12)->value().valueDouble() , 5.0);
   values.clear();
   values << 8.0;
   ios.updateAnalogInputValues(values, 12, 1, false);
-  QCOMPARE(ios.analogInputAt(10)->value().valueDouble() , 6.0);
-  QCOMPARE(ios.analogInputAt(12)->value().valueDouble() , 8.0);
+  QCOMPARE(ios.analogInputAtAddress(10)->value().valueDouble() , 6.0);
+  QCOMPARE(ios.analogInputAtAddress(12)->value().valueDouble() , 8.0);
   values.clear();
   values << 9.0 << 10.0;
   ios.updateAnalogInputValues(values, 12, 1, false);
-  QCOMPARE(ios.analogInputAt(10)->value().valueDouble() , 6.0);
-  QCOMPARE(ios.analogInputAt(12)->value().valueDouble() , 9.0);
+  QCOMPARE(ios.analogInputAtAddress(10)->value().valueDouble() , 6.0);
+  QCOMPARE(ios.analogInputAtAddress(12)->value().valueDouble() , 9.0);
   // We add a analog input with address 13, so we have 10,12,13
   ai = new mdtAnalogIo;
   ai->setAddress(13);
@@ -657,16 +657,16 @@ void mdtDeviceTest::deviceIosTest()
   ai->setValue(50.0);   // Set directly a known value
   ios.addAnalogInput(ai);
   QCOMPARE(ios.analogInputsCount(), 3);
-  QVERIFY(ios.analogInputAt(10) != 0);
-  QVERIFY(ios.analogInputAt(12) != 0);
-  QVERIFY(ios.analogInputAt(13) != 0);
+  QVERIFY(ios.analogInputAtAddress(10) != 0);
+  QVERIFY(ios.analogInputAtAddress(12) != 0);
+  QVERIFY(ios.analogInputAtAddress(13) != 0);
   // Check multiple analog inputs update: 1 item starting at address 12 with 2 items in value
   values.clear();
   values << 1.0 << 8.0;
   ios.updateAnalogInputValues(values, 12, 1, false);
-  QCOMPARE(ios.analogInputAt(10)->value().valueDouble() , 6.0);
-  QCOMPARE(ios.analogInputAt(12)->value().valueDouble() , 1.0);
-  QCOMPARE(ios.analogInputAt(13)->value().valueDouble() , 50.0);
+  QCOMPARE(ios.analogInputAtAddress(10)->value().valueDouble() , 6.0);
+  QCOMPARE(ios.analogInputAtAddress(12)->value().valueDouble() , 1.0);
+  QCOMPARE(ios.analogInputAtAddress(13)->value().valueDouble() , 50.0);
 
   // Check analog outputs
   QVERIFY(ios.analogOutputAtAddressRead(13) == 0);
@@ -755,16 +755,16 @@ void mdtDeviceTest::deviceIosTest()
   QCOMPARE(ios.analogOutputAtAddressRead(15)->value().valueDouble() , 9.0);
 
   // Check digital inputs
-  QVERIFY(ios.digitalInputAt(11) == 0);
-  QVERIFY(ios.digitalInputAt(17) != 0);
-  QCOMPARE(ios.digitalInputAt(17)->address(), 17);
-  ios.digitalInputAt(17)->setLabelShort("DI17");
+  QVERIFY(ios.digitalInputAtAddress(11) == 0);
+  QVERIFY(ios.digitalInputAtAddress(17) != 0);
+  QCOMPARE(ios.digitalInputAtAddress(17)->address(), 17);
+  ios.digitalInputAtAddress(17)->setLabelShort("DI17");
   QVERIFY(ios.digitalInputWithLabelShort("") == 0);
   QVERIFY(ios.digitalInputWithLabelShort("DI17") != 0);
   QCOMPARE(ios.digitalInputWithLabelShort("DI17")->address(), 17);
   QCOMPARE(ios.digitalInputWithLabelShort("DI17")->labelShort(), QString("DI17"));
-  QVERIFY(ios.digitalInputAt(18) != 0);
-  QCOMPARE(ios.digitalInputAt(18)->address(), 18);
+  QVERIFY(ios.digitalInputAtAddress(18) != 0);
+  QCOMPARE(ios.digitalInputAtAddress(18)->address(), 18);
   QVERIFY(ios.digitalInputWithLabelShort("DI18") != 0);
   QCOMPARE(ios.digitalInputWithLabelShort("DI18")->address(), 18);
   QCOMPARE(ios.digitalInputWithLabelShort("DI18")->labelShort(), QString("DI18"));
@@ -774,60 +774,60 @@ void mdtDeviceTest::deviceIosTest()
   values.clear();
   values << false << true;
   ios.updateDigitalInputValues(values, -1, -1, false);
-  QCOMPARE(ios.digitalInputAt(17)->value().valueBool(), false);
-  QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(17)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(18)->value().valueBool(), true);
   values.clear();
   values << true;
   ios.updateDigitalInputValues(values, -1, 1, false);
-  QCOMPARE(ios.digitalInputAt(17)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(17)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(18)->value().valueBool(), true);
   values.clear();
   values << false;
   ios.updateDigitalInputValues(values, 18, 1, false);
-  QCOMPARE(ios.digitalInputAt(17)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(17)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(18)->value().valueBool(), false);
   // Check multiple digital inputs update - List contains to much items
   values.clear();
   values << false << true;
   ios.updateDigitalInputValues(values, -1, -1, false);
-  QCOMPARE(ios.digitalInputAt(17)->value().valueBool(), false);
-  QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(17)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(18)->value().valueBool(), true);
   values.clear();
   values << true << false;
   ios.updateDigitalInputValues(values, -1, 1, false);
-  QCOMPARE(ios.digitalInputAt(17)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(17)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(18)->value().valueBool(), true);
   values.clear();
   values << false << false;
   ios.updateDigitalInputValues(values, 18, 1, false);
-  QCOMPARE(ios.digitalInputAt(17)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(17)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(18)->value().valueBool(), false);
   // We add a new digital input with address 20 (we have also 17, 18, 20)
   di = new mdtDigitalIo;
   di->setAddress(20);
   di->setValue(false);
   ios.addDigitalInput(di);
   QCOMPARE(ios.digitalInputsCount(), 3);
-  QVERIFY(ios.digitalInputAt(17) != 0);
-  QVERIFY(ios.digitalInputAt(18) != 0);
-  QVERIFY(ios.digitalInputAt(20) != 0);
-  QCOMPARE(ios.digitalInputAt(17)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), false);
-  QCOMPARE(ios.digitalInputAt(20)->value().valueBool(), false);
+  QVERIFY(ios.digitalInputAtAddress(17) != 0);
+  QVERIFY(ios.digitalInputAtAddress(18) != 0);
+  QVERIFY(ios.digitalInputAtAddress(20) != 0);
+  QCOMPARE(ios.digitalInputAtAddress(17)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(18)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(20)->value().valueBool(), false);
   // Update address 18 and 20 - No address match - List contains to much items
   values.clear();
   values << true << true << true << true;
   ios.updateDigitalInputValues(values, 18, 2, false);
-  QCOMPARE(ios.digitalInputAt(17)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(20)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(17)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(18)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(20)->value().valueBool(), true);
   // Update address 18 - No address match - List contains to much items
   values.clear();
   values << false << false << false << false;
   ios.updateDigitalInputValues(values, 18, 1, false);
-  QCOMPARE(ios.digitalInputAt(17)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(18)->value().valueBool(), false);
-  QCOMPARE(ios.digitalInputAt(20)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(17)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(18)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(20)->value().valueBool(), true);
 
   // Check digital outputs
   QVERIFY(ios.digitalOutputAtAddressRead(19) == 0);
@@ -955,13 +955,13 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   QCOMPARE(seg->addressesRead().at(1), 1);
   QCOMPARE(seg->addressesRead().at(2), 2);
   // First segment - Set some values and check
-  ai = ios.analogInputAt(0);
+  ai = ios.analogInputAtAddress(0);
   QVERIFY(ai != 0);
   ai->setValue(10);
-  ai = ios.analogInputAt(1);
+  ai = ios.analogInputAtAddress(1);
   QVERIFY(ai != 0);
   ai->setValue(11);
-  ai = ios.analogInputAt(2);
+  ai = ios.analogInputAtAddress(2);
   QVERIFY(ai != 0);
   ai->setValue(12);
   expectedValuesInt.clear();
@@ -974,10 +974,10 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   QCOMPARE(seg->addressesRead().at(0), 5);
   QCOMPARE(seg->addressesRead().at(1), 6);
   // Second segment - Set some values and check
-  ai = ios.analogInputAt(5);
+  ai = ios.analogInputAtAddress(5);
   QVERIFY(ai != 0);
   ai->setValue(15);
-  ai = ios.analogInputAt(6);
+  ai = ios.analogInputAtAddress(6);
   QVERIFY(ai != 0);
   ai->setValue(16);
   expectedValuesInt.clear();
@@ -986,44 +986,44 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   // Check grouped updates - Only first segment
   valuesVar.clear();
   valuesVar << -10;
-  QVERIFY(ios.analogInputAt(0) != 0);
-  QVERIFY(ios.analogInputAt(0)->value().valueInt() != -10);
+  QVERIFY(ios.analogInputAtAddress(0) != 0);
+  QVERIFY(ios.analogInputAtAddress(0)->value().valueInt() != -10);
   ios.updateAnalogInputValues(valuesVar, 0, -1, true);
-  QCOMPARE(ios.analogInputAt(0)->value().valueInt(), -10);
+  QCOMPARE(ios.analogInputAtAddress(0)->value().valueInt(), -10);
   ios.updateAnalogInputValues(valuesVar, 3, -1, true);  // Address 3 not exists
-  QCOMPARE(ios.analogInputAt(0)->value().valueInt(), -10);
+  QCOMPARE(ios.analogInputAtAddress(0)->value().valueInt(), -10);
   // Check grouped updates - first + second segments
   // Note: considere that we only included I/O's with addresses 0,1,2,5,6 in container, but we made a query to device for addresses 2-6
   valuesVar.clear();
   valuesVar << 200 << 300 << 400 << 500 << 600;
-  QVERIFY(ios.analogInputAt(2) != 0);
-  QVERIFY(ios.analogInputAt(2)->value().valueInt() != 200);
-  QVERIFY(ios.analogInputAt(5) != 0);
-  QVERIFY(ios.analogInputAt(5)->value().valueInt() != 500);
-  QVERIFY(ios.analogInputAt(6) != 0);
-  QVERIFY(ios.analogInputAt(6)->value().valueInt() != 600);
+  QVERIFY(ios.analogInputAtAddress(2) != 0);
+  QVERIFY(ios.analogInputAtAddress(2)->value().valueInt() != 200);
+  QVERIFY(ios.analogInputAtAddress(5) != 0);
+  QVERIFY(ios.analogInputAtAddress(5)->value().valueInt() != 500);
+  QVERIFY(ios.analogInputAtAddress(6) != 0);
+  QVERIFY(ios.analogInputAtAddress(6)->value().valueInt() != 600);
   ios.updateAnalogInputValues(valuesVar, 2, -1, true);
-  QCOMPARE(ios.analogInputAt(2)->value().valueInt(), 200);
-  QCOMPARE(ios.analogInputAt(5)->value().valueInt(), 500);
-  QCOMPARE(ios.analogInputAt(6)->value().valueInt(), 600);
+  QCOMPARE(ios.analogInputAtAddress(2)->value().valueInt(), 200);
+  QCOMPARE(ios.analogInputAtAddress(5)->value().valueInt(), 500);
+  QCOMPARE(ios.analogInputAtAddress(6)->value().valueInt(), 600);
   // Same story, but we queried device about addresses 0-3 (and I/O with address 3 does not exist in container)
   valuesVar.clear();
   valuesVar << 0 << 10 << 20 << 30;
-  QVERIFY(ios.analogInputAt(0) != 0);
-  QVERIFY(ios.analogInputAt(0)->value().valueInt() != 0);
-  QVERIFY(ios.analogInputAt(1) != 0);
-  QVERIFY(ios.analogInputAt(1)->value().valueInt() != 10);
-  QVERIFY(ios.analogInputAt(2) != 0);
-  QVERIFY(ios.analogInputAt(2)->value().valueInt() != 20);
+  QVERIFY(ios.analogInputAtAddress(0) != 0);
+  QVERIFY(ios.analogInputAtAddress(0)->value().valueInt() != 0);
+  QVERIFY(ios.analogInputAtAddress(1) != 0);
+  QVERIFY(ios.analogInputAtAddress(1)->value().valueInt() != 10);
+  QVERIFY(ios.analogInputAtAddress(2) != 0);
+  QVERIFY(ios.analogInputAtAddress(2)->value().valueInt() != 20);
   // We will check that 4th I/O was untouched
-  QVERIFY(ios.analogInputAt(5) != 0);
-  QVERIFY(ios.analogInputAt(5)->value().valueInt() == 500);
+  QVERIFY(ios.analogInputAtAddress(5) != 0);
+  QVERIFY(ios.analogInputAtAddress(5)->value().valueInt() == 500);
   ios.updateAnalogInputValues(valuesVar, -1, -1, true);
-  QCOMPARE(ios.analogInputAt(0)->value().valueInt(), 0);
-  QCOMPARE(ios.analogInputAt(1)->value().valueInt(), 10);
-  QCOMPARE(ios.analogInputAt(2)->value().valueInt(), 20);
+  QCOMPARE(ios.analogInputAtAddress(0)->value().valueInt(), 0);
+  QCOMPARE(ios.analogInputAtAddress(1)->value().valueInt(), 10);
+  QCOMPARE(ios.analogInputAtAddress(2)->value().valueInt(), 20);
   // Check that 4th I/O was untouched
-  QCOMPARE(ios.analogInputAt(5)->value().valueInt(), 500);
+  QCOMPARE(ios.analogInputAtAddress(5)->value().valueInt(), 500);
 
   /*
    * Analog OUT
@@ -1238,13 +1238,13 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   QCOMPARE(seg->addressesRead().at(1), 1);
   QCOMPARE(seg->addressesRead().at(2), 2);
   // First segment - Set some values and check
-  di = ios.digitalInputAt(0);
+  di = ios.digitalInputAtAddress(0);
   QVERIFY(di != 0);
   di->setValue(true);
-  di = ios.digitalInputAt(1);
+  di = ios.digitalInputAtAddress(1);
   QVERIFY(di != 0);
   di->setValue(false);
-  di = ios.digitalInputAt(2);
+  di = ios.digitalInputAtAddress(2);
   QVERIFY(di != 0);
   di->setValue(true);
   expectedValuesBool.clear();
@@ -1257,10 +1257,10 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   QCOMPARE(seg->addressesRead().at(0), 5);
   QCOMPARE(seg->addressesRead().at(1), 6);
   // Second segment - Set some values and check
-  di = ios.digitalInputAt(5);
+  di = ios.digitalInputAtAddress(5);
   QVERIFY(di != 0);
   di->setValue(true);
-  di = ios.digitalInputAt(6);
+  di = ios.digitalInputAtAddress(6);
   QVERIFY(di != 0);
   di->setValue(false);
   expectedValuesBool.clear();
@@ -1269,39 +1269,39 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
   // Check grouped updates - Only first segment
   valuesVar.clear();
   valuesVar << false;
-  QVERIFY(ios.digitalInputAt(0) != 0);
-  QVERIFY(ios.digitalInputAt(0)->value().valueBool() != false);
+  QVERIFY(ios.digitalInputAtAddress(0) != 0);
+  QVERIFY(ios.digitalInputAtAddress(0)->value().valueBool() != false);
   ios.updateDigitalInputValues(valuesVar, 0, -1, true);
-  QCOMPARE(ios.digitalInputAt(0)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(0)->value().valueBool(), false);
   ios.updateDigitalInputValues(valuesVar, 3, -1, true);  // Address 3 not exists
-  QCOMPARE(ios.digitalInputAt(0)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(0)->value().valueBool(), false);
   // Check grouped updates - first + second segments
   // Note: considere that we only included I/O's with addresses 0,1,2,5,6 in container, but we made a query to device for addresses 2-6
   valuesVar.clear();
   valuesVar << true << false << true << false << true;  // Data for device addresses 2, 3, 4, 5 and 6
   ios.setDigitalInputsValue(mdtValue());
-  QVERIFY(ios.digitalInputAt(0) != 0);
-  QVERIFY(ios.digitalInputAt(1) != 0);
-  QVERIFY(ios.digitalInputAt(2) != 0);
-  QVERIFY(ios.digitalInputAt(5) != 0);
-  QVERIFY(ios.digitalInputAt(6) != 0);
+  QVERIFY(ios.digitalInputAtAddress(0) != 0);
+  QVERIFY(ios.digitalInputAtAddress(1) != 0);
+  QVERIFY(ios.digitalInputAtAddress(2) != 0);
+  QVERIFY(ios.digitalInputAtAddress(5) != 0);
+  QVERIFY(ios.digitalInputAtAddress(6) != 0);
   ios.updateDigitalInputValues(valuesVar, 2, -1, true);
-  QCOMPARE(ios.digitalInputAt(2)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(5)->value().valueBool(), false);
-  QCOMPARE(ios.digitalInputAt(6)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(2)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(5)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(6)->value().valueBool(), true);
   // Same story, but we queried device about addresses 0-3 (and I/O with address 3 does not exist in container)
   valuesVar.clear();
   valuesVar << true << false << true << false;  // Data for device addresses 0, 1, 2 and 3
   ios.setDigitalInputsValue(mdtValue());
   // We will check that 4th I/O was untouched
-  QVERIFY(ios.digitalInputAt(5) != 0);
-  QVERIFY(ios.digitalInputAt(5)->value().valueBool() != true);
+  QVERIFY(ios.digitalInputAtAddress(5) != 0);
+  QVERIFY(ios.digitalInputAtAddress(5)->value().valueBool() != true);
   ios.updateDigitalInputValues(valuesVar, -1, -1, true);
-  QCOMPARE(ios.digitalInputAt(0)->value().valueBool(), true);
-  QCOMPARE(ios.digitalInputAt(1)->value().valueBool(), false);
-  QCOMPARE(ios.digitalInputAt(2)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(0)->value().valueBool(), true);
+  QCOMPARE(ios.digitalInputAtAddress(1)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(2)->value().valueBool(), true);
   // Check that 4th I/O was untouched
-  QCOMPARE(ios.digitalInputAt(5)->value().valueBool(), false);
+  QCOMPARE(ios.digitalInputAtAddress(5)->value().valueBool(), false);
 
   /*
    * Digital OUT
@@ -2082,21 +2082,29 @@ void mdtDeviceTest::modbusWagoTest()
   // Analog inputs
   QVERIFY(!d.getAnalogInputValue(0, false, false).isValid());
   QVERIFY(!d.getAnalogInputValue(0, true, false).isValid());
+  QVERIFY(!d.getAnalogInputValueAt(0, false, false).isValid());
+  QVERIFY(!d.getAnalogInputValueAt(0, true, false).isValid());
   QVERIFY(d.getAnalogInputValue(0, true, true).isValid());
   QVERIFY(d.getAnalogInputValue(0, false, false).isValid());
+  QVERIFY(d.getAnalogInputValueAt(0, true, true).isValid());
+  QVERIFY(d.getAnalogInputValueAt(0, false, false).isValid());
   QVERIFY(!d.getAnalogInputValue(0, true, false).isValid());
   QVERIFY(d.getAnalogInputValue("AI1", true, true).isValid());
   QVERIFY(!d.getAnalogInputValue("AI1", true, false).isValid());
   QVERIFY(d.getAnalogInputValue(1, true, true).isValid());
   QVERIFY(d.getAnalogInputValue(1, false, false).isValid());
+  QVERIFY(d.getAnalogInputValueAt(1, true, true).isValid());
+  QVERIFY(d.getAnalogInputValueAt(1, false, false).isValid());
   QVERIFY(d.getAnalogInputValue("AI2", true, true).isValid());
   QVERIFY(!d.getAnalogInputValue("AI2", true, false).isValid());
   QVERIFY(d.getAnalogInputs(true) >= 0);
 
   // Analog outputs
   QVERIFY(!d.getAnalogOutputValue(0x200, false, false).isValid());
+  QVERIFY(!d.getAnalogOutputValueAt(0, false, false).isValid());
   QVERIFY(d.getAnalogOutputValue(0x200, true, true).isValid());
   QVERIFY(d.getAnalogOutputValue(0x200, false, false).isValid());
+  QVERIFY(d.getAnalogOutputValueAt(0, false, false).isValid());
   QVERIFY(!d.getAnalogOutputValue(0x200, true, false).isValid());
   QVERIFY(d.setAnalogOutputValue(0, 2.5, true, true) >= 0);
   d.wait(setGetWaitTime);
@@ -2104,12 +2112,17 @@ void mdtDeviceTest::modbusWagoTest()
   QVERIFY(d.getAnalogOutputs(true) >= 0);
   QVERIFY(d.getAnalogOutputValue(0x200, false, false).isValid());
   MDT_COMPARE(d.getAnalogOutputValue(0x200, false, false).valueDouble(), 2.5, 12, -10.0, 10.0);
+  MDT_COMPARE(d.getAnalogOutputValueAt(0, false, false).valueDouble(), 2.5, 12, -10.0, 10.0);
   QVERIFY(d.setAnalogOutputValue("AO1", 2.5, true, true) >= 0);
   d.wait(setGetWaitTime);
   QVERIFY(d.getAnalogOutputValue("AO1", true, true).isValid());
   ///QVERIFY(qAbs(d.getAnalogOutputValue(0x200, 500, true).valueDouble()-2.5) < (10.0/4050.0));
   MDT_COMPARE(d.getAnalogOutputValue(0x200, true, true).valueDouble(), 2.5, 12, -10.0, 10.0);
   QVERIFY(d.getAnalogOutputValue(0x200, false, false).isValid());
+  QVERIFY(d.setAnalogOutputValueAt(1, 3.5, true, true) >= 0);
+  d.wait(setGetWaitTime);
+  QVERIFY(d.getAnalogOutputValue("AO1", true, true).isValid());
+  MDT_COMPARE(d.getAnalogOutputValue(0x201, true, true).valueDouble(), 3.5, 12, -10.0, 10.0);
   // Grouped query
   QVERIFY(d.setAnalogOutputValue(0, 1.5, false, false) == 0);
   QVERIFY(d.setAnalogOutputValue(1, 2.5, false, false) == 0);
@@ -2124,6 +2137,7 @@ void mdtDeviceTest::modbusWagoTest()
 
   // Digital inputs
   QVERIFY(!d.getDigitalInputValue(0, false, false).isValid());
+  QVERIFY(!d.getDigitalInputValueAt(1, false, false).isValid());
   QVERIFY(d.getDigitalInputValue(0, true, true).isValid());
   QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
   QVERIFY(!d.getDigitalInputValue(0, true, false).isValid());
@@ -2151,10 +2165,15 @@ void mdtDeviceTest::modbusWagoTest()
   d.wait(setGetWaitTime);
   QCOMPARE(d.getDigitalOutputValue("DO1", true, true).valueBool(), true);
   QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), true);
+  QCOMPARE(d.getDigitalOutputValueAt(1, true, true).valueBool(), true);
   QVERIFY(d.setDigitalOutputValue("DO1", false, true, true) >= 0);
   d.wait(setGetWaitTime);
   QCOMPARE(d.getDigitalOutputValue("DO1", true, true).valueBool(), false);
   QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), false);
+  QVERIFY(d.setDigitalOutputValueAt(1, true, true, true) >= 0);
+  d.wait(setGetWaitTime);
+  QCOMPARE(d.getDigitalOutputValue("DO1", true, true).valueBool(), true);
+
   ///QVERIFY(!d.getDigitalOutputState(0x200, 0).isValid());
   ///qDebug() << "TEST , getDigitalOutputState() ...";
   ///QVERIFY(d.getDigitalOutputState(0x200, 500).isValid());
@@ -2374,6 +2393,7 @@ void mdtDeviceTest::U3606ATest()
   // Get value
   ///QVERIFY(d.getAnalogInputValue(0, 32000).isValid());
   QVERIFY(d.getAnalogInputValue(0, true, true).isValid());
+  QVERIFY(d.getAnalogInputValueAt(0, true, true).isValid());
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   qDebug() << "*** OPC: " << d.sendQuery("*OPC?\n");
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");

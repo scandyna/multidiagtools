@@ -232,7 +232,7 @@ void mdtDeviceU3606A::updateMeasureSetup()
   mdtAnalogIo *aio;
 
   // Get the measure input
-  aio = ios()->analogInputAt(0);
+  aio = ios()->analogInputAtAddress(0);
   Q_ASSERT(aio != 0);
   // Check validity and update
   if(pvCodec->measureRange().isValid()){

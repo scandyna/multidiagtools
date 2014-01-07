@@ -234,6 +234,7 @@ class mdtDevice : public QObject
    * \param address Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a input number, etc...
+   *
    * \sa getAnalogInputValue(mdtAnalogIo*, bool, bool)
    */
   mdtValue getAnalogInputValue(int address, bool queryDevice, bool waitOnReply);
@@ -290,13 +291,21 @@ class mdtDevice : public QObject
 
   /*! \brief Get analog output value
    *
-   * \overload getAnalogOutputValue(mdtAnalogIo*, bool, bool)
-   *
    * \param addressRead Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a output number, etc...
+   *
+   * \sa getAnalogOutputValue(mdtAnalogIo*, bool, bool)
    */
   mdtValue getAnalogOutputValue(int addressRead, bool queryDevice, bool waitOnReply);
+
+  /*! \brief Get analog output value
+   *
+   * \param position See the concept of position in mdtDeviceIos class detailed description .
+   *
+   * \sa getAnalogOutputValue(mdtAnalogIo*, bool, bool)
+   */
+  mdtValue getAnalogOutputValueAt(int position, bool queryDevice, bool waitOnReply);
 
   /*! \brief Get analog output value
    *
@@ -342,13 +351,21 @@ class mdtDevice : public QObject
 
   /*! \brief Set analog output value
    *
-   * \overload setAnalogOutputValue(mdtAnalogIo*, const mdtValue&, bool, bool)
-   *
    * \param addressWrite Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a output number, etc...
+   *
+   * \sa setAnalogOutputValue(mdtAnalogIo*, const mdtValue&, bool, bool)
    */
   int setAnalogOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+
+  /*! \brief Set analog output value
+   *
+   * \param position See the concept of position in mdtDeviceIos class detailed description .
+   *
+   * \sa setAnalogOutputValue(mdtAnalogIo*, const mdtValue&, bool, bool)
+   */
+  int setAnalogOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply);
 
   /*! \brief Set analog output value
    *
@@ -397,13 +414,21 @@ class mdtDevice : public QObject
 
   /*! \brief Get digital input value
    *
-   * \overload getDigitalInputValue(mdtDigitalIo*, bool, bool)
-   *
    * \param address Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a input number, etc...
+   *
+   * \sa getDigitalInputValue(mdtDigitalIo*, bool, bool)
    */
   mdtValue getDigitalInputValue(int address, bool queryDevice, bool waitOnReply);
+
+  /*! \brief Get digital input value
+   *
+   * \param position See the concept of position in mdtDeviceIos class detailed description .
+   *
+   * \sa getDigitalInputValue(mdtDigitalIo*, bool, bool)
+   */
+  mdtValue getDigitalInputValueAt(int position, bool queryDevice, bool waitOnReply);
 
   /*! \brief Get digital input value
    *
@@ -445,13 +470,21 @@ class mdtDevice : public QObject
 
   /*! \brief Get digital output value
    *
-   * \overload getDigitalOutputValue(mdtDigitalIo*, bool, bool)
-   *
    * \param addressRead Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a output number, etc...
+   *
+   * \sa getDigitalOutputValue(mdtDigitalIo*, bool, bool)
    */
   mdtValue getDigitalOutputValue(int addressRead, bool queryDevice, bool waitOnReply);
+
+  /*! \brief Get digital output value
+   *
+   * \param position See the concept of position in mdtDeviceIos class detailed description .
+   *
+   * \sa getDigitalOutputValue(mdtDigitalIo*, bool, bool)
+   */
+  mdtValue getDigitalOutputValueAt(int position, bool queryDevice, bool waitOnReply);
 
   /*! \brief Get digital output value
    *
@@ -497,13 +530,21 @@ class mdtDevice : public QObject
 
   /*! \brief Set digital output value
    *
-   * \overload setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
-   *
    * \param addressWrite Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a output number, etc...
+   *
+   * \sa setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
    */
   int setDigitalOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+
+  /*! \brief Set digital output value
+   *
+   * \param position See the concept of position in mdtDeviceIos class detailed description .
+   *
+   * \sa setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
+   */
+  int setDigitalOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply);
 
   /*! \brief Set digital output value
    *

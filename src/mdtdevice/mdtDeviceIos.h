@@ -149,7 +149,7 @@ class mdtDeviceIos : public QObject
    * If no object exists at given address,
    *  a null pointer is returned.
    */
-  mdtAnalogIo *analogInputAt(int address);
+  mdtAnalogIo *analogInputAtAddress(int address);
 
   /*! \brief Get analog input with a given short label
    *
@@ -261,7 +261,7 @@ class mdtDeviceIos : public QObject
    * If no object exists at given address,
    *  a null pointer is returned.
    */
-  mdtDigitalIo *digitalInputAt(int address);
+  mdtDigitalIo *digitalInputAtAddress(int address);
 
   /*! \brief Get digital input with a given short label
    *

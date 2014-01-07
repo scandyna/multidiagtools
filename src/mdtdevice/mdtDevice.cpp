@@ -208,7 +208,7 @@ mdtValue mdtDevice::getAnalogInputValue(int address, bool queryDevice, bool wait
     return mdtValue();
   }
   // Get internal I/O object
-  ai = pvIos->analogInputAt(address);
+  ai = pvIos->analogInputAtAddress(address);
   if(ai == 0){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog input assigned to address " + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
@@ -221,6 +221,28 @@ mdtValue mdtDevice::getAnalogInputValue(int address, bool queryDevice, bool wait
 
 mdtValue mdtDevice::getAnalogInputValueAt(int position, bool queryDevice, bool waitOnReply)
 {
+  mdtAnalogIo *ai;
+
+  if(pvIos == 0){
+    return mdtValue();
+  }
+  // Check indexes
+  if((position < 0)||(position >= pvIos->analogInputs().size())){
+    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
+    return mdtValue();
+  }
+  // Get internal I/O object
+  ai = pvIos->analogInputs().at(position);
+  if(ai == 0){
+    pvLastError.setError(tr("Device ") + name() + tr(": no analog input assigned at position ") + QString::number(position), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
+    return mdtValue();
+  }
+
+  return getAnalogInputValue(ai, queryDevice, waitOnReply);
 }
 
 mdtValue mdtDevice::getAnalogInputValue(const QString &labelShort, bool queryDevice, bool waitOnReply)
@@ -344,6 +366,32 @@ mdtValue mdtDevice::getAnalogOutputValue(int addressRead, bool queryDevice, bool
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog output assigned to address " + QString::number(addressRead), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
     e.commit();
+    return mdtValue();
+  }
+
+  return getAnalogOutputValue(ao, queryDevice, waitOnReply);
+}
+
+mdtValue mdtDevice::getAnalogOutputValueAt(int position, bool queryDevice, bool waitOnReply)
+{
+  mdtAnalogIo *ao;
+
+  if(pvIos == 0){
+    return mdtValue();
+  }
+  // Check indexes
+  if((position < 0)||(position >= pvIos->analogOutputs().size())){
+    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
+    return mdtValue();
+  }
+  // Get internal I/O object
+  ao = pvIos->analogOutputs().at(position);
+  if(ao == 0){
+    pvLastError.setError(tr("Device ") + name() + tr(": no analog output assigned at position ") + QString::number(position), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
     return mdtValue();
   }
 
@@ -477,6 +525,32 @@ int mdtDevice::setAnalogOutputValue(int addressWrite, const mdtValue &value, boo
   return setAnalogOutputValue(analogOutput, value, sendToDevice, waitOnReply);
 }
 
+int mdtDevice::setAnalogOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+{
+  mdtAnalogIo *analogOutput;
+
+  if(pvIos == 0){
+    return -1;
+  }
+  // Check indexes
+  if((position < 0)||(position >= pvIos->analogOutputs().size())){
+    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
+    return -1;
+  }
+  // Get internal I/O object
+  analogOutput = pvIos->analogOutputs().at(position);
+  if(analogOutput == 0){
+    pvLastError.setError(tr("Device ") + name() + tr(": no analog output assigned at position ") + QString::number(position), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
+    return -1;
+  }
+
+  return setAnalogOutputValue(analogOutput, value, sendToDevice, waitOnReply);
+}
+
 int mdtDevice::setAnalogOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
   mdtAnalogIo *analogOutput;
@@ -594,11 +668,37 @@ mdtValue mdtDevice::getDigitalInputValue(int address, bool queryDevice, bool wai
     return mdtValue();
   }
   // Get I/O object
-  digitalInput = pvIos->digitalInputAt(address);
+  digitalInput = pvIos->digitalInputAtAddress(address);
   if(digitalInput == 0){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital input assigned to address " + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
     e.commit();
+    return mdtValue();
+  }
+
+  return getDigitalInputValue(digitalInput, queryDevice, waitOnReply);
+}
+
+mdtValue mdtDevice::getDigitalInputValueAt(int position, bool queryDevice, bool waitOnReply)
+{
+  mdtDigitalIo *digitalInput;
+
+  if(pvIos == 0){
+    return mdtValue();
+  }
+  // Check indexes
+  if((position < 0)||(position >= pvIos->digitalInputs().size())){
+    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
+    return mdtValue();
+  }
+  // Get internal I/O object
+  digitalInput = pvIos->digitalInputs().at(position);
+  if(digitalInput == 0){
+    pvLastError.setError(tr("Device ") + name() + tr(": no digital input assigned at position ") + QString::number(position), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
     return mdtValue();
   }
 
@@ -732,6 +832,32 @@ mdtValue mdtDevice::getDigitalOutputValue(int addressRead, bool queryDevice, boo
   return getDigitalOutputValue(digitalOutput, queryDevice, waitOnReply);
 }
 
+mdtValue mdtDevice::getDigitalOutputValueAt(int position, bool queryDevice, bool waitOnReply)
+{
+  mdtDigitalIo *digitalOutput;
+
+  if(pvIos == 0){
+    return mdtValue();
+  }
+  // Check indexes
+  if((position < 0)||(position >= pvIos->digitalOutputs().size())){
+    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
+    return mdtValue();
+  }
+  // Get internal I/O object
+  digitalOutput = pvIos->digitalOutputs().at(position);
+  if(digitalOutput == 0){
+    pvLastError.setError(tr("Device ") + name() + tr(": no digital output assigned at position ") + QString::number(position), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
+    return mdtValue();
+  }
+
+  return getDigitalOutputValue(digitalOutput, queryDevice, waitOnReply);
+}
+
 mdtValue mdtDevice::getDigitalOutputValue(const QString &labelShort, bool queryDevice, bool waitOnReply)
 {
   mdtDigitalIo *digitalOutput;
@@ -853,6 +979,32 @@ int mdtDevice::setDigitalOutputValue(int addressWrite, const mdtValue &value, bo
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output assigned to address " + QString::number(addressWrite), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
     e.commit();
+    return -1;
+  }
+
+  return setDigitalOutputValue(digitalOutput, value, sendToDevice, waitOnReply);
+}
+
+int mdtDevice::setDigitalOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+{
+  mdtDigitalIo *digitalOutput;
+
+  if(pvIos == 0){
+    return -1;
+  }
+  // Check indexes
+  if((position < 0)||(position >= pvIos->digitalOutputs().size())){
+    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
+    return -1;
+  }
+  // Get internal I/O object
+  digitalOutput = pvIos->digitalOutputs().at(position);
+  if(digitalOutput == 0){
+    pvLastError.setError(tr("Device ") + name() + tr(": no digital output assigned at position ") + QString::number(position), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDevice");
+    pvLastError.commit();
     return -1;
   }
 

@@ -310,7 +310,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
   while(pvPort->readenFrames().size() > 0){
     frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->readenFrames().dequeue());
     Q_ASSERT(frame != 0);
-    qDebug() << "mdtUsbtmcPortManager::fromThreadNewFrameReaden() - bTag: " << frame->bTag();
+    ///qDebug() << "mdtUsbtmcPortManager::fromThreadNewFrameReaden() - bTag: " << frame->bTag();
     port->expectedBulkInbTags().removeOne(frame->bTag());
     // Check if frame is complete
     if(!frame->isComplete()){
