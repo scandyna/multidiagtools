@@ -114,7 +114,7 @@ QList<QVariant> mdtTtTest::getTestItemIdListForTestId(const QVariant & testId)
   return testItemIdList;
 }
 
-QList<QVariant> mdtTtTest::getNodeIdListForTestId(const QVariant & testId)
+QList<QVariant> mdtTtTest::getHardwareNodeIdListForTestId(const QVariant & testId)
 {
   QString sql;
   QSqlError sqlError;
@@ -137,7 +137,7 @@ QList<QVariant> mdtTtTest::getNodeIdListForTestId(const QVariant & testId)
   return nodeIdList;
 }
 
-QList<QVariant> mdtTtTest::getNodeIdListForTestItemId(const QVariant & testItemId)
+QList<QVariant> mdtTtTest::getHardwareNodeIdListForTestItemId(const QVariant & testItemId)
 {
   QString sql;
   QSqlError sqlError;
@@ -160,7 +160,7 @@ QList<QVariant> mdtTtTest::getNodeIdListForTestItemId(const QVariant & testItemI
   return nodeIdList;
 }
 
-QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId, const QVariant & nodeId)
+QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId)
 {
   QList<mdtTtTestNodeUnitSetupData> dataList;
   QString sql;
@@ -177,7 +177,7 @@ QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant
         " Value,"\
         " NodeId ";
   sql += " FROM TestItemNodeUnitSetup_view ";
-  sql += " WHERE Id_PK = " + testItemId.toString() + " AND NodeId = " + nodeId.toString();
+  sql += " WHERE Id_PK = " + testItemId.toString() + " AND NodeId = " + hardwareNodeId.toString();
   if(!query.exec(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query to get test node unit setup.", mdtError::Error);

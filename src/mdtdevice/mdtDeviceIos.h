@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -45,7 +45,19 @@ class mdtDeviceIosSegment;
  *  class to have a generic representation af all
  *  type of I/O.
  *
- * Concept of address:
+ * Concept of position
+ *
+ *  Internally, I/Os are stored in 4 QList:
+ *   - 1 for analog inputs
+ *   - 1 fro analog outputs
+ *   - 1 for digital inputs
+ *   - 1 for digital outputs
+ *
+ * The position is simply a index in a list, with a range from 0 to N-1 I/O for a type .
+ *  The order of position is the order of call to add method .
+ *
+ * Concept of address
+ *
  *  Internally, each I/O is stored in a QMap with an address as key.
  *  In some cases, this can reflect a real situations, for exaple:
  *  - Relative address of a MODBUS query
@@ -150,7 +162,7 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Get a list containing all analog inputs
    *
-   * Note: the returned list is not sorted.
+   * Note: the returned list is not sorted by address .
    *        for grouped queries, see analogInputsSegments() and updateAnalogInputValues()
    */
   const QList<mdtAnalogIo*> analogInputs() const;
@@ -211,7 +223,7 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Get a list containing all analog outputs
    *
-   * Note: the returned list is not sorted
+   * Note: the returned list is not sorted by address .
    */
   const QList<mdtAnalogIo*> analogOutputs() const;
 
@@ -262,7 +274,7 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Get a list containing all digital inputs
    *
-   * Note: the returned list is not sorted
+   * Note: the returned list is not sorted by address .
    */
   const QList<mdtDigitalIo*> digitalInputs() const;
 
@@ -322,7 +334,7 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Get a list containing all digital outputs
    *
-   * Note: the returned list is not sorted
+   * Note: the returned list is not sorted by address .
    */
   const QList<mdtDigitalIo*> digitalOutputs() const;
 

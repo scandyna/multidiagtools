@@ -67,24 +67,20 @@ class mdtTtTest : public mdtClBase
    */
   QList<QVariant> getTestItemIdListForTestId(const QVariant & testId);
 
-  /*! \brief Get list of NodeId used by given test ID
-   *
-   * Note: returns NodeId field from TestNode_tbl .
+  /*! \brief Get list of hardware node ID used by given test ID
    */
-  QList<QVariant> getNodeIdListForTestId(const QVariant & testId);
+  QList<QVariant> getHardwareNodeIdListForTestId(const QVariant & testId);
 
-  /*! \brief Get list of NodeId used by given test item ID
-   *
-   * Note: returns NodeId field from TestNode_tbl .
+  /*! \brief Get list of hardware node ID used by given test item ID
    */
-  QList<QVariant> getNodeIdListForTestItemId(const QVariant & testItemId);
+  QList<QVariant> getHardwareNodeIdListForTestItemId(const QVariant & testItemId);
 
-  /*! \brief Get test node unit setups for a given test item ID and nodeId
+  /*! \brief Get test node unit setups for a given test item ID and hardwareNodeId
    *
    * \param testItemId Primary key of TestItem_tbl
-   * \param nodeId NodeId from TestNode_tbl
+   * \param hardwareNodeId NodeId from TestNode_tbl
    */
-  QList<mdtTtTestNodeUnitSetupData> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & nodeId);
+  QList<mdtTtTestNodeUnitSetupData> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId);
 
   /*! \brief Set test model
    *

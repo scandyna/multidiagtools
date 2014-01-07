@@ -23,6 +23,7 @@
 ///#include "mdtTtTestModel.h"
 #include "mdtTtTest.h"
 #include "mdtDevice.h"
+#include <mdtDeviceIos.h>
 #include "mdtDeviceModbusWago.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
@@ -85,6 +86,7 @@ bool mdtTtCableChecker::setupTables()
     return false;
   }
   createMultimeter();
+  createIoNodes();
   return true;
 }
 
@@ -361,17 +363,78 @@ void mdtTtCableChecker::createMultimeter()
 
 void mdtTtCableChecker::createIoNodes()
 {
+  QList<QVariant> hwNodeIdList;
+  QVariant testId;
+  mdtDeviceModbusWago *device;
+  mdtDeviceIos *nodeIos;
+  QString name;
+  int i;
+
+  // Get test ID and HW node ID list
+  testId = currentData("Test_tbl", "Id_PK");
+  if(testId.isNull()){
+    return;
+  }
+  hwNodeIdList = pvTest->getHardwareNodeIdListForTestId(testId);
+  // Create nodes
+  for(i = 0; i < hwNodeIdList.size(); ++i){
+    device = new mdtDeviceModbusWago;
+    nodeIos = new mdtDeviceIos;
+    name = "I/O node ID " + hwNodeIdList.at(i).toString();
+    device->setName(name);
+    device->setHardwareNodeId(hwNodeIdList.at(i).toInt(), 8, 0);
+    device->setIos(nodeIos);
+    pvModbusIoNodes.append(device);
+    addDeviceStatusWidget(device, name);
+  }
 }
 
 bool mdtTtCableChecker::connectToInstruments()
 {
   Q_ASSERT(pvMultimeter != 0);
 
+  QList<QVariant> hwNodeIdListVar;
+  QList<int> hwNodeIdList;
+  QVariant testId;
+  mdtDeviceModbusWago *ioNode;
+  
+  int i;
+
+  // Get test ID and HW node ID list
+  testId = currentData("Test_tbl", "Id_PK");
+  if(testId.isNull()){
+    return false;
+  }
+  hwNodeIdListVar = pvTest->getHardwareNodeIdListForTestId(testId);
+  for(i = 0; i < hwNodeIdListVar.size(); ++i){
+    hwNodeIdList.append(hwNodeIdListVar.at(i).toInt());
+  }
+  // Connect to multimeter
   if(pvMultimeter->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
     pvLastError.setError(tr("Cannot connect to U3606A"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
     pvLastError.commit();
     return false;
+  }
+  // Connect to nodes
+  for(i = 0; i < pvModbusIoNodes.size(); ++i){
+    ioNode = pvModbusIoNodes.at(i);
+    Q_ASSERT(ioNode != 0);
+    // Connect
+    if(ioNode->connectToDevice(hwNodeIdList) != mdtAbstractPort::NoError){
+      pvLastError.setError(tr("Cannot connect to ") + ioNode->name(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+      pvLastError.commit();
+      return false;
+    }
+    // Setup I/Os
+    if(!ioNode->detectIos(ioNode->ios())){
+      pvLastError.setError(tr("Cannot detect I/Os in ") + ioNode->name(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+      pvLastError.commit();
+      return false;
+    }
+    ioNode->setIos(ioNode->ios(), true);
   }
 
   return true;
@@ -381,19 +444,38 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
 {
   QList<mdtTtTestNodeUnitSetupData> setupDataList;
   mdtTtTestNodeUnitSetupData setupData;
-  int i;
+  mdtDeviceModbusWago *ioNode;
+  int i, k;
 
-  // Get setup data
-  setupDataList = pvTest->getNodeUnitSetupList(testItemId, 26);
-  // Set all node outputs to OFF
-  qDebug() << "Setting node units OFF ...";
-  // Setup all specified node units
-  for(i = 0; i < setupDataList.size(); ++i){
-    setupData = setupDataList.at(i);
-    /// \todo Check data validity !
-    qDebug() << "Setup node ID " << setupData.nodeId().toInt() << " , enable unit " << setupData.schemaPosition().toString();
+  for(i = 0; i < pvModbusIoNodes.size(); ++i){
+    ioNode = pvModbusIoNodes.at(i);
+    Q_ASSERT(ioNode != 0);
+    // Get setup data
+    setupDataList = pvTest->getNodeUnitSetupList(testItemId, ioNode->hardwareNodeId());
+    // Set all outputs OFF
+    Q_ASSERT(ioNode->ios() != 0);
+    ioNode->ios()->setDigitalOutputsValue(false);
+    // Setup all specified node units
+    for(k = 0; k < setupDataList.size(); ++k){
+      setupData = setupDataList.at(k);
+      /// \todo Check data validity !
+      if(setupData.nodeId() == ioNode->hardwareNodeId()){
+        if(ioNode->setDigitalOutputValue(setupData.schemaPosition().toString(), false, false, false) < 0){
+          pvLastError.setError(tr("Cannot set digital output ") + setupData.schemaPosition().toString() + tr(" for ") + ioNode->name(), mdtError::Error);
+          MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+          pvLastError.commit();
+          return false;
+        }
+      }
+    }
+    // Send query to node
+    if(ioNode->setDigitalOutputs(true) < 0){
+      pvLastError.setError(tr("Cannot set digital outputs to ") + ioNode->name(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+      pvLastError.commit();
+      return false;
+    }
   }
-  qDebug() << "Sending queries to nodes ...";
 
   return true;
 }

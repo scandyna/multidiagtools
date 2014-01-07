@@ -231,13 +231,20 @@ class mdtDevice : public QObject
 
   /*! \brief Get analog input value
    *
-   * \overload getAnalogInputValue(mdtAnalogIo*, bool, bool)
-   *
    * \param address Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a input number, etc...
+   * \sa getAnalogInputValue(mdtAnalogIo*, bool, bool)
    */
   mdtValue getAnalogInputValue(int address, bool queryDevice, bool waitOnReply);
+
+  /*! \brief Get analog input value
+   *
+   * \param position See the concept of position in mdtDeviceIos class detailed description .
+   *
+   * \sa getAnalogInputValue(mdtAnalogIo*, bool, bool)
+   */
+  mdtValue getAnalogInputValueAt(int position, bool queryDevice, bool waitOnReply);
 
   /*! \brief Get analog input value
    *

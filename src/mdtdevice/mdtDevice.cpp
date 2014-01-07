@@ -219,6 +219,10 @@ mdtValue mdtDevice::getAnalogInputValue(int address, bool queryDevice, bool wait
   return getAnalogInputValue(ai, queryDevice, waitOnReply);
 }
 
+mdtValue mdtDevice::getAnalogInputValueAt(int position, bool queryDevice, bool waitOnReply)
+{
+}
+
 mdtValue mdtDevice::getAnalogInputValue(const QString &labelShort, bool queryDevice, bool waitOnReply)
 {
   mdtAnalogIo *ai;

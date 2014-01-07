@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -474,6 +474,10 @@ void mdtDeviceIos::addDigitalOutput(mdtDigitalIo *dout, addressAccess_t sortSegm
   // Add current segment to list
   segment->setIos(segmentDoList);
   pvDigitalOutputsSegments.append(segment);
+  /// \todo provisoire
+  for(i = 0; i< pvDigitalOutputs.size(); i++){
+    qDebug() << "DO pos. " << i << ": RD ADR: " << pvDigitalOutputs.at(i)->addressRead() << " , WR ADR: " << pvDigitalOutputs.at(i)->addressWrite();
+  }
 }
 
 void mdtDeviceIos::addDigitalOutputs(const QList<mdtDigitalIo*> & doList, addressAccess_t sortSegmentsBy)
