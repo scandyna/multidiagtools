@@ -1,0 +1,15 @@
+# CMake project file for Multi Diag Tools
+# * Unit test for: mdtdatabase *
+# * Directory: tests/mdtdatabase *
+
+# Project
+project (multidiagtools)
+
+# * mdtDatabaseTest executable *
+QT4_WRAP_CPP(MDT_DATABASE_TEST_MOC "mdtDatabaseTest.h")
+#QT4_WRAP_UI (MDT_DATABASE_TEST_UIC_HEADERS "mdtSqlFormWidgetTestForm.ui")
+add_executable(mdtdatabasetest "mdtDatabaseTest.cpp" ${MDT_DATABASE_TEST_MOC} ${MDT_DATABASE_TEST_UIC_HEADERS})
+target_link_libraries(mdtdatabasetest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasetest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdtdatabasetest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasetest "mdttest")

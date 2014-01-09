@@ -16,8 +16,9 @@ set (HEADER_FILES
 # Liste des fichiers sources
 set (SOURCES_FILES 
           mdtSqlForm.cpp
-	  mdtSqlWindow.cpp
-	  mdtSqlDialog.cpp
+          mdtSqlWindow.cpp
+          mdtSqlDialog.cpp
+          mdtSqlRecord.cpp
     )
 
 # Qt ui files

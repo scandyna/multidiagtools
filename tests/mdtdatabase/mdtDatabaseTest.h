@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,40 +18,42 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DATA_TABLE_TEST_OLD_H
-#define MDT_DATA_TABLE_TEST_OLD_H
+#ifndef MDT_DATABASE_TEST_H
+#define MDT_DATABASE_TEST_H
 
 #include "mdtTest.h"
+#include <QFileInfo>
+#include <QMessageBox>
+#include <QSqlDatabase>
 
-class mdtDataTableTest : public mdtTest
+class mdtDatabaseTest : public mdtTest
 {
  Q_OBJECT
 
  private slots:
 
-  void sandbox();
+  void initTestCase();
+  void cleanupTestCase();
 
-  // Dataset creations test
-  void createDataSetTest();
+  /// \todo Add mdtSqlDialog test
+  /// \todo Add mdtSqlForm test
+  /// \todo Add mdtSqlWindow test
 
-  // Add/edit/remove data test
-  void editDataTest();
+  void sqlRecordTest();
 
-  // Field map test
-  void fieldMapItemCopyTest();
-  void fieldMapCopyTest();
-  void fieldMapFieldsMappedFilterTest();
-  void fieldMapHeaderTest();
-  void fieldMapTest();
-  void fieldMapAutoMapTest();
-  void fieldMapDataTest();
+ private:
 
-  // CSV export/import tests
-  void csvExportTest();
-  void csvImportTest();
+  /*
+   * Create the test database
+   */
+  void createTestDatabase();
+  // Populate database with some common data
+  void populateTestDatabase();
+  // Clear test database data
+  void clearTestDatabaseData();
 
-  // Table copy test
-  void copyTableTest();
+  QFileInfo pvDatabaseFileInfo;
+  QSqlDatabase pvDatabase;
 };
 
-#endif  // #ifndef MDT_DATA_TABLE_TEST_OLD_H
+#endif // #ifndef MDT_DATABASE_TEST_H

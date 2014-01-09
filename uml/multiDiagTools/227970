@@ -1,6 +1,6 @@
 format 76
 "Program" // mdttools::TestTool::Program
-  revision 12
+  revision 13
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -549,6 +549,49 @@ ${inlines}
       end
 
       operation 1813890 "mdtTtTest"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 1007106 "mdtTtTestNodeUnitData"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 1073794 "mdtTtTestNodeUnitData"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 1336322 // <generalisation>
+	relation 1323394 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1336322 // <generalisation>
+	  b parent class_ref 1067266 // mdtSqlRecord
+      end
+
+      operation 1852674 "mdtTtTestNodeUnitData"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "db" type class_ref 405122 // QSqlDatabase
@@ -1513,6 +1556,30 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 1060738 // mdtTtTestNodeUnitSetupData
+      end
+    end
+
+    artifact 677250 "mdtTtTestNodeUnitData"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 1073794 // mdtTtTestNodeUnitData
       end
     end
   end
