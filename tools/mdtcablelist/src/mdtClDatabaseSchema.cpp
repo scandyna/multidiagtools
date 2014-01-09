@@ -1507,6 +1507,11 @@ bool mdtClDatabaseSchema::setupTestNodeUnitTable()
   field.setType(QVariant::String);
   field.setLength(30);
   table.addField(field, false);
+  // IoPosition
+  field = QSqlField();
+  field.setName("IoPosition");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
   // Indexes
   table.addIndex("Unit_Id_FK_PK_idx", false);
   if(!table.addFieldToIndex("Unit_Id_FK_PK_idx", "Unit_Id_FK_PK")){
@@ -1995,6 +2000,7 @@ bool mdtClDatabaseSchema::createTestNodeUnitView()
         "TestNodeUnit_tbl.TestConnection_Id_FK,\n"\
         "Unit_tbl.SchemaPosition,\n"\
         "TestNodeUnit_tbl.Bus,\n"\
+        "TestNodeUnit_tbl.IoPosition,\n"\
         "UnitConnector_tbl.Name AS UnitConnectorName,\n"\
         "UnitConnection_tbl.UnitContactName,\n"\
         "UnitConnection_tbl.SignalName,\n"\
@@ -2475,6 +2481,7 @@ bool mdtClDatabaseSchema::createTestLinkView()
         " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
         " TN.NodeId,\n"\
         " TNU.Bus,\n"\
+        " TNU.IoPosition,\n"\
         " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
         " UCT.Name AS TestConnectorName,\n"\
         " UCNXT.UnitContactName AS TestContactName,\n"\
@@ -2572,6 +2579,7 @@ bool mdtClDatabaseSchema::createTestModelItemNodeUnitSetupView()
         " TNUS.State,\n"\
         " TNUS.Value,\n"\
         " TNU.Bus,\n"\
+        " TNU.IoPosition,\n"\
         " TN.NodeId\n"\
         "FROM TestNodeUnitSetup_tbl TNUS\n"\
         " JOIN TestModelItem_tbl TMI\n"\
@@ -2621,6 +2629,7 @@ bool mdtClDatabaseSchema::createTestModelItemNodeUnitView()
         " TNU.Unit_Id_FK_PK,\n"\
         " U.SchemaPosition,\n"\
         " TNU.Bus,\n"\
+        " TNU.IoPosition,\n"\
         " TNU.Type_Code_FK,\n"\
         " TN.VehicleType_Id_FK_PK AS TestNode_Id_FK,\n"\
         " TN.NodeId\n"\
@@ -2712,6 +2721,7 @@ bool mdtClDatabaseSchema::createTestItemNodeUnitSetupView()
         " TNUS.State,\n"\
         " TNUS.Value,\n"\
         " TNU.Bus,\n"\
+        " TNU.IoPosition,\n"\
         " TN.NodeId\n"\
         "FROM TestItem_tbl TI\n"\
         " JOIN TestModelItem_tbl TMI\n"\

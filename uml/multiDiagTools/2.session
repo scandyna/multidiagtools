@@ -1,11 +1,24 @@
-window_sizes 1280 1001 237 1037 923 0
+window_sizes 1280 1001 315 959 923 0
 diagrams
-  active  classdiagram_ref 927874 // TestNode
-    1037 923 90 18 0 0
+  classdiagram_ref 987522 // Description
+    829 738 100 4 0 0
+  classdiagram_ref 1000578 // mdtSqlData
+    829 738 100 4 0 0
+  classdiagram_ref 927874 // TestNode
+    829 738 100 18 0 0
+  active  classdiagram_ref 934402 // mdtTtTestNode
+    959 923 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 927874 // TestNode
+selected classdiagram_ref 934402 // mdtTtTestNode
 open
-  classview_ref 569730 // TestTool
+  classview_ref 595842 // MultiTableEdition
+  classview_ref 582786 // GUI
+  class_ref 1067266 // mdtSqlData
+  class_ref 992770 // TestNodeUnit_tbl
+  classview_ref 576258 // TestTool
+  operation_ref 792834 // ~QSqlRecord
+  operation_ref 1844738 // clear
+  operation_ref 1844866 // clearValues
 end
 end
