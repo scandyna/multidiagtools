@@ -53,9 +53,73 @@ bool mdtSqlRecord::addField(const QString & fieldName, const QString & tableName
     pvLastError.commit();
     return false;
   }
+  fld.setGenerated(false);
   append(fld);
 
   return true;
+}
+
+bool mdtSqlRecord::addAllFields(const QString & tableName, const QSqlDatabase & db)
+{
+  QSqlRecord dbRecord;
+  QSqlField fld;
+  int i;
+
+  // Get record object to fetch attributes
+  dbRecord = db.record(tableName);
+  if(dbRecord.isEmpty()){
+    QSqlError sqlError = db.lastError();
+    pvLastError.setError("Table '" + tableName + "' was not found in database.", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlRecord");
+    pvLastError.commit();
+    return false;
+  }
+  // Get fields and add them
+  for(i = 0; i < dbRecord.count(); ++i){
+    fld = dbRecord.field(i);
+    if(!fld.isValid()){
+      pvLastError.setError("Field '" + fld.name() + "' was not found in table '" + tableName + "'", mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtSqlRecord");
+      pvLastError.commit();
+      return false;
+    }
+    fld.setGenerated(false);
+    append(fld);
+  }
+
+  return true;
+}
+
+bool mdtSqlRecord::hasValue(int fieldIndex) const
+{
+  return isGenerated(fieldIndex);
+}
+
+bool mdtSqlRecord::hasValue(const QString & fieldName) const
+{
+  return isGenerated(fieldName);
+}
+
+void mdtSqlRecord::setValue(int fieldIndex, const QVariant & val)
+{
+  setGenerated(fieldIndex, true);
+  QSqlRecord::setValue(fieldIndex, val);
+}
+
+void mdtSqlRecord::setValue(const QString & fieldName, const QVariant & val)
+{
+  setValue(indexOf(fieldName), val);
+}
+
+void mdtSqlRecord::clearValues()
+{
+  int i;
+
+  for(i = 0; i < count(); ++i){
+    setGenerated(i, false);
+  }
+  QSqlRecord::clearValues();
 }
 
 mdtError mdtSqlRecord::lastError() const

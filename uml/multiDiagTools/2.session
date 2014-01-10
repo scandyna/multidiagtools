@@ -1,11 +1,9 @@
-window_sizes 1280 1001 315 959 923 0
+window_sizes 1024 718 315 703 640 0
 diagrams
   classdiagram_ref 1000578 // mdtSqlData
     829 738 100 4 0 0
-  classdiagram_ref 927874 // TestNode
-    829 738 100 18 0 0
-  active  classdiagram_ref 1007106 // mdtTtTestNodeUnitData
-    959 923 100 4 0 0
+  active  classdiagram_ref 927874 // TestNode
+    703 640 100 18 247 190
 end
 show_stereotypes
 selected classdiagram_ref 1007106 // mdtTtTestNodeUnitData

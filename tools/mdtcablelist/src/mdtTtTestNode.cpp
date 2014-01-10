@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -182,6 +182,32 @@ QList<QVariant> mdtTtTestNode::getChannelTestConnectionIdList(const QVariant & t
   }
 
   return testConnectionIdList;
+}
+
+bool mdtTtTestNode::addTestNodeUnit(const mdtTtTestNodeUnitData & data)
+{
+  return addRecord(data, "TestNodeUnit_tbl");
+}
+
+bool mdtTtTestNode::addTestNodeUnits(const QList<mdtTtTestNodeUnitData> & dataList)
+{
+  int i;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    if(!addRecord(dataList.at(i), "TestNodeUnit_tbl")){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+  ///return addRecordList(dataList, "TestNodeUnit_tbl", true);
 }
 
 bool mdtTtTestNode::addTestNodeUnit(const QVariant & UnitId, const QVariant & TestNodeId , const QVariant & typeCode, const QVariant & busName)

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,6 +27,7 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtTtTestNodeUnitData.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -77,6 +78,9 @@ void mdtTtTestNodeEditor::setBaseVehicleType()
 void mdtTtTestNodeEditor::addUnits()
 {
   mdtTtTestNode tn(database());
+  QList<mdtTtTestNodeUnitData> dataList;
+  int i;
+  
   QVariant baseVehicleTypeId;
   QVariant typeCode;
   QVariant busName;
@@ -135,12 +139,33 @@ void mdtTtTestNodeEditor::addUnits()
     return;
   }
   qDebug() << "Selected units: " << unitIdList;
+  // Build data list
+  for(i = 0; i < unitIdList.size(); ++i){
+    mdtTtTestNodeUnitData data(database());
+    if(data.isEmpty()){
+      pvLastError = data.lastError();
+      displayLastError();
+      return;
+    }
+    data.setValue("Unit_Id_FK_PK", unitIdList.at(i));
+    data.setValue("TestNode_Id_FK", baseVehicleTypeId);
+    data.setValue("Type_Code_FK", typeCode);
+    data.setValue("Bus", busName);
+    dataList.append(data);
+  }
   // Add test node unit
+  if(!tn.addTestNodeUnits(dataList)){
+    pvLastError = tn.lastError();
+    displayLastError();
+    return;
+  }
+  /**
   if(!tn.addTestNodeUnits(unitIdList, baseVehicleTypeId, typeCode, busName)){
     pvLastError = tn.lastError();
     displayLastError();
     return;
   }
+  */
   // Assign test connection to each test node unit
   if(!assignTestConnectionToTestNodeUnitLits(unitIdList, unitConnectionIdList)){
     displayLastError();

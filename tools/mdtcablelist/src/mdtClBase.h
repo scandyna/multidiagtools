@@ -22,11 +22,13 @@
 #define MDT_CL_BASE_H
 
 #include "mdtError.h"
+#include "mdtSqlRecord.h"
 #include <QSqlDatabase>
 #include <QString>
 #include <QStringList>
 #include <QModelIndex>
 #include <QVariant>
+#include <QList>
 
 /*! \brief Base class for helper class
  *
@@ -58,6 +60,21 @@ class mdtClBase
   /*! \brief Get last error
    */
   mdtError lastError();
+
+  /*! \brief Add a record to given table
+   *
+   * Will only get values from fields that have a value.
+   *  For this, mdtSqlRecord::hasValue() is used.
+   */
+  bool addRecord(const mdtSqlRecord & record, const QString & tableName);
+
+  /*! \brief Add a list of records to given table
+   *
+   * If singleTransaction is true, a transaction will be used for
+   *  adding all records. If you need to handle a transaction
+   *  outside, set this parameter to false.
+   */
+  bool addRecordList(const QList<mdtSqlRecord> & recordList, const QString & tableName, bool singleTransaction = false);
 
   /*! \brief Remove data from given table
    *

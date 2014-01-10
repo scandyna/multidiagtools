@@ -59,11 +59,15 @@ void mdtDatabaseTest::initTestCase()
 
 void mdtDatabaseTest::sqlRecordTest()
 {
-  mdtSqlRecord record;
+  mdtSqlRecord record, record2;
 
   // Set database data
   clearTestDatabaseData();
   populateTestDatabase();
+
+  /*
+   * Fields creation
+   */
 
   // Add existing fields
   QVERIFY(record.addField("Id_PK", "Client_tbl", pvDatabase));
@@ -75,6 +79,63 @@ void mdtDatabaseTest::sqlRecordTest()
   // Try to add a non existing field
   QVERIFY(!record.addField("jkhhdsh dhaskhd sah asdk", "Client_tbl", pvDatabase));
   QCOMPARE(record.count(), 2);
+  // Clear fields
+  record.clear();
+  QCOMPARE(record.count(), 0);
+  // Add all fields of Client_tbl and check
+  QVERIFY(record.addAllFields("Client_tbl", pvDatabase));
+  QCOMPARE(record.count(), 3);
+  QCOMPARE(record.field(0).name(), QString("Id_PK"));
+  QCOMPARE(record.field(1).name(), QString("FirstName"));
+  QCOMPARE(record.field(2).name(), QString("Remarks"));
+
+  /*
+   * Edition
+   */
+
+  // Initial flags
+  QCOMPARE(record.count(), 3);
+  QVERIFY(!record.hasValue(0));
+  QVERIFY(!record.hasValue(1));
+  QVERIFY(!record.hasValue(2));
+  QVERIFY(!record.hasValue("Id_PK"));
+  QVERIFY(!record.hasValue("FirstName"));
+  QVERIFY(!record.hasValue("Remarks"));
+  // Edit a field and check
+  record.setValue("FirstName", "A test name");
+  QVERIFY(!record.hasValue("Id_PK"));
+  QVERIFY(record.hasValue("FirstName"));
+  QVERIFY(!record.hasValue("Remarks"));
+  // Clear values and check
+  record.clearValues();
+  QCOMPARE(record.count(), 3);
+  QVERIFY(!record.hasValue("Id_PK"));
+  QVERIFY(!record.hasValue("FirstName"));
+  QVERIFY(!record.hasValue("Remarks"));
+
+  /*
+   * Copy
+   */
+
+  // Copy and check
+  record2 = record;
+  QCOMPARE(record2.count(), 3);
+  QCOMPARE(record2.field(0).name(), QString("Id_PK"));
+  QCOMPARE(record2.field(1).name(), QString("FirstName"));
+  QCOMPARE(record2.field(2).name(), QString("Remarks"));
+  QVERIFY(!record2.hasValue("Id_PK"));
+  QVERIFY(!record2.hasValue("FirstName"));
+  QVERIFY(!record2.hasValue("Remarks"));
+  // Edit first
+  record.setValue("Remarks", "A test remark");
+  QVERIFY(!record.hasValue("Id_PK"));
+  QVERIFY(!record.hasValue("FirstName"));
+  QVERIFY(record.hasValue("Remarks"));
+  QVERIFY(!record2.hasValue("Id_PK"));
+  QVERIFY(!record2.hasValue("FirstName"));
+  QVERIFY(!record2.hasValue("Remarks"));
+
+
 }
 
 /*

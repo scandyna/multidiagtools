@@ -44,6 +44,93 @@ mdtError mdtClBase::lastError()
   return pvLastError;
 }
 
+bool mdtClBase::addRecord(const mdtSqlRecord & record, const QString & tableName)
+{
+  QString sql;
+  QSqlQuery query(database());
+  int i, index, lastIndex;
+
+  // Get last field index that has a value
+  lastIndex = -1;
+  for(i = 0; i < record.count(); ++i){
+    if(record.hasValue(i)){
+      lastIndex = i;
+    }
+  }
+  // Prepare query for insertion
+  sql = "INSERT INTO " + tableName +" (";
+  for(i = 0; i <= lastIndex; ++i){
+    if(record.hasValue(i)){
+      sql += record.fieldName(i);
+      if(i < (lastIndex-1)){
+        sql += ",";
+      }
+    }
+  }
+  sql += ") VALUES (";
+  for(i = 0; i <= lastIndex; ++i){
+    if(record.hasValue(i)){
+      sql += "?";
+      if(i < (lastIndex-1)){
+        sql += ",";
+      }
+    }
+  }
+  sql += ")";
+  if(!query.prepare(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot prepare query for inertion in table '" + tableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    pvLastError.commit();
+    return false;
+  }
+  // Add values and execute query
+  index = 0;
+  for(i = 0; i <= lastIndex; ++i){
+    if(record.hasValue(i)){
+      query.bindValue(index, record.value(i));
+      ++index;
+    }
+  }
+  if(!query.exec()){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot exec query for inertion in table '" + tableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClBase::addRecordList(const QList<mdtSqlRecord> & recordList, const QString & tableName, bool singleTransaction )
+{
+  int i;
+
+  if(singleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
+  }
+  for(i = 0; i < recordList.size(); ++i){
+    if(!addRecord(recordList.at(i), tableName)){
+      if(singleTransaction){
+        rollbackTransaction();
+      }
+      return false;
+    }
+  }
+  if(singleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
+  }
+
+  return true;  
+}
+
 bool mdtClBase::removeData(const QString & tableName, const QStringList & fields, const QModelIndexList & indexes)
 {
   int i;

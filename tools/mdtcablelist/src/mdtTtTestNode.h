@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_TT_TEST_NODE_H
 
 #include "mdtClBase.h"
+#include "mdtTtTestNodeUnitData.h"
 #include <QList>
 #include <QVariant>
 #include <QString>
@@ -67,6 +68,14 @@ class mdtTtTestNode : public mdtClBase
   /*! \brief Get a list of channel test connections for given bus name and node ID
    */
   QList<QVariant> getChannelTestConnectionIdList(const QVariant & testNodeId, const QVariant & busName);
+
+  /*! \brief Add a test node unit
+   */
+  bool addTestNodeUnit(const mdtTtTestNodeUnitData & data);
+
+  /*! \brief Add a list of test node units
+   */
+  bool addTestNodeUnits(const QList<mdtTtTestNodeUnitData> & dataList);
 
   /*! \brief Add a test node unit
    */

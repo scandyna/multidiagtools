@@ -25,6 +25,7 @@
 #include <QSqlRecord>
 #include <QSqlDatabase>
 #include <QString>
+#include <QVariant>
 
 /*! \brief Database record container class
  *
@@ -32,8 +33,12 @@
  *
  * Based on QSqlRecord , all field attributes and values are stored as QSqlField objects.
  *
+ * To set a value, use setValue(int, const QVariant &) or setValue(const QString &, const QVariant &).
+ *  To check if a value was set, use hasValue(int) or hasValue(const QString &).
+ *  To clear values and hasValue flags, use clearValues().
+ *
  * A possible way to create a sub class could be:
- *  - Create fields that are relevant, using addField()
+ *  - Create fields that are relevant, using addField() , or addAllFields().
  *  - On error, use clear()  (from QSqlRecord).
  *  - The user can also check if data record instance is valid by using
  *     isEmpty() (from QSqlRecord) and lastError().
@@ -65,6 +70,51 @@ class mdtSqlRecord : public QSqlRecord
    *          Error is also available with lastError().
    */
   bool addField(const QString & fieldName, const QString & tableName, const QSqlDatabase & db);
+
+  /*! \brief Add all fields of given table to record
+   *
+   * \param tableName Name of table in database.
+   * \param db Database to use.
+   * \sa addField()
+   */
+  bool addAllFields(const QString & tableName, const QSqlDatabase & db);
+
+  /*! \brief Check if a value was set
+   *
+   * By insertion or edition in database, it can be important to know
+   *  if a field must be updated or not.
+   *  Because a Null value can be valid, it's not possible to use this flag.
+   *  This method returns true once a value was set in given field.
+   *
+   * To clear this flag, use clearValues().
+   *
+   * Note: internally, QSqlRecord::isGenerated() is used.
+   */
+  bool hasValue(int fieldIndex) const;
+
+  /*! \brief Check if a value was set
+   *
+   * \sa hasValue(int)
+   */
+  bool hasValue(const QString & fieldName) const;
+
+  /*! \brief Set value
+   *
+   * Set the hasValue flag and set value.
+   */
+  void setValue(int fieldIndex, const QVariant & val);
+
+  /*! \brief Set value
+   *
+   * \sa setValue(int)
+   */
+  void setValue(const QString & fieldName, const QVariant & val);
+
+  /*! \brief Clear values
+   *
+   * Will clear value and hasValue flag for all fields.
+   */
+  void clearValues();
 
   /*! \brief Get last error
    */
