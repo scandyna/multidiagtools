@@ -428,7 +428,19 @@ QVariant mdtSqlForm::data(const QString &tableName, int row, const QString &fiel
   return w->data(row, fieldName);
 }
 
+void mdtSqlForm::insert()
+{
+  Q_ASSERT(pvMainSqlWidget != 0);
+
+  pvMainSqlWidget->insert();
+}
+
 bool mdtSqlForm::setupTables()
 {
   return false;
+}
+
+mdtError & mdtSqlForm::lastErrorW()
+{
+  return pvLastError;
 }

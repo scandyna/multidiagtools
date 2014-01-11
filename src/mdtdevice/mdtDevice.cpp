@@ -931,6 +931,8 @@ int mdtDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue
   int transactionId;
   mdtPortTransaction *transaction;
 
+  qDebug() << "mdtDevice::setDigitalOutputValue() - I/O addressWrite: " << digitalOutput->addressWrite() << " , Read: " << digitalOutput->addressRead();
+
   digitalOutput->setValue(value, false);
   if(!sendToDevice){
     return 0;
@@ -1043,6 +1045,9 @@ int mdtDevice::setDigitalOutputs(bool waitOnReply)
   if(pvIos->digitalOutputsCount() < 1){
     return -1;
   }
+  
+  qDebug() << "mdtDevice::setDigitalOutputs() - waitOnReply: " << waitOnReply;
+  
   // Disable I/Os - Must be re-enabled by subclass once data are in
   pvIos->setDigitalOutputsEnabled(false);
   for(i = 0; i < pvIos->digitalOutputsSegments().size(); ++i){
@@ -1053,6 +1058,7 @@ int mdtDevice::setDigitalOutputs(bool waitOnReply)
     transaction->setAddress(segment->startAddressWrite());
     transaction->setIoCount(segment->ioCount());
     // Send query and wait if requested
+    qDebug() << "mdtDevice::setDigitalOutputs() - sending query, start: " << transaction->address() << ", I/O count: " << transaction->ioCount();
     if(waitOnReply){
       transaction->setQueryReplyMode(true);
       transactionId = writeDigitalOutputs(transaction);

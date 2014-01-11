@@ -557,6 +557,7 @@ void mdtDeviceTest::deviceIosTest()
   QList<mdtDigitalIo*> dIoList;
   mdtDigitalIo *dout;
   QList<QVariant> values;
+  QList<bool> doSates;
 
   // Add analog inputs
   ai = new mdtAnalogIo;

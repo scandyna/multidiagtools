@@ -20,10 +20,49 @@
  ****************************************************************************/
 #include "mdtTtTestNodeUnitSetupData.h"
 
-mdtTtTestNodeUnitSetupData::mdtTtTestNodeUnitSetupData() 
+#include <QDebug>
+
+mdtTtTestNodeUnitSetupData::mdtTtTestNodeUnitSetupData()
 {
+  qDebug() << "mdtTtTestNodeUnitSetupData::mdtTtTestNodeUnitSetupData() ...";
 }
 
+mdtTtTestNodeUnitSetupData::mdtTtTestNodeUnitSetupData(const QSqlDatabase & db)
+{
+  qDebug() << "mdtTtTestNodeUnitSetupData::mdtTtTestNodeUnitSetupData(const QSqlDatabase &) ...";
+
+  if(!addAllFields("TestNodeUnitSetup_tbl", db)){
+    clear();
+    return;
+  }
+  // Add fields from Unit_tbl
+  if(!addField("SchemaPosition", "Unit_tbl", db)){
+    clear();
+    return;
+  }
+  // Add fields from TestNodeUnit_tbl
+  if(!addField("Bus", "TestNodeUnit_tbl", db)){
+    clear();
+    return;
+  }
+  if(!addField("IoPosition", "TestNodeUnit_tbl", db)){
+    clear();
+    return;
+  }
+  // Add fields from TestNode_tbl
+  if(!addField("NodeId", "TestNode_tbl", db)){
+    clear();
+    return;
+  }
+}
+
+mdtTtTestNodeUnitSetupData::mdtTtTestNodeUnitSetupData(const QSqlRecord & record)
+ : mdtSqlRecord(record)
+{
+  qDebug() << "mdtTtTestNodeUnitSetupData::mdtTtTestNodeUnitSetupData(const QSqlRecord &) ...";
+}
+
+/**
 void mdtTtTestNodeUnitSetupData::setId(QVariant value) 
 {
   pvId = value;
@@ -33,7 +72,9 @@ QVariant mdtTtTestNodeUnitSetupData::id() const
 {
   return pvId;
 }
+*/
 
+/**
 void mdtTtTestNodeUnitSetupData::setState(QVariant value) 
 {
   pvState = value;
@@ -93,3 +134,4 @@ QVariant mdtTtTestNodeUnitSetupData::testItemId() const
 {
   return pvTestItemId;
 }
+*/

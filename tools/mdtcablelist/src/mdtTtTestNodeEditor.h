@@ -47,6 +47,10 @@ class mdtTtTestNodeEditor : public mdtClEditor
    */
   void addUnits();
 
+  /*! \brief Edit a node unit
+   */
+  void editUnit();
+
   /*! \brief Remove test node units
    */
   void removeUnits();

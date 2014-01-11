@@ -45,6 +45,7 @@
 #include <QTimer>
 #include <QAbstractButton>
 #include <QModelIndex>
+#include <QList>
 
 #include <QTableView>
 #include <QItemSelectionModel>
@@ -60,6 +61,9 @@ void mdtDatabaseTest::initTestCase()
 void mdtDatabaseTest::sqlRecordTest()
 {
   mdtSqlRecord record, record2;
+  QList<mdtSqlRecord> recordList;
+  QSqlQuery query(pvDatabase);
+  QString sql;
 
   // Set database data
   clearTestDatabaseData();
@@ -135,7 +139,57 @@ void mdtDatabaseTest::sqlRecordTest()
   QVERIFY(!record2.hasValue("FirstName"));
   QVERIFY(!record2.hasValue("Remarks"));
 
+  /*
+   * Build a mdtSqlRecord on the base of a QSqlRecord
+   */
 
+  // Create a QSqlRecord
+  QSqlRecord sqlRecord = pvDatabase.record("Client_tbl");
+  // Build mdtSqlRecord
+  mdtSqlRecord record3(sqlRecord);
+  QCOMPARE(record3.count(), 3);
+  QCOMPARE(record3.field(0).name(), QString("Id_PK"));
+  QCOMPARE(record3.field(1).name(), QString("FirstName"));
+  QCOMPARE(record3.field(2).name(), QString("Remarks"));
+
+  /*
+   * Assign a QSqlRecord to a mdtSqlRecord
+   */
+
+  record.clear();
+  QCOMPARE(record.count(), 0);
+  record = sqlRecord;
+  QCOMPARE(record.count(), 3);
+  QCOMPARE(record.field(0).name(), QString("Id_PK"));
+  QCOMPARE(record.field(1).name(), QString("FirstName"));
+  QCOMPARE(record.field(2).name(), QString("Remarks"));
+
+  /*
+   * List storage
+   */
+
+  // Get all records of Client_tbl
+  sql = "SELECT Id_PK, FirstName, Remarks FROM Client_tbl";
+  QVERIFY(query.exec(sql));
+  while(query.next()){
+    recordList.append(query.record());
+  }
+  // Check record list
+  QCOMPARE(recordList.size(), 2);
+  record = recordList.at(0);
+  QCOMPARE(record.count(), 3);
+  QCOMPARE(record.field(0).name(), QString("Id_PK"));
+  QCOMPARE(record.field(1).name(), QString("FirstName"));
+  QCOMPARE(record.field(2).name(), QString("Remarks"));
+  QCOMPARE(record.value("FirstName"), QVariant("Andy"));
+  QCOMPARE(record.value("Remarks"), QVariant(""));
+  record = recordList.at(1);
+  QCOMPARE(record.count(), 3);
+  QCOMPARE(record.field(0).name(), QString("Id_PK"));
+  QCOMPARE(record.field(1).name(), QString("FirstName"));
+  QCOMPARE(record.field(2).name(), QString("Remarks"));
+  QCOMPARE(record.value("FirstName"), QVariant("Bety"));
+  QCOMPARE(record.value("Remarks"), QVariant("Remark on Bety"));
 }
 
 /*

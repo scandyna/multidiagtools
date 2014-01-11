@@ -18,14 +18,50 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtTtTestNodeUnitData.h"
-#include <QString>
+#ifndef MDT_TT_TEST_NODE_UNIT_EDITOR_H
+#define MDT_TT_TEST_NODE_UNIT_EDITOR_H
 
-mdtTtTestNodeUnitData::mdtTtTestNodeUnitData(const QSqlDatabase & db)
+#include "mdtSqlForm.h"
+#include "ui_mdtTtTestNodeUnitEditor.h"
+#include <QSqlDatabase>
+
+class QWidget;
+
+/*! \brief Class to edit test node unit
+ */
+class mdtTtTestNodeUnitEditor : public mdtSqlForm, Ui::mdtTtTestNodeUnitEditor
 {
-  if(!addAllFields("TestNodeUnit_tbl", db)){
-    clear();
-    return;
-  }
-}
+ Q_OBJECT
 
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtTtTestNodeUnitEditor(QWidget *parent, QSqlDatabase db);
+
+  /*! \brief Setup tables
+   */
+  bool setupTables();
+
+ private:
+
+  Q_DISABLE_COPY(mdtTtTestNodeUnitEditor);
+
+  /*! \brief Setup test node unit table
+   */
+  bool setupTestNodeUnitTable();
+
+  /*! \brief Setup widget mapping with test node table
+   */
+  bool setupTestNodeTableWidgetMapping();
+
+  /*! \brief Setup widget mapping with unit table
+   */
+  bool setupUnitTableWidgetMapping();
+
+  /*! \brief Setup widget mapping with type table
+   */
+  bool setupTypeTableWidgetMapping();
+};
+
+#endif // #ifndef MDT_TT_TEST_NODE_UNIT_EDITOR_H

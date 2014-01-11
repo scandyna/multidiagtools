@@ -27,6 +27,9 @@
 #include <QHash>
 #include <QList>
 
+/// \todo Provisoire !
+#include "mdtAlgorithms.h"
+
 mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
  : mdtDevice(parent)
 {
@@ -408,6 +411,7 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
       break;
     case 0x0F:  // Write multiple coils
       // Check validitiy and update
+      qDebug() << "mdtDeviceModbus::decodeReadenFrame() - values: " << pvCodec->values();
       if(pvCodec->values().size() == 2){
         // Start address
         var = pvCodec->values().at(0);
@@ -658,10 +662,12 @@ int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
+  qDebug() << "mdtDeviceModbus::writeDigitalOutputs() - states: " << ios()->digitalOutputsStatesByAddressWrite();
   pdu = pvCodec->encodeWriteMultipleCoils(transaction->address(), ios()->digitalOutputsStatesByAddressWrite());
   if(pdu.isEmpty()){
     return -1;
   }
+  qDebug() << "mdtDeviceModbus::writeDigitalOutputs() - PDU: " << mdtAlgorithms::byteArrayToHexString(pdu);
   // Send request
   transaction->setData(pdu);
   return pvTcpPortManager->sendData(transaction);

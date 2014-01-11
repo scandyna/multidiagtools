@@ -278,6 +278,10 @@ class mdtSqlForm : public QWidget
    */
   QVariant data(const QString &tableName, int row, const QString &fieldName);
 
+  /*! \brief Call insert method on mainSqlWidget
+   */
+  void insert();
+
   /*! \brief Setup tables
    *
    * Must be re-implemented in subclass, default implementation does nothing .
@@ -285,6 +289,12 @@ class mdtSqlForm : public QWidget
   virtual bool setupTables();
 
  protected:
+
+  /*! \brief Get lastError ogject for write acces
+   *
+   * Subclass can use this method to set lastError
+   */
+  mdtError & lastErrorW();
 
   mdtError pvLastError;
 

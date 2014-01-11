@@ -110,7 +110,12 @@ void mdtTtTestModelEditor::editTestItem()
     displayLastError();
     return;
   }
-  tie->setMainTableFilter("Id_PK", currentTestItemId);
+  if(!tie->setMainTableFilter("Id_PK", currentTestItemId)){
+    pvLastError = tie->lastError();
+    displayLastError();
+    delete tie;
+    return;
+  }
   dialog.setSqlForm(tie);
   dialog.resize(700, 400);
   dialog.enableEdition();

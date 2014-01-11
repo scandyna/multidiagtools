@@ -53,6 +53,10 @@ class mdtSqlRecord : public QSqlRecord
    */
   mdtSqlRecord();
 
+  /*! \brief Build a mdtSqlRecord on the base of a QSqlRecord
+   */
+  mdtSqlRecord(const QSqlRecord & sqlRecord);
+
   /*! \brief Destructor
    */
   ~mdtSqlRecord();

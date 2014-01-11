@@ -30,6 +30,7 @@
 #include <QString>
 #include <QStringList>
 #include <QList>
+#include <QSqlRecord>
 
 class QSqlTableModel;
 
@@ -80,7 +81,8 @@ class mdtTtTest : public mdtClBase
    * \param testItemId Primary key of TestItem_tbl
    * \param hardwareNodeId NodeId from TestNode_tbl
    */
-  QList<mdtTtTestNodeUnitSetupData> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId);
+  ///QList<mdtTtTestNodeUnitSetupData> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId);
+  QList<QSqlRecord> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId);
 
   /*! \brief Set test model
    *

@@ -28,6 +28,8 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtTtTestNodeUnitData.h"
+#include "mdtTtTestNodeUnitEditor.h"
+#include "mdtSqlDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -170,6 +172,37 @@ void mdtTtTestNodeEditor::addUnits()
   if(!assignTestConnectionToTestNodeUnitLits(unitIdList, unitConnectionIdList)){
     displayLastError();
   }
+  // Update TestNodeUnit_view
+  form()->select("TestNodeUnit_view");
+}
+
+void mdtTtTestNodeEditor::editUnit()
+{
+  mdtTtTestNodeUnitEditor *tnue;
+  mdtSqlDialog dialog;
+  QVariant testNodeUnitId;
+
+  testNodeUnitId = form()->currentData("TestNodeUnit_view", "Unit_Id_FK_PK");
+  if(testNodeUnitId.isNull()){
+    return;
+  }
+  tnue = new mdtTtTestNodeUnitEditor(0, database());
+  if(!tnue->setupTables()){
+    pvLastError = tnue->lastError();
+    displayLastError();
+    return;
+  }
+  if(!tnue->setMainTableFilter("Unit_Id_FK_PK", testNodeUnitId)){
+    pvLastError = tnue->lastError();
+    displayLastError();
+    delete tnue;
+    return;
+  }
+  dialog.setSqlForm(tnue);
+  dialog.resize(700, 400);
+  dialog.enableEdition();
+  dialog.setWindowTitle(tr("Test node unit edition"));
+  dialog.exec();
   // Update TestNodeUnit_view
   form()->select("TestNodeUnit_view");
 }
@@ -499,6 +532,7 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddUnit;
+  QPushButton *pbEditUnit;
   QPushButton *pbRemoveUnit;
 
   if(!form()->addChildTable("TestNodeUnit_view", tr("Units"), database())){
@@ -534,6 +568,9 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   pbAddUnit = new QPushButton(tr("Add units ..."));
   connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addUnits()));
   widget->addWidgetToLocalBar(pbAddUnit);
+  pbEditUnit = new QPushButton(tr("Edit unit"));
+  connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
+  widget->addWidgetToLocalBar(pbEditUnit);
   pbRemoveUnit = new QPushButton(tr("Remove units"));
   connect(pbRemoveUnit, SIGNAL(clicked()), this, SLOT(removeUnits()));
   widget->addWidgetToLocalBar(pbRemoveUnit);

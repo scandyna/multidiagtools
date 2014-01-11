@@ -54,6 +54,9 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 
+/// \todo Provisoire !
+#include "mdtDeviceIosWidget.h"
+
 using namespace mdtTtCableCheckerPrivate;
 
 struct mdtTtCableCheckerPrivate::deviceStatusWidget
@@ -435,6 +438,10 @@ bool mdtTtCableChecker::connectToInstruments()
       return false;
     }
     ioNode->setIos(ioNode->ios(), true);
+    /// \todo Provisoire !!
+    mdtDeviceIosWidget *w = new mdtDeviceIosWidget;
+    w->setDeviceIos(ioNode->ios());
+    w->show();
   }
 
   return true;
@@ -442,8 +449,9 @@ bool mdtTtCableChecker::connectToInstruments()
 
 bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
 {
-  QList<mdtTtTestNodeUnitSetupData> setupDataList;
-  mdtTtTestNodeUnitSetupData setupData;
+  ///QList<mdtTtTestNodeUnitSetupData> setupDataList;
+  QList<QSqlRecord> setupDataList;
+  ///mdtTtTestNodeUnitSetupData setupData;
   mdtDeviceModbusWago *ioNode;
   int i, k;
 
@@ -457,8 +465,22 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
     ioNode->ios()->setDigitalOutputsValue(false);
     // Setup all specified node units
     for(k = 0; k < setupDataList.size(); ++k){
-      setupData = setupDataList.at(k);
+      ///mdtTtTestNodeUnitSetupData setupData;
+      ///setupData = setupDataList.at(k);
+      ///QSqlRecord rec = setupData;
+      QSqlRecord rec = setupDataList.at(k);
+      qDebug() << "CC, rec: " << rec;
+      ///setupData = setupDataList.at(k);
       /// \todo Check data validity !
+      if(rec.value("NodeId") == ioNode->hardwareNodeId()){
+        if(ioNode->setDigitalOutputValueAt(rec.value("IoPosition").toInt(), false, false, false) < 0){
+          pvLastError.setError(tr("Cannot set digital output ") + rec.value("SchemaPosition").toString() + tr(" for ") + ioNode->name(), mdtError::Error);
+          MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+          pvLastError.commit();
+          return false;
+        }
+      }
+      /**
       if(setupData.nodeId() == ioNode->hardwareNodeId()){
         if(ioNode->setDigitalOutputValue(setupData.schemaPosition().toString(), false, false, false) < 0){
           pvLastError.setError(tr("Cannot set digital output ") + setupData.schemaPosition().toString() + tr(" for ") + ioNode->name(), mdtError::Error);
@@ -467,6 +489,7 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
           return false;
         }
       }
+      */
     }
     // Send query to node
     if(ioNode->setDigitalOutputs(true) < 0){
@@ -475,6 +498,7 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
       pvLastError.commit();
       return false;
     }
+    ioNode->wait(500);
   }
 
   return true;

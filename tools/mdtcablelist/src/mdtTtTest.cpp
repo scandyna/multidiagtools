@@ -160,9 +160,11 @@ QList<QVariant> mdtTtTest::getHardwareNodeIdListForTestItemId(const QVariant & t
   return nodeIdList;
 }
 
-QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId)
+///QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId)
+QList<QSqlRecord> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId)
 {
-  QList<mdtTtTestNodeUnitSetupData> dataList;
+  ///QList<mdtTtTestNodeUnitSetupData> dataList;
+  QList<QSqlRecord> dataList;
   QString sql;
   QSqlError sqlError;
   QSqlQuery query(database());
@@ -173,6 +175,7 @@ QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant
         " Id_PK AS TestItemId,"\
         " TestModelItem_Id_FK,"\
         " SchemaPosition,"\
+        " IoPosition,"\
         " State,"\
         " Value,"\
         " NodeId ";
@@ -187,8 +190,15 @@ QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant
     return dataList;
   }
   while(query.next()){
-    mdtTtTestNodeUnitSetupData data;
-    data.setId(QVariant()); /// \todo Implement !
+    ///mdtTtTestNodeUnitSetupData data(database());
+    ///qDebug() << "mdtTtTest: rec: " << query.record();
+    ///mdtTtTestNodeUnitSetupData data = query.record();
+    dataList.append(query.record());
+    /// \todo TestItemNodeUnitSetup_tbl.Id_PK is missing in view
+    ///data.setValue("??", ??);
+    ///data.setValue("");
+    ///data.setId(QVariant()); /// \todo Implement !
+    /**
     data.setTestItemId(query.value(0));
     data.setTestModelItemId(query.value(1));
     data.setSchemaPosition(query.value(2));
@@ -196,6 +206,7 @@ QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant
     data.setValue(query.value(4));
     data.setNodeId(query.value(5));
     dataList.append(data);
+    */
   }
 
   return dataList;

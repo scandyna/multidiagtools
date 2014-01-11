@@ -22,7 +22,12 @@
 #include <QSqlError>
 #include <QSqlField>
 
-mdtSqlRecord::mdtSqlRecord() 
+mdtSqlRecord::mdtSqlRecord()
+{
+}
+
+mdtSqlRecord::mdtSqlRecord(const QSqlRecord & sqlRecord)
+ : QSqlRecord(sqlRecord)
 {
 }
 
@@ -40,7 +45,9 @@ bool mdtSqlRecord::addField(const QString & fieldName, const QString & tableName
   if(dbRecord.isEmpty()){
     QSqlError sqlError = db.lastError();
     pvLastError.setError("Cannot get field information. Field: " + fieldName + ", table: " + tableName, mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    if(sqlError.isValid()){
+      pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    }
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlRecord");
     pvLastError.commit();
     return false;
@@ -70,7 +77,9 @@ bool mdtSqlRecord::addAllFields(const QString & tableName, const QSqlDatabase & 
   if(dbRecord.isEmpty()){
     QSqlError sqlError = db.lastError();
     pvLastError.setError("Table '" + tableName + "' was not found in database.", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    if(sqlError.isValid()){
+      pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    }
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlRecord");
     pvLastError.commit();
     return false;

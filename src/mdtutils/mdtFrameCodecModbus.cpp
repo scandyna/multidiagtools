@@ -22,7 +22,7 @@
 #include "mdtError.h"
 #include <QString>
 
-#include <QDebug>
+///#include <QDebug>
 
 mdtFrameCodecModbus::mdtFrameCodecModbus()
 {
