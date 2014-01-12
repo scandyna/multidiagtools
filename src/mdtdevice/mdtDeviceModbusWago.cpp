@@ -71,106 +71,10 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
   return mdtDeviceModbus::connectToDevice(devInfo);
 }
 
-/**
-mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInfo &devInfo)
-{
-  QList<mdtPortInfo*> portInfoList;
-  int i;
-
-  // Check that port manager is not running
-  if(!pvTcpPortManager->isClosed()){
-    qDebug() << "mdtDeviceModbusWago::connectToDevice() : stopping ...";
-    pvTcpPortManager->stop();
-  }
-  // Scan looking in chache file first
-  portInfoList = pvTcpPortManager->scan(pvTcpPortManager->readScanResult());
-  for(i=0; i<portInfoList.size(); i++){
-    Q_ASSERT(portInfoList.at(i) != 0);
-    // Try to connect
-    pvTcpPortManager->setPortInfo(*portInfoList.at(i));
-    if(!pvTcpPortManager->start()){
-      continue;
-    }
-    qDebug() << "mdtDeviceModbusWago::connectToDevice() : Running ...";
-    // Connected, check if device is a Wago 750
-    if(isWago750()){
-      qDeleteAll(portInfoList);
-      qDebug() << "mdtDeviceModbusWago::connectToDevice() : Is a Wago 750";
-      return mdtAbstractPort::NoError;
-    }
-    pvTcpPortManager->stop();
-  }
-  qDeleteAll(portInfoList);
-  portInfoList.clear();
-  pvTcpPortManager->stop();
-  // Scan network
-  portInfoList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100);
-  for(i=0; i<portInfoList.size(); i++){
-    Q_ASSERT(portInfoList.at(i) != 0);
-    // Try to connect
-    qDebug() << "mdtDeviceModbusWago::connectToDevice() : Trying " << portInfoList.at(i)->portName() << " ...";
-    pvTcpPortManager->setPortInfo(*portInfoList.at(i));
-    if(!pvTcpPortManager->start()){
-      continue;
-    }
-    qDebug() << "mdtDeviceModbusWago::connectToDevice() : Running ...";
-    // Connected, check if device is a Wago 750
-    if(isWago750()){
-      pvTcpPortManager->saveScanResult(portInfoList);
-      qDeleteAll(portInfoList);
-      qDebug() << "mdtDeviceModbusWago::connectToDevice() : Is a Wago 750";
-      return mdtAbstractPort::NoError;
-    }
-    pvTcpPortManager->stop();
-  }
-  qDeleteAll(portInfoList);
-  pvTcpPortManager->stop();
-
-  return mdtAbstractPort::PortNotFound;
-}
-*/
-
 mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
 {
   return mdtDeviceModbus::connectToDevice(scanResult, hardwareNodeId, bitsCount, startFrom);
 }
-
-/**
-mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
-{
-  ///Q_ASSERT(!pvTcpPortManager->isRunning());
-
-  int i;
-
-  // Check that port manager is not running
-  if(!pvTcpPortManager->isClosed()){
-    qDebug() << "mdtDeviceModbusWago::connectToDevice() : stopping ...";
-    pvTcpPortManager->stop();
-  }
-  for(i=0; i<scanResult.size(); i++){
-    Q_ASSERT(scanResult.at(i) != 0);
-    // Try to connect
-    pvTcpPortManager->setPortInfo(*scanResult.at(i));
-    if(!pvTcpPortManager->start()){
-      continue;
-    }
-    // We are connected here, check if device is a Wago 750 fieldbus coupler
-    if(!isWago750()){
-      pvTcpPortManager->stop();
-      continue;
-    }
-    // Get the hardware node ID
-    if(pvTcpPortManager->getHardwareNodeAddress(bitsCount, startFrom) == hardwareNodeId){
-      return mdtAbstractPort::NoError;
-    }else{
-      pvTcpPortManager->stop();
-      continue;
-    }
-  }
-
-  return mdtAbstractPort::PortNotFound;
-}
-*/
 
 mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<int> & existingHwNodeIdList)
 {
@@ -242,11 +146,8 @@ int mdtDeviceModbusWago::digitalInputsCount()
   return registerValues().at(0);
 }
 
-///bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDeviceModbusWagoModule*> specialModules)
 bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> specialModules)
 {
-  ///Q_ASSERT(ios != 0);
-
   int analogInputsCnt;
   int analogOutputsCnt;
   int digitalInputsCnt;
@@ -261,7 +162,6 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
   int doAddressRead, doAddressWrite;
 
   // Clear current I/O setup
-  ///ios->deleteIos();
   deleteIos();
   qDeleteAll(pvModules);
   pvModules.clear();
@@ -370,7 +270,6 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
       e.commit();
       qDeleteAll(pvModules);
       pvModules.clear();
-      ///ios->deleteIos();
       deleteIos();
       return false;
     }
@@ -382,12 +281,6 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
     addOutputs(module->analogOutputs());
     addInputs(module->digitalInputs());
     addOutputs(module->digitalOutputs());
-    /**
-    ios->addAnalogInputs(module->analogInputs());
-    ios->addAnalogOutputs(module->analogOutputs());
-    ios->addDigitalInputs(module->digitalInputs());
-    ios->addDigitalOutputs(module->digitalOutputs());
-    */
     // Update current first addresses
     aiAddress = module->nextModuleFirstAiAddress();
     aoAddressRead = module->nextModuleFirstAoAddressRead();

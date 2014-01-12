@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -45,7 +45,6 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   pvDeviceModbusWago = new mdtDeviceModbusWago(this);
   pvDeviceModbusWago->setName("Wago I/O 750");
   // Setup I/Os widget
-  ///pvDeviceIos = new mdtDeviceIos(pvDeviceModbusWago);
   pvDeviceIosWidget = new mdtDeviceIosWidget;
   saIos->setWidget(pvDeviceIosWidget);
   // Make connections
@@ -157,7 +156,6 @@ void mdtModbusIoTool::setup()
       pvDeviceModbusWago->portManager()->stop();
       return;
     }
-    ///pvDeviceModbusWago->setIos(pvDeviceIos, true); /// \todo Corriger !!
     pvDeviceIosWidget->setDeviceIos(pvDeviceModbusWago->ios());
     pvDeviceModbusWago->getDigitalOutputs(0);
     showStatusMessage(tr("I/O detection done"), 1000);
@@ -186,30 +184,6 @@ void mdtModbusIoTool::connectToNode()
     setStateConnectingToNodeFinished();
     return;
   }
-  /**
-  // Scan looking in chache file first
-  portInfoList = m->scan(m->readScanResult(), 100, expectedHwNodeAddresses, 8, 0);
-  // Try to connect ...
-  if(pvDeviceModbusWago->connectToDevice(portInfoList, sbHwNodeId->value(), 8) != mdtAbstractPort::NoError){
-    // scan network an try again
-    qDeleteAll(portInfoList);
-    portInfoList.clear();
-    portInfoList = m->scan(QNetworkInterface::allInterfaces(), 502, 100, true, expectedHwNodeAddresses, 8, 0);
-    if(pvDeviceModbusWago->connectToDevice(portInfoList, sbHwNodeId->value(), 8) != mdtAbstractPort::NoError){
-      pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
-      setStateConnectingToNodeFinished();
-      return;
-    }
-    // Ok found, save scan result
-    if(!m->saveScanResult(portInfoList)){
-      showStatusMessage(tr("Cannot save scan result in cache file"), 3000);
-    }
-    // We no longer need portInfoList
-    qDeleteAll(portInfoList);
-    portInfoList.clear();
-  }
-  */
-  
   showStatusMessage(tr("I/O detection ..."));
   if(!pvDeviceModbusWago->detectIos()){
     QString details = tr("This probably caused by presence of a unsupported module.");
@@ -222,7 +196,6 @@ void mdtModbusIoTool::connectToNode()
     emit errorEvent();
     return;
   }
-  ///pvDeviceModbusWago->setIos(pvDeviceIos, true); \todo Corriger !!
   pvDeviceIosWidget->setDeviceIos(pvDeviceModbusWago->ios());
   pvDeviceModbusWago->getDigitalOutputs(0);
   showStatusMessage(tr("I/O detection done"), 1000);
@@ -234,13 +207,7 @@ void mdtModbusIoTool::connectToNode()
 
 void mdtModbusIoTool::disconnectFromNode()
 {
-  /**
-  mdtModbusTcpPortManager *m = pvDeviceModbusWago->modbusTcpPortManager();
-  Q_ASSERT(m != 0);
-  */
-
   pvStatusWidget->clearMessage();
-  ///m->stop();
   pvDeviceModbusWago->disconnectFromDevice();
   pvDeviceIosWidget->clearIoWidgets();
 }

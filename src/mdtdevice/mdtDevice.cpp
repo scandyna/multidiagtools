@@ -23,7 +23,6 @@
 #include "mdtDeviceIosSegment.h"
 #include "mdtPortManager.h"
 #include <QTimer>
-///#include <QList>
 
 #include <QDebug>
 
@@ -48,7 +47,6 @@ mdtDevice::mdtDevice(QObject *parent)
 
 mdtDevice::~mdtDevice()
 {
-  ///stop();
   disconnectFromDevice();
   delete pvQueryTimer;
   delete pvIos;
@@ -78,49 +76,6 @@ void mdtDevice::disconnectFromDevice()
     }
   }
 }
-
-/**
-void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
-{
-  Q_ASSERT(ios != 0);
-
-  int i;
-  QList<mdtAnalogIo*> analogOutputs;
-  QList<mdtDigitalIo*> digitalOutputs;
-
-  // Clear prevous I/Os
-  if(pvIos != 0){
-    analogOutputs = pvIos->analogOutputs();
-    for(i=0; i<analogOutputs.size(); i++){
-      Q_ASSERT(analogOutputs.at(i) != 0);
-      disconnect(analogOutputs.at(i), SIGNAL(valueChanged(mdtAnalogIo*)), this, SLOT(setAnalogOutputValue(mdtAnalogIo*)));
-    }
-    digitalOutputs = pvIos->digitalOutputs();
-    for(i=0; i<digitalOutputs.size(); i++){
-      Q_ASSERT(digitalOutputs.at(i) != 0);
-      disconnect(digitalOutputs.at(i), SIGNAL(valueChanged(mdtDigitalIo*)), this, SLOT(setDigitalOutputValue(mdtDigitalIo*)));
-    }
-    if(pvIos != ios){
-      pvIos->deleteIos();
-      delete pvIos;
-    }
-  }
-  // Set new I/Os
-  pvIos = ios;
-  if(autoOutputUpdate){
-    analogOutputs = pvIos->analogOutputs();
-    for(i=0; i<analogOutputs.size(); i++){
-      Q_ASSERT(analogOutputs.at(i) != 0);
-      connect(analogOutputs.at(i), SIGNAL(valueChanged(mdtAnalogIo*)), this, SLOT(setAnalogOutputValue(mdtAnalogIo*)));
-    }
-    digitalOutputs = pvIos->digitalOutputs();
-    for(i=0; i<digitalOutputs.size(); i++){
-      Q_ASSERT(digitalOutputs.at(i) != 0);
-      connect(digitalOutputs.at(i), SIGNAL(valueChanged(mdtDigitalIo*)), this, SLOT(setDigitalOutputValue(mdtDigitalIo*)));
-    }
-  }
-}
-*/
 
 void mdtDevice::addInput(mdtAnalogIo *analogInput)
 {

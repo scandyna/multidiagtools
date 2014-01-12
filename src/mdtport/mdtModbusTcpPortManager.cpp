@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -312,8 +312,6 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
 
 bool mdtModbusTcpPortManager::saveScanResult(const QList<mdtPortInfo*> scanResult)
 {
-  ///Q_ASSERT(!isRunning());
-
   QFile file;
   int i;
   QByteArray line;
@@ -346,8 +344,6 @@ bool mdtModbusTcpPortManager::saveScanResult(const QList<mdtPortInfo*> scanResul
 
 QStringList mdtModbusTcpPortManager::readScanResult()
 {
-  ///Q_ASSERT(!isRunning());
-
   QFile file;
   QStringList scanResult;
 
@@ -433,7 +429,6 @@ bool mdtModbusTcpPortManager::getRegisterValues(int address, int n)
   mdtFrameCodecModbus codec;
   int i;
 
-  ///qDebug() << "mdtModbusTcpPortManager::getRegisterValues() - start address: " << address << " - end address: " << address + n - 1;
   // Clear previous results
   pvRegisterValues.clear();
   // Setup MODBUS PDU

@@ -155,18 +155,6 @@ class mdtDevice : public QObject
    */
   virtual void disconnectFromDevice();
 
-  /*! \brief Set the I/O's container
-   *
-   * \param ios A pointer to a mdtDeviceIos object
-   * \param autoOutputUpdate If true, mdtAnalogIo::valueChanged() signal will be connected to
-   *                                setAnalogOutputValue(int, int) slot for each analog output
-   *                            and mdtDigitalIo::stateChanged() signal will be connected to
-   *                                setDigitalOutputState(int, bool) slot for each digital output.
-   *
-   * \pre ios must be a valid pointer
-   */
-  ///void setIos(mdtDeviceIos *ios, bool autoOutputUpdate = false);
-
   /*! \brief Add a analog input
    */
   void addInput(mdtAnalogIo *analogInput);

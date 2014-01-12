@@ -1580,7 +1580,6 @@ void mdtDeviceTest::modbusTest()
   mdtModbusTcpPortManager *m = d.modbusTcpPortManager();
   QList<mdtPortInfo*> portInfoList;
   int hwNodeId = 3;
-  ///mdtDeviceIos ios;
   mdtDeviceIosWidget *iosw;
   mdtDigitalIo *di;
   mdtDeviceWindow dw;
@@ -1593,21 +1592,17 @@ void mdtDeviceTest::modbusTest()
   di->setLabelShort("DI1");
   di->setDetails("Some details about digital input 1");
   d.addInput(di);
-  ///ios.addDigitalInput(di);  
   di = new mdtDigitalIo;
   di->setAddress(1);
   di->setLabelShort("DI2");
   di->setDetails("Some details about digital input 2");
   d.addInput(di);
-  ///ios.addDigitalInput(di);  
 
   // Setup I/O's widget
   iosw = new mdtDeviceIosWidget;
-  ///iosw->setDeviceIos(&ios);
   iosw->setDeviceIos(d.ios());
 
   // Setup device
-  ///d.setIos(&ios, true);  \todo Corriger !!
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
   dw.show();
@@ -2043,7 +2038,6 @@ void mdtDeviceTest::modbusWagoModuleRtdTest()
 void mdtDeviceTest::modbusWagoTest()
 {
   mdtDeviceModbusWago d;
-  ///mdtDeviceIos ios;
   mdtDeviceIosWidget *iosw;
   mdtDeviceWindow dw;
   int setGetWaitTime = 30;  // [ms]
@@ -2057,10 +2051,6 @@ void mdtDeviceTest::modbusWagoTest()
   iosw->setDeviceIos(d.ios());
 
   // Setup device
-  ///d.setIos(&ios, false); \todo Corriger
-  ///d.setAnalogOutputAddressOffset(0x0200);
-  ///d.setDigitalOutputAddressOffset(0x0200);
-  ///d.portManager()->config().setReadTimeout(30000);  // We set a long timeout in case we use valgrind
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
   dw.show();
@@ -2068,14 +2058,12 @@ void mdtDeviceTest::modbusWagoTest()
   if(d.connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){;
     QSKIP("No Wago 750 device found, or other error", SkipAll);
   }
-  ///QVERIFY(d.portManager()->isRunning());
   QVERIFY(d.portManager()->isReady());
   qDebug() << "Analog outputs: " << d.analogOutputsCount();
   qDebug() << "Analog inputs: " << d.analogInputsCount();
   qDebug() << "Digital outputs: " << d.digitalOutputsCount();
   qDebug() << "Digital inputs: " << d.digitalInputsCount();
   QVERIFY(d.detectIos());
-  ///d.setIos(&ios, true);  \todo Corriger !!
   iosw->setDeviceIos(d.ios());
   QVERIFY(d.ios() != 0);
 
@@ -2194,10 +2182,6 @@ void mdtDeviceTest::modbusWagoTest()
     QVERIFY(d.setDigitalOutputValueAt(0, true, true, true) >= 0);
     d.wait(setGetWaitTime);
     QCOMPARE(d.getDigitalOutputValue("DO1", true, true).valueBool(), true);
-
-    ///QVERIFY(!d.getDigitalOutputState(0x200, 0).isValid());
-    ///qDebug() << "TEST , getDigitalOutputState() ...";
-    ///QVERIFY(d.getDigitalOutputState(0x200, 500).isValid());
     // Grouped query
     QVERIFY(d.setDigitalOutputValue(0, true, false, false) == 0);
     QVERIFY(d.setDigitalOutputValue("DO2", true, false, false) == 0);
@@ -2210,12 +2194,6 @@ void mdtDeviceTest::modbusWagoTest()
   }else{
     qDebug() << "No digital outputs available - Will not be tested";
   }
-
-  
-
-  ///QVERIFY(d.getDigitalInputs(500) >= 0);
-  ///QVERIFY(d.getAnalogOutputs(500) >= 0);
-  ///QVERIFY(d.getDigitalOutputs(500) >= 0);
   d.start(100);
   /**
   while(dw.isVisible()){
@@ -2229,7 +2207,6 @@ void mdtDeviceTest::modbusBeckhoffTest()
   QSKIP("Beckhoff is not supported for the moment", SkipAll);
 
   mdtDeviceModbus d;
-  mdtDeviceIos ios;
   mdtDeviceIosWidget *iosw;
   mdtAnalogIo *ai;
   mdtAnalogIo *ao;
@@ -2248,7 +2225,7 @@ void mdtDeviceTest::modbusBeckhoffTest()
   ai->setUnit("[V]");
   ai->setDetails("Module type: KL3001");
   ai->setRange(-10.0, 10.0, 13, 3, true);
-  ios.addAnalogInput(ai);
+  d.addInput(ai);
 
   // Analog outputs
   ao = new mdtAnalogIo;
@@ -2258,41 +2235,38 @@ void mdtDeviceTest::modbusBeckhoffTest()
   ao->setDetails("Module type: KL4001");
   QVERIFY(ao->setRange(0.0, 10.0, 12, 3, false));
   ///QVERIFY(ao->setEncodeBitSettings(15, 0));
-  ios.addAnalogOutput(ao);
+  d.addOutput(ao);
 
   // Digital inputs
   di = new mdtDigitalIo;
   di->setAddress(0);
   di->setLabelShort("DI1");
   di->setDetails("Module type: KL1002");
-  ios.addDigitalInput(di);
+  d.addInput(di);
   di = new mdtDigitalIo;
   di->setAddress(1);
   di->setLabelShort("DI2");
   di->setDetails("Module type: KL1002");
-  ios.addDigitalInput(di);
+  d.addInput(di);
 
   // Digital outputs
   dout = new mdtDigitalIo;
   dout->setAddress(0);
   dout->setLabelShort("DO1");
   dout->setDetails("Module type: KL2012");
-  ios.addDigitalOutput(dout);
+  d.addOutput(dout);
   dout = new mdtDigitalIo;
   dout->setAddress(1);
   dout->setLabelShort("DO2");
   dout->setDetails("Module type: KL2012");
-  ios.addDigitalOutput(dout);
+  d.addOutput(dout);
 
   // Setup I/O's widget
   iosw = new mdtDeviceIosWidget;
-  iosw->setDeviceIos(&ios);
+  iosw->setDeviceIos(d.ios());
   ///iosw.show();
 
   // Setup device
-  ///d.setIos(&ios, true);  \todo Corriger !!
-  ///d.setAnalogOutputAddressOffset(0x0800);
-  ///d.setDigitalOutputAddressOffset(0);
   dw.setIosWidget(iosw);
   dw.show();
 

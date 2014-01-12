@@ -31,7 +31,6 @@
 mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
  : mdtDeviceScpi(parent)
 {
-  ///mdtDeviceIos *ios;
   mdtAnalogIo *aio;
 
   pvCodec = new mdtFrameCodecScpiU3606A;
@@ -43,28 +42,22 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
   portManager()->config().setWriteQueueSize(1);
   connect(pvUsbtmcPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
   // Setup I/Os
-  ///ios = new mdtDeviceIos(this);
   aio = new mdtAnalogIo;
   aio->setAddress(0);
   aio->setLabelShort("MEASURE");
   addInput(aio);
-  ///ios->addAnalogInput(aio);
   aio = new mdtAnalogIo;
   aio->setAddress(1);
   aio->setLabelShort("SENSEU");
   addInput(aio);
-  ///ios->addAnalogInput(aio);
   aio = new mdtAnalogIo;
   aio->setAddress(2);
   aio->setLabelShort("SENSEI");
   addInput(aio);
-  ///ios->addAnalogInput(aio);
   aio = new mdtAnalogIo;
   aio->setAddress(0);
   aio->setLabelShort("SOURCE");
   addOutput(aio);
-  ///ios->addAnalogOutput(aio);
-  ///setIos(ios, true); /// \todo Corriger !
 }
 
 mdtDeviceU3606A::~mdtDeviceU3606A()
