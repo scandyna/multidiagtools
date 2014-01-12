@@ -1,0 +1,274 @@
+\hypertarget{classmdt_sql_record}{
+\section{mdtSqlRecord Class Reference}
+\label{classmdt_sql_record}\index{mdtSqlRecord@{mdtSqlRecord}}
+}
+
+
+Database record container class.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlRecord.h$>$}
+
+
+
+Collaboration diagram for mdtSqlRecord:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=170pt]{classmdt_sql_record__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_record_a1b171d11ee1b270df4f56007c5609699}{
+\hyperlink{classmdt_sql_record_a1b171d11ee1b270df4f56007c5609699}{mdtSqlRecord} ()}
+\label{classmdt_sql_record_a1b171d11ee1b270df4f56007c5609699}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_record_a6b658e74e8b1da998f610b7e8a731e0e}{
+\hyperlink{classmdt_sql_record_a6b658e74e8b1da998f610b7e8a731e0e}{mdtSqlRecord} (const QSqlRecord \&sqlRecord)}
+\label{classmdt_sql_record_a6b658e74e8b1da998f610b7e8a731e0e}
+
+\begin{DoxyCompactList}\small\item\em Build a \hyperlink{classmdt_sql_record}{mdtSqlRecord} on the base of a QSqlRecord. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_record_af7e8c8cd4f7265853d746807e063396f}{
+\hyperlink{classmdt_sql_record_af7e8c8cd4f7265853d746807e063396f}{$\sim$mdtSqlRecord} ()}
+\label{classmdt_sql_record_af7e8c8cd4f7265853d746807e063396f}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{addField} (const QString \&fieldName, const QString \&tableName, const QSqlDatabase \&db)
+\begin{DoxyCompactList}\small\item\em Add a field to record. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}{addAllFields} (const QString \&tableName, const QSqlDatabase \&db)
+\begin{DoxyCompactList}\small\item\em Add all fields of given table to record. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{hasValue} (int fieldIndex) const 
+\begin{DoxyCompactList}\small\item\em Check if a value was set. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_record_a581595f4425f824c794994eb564873cd}{hasValue} (const QString \&fieldName) const 
+\begin{DoxyCompactList}\small\item\em Check if a value was set. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{setValue} (int fieldIndex, const QVariant \&val)
+\begin{DoxyCompactList}\small\item\em Set value. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{setValue} (const QString \&fieldName, const QVariant \&val)
+\begin{DoxyCompactList}\small\item\em Set value. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{clearValues} ()
+\begin{DoxyCompactList}\small\item\em Clear values. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{
+\hyperlink{classmdt_error}{mdtError} \hyperlink{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{lastError} () const }
+\label{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}
+
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_error}{mdtError} \& \hyperlink{classmdt_sql_record_a9a930216441a3a1234c3f2774d17eb11}{lastErrorW} ()
+\begin{DoxyCompactList}\small\item\em Get last error for write access. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Database record container class. 
+
+This class can be useful to create data storage classes in application.
+
+Based on QSqlRecord , all field attributes and values are stored as QSqlField objects.
+
+To set a value, use \hyperlink{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{setValue(int, const QVariant \&)} or \hyperlink{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{setValue(const QString \&, const QVariant \&)}. To check if a value was set, use hasValue(int) or hasValue(const QString \&). To clear values and hasValue flags, use \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{clearValues()}.
+
+A possible way to create a sub class could be:
+\begin{DoxyItemize}
+\item Create fields that are relevant, using \hyperlink{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{addField()} , or \hyperlink{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}{addAllFields()}.
+\item On error, use clear() (from QSqlRecord).
+\item The user can also check if data record instance is valid by using isEmpty() (from QSqlRecord) and \hyperlink{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{lastError()}.
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+Qt's QSqlRecord documentation 
+\end{DoxySeeAlso}
+
+
+Definition at line 48 of file mdtSqlRecord.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}{
+\index{mdtSqlRecord@{mdtSqlRecord}!addAllFields@{addAllFields}}
+\index{addAllFields@{addAllFields}!mdtSqlRecord@{mdtSqlRecord}}
+\subsubsection[{addAllFields}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRecord::addAllFields (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{tableName, }
+\item[{const QSqlDatabase \&}]{db}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}
+
+
+Add all fields of given table to record. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tableName} & Name of table in database. \\
+\hline
+{\em db} & Database to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{addField()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 69 of file mdtSqlRecord.cpp.
+
+\hypertarget{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{
+\index{mdtSqlRecord@{mdtSqlRecord}!addField@{addField}}
+\index{addField@{addField}!mdtSqlRecord@{mdtSqlRecord}}
+\subsubsection[{addField}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRecord::addField (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fieldName, }
+\item[{const QString \&}]{tableName, }
+\item[{const QSqlDatabase \&}]{db}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}
+
+
+Add a field to record. 
+
+Will use given db object and tableName to get requested fieldName attributes, and add it to fields list using QSqlRecord::append() method.
+
+
+\begin{DoxyParams}{Parameters}
+{\em fieldName} & Name of the field to add. \\
+\hline
+{\em tableName} & Name of table in database (used to get fields attributes). \\
+\hline
+{\em db} & Database to use. Pass a empty object ( QSqlDatabase() ) to use default database. (This parameter is used to get fields attributes). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+False if database is closed, if the table or field does not exists. Error is also available with \hyperlink{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{lastError()}. 
+\end{DoxyReturn}
+
+
+Definition at line 38 of file mdtSqlRecord.cpp.
+
+\hypertarget{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{
+\index{mdtSqlRecord@{mdtSqlRecord}!clearValues@{clearValues}}
+\index{clearValues@{clearValues}!mdtSqlRecord@{mdtSqlRecord}}
+\subsubsection[{clearValues}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRecord::clearValues (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}
+
+
+Clear values. 
+
+Will clear value and hasValue flag for all fields. 
+
+Definition at line 124 of file mdtSqlRecord.cpp.
+
+\hypertarget{classmdt_sql_record_a581595f4425f824c794994eb564873cd}{
+\index{mdtSqlRecord@{mdtSqlRecord}!hasValue@{hasValue}}
+\index{hasValue@{hasValue}!mdtSqlRecord@{mdtSqlRecord}}
+\subsubsection[{hasValue}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRecord::hasValue (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fieldName}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_sql_record_a581595f4425f824c794994eb564873cd}
+
+
+Check if a value was set. 
+
+\begin{DoxySeeAlso}{See also}
+hasValue(int) 
+\end{DoxySeeAlso}
+
+
+Definition at line 108 of file mdtSqlRecord.cpp.
+
+\hypertarget{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{
+\index{mdtSqlRecord@{mdtSqlRecord}!hasValue@{hasValue}}
+\index{hasValue@{hasValue}!mdtSqlRecord@{mdtSqlRecord}}
+\subsubsection[{hasValue}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRecord::hasValue (
+\begin{DoxyParamCaption}
+\item[{int}]{fieldIndex}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}
+
+
+Check if a value was set. 
+
+By insertion or edition in database, it can be important to know if a field must be updated or not. Because a Null value can be valid, it's not possible to use this flag. This method returns true once a value was set in given field.
+
+To clear this flag, use \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{clearValues()}.
+
+Note: internally, QSqlRecord::isGenerated() is used. 
+
+Definition at line 103 of file mdtSqlRecord.cpp.
+
+\hypertarget{classmdt_sql_record_a9a930216441a3a1234c3f2774d17eb11}{
+\index{mdtSqlRecord@{mdtSqlRecord}!lastErrorW@{lastErrorW}}
+\index{lastErrorW@{lastErrorW}!mdtSqlRecord@{mdtSqlRecord}}
+\subsubsection[{lastErrorW}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtError} \& mdtSqlRecord::lastErrorW (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_sql_record_a9a930216441a3a1234c3f2774d17eb11}
+
+
+Get last error for write access. 
+
+Can be used by subclass to set the last error. 
+
+Definition at line 139 of file mdtSqlRecord.cpp.
+
+\hypertarget{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{
+\index{mdtSqlRecord@{mdtSqlRecord}!setValue@{setValue}}
+\index{setValue@{setValue}!mdtSqlRecord@{mdtSqlRecord}}
+\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRecord::setValue (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fieldName, }
+\item[{const QVariant \&}]{val}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}
+
+
+Set value. 
+
+\begin{DoxySeeAlso}{See also}
+setValue(int) 
+\end{DoxySeeAlso}
+
+
+Definition at line 119 of file mdtSqlRecord.cpp.
+
+\hypertarget{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{
+\index{mdtSqlRecord@{mdtSqlRecord}!setValue@{setValue}}
+\index{setValue@{setValue}!mdtSqlRecord@{mdtSqlRecord}}
+\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRecord::setValue (
+\begin{DoxyParamCaption}
+\item[{int}]{fieldIndex, }
+\item[{const QVariant \&}]{val}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}
+
+
+Set value. 
+
+Set the hasValue flag and set value. 
+
+Definition at line 113 of file mdtSqlRecord.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtdatabase/mdtSqlRecord.h\item 
+src/mdtdatabase/mdtSqlRecord.cpp\end{DoxyCompactItemize}

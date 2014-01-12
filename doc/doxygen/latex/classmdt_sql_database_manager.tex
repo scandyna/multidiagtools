@@ -233,7 +233,7 @@ Open a sqlite database.
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000084}{Todo}]Close here ?? \end{Desc}
+\item[\hyperlink{todo__todo000083}{Todo}]Close here ?? \end{Desc}
 
 
 QSqlQuery query(pvDatabase); if(!query.exec(\char`\"{}PRAGMA foreign\_\-keys = ON\char`\"{}))\{ pvLastError.setError(tr(\char`\"{}Cannot enable foreign keys support on database '\char`\"{}) + pvDatabaseName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); MDT\_\-ERROR\_\-SET\_\-SRC(pvLastError, \char`\"{}mdtSqlDatabaseManager\char`\"{}); pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text()); pvLastError.commit(); return false; \}

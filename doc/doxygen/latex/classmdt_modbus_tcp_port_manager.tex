@@ -152,11 +152,11 @@ Called by the thread whenn a complete frame was readen.
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000036}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000035}{Todo}]Error on incomplete frame \end{Desc}
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000037}{Todo}]check about transaction ID ? Should be a assertion ? \end{Desc}
+\item[\hyperlink{todo__todo000036}{Todo}]check about transaction ID ? Should be a assertion ? \end{Desc}
 
 
 
@@ -165,7 +165,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6
 
 
 
-Definition at line 598 of file mdtModbusTcpPortManager.cpp.
+Definition at line 593 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a4f52a477c264f809984e25abbc856db8}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!getHardwareNodeAddress@{getHardwareNodeAddress}}
@@ -206,7 +206,7 @@ startFrom must be $>$= 0
 \end{DoxyPrecond}
 
 
-Definition at line 373 of file mdtModbusTcpPortManager.cpp.
+Definition at line 369 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!getRegisterValues@{getRegisterValues}}
@@ -236,7 +236,7 @@ n must be $>$ 0
 \end{DoxyPrecond}
 
 
-Definition at line 425 of file mdtModbusTcpPortManager.cpp.
+Definition at line 421 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a5477eb7e8d57c5a42004046b426e39b6}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!isReady@{isReady}}
@@ -257,7 +257,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a6dc2798324521d177fb8f79d4f6
 
 
 
-Definition at line 368 of file mdtModbusTcpPortManager.cpp.
+Definition at line 364 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_ab4d0a994973af6008faf489ca9ddb03d}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!readScanResult@{readScanResult}}
@@ -279,11 +279,7 @@ List of lines or empty list if file not exists or on error.
 \end{DoxyReturn}
 
 
-Q\_\-ASSERT(!isRunning()); 
-
-
-
-Definition at line 347 of file mdtModbusTcpPortManager.cpp.
+Definition at line 345 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a99a13b5250a8523aa63869991581e56a}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!registerValues@{registerValues}}
@@ -300,7 +296,7 @@ Helper method for register service.
 
 Return result set by \hyperlink{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{getRegisterValues()}. Note that values are keeped until next call of \hyperlink{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{getRegisterValues()}. 
 
-Definition at line 478 of file mdtModbusTcpPortManager.cpp.
+Definition at line 473 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a3a1f5a54c93fa90ba83dea8785407da3}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!saveScanResult@{saveScanResult}}
@@ -328,10 +324,6 @@ True on successfull write.
 \begin{DoxyPrecond}{Precondition}
 Manager must no running 
 \end{DoxyPrecond}
-
-
-Q\_\-ASSERT(!isRunning()); 
-
 
 
 Definition at line 313 of file mdtModbusTcpPortManager.cpp.
@@ -500,7 +492,7 @@ transaction must be a valid pointer, and not allready exists in transactions pen
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000035}{Todo}]Handle this ? \end{Desc}
+\item[\hyperlink{todo__todo000034}{Todo}]Handle this ? \end{Desc}
 
 
 
@@ -509,7 +501,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_ad98399edba146af5cf32a900209
 
 
 
-Definition at line 522 of file mdtModbusTcpPortManager.cpp.
+Definition at line 517 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_ac6ffcccbba23b1bda5cba2ae347793ba}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!sendData@{sendData}}
@@ -538,7 +530,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a445b27f0819158f67f1bd548cdd
 
 
 
-Definition at line 574 of file mdtModbusTcpPortManager.cpp.
+Definition at line 569 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a746211413dfafb987a93145c9fa4876f}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!setRegisterValues@{setRegisterValues}}
@@ -566,7 +558,7 @@ startAddress must be $>$= 0
 \end{DoxyPrecond}
 
 
-Definition at line 483 of file mdtModbusTcpPortManager.cpp.
+Definition at line 478 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_ab04f69b660487a7c59d309df7a8f5baa}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!tryToConnect@{tryToConnect}}

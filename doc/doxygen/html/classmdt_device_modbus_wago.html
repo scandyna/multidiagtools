@@ -86,11 +86,19 @@ Collaboration diagram for mdtDeviceModbusWago:</div>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31abb03678a8afe2e6bf7c03e5e92726"></a><!-- doxytag: member="mdtDeviceModbusWago::mdtDeviceModbusWago" ref="a31abb03678a8afe2e6bf7c03e5e92726" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>mdtDeviceModbusWago</b> (QObject *parent=0)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#a31abb03678a8afe2e6bf7c03e5e92726">mdtDeviceModbusWago</a> (QObject *parent=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a13bfe3028d8c286d4233ea0ce0b2a8"></a><!-- doxytag: member="mdtDeviceModbusWago::~mdtDeviceModbusWago" ref="a8a13bfe3028d8c286d4233ea0ce0b2a8" args="()" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#a8a13bfe3028d8c286d4233ea0ce0b2a8">~mdtDeviceModbusWago</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#ac15c95cee8dec98609278d0e0ab2b3ce">connectToDevice</a> (const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;portInfo)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to physical device.  <a href="#ac15c95cee8dec98609278d0e0ab2b3ce"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">connectToDevice</a> (const <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;devInfo)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#a025f0411a708a529054a0e3c0b6461cd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#a12ad1f1ef34b16be5903d1d6232a7c6d">connectToDevice</a> (const QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt; &amp;scanResult, int hardwareNodeId, int bitsCount, int startFrom=0)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#a12ad1f1ef34b16be5903d1d6232a7c6d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#aeebc68749c2e22beacd18d85cc0b313a">connectToDevice</a> (const QList&lt; int &gt; &amp;existingHwNodeIdList)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#aeebc68749c2e22beacd18d85cc0b313a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f01ba89d90ddfbcaa0cbda1885d22f1"></a><!-- doxytag: member="mdtDeviceModbusWago::isWago750" ref="a6f01ba89d90ddfbcaa0cbda1885d22f1" args="()" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1">isWago750</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if device is a Wago 750 series. <br/></td></tr>
@@ -102,8 +110,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of digital outputs.  <a href="#a6711c4e486c3b103b187102685e091cc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#ad51fd45858e62c597ba8fc2bf3e877bd">digitalInputsCount</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of digital inputs.  <a href="#ad51fd45858e62c597ba8fc2bf3e877bd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#af26af790e502e5b85498540dd215cff7">detectIos</a> (<a class="el" href="classmdt_device_ios.html">mdtDeviceIos</a> *ios, const QMap&lt; int, <a class="el" href="classmdt_device_modbus_wago_module.html">mdtDeviceModbusWagoModule</a> * &gt; specialModules=QMap&lt; int, <a class="el" href="classmdt_device_modbus_wago_module.html">mdtDeviceModbusWagoModule</a> * &gt;())</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query device about filed bus + I/Os setup.  <a href="#af26af790e502e5b85498540dd215cff7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus_wago.html#aae46b00317190b70a59080e9b2917ed6">detectIos</a> (const QMap&lt; int, <a class="el" href="classmdt_device_modbus_wago_module.html">mdtDeviceModbusWagoModule</a> * &gt; specialModules=QMap&lt; int, <a class="el" href="classmdt_device_modbus_wago_module.html">mdtDeviceModbusWagoModule</a> * &gt;())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query device about filed bus + I/Os setup.  <a href="#aae46b00317190b70a59080e9b2917ed6"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
@@ -127,7 +135,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Note: calling this method will query the device</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of analog inputs, or &lt; 0 on error </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00172">172</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00116">116</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -149,7 +157,86 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Note: calling this method will query the device</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of analog outputs, or &lt; 0 on error </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a025f0411a708a529054a0e3c0b6461cd"></a><!-- doxytag: member="mdtDeviceModbusWago::connectToDevice" ref="a025f0411a708a529054a0e3c0b6461cd" args="(const mdtDeviceInfo &amp;devInfo)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtDeviceModbusWago::connectToDevice </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>devInfo</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Search and connect to physical device. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device_modbus.html#a093c6407ee69c4c7696a0c71d0acd88d" title="Search and connect to physical device.">mdtDeviceModbus::connectToDevice(const mdtDeviceInfo&amp;)</a> . </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_device_modbus.html#a093c6407ee69c4c7696a0c71d0acd88d">mdtDeviceModbus</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00069">69</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aeebc68749c2e22beacd18d85cc0b313a"></a><!-- doxytag: member="mdtDeviceModbusWago::connectToDevice" ref="aeebc68749c2e22beacd18d85cc0b313a" args="(const QList&lt; int &gt; &amp;existingHwNodeIdList)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtDeviceModbusWago::connectToDevice </td>
+          <td>(</td>
+          <td class="paramtype">const QList&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>existingHwNodeIdList</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Search and connect to physical device. </p>
+<p>See <a class="el" href="classmdt_device_modbus.html#a08100215b37c0922ed177d1f99d07e97" title="Search and connect to physical device.">mdtDeviceModbus::connectToDevice(const QList&lt;int&gt;&amp;)</a> . </p>
+
+<p>Reimplemented from <a class="el" href="classmdt_device_modbus.html#a08100215b37c0922ed177d1f99d07e97">mdtDeviceModbus</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00079">79</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac15c95cee8dec98609278d0e0ab2b3ce"></a><!-- doxytag: member="mdtDeviceModbusWago::connectToDevice" ref="ac15c95cee8dec98609278d0e0ab2b3ce" args="(const mdtPortInfo &amp;portInfo)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtDeviceModbusWago::connectToDevice </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>portInfo</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Connect to physical device. </p>
+<p>This method can be reimplemented in subclass if specific tasks must be done during connection .</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">portInfo</td><td><a class="el" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> object . The portName attribute of portInfo must contain host:port format (or ip:port) . </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A error listed in <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> (NoError on success) . </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_device_modbus.html#a3ca2a84163fed1380cbc8859a6b70db0">mdtDeviceModbus</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -191,80 +278,33 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memdoc">
 
 <p>Search and connect to physical device. </p>
-<p>Work as <a class="el" href="classmdt_device_modbus.html#a323b16687f448a4e45eb0b313635b77f" title="Search and connect to physical device.">mdtDeviceModbus::connectToDevice()</a> , but checks that device is a Wago 750 fieldbus coupler. </p>
-
-<p><p>Q_ASSERT(!pvTcpPortManager-&gt;isRunning()); </p>
-</p>
+<p>Work as <a class="el" href="classmdt_device_modbus.html#abfcab17fbf05aab7843ae689316dd01f" title="Search and connect to physical device.">mdtDeviceModbus::connectToDevice()</a> , but checks that device is a Wago 750 fieldbus coupler. </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device_modbus.html#a323b16687f448a4e45eb0b313635b77f">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a025f0411a708a529054a0e3c0b6461cd"></a><!-- doxytag: member="mdtDeviceModbusWago::connectToDevice" ref="a025f0411a708a529054a0e3c0b6461cd" args="(const mdtDeviceInfo &amp;devInfo)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtDeviceModbusWago::connectToDevice </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;&#160;</td>
-          <td class="paramname"><em>devInfo</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Search and connect to physical device. </p>
-<p>Will scan available ports and open the first port that has device attached maching request.</p>
-<p>Note: in current version, only Wago 750 system is supported.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">devInfo</td><td>Requested device's informations (can be empty, no information is used in current version). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>A error listed in <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> (NoError on success) </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="af26af790e502e5b85498540dd215cff7"></a><!-- doxytag: member="mdtDeviceModbusWago::detectIos" ref="af26af790e502e5b85498540dd215cff7" args="(mdtDeviceIos *ios, const QMap&lt; int, mdtDeviceModbusWagoModule * &gt; specialModules=QMap&lt; int, mdtDeviceModbusWagoModule * &gt;())" -->
+<a class="anchor" id="aae46b00317190b70a59080e9b2917ed6"></a><!-- doxytag: member="mdtDeviceModbusWago::detectIos" ref="aae46b00317190b70a59080e9b2917ed6" args="(const QMap&lt; int, mdtDeviceModbusWagoModule * &gt; specialModules=QMap&lt; int, mdtDeviceModbusWagoModule * &gt;())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool mdtDeviceModbusWago::detectIos </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmdt_device_ios.html">mdtDeviceIos</a> *&#160;</td>
-          <td class="paramname"><em>ios</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const QMap&lt; int, <a class="el" href="classmdt_device_modbus_wago_module.html">mdtDeviceModbusWagoModule</a> * &gt;&#160;</td>
-          <td class="paramname"><em>specialModules</em> = <code>QMap&lt;int,&#160;<a class="el" href="classmdt_device_modbus_wago_module.html">mdtDeviceModbusWagoModule</a>*&gt;()</code>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>specialModules</em> = <code>QMap&lt;int,&#160;<a class="el" href="classmdt_device_modbus_wago_module.html">mdtDeviceModbusWagoModule</a>*&gt;()</code></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Query device about filed bus + I/Os setup. </p>
-<p>The detected I/Os are added to given ios, but not added to internal ios container (use <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a> for this). Goal is to be able to detect setup without alter the internal container, so a check could be made before running really, or something else.</p>
 <p>For some special configurable modules, channels count and process image format can vary. Because some of these parameters cannot be readen from module via MODBUS, a instance of a module object with corresponding setup must be given as argument. (It's also possible to specify only the special modules. Internally, setup regarding register word returned from fieldbus coupler will be used for positions that are not present in the map).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">ios</td><td>I/O container in witch the result will be stored. </td></tr>
     <tr><td class="paramname">specialModules</td><td>Map with module position as key and special module object as value. Note: position 0 is the fieldbus coupler, so module position starts at 1. Module objects contained in the map are not deleted in this method. </td></tr>
   </table>
   </dd>
@@ -272,11 +312,14 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success. A failure is mostly due to a communication error, an unsupported fieldbus coupler, a unsupported module or a mistmatch with a special module configuration. </dd></dl>
 
 <p><dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>If number of requested modules is &gt; 62, this hangs up with 750-352 filedbus (possibly a bug in mdtLib..) </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>Handle adrress mapping of bus coupler (can be a problem with &gt; 256 I/O on 750-352 f.ex.) </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Provisoire !!!! </dd></dl>
+<p>qDebug() &lt;&lt; "I/O config: " &lt;&lt; <a class="el" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues()</a>;</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Handle adrress mapping of bus coupler (can be a problem with &gt; 256 I/O on 750-352 f.ex.) </dd></dl>
+<p>qDebug() &lt;&lt; "I/O setup word: " &lt;&lt; word &lt;&lt; " ...";</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Provisoire !!!! </dd></dl>
+<p>qDebug() &lt;&lt; "Module pos. " &lt;&lt; i &lt;&lt; ": word: " &lt;&lt; word &lt;&lt; ", firs AI address: " &lt;&lt; module-&gt;firstAiAddress() &lt;&lt; " , IN count: " &lt;&lt; module-&gt;analogInputs().size(); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00205">205</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00149">149</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -298,7 +341,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Note: calling this method will query the device</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of digital inputs, or &lt; 0 on error </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00194">194</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -320,7 +363,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Note: calling this method will query the device</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of digital outputs, or &lt; 0 on error </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00127">127</a> of file <a class="el" href="mdt_device_modbus_wago_8cpp_source.html">mdtDeviceModbusWago.cpp</a>.</p>
 
 </div>
 </div>
@@ -343,7 +386,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:25 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

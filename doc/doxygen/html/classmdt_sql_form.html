@@ -62,6 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">mdtSqlForm Class Reference</div>  </div>
@@ -137,8 +138,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current data for given table and field name.  <a href="#aca283557b7e2586779cb5c498d388f14"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a0c27d6a9ecbf0589f313c7193c632a62">data</a> (const QString &amp;tableName, int row, const QString &amp;fieldName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data for given table , row and field name.  <a href="#a0c27d6a9ecbf0589f313c7193c632a62"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2138e4e1236a9b1c002825ddd9e59298"></a><!-- doxytag: member="mdtSqlForm::insert" ref="a2138e4e1236a9b1c002825ddd9e59298" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a2138e4e1236a9b1c002825ddd9e59298">insert</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call insert method on mainSqlWidget. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a27fe6e45aa5d4d7782aad9833e6de20b">setupTables</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup tables.  <a href="#a27fe6e45aa5d4d7782aad9833e6de20b"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_error.html">mdtError</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#abee43c43913605ad585ad163b998fca4">lastErrorW</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get lastError ogject for write acces.  <a href="#abee43c43913605ad585ad163b998fca4"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc24e8dedd1249a29708347fdff560fd"></a><!-- doxytag: member="mdtSqlForm::pvLastError" ref="afc24e8dedd1249a29708347fdff560fd" args="" -->
@@ -504,6 +512,27 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="abee43c43913605ad585ad163b998fca4"></a><!-- doxytag: member="mdtSqlForm::lastErrorW" ref="abee43c43913605ad585ad163b998fca4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_error.html">mdtError</a> &amp; mdtSqlForm::lastErrorW </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get lastError ogject for write acces. </p>
+<p>Subclass can use this method to set lastError </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00443">443</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a857fc9370e2054408ae8b42e8deedbf5"></a><!-- doxytag: member="mdtSqlForm::mainSqlWidget" ref="a857fc9370e2054408ae8b42e8deedbf5" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -802,7 +831,7 @@ Protected Attributes</h2></td></tr>
 <p>Setup tables. </p>
 <p>Must be re-implemented in subclass, default implementation does nothing . </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00431">431</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00438">438</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -847,7 +876,7 @@ Protected Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:48 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:29 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -88,8 +88,18 @@ QVariant \hyperlink{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}{current
 \begin{DoxyCompactList}\small\item\em Get current data for given table and field name. \end{DoxyCompactList}\item 
 QVariant \hyperlink{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{data} (const QString \&tableName, int row, const QString \&fieldName)
 \begin{DoxyCompactList}\small\item\em Get data for given table , row and field name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}{
+void \hyperlink{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}{insert} ()}
+\label{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}
+
+\begin{DoxyCompactList}\small\item\em Call insert method on mainSqlWidget. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_sql_form_a27fe6e45aa5d4d7782aad9833e6de20b}{setupTables} ()
 \begin{DoxyCompactList}\small\item\em Setup tables. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_error}{mdtError} \& \hyperlink{classmdt_sql_form_abee43c43913605ad585ad163b998fca4}{lastErrorW} ()
+\begin{DoxyCompactList}\small\item\em Get lastError ogject for write acces. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -366,6 +376,23 @@ return m-\/$>$\hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{la
 
 Definition at line 337 of file mdtSqlForm.cpp.
 
+\hypertarget{classmdt_sql_form_abee43c43913605ad585ad163b998fca4}{
+\index{mdtSqlForm@{mdtSqlForm}!lastErrorW@{lastErrorW}}
+\index{lastErrorW@{lastErrorW}!mdtSqlForm@{mdtSqlForm}}
+\subsubsection[{lastErrorW}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtError} \& mdtSqlForm::lastErrorW (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_sql_form_abee43c43913605ad585ad163b998fca4}
+
+
+Get lastError ogject for write acces. 
+
+Subclass can use this method to set lastError 
+
+Definition at line 443 of file mdtSqlForm.cpp.
+
 \hypertarget{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{
 \index{mdtSqlForm@{mdtSqlForm}!mainSqlWidget@{mainSqlWidget}}
 \index{mainSqlWidget@{mainSqlWidget}!mdtSqlForm@{mdtSqlForm}}
@@ -595,7 +622,7 @@ Setup tables.
 
 Must be re-\/implemented in subclass, default implementation does nothing . 
 
-Definition at line 431 of file mdtSqlForm.cpp.
+Definition at line 438 of file mdtSqlForm.cpp.
 
 \hypertarget{classmdt_sql_form_a1ea800b795e3ead97e6a0452ab305d65}{
 \index{mdtSqlForm@{mdtSqlForm}!sqlWidget@{sqlWidget}}

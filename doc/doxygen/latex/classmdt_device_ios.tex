@@ -60,7 +60,7 @@ void \hyperlink{classmdt_device_ios_a0e2683630eff9410003a36ae5af76b52}{addAnalog
 \begin{DoxyCompactList}\small\item\em Add a analog input. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_ios_a776dc0508f88f8ea206801fc7472bfb2}{addAnalogInputs} (const QList$<$ \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ \&aiList)
 \begin{DoxyCompactList}\small\item\em Add a list of analog inputs. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_a70a3d979ec5d44297e8195e37596d5bc}{analogInputAt} (int address)
+\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_ad74dc114cec2029aa9a14714f13666c7}{analogInputAtAddress} (int address)
 \begin{DoxyCompactList}\small\item\em Get analog input at given address. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_ae31753e23d7ab14073f852dca85c2f9e}{analogInputWithLabelShort} (const QString \&labelShort)
 \begin{DoxyCompactList}\small\item\em Get analog input with a given short label. \end{DoxyCompactList}\item 
@@ -117,7 +117,7 @@ void \hyperlink{classmdt_device_ios_a023571f5d77bd0874c08b53890a56381}{addDigita
 \begin{DoxyCompactList}\small\item\em Add a digital input. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_ios_a470c27db1fefa6cd2a4a690bb0ff04f5}{addDigitalInputs} (const QList$<$ \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ $>$ \&diList)
 \begin{DoxyCompactList}\small\item\em Add a list of digital inputs. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_a78f68d0efeac0a23628f133121f28df8}{digitalInputAt} (int address)
+\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_a9df04d579a6642e5cf717c792cba34f9}{digitalInputAtAddress} (int address)
 \begin{DoxyCompactList}\small\item\em Get digital input at given address. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_abcde6de5a0ca6d642af04c21250d6555}{digitalInputWithLabelShort} (const QString \&labelShort)
 \begin{DoxyCompactList}\small\item\em Get digital input with a given short label. \end{DoxyCompactList}\item 
@@ -187,7 +187,21 @@ This class can contain 4 type of I/O:
 
 The main goal here is the functionnal part. The (G)UI part is done in other place. For example, it's possible to use \hyperlink{classmdt_device_ios_widget}{mdtDeviceIosWidget} class to have a generic representation af all type of I/O.
 
-Concept of address: Internally, each I/O is stored in a QMap with an address as key. In some cases, this can reflect a real situations, for exaple:
+Concept of position
+
+Internally, I/Os are stored in 4 QList:
+\begin{DoxyItemize}
+\item 1 for analog inputs
+\item 1 fro analog outputs
+\item 1 for digital inputs
+\item 1 for digital outputs
+\end{DoxyItemize}
+
+The position is simply a index in a list, with a range from 0 to N-\/1 I/O for a type . The order of position is the order of call to add method .
+
+Concept of address
+
+Internally, each I/O is stored in a QMap with an address as key. In some cases, this can reflect a real situations, for exaple:
 \begin{DoxyItemize}
 \item Relative address of a MODBUS query
 \item Memory address of physical device
@@ -218,7 +232,7 @@ Some helper methods are also available:
 \item \hyperlink{classmdt_device_ios_a06642814dbbb525dff7d1a7e603f57ac}{updateDigitalOutputValues()} 
 \end{DoxyItemize}
 
-Definition at line 82 of file mdtDeviceIos.h.
+Definition at line 94 of file mdtDeviceIos.h.
 
 
 
@@ -248,7 +262,7 @@ Write}
 
 
 
-Definition at line 94 of file mdtDeviceIos.h.
+Definition at line 106 of file mdtDeviceIos.h.
 
 
 
@@ -435,15 +449,15 @@ Add a list of digital outputs.
 
 Definition at line 479 of file mdtDeviceIos.cpp.
 
-\hypertarget{classmdt_device_ios_a70a3d979ec5d44297e8195e37596d5bc}{
-\index{mdtDeviceIos@{mdtDeviceIos}!analogInputAt@{analogInputAt}}
-\index{analogInputAt@{analogInputAt}!mdtDeviceIos@{mdtDeviceIos}}
-\subsubsection[{analogInputAt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAnalogIo} $\ast$ mdtDeviceIos::analogInputAt (
+\hypertarget{classmdt_device_ios_ad74dc114cec2029aa9a14714f13666c7}{
+\index{mdtDeviceIos@{mdtDeviceIos}!analogInputAtAddress@{analogInputAtAddress}}
+\index{analogInputAtAddress@{analogInputAtAddress}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{analogInputAtAddress}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAnalogIo} $\ast$ mdtDeviceIos::analogInputAtAddress (
 \begin{DoxyParamCaption}
 \item[{int}]{address}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_device_ios_a70a3d979ec5d44297e8195e37596d5bc}
+\label{classmdt_device_ios_ad74dc114cec2029aa9a14714f13666c7}
 
 
 Get analog input at given address. 
@@ -465,7 +479,7 @@ Definition at line 149 of file mdtDeviceIos.cpp.
 
 Get a list containing all analog inputs. 
 
-Note: the returned list is not sorted. for grouped queries, see \hyperlink{classmdt_device_ios_a71a1b9cdbc524e4d0094ab37575defc1}{analogInputsSegments()} and \hyperlink{classmdt_device_ios_addeff0a2dab646a49170f8be10cc46fb}{updateAnalogInputValues()} 
+Note: the returned list is not sorted by address . for grouped queries, see \hyperlink{classmdt_device_ios_a71a1b9cdbc524e4d0094ab37575defc1}{analogInputsSegments()} and \hyperlink{classmdt_device_ios_addeff0a2dab646a49170f8be10cc46fb}{updateAnalogInputValues()} 
 
 Definition at line 168 of file mdtDeviceIos.cpp.
 
@@ -533,7 +547,7 @@ Definition at line 266 of file mdtDeviceIos.cpp.
 
 Get a list containing all analog outputs. 
 
-Note: the returned list is not sorted 
+Note: the returned list is not sorted by address . 
 
 Definition at line 285 of file mdtDeviceIos.cpp.
 
@@ -571,15 +585,15 @@ Will free all stored I/O objects.
 
 Definition at line 70 of file mdtDeviceIos.cpp.
 
-\hypertarget{classmdt_device_ios_a78f68d0efeac0a23628f133121f28df8}{
-\index{mdtDeviceIos@{mdtDeviceIos}!digitalInputAt@{digitalInputAt}}
-\index{digitalInputAt@{digitalInputAt}!mdtDeviceIos@{mdtDeviceIos}}
-\subsubsection[{digitalInputAt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDigitalIo} $\ast$ mdtDeviceIos::digitalInputAt (
+\hypertarget{classmdt_device_ios_a9df04d579a6642e5cf717c792cba34f9}{
+\index{mdtDeviceIos@{mdtDeviceIos}!digitalInputAtAddress@{digitalInputAtAddress}}
+\index{digitalInputAtAddress@{digitalInputAtAddress}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{digitalInputAtAddress}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDigitalIo} $\ast$ mdtDeviceIos::digitalInputAtAddress (
 \begin{DoxyParamCaption}
 \item[{int}]{address}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_device_ios_a78f68d0efeac0a23628f133121f28df8}
+\label{classmdt_device_ios_a9df04d579a6642e5cf717c792cba34f9}
 
 
 Get digital input at given address. 
@@ -601,7 +615,7 @@ Definition at line 378 of file mdtDeviceIos.cpp.
 
 Get a list containing all digital inputs. 
 
-Note: the returned list is not sorted 
+Note: the returned list is not sorted by address . 
 
 Definition at line 397 of file mdtDeviceIos.cpp.
 
@@ -669,7 +683,7 @@ Definition at line 494 of file mdtDeviceIos.cpp.
 
 Get a list containing all digital outputs. 
 
-Note: the returned list is not sorted 
+Note: the returned list is not sorted by address . 
 
 Definition at line 513 of file mdtDeviceIos.cpp.
 

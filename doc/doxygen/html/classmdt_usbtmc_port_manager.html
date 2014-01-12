@@ -189,14 +189,15 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Called by the thread whenn a frame was readen. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000060">Todo:</a></b></dt><dd>On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. &lt;- Should be done in thread.. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000059">Todo:</a></b></dt><dd>On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. &lt;- Should be done in thread.. </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000061">Todo:</a></b></dt><dd>Check ID coherence ? Should be a assertion ? </dd></dl>
+<p><p>qDebug() &lt;&lt; "mdtUsbtmcPortManager::fromThreadNewFrameReaden() - bTag: " &lt;&lt; frame-&gt;bTag();</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000060">Todo:</a></b></dt><dd>Check ID coherence ? Should be a assertion ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00346">346</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00297">297</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -405,13 +406,9 @@ transaction must be a valid pointer, and not allready exists in transactions pen
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a> (&lt; 0). On failure, the transaction is restored to pool. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be set </dd>
 <dd>
-transaction must be a valid pointer</dd></dl>
-<p>int <a class="el" href="classmdt_usbtmc_port_manager.html#a6d566c68ddeb7c7ca14b5c70ae784efc" title="Write data by copy.">mdtUsbtmcPortManager::sendData(const QByteArray &amp;data)</a> { Q_ASSERT(pvPort != 0);</p>
-<p><a class="el" href="classmdt_frame_usb_tmc.html" title="USBTMC frame.">mdtFrameUsbTmc</a> *frame;</p>
-<p>Wait until we can write while(1){ If port manager was stopped, we return if(<a class="el" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed()</a>){ return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a>; } if(<a class="el" href="classmdt_usbtmc_port_manager.html#a0b90ceb0bbf424222ec878a355d206d7" title="Check if port manager is ready.">isReady()</a>){ <a class="el" href="classmdt_port_manager.html#a3107b7121dfe5b9686d9b3b3a48a0af0" title="Lock the port&#39;s mutex.">lockPortMutex()</a>; if(pvPort-&gt;writeFramesPool().size() &gt; 0){ frame = dynamic_cast&lt;mdtFrameUsbTmc*&gt; (pvPort-&gt;writeFramesPool().dequeue()); Q_ASSERT(frame != 0); Here we are ready to write - we keep port mutext locked break; } <a class="el" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex()</a>; } QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents); } if(!waitTransactionPossible()){ <a class="el" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex()</a>; return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a>; } We are ready to write Q_ASSERT(frame != 0); frame-&gt;clear(); frame-&gt;clearSub(); Store data and add frame to write queue frame-&gt;setWaitAnAnswer(false); frame-&gt;setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT); Increment bTag and enshure it's in correct range (1-255) incrementCurrentTransactionId(1, 255); frame-&gt;setbTag(<a class="el" href="classmdt_port_manager.html#a19abf29c8948cde0337d67c9722c25aa" title="Get the current transaction ID.">currentTransactionId()</a>); frame-&gt;setMessageData(data); frame-&gt;setEOM(true); frame-&gt;encode(); pvPort-&gt;addFrameToWrite(frame); <a class="el" href="classmdt_port_manager.html#a882e6bf95dac9cd4ab8cc93ecc524874" title="Unlock port&#39;s mutex.">unlockPortMutex()</a>;</p>
-<p>return <a class="el" href="classmdt_port_manager.html#a19abf29c8948cde0337d67c9722c25aa" title="Get the current transaction ID.">currentTransactionId()</a>; } </p>
+transaction must be a valid pointer </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00253">253</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00204">204</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -438,10 +435,10 @@ transaction must be a valid pointer</dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000062">Todo:</a></b></dt><dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000061">Todo:</a></b></dt><dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 if write queue is full. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00306">306</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00257">257</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -461,12 +458,12 @@ transaction must be a valid pointer</dd></dl>
 
 <p>Send a READ_STATUS_BYTE request thru the control endpoint. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success or WriteQueueEmpty on error.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000059">Todo:</a></b></dt><dd>finish ! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000058">Todo:</a></b></dt><dd>finish ! </dd></dl>
 
 <p><p>m.sendControlRequest(f); End Sandbox ! </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00318">318</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00269">269</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -489,7 +486,7 @@ transaction must be a valid pointer</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:30 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

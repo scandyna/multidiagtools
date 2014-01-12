@@ -113,8 +113,9 @@ Public Types</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Measure type.  <a href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a178cc4f868b15b8c4591d8333afa84e4">decodeConfigure</a> (const QByteArray &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode CONFigure? reply.  <a href="#a178cc4f868b15b8c4591d8333afa84e4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a178cc4f868b15b8c4591d8333afa84e4"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::decodeConfigure" ref="a178cc4f868b15b8c4591d8333afa84e4" args="(const QByteArray &amp;data)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a178cc4f868b15b8c4591d8333afa84e4">decodeConfigure</a> (const QByteArray &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode CONFigure? reply. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a590c72641f56e0f0db6547244b3643ef"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::measureType" ref="a590c72641f56e0f0db6547244b3643ef" args="() const " -->
 <a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004">measure_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a590c72641f56e0f0db6547244b3643ef">measureType</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the measure type. <br/></td></tr>
@@ -193,31 +194,6 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 
 </div>
 </div>
-<hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a178cc4f868b15b8c4591d8333afa84e4"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::decodeConfigure" ref="a178cc4f868b15b8c4591d8333afa84e4" args="(const QByteArray &amp;data)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtFrameCodecScpiU3606A::decodeConfigure </td>
-          <td>(</td>
-          <td class="paramtype">const QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Decode CONFigure? reply. </p>
-
-<p><p>if(pvValues.size() == 3){ value = pvValues.at(1); qDebug() &lt;&lt; "mdtFrameCodecScpiU3606A::decodeConfigure() - value: " &lt;&lt; value; if(value.convert(QVariant::Double)){ pvMeasureRange = checkFloatingValueValidity(value.toDouble()); } value = pvValues.at(2); if(value.convert(QVariant::Double)){ pvResolution = checkFloatingValueValidity(value.toDouble()); } }</p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_u3606_a_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_frame_codec_scpi_u3606_a_8cpp_source.html">mdtFrameCodecScpiU3606A.cpp</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_frame_codec_scpi_u3606_a_8h_source.html">mdtFrameCodecScpiU3606A.h</a></li>
 <li>src/mdtutils/<a class="el" href="mdt_frame_codec_scpi_u3606_a_8cpp_source.html">mdtFrameCodecScpiU3606A.cpp</a></li>
@@ -237,7 +213,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:27 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

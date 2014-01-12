@@ -22,8 +22,7 @@ Inheritance diagram for mdtDeviceScpi:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceScpi:
-\nopagebreak
+Collaboration diagram for mdtDeviceScpi:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -121,7 +120,7 @@ Definition at line 32 of file mdtDeviceScpi.cpp.
 Query device about error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000023}{Todo}]Buggy, review !\end{Desc}
+\item[\hyperlink{todo__todo000025}{Todo}]Buggy, review !\end{Desc}
 
 
 Will send the SYST:ERR? and return.
@@ -172,7 +171,7 @@ device = devInfo; device.setVendorId(0x0957); device.setProductId(0x4d18);
 if(\hyperlink{classmdt_device_scpi_a7dc5ab8856a766a45bcc7e9cba0f54ca}{portManager()}-\/$>$openPort())\{ if(\hyperlink{classmdt_device_scpi_a7dc5ab8856a766a45bcc7e9cba0f54ca}{portManager()}-\/$>$\hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start()})\{ retVal = \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError}; \}else\{ retVal = \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError}; \} \}else\{ retVal = \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError}; \}
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000022}{Todo}]Add DeviceNotFound error ? \end{Desc}
+\item[\hyperlink{todo__todo000024}{Todo}]Add DeviceNotFound error ? \end{Desc}
 
 
 
@@ -201,7 +200,7 @@ Definition at line 68 of file mdtDeviceScpi.cpp.
 Handle device error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000024}{Todo}]Buggy, review !\end{Desc}
+\item[\hyperlink{todo__todo000026}{Todo}]Buggy, review !\end{Desc}
 
 
 This method is called from subclass's decodeReadenFrame(mdtPortTransaction) method when a frame of type MDT\_\-FC\_\-SCPI\_\-ERR was received.
@@ -238,7 +237,7 @@ Definition at line 218 of file mdtDeviceScpi.cpp.
 Handle device's specific error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000025}{Todo}]Buggy, review !\end{Desc}
+\item[\hyperlink{todo__todo000027}{Todo}]Buggy, review !\end{Desc}
 
 
 This method is called from \hyperlink{classmdt_device_scpi_a16b6b0c77b1078da285f9d8d9ba52181}{handleDeviceError()}.

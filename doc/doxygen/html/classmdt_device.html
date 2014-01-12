@@ -120,8 +120,34 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device name. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">connectToDevice</a> (const <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;devInfo)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#abab1b6e45af527880ce469ae318474c0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2">setIos</a> (<a class="el" href="classmdt_device_ios.html">mdtDeviceIos</a> *ios, bool autoOutputUpdate=false)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the I/O's container.  <a href="#a9f1de62ef54974b0636dee673bd819e2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a2b694a37d9464d27214bdeceec220998">disconnectFromDevice</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from device.  <a href="#a2b694a37d9464d27214bdeceec220998"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae887c9c83fa090c16717d75905e1079d"></a><!-- doxytag: member="mdtDevice::addInput" ref="ae887c9c83fa090c16717d75905e1079d" args="(mdtAnalogIo *analogInput)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ae887c9c83fa090c16717d75905e1079d">addInput</a> (<a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *analogInput)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a analog input. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5fd61d58c5b305f61ad706c13d658d2"></a><!-- doxytag: member="mdtDevice::addInputs" ref="af5fd61d58c5b305f61ad706c13d658d2" args="(const QList&lt; mdtAnalogIo * &gt; &amp;analogInputs)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#af5fd61d58c5b305f61ad706c13d658d2">addInputs</a> (const QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt; &amp;analogInputs)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a list of analog inputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7acf4cc331c003fd6d30190d54242da1"></a><!-- doxytag: member="mdtDevice::addOutput" ref="a7acf4cc331c003fd6d30190d54242da1" args="(mdtAnalogIo *analogOutput)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a7acf4cc331c003fd6d30190d54242da1">addOutput</a> (<a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *analogOutput)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a analog output. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac8600604fb55c70e84e100e3af8887a"></a><!-- doxytag: member="mdtDevice::addOutputs" ref="aac8600604fb55c70e84e100e3af8887a" args="(const QList&lt; mdtAnalogIo * &gt; &amp;analogOutputs)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#aac8600604fb55c70e84e100e3af8887a">addOutputs</a> (const QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt; &amp;analogOutputs)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a list of analog outputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a186861ad3b8857ba045534244fb9f9ef"></a><!-- doxytag: member="mdtDevice::addInput" ref="a186861ad3b8857ba045534244fb9f9ef" args="(mdtDigitalIo *digitalInput)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a186861ad3b8857ba045534244fb9f9ef">addInput</a> (<a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *digitalInput)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a digital input. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9dbe6a03ca719a17f615cd59ce1fd46d"></a><!-- doxytag: member="mdtDevice::addInputs" ref="a9dbe6a03ca719a17f615cd59ce1fd46d" args="(const QList&lt; mdtDigitalIo * &gt; &amp;digitalInputs)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a9dbe6a03ca719a17f615cd59ce1fd46d">addInputs</a> (const QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt; &amp;digitalInputs)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a list of digital inputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a319cd0eeec028f3fc8cfcb96def79404"></a><!-- doxytag: member="mdtDevice::addOutput" ref="a319cd0eeec028f3fc8cfcb96def79404" args="(mdtDigitalIo *digitalOutput)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a319cd0eeec028f3fc8cfcb96def79404">addOutput</a> (<a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *digitalOutput)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a digital output. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3af87ab29bdd44019af739398a6987eb"></a><!-- doxytag: member="mdtDevice::addOutputs" ref="a3af87ab29bdd44019af739398a6987eb" args="(const QList&lt; mdtDigitalIo * &gt; &amp;digitalOutputs)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a3af87ab29bdd44019af739398a6987eb">addOutputs</a> (const QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt; &amp;digitalOutputs)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a list of digital outputs. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a61032f15e601eb1bd74da80014bae593">deleteIos</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all I/O in container.  <a href="#a61032f15e601eb1bd74da80014bae593"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_device_ios.html">mdtDeviceIos</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#adb7099877ad2080961fae5a40117e9e5">ios</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the I/Os container.  <a href="#adb7099877ad2080961fae5a40117e9e5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#aa241c40514683254990e742cf1bbb155">setBackToReadyStateTimeout</a> (int timeout)</td></tr>
@@ -141,48 +167,60 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error.  <a href="#a79ca328ff9e9f413a38c1cc9c9267cee"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ab828764660ba53ffce1995901ddf5a0a">getAnalogInputValue</a> (<a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *analogInput, bool queryDevice, bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog input value.  <a href="#ab828764660ba53ffce1995901ddf5a0a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6a9d73cd51ce21f69dc8e4646d4fcfe"></a><!-- doxytag: member="mdtDevice::getAnalogInputValue" ref="ad6a9d73cd51ce21f69dc8e4646d4fcfe" args="(int address, bool queryDevice, bool waitOnReply)" -->
-<a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getAnalogInputValue</b> (int address, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ad6a9d73cd51ce21f69dc8e4646d4fcfe">getAnalogInputValue</a> (int address, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog input value.  <a href="#ad6a9d73cd51ce21f69dc8e4646d4fcfe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ae2bc364104f843b037bbbf8aa8a37d8e">getAnalogInputValueAt</a> (int position, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog input value.  <a href="#ae2bc364104f843b037bbbf8aa8a37d8e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66a4c466dd6cb5c8235850f6dc23ae7b"></a><!-- doxytag: member="mdtDevice::getAnalogInputValue" ref="a66a4c466dd6cb5c8235850f6dc23ae7b" args="(const QString &amp;labelShort, bool queryDevice, bool waitOnReply)" -->
 <a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getAnalogInputValue</b> (const QString &amp;labelShort, bool queryDevice, bool waitOnReply)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a98cba3132db15317daf54eb701388e91">getAnalogInputs</a> (bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all analog inputs on physical device and update (G)UI representation.  <a href="#a98cba3132db15317daf54eb701388e91"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a163ee286d905feafe50b3e4351d4bf41">getAnalogOutputValue</a> (<a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *analogOutput, bool queryDevice, bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog output value.  <a href="#a163ee286d905feafe50b3e4351d4bf41"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa90eb1111d6778f4227224d3b1804ae7"></a><!-- doxytag: member="mdtDevice::getAnalogOutputValue" ref="aa90eb1111d6778f4227224d3b1804ae7" args="(int addressRead, bool queryDevice, bool waitOnReply)" -->
-<a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getAnalogOutputValue</b> (int addressRead, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#aa90eb1111d6778f4227224d3b1804ae7">getAnalogOutputValue</a> (int addressRead, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog output value.  <a href="#aa90eb1111d6778f4227224d3b1804ae7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ae3776f8a9215c799781e701798927f0c">getAnalogOutputValueAt</a> (int position, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog output value.  <a href="#ae3776f8a9215c799781e701798927f0c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6bfbab4c93bc0136068e773dd776010"></a><!-- doxytag: member="mdtDevice::getAnalogOutputValue" ref="ad6bfbab4c93bc0136068e773dd776010" args="(const QString &amp;labelShort, bool queryDevice, bool waitOnReply)" -->
 <a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getAnalogOutputValue</b> (const QString &amp;labelShort, bool queryDevice, bool waitOnReply)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a78a8968cf61c1cac518b0a8af471110c">getAnalogOutputs</a> (bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all analog outputs on physical device and update (G)UI representation.  <a href="#a78a8968cf61c1cac518b0a8af471110c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a766d9adcf8c2274f61f120a4a5c5c6d9">setAnalogOutputValue</a> (<a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *analogOutput, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set analog output value.  <a href="#a766d9adcf8c2274f61f120a4a5c5c6d9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab605f81f28271f54570f151e94039807"></a><!-- doxytag: member="mdtDevice::setAnalogOutputValue" ref="ab605f81f28271f54570f151e94039807" args="(int addressWrite, const mdtValue &amp;value, bool sendToDevice, bool waitOnReply)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>setAnalogOutputValue</b> (int addressWrite, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ab605f81f28271f54570f151e94039807">setAnalogOutputValue</a> (int addressWrite, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set analog output value.  <a href="#ab605f81f28271f54570f151e94039807"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a2db6bcd6d69cba9e8be0e68388d75030">setAnalogOutputValueAt</a> (int position, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set analog output value.  <a href="#a2db6bcd6d69cba9e8be0e68388d75030"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40b49f882622c37f50a57132f954e732"></a><!-- doxytag: member="mdtDevice::setAnalogOutputValue" ref="a40b49f882622c37f50a57132f954e732" args="(const QString &amp;labelShort, const mdtValue &amp;value, bool sendToDevice, bool waitOnReply)" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>setAnalogOutputValue</b> (const QString &amp;labelShort, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a57e1cee7e670469035c57e3bd2ff4c9d">setAnalogOutputs</a> (bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write all analog outputs on physical device and update (G)UI representation.  <a href="#a57e1cee7e670469035c57e3bd2ff4c9d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#afe8bd7811ccc4a2ba8088edf073e0a8d">getDigitalInputValue</a> (<a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *digitalInput, bool queryDevice, bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital input value.  <a href="#afe8bd7811ccc4a2ba8088edf073e0a8d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9915b677a307ffeab98a413d61b0f2e7"></a><!-- doxytag: member="mdtDevice::getDigitalInputValue" ref="a9915b677a307ffeab98a413d61b0f2e7" args="(int address, bool queryDevice, bool waitOnReply)" -->
-<a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getDigitalInputValue</b> (int address, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a9915b677a307ffeab98a413d61b0f2e7">getDigitalInputValue</a> (int address, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital input value.  <a href="#a9915b677a307ffeab98a413d61b0f2e7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a8a17dbc767f75813241ce4a9709d0ac7">getDigitalInputValueAt</a> (int position, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital input value.  <a href="#a8a17dbc767f75813241ce4a9709d0ac7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a295a2795695804cc291282d92a1c7641"></a><!-- doxytag: member="mdtDevice::getDigitalInputValue" ref="a295a2795695804cc291282d92a1c7641" args="(const QString &amp;labelShort, bool queryDevice, bool waitOnReply)" -->
 <a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getDigitalInputValue</b> (const QString &amp;labelShort, bool queryDevice, bool waitOnReply)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a6e338b959c86591b6b3401f925c49050">getDigitalInputs</a> (bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all digital inputs on physical device and update (G)UI representation.  <a href="#a6e338b959c86591b6b3401f925c49050"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a978bde9f2b6177b6f3742163e7a712a9">getDigitalOutputValue</a> (<a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *digitalOutput, bool queryDevice, bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital output value.  <a href="#a978bde9f2b6177b6f3742163e7a712a9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf8160df55a9eb9ba6820e24bb7f1440"></a><!-- doxytag: member="mdtDevice::getDigitalOutputValue" ref="adf8160df55a9eb9ba6820e24bb7f1440" args="(int addressRead, bool queryDevice, bool waitOnReply)" -->
-<a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getDigitalOutputValue</b> (int addressRead, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#adf8160df55a9eb9ba6820e24bb7f1440">getDigitalOutputValue</a> (int addressRead, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital output value.  <a href="#adf8160df55a9eb9ba6820e24bb7f1440"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#abdd55e5a7bbfe268fc3c790e81da373a">getDigitalOutputValueAt</a> (int position, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital output value.  <a href="#abdd55e5a7bbfe268fc3c790e81da373a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e7b7de4243f45d8cfa42599d51555bf"></a><!-- doxytag: member="mdtDevice::getDigitalOutputValue" ref="a5e7b7de4243f45d8cfa42599d51555bf" args="(const QString &amp;labelShort, bool queryDevice, bool waitOnReply)" -->
 <a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getDigitalOutputValue</b> (const QString &amp;labelShort, bool queryDevice, bool waitOnReply)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ab35b81b8eb68e161ac06ae882be39a25">getDigitalOutputs</a> (bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all digital outputs on physical device and update (G)UI representation.  <a href="#ab35b81b8eb68e161ac06ae882be39a25"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a04564fd9be440c026e7c399f0e619485">setDigitalOutputValue</a> (<a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *digitalOutput, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a digital output value.  <a href="#a04564fd9be440c026e7c399f0e619485"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c2514c3c31a687a01a898c874d2c45e"></a><!-- doxytag: member="mdtDevice::setDigitalOutputValue" ref="a5c2514c3c31a687a01a898c874d2c45e" args="(int addressWrite, const mdtValue &amp;value, bool sendToDevice, bool waitOnReply)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>setDigitalOutputValue</b> (int addressWrite, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a5c2514c3c31a687a01a898c874d2c45e">setDigitalOutputValue</a> (int addressWrite, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set digital output value.  <a href="#a5c2514c3c31a687a01a898c874d2c45e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a6b906f01f6b0bdc8586df09a872173ef">setDigitalOutputValueAt</a> (int position, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set digital output value.  <a href="#a6b906f01f6b0bdc8586df09a872173ef"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2377d24cc1e767a24dfc5e34454a8737"></a><!-- doxytag: member="mdtDevice::setDigitalOutputValue" ref="a2377d24cc1e767a24dfc5e34454a8737" args="(const QString &amp;labelShort, const mdtValue &amp;value, bool sendToDevice, bool waitOnReply)" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>setDigitalOutputValue</b> (const QString &amp;labelShort, const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a7b86a816e55a91f0d62426e1741437c6">setDigitalOutputs</a> (bool waitOnReply)</td></tr>
@@ -209,8 +247,8 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all analog outputs on physical device.  <a href="#ab0232ac83c38bc93d3bc2aa91d94c291"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f">writeAnalogOutput</a> (int value, <a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write value on a analog output to physical device.  <a href="#ae764634bba2b321ac2b4731c0353e45f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245">writeAnalogOutputs</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write all analog outputs to physical device.  <a href="#abc52b797df29945bf0a6358aab1b7245"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a2d82cb0920e4e0628186e59f9b4de7d4">writeAnalogOutputs</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction, <a class="el" href="classmdt_device_ios_segment.html">mdtDeviceIosSegment</a> *segment)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write all analog outputs to physical device.  <a href="#a2d82cb0920e4e0628186e59f9b4de7d4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#af128b606050035abaf8d049bb2227015">readDigitalInput</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one digital input on physical device.  <a href="#af128b606050035abaf8d049bb2227015"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14">readDigitalInputs</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
@@ -221,8 +259,8 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all digital outputs on physical device.  <a href="#aac038c24c3b91757584bdf0d09fb8b02"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1">writeDigitalOutput</a> (bool state, <a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write state on a digital output to physical device.  <a href="#a0fbe57503d86554829e708b2b83d73f1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1">writeDigitalOutputs</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write all digital outputs to physical device.  <a href="#aa9e8ae7b4ff2455b4105d280d8523fc1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ae644ab1ef0ebb57d6d9d502829907ec1">writeDigitalOutputs</a> (<a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction, <a class="el" href="classmdt_device_ios_segment.html">mdtDeviceIosSegment</a> *segment)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write all digital outputs to physical device.  <a href="#ae644ab1ef0ebb57d6d9d502829907ec1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f">queriesSequence</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence of queries to send periodically.  <a href="#acba50968d201ad95c4eaa2ab2ed48b4f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e">getNewTransaction</a> ()</td></tr>
@@ -246,9 +284,22 @@ Protected Member Functions</h2></td></tr>
 <p>A other usage is automated sequence. In this case, the sequence will tell when it need to set a output and when a input value is reuqierd.</p>
 <p>A device can accept one or many request before results must be read. This depends most case on used port and protocol.</p>
 <p>It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application). For this, <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0" title="Search and connect to physical device.">connectToDevice()</a> was introduced.</p>
-<p>A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep consistency, this states are updated in this class using <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> 's state machine. This state machine is based on QStateMachine. </p>
+<p>A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep consistency, this states are updated in this class using <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> 's state machine. This state machine is based on QStateMachine.</p>
+<p>Notes about I/O container: In first version of <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>, I/O container (<a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> object) was handled by caller. Experience showed that this was a bad solution. Now, the container is created, and destroyed, bay <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> itself. To deal with I/O container, some methods are available:</p>
+<ul>
+<li><a class="el" href="classmdt_device.html#ae887c9c83fa090c16717d75905e1079d" title="Add a analog input.">addInput(mdtAnalogIo *)</a> : add a analog input.</li>
+<li>addInputs(QList&lt;mdtAnalogIo*&gt; &amp;) : add a list of analog inputs.</li>
+<li><a class="el" href="classmdt_device.html#a7acf4cc331c003fd6d30190d54242da1" title="Add a analog output.">addOutput(mdtAnalogIo *)</a> : add a analog output.</li>
+<li>addOutputs(QList&lt;mdtAnalogIo*&gt; &amp;) : add a list of analog outputs.</li>
+<li><a class="el" href="classmdt_device.html#a186861ad3b8857ba045534244fb9f9ef" title="Add a digital input.">addInput(mdtDigitalIo *)</a> : add a digital input.</li>
+<li>addInputs(QList&lt;mdtDigitalIo*&gt; &amp;) : add a list of digital inputs.</li>
+<li><a class="el" href="classmdt_device.html#a319cd0eeec028f3fc8cfcb96def79404" title="Add a digital output.">addOutput(mdtDigitalIo *)</a> : add a digital output.</li>
+<li>addOutputs(QList&lt;mdtDigitalIo*&gt; &amp;) : add a list of digital outputs.</li>
+<li><a class="el" href="classmdt_device.html#adb7099877ad2080961fae5a40117e9e5" title="Get the I/Os container.">ios()</a> : access I/O container.</li>
+<li><a class="el" href="classmdt_device.html#a61032f15e601eb1bd74da80014bae593" title="Delete all I/O in container.">deleteIos()</a> : delete all I/O in container. </li>
+</ul>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00090">90</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00108">108</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a6d501791e7243358cc61b144254b80db"></a><!-- doxytag: member="mdtDevice::mdtDevice" ref="a6d501791e7243358cc61b144254b80db" args="(QObject *parent=0)" -->
 <div class="memitem">
@@ -270,7 +321,7 @@ Protected Member Functions</h2></td></tr>
 <p><p><a class="el" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state.">currentState()</a> = <a class="el" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa4004253e25d51b1e628bb5006dbbd153">mdtPortManager::Disconnected</a>; setStateDisconnected(); connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SLOT(setStateReady())); connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SIGNAL(deviceReady())); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00030">30</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00029">29</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -289,9 +340,9 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Destructor. </p>
-<p>If queries sequence is running, it will be stopped (see <a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407" title="Stop periodic device querying.">stop()</a> ). </p>
+<p>Will disconnect from device and delete I/O container. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -322,7 +373,7 @@ Protected Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A error listed in <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> (NoError on success)</dd></dl>
 <p>Note: default implementation does nothing and returns allways a UnhandledError. See subclass documentation for more details. </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">mdtDeviceDSO1000A</a>, <a class="el" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">mdtDeviceModbusWago</a>, <a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">mdtDeviceScpi</a>, and <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">mdtDeviceDSO1000A</a>, <a class="el" href="classmdt_device_modbus.html#a093c6407ee69c4c7696a0c71d0acd88d">mdtDeviceModbus</a>, <a class="el" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">mdtDeviceModbusWago</a>, <a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">mdtDeviceScpi</a>, and <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
@@ -352,7 +403,51 @@ Protected Member Functions</h2></td></tr>
 <li>Once decoding was done, the concerned I/O(s) sould be updated with new value, or set to invalid value on error (see <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> class). Doing so will keep (G)UI consistency. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00969">969</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01191">1191</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a61032f15e601eb1bd74da80014bae593"></a><!-- doxytag: member="mdtDevice::deleteIos" ref="a61032f15e601eb1bd74da80014bae593" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDevice::deleteIos </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Delete all I/O in container. </p>
+<p>All I/O's will be deleted, but I/O container itself will remain valid. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00154">154</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2b694a37d9464d27214bdeceec220998"></a><!-- doxytag: member="mdtDevice::disconnectFromDevice" ref="a2b694a37d9464d27214bdeceec220998" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDevice::disconnectFromDevice </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Disconnect from device. </p>
+<p>Will stop periodic querying ( see <a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407" title="Stop periodic device querying.">stop()</a> ), and stop internal port manager (if set).</p>
+<p>If specific work must be done, subclass can re-implement this method.</p>
+<p>Note: in the implementation, ios are keeped as they are. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -383,7 +478,7 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout or other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00242">242</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00334">334</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -433,19 +528,100 @@ Protected Member Functions</h2></td></tr>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc...</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
     <tr><td class="paramname">labelShort</td><td>Short label set in I/O (see <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad6a9d73cd51ce21f69dc8e4646d4fcfe"></a><!-- doxytag: member="mdtDevice::getAnalogInputValue" ref="ad6a9d73cd51ce21f69dc8e4646d4fcfe" args="(int address, bool queryDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtDevice::getAnalogInputValue </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>queryDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get analog input value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc...</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#ab828764660ba53ffce1995901ddf5a0a" title="Get analog input value.">getAnalogInputValue(mdtAnalogIo*, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00269">269</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae2bc364104f843b037bbbf8aa8a37d8e"></a><!-- doxytag: member="mdtDevice::getAnalogInputValueAt" ref="ae2bc364104f843b037bbbf8aa8a37d8e" args="(int position, bool queryDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtDevice::getAnalogInputValueAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>queryDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get analog input value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>See the concept of position in <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> class detailed description .</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#ab828764660ba53ffce1995901ddf5a0a" title="Get analog input value.">getAnalogInputValue(mdtAnalogIo*, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00288">288</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -476,7 +652,7 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout or other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00368">368</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00486">486</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -526,19 +702,100 @@ Protected Member Functions</h2></td></tr>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">addressRead</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc...</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
     <tr><td class="paramname">labelShort</td><td>Short label set in I/O (see <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00288">288</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00380">380</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa90eb1111d6778f4227224d3b1804ae7"></a><!-- doxytag: member="mdtDevice::getAnalogOutputValue" ref="aa90eb1111d6778f4227224d3b1804ae7" args="(int addressRead, bool queryDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtDevice::getAnalogOutputValue </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>addressRead</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>queryDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get analog output value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addressRead</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc...</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#a163ee286d905feafe50b3e4351d4bf41" title="Get analog output value.">getAnalogOutputValue(mdtAnalogIo*, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00422">422</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae3776f8a9215c799781e701798927f0c"></a><!-- doxytag: member="mdtDevice::getAnalogOutputValueAt" ref="ae3776f8a9215c799781e701798927f0c" args="(int position, bool queryDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtDevice::getAnalogOutputValueAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>queryDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get analog output value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>See the concept of position in <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> class detailed description .</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#a163ee286d905feafe50b3e4351d4bf41" title="Get analog output value.">getAnalogOutputValue(mdtAnalogIo*, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00441">441</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -569,7 +826,7 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00623">623</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00793">793</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -619,19 +876,100 @@ Protected Member Functions</h2></td></tr>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc...</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
     <tr><td class="paramname">labelShort</td><td>Short label set in I/O (see <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00543">543</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00687">687</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9915b677a307ffeab98a413d61b0f2e7"></a><!-- doxytag: member="mdtDevice::getDigitalInputValue" ref="a9915b677a307ffeab98a413d61b0f2e7" args="(int address, bool queryDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtDevice::getDigitalInputValue </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>queryDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get digital input value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc...</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#afe8bd7811ccc4a2ba8088edf073e0a8d" title="Get digital input value.">getDigitalInputValue(mdtDigitalIo*, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00729">729</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8a17dbc767f75813241ce4a9709d0ac7"></a><!-- doxytag: member="mdtDevice::getDigitalInputValueAt" ref="a8a17dbc767f75813241ce4a9709d0ac7" args="(int position, bool queryDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtDevice::getDigitalInputValueAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>queryDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get digital input value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>See the concept of position in <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> class detailed description .</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#afe8bd7811ccc4a2ba8088edf073e0a8d" title="Get digital input value.">getDigitalInputValue(mdtDigitalIo*, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00748">748</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -662,7 +1000,7 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00750">750</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00946">946</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -711,19 +1049,100 @@ Protected Member Functions</h2></td></tr>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">addressRead</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc...</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
     <tr><td class="paramname">labelShort</td><td>Short label set in I/O (see <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00670">670</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00840">840</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adf8160df55a9eb9ba6820e24bb7f1440"></a><!-- doxytag: member="mdtDevice::getDigitalOutputValue" ref="adf8160df55a9eb9ba6820e24bb7f1440" args="(int addressRead, bool queryDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtDevice::getDigitalOutputValue </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>addressRead</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>queryDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get digital output value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addressRead</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc...</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#a978bde9f2b6177b6f3742163e7a712a9" title="Get digital output value.">getDigitalOutputValue(mdtDigitalIo*, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00882">882</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abdd55e5a7bbfe268fc3c790e81da373a"></a><!-- doxytag: member="mdtDevice::getDigitalOutputValueAt" ref="abdd55e5a7bbfe268fc3c790e81da373a" args="(int position, bool queryDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtDevice::getDigitalOutputValueAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>queryDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get digital output value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>See the concept of position in <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> class detailed description .</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#a978bde9f2b6177b6f3742163e7a712a9" title="Get digital output value.">getDigitalOutputValue(mdtDigitalIo*, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00901">901</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -745,7 +1164,7 @@ Protected Member Functions</h2></td></tr>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a75ebd3d1859e3ed38b9558981e53aac4" title="Get a new transaction.">mdtPortManager::getNewTransaction()</a></dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>portManager must be set before calling this method </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01039">1039</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01261">1261</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -764,11 +1183,10 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Get the I/Os container. </p>
-<p>Will return a null pointer if I/Os was not set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a> .</p>
-<p>Depending on subclass implementation, the I/Os container cann be set automatically, and can be deleted whenn device is destroyed.</p>
-<p>In this base class, I/Os container is not deleted . </p>
+<p>Note: once this <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> object was destroyed, the I/O container is deleted.</p>
+<dl class="post"><dt><b>Postcondition:</b></dt><dd>During the lifetime of this <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> object, a valid pointer will be returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -790,7 +1208,7 @@ Protected Member Functions</h2></td></tr>
 <p>This default implementation calls <a class="el" href="classmdt_port_manager.html#a6dc2798324521d177fb8f79d4f6c5f0f" title="Check if port manager is ready.">mdtPortManager::isReady()</a> , or returns false if portManager was not set.</p>
 <p>Note: <a class="el" href="classmdt_device.html#a8887a1142d3d3be673c18cf3376e7af4" title="Check if device is ready.">isReady()</a> should return true only if device it ready for querying. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00126">126</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -811,7 +1229,7 @@ Protected Member Functions</h2></td></tr>
 <p>Get last error. </p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Not completly used currently, must be implemented in this class + subclasses . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00222">222</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -834,7 +1252,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#aed892b501f8cbd372ccfda1a4fafa536">mdtDeviceModbus</a>, and <a class="el" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca">mdtDeviceScpi</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00121">121</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00187">187</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -864,7 +1282,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a3b83b926ed1f9c3bdf7024de2745c285">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00964">964</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01186">1186</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -893,13 +1311,13 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details). </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#aa2a024793ae2a5e81c7e92260a70cd9e">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00978">978</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01200">1200</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -933,13 +1351,13 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a846af6dbf80bbf747f3f966420ef6f92">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00983">983</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01205">1205</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -968,13 +1386,13 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a30c815cbe5e603e8114dcbc09849e322">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00988">988</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01210">1210</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1008,13 +1426,13 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#ae02dd44f1d873fcc15ff75d781b62b0b">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00993">993</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01215">1215</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1048,13 +1466,13 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a9dd05e51223ee5bb79970fbe84c501f9">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01008">1008</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01230">1230</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1088,13 +1506,13 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a3fba9e113092f9da187cf684fb62b132">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01013">1013</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01235">1235</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1123,13 +1541,13 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a13a334ac86135751893f37064d8f548d">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01018">1018</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01240">1240</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1163,13 +1581,13 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a8915a036472bff0f356756992c1eae51">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01023">1023</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01245">1245</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1192,7 +1610,7 @@ transaction must be a valid pointer. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a5fea4a9b8e94d38e8ec699dba05c7ca8" title="Restore a transaction into pool.">mdtPortManager::restoreTransaction()</a></dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>portManager must be set before calling this method </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01046">1046</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01268">1268</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1213,7 +1631,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Queries to send periodically. </p>
 <p>This slot is periodically called after a call of <a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7" title="Start periodic device querying.">start()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00955">955</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01177">1177</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1234,8 +1652,8 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Write all analog outputs on physical device and update (G)UI representation. </p>
 <p>To send the analog outputs values once, it's possible to set them without sending query. See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> and <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> for details. Then, call this method to sent all analog outputs values to device.</p>
-<p><a class="el" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245" title="Write all analog outputs to physical device.">writeAnalogOutputs()</a> will be called, witch also sends the request to device. Depending on result, device's state can be updated.</p>
-<p>Behaviour of this method can vary, depending on device specific subclass. (See sublcass <a class="el" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245" title="Write all analog outputs to physical device.">writeAnalogOutputs()</a> for details).</p>
+<p><a class="el" href="classmdt_device.html#a2d82cb0920e4e0628186e59f9b4de7d4" title="Write all analog outputs to physical device.">writeAnalogOutputs()</a> will be called, witch also sends the request to device. Depending on result, device's state can be updated.</p>
+<p>Behaviour of this method can vary, depending on device specific subclass. (See sublcass <a class="el" href="classmdt_device.html#a2d82cb0920e4e0628186e59f9b4de7d4" title="Write all analog outputs to physical device.">writeAnalogOutputs()</a> for details).</p>
 <p>Once results are available or on error, the internal analog outputs are updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -1245,7 +1663,7 @@ transaction must be a valid pointer. </dd></dl>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00495">495</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00639">639</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1302,19 +1720,12 @@ transaction must be a valid pointer. </dd></dl>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">addressWrite</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc...</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
     <tr><td class="paramname">labelShort</td><td>Short label set in I/O (see <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00414">414</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00532">532</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1338,7 +1749,107 @@ transaction must be a valid pointer. </dd></dl>
 <p>This slot is used by <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> to notify that a value has changed.</p>
 <p>See <a class="el" href="classmdt_device.html#a766d9adcf8c2274f61f120a4a5c5c6d9" title="Set analog output value.">setAnalogOutputValue(mdtAnalogIo*, const mdtValue&amp;, bool, bool)</a> for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00933">933</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01155">1155</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab605f81f28271f54570f151e94039807"></a><!-- doxytag: member="mdtDevice::setAnalogOutputValue" ref="ab605f81f28271f54570f151e94039807" args="(int addressWrite, const mdtValue &amp;value, bool sendToDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtDevice::setAnalogOutputValue </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>addressWrite</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>sendToDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set analog output value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addressWrite</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc...</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#a766d9adcf8c2274f61f120a4a5c5c6d9" title="Set analog output value.">setAnalogOutputValue(mdtAnalogIo*, const mdtValue&amp;, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00575">575</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2db6bcd6d69cba9e8be0e68388d75030"></a><!-- doxytag: member="mdtDevice::setAnalogOutputValueAt" ref="a2db6bcd6d69cba9e8be0e68388d75030" args="(int position, const mdtValue &amp;value, bool sendToDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtDevice::setAnalogOutputValueAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>sendToDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set analog output value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>See the concept of position in <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> class detailed description .</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#a766d9adcf8c2274f61f120a4a5c5c6d9" title="Set analog output value.">setAnalogOutputValue(mdtAnalogIo*, const mdtValue&amp;, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00594">594</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1368,7 +1879,7 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00116">116</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1390,8 +1901,8 @@ transaction must be a valid pointer. </dd></dl>
 <p>Write all digital outputs to physical device and update (G)UI representation. </p>
 <p>To send the digital outputs values once. It's possible to use <a class="el" href="classmdt_device.html#a04564fd9be440c026e7c399f0e619485" title="Set a digital output value.">setDigitalOutputValue()</a> without sending the query to device, then using this method to commit all values once.</p>
 <p>See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> and <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> for details.</p>
-<p><a class="el" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1" title="Write all digital outputs to physical device.">writeDigitalOutputs()</a> will be called, witch also sends the request to device. Depending on result, device's state can be updated.</p>
-<p>Behaviour of this method can vary, depending on device specific subclass. (See sublcass <a class="el" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1" title="Write all digital outputs to physical device.">writeDigitalOutputs()</a> for details).</p>
+<p><a class="el" href="classmdt_device.html#ae644ab1ef0ebb57d6d9d502829907ec1" title="Write all digital outputs to physical device.">writeDigitalOutputs()</a> will be called, witch also sends the request to device. Depending on result, device's state can be updated.</p>
+<p>Behaviour of this method can vary, depending on device specific subclass. (See sublcass <a class="el" href="classmdt_device.html#ae644ab1ef0ebb57d6d9d502829907ec1" title="Write all digital outputs to physical device.">writeDigitalOutputs()</a> for details).</p>
 <p>Once results are available, the internal digital outputs are updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -1401,31 +1912,7 @@ transaction must be a valid pointer. </dd></dl>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00877">877</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a93abbc706a1e6601ce947eee5e50fba6"></a><!-- doxytag: member="mdtDevice::setDigitalOutputValue" ref="a93abbc706a1e6601ce947eee5e50fba6" args="(mdtDigitalIo *digitalOutput)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtDevice::setDigitalOutputValue </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td>
-          <td class="paramname"><em>digitalOutput</em></td><td>)</td>
-          <td><code> [slot]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set value on a digital output on physical device. </p>
-<p>Checks device's state and send request if Ready.</p>
-<p>This slot is used by <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> to notify that a value has changed.</p>
-<p>See <a class="el" href="classmdt_device.html#a04564fd9be440c026e7c399f0e619485" title="Set a digital output value.">setDigitalOutputValue(mdtDigitalIo*, const mdtValue&amp;, bool, bool)</a> for details. </p>
-
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00944">944</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01099">1099</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1482,37 +1969,42 @@ transaction must be a valid pointer. </dd></dl>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">addressWrite</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc...</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
     <tr><td class="paramname">labelShort</td><td>Short label set in I/O (see <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00797">797</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00993">993</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9f1de62ef54974b0636dee673bd819e2"></a><!-- doxytag: member="mdtDevice::setIos" ref="a9f1de62ef54974b0636dee673bd819e2" args="(mdtDeviceIos *ios, bool autoOutputUpdate=false)" -->
+<a class="anchor" id="a5c2514c3c31a687a01a898c874d2c45e"></a><!-- doxytag: member="mdtDevice::setDigitalOutputValue" ref="a5c2514c3c31a687a01a898c874d2c45e" args="(int addressWrite, const mdtValue &amp;value, bool sendToDevice, bool waitOnReply)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDevice::setIos </td>
+          <td class="memname">int mdtDevice::setDigitalOutputValue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmdt_device_ios.html">mdtDeviceIos</a> *&#160;</td>
-          <td class="paramname"><em>ios</em>, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>addressWrite</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>autoOutputUpdate</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>sendToDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1523,17 +2015,90 @@ transaction must be a valid pointer. </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Set the I/O's container. </p>
+<p>Set digital output value. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">ios</td><td>A pointer to a <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> object </td></tr>
-    <tr><td class="paramname">autoOutputUpdate</td><td>If true, <a class="el" href="classmdt_abstract_io.html#a43feaa62996af78f64aea084122f1370" title="This signal is emitted whenever the value is changed.">mdtAnalogIo::valueChanged()</a> signal will be connected to setAnalogOutputValue(int, int) slot for each analog output and mdtDigitalIo::stateChanged() signal will be connected to setDigitalOutputState(int, bool) slot for each digital output.</td></tr>
+    <tr><td class="paramname">addressWrite</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc...</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>ios must be a valid pointer </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#a04564fd9be440c026e7c399f0e619485" title="Set a digital output value.">setDigitalOutputValue(mdtDigitalIo*, const mdtValue&amp;, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01035">1035</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a93abbc706a1e6601ce947eee5e50fba6"></a><!-- doxytag: member="mdtDevice::setDigitalOutputValue" ref="a93abbc706a1e6601ce947eee5e50fba6" args="(mdtDigitalIo *digitalOutput)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDevice::setDigitalOutputValue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td>
+          <td class="paramname"><em>digitalOutput</em></td><td>)</td>
+          <td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set value on a digital output on physical device. </p>
+<p>Checks device's state and send request if Ready.</p>
+<p>This slot is used by <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> to notify that a value has changed.</p>
+<p>See <a class="el" href="classmdt_device.html#a04564fd9be440c026e7c399f0e619485" title="Set a digital output value.">setDigitalOutputValue(mdtDigitalIo*, const mdtValue&amp;, bool, bool)</a> for details. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01166">1166</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6b906f01f6b0bdc8586df09a872173ef"></a><!-- doxytag: member="mdtDevice::setDigitalOutputValueAt" ref="a6b906f01f6b0bdc8586df09a872173ef" args="(int position, const mdtValue &amp;value, bool sendToDevice, bool waitOnReply)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtDevice::setDigitalOutputValueAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classmdt_value.html">mdtValue</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>sendToDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set digital output value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>See the concept of position in <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> class detailed description .</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device.html#a04564fd9be440c026e7c399f0e619485" title="Set a digital output value.">setDigitalOutputValue(mdtDigitalIo*, const mdtValue&amp;, bool, bool)</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01054">1054</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1563,7 +2128,7 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00134">134</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00200">200</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1645,7 +2210,7 @@ transaction must be a valid pointer. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#aaa85e0200aba0e0f4392dfe01abae2cf" title="Wait for some time.">mdtPortManager::wait()</a> </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port manager must be set before using this method </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00149">149</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00215">215</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1677,7 +2242,7 @@ transaction must be a valid pointer. </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false on timeout. If id was not found in transactions list, a warning will be generated in <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system, and false will be returned. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>granularity must be &gt; 0. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01054">1054</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01276">1276</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1717,17 +2282,17 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#ac63297a31205759622f341525c34251f">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00998">998</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01220">1220</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abc52b797df29945bf0a6358aab1b7245"></a><!-- doxytag: member="mdtDevice::writeAnalogOutputs" ref="abc52b797df29945bf0a6358aab1b7245" args="(mdtPortTransaction *transaction)" -->
+<a class="anchor" id="a2d82cb0920e4e0628186e59f9b4de7d4"></a><!-- doxytag: member="mdtDevice::writeAnalogOutputs" ref="a2d82cb0920e4e0628186e59f9b4de7d4" args="(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1735,8 +2300,18 @@ transaction must be a valid pointer. </dd></dl>
           <td class="memname">int mdtDevice::writeAnalogOutputs </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *&#160;</td>
-          <td class="paramname"><em>transaction</em></td><td>)</td>
-          <td><code> [protected, virtual]</code></td>
+          <td class="paramname"><em>transaction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_device_ios_segment.html">mdtDeviceIosSegment</a> *&#160;</td>
+          <td class="paramname"><em>segment</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -1753,17 +2328,18 @@ transaction must be a valid pointer. </dd></dl>
 <li>QueryReplyMode flag </li>
 </ul>
 </td></tr>
+    <tr><td class="paramname">segment</td><td>Contains contiguous outputs to write. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a87af02c83cede03d6ee988c678e0fc00">mdtDeviceModbus</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#aa09d1682bef4bbc08b59b20110e613ff">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01003">1003</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01225">1225</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1803,17 +2379,17 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a6950c10fc521b193fb3c754223879694">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01028">1028</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01250">1250</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa9e8ae7b4ff2455b4105d280d8523fc1"></a><!-- doxytag: member="mdtDevice::writeDigitalOutputs" ref="aa9e8ae7b4ff2455b4105d280d8523fc1" args="(mdtPortTransaction *transaction)" -->
+<a class="anchor" id="ae644ab1ef0ebb57d6d9d502829907ec1"></a><!-- doxytag: member="mdtDevice::writeDigitalOutputs" ref="ae644ab1ef0ebb57d6d9d502829907ec1" args="(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1821,8 +2397,18 @@ transaction must be a valid pointer. </dd></dl>
           <td class="memname">int mdtDevice::writeDigitalOutputs </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *&#160;</td>
-          <td class="paramname"><em>transaction</em></td><td>)</td>
-          <td><code> [protected, virtual]</code></td>
+          <td class="paramname"><em>transaction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_device_ios_segment.html">mdtDeviceIosSegment</a> *&#160;</td>
+          <td class="paramname"><em>segment</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [protected, virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -1839,17 +2425,18 @@ transaction must be a valid pointer. </dd></dl>
 <li>QueryReplyMode flag </li>
 </ul>
 </td></tr>
+    <tr><td class="paramname">segment</td><td>Contains contiguous outputs to write. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see mdtPortManager::writeData() for details) </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with setIos(). </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#aad3ce85a19307e3056b940da99fe512b">mdtDeviceModbus</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a6713edaee0bfba48791008124299b753">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01033">1033</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01255">1255</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1872,7 +2459,7 @@ transaction must be a valid pointer. </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:25 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

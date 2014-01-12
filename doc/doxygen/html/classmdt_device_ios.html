@@ -114,8 +114,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a analog input.  <a href="#a0e2683630eff9410003a36ae5af76b52"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a776dc0508f88f8ea206801fc7472bfb2">addAnalogInputs</a> (const QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt; &amp;aiList)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a list of analog inputs.  <a href="#a776dc0508f88f8ea206801fc7472bfb2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a70a3d979ec5d44297e8195e37596d5bc">analogInputAt</a> (int address)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog input at given address.  <a href="#a70a3d979ec5d44297e8195e37596d5bc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ad74dc114cec2029aa9a14714f13666c7">analogInputAtAddress</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog input at given address.  <a href="#ad74dc114cec2029aa9a14714f13666c7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ae31753e23d7ab14073f852dca85c2f9e">analogInputWithLabelShort</a> (const QString &amp;labelShort)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog input with a given short label.  <a href="#ae31753e23d7ab14073f852dca85c2f9e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const QList&lt; <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#aab70f76d2107f0a9324a9b9d4db21532">analogInputs</a> () const </td></tr>
@@ -159,8 +159,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a digital input.  <a href="#a023571f5d77bd0874c08b53890a56381"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a470c27db1fefa6cd2a4a690bb0ff04f5">addDigitalInputs</a> (const QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt; &amp;diList)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a list of digital inputs.  <a href="#a470c27db1fefa6cd2a4a690bb0ff04f5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a78f68d0efeac0a23628f133121f28df8">digitalInputAt</a> (int address)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital input at given address.  <a href="#a78f68d0efeac0a23628f133121f28df8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a9df04d579a6642e5cf717c792cba34f9">digitalInputAtAddress</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital input at given address.  <a href="#a9df04d579a6642e5cf717c792cba34f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#abcde6de5a0ca6d642af04c21250d6555">digitalInputWithLabelShort</a> (const QString &amp;labelShort)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get digital input with a given short label.  <a href="#abcde6de5a0ca6d642af04c21250d6555"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const QList&lt; <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#adb2cbcd4adcee1e9434634694ee1ae24">digitalInputs</a> () const </td></tr>
@@ -213,7 +213,17 @@ QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class=
 <li>Digital output (based on <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a>)</li>
 </ul>
 <p>The main goal here is the functionnal part. The (G)UI part is done in other place. For example, it's possible to use <a class="el" href="classmdt_device_ios_widget.html" title="Display a set of I/O&#39;s.">mdtDeviceIosWidget</a> class to have a generic representation af all type of I/O.</p>
-<p>Concept of address: Internally, each I/O is stored in a QMap with an address as key. In some cases, this can reflect a real situations, for exaple:</p>
+<p>Concept of position</p>
+<p>Internally, I/Os are stored in 4 QList:</p>
+<ul>
+<li>1 for analog inputs</li>
+<li>1 fro analog outputs</li>
+<li>1 for digital inputs</li>
+<li>1 for digital outputs</li>
+</ul>
+<p>The position is simply a index in a list, with a range from 0 to N-1 I/O for a type . The order of position is the order of call to add method .</p>
+<p>Concept of address</p>
+<p>Internally, each I/O is stored in a QMap with an address as key. In some cases, this can reflect a real situations, for exaple:</p>
 <ul>
 <li>Relative address of a MODBUS query</li>
 <li>Memory address of physical device</li>
@@ -240,7 +250,7 @@ QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class=
 <li><a class="el" href="classmdt_device_ios.html#a06642814dbbb525dff7d1a7e603f57ac" title="Update (G)UI&#39;s value for a set of digital outputs.">updateDigitalOutputValues()</a> </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8h_source.html#l00082">82</a> of file <a class="el" href="mdt_device_ios_8h_source.html">mdtDeviceIos.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8h_source.html#l00094">94</a> of file <a class="el" href="mdt_device_ios_8h_source.html">mdtDeviceIos.h</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
 <a class="anchor" id="a72fc3fdcd905d669b1e90496e808d6dd"></a><!-- doxytag: member="mdtDeviceIos::addressAccess_t" ref="a72fc3fdcd905d669b1e90496e808d6dd" args="" -->
 <div class="memitem">
@@ -266,7 +276,7 @@ QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8h_source.html#l00094">94</a> of file <a class="el" href="mdt_device_ios_8h_source.html">mdtDeviceIos.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8h_source.html#l00106">106</a> of file <a class="el" href="mdt_device_ios_8h_source.html">mdtDeviceIos.h</a>.</p>
 
 </div>
 </div>
@@ -507,12 +517,12 @@ No I/O with same address must be set as double </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a70a3d979ec5d44297e8195e37596d5bc"></a><!-- doxytag: member="mdtDeviceIos::analogInputAt" ref="a70a3d979ec5d44297e8195e37596d5bc" args="(int address)" -->
+<a class="anchor" id="ad74dc114cec2029aa9a14714f13666c7"></a><!-- doxytag: member="mdtDeviceIos::analogInputAtAddress" ref="ad74dc114cec2029aa9a14714f13666c7" args="(int address)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * mdtDeviceIos::analogInputAt </td>
+          <td class="memname"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> * mdtDeviceIos::analogInputAtAddress </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>address</em></td><td>)</td>
@@ -544,7 +554,7 @@ No I/O with same address must be set as double </dd></dl>
 <div class="memdoc">
 
 <p>Get a list containing all analog inputs. </p>
-<p>Note: the returned list is not sorted. for grouped queries, see <a class="el" href="classmdt_device_ios.html#a71a1b9cdbc524e4d0094ab37575defc1" title="Get a list of all analog inputs segments.">analogInputsSegments()</a> and <a class="el" href="classmdt_device_ios.html#addeff0a2dab646a49170f8be10cc46fb" title="Update (G)UI&#39;s value for a set of analog inputs.">updateAnalogInputValues()</a> </p>
+<p>Note: the returned list is not sorted by address . for grouped queries, see <a class="el" href="classmdt_device_ios.html#a71a1b9cdbc524e4d0094ab37575defc1" title="Get a list of all analog inputs segments.">analogInputsSegments()</a> and <a class="el" href="classmdt_device_ios.html#addeff0a2dab646a49170f8be10cc46fb" title="Update (G)UI&#39;s value for a set of analog inputs.">updateAnalogInputValues()</a> </p>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00168">168</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
@@ -631,7 +641,7 @@ No I/O with same address must be set as double </dd></dl>
 <div class="memdoc">
 
 <p>Get a list containing all analog outputs. </p>
-<p>Note: the returned list is not sorted </p>
+<p>Note: the returned list is not sorted by address . </p>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00285">285</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
@@ -680,12 +690,12 @@ No I/O with same address must be set as double </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a78f68d0efeac0a23628f133121f28df8"></a><!-- doxytag: member="mdtDeviceIos::digitalInputAt" ref="a78f68d0efeac0a23628f133121f28df8" args="(int address)" -->
+<a class="anchor" id="a9df04d579a6642e5cf717c792cba34f9"></a><!-- doxytag: member="mdtDeviceIos::digitalInputAtAddress" ref="a9df04d579a6642e5cf717c792cba34f9" args="(int address)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * mdtDeviceIos::digitalInputAt </td>
+          <td class="memname"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> * mdtDeviceIos::digitalInputAtAddress </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>address</em></td><td>)</td>
@@ -717,7 +727,7 @@ No I/O with same address must be set as double </dd></dl>
 <div class="memdoc">
 
 <p>Get a list containing all digital inputs. </p>
-<p>Note: the returned list is not sorted </p>
+<p>Note: the returned list is not sorted by address . </p>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00397">397</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
@@ -804,7 +814,7 @@ No I/O with same address must be set as double </dd></dl>
 <div class="memdoc">
 
 <p>Get a list containing all digital outputs. </p>
-<p>Note: the returned list is not sorted </p>
+<p>Note: the returned list is not sorted by address . </p>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00513">513</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
@@ -1181,7 +1191,7 @@ No I/O with same address must be set as double </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:25 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

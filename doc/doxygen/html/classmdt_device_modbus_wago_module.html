@@ -508,7 +508,7 @@ Protected Member Functions</h2></td></tr>
 <p>Will add control byte, status byte and register data for given channelCount </p>
 
 <p><p>pvRegisterDataWords.append(QPair&lt;int, quint16&gt;(currentAddressRead, 0)); ///</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Gag avec adresses !! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>Gag avec adresses !! </dd></dl>
 <p>++currentAddressRead; </p>
 </p>
 
@@ -1476,11 +1476,11 @@ Protected Member Functions</h2></td></tr>
 <p>Will read status (Sx) and data (Dx) bytes from physical module and update internally cached values.</p>
 <p>Note: this method will not send a specific query. For this, control byte must be setup regarding specific module and sent to device with <a class="el" href="classmdt_device_modbus_wago_module.html#a92cf3b411849e57c1d392ffa1b2e2ce6" title="Write control byte for given range of channels.">writeControlBytes()</a> first.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>firstChannel and lastChannel must be in a valid range</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
 
 <p><p>if(needDeviceSetupState &amp;&amp; (pvDevice-&gt;currentState() != mdtPortManager::Setup)){ }</p>
 <p>registersCount = pvRegisterDataWords.at(lastChannel).first - startAddress + 1; ///</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>Change to status byte of last channel + 1...... </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Change to status byte of last channel + 1...... </dd></dl>
 <p>pvRegisterDataWords[channel].second = pvDevice-&gt;registerValues().at(i + 1);</p>
 <p>Q_ASSERT(pvDevice-&gt;registerValues().size() == (lastChannel + 1)); for(channel = firstChannel; channel &lt;= lastChannel; channel += 2){ pvStatusBytes[channel].second = pvDevice-&gt;registerValues().at(channel) &amp; 0x00FF; pvRegisterDataWords[channel].second = pvDevice-&gt;registerValues().at(channel + 1); }</p>
 </p>
@@ -1524,7 +1524,7 @@ Protected Member Functions</h2></td></tr>
 <p>Will read status byte (Sx) from physical module and update internally cached value.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device_modbus_wago_module.html#abe92a4c761a0ccf4d31312eda0521b11" title="Get the status byte for given channel.">statusByte()</a> </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>firstChannel and lastChannel must be in a valid range</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
 
 <p><p>Q_ASSERT(lastChannel &lt; pvRegisterDataWords.size());</p>
 <p>if(needDeviceSetupState &amp;&amp; (pvDevice-&gt;currentState() != mdtPortManager::Setup)){ }</p>
@@ -1745,7 +1745,7 @@ Protected Member Functions</h2></td></tr>
 <p>This method will use this word do create internally I/O's based on <a class="el" href="classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI.">mdtAbstractIo</a> and setup them on the base of known parameters (range, type, etc...).</p>
 <p>Note that no absolute addressing is done at this step. Call <a class="el" href="classmdt_device_modbus_wago_module.html#ac7d9da94e7d4c06e288a346ac123c711" title="Update addresses of the module.">updateAddresses()</a> for this.</p>
 <p>Some special modules need to communicate with fieldbus coupler to access register service. To get setup during I/O detection, use getSpecialModuleSetup() instead of this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>Adapt</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>Adapt</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">word</td><td>Word that contains I/O informations. </td></tr>
@@ -1753,7 +1753,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Implement </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Implement </dd></dl>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html">mdtDeviceModbusWagoModule.cpp</a>.</p>
@@ -1911,7 +1911,7 @@ Protected Member Functions</h2></td></tr>
 <p>Will write cached control byte (Cx) to physical module.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device_modbus_wago_module.html#aba44d9749bb81fe2659699ae3c50842c" title="Set the control byte for given channel.">setControlByte()</a> </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>firstChannel and lastChannel must be in a valid range</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
 
 <p><p>Q_ASSERT(lastChannel &lt; pvRegisterDataWords.size());</p>
 <p>if(needDeviceSetupState &amp;&amp; (pvDevice-&gt;currentState() != mdtPortManager::Setup)){ }</p>
@@ -1955,7 +1955,7 @@ Protected Member Functions</h2></td></tr>
 <p>Write register bytes for given range of channels. </p>
 <p>Will write cached control (Cx) and data (Dx) bytes to physical module.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>firstChannel and lastChannel must be in a valid range</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
 
 <p><p>if(needDeviceSetupState &amp;&amp; (pvDevice-&gt;currentState() != mdtPortManager::Setup)){ }</p>
 <p>values.append(pvRegisterDataWords.at(i).second); </p>
@@ -1984,7 +1984,7 @@ Protected Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:25 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

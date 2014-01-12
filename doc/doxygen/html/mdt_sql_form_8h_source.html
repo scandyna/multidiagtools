@@ -158,24 +158,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00269"></a>00269 
 <a name="l00279"></a>00279   QVariant <a class="code" href="classmdt_sql_form.html#a0c27d6a9ecbf0589f313c7193c632a62" title="Get data for given table , row and field name.">data</a>(<span class="keyword">const</span> QString &amp;tableName, <span class="keywordtype">int</span> row, <span class="keyword">const</span> QString &amp;fieldName);
 <a name="l00280"></a>00280 
-<a name="l00285"></a>00285   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_form.html#a27fe6e45aa5d4d7782aad9833e6de20b" title="Setup tables.">setupTables</a>();
-<a name="l00286"></a>00286 
-<a name="l00287"></a>00287  <span class="keyword">protected</span>:
-<a name="l00288"></a>00288 
-<a name="l00289"></a>00289   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> pvLastError;
+<a name="l00283"></a>00283   <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form.html#a2138e4e1236a9b1c002825ddd9e59298" title="Call insert method on mainSqlWidget.">insert</a>();
+<a name="l00284"></a>00284 
+<a name="l00289"></a>00289   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_form.html#a27fe6e45aa5d4d7782aad9833e6de20b" title="Setup tables.">setupTables</a>();
 <a name="l00290"></a>00290 
-<a name="l00291"></a>00291  <span class="keyword">private</span>:
+<a name="l00291"></a>00291  <span class="keyword">protected</span>:
 <a name="l00292"></a>00292 
-<a name="l00293"></a>00293   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API.">mdtSqlForm</a>);
-<a name="l00294"></a>00294 
-<a name="l00295"></a>00295   QHash&lt;QString, mdtSqlRelation*&gt; pvRelationsByChildTableName;
-<a name="l00296"></a>00296   <a class="code" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model.">mdtSqlFormWidget</a> *pvMainSqlWidget;
-<a name="l00297"></a>00297   QTabWidget *pvChildsTabWidget;
-<a name="l00298"></a>00298   QVBoxLayout *pvMainLayout;
-<a name="l00299"></a>00299   QSqlDatabase pvDatabase;
-<a name="l00300"></a>00300 };
-<a name="l00301"></a>00301 
-<a name="l00302"></a>00302 <span class="preprocessor">#endif  // #ifndef MDT_SQL_FORM_H</span>
+<a name="l00297"></a>00297   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> &amp; <a class="code" href="classmdt_sql_form.html#abee43c43913605ad585ad163b998fca4" title="Get lastError ogject for write acces.">lastErrorW</a>();
+<a name="l00298"></a>00298 
+<a name="l00299"></a>00299   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> pvLastError;
+<a name="l00300"></a>00300 
+<a name="l00301"></a>00301  <span class="keyword">private</span>:
+<a name="l00302"></a>00302 
+<a name="l00303"></a>00303   Q_DISABLE_COPY(<a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API.">mdtSqlForm</a>);
+<a name="l00304"></a>00304 
+<a name="l00305"></a>00305   QHash&lt;QString, mdtSqlRelation*&gt; pvRelationsByChildTableName;
+<a name="l00306"></a>00306   <a class="code" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model.">mdtSqlFormWidget</a> *pvMainSqlWidget;
+<a name="l00307"></a>00307   QTabWidget *pvChildsTabWidget;
+<a name="l00308"></a>00308   QVBoxLayout *pvMainLayout;
+<a name="l00309"></a>00309   QSqlDatabase pvDatabase;
+<a name="l00310"></a>00310 };
+<a name="l00311"></a>00311 
+<a name="l00312"></a>00312 <span class="preprocessor">#endif  // #ifndef MDT_SQL_FORM_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -192,7 +196,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:23 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

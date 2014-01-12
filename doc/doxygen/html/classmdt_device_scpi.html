@@ -169,7 +169,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Query device about error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
 <p>Will send the SYST:ERR? and return.</p>
 <p>Subclass notes:<br/>
  The SYST:ERR? query is sent to device. A new transaction is initalized, with type MDT_FC_SCPI_ERR. When subclass receives such transaction type, it should call <a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181" title="Handle device error.">handleDeviceError()</a> without decoding frame.</p>
@@ -210,7 +210,7 @@ Protected Attributes</h2></td></tr>
 <p><p><a class="el" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> device;</p>
 <p>device = devInfo; device.setVendorId(0x0957); device.setProductId(0x4d18);</p>
 <p>if(<a class="el" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager()</a>-&gt;openPort()){ if(<a class="el" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager()</a>-&gt;<a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7" title="Start periodic device querying.">start()</a>){ retVal = <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>; }else{ retVal = <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>; } }else{ retVal = <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>; }</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>.</p>
@@ -237,7 +237,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Handle device error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
 <p>This method is called from subclass's decodeReadenFrame(mdtPortTransaction) method when a frame of type MDT_FC_SCPI_ERR was received.</p>
 <p>Errors &lt;= 0 are handled directly. If error is &gt; 0, <a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637" title="Handle device&#39;s specific error.">handleDeviceSpecificError()</a> is called.</p>
 <p>See the SCPI99 standard for more details.</p>
@@ -285,7 +285,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Handle device's specific error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
 <p>This method is called from <a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181" title="Handle device error.">handleDeviceError()</a>.</p>
 <p>This default implementation simply log the error (with <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> system).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -478,7 +478,7 @@ Protected Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:25 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

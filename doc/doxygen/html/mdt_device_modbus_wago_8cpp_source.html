@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2014 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -98,357 +98,297 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037 <span class="preprocessor">#include &lt;QDebug&gt;</span>
 <a name="l00038"></a>00038 
-<a name="l00039"></a>00039 mdtDeviceModbusWago::mdtDeviceModbusWago(QObject *parent)
+<a name="l00039"></a><a class="code" href="classmdt_device_modbus_wago.html#a31abb03678a8afe2e6bf7c03e5e92726">00039</a> <a class="code" href="classmdt_device_modbus_wago.html#a31abb03678a8afe2e6bf7c03e5e92726" title="Constructor.">mdtDeviceModbusWago::mdtDeviceModbusWago</a>(QObject *parent)
 <a name="l00040"></a>00040  : <a class="code" href="classmdt_device_modbus.html" title="Represent a MODBUS device.">mdtDeviceModbus</a>(parent)
 <a name="l00041"></a>00041 {
 <a name="l00042"></a>00042 }
 <a name="l00043"></a>00043 
-<a name="l00044"></a>00044 mdtDeviceModbusWago::~mdtDeviceModbusWago()
+<a name="l00044"></a><a class="code" href="classmdt_device_modbus_wago.html#a8a13bfe3028d8c286d4233ea0ce0b2a8">00044</a> <a class="code" href="classmdt_device_modbus_wago.html#a8a13bfe3028d8c286d4233ea0ce0b2a8" title="Destructor.">mdtDeviceModbusWago::~mdtDeviceModbusWago</a>()
 <a name="l00045"></a>00045 {
-<a name="l00046"></a>00046 }
-<a name="l00047"></a>00047 
-<a name="l00048"></a><a class="code" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">00048</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd" title="Search and connect to physical device.">mdtDeviceModbusWago::connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo)
-<a name="l00049"></a>00049 {
-<a name="l00050"></a>00050   QList&lt;mdtPortInfo*&gt; portInfoList;
-<a name="l00051"></a>00051   <span class="keywordtype">int</span> i;
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053   <span class="comment">// Check that port manager is not running</span>
-<a name="l00054"></a>00054   <span class="keywordflow">if</span>(!pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed</a>()){
-<a name="l00055"></a>00055     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceModbusWago::connectToDevice() : stopping ...&quot;</span>;
-<a name="l00056"></a>00056     pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
-<a name="l00057"></a>00057   }
-<a name="l00058"></a>00058   <span class="comment">// Scan looking in chache file first</span>
-<a name="l00059"></a>00059   portInfoList = pvTcpPortManager-&gt;<a class="code" href="classmdt_modbus_tcp_port_manager.html#a41d366dbf944346b6b0466d4618b9625" title="Scan for available hosts with a MODBUS/TCP compatible device attached.">scan</a>(pvTcpPortManager-&gt;<a class="code" href="classmdt_modbus_tcp_port_manager.html#ab4d0a994973af6008faf489ca9ddb03d" title="Read scan result stored in cache file.">readScanResult</a>());
-<a name="l00060"></a>00060   <span class="keywordflow">for</span>(i=0; i&lt;portInfoList.size(); i++){
-<a name="l00061"></a>00061     Q_ASSERT(portInfoList.at(i) != 0);
-<a name="l00062"></a>00062     <span class="comment">// Try to connect</span>
-<a name="l00063"></a>00063     pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(*portInfoList.at(i));
-<a name="l00064"></a>00064     <span class="keywordflow">if</span>(!pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start port manager.">start</a>()){
-<a name="l00065"></a>00065       <span class="keywordflow">continue</span>;
-<a name="l00066"></a>00066     }
-<a name="l00067"></a>00067     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceModbusWago::connectToDevice() : Running ...&quot;</span>;
-<a name="l00068"></a>00068     <span class="comment">// Connected, check if device is a Wago 750</span>
-<a name="l00069"></a>00069     <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1" title="Check if device is a Wago 750 series.">isWago750</a>()){
-<a name="l00070"></a>00070       qDeleteAll(portInfoList);
-<a name="l00071"></a>00071       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceModbusWago::connectToDevice() : Is a Wago 750&quot;</span>;
-<a name="l00072"></a>00072       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
-<a name="l00073"></a>00073     }
-<a name="l00074"></a>00074     pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
-<a name="l00075"></a>00075   }
-<a name="l00076"></a>00076   qDeleteAll(portInfoList);
-<a name="l00077"></a>00077   portInfoList.clear();
-<a name="l00078"></a>00078   pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
-<a name="l00079"></a>00079   <span class="comment">// Scan network</span>
-<a name="l00080"></a>00080   portInfoList = pvTcpPortManager-&gt;<a class="code" href="classmdt_modbus_tcp_port_manager.html#a41d366dbf944346b6b0466d4618b9625" title="Scan for available hosts with a MODBUS/TCP compatible device attached.">scan</a>(QNetworkInterface::allInterfaces(), 502, 100);
-<a name="l00081"></a>00081   <span class="keywordflow">for</span>(i=0; i&lt;portInfoList.size(); i++){
-<a name="l00082"></a>00082     Q_ASSERT(portInfoList.at(i) != 0);
-<a name="l00083"></a>00083     <span class="comment">// Try to connect</span>
-<a name="l00084"></a>00084     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceModbusWago::connectToDevice() : Trying &quot;</span> &lt;&lt; portInfoList.at(i)-&gt;portName() &lt;&lt; <span class="stringliteral">&quot; ...&quot;</span>;
-<a name="l00085"></a>00085     pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(*portInfoList.at(i));
-<a name="l00086"></a>00086     <span class="keywordflow">if</span>(!pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start port manager.">start</a>()){
-<a name="l00087"></a>00087       <span class="keywordflow">continue</span>;
-<a name="l00088"></a>00088     }
-<a name="l00089"></a>00089     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceModbusWago::connectToDevice() : Running ...&quot;</span>;
-<a name="l00090"></a>00090     <span class="comment">// Connected, check if device is a Wago 750</span>
-<a name="l00091"></a>00091     <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1" title="Check if device is a Wago 750 series.">isWago750</a>()){
-<a name="l00092"></a>00092       pvTcpPortManager-&gt;<a class="code" href="classmdt_modbus_tcp_port_manager.html#a3a1f5a54c93fa90ba83dea8785407da3" title="Save a scan result into the known hosts file.">saveScanResult</a>(portInfoList);
-<a name="l00093"></a>00093       qDeleteAll(portInfoList);
-<a name="l00094"></a>00094       qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceModbusWago::connectToDevice() : Is a Wago 750&quot;</span>;
-<a name="l00095"></a>00095       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
-<a name="l00096"></a>00096     }
-<a name="l00097"></a>00097     pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
-<a name="l00098"></a>00098   }
-<a name="l00099"></a>00099   qDeleteAll(portInfoList);
-<a name="l00100"></a>00100   pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
+<a name="l00046"></a>00046   qDeleteAll(pvModules);
+<a name="l00047"></a>00047 }
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="classmdt_device_modbus_wago.html#ac15c95cee8dec98609278d0e0ab2b3ce">00049</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_modbus.html#abfcab17fbf05aab7843ae689316dd01f" title="Search and connect to physical device.">mdtDeviceModbusWago::connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp; portInfo)
+<a name="l00050"></a>00050 {
+<a name="l00051"></a>00051   <span class="comment">// Check that port manager is not running</span>
+<a name="l00052"></a>00052   <span class="keywordflow">if</span>(!pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed</a>()){
+<a name="l00053"></a>00053     pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
+<a name="l00054"></a>00054   }
+<a name="l00055"></a>00055   <span class="comment">// Try to connect</span>
+<a name="l00056"></a>00056   pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(portInfo);
+<a name="l00057"></a>00057   <span class="keywordflow">if</span>(!pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start port manager.">start</a>()){
+<a name="l00058"></a>00058     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">mdtAbstractPort::PortNotFound</a>;
+<a name="l00059"></a>00059   }
+<a name="l00060"></a>00060   <span class="comment">// Connected - check if device is a Wago 750 fieldbus coupler</span>
+<a name="l00061"></a>00061   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1" title="Check if device is a Wago 750 series.">isWago750</a>()){
+<a name="l00062"></a>00062     pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
+<a name="l00063"></a>00063     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">mdtAbstractPort::PortNotFound</a>;
+<a name="l00064"></a>00064   }
+<a name="l00065"></a>00065   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceModbusWago::connectToDevice() - found WAGO device at &quot;</span> &lt;&lt; portInfo.<a class="code" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0" title="Get the port name.">portName</a>();
+<a name="l00066"></a>00066   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
+<a name="l00067"></a>00067 }
+<a name="l00068"></a>00068 
+<a name="l00069"></a><a class="code" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">00069</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_modbus.html#abfcab17fbf05aab7843ae689316dd01f" title="Search and connect to physical device.">mdtDeviceModbusWago::connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo)
+<a name="l00070"></a>00070 {
+<a name="l00071"></a>00071   <span class="keywordflow">return</span> <a class="code" href="classmdt_device_modbus.html#abfcab17fbf05aab7843ae689316dd01f" title="Search and connect to physical device.">mdtDeviceModbus::connectToDevice</a>(devInfo);
+<a name="l00072"></a>00072 }
+<a name="l00073"></a>00073 
+<a name="l00074"></a><a class="code" href="classmdt_device_modbus_wago.html#a12ad1f1ef34b16be5903d1d6232a7c6d">00074</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_modbus.html#abfcab17fbf05aab7843ae689316dd01f" title="Search and connect to physical device.">mdtDeviceModbusWago::connectToDevice</a>(<span class="keyword">const</span> QList&lt;mdtPortInfo*&gt; &amp;scanResult, <span class="keywordtype">int</span> hardwareNodeId, <span class="keywordtype">int</span> bitsCount, <span class="keywordtype">int</span> startFrom)
+<a name="l00075"></a>00075 {
+<a name="l00076"></a>00076   <span class="keywordflow">return</span> <a class="code" href="classmdt_device_modbus.html#abfcab17fbf05aab7843ae689316dd01f" title="Search and connect to physical device.">mdtDeviceModbus::connectToDevice</a>(scanResult, hardwareNodeId, bitsCount, startFrom);
+<a name="l00077"></a>00077 }
+<a name="l00078"></a>00078 
+<a name="l00079"></a><a class="code" href="classmdt_device_modbus_wago.html#aeebc68749c2e22beacd18d85cc0b313a">00079</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_modbus.html#abfcab17fbf05aab7843ae689316dd01f" title="Search and connect to physical device.">mdtDeviceModbusWago::connectToDevice</a>(<span class="keyword">const</span> QList&lt;int&gt; &amp; existingHwNodeIdList)
+<a name="l00080"></a>00080 {
+<a name="l00081"></a>00081   <span class="keywordflow">return</span> <a class="code" href="classmdt_device_modbus.html#abfcab17fbf05aab7843ae689316dd01f" title="Search and connect to physical device.">mdtDeviceModbus::connectToDevice</a>(existingHwNodeIdList);
+<a name="l00082"></a>00082 }
+<a name="l00083"></a>00083 
+<a name="l00084"></a><a class="code" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1">00084</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1" title="Check if device is a Wago 750 series.">mdtDeviceModbusWago::isWago750</a>()
+<a name="l00085"></a>00085 {
+<a name="l00086"></a>00086   <span class="comment">// If device is not from Wago, server can return a error (Something like: invalid address range)</span>
+<a name="l00087"></a>00087   <span class="comment">// We put a information into the log, so that we know that we are scanning.</span>
+<a name="l00088"></a>00088   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e1(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: checking if device is from Wago ...&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc">mdtError::Info</a>);
+<a name="l00089"></a>00089   MDT_ERROR_SET_SRC(e1, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00090"></a>00090   e1.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x2011, 1)){
+<a name="l00093"></a>00093     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00094"></a>00094   }
+<a name="l00095"></a>00095   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
+<a name="l00096"></a>00096     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00097"></a>00097   }
+<a name="l00098"></a>00098   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e2(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: device is from Wago&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc">mdtError::Info</a>);
+<a name="l00099"></a>00099   MDT_ERROR_SET_SRC(e2, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00100"></a>00100   e2.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00101"></a>00101 
-<a name="l00102"></a>00102   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">mdtAbstractPort::PortNotFound</a>;
+<a name="l00102"></a>00102   <span class="keywordflow">return</span> (<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0) == 750);
 <a name="l00103"></a>00103 }
 <a name="l00104"></a>00104 
-<a name="l00105"></a><a class="code" href="classmdt_device_modbus_wago.html#a12ad1f1ef34b16be5903d1d6232a7c6d">00105</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd" title="Search and connect to physical device.">mdtDeviceModbusWago::connectToDevice</a>(<span class="keyword">const</span> QList&lt;mdtPortInfo*&gt; &amp;scanResult, <span class="keywordtype">int</span> hardwareNodeId, <span class="keywordtype">int</span> bitsCount, <span class="keywordtype">int</span> startFrom)
+<a name="l00105"></a><a class="code" href="classmdt_device_modbus_wago.html#ad812b7ee3a2f2677cddde205da5ec787">00105</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_modbus_wago.html#ad812b7ee3a2f2677cddde205da5ec787" title="Get number of analog outputs.">mdtDeviceModbusWago::analogOutputsCount</a>()
 <a name="l00106"></a>00106 {
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109   <span class="keywordtype">int</span> i;
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111   <span class="comment">// Check that port manager is not running</span>
-<a name="l00112"></a>00112   <span class="keywordflow">if</span>(!pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aeecbec49376838ab3547729636166d97" title="Check if port is closed.">isClosed</a>()){
-<a name="l00113"></a>00113     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceModbusWago::connectToDevice() : stopping ...&quot;</span>;
-<a name="l00114"></a>00114     pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
-<a name="l00115"></a>00115   }
-<a name="l00116"></a>00116   <span class="keywordflow">for</span>(i=0; i&lt;scanResult.size(); i++){
-<a name="l00117"></a>00117     Q_ASSERT(scanResult.at(i) != 0);
-<a name="l00118"></a>00118     <span class="comment">// Try to connect</span>
-<a name="l00119"></a>00119     pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(*scanResult.at(i));
-<a name="l00120"></a>00120     <span class="keywordflow">if</span>(!pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start port manager.">start</a>()){
-<a name="l00121"></a>00121       <span class="keywordflow">continue</span>;
-<a name="l00122"></a>00122     }
-<a name="l00123"></a>00123     <span class="comment">// We are connected here, check if device is a Wago 750 fieldbus coupler</span>
-<a name="l00124"></a>00124     <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1" title="Check if device is a Wago 750 series.">isWago750</a>()){
-<a name="l00125"></a>00125       pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
-<a name="l00126"></a>00126       <span class="keywordflow">continue</span>;
-<a name="l00127"></a>00127     }
-<a name="l00128"></a>00128     <span class="comment">// Get the hardware node ID</span>
-<a name="l00129"></a>00129     <span class="keywordflow">if</span>(pvTcpPortManager-&gt;<a class="code" href="classmdt_modbus_tcp_port_manager.html#a4f52a477c264f809984e25abbc856db8" title="Get the hardware node ID.">getHardwareNodeAddress</a>(bitsCount, startFrom) == hardwareNodeId){
-<a name="l00130"></a>00130       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
-<a name="l00131"></a>00131     }<span class="keywordflow">else</span>{
-<a name="l00132"></a>00132       pvTcpPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop port manager.">stop</a>();
-<a name="l00133"></a>00133       <span class="keywordflow">continue</span>;
-<a name="l00134"></a>00134     }
-<a name="l00135"></a>00135   }
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">mdtAbstractPort::PortNotFound</a>;
-<a name="l00138"></a>00138 }
-<a name="l00139"></a>00139 
-<a name="l00140"></a><a class="code" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1">00140</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_modbus_wago.html#a6f01ba89d90ddfbcaa0cbda1885d22f1" title="Check if device is a Wago 750 series.">mdtDeviceModbusWago::isWago750</a>()
-<a name="l00141"></a>00141 {
-<a name="l00142"></a>00142   <span class="comment">// If device is not from Wago, server can return a error (Something like: invalid address range)</span>
-<a name="l00143"></a>00143   <span class="comment">// We put a information into the log, so that we know that we are scanning.</span>
-<a name="l00144"></a>00144   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e1(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: checking if device is from Wago ...&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc">mdtError::Info</a>);
-<a name="l00145"></a>00145   MDT_ERROR_SET_SRC(e1, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00146"></a>00146   e1.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00147"></a>00147 
-<a name="l00148"></a>00148   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x2011, 1)){
-<a name="l00149"></a>00149     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00150"></a>00150   }
-<a name="l00151"></a>00151   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
-<a name="l00152"></a>00152     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00153"></a>00153   }
-<a name="l00154"></a>00154   <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e2(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: device is from Wago&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc">mdtError::Info</a>);
-<a name="l00155"></a>00155   MDT_ERROR_SET_SRC(e2, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00156"></a>00156   e2.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158   <span class="keywordflow">return</span> (<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0) == 750);
-<a name="l00159"></a>00159 }
-<a name="l00160"></a>00160 
-<a name="l00161"></a><a class="code" href="classmdt_device_modbus_wago.html#ad812b7ee3a2f2677cddde205da5ec787">00161</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_modbus_wago.html#ad812b7ee3a2f2677cddde205da5ec787" title="Get number of analog outputs.">mdtDeviceModbusWago::analogOutputsCount</a>()
-<a name="l00162"></a>00162 {
-<a name="l00163"></a>00163   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x1022, 1)){
-<a name="l00164"></a>00164     <span class="keywordflow">return</span> -1;
-<a name="l00165"></a>00165   }
-<a name="l00166"></a>00166   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
-<a name="l00167"></a>00167     <span class="keywordflow">return</span> -1;
-<a name="l00168"></a>00168   }
-<a name="l00169"></a>00169   <span class="keywordflow">return</span> (<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0) / 16);
-<a name="l00170"></a>00170 }
-<a name="l00171"></a>00171 
-<a name="l00172"></a><a class="code" href="classmdt_device_modbus_wago.html#a9da56c13404fd9243c5920ff2ef8bd15">00172</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_modbus_wago.html#a9da56c13404fd9243c5920ff2ef8bd15" title="Get number of analog inputs.">mdtDeviceModbusWago::analogInputsCount</a>()
-<a name="l00173"></a>00173 {
-<a name="l00174"></a>00174   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x1023, 1)){
-<a name="l00175"></a>00175     <span class="keywordflow">return</span> -1;
-<a name="l00176"></a>00176   }
-<a name="l00177"></a>00177   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
-<a name="l00178"></a>00178     <span class="keywordflow">return</span> -1;
-<a name="l00179"></a>00179   }
-<a name="l00180"></a>00180   <span class="keywordflow">return</span> (<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0) / 16);
-<a name="l00181"></a>00181 }
-<a name="l00182"></a>00182 
-<a name="l00183"></a><a class="code" href="classmdt_device_modbus_wago.html#a6711c4e486c3b103b187102685e091cc">00183</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_modbus_wago.html#a6711c4e486c3b103b187102685e091cc" title="Get number of digital outputs.">mdtDeviceModbusWago::digitalOutputsCount</a>()
-<a name="l00184"></a>00184 {
-<a name="l00185"></a>00185   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x1024, 1)){
-<a name="l00186"></a>00186     <span class="keywordflow">return</span> -1;
-<a name="l00187"></a>00187   }
-<a name="l00188"></a>00188   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
-<a name="l00189"></a>00189     <span class="keywordflow">return</span> -1;
-<a name="l00190"></a>00190   }
-<a name="l00191"></a>00191   <span class="keywordflow">return</span> <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0);
-<a name="l00192"></a>00192 }
-<a name="l00193"></a>00193 
-<a name="l00194"></a><a class="code" href="classmdt_device_modbus_wago.html#ad51fd45858e62c597ba8fc2bf3e877bd">00194</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_modbus_wago.html#ad51fd45858e62c597ba8fc2bf3e877bd" title="Get number of digital inputs.">mdtDeviceModbusWago::digitalInputsCount</a>()
-<a name="l00195"></a>00195 {
-<a name="l00196"></a>00196   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x1025, 1)){
-<a name="l00197"></a>00197     <span class="keywordflow">return</span> -1;
-<a name="l00198"></a>00198   }
-<a name="l00199"></a>00199   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
-<a name="l00200"></a>00200     <span class="keywordflow">return</span> -1;
-<a name="l00201"></a>00201   }
-<a name="l00202"></a>00202   <span class="keywordflow">return</span> <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0);
-<a name="l00203"></a>00203 }
-<a name="l00204"></a>00204 
-<a name="l00205"></a><a class="code" href="classmdt_device_modbus_wago.html#af26af790e502e5b85498540dd215cff7">00205</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_modbus_wago.html#af26af790e502e5b85498540dd215cff7" title="Query device about filed bus + I/Os setup.">mdtDeviceModbusWago::detectIos</a>(<a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *ios, <span class="keyword">const</span> QMap&lt;int, mdtDeviceModbusWagoModule*&gt; specialModules)
-<a name="l00206"></a>00206 {
-<a name="l00207"></a>00207   Q_ASSERT(ios != 0);
-<a name="l00208"></a>00208 
-<a name="l00209"></a>00209   <span class="keywordtype">int</span> analogInputsCnt;
-<a name="l00210"></a>00210   <span class="keywordtype">int</span> analogOutputsCnt;
-<a name="l00211"></a>00211   <span class="keywordtype">int</span> digitalInputsCnt;
-<a name="l00212"></a>00212   <span class="keywordtype">int</span> digitalOutputsCnt;
-<a name="l00213"></a>00213   <span class="keywordtype">int</span> i;
-<a name="l00214"></a>00214   quint16 word;
-<a name="l00215"></a>00215   QVariant var;
-<a name="l00216"></a>00216   <a class="code" href="classmdt_device_modbus_wago_module.html" title="Helper class for Wago modules detection and setup.">mdtDeviceModbusWagoModule</a> *module;
-<a name="l00217"></a>00217   <span class="keywordtype">int</span> aiAddress;
-<a name="l00218"></a>00218   <span class="keywordtype">int</span> aoAddressRead, aoAddressWrite;
-<a name="l00219"></a>00219   <span class="keywordtype">int</span> diAddress;
-<a name="l00220"></a>00220   <span class="keywordtype">int</span> doAddressRead, doAddressWrite;
-<a name="l00221"></a>00221 
-<a name="l00222"></a>00222   <span class="comment">// Clear current I/O setup</span>
-<a name="l00223"></a>00223   ios-&gt;<a class="code" href="classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0" title="Delete all I/O objects.">deleteIos</a>();
-<a name="l00224"></a>00224   qDeleteAll(pvModules);
-<a name="l00225"></a>00225   pvModules.clear();
-<a name="l00226"></a>00226   <span class="comment">// Detect I/O&#39;s count</span>
-<a name="l00227"></a>00227   analogInputsCnt = <a class="code" href="classmdt_device_modbus_wago.html#a9da56c13404fd9243c5920ff2ef8bd15" title="Get number of analog inputs.">analogInputsCount</a>();
-<a name="l00228"></a>00228   <span class="keywordflow">if</span>(analogInputsCnt &lt; 0){
-<a name="l00229"></a>00229     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: error occured during analog inputs count detection&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00230"></a>00230     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00231"></a>00231     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00232"></a>00232     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00233"></a>00233   }
-<a name="l00234"></a>00234   analogOutputsCnt = <a class="code" href="classmdt_device_modbus_wago.html#ad812b7ee3a2f2677cddde205da5ec787" title="Get number of analog outputs.">analogOutputsCount</a>();
-<a name="l00235"></a>00235   <span class="keywordflow">if</span>(analogOutputsCnt &lt; 0){
-<a name="l00236"></a>00236     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: error occured during analog outputs count detection&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00237"></a>00237     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00238"></a>00238     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00239"></a>00239     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00240"></a>00240   }
-<a name="l00241"></a>00241   digitalInputsCnt = <a class="code" href="classmdt_device_modbus_wago.html#ad51fd45858e62c597ba8fc2bf3e877bd" title="Get number of digital inputs.">digitalInputsCount</a>();
-<a name="l00242"></a>00242   <span class="keywordflow">if</span>(digitalInputsCnt &lt; 0){
-<a name="l00243"></a>00243     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: error occured during digital inputs count detection&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00244"></a>00244     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00245"></a>00245     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00246"></a>00246     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00247"></a>00247   }
-<a name="l00248"></a>00248   digitalOutputsCnt = <a class="code" href="classmdt_device_modbus_wago.html#a6711c4e486c3b103b187102685e091cc" title="Get number of digital outputs.">digitalOutputsCount</a>();
-<a name="l00249"></a>00249   <span class="keywordflow">if</span>(digitalOutputsCnt &lt; 0){
-<a name="l00250"></a>00250     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: error occured during digital outputs count detection&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00251"></a>00251     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00252"></a>00252     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00253"></a>00253     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00254"></a>00254   }
-<a name="l00255"></a>00255   <span class="comment">// Get modules configuration</span>
-<a name="l00257"></a>00257 <span class="comment"></span>  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x2030, 62)){
-<a name="l00258"></a>00258     qDebug() &lt;&lt; <span class="stringliteral">&quot;Cannot get I/O config&quot;</span>;
-<a name="l00259"></a>00259     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00260"></a>00260   }
-<a name="l00261"></a>00261   qDebug() &lt;&lt; <span class="stringliteral">&quot;I/O config: &quot;</span> &lt;&lt; <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>();
-<a name="l00262"></a>00262   <span class="comment">// Setup the Fieldbus Coupler.</span>
-<a name="l00263"></a>00263   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() &lt; 1){
-<a name="l00264"></a>00264     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no field bus coupler found&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00265"></a>00265     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00266"></a>00266     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00267"></a>00267     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00268"></a>00268   }
-<a name="l00269"></a>00269   word = <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0);
-<a name="l00270"></a>00270   <span class="keywordflow">if</span>((word &lt; 1)||(word &gt; 999)){
-<a name="l00271"></a>00271     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: field bus coupler part number is wrong (expected: value from 1 to 999)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00272"></a>00272     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00273"></a>00273     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00274"></a>00274     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00275"></a>00275   }
-<a name="l00276"></a>00276   qDebug() &lt;&lt; <span class="stringliteral">&quot;Found filedbus part number 750 -&quot;</span> &lt;&lt; word;
-<a name="l00277"></a>00277   <span class="comment">// Setup each module and add them to container</span>
-<a name="l00278"></a>00278   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() &lt; 2){
-<a name="l00279"></a>00279     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no I/O modules found&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00280"></a>00280     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00281"></a>00281     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00282"></a>00282     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00283"></a>00283   }
-<a name="l00285"></a>00285   aiAddress = 0;
-<a name="l00286"></a>00286   aoAddressRead = 0x0200;
-<a name="l00287"></a>00287   aoAddressWrite = 0;
-<a name="l00288"></a>00288   diAddress = 0;
-<a name="l00289"></a>00289   doAddressRead = 0x0200;
-<a name="l00290"></a>00290   doAddressWrite = 0;
-<a name="l00291"></a>00291   <span class="keywordflow">for</span>(i = 1; i &lt; <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size(); ++i){
-<a name="l00292"></a>00292     word = <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(i);
-<a name="l00293"></a>00293     <span class="keywordflow">if</span>(word == 0){
-<a name="l00294"></a>00294       <span class="comment">// We have detected all connected I/Os</span>
-<a name="l00295"></a>00295       <span class="keywordflow">break</span>;
-<a name="l00296"></a>00296     }
-<a name="l00297"></a>00297     qDebug() &lt;&lt; <span class="stringliteral">&quot;I/O setup word: &quot;</span> &lt;&lt; word  &lt;&lt; <span class="stringliteral">&quot; ...&quot;</span>;
-<a name="l00298"></a>00298     <span class="comment">// Check if we have a special (manually configured) module</span>
-<a name="l00299"></a>00299     module = specialModules.value(i);
-<a name="l00300"></a>00300     <span class="keywordflow">if</span>(module != 0){
-<a name="l00301"></a>00301       <span class="comment">// Some special modules needs to communicate with device, so we address a first time</span>
-<a name="l00302"></a>00302       module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ac7d9da94e7d4c06e288a346ac123c711" title="Update addresses of the module.">updateAddresses</a>(aiAddress, aoAddressRead, aoAddressWrite, diAddress, doAddressRead, doAddressWrite);
-<a name="l00303"></a>00303       <span class="keywordflow">if</span>(!module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#adf7431cd4d41d7839b42cc21badeabc5" title="Setup module.">setupFromRegisterWord</a>(word)){
-<a name="l00304"></a>00304         <span class="comment">// We must not free given module, simply set pointer Null</span>
-<a name="l00305"></a>00305         module = 0;
-<a name="l00306"></a>00306       }
-<a name="l00307"></a>00307       <span class="comment">// Re-address module</span>
-<a name="l00308"></a>00308       module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ac7d9da94e7d4c06e288a346ac123c711" title="Update addresses of the module.">updateAddresses</a>(aiAddress, aoAddressRead, aoAddressWrite, diAddress, doAddressRead, doAddressWrite);
-<a name="l00309"></a>00309     }<span class="keywordflow">else</span>{
-<a name="l00310"></a>00310       <span class="comment">// Create a module object, setup and adrress it</span>
-<a name="l00312"></a>00312 <span class="comment"></span>      <span class="keywordflow">if</span>(word == 464){
-<a name="l00313"></a>00313         module = <span class="keyword">new</span> <a class="code" href="classmdt_device_modbus_wago_module_rtd.html" title="Helper class for RTD modules.">mdtDeviceModbusWagoModuleRtd</a>(<span class="keyword">false</span>, <span class="keyword">this</span>);
-<a name="l00314"></a>00314       }<span class="keywordflow">else</span>{
-<a name="l00315"></a>00315         module = <span class="keyword">new</span> <a class="code" href="classmdt_device_modbus_wago_module.html" title="Helper class for Wago modules detection and setup.">mdtDeviceModbusWagoModule</a>(<span class="keyword">false</span>, <span class="keyword">this</span>);
-<a name="l00316"></a>00316       }
-<a name="l00317"></a>00317       <span class="keywordflow">if</span>(!module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#adf7431cd4d41d7839b42cc21badeabc5" title="Setup module.">setupFromRegisterWord</a>(word)){
-<a name="l00318"></a>00318         module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a7f874ff01aa984101b1d867c781eba67" title="Clear I/O module.">clear</a>(<span class="keyword">true</span>);
-<a name="l00319"></a>00319         <span class="keyword">delete</span> module;
-<a name="l00320"></a>00320         module = 0;
-<a name="l00321"></a>00321       }
-<a name="l00322"></a>00322       module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ac7d9da94e7d4c06e288a346ac123c711" title="Update addresses of the module.">updateAddresses</a>(aiAddress, aoAddressRead, aoAddressWrite, diAddress, doAddressRead, doAddressWrite);
-<a name="l00323"></a>00323     }
-<a name="l00324"></a>00324     <span class="comment">// If module is null, a problem occured - cleanup and fail</span>
-<a name="l00325"></a>00325     <span class="keywordflow">if</span>(module == 0){
-<a name="l00326"></a>00326       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: setup failed on a module (setup word: &quot;</span> + QString::number(word) + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00327"></a>00327       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00328"></a>00328       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00329"></a>00329       qDeleteAll(pvModules);
-<a name="l00330"></a>00330       pvModules.clear();
-<a name="l00331"></a>00331       ios-&gt;<a class="code" href="classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0" title="Delete all I/O objects.">deleteIos</a>();
-<a name="l00332"></a>00332       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00333"></a>00333     }
-<a name="l00334"></a>00334     Q_ASSERT(module != 0);
-<a name="l00335"></a>00335     Q_ASSERT(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a32a3ee554941240682fb1b166c1217ff" title="Get module type.">type</a>() != <a class="code" href="classmdt_device_modbus_wago_module.html#a2d8f6895b2a031c953bd91c2f65a1a25aa195556cb75e827f16f81e9f09908660">mdtDeviceModbusWagoModule::Unknown</a>);
-<a name="l00336"></a>00336     qDebug() &lt;&lt; <span class="stringliteral">&quot;Module pos. &quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;: word: &quot;</span> &lt;&lt; word &lt;&lt; <span class="stringliteral">&quot;, firs AI address: &quot;</span> &lt;&lt; module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a502dc2388ecf0531786c09964b4f7566" title="Get first address of module&#39;s analog inputs process image.">firstAiAddress</a>() &lt;&lt; <span class="stringliteral">&quot; , IN count: &quot;</span> &lt;&lt; module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a755946efd8ea4ee13d8f6fe4fb6ea05f" title="Access internal analog inputs.">analogInputs</a>().size();
-<a name="l00337"></a>00337     <span class="comment">// Add module&#39;s I/Os to container</span>
-<a name="l00338"></a>00338     ios-&gt;<a class="code" href="classmdt_device_ios.html#a776dc0508f88f8ea206801fc7472bfb2" title="Add a list of analog inputs.">addAnalogInputs</a>(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a755946efd8ea4ee13d8f6fe4fb6ea05f" title="Access internal analog inputs.">analogInputs</a>());
-<a name="l00339"></a>00339     ios-&gt;<a class="code" href="classmdt_device_ios.html#acde9cd81580041c5a9bcb5e3f7ee5592" title="Add a list of analog outputs.">addAnalogOutputs</a>(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a61ed3d50d5ad17324a6bf9d7c2cd1df5" title="Access internal analog outputs.">analogOutputs</a>());
-<a name="l00340"></a>00340     ios-&gt;<a class="code" href="classmdt_device_ios.html#a470c27db1fefa6cd2a4a690bb0ff04f5" title="Add a list of digital inputs.">addDigitalInputs</a>(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ad9f9289c7f23f00c6d4d25b576a5c440" title="Access internal digital inputs.">digitalInputs</a>());
-<a name="l00341"></a>00341     ios-&gt;<a class="code" href="classmdt_device_ios.html#adf6a8efe1f82a9cfeea12afce6d58a5d" title="Add a list of digital outputs.">addDigitalOutputs</a>(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a9d249d400b5e7f54e8fa7e0cc370eda2" title="Access internal digital outputs.">digitalOutputs</a>());
-<a name="l00342"></a>00342     <span class="comment">// Update current first addresses</span>
-<a name="l00343"></a>00343     aiAddress = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a9a76569563743da0a493766658528bb6" title="Get first address for next module in analog inputs process image.">nextModuleFirstAiAddress</a>();
-<a name="l00344"></a>00344     aoAddressRead = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a76d102ba44dfc0777c8dbb5446665353" title="Get first address for next module in analog outputs process image for read access.">nextModuleFirstAoAddressRead</a>();
-<a name="l00345"></a>00345     aoAddressWrite = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a51b519af4518c16be937fa55b458bf8e" title="Get first address for next module in digital outputs process image for write access.">nextModuleFirstAoAddressWrite</a>();
-<a name="l00346"></a>00346     diAddress = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ad789bd289b2969f4c8291dd4f5c543c0" title="Get first address for next module in digital inputs process image.">nextModuleFirstDiAddress</a>();
-<a name="l00347"></a>00347     doAddressRead = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#aa2efef403e1f92e8e4a8195d7568b116" title="Get first address for next module in digital outputs process image for read access.">nextModuleFirstDoAddressRead</a>();
-<a name="l00348"></a>00348     doAddressWrite = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a2417c543a08a9804b0ec5b4dc9dfe4cd" title="Get first address for next module in digital outputs process image for write access.">nextModuleFirstDoAddressWrite</a>();
-<a name="l00349"></a>00349     <span class="comment">// Add module to modules container</span>
-<a name="l00350"></a>00350     pvModules.append(module);
-<a name="l00351"></a>00351   }
-<a name="l00352"></a>00352   <span class="comment">// Check coherence between detected setup and I/Os count</span>
-<a name="l00353"></a>00353   <span class="keywordflow">if</span>(ios-&gt;<a class="code" href="classmdt_device_ios.html#a904069e2e641c92291226ea2524eadb3" title="Get the number of analog inputs.">analogInputsCount</a>() != analogInputsCnt){
-<a name="l00354"></a>00354     qDeleteAll(pvModules);
-<a name="l00355"></a>00355     pvModules.clear();
-<a name="l00356"></a>00356     ios-&gt;<a class="code" href="classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0" title="Delete all I/O objects.">deleteIos</a>();
-<a name="l00357"></a>00357     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: analog inputs count not coherent&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00358"></a>00358     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00359"></a>00359     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00360"></a>00360     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00361"></a>00361   }
-<a name="l00362"></a>00362   <span class="keywordflow">if</span>(ios-&gt;<a class="code" href="classmdt_device_ios.html#a8b9b14c4968e5aaae60ac7f91f77e06c" title="Get the number of analog outputs.">analogOutputsCount</a>() != analogOutputsCnt){
-<a name="l00363"></a>00363     qDeleteAll(pvModules);
-<a name="l00364"></a>00364     pvModules.clear();
-<a name="l00365"></a>00365     ios-&gt;<a class="code" href="classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0" title="Delete all I/O objects.">deleteIos</a>();
-<a name="l00366"></a>00366     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: analog outputs count not coherent&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00367"></a>00367     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00368"></a>00368     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00369"></a>00369     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00370"></a>00370   }
-<a name="l00371"></a>00371   <span class="keywordflow">if</span>(ios-&gt;<a class="code" href="classmdt_device_ios.html#a8d6306c16a25c82d6d8002020f4dc16a" title="Get the number of digital inputs.">digitalInputsCount</a>() != digitalInputsCnt){
-<a name="l00372"></a>00372     qDeleteAll(pvModules);
-<a name="l00373"></a>00373     pvModules.clear();
-<a name="l00374"></a>00374     ios-&gt;<a class="code" href="classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0" title="Delete all I/O objects.">deleteIos</a>();
-<a name="l00375"></a>00375     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: digital inputs count not coherent&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00376"></a>00376     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00377"></a>00377     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00378"></a>00378     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00379"></a>00379   }
-<a name="l00380"></a>00380   <span class="keywordflow">if</span>(ios-&gt;<a class="code" href="classmdt_device_ios.html#a81041e03a387fdcdc2638527b27a0ff6" title="Get the number of digital outputs.">digitalOutputsCount</a>() != digitalOutputsCnt){
-<a name="l00381"></a>00381     qDeleteAll(pvModules);
-<a name="l00382"></a>00382     pvModules.clear();
-<a name="l00383"></a>00383     ios-&gt;<a class="code" href="classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0" title="Delete all I/O objects.">deleteIos</a>();
-<a name="l00384"></a>00384     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: digital outputs count not coherent&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
-<a name="l00385"></a>00385     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
-<a name="l00386"></a>00386     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00387"></a>00387     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00388"></a>00388   }
-<a name="l00389"></a>00389   <span class="comment">// Set a default short label for each I/O</span>
-<a name="l00390"></a>00390   ios-&gt;<a class="code" href="classmdt_device_ios.html#a100ce7dcaecb7ee9a1a3e68f75cdac73" title="Set a default short label for each I/O.">setIosDefaultLabelShort</a>();
-<a name="l00391"></a>00391 
-<a name="l00392"></a>00392   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00393"></a>00393 }
+<a name="l00107"></a>00107   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x1022, 1)){
+<a name="l00108"></a>00108     <span class="keywordflow">return</span> -1;
+<a name="l00109"></a>00109   }
+<a name="l00110"></a>00110   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
+<a name="l00111"></a>00111     <span class="keywordflow">return</span> -1;
+<a name="l00112"></a>00112   }
+<a name="l00113"></a>00113   <span class="keywordflow">return</span> (<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0) / 16);
+<a name="l00114"></a>00114 }
+<a name="l00115"></a>00115 
+<a name="l00116"></a><a class="code" href="classmdt_device_modbus_wago.html#a9da56c13404fd9243c5920ff2ef8bd15">00116</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_modbus_wago.html#a9da56c13404fd9243c5920ff2ef8bd15" title="Get number of analog inputs.">mdtDeviceModbusWago::analogInputsCount</a>()
+<a name="l00117"></a>00117 {
+<a name="l00118"></a>00118   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x1023, 1)){
+<a name="l00119"></a>00119     <span class="keywordflow">return</span> -1;
+<a name="l00120"></a>00120   }
+<a name="l00121"></a>00121   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
+<a name="l00122"></a>00122     <span class="keywordflow">return</span> -1;
+<a name="l00123"></a>00123   }
+<a name="l00124"></a>00124   <span class="keywordflow">return</span> (<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0) / 16);
+<a name="l00125"></a>00125 }
+<a name="l00126"></a>00126 
+<a name="l00127"></a><a class="code" href="classmdt_device_modbus_wago.html#a6711c4e486c3b103b187102685e091cc">00127</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_modbus_wago.html#a6711c4e486c3b103b187102685e091cc" title="Get number of digital outputs.">mdtDeviceModbusWago::digitalOutputsCount</a>()
+<a name="l00128"></a>00128 {
+<a name="l00129"></a>00129   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x1024, 1)){
+<a name="l00130"></a>00130     <span class="keywordflow">return</span> -1;
+<a name="l00131"></a>00131   }
+<a name="l00132"></a>00132   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
+<a name="l00133"></a>00133     <span class="keywordflow">return</span> -1;
+<a name="l00134"></a>00134   }
+<a name="l00135"></a>00135   <span class="keywordflow">return</span> <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0);
+<a name="l00136"></a>00136 }
+<a name="l00137"></a>00137 
+<a name="l00138"></a><a class="code" href="classmdt_device_modbus_wago.html#ad51fd45858e62c597ba8fc2bf3e877bd">00138</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_modbus_wago.html#ad51fd45858e62c597ba8fc2bf3e877bd" title="Get number of digital inputs.">mdtDeviceModbusWago::digitalInputsCount</a>()
+<a name="l00139"></a>00139 {
+<a name="l00140"></a>00140   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x1025, 1)){
+<a name="l00141"></a>00141     <span class="keywordflow">return</span> -1;
+<a name="l00142"></a>00142   }
+<a name="l00143"></a>00143   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() != 1){
+<a name="l00144"></a>00144     <span class="keywordflow">return</span> -1;
+<a name="l00145"></a>00145   }
+<a name="l00146"></a>00146   <span class="keywordflow">return</span> <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0);
+<a name="l00147"></a>00147 }
+<a name="l00148"></a>00148 
+<a name="l00149"></a><a class="code" href="classmdt_device_modbus_wago.html#aae46b00317190b70a59080e9b2917ed6">00149</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_modbus_wago.html#aae46b00317190b70a59080e9b2917ed6" title="Query device about filed bus + I/Os setup.">mdtDeviceModbusWago::detectIos</a>(<span class="keyword">const</span> QMap&lt;int, mdtDeviceModbusWagoModule*&gt; specialModules)
+<a name="l00150"></a>00150 {
+<a name="l00151"></a>00151   <span class="keywordtype">int</span> analogInputsCnt;
+<a name="l00152"></a>00152   <span class="keywordtype">int</span> analogOutputsCnt;
+<a name="l00153"></a>00153   <span class="keywordtype">int</span> digitalInputsCnt;
+<a name="l00154"></a>00154   <span class="keywordtype">int</span> digitalOutputsCnt;
+<a name="l00155"></a>00155   <span class="keywordtype">int</span> i;
+<a name="l00156"></a>00156   quint16 word;
+<a name="l00157"></a>00157   QVariant var;
+<a name="l00158"></a>00158   <a class="code" href="classmdt_device_modbus_wago_module.html" title="Helper class for Wago modules detection and setup.">mdtDeviceModbusWagoModule</a> *module;
+<a name="l00159"></a>00159   <span class="keywordtype">int</span> aiAddress;
+<a name="l00160"></a>00160   <span class="keywordtype">int</span> aoAddressRead, aoAddressWrite;
+<a name="l00161"></a>00161   <span class="keywordtype">int</span> diAddress;
+<a name="l00162"></a>00162   <span class="keywordtype">int</span> doAddressRead, doAddressWrite;
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164   <span class="comment">// Clear current I/O setup</span>
+<a name="l00165"></a>00165   <a class="code" href="classmdt_device.html#a61032f15e601eb1bd74da80014bae593" title="Delete all I/O in container.">deleteIos</a>();
+<a name="l00166"></a>00166   qDeleteAll(pvModules);
+<a name="l00167"></a>00167   pvModules.clear();
+<a name="l00168"></a>00168   <span class="comment">// Detect I/O&#39;s count</span>
+<a name="l00169"></a>00169   analogInputsCnt = <a class="code" href="classmdt_device_modbus_wago.html#a9da56c13404fd9243c5920ff2ef8bd15" title="Get number of analog inputs.">analogInputsCount</a>();
+<a name="l00170"></a>00170   <span class="keywordflow">if</span>(analogInputsCnt &lt; 0){
+<a name="l00171"></a>00171     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: error occured during analog inputs count detection&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00172"></a>00172     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00173"></a>00173     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00174"></a>00174     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00175"></a>00175   }
+<a name="l00176"></a>00176   analogOutputsCnt = <a class="code" href="classmdt_device_modbus_wago.html#ad812b7ee3a2f2677cddde205da5ec787" title="Get number of analog outputs.">analogOutputsCount</a>();
+<a name="l00177"></a>00177   <span class="keywordflow">if</span>(analogOutputsCnt &lt; 0){
+<a name="l00178"></a>00178     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: error occured during analog outputs count detection&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00179"></a>00179     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00180"></a>00180     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00181"></a>00181     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00182"></a>00182   }
+<a name="l00183"></a>00183   digitalInputsCnt = <a class="code" href="classmdt_device_modbus_wago.html#ad51fd45858e62c597ba8fc2bf3e877bd" title="Get number of digital inputs.">digitalInputsCount</a>();
+<a name="l00184"></a>00184   <span class="keywordflow">if</span>(digitalInputsCnt &lt; 0){
+<a name="l00185"></a>00185     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: error occured during digital inputs count detection&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00186"></a>00186     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00187"></a>00187     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00188"></a>00188     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00189"></a>00189   }
+<a name="l00190"></a>00190   digitalOutputsCnt = <a class="code" href="classmdt_device_modbus_wago.html#a6711c4e486c3b103b187102685e091cc" title="Get number of digital outputs.">digitalOutputsCount</a>();
+<a name="l00191"></a>00191   <span class="keywordflow">if</span>(digitalOutputsCnt &lt; 0){
+<a name="l00192"></a>00192     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: error occured during digital outputs count detection&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00193"></a>00193     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00194"></a>00194     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00195"></a>00195     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00196"></a>00196   }
+<a name="l00197"></a>00197   <span class="comment">// Get modules configuration</span>
+<a name="l00199"></a>00199 <span class="comment"></span>  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues</a>(0x2030, 62)){
+<a name="l00200"></a>00200     qDebug() &lt;&lt; <span class="stringliteral">&quot;Cannot get I/O config&quot;</span>;
+<a name="l00201"></a>00201     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00202"></a>00202   }
+<a name="l00204"></a>00204   <span class="comment">// Setup the Fieldbus Coupler.</span>
+<a name="l00205"></a>00205   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() &lt; 1){
+<a name="l00206"></a>00206     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no field bus coupler found&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00207"></a>00207     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00208"></a>00208     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00209"></a>00209     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00210"></a>00210   }
+<a name="l00211"></a>00211   word = <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(0);
+<a name="l00212"></a>00212   <span class="keywordflow">if</span>((word &lt; 1)||(word &gt; 999)){
+<a name="l00213"></a>00213     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: field bus coupler part number is wrong (expected: value from 1 to 999)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00214"></a>00214     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00215"></a>00215     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00216"></a>00216     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00217"></a>00217   }
+<a name="l00218"></a>00218   qDebug() &lt;&lt; <span class="stringliteral">&quot;Found filedbus part number 750 -&quot;</span> &lt;&lt; word;
+<a name="l00219"></a>00219   <span class="comment">// Setup each module and add them to container</span>
+<a name="l00220"></a>00220   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size() &lt; 2){
+<a name="l00221"></a>00221     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no I/O modules found&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00222"></a>00222     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00223"></a>00223     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00224"></a>00224     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00225"></a>00225   }
+<a name="l00227"></a>00227   aiAddress = 0;
+<a name="l00228"></a>00228   aoAddressRead = 0x0200;
+<a name="l00229"></a>00229   aoAddressWrite = 0;
+<a name="l00230"></a>00230   diAddress = 0;
+<a name="l00231"></a>00231   doAddressRead = 0x0200;
+<a name="l00232"></a>00232   doAddressWrite = 0;
+<a name="l00233"></a>00233   <span class="keywordflow">for</span>(i = 1; i &lt; <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().size(); ++i){
+<a name="l00234"></a>00234     word = <a class="code" href="classmdt_device_modbus.html#a83cb2a28111653fbcbbe748f7a1a2e3d" title="Helper method for register service.">registerValues</a>().at(i);
+<a name="l00235"></a>00235     <span class="keywordflow">if</span>(word == 0){
+<a name="l00236"></a>00236       <span class="comment">// We have detected all connected I/Os</span>
+<a name="l00237"></a>00237       <span class="keywordflow">break</span>;
+<a name="l00238"></a>00238     }
+<a name="l00240"></a>00240     <span class="comment">// Check if we have a special (manually configured) module</span>
+<a name="l00241"></a>00241     module = specialModules.value(i);
+<a name="l00242"></a>00242     <span class="keywordflow">if</span>(module != 0){
+<a name="l00243"></a>00243       <span class="comment">// Some special modules needs to communicate with device, so we address a first time</span>
+<a name="l00244"></a>00244       module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ac7d9da94e7d4c06e288a346ac123c711" title="Update addresses of the module.">updateAddresses</a>(aiAddress, aoAddressRead, aoAddressWrite, diAddress, doAddressRead, doAddressWrite);
+<a name="l00245"></a>00245       <span class="keywordflow">if</span>(!module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#adf7431cd4d41d7839b42cc21badeabc5" title="Setup module.">setupFromRegisterWord</a>(word)){
+<a name="l00246"></a>00246         <span class="comment">// We must not free given module, simply set pointer Null</span>
+<a name="l00247"></a>00247         module = 0;
+<a name="l00248"></a>00248       }
+<a name="l00249"></a>00249       <span class="comment">// Re-address module</span>
+<a name="l00250"></a>00250       module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ac7d9da94e7d4c06e288a346ac123c711" title="Update addresses of the module.">updateAddresses</a>(aiAddress, aoAddressRead, aoAddressWrite, diAddress, doAddressRead, doAddressWrite);
+<a name="l00251"></a>00251     }<span class="keywordflow">else</span>{
+<a name="l00252"></a>00252       <span class="comment">// Create a module object, setup and adrress it</span>
+<a name="l00254"></a>00254 <span class="comment"></span>      <span class="keywordflow">if</span>(word == 464){
+<a name="l00255"></a>00255         module = <span class="keyword">new</span> <a class="code" href="classmdt_device_modbus_wago_module_rtd.html" title="Helper class for RTD modules.">mdtDeviceModbusWagoModuleRtd</a>(<span class="keyword">false</span>, <span class="keyword">this</span>);
+<a name="l00256"></a>00256       }<span class="keywordflow">else</span>{
+<a name="l00257"></a>00257         module = <span class="keyword">new</span> <a class="code" href="classmdt_device_modbus_wago_module.html" title="Helper class for Wago modules detection and setup.">mdtDeviceModbusWagoModule</a>(<span class="keyword">false</span>, <span class="keyword">this</span>);
+<a name="l00258"></a>00258       }
+<a name="l00259"></a>00259       <span class="keywordflow">if</span>(!module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#adf7431cd4d41d7839b42cc21badeabc5" title="Setup module.">setupFromRegisterWord</a>(word)){
+<a name="l00260"></a>00260         module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a7f874ff01aa984101b1d867c781eba67" title="Clear I/O module.">clear</a>(<span class="keyword">true</span>);
+<a name="l00261"></a>00261         <span class="keyword">delete</span> module;
+<a name="l00262"></a>00262         module = 0;
+<a name="l00263"></a>00263       }
+<a name="l00264"></a>00264       module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ac7d9da94e7d4c06e288a346ac123c711" title="Update addresses of the module.">updateAddresses</a>(aiAddress, aoAddressRead, aoAddressWrite, diAddress, doAddressRead, doAddressWrite);
+<a name="l00265"></a>00265     }
+<a name="l00266"></a>00266     <span class="comment">// If module is null, a problem occured - cleanup and fail</span>
+<a name="l00267"></a>00267     <span class="keywordflow">if</span>(module == 0){
+<a name="l00268"></a>00268       <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: setup failed on a module (setup word: &quot;</span> + QString::number(word) + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00269"></a>00269       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00270"></a>00270       e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00271"></a>00271       qDeleteAll(pvModules);
+<a name="l00272"></a>00272       pvModules.clear();
+<a name="l00273"></a>00273       <a class="code" href="classmdt_device.html#a61032f15e601eb1bd74da80014bae593" title="Delete all I/O in container.">deleteIos</a>();
+<a name="l00274"></a>00274       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00275"></a>00275     }
+<a name="l00276"></a>00276     Q_ASSERT(module != 0);
+<a name="l00277"></a>00277     Q_ASSERT(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a32a3ee554941240682fb1b166c1217ff" title="Get module type.">type</a>() != <a class="code" href="classmdt_device_modbus_wago_module.html#a2d8f6895b2a031c953bd91c2f65a1a25aa195556cb75e827f16f81e9f09908660">mdtDeviceModbusWagoModule::Unknown</a>);
+<a name="l00279"></a>00279     <span class="comment">// Add module&#39;s I/Os to container</span>
+<a name="l00280"></a>00280     <a class="code" href="classmdt_device.html#af5fd61d58c5b305f61ad706c13d658d2" title="Add a list of analog inputs.">addInputs</a>(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a755946efd8ea4ee13d8f6fe4fb6ea05f" title="Access internal analog inputs.">analogInputs</a>());
+<a name="l00281"></a>00281     <a class="code" href="classmdt_device.html#aac8600604fb55c70e84e100e3af8887a" title="Add a list of analog outputs.">addOutputs</a>(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a61ed3d50d5ad17324a6bf9d7c2cd1df5" title="Access internal analog outputs.">analogOutputs</a>());
+<a name="l00282"></a>00282     <a class="code" href="classmdt_device.html#af5fd61d58c5b305f61ad706c13d658d2" title="Add a list of analog inputs.">addInputs</a>(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ad9f9289c7f23f00c6d4d25b576a5c440" title="Access internal digital inputs.">digitalInputs</a>());
+<a name="l00283"></a>00283     <a class="code" href="classmdt_device.html#aac8600604fb55c70e84e100e3af8887a" title="Add a list of analog outputs.">addOutputs</a>(module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a9d249d400b5e7f54e8fa7e0cc370eda2" title="Access internal digital outputs.">digitalOutputs</a>());
+<a name="l00284"></a>00284     <span class="comment">// Update current first addresses</span>
+<a name="l00285"></a>00285     aiAddress = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a9a76569563743da0a493766658528bb6" title="Get first address for next module in analog inputs process image.">nextModuleFirstAiAddress</a>();
+<a name="l00286"></a>00286     aoAddressRead = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a76d102ba44dfc0777c8dbb5446665353" title="Get first address for next module in analog outputs process image for read access.">nextModuleFirstAoAddressRead</a>();
+<a name="l00287"></a>00287     aoAddressWrite = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a51b519af4518c16be937fa55b458bf8e" title="Get first address for next module in digital outputs process image for write access.">nextModuleFirstAoAddressWrite</a>();
+<a name="l00288"></a>00288     diAddress = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#ad789bd289b2969f4c8291dd4f5c543c0" title="Get first address for next module in digital inputs process image.">nextModuleFirstDiAddress</a>();
+<a name="l00289"></a>00289     doAddressRead = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#aa2efef403e1f92e8e4a8195d7568b116" title="Get first address for next module in digital outputs process image for read access.">nextModuleFirstDoAddressRead</a>();
+<a name="l00290"></a>00290     doAddressWrite = module-&gt;<a class="code" href="classmdt_device_modbus_wago_module.html#a2417c543a08a9804b0ec5b4dc9dfe4cd" title="Get first address for next module in digital outputs process image for write access.">nextModuleFirstDoAddressWrite</a>();
+<a name="l00291"></a>00291     <span class="comment">// Add module to modules container</span>
+<a name="l00292"></a>00292     pvModules.append(module);
+<a name="l00293"></a>00293   }
+<a name="l00294"></a>00294   <span class="comment">// Check coherence between detected setup and I/Os count</span>
+<a name="l00295"></a>00295   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device.html#adb7099877ad2080961fae5a40117e9e5" title="Get the I/Os container.">ios</a>()-&gt;<a class="code" href="classmdt_device_modbus_wago.html#a9da56c13404fd9243c5920ff2ef8bd15" title="Get number of analog inputs.">analogInputsCount</a>() != analogInputsCnt){
+<a name="l00296"></a>00296     qDeleteAll(pvModules);
+<a name="l00297"></a>00297     pvModules.clear();
+<a name="l00298"></a>00298     <a class="code" href="classmdt_device.html#a61032f15e601eb1bd74da80014bae593" title="Delete all I/O in container.">deleteIos</a>();
+<a name="l00299"></a>00299     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: analog inputs count not coherent&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00300"></a>00300     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00301"></a>00301     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00302"></a>00302     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00303"></a>00303   }
+<a name="l00304"></a>00304   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device.html#adb7099877ad2080961fae5a40117e9e5" title="Get the I/Os container.">ios</a>()-&gt;<a class="code" href="classmdt_device_modbus_wago.html#ad812b7ee3a2f2677cddde205da5ec787" title="Get number of analog outputs.">analogOutputsCount</a>() != analogOutputsCnt){
+<a name="l00305"></a>00305     qDeleteAll(pvModules);
+<a name="l00306"></a>00306     pvModules.clear();
+<a name="l00307"></a>00307     <a class="code" href="classmdt_device.html#a61032f15e601eb1bd74da80014bae593" title="Delete all I/O in container.">deleteIos</a>();
+<a name="l00308"></a>00308     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: analog outputs count not coherent&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00309"></a>00309     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00310"></a>00310     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00311"></a>00311     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00312"></a>00312   }
+<a name="l00313"></a>00313   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device.html#adb7099877ad2080961fae5a40117e9e5" title="Get the I/Os container.">ios</a>()-&gt;<a class="code" href="classmdt_device_modbus_wago.html#ad51fd45858e62c597ba8fc2bf3e877bd" title="Get number of digital inputs.">digitalInputsCount</a>() != digitalInputsCnt){
+<a name="l00314"></a>00314     qDeleteAll(pvModules);
+<a name="l00315"></a>00315     pvModules.clear();
+<a name="l00316"></a>00316     <a class="code" href="classmdt_device.html#a61032f15e601eb1bd74da80014bae593" title="Delete all I/O in container.">deleteIos</a>();
+<a name="l00317"></a>00317     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: digital inputs count not coherent&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00318"></a>00318     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00319"></a>00319     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00320"></a>00320     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00321"></a>00321   }
+<a name="l00322"></a>00322   <span class="keywordflow">if</span>(<a class="code" href="classmdt_device.html#adb7099877ad2080961fae5a40117e9e5" title="Get the I/Os container.">ios</a>()-&gt;<a class="code" href="classmdt_device_modbus_wago.html#a6711c4e486c3b103b187102685e091cc" title="Get number of digital outputs.">digitalOutputsCount</a>() != digitalOutputsCnt){
+<a name="l00323"></a>00323     qDeleteAll(pvModules);
+<a name="l00324"></a>00324     pvModules.clear();
+<a name="l00325"></a>00325     <a class="code" href="classmdt_device.html#a61032f15e601eb1bd74da80014bae593" title="Delete all I/O in container.">deleteIos</a>();
+<a name="l00326"></a>00326     <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: digital outputs count not coherent&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);
+<a name="l00327"></a>00327     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceModbusWago&quot;</span>);
+<a name="l00328"></a>00328     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00329"></a>00329     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00330"></a>00330   }
+<a name="l00331"></a>00331   <span class="comment">// Set a default short label for each I/O</span>
+<a name="l00332"></a>00332   <a class="code" href="classmdt_device.html#adb7099877ad2080961fae5a40117e9e5" title="Get the I/Os container.">ios</a>()-&gt;<a class="code" href="classmdt_device_ios.html#a100ce7dcaecb7ee9a1a3e68f75cdac73" title="Set a default short label for each I/O.">setIosDefaultLabelShort</a>();
+<a name="l00333"></a>00333 
+<a name="l00334"></a>00334   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00335"></a>00335 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -465,7 +405,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:23 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

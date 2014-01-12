@@ -56,49 +56,49 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Todo List </div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="_todo000030"></a> </p>
+<div class="textblock"><p><a class="anchor" id="_todo000029"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>  </dt>
 <dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd>
 </dl>
-<p><a class="anchor" id="_todo000031"></a> </p>
+<p><a class="anchor" id="_todo000030"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a54b7bfb725c91b2c292a39275b877207">mdtAbstractPort::flushInRequestPending</a> () </dt>
 <dd>Thread are to adapt. </dd>
 </dl>
-<p><a class="anchor" id="_todo000032"></a> </p>
+<p><a class="anchor" id="_todo000031"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a2cc79d9288bebafaa183753dcf0807f3">mdtAbstractPort::flushOutRequestPending</a> () </dt>
 <dd>Thread are to adapt. </dd>
 </dl>
-<p><a class="anchor" id="_todo000071"></a> </p>
+<p><a class="anchor" id="_todo000070"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>  </dt>
 <dd>Comment this class </dd>
 </dl>
-<p><a class="anchor" id="_todo000072"></a> </p>
+<p><a class="anchor" id="_todo000071"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">mdtAbstractSerialPort::getCtlStates</a> ()=0 </dt>
 <dd>Update name to : updateCtlStates ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000074"></a> </p>
+<p><a class="anchor" id="_todo000073"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75">mdtCsvFile::clear</a> () </dt>
 <dd>Check new function in mdtAlgorithm </dd>
 </dl>
-<p><a class="anchor" id="_todo000082"></a> </p>
+<p><a class="anchor" id="_todo000081"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_data_table_manager.html#a8fa0924a76e8f3fec9617f690cc4e148">mdtDataTableManager::dataSetDirectory</a> () const  </dt>
 <dd>Not used yet. </dd>
 </dl>
-<p><a class="anchor" id="_todo000083"></a> </p>
+<p><a class="anchor" id="_todo000082"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_data_table_manager.html#abe733f071ca77579522823598e79dd9a">mdtDataTableManager::exportToCsvFile</a> (const QString &amp;filePath, <a class="el" href="classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418" title="Creation mode.">mdtSqlDatabaseManager::createMode_t</a> mode) </dt>
 <dd><p class="startdd">Add: separator, data protection, escape char, EOL </p>
 <p class="enddd">Implement ... </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000081"></a> </p>
+<p><a class="anchor" id="_todo000080"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_data_table_manager.html#a1e19b3f34c1b0a91bcae4396731efc57">mdtDataTableManager::setDataSetDirectory</a> (const QDir &amp;dir) </dt>
 <dd>Not used yet. </dd>
@@ -113,78 +113,88 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_device.html#ab937015c1a319b7234442a4cc29a02a8">mdtDevice::waitTransactionDone</a> (int id) </dt>
 <dd>Adapt, comment</dd>
 </dl>
-<p><a class="anchor" id="_todo000034"></a> </p>
+<p><a class="anchor" id="_todo000033"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_info.html#afe4bbdc87acff59999905a0eeb812fe1">mdtDeviceInfo::productName</a> () const  </dt>
 <dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd>
 </dl>
-<p><a class="anchor" id="_todo000033"></a> </p>
+<p><a class="anchor" id="_todo000032"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_info.html#a207d7b6b49fd65726232e95cd9e0568c">mdtDeviceInfo::vendorName</a> () const  </dt>
 <dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd>
 </dl>
-<p><a class="anchor" id="_todo000010"></a> </p>
+<p><a class="anchor" id="_todo000011"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_device_modbus_wago.html#af26af790e502e5b85498540dd215cff7">mdtDeviceModbusWago::detectIos</a> (<a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *ios, const QMap&lt; int, mdtDeviceModbusWagoModule * &gt; specialModules=QMap&lt; int, <a class="el" href="classmdt_device_modbus_wago_module.html" title="Helper class for Wago modules detection and setup.">mdtDeviceModbusWagoModule</a> * &gt;()) </dt>
+<dt>Member <a class="el" href="classmdt_device_modbus.html#abfcab17fbf05aab7843ae689316dd01f">mdtDeviceModbus::connectToDevice</a> () </dt>
+<dd>Not implemented yet . </dd>
+</dl>
+<p><a class="anchor" id="_todo000008"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_device_modbus.html#ac69cfbe26681342ba05672ab63de2a1f">mdtDeviceModbus::mdtDeviceModbus</a> (QObject *parent=0) </dt>
+<dd>Provisoire ! </dd>
+</dl>
+<p><a class="anchor" id="_todo000012"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_device_modbus_wago.html#aae46b00317190b70a59080e9b2917ed6">mdtDeviceModbusWago::detectIos</a> (const QMap&lt; int, mdtDeviceModbusWagoModule * &gt; specialModules=QMap&lt; int, <a class="el" href="classmdt_device_modbus_wago_module.html" title="Helper class for Wago modules detection and setup.">mdtDeviceModbusWagoModule</a> * &gt;()) </dt>
 <dd><p class="startdd">Handle adrress mapping of bus coupler (can be a problem with &gt; 256 I/O on 750-352 f.ex.) </p>
 <p class="enddd">Provisoire !!!! </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000013"></a> </p>
+<p><a class="anchor" id="_todo000015"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_modbus_wago_module.html#ad803f3aa8d9777feaa5cdb3a4cccd316">mdtDeviceModbusWagoModule::addRegisters</a> (int channelCount, int firstAddressRead, int firstAddressWrite) </dt>
 <dd>Gag avec adresses !! </dd>
 </dl>
-<p><a class="anchor" id="_todo000014"></a> </p>
+<p><a class="anchor" id="_todo000016"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_modbus_wago_module.html#aa775cffab72f7ed7cd92a48d26da3225">mdtDeviceModbusWagoModule::readRegisters</a> (int firstChannel, int lastChannel, bool needDeviceSetupState) </dt>
 <dd><p class="startdd">Implement needDeviceSetupState </p>
 <p class="enddd">Change to status byte of last channel + 1...... </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000017"></a> </p>
+<p><a class="anchor" id="_todo000019"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_modbus_wago_module.html#a90bd4625c8b1efcd34cd56b31dc2f72c">mdtDeviceModbusWagoModule::readStatusBytes</a> (int firstChannel, int lastChannel, bool needDeviceSetupState) </dt>
 <dd>Implement needDeviceSetupState </dd>
 </dl>
-<p><a class="anchor" id="_todo000019"></a> </p>
+<p><a class="anchor" id="_todo000021"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_modbus_wago_module.html#adf7431cd4d41d7839b42cc21badeabc5">mdtDeviceModbusWagoModule::setupFromRegisterWord</a> (quint16 word) </dt>
 <dd><p class="startdd">Adapt</p>
 <p class="enddd">Implement </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000018"></a> </p>
+<p><a class="anchor" id="_todo000020"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_modbus_wago_module.html#a92cf3b411849e57c1d392ffa1b2e2ce6">mdtDeviceModbusWagoModule::writeControlBytes</a> (int firstChannel, int lastChannel, bool needDeviceSetupState) </dt>
 <dd>Implement needDeviceSetupState </dd>
 </dl>
-<p><a class="anchor" id="_todo000016"></a> </p>
+<p><a class="anchor" id="_todo000018"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_modbus_wago_module.html#a8fe809c91ccbf05f77c189fbaba12b91">mdtDeviceModbusWagoModule::writeRegisters</a> (int firstChannel, int lastChannel, bool needDeviceSetupState) </dt>
 <dd>Implement needDeviceSetupState </dd>
 </dl>
-<p><a class="anchor" id="_todo000020"></a> </p>
+<p><a class="anchor" id="_todo000022"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_modbus_wago_module_rtd.html#a4d48b7646a6a1da76126f8b32aa6f499">mdtDeviceModbusWagoModuleRtd::mdtDeviceModbusWagoModuleRtd</a> (bool autoDeleteIos, <a class="el" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a> *device) </dt>
 <dd>Finish/correct setIoCount(4); </dd>
 </dl>
-<p><a class="anchor" id="_todo000023"></a> </p>
+<p><a class="anchor" id="_todo000025"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_scpi.html#a65c6f747ac6c6fe727a7359f78139168">mdtDeviceScpi::checkDeviceError</a> () </dt>
 <dd>Buggy, review !</dd>
 </dl>
-<p><a class="anchor" id="_todo000022"></a> </p>
+<p><a class="anchor" id="_todo000024"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">mdtDeviceScpi::connectToDevice</a> (const <a class="el" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo) </dt>
 <dd>Add DeviceNotFound error ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000024"></a> </p>
+<p><a class="anchor" id="_todo000026"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181">mdtDeviceScpi::handleDeviceError</a> (const QList&lt; QVariant &gt; &amp;decodedValues) </dt>
 <dd>Buggy, review !</dd>
 </dl>
-<p><a class="anchor" id="_todo000025"></a> </p>
+<p><a class="anchor" id="_todo000027"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637">mdtDeviceScpi::handleDeviceSpecificError</a> (int errNum, const QString &amp;errText, const QList&lt; QString &gt; &amp;deviceSpecificTexts) </dt>
 <dd>Buggy, review !</dd>
@@ -199,95 +209,95 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_device_u3606_a_widget.html#a653d85749d67555d8c3a43a779b6d2a2">mdtDeviceU3606AWidget::mdtDeviceU3606AWidget</a> (QWidget *parent=0) </dt>
 <dd>A supprimer !(?)! </dd>
 </dl>
-<p><a class="anchor" id="_todo000077"></a> </p>
+<p><a class="anchor" id="_todo000076"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_k8055.html#a9dfe60529b0e80d5bbd3852fdea51b18">mdtFrameCodecK8055::decode</a> (QByteArray &amp;data) </dt>
 <dd>check status field ?? </dd>
 </dl>
-<p><a class="anchor" id="_todo000078"></a> </p>
+<p><a class="anchor" id="_todo000077"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100">mdtFrameCodecScpi::decodeIEEEdataAscii</a> (const QByteArray &amp;data) </dt>
 <dd>Not implemented yet </dd>
 </dl>
-<p><a class="anchor" id="_todo000079"></a> </p>
+<p><a class="anchor" id="_todo000078"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345">mdtFrameCodecScpi::decodeIEEEdataByte</a> (const QByteArray &amp;data) </dt>
 <dd>Not implemented yet </dd>
 </dl>
-<p><a class="anchor" id="_todo000080"></a> </p>
+<p><a class="anchor" id="_todo000079"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_usb_tmc.html#a06d2743a113bd2b4cf2ee44014ecd710">mdtFrameUsbTmc::putData</a> (const char *data, int maxLen) </dt>
 <dd>other bmTransferAttributes </dd>
 </dl>
-<p><a class="anchor" id="_todo000036"></a> </p>
+<p><a class="anchor" id="_todo000035"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9">mdtModbusTcpPortManager::fromThreadNewFrameReaden</a> () </dt>
 <dd><p class="startdd">Error on incomplete frame </p>
 <p class="enddd">check about transaction ID ? Should be a assertion ? </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000035"></a> </p>
+<p><a class="anchor" id="_todo000034"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#a208a3b2522795974836fd8aef406725a">mdtModbusTcpPortManager::sendData</a> (<a class="el" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction) </dt>
 <dd>Handle this ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000029"></a> </p>
+<p><a class="anchor" id="_todo000028"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_port_lock.html">mdtPortLock</a>  </dt>
 <dd>Implement UUCP format in LCK.. files </dd>
 </dl>
-<p><a class="anchor" id="_todo000041"></a> </p>
+<p><a class="anchor" id="_todo000040"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>  </dt>
 <dd><p class="startdd">Port manager has no raison to inherit QThread -&gt; make it inherit QObject </p>
 <p class="enddd">Document init, open, close, ...</p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000040"></a> </p>
+<p><a class="anchor" id="_todo000039"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager::fromThreadNewFrameReaden</a> () </dt>
 <dd>A méditer: </dd>
 </dl>
-<p><a class="anchor" id="_todo000043"></a> </p>
+<p><a class="anchor" id="_todo000042"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">mdtPortManager::openPort</a> () </dt>
 <dd><p class="startdd">Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </p>
 <p class="enddd">Handle and/or display error &lt;- Note: no graphical dialog here ! Or.. yes ? </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000045"></a> </p>
+<p><a class="anchor" id="_todo000044"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a>  </dt>
 <dd>suspendTransmission() call is no longer in getNewFrameRead(), must be handled in run() now. </dd>
 </dl>
-<p><a class="anchor" id="_todo000046"></a> </p>
+<p><a class="anchor" id="_todo000045"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_status_widget.html#a8fce28ddb290512f5681cf800ac17b81">mdtPortStatusWidget::showMessage</a> (const QString &amp;message, const QString &amp;details, int timeout=0) </dt>
 <dd>Implement details ! </dd>
 </dl>
-<p><a class="anchor" id="_todo000049"></a> </p>
+<p><a class="anchor" id="_todo000048"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">mdtPortThread::errorOccured</a> (int error) </dt>
 <dd>Adapt threads + port managers</dd>
 </dl>
-<p><a class="anchor" id="_todo000047"></a> </p>
+<p><a class="anchor" id="_todo000046"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_thread.html#abee1d2f9b67ca37cfd13e108ca978b36">mdtPortThread::reconnect</a> (bool notify=true) </dt>
 <dd><p class="startdd">emit connected() </p>
 <p class="enddd">notify ConnectionFailed </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000050"></a> </p>
+<p><a class="anchor" id="_todo000049"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_thread_helper.html#aed853f4cedc143c62e7dad5e38ff4b8c">mdtPortThreadHelper::getNewFrameRead</a> () </dt>
 <dd>Currently implemented in polling, should be done with a wait condition.</dd>
 </dl>
-<p><a class="anchor" id="_todo000051"></a> </p>
+<p><a class="anchor" id="_todo000050"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_thread_helper_socket.html#aa77afb8d26e4863bd437e0d59efae7a7">mdtPortThreadHelperSocket::mdtPortThreadHelperSocket</a> (QObject *parent=0) </dt>
 <dd>Implement socket options (think also about <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>) </dd>
 </dl>
-<p><a class="anchor" id="_todo000084"></a> </p>
+<p><a class="anchor" id="_todo000083"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_sql_database_manager.html#a336b722f66e13c5c9b09575642f7b273">mdtSqlDatabaseManager::openDatabaseSqlite</a> (const QFileInfo &amp;fileInfo, const QString &amp;connectionName=QString()) </dt>
 <dd>Close here ?? </dd>
@@ -302,47 +312,47 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_sql_dialog.html#ada1726d5861cb071fab7a1c31bc52abb">mdtSqlDialog::reject</a> () </dt>
 <dd>Fix this ! </dd>
 </dl>
-<p><a class="anchor" id="_todo000085"></a> </p>
+<p><a class="anchor" id="_todo000084"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_sql_dialog_old.html#a658d4a0a9bc97cb8a354a5b2157ab1a0">mdtSqlDialogOld::setCurrentRow</a> (const QList&lt; QPair&lt; QString, QVariant &gt; &gt; &amp;matchList) </dt>
 <dd>Implement in <a class="el" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI.">mdtAbstractSqlWidget</a> and here </dd>
 </dl>
-<p><a class="anchor" id="_todo000088"></a> </p>
+<p><a class="anchor" id="_todo000087"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_sql_field_handler.html#ad482be9d476c3310373078a6cd949714">mdtSqlFieldHandler::clearWidgetData</a> () </dt>
 <dd>Below becomes obselète </dd>
 </dl>
-<p><a class="anchor" id="_todo000087"></a> </p>
+<p><a class="anchor" id="_todo000086"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_sql_field_handler.html#a91ab8160d5015b6030e7169ab7108d33">mdtSqlFieldHandler::dataWidget</a> () </dt>
 <dd>Below becomes obselète </dd>
 </dl>
-<p><a class="anchor" id="_todo000086"></a> </p>
+<p><a class="anchor" id="_todo000085"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html">mdtSqlFieldHandlerAbstractDataWidget</a>  </dt>
 <dd>Implement other data editors (now only QLineEdit is implemented) </dd>
 </dl>
-<p><a class="anchor" id="_todo000089"></a> </p>
+<p><a class="anchor" id="_todo000088"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_sql_form_dialog.html">mdtSqlFormDialog</a>  </dt>
 <dd>Obselete this class </dd>
 </dl>
-<p><a class="anchor" id="_todo000090"></a> </p>
+<p><a class="anchor" id="_todo000089"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_sql_form_widget.html#ace4f7fad749a4efe1233b61d071b3926">mdtSqlFormWidget::mapFormWidgets</a> (const QString &amp;firstWidgetInTabOrder=QString()) </dt>
 <dd>Check redoundances with onCurrentIndexChanged() </dd>
 </dl>
-<p><a class="anchor" id="_todo000091"></a> </p>
+<p><a class="anchor" id="_todo000090"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_sql_form_window.html">mdtSqlFormWindow</a>  </dt>
 <dd>Obselete this class </dd>
 </dl>
-<p><a class="anchor" id="_todo000094"></a> </p>
+<p><a class="anchor" id="_todo000093"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_sql_table_model.html">mdtSqlTableModel</a>  </dt>
 <dd>Check if not obselete ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000093"></a> </p>
+<p><a class="anchor" id="_todo000092"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_sql_table_model.html#ad423c1b0c74ecbbb575637b028c2574b">mdtSqlTableModel::mdtSqlTableModel</a> (QObject *parent=0, QSqlDatabase db=QSqlDatabase()) </dt>
 <dd>Check if not obselete ? </dd>
@@ -352,39 +362,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_sql_window.html#a961d587d63b0997a10db6728773a108f">mdtSqlWindow::disableNavigation</a> () </dt>
 <dd>Possible ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000095"></a> </p>
+<p><a class="anchor" id="_todo000094"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_sql_window_old.html#a5c1dd39dcead4e1f44e7c59c567caaeb">mdtSqlWindowOld::disableNavigation</a> () </dt>
 <dd>Possible ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000054"></a> </p>
+<p><a class="anchor" id="_todo000053"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866">mdtUsbDeviceDescriptor::productName</a> () const  </dt>
 <dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd>
 </dl>
-<p><a class="anchor" id="_todo000053"></a> </p>
+<p><a class="anchor" id="_todo000052"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b">mdtUsbDeviceDescriptor::vendorName</a> () const  </dt>
 <dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd>
 </dl>
-<p><a class="anchor" id="_todo000058"></a> </p>
+<p><a class="anchor" id="_todo000057"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usb_port_manager.html#a34bf0ac118e586bf2547a98964a2230c">mdtUsbPortManager::waitReadenControlResponse</a> () </dt>
 <dd>Adapt using internal timeouts + errors system </dd>
 </dl>
-<p><a class="anchor" id="_todo000060"></a> </p>
+<p><a class="anchor" id="_todo000059"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">mdtUsbtmcPortManager::fromThreadNewFrameReaden</a> () </dt>
 <dd><p class="startdd">On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. &lt;- Should be done in thread.. </p>
 <p class="enddd">Check ID coherence ? Should be a assertion ? </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000062"></a> </p>
+<p><a class="anchor" id="_todo000061"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#ab1604a1c8f2e9192714d039dbf9a5158">mdtUsbtmcPortManager::sendReadRequest</a> (bool enqueueResponse) </dt>
 <dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd>
 </dl>
-<p><a class="anchor" id="_todo000059"></a> </p>
+<p><a class="anchor" id="_todo000058"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#a7bcc280bd4a26ed523832550b1e61553">mdtUsbtmcPortManager::sendReadStatusByteRequest</a> () </dt>
 <dd>finish ! </dd>
@@ -404,7 +414,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:24 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

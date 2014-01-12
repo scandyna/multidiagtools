@@ -22,8 +22,7 @@ Inheritance diagram for mdtDeviceU3606A:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceU3606A:
-\nopagebreak
+Collaboration diagram for mdtDeviceU3606A:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -51,7 +50,9 @@ void \hyperlink{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{onSta
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
 \begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004}{mdtFrameCodecScpiU3606A::measure\_\-type\_\-t} \hyperlink{classmdt_device_u3606_a_a8732ec3f4a04a191585191e1ba4f190d}{getMeasureConfiguration} ()
-\begin{DoxyCompactList}\small\item\em Get the measure configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get the measure configuration. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdtValue} \hyperlink{classmdt_device_u3606_a_ae75a1a896f905487d080761a2b8cf5a5}{getMeasureValue} ()
+\begin{DoxyCompactList}\small\item\em Get measure value. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -69,7 +70,7 @@ Analog output&0&SOURCE&Represent the source part \\\cline{1-4}
 \end{TabularC}
 
 
-Definition at line 41 of file mdtDeviceU3606A.h.
+Definition at line 42 of file mdtDeviceU3606A.h.
 
 
 
@@ -123,7 +124,7 @@ Reimplemented from \hyperlink{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348
 
 
 
-Definition at line 71 of file mdtDeviceU3606A.cpp.
+Definition at line 68 of file mdtDeviceU3606A.cpp.
 
 \hypertarget{classmdt_device_u3606_a_a8732ec3f4a04a191585191e1ba4f190d}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!getMeasureConfiguration@{getMeasureConfiguration}}
@@ -144,7 +145,24 @@ Internal analog measure input is also updated with device's range and unit .
 
 By error, unknown measure type is returned . 
 
-Definition at line 83 of file mdtDeviceU3606A.cpp.
+Definition at line 80 of file mdtDeviceU3606A.cpp.
+
+\hypertarget{classmdt_device_u3606_a_ae75a1a896f905487d080761a2b8cf5a5}{
+\index{mdtDeviceU3606A@{mdtDeviceU3606A}!getMeasureValue@{getMeasureValue}}
+\index{getMeasureValue@{getMeasureValue}!mdtDeviceU3606A@{mdtDeviceU3606A}}
+\subsubsection[{getMeasureValue}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtValue} mdtDeviceU3606A::getMeasureValue (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_u3606_a_ae75a1a896f905487d080761a2b8cf5a5}
+
+
+Get measure value. 
+
+This is similar to call getAnalogInputValue(\char`\"{}MEASURE\char`\"{}, true, true) . 
+
+Definition at line 111 of file mdtDeviceU3606A.cpp.
 
 
 

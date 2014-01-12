@@ -22,8 +22,7 @@ Inheritance diagram for mdtFrameCodecScpiU3606A:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtFrameCodecScpiU3606A:
-\nopagebreak
+Collaboration diagram for mdtFrameCodecScpiU3606A:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -55,7 +54,10 @@ enum \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-bool \hyperlink{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{decodeConfigure} (const QByteArray \&data)
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{
+bool \hyperlink{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{decodeConfigure} (const QByteArray \&data)}
+\label{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}
+
 \begin{DoxyCompactList}\small\item\em Decode CONFigure? reply. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_frame_codec_scpi_u3606_a_a590c72641f56e0f0db6547244b3643ef}{
 \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004}{measure\_\-type\_\-t} \hyperlink{classmdt_frame_codec_scpi_u3606_a_a590c72641f56e0f0db6547244b3643ef}{measureType} () const }
@@ -157,30 +159,6 @@ MT\_\-DCYCLE}
 
 
 Definition at line 34 of file mdtFrameCodecScpiU3606A.h.
-
-
-
-\subsection{Member Function Documentation}
-\hypertarget{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{
-\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!decodeConfigure@{decodeConfigure}}
-\index{decodeConfigure@{decodeConfigure}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}
-\subsubsection[{decodeConfigure}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpiU3606A::decodeConfigure (
-\begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}
-
-
-Decode CONFigure? reply. 
-
-
-
-if(pvValues.size() == 3)\{ value = pvValues.at(1); qDebug() $<$$<$ \char`\"{}mdtFrameCodecScpiU3606A::decodeConfigure() -\/ value: \char`\"{} $<$$<$ value; if(value.convert(QVariant::Double))\{ pvMeasureRange = checkFloatingValueValidity(value.toDouble()); \} value = pvValues.at(2); if(value.convert(QVariant::Double))\{ pvResolution = checkFloatingValueValidity(value.toDouble()); \} \}
-
-
-
-Definition at line 32 of file mdtFrameCodecScpiU3606A.cpp.
 
 
 

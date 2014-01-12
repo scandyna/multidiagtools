@@ -13,8 +13,7 @@ Inheritance diagram for mdtDeviceModbusWago:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceModbusWago:
-\nopagebreak
+Collaboration diagram for mdtDeviceModbusWago:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -25,13 +24,22 @@ Collaboration diagram for mdtDeviceModbusWago:
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classmdt_device_modbus_wago_a31abb03678a8afe2e6bf7c03e5e92726}{
-{\bfseries mdtDeviceModbusWago} (QObject $\ast$parent=0)}
+\hyperlink{classmdt_device_modbus_wago_a31abb03678a8afe2e6bf7c03e5e92726}{mdtDeviceModbusWago} (QObject $\ast$parent=0)}
 \label{classmdt_device_modbus_wago_a31abb03678a8afe2e6bf7c03e5e92726}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_modbus_wago_a8a13bfe3028d8c286d4233ea0ce0b2a8}{
+\hyperlink{classmdt_device_modbus_wago_a8a13bfe3028d8c286d4233ea0ce0b2a8}{$\sim$mdtDeviceModbusWago} ()}
+\label{classmdt_device_modbus_wago_a8a13bfe3028d8c286d4233ea0ce0b2a8}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_modbus_wago_ac15c95cee8dec98609278d0e0ab2b3ce}{connectToDevice} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&portInfo)
+\begin{DoxyCompactList}\small\item\em Connect to physical device. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
 \begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_modbus_wago_a12ad1f1ef34b16be5903d1d6232a7c6d}{connectToDevice} (const QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \&scanResult, int hardwareNodeId, int bitsCount, int startFrom=0)
+\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_modbus_wago_aeebc68749c2e22beacd18d85cc0b313a}{connectToDevice} (const QList$<$ int $>$ \&existingHwNodeIdList)
 \begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_modbus_wago_a6f01ba89d90ddfbcaa0cbda1885d22f1}{
 bool \hyperlink{classmdt_device_modbus_wago_a6f01ba89d90ddfbcaa0cbda1885d22f1}{isWago750} ()}
@@ -46,7 +54,7 @@ int \hyperlink{classmdt_device_modbus_wago_a6711c4e486c3b103b187102685e091cc}{di
 \begin{DoxyCompactList}\small\item\em Get number of digital outputs. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_device_modbus_wago_ad51fd45858e62c597ba8fc2bf3e877bd}{digitalInputsCount} ()
 \begin{DoxyCompactList}\small\item\em Get number of digital inputs. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_device_modbus_wago_af26af790e502e5b85498540dd215cff7}{detectIos} (\hyperlink{classmdt_device_ios}{mdtDeviceIos} $\ast$ios, const QMap$<$ int, \hyperlink{classmdt_device_modbus_wago_module}{mdtDeviceModbusWagoModule} $\ast$ $>$ specialModules=QMap$<$ int, \hyperlink{classmdt_device_modbus_wago_module}{mdtDeviceModbusWagoModule} $\ast$ $>$())
+bool \hyperlink{classmdt_device_modbus_wago_aae46b00317190b70a59080e9b2917ed6}{detectIos} (const QMap$<$ int, \hyperlink{classmdt_device_modbus_wago_module}{mdtDeviceModbusWagoModule} $\ast$ $>$ specialModules=QMap$<$ int, \hyperlink{classmdt_device_modbus_wago_module}{mdtDeviceModbusWagoModule} $\ast$ $>$())
 \begin{DoxyCompactList}\small\item\em Query device about filed bus + I/Os setup. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -78,7 +86,7 @@ Number of analog inputs, or $<$ 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 172 of file mdtDeviceModbusWago.cpp.
+Definition at line 116 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_ad812b7ee3a2f2677cddde205da5ec787}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogOutputsCount@{analogOutputsCount}}
@@ -100,7 +108,83 @@ Number of analog outputs, or $<$ 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 161 of file mdtDeviceModbusWago.cpp.
+Definition at line 105 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!connectToDevice@{connectToDevice}}
+\index{connectToDevice@{connectToDevice}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceModbusWago::connectToDevice (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtDeviceInfo} \&}]{devInfo}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}
+
+
+Search and connect to physical device. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_modbus_a093c6407ee69c4c7696a0c71d0acd88d}{mdtDeviceModbus::connectToDevice(const mdtDeviceInfo\&)} . 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{classmdt_device_modbus_a093c6407ee69c4c7696a0c71d0acd88d}{mdtDeviceModbus}.
+
+
+
+Definition at line 69 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_aeebc68749c2e22beacd18d85cc0b313a}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!connectToDevice@{connectToDevice}}
+\index{connectToDevice@{connectToDevice}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceModbusWago::connectToDevice (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ int $>$ \&}]{existingHwNodeIdList}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_modbus_wago_aeebc68749c2e22beacd18d85cc0b313a}
+
+
+Search and connect to physical device. 
+
+See \hyperlink{classmdt_device_modbus_a08100215b37c0922ed177d1f99d07e97}{mdtDeviceModbus::connectToDevice(const QList$<$int$>$\&)} . 
+
+Reimplemented from \hyperlink{classmdt_device_modbus_a08100215b37c0922ed177d1f99d07e97}{mdtDeviceModbus}.
+
+
+
+Definition at line 79 of file mdtDeviceModbusWago.cpp.
+
+\hypertarget{classmdt_device_modbus_wago_ac15c95cee8dec98609278d0e0ab2b3ce}{
+\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!connectToDevice@{connectToDevice}}
+\index{connectToDevice@{connectToDevice}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
+\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceModbusWago::connectToDevice (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtPortInfo} \&}]{portInfo}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_modbus_wago_ac15c95cee8dec98609278d0e0ab2b3ce}
+
+
+Connect to physical device. 
+
+This method can be reimplemented in subclass if specific tasks must be done during connection .
+
+
+\begin{DoxyParams}{Parameters}
+{\em portInfo} & \hyperlink{classmdt_port_info}{mdtPortInfo} object . The portName attribute of portInfo must contain host:port format (or ip:port) . \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} (NoError on success) . 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classmdt_device_modbus_a3ca2a84163fed1380cbc8859a6b70db0}{mdtDeviceModbus}.
+
+
+
+Definition at line 49 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_a12ad1f1ef34b16be5903d1d6232a7c6d}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!connectToDevice@{connectToDevice}}
@@ -118,73 +202,31 @@ Definition at line 161 of file mdtDeviceModbusWago.cpp.
 
 Search and connect to physical device. 
 
-Work as \hyperlink{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{mdtDeviceModbus::connectToDevice()} , but checks that device is a Wago 750 fieldbus coupler. 
-
-Q\_\-ASSERT(!pvTcpPortManager-\/$>$isRunning()); 
-
-
+Work as \hyperlink{classmdt_device_modbus_abfcab17fbf05aab7843ae689316dd01f}{mdtDeviceModbus::connectToDevice()} , but checks that device is a Wago 750 fieldbus coupler. 
 
 Reimplemented from \hyperlink{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{mdtDeviceModbus}.
 
 
 
-Definition at line 105 of file mdtDeviceModbusWago.cpp.
+Definition at line 74 of file mdtDeviceModbusWago.cpp.
 
-\hypertarget{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}{
-\index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!connectToDevice@{connectToDevice}}
-\index{connectToDevice@{connectToDevice}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
-\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceModbusWago::connectToDevice (
-\begin{DoxyParamCaption}
-\item[{const {\bf mdtDeviceInfo} \&}]{devInfo}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}
-
-
-Search and connect to physical device. 
-
-Will scan available ports and open the first port that has device attached maching request.
-
-Note: in current version, only Wago 750 system is supported.
-
-
-\begin{DoxyParams}{Parameters}
-{\em devInfo} & Requested device's informations (can be empty, no information is used in current version). \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} (NoError on success) 
-\end{DoxyReturn}
-
-
-Reimplemented from \hyperlink{classmdt_device_abab1b6e45af527880ce469ae318474c0}{mdtDevice}.
-
-
-
-Definition at line 48 of file mdtDeviceModbusWago.cpp.
-
-\hypertarget{classmdt_device_modbus_wago_af26af790e502e5b85498540dd215cff7}{
+\hypertarget{classmdt_device_modbus_wago_aae46b00317190b70a59080e9b2917ed6}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!detectIos@{detectIos}}
 \index{detectIos@{detectIos}!mdtDeviceModbusWago@{mdtDeviceModbusWago}}
 \subsubsection[{detectIos}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbusWago::detectIos (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtDeviceIos} $\ast$}]{ios, }
 \item[{const QMap$<$ int, {\bf mdtDeviceModbusWagoModule} $\ast$ $>$}]{specialModules = {\ttfamily QMap$<$int,~{\bf mdtDeviceModbusWagoModule}$\ast$$>$()}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_device_modbus_wago_af26af790e502e5b85498540dd215cff7}
+\label{classmdt_device_modbus_wago_aae46b00317190b70a59080e9b2917ed6}
 
 
 Query device about filed bus + I/Os setup. 
-
-The detected I/Os are added to given ios, but not added to internal ios container (use \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()} for this). Goal is to be able to detect setup without alter the internal container, so a check could be made before running really, or something else.
 
 For some special configurable modules, channels count and process image format can vary. Because some of these parameters cannot be readen from module via MODBUS, a instance of a module object with corresponding setup must be given as argument. (It's also possible to specify only the special modules. Internally, setup regarding register word returned from fieldbus coupler will be used for positions that are not present in the map).
 
 
 \begin{DoxyParams}{Parameters}
-{\em ios} & I/O container in witch the result will be stored. \\
-\hline
 {\em specialModules} & Map with module position as key and special module object as value. Note: position 0 is the fieldbus coupler, so module position starts at 1. Module objects contained in the map are not deleted in this method. \\
 \hline
 \end{DoxyParams}
@@ -197,17 +239,23 @@ True on success. A failure is mostly due to a communication error, an unsupporte
 \item[\hyperlink{bug__bug000001}{Bug}]If number of requested modules is $>$ 62, this hangs up with 750-\/352 filedbus (possibly a bug in mdtLib..) \end{Desc}
 
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000010}{Todo}]Handle adrress mapping of bus coupler (can be a problem with $>$ 256 I/O on 750-\/352 f.ex.) \end{Desc}
-
+qDebug() $<$$<$ \char`\"{}I/O config: \char`\"{} $<$$<$ \hyperlink{classmdt_device_modbus_a83cb2a28111653fbcbbe748f7a1a2e3d}{registerValues()};
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000011}{Todo}]Provisoire !!!! \end{Desc}
+\item[\hyperlink{todo__todo000012}{Todo}]Handle adrress mapping of bus coupler (can be a problem with $>$ 256 I/O on 750-\/352 f.ex.) \end{Desc}
+
+
+qDebug() $<$$<$ \char`\"{}I/O setup word: \char`\"{} $<$$<$ word $<$$<$ \char`\"{} ...\char`\"{};
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000013}{Todo}]Provisoire !!!! \end{Desc}
+
+
+qDebug() $<$$<$ \char`\"{}Module pos. \char`\"{} $<$$<$ i $<$$<$ \char`\"{}: word: \char`\"{} $<$$<$ word $<$$<$ \char`\"{}, firs AI address: \char`\"{} $<$$<$ module-\/$>$firstAiAddress() $<$$<$ \char`\"{} , IN count: \char`\"{} $<$$<$ module-\/$>$analogInputs().size(); 
 
 
 
-
-Definition at line 205 of file mdtDeviceModbusWago.cpp.
+Definition at line 149 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_ad51fd45858e62c597ba8fc2bf3e877bd}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalInputsCount@{digitalInputsCount}}
@@ -229,7 +277,7 @@ Number of digital inputs, or $<$ 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 194 of file mdtDeviceModbusWago.cpp.
+Definition at line 138 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_a6711c4e486c3b103b187102685e091cc}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalOutputsCount@{digitalOutputsCount}}
@@ -251,7 +299,7 @@ Number of digital outputs, or $<$ 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 183 of file mdtDeviceModbusWago.cpp.
+Definition at line 127 of file mdtDeviceModbusWago.cpp.
 
 
 

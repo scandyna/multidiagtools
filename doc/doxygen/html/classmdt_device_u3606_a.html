@@ -105,6 +105,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#acf3b48b13bc179ad4f94b3011b7d607a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004">mdtFrameCodecScpiU3606A::measure_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a8732ec3f4a04a191585191e1ba4f190d">getMeasureConfiguration</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the measure configuration.  <a href="#a8732ec3f4a04a191585191e1ba4f190d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_value.html">mdtValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#ae75a1a896f905487d080761a2b8cf5a5">getMeasureValue</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get measure value.  <a href="#ae75a1a896f905487d080761a2b8cf5a5"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Representation of a Agilent U3606A. </p>
@@ -122,7 +124,7 @@ Public Member Functions</h2></td></tr>
 <td>Analog output</td><td>0</td><td>SOURCE</td><td>Represent the source part </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8h_source.html#l00041">41</a> of file <a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8h_source.html#l00042">42</a> of file <a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a91201ae14df7b553a947b5857eaa1c65"></a><!-- doxytag: member="mdtDeviceU3606A::mdtDeviceU3606A" ref="a91201ae14df7b553a947b5857eaa1c65" args="(QObject *parent=0)" -->
 <div class="memitem">
@@ -174,7 +176,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">mdtDeviceScpi</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00071">71</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
 </div>
 </div>
@@ -197,7 +199,28 @@ Public Member Functions</h2></td></tr>
 <p>Internal analog measure input is also updated with device's range and unit .</p>
 <p>By error, unknown measure type is returned . </p>
 
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00083">83</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00080">80</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae75a1a896f905487d080761a2b8cf5a5"></a><!-- doxytag: member="mdtDeviceU3606A::getMeasureValue" ref="ae75a1a896f905487d080761a2b8cf5a5" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_value.html">mdtValue</a> mdtDeviceU3606A::getMeasureValue </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get measure value. </p>
+<p>This is similar to call getAnalogInputValue("MEASURE", true, true) . </p>
+
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
 </div>
 </div>
@@ -220,7 +243,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 3 2014 21:55:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 12 2014 12:42:25 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
