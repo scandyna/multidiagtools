@@ -54,9 +54,6 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 
-/// \todo Provisoire !
-#include "mdtDeviceIosWidget.h"
-
 using namespace mdtTtCableCheckerPrivate;
 
 struct mdtTtCableCheckerPrivate::deviceStatusWidget
@@ -78,6 +75,8 @@ mdtTtCableChecker::mdtTtCableChecker(QWidget *parent, QSqlDatabase db)
 mdtTtCableChecker::~mdtTtCableChecker()
 {
   delete pvTest;
+  removeMultimeter();
+  removeIoNodes();
 }
 
 bool mdtTtCableChecker::setupTables()
@@ -190,6 +189,7 @@ void mdtTtCableChecker::runTest()
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
     pvLastError.commit();
     displayLastError();
+    disconnectFromInstruments();
     return;
   }
   // Run items
@@ -200,6 +200,7 @@ void mdtTtCableChecker::runTest()
     qDebug() << "Setup coupling nodes ...";
     if(!setupNodes(testItemId)){
       displayLastError();
+      disconnectFromInstruments();
       return;
     }
     // Measure value
@@ -210,9 +211,12 @@ void mdtTtCableChecker::runTest()
     if(!pvTest->setMeasuredValue(testItemId, measuredValue)){
       pvLastError = pvTest->lastError();
       displayLastError();
+      disconnectFromInstruments();
       return;
     }
   }
+  // Disconnect from instruments
+  disconnectFromInstruments();
   // Save results to database
   if(!pvTest->submitTestItemSqlModelData()){
     pvLastError = pvTest->lastError();
@@ -364,12 +368,22 @@ void mdtTtCableChecker::createMultimeter()
   addDeviceStatusWidget(pvMultimeter, "U3606A");
 }
 
+void mdtTtCableChecker::removeMultimeter()
+{
+  if(pvMultimeter != 0){
+    pvMultimeter->disconnectFromDevice();
+    removeDeviceStatusWidget(pvMultimeter);
+    delete pvMultimeter;
+    pvMultimeter = 0;
+  }
+}
+
 void mdtTtCableChecker::createIoNodes()
 {
   QList<QVariant> hwNodeIdList;
   QVariant testId;
   mdtDeviceModbusWago *device;
-  mdtDeviceIos *nodeIos;
+  ///mdtDeviceIos *nodeIos;
   QString name;
   int i;
 
@@ -382,14 +396,29 @@ void mdtTtCableChecker::createIoNodes()
   // Create nodes
   for(i = 0; i < hwNodeIdList.size(); ++i){
     device = new mdtDeviceModbusWago;
-    nodeIos = new mdtDeviceIos;
+    ///nodeIos = new mdtDeviceIos(this);
     name = "I/O node ID " + hwNodeIdList.at(i).toString();
     device->setName(name);
     device->setHardwareNodeId(hwNodeIdList.at(i).toInt(), 8, 0);
-    device->setIos(nodeIos);
+    ///device->setIos(nodeIos); \todo Corriger !!
     pvModbusIoNodes.append(device);
     addDeviceStatusWidget(device, name);
   }
+}
+
+void mdtTtCableChecker::removeIoNodes()
+{
+  mdtDeviceModbusWago *device;
+  int i;
+
+  for(i = 0; i < pvModbusIoNodes.size(); ++i){
+    device = pvModbusIoNodes.at(i);
+    Q_ASSERT(device != 0);
+    device->disconnectFromDevice();
+    removeDeviceStatusWidget(device);
+    delete device;
+  }
+  pvModbusIoNodes.clear();
 }
 
 bool mdtTtCableChecker::connectToInstruments()
@@ -400,7 +429,6 @@ bool mdtTtCableChecker::connectToInstruments()
   QList<int> hwNodeIdList;
   QVariant testId;
   mdtDeviceModbusWago *ioNode;
-  
   int i;
 
   // Get test ID and HW node ID list
@@ -428,23 +456,38 @@ bool mdtTtCableChecker::connectToInstruments()
       pvLastError.setError(tr("Cannot connect to ") + ioNode->name(), mdtError::Error);
       MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
       pvLastError.commit();
+      disconnectFromInstruments();
       return false;
     }
     // Setup I/Os
-    if(!ioNode->detectIos(ioNode->ios())){
+    if(!ioNode->detectIos()){
       pvLastError.setError(tr("Cannot detect I/Os in ") + ioNode->name(), mdtError::Error);
       MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
       pvLastError.commit();
+      disconnectFromInstruments();
       return false;
     }
-    ioNode->setIos(ioNode->ios(), true);
-    /// \todo Provisoire !!
-    mdtDeviceIosWidget *w = new mdtDeviceIosWidget;
-    w->setDeviceIos(ioNode->ios());
-    w->show();
+    ///ioNode->setIos(ioNode->ios(), true); \todo Corriger
   }
 
   return true;
+}
+
+void mdtTtCableChecker::disconnectFromInstruments()
+{
+  Q_ASSERT(pvMultimeter != 0);
+
+  mdtDeviceModbusWago *ioNode;
+  int i;
+
+  // Disconnect from multimeter
+  pvMultimeter->disconnectFromDevice();
+  // Disconnect from nodes
+  for(i = 0; i < pvModbusIoNodes.size(); ++i){
+    ioNode = pvModbusIoNodes.at(i);
+    Q_ASSERT(ioNode != 0);
+    ioNode->disconnectFromDevice();
+  }
 }
 
 bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
@@ -452,7 +495,7 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
   ///QList<mdtTtTestNodeUnitSetupData> setupDataList;
   QList<QSqlRecord> setupDataList;
   ///mdtTtTestNodeUnitSetupData setupData;
-  mdtDeviceModbusWago *ioNode;
+  mdtDeviceModbusWago *ioNode = 0;
   int i, k;
 
   for(i = 0; i < pvModbusIoNodes.size(); ++i){
@@ -473,7 +516,7 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
       ///setupData = setupDataList.at(k);
       /// \todo Check data validity !
       if(rec.value("NodeId") == ioNode->hardwareNodeId()){
-        if(ioNode->setDigitalOutputValueAt(rec.value("IoPosition").toInt(), false, false, false) < 0){
+        if(ioNode->setDigitalOutputValueAt(rec.value("IoPosition").toInt(), rec.value("State").toBool(), false, false) < 0){
           pvLastError.setError(tr("Cannot set digital output ") + rec.value("SchemaPosition").toString() + tr(" for ") + ioNode->name(), mdtError::Error);
           MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
           pvLastError.commit();
@@ -498,7 +541,10 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
       pvLastError.commit();
       return false;
     }
-    ioNode->wait(500);
+  }
+  // We wait some time to be shure that relays are set
+  if(ioNode != 0){
+    ioNode->wait(50);
   }
 
   return true;

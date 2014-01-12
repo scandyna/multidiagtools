@@ -31,6 +31,7 @@
 
 class mdtFrameCodecModbus;
 class mdtModbusTcpPortManager;
+class mdtDeviceIosSegment;
 
 /*! \brief Represent a MODBUS device
  *
@@ -268,7 +269,7 @@ class mdtDeviceModbus : public mdtDevice
    * \pre I/O's must be set with setIos().
    * \pre transaction must be a valid pointer.
    */
-  int writeAnalogOutputs(mdtPortTransaction *transaction);
+  int writeAnalogOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment);
 
   /*! \brief Read one digital input on physical device
    *
@@ -353,7 +354,7 @@ class mdtDeviceModbus : public mdtDevice
    * \pre I/O's must be set with setIos().
    * \pre transaction must be a valid pointer.
    */
-  int writeDigitalOutputs(mdtPortTransaction *transaction);
+  int writeDigitalOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment);
 
   // Sequence of periodic queries
   bool queriesSequence();

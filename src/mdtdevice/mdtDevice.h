@@ -33,8 +33,10 @@
 #include <QByteArray>
 #include <QString>
 #include <QStringList>
+#include <QList>
 
 class QTimer;
+class mdtDeviceIosSegment;
 
 /*! \brief Base class for a device connected to a port
  *
@@ -86,6 +88,22 @@ class QTimer;
  * A device can have several states (ready, busy, disconnected, ...). To help the application programmer
  *  to keep consistency, this states are updated in this class using mdtPortManager 's state machine.
  *  This state machine is based on QStateMachine.
+ *
+ * Notes about I/O container:
+ *  In first version of mdtDevice, I/O container (mdtDeviceIos object) was handled by caller.
+ *  Experience showed that this was a bad solution.
+ *  Now, the container is created, and destroyed, bay mdtDevice itself.
+ *  To deal with I/O container, some methods are available:
+ *  - addInput(mdtAnalogIo *) : add a analog input.
+ *  - addInputs(QList<mdtAnalogIo*> &) : add a list of analog inputs.
+ *  - addOutput(mdtAnalogIo *) : add a analog output.
+ *  - addOutputs(QList<mdtAnalogIo*> &) : add a list of analog outputs.
+ *  - addInput(mdtDigitalIo *) : add a digital input.
+ *  - addInputs(QList<mdtDigitalIo*> &) : add a list of digital inputs.
+ *  - addOutput(mdtDigitalIo *) : add a digital output.
+ *  - addOutputs(QList<mdtDigitalIo*> &) : add a list of digital outputs.
+ *  - ios() : access I/O container.
+ *  - deleteIos() : delete all I/O in container.
  */
 class mdtDevice : public QObject
 {
@@ -99,8 +117,8 @@ class mdtDevice : public QObject
 
   /*! \brief Destructor
    *
-   * If queries sequence is running,
-   *  it will be stopped (see stop() ).
+   * Will disconnect from device
+   *  and delete I/O container.
    */
   virtual ~mdtDevice();
 
@@ -125,6 +143,18 @@ class mdtDevice : public QObject
    */
   virtual mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
 
+  /*! \brief Disconnect from device
+   *
+   * Will stop periodic querying ( see stop() ),
+   *  and stop internal port manager (if set).
+   *
+   * If specific work must be done,
+   *  subclass can re-implement this method.
+   *
+   * Note: in the implementation, ios are keeped as they are.
+   */
+  virtual void disconnectFromDevice();
+
   /*! \brief Set the I/O's container
    *
    * \param ios A pointer to a mdtDeviceIos object
@@ -135,16 +165,54 @@ class mdtDevice : public QObject
    *
    * \pre ios must be a valid pointer
    */
-  void setIos(mdtDeviceIos *ios, bool autoOutputUpdate = false);
+  ///void setIos(mdtDeviceIos *ios, bool autoOutputUpdate = false);
+
+  /*! \brief Add a analog input
+   */
+  void addInput(mdtAnalogIo *analogInput);
+
+  /*! \brief Add a list of analog inputs
+   */
+  void addInputs(const QList<mdtAnalogIo*> & analogInputs);
+
+  /*! \brief Add a analog output
+   */
+  void addOutput(mdtAnalogIo *analogOutput);
+
+  /*! \brief Add a list of analog outputs
+   */
+  void addOutputs(const QList<mdtAnalogIo*> & analogOutputs);
+
+  /*! \brief Add a digital input
+   */
+  void addInput(mdtDigitalIo *digitalInput);
+
+  /*! \brief Add a list of digital inputs
+   */
+  void addInputs(const QList<mdtDigitalIo*> & digitalInputs);
+
+  /*! \brief Add a digital output
+   */
+  void addOutput(mdtDigitalIo *digitalOutput);
+
+  /*! \brief Add a list of digital outputs
+   */
+  void addOutputs(const QList<mdtDigitalIo*> & digitalOutputs);
+
+  /*! \brief Delete all I/O in container
+   *
+   * All I/O's will be deleted,
+   *  but I/O container itself will remain valid.
+   */
+  void deleteIos();
 
   /*! \brief Get the I/Os container
    *
-   * Will return a null pointer if I/Os was not set with setIos() .
+   * Note: once this mdtDevice object was destroyed,
+   *  the I/O container is deleted.
    *
-   * Depending on subclass implementation, the I/Os container
-   *  cann be set automatically, and can be deleted whenn device is destroyed.
-   *
-   * In this base class, I/Os container is not deleted .
+   * \post During the lifetime of this mdtDevice object,
+   *        a valid pointer will be returned.
    */
   mdtDeviceIos *ios();
 
@@ -717,11 +785,12 @@ class mdtDevice : public QObject
    *                      - ioCount : number of I/Os to set
    *                      - address : first I/O address (for write access) to considere
    *                      - QueryReplyMode flag
+   * \param segment Contains contiguous outputs to write.
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
    * \pre transaction must be a valid pointer.
    */
-  virtual int writeAnalogOutputs(mdtPortTransaction *transaction);
+  virtual int writeAnalogOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment);
 
   /*! \brief Read one digital input on physical device
    *
@@ -814,11 +883,12 @@ class mdtDevice : public QObject
    *                      - ioCount : number of I/Os to set
    *                      - address : first I/O address (for write access) to considere
    *                      - QueryReplyMode flag
+   * \param segment Contains contiguous outputs to write.
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
    * \pre transaction must be a valid pointer.
    */
-  virtual int writeDigitalOutputs(mdtPortTransaction *transaction);
+  virtual int writeDigitalOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment);
 
   /*! \brief Sequence of queries to send periodically
    *

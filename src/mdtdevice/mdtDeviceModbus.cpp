@@ -21,6 +21,7 @@
 #include "mdtDeviceModbus.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtFrameCodecModbus.h"
+#include "mdtDeviceIosSegment.h"
 #include "mdtError.h"
 #include <QByteArray>
 #include <QString>
@@ -225,6 +226,10 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<int> & exi
   if(!_existingHwNodeIdList.contains(pvHardwareNodeId.toInt())){
     _existingHwNodeIdList.append(pvHardwareNodeId.toInt());
   }
+  // Check that port manager is not running
+  if(!pvTcpPortManager->isClosed()){
+    pvTcpPortManager->stop();
+  }
   // Scan looking in chache file first
   portInfoList = pvTcpPortManager->scan(pvTcpPortManager->readScanResult(), 100, _existingHwNodeIdList, pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
   // Try to connect
@@ -411,7 +416,6 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
       break;
     case 0x0F:  // Write multiple coils
       // Check validitiy and update
-      qDebug() << "mdtDeviceModbus::decodeReadenFrame() - values: " << pvCodec->values();
       if(pvCodec->values().size() == 2){
         // Start address
         var = pvCodec->values().at(0);
@@ -552,15 +556,17 @@ int mdtDeviceModbus::writeAnalogOutput(int value, mdtPortTransaction *transactio
   return pvTcpPortManager->sendData(transaction);
 }
 
-int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction)
+int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment)
 {
   Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
+  Q_ASSERT(segment != 0);
 
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  pdu = pvCodec->encodeWriteMultipleRegisters(transaction->address(), ios()->analogOutputsValuesIntByAddressWrite());
+  ///pdu = pvCodec->encodeWriteMultipleRegisters(transaction->address(), ios()->analogOutputsValuesIntByAddressWrite());
+  pdu = pvCodec->encodeWriteMultipleRegisters(segment->startAddressWrite(), segment->valuesInt());
   if(pdu.isEmpty()){
     return -1;
   }
@@ -654,20 +660,20 @@ int mdtDeviceModbus::writeDigitalOutput(bool state, mdtPortTransaction *transact
   return pvTcpPortManager->sendData(transaction);
 }
 
-int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction)
+int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment)
 {
   Q_ASSERT(ios() != 0);
   Q_ASSERT(transaction != 0);
+  Q_ASSERT(segment != 0);
 
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  qDebug() << "mdtDeviceModbus::writeDigitalOutputs() - states: " << ios()->digitalOutputsStatesByAddressWrite();
-  pdu = pvCodec->encodeWriteMultipleCoils(transaction->address(), ios()->digitalOutputsStatesByAddressWrite());
+  ///pdu = pvCodec->encodeWriteMultipleCoils(transaction->address(), ios()->digitalOutputsStatesByAddressWrite());
+  pdu = pvCodec->encodeWriteMultipleCoils(segment->startAddressWrite(), segment->valuesBool());
   if(pdu.isEmpty()){
     return -1;
   }
-  qDebug() << "mdtDeviceModbus::writeDigitalOutputs() - PDU: " << mdtAlgorithms::byteArrayToHexString(pdu);
   // Send request
   transaction->setData(pdu);
   return pvTcpPortManager->sendData(transaction);

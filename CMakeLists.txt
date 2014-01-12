@@ -218,10 +218,10 @@ add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowid
 add_test (mdtDataTableTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatatabletest)
 
 # mdtDatabaseTestOld
-add_test (mdtDatabaseTestOld ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatabasetest)
+add_test (mdtDatabaseTestOld ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatabasetestold)
 
 # * mdtdatabase *
-add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasetestold)
+add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasetest)
 
 # mdtIoWidgetTest
 add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowidgettest)

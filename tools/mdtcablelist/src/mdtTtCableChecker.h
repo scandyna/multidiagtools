@@ -95,9 +95,17 @@ class mdtTtCableChecker : public mdtSqlForm
    */
   void createMultimeter();
 
+  /*! \brief Remove multimeter
+   */
+  void removeMultimeter();
+
   /*! \brief Create I/O nodes
    */
   void createIoNodes();
+
+  /*! \brief Remove I/O nodes
+   */
+  void removeIoNodes();
 
   /*! \brief Setup nodes
    */
@@ -106,6 +114,10 @@ class mdtTtCableChecker : public mdtSqlForm
   /*! \brief Connect to instruments
    */
   bool connectToInstruments();
+
+  /*! \brief Disconnect from instruments
+   */
+  void disconnectFromInstruments();
 
   /*! \brief Add device status widget
    */

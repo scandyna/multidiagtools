@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -43,6 +43,7 @@ mdtDeviceModbusWago::mdtDeviceModbusWago(QObject *parent)
 
 mdtDeviceModbusWago::~mdtDeviceModbusWago()
 {
+  qDeleteAll(pvModules);
 }
 
 mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtPortInfo & portInfo)
@@ -241,9 +242,10 @@ int mdtDeviceModbusWago::digitalInputsCount()
   return registerValues().at(0);
 }
 
-bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDeviceModbusWagoModule*> specialModules)
+///bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDeviceModbusWagoModule*> specialModules)
+bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> specialModules)
 {
-  Q_ASSERT(ios != 0);
+  ///Q_ASSERT(ios != 0);
 
   int analogInputsCnt;
   int analogOutputsCnt;
@@ -259,7 +261,8 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
   int doAddressRead, doAddressWrite;
 
   // Clear current I/O setup
-  ios->deleteIos();
+  ///ios->deleteIos();
+  deleteIos();
   qDeleteAll(pvModules);
   pvModules.clear();
   // Detect I/O's count
@@ -297,7 +300,7 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
     qDebug() << "Cannot get I/O config";
     return false;
   }
-  qDebug() << "I/O config: " << registerValues();
+  ///qDebug() << "I/O config: " << registerValues();
   // Setup the Fieldbus Coupler.
   if(registerValues().size() < 1){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no field bus coupler found", mdtError::Error);
@@ -333,7 +336,7 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
       // We have detected all connected I/Os
       break;
     }
-    qDebug() << "I/O setup word: " << word  << " ...";
+    ///qDebug() << "I/O setup word: " << word  << " ...";
     // Check if we have a special (manually configured) module
     module = specialModules.value(i);
     if(module != 0){
@@ -367,17 +370,24 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
       e.commit();
       qDeleteAll(pvModules);
       pvModules.clear();
-      ios->deleteIos();
+      ///ios->deleteIos();
+      deleteIos();
       return false;
     }
     Q_ASSERT(module != 0);
     Q_ASSERT(module->type() != mdtDeviceModbusWagoModule::Unknown);
-    qDebug() << "Module pos. " << i << ": word: " << word << ", firs AI address: " << module->firstAiAddress() << " , IN count: " << module->analogInputs().size();
+    ///qDebug() << "Module pos. " << i << ": word: " << word << ", firs AI address: " << module->firstAiAddress() << " , IN count: " << module->analogInputs().size();
     // Add module's I/Os to container
+    addInputs(module->analogInputs());
+    addOutputs(module->analogOutputs());
+    addInputs(module->digitalInputs());
+    addOutputs(module->digitalOutputs());
+    /**
     ios->addAnalogInputs(module->analogInputs());
     ios->addAnalogOutputs(module->analogOutputs());
     ios->addDigitalInputs(module->digitalInputs());
     ios->addDigitalOutputs(module->digitalOutputs());
+    */
     // Update current first addresses
     aiAddress = module->nextModuleFirstAiAddress();
     aoAddressRead = module->nextModuleFirstAoAddressRead();
@@ -389,44 +399,44 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios, const QMap<int, mdtDevice
     pvModules.append(module);
   }
   // Check coherence between detected setup and I/Os count
-  if(ios->analogInputsCount() != analogInputsCnt){
+  if(ios()->analogInputsCount() != analogInputsCnt){
     qDeleteAll(pvModules);
     pvModules.clear();
-    ios->deleteIos();
+    deleteIos();
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": analog inputs count not coherent", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
     e.commit();
     return false;
   }
-  if(ios->analogOutputsCount() != analogOutputsCnt){
+  if(ios()->analogOutputsCount() != analogOutputsCnt){
     qDeleteAll(pvModules);
     pvModules.clear();
-    ios->deleteIos();
+    deleteIos();
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": analog outputs count not coherent", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
     e.commit();
     return false;
   }
-  if(ios->digitalInputsCount() != digitalInputsCnt){
+  if(ios()->digitalInputsCount() != digitalInputsCnt){
     qDeleteAll(pvModules);
     pvModules.clear();
-    ios->deleteIos();
+    deleteIos();
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": digital inputs count not coherent", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
     e.commit();
     return false;
   }
-  if(ios->digitalOutputsCount() != digitalOutputsCnt){
+  if(ios()->digitalOutputsCount() != digitalOutputsCnt){
     qDeleteAll(pvModules);
     pvModules.clear();
-    ios->deleteIos();
+    deleteIos();
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": digital outputs count not coherent", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
     e.commit();
     return false;
   }
   // Set a default short label for each I/O
-  ios->setIosDefaultLabelShort();
+  ios()->setIosDefaultLabelShort();
 
   return true;
 }

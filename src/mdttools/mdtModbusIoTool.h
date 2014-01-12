@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,7 +28,7 @@
 #include <QActionGroup>
 
 class mdtDeviceModbusWago;
-class mdtDeviceIos;
+///class mdtDeviceIos;
 class mdtDeviceIosWidget;
 class mdtPortStatusWidget;
 
@@ -143,7 +143,7 @@ signals:
   bool pvReady; /// \todo Ok ???
   bool pvConnectingToNode;
   mdtDeviceModbusWago *pvDeviceModbusWago;
-  mdtDeviceIos *pvDeviceIos;
+  ///mdtDeviceIos *pvDeviceIos;
   mdtDeviceIosWidget *pvDeviceIosWidget;
   mdtPortStatusWidget *pvStatusWidget;
   QString pvStatusDeviceInformations;   // Used to display informations about device in permanent area of status widget

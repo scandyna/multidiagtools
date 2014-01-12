@@ -23,7 +23,7 @@
 #include "mdtDeviceIosSegment.h"
 #include "mdtPortManager.h"
 #include <QTimer>
-#include <QList>
+///#include <QList>
 
 #include <QDebug>
 
@@ -31,7 +31,7 @@ mdtDevice::mdtDevice(QObject *parent)
  : QObject(parent)
 {
   qDebug() << "mdtDevice::mdtDevice() ...";
-  pvIos = 0;
+  pvIos = new mdtDeviceIos;
   pvBackToReadyStateTimeout = -1;
   pvBackToReadyStateTimer = new QTimer(this);
   pvBackToReadyStateTimer->setSingleShot(true);
@@ -48,8 +48,10 @@ mdtDevice::mdtDevice(QObject *parent)
 
 mdtDevice::~mdtDevice()
 {
-  stop();
+  ///stop();
+  disconnectFromDevice();
   delete pvQueryTimer;
+  delete pvIos;
 }
 
 void mdtDevice::setName(const QString &name)
@@ -67,6 +69,17 @@ mdtAbstractPort::error_t mdtDevice::connectToDevice(const mdtDeviceInfo &devInfo
   return mdtAbstractPort::UnhandledError;
 }
 
+void mdtDevice::disconnectFromDevice()
+{
+  stop();
+  if(portManager() != 0){
+    if(!portManager()->isClosed()){
+      portManager()->stop();
+    }
+  }
+}
+
+/**
 void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
 {
   Q_ASSERT(ios != 0);
@@ -107,9 +120,107 @@ void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
     }
   }
 }
+*/
+
+void mdtDevice::addInput(mdtAnalogIo *analogInput)
+{
+  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(analogInput != 0);
+
+  pvIos->addAnalogInput(analogInput);
+}
+
+void mdtDevice::addInputs(const QList<mdtAnalogIo*> & analogInputs)
+{
+  Q_ASSERT(pvIos != 0);
+
+  pvIos->addAnalogInputs(analogInputs);
+}
+
+void mdtDevice::addOutput(mdtAnalogIo *analogOutput)
+{
+  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(analogOutput != 0);
+
+  connect(analogOutput, SIGNAL(valueChanged(mdtAnalogIo*)), this, SLOT(setAnalogOutputValue(mdtAnalogIo*)));
+  pvIos->addAnalogOutput(analogOutput);
+}
+
+void mdtDevice::addOutputs(const QList<mdtAnalogIo*> & analogOutputs)
+{
+  Q_ASSERT(pvIos != 0);
+
+  int i;
+
+  for(i = 0; i < analogOutputs.size(); ++i){
+    Q_ASSERT(analogOutputs.at(i) != 0);
+    connect(analogOutputs.at(i), SIGNAL(valueChanged(mdtAnalogIo*)), this, SLOT(setAnalogOutputValue(mdtAnalogIo*)));
+  }
+  pvIos->addAnalogOutputs(analogOutputs);
+}
+
+void mdtDevice::addInput(mdtDigitalIo *digitalInput)
+{
+  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(digitalInput != 0);
+
+  pvIos->addDigitalInput(digitalInput);
+}
+
+void mdtDevice::addInputs(const QList<mdtDigitalIo*> & digitalInputs)
+{
+  Q_ASSERT(pvIos != 0);
+
+  pvIos->addDigitalInputs(digitalInputs);
+}
+
+void mdtDevice::addOutput(mdtDigitalIo *digitalOutput)
+{
+  Q_ASSERT(pvIos != 0);
+  Q_ASSERT(digitalOutput != 0);
+
+  connect(digitalOutput, SIGNAL(valueChanged(mdtDigitalIo*)), this, SLOT(setDigitalOutputValue(mdtDigitalIo*)));
+  pvIos->addDigitalOutput(digitalOutput);
+}
+
+void mdtDevice::addOutputs(const QList<mdtDigitalIo*> & digitalOutputs)
+{
+  Q_ASSERT(pvIos != 0);
+
+  int i;
+
+  for(i = 0; i < digitalOutputs.size(); ++i){
+    Q_ASSERT(digitalOutputs.at(i) != 0);
+    connect(digitalOutputs.at(i), SIGNAL(valueChanged(mdtDigitalIo*)), this, SLOT(setDigitalOutputValue(mdtDigitalIo*)));
+  }
+  pvIos->addDigitalOutputs(digitalOutputs);
+}
+
+void mdtDevice::deleteIos()
+{
+  Q_ASSERT(pvIos != 0);
+
+  int i;
+  QList<mdtAnalogIo*> analogOutputs;
+  QList<mdtDigitalIo*> digitalOutputs;
+
+  analogOutputs = pvIos->analogOutputs();
+  for(i = 0; i < analogOutputs.size(); ++i){
+    Q_ASSERT(analogOutputs.at(i) != 0);
+    disconnect(analogOutputs.at(i), SIGNAL(valueChanged(mdtAnalogIo*)), this, SLOT(setAnalogOutputValue(mdtAnalogIo*)));
+  }
+  digitalOutputs = pvIos->digitalOutputs();
+  for(i = 0; i < digitalOutputs.size(); ++i){
+    Q_ASSERT(digitalOutputs.at(i) != 0);
+    disconnect(digitalOutputs.at(i), SIGNAL(valueChanged(mdtDigitalIo*)), this, SLOT(setDigitalOutputValue(mdtDigitalIo*)));
+  }
+  pvIos->deleteIos();
+}
 
 mdtDeviceIos *mdtDevice::ios()
 {
+  Q_ASSERT(pvIos != 0);
+
   return pvIos;
 }
 
@@ -595,7 +706,7 @@ int mdtDevice::setAnalogOutputs(bool waitOnReply)
     // Send query and wait if requested
     if(waitOnReply){
       transaction->setQueryReplyMode(true);
-      transactionId = writeAnalogOutputs(transaction);
+      transactionId = writeAnalogOutputs(transaction, segment);
       if(transactionId < 0){
         pvIos->setAnalogOutputsValue(mdtValue());
         return transactionId;
@@ -607,7 +718,7 @@ int mdtDevice::setAnalogOutputs(bool waitOnReply)
       }
     }else{
       transaction->setQueryReplyMode(false);
-      transactionId = writeAnalogOutputs(transaction);
+      transactionId = writeAnalogOutputs(transaction, segment);
       if(transactionId < 0){
         pvIos->setAnalogOutputsValue(mdtValue());
         return transactionId;
@@ -931,8 +1042,6 @@ int mdtDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue
   int transactionId;
   mdtPortTransaction *transaction;
 
-  qDebug() << "mdtDevice::setDigitalOutputValue() - I/O addressWrite: " << digitalOutput->addressWrite() << " , Read: " << digitalOutput->addressRead();
-
   digitalOutput->setValue(value, false);
   if(!sendToDevice){
     return 0;
@@ -1045,9 +1154,6 @@ int mdtDevice::setDigitalOutputs(bool waitOnReply)
   if(pvIos->digitalOutputsCount() < 1){
     return -1;
   }
-  
-  qDebug() << "mdtDevice::setDigitalOutputs() - waitOnReply: " << waitOnReply;
-  
   // Disable I/Os - Must be re-enabled by subclass once data are in
   pvIos->setDigitalOutputsEnabled(false);
   for(i = 0; i < pvIos->digitalOutputsSegments().size(); ++i){
@@ -1058,10 +1164,9 @@ int mdtDevice::setDigitalOutputs(bool waitOnReply)
     transaction->setAddress(segment->startAddressWrite());
     transaction->setIoCount(segment->ioCount());
     // Send query and wait if requested
-    qDebug() << "mdtDevice::setDigitalOutputs() - sending query, start: " << transaction->address() << ", I/O count: " << transaction->ioCount();
     if(waitOnReply){
       transaction->setQueryReplyMode(true);
-      transactionId = writeDigitalOutputs(transaction);
+      transactionId = writeDigitalOutputs(transaction, segment);
       if(transactionId < 0){
         pvIos->setDigitalOutputsValue(mdtValue());
         return transactionId;
@@ -1073,7 +1178,7 @@ int mdtDevice::setDigitalOutputs(bool waitOnReply)
       }
     }else{
       transaction->setQueryReplyMode(false);
-      transactionId = writeDigitalOutputs(transaction);
+      transactionId = writeDigitalOutputs(transaction, segment);
       if(transactionId < 0){
         pvIos->setDigitalOutputsValue(mdtValue());
         return transactionId;
@@ -1162,7 +1267,7 @@ int mdtDevice::writeAnalogOutput(int value, mdtPortTransaction *transaction)
   return -1;
 }
 
-int mdtDevice::writeAnalogOutputs(mdtPortTransaction *transaction)
+int mdtDevice::writeAnalogOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment)
 {
   return -1;
 }
@@ -1192,7 +1297,7 @@ int mdtDevice::writeDigitalOutput(bool state, mdtPortTransaction *transaction)
   return -1;
 }
 
-int mdtDevice::writeDigitalOutputs(mdtPortTransaction *transaction)
+int mdtDevice::writeDigitalOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment)
 {
   return -1;
 }

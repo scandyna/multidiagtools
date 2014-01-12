@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -112,11 +112,6 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
 
   /*! \brief Query device about filed bus + I/Os setup
    *
-   * The detected I/Os are added to given ios,
-   *  but not added to internal ios container (use setIos() for this).
-   *  Goal is to be able to detect setup without alter the internal container,
-   *  so a check could be made before running really, or something else.
-   *
    * For some special configurable modules, channels count and process image format can vary.
    *  Because some of these parameters cannot be readen from module via MODBUS,
    *  a instance of a module object with corresponding setup must be given as argument.
@@ -124,14 +119,14 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    *   setup regarding register word returned from fieldbus coupler will be used for
    *   positions that are not present in the map).
    *
-   * \param ios I/O container in witch the result will be stored.
    * \param specialModules Map with module position as key and special module object as value.
    *          Note: position 0 is the fieldbus coupler, so module position starts at 1.
    *          Module objects contained in the map are not deleted in this method.
    * \return True on success. A failure is mostly due to a communication error, an unsupported
    *          fieldbus coupler, a unsupported module or a mistmatch with a special module configuration.
    */
-  bool detectIos(mdtDeviceIos *ios, const QMap<int, mdtDeviceModbusWagoModule*> specialModules = QMap<int, mdtDeviceModbusWagoModule*>());
+  ///bool detectIos(mdtDeviceIos *ios, const QMap<int, mdtDeviceModbusWagoModule*> specialModules = QMap<int, mdtDeviceModbusWagoModule*>());
+  bool detectIos(const QMap<int, mdtDeviceModbusWagoModule*> specialModules = QMap<int, mdtDeviceModbusWagoModule*>());
 
  private:
 
