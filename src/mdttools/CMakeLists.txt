@@ -1,6 +1,6 @@
 # Project file for Multi Diag Tools
-# * Part: mduttools *
-# * Directory: mduttools *
+# * Part: mdttools *
+# * Directory: mdttools *
 
 # Project
 project (multidiagtools)
