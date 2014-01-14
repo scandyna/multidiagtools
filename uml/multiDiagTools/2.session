@@ -1,9 +1,7 @@
 window_sizes 1024 718 210 808 640 0
 diagrams
-  classdiagram_ref 941058 // Test
-    959 923 100 3 36 0
   active  classdiagram_ref 739586 // CableListAllTables
-    808 640 100 17 0 328
+    808 640 80 17 312 0
 end
 show_stereotypes
 selected classdiagram_ref 739586 // CableListAllTables

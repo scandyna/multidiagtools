@@ -747,6 +747,7 @@ void mdtClUnitEditor::editLink()
   unitId = currentUnitId();
   dialog.setStartUnit(unitId, unitWidget->currentData("SchemaPosition"), unitWidget->currentData("Cabinet"));
   dialog.setStartConnectionData(startConnectionData);
+  /// \bug This displays allways current unit, this is wrong !!
   dialog.setEndUnit(unitId, unitWidget->currentData("SchemaPosition"), unitWidget->currentData("Cabinet"));
   dialog.setEndConnectionData(endConnectionData);
   dialog.setLinkData(linkData);

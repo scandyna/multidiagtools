@@ -7,166 +7,177 @@
     <diagram title="RBDe 560 DO FAKE" displayrows="true" version="0.3" cols="17" folio="%id/%total" displaycols="true" height="660" colsize="60" order="1" rows="8" author="" filename="" date="null" rowsize="80">
         <defaultconductor num="_" type="multi"/>
         <elements>
-            <element x="600" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="180" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="0" orientation="0"/>
-                    <terminal x="0" y="16" id="1" orientation="2"/>
+                    <terminal x="0" y="-17" id="0" orientation="0"/>
+                    <terminal x="0" y="17" id="1" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="C"/>
+                    <input x="2.75" y="3" text="S15kV"/>
                 </inputs>
             </element>
-            <element x="540" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="50" y="70" type="embed://import/bornes/borne_finale.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="-6" id="2" orientation="0"/>
-                    <terminal x="0" y="16" id="3" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" userx="2.25" usery="4.25" text="B"/>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text=""/>
                 </inputs>
             </element>
-            <element x="480" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="250" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="4" orientation="0"/>
-                    <terminal x="0" y="16" id="5" orientation="2"/>
+                    <terminal x="0" y="-17" id="3" orientation="0"/>
+                    <terminal x="0" y="17" id="4" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="A"/>
+                    <input x="2.75" y="3" text="SPANTO"/>
                 </inputs>
             </element>
-            <element x="780" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="350" y="70" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
-                    <terminal x="0" y="-6" id="6" orientation="0"/>
-                    <terminal x="0" y="16" id="7" orientation="2"/>
+                    <terminal x="0" y="-6" id="5" orientation="0"/>
+                    <terminal x="0" y="6" id="6" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="F"/>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text="XWCAB"/>
                 </inputs>
             </element>
-            <element x="720" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="480" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="8" orientation="0"/>
-                    <terminal x="0" y="16" id="9" orientation="2"/>
+                    <terminal x="0" y="-17" id="7" orientation="0"/>
+                    <terminal x="0" y="17" id="8" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="E"/>
+                    <input x="2.75" y="3" text="S+"/>
                 </inputs>
             </element>
-            <element x="660" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="540" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="10" orientation="0"/>
-                    <terminal x="0" y="16" id="11" orientation="2"/>
+                    <terminal x="0" y="-17" id="9" orientation="0"/>
+                    <terminal x="0" y="17" id="10" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="D"/>
+                    <input x="2.75" y="3" text="SM"/>
                 </inputs>
             </element>
-            <element x="720" y="480" type="embed://import/bobine_relais_simple.elmt" orientation="0">
+            <element x="600" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-16" id="12" orientation="0"/>
-                    <terminal x="0" y="21" id="13" orientation="0"/>
+                    <terminal x="0" y="-17" id="11" orientation="0"/>
+                    <terminal x="0" y="17" id="12" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="23" y="1" text="KBM"/>
+                    <input x="2.75" y="3" text="S-"/>
                 </inputs>
             </element>
-            <element x="720" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="660" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="14" orientation="0"/>
-                    <terminal x="0" y="16" id="15" orientation="2"/>
+                    <terminal x="0" y="-17" id="13" orientation="0"/>
+                    <terminal x="0" y="17" id="14" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="H"/>
+                    <input x="2.75" y="3" text="SB+"/>
                 </inputs>
             </element>
-            <element x="780" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="720" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="16" orientation="0"/>
-                    <terminal x="0" y="16" id="17" orientation="2"/>
+                    <terminal x="0" y="-17" id="15" orientation="0"/>
+                    <terminal x="0" y="17" id="16" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="J"/>
+                    <input x="2.75" y="3" text="SBM"/>
                 </inputs>
             </element>
-            <element x="780" y="540" type="embed://import/bobine_relais_simple.elmt" orientation="0">
+            <element x="780" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-16" id="18" orientation="0"/>
-                    <terminal x="0" y="21" id="19" orientation="0"/>
+                    <terminal x="0" y="-17" id="17" orientation="0"/>
+                    <terminal x="0" y="17" id="18" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="23" y="1" text="KB-"/>
+                    <input x="2.75" y="3" text="SB-"/>
                 </inputs>
             </element>
-            <element x="600" y="480" type="embed://import/bobine_relais_simple.elmt" orientation="0">
+            <element x="180" y="480" type="embed://import/bobine_relais_simple.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-16" id="20" orientation="0"/>
-                    <terminal x="0" y="21" id="21" orientation="0"/>
+                    <terminal x="0" y="-16" id="19" orientation="0"/>
+                    <terminal x="0" y="21" id="20" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="23" y="1" text="K-"/>
+                    <input x="23" y="1" text="K15kV"/>
                 </inputs>
             </element>
-            <element x="600" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="50" y="150" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="21" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text=""/>
+                </inputs>
+            </element>
+            <element x="180" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
                     <terminal x="0" y="-6" id="22" orientation="0"/>
                     <terminal x="0" y="16" id="23" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="F"/>
+                    <input x="3" y="5" text="B"/>
                 </inputs>
             </element>
-            <element x="660" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="180" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
                     <terminal x="0" y="-6" id="24" orientation="0"/>
                     <terminal x="0" y="16" id="25" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="G"/>
+                    <input x="3" y="5" text="B"/>
                 </inputs>
             </element>
-            <element x="660" y="540" type="embed://import/bobine_relais_simple.elmt" orientation="0">
+            <element x="110" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-16" id="26" orientation="0"/>
-                    <terminal x="0" y="21" id="27" orientation="0"/>
+                    <terminal x="0" y="-6" id="26" orientation="0"/>
+                    <terminal x="0" y="16" id="27" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="23" y="1" text="KB+"/>
+                    <input x="3" y="5" text="A"/>
                 </inputs>
             </element>
-            <element x="540" y="540" type="embed://import/bobine_relais_simple.elmt" orientation="0">
+            <element x="150" y="600" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
-                    <terminal x="0" y="-16" id="28" orientation="0"/>
-                    <terminal x="0" y="21" id="29" orientation="0"/>
+                    <terminal x="0" y="-6" id="28" orientation="0"/>
+                    <terminal x="0" y="6" id="29" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="23" y="1" text="KM"/>
+                    <input x="5" y="8" userrotation="-90" userx="9.55" usery="11.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="36.55" usery="25.45" text="XWC0V"/>
                 </inputs>
             </element>
-            <element x="540" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="250" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
                     <terminal x="0" y="-6" id="30" orientation="0"/>
                     <terminal x="0" y="16" id="31" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="E"/>
+                    <input x="3" y="5" text="C"/>
                 </inputs>
             </element>
-            <element x="480" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="250" y="540" type="embed://import/bobine_relais_simple.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="32" orientation="0"/>
-                    <terminal x="0" y="16" id="33" orientation="2"/>
+                    <terminal x="0" y="-16" id="32" orientation="0"/>
+                    <terminal x="0" y="21" id="33" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="D"/>
+                    <input x="23" y="1" text="KPANTO"/>
                 </inputs>
             </element>
-            <element x="480" y="480" type="embed://import/bobine_relais_simple.elmt" orientation="0">
+            <element x="110" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-16" id="34" orientation="0"/>
-                    <terminal x="0" y="21" id="35" orientation="0"/>
+                    <terminal x="0" y="-6" id="34" orientation="0"/>
+                    <terminal x="0" y="16" id="35" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="23" y="1" text="K+"/>
+                    <input x="3" y="5" text="A"/>
                 </inputs>
             </element>
             <element x="250" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
@@ -178,251 +189,229 @@
                     <input x="3" y="5" text="C"/>
                 </inputs>
             </element>
-            <element x="110" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="480" y="480" type="embed://import/bobine_relais_simple.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="38" orientation="0"/>
-                    <terminal x="0" y="16" id="39" orientation="2"/>
+                    <terminal x="0" y="-16" id="38" orientation="0"/>
+                    <terminal x="0" y="21" id="39" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="A"/>
+                    <input x="23" y="1" text="K+"/>
                 </inputs>
             </element>
-            <element x="250" y="540" type="embed://import/bobine_relais_simple.elmt" orientation="0">
+            <element x="480" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-16" id="40" orientation="0"/>
-                    <terminal x="0" y="21" id="41" orientation="0"/>
+                    <terminal x="0" y="-6" id="40" orientation="0"/>
+                    <terminal x="0" y="16" id="41" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="23" y="1" text="KPANTO"/>
+                    <input x="3" y="5" text="D"/>
                 </inputs>
             </element>
-            <element x="250" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="540" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
                     <terminal x="0" y="-6" id="42" orientation="0"/>
                     <terminal x="0" y="16" id="43" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="C"/>
+                    <input x="3" y="5" text="E"/>
                 </inputs>
             </element>
-            <element x="150" y="600" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="540" y="540" type="embed://import/bobine_relais_simple.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="44" orientation="0"/>
-                    <terminal x="0" y="6" id="45" orientation="2"/>
+                    <terminal x="0" y="-16" id="44" orientation="0"/>
+                    <terminal x="0" y="21" id="45" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="9.55" usery="11.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="36.55" usery="25.45" text="XWC02V"/>
+                    <input x="23" y="1" text="KM"/>
                 </inputs>
             </element>
-            <element x="110" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="660" y="540" type="embed://import/bobine_relais_simple.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="46" orientation="0"/>
-                    <terminal x="0" y="16" id="47" orientation="2"/>
+                    <terminal x="0" y="-16" id="46" orientation="0"/>
+                    <terminal x="0" y="21" id="47" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="A"/>
+                    <input x="23" y="1" text="KB+"/>
                 </inputs>
             </element>
-            <element x="180" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="660" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
                     <terminal x="0" y="-6" id="48" orientation="0"/>
                     <terminal x="0" y="16" id="49" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="B"/>
+                    <input x="3" y="5" text="G"/>
                 </inputs>
             </element>
-            <element x="180" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
+            <element x="600" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
                     <terminal x="0" y="-6" id="50" orientation="0"/>
                     <terminal x="0" y="16" id="51" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="3" y="5" text="B"/>
+                    <input x="3" y="5" text="F"/>
                 </inputs>
             </element>
-            <element x="50" y="150" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+            <element x="600" y="480" type="embed://import/bobine_relais_simple.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="52" orientation="0"/>
+                    <terminal x="0" y="-16" id="52" orientation="0"/>
+                    <terminal x="0" y="21" id="53" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text=""/>
+                    <input x="23" y="1" text="K-"/>
                 </inputs>
             </element>
-            <element x="180" y="480" type="embed://import/bobine_relais_simple.elmt" orientation="0">
+            <element x="780" y="540" type="embed://import/bobine_relais_simple.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-16" id="53" orientation="0"/>
-                    <terminal x="0" y="21" id="54" orientation="0"/>
+                    <terminal x="0" y="-16" id="54" orientation="0"/>
+                    <terminal x="0" y="21" id="55" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="23" y="1" text="K15kV"/>
+                    <input x="23" y="1" text="KB-"/>
                 </inputs>
             </element>
-            <element x="780" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
+            <element x="780" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-17" id="55" orientation="0"/>
-                    <terminal x="0" y="17" id="56" orientation="2"/>
+                    <terminal x="0" y="-6" id="56" orientation="0"/>
+                    <terminal x="0" y="16" id="57" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="2.75" y="3" text="SB-"/>
+                    <input x="3" y="5" text="J"/>
                 </inputs>
             </element>
-            <element x="720" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
+            <element x="720" y="370" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-17" id="57" orientation="0"/>
-                    <terminal x="0" y="17" id="58" orientation="2"/>
+                    <terminal x="0" y="-6" id="58" orientation="0"/>
+                    <terminal x="0" y="16" id="59" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="2.75" y="3" text="SBM"/>
+                    <input x="3" y="5" text="H"/>
                 </inputs>
             </element>
-            <element x="660" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
+            <element x="720" y="480" type="embed://import/bobine_relais_simple.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-17" id="59" orientation="0"/>
-                    <terminal x="0" y="17" id="60" orientation="2"/>
+                    <terminal x="0" y="-16" id="60" orientation="0"/>
+                    <terminal x="0" y="21" id="61" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="2.75" y="3" text="SB+"/>
+                    <input x="23" y="1" text="KBM"/>
                 </inputs>
             </element>
-            <element x="600" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
+            <element x="660" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-17" id="61" orientation="0"/>
-                    <terminal x="0" y="17" id="62" orientation="2"/>
+                    <terminal x="0" y="-6" id="62" orientation="0"/>
+                    <terminal x="0" y="16" id="63" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="2.75" y="3" text="S-"/>
+                    <input x="3" y="5" text="D"/>
                 </inputs>
             </element>
-            <element x="540" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
+            <element x="720" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-17" id="63" orientation="0"/>
-                    <terminal x="0" y="17" id="64" orientation="2"/>
+                    <terminal x="0" y="-6" id="64" orientation="0"/>
+                    <terminal x="0" y="16" id="65" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="2.75" y="3" text="SM"/>
+                    <input x="3" y="5" text="E"/>
                 </inputs>
             </element>
-            <element x="480" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
+            <element x="780" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-17" id="65" orientation="0"/>
-                    <terminal x="0" y="17" id="66" orientation="2"/>
+                    <terminal x="0" y="-6" id="66" orientation="0"/>
+                    <terminal x="0" y="16" id="67" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="2.75" y="3" text="S+"/>
+                    <input x="3" y="5" text="F"/>
                 </inputs>
             </element>
-            <element x="350" y="70" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="480" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="67" orientation="0"/>
-                    <terminal x="0" y="6" id="68" orientation="2"/>
+                    <terminal x="0" y="-6" id="68" orientation="0"/>
+                    <terminal x="0" y="16" id="69" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text="XWCAB"/>
+                    <input x="3" y="5" text="A"/>
                 </inputs>
             </element>
-            <element x="250" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
+            <element x="540" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-17" id="69" orientation="0"/>
-                    <terminal x="0" y="17" id="70" orientation="2"/>
+                    <terminal x="0" y="-6" id="70" orientation="0"/>
+                    <terminal x="0" y="16" id="71" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="2.75" y="3" text="SPANTO"/>
+                    <input x="3" y="5" userx="2.25" usery="4.25" text="B"/>
                 </inputs>
             </element>
-            <element x="50" y="70" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+            <element x="600" y="230" type="embed://import/bornes/prise_fiche.elmt" orientation="0">
                 <terminals>
-                    <terminal x="0" y="-6" id="71" orientation="0"/>
+                    <terminal x="0" y="-6" id="72" orientation="0"/>
+                    <terminal x="0" y="16" id="73" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text=""/>
-                </inputs>
-            </element>
-            <element x="180" y="140" type="embed://import/contacts/poussoirs/poussoir.elmt" orientation="0">
-                <terminals>
-                    <terminal x="0" y="-17" id="72" orientation="0"/>
-                    <terminal x="0" y="17" id="73" orientation="2"/>
-                </terminals>
-                <inputs>
-                    <input x="2.75" y="3" text="S15kV"/>
+                    <input x="3" y="5" text="C"/>
                 </inputs>
             </element>
         </elements>
         <conductors>
-            <conductor num="2006" terminal1="7" userx="780" terminal2="16" usery="290" type="multi"/>
-            <conductor num="2005" terminal1="9" userx="720" terminal2="14" usery="290" type="multi"/>
-            <conductor num="2004" terminal1="11" userx="660" terminal2="24" usery="290" type="multi"/>
-            <conductor num="2003" terminal1="1" userx="600" terminal2="22" usery="290" type="multi"/>
-            <conductor num="2002" terminal1="3" userx="540" terminal2="30" usery="290" type="multi"/>
-            <conductor num="2001" terminal1="5" userx="480" terminal2="32" usery="290" type="multi"/>
-            <conductor num="2006" terminal1="56" terminal2="6" type="multi"/>
-            <conductor num="" terminal1="44" terminal2="19" type="multi">
-                <segment length="9" orientation="horizontal"/>
-                <segment length="301" orientation="horizontal"/>
-                <segment length="0" orientation="horizontal"/>
-                <segment length="310" orientation="horizontal"/>
-                <segment length="-52" orientation="vertical"/>
+            <conductor num="" terminal1="2" terminal2="0" type="multi"/>
+            <conductor num="24V" terminal1="0" userx="200" terminal2="3" usery="50" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="-40" orientation="vertical"/>
+                <segment length="70" orientation="horizontal"/>
+                <segment length="40" orientation="vertical"/>
                 <segment length="9" orientation="vertical"/>
             </conductor>
-            <conductor num="2005" terminal1="58" terminal2="8" type="multi"/>
-            <conductor num="" terminal1="13" terminal2="44" type="multi">
+            <conductor num="" terminal1="6" terminal2="3" type="multi"/>
+            <conductor num="24V" terminal1="5" userx="420" terminal2="7" usery="50" type="multi"/>
+            <conductor num="" terminal1="7" terminal2="9" type="multi">
                 <segment length="-9" orientation="vertical"/>
-                <segment length="112" orientation="vertical"/>
-                <segment length="-280" orientation="horizontal"/>
-                <segment length="0" orientation="horizontal"/>
-                <segment length="-271" orientation="horizontal"/>
-                <segment length="-9" orientation="horizontal"/>
+                <segment length="-40" orientation="vertical"/>
+                <segment length="60" orientation="horizontal"/>
+                <segment length="40" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
             </conductor>
-            <conductor num="2004" terminal1="60" terminal2="10" type="multi"/>
-            <conductor num="" terminal1="27" terminal2="44" type="multi">
+            <conductor num="" terminal1="9" terminal2="11" type="multi">
                 <segment length="-9" orientation="vertical"/>
-                <segment length="52" orientation="vertical"/>
-                <segment length="-250" orientation="horizontal"/>
-                <segment length="0" orientation="horizontal"/>
-                <segment length="-241" orientation="horizontal"/>
-                <segment length="-9" orientation="horizontal"/>
+                <segment length="-40" orientation="vertical"/>
+                <segment length="60" orientation="horizontal"/>
+                <segment length="40" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
             </conductor>
-            <conductor num="" terminal1="21" terminal2="44" type="multi">
+            <conductor num="" terminal1="11" terminal2="13" type="multi">
                 <segment length="-9" orientation="vertical"/>
-                <segment length="112" orientation="vertical"/>
-                <segment length="-220" orientation="horizontal"/>
-                <segment length="0" orientation="horizontal"/>
-                <segment length="-211" orientation="horizontal"/>
-                <segment length="-9" orientation="horizontal"/>
+                <segment length="-40" orientation="vertical"/>
+                <segment length="60" orientation="horizontal"/>
+                <segment length="40" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
             </conductor>
-            <conductor num="2003" terminal1="62" terminal2="0" type="multi"/>
-            <conductor num="2002" terminal1="64" terminal2="2" type="multi"/>
-            <conductor num="" terminal1="29" terminal2="44" type="multi">
+            <conductor num="" terminal1="13" terminal2="15" type="multi">
                 <segment length="-9" orientation="vertical"/>
-                <segment length="52" orientation="vertical"/>
-                <segment length="-190" orientation="horizontal"/>
-                <segment length="0" orientation="horizontal"/>
-                <segment length="-181" orientation="horizontal"/>
-                <segment length="-9" orientation="horizontal"/>
+                <segment length="-40" orientation="vertical"/>
+                <segment length="60" orientation="horizontal"/>
+                <segment length="40" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
             </conductor>
-            <conductor num="2001" terminal1="66" terminal2="4" type="multi"/>
-            <conductor num="" terminal1="35" terminal2="44" type="multi">
+            <conductor num="" terminal1="15" terminal2="17" type="multi">
                 <segment length="-9" orientation="vertical"/>
-                <segment length="112" orientation="vertical"/>
-                <segment length="-160" orientation="horizontal"/>
-                <segment length="0" orientation="horizontal"/>
-                <segment length="-151" orientation="horizontal"/>
-                <segment length="-9" orientation="horizontal"/>
+                <segment length="-40" orientation="vertical"/>
+                <segment length="60" orientation="horizontal"/>
+                <segment length="40" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
             </conductor>
-            <conductor num="2005" terminal1="15" userx="720" terminal2="12" usery="410" type="multi"/>
-            <conductor num="2006" terminal1="17" userx="780" terminal2="18" usery="410" type="multi"/>
-            <conductor num="2003" terminal1="23" userx="600" terminal2="20" usery="410" type="multi"/>
-            <conductor num="2004" terminal1="25" userx="660" terminal2="26" usery="410" type="multi"/>
-            <conductor num="2002" terminal1="31" userx="540" terminal2="28" usery="410" type="multi"/>
-            <conductor num="2001" terminal1="33" userx="480" terminal2="34" usery="410" type="multi"/>
-            <conductor num="1003" terminal1="37" userx="250" terminal2="42" usery="290" type="multi"/>
-            <conductor num="0V" terminal1="52" terminal2="38" type="multi"/>
-            <conductor num="1003" terminal1="70" terminal2="36" type="multi"/>
-            <conductor num="0V" terminal1="44" userx="200" terminal2="41" usery="600" type="multi">
+            <conductor num="1002" terminal1="1" terminal2="24" type="multi"/>
+            <conductor num="1002" terminal1="23" userx="180" terminal2="19" usery="410" type="multi"/>
+            <conductor num="1002" terminal1="25" userx="180" terminal2="22" usery="290" type="multi"/>
+            <conductor num="" terminal1="27" terminal2="29" type="multi"/>
+            <conductor num="" terminal1="28" terminal2="20" type="multi">
+                <segment length="9" orientation="horizontal"/>
+                <segment length="11" orientation="horizontal"/>
+                <segment length="-103" orientation="vertical"/>
+                <segment length="0" orientation="horizontal"/>
+                <segment length="0" orientation="horizontal"/>
+            </conductor>
+            <conductor num="1003" terminal1="31" userx="250" terminal2="32" usery="410" type="multi"/>
+            <conductor num="0V" terminal1="35" userx="110" terminal2="26" usery="290" type="multi"/>
+            <conductor num="0V" terminal1="28" userx="200" terminal2="33" usery="600" type="multi">
                 <segment length="9" orientation="horizontal"/>
                 <segment length="31" orientation="horizontal"/>
                 <segment length="0" orientation="horizontal"/>
@@ -430,69 +419,81 @@
                 <segment length="-52" orientation="vertical"/>
                 <segment length="9" orientation="vertical"/>
             </conductor>
-            <conductor num="0V" terminal1="39" userx="110" terminal2="46" usery="290" type="multi"/>
-            <conductor num="1003" terminal1="43" userx="250" terminal2="40" usery="410" type="multi"/>
-            <conductor num="" terminal1="44" terminal2="54" type="multi">
+            <conductor num="1003" terminal1="4" terminal2="36" type="multi"/>
+            <conductor num="0V" terminal1="21" terminal2="34" type="multi"/>
+            <conductor num="1003" terminal1="37" userx="250" terminal2="30" usery="290" type="multi"/>
+            <conductor num="2001" terminal1="41" userx="480" terminal2="38" usery="410" type="multi"/>
+            <conductor num="2002" terminal1="43" userx="540" terminal2="44" usery="410" type="multi"/>
+            <conductor num="2004" terminal1="49" userx="660" terminal2="46" usery="410" type="multi"/>
+            <conductor num="2003" terminal1="51" userx="600" terminal2="52" usery="410" type="multi"/>
+            <conductor num="2006" terminal1="57" userx="780" terminal2="54" usery="410" type="multi"/>
+            <conductor num="2005" terminal1="59" userx="720" terminal2="60" usery="410" type="multi"/>
+            <conductor num="" terminal1="39" terminal2="28" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="112" orientation="vertical"/>
+                <segment length="-160" orientation="horizontal"/>
+                <segment length="0" orientation="horizontal"/>
+                <segment length="-151" orientation="horizontal"/>
+                <segment length="-9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="2001" terminal1="8" terminal2="68" type="multi"/>
+            <conductor num="" terminal1="45" terminal2="28" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="52" orientation="vertical"/>
+                <segment length="-190" orientation="horizontal"/>
+                <segment length="0" orientation="horizontal"/>
+                <segment length="-181" orientation="horizontal"/>
+                <segment length="-9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="2002" terminal1="10" terminal2="70" type="multi"/>
+            <conductor num="2003" terminal1="12" terminal2="72" type="multi"/>
+            <conductor num="" terminal1="53" terminal2="28" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="112" orientation="vertical"/>
+                <segment length="-220" orientation="horizontal"/>
+                <segment length="0" orientation="horizontal"/>
+                <segment length="-211" orientation="horizontal"/>
+                <segment length="-9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="" terminal1="47" terminal2="28" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="52" orientation="vertical"/>
+                <segment length="-250" orientation="horizontal"/>
+                <segment length="0" orientation="horizontal"/>
+                <segment length="-241" orientation="horizontal"/>
+                <segment length="-9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="2004" terminal1="14" terminal2="62" type="multi"/>
+            <conductor num="" terminal1="61" terminal2="28" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="112" orientation="vertical"/>
+                <segment length="-280" orientation="horizontal"/>
+                <segment length="0" orientation="horizontal"/>
+                <segment length="-271" orientation="horizontal"/>
+                <segment length="-9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="2005" terminal1="16" terminal2="64" type="multi"/>
+            <conductor num="" terminal1="28" terminal2="55" type="multi">
                 <segment length="9" orientation="horizontal"/>
-                <segment length="11" orientation="horizontal"/>
-                <segment length="-103" orientation="vertical"/>
+                <segment length="301" orientation="horizontal"/>
                 <segment length="0" orientation="horizontal"/>
-                <segment length="0" orientation="horizontal"/>
-            </conductor>
-            <conductor num="" terminal1="47" terminal2="45" type="multi"/>
-            <conductor num="1002" terminal1="49" userx="180" terminal2="50" usery="290" type="multi"/>
-            <conductor num="1002" terminal1="51" userx="180" terminal2="53" usery="410" type="multi"/>
-            <conductor num="1002" terminal1="73" terminal2="48" type="multi"/>
-            <conductor num="" terminal1="57" terminal2="55" type="multi">
-                <segment length="-9" orientation="vertical"/>
-                <segment length="-40" orientation="vertical"/>
-                <segment length="60" orientation="horizontal"/>
-                <segment length="40" orientation="vertical"/>
+                <segment length="310" orientation="horizontal"/>
+                <segment length="-52" orientation="vertical"/>
                 <segment length="9" orientation="vertical"/>
             </conductor>
-            <conductor num="" terminal1="59" terminal2="57" type="multi">
-                <segment length="-9" orientation="vertical"/>
-                <segment length="-40" orientation="vertical"/>
-                <segment length="60" orientation="horizontal"/>
-                <segment length="40" orientation="vertical"/>
-                <segment length="9" orientation="vertical"/>
-            </conductor>
-            <conductor num="" terminal1="61" terminal2="59" type="multi">
-                <segment length="-9" orientation="vertical"/>
-                <segment length="-40" orientation="vertical"/>
-                <segment length="60" orientation="horizontal"/>
-                <segment length="40" orientation="vertical"/>
-                <segment length="9" orientation="vertical"/>
-            </conductor>
-            <conductor num="" terminal1="63" terminal2="61" type="multi">
-                <segment length="-9" orientation="vertical"/>
-                <segment length="-40" orientation="vertical"/>
-                <segment length="60" orientation="horizontal"/>
-                <segment length="40" orientation="vertical"/>
-                <segment length="9" orientation="vertical"/>
-            </conductor>
-            <conductor num="" terminal1="65" terminal2="63" type="multi">
-                <segment length="-9" orientation="vertical"/>
-                <segment length="-40" orientation="vertical"/>
-                <segment length="60" orientation="horizontal"/>
-                <segment length="40" orientation="vertical"/>
-                <segment length="9" orientation="vertical"/>
-            </conductor>
-            <conductor num="24V" terminal1="67" userx="420" terminal2="65" usery="50" type="multi"/>
-            <conductor num="" terminal1="68" terminal2="69" type="multi"/>
-            <conductor num="24V" terminal1="72" userx="200" terminal2="69" usery="50" type="multi">
-                <segment length="-9" orientation="vertical"/>
-                <segment length="-40" orientation="vertical"/>
-                <segment length="70" orientation="horizontal"/>
-                <segment length="40" orientation="vertical"/>
-                <segment length="9" orientation="vertical"/>
-            </conductor>
-            <conductor num="" terminal1="71" terminal2="72" type="multi"/>
+            <conductor num="2006" terminal1="18" terminal2="66" type="multi"/>
+            <conductor num="2001" terminal1="69" userx="480" terminal2="40" usery="290" type="multi"/>
+            <conductor num="2002" terminal1="71" userx="540" terminal2="42" usery="290" type="multi"/>
+            <conductor num="2003" terminal1="73" userx="600" terminal2="50" usery="290" type="multi"/>
+            <conductor num="2004" terminal1="63" userx="660" terminal2="48" usery="290" type="multi"/>
+            <conductor num="2005" terminal1="65" userx="720" terminal2="58" usery="290" type="multi"/>
+            <conductor num="2006" terminal1="67" userx="780" terminal2="56" usery="290" type="multi"/>
         </conductors>
         <inputs>
-            <input x="70" y="360" text="XC"/>
-            <input x="420" y="220" text="XCABL"/>
+            <input x="30" y="100" text="XWPWR"/>
             <input x="50" y="220" text="XCABR"/>
+            <input x="420" y="220" text="XCABL"/>
+            <input x="70" y="360" text="XC"/>
         </inputs>
     </diagram>
     <collection>

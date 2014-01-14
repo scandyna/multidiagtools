@@ -1,0 +1,1245 @@
+<project title="" version="0.3">
+    <newdiagrams>
+        <border displayrows="true" cols="17" displaycols="true" colsize="60" rows="8" rowsize="80"/>
+        <inset title="" folio="%id/%total" author="" filename="" date="null"/>
+        <conductors num="_" type="multi"/>
+    </newdiagrams>
+    <diagram title="Source and measure" displayrows="true" version="0.3" cols="17" folio="%id/%total" displaycols="true" height="660" colsize="60" order="1" rows="8" author="PS" filename="Coupling box" date="20140114" rowsize="80">
+        <defaultconductor num="_" type="multi"/>
+        <elements>
+            <element x="1020" y="620" type="embed://import/bornes/bornes_s.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="17" id="0" orientation="2"/>
+                </terminals>
+                <inputs/>
+            </element>
+            <element x="600" y="620" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="1" orientation="0"/>
+                    <terminal x="0" y="6" id="2" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="220" y="80" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="3" orientation="0"/>
+                    <terminal x="0" y="6" id="4" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="320" y="70" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="5" orientation="0"/>
+                    <terminal x="10" y="26" id="6" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KSRC+"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="14"/>
+                </inputs>
+            </element>
+            <element x="600" y="80" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="7" orientation="0"/>
+                    <terminal x="0" y="6" id="8" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="70" y="80" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="9" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="17.3" usery="23.95" text="XSRC+"/>
+                </inputs>
+            </element>
+            <element x="70" y="150" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="10" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="22.45" text="XSRC-"/>
+                </inputs>
+            </element>
+            <element x="320" y="140" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="11" orientation="0"/>
+                    <terminal x="10" y="26" id="12" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KSRC-"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
+                </inputs>
+            </element>
+            <element x="220" y="150" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="13" orientation="0"/>
+                    <terminal x="0" y="6" id="14" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="220" y="620" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="15" orientation="0"/>
+                    <terminal x="0" y="6" id="16" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="320" y="610" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="17" orientation="0"/>
+                    <terminal x="10" y="26" id="18" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KISO-"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
+                </inputs>
+            </element>
+            <element x="70" y="620" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="19" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XISO-"/>
+                </inputs>
+            </element>
+            <element x="70" y="550" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="20" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XISO+"/>
+                </inputs>
+            </element>
+            <element x="320" y="540" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="21" orientation="0"/>
+                    <terminal x="10" y="26" id="22" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KISO+"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="14"/>
+                </inputs>
+            </element>
+            <element x="220" y="550" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="23" orientation="0"/>
+                    <terminal x="0" y="6" id="24" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="220" y="400" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="25" orientation="0"/>
+                    <terminal x="0" y="6" id="26" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="320" y="470" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="27" orientation="0"/>
+                    <terminal x="10" y="26" id="28" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-8.45" usery="28.45" text="LMEAS-R"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
+                </inputs>
+            </element>
+            <element x="320" y="310" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="29" orientation="0"/>
+                    <terminal x="10" y="26" id="30" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-14.45" usery="34.45" text="KMEAS+R"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
+                </inputs>
+            </element>
+            <element x="220" y="240" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="31" orientation="0"/>
+                    <terminal x="0" y="6" id="32" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="310" y="230" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="33" orientation="0"/>
+                    <terminal x="10" y="26" id="34" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-12.95" usery="15.7" text="KMEAS+"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="14"/>
+                </inputs>
+            </element>
+            <element x="320" y="390" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="35" orientation="0"/>
+                    <terminal x="10" y="26" id="36" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KMEAS-"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="14"/>
+                </inputs>
+            </element>
+            <element x="70" y="240" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="37" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XMEAS+"/>
+                </inputs>
+            </element>
+            <element x="70" y="400" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="38" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XMEAS-"/>
+                </inputs>
+            </element>
+            <element x="1020" y="80" type="embed://import/bornes/bornes_s.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="17" id="39" orientation="2"/>
+                </terminals>
+                <inputs/>
+            </element>
+        </elements>
+        <conductors>
+            <conductor num="BUSB" terminal1="1" userx="800" terminal2="0" usery="590" type="multi"/>
+            <conductor num="BUSA" terminal1="7" userx="780" terminal2="39" usery="50" type="multi"/>
+            <conductor num="" terminal1="17" terminal2="2" type="multi"/>
+            <conductor num="" terminal1="35" terminal2="2" type="multi">
+                <segment length="9" orientation="horizontal"/>
+                <segment length="181" orientation="horizontal"/>
+                <segment length="220" orientation="vertical"/>
+                <segment length="41" orientation="horizontal"/>
+                <segment length="9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="" terminal1="29" terminal2="2" type="multi">
+                <segment length="9" orientation="horizontal"/>
+                <segment length="181" orientation="horizontal"/>
+                <segment length="300" orientation="vertical"/>
+                <segment length="41" orientation="horizontal"/>
+                <segment length="9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="" terminal1="11" terminal2="2" type="multi">
+                <segment length="9" orientation="horizontal"/>
+                <segment length="181" orientation="horizontal"/>
+                <segment length="470" orientation="vertical"/>
+                <segment length="41" orientation="horizontal"/>
+                <segment length="9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="SRC+" terminal1="9" userx="130" terminal2="4" usery="530" type="multi"/>
+            <conductor num="" terminal1="3" userx="250" terminal2="6" usery="530" type="multi"/>
+            <conductor num="" terminal1="21" terminal2="8" type="multi"/>
+            <conductor num="" terminal1="27" terminal2="8" type="multi"/>
+            <conductor num="" terminal1="13" userx="250" terminal2="12" usery="600" type="multi"/>
+            <conductor num="" terminal1="33" userx="420" terminal2="8" usery="160" type="multi">
+                <segment length="39" orientation="horizontal"/>
+                <segment length="91" orientation="horizontal"/>
+                <segment length="-160" orientation="vertical"/>
+                <segment length="81" orientation="horizontal"/>
+                <segment length="39" orientation="horizontal"/>
+            </conductor>
+            <conductor num="SRC-" terminal1="10" userx="130" terminal2="14" usery="600" type="multi"/>
+            <conductor num="" terminal1="5" userx="390" terminal2="8" usery="70" type="multi"/>
+            <conductor num="ISO-" terminal1="19" userx="130" terminal2="16" usery="530" type="multi"/>
+            <conductor num="" terminal1="15" userx="260" terminal2="18" usery="490" type="multi"/>
+            <conductor num="" terminal1="23" userx="260" terminal2="22" usery="410" type="multi"/>
+            <conductor num="ISO+" terminal1="20" userx="130" terminal2="24" usery="390" type="multi"/>
+            <conductor num="" terminal1="28" terminal2="25" type="multi">
+                <segment length="-11.5" orientation="horizontal"/>
+                <segment length="-18.5" orientation="horizontal"/>
+                <segment length="-80" orientation="vertical"/>
+                <segment length="-18.5" orientation="horizontal"/>
+                <segment length="-11.5" orientation="horizontal"/>
+            </conductor>
+            <conductor num="MEAS-" terminal1="38" userx="130" terminal2="26" usery="430" type="multi"/>
+            <conductor num="" terminal1="25" userx="260" terminal2="36" usery="450" type="multi"/>
+            <conductor num="MEAS+" terminal1="37" userx="130" terminal2="32" usery="260" type="multi"/>
+            <conductor num="" terminal1="30" terminal2="31" type="multi"/>
+            <conductor num="" terminal1="34" terminal2="31" type="multi"/>
+        </conductors>
+        <inputs>
+            <input x="1000" y="590" text="/2.1"/>
+            <input x="520" y="120" text="BUSB"/>
+            <input x="450" y="50" text="BUSA"/>
+            <input x="1000" y="60" text="/2.1"/>
+        </inputs>
+    </diagram>
+    <diagram title="Channel relays" displayrows="true" version="0.3" cols="17" folio="%id/%total" displaycols="true" height="660" colsize="60" order="2" rows="8" author="PS" filename="Coupling box" date="20140114" rowsize="80">
+        <defaultconductor num="_" type="multi"/>
+        <elements>
+            <element x="520" y="370" type="embed://import/bornes/connecteur_f.elmt" orientation="2">
+                <terminals>
+                    <terminal x="0" y="-7" id="0" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="1" y="-7.5" userrotation="-180" userx="27.5" usery="-11.35" text="a10"/>
+                </inputs>
+            </element>
+            <element x="520" y="560" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="1" orientation="0"/>
+                    <terminal x="0" y="6" id="2" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="510" y="470" type="embed://import/contact_relai.elmt" orientation="0">
+                <terminals>
+                    <terminal x="10" y="-26" id="3" orientation="0"/>
+                    <terminal x="10" y="26" id="4" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userx="8" usery="17" text="23"/>
+                    <input x="-30" y="1.5" userx="-32" usery="-0.5" text="K6.2"/>
+                    <input x="8" y="-21.5" userx="8" usery="-24.5" text="24"/>
+                </inputs>
+            </element>
+            <element x="430" y="470" type="embed://import/contact_relai.elmt" orientation="0">
+                <terminals>
+                    <terminal x="10" y="-26" id="5" orientation="0"/>
+                    <terminal x="10" y="26" id="6" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userx="8" usery="17" text="23"/>
+                    <input x="-30" y="1.5" userx="-32" usery="-0.5" text="K5.2"/>
+                    <input x="8" y="-21.5" userx="8" usery="-24.5" text="24"/>
+                </inputs>
+            </element>
+            <element x="440" y="560" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="7" orientation="0"/>
+                    <terminal x="0" y="6" id="8" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userx="66.875" usery="-0.4375" text=""/>
+                    <input x="5" y="-5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="440" y="370" type="embed://import/bornes/connecteur_f.elmt" orientation="2">
+                <terminals>
+                    <terminal x="0" y="-7" id="9" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="1" y="-7.5" userrotation="-180" userx="27.5" usery="-11.35" text="a10"/>
+                </inputs>
+            </element>
+            <element x="360" y="370" type="embed://import/bornes/connecteur_f.elmt" orientation="2">
+                <terminals>
+                    <terminal x="0" y="-7" id="10" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="1" y="-7.5" userrotation="-180" userx="23" usery="-10.6" text="a8"/>
+                </inputs>
+            </element>
+            <element x="360" y="560" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="11" orientation="0"/>
+                    <terminal x="0" y="6" id="12" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="350" y="470" type="embed://import/contact_relai.elmt" orientation="0">
+                <terminals>
+                    <terminal x="10" y="-26" id="13" orientation="0"/>
+                    <terminal x="10" y="26" id="14" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userx="8" usery="17" text="23"/>
+                    <input x="-30" y="1.5" userx="-32" usery="-0.5" text="K4.2"/>
+                    <input x="8" y="-21.5" userx="8" usery="-24.5" text="24"/>
+                </inputs>
+            </element>
+            <element x="270" y="470" type="embed://import/contact_relai.elmt" orientation="0">
+                <terminals>
+                    <terminal x="10" y="-26" id="15" orientation="0"/>
+                    <terminal x="10" y="26" id="16" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userx="8" usery="17" text="23"/>
+                    <input x="-30" y="1.5" userx="-32" usery="-0.5" text="K3.2"/>
+                    <input x="8" y="-21.5" userx="8" usery="-24.5" text="24"/>
+                </inputs>
+            </element>
+            <element x="280" y="560" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="17" orientation="0"/>
+                    <terminal x="0" y="6" id="18" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="280" y="370" type="embed://import/bornes/connecteur_f.elmt" orientation="2">
+                <terminals>
+                    <terminal x="0" y="-7" id="19" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="1" y="-7.5" userrotation="-180" userx="23" usery="-10.6" text="a6"/>
+                </inputs>
+            </element>
+            <element x="190" y="370" type="embed://import/bornes/connecteur_f.elmt" orientation="2">
+                <terminals>
+                    <terminal x="0" y="-7" id="20" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="1" y="-7.5" userrotation="-180" userx="23" usery="-10.6" text="a4"/>
+                </inputs>
+            </element>
+            <element x="190" y="560" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="21" orientation="0"/>
+                    <terminal x="0" y="6" id="22" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="180" y="470" type="embed://import/contact_relai.elmt" orientation="0">
+                <terminals>
+                    <terminal x="10" y="-26" id="23" orientation="0"/>
+                    <terminal x="10" y="26" id="24" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userx="8" usery="17" text="23"/>
+                    <input x="-30" y="1.5" userx="-32" usery="-0.5" text="K2.2"/>
+                    <input x="8" y="-21.5" userx="8" usery="-24.5" text="24"/>
+                </inputs>
+            </element>
+            <element x="50" y="600" type="embed://import/bornes/bornes_e.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-17" id="25" orientation="0"/>
+                </terminals>
+                <inputs/>
+            </element>
+            <element x="100" y="470" type="embed://import/contact_relai.elmt" orientation="0">
+                <terminals>
+                    <terminal x="10" y="-26" id="26" orientation="0"/>
+                    <terminal x="10" y="26" id="27" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userx="8" usery="17" text="23"/>
+                    <input x="-30" y="1.5" userx="-32" usery="-0.5" text="K1.2"/>
+                    <input x="8" y="-21.5" userx="8" usery="-24.5" text="24"/>
+                </inputs>
+            </element>
+            <element x="110" y="560" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="28" orientation="0"/>
+                    <terminal x="0" y="6" id="29" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="110" y="370" type="embed://import/bornes/connecteur_f.elmt" orientation="2">
+                <terminals>
+                    <terminal x="0" y="-7" id="30" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="1" y="-7.5" userrotation="-180" userx="23" usery="-10.6" text="a2"/>
+                </inputs>
+            </element>
+            <element x="50" y="90" type="embed://import/bornes/bornes_e.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-17" id="31" orientation="0"/>
+                </terminals>
+                <inputs/>
+            </element>
+            <element x="110" y="120" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="32" orientation="0"/>
+                    <terminal x="0" y="6" id="33" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" userx="3.875" usery="-1.625" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="120" y="200" type="embed://import/contact_relai.elmt" orientation="2">
+                <terminals>
+                    <terminal x="10" y="-26" id="34" orientation="0"/>
+                    <terminal x="10" y="26" id="35" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-180" userx="28" usery="15.9" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-180" userx="3" usery="-1.6" text="K1.1"/>
+                    <input x="8" y="-21.5" userrotation="-180" userx="28" usery="-25.6" text="14"/>
+                </inputs>
+            </element>
+            <element x="190" y="120" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="36" orientation="0"/>
+                    <terminal x="0" y="6" id="37" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" userx="6" usery="-0.5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="200" y="200" type="embed://import/contact_relai.elmt" orientation="2">
+                <terminals>
+                    <terminal x="10" y="-26" id="38" orientation="0"/>
+                    <terminal x="10" y="26" id="39" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-180" userx="28" usery="15.9" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-180" userx="3" usery="-1.6" text="K2.1"/>
+                    <input x="8" y="-21.5" userrotation="-180" userx="28" usery="-25.6" text="14"/>
+                </inputs>
+            </element>
+            <element x="110" y="320" type="embed://import/bornes/connecteur_f.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-7" id="40" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="4" y="-7.5" text="a1"/>
+                </inputs>
+            </element>
+            <element x="190" y="320" type="embed://import/bornes/connecteur_f.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-7" id="41" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="4" y="-7.5" text="a3"/>
+                </inputs>
+            </element>
+            <element x="280" y="320" type="embed://import/bornes/connecteur_f.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-7" id="42" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="4" y="-7.5" text="a5"/>
+                </inputs>
+            </element>
+            <element x="290" y="200" type="embed://import/contact_relai.elmt" orientation="2">
+                <terminals>
+                    <terminal x="10" y="-26" id="43" orientation="0"/>
+                    <terminal x="10" y="26" id="44" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-180" userx="28" usery="15.9" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-180" userx="3" usery="-1.6" text="K3.1"/>
+                    <input x="8" y="-21.5" userrotation="-180" userx="28" usery="-25.6" text="14"/>
+                </inputs>
+            </element>
+            <element x="280" y="120" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="45" orientation="0"/>
+                    <terminal x="0" y="6" id="46" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" userx="5" usery="-0.5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="360" y="120" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="47" orientation="0"/>
+                    <terminal x="0" y="6" id="48" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" userx="5" usery="-0.5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="370" y="200" type="embed://import/contact_relai.elmt" orientation="2">
+                <terminals>
+                    <terminal x="10" y="-26" id="49" orientation="0"/>
+                    <terminal x="10" y="26" id="50" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-180" userx="28" usery="15.9" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-180" userx="3" usery="-1.6" text="K4.1"/>
+                    <input x="8" y="-21.5" userrotation="-180" userx="28" usery="-25.6" text="14"/>
+                </inputs>
+            </element>
+            <element x="360" y="320" type="embed://import/bornes/connecteur_f.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-7" id="51" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="4" y="-7.5" text="a7"/>
+                </inputs>
+            </element>
+            <element x="440" y="320" type="embed://import/bornes/connecteur_f.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-7" id="52" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="4" y="-7.5" text="a9"/>
+                </inputs>
+            </element>
+            <element x="450" y="200" type="embed://import/contact_relai.elmt" orientation="2">
+                <terminals>
+                    <terminal x="10" y="-26" id="53" orientation="0"/>
+                    <terminal x="10" y="26" id="54" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-180" userx="28" usery="15.9" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-180" userx="3" usery="-1.6" text="K5.1"/>
+                    <input x="8" y="-21.5" userrotation="-180" userx="28" usery="-25.6" text="14"/>
+                </inputs>
+            </element>
+            <element x="440" y="120" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="55" orientation="0"/>
+                    <terminal x="0" y="6" id="56" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" userx="5" usery="0.0625" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="520" y="120" type="embed://import/bornes/borne_continuite.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-6" id="57" orientation="0"/>
+                    <terminal x="0" y="6" id="58" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" text=""/>
+                    <input x="5" y="-5" userx="5" usery="-0.5" text="XW1"/>
+                </inputs>
+            </element>
+            <element x="530" y="200" type="embed://import/contact_relai.elmt" orientation="2">
+                <terminals>
+                    <terminal x="10" y="-26" id="59" orientation="0"/>
+                    <terminal x="10" y="26" id="60" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-180" userx="28" usery="15.9" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-180" userx="3" usery="-1.6" text="K6.1"/>
+                    <input x="8" y="-21.5" userrotation="-180" userx="28" usery="-25.6" text="14"/>
+                </inputs>
+            </element>
+            <element x="520" y="320" type="embed://import/bornes/connecteur_f.elmt" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-7" id="61" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="4" y="-7.5" text="a11"/>
+                </inputs>
+            </element>
+        </elements>
+        <conductors>
+            <conductor num="" terminal1="2" userx="480" terminal2="8" usery="590" type="multi">
+                <segment length="9" orientation="vertical"/>
+                <segment length="21" orientation="vertical"/>
+                <segment length="-80" orientation="horizontal"/>
+                <segment length="-21" orientation="vertical"/>
+                <segment length="-9" orientation="vertical"/>
+            </conductor>
+            <conductor num="" terminal1="12" terminal2="8" type="multi">
+                <segment length="9" orientation="vertical"/>
+                <segment length="21" orientation="vertical"/>
+                <segment length="80" orientation="horizontal"/>
+                <segment length="-21" orientation="vertical"/>
+                <segment length="-9" orientation="vertical"/>
+            </conductor>
+            <conductor num="BUSB" terminal1="12" userx="300" terminal2="18" usery="600" type="multi">
+                <segment length="9" orientation="vertical"/>
+                <segment length="21" orientation="vertical"/>
+                <segment length="-80" orientation="horizontal"/>
+                <segment length="-21" orientation="vertical"/>
+                <segment length="-9" orientation="vertical"/>
+            </conductor>
+            <conductor num="" terminal1="22" userx="240" terminal2="18" usery="580" type="multi">
+                <segment length="9" orientation="vertical"/>
+                <segment length="21" orientation="vertical"/>
+                <segment length="90" orientation="horizontal"/>
+                <segment length="-21" orientation="vertical"/>
+                <segment length="-9" orientation="vertical"/>
+            </conductor>
+            <conductor num="" terminal1="29" userx="170" terminal2="22" usery="590" type="multi">
+                <segment length="9" orientation="vertical"/>
+                <segment length="21" orientation="vertical"/>
+                <segment length="80" orientation="horizontal"/>
+                <segment length="-21" orientation="vertical"/>
+                <segment length="-9" orientation="vertical"/>
+            </conductor>
+            <conductor num="" terminal1="4" userx="520" terminal2="1" usery="510" type="multi"/>
+            <conductor num="" terminal1="6" userx="440" terminal2="7" usery="510" type="multi"/>
+            <conductor num="" terminal1="14" terminal2="11" type="multi"/>
+            <conductor num="" terminal1="16" terminal2="17" type="multi"/>
+            <conductor num="" terminal1="24" terminal2="21" type="multi"/>
+            <conductor num="" terminal1="27" terminal2="28" type="multi"/>
+            <conductor num="62" terminal1="0" userx="520" terminal2="3" usery="400" type="multi"/>
+            <conductor num="52" terminal1="9" userx="440" terminal2="5" usery="400" type="multi"/>
+            <conductor num="42" terminal1="10" userx="360" terminal2="13" usery="400" type="multi"/>
+            <conductor num="32" terminal1="19" userx="280" terminal2="15" usery="400" type="multi"/>
+            <conductor num="22" terminal1="20" userx="190" terminal2="23" usery="400" type="multi"/>
+            <conductor num="12" terminal1="30" userx="110" terminal2="26" usery="400" type="multi"/>
+            <conductor num="" terminal1="25" terminal2="29" type="multi"/>
+            <conductor num="" terminal1="33" terminal2="35" type="multi"/>
+            <conductor num="11" terminal1="34" userx="300" terminal2="40" usery="260" type="multi"/>
+            <conductor num="" terminal1="31" userx="80" terminal2="32" usery="60" type="multi"/>
+            <conductor num="" terminal1="32" userx="340" terminal2="36" usery="110" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="-11" orientation="vertical"/>
+                <segment length="80" orientation="horizontal"/>
+                <segment length="11" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
+            </conductor>
+            <conductor num="" terminal1="36" terminal2="45" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="-11" orientation="vertical"/>
+                <segment length="90" orientation="horizontal"/>
+                <segment length="11" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
+            </conductor>
+            <conductor num="BUSA" terminal1="45" userx="480" terminal2="47" usery="70" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="-11" orientation="vertical"/>
+                <segment length="80" orientation="horizontal"/>
+                <segment length="11" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
+            </conductor>
+            <conductor num="" terminal1="47" userx="610" terminal2="55" usery="70" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="-11" orientation="vertical"/>
+                <segment length="80" orientation="horizontal"/>
+                <segment length="11" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
+            </conductor>
+            <conductor num="" terminal1="55" userx="680" terminal2="57" usery="60" type="multi">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="-11" orientation="vertical"/>
+                <segment length="80" orientation="horizontal"/>
+                <segment length="11" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
+            </conductor>
+            <conductor num="" terminal1="37" userx="380" terminal2="39" usery="140" type="multi"/>
+            <conductor num="" terminal1="46" userx="470" terminal2="44" usery="140" type="multi"/>
+            <conductor num="" terminal1="48" userx="550" terminal2="50" usery="140" type="multi"/>
+            <conductor num="" terminal1="54" terminal2="56" type="multi"/>
+            <conductor num="" terminal1="58" terminal2="60" type="multi"/>
+            <conductor num="21" terminal1="38" userx="380" terminal2="41" usery="260" type="multi"/>
+            <conductor num="31" terminal1="43" userx="470" terminal2="42" usery="260" type="multi"/>
+            <conductor num="41" terminal1="49" userx="550" terminal2="51" usery="260" type="multi"/>
+            <conductor num="51" terminal1="53" userx="630" terminal2="52" usery="260" type="multi"/>
+            <conductor num="61" terminal1="59" userx="710" terminal2="61" usery="260" type="multi"/>
+        </conductors>
+        <inputs>
+            <input x="40" y="610" text="/1.17"/>
+            <input x="40" y="60" text="/1.17"/>
+        </inputs>
+    </diagram>
+    <collection>
+        <category name="import">
+            <names>
+                <name lang="ru">Импортированные элементы</name>
+                <name lang="en">Imported elements</name>
+                <name lang="it">Elementi importati</name>
+                <name lang="fr">Éléments importés</name>
+                <name lang="pl">Elementy importowane</name>
+                <name lang="es">Elementos importados</name>
+                <name lang="cs">Zavedené prvky</name>
+            </names>
+            <category name="bornes">
+                <names>
+                    <name lang="ar">طرفيات توصيل</name>
+                    <name lang="de">Klemmen</name>
+                    <name lang="ru">соеденителей</name>
+                    <name lang="pt">Terminais</name>
+                    <name lang="en">Terminals</name>
+                    <name lang="it">Terminali</name>
+                    <name lang="fr">Bornes</name>
+                    <name lang="pl">Złącza i zaciski</name>
+                    <name lang="cs">Svorky</name>
+                </names>
+                <category name="borniers">
+                    <names>
+                        <name lang="ar">أطراف توصيل</name>
+                        <name lang="de">Klemmen</name>
+                        <name lang="ru">соеденителей</name>
+                        <name lang="pt">Terminais</name>
+                        <name lang="en">Terminals</name>
+                        <name lang="it">Terminali</name>
+                        <name lang="fr">Borniers</name>
+                        <name lang="pl">Listwy zaciskowe</name>
+                        <name lang="es">Terminales</name>
+                        <name lang="cs">Svorky</name>
+                    </names>
+                    <element name="bornier.elmt">
+                        <definition width="110" version="0.3" hotspot_x="55" hotspot_y="155" height="220" type="element" orientation="dyyy">
+                            <names>
+                                <name lang="ar">طرف توصيل</name>
+                                <name lang="de">Klemmleiste</name>
+                                <name lang="en">Terminal</name>
+                                <name lang="it">Terminale</name>
+                                <name lang="fr">Bornier</name>
+                                <name lang="pl">Listwa zaciskowa</name>
+                                <name lang="cs">Svorkoviště</name>
+                            </names>
+                            <informations/>
+                            <description>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-130" x1="-19" y2="-130" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-133" x1="-18" y2="-125" x2="-18"/>
+                                <rect width="34" x="-11" y="-133" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-133" x1="-18" y2="-133" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="30" x1="-19" y2="30" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-50" x1="-19" y2="-50" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-90" x1="-19" y2="-90" x2="-21"/>
+                                <input x="30" y="-131.333" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="-129.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-130" x1="26" y2="-130" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-110" x1="-19" y2="-110" x2="-21"/>
+                                <input x="-40" y="-131.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="27" x1="-18" y2="35" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-53" x1="-18" y2="-45" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-113" x1="-18" y2="-105" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-93" x1="-18" y2="-85" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-125" x1="-18" y2="-125" x2="22"/>
+                                <rect width="34" x="-11" y="27" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <rect width="34" x="-11" y="-53" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <rect width="34" x="-11" y="-113" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <rect width="34" x="-11" y="-93" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <input x="-9" y="-138.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-53" x1="-18" y2="-53" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="27" x1="-18" y2="27" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-93" x1="-18" y2="-93" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-113" x1="-18" y2="-113" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-140" x1="-19" y2="-140" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-10" x1="-19" y2="-10" x2="-21"/>
+                                <input x="30" y="-111.333" size="4" rotate="true" text="_"/>
+                                <input x="30" y="-91.333" size="4" rotate="true" text="_"/>
+                                <input x="30" y="-51.333" size="4" rotate="true" text="_"/>
+                                <input x="-40" y="-141.333" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="-89.333" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="-109.333" size="4" rotate="true" text="_"/>
+                                <input x="30" y="28.667" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="30.667" size="4" rotate="true" text="_"/>
+                                <input x="30" y="-141.333" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="-49.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-110" x1="26" y2="-110" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-90" x1="26" y2="-90" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-70" x1="-19" y2="-70" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-143" x1="-18" y2="-135" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="30" x1="26" y2="30" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-50" x1="26" y2="-50" x2="24"/>
+                                <input x="-40" y="-111.333" size="4" rotate="true" text="_"/>
+                                <rect width="34" x="-11" y="-143" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="50" x1="-19" y2="50" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-105" x1="-18" y2="-105" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-30" x1="-19" y2="-30" x2="-21"/>
+                                <input x="-40" y="-91.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-143" x1="-18" y2="-143" x2="22"/>
+                                <input x="-40" y="28.667" size="4" rotate="true" text="_"/>
+                                <input x="-40" y="-51.333" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="-118.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-73" x1="-18" y2="-65" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-85" x1="-18" y2="-85" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-140" x1="26" y2="-140" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-33" x1="-18" y2="-25" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-120" x1="-19" y2="-120" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="47" x1="-18" y2="55" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-135" x1="-18" y2="-135" x2="22"/>
+                                <input x="-40" y="-121.333" size="4" rotate="true" text="_"/>
+                                <rect width="34" x="-11" y="-73" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-13" x1="-18" y2="-5" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="35" x1="-18" y2="35" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-45" x1="-18" y2="-45" x2="22"/>
+                                <input x="30" y="-121.333" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="-98.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-73" x1="-18" y2="-73" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-123" x1="-18" y2="-115" x2="-18"/>
+                                <rect width="34" x="-11" y="47" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <rect width="34" x="-11" y="-33" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <rect width="34" x="-11" y="-13" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-100" x1="-19" y2="-100" x2="-21"/>
+                                <rect width="34" x="-11" y="-123" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <input x="30" y="-71.333" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="-58.333" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="21.667" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-123" x1="-18" y2="-123" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-13" x1="-18" y2="-13" x2="22"/>
+                                <input x="-40" y="-101.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-120" x1="26" y2="-120" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="47" x1="-18" y2="47" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-33" x1="-18" y2="-33" x2="22"/>
+                                <input x="-9" y="-69.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-115" x1="-18" y2="-115" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-60" x1="-19" y2="-60" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="20" x1="-19" y2="20" x2="-21"/>
+                                <input x="30" y="-101.333" size="4" rotate="true" text="_"/>
+                                <input x="30" y="48.667" size="4" rotate="true" text="_"/>
+                                <input x="30" y="-31.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-70" x1="26" y2="-70" x2="24"/>
+                                <input x="30" y="-11.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-103" x1="-18" y2="-95" x2="-18"/>
+                                <input x="-40" y="-61.333" size="4" rotate="true" text="_"/>
+                                <input x="-40" y="-71.333" size="4" rotate="true" text="_"/>
+                                <input x="-40" y="18.667" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="-9.333" size="4" rotate="true" text="_"/>
+                                <rect width="34" x="-11" y="-103" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <input x="-9" y="50.667" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-65" x1="-18" y2="-65" x2="22"/>
+                                <input x="-9" y="-29.333" size="4" rotate="true" text="_"/>
+                                <input x="30" y="-61.333" size="4" rotate="true" text="_"/>
+                                <input x="30" y="18.667" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-103" x1="-18" y2="-103" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-30" x1="26" y2="-30" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="50" x1="26" y2="50" x2="24"/>
+                                <input x="-9" y="-78.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-100" x1="26" y2="-100" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-10" x1="26" y2="-10" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="10" x1="-19" y2="10" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-80" x1="-19" y2="-80" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-63" x1="-18" y2="-55" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-95" x1="-18" y2="-95" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="17" x1="-18" y2="25" x2="-18"/>
+                                <input x="-40" y="-31.333" size="4" rotate="true" text="_"/>
+                                <input x="-40" y="-81.333" size="4" rotate="true" text="_"/>
+                                <input x="-40" y="48.667" size="4" rotate="true" text="_"/>
+                                <rect width="34" x="-11" y="17" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <rect width="34" x="-11" y="-63" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <input x="30" y="-81.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-83" x1="-18" y2="-75" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-25" x1="-18" y2="-25" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="55" x1="-18" y2="55" x2="22"/>
+                                <rect width="34" x="-11" y="-83" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <input x="-40" y="-11.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-63" x1="-18" y2="-63" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="17" x1="-18" y2="17" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-83" x1="-18" y2="-83" x2="22"/>
+                                <input x="-9" y="-38.333" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="41.667" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-80" x1="26" y2="-80" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-75" x1="-18" y2="-75" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="7" x1="-18" y2="15" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-5" x1="-18" y2="-5" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-60" x1="26" y2="-60" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="20" x1="26" y2="20" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-40" x1="-19" y2="-40" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="40" x1="-19" y2="40" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-55" x1="-18" y2="-55" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="25" x1="-18" y2="25" x2="22"/>
+                                <input x="-40" y="-41.333" size="4" rotate="true" text="_"/>
+                                <input x="-40" y="38.667" size="4" rotate="true" text="_"/>
+                                <rect width="34" x="-11" y="7" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <input x="30" y="-41.333" size="4" rotate="true" text="_"/>
+                                <input x="30" y="38.667" size="4" rotate="true" text="_"/>
+                                <input x="-9" y="-18.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="7" x1="-18" y2="7" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="37" x1="-18" y2="45" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-43" x1="-18" y2="-35" x2="-18"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-20" x1="-19" y2="-20" x2="-21"/>
+                                <rect width="34" x="-11" y="-43" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <rect width="34" x="-11" y="37" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <input x="30" y="8.667" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="37" x1="-18" y2="37" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-43" x1="-18" y2="-43" x2="22"/>
+                                <input x="-40" y="-21.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-40" x1="26" y2="-40" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="40" x1="26" y2="40" x2="24"/>
+                                <input x="-9" y="10.667" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-35" x1="-18" y2="-35" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="45" x1="-18" y2="45" x2="22"/>
+                                <input x="30" y="-21.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="10" x1="26" y2="10" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-23" x1="-18" y2="-15" x2="-18"/>
+                                <input x="-40" y="8.667" size="4" rotate="true" text="_"/>
+                                <rect width="34" x="-11" y="-23" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="15" x1="-18" y2="15" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-23" x1="-18" y2="-23" x2="22"/>
+                                <input x="-9" y="1.667" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-20" x1="26" y2="-20" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="0" x1="-19" y2="0" x2="-21"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-15" x1="-18" y2="-15" x2="22"/>
+                                <input x="-40" y="-1.333" size="4" rotate="true" text="_"/>
+                                <input x="30" y="-1.333" size="4" rotate="true" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-3" x1="-18" y2="5" x2="-18"/>
+                                <rect width="34" x="-11" y="-3" antialias="false" height="8" style="line-style:normal;line-weight:normal;filling:none;color:black"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-3" x1="-18" y2="-3" x2="22"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="0" x1="26" y2="0" x2="24"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="5" x1="-18" y2="5" x2="22"/>
+                                <terminal x="-50" y="-100" orientation="w"/>
+                                <terminal x="50" y="-130" orientation="e"/>
+                                <terminal x="50" y="-90" orientation="e"/>
+                                <terminal x="-50" y="-110" orientation="w"/>
+                                <terminal x="-50" y="-70" orientation="w"/>
+                                <terminal x="50" y="-100" orientation="e"/>
+                                <terminal x="-50" y="-10" orientation="w"/>
+                                <terminal x="-50" y="-130" orientation="w"/>
+                                <terminal x="-50" y="-60" orientation="w"/>
+                                <terminal x="-50" y="-80" orientation="w"/>
+                                <terminal x="-50" y="-40" orientation="w"/>
+                                <terminal x="-50" y="-120" orientation="w"/>
+                                <terminal x="50" y="-70" orientation="e"/>
+                                <terminal x="50" y="-20" orientation="e"/>
+                                <terminal x="50" y="-120" orientation="e"/>
+                                <terminal x="50" y="-60" orientation="e"/>
+                                <terminal x="-50" y="-50" orientation="w"/>
+                                <terminal x="50" y="-110" orientation="e"/>
+                                <terminal x="-50" y="-20" orientation="w"/>
+                                <terminal x="-50" y="10" orientation="w"/>
+                                <terminal x="-50" y="-90" orientation="w"/>
+                                <terminal x="-50" y="-30" orientation="w"/>
+                                <terminal x="50" y="-40" orientation="e"/>
+                                <terminal x="50" y="0" orientation="e"/>
+                                <terminal x="50" y="-30" orientation="e"/>
+                                <terminal x="50" y="10" orientation="e"/>
+                                <terminal x="50" y="-50" orientation="e"/>
+                                <terminal x="50" y="-10" orientation="e"/>
+                                <terminal x="-50" y="-140" orientation="w"/>
+                                <terminal x="50" y="-140" orientation="e"/>
+                                <terminal x="50" y="-80" orientation="e"/>
+                                <terminal x="-50" y="0" orientation="w"/>
+                                <terminal x="50" y="30" orientation="e"/>
+                                <terminal x="-50" y="50" orientation="w"/>
+                                <terminal x="-50" y="30" orientation="w"/>
+                                <terminal x="-50" y="40" orientation="w"/>
+                                <terminal x="50" y="40" orientation="e"/>
+                                <terminal x="50" y="50" orientation="e"/>
+                                <terminal x="-50" y="20" orientation="w"/>
+                                <terminal x="50" y="20" orientation="e"/>
+                            </description>
+                        </definition>
+                    </element>
+                </category>
+                <element name="borne_continuite.elmt">
+                    <definition width="30" version="0.3" hotspot_x="10" hotspot_y="20" height="40" type="element" ic="true" orientation="dyyy">
+                        <names>
+                            <name lang="ar">طرف توصيل</name>
+                            <name lang="de">Klemmblock</name>
+                            <name lang="ru">Клеммное соединение</name>
+                            <name lang="pt">Terminal de combinação</name>
+                            <name lang="en">Terminal block</name>
+                            <name lang="it">Terminale di unione</name>
+                            <name lang="fr">Borne continuité</name>
+                            <name lang="pl">Zacisk</name>
+                            <name lang="es">Punto de combinación</name>
+                            <name lang="cs">Spojovací svorka</name>
+                        </names>
+                        <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                        <description>
+                            <input x="5" y="8" size="7" text="_"/>
+                            <input x="5" y="-5" size="10" text="_"/>
+                            <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="10" x1="0" y2="3" x2="0"/>
+                            <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-10" x1="0" y2="-3" x2="0"/>
+                            <circle x="-2.5" y="-2.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                            <terminal x="0" y="-10" orientation="n"/>
+                            <terminal x="0" y="10" orientation="s"/>
+                        </description>
+                    </definition>
+                </element>
+                <element name="connecteur_f.elmt">
+                    <definition width="30" version="0.3" hotspot_x="15" hotspot_y="35" height="70" type="element" orientation="dyyy">
+                        <names>
+                            <name lang="ar">موصل أنثوي</name>
+                            <name lang="de">Stecker (weiblich)</name>
+                            <name lang="ru">Гнездо (нов.)</name>
+                            <name lang="pt">Conector fêmea</name>
+                            <name lang="en">Female connector</name>
+                            <name lang="it">Connettore femmina</name>
+                            <name lang="fr">Connecteur femelle</name>
+                            <name lang="pl">Gniazdo</name>
+                            <name lang="es">Connector hembra</name>
+                            <name lang="cs">Ženská spojka</name>
+                        </names>
+                        <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                        <description>
+                            <input x="1" y="-7.5" size="8" text="_"/>
+                            <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-10" x1="0" y2="-1" x2="0"/>
+                            <arc width="6" x="-3" y="0" antialias="true" height="6" style="line-style:normal;line-weight:normal;filling:none;color:black" start="-180" angle="-84"/>
+                            <arc width="6" x="-3" y="0" antialias="true" height="6" style="line-style:normal;line-weight:normal;filling:none;color:black" start="83" angle="-84"/>
+                            <terminal x="0" y="-11" orientation="n"/>
+                        </description>
+                    </definition>
+                </element>
+                <element name="borne_finale.elmt">
+                    <definition width="30" version="0.3" hotspot_x="10" hotspot_y="20" height="40" type="element" ic="true" orientation="dyyy">
+                        <names>
+                            <name lang="ar">طرف نهائي</name>
+                            <name lang="de">Endklemme</name>
+                            <name lang="ru">Клеммник</name>
+                            <name lang="pt">Terminal de fim</name>
+                            <name lang="en">Terminal block</name>
+                            <name lang="it">Terminale di fine</name>
+                            <name lang="fr">Borne finale</name>
+                            <name lang="pl">Zacisk</name>
+                            <name lang="es">Punto de unión</name>
+                            <name lang="cs">Koncová svorka</name>
+                        </names>
+                        <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                        <description>
+                            <input x="5" y="8" size="7" text="_"/>
+                            <input x="5" y="-5" size="10" text="_"/>
+                            <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-10" x1="0" y2="-3" x2="0"/>
+                            <circle x="-2.5" y="-2.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                            <terminal x="0" y="-10" orientation="n"/>
+                        </description>
+                    </definition>
+                </element>
+                <element name="bornes_s.elmt">
+                    <definition width="10" version="0.3" hotspot_x="5" hotspot_y="5" height="30" type="element" orientation="dyyy">
+                        <names>
+                            <name lang="ar">طرف خرج</name>
+                            <name lang="de">Ausgangsklemme</name>
+                            <name lang="ru">Гнездо (стар.)</name>
+                            <name lang="pt">Terminal de saída</name>
+                            <name lang="en">Output terminal</name>
+                            <name lang="it">Terminale di ingresso</name>
+                            <name lang="fr">Borne sortie</name>
+                            <name lang="pl">Gniazdo</name>
+                            <name lang="es">Terminal de salida</name>
+                            <name lang="cs">Výstupní svorka</name>
+                        </names>
+                        <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                        <description>
+                            <polygon antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" closed="false" y1="-1" x1="-4" y2="5" x2="0" y3="-1" x3="4"/>
+                            <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="5.5" x1="0" y2="20" x2="0"/>
+                            <terminal x="0" y="21" orientation="s"/>
+                        </description>
+                    </definition>
+                </element>
+                <element name="bornes_e.elmt">
+                    <definition width="20" version="0.3" hotspot_x="10" hotspot_y="25" height="30" type="element" orientation="dyyy">
+                        <names>
+                            <name lang="ar">طرف دخل</name>
+                            <name lang="de">Eingangsklemme</name>
+                            <name lang="ru">Штырь (стар.)</name>
+                            <name lang="pt">Terminal de entrada</name>
+                            <name lang="en">Input terminal</name>
+                            <name lang="it">Terminale di ingresso</name>
+                            <name lang="fr">Borne entrée</name>
+                            <name lang="pl">Wtyk</name>
+                            <name lang="es">Terminal de entrada</name>
+                            <name lang="cs">Vstupní svorka</name>
+                        </names>
+                        <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                        <description>
+                            <polygon antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" closed="false" y1="-5" x1="-4" y2="1" x2="0" y3="-5" x3="4"/>
+                            <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-20" x1="0" y2="0" x2="0"/>
+                            <terminal x="0" y="-21" orientation="n"/>
+                        </description>
+                    </definition>
+                </element>
+            </category>
+            <category name="contacts">
+                <names>
+                    <name lang="ar">ملامسات</name>
+                    <name lang="de">Kontakte</name>
+                    <name lang="ru">Контакты</name>
+                    <name lang="pt">Contactos</name>
+                    <name lang="en">Contacts</name>
+                    <name lang="it">Contatti</name>
+                    <name lang="fr">Contacts</name>
+                    <name lang="pl">Zestyki</name>
+                    <name lang="es">Terminales</name>
+                    <name lang="cs">Kontakty</name>
+                </names>
+                <category name="simples">
+                    <names>
+                        <name lang="ar">بسيطة</name>
+                        <name lang="de">Einfach</name>
+                        <name lang="ru">простые</name>
+                        <name lang="pt">Simples</name>
+                        <name lang="en">Simple</name>
+                        <name lang="it">Semplice</name>
+                        <name lang="fr">Simples</name>
+                        <name lang="pl">Pojedyncze</name>
+                        <name lang="es">Simples</name>
+                        <name lang="cs">Jednoduché</name>
+                    </names>
+                    <element name="con_simple.elmt">
+                        <definition width="30" version="0.3" hotspot_x="10" hotspot_y="25" height="50" type="element" orientation="dnny">
+                            <names>
+                                <name lang="ar">مُلامس بسيط (NO)</name>
+                                <name lang="de">Kontakt Einfach</name>
+                                <name lang="ru">Проктой контакт (НР)</name>
+                                <name lang="pt">Contacto simples (NO)</name>
+                                <name lang="en">Simple contact</name>
+                                <name lang="it">Contatto semplice (NA)</name>
+                                <name lang="fr">Contact simple</name>
+                                <name lang="pl">Zestyk zwierny</name>
+                                <name lang="es">Contactor simple</name>
+                                <name lang="cs">Jednoduché spojení</name>
+                            </names>
+                            <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                            <description>
+                                <polygon antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" closed="false" y1="-10" x1="-5" y2="10" x2="0" y3="20" x3="0"/>
+                                <input x="2.75" y="3" size="9" text="_"/>
+                                <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-20" x1="0" y2="-10" x2="0"/>
+                                <terminal x="0" y="-21" orientation="n"/>
+                                <terminal x="0" y="21" orientation="s"/>
+                            </description>
+                        </definition>
+                    </element>
+                </category>
+            </category>
+            <element name="contact_relai.elmt">
+                <definition width="60" version="0.3" hotspot_x="30" hotspot_y="35" height="70" type="element" orientation="dyyy">
+                    <names>
+                        <name lang="fr">Contact de relai</name>
+                    </names>
+                    <informations/>
+                    <description>
+                        <input x="8" y="20" size="7" text="13"/>
+                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-30" x1="10" y2="-10" x2="10"/>
+                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="30" x1="10" y2="10" x2="10"/>
+                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="10" x1="10" y2="-10" x2="6"/>
+                        <input x="-30" y="1.5" size="9" text="K_"/>
+                        <input x="8" y="-21.5" size="7" text="14"/>
+                        <terminal x="10" y="-30" orientation="n"/>
+                        <terminal x="10" y="30" orientation="s"/>
+                    </description>
+                </definition>
+            </element>
+        </category>
+    </collection>
+</project>
