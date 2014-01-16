@@ -21,7 +21,7 @@
 #ifndef MDT_TT_TEST_NODE_H
 #define MDT_TT_TEST_NODE_H
 
-#include "mdtClBase.h"
+#include "mdtTtBase.h"
 #include "mdtTtTestNodeUnitData.h"
 #include <QList>
 #include <QVariant>
@@ -30,13 +30,13 @@
 
 /*! \brief Helper class for test node edition
  */
-class mdtTtTestNode : public mdtClBase
+class mdtTtTestNode : public mdtTtBase
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtTtTestNode(QSqlDatabase db);
+  mdtTtTestNode(QObject *parent, QSqlDatabase db);
 
   /*! \brief Get SQL statement for units selection
    *

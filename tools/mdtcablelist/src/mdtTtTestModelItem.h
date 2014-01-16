@@ -21,19 +21,19 @@
 #ifndef MDT_TT_TEST_MODEL_ITEM_H
 #define MDT_TT_TEST_MODEL_ITEM_H
 
-#include "mdtClBase.h"
+#include "mdtTtBase.h"
 #include <QVariant>
 #include <QModelIndex>
 
 /*! \brief Helper class for test item edition
  */
-class mdtTtTestModelItem : public mdtClBase
+class mdtTtTestModelItem : public mdtTtBase
 {
  public:
 
   /*! \brief Coinstructor
    */
-  mdtTtTestModelItem(QSqlDatabase db);
+  mdtTtTestModelItem(QObject *parent, QSqlDatabase db);
 
   /*! \brief Get a list of used node unit IDs for given test item ID
    *

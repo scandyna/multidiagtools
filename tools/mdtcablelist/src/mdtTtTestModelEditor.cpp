@@ -52,7 +52,7 @@ mdtTtTestModelEditor::mdtTtTestModelEditor(QObject *parent, QSqlDatabase db)
 
 void mdtTtTestModelEditor::addTestItem() 
 {
-  mdtTtTestModel t(database());
+  mdtTtTestModel tm(this, database());
   QVariant testId;
   QVariant testCableId;
   QVariant testLinkBusAId;
@@ -82,8 +82,8 @@ void mdtTtTestModelEditor::addTestItem()
   // Set a expectedValue
   ///expectedValue = 1.2;
   // Add to db
-  if(!t.addTestItem(testId, testLinkBusAId, testLinkBusBId, expectedValue)){
-    pvLastError = t.lastError();
+  if(!tm.addTestItem(testId, testLinkBusAId, testLinkBusBId, expectedValue)){
+    pvLastError = tm.lastError();
     displayLastError();
     return;
   }
@@ -129,7 +129,7 @@ void mdtTtTestModelEditor::editTestItem()
 void mdtTtTestModelEditor::removeTestItem() 
 {
   mdtSqlTableWidget *widget;
-  mdtTtTestModel t(database());
+  mdtTtTestModel tm(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
 
@@ -150,9 +150,9 @@ void mdtTtTestModelEditor::removeTestItem()
     return;
   }
   // Delete seleced rows
-  ///if(!t.removeTestItems(indexes)){
-  if(!t.removeData("TestModelItem_tbl", "Id_PK", indexes)){
-    pvLastError = t.lastError();
+  ///if(!tm.removeTestItems(indexes)){
+  if(!tm.removeData("TestModelItem_tbl", "Id_PK", indexes)){
+    pvLastError = tm.lastError();
     displayLastError();
     return;
   }
@@ -163,7 +163,7 @@ void mdtTtTestModelEditor::removeTestItem()
 
 void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
 {
-  mdtTtTestModel t(database());
+  mdtTtTestModel tm(this, database());
   QVariant testId;
   QList<QVariant> setupIdList;
 
@@ -173,11 +173,11 @@ void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
     return;
   }
   // Warn user if some setup allready exists
-  setupIdList = t.getTestNodeUnitSetupIdList(testId);
+  setupIdList = tm.getTestNodeUnitSetupIdList(testId);
   if(!setupIdList.isEmpty()){
     QString text;
     QMessageBox msgBox;
-    text = tr("Setups will be generated for current test. ");
+    text = tr("Setups will be generated for current testm. ");
     text += tr("Some setups allready exists, and they will be deleted if you continue.");
     msgBox.setText(text);
     msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -189,8 +189,8 @@ void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
     }
   }
   // Generate setup
-  if(!t.generateTestNodeUnitSetup(testId)){
-    pvLastError = t.lastError();
+  if(!tm.generateTestNodeUnitSetup(testId)){
+    pvLastError = tm.lastError();
     displayLastError();
     return;
   }
@@ -201,7 +201,7 @@ void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
 void mdtTtTestModelEditor::removeTestNodeUnitSetup()
 {
   mdtSqlTableWidget *widget;
-  mdtTtTestModelItem ti(database());
+  mdtTtTestModelItem tmi(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
 
@@ -222,8 +222,8 @@ void mdtTtTestModelEditor::removeTestNodeUnitSetup()
     return;
   }
   // Delete seleced rows
-  if(!ti.removeTestNodeUnitSetups(indexes)){
-    pvLastError = ti.lastError();
+  if(!tmi.removeTestNodeUnitSetups(indexes)){
+    pvLastError = tmi.lastError();
     displayLastError();
     return;
   }

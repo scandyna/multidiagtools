@@ -18,33 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClBase.h"
+#include "mdtTtBase.h"
 #include <QSqlError>
 #include <QSqlError>
 #include <QSqlQuery>
 
 #include <QDebug>
 
-mdtClBase::mdtClBase(QSqlDatabase db) 
+mdtTtBase::mdtTtBase(QObject *parent, QSqlDatabase db)
+ : QObject(parent)
 {
   pvDatabase = db;
 }
 
-mdtClBase::~mdtClBase() 
+mdtTtBase::~mdtTtBase() 
 {
 }
 
-QSqlDatabase mdtClBase::database() 
+QSqlDatabase mdtTtBase::database() 
 {
   return pvDatabase;
 }
 
-mdtError mdtClBase::lastError() 
+mdtError mdtTtBase::lastError() 
 {
   return pvLastError;
 }
 
-bool mdtClBase::addRecord(const mdtSqlRecord & record, const QString & tableName)
+bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName)
 {
   QString sql;
   QSqlQuery query(database());
@@ -81,7 +82,7 @@ bool mdtClBase::addRecord(const mdtSqlRecord & record, const QString & tableName
     QSqlError sqlError = query.lastError();
     pvLastError.setError("Cannot prepare query for inertion in table '" + tableName + "'", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
   }
@@ -97,7 +98,7 @@ bool mdtClBase::addRecord(const mdtSqlRecord & record, const QString & tableName
     QSqlError sqlError = query.lastError();
     pvLastError.setError("Cannot exec query for inertion in table '" + tableName + "'", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
   }
@@ -105,7 +106,7 @@ bool mdtClBase::addRecord(const mdtSqlRecord & record, const QString & tableName
   return true;
 }
 
-bool mdtClBase::addRecordList(const QList<mdtSqlRecord> & recordList, const QString & tableName, bool singleTransaction )
+bool mdtTtBase::addRecordList(const QList<mdtSqlRecord> & recordList, const QString & tableName, bool singleTransaction )
 {
   int i;
 
@@ -131,7 +132,11 @@ bool mdtClBase::addRecordList(const QList<mdtSqlRecord> & recordList, const QStr
   return true;  
 }
 
-bool mdtClBase::removeData(const QString & tableName, const QStringList & fields, const QModelIndexList & indexes)
+QList<QSqlRecord> mdtTtBase::getData(const QString & sql, bool *ok, const QStringList & expectedFields)
+{
+}
+
+bool mdtTtBase::removeData(const QString & tableName, const QStringList & fields, const QModelIndexList & indexes)
 {
   int i;
   int col;
@@ -155,7 +160,7 @@ bool mdtClBase::removeData(const QString & tableName, const QStringList & fields
   ///qDebug() << "indexes max column : " << max;
   if(max > fields.size()){
     pvLastError.setError("Cannot remove rows in table " + tableName + ": indexes contains more columns than fields list.", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
   }
@@ -183,7 +188,7 @@ bool mdtClBase::removeData(const QString & tableName, const QStringList & fields
     sqlError = query.lastError();
     pvLastError.setError("Cannot remove rows in table " + tableName, mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
   }
@@ -191,12 +196,12 @@ bool mdtClBase::removeData(const QString & tableName, const QStringList & fields
   return true;
 }
 
-bool mdtClBase::removeData(const QString & tableName, const QString & fieldName, const QModelIndexList & indexes)
+bool mdtTtBase::removeData(const QString & tableName, const QString & fieldName, const QModelIndexList & indexes)
 {
   return removeData(tableName, QStringList(fieldName), indexes);
 }
 
-bool mdtClBase::removeData(const QString & tableName, const QString & fieldName, const QVariant & matchData)
+bool mdtTtBase::removeData(const QString & tableName, const QString & fieldName, const QVariant & matchData)
 {
   QString sql;
   QString delimiter;
@@ -212,7 +217,7 @@ bool mdtClBase::removeData(const QString & tableName, const QString & fieldName,
     sqlError = query.lastError();
     pvLastError.setError("Cannot remove row in table " + tableName, mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
   }
@@ -220,46 +225,46 @@ bool mdtClBase::removeData(const QString & tableName, const QString & fieldName,
   return true;
 }
 
-bool mdtClBase::beginTransaction() 
+bool mdtTtBase::beginTransaction() 
 {
   if(!pvDatabase.transaction()){
     QSqlError sqlError = pvDatabase.lastError();
     pvLastError.setError("Cannot beginn transaction (database: " + pvDatabase.databaseName() + ")", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
   }
   return true;
 }
 
-bool mdtClBase::rollbackTransaction() 
+bool mdtTtBase::rollbackTransaction() 
 {
   if(!pvDatabase.rollback()){
     QSqlError sqlError = pvDatabase.lastError();
     pvLastError.setError("Cannot beginn rollback (database: " + pvDatabase.databaseName() + ")", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
   }
   return true;
 }
 
-bool mdtClBase::commitTransaction() 
+bool mdtTtBase::commitTransaction() 
 {
   if(!pvDatabase.commit()){
     QSqlError sqlError = pvDatabase.lastError();
     pvLastError.setError("Cannot beginn commit (database: " + pvDatabase.databaseName() + ")", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClBase");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
   }
   return true;
 }
 
-QString mdtClBase::sqlDataDelimiter(QVariant::Type type)
+QString mdtTtBase::sqlDataDelimiter(QVariant::Type type)
 {
   switch(type){
     case QVariant::String:

@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_BASE_H
-#define MDT_CL_BASE_H
+#ifndef MDT_TT_BASE_H
+#define MDT_TT_BASE_H
 
 #include "mdtError.h"
 #include "mdtSqlRecord.h"
@@ -29,10 +29,12 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QList>
+#include <QSqlRecord>
+#include <QObject>
 
 /*! \brief Base class for helper class
  *
- * To edit entities (linke Article, Unit, ...) ,
+ * To edit entities (links, Article, Unit, ...) ,
  *  dedicated classes helps for interaction with database .
  *
  * This class is a base that regroups common methods .
@@ -41,17 +43,17 @@
  *   - Use of tr()
  *   - Use QObject::destroyed() signal (see mdtTtTest for a typical usecase)
  */
-class mdtClBase
+class mdtTtBase : public QObject
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtClBase(QSqlDatabase db);
+  mdtTtBase(QObject *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
-  virtual ~mdtClBase();
+  virtual ~mdtTtBase();
 
   /*! \brief Get database instance
    */
@@ -75,6 +77,20 @@ class mdtClBase
    *  outside, set this parameter to false.
    */
   bool addRecordList(const QList<mdtSqlRecord> & recordList, const QString & tableName, bool singleTransaction = false);
+
+  /*! \brief Get data for given sql statement
+   *
+   * Note that this method will not check if given SQL statement
+   *  makes a SELECT, INSERT, etc..
+   *  It is simply executed.
+   *
+   * \param sql SQL statement
+   * \param ok If not null, this pointer will contain true on success,
+   *            false else (in that case, lastError() will contain error ).
+   * \param expectedFields If not empty, it will be checked that query result
+   *                        contains all listed fields, and fail if some fields are missing.
+   */
+  QList<QSqlRecord> getData(const QString & sql, bool *ok = 0, const QStringList & expectedFields = QStringList());
 
   /*! \brief Remove data from given table
    *
@@ -131,9 +147,9 @@ class mdtClBase
 
  private:
 
-  Q_DISABLE_COPY(mdtClBase);
+  Q_DISABLE_COPY(mdtTtBase);
 
   QSqlDatabase pvDatabase;
 };
 
-#endif // #ifndef MDTCLBASE_H
+#endif // #ifndef MDT_TT_BASE_H

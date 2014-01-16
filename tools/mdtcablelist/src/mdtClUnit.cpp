@@ -26,8 +26,8 @@
 
 #include <QDebug>
 
-mdtClUnit::mdtClUnit(QSqlDatabase db)
- : mdtClBase(db)  
+mdtClUnit::mdtClUnit(QObject *parent, QSqlDatabase db)
+ : mdtTtBase(parent, db)
 {
   pvToUnitConnectionRelatedRangesModel = new QSqlQueryModel;
   pvUnitModel = new QSqlQueryModel;

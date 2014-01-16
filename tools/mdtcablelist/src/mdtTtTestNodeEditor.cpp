@@ -79,7 +79,7 @@ void mdtTtTestNodeEditor::setBaseVehicleType()
 
 void mdtTtTestNodeEditor::addUnits()
 {
-  mdtTtTestNode tn(database());
+  mdtTtTestNode tn(this, database());
   QList<mdtTtTestNodeUnitData> dataList;
   int i;
   
@@ -210,7 +210,7 @@ void mdtTtTestNodeEditor::editUnit()
 void mdtTtTestNodeEditor::removeUnits()
 {
   mdtSqlTableWidget *widget;
-  mdtTtTestNode tn(database());
+  mdtTtTestNode tn(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
 
@@ -280,7 +280,7 @@ QVariant mdtTtTestNodeEditor::selectUnitToUseAsTestNode(const QVariant & vehicle
 {
   Q_ASSERT(!vehicleTypeId.isNull());
 
-  mdtTtTestNode tn(database());
+  mdtTtTestNode tn(this, database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
@@ -317,7 +317,7 @@ QVariant mdtTtTestNodeEditor::selectUnitToUseAsTestNode(const QVariant & vehicle
 
 QVariant mdtTtTestNodeEditor::selectUnitConnection(const QVariant & unitId)
 {
-  mdtTtTestNode tn(database());
+  mdtTtTestNode tn(this, database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
@@ -354,7 +354,7 @@ QVariant mdtTtTestNodeEditor::selectUnitConnection(const QVariant & unitId)
 
 QList<QVariant> mdtTtTestNodeEditor::selectUnitIdList(const QList<QVariant> & unitIdList)
 {
-  mdtTtTestNode tn(database());
+  mdtTtTestNode tn(this, database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
@@ -409,7 +409,7 @@ QVariant mdtTtTestNodeEditor::getBusName()
 
 bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnit(const QVariant & testNodeUnitId, const QList<QVariant> & busSideTestNodeUnitConnectionIdList)
 {
-  mdtTtTestNode tn(database());
+  mdtTtTestNode tn(this, database());
   QList<QVariant> testNodeUnitConnectionIdList;
   QList<QVariant> linkedConnectionIdList;
   QVariant testNodeUnitConnectionId;

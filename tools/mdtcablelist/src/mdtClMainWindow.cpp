@@ -21,7 +21,7 @@
 #include "mdtClMainWindow.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlDatabaseManager.h"
-#include "mdtClDatabaseSchema.h"
+#include "mdtTtDatabaseSchema.h"
 #include "mdtClVehicleTypeEditor.h"
 #include "mdtClConnectorEditor.h"
 #include "mdtClUnitEditor.h"
@@ -415,7 +415,7 @@ bool mdtClMainWindow::openDatabaseSqlite()
     displayWarning(pvDatabaseManager->lastError().text());
     /// \todo Dangerous !!
     /**
-    mdtClDatabaseSchema dbSchema(pvDatabaseManager);
+    mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
     if(!dbSchema.createSchemaSqlite(fileInfo)){
       QMessageBox msgBox(this);
       mdtError e(tr("Cannot create database schema."), mdtError::Error);
@@ -430,7 +430,7 @@ bool mdtClMainWindow::openDatabaseSqlite()
     return false;
   }
   // Check that we have open a cable list schema
-  mdtClDatabaseSchema dbSchema(pvDatabaseManager);
+  mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
   if(!dbSchema.checkSchema()){
     displayWarning(tr("Choosen file does not contain a valid cable list database."));
     closeDatabase();
@@ -448,7 +448,7 @@ bool mdtClMainWindow::createDatabaseSqlite()
     return false;
   }
   // Create database
-  mdtClDatabaseSchema dbSchema(pvDatabaseManager);
+  mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
   if(!dbSchema.createSchemaSqlite(pvWorkDirectory)){
     QMessageBox msgBox(this);
     msgBox.setText(tr("Database creation failed.") + "                ");
@@ -480,7 +480,7 @@ bool mdtClMainWindow::importDatabaseSqlite()
     return false;
   }
   // Import ...
-  mdtClDatabaseSchema dbSchema(pvDatabaseManager);
+  mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
 
   return dbSchema.importDatabase(pvWorkDirectory);
 }

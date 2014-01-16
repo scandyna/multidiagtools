@@ -38,7 +38,7 @@ set (TEST_HEADER_FILES
 
 # Source files
 set (TEST_SOURCES_FILES 
-          ../src/mdtClBase.cpp
+          #../src/mdtClBase.cpp
           ../src/mdtClEditor.cpp
           ../src/mdtClVehicleTypeEditor.cpp
           ../src/mdtClConnectorEditor.cpp
@@ -64,7 +64,7 @@ set (TEST_SOURCES_FILES
           ../src/mdtClPathGraphicsLink.cpp
           ../src/mdtClPathGraph.cpp
           ../src/mdtClPathGraphDialog.cpp
-          ../src/mdtClDatabaseSchema.cpp
+          #../src/mdtClDatabaseSchema.cpp
           ../src/mdtClMainWindow.cpp
           ../src/mdtCcTestConnectionCable.cpp
           ../src/mdtCcTestConnectionCableEditor.cpp
@@ -118,6 +118,7 @@ target_link_libraries(mdtclsandbox "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdtdevice${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclsandbox "mdttesttool${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdtclsandbox "mdtdport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdttest")
 
@@ -128,5 +129,6 @@ target_link_libraries(mdtclunittest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdtdevice${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclunittest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdtclunittest "mdtdport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdttest")

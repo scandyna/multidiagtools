@@ -53,8 +53,8 @@ bool mdtCcTestConnectionCableEditor::setupTables()
 
 void mdtCcTestConnectionCableEditor::generateLinks()
 {
-  mdtCcTestConnectionCable tcc(database());
-  mdtTtTestNode tn(database());
+  mdtCcTestConnectionCable tcc(this, database());
+  mdtTtTestNode tn(this, database());
   QVariant cableId;
   QVariant dutVehicleId;
   QVariant dutUnitId;
@@ -160,7 +160,7 @@ void mdtCcTestConnectionCableEditor::generateLinks()
 void mdtCcTestConnectionCableEditor::removeLinks()
 {
   mdtSqlTableWidget *widget;
-  mdtCcTestConnectionCable tcc(database());
+  mdtCcTestConnectionCable tcc(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
 
@@ -193,7 +193,7 @@ void mdtCcTestConnectionCableEditor::removeLinks()
 /**
 void mdtCcTestConnectionCableEditor::connectTestCable()
 {
-  mdtCcTestConnectionCable tcc(database());
+  mdtCcTestConnectionCable tcc(this, database());
   QVariant testCableId;
   QVariant dutVehicleId;
   QVariant testNodeId;
@@ -224,7 +224,7 @@ void mdtCcTestConnectionCableEditor::connectTestCable()
 /**
 void mdtCcTestConnectionCableEditor::disconnectTestCable()
 {
-  mdtCcTestConnectionCable tcc(database());
+  mdtCcTestConnectionCable tcc(this, database());
   QVariant testCableId;
 
   // Let user choose a test cable to disconnect
@@ -313,7 +313,7 @@ QVariant mdtCcTestConnectionCableEditor::selectDutUnitId(const QVariant & vehicl
 
 QVariant mdtCcTestConnectionCableEditor::selectTestNode()
 {
-  mdtCcTestConnectionCable tcc(database());
+  mdtCcTestConnectionCable tcc(this, database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
@@ -351,7 +351,7 @@ QVariant mdtCcTestConnectionCableEditor::selectTestNode()
 
 QVariant mdtCcTestConnectionCableEditor::selectTestCable()
 {
-  mdtCcTestConnectionCable tcc(database());
+  mdtCcTestConnectionCable tcc(this, database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
@@ -386,7 +386,7 @@ QVariant mdtCcTestConnectionCableEditor::selectTestCable()
 
 QVariant mdtCcTestConnectionCableEditor::selectStartConnectorId(const QVariant & dutUnitId) 
 {
-  mdtCcTestConnectionCable tcc(database());
+  mdtCcTestConnectionCable tcc(this, database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
@@ -423,7 +423,7 @@ QVariant mdtCcTestConnectionCableEditor::selectStartConnectorId(const QVariant &
 
 QList<QVariant> mdtCcTestConnectionCableEditor::selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList) 
 {
-  mdtCcTestConnectionCable tcc(database());
+  mdtCcTestConnectionCable tcc(this, database());
   mdtSqlSelectionDialog selectionDialog;
   QModelIndexList selectedItems;
   QList<QVariant> idList;

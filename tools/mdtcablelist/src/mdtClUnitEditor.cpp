@@ -150,7 +150,7 @@ void mdtClUnitEditor::removeVehicleAssignation()
 
 void mdtClUnitEditor::setBaseArticle()
 {
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   mdtSqlSelectionDialog selectionDialog;
   QSqlQueryModel model;
   int ret;
@@ -222,7 +222,7 @@ void mdtClUnitEditor::addComponent()
 {
   mdtSqlSelectionDialog dialog;
   QSqlQueryModel *unitModel;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
 
   if(currentUnitId().isNull()){
     return;
@@ -263,7 +263,7 @@ void mdtClUnitEditor::addComponent()
 void mdtClUnitEditor::removeComponents()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
   int ret;
@@ -299,7 +299,7 @@ void mdtClUnitEditor::addConnector()
 {
   QVariant unitId;
   QVariant connectorName;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QInputDialog dialog;
 
   // Get unit ID
@@ -334,7 +334,7 @@ void mdtClUnitEditor::addConnectorBasedConnector()
   QVariant connectorName;
   QList<QVariant> contactList;
   QList<mdtClUnitConnectionData> contactDataList;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QInputDialog dialog;
   int i;
 
@@ -381,7 +381,7 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
   QVariant articleConnectorId;
   QList<QVariant> articleConnectionList;
   QList<mdtClUnitConnectionData> connectionDataList;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QInputDialog dialog;
   int i;
 
@@ -433,7 +433,7 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
 void mdtClUnitEditor::removeConnector()
 {
   QVariant connectorId;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
 
   connectorId = selectUnitConnector();
   if(connectorId.isNull()){
@@ -451,7 +451,7 @@ void mdtClUnitEditor::removeConnector()
 void mdtClUnitEditor::addConnection()
 {
   mdtClUnitConnectionDialog connectionDialog(0, database());
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QVariant unitId;
   QVariant unitConnectorId;
   QVariant articleConnectionId;
@@ -516,7 +516,7 @@ void mdtClUnitEditor::addConnection()
 void mdtClUnitEditor::addArticleConnectionBasedConnection()
 {
   mdtClUnitConnectionDialog connectionDialog(0, database());
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QVariant unitId;
   QVariant articleId;
   ///QVariant unitConnectorId;
@@ -567,7 +567,7 @@ void mdtClUnitEditor::addArticleConnectionBasedConnection()
 void mdtClUnitEditor::addFreeConnection()
 {
   mdtClUnitConnectionDialog dialog(0, database());
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
 
   if(currentUnitId().isNull()){
     return;
@@ -592,7 +592,7 @@ void mdtClUnitEditor::editConnection()
 {
   mdtSqlTableWidget *widget;
   mdtClUnitConnectionDialog dialog(0, database());
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   mdtClUnitConnectionData data;
 
   widget = form()->sqlTableWidget("UnitConnection_view");
@@ -622,7 +622,7 @@ void mdtClUnitEditor::editConnection()
 void mdtClUnitEditor::removeConnections()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
   QString linksMsg;
@@ -670,7 +670,7 @@ void mdtClUnitEditor::addLink()
   mdtSqlFormWidget *widget;
   mdtClUnitLinkDialog dialog(0, database());
   QVariant unitId;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
 
   widget = form()->sqlFormWidget("Unit_tbl");
   Q_ASSERT(widget != 0);
@@ -708,7 +708,7 @@ void mdtClUnitEditor::editLink()
   mdtClUnitConnectionData startConnectionData;
   mdtClUnitConnectionData endConnectionData;
   mdtClLinkData linkData;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
 
   unitWidget = form()->sqlFormWidget("Unit_tbl");
   Q_ASSERT(unitWidget != 0);
@@ -772,7 +772,7 @@ void mdtClUnitEditor::editLink()
 void mdtClUnitEditor::removeLinks()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QMessageBox msgBox;
   QList<QModelIndexList> indexes;
   QSqlError sqlError;
@@ -981,7 +981,7 @@ QVariant mdtClUnitEditor::selectArticleConnectionLinkedToUnitConnector(const QVa
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QString sql;
   QString msg;
 
@@ -1029,7 +1029,7 @@ QVariant mdtClUnitEditor::selectArticleConnector()
   QSqlError sqlError;
   QSqlQueryModel model;
   QString sql;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QVariant unitId;
   QVariant articleId;
 
@@ -1070,7 +1070,7 @@ QList<QVariant> mdtClUnitEditor::selectByArticleConnectorIdArticleConnectionIdLi
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QString sql;
   QModelIndexList selectedItems;
   QList<QVariant> idList;
@@ -1130,7 +1130,7 @@ QList<QVariant> mdtClUnitEditor::selectByArticleIdArticleConnectionIdList(const 
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QSqlQueryModel model;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   QString sql;
   QModelIndexList selectedItems;
   QList<QVariant> idList;

@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtClUnitTest.h"
 #include "mdtApplication.h"
-#include "mdtClDatabaseSchema.h"
+#include "mdtTtDatabaseSchema.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClLinkData.h"
 #include <QTest>
@@ -44,7 +44,7 @@ void mdtClUnitTest::initTestCase()
    */
   QVERIFY(dbFile.open());
   dbFileInfo.setFile(dbFile);
-  mdtClDatabaseSchema schema(&pvDatabaseManager);
+  mdtTtDatabaseSchema schema(&pvDatabaseManager);
   QVERIFY(schema.createSchemaSqlite(dbFileInfo));
   QVERIFY(pvDatabaseManager.database().isOpen());
   /// \todo Check that tables and views are created

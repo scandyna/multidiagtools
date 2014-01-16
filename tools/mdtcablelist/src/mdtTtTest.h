@@ -21,7 +21,7 @@
 #ifndef MDT_TT_TEST_H
 #define MDT_TT_TEST_H
 
-#include "mdtClBase.h"
+#include "mdtTtBase.h"
 #include "mdtValue.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 #include <QSqlDatabase>
@@ -38,13 +38,13 @@ class QSqlTableModel;
  *
  * 
  */
-class mdtTtTest : public mdtClBase
+class mdtTtTest : public mdtTtBase
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtTtTest(QSqlDatabase db);
+  mdtTtTest(QObject *parent, QSqlDatabase db);
 
   /*! \brief Set test item model
    *

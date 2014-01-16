@@ -108,6 +108,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src/mdtport/linux")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool")
 endif(UNIX)
 
 #################################################################################################################################################
@@ -153,9 +154,11 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
 # * mdttools *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools")
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool")
 
 # *** Tools section (executables) ***
 add_subdirectory("${PROJECT_SOURCE_DIR}/tools")
+
 endif(UNIX)
 
 # *** Mini test programm section ***
@@ -251,6 +254,10 @@ if(UNIX)
   add_test (mdtSerialPortConfigTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtserialportconfigtest)
 
   add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtdevicetest)
+
+  # mdtTestToolTest
+  add_test (mdtTestToolTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttesttooltest)
+
 endif(UNIX)
 
 # * Tools - mdt cable list *

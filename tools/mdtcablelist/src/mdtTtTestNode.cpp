@@ -23,8 +23,8 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-mdtTtTestNode::mdtTtTestNode(QSqlDatabase db)
- : mdtClBase(db)
+mdtTtTestNode::mdtTtTestNode(QObject *parent, QSqlDatabase db)
+ : mdtTtBase(parent, db)
 {
 }
 

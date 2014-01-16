@@ -23,7 +23,7 @@
 
 #include "mdtClUnitConnectionData.h"
 #include "mdtClLinkData.h"
-#include "mdtClBase.h"
+#include "mdtTtBase.h"
 #include "mdtError.h"
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
@@ -36,13 +36,13 @@
 
 /*! \brief Helper class to mana unit and related data
  */
-class mdtClUnit : public mdtClBase
+class mdtClUnit : public mdtTtBase
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtClUnit(QSqlDatabase db);
+  mdtClUnit(QObject *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */

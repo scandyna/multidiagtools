@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClDatabaseSchema.h"
+#include "mdtTtDatabaseSchema.h"
 #include "mdtSqlDatabaseManager.h"
 #include "mdtDataTableManager.h"
 #include <QSqlQuery>
@@ -29,7 +29,7 @@
 
 #include <QDebug>
 
-mdtClDatabaseSchema::mdtClDatabaseSchema(mdtSqlDatabaseManager *dbManager) 
+mdtTtDatabaseSchema::mdtTtDatabaseSchema(mdtSqlDatabaseManager *dbManager) 
 {
   Q_ASSERT(dbManager != 0);
 
@@ -37,12 +37,12 @@ mdtClDatabaseSchema::mdtClDatabaseSchema(mdtSqlDatabaseManager *dbManager)
   pvDatabaseManager = dbManager;
 }
 
-mdtClDatabaseSchema::~mdtClDatabaseSchema() 
+mdtTtDatabaseSchema::~mdtTtDatabaseSchema() 
 {
   ///delete pvDatabaseManager;
 }
 
-bool mdtClDatabaseSchema::createSchemaSqlite(const QDir & startDirectory)
+bool mdtTtDatabaseSchema::createSchemaSqlite(const QDir & startDirectory)
 {
   if(!pvDatabaseManager->createDatabaseSqlite(startDirectory)){
     return false;
@@ -50,7 +50,7 @@ bool mdtClDatabaseSchema::createSchemaSqlite(const QDir & startDirectory)
   return createSchemaSqlite();
 }
 
-bool mdtClDatabaseSchema::createSchemaSqlite(const QFileInfo & dbFileInfo) 
+bool mdtTtDatabaseSchema::createSchemaSqlite(const QFileInfo & dbFileInfo) 
 {
   if(!pvDatabaseManager->createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting)){
     return false;
@@ -58,7 +58,7 @@ bool mdtClDatabaseSchema::createSchemaSqlite(const QFileInfo & dbFileInfo)
   return createSchemaSqlite();
 }
 
-bool mdtClDatabaseSchema::createSchemaSqlite()
+bool mdtTtDatabaseSchema::createSchemaSqlite()
 {
   Q_ASSERT(pvDatabaseManager->database().isOpen());
 
@@ -87,7 +87,7 @@ bool mdtClDatabaseSchema::createSchemaSqlite()
   return populateTables();
 }
 
-bool mdtClDatabaseSchema::importDatabase(const QDir & startDirectory)
+bool mdtTtDatabaseSchema::importDatabase(const QDir & startDirectory)
 {
   Q_ASSERT(pvDatabaseManager->database().isOpen());
 
@@ -102,7 +102,7 @@ bool mdtClDatabaseSchema::importDatabase(const QDir & startDirectory)
   return importDatabase(dbFileInfo);
 }
 
-bool mdtClDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
+bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
 {
   Q_ASSERT(pvDatabaseManager->database().isOpen());
 
@@ -119,7 +119,7 @@ bool mdtClDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   // Check that it's not the current database
   if(sourceDbManager.database().databaseName() == pvDatabaseManager->database().databaseName()){
     pvLastError.setError("Selected source database is the same as current (destination) database.", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
     pvLastError.commit();
     return false;
   }
@@ -129,7 +129,7 @@ bool mdtClDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   for(i = 0; i < sourceTables.size(); ++i){
     if(!destinationTables.contains(sourceTables.at(i))){
       pvLastError.setError("Table '" + sourceTables.at(i) + "' does not exists in current database - Will be ignored", mdtError::Warning);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
       pvLastError.commit();
       ignoredTables.append(sourceTables.at(i));
     }
@@ -164,7 +164,7 @@ bool mdtClDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   return true;
 }
 
-bool mdtClDatabaseSchema::checkSchema()
+bool mdtTtDatabaseSchema::checkSchema()
 {
   Q_ASSERT(pvDatabaseManager->database().isOpen());
 
@@ -179,7 +179,7 @@ bool mdtClDatabaseSchema::checkSchema()
   for(i = 0; i < pvTables.size(); ++i){
     if(!dbTables.contains(pvTables.at(i).tableName())){
       pvLastError.setError("Table '" + pvTables.at(i).tableName() + "' is missing in database '" + pvDatabaseManager->database().databaseName() + "'.", mdtError::Error);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
       pvLastError.commit();
       return false;
     }
@@ -188,12 +188,12 @@ bool mdtClDatabaseSchema::checkSchema()
   return true;
 }
 
-mdtError mdtClDatabaseSchema::lastError() const
+mdtError mdtTtDatabaseSchema::lastError() const
 {
   return pvLastError;
 }
 
-bool mdtClDatabaseSchema::setupTables() 
+bool mdtTtDatabaseSchema::setupTables() 
 {
   // We must build tables list in correct order, regarding dependencies
   if(!setupVehicleTypeTable()){
@@ -278,7 +278,7 @@ bool mdtClDatabaseSchema::setupTables()
   return true;
 }
 
-bool mdtClDatabaseSchema::createTablesSqlite() 
+bool mdtTtDatabaseSchema::createTablesSqlite() 
 {
   int i;
   QSqlQuery query(pvDatabaseManager->database());
@@ -293,7 +293,7 @@ bool mdtClDatabaseSchema::createTablesSqlite()
   return true;
 }
 
-bool mdtClDatabaseSchema::createViews() 
+bool mdtTtDatabaseSchema::createViews() 
 {
   if(!createArticleComponentView()){
     return false;
@@ -358,7 +358,7 @@ bool mdtClDatabaseSchema::createViews()
   return true;
 }
 
-bool mdtClDatabaseSchema::populateTables()
+bool mdtTtDatabaseSchema::populateTables()
 {
   if(!populateLinkTypeTable()){
     return false;
@@ -372,7 +372,7 @@ bool mdtClDatabaseSchema::populateTables()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupVehicleTypeTable() 
+bool mdtTtDatabaseSchema::setupVehicleTypeTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -408,7 +408,7 @@ bool mdtClDatabaseSchema::setupVehicleTypeTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupVehicleTypeUnitTable() 
+bool mdtTtDatabaseSchema::setupVehicleTypeUnitTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -443,7 +443,7 @@ bool mdtClDatabaseSchema::setupVehicleTypeUnitTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupVehicleTypeLinkTable() 
+bool mdtTtDatabaseSchema::setupVehicleTypeLinkTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -506,7 +506,7 @@ bool mdtClDatabaseSchema::setupVehicleTypeLinkTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupConnectorTable()
+bool mdtTtDatabaseSchema::setupConnectorTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -558,7 +558,7 @@ bool mdtClDatabaseSchema::setupConnectorTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupConnectorContactTable()
+bool mdtTtDatabaseSchema::setupConnectorContactTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -599,7 +599,7 @@ bool mdtClDatabaseSchema::setupConnectorContactTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupArticleTable() 
+bool mdtTtDatabaseSchema::setupArticleTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -672,7 +672,7 @@ bool mdtClDatabaseSchema::setupArticleTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupArticleComponentTable() 
+bool mdtTtDatabaseSchema::setupArticleComponentTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -716,7 +716,7 @@ bool mdtClDatabaseSchema::setupArticleComponentTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupArticleConnectorTable()
+bool mdtTtDatabaseSchema::setupArticleConnectorTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -772,7 +772,7 @@ bool mdtClDatabaseSchema::setupArticleConnectorTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupArticleConnectionTable() 
+bool mdtTtDatabaseSchema::setupArticleConnectionTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -866,7 +866,7 @@ bool mdtClDatabaseSchema::setupArticleConnectionTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupArticleLinkTable() 
+bool mdtTtDatabaseSchema::setupArticleLinkTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -958,7 +958,7 @@ bool mdtClDatabaseSchema::setupArticleLinkTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupUnitTable() 
+bool mdtTtDatabaseSchema::setupUnitTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1031,7 +1031,7 @@ bool mdtClDatabaseSchema::setupUnitTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupUnitConnectorTable()
+bool mdtTtDatabaseSchema::setupUnitConnectorTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1106,7 +1106,7 @@ bool mdtClDatabaseSchema::setupUnitConnectorTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupUnitConnectionTable() 
+bool mdtTtDatabaseSchema::setupUnitConnectionTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1236,7 +1236,7 @@ bool mdtClDatabaseSchema::setupUnitConnectionTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupLinkTable() 
+bool mdtTtDatabaseSchema::setupLinkTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1353,7 +1353,7 @@ bool mdtClDatabaseSchema::setupLinkTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupLinkDirectionTable() 
+bool mdtTtDatabaseSchema::setupLinkDirectionTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1400,7 +1400,7 @@ bool mdtClDatabaseSchema::setupLinkDirectionTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupLinkTypeTable() 
+bool mdtTtDatabaseSchema::setupLinkTypeTable() 
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1447,7 +1447,7 @@ bool mdtClDatabaseSchema::setupLinkTypeTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestNodeTable()
+bool mdtTtDatabaseSchema::setupTestNodeTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1475,7 +1475,7 @@ bool mdtClDatabaseSchema::setupTestNodeTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestNodeUnitTable()
+bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1555,7 +1555,7 @@ bool mdtClDatabaseSchema::setupTestNodeUnitTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestNodeUnitTypeTable()
+bool mdtTtDatabaseSchema::setupTestNodeUnitTypeTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1596,7 +1596,7 @@ bool mdtClDatabaseSchema::setupTestNodeUnitTypeTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestCableTable()
+bool mdtTtDatabaseSchema::setupTestCableTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1619,7 +1619,7 @@ bool mdtClDatabaseSchema::setupTestCableTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestLinkTable()
+bool mdtTtDatabaseSchema::setupTestLinkTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1688,7 +1688,7 @@ bool mdtClDatabaseSchema::setupTestLinkTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestModelTable()
+bool mdtTtDatabaseSchema::setupTestModelTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1711,7 +1711,7 @@ bool mdtClDatabaseSchema::setupTestModelTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestModelItemTable()
+bool mdtTtDatabaseSchema::setupTestModelItemTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1785,7 +1785,7 @@ bool mdtClDatabaseSchema::setupTestModelItemTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestNodeUnitSetupTable()
+bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1844,7 +1844,7 @@ bool mdtClDatabaseSchema::setupTestNodeUnitSetupTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestTable()
+bool mdtTtDatabaseSchema::setupTestTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1895,7 +1895,7 @@ bool mdtClDatabaseSchema::setupTestTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::setupTestItemTable()
+bool mdtTtDatabaseSchema::setupTestItemTable()
 {
   mdtSqlSchemaTable table;
   QSqlField field;
@@ -1955,7 +1955,7 @@ bool mdtClDatabaseSchema::setupTestItemTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::createView(const QString & viewName, const QString & sql) 
+bool mdtTtDatabaseSchema::createView(const QString & viewName, const QString & sql) 
 {
   QSqlQuery query(pvDatabaseManager->database());
   QSqlError sqlError;
@@ -1969,7 +1969,7 @@ bool mdtClDatabaseSchema::createView(const QString & viewName, const QString & s
     sqlError = query.lastError();
     pvLastError.setError("Unable to drop view '" + viewName + "'", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
     pvLastError.commit();
     return false;
   }
@@ -1978,7 +1978,7 @@ bool mdtClDatabaseSchema::createView(const QString & viewName, const QString & s
     sqlError = query.lastError();
     pvLastError.setError("Unable to create view '" + viewName + "'", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
     pvLastError.commit();
     return false;
   }
@@ -1988,7 +1988,7 @@ bool mdtClDatabaseSchema::createView(const QString & viewName, const QString & s
   return true;
 }
 
-bool mdtClDatabaseSchema::createTestNodeUnitView()
+bool mdtTtDatabaseSchema::createTestNodeUnitView()
 {
   QString sql;
 
@@ -2025,7 +2025,7 @@ bool mdtClDatabaseSchema::createTestNodeUnitView()
   return createView("TestNodeUnit_view", sql);
 }
 
-bool mdtClDatabaseSchema::createVehicleTypeUnitView() 
+bool mdtTtDatabaseSchema::createVehicleTypeUnitView() 
 {
   QString sql;
 
@@ -2048,7 +2048,7 @@ bool mdtClDatabaseSchema::createVehicleTypeUnitView()
   return createView("VehicleType_Unit_view", sql);
 }
 
-bool mdtClDatabaseSchema::createArticleComponentUsageView() 
+bool mdtTtDatabaseSchema::createArticleComponentUsageView() 
 {
   QString sql;
 
@@ -2068,7 +2068,7 @@ bool mdtClDatabaseSchema::createArticleComponentUsageView()
   return createView("ArticleComponentUsage_view", sql);
 }
 
-bool mdtClDatabaseSchema::createArticleComponentView() 
+bool mdtTtDatabaseSchema::createArticleComponentView() 
 {
   QString sql;
 
@@ -2090,7 +2090,7 @@ bool mdtClDatabaseSchema::createArticleComponentView()
   return createView("ArticleComponent_view", sql);
 }
 
-bool mdtClDatabaseSchema::createArticleConnectionView()
+bool mdtTtDatabaseSchema::createArticleConnectionView()
 {
   QString sql;
 
@@ -2105,7 +2105,7 @@ bool mdtClDatabaseSchema::createArticleConnectionView()
   return createView("ArticleConnection_view", sql);
 }
 
-bool mdtClDatabaseSchema::createArticleLinkView() 
+bool mdtTtDatabaseSchema::createArticleLinkView() 
 {
   QString sql;
 
@@ -2156,7 +2156,7 @@ bool mdtClDatabaseSchema::createArticleLinkView()
   return createView("ArticleLink_view", sql);
 }
 
-bool mdtClDatabaseSchema::createUnitView() 
+bool mdtTtDatabaseSchema::createUnitView() 
 {
   QString sql;
 
@@ -2186,7 +2186,7 @@ bool mdtClDatabaseSchema::createUnitView()
   return createView("Unit_view", sql);
 }
 
-bool mdtClDatabaseSchema::createUnitComponentView() 
+bool mdtTtDatabaseSchema::createUnitComponentView() 
 {
   QString sql;
 
@@ -2213,7 +2213,7 @@ bool mdtClDatabaseSchema::createUnitComponentView()
   return createView("UnitComponent_view", sql);
 }
 
-bool mdtClDatabaseSchema::createUnitConnectionView() 
+bool mdtTtDatabaseSchema::createUnitConnectionView() 
 {
   QString sql;
 
@@ -2249,7 +2249,7 @@ bool mdtClDatabaseSchema::createUnitConnectionView()
   return createView("UnitConnection_view", sql);
 }
 
-bool mdtClDatabaseSchema::createArticleLinkUnitConnectionView()
+bool mdtTtDatabaseSchema::createArticleLinkUnitConnectionView()
 {
   QString sql;
 
@@ -2278,7 +2278,7 @@ bool mdtClDatabaseSchema::createArticleLinkUnitConnectionView()
   return createView("ArticleLink_UnitConnection_view", sql);
 }
 
-bool mdtClDatabaseSchema::createUnitLinkView() 
+bool mdtTtDatabaseSchema::createUnitLinkView() 
 {
   QString sql, selectSql;
 
@@ -2362,7 +2362,7 @@ bool mdtClDatabaseSchema::createUnitLinkView()
   return createView("UnitLink_view", sql);
 }
 
-bool mdtClDatabaseSchema::createUnitVehicleTypeView() 
+bool mdtTtDatabaseSchema::createUnitVehicleTypeView() 
 {
   QString sql;
 
@@ -2380,7 +2380,7 @@ bool mdtClDatabaseSchema::createUnitVehicleTypeView()
   return createView("Unit_VehicleType_view", sql);
 }
 
-bool mdtClDatabaseSchema::createLinkListView() 
+bool mdtTtDatabaseSchema::createLinkListView() 
 {
   QString sql, selectSql;
 
@@ -2466,7 +2466,7 @@ bool mdtClDatabaseSchema::createLinkListView()
   return createView("LinkList_view", sql);
 }
 
-bool mdtClDatabaseSchema::createTestLinkView()
+bool mdtTtDatabaseSchema::createTestLinkView()
 {
   QString sql;
 
@@ -2513,7 +2513,7 @@ bool mdtClDatabaseSchema::createTestLinkView()
   return createView("TestLink_view", sql);
 }
 
-bool mdtClDatabaseSchema::createTestModelItemView()
+bool mdtTtDatabaseSchema::createTestModelItemView()
 {
   QString sql;
 
@@ -2565,7 +2565,7 @@ bool mdtClDatabaseSchema::createTestModelItemView()
   return createView("TestModelItem_view", sql);
 }
 
-bool mdtClDatabaseSchema::createTestModelItemNodeUnitSetupView()
+bool mdtTtDatabaseSchema::createTestModelItemNodeUnitSetupView()
 {
   QString sql;
 
@@ -2595,7 +2595,7 @@ bool mdtClDatabaseSchema::createTestModelItemNodeUnitSetupView()
   return createView("TestModelItemNodeUnitSetup_view", sql);
 }
 
-bool mdtClDatabaseSchema::createTestModelItemNodeView()
+bool mdtTtDatabaseSchema::createTestModelItemNodeView()
 {
   QString sql;
 
@@ -2618,7 +2618,7 @@ bool mdtClDatabaseSchema::createTestModelItemNodeView()
   return createView("TestModelItemNode_view", sql);
 }
 
-bool mdtClDatabaseSchema::createTestModelItemNodeUnitView()
+bool mdtTtDatabaseSchema::createTestModelItemNodeUnitView()
 {
   QString sql;
 
@@ -2649,7 +2649,7 @@ bool mdtClDatabaseSchema::createTestModelItemNodeUnitView()
   return createView("TestModelItemNodeUnit_view", sql);
 }
 
-bool mdtClDatabaseSchema::createTestItemView()
+bool mdtTtDatabaseSchema::createTestItemView()
 {
   QString sql;
 
@@ -2704,7 +2704,7 @@ bool mdtClDatabaseSchema::createTestItemView()
   return createView("TestItem_view", sql);
 }
 
-bool mdtClDatabaseSchema::createTestItemNodeUnitSetupView()
+bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
 {
   QString sql;
 
@@ -2739,7 +2739,7 @@ bool mdtClDatabaseSchema::createTestItemNodeUnitSetupView()
   return createView("TestItemNodeUnitSetup_view", sql);
 }
 
-bool mdtClDatabaseSchema::pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData)
+bool mdtTtDatabaseSchema::pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData)
 {
   QSqlQuery query(pvDatabaseManager->database());
   QSqlError sqlError;
@@ -2754,7 +2754,7 @@ bool mdtClDatabaseSchema::pkExistsInTable(const QString & tableName, const QStri
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query to check if data exists in table '" + tableName + "'", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
     pvLastError.commit();
     return false;
   }
@@ -2765,7 +2765,7 @@ bool mdtClDatabaseSchema::pkExistsInTable(const QString & tableName, const QStri
   return false;
 }
 
-bool mdtClDatabaseSchema::insertDataIntoTable(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
+bool mdtTtDatabaseSchema::insertDataIntoTable(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
 {
   Q_ASSERT(fields.size() > 0);
   Q_ASSERT(data.size() == fields.size());
@@ -2807,7 +2807,7 @@ bool mdtClDatabaseSchema::insertDataIntoTable(const QString & tableName, const Q
     sqlError = query.lastError();
     pvLastError.setError("Cannot prepare query for insertion into table '" + tableName + "'", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
     pvLastError.commit();
     return false;
   }
@@ -2826,7 +2826,7 @@ bool mdtClDatabaseSchema::insertDataIntoTable(const QString & tableName, const Q
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query for insertion into table '" + tableName + "'", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClDatabaseSchema");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
     pvLastError.commit();
     return false;
   }
@@ -2834,7 +2834,7 @@ bool mdtClDatabaseSchema::insertDataIntoTable(const QString & tableName, const Q
   return true;
 }
 
-QString mdtClDatabaseSchema::sqlForDataInsertion(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
+QString mdtTtDatabaseSchema::sqlForDataInsertion(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
 {
   QString sql;
   int i;
@@ -2859,7 +2859,7 @@ QString mdtClDatabaseSchema::sqlForDataInsertion(const QString & tableName, cons
   return sql;
 }
 
-QString mdtClDatabaseSchema::sqlForDataEdition(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
+QString mdtTtDatabaseSchema::sqlForDataEdition(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
 {
   Q_ASSERT(fields.size() > 0);
   Q_ASSERT(data.size() == fields.size());
@@ -2887,7 +2887,7 @@ QString mdtClDatabaseSchema::sqlForDataEdition(const QString & tableName, const 
   return sql;
 }
 
-bool mdtClDatabaseSchema::populateLinkTypeTable()
+bool mdtTtDatabaseSchema::populateLinkTypeTable()
 {
   QStringList fields;
   QList<QVariant> data;
@@ -2915,7 +2915,7 @@ bool mdtClDatabaseSchema::populateLinkTypeTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::populateLinkDirectionTable()
+bool mdtTtDatabaseSchema::populateLinkDirectionTable()
 {
   QStringList fields;
   QList<QVariant> data;
@@ -2943,7 +2943,7 @@ bool mdtClDatabaseSchema::populateLinkDirectionTable()
   return true;
 }
 
-bool mdtClDatabaseSchema::populateTestNodeUnitTypeTable()
+bool mdtTtDatabaseSchema::populateTestNodeUnitTypeTable()
 {
   QStringList fields;
   QList<QVariant> data;

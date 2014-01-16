@@ -25,8 +25,8 @@
 
 #include <QDebug>
 
-mdtClArticle::mdtClArticle(QSqlDatabase db)
- : mdtClBase(db)
+mdtClArticle::mdtClArticle(QObject *parent, QSqlDatabase db)
+ : mdtTtBase(parent, db)
 {
   pvArticleModel = new QSqlQueryModel;
 }

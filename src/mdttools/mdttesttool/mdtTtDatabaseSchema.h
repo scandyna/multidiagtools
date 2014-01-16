@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_DATABASE_SCHEMA_H
-#define MDT_CL_DATABASE_SCHEMA_H
+#ifndef MDT_TT_DATABASE_SCHEMA_H
+#define MDT_TT_DATABASE_SCHEMA_H
 
 #include "mdtSqlSchemaTable.h"
 #include "mdtError.h"
@@ -35,17 +35,17 @@ class mdtSqlDatabaseManager;
 
 /*! \brief Build database schema
  */
-class mdtClDatabaseSchema
+class mdtTtDatabaseSchema
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtClDatabaseSchema(mdtSqlDatabaseManager *dbManager);
+  mdtTtDatabaseSchema(mdtSqlDatabaseManager *dbManager);
 
   /*! \brief Destructor
    */
-  ~mdtClDatabaseSchema();
+  ~mdtTtDatabaseSchema();
 
   /*! \brief Create schema using Sqlite
    *
@@ -389,11 +389,11 @@ class mdtClDatabaseSchema
    */
   bool populateTestNodeUnitTypeTable();
 
-  Q_DISABLE_COPY(mdtClDatabaseSchema);
+  Q_DISABLE_COPY(mdtTtDatabaseSchema);
 
   mdtSqlDatabaseManager *pvDatabaseManager;
   QList<mdtSqlSchemaTable> pvTables;
   mdtError pvLastError;
 };
 
-#endif // #ifndef MDT_CL_DATABASE_SCHEMA_H
+#endif // #ifndef MDT_TT_DATABASE_SCHEMA_H

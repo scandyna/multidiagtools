@@ -69,7 +69,7 @@ bool mdtTtTestModelItemEditor::setupTables()
 
 void mdtTtTestModelItemEditor::setTestLink()
 {
-  mdtTtTestModelItem ti(database());
+  mdtTtTestModelItem tmi(this, database());
   QVariant testItemId;
   QVariant testLinkBusAId;
   QVariant testLinkBusBId;
@@ -90,8 +90,8 @@ void mdtTtTestModelItemEditor::setTestLink()
     return;
   }
   // Add to db
-  if(!ti.setTestLink(testItemId, testLinkBusAId, testLinkBusBId)){
-    pvLastError = ti.lastError();
+  if(!tmi.setTestLink(testItemId, testLinkBusAId, testLinkBusBId)){
+    pvLastError = tmi.lastError();
     displayLastError();
     return;
   }
@@ -103,7 +103,7 @@ void mdtTtTestModelItemEditor::setTestLink()
 
 void mdtTtTestModelItemEditor::generateTestNodeUnitSetup()
 {
-  mdtTtTestModelItem ti(database());
+  mdtTtTestModelItem tmi(this, database());
   QVariant testItemId;
   QList<QVariant> setupIdList;
 
@@ -116,7 +116,7 @@ void mdtTtTestModelItemEditor::generateTestNodeUnitSetup()
   qDebug() << "-> testItemId: " << testItemId;
   qDebug() << "Get setupIdList ...";
   // Warn user if some setup allready exists
-  setupIdList = ti.getTestNodeUnitSetupIdList(testItemId);
+  setupIdList = tmi.getTestNodeUnitSetupIdList(testItemId);
   qDebug() << "-> setupIdList: " << setupIdList;
   if(!setupIdList.isEmpty()){
     QString text;
@@ -134,8 +134,8 @@ void mdtTtTestModelItemEditor::generateTestNodeUnitSetup()
   }
   // Generate setup
   qDebug() << "Generate ...";
-  if(!ti.generateTestNodeUnitSetup(testItemId)){
-    pvLastError = ti.lastError();
+  if(!tmi.generateTestNodeUnitSetup(testItemId)){
+    pvLastError = tmi.lastError();
     displayLastError();
     return;
   }
@@ -147,7 +147,7 @@ void mdtTtTestModelItemEditor::generateTestNodeUnitSetup()
 void mdtTtTestModelItemEditor::removeTestNodeUnitSetup()
 {
   mdtSqlTableWidget *widget;
-  mdtTtTestModelItem ti(database());
+  mdtTtTestModelItem tmi(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
 
@@ -168,8 +168,8 @@ void mdtTtTestModelItemEditor::removeTestNodeUnitSetup()
     return;
   }
   // Delete seleced rows
-  if(!ti.removeTestNodeUnitSetups(indexes)){
-    pvLastError = ti.lastError();
+  if(!tmi.removeTestNodeUnitSetups(indexes)){
+    pvLastError = tmi.lastError();
     displayLastError();
     return;
   }

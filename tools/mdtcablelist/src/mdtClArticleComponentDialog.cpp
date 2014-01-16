@@ -84,7 +84,7 @@ void mdtClArticleComponentDialog::selectComponent()
 {
   mdtSqlSelectionDialog dialog(this);
   QSqlQueryModel *articleModel;
-  mdtClArticle art(pvDatabase);
+  mdtClArticle art(this, pvDatabase);
   QModelIndex index;
   QVariant data;
   int row;

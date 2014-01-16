@@ -26,8 +26,8 @@
 
 #include <QDebug>
 
-mdtTtTestModelItem::mdtTtTestModelItem(QSqlDatabase db)
- : mdtClBase(db)
+mdtTtTestModelItem::mdtTtTestModelItem(QObject *parent, QSqlDatabase db)
+ : mdtTtBase(parent, db)
 {
 }
 

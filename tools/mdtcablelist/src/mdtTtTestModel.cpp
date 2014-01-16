@@ -27,8 +27,8 @@
 
 #include <QDebug>
 
-mdtTtTestModel::mdtTtTestModel(QSqlDatabase db)
- : mdtClBase(db)
+mdtTtTestModel::mdtTtTestModel(QObject *parent, QSqlDatabase db)
+ : mdtTtBase(parent, db)
 {
 }
 
@@ -270,7 +270,7 @@ bool mdtTtTestModel::removeTestItems(const QModelIndexList & indexListOfSelected
 
 bool mdtTtTestModel::generateTestNodeUnitSetup(const QVariant & testId)
 {
-  mdtTtTestModelItem ti(database());
+  mdtTtTestModelItem tmi(this, database());
   QString sql;
   QSqlError sqlError;
   QSqlQuery query(database());
@@ -289,7 +289,7 @@ bool mdtTtTestModel::generateTestNodeUnitSetup(const QVariant & testId)
   while(query.next()){
     // Get test item data
     testItemId = query.value(0);
-    if(!ti.generateTestNodeUnitSetup(testItemId)){
+    if(!tmi.generateTestNodeUnitSetup(testItemId)){
       return false;
     }
   }

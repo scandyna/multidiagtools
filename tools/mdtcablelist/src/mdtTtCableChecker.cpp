@@ -69,12 +69,12 @@ mdtTtCableChecker::mdtTtCableChecker(QWidget *parent, QSqlDatabase db)
 {
   pvMultimeter = 0;
   pvDeviceStatusWidgetsLayout = 0;
-  pvTest = new mdtTtTest(db);
+  pvTest = new mdtTtTest(this, db);
 }
 
 mdtTtCableChecker::~mdtTtCableChecker()
 {
-  delete pvTest;
+  delete pvTest;  /// \todo Check if OK (now, mdtTtTest inherits QObject, via mdtTtBase)
   removeMultimeter();
   removeIoNodes();
 }
@@ -94,7 +94,7 @@ bool mdtTtCableChecker::setupTables()
 
 void mdtTtCableChecker::setTestModel()
 {
-  mdtTtTest t(database());
+  ///mdtTtTest t(database());
   QVariant testResultId;
   QVariant baseTestId;
 
@@ -109,11 +109,18 @@ void mdtTtCableChecker::setTestModel()
     return;
   }
   // Set test model
+  if(!pvTest->setTestModel(testResultId, baseTestId)){
+    pvLastError = pvTest->lastError();
+    displayLastError();
+    return;
+  }
+  /**
   if(!t.setTestModel(testResultId, baseTestId)){
     pvLastError = t.lastError();
     displayLastError();
     return;
   }
+  */
   // Force a update
   mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
@@ -126,7 +133,7 @@ void mdtTtCableChecker::setTestModel()
 
 void mdtTtCableChecker::removeTestResult()
 {
-  mdtTtTest t(database());
+  ///mdtTtTest t(database());
   QMessageBox msgBox;
   QVariant testResultId;
 
@@ -145,11 +152,18 @@ void mdtTtCableChecker::removeTestResult()
     return;
   }
   // Delete test result items
+  if(!pvTest->removeData("TestItem_tbl", "Test_Id_FK", testResultId)){
+    pvLastError = pvTest->lastError();
+    displayLastError();
+    return;
+  }
+  /**
   if(!t.removeData("TestItem_tbl", "Test_Id_FK", testResultId)){
     pvLastError = t.lastError();
     displayLastError();
     return;
   }
+  */
   // Delete test result
   mainSqlWidget()->remove();
   // Update connections table

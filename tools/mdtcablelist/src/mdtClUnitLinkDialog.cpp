@@ -471,7 +471,7 @@ void mdtClUnitLinkDialog::selectStartConnection()
   QSqlQueryModel model;
   QList<QVariant> result;
   mdtClUnitConnectionData data;
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(this, pvDatabase);
 
   // Setup and run query
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
@@ -511,7 +511,7 @@ void mdtClUnitLinkDialog::selectEndConnection()
   QSqlQueryModel model;
   QList<QVariant> result;
   mdtClUnitConnectionData data;
-  mdtClUnit unit(pvDatabase);
+  mdtClUnit unit(this, pvDatabase);
 
   // Setup and run query
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvEndUnitId.toString();

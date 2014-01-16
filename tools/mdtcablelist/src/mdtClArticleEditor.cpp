@@ -61,7 +61,7 @@ mdtClArticleEditor::~mdtClArticleEditor()
 void mdtClArticleEditor::addComponent()
 {
   mdtClArticleComponentDialog dialog(0, database(), currentArticleId());
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
 
   if(currentArticleId().isNull()){
     return;
@@ -89,7 +89,7 @@ void mdtClArticleEditor::editComponent()
   mdtSqlTableWidget *widget;
   QVariant currentArtId;
   QVariant currentComponentId;
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
 
   widget = form()->sqlTableWidget("ArticleComponent_view");
   Q_ASSERT(widget != 0);
@@ -125,7 +125,7 @@ void mdtClArticleEditor::editComponent(const QModelIndex &index)
 void mdtClArticleEditor::removeComponents()
 {
   mdtSqlTableWidget *widget;
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
   QSqlError sqlError;
@@ -168,7 +168,7 @@ void mdtClArticleEditor::addConnection()
   QVariant articleId;
   mdtClArticleConnectionData data;
   mdtClArticleConnectionDialog dialog;
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
   QSqlQueryModel model;
   QString sql;
 
@@ -199,7 +199,7 @@ void mdtClArticleEditor::addConnection()
 void mdtClArticleEditor::removeConnections()
 {
   mdtSqlTableWidget *widget;
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
   QSqlError sqlError;
@@ -239,7 +239,7 @@ void mdtClArticleEditor::addConnector()
   QString connectorName;
   QList<QVariant> selectedContacts;
   QList<mdtClArticleConnectionData> dataList;
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
   int i;
 
   articleId = currentArticleId();
@@ -284,7 +284,7 @@ void mdtClArticleEditor::addConnector()
 void mdtClArticleEditor::removeConnectors()
 {
   QList<QVariant> articleConnectorIdList;
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
   QMessageBox msgBox;
 
   // Let user select article connectors
@@ -314,7 +314,7 @@ void mdtClArticleEditor::removeConnectors()
 void mdtClArticleEditor::addLink()
 {
   mdtClArticleLinkDialog dialog(0, database(), currentArticleId());
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
 
   // Check if some connection exists
   if(form()->rowCount("ArticleConnection_view") < 1){
@@ -348,7 +348,7 @@ void mdtClArticleEditor::editLink()
   mdtClArticleLinkDialog dialog(0, database(), currentArticleId());
   int row;
   mdtAbstractSqlWidget *widget;
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
 
   if(currentArticleId().isNull()){
     return;
@@ -386,7 +386,7 @@ void mdtClArticleEditor::editLink()
 void mdtClArticleEditor::removeLinks()
 {
   mdtSqlTableWidget *widget;
-  mdtClArticle art(database());
+  mdtClArticle art(this, database());
   QMessageBox msgBox;
   QStringList fields;
   QList<QModelIndexList> indexes;

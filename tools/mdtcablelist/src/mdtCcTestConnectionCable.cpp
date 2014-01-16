@@ -27,8 +27,8 @@
 
 #include <QDebug>
 
-mdtCcTestConnectionCable::mdtCcTestConnectionCable(QSqlDatabase db)
- : mdtClBase(db)
+mdtCcTestConnectionCable::mdtCcTestConnectionCable(QObject *parent, QSqlDatabase db)
+ : mdtTtBase(parent, db)
 {
   pvPathGraph = new mdtClPathGraph(db);
 }
@@ -445,7 +445,7 @@ bool mdtCcTestConnectionCable::addLinks(const QVariant & nodeId, const QList<QVa
 {
   Q_ASSERT(dutConnectionIdList.size() <= testConnectionIdList.size());
 
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   int i;
 
   for(i = 0; i < dutConnectionIdList.size(); ++i){
@@ -513,7 +513,7 @@ bool mdtCcTestConnectionCable::connectTestCable(const QVariant & testCableId, co
 {
   QList<mdtClLinkData> testLinkDataList;
   mdtClLinkData data;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   int i;
 
   // Get link data for given cable
@@ -545,7 +545,7 @@ bool mdtCcTestConnectionCable::disconnectTestCable(const QVariant & testCableId)
 {
   QList<mdtClLinkData> testLinkDataList;
   mdtClLinkData data;
-  mdtClUnit unit(database());
+  mdtClUnit unit(this, database());
   int i;
 
   // Get link data for given cable

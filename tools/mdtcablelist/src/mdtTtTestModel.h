@@ -21,20 +21,20 @@
 #ifndef MDT_TT_TEST_MODEL_H
 #define MDT_TT_TEST_MODEL_H
 
-#include "mdtClBase.h"
+#include "mdtTtBase.h"
 #include <QVariant>
 #include <QList>
 #include <QModelIndex>
 
 /*! \brief Helper class for test edition
  */
-class mdtTtTestModel : public mdtClBase
+class mdtTtTestModel : public mdtTtBase
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtTtTestModel(QSqlDatabase db);
+  mdtTtTestModel(QObject *parent, QSqlDatabase db);
 
   /*! \brief Get a list of test item IDs for given test ID
    */

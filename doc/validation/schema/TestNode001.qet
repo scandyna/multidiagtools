@@ -7,83 +7,85 @@
     <diagram title="Source and measure" displayrows="true" version="0.3" cols="17" folio="%id/%total" displaycols="true" height="660" colsize="60" order="1" rows="8" author="PS" filename="Coupling box" date="20140114" rowsize="80">
         <defaultconductor num="_" type="multi"/>
         <elements>
-            <element x="1020" y="620" type="embed://import/bornes/bornes_s.elmt" orientation="1">
+            <element x="1020" y="80" type="embed://import/bornes/bornes_s.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="17" id="0" orientation="2"/>
                 </terminals>
                 <inputs/>
             </element>
-            <element x="600" y="620" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="70" y="400" type="embed://import/bornes/borne_finale.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="-6" id="1" orientation="0"/>
-                    <terminal x="0" y="6" id="2" orientation="2"/>
                 </terminals>
                 <inputs>
                     <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text="XW1"/>
+                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XMEAS-"/>
                 </inputs>
             </element>
-            <element x="220" y="80" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="70" y="240" type="embed://import/bornes/borne_finale.elmt" orientation="1">
                 <terminals>
-                    <terminal x="0" y="-6" id="3" orientation="0"/>
-                    <terminal x="0" y="6" id="4" orientation="2"/>
+                    <terminal x="0" y="-6" id="2" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XMEAS+"/>
                 </inputs>
             </element>
-            <element x="320" y="70" type="embed://import/contact_relai.elmt" orientation="1">
+            <element x="320" y="390" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="3" orientation="0"/>
+                    <terminal x="10" y="26" id="4" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="13"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KMEAS-"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="14"/>
+                </inputs>
+            </element>
+            <element x="310" y="230" type="embed://import/contact_relai.elmt" orientation="1">
                 <terminals>
                     <terminal x="10" y="-26" id="5" orientation="0"/>
                     <terminal x="10" y="26" id="6" orientation="2"/>
                 </terminals>
                 <inputs>
                     <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="13"/>
-                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KSRC+"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-12.95" usery="15.7" text="KMEAS+"/>
                     <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="14"/>
                 </inputs>
             </element>
-            <element x="600" y="80" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="220" y="240" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="-6" id="7" orientation="0"/>
                     <terminal x="0" y="6" id="8" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text="XW1"/>
+                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
                 </inputs>
             </element>
-            <element x="70" y="80" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+            <element x="320" y="310" type="embed://import/contact_relai.elmt" orientation="1">
                 <terminals>
-                    <terminal x="0" y="-6" id="9" orientation="0"/>
+                    <terminal x="10" y="-26" id="9" orientation="0"/>
+                    <terminal x="10" y="26" id="10" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="17.3" usery="23.95" text="XSRC+"/>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-14.45" usery="34.45" text="KMEAS+R"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
                 </inputs>
             </element>
-            <element x="70" y="150" type="embed://import/bornes/borne_finale.elmt" orientation="1">
-                <terminals>
-                    <terminal x="0" y="-6" id="10" orientation="0"/>
-                </terminals>
-                <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="22.45" text="XSRC-"/>
-                </inputs>
-            </element>
-            <element x="320" y="140" type="embed://import/contact_relai.elmt" orientation="1">
+            <element x="320" y="470" type="embed://import/contact_relai.elmt" orientation="1">
                 <terminals>
                     <terminal x="10" y="-26" id="11" orientation="0"/>
                     <terminal x="10" y="26" id="12" orientation="2"/>
                 </terminals>
                 <inputs>
                     <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
-                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KSRC-"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-8.45" usery="28.45" text="KMEAS-R"/>
                     <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
                 </inputs>
             </element>
-            <element x="220" y="150" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="220" y="400" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="-6" id="13" orientation="0"/>
                     <terminal x="0" y="6" id="14" orientation="2"/>
@@ -93,7 +95,7 @@
                     <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
                 </inputs>
             </element>
-            <element x="220" y="620" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="220" y="550" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="-6" id="15" orientation="0"/>
                     <terminal x="0" y="6" id="16" orientation="2"/>
@@ -103,39 +105,10 @@
                     <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
                 </inputs>
             </element>
-            <element x="320" y="610" type="embed://import/contact_relai.elmt" orientation="1">
+            <element x="320" y="540" type="embed://import/contact_relai.elmt" orientation="1">
                 <terminals>
                     <terminal x="10" y="-26" id="17" orientation="0"/>
                     <terminal x="10" y="26" id="18" orientation="2"/>
-                </terminals>
-                <inputs>
-                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
-                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KISO-"/>
-                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
-                </inputs>
-            </element>
-            <element x="70" y="620" type="embed://import/bornes/borne_finale.elmt" orientation="1">
-                <terminals>
-                    <terminal x="0" y="-6" id="19" orientation="0"/>
-                </terminals>
-                <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XISO-"/>
-                </inputs>
-            </element>
-            <element x="70" y="550" type="embed://import/bornes/borne_finale.elmt" orientation="1">
-                <terminals>
-                    <terminal x="0" y="-6" id="20" orientation="0"/>
-                </terminals>
-                <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XISO+"/>
-                </inputs>
-            </element>
-            <element x="320" y="540" type="embed://import/contact_relai.elmt" orientation="1">
-                <terminals>
-                    <terminal x="10" y="-26" id="21" orientation="0"/>
-                    <terminal x="10" y="26" id="22" orientation="2"/>
                 </terminals>
                 <inputs>
                     <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="13"/>
@@ -143,7 +116,36 @@
                     <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="14"/>
                 </inputs>
             </element>
-            <element x="220" y="550" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="70" y="550" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="19" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XISO+"/>
+                </inputs>
+            </element>
+            <element x="70" y="620" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="20" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XISO-"/>
+                </inputs>
+            </element>
+            <element x="320" y="610" type="embed://import/contact_relai.elmt" orientation="1">
+                <terminals>
+                    <terminal x="10" y="-26" id="21" orientation="0"/>
+                    <terminal x="10" y="26" id="22" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KISO-"/>
+                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
+                </inputs>
+            </element>
+            <element x="220" y="620" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="-6" id="23" orientation="0"/>
                     <terminal x="0" y="6" id="24" orientation="2"/>
@@ -153,7 +155,7 @@
                     <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
                 </inputs>
             </element>
-            <element x="220" y="400" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="220" y="150" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="-6" id="25" orientation="0"/>
                     <terminal x="0" y="6" id="26" orientation="2"/>
@@ -163,79 +165,77 @@
                     <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
                 </inputs>
             </element>
-            <element x="320" y="470" type="embed://import/contact_relai.elmt" orientation="1">
+            <element x="320" y="140" type="embed://import/contact_relai.elmt" orientation="1">
                 <terminals>
                     <terminal x="10" y="-26" id="27" orientation="0"/>
                     <terminal x="10" y="26" id="28" orientation="2"/>
                 </terminals>
                 <inputs>
                     <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
-                    <input x="-30" y="1.5" userrotation="-90" userx="-8.45" usery="28.45" text="LMEAS-R"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KSRC-"/>
                     <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
                 </inputs>
             </element>
-            <element x="320" y="310" type="embed://import/contact_relai.elmt" orientation="1">
+            <element x="70" y="150" type="embed://import/bornes/borne_finale.elmt" orientation="1">
                 <terminals>
-                    <terminal x="10" y="-26" id="29" orientation="0"/>
-                    <terminal x="10" y="26" id="30" orientation="2"/>
+                    <terminal x="0" y="-6" id="29" orientation="0"/>
                 </terminals>
                 <inputs>
-                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="23"/>
-                    <input x="-30" y="1.5" userrotation="-90" userx="-14.45" usery="34.45" text="KMEAS+R"/>
-                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="24"/>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="22.45" text="XSRC-"/>
                 </inputs>
             </element>
-            <element x="220" y="240" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
+            <element x="70" y="80" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+                <terminals>
+                    <terminal x="0" y="-6" id="30" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="17.3" usery="23.95" text="XSRC+"/>
+                </inputs>
+            </element>
+            <element x="600" y="80" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="-6" id="31" orientation="0"/>
                     <terminal x="0" y="6" id="32" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
+                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text="XW1"/>
                 </inputs>
             </element>
-            <element x="310" y="230" type="embed://import/contact_relai.elmt" orientation="1">
+            <element x="320" y="70" type="embed://import/contact_relai.elmt" orientation="1">
                 <terminals>
                     <terminal x="10" y="-26" id="33" orientation="0"/>
                     <terminal x="10" y="26" id="34" orientation="2"/>
                 </terminals>
                 <inputs>
                     <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="13"/>
-                    <input x="-30" y="1.5" userrotation="-90" userx="-12.95" usery="15.7" text="KMEAS+"/>
+                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KSRC+"/>
                     <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="14"/>
                 </inputs>
             </element>
-            <element x="320" y="390" type="embed://import/contact_relai.elmt" orientation="1">
+            <element x="220" y="80" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
-                    <terminal x="10" y="-26" id="35" orientation="0"/>
-                    <terminal x="10" y="26" id="36" orientation="2"/>
+                    <terminal x="0" y="-6" id="35" orientation="0"/>
+                    <terminal x="0" y="6" id="36" orientation="2"/>
                 </terminals>
                 <inputs>
-                    <input x="8" y="20" userrotation="-90" userx="20.05" usery="27.95" text="13"/>
-                    <input x="-30" y="1.5" userrotation="-90" userx="-9.2" usery="23.2" text="KMEAS-"/>
-                    <input x="8" y="-21.5" userrotation="-90" userx="20.05" usery="-13.55" text="14"/>
+                    <input x="5" y="8" userrotation="-90" userx="10.55" usery="7.45" text=""/>
+                    <input x="5" y="-5" userrotation="-90" userx="16.55" usery="17.2" text="XW1"/>
                 </inputs>
             </element>
-            <element x="70" y="240" type="embed://import/bornes/borne_finale.elmt" orientation="1">
+            <element x="600" y="620" type="embed://import/bornes/borne_continuite.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="-6" id="37" orientation="0"/>
+                    <terminal x="0" y="6" id="38" orientation="2"/>
                 </terminals>
                 <inputs>
                     <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XMEAS+"/>
+                    <input x="5" y="-5" userrotation="-90" userx="12.05" usery="2.95" text="XW1"/>
                 </inputs>
             </element>
-            <element x="70" y="400" type="embed://import/bornes/borne_finale.elmt" orientation="1">
-                <terminals>
-                    <terminal x="0" y="-6" id="38" orientation="0"/>
-                </terminals>
-                <inputs>
-                    <input x="5" y="8" userrotation="-90" userx="13.55" usery="12.45" text=""/>
-                    <input x="5" y="-5" userrotation="-90" userx="19.55" usery="26.2" text="XMEAS-"/>
-                </inputs>
-            </element>
-            <element x="1020" y="80" type="embed://import/bornes/bornes_s.elmt" orientation="1">
+            <element x="1020" y="620" type="embed://import/bornes/bornes_s.elmt" orientation="1">
                 <terminals>
                     <terminal x="0" y="17" id="39" orientation="2"/>
                 </terminals>
@@ -243,66 +243,66 @@
             </element>
         </elements>
         <conductors>
-            <conductor num="BUSB" terminal1="1" userx="800" terminal2="0" usery="590" type="multi"/>
-            <conductor num="BUSA" terminal1="7" userx="780" terminal2="39" usery="50" type="multi"/>
-            <conductor num="" terminal1="17" terminal2="2" type="multi"/>
-            <conductor num="" terminal1="35" terminal2="2" type="multi">
-                <segment length="9" orientation="horizontal"/>
-                <segment length="181" orientation="horizontal"/>
-                <segment length="220" orientation="vertical"/>
-                <segment length="41" orientation="horizontal"/>
-                <segment length="9" orientation="horizontal"/>
-            </conductor>
-            <conductor num="" terminal1="29" terminal2="2" type="multi">
-                <segment length="9" orientation="horizontal"/>
-                <segment length="181" orientation="horizontal"/>
-                <segment length="300" orientation="vertical"/>
-                <segment length="41" orientation="horizontal"/>
-                <segment length="9" orientation="horizontal"/>
-            </conductor>
-            <conductor num="" terminal1="11" terminal2="2" type="multi">
-                <segment length="9" orientation="horizontal"/>
-                <segment length="181" orientation="horizontal"/>
-                <segment length="470" orientation="vertical"/>
-                <segment length="41" orientation="horizontal"/>
-                <segment length="9" orientation="horizontal"/>
-            </conductor>
-            <conductor num="SRC+" terminal1="9" userx="130" terminal2="4" usery="530" type="multi"/>
-            <conductor num="" terminal1="3" userx="250" terminal2="6" usery="530" type="multi"/>
-            <conductor num="" terminal1="21" terminal2="8" type="multi"/>
-            <conductor num="" terminal1="27" terminal2="8" type="multi"/>
-            <conductor num="" terminal1="13" userx="250" terminal2="12" usery="600" type="multi"/>
-            <conductor num="" terminal1="33" userx="420" terminal2="8" usery="160" type="multi">
-                <segment length="39" orientation="horizontal"/>
-                <segment length="91" orientation="horizontal"/>
-                <segment length="-160" orientation="vertical"/>
-                <segment length="81" orientation="horizontal"/>
-                <segment length="39" orientation="horizontal"/>
-            </conductor>
-            <conductor num="SRC-" terminal1="10" userx="130" terminal2="14" usery="600" type="multi"/>
-            <conductor num="" terminal1="5" userx="390" terminal2="8" usery="70" type="multi"/>
-            <conductor num="ISO-" terminal1="19" userx="130" terminal2="16" usery="530" type="multi"/>
-            <conductor num="" terminal1="15" userx="260" terminal2="18" usery="490" type="multi"/>
-            <conductor num="" terminal1="23" userx="260" terminal2="22" usery="410" type="multi"/>
-            <conductor num="ISO+" terminal1="20" userx="130" terminal2="24" usery="390" type="multi"/>
-            <conductor num="" terminal1="28" terminal2="25" type="multi">
+            <conductor num="" terminal1="6" terminal2="7" type="multi"/>
+            <conductor num="" terminal1="10" terminal2="7" type="multi"/>
+            <conductor num="MEAS+" terminal1="2" userx="130" terminal2="8" usery="260" type="multi"/>
+            <conductor num="" terminal1="13" userx="260" terminal2="4" usery="450" type="multi"/>
+            <conductor num="MEAS-" terminal1="1" userx="130" terminal2="14" usery="430" type="multi"/>
+            <conductor num="" terminal1="12" terminal2="13" type="multi">
                 <segment length="-11.5" orientation="horizontal"/>
                 <segment length="-18.5" orientation="horizontal"/>
                 <segment length="-80" orientation="vertical"/>
                 <segment length="-18.5" orientation="horizontal"/>
                 <segment length="-11.5" orientation="horizontal"/>
             </conductor>
-            <conductor num="MEAS-" terminal1="38" userx="130" terminal2="26" usery="430" type="multi"/>
-            <conductor num="" terminal1="25" userx="260" terminal2="36" usery="450" type="multi"/>
-            <conductor num="MEAS+" terminal1="37" userx="130" terminal2="32" usery="260" type="multi"/>
-            <conductor num="" terminal1="30" terminal2="31" type="multi"/>
-            <conductor num="" terminal1="34" terminal2="31" type="multi"/>
+            <conductor num="ISO+" terminal1="19" userx="130" terminal2="16" usery="490" type="multi"/>
+            <conductor num="" terminal1="15" userx="260" terminal2="18" usery="490" type="multi"/>
+            <conductor num="" terminal1="23" userx="260" terminal2="22" usery="560" type="multi"/>
+            <conductor num="ISO-" terminal1="20" userx="130" terminal2="24" usery="560" type="multi"/>
+            <conductor num="" terminal1="33" userx="390" terminal2="32" usery="70" type="multi"/>
+            <conductor num="SRC-" terminal1="29" userx="130" terminal2="26" usery="210" type="multi"/>
+            <conductor num="" terminal1="5" userx="420" terminal2="32" usery="160" type="multi">
+                <segment length="39" orientation="horizontal"/>
+                <segment length="91" orientation="horizontal"/>
+                <segment length="-160" orientation="vertical"/>
+                <segment length="81" orientation="horizontal"/>
+                <segment length="39" orientation="horizontal"/>
+            </conductor>
+            <conductor num="" terminal1="25" userx="250" terminal2="28" usery="210" type="multi"/>
+            <conductor num="" terminal1="11" terminal2="32" type="multi"/>
+            <conductor num="" terminal1="17" terminal2="32" type="multi"/>
+            <conductor num="" terminal1="35" userx="250" terminal2="34" usery="140" type="multi"/>
+            <conductor num="SRC+" terminal1="30" userx="130" terminal2="36" usery="140" type="multi"/>
+            <conductor num="" terminal1="27" terminal2="38" type="multi">
+                <segment length="9" orientation="horizontal"/>
+                <segment length="181" orientation="horizontal"/>
+                <segment length="470" orientation="vertical"/>
+                <segment length="41" orientation="horizontal"/>
+                <segment length="9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="" terminal1="9" terminal2="38" type="multi">
+                <segment length="9" orientation="horizontal"/>
+                <segment length="181" orientation="horizontal"/>
+                <segment length="300" orientation="vertical"/>
+                <segment length="41" orientation="horizontal"/>
+                <segment length="9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="" terminal1="3" terminal2="38" type="multi">
+                <segment length="9" orientation="horizontal"/>
+                <segment length="181" orientation="horizontal"/>
+                <segment length="220" orientation="vertical"/>
+                <segment length="41" orientation="horizontal"/>
+                <segment length="9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="" terminal1="21" terminal2="38" type="multi"/>
+            <conductor num="BUSA" terminal1="31" userx="780" terminal2="0" usery="50" type="multi"/>
+            <conductor num="BUSB" terminal1="37" userx="800" terminal2="39" usery="590" type="multi"/>
         </conductors>
         <inputs>
-            <input x="1000" y="590" text="/2.1"/>
-            <input x="520" y="120" text="BUSB"/>
-            <input x="450" y="50" text="BUSA"/>
             <input x="1000" y="60" text="/2.1"/>
+            <input x="450" y="50" text="BUSA"/>
+            <input x="520" y="120" text="BUSB"/>
+            <input x="1000" y="590" text="/2.1"/>
         </inputs>
     </diagram>
     <diagram title="Channel relays" displayrows="true" version="0.3" cols="17" folio="%id/%total" displaycols="true" height="660" colsize="60" order="2" rows="8" author="PS" filename="Coupling box" date="20140114" rowsize="80">

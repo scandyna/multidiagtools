@@ -28,8 +28,8 @@
 
 #include <QDebug>
 
-mdtTtTest::mdtTtTest(QSqlDatabase db)
- : mdtClBase(db)
+mdtTtTest::mdtTtTest(QObject *parent, QSqlDatabase db)
+ : mdtTtBase(parent, db)
 {
   pvTestItemSqlModel = 0;
   pvColIdxOfTestItemId = -1;
@@ -287,14 +287,14 @@ bool mdtTtTest::addItem(const QVariant & testResultId, const QVariant & testItem
 
 bool mdtTtTest::addItemsByTestId(const QVariant & testResultId, const QVariant & testId)
 {
-  mdtTtTestModel t(database());
+  mdtTtTestModel tm(this, database());
   QList<QVariant> testItemIdList;
   int i;
 
   // Get base test items ID list
-  testItemIdList = t.getListOfTestItemIdListByTestId(testId);
+  testItemIdList = tm.getListOfTestItemIdListByTestId(testId);
   if(testItemIdList.isEmpty()){
-    pvLastError = t.lastError();
+    pvLastError = tm.lastError();
     return false;
   }
   // Add test result items

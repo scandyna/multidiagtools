@@ -21,7 +21,7 @@
 #ifndef MDT_CL_ARTICLE_H
 #define MDT_CL_ARTICLE_H
 
-#include "mdtClBase.h"
+#include "mdtTtBase.h"
 #include "mdtClArticleConnectionData.h"
 #include "mdtClLinkData.h"
 #include <QSqlDatabase>
@@ -33,13 +33,13 @@
 
 /*! \brief Helper class for Article and related tables edition
  */
-class mdtClArticle : public mdtClBase
+class mdtClArticle : public mdtTtBase
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtClArticle(QSqlDatabase db);
+  mdtClArticle(QObject *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */

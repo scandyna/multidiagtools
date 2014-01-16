@@ -21,7 +21,7 @@
 #ifndef MDT_CC_TEST_CONNECTION_CABLE_H
 #define MDT_CC_TEST_CONNECTION_CABLE_H
 
-#include "mdtClBase.h"
+#include "mdtTtBase.h"
 #include "mdtClLinkData.h"
 #include <QString>
 #include <QVariant>
@@ -31,13 +31,13 @@ class mdtClPathGraph;
 
 /*! \brief Helper class for test connection cable edition
  */
-class mdtCcTestConnectionCable : public mdtClBase
+class mdtCcTestConnectionCable : public mdtTtBase
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtCcTestConnectionCable(QSqlDatabase db);
+  mdtCcTestConnectionCable(QObject *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
