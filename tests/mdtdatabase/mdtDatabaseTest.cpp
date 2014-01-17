@@ -64,6 +64,7 @@ void mdtDatabaseTest::sqlRecordTest()
   QList<mdtSqlRecord> recordList;
   QSqlQuery query(pvDatabase);
   QString sql;
+  mdtSqlRecord matchData;
 
   // Set database data
   clearTestDatabaseData();
@@ -105,17 +106,21 @@ void mdtDatabaseTest::sqlRecordTest()
   QVERIFY(!record.hasValue("Id_PK"));
   QVERIFY(!record.hasValue("FirstName"));
   QVERIFY(!record.hasValue("Remarks"));
+  QCOMPARE(record.fieldIndexesWithValue().size(), 0);
   // Edit a field and check
   record.setValue("FirstName", "A test name");
   QVERIFY(!record.hasValue("Id_PK"));
   QVERIFY(record.hasValue("FirstName"));
   QVERIFY(!record.hasValue("Remarks"));
+  QCOMPARE(record.fieldIndexesWithValue().size(), 1);
+  QCOMPARE(record.fieldIndexesWithValue().at(0), 1);
   // Clear values and check
   record.clearValues();
   QCOMPARE(record.count(), 3);
   QVERIFY(!record.hasValue("Id_PK"));
   QVERIFY(!record.hasValue("FirstName"));
   QVERIFY(!record.hasValue("Remarks"));
+  QCOMPARE(record.fieldIndexesWithValue().size(), 0);
 
   /*
    * Copy
@@ -190,6 +195,78 @@ void mdtDatabaseTest::sqlRecordTest()
   QCOMPARE(record.field(2).name(), QString("Remarks"));
   QCOMPARE(record.value("FirstName"), QVariant("Bety"));
   QCOMPARE(record.value("Remarks"), QVariant("Remark on Bety"));
+
+  /*
+   * SQL for insertion
+   */
+
+  // Check contiguous fields
+  record.clearValues();
+  QCOMPARE(record.count(), 3);
+  record.setValue("Id_PK", 1);
+  QCOMPARE(record.sqlForInsert("Client_tbl"), QString("INSERT INTO Client_tbl (Id_PK) VALUES (?)"));
+  record.setValue("Id_PK", 2);
+  record.setValue("FirstName", "Name 2");
+  QCOMPARE(record.sqlForInsert("Client_tbl"), QString("INSERT INTO Client_tbl (Id_PK,FirstName) VALUES (?,?)"));
+  record.setValue("Id_PK", 3);
+  record.setValue("FirstName", "Name 3");
+  record.setValue("Remarks", "REM 3");
+  QCOMPARE(record.sqlForInsert("Client_tbl"), QString("INSERT INTO Client_tbl (Id_PK,FirstName,Remarks) VALUES (?,?,?)"));
+  // Check non contiguous fields
+  record.clearValues();
+  record.setValue("Remarks", "REM 4");
+  QCOMPARE(record.sqlForInsert("Client_tbl"), QString("INSERT INTO Client_tbl (Remarks) VALUES (?)"));
+  record.setValue("Id_PK", 4);
+  QCOMPARE(record.sqlForInsert("Client_tbl"), QString("INSERT INTO Client_tbl (Id_PK,Remarks) VALUES (?,?)"));
+
+  /*
+   * SQL for update
+   */
+
+  // Update 1 field , 1 condition field
+  record.clearValues();
+  matchData.clear();
+  record.setValue("FirstName", "Name 5");
+  QVERIFY(matchData.addField("Id_PK", "Client_tbl", pvDatabase));
+  matchData.setValue("Id_PK", 5);
+  QCOMPARE(record.sqlForUpdate("Client_tbl", matchData), QString("UPDATE Client_tbl SET FirstName=? WHERE Id_PK=5"));
+  // Update 2 fields , 1 condition field
+  record.clearValues();
+  matchData.clear();
+  record.setValue("FirstName", "Name 6");
+  record.setValue("Remarks", "Remark 6");
+  QVERIFY(matchData.addField("Id_PK", "Client_tbl", pvDatabase));
+  matchData.setValue("Id_PK", 6);
+  QCOMPARE(record.sqlForUpdate("Client_tbl", matchData), QString("UPDATE Client_tbl SET FirstName=?,Remarks=? WHERE Id_PK=6"));
+  // Update 3 fields , 1 condition field
+  record.clearValues();
+  matchData.clear();
+  record.setValue("Id_PK", 7);
+  record.setValue("FirstName", "Name 7");
+  record.setValue("Remarks", "Remark 7");
+  QVERIFY(matchData.addField("Id_PK", "Client_tbl", pvDatabase));
+  matchData.setValue("Id_PK", 7);
+  QCOMPARE(record.sqlForUpdate("Client_tbl", matchData), QString("UPDATE Client_tbl SET Id_PK=?,FirstName=?,Remarks=? WHERE Id_PK=7"));
+  // Update 1 field , 2 condition fields
+  record.clearValues();
+  matchData.clear();
+  record.setValue("FirstName", "Name 8");
+  QVERIFY(matchData.addField("Id_PK", "Client_tbl", pvDatabase));
+  QVERIFY(matchData.addField("FirstName", "Client_tbl", pvDatabase));
+  matchData.setValue("Id_PK", 7);
+  matchData.setValue("FirstName", "Name 7");
+  QCOMPARE(record.sqlForUpdate("Client_tbl", matchData), QString("UPDATE Client_tbl SET FirstName=? WHERE Id_PK=7 AND FirstName='Name 7'"));
+  // Update 1 field , 3 condition fields
+  record.clearValues();
+  matchData.clear();
+  record.setValue("FirstName", "Name 9");
+  QVERIFY(matchData.addField("Id_PK", "Client_tbl", pvDatabase));
+  QVERIFY(matchData.addField("FirstName", "Client_tbl", pvDatabase));
+  QVERIFY(matchData.addField("Remarks", "Client_tbl", pvDatabase));
+  matchData.setValue("Id_PK", 8);
+  matchData.setValue("FirstName", "Name 8");
+  matchData.setValue("Remarks", "Remark 8");
+  QCOMPARE(record.sqlForUpdate("Client_tbl", matchData), QString("UPDATE Client_tbl SET FirstName=? WHERE Id_PK=8 AND FirstName='Name 8' AND Remarks='Remark 8'"));
 }
 
 /*

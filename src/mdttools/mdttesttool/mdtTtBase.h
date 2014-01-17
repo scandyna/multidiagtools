@@ -92,6 +92,24 @@ class mdtTtBase : public QObject
    */
   QList<QSqlRecord> getData(const QString & sql, bool *ok = 0, const QStringList & expectedFields = QStringList());
 
+  /*! \brief Update data for given table
+   *
+   * \param tableName Name of table in witch data must be updated.
+   * \param record Record containing data to update.
+   * \param matchData Records that contains conditions.
+   *               For each field, a condition of type fieldName = fieldValue is added.
+   */
+  bool updateRecord(const QString & tableName, const mdtSqlRecord & record, const QSqlRecord & matchData);
+
+  /*! \brief Update data for given table
+   *
+   * \param tableName Name of table in witch data must be updated.
+   * \param record Record containing data to update.
+   * \param matchField Field that contains condition.
+   * \param matchData Data that contains conditions.
+   */
+  bool updateRecord(const QString & tableName, const mdtSqlRecord & record, const QString & matchField, const QVariant & matchData);
+
   /*! \brief Remove data from given table
    *
    * This method can be used with result of mdtSqlTableWidget::indexListOfSelectedRows()

@@ -727,7 +727,7 @@ bool mdtClUnit::editUnitConnection(const mdtClUnitConnectionData & data)
   QSqlError sqlError;
   QSqlQuery query(database());
 
-  // Prepare query for insertion
+  // Prepare query for edition
   sql = "UPDATE UnitConnection_tbl "\
         " SET Unit_Id_FK = :Unit_Id_FK , "\
         "  UnitConnector_Id_FK = :UnitConnector_Id_FK , "\

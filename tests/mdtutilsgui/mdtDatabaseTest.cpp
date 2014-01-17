@@ -1441,6 +1441,7 @@ void mdtDatabaseTest::databaseManagerTest()
    */
   QVERIFY(dbFile.open());
   dbFileInfo.setFile(dbFile);
+  dbFile.close();
   // database was never open, creation must work (file will be overwritten)
   QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(m.database().isOpen());

@@ -22,6 +22,8 @@
 #include <QSqlError>
 #include <QSqlField>
 
+#include <QDebug>
+
 mdtSqlRecord::mdtSqlRecord()
 {
 }
@@ -134,6 +136,90 @@ void mdtSqlRecord::clearValues()
 mdtError mdtSqlRecord::lastError() const
 {
   return pvLastError;
+}
+
+QVector<int> mdtSqlRecord::fieldIndexesWithValue() const
+{
+  QVector<int> indexList;
+  int i;
+
+  for(i = 0; i < count(); ++i){
+    if(hasValue(i)){
+      indexList.append(i);
+    }
+  }
+
+  return indexList;
+}
+
+QString mdtSqlRecord::sqlForInsert(const QString & tableName) const
+{
+  QString sql;
+  QVector<int> indexList;
+  int i;
+
+  indexList = fieldIndexesWithValue();
+  sql = "INSERT INTO " + tableName + " (";
+  for(i = 0; i < indexList.size(); ++i){
+    sql += fieldName(indexList.at(i));
+    if(i < (indexList.size()-1)){
+      sql += ",";
+    }
+  }
+  sql += ") VALUES (";
+  for(i = 0; i < indexList.size(); ++i){
+    sql += "?";
+    if(i < (indexList.size()-1)){
+      sql += ",";
+    }
+  }
+  sql += ")";
+
+  return sql;
+}
+
+QString mdtSqlRecord::sqlForUpdate(const QString & tableName, const QSqlRecord & matchData) const
+{
+  QString sql;
+  QVector<int> indexList;
+  int index;
+  QString delimiter;
+  QSqlField field;
+  int i;
+
+  indexList = fieldIndexesWithValue();
+  // Build base update SQL statement
+  sql = "UPDATE " + tableName + " SET ";
+  for(i = 0; i < indexList.size(); ++i){
+    index = indexList.at(i);
+    sql += fieldName(index) + "=?";
+    if(i < (indexList.size()-1)){
+      sql += ",";
+    }
+  }
+  // Add row condition
+  if(matchData.count() > 0){
+    field = matchData.field(0);
+    delimiter = sqlDataDelimiter(field.type());
+    sql += " WHERE " + field.name() + "=" + delimiter + field.value().toString() + delimiter;
+    for(i = 1; i < matchData.count(); ++i){
+      field = matchData.field(i);
+      delimiter = sqlDataDelimiter(field.type());
+      sql += " AND " + field.name() + "=" + delimiter + field.value().toString() + delimiter;
+    }
+  }
+
+  return sql;
+}
+
+QString mdtSqlRecord::sqlDataDelimiter(QVariant::Type type)
+{
+  switch(type){
+    case QVariant::String:
+      return "'";
+    default:
+      return "";
+  }
 }
 
 mdtError & mdtSqlRecord::lastErrorW() 

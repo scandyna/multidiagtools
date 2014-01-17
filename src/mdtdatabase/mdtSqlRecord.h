@@ -26,6 +26,7 @@
 #include <QSqlDatabase>
 #include <QString>
 #include <QVariant>
+#include <QVector>
 
 /*! \brief Database record container class
  *
@@ -123,6 +124,47 @@ class mdtSqlRecord : public QSqlRecord
   /*! \brief Get last error
    */
   mdtError lastError() const;
+
+  /*! \brief Get a list with field indexes that have a value
+   *
+   * Note: each time this method is called,
+   *  the list will be generated.
+   *
+   * \sa hasValue()
+   */
+  QVector<int> fieldIndexesWithValue() const;
+
+  /*! \brief Get SQL statement for insertion with QSqlQuery
+   *
+   * Will generate SQL statement for insertion
+   *  in given table name.
+   *  The statement works with QSqlQuery values binding
+   *  with positional placeholders.
+   *  Example of a returned statement: INSERT INTO table (Id_PK, Name) VALUES (?, ?).
+   *
+   *  Only fields that have a value are added in SQL statement.
+   */
+  QString sqlForInsert(const QString & tableName) const;
+
+  /*! \brief Get SQL statement for update with QSqlQuery
+   *
+   * Will generate SQL statement for update
+   *  in given table name.
+   *  The statement works with QSqlQuery values binding
+   *  with positional placeholders.
+   *  Example of a returned statement: UPDATE table SET Id_PK=?,Name=?.
+   *
+   *  Only fields that have a value are added in SQL statement.
+   *
+   * \param tableName Name of table to update.
+   * \param matchData For each field in matchData, a condition of type fieldName=fieldValue is added.
+   *            This will determine witch row to update.
+   */
+  QString sqlForUpdate(const QString & tableName, const QSqlRecord & matchData) const;
+
+  /*! \brief Get SQL data delimiter for given data type
+   */
+  static QString sqlDataDelimiter(QVariant::Type type);
 
  protected:
 

@@ -22,8 +22,11 @@
 #include <QSqlError>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QVector>
 
 #include <QDebug>
+
+/// \todo Add tr() in errors
 
 mdtTtBase::mdtTtBase(QObject *parent, QSqlDatabase db)
  : QObject(parent)
@@ -49,9 +52,12 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
 {
   QString sql;
   QSqlQuery query(database());
-  int i, index, lastIndex;
+  ///int i, index, lastIndex;
+  QVector<int> indexList;
+  int i;
 
   // Get last field index that has a value
+  /**
   lastIndex = -1;
   for(i = 0; i < record.count(); ++i){
     if(record.hasValue(i)){
@@ -78,15 +84,24 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
     }
   }
   sql += ")";
+  */
+  indexList = record.fieldIndexesWithValue();
+  sql = record.sqlForInsert(tableName);
+  qDebug() << "SQL: " << sql;
+  // Prepare query
   if(!query.prepare(sql)){
     QSqlError sqlError = query.lastError();
-    pvLastError.setError("Cannot prepare query for inertion in table '" + tableName + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot prepare query for inertion in table '") + tableName + tr("'"), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
   }
   // Add values and execute query
+  for(i = 0; i < indexList.size(); ++i){
+    query.bindValue(i, record.value(indexList.at(i)));
+  }
+  /**
   index = 0;
   for(i = 0; i <= lastIndex; ++i){
     if(record.hasValue(i)){
@@ -94,9 +109,10 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
       ++index;
     }
   }
+  */
   if(!query.exec()){
     QSqlError sqlError = query.lastError();
-    pvLastError.setError("Cannot exec query for inertion in table '" + tableName + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot exec query for inertion in table '") + tableName + tr("'"), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
@@ -134,6 +150,103 @@ bool mdtTtBase::addRecordList(const QList<mdtSqlRecord> & recordList, const QStr
 
 QList<QSqlRecord> mdtTtBase::getData(const QString & sql, bool *ok, const QStringList & expectedFields)
 {
+  QSqlQuery query(database());
+  QList<QSqlRecord> dataList;
+  int i;
+
+  // Execute query
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot exec query: '") + sql + tr("'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
+    pvLastError.commit();
+    if(ok != 0){
+      *ok = false;
+    }
+    return dataList;
+  }
+  // If requested, check that expected fields exists in result
+  if(expectedFields.size() > 0){
+    QStringList missingFields;
+    QSqlRecord record = query.record();
+    for(i = 0; i < expectedFields.size(); ++i){
+      if(record.indexOf(expectedFields.at(i)) < 0){
+        missingFields.append(expectedFields.at(i));
+      }
+    }
+    if(missingFields.size() > 0){
+      QString text = tr("A query returned not all expected fields. Missing fields:\n");
+      for(i = 0; i < missingFields.size(); ++i){
+        text += " - " + missingFields.at(i) + "\n";
+      }
+      text += tr("SQL statement: '") + sql + tr("'");
+      pvLastError.setError(text, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
+      pvLastError.commit();
+      if(ok != 0){
+        *ok = false;
+      }
+      return dataList;
+
+    }
+  }
+  // Get data
+  while(query.next()){
+    dataList.append(query.record());
+  }
+  if(ok != 0){
+    *ok = true;
+  }
+
+  return dataList;
+}
+
+bool mdtTtBase::updateRecord(const QString & tableName, const mdtSqlRecord & record, const QSqlRecord & matchData)
+{
+  QSqlQuery query(database());
+  QString sql;
+  QVector<int> indexList;
+  int i;
+
+  // Set base SQL statement and prepare query
+  indexList = record.fieldIndexesWithValue();
+  sql = record.sqlForUpdate(tableName, matchData);
+  if(!query.prepare(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot prepare query to update table '") + tableName + tr("'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
+    pvLastError.commit();
+    return false;
+  }
+  // Add values and execute query
+  for(i = 0; i < indexList.size(); ++i){
+    query.bindValue(i, record.value(indexList.at(i)));
+  }
+  if(!query.exec()){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot exec query to update table '") + tableName + tr("'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtBase::updateRecord(const QString & tableName, const mdtSqlRecord & record, const QString & matchField, const QVariant & matchData)
+{
+  mdtSqlRecord matchRecord;
+
+  if(!matchRecord.addField(matchField, tableName, database())){
+    pvLastError = matchRecord.lastError();
+    return false;
+  }
+  matchRecord.setValue(matchField, matchData);
+
+  return updateRecord(tableName, record, matchRecord);
 }
 
 bool mdtTtBase::removeData(const QString & tableName, const QStringList & fields, const QModelIndexList & indexes)
@@ -266,10 +379,5 @@ bool mdtTtBase::commitTransaction()
 
 QString mdtTtBase::sqlDataDelimiter(QVariant::Type type)
 {
-  switch(type){
-    case QVariant::String:
-      return "'";
-    default:
-      return "";
-  }
+  return mdtSqlRecord::sqlDataDelimiter(type);
 }

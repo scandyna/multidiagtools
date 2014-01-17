@@ -22,6 +22,7 @@
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
+#include "mdtTtBase.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -36,6 +37,7 @@
 #include <QAbstractButton>
 #include <QComboBox>
 #include <QString>
+#include <QStringList>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
@@ -47,7 +49,6 @@
 #include <QList>
 #include <QFileInfo>
 
-
 #include <QTableView>
 #include <QItemSelectionModel>
 
@@ -56,6 +57,7 @@
 void mdtTestToolTest::initTestCase()
 {
   createDatabaseSchema();
+  QVERIFY(pvDatabaseManager.database().isOpen());
 }
 
 void mdtTestToolTest::cleanupTestCase()
@@ -64,6 +66,95 @@ void mdtTestToolTest::cleanupTestCase()
 
 void mdtTestToolTest::mdtTtBaseTest()
 {
+  mdtTtBase b(0, pvDatabaseManager.database());
+  mdtSqlRecord record;
+  QSqlRecord data;
+  QList<QSqlRecord> dataList;
+  bool ok;
+  QString sql;
+  QStringList fields;
+
+  // Add data
+  QVERIFY(record.addAllFields("VehicleType_tbl", b.database()));
+  record.setValue("Id_PK", 1);
+  record.setValue("Type", "Vehicle type 1");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  // Get data and check
+  sql = "SELECT * FROM VehicleType_tbl";
+  fields.clear();
+  fields << "Id_PK" << "Type" << "SubType" << "SeriesNumber";
+  dataList = b.getData(sql, &ok, fields);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(1));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 1"));
+  QCOMPARE(data.value("SubType"), QVariant(QVariant::String));
+  QVERIFY(data.value("SubType").isNull());
+  QCOMPARE(data.value("SeriesNumber"), QVariant(QVariant::String));
+  QVERIFY(data.value("SeriesNumber").isNull());
+  // Get data from a non existing table - must fail
+  sql = "SELECT * FROM jkhswjqkhkjqhwdjwhqkhj";
+  dataList = b.getData(sql, &ok, fields);
+  QVERIFY(!ok);
+  QCOMPARE(dataList.size(), 0);
+  // Get data from a existing table, but expect a field that not exists - must fail
+  sql = "SELECT * FROM VehicleType_tbl";
+  fields.clear();
+  fields << "Id_PK" << "Type" << "HuhUHHUIJhkhjKHjhkjh" << "SeriesNumber";
+  dataList = b.getData(sql, &ok, fields);
+  QVERIFY(!ok);
+  QCOMPARE(dataList.size(), 0);
+  // Get data from a existing table, specifing only some expect fields - Must work
+  sql = "SELECT * FROM VehicleType_tbl";
+  fields.clear();
+  fields << "Id_PK" << "SeriesNumber";
+  dataList = b.getData(sql, &ok, fields);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  // Get data from a existing table without specifing expected fields - Must work
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getData(sql, &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  // Get data without ok pointer, must not crash
+  dataList = b.getData(sql);
+  QCOMPARE(dataList.size(), 1);
+  // Add data
+  QVERIFY(record.addAllFields("VehicleType_tbl", b.database()));
+  record.setValue("Id_PK", 2);
+  record.setValue("Type", "Vehicle type 2");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  // Get data and check
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getData(sql, &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 2);
+  data = dataList.at(1);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 2"));
+  // Remove first row
+  QVERIFY(b.removeData("VehicleType_tbl", "Id_PK", 1));
+  // Check that only first row was removed
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getData(sql, &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 2"));
+  // Edit row
+  record.clearValues();
+  record.setValue("Type", "Vehicle type 22");
+  QVERIFY(b.updateRecord("VehicleType_tbl", record, "Id_PK", 2));
+  // Get data and check
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getData(sql, &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 22"));
 }
 
 /*
@@ -72,7 +163,7 @@ void mdtTestToolTest::mdtTtBaseTest()
 
 void mdtTestToolTest::createDatabaseSchema()
 {
-  QSqlDatabase db;
+  ///QSqlDatabase db;
 
   QTemporaryFile dbFile;
   QFileInfo dbFileInfo;
@@ -81,7 +172,8 @@ void mdtTestToolTest::createDatabaseSchema()
    * Check Sqlite database creation
    */
   QVERIFY(dbFile.open());
-  dbFileInfo.setFile(dbFile);
+  dbFile.close();
+  dbFileInfo.setFile(dbFile.fileName() + ".db");
   mdtTtDatabaseSchema schema(&pvDatabaseManager);
   QVERIFY(schema.createSchemaSqlite(dbFileInfo));
   QVERIFY(pvDatabaseManager.database().isOpen());

@@ -24,6 +24,7 @@
 #include "mdtTest.h"
 #include "mdtSqlDatabaseManager.h"
 #include <QMessageBox>
+///#include <QFileInfo>
 
 class mdtTestToolTest : public mdtTest
 {
@@ -44,6 +45,7 @@ class mdtTestToolTest : public mdtTest
   void createDatabaseSchema();
 
   mdtSqlDatabaseManager pvDatabaseManager;
+  ///QFileInfo pvDatabaseFileInfo;
 };
 
 #endif // #ifndef MDT_TEST_TOOL_TEST_H
