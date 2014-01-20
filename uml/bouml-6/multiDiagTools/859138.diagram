@@ -1,0 +1,68 @@
+format 76
+
+classcanvas 128002 class_ref 894722 // mdtClPathGraphEdgeData
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 347 145 2000
+end
+classcanvas 128130 class_ref 818946 // mdtClUnitConnectionData
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 450 415 2000
+end
+classcanvas 128258 class_ref 888194 // mdtClLinkData
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 228 53 2005
+end
+classcanvas 128642 class_ref 894850 // mdtClPathGraph
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 33 531 2000
+end
+classcanvas 129666 class_ref 174338 // QSqlQueryModel
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 46 278 3005
+end
+classcanvas 129922 class_ref 895618 // QGraphicsScene
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 39 842 2005
+end
+classcanvas 131074 class_ref 903554 // mdtClPathGraphicsConnection
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 579 965 2000
+end
+classcanvas 131202 class_ref 903682 // mdtClPathGraphicsLink
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 219 964 2000
+end
+relationcanvas 128386 relation_ref 1095554 // <unidirectional association>
+  decenter_end 907
+  from ref 128002 z 2006 to ref 128258
+  no_role_a no_role_b
+  multiplicity_a_pos 347 107 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 1095682 // <unidirectional association>
+  decenter_end 512
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 520 392 3000 no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 1097090 // <directional composition>
+  decenter_begin 112
+  from ref 128642 z 3006 to ref 129666
+  role_a_pos 119 326 3000 no_role_b
+  multiplicity_a_pos 91 326 3000 no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 1097346 // <directional composition>
+  from ref 128642 z 2006 to ref 129922
+  role_a_pos 139 819 3000 no_role_b
+  multiplicity_a_pos 111 819 3000 no_multiplicity_b
+end
+relationcanvas 131586 relation_ref 1105410 // <association>
+  from ref 131202 z 2001 to ref 131074
+  no_role_a role_b_pos 411 962 3000
+  multiplicity_a_pos 560 992 3000 multiplicity_b_pos 411 992 3000
+end
+relationcanvas 131714 relation_ref 1112194 // <unidirectional association>
+  from ref 128642 z 2001 stereotype "<<hash>>" xyz 524 866 3000 to ref 131074
+  role_a_pos 525 950 3000 no_role_b
+  multiplicity_a_pos 656 980 3000 no_multiplicity_b
+end
+end

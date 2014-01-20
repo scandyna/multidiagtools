@@ -1,0 +1,71 @@
+format 76
+
+activitynodecanvas 128002 activitynode_ref 149378 // initial_node
+  xyz 385 61 2000
+end
+activityactioncanvas 128130 activityaction_ref 149762 // activity action pvRxFramesPool.size() > 0
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 281 115 2000 226 53
+end
+activitynodecanvas 128386 activitynode_ref 149506 // decision
+  xyz 381 206 2000
+end
+activityactioncanvas 128642 activityaction_ref 149890 // activity action frame = pvRxFramesPool.dequeue()
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 244 292 2000 300 54
+end
+activityactioncanvas 128898 activityaction_ref 150018 // activity action frame = 0
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 556 194 2000 100 60
+end
+activitynodecanvas 129154 activitynode_ref 149634 // activity_final
+  xyz 382 518 2000
+end
+activityactioncanvas 129666 activityaction_ref 150402 // activity action frame.clear()
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 345 397 2000 100 60
+end
+note 130562 "Assert (frame != 0)"
+  xyzwh 176 356 2000 155 45
+flowcanvas 128258 flow_ref 146178 // <flow>
+  
+  from ref 128002 z 2001 to ref 128130
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 128514 flow_ref 146306 // <flow>
+  
+  from ref 128130 z 2001 to ref 128386
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 128770 flow_ref 146434 // [true]
+  
+  from ref 128386 z 2001 label "[true]" xyz 396 258 3000 to ref 128642
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 129026 flow_ref 146562 // [else]
+  
+  from ref 128386 z 2001 label "[else]" xyz 464 205 3000 to ref 128898
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 129410 flow_ref 146818 // <flow>
+  geometry HVr
+  
+  from ref 128898 z 2001 to point 603 527
+  line 129538 z 2001 to ref 129154
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 130306 flow_ref 148482 // <flow>
+  
+  from ref 128642 z 2001 to ref 129666
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 130434 flow_ref 148610 // <flow>
+  
+  from ref 129666 z 2001 to ref 129154
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+end

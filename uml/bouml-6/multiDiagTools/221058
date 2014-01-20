@@ -1,0 +1,692 @@
+format 204
+"sandbox" // sandbox
+  revision 12
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 398722 "USBTMC"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    sequencediagram 568066 "USBTMC_sendCommand"
+      sequencediagramsettings end
+      overlapping_bars size A3
+    end
+  end
+
+  classview 523138 "ModbusSerialLine"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    activity 161026 "sendBroadcastRequest"
+      activitydiagram 825986 "sendBoradcastRequest"
+	activitydiagramsettings
+	 end
+	size A4
+      end
+
+      activitynode 192130 initial_node ""
+	flow 207874 "<flow>"
+	  on activityaction_ref 199170 // activity action wait Idle
+	end
+      end
+
+      activityaction 199170 "wait Idle"
+	opaque_action
+	flow 213250 "<flow>"
+	  on activityaction_ref 199298 // activity action encodeFrame
+	end
+      end
+
+      activityaction 199298 "encodeFrame"
+	opaque_action
+	flow 208258 "<flow>"
+	  on activityaction_ref 199426 // activity action writeData
+	end
+      end
+
+      activityaction 199426 "writeData"
+	opaque_action
+	flow 208642 "<flow>"
+	  on activitynode_ref 192514 // decision
+	end
+      end
+
+      activitynode 192386 activity_final ""
+      end
+
+      activityaction 199554 "wait turnaround delay"
+	accept_event_action
+	timeevent
+	flow 208898 "<flow>"
+	  on activityaction_ref 199682 // activity action set Idle state
+	end
+      end
+
+      activityaction 199682 "set Idle state"
+	opaque_action
+	flow 209154 "<flow>"
+	  on activitynode_ref 192770 // activity_final
+	end
+      end
+
+      activitynode 192514 decision ""
+	flow 208770 "[write OK]"
+	  on activityaction_ref 199554 // activity action wait turnaround delay
+	end
+
+	flow 209026 "[else]"
+	  on activitynode_ref 192642 // activity_final
+	end
+      end
+
+      activitynode 192642 activity_final ""
+      end
+
+      activitynode 192770 activity_final ""
+      end
+
+      interruptibleactivityregion 128258 ""
+	activityaction 201346 "error occured"
+	  accept_event_action
+	  flow 213378 "<flow>"
+	    on activitynode_ref 192386 // activity_final
+	  end
+	end
+      end
+
+      interruptibleactivityregion 128386 ""
+	activityaction 201474 "error occured"
+	  accept_event_action
+	  flow 213506 "<flow>"
+	    on activityaction_ref 201602 // activity action set Idle state
+	  end
+	end
+      end
+
+      activityaction 201602 "set Idle state"
+	opaque_action
+	flow 213634 "<flow>"
+	  on activitynode_ref 194434 // activity_final
+	end
+      end
+
+      activitynode 194434 activity_final ""
+      end
+    end
+
+    activity 161154 "sendMSrequest"
+      activitydiagram 826114 "sendMSrequest"
+	activitydiagramsettings
+	 end
+	size A4
+      end
+
+      activitynode 192898 initial_node ""
+	flow 209282 "<flow>"
+	  on activityaction_ref 199810 // activity action wait Idle
+	end
+      end
+
+      activityaction 199810 "wait Idle"
+	opaque_action
+	flow 211458 "<flow>"
+	  on activityaction_ref 199938 // activity action encodeFrame
+	end
+      end
+
+      activityaction 199938 "encodeFrame"
+	opaque_action
+	flow 209794 "<flow>"
+	  on activityaction_ref 200066 // activity action writeData
+	end
+      end
+
+      activitynode 193154 activity_final ""
+      end
+
+      activityaction 200066 "writeData"
+	opaque_action
+	flow 209922 "<flow>"
+	  on activitynode_ref 193410 // decision
+	end
+      end
+
+      activitynode 193410 decision ""
+	flow 210946 "[else]"
+	  on activitynode_ref 193794 // activity_final
+	end
+
+	flow 211074 "[write OK]"
+	  on activityaction_ref 200578 // activity action start timeout timer
+	end
+      end
+
+      activityaction 200194 "timeout"
+	accept_event_action
+	timeevent
+	flow 212098 "<flow>"
+	  on activityaction_ref 200962 // activity action clean ...
+	end
+      end
+
+      activityaction 200322 "wait on reply"
+	opaque_action
+	flow 212354 "<flow>"
+	  on activityaction_ref 201090 // activity action decode frame
+	end
+      end
+
+      interruptibleactivityregion 128002 ""
+	activityaction 200450 "error occured"
+	  accept_event_action
+	  flow 211842 "<flow>"
+	    on activityaction_ref 200834 // activity action stop timeout timer
+	  end
+	end
+      end
+
+      activitynode 193794 activity_final ""
+      end
+
+      activityaction 200578 "start timeout timer"
+	opaque_action
+	flow 211202 "<flow>"
+	  on activityaction_ref 200322 // activity action wait on reply
+	end
+      end
+
+      interruptibleactivityregion 128130 ""
+	activityaction 200706 "error occured"
+	  accept_event_action
+	  flow 211330 "<flow>"
+	    on activitynode_ref 193154 // activity_final
+	  end
+	end
+      end
+
+      activitynode 193922 activity_final ""
+      end
+
+      activityaction 200834 "stop timeout timer"
+	opaque_action
+	flow 211970 "<flow>"
+	  on activityaction_ref 200962 // activity action clean ...
+	end
+      end
+
+      activityaction 200962 "clean ..."
+	opaque_action
+	flow 212226 "<flow>"
+	  on activitynode_ref 193922 // activity_final
+	end
+      end
+
+      activityaction 201090 "decode frame"
+	opaque_action
+	flow 212482 "<flow>"
+	  on activitynode_ref 194050 // decision
+	end
+      end
+
+      activitynode 194050 decision ""
+	flow 212610 "[unexpected slave]"
+	  on activityaction_ref 200322 // activity action wait on reply
+	end
+
+	flow 212866 "[frame error]"
+	  on activityaction_ref 200834 // activity action stop timeout timer
+	end
+
+	flow 212994 "[else]"
+	  on activityaction_ref 201218 // activity action stop timeout timer
+	end
+      end
+
+      activityaction 201218 "stop timeout timer"
+	opaque_action
+	flow 213122 "<flow>"
+	  on activitynode_ref 194306 // activity_final
+	end
+      end
+
+      activitynode 194306 activity_final ""
+      end
+    end
+  end
+
+  classview 523266 "ModbusTCP"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    activity 161282 "sendRequest"
+      activitydiagram 826242 "sendRequest"
+	activitydiagramsettings
+	 end
+	size A4
+      end
+
+      activitynode 194562 initial_node ""
+	flow 213762 "<flow>"
+	  on activityaction_ref 201730 // activity action wait write ready
+	end
+      end
+
+      activityaction 201730 "wait write ready"
+	opaque_action
+	flow 214018 "<flow>"
+	  on activityaction_ref 201986 // activity action encode frame
+	end
+      end
+
+      interruptibleactivityregion 128514 ""
+	activityaction 201858 "error occured"
+	  accept_event_action
+	  flow 213890 "<flow>"
+	    on activitynode_ref 194818 // activity_final
+	  end
+	end
+      end
+
+      activitynode 194818 activity_final ""
+      end
+
+      activityaction 201986 "encode frame"
+	opaque_action
+	flow 214146 "<flow>"
+	  on activityaction_ref 202114 // activity action write data
+	end
+      end
+
+      activityaction 202114 "write data"
+	opaque_action
+	flow 214274 "<flow>"
+	  on activitynode_ref 194946 // decision
+	end
+      end
+
+      activitynode 194946 decision ""
+	flow 214402 "[else]"
+	  on activitynode_ref 195074 // activity_final
+	end
+
+	flow 214530 "[write OK]"
+	  on activityaction_ref 202242 // activity action start timeout timer
+	end
+      end
+
+      activitynode 195074 activity_final ""
+      end
+
+      activityaction 202242 "start timeout timer"
+	opaque_action
+	flow 214658 "<flow>"
+	  on activitynode_ref 195330 // activity_final
+	end
+      end
+
+      activitynode 195330 activity_final ""
+      end
+    end
+
+    activity 161410 "sendRequestAndWaitReply"
+      activitydiagram 826370 "sendRequestAndWaitReply"
+	activitydiagramsettings
+	 end
+	size A4
+      end
+
+      activityaction 202370 "sendRquest"
+	call_behavior_action
+	synchronous activity_ref 161282 // sendRequest
+	flow 214914 "<flow>"
+	  on activitynode_ref 195586 // decision
+	end
+      end
+
+      activitynode 195458 initial_node ""
+	flow 214786 "<flow>"
+	  on activityaction_ref 202370 // activity action sendRquest
+	end
+      end
+
+      activitynode 195586 decision ""
+	flow 215042 "[else]"
+	  on activitynode_ref 195714 // activity_final
+	end
+      end
+
+      activitynode 195714 activity_final ""
+      end
+    end
+  end
+
+  classview 529794 "mdtPortThread"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 832898 "mdtPortEventHandler"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 867970 "mdtPortThreadEventHandler"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1079554 // <generalisation>
+	relation 1068290 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1079554 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 1556866 "mdtPortThreadEventHandler"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1556994 "~mdtPortThreadEventHandler"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1557122 "waitOnEvent"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1557250 "readProcessBegin"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1557378 "writeProcessBegin"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1557506 "newFrameReaden"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1557634 "errorOccured"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "error" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1557762 "threadReady"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1557890 "threadFinished"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1558018 "connected"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1558146 "notifyReadProcessBegin"
+	abstract force_body_gen cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1558274 "notifyWriteProcessBegin"
+	abstract force_body_gen cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1558402 "notifyNewFrameReaden"
+	abstract force_body_gen cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1558530 "notifyErrorOccured"
+	abstract force_body_gen cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1558658 "notifyThreadReady"
+	abstract force_body_gen cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1558786 "notifyThreadFinished"
+	abstract force_body_gen cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1558914 "notifyConnected"
+	abstract force_body_gen cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+  end
+end

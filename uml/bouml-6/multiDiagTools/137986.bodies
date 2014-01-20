@@ -1,0 +1,231 @@
+class zmsTrainCompositionUnit
+!!!160514.cpp!!!	zmsTrainCompositionUnit()
+  pvVehicules[0] = 0;
+  pvVehicules[1] = 0;
+  pvPassiveBt = 0;
+!!!160642.cpp!!!	~zmsTrainCompositionUnit()
+  if(pvPassiveBt  != 0){
+    delete pvPassiveBt;
+  }
+!!!160770.cpp!!!	addVehicule(inout vehicule : zmsTrainVehicule) : void
+  assert(vehicule != 0);
+  assert(vehicule->address() != 0x00);
+
+  // Cas d'une Bt (qui sera une ZST):
+  if((vehicule->type() == zmsTrainVehicule::BTSBZ)&&(vehicule->address() == 0x20)){
+    vehicule->setDirection(zmsTrainVehicule::NORMAL);
+    pvVehicules[1] = vehicule;
+  }else{
+    // Si une Bt ZST existe en position 1, ce véhicule est la première ULOK (motrice esclave)
+    if(pvVehicules[1] != 0){
+      if((pvVehicules[1]->type() == zmsTrainVehicule::BTSBZ)&&(pvVehicules[1]->address() == 0x20)){
+        vehicule->setDirection(zmsTrainVehicule::INVERTED);
+        pvVehicules[0] = vehicule;
+      }
+    }else{
+      // C'est une Re450 à laqeulle il faut accoupler une Bt passive
+      pvPassiveBt = new zmsTrainVehicule;
+      pvPassiveBt->setAddress(0x00);
+      pvPassiveBt->setType(zmsDiagFrame::PASSIVBT);
+      pvPassiveBt->setDirection(zmsTrainVehicule::INVERTED);
+      pvVehicules[0] = pvPassiveBt;
+      vehicule->setDirection(zmsTrainVehicule::NORMAL);
+      pvVehicules[1] = vehicule;
+    }
+  }
+!!!160898.cpp!!!	setAttributes(inout ZSTdiagFrame : zmsDiagFrame) : zms_error_t
+  assert(ZSTdiagFrame != 0);
+
+  zms_error_t err;
+
+  // Etat des attelages
+  err = setCouplingStates(ZSTdiagFrame);
+  if(err != 0){
+    return err;
+  }
+  // Orientation
+  err = setDirection(ZSTdiagFrame);
+  if(err != 0){
+    return err;
+  }
+
+  return ZMS_NO_ERROR;
+!!!161026.cpp!!!	vehiculeAt(in position : int) : zmsTrainVehicule
+  if(position < 0){
+    return 0;
+  }
+  if(position > 1){
+    return 0;
+  }
+  return pvVehicules[position];
+!!!161154.cpp!!!	setNumber(in unitNumber : int) : void
+  pvNumber = unitNumber;
+!!!161282.cpp!!!	number() : int
+  return pvNumber;
+!!!161410.cpp!!!	direction() : zmsTrainVehicule::direction_t
+  return pvDirection;
+!!!161538.cpp!!!	invertDirection() : zms_error_t
+  zmsTrainVehicule *v;
+
+  // Verification de la présence des véhicules
+  if(pvVehicules[0] == 0){
+    cerr << "zmsTrainCompositionUnit::invertDirection(): missing vehicule at position 0" << endl;
+    return ZMS_ERROR_COMP_UNIT_VEHIC_MISS;
+  }
+  if(pvVehicules[1] == 0){
+    cerr << "zmsTrainCompositionUnit::invertDirection(): missing vehicule at position 1" << endl;
+    return ZMS_ERROR_COMP_UNIT_VEHIC_MISS;
+  }
+
+  // On croise les véhicules
+  v = pvVehicules[0];
+  pvVehicules[0] = pvVehicules[1];
+  pvVehicules[1] = v;
+  // On inverse les sens des véhicules
+  pvVehicules[0]->invertDirection();
+  pvVehicules[1]->invertDirection();
+
+  return ZMS_NO_ERROR;
+!!!161666.cpp!!!	reCouplingSet(inout ZSTdiagFrame : zmsDiagFrame) : bool
+  assert(ZSTdiagFrame != 0);
+  if(pvNumber == 1){
+    return ZSTdiagFrame->couplingLocTrain1set();
+  }else if(pvNumber == 2){
+    return ZSTdiagFrame->couplingLocTrain2set();
+  }else if(pvNumber == 3){
+    return ZSTdiagFrame->couplingLocTrain3set();
+  }else if(pvNumber == 4){
+    return ZSTdiagFrame->couplingLocTrain4set();
+  }
+  return false;
+!!!161794.cpp!!!	btCouplingSet(inout ZSTdiagFrame : zmsDiagFrame) : bool
+  assert(ZSTdiagFrame != 0);
+  if(pvNumber == 1){
+    return ZSTdiagFrame->couplingBtTrain1set();
+  }else if(pvNumber == 2){
+    return ZSTdiagFrame->couplingBtTrain2set();
+  }else if(pvNumber == 3){
+    return ZSTdiagFrame->couplingBtTrain3set();
+  }else if(pvNumber == 4){
+    return ZSTdiagFrame->couplingBtTrain4set();
+  }
+  return false;
+!!!161922.cpp!!!	setCouplingStates(inout ZSTdiagFrame : zmsDiagFrame) : zms_error_t
+  assert(ZSTdiagFrame != 0);
+
+  /*
+    On récupère l'état des attelages dans la trame de diagnostic.
+    Ses informations sont données selon la composition du train (unité1, unité2, ...),
+    On détermine quel est type de véhicule actuel, et on récupère l'état des attelages
+    de la composition dans laquelle il se trouve.
+  */
+
+  // Verification de la présence des véhicules
+  if(pvVehicules[0] == 0){
+    cerr << "zmsTrainCompositionUnit::setCouplingStates(): missing vehicule at position 0" << endl;
+    return ZMS_ERROR_COMP_UNIT_VEHIC_MISS;
+  }
+  if(pvVehicules[1] == 0){
+    cerr << "zmsTrainCompositionUnit::setCouplingStates(): missing vehicule at position 1" << endl;
+    return ZMS_ERROR_COMP_UNIT_VEHIC_MISS;
+  }
+
+  /* Véhicule 0 */
+  // Cas de la Re450
+  if(pvVehicules[0]->type() == zmsTrainVehicule::RE450){
+    pvVehicules[0]->setFrontCouplingOccupied(reCouplingSet(ZSTdiagFrame));
+    pvVehicules[0]->setBtCouplingOccupied(btCouplingSet(ZSTdiagFrame));
+  }else if(pvVehicules[0]->type() == zmsTrainVehicule::BTSBZ){
+    // Cas de la Bt
+    pvVehicules[0]->setFrontCouplingOccupied(btCouplingSet(ZSTdiagFrame));
+    // L'état de l'attelage "côté Bt" n'existe pas dans la Bt
+  }
+
+  /* Véhicule 1 */
+  // Cas de la Re450
+  if(pvVehicules[1]->type() == zmsTrainVehicule::RE450){
+    pvVehicules[1]->setFrontCouplingOccupied(reCouplingSet(ZSTdiagFrame));
+    pvVehicules[1]->setBtCouplingOccupied(btCouplingSet(ZSTdiagFrame));
+  }else if(pvVehicules[1]->type() == zmsTrainVehicule::BTSBZ){
+    // Cas de la Bt
+    pvVehicules[1]->setFrontCouplingOccupied(btCouplingSet(ZSTdiagFrame));
+    // L'état de l'attelage "côté Bt" n'existe pas dans la Bt
+  }
+
+  return ZMS_NO_ERROR;
+!!!162050.cpp!!!	setDirection(inout ZSTdiagFrame : zmsDiagFrame) : zms_error_t
+  return setDirectionByCouplingStates(ZSTdiagFrame);
+!!!162178.cpp!!!	setDirectionByCouplingStates(inout ZSTdiagFrame : zmsDiagFrame) : zms_error_t
+  zmsTrainVehicule *v;
+
+  /*
+    Première étape: déterminer l'orientation en considérant l'unité à l'arrière du train
+  */
+
+  // Verification de la présence des véhicules
+  if(pvVehicules[0] == 0){
+    cerr << "zmsTrainCompositionUnit::setDirectionByCouplingStates(): missing vehicule at position 0" << endl;
+    return ZMS_ERROR_COMP_UNIT_VEHIC_MISS;
+  }
+  if(pvVehicules[1] == 0){
+    cerr << "zmsTrainCompositionUnit::setDirectionByCouplingStates(): missing vehicule at position 1" << endl;
+    return ZMS_ERROR_COMP_UNIT_VEHIC_MISS;
+  }
+
+  // Si l'unité contient la ZST, l'orientation sera normale
+  if((pvVehicules[0]->isZST())||(pvVehicules[1]->isZST())){
+    pvDirection = zmsTrainVehicule::NORMAL;
+  }else{
+    if((!btCouplingSet(ZSTdiagFrame))&&(reCouplingSet(ZSTdiagFrame))){
+      pvDirection = zmsTrainVehicule::NORMAL;
+    }else if((btCouplingSet(ZSTdiagFrame))&&(!reCouplingSet(ZSTdiagFrame))){
+      pvDirection = zmsTrainVehicule::INVERTED;
+    }else if((btCouplingSet(ZSTdiagFrame))&&(reCouplingSet(ZSTdiagFrame))){
+      pvDirection = zmsTrainVehicule::UNDEFINED;
+    }else{
+      // Aucun attelage occupé dans une unité esclave, impossible
+      pvDirection = zmsTrainVehicule::UNDEFINED;
+      //pvVehicules[0]->setType(zmsTrainVehicule::UNKNOW);
+      //pvVehicules[1]->setType(zmsTrainVehicule::UNKNOW);
+      //return ZMS_ERROR_COMP_UNIT_UST_KPL00;
+    }
+  }
+
+  /*
+    Si l'unité se trouve à l'avant du train, l'orientation est inversée
+  */
+  if((pvVehicules[0]->address() > 0x20)||(pvVehicules[1]->address() > 0x20)){
+    // On inverse le sens de marche de l'unité si définit
+    if(pvDirection == zmsTrainVehicule::NORMAL){
+      pvDirection = zmsTrainVehicule::INVERTED;
+    }else if(pvDirection == zmsTrainVehicule::INVERTED){
+      pvDirection = zmsTrainVehicule::NORMAL;
+    }
+    // Indéfinit reste indéfinit.
+  }
+
+  /*
+    On applique le sens de marche des deux véhicules en fonction du sens de marche de l'unité
+  */
+  if(pvDirection == zmsTrainVehicule::NORMAL){
+    pvVehicules[0]->setDirection(zmsTrainVehicule::INVERTED);
+    pvVehicules[1]->setDirection(zmsTrainVehicule::NORMAL);
+  }else if(pvDirection == zmsTrainVehicule::INVERTED){
+    pvVehicules[0]->setDirection(zmsTrainVehicule::NORMAL);
+    pvVehicules[1]->setDirection(zmsTrainVehicule::INVERTED);
+  }else{
+    // Type de véhicule indéfinit, et orientation convensionelle
+    pvVehicules[0]->setDirection(zmsTrainVehicule::INVERTED);
+    pvVehicules[0]->setType(zmsTrainVehicule::UNKNOW);
+    pvVehicules[1]->setDirection(zmsTrainVehicule::NORMAL);
+    pvVehicules[1]->setType(zmsTrainVehicule::UNKNOW);
+  }
+
+  // Si le sens de marche est inverse, on croise les véhicules de l'unité
+  if(pvDirection == zmsTrainVehicule::INVERTED){
+    v = pvVehicules[0];
+    pvVehicules[0] = pvVehicules[1];
+    pvVehicules[1] = v;
+  }
+
+  return ZMS_NO_ERROR;

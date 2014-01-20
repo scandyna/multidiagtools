@@ -1,0 +1,152 @@
+format 76
+
+activitynodecanvas 128002 activitynode_ref 170370 // initial_node
+  xyz 272 38 2000
+end
+activitynodecanvas 128130 activitynode_ref 170498 // decision
+  xyz 269 113 2000
+end
+activityactioncanvas 128386 activityaction_ref 170626 // activity action frame = getNewFrame()
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 434 107 2000 187 51
+end
+note 128514 "From TX frames"
+  xyzwh 647 114 2000 131 39
+activitynodecanvas 128898 activitynode_ref 170626 // decision
+  xyz 516 188 2000
+end
+activitynodecanvas 129154 activitynode_ref 170754 // activity_final
+  xyz 639 195 2000
+end
+note 129410 "Nothing to send"
+  xyzwh 691 189 2000 89 55
+activityactioncanvas 129538 activityaction_ref 170754 // activity action bufferCursor = frame.data()
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 424 265 2000 211 46
+end
+activityactioncanvas 129794 activityaction_ref 170882 // activity action toWrite = frame.size()
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 437 349 2000 187 46
+end
+activityactioncanvas 130050 activityaction_ref 171010 // activity action written = writeData(toWrite)
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 172 348 2000 222 52
+end
+activityactioncanvas 130434 activityaction_ref 171138 // activity action toWrite -= written
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 190 717 2000 186 46
+end
+activityactioncanvas 130690 activityaction_ref 171266 // activity action bufferCursor += written
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 193 613 2000 180 43
+end
+activitynodecanvas 130946 activitynode_ref 170882 // decision
+  xyz 270 537 2000
+end
+activityactioncanvas 131202 activityaction_ref 171394 // activity action txFramesPoll.enqueue(frame)
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 472 529 2000 219 54
+end
+activityactioncanvas 131586 activityaction_ref 171522 // activity action frame = 0
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 488 608 2000 188 54
+end
+activitynodecanvas 131842 activitynode_ref 171010 // activity_final
+  xyz 269 800 2000
+end
+activityactioncanvas 132226 activityaction_ref 178050 // activity action frame.take(written)
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 197 455 2006 174 44
+end
+flowcanvas 128258 flow_ref 173314 // <flow>
+  
+  from ref 128002 z 2001 to ref 128130
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 128642 flow_ref 173442 // [frame == 0]
+  
+  from ref 128130 z 2001 label "[frame == 0]" xyz 322 115 2001 to ref 128386
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 129026 flow_ref 173570 // <flow>
+  
+  from ref 128386 z 2001 to ref 128898
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 129282 flow_ref 173698 // [frame == 0]
+  
+  from ref 128898 z 2001 label "[frame == 0]" xyz 548 189 2001 to ref 129154
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 129666 flow_ref 173826 // <flow>
+  
+  from ref 128898 z 2001 to ref 129538
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 129922 flow_ref 173954 // <flow>
+  
+  from ref 129538 z 2001 to ref 129794
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 130178 flow_ref 174082 // [else]
+  
+  from ref 128130 z 2001 label "[else]" xyz 288 237 2001 to ref 130050
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 130306 flow_ref 174210 // <flow>
+  
+  from ref 129794 z 2001 to ref 130050
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131330 flow_ref 174722 // [frame.isEmpty()]
+  
+  from ref 130946 z 2001 label "[frame.isEmpty()]" xyz 328 538 2001 to ref 131202
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132866 flow_ref 181890 // <flow>
+  
+  from ref 132226 z 2007 to ref 130946
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132994 flow_ref 182018 // [else]
+  
+  from ref 130946 z 2001 label "[else]" xyz 288 584 2001 to ref 130690
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133250 flow_ref 182274 // <flow>
+  
+  from ref 131202 z 2001 to ref 131586
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133506 flow_ref 182530 // <flow>
+  
+  from ref 130050 z 2007 to ref 132226
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133634 flow_ref 182658 // <flow>
+  
+  from ref 130690 z 2001 to ref 130434
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133762 flow_ref 182786 // <flow>
+  
+  from ref 130434 z 2001 to ref 131842
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 134018 flow_ref 182914 // <flow>
+  geometry HVr
+  
+  from ref 131586 z 2001 to point 579 810
+  line 134146 z 2001 to ref 131842
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+end

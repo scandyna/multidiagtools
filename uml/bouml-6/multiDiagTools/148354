@@ -1,0 +1,72 @@
+format 204
+"mdtserialport" // mdtTest::mdtserialport
+  revision 2
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 161794 "mdtSerialPortTest"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 169602 "mdtSerialPortTest"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 182786 "mdtSerialPortTest"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 182914 // <generalisation>
+	relation 182786 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 182914 // <generalisation>
+	  b parent class_ref 138498 // mdtTest
+      end
+    end
+  end
+end

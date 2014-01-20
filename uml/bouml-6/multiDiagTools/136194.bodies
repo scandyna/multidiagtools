@@ -1,0 +1,323 @@
+class zmsHtmlReport
+!!!149762.cpp!!!	zmsHtmlReport()
+  char strNum[20] = {'\0'};
+  string str;
+
+  pvUicNumber = "N/A";
+  pvVehiculeType = "N/A";
+  pvZmsSerialNumber = "N/A";
+  pvLanguage = "DE";
+  pvDate = "";
+  pvMicasVersion = "N/A";
+  pvOperatorId = "N/A";
+  pvPlace = "N/A";
+
+  snprintf(strNum, 20, "%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
+  pvZmspruefVersion = strNum;
+  pvErrorListFile += "zms_error_list_html.tmp";
+!!!150018.cpp!!!	setWorkDirectory(in workDirectory : string) : void
+  // Fichier de liste d'erreurs
+  pvErrorListFile = "";
+  if(workDirectory.size() == 0){
+    pvErrorListFile = "zms_error_list_html.tmp";
+  }else{
+#ifdef __WIN32
+    if(workDirectory.at(workDirectory.size()-1) != '\\'){
+      pvErrorListFile = workDirectory + "\\";
+#else
+    if(workDirectory.at(workDirectory.size()-1) != '/'){
+      pvErrorListFile = workDirectory + "/";
+#endif
+    }else{
+      pvErrorListFile = workDirectory;
+    }
+    pvErrorListFile += "zms_error_list_html.tmp";
+  }
+}
+
+void zmsHtmlReport::setLanguage(string language)
+{
+  if(language == "DE"){
+    pvLanguage = "DE";
+  }else if(language == "FR"){
+    pvLanguage = "FR";
+  }else if(language == "EN"){
+    pvLanguage = "EN";
+  }else{
+    cerr << "zmsHtmlReport::setLanguage(): unsupported language: " << language << " , setting DE" << endl;
+    pvLanguage = "DE";
+  }
+}
+
+void zmsHtmlReport::setOperatorId(string operatorId)
+{
+  // On supprime les espace en début et fin de chaîne
+  operatorId = trimmedString(operatorId);
+  // Stockage
+  if(operatorId.size() == 0){
+    pvOperatorId = "N/A";
+  }else{
+#ifdef __WIN32
+    operatorId = convertToUtf8(operatorId);
+#endif
+    pvOperatorId = operatorId;
+  }
+}
+
+void zmsHtmlReport::setPlace(string place)
+{
+  // On supprime les espace en début et fin de chaîne
+  place = trimmedString(place);
+  // Stockage
+  if(place.size() == 0){
+    pvPlace = "N/A";
+  }else{
+#ifdef __WIN32
+    place = convertToUtf8(place);
+#endif
+    pvPlace = place;
+  }
+}
+
+void zmsHtmlReport::setUicNumber(string uicNumber)
+{
+  // On supprime les espace en début et fin de chaîne
+  uicNumber = trimmedString(uicNumber);
+  // Stockage
+  if(uicNumber.size() == 0){
+    pvUicNumber = "N/A";
+  }else{
+#ifdef __WIN32
+    uicNumber = convertToUtf8(uicNumber);
+#endif
+    pvUicNumber = uicNumber;
+  }
+}
+
+void zmsHtmlReport::setVehiculeType(string vehiculeType)
+{
+  // On supprime les espace en début et fin de chaîne
+  vehiculeType = trimmedString(vehiculeType);
+  // Stockage
+  if(vehiculeType.size() == 0){
+    pvVehiculeType = "N/A";
+  }else{
+#ifdef __WIN32
+    vehiculeType = convertToUtf8(vehiculeType);
+#endif
+    pvVehiculeType = vehiculeType;
+  }
+}
+
+void zmsHtmlReport::setZmsSerialNumber(string zmsSerialNumber)
+{
+  // On supprime les espace en début et fin de chaîne
+  zmsSerialNumber = trimmedString(zmsSerialNumber);
+  // Stockage
+  if(zmsSerialNumber.size() == 0){
+    pvZmsSerialNumber = "N/A";
+  }else{
+#ifdef __WIN32
+    zmsSerialNumber = convertToUtf8(zmsSerialNumber);
+#endif
+    pvZmsSerialNumber = zmsSerialNumber;
+  }
+}
+
+void zmsHtmlReport::setRemarks(string remarks)
+{
+  // On supprime les espace en début et fin de chaîne
+  remarks = trimmedString(remarks);
+  // Stockage
+#ifdef __WIN32
+  remarks = convertToUtf8(remarks);
+#endif
+  pvRemarks = remarks;
+}
+
+bool zmsHtmlReport::addError(zmsDeviceError &deviceError, const string &timestamp)
+{
+  zmsFile file;
+
+  // Ouverture du fichier
+  if(!file.openWr(pvErrorListFile, true, true)){
+    return false;
+  }
+  // Génération de la chaine HTML des erreurs
+  deviceError.setHtmlErrorList(timestamp);
+  // Ajout au fichier
+#ifdef __WIN32
+  file.wrStream() << convertToUtf8(deviceError.htmlErrorList());
+#else
+  file.wrStream() << deviceError.htmlErrorList();
+#endif
+  file.close();
+
+  return true;
+}
+
+bool zmsHtmlReport::save(string filePath)
+{
+  zmsFile file, errorListFile;
+
+  // Création du fichier du rapport
+  if(!file.openWr(filePath, false, true)){
+    return false;
+  }
+  // Ajout des données : entête du rapport
+  file.wrStream() << header();
+  file.wrStream() << "  <h2>Fehlern</h2>\n";
+  // Ouverture du fichier temporaire de la liste de erreurs
+  if(!errorListFile.openRd(pvErrorListFile)){
+    // Si non existant, il se peut qu'il n'y ai pas eu d'erreur
+    file.wrStream() << "<p>Kein Fehler gefunden</p>\n";
+  }else{
+    // Entête du tableau d'erreurs
+    file.wrStream() << "  <table border=\"1\">\n";
+    file.wrStream() << "   <th>Datum und Zeit</th>\n";
+    file.wrStream() << "   <th>Zugbustaufe<br>aktiv</th>\n";
+    file.wrStream() << "   <th>Fehler Code</th>\n";
+    file.wrStream() << "   <th>Fehler Text</th>\n";
+    // Liste des erreurs
+    file.wrStream() << errorListFile.rdStream().rdbuf();
+    // Fin du tableau
+    file.wrStream() << "  </table>\n";
+    // Effacement du fichier temporaire
+    errorListFile.close();
+    if(remove(pvErrorListFile.c_str()) != 0){
+      cerr << "zmsHtmlReport::save(): cannot remove temporary file: " << pvErrorListFile << endl;
+      return false;
+    }
+  }
+  // Fin du fichier
+  file.wrStream() << " </body>\n</html>\n";
+  // Fermeture
+  file.close();
+
+  return true;
+}
+
+string zmsHtmlReport::header()
+{
+  string html;
+  time_t reportDate;
+  char strReportDate[20] = {'\0'};
+
+  // Date
+  reportDate = time(0);
+  strftime(strReportDate, 20, "%d.%m.%Y", localtime(&reportDate));
+  pvDate = strReportDate;
+
+  html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"  \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+  html += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n";
+  html += "<html>\n";
+  html += " <head>\n";
+  html += "  <link rel=\"stylesheet\" type=\"text/css\" href=\"report.css\" />\n";
+  html += "  <title>Zmsprüf Report</title>\n";
+  html += " </head>\n";
+  html += " <body>\n";
+  // Logo
+  html += "  <img src=\"img/logo_sbb.png\" id=\"logo\"/>\n";
+  // Entête de rapport
+  html += "  <h1>Zmsprüf Protokoll</h1>\n";
+  html += "  <h2>Gemeinsame Daten</h2>\n";
+  html += "  <p>\n";
+  html += "   Datum: " + pvDate + "<br>\n";
+  html += "   Benutzer ID: " + pvOperatorId + "<br>\n";
+  html += "   Test Ort: " + pvPlace + "<br>\n";
+  html += "   Fahrzeug Type: " + pvVehiculeType + "<br>\n";
+  html += "   Fahrzeug UIC Nummer: " + pvUicNumber + "<br>\n";
+  html += "   ZMS Gerät Serienummer: " + pvZmsSerialNumber + "<br>\n";
+  //html += "   ZMS MICAS Version: " + pvMicasVersion + "<br>\n";
+  html += "   Zmsprüf Version: " + pvZmspruefVersion + "<br>\n";
+  html += "  </p>\n";
+  // Remarques
+  if(pvRemarks.size() > 0){
+    html += "  <h2>Bemerkungen</h2>\n";
+    html += "   <p>\n";
+    html += pvRemarks;
+    html += "   </p>\n";
+  }
+
+  return html;
+}
+
+string zmsHtmlReport::trimmedString(string &str)
+{
+  size_t len;
+  char c;
+  size_t pos;
+
+  // Suppression en début de chaine
+  pos = str.find_first_not_of(' ');
+  if(pos > 0){
+    len = pos;
+    str.erase(0, len);
+  }
+  // Fin de chaine
+  len = str.size();
+  if(len > 0){
+    pos = len;
+    while(pos > 0){
+      pos--;
+      c = str.at(pos);
+      if(c != ' '){
+        break;
+      }
+      str.erase(pos, 1);
+    }
+  }
+
+  return str;
+}
+
+#ifdef __WIN32
+string zmsHtmlReport::convertToUtf8(string str)
+{
+  wchar_t *wStr;
+  int wStrLen;
+  char *utf8Str;
+  int utf8StrLen;
+
+  // Conversion en wchar: on détermine la taille nécessire
+  wStrLen = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, str.c_str(), -1, NULL, 0);
+  if(wStrLen <= 0){
+    cerr << "zmsHtmlReport::convertToUtf8(): source conversion failed, errnum: " << GetLastError() << endl;
+    return str;
+  }
+  // Allocation
+  wStr = new wchar_t[wStrLen+1];
+  if(wStr == 0){
+    cerr << "zmsHtmlReport::convertToUtf8(): memory allocation failed (size calculation)" << endl;
+    return str;
+  }
+  // Conversion effective
+  wStrLen = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, str.c_str(), -1, wStr, wStrLen);
+  if(wStrLen <= 0){
+    cerr << "zmsHtmlReport::convertToUtf8(): source conversion failed, errnum: " << GetLastError() << endl;
+    return str;
+  }
+  // Conversion en UTF-8: on détermine la taille nécessire
+  utf8StrLen = WideCharToMultiByte(CP_UTF8, 0, wStr, wStrLen, NULL, 0, NULL, NULL);
+  if(utf8StrLen <= 0){
+    cerr << "zmsHtmlReport::convertToUtf8(): utf-8 conversion failed (size calculation), errnum: " << GetLastError() << endl;
+    return str;
+  }
+  // Allocation
+  utf8Str = new char[utf8StrLen+1];
+  if(utf8Str == 0){
+    cerr << "zmsHtmlReport::convertToUtf8(): memory allocation failed" << endl;
+    return str;
+  }
+  // Conversion en UTF-8: on détermine la taille nécessire
+  utf8StrLen = WideCharToMultiByte(CP_UTF8, 0, wStr, wStrLen, utf8Str, utf8StrLen, NULL, NULL);
+  if(utf8StrLen <= 0){
+    cerr << "zmsHtmlReport::convertToUtf8(): utf-8 conversion failed, errnum: " << GetLastError() << endl;
+    return str;
+  }
+  // Libérations
+  delete[] wStr;
+
+  return utf8Str;
+}
+#endif  // __WIN32

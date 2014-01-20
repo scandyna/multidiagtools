@@ -1,0 +1,58 @@
+format 76
+
+classcanvas 128002 class_ref 888194 // mdtClLinkData
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 28 159 2000
+end
+classcanvas 128130 class_ref 952706 // mdtClArticleConnectionData
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 542 83 2000
+end
+classcanvas 128258 class_ref 952578 // mdtClConnectionData
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 650 197 2006
+end
+classcanvas 128514 class_ref 952834 // mdtClUnitConnectionData
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 502 292 2012
+end
+note 129538 "A adapter dans code .."
+  xyzwh 527 547 2000 227 163
+relationcanvas 128386 relation_ref 1184514 // <generalisation>
+  decenter_begin 925
+  from ref 128130 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 1184642 // <generalisation>
+  from ref 128514 z 2013 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 1185026 // <directional composition>
+  decenter_begin 495
+  decenter_end 827
+  from ref 128002 z 2013 to ref 128514
+  role_a_pos 519 306 3000 no_role_b
+  multiplicity_a_pos 651 336 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 1185154 // <directional composition>
+  from ref 128002 z 2013 to ref 128514
+  role_a_pos 386 307 3000 no_role_b
+  multiplicity_a_pos 525 337 3000 no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 1184770 // <directional composition>
+  decenter_begin 115
+  decenter_end 104
+  from ref 128002 z 2001 to ref 128130
+  role_a_pos 392 95 3000 no_role_b
+  multiplicity_a_pos 546 125 3000 no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 1184898 // <directional composition>
+  decenter_begin 192
+  decenter_end 712
+  from ref 128002 z 2001 to ref 128130
+  role_a_pos 532 96 3000 no_role_b
+  multiplicity_a_pos 679 126 3000 no_multiplicity_b
+end
+end

@@ -1,0 +1,154 @@
+format 76
+
+activityactioncanvas 128002 activityaction_ref 128002 // activity action readen = readData(bufferSize)
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 282.2 113.2 2000 216 52
+end
+activitynodecanvas 128642 activitynode_ref 134786 // initial_node
+  xyz 379.2 9.6 2000
+end
+activityactioncanvas 128898 activityaction_ref 134530 // activity action toStore = readen
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 285.2 198 2000 208 51
+end
+activityactioncanvas 131458 activityaction_ref 141442 // activity action rxFrames.enqueue(frame)
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 598.2 419.2 2000 205 53
+end
+note 135170 "Data < 1 à faire
+RX timeout à faire (Non ascii)"
+  xyzwh 525.2 105.4 2000 213 55
+activityactioncanvas 139138 activityaction_ref 150146 // activity action frame = getNewFrame()
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 595 620 2000 214 49
+end
+activityactioncanvas 141058 activityaction_ref 156930 // activity action stored = frame.putData(toStore)
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 269 347 2000 241 40
+end
+activityactioncanvas 141442 activityaction_ref 157058 // activity action toStore = toStore - stored
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 281 619 2000 217 57
+end
+activityactioncanvas 141698 activityaction_ref 157186 // activity action bufferCursor = buffer
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 301 44 2000 179 44
+end
+activityactioncanvas 143234 activityaction_ref 157314 // activity action bufferCursor += stored
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 32 722 2000 192 40
+end
+activitynodecanvas 144770 activitynode_ref 163330 // activity_final
+  xyz 378 809 2000
+end
+activitynodecanvas 147074 activitynode_ref 169986 // decision
+  xyz 377 424 2000
+end
+activitynodecanvas 147842 activitynode_ref 170114 // decision
+  xyz 377 722 2000
+end
+activitynodecanvas 148994 activitynode_ref 170242 // merge
+  xyz 376 272 2000
+end
+activityactioncanvas 149762 activityaction_ref 170370 // activity action toStore -= frame.eofSeqLen()
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 573 493 2000 258 47
+end
+activityactioncanvas 150018 activityaction_ref 170498 // activity action bufferCursor += frame.eofSeqLen()
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 576 559 2005 254 40
+end
+flowcanvas 146818 flow_ref 164354 // <flow>
+  
+  from ref 128002 z 2001 to ref 128898
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 147202 flow_ref 171010 // <flow>
+  
+  from ref 141058 z 2001 to ref 147074
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 147330 flow_ref 171138 // [frame.bytesToRead() == 0]
+  decenter_begin 593
+  
+  from ref 147074 z 2001 label "[frame.bytesToRead() == 0]" xyz 412 427 3000 to ref 131458
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 147586 flow_ref 171394 // [else]
+  
+  from ref 147074 z 2001 label "[else]" xyz 393.5 530.5 3000 to ref 141442
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 147970 flow_ref 171650 // <flow>
+  
+  from ref 141442 z 2001 to ref 147842
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 148098 flow_ref 171778 // [toStore > 0]
+  
+  from ref 147842 z 2001 label "[toStore > 0]" xyz 258 723 3000 to ref 143234
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 148226 flow_ref 171906 // [else]
+  
+  from ref 147842 z 2001 label "[else]" xyz 390 777 3000 to ref 144770
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 148354 flow_ref 172034 // <flow>
+  
+  from ref 128642 z 2001 to ref 141698
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 148482 flow_ref 172162 // <flow>
+  
+  from ref 141698 z 2001 to ref 128002
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 149122 flow_ref 172418 // <flow>
+  
+  from ref 128898 z 2001 to ref 148994
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 149250 flow_ref 172546 // [frame != 0]
+  
+  from ref 148994 z 2001 label "[frame != 0]" xyz 395 322 3000 to ref 141058
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 149378 flow_ref 172674 // <flow>
+  geometry VH
+  
+  from ref 143234 z 2001 to point 125 288
+  line 149506 z 2001 to ref 148994
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 149634 flow_ref 172802 // <flow>
+  
+  from ref 139138 z 2001 to ref 141442
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 149890 flow_ref 172930 // <flow>
+  
+  from ref 131458 z 2001 to ref 149762
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 150146 flow_ref 173058 // <flow>
+  
+  from ref 149762 z 2006 to ref 150018
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 150274 flow_ref 173186 // <flow>
+  
+  from ref 150018 z 2006 to ref 139138
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+end

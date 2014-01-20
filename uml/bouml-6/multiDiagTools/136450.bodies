@@ -1,0 +1,99 @@
+class zmsCsvFile
+!!!133634.cpp!!!	~zmsCsvFile()
+  clear();
+!!!133762.cpp!!!	clear() : void
+  vector<zmsCsvFileLine*>::iterator it;
+
+  // On libère les ressources
+  for(it = pvLines.begin(); it != pvLines.end(); it++){
+    if(*it != 0){
+      delete *it;
+    }
+  }
+  pvLines.clear();
+!!!133890.cpp!!!	readLines(in fieldSeparator : char = ';', in dataProtectCar : char = '"') : bool
+  streamsize readen, i;
+  char buffer[1024];
+  string str;
+  bool parserEnabled;
+  zmsCsvFileLine *line;
+
+  // On vérifie qu'un fichier soit ouvert
+  if(!isOpenRd()){
+    cerr << "zmsCsvFile::readLines(): no file is open" << endl;
+    return false;
+  }
+  // On efface les résultats précédents
+  clear();
+  // Par défaut, le parseur est actif
+  parserEnabled = true;
+  // Parcour du fichier
+  while(!pvRdStream.eof()){
+    // Lecture d'un bloc de données
+    pvRdStream.read(buffer, 1024);
+    readen = pvRdStream.gcount();
+    // Parcour du bloc lu
+    for(i=0; i<readen; i++){
+      // Si le parseur est actif, on réagis aux caractères clés
+      if(parserEnabled){
+        // Si on recontre le caractère de protection des données, on désactive le parseur
+        if(buffer[i] == dataProtectCar){
+          parserEnabled = false;
+        }
+        if(buffer[i] == '\n'){
+          // Fin de ligne, on cré une entrée dans la liste des lignes
+          if(str.size() > 0){
+            line = new zmsCsvFileLine;
+            if(!line->setLine(str, fieldSeparator, dataProtectCar)){
+              cerr << "zmsCsvFile::readLines(): line creation failed" << endl;
+              return false;
+            }
+            pvLines.push_back(line);
+            str = "";
+          }
+        }else{
+          // Simple caractère, on ajoute
+          str += buffer[i];
+        }
+      }else{
+        // Parseur inactif, on vérifie s'il faut le ré-activer
+        if(buffer[i] == dataProtectCar){
+          parserEnabled = true;
+        }
+        // On ajoute simplement le caractère
+        str += buffer[i];
+      }
+    }
+  }
+  // Si le parseur est inactif c'est qu'un caractère de protection manque pour la fermeture
+  // par exemple: "data" est valide, mais "data  est invalide
+  if(!parserEnabled){
+    cerr << "zmsCsvFile::readLines(): invalid file format, data protection char missing" << endl;
+    return false;
+  }
+  // Si le fichier n'est pas terminé avec un retour, on ajoute la dernière ligne si non vide
+  if(str.size() > 0){
+    line = new zmsCsvFileLine;
+    if(!line->setLine(str, fieldSeparator, dataProtectCar)){
+      cerr << "zmsCsvFile::readLines(): line creation failed" << endl;
+      return false;
+    }
+    pvLines.push_back(line);
+  }
+  return true;
+!!!134018.cpp!!!	valueAt(in line : int, in column : int) : string
+  if(line < 0){
+    return "";
+  }
+  if(pvLines.size() < 1){
+    return "";
+  }
+  if((size_t)line >= pvLines.size()){
+    return "";
+  }
+  if(pvLines.at(line) == 0){
+    return "";
+  }
+  return pvLines.at(line)->valueAt(column);
+!!!134146.cpp!!!	lines() : vector<zmsCsvFileLine*>
+  return pvLines;
