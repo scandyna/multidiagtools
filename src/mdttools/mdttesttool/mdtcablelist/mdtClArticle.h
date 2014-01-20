@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,10 +22,12 @@
 #define MDT_CL_ARTICLE_H
 
 #include "mdtTtBase.h"
-#include "mdtClArticleConnectionData.h"
-#include "mdtClLinkData.h"
+#include "mdtSqlRecord.h"
+///#include "mdtClArticleConnectionData.h"
+///#include "mdtClLinkData.h"
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
+#include <QSqlRecord>
 #include <QSqlError>
 #include <QVariant>
 #include <QModelIndex>
@@ -85,17 +87,20 @@ class mdtClArticle : public mdtTtBase
 
   /*! \brief Get a list of connector contact data for given connector contact ID list
    */
-  QList<mdtClArticleConnectionData> connectorContactData(const QList<QVariant> & connectorContactIdList);
+  ///QList<mdtClArticleConnectionData> connectorContactData(const QList<QVariant> & connectorContactIdList);
+  QList<QSqlRecord> connectorContactData(const QList<QVariant> & connectorContactIdList, bool *ok);
 
   /*! \brief Add a connection
    */
-  bool addConnection(const mdtClArticleConnectionData &data);
+  ///bool addConnection(const mdtClArticleConnectionData &data);
+  bool addConnection(const mdtSqlRecord & data);
 
   /*! \brief Add many connections
    *
    * If single transaction is set, a transaction is used .
    */
-  bool addConnections(const QList<mdtClArticleConnectionData> & dataList, bool singleTransaction);
+  ///bool addConnections(const QList<mdtClArticleConnectionData> & dataList, bool singleTransaction);
+  bool addConnections(const QList<mdtSqlRecord> & dataList, bool singleTransaction);
 
   /*! \brief Remove a single connection
    */
@@ -126,9 +131,11 @@ class mdtClArticle : public mdtTtBase
 
   /*! \brief Add a connector and its contacts
    *
-   * \pre Each connection item must match the same article ID
+   * Note: in given articleConnectionDataList, Article_Id_FK and ArticleConnector_Id_FK
+   *        are not relevant, because they are token from articleConnectorData.
    */
-  bool addConnector(const QList<mdtClArticleConnectionData> & dataList);
+  ///bool addConnector(const QList<mdtClArticleConnectionData> & dataList);
+  bool addConnector(const mdtSqlRecord & articleConnectorData, const QList<mdtSqlRecord> & articleConnectionDataList);
 
   /*! \brief Remove a connector and all its contacts
    */
@@ -168,7 +175,8 @@ class mdtClArticle : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtClLinkData &data);
+  ///bool editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtClLinkData &data);
+  bool editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtSqlRecord &data);
 
   /*! \brief Remove a signle link
    *

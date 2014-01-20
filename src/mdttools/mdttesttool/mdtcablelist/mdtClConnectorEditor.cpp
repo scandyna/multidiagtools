@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,14 +20,12 @@
  ****************************************************************************/
 #include "mdtClConnectorEditor.h"
 #include "ui_mdtClConnectorEditor.h"
-///#include "mdtSqlFormOld.h"
 #include "mdtSqlFormWindow.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
-#include "mdtSqlWindowOld.h"
 
-mdtClConnectorEditor::mdtClConnectorEditor(QObject *parent, QSqlDatabase db)
- : mdtClEditor(parent, db)
+mdtClConnectorEditor::mdtClConnectorEditor(QWidget *parent, QSqlDatabase db)
+ : mdtSqlForm(parent, db)
 {
 }
 
@@ -49,40 +47,31 @@ bool mdtClConnectorEditor::setupTables()
 
 bool mdtClConnectorEditor::setupConnectorTable()
 {
-  Q_ASSERT(form() != 0);
-
   Ui::mdtClConnectorEditor ce;
 
   // Setup main form widget
-  ce.setupUi(form()->mainSqlWidget());
+  ce.setupUi(mainSqlWidget());
   ///connect(this, SIGNAL(unitEdited()), form()->mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
-  if(!form()->setTable("Connector_tbl", "Connector", database())){
+  if(!setMainTable("Connector_tbl", "Connector", database())){
     return false;
   }
-  if(sqlWindow() != 0){
-    sqlWindow()->enableNavigation();
-    sqlWindow()->enableEdition();
-    sqlWindow()->resize(800, 500);
-    sqlWindow()->setWindowTitle(tr("Connector edition"));
-  }
+  setWindowTitle(tr("Connector edition"));
 
   return true;
 }
 
 bool mdtClConnectorEditor::setupConnectorContactTable()
 {
-  Q_ASSERT(form() != 0);
-
   mdtSqlTableWidget *widget;
 
-  if(!form()->addChildTable("ConnectorContact_tbl", tr("Contacts"), database())){
+  if(!addChildTable("ConnectorContact_tbl", tr("Contacts"), database())){
     return false;
   }
-  if(!form()->addRelation("Id_PK", "ConnectorContact_tbl", "Connector_Id_FK")){
+  if(!addRelation("Id_PK", "ConnectorContact_tbl", "Connector_Id_FK")){
     return false;
   }
-  widget = form()->sqlTableWidget("ConnectorContact_tbl");
+  widget = sqlTableWidget("ConnectorContact_tbl");
   Q_ASSERT(widget != 0);
   // Enable edition
   widget->enableLocalEdition();

@@ -31,6 +31,7 @@
 #include <QList>
 #include <QSqlRecord>
 #include <QObject>
+#include <QSqlQuery>
 
 /*! \brief Base class for helper class
  *
@@ -69,6 +70,16 @@ class mdtTtBase : public QObject
    *  For this, mdtSqlRecord::hasValue() is used.
    */
   bool addRecord(const mdtSqlRecord & record, const QString & tableName);
+
+  /*! \brief Add a record to given table
+   *
+   * Works the same way as addRecord(const mdtSqlRecord&, const QString&) ,
+   *  but uses given QSqlQuery object.
+   *
+   * This can be useful, for example, if QSqlQuery::lastInsertId() must
+   *  be used by insersion in multiple tables.
+   */
+  bool addRecord(const mdtSqlRecord & record, const QString & tableName, QSqlQuery & query);
 
   /*! \brief Add a list of records to given table
    *

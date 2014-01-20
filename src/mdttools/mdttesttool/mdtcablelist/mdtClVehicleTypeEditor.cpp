@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -40,22 +40,17 @@
 
 #include <QDebug>
 
-mdtClVehicleTypeEditor::mdtClVehicleTypeEditor(QObject *parent, const QSqlDatabase db)
- : QObject(parent)
+mdtClVehicleTypeEditor::mdtClVehicleTypeEditor(QWidget *parent, QSqlDatabase db)
+ : mdtSqlForm(parent, db)
 {
-  pvDatabase = db;
-  pvForm = new mdtSqlFormWindow;
 }
 
 mdtClVehicleTypeEditor::~mdtClVehicleTypeEditor()
 {
-  delete pvForm;
 }
 
 bool mdtClVehicleTypeEditor::setupTables()
 {
-  QSqlError sqlError;
-
   if(!setupVehicleTypeTable()){
     return false;
   }
@@ -66,16 +61,9 @@ bool mdtClVehicleTypeEditor::setupTables()
   return true;
 }
 
-mdtSqlFormWindow *mdtClVehicleTypeEditor::form()
-{
-  Q_ASSERT(pvForm != 0);
-
-  return pvForm;
-}
-
 QVariant mdtClVehicleTypeEditor::currentVehicleTypeId()
 {
-  return pvForm->currentData("VehicleType_tbl", "Id_PK");
+  return currentData("VehicleType_tbl", "Id_PK");
 }
 
 bool mdtClVehicleTypeEditor::setupVehicleTypeTable()
@@ -83,18 +71,13 @@ bool mdtClVehicleTypeEditor::setupVehicleTypeTable()
   Ui::mdtClVehicleTypeEditor vte;
 
   // Setup main form widget
-  vte.setupUi(pvForm->mainSqlWidget());
-  connect(this, SIGNAL(vehicleTypeEdited()), pvForm->mainSqlWidget(), SIGNAL(dataEdited()));
+  vte.setupUi(mainSqlWidget());
+  ///connect(this, SIGNAL(vehicleTypeEdited()), mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
-  if(!pvForm->setTable("VehicleType_tbl", "Vehicle types", pvDatabase)){
+  if(!setMainTable("VehicleType_tbl", "Vehicle types", database())){
     return false;
   }
-  pvForm->sqlWindow()->enableNavigation();
-  pvForm->sqlWindow()->enableEdition();
-  pvForm->sqlWindow()->resize(800, 500);
-  pvForm->sqlWindow()->setWindowTitle(tr("Vehicle types edition"));
-  // Force a update
-  pvForm->mainSqlWidget()->setCurrentIndex(pvForm->mainSqlWidget()->currentRow());
+  setWindowTitle(tr("Vehicle types edition"));
 
   return true;
 }
@@ -104,15 +87,15 @@ bool mdtClVehicleTypeEditor::setupUnitTable()
   mdtSqlTableWidget *widget;
 
   // Add unit table
-  if(!pvForm->addChildTable("VehicleType_Unit_view", tr("Units"), pvDatabase)){
+  if(!addChildTable("VehicleType_Unit_view", tr("Units"), database())){
     return false;
   }
   // Setup Unit <-> VehicleType relation
-  if(!pvForm->addRelation("Id_PK", "VehicleType_Unit_view", "VehicleType_Id_FK")){
+  if(!addRelation("Id_PK", "VehicleType_Unit_view", "VehicleType_Id_FK")){
     return false;
   }
   // Get widget to continue setup
-  widget = pvForm->sqlTableWidget("VehicleType_Unit_view");
+  widget = sqlTableWidget("VehicleType_Unit_view");
   Q_ASSERT(widget != 0);
   // Hide relation fields and PK
   widget->setColumnHidden("Type", true);

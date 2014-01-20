@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,44 +18,55 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_CONNECTOR_EDITOR_H
-#define MDT_CL_CONNECTOR_EDITOR_H
+#ifndef MDT_CL_VEHICLE_TYPE_EDITOR_H
+#define MDT_CL_VEHICLE_TYPE_EDITOR_H
 
-#include "mdtClEditor.h"
+#include "mdtSqlForm.h"
+#include <QVariant>
 
-/*! \brief Class for connector edition
+class QWidget;
+
+/*! \brief Vehicle type editor
  */
-class mdtClConnectorEditor : public mdtClEditor
+class mdtClVehicleTypeEditor : public mdtSqlForm
 {
  Q_OBJECT
 
  public:
 
-  /*! \brief Constructor
+  /*! \brief Contruct a vehicle type editor
    */
-  mdtClConnectorEditor(QObject *parent, QSqlDatabase db);
+  mdtClVehicleTypeEditor(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
-  ~mdtClConnectorEditor();
-
- protected:
+  ~mdtClVehicleTypeEditor();
 
   /*! \brief Setup tables
    */
   bool setupTables();
 
+/// signals:
+
+  /*! \brief Used to tell vehicle type widget that we have edited some data
+   */
+  ///void vehicleTypeEdited();
+
  private:
 
-  /*! \brief Setup connector table
+  /*! \brief Get current vehicle type ID
    */
-  bool setupConnectorTable();
+  QVariant currentVehicleTypeId();
 
-  /*! \brief Setup connector contact table
+  /*! \brief Setup Article table and widget
    */
-  bool setupConnectorContactTable();
+  bool setupVehicleTypeTable();
 
-  Q_DISABLE_COPY(mdtClConnectorEditor);
+  /*! \brief Setup Article-Connection table and widget
+   */
+  bool setupUnitTable();
+
+  Q_DISABLE_COPY(mdtClVehicleTypeEditor);
 };
 
-#endif // #ifndef MDT_CL_CONNECTOR_EDITOR_H
+#endif  // #ifndef MDT_CL_VEHICLE_TYPE_EDITOR_H

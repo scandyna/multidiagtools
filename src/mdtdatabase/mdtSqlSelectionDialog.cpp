@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,6 +21,7 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
 #include <QSqlQueryModel>
+#include <QSqlField>
 #include <QTableView>
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -171,6 +172,36 @@ void mdtSqlSelectionDialog::addSelectionResultColumn(const QString &field)
     return;
   }
   pvSelectionResultColumns.append(column);
+}
+
+QSqlRecord mdtSqlSelectionDialog::selectedDataRecord()
+{
+  Q_ASSERT(pvModel != 0);
+  Q_ASSERT(pvTableView->selectionModel() != 0);
+
+  QSqlRecord record;
+  QSqlRecord fieldInfo;
+  int row, i;
+  QModelIndex index;
+
+  if(pvSelectionResults.isEmpty()){
+    return record;
+  }
+  // We take only first row of selection results
+  index = pvSelectionResults.at(0);
+  if(!index.isValid()){
+    return record;
+  }
+  row = index.row();
+  fieldInfo = pvModel->record();
+  for(i = 0; i < pvSelectionResultColumns.size(); ++i){
+    index = pvModel->index(row, pvSelectionResultColumns.at(i));
+    record.append(fieldInfo.field(index.column()));
+    record.setValue(i, pvModel->data(index));
+    ///result.append(pvModel->data(index));
+  }
+
+  return record;
 }
 
 QList<QVariant> mdtSqlSelectionDialog::selectionResult()

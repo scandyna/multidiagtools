@@ -113,16 +113,23 @@ void mdtClMainWindow::editVehicleType()
       pvVehicleTypeEditor = 0;
       return;
     }
+    pvVehicleTypeEditorWindow = new mdtSqlWindow(this);
+    pvVehicleTypeEditorWindow->setSqlForm(pvVehicleTypeEditor);
+    pvVehicleTypeEditorWindow->resize(800, 500);
+    pvVehicleTypeEditorWindow->enableNavigation();
+    pvVehicleTypeEditorWindow->enableEdition();
   }
   Q_ASSERT(pvVehicleTypeEditor != 0);
-  pvVehicleTypeEditor->form()->show();
+  Q_ASSERT(pvVehicleTypeEditorWindow != 0);
+  pvVehicleTypeEditor->select();
+  pvVehicleTypeEditorWindow->show();
 }
 
 void mdtClMainWindow::editConnector()
 {
   if(pvConnectorEditor == 0){
     pvConnectorEditor = new mdtClConnectorEditor(this, pvDatabaseManager->database());
-    if(!pvConnectorEditor->setupAsWindow()){
+    if(!pvConnectorEditor->setupTables()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup connector editor."));
       msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
@@ -133,9 +140,16 @@ void mdtClMainWindow::editConnector()
       pvConnectorEditor = 0;
       return;
     }
+    pvConnectorEditorWindow = new mdtSqlWindow(this);
+    pvConnectorEditorWindow->setSqlForm(pvConnectorEditor);
+    pvConnectorEditorWindow->resize(800, 500);
+    pvConnectorEditorWindow->enableNavigation();
+    pvConnectorEditorWindow->enableEdition();
   }
   Q_ASSERT(pvConnectorEditor != 0);
-  pvConnectorEditor->show();
+  Q_ASSERT(pvConnectorEditorWindow != 0);
+  pvConnectorEditor->select();
+  pvConnectorEditorWindow->show();
 }
 
 void mdtClMainWindow::editUnit()

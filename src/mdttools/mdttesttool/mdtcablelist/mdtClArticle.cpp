@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,6 +21,7 @@
 #include "mdtClArticle.h"
 #include "mdtError.h"
 #include <QString>
+#include <QStringList>
 #include <QSqlQuery>
 
 #include <QDebug>
@@ -178,6 +179,7 @@ bool mdtClArticle::removeComponents(const QVariant &articleId, const QModelIndex
   return removeComponents(articleId, idList);
 }
 
+/**
 QList<mdtClArticleConnectionData> mdtClArticle::connectorContactData(const QList<QVariant> & connectorContactIdList)
 {
   QString sql;
@@ -216,7 +218,34 @@ QList<mdtClArticleConnectionData> mdtClArticle::connectorContactData(const QList
 
   return dataList;
 }
+*/
 
+QList<QSqlRecord> mdtClArticle::connectorContactData(const QList<QVariant> & connectorContactIdList, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QString sql;
+  QStringList expectedFields;
+  int i;
+
+  /// \todo Is this a error or not ?
+  if(connectorContactIdList.isEmpty()){
+    return QList<QSqlRecord>();
+  }
+  // Setup query
+  sql = "SELECT Id_PK, Connector_Id_FK, Name "\
+        "FROM ConnectorContact_tbl ";
+  Q_ASSERT(connectorContactIdList.size() > 0);
+  sql += "WHERE Id_PK = " + connectorContactIdList.at(0).toString();
+  for(i = 1; i < connectorContactIdList.size(); ++i){
+    sql += " OR Id_PK = " + connectorContactIdList.at(i).toString();
+  }
+  expectedFields << "Id_PK" << "Connector_Id_FK" << "Name";
+
+  return getData(sql, ok, expectedFields);
+}
+
+/**
 bool mdtClArticle::addConnection(const mdtClArticleConnectionData &data)
 {
   QString sql;
@@ -254,7 +283,14 @@ bool mdtClArticle::addConnection(const mdtClArticleConnectionData &data)
 
   return true;
 }
+*/
 
+bool mdtClArticle::addConnection(const mdtSqlRecord &data)
+{
+  return addRecord(data, "ArticleConnection_tbl");
+}
+
+/**
 bool mdtClArticle::addConnections(const QList<mdtClArticleConnectionData> & dataList, bool singleTransaction)
 {
   int i;
@@ -279,6 +315,12 @@ bool mdtClArticle::addConnections(const QList<mdtClArticleConnectionData> & data
   }
 
   return true;
+}
+*/
+
+bool mdtClArticle::addConnections(const QList<mdtSqlRecord> & dataList, bool singleTransaction)
+{
+  return addRecordList(dataList, "ArticleConnection_tbl", singleTransaction);
 }
 
 bool mdtClArticle::removeConnection(const QVariant & articleConnectionId)
@@ -377,6 +419,7 @@ bool mdtClArticle::removeConnectorsConnections(const QList<QVariant> & articleCo
   return true;
 }
 
+/**
 bool mdtClArticle::addConnector(const QList<mdtClArticleConnectionData> & dataList)
 {
   QString sql;
@@ -448,6 +491,69 @@ bool mdtClArticle::addConnector(const QList<mdtClArticleConnectionData> & dataLi
   }
   // Add connections
   if(!addConnections(connectionDataList, false)){
+    rollbackTransaction();
+    return false;
+  }
+  // Commit
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+*/
+
+bool mdtClArticle::addConnector(const mdtSqlRecord & articleConnectorData, const QList<mdtSqlRecord> & articleConnectionDataList)
+{
+  QString sql;
+  QSqlQuery query(database());
+  QList<mdtSqlRecord> _articleConnectionDataList; // Because we update FKs, we need a copy
+  QVariant articleConnectorId;
+  QVariant articleId;
+  int i;
+
+  // We accept that calling this method without data is not a error
+  if(articleConnectionDataList.isEmpty()){
+    return true;
+  }
+  _articleConnectionDataList = articleConnectionDataList;
+
+  // Because we add connector and get its ID for connections insertion, we use a transaction for the whole process
+  if(!beginTransaction()){
+    return false;
+  }
+  // Get article ID
+  articleId = articleConnectorData.value("Article_Id_FK");
+  if(articleId.isNull()){
+    pvLastError.setError(tr("Given article connector data contains not a valid article ID."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Add article connector
+  if(!addRecord(articleConnectorData, "ArticleConnector_tbl", query)){
+    rollbackTransaction();
+    return false;
+  }
+  // Get article connector ID and update data
+  articleConnectorId = query.lastInsertId();
+  if(articleConnectorId.isNull()){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot get article connector ID for connector inertion."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    rollbackTransaction();
+    return false;
+  }
+  // Update FKs in connection data
+  for(i = 0; i < _articleConnectionDataList.size(); ++i){
+    _articleConnectionDataList[i].setValue("Article_Id_FK", articleId);
+    _articleConnectionDataList[i].setValue("ArticleConnector_Id_FK", articleConnectorId);
+  }
+  // Add connections
+  if(!addConnections(_articleConnectionDataList, false)){
     rollbackTransaction();
     return false;
   }
@@ -562,6 +668,7 @@ bool mdtClArticle::addBridge(const QVariant & articleConnectionStartId, const QV
   return addLink(articleConnectionStartId, articleConnectionEndId, 0.0, "BID", "ARTBRIDGE");
 }
 
+/**
 bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtClLinkData &data)
 {
   QString sql;
@@ -600,6 +707,26 @@ bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVa
   }
 
   return true;
+}
+*/
+
+bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtSqlRecord & data)
+{
+  mdtSqlRecord matchData;
+
+  // Setup row condition
+  if(!matchData.addField("ArticleConnectionStart_Id_FK", "ArticleLink_tbl", database())){
+    pvLastError = matchData.lastError();
+    return false;
+  }
+  if(!matchData.addField("ArticleConnectionEnd_Id_FK", "ArticleLink_tbl", database())){
+    pvLastError = matchData.lastError();
+    return false;
+  }
+  matchData.setValue("ArticleConnectionStart_Id_FK", articleConnectionStartId);
+  matchData.setValue("ArticleConnectionEnd_Id_FK", articleConnectionEndId);
+
+  return updateRecord("ArticleLink_tbl", data, matchData);
 }
 
 bool mdtClArticle::removeLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId)

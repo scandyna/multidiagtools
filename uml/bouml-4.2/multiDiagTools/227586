@@ -1,6 +1,6 @@
 format 76
 "mdttesttool" // mdttools::mdttesttool
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -335,7 +335,7 @@ ${inlines}
     end
   end
 
-  classview 542850 "mdtClDatabase"
+  classview 542850 "mdtTtDatabaseSchema"
     //class diagram settings
     draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
     //collaboration diagram settings
@@ -351,12 +351,12 @@ ${inlines}
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    classdiagram 887682 "mdtClDatabaseSchema"
+    classdiagram 887682 "mdtTtDatabaseSchema"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 923778 "mdtClDatabaseSchema"
+    class 923778 "mdtTtDatabaseSchema"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -379,7 +379,7 @@ ${inlines}
 	  b parent class_ref 910210 // mdtSqlSchemaTable
       end
 
-      operation 1675906 "mdtClDatabaseSchema"
+      operation 1675906 "mdtTtDatabaseSchema"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
@@ -394,7 +394,7 @@ ${inlines}
 	
       end
 
-      operation 1676034 "~mdtClDatabaseSchema"
+      operation 1676034 "~mdtTtDatabaseSchema"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};

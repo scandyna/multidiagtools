@@ -109,6 +109,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool/mdtcablelist")
 endif(UNIX)
 
 #################################################################################################################################################
@@ -155,6 +156,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 # * mdttools *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool")
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool/mdtcablelist")
 
 # *** Tools section (executables) ***
 add_subdirectory("${PROJECT_SOURCE_DIR}/tools")

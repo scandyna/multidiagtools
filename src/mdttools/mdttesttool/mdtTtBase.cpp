@@ -21,10 +21,9 @@
 #include "mdtTtBase.h"
 #include <QSqlError>
 #include <QSqlError>
-#include <QSqlQuery>
 #include <QVector>
 
-#include <QDebug>
+//#include <QDebug>
 
 /// \todo Add tr() in errors
 
@@ -50,44 +49,18 @@ mdtError mdtTtBase::lastError()
 
 bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName)
 {
-  QString sql;
   QSqlQuery query(database());
-  ///int i, index, lastIndex;
+  return addRecord(record, tableName, query);
+}
+
+bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName, QSqlQuery & query)
+{
+  QString sql;
   QVector<int> indexList;
   int i;
 
-  // Get last field index that has a value
-  /**
-  lastIndex = -1;
-  for(i = 0; i < record.count(); ++i){
-    if(record.hasValue(i)){
-      lastIndex = i;
-    }
-  }
-  // Prepare query for insertion
-  sql = "INSERT INTO " + tableName +" (";
-  for(i = 0; i <= lastIndex; ++i){
-    if(record.hasValue(i)){
-      sql += record.fieldName(i);
-      if(i < (lastIndex-1)){
-        sql += ",";
-      }
-    }
-  }
-  sql += ") VALUES (";
-  for(i = 0; i <= lastIndex; ++i){
-    if(record.hasValue(i)){
-      sql += "?";
-      if(i < (lastIndex-1)){
-        sql += ",";
-      }
-    }
-  }
-  sql += ")";
-  */
   indexList = record.fieldIndexesWithValue();
   sql = record.sqlForInsert(tableName);
-  qDebug() << "SQL: " << sql;
   // Prepare query
   if(!query.prepare(sql)){
     QSqlError sqlError = query.lastError();
@@ -101,15 +74,6 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
   for(i = 0; i < indexList.size(); ++i){
     query.bindValue(i, record.value(indexList.at(i)));
   }
-  /**
-  index = 0;
-  for(i = 0; i <= lastIndex; ++i){
-    if(record.hasValue(i)){
-      query.bindValue(index, record.value(i));
-      ++index;
-    }
-  }
-  */
   if(!query.exec()){
     QSqlError sqlError = query.lastError();
     pvLastError.setError(tr("Cannot exec query for inertion in table '") + tableName + tr("'"), mdtError::Error);
@@ -270,9 +234,8 @@ bool mdtTtBase::removeData(const QString & tableName, const QStringList & fields
       max = col;
     }
   }
-  ///qDebug() << "indexes max column : " << max;
   if(max > fields.size()){
-    pvLastError.setError("Cannot remove rows in table " + tableName + ": indexes contains more columns than fields list.", mdtError::Error);
+    pvLastError.setError(tr("Cannot remove rows from table '") + tableName + tr(": indexes contains more columns than fields list."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
     return false;
@@ -293,13 +256,12 @@ bool mdtTtBase::removeData(const QString & tableName, const QStringList & fields
     sql += fields.at(col) + " = " + delimiter + data.toString() + delimiter;
   }
   sql += ")";
-  ///qDebug() << "SQL: " << sql;
   // Submit query
   QSqlQuery query(database());
   if(!query.exec(sql)){
     QSqlError sqlError;
     sqlError = query.lastError();
-    pvLastError.setError("Cannot remove rows in table " + tableName, mdtError::Error);
+    pvLastError.setError(tr("Cannot remove rows from table '") + tableName + tr("'."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
@@ -322,13 +284,12 @@ bool mdtTtBase::removeData(const QString & tableName, const QString & fieldName,
   // Generate SQL statement
   delimiter = sqlDataDelimiter(matchData.type());
   sql = "DELETE FROM " + tableName + " WHERE " + fieldName + " = " + delimiter + matchData.toString() + delimiter;
-  ///qDebug() << "SQL: " << sql;
   // Submit query
   QSqlQuery query(database());
   if(!query.exec(sql)){
     QSqlError sqlError;
     sqlError = query.lastError();
-    pvLastError.setError("Cannot remove row in table " + tableName, mdtError::Error);
+    pvLastError.setError(tr("Cannot remove row from table '") + tableName + tr("'."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
@@ -342,7 +303,7 @@ bool mdtTtBase::beginTransaction()
 {
   if(!pvDatabase.transaction()){
     QSqlError sqlError = pvDatabase.lastError();
-    pvLastError.setError("Cannot beginn transaction (database: " + pvDatabase.databaseName() + ")", mdtError::Error);
+    pvLastError.setError(tr("Cannot beginn transaction (database: '") + pvDatabase.databaseName() + tr("')."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
@@ -355,7 +316,7 @@ bool mdtTtBase::rollbackTransaction()
 {
   if(!pvDatabase.rollback()){
     QSqlError sqlError = pvDatabase.lastError();
-    pvLastError.setError("Cannot beginn rollback (database: " + pvDatabase.databaseName() + ")", mdtError::Error);
+    pvLastError.setError(tr("Cannot beginn rollback (database: '") + pvDatabase.databaseName() + tr("')."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
@@ -368,7 +329,7 @@ bool mdtTtBase::commitTransaction()
 {
   if(!pvDatabase.commit()){
     QSqlError sqlError = pvDatabase.lastError();
-    pvLastError.setError("Cannot beginn commit (database: " + pvDatabase.databaseName() + ")", mdtError::Error);
+    pvLastError.setError(tr("Cannot beginn commit (database: '") + pvDatabase.databaseName() + tr("')."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();

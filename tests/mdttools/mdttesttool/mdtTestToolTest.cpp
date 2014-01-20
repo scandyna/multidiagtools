@@ -163,8 +163,6 @@ void mdtTestToolTest::mdtTtBaseTest()
 
 void mdtTestToolTest::createDatabaseSchema()
 {
-  ///QSqlDatabase db;
-
   QTemporaryFile dbFile;
   QFileInfo dbFileInfo;
 

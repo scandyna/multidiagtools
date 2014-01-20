@@ -1,34 +1,24 @@
 format 76
 
-classcanvas 128130 class_ref 952450 // mdtClConnectorEditor
+classcanvas 128002 class_ref 798722 // mdtClArticle
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 134 290 2000
+  xyz 12 283.8 2000
 end
-classcanvas 128258 class_ref 952322 // mdtClEditor
+classcanvas 128130 class_ref 405122 // QSqlDatabase
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 308 164 2005
+  xyz 749.4 75.3 2000
 end
-classcanvas 128514 class_ref 952578 // mdtClConnectionData
+classcanvas 128386 class_ref 952962 // mdtTtBase
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 505 107 2000
+  xyz 502 76 2006
 end
-classcanvas 129154 class_ref 959490 // Ui::mdtClConnectorEditor
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 40 43 2000
+relationcanvas 128514 relation_ref 1185538 // <unidirectional association>
+  from ref 128386 z 2007 to ref 128130
+  role_a_pos 660 73 3000 no_role_b
+  multiplicity_a_pos 730 103 3000 no_multiplicity_b
 end
-relationcanvas 128386 relation_ref 1184386 // <generalisation>
-  from ref 128130 z 2006 to ref 128258
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128770 relation_ref 1185410 // <dependency>
-  from ref 128130 z 2001 to ref 128514
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129282 relation_ref 1192322 // <dependency>
-  decenter_begin 293
-  from ref 128130 z 2001 to ref 129154
+relationcanvas 128642 relation_ref 1185666 // <generalisation>
+  from ref 128002 z 2007 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

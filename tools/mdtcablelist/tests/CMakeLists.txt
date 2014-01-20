@@ -12,10 +12,10 @@ project (multidiagtools)
 # Header files containing Qt Q_OBJECT macro
 set (TEST_HEADER_FILES
           ../src/mdtClEditor.h
-          ../src/mdtClVehicleTypeEditor.h
-          ../src/mdtClConnectorEditor.h
-          ../src/mdtClArticleEditor.h
-          ../src/mdtClArticleConnectionDialog.h
+          #../src/mdtClVehicleTypeEditor.h
+          #../src/mdtClConnectorEditor.h
+          #../src/mdtClArticleEditor.h
+          #../src/mdtClArticleConnectionDialog.h
           ../src/mdtClUnitEditor.h
           ../src/mdtClLinkEditor.h
           ../src/mdtClUnitConnectionDialog.h
@@ -23,8 +23,8 @@ set (TEST_HEADER_FILES
           ../src/mdtClUnitLinkDialog.h
           ../src/mdtClTerminalBlockEditor.h
           ../src/mdtClTerminalEditorDialog.h
-          ../src/mdtClArticleComponentDialog.h
-          ../src/mdtClArticleLinkDialog.h
+          #../src/mdtClArticleComponentDialog.h
+          #../src/mdtClArticleLinkDialog.h
           ../src/mdtClPathGraphDialog.h
           ../src/mdtClMainWindow.h
           ../src/mdtCcTestConnectionCableEditor.h
@@ -40,12 +40,12 @@ set (TEST_HEADER_FILES
 set (TEST_SOURCES_FILES 
           #../src/mdtClBase.cpp
           ../src/mdtClEditor.cpp
-          ../src/mdtClVehicleTypeEditor.cpp
-          ../src/mdtClConnectorEditor.cpp
+          #../src/mdtClVehicleTypeEditor.cpp
+          #../src/mdtClConnectorEditor.cpp
           ../src/mdtClConnectionData.cpp
           ../src/mdtClArticleConnectionData.cpp
-          ../src/mdtClArticleEditor.cpp
-          ../src/mdtClArticleConnectionDialog.cpp
+          #../src/mdtClArticleEditor.cpp
+          #../src/mdtClArticleConnectionDialog.cpp
           ../src/mdtClUnit.cpp
           ../src/mdtClUnitEditor.cpp
           ../src/mdtClUnitConnectionData.cpp
@@ -57,9 +57,9 @@ set (TEST_SOURCES_FILES
           ../src/mdtClTerminalBlockEditor.cpp
           ../src/mdtClTerminalEditorDialog.cpp
           ../src/mdtClUnitVehicleType.cpp
-          ../src/mdtClArticleComponentDialog.cpp
-          ../src/mdtClArticleLinkDialog.cpp
-          ../src/mdtClArticle.cpp
+          #../src/mdtClArticleComponentDialog.cpp
+          #../src/mdtClArticleLinkDialog.cpp
+          #../src/mdtClArticle.cpp
           ../src/mdtClPathGraphicsConnection.cpp
           ../src/mdtClPathGraphicsLink.cpp
           ../src/mdtClPathGraph.cpp
@@ -84,18 +84,18 @@ set (TEST_SOURCES_FILES
 
 # Qt ui files
 set (TEST_FORM_FILES
-          ../src/mdtClVehicleTypeEditor.ui
-          ../src/mdtClConnectorEditor.ui
-          ../src/mdtClArticleEditor.ui
-          ../src/mdtClArticleConnectionDialog.ui
+          #../src/mdtClVehicleTypeEditor.ui
+          #../src/mdtClConnectorEditor.ui
+          #../src/mdtClArticleEditor.ui
+          #../src/mdtClArticleConnectionDialog.ui
           ../src/mdtClUnitEditor.ui
           ../src/mdtClUnitConnectionDialog.ui
           ../src/mdtClUnitLinkDialog.ui
 #          ../src/mdtClUnitConnectionEditor.ui
           ../src/mdtClLinkEditor.ui
           ../src/mdtClTerminalBlockEditor.ui
-          ../src/mdtClArticleComponentDialog.ui
-          ../src/mdtClArticleLinkDialog.ui
+          #../src/mdtClArticleComponentDialog.ui
+          #../src/mdtClArticleLinkDialog.ui
           ../src/mdtClPathGraphDialog.ui
           ../src/mdtClMainWindow.ui
           ../src/mdtTtTestNodeEditor.ui
@@ -119,6 +119,7 @@ target_link_libraries(mdtclsandbox "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdtdevice${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdttesttool${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclsandbox "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdtclsandbox "mdtdport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclsandbox "mdttest")
 
@@ -130,5 +131,6 @@ target_link_libraries(mdtclunittest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdtdevice${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclunittest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdtclunittest "mdtdport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunittest "mdttest")

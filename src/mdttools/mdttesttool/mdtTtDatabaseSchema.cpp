@@ -33,13 +33,11 @@ mdtTtDatabaseSchema::mdtTtDatabaseSchema(mdtSqlDatabaseManager *dbManager)
 {
   Q_ASSERT(dbManager != 0);
 
-  ///pvDatabaseManager = new mdtSqlDatabaseManager;
   pvDatabaseManager = dbManager;
 }
 
 mdtTtDatabaseSchema::~mdtTtDatabaseSchema() 
 {
-  ///delete pvDatabaseManager;
 }
 
 bool mdtTtDatabaseSchema::createSchemaSqlite(const QDir & startDirectory)
@@ -2776,32 +2774,12 @@ bool mdtTtDatabaseSchema::insertDataIntoTable(const QString & tableName, const Q
   int i;
   bool pkExists;
 
-  /**
-  // Generate SQL statement
-  sql = "INSERT INTO '" + tableName + "' (";
-  for(i = 0; i < fields.size(); ++i){
-    sql += fields.at(i);
-    if(i < (fields.size() - 1)){
-      sql += ",";
-    }
-  }
-  sql += ") VALUES(";
-  for(i = 0; i < fields.size(); ++i){
-    sql += "?";
-    if(i < (fields.size() - 1)){
-      sql += ",";
-    }
-  }
-  sql += ")";
-  */
   pkExists = pkExistsInTable(tableName, fields.at(0), data.at(0));
-  ///pkExists = true;
   if(pkExists){
     sql = sqlForDataEdition(tableName, fields, data);
   }else{
     sql = sqlForDataInsertion(tableName, fields, data);
   }
-  qDebug() << "INSERT SQL: " << sql;
   // Prepare query for insertion
   if(!query.prepare(sql)){
     sqlError = query.lastError();
@@ -2818,7 +2796,6 @@ bool mdtTtDatabaseSchema::insertDataIntoTable(const QString & tableName, const Q
     i = 0;
   }
   for(i = i; i < data.size(); ++i){
-    qDebug() << "i: " << i << " , data: " << data.at(i);
     query.bindValue(i, data.at(i));
   }
   // Exec query

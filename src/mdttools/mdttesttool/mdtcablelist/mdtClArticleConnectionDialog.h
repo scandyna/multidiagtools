@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,7 @@
 #ifndef MDT_CL_ARTICLE_CONNECTION_DIALOG_H
 #define MDT_CL_ARTICLE_CONNECTION_DIALOG_H
 
-#include "mdtClArticleConnectionData.h"
+///#include "mdtClArticleConnectionData.h"
 #include "ui_mdtClArticleConnectionDialog.h"
 #include <QDialog>
 #include <QVariant>

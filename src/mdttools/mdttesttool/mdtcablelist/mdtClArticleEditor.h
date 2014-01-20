@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,17 +21,19 @@
 #ifndef MDT_CL_ARTICLE_EDITOR_H
 #define MDT_CL_ARTICLE_EDITOR_H
 
+#include "mdtSqlForm.h"
 #include <QSqlDatabase>
 #include <QModelIndex>
-#include <QObject>
 #include <QVariant>
 #include <QList>
-#include "mdtSqlFormWindow.h"
-#include "mdtClEditor.h"
+///#include "mdtSqlFormWindow.h"
+///#include "mdtClEditor.h"
+
+class QWidget;
 
 /*! \brief Cable list's article editor
  */
-class mdtClArticleEditor : public mdtClEditor
+class mdtClArticleEditor : public mdtSqlForm
 {
  Q_OBJECT
 
@@ -39,11 +41,15 @@ class mdtClArticleEditor : public mdtClEditor
 
   /*! \brief Contruct a article editor
    */
-  mdtClArticleEditor(QObject *parent, QSqlDatabase db);
+  mdtClArticleEditor(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
   ~mdtClArticleEditor();
+
+  /*! \brief Setup tables
+   */
+  bool setupTables();
 
  private slots:
 
@@ -92,10 +98,6 @@ class mdtClArticleEditor : public mdtClEditor
   void removeLinks();
 
  private:
-
-  /*! \brief Setup tables
-   */
-  bool setupTables();
 
   /*! \brief Get current Article ID
    *

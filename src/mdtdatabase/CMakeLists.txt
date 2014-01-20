@@ -9,8 +9,9 @@ project (multidiagtools)
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
           mdtSqlForm.h
-	  mdtSqlWindow.h
-	  mdtSqlDialog.h
+          mdtSqlWindow.h
+          mdtSqlDialog.h
+          mdtSqlSelectionDialog.h
     )
 
 # Liste des fichiers sources
@@ -19,6 +20,7 @@ set (SOURCES_FILES
           mdtSqlWindow.cpp
           mdtSqlDialog.cpp
           mdtSqlRecord.cpp
+          mdtSqlSelectionDialog.cpp
     )
 
 # Qt ui files

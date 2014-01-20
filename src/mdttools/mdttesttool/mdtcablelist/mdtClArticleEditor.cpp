@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtClArticleEditor.h"
 #include "ui_mdtClArticleEditor.h"
-#include "mdtSqlWindowOld.h"
+///#include "mdtSqlWindowOld.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtAbstractSqlWidget.h"
@@ -28,7 +28,7 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
 #include "mdtClArticleComponentDialog.h"
-#include "mdtClArticleConnectionData.h"
+///#include "mdtClArticleConnectionData.h"
 #include "mdtClArticleConnectionDialog.h"
 #include "mdtClArticleLinkDialog.h"
 #include "mdtClArticle.h"
@@ -48,14 +48,14 @@
 
 #include <QDebug>
 
-mdtClArticleEditor::mdtClArticleEditor(QObject *parent, QSqlDatabase db)
- : mdtClEditor(parent, db)
+mdtClArticleEditor::mdtClArticleEditor(QWidget *parent, QSqlDatabase db)
+ : mdtSqlForm(parent, db)
 {
 }
 
 mdtClArticleEditor::~mdtClArticleEditor()
 {
-  delete form();
+  ///delete form();
 }
 
 void mdtClArticleEditor::addComponent()

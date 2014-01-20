@@ -1,5 +1,5 @@
 # CMake project file for Multi Diag Tools
-# Tool: mdtcablelist
+# Tool: mdtcablelistexe
 
 # Project
 project (multidiagtools)
@@ -10,10 +10,10 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 # Header files containing Qt Q_OBJECT macro
 set (HEADER_FILES
           src/mdtClEditor.h
-          src/mdtClVehicleTypeEditor.h
-          src/mdtClConnectorEditor.h
-          src/mdtClArticleEditor.h
-          src/mdtClArticleConnectionDialog.h
+          #src/mdtClVehicleTypeEditor.h
+          #src/mdtClConnectorEditor.h
+          #src/mdtClArticleEditor.h
+          #src/mdtClArticleConnectionDialog.h
           src/mdtClUnitEditor.h
           src/mdtClLinkEditor.h
           src/mdtClUnitConnectionDialog.h
@@ -21,8 +21,8 @@ set (HEADER_FILES
           src/mdtClUnitLinkDialog.h
           src/mdtClTerminalBlockEditor.h
           src/mdtClTerminalEditorDialog.h
-          src/mdtClArticleComponentDialog.h
-          src/mdtClArticleLinkDialog.h
+          #src/mdtClArticleComponentDialog.h
+          #src/mdtClArticleLinkDialog.h
           src/mdtClPathGraphDialog.h
           src/mdtClMainWindow.h
           src/mdtCcTestConnectionCableEditor.h
@@ -40,12 +40,12 @@ set (SOURCES_FILES
           src/main.cpp
           #src/mdtClBase.cpp
           src/mdtClEditor.cpp
-          src/mdtClVehicleTypeEditor.cpp
-          src/mdtClConnectorEditor.cpp
+          #src/mdtClVehicleTypeEditor.cpp
+          #src/mdtClConnectorEditor.cpp
           src/mdtClConnectionData.cpp
           src/mdtClArticleConnectionData.cpp
-          src/mdtClArticleEditor.cpp
-          src/mdtClArticleConnectionDialog.cpp
+          #src/mdtClArticleEditor.cpp
+          #src/mdtClArticleConnectionDialog.cpp
           src/mdtClUnit.cpp
           src/mdtClUnitEditor.cpp
           src/mdtClUnitConnectionData.cpp
@@ -57,9 +57,9 @@ set (SOURCES_FILES
           src/mdtClTerminalBlockEditor.cpp
           src/mdtClTerminalEditorDialog.cpp
           src/mdtClUnitVehicleType.cpp
-          src/mdtClArticleComponentDialog.cpp
-          src/mdtClArticleLinkDialog.cpp
-          src/mdtClArticle.cpp
+          #src/mdtClArticleComponentDialog.cpp
+          #src/mdtClArticleLinkDialog.cpp
+          #src/mdtClArticle.cpp
           src/mdtClPathGraphicsConnection.cpp
           src/mdtClPathGraphicsLink.cpp
           src/mdtClPathGraph.cpp
@@ -84,18 +84,18 @@ set (SOURCES_FILES
 
 # Qt ui files
 set (FORM_FILES
-          src/mdtClVehicleTypeEditor.ui
-          src/mdtClConnectorEditor.ui
-          src/mdtClArticleEditor.ui
-          src/mdtClArticleConnectionDialog.ui
+          #src/mdtClVehicleTypeEditor.ui
+          #src/mdtClConnectorEditor.ui
+          #src/mdtClArticleEditor.ui
+          #src/mdtClArticleConnectionDialog.ui
           src/mdtClUnitEditor.ui
           src/mdtClUnitConnectionDialog.ui
           src/mdtClUnitLinkDialog.ui
 #          src/mdtClUnitConnectionEditor.ui
           src/mdtClLinkEditor.ui
           src/mdtClTerminalBlockEditor.ui
-          src/mdtClArticleComponentDialog.ui
-          src/mdtClArticleLinkDialog.ui
+          #src/mdtClArticleComponentDialog.ui
+          #src/mdtClArticleLinkDialog.ui
           src/mdtClPathGraphDialog.ui
           src/mdtClMainWindow.ui
           src/mdtTtTestNodeEditor.ui
@@ -120,18 +120,19 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 
 # Executable
-add_executable (mdtcablelist${MDTLIB_VERSION_SUFFIX} ${GUI_TYPE} ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+add_executable (mdtcablelistexe${MDTLIB_VERSION_SUFFIX} ${GUI_TYPE} ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 # Libraries to link
-target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdttesttool${MDTLIB_VERSION_SUFFIX}")
-#target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtdport${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
+target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdttesttool${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtdport${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 
 # Install targets
-install (TARGETS "mdtcablelist${MDTLIB_VERSION_SUFFIX}" RUNTIME DESTINATION bin COMPONENT tools)
+install (TARGETS "mdtcablelistexe${MDTLIB_VERSION_SUFFIX}" RUNTIME DESTINATION bin COMPONENT tools)
 
 #################################################################################################################################################
 # *** Unit tests section ***

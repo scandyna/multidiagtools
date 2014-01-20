@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,63 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_VEHICLE_TYPE_EDITOR_H
-#define MDT_CL_VEHICLE_TYPE_EDITOR_H
+#ifndef MDT_CL_CONNECTOR_EDITOR_H
+#define MDT_CL_CONNECTOR_EDITOR_H
 
-#include "mdtSqlFormWindow.h"
-#include <QSqlDatabase>
-#include <QObject>
-#include <QVariant>
+#include "mdtSqlForm.h"
 
-/*! \brief Vehicle type editor
+class QWidget;
+
+/*! \brief Class for connector edition
  */
-class mdtClVehicleTypeEditor : public QObject
+class mdtClConnectorEditor : public mdtSqlForm
 {
  Q_OBJECT
 
  public:
 
-  /*! \brief Contruct a vehicle type editor
+  /*! \brief Constructor
    */
-  mdtClVehicleTypeEditor(QObject *parent = 0, QSqlDatabase db = QSqlDatabase());
+  mdtClConnectorEditor(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
-  ~mdtClVehicleTypeEditor();
+  ~mdtClConnectorEditor();
 
   /*! \brief Setup tables
    */
   bool setupTables();
 
-  /*! \brief Get form object
-   */
-  mdtSqlFormWindow *form();
-
- signals:
-
-  /*! \brief Used to tell vehicle type widget that we have edited some data
-   */
-  void vehicleTypeEdited();
-
  private:
 
-  /*! \brief Get current vehicle type ID
+  /*! \brief Setup connector table
    */
-  QVariant currentVehicleTypeId();
+  bool setupConnectorTable();
 
-  /*! \brief Setup Article table and widget
+  /*! \brief Setup connector contact table
    */
-  bool setupVehicleTypeTable();
+  bool setupConnectorContactTable();
 
-  /*! \brief Setup Article-Connection table and widget
-   */
-  bool setupUnitTable();
-
-  Q_DISABLE_COPY(mdtClVehicleTypeEditor);
-
-  QSqlDatabase pvDatabase;
-  // Form object
-  mdtSqlFormWindow *pvForm;
+  Q_DISABLE_COPY(mdtClConnectorEditor);
 };
 
-#endif  // #ifndef MDT_CL_VEHICLE_TYPE_EDITOR_H
+#endif // #ifndef MDT_CL_CONNECTOR_EDITOR_H

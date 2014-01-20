@@ -157,9 +157,14 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   // Database members
   mdtSqlDatabaseManager *pvDatabaseManager;
   QDir pvWorkDirectory;
-  // Editors
+  // Vehicle type editor
   mdtClVehicleTypeEditor *pvVehicleTypeEditor;
+  mdtSqlWindow *pvVehicleTypeEditorWindow;
+  // Connector editor
   mdtClConnectorEditor *pvConnectorEditor;
+  mdtSqlWindow *pvConnectorEditorWindow;
+  // Editors
+  
   mdtClUnitEditor *pvUnitEditor;
   mdtClArticleEditor *pvArticleEditor;
   mdtTtTestNodeEditor *pvTestNodeEditor;

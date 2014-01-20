@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,6 +26,7 @@
 #include <QString>
 #include <QStringList>
 #include <QModelIndex>
+#include <QSqlRecord>
 
 class QTableView;
 class QSqlQueryModel;
@@ -113,6 +114,17 @@ class mdtSqlSelectionDialog : public QDialog
    * \pre Model must be set with setModel() before using this method.
    */
   void addSelectionResultColumn(const QString &field);
+
+  /*! \brief Return a record containing data that user has selected
+   *
+   * The data are these that was specified with setSelectionResultColumns() ,
+   *  in the same order.
+   *
+   * If the user reject the dialog, a empty record is returned.
+   *
+   * This method works only for single row selection.
+   */
+  QSqlRecord selectedDataRecord();
 
   /*! \brief Return data that user has selected
    *

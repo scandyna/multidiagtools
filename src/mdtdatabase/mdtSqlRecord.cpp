@@ -22,7 +22,7 @@
 #include <QSqlError>
 #include <QSqlField>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlRecord::mdtSqlRecord()
 {

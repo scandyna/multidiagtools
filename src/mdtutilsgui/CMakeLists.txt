@@ -62,7 +62,7 @@ set (HEADER_FILES
           mdtSqlTableWidget.h
           mdtSqlWindowOld.h
           mdtSqlDialogOld.h
-          mdtSqlSelectionDialog.h
+          #mdtSqlSelectionDialog.h
           mdtSortFilterProxyModel.h
           mdtSqlDataValidator.h
           mdtSqlFormWidgetDataValidator.h
@@ -108,7 +108,7 @@ set (SOURCES_FILES
           mdtSqlTableWidget.cpp
           mdtSqlWindowOld.cpp
           mdtSqlDialogOld.cpp
-          mdtSqlSelectionDialog.cpp
+          #mdtSqlSelectionDialog.cpp
           mdtSortFilterProxyModel.cpp
           mdtSqlDataValidator.cpp
           mdtSqlFormWidgetDataValidator.cpp
