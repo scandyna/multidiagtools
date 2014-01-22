@@ -299,6 +299,31 @@ bool mdtTtBase::removeData(const QString & tableName, const QString & fieldName,
   return true;
 }
 
+bool mdtTtBase::removeData(const QString & tableName, const QString & fieldName1, const QVariant & matchData1, const QString & fieldName2, const QVariant & matchData2)
+{
+  QString sql;
+  QString delimiter1, delimiter2;
+
+  // Generate SQL statement
+  delimiter1 = sqlDataDelimiter(matchData1.type());
+  delimiter2 = sqlDataDelimiter(matchData2.type());
+  sql = "DELETE FROM " + tableName + " WHERE " + fieldName1 + " = " + delimiter1 + matchData1.toString() + delimiter1;
+  sql += " AND " + fieldName2 + " = " + delimiter2 + matchData2.toString() + delimiter2;
+  // Submit query
+  QSqlQuery query(database());
+  if(!query.exec(sql)){
+    QSqlError sqlError;
+    sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot remove row from table '") + tableName + tr("'."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
 bool mdtTtBase::beginTransaction() 
 {
   if(!pvDatabase.transaction()){

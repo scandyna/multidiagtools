@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtClArticleEditor.h"
 #include "ui_mdtClArticleEditor.h"
-///#include "mdtSqlWindowOld.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtAbstractSqlWidget.h"
@@ -28,7 +27,6 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
 #include "mdtClArticleComponentDialog.h"
-///#include "mdtClArticleConnectionData.h"
 #include "mdtClArticleConnectionDialog.h"
 #include "mdtClArticleLinkDialog.h"
 #include "mdtClArticle.h"
@@ -57,7 +55,6 @@ mdtClArticleEditor::mdtClArticleEditor(QWidget *parent, QSqlDatabase db)
 
 mdtClArticleEditor::~mdtClArticleEditor()
 {
-  ///delete form();
 }
 
 void mdtClArticleEditor::addComponent()
@@ -188,7 +185,6 @@ void mdtClArticleEditor::addConnection()
   }
   // Get and update data
   data = dialog.data();
-  ///data.setArticleId(articleId);
   data.setValue("Article_Id_FK", articleId);
   // Add connection
   if(!art.addConnection(data)){
@@ -289,12 +285,6 @@ void mdtClArticleEditor::addConnector()
     displayLastError();
     return;
   }
-  /**
-  for(i = 0; i < dataList.size(); ++i){
-    dataList[i].setArticleId(articleId);
-    dataList[i].setConnectorName(connectorName);
-  }
-  */
   if(!art.addConnector(connectorData, connectionDataList)){
     pvLastError = art.lastError();
     displayLastError();
@@ -353,7 +343,6 @@ void mdtClArticleEditor::addLink()
     return;
   }
   // Add link
-  ///if(!art.addLink(dialog.startConnectionId(), dialog.endConnectionId(), dialog.value().toDouble(), dialog.linkDirectionCode(), dialog.linkTypeCode())){
   if(!art.addLink(dialog.linkData())){
     QMessageBox msgBox;
     msgBox.setText(tr("Link insertion failed"));
@@ -419,7 +408,6 @@ void mdtClArticleEditor::removeLinks()
   QMessageBox msgBox;
   QStringList fields;
   QList<QModelIndexList> indexes;
-  ///QModelIndexList indexes;
   QSqlError sqlError;
   int ret;
 
@@ -486,8 +474,6 @@ bool mdtClArticleEditor::setupTables()
 
 QVariant mdtClArticleEditor::currentArticleId()
 {
-  ///Q_ASSERT(form() != 0);
-
   return currentData("Article_tbl", "Id_PK");
 }
 
@@ -760,8 +746,6 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
 
 bool mdtClArticleEditor::setupArticleLinkTable()
 {
-  ///Q_ASSERT(form() != 0);
-
   mdtSqlTableWidget *widget;
   QPushButton *pbAddLink;
   QPushButton *pbEditLink;

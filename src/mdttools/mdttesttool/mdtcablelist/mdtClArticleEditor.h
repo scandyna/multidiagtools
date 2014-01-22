@@ -26,8 +26,6 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QList>
-///#include "mdtSqlFormWindow.h"
-///#include "mdtClEditor.h"
 
 class QWidget;
 

@@ -88,7 +88,6 @@ void mdtClArticleLinkDialog::setLinkTypeCode(const QVariant & code)
   int row;
   QVariant data;
 
-  ///pvLinkData.setLinkTypeCode(code);
   pvLinkData.setValue("LinkType_Code_FK", code);
   for(row = 0; row < pvLinkTypeModel->rowCount(); ++row){
     index = pvLinkTypeModel->index(row, 0);
@@ -100,20 +99,12 @@ void mdtClArticleLinkDialog::setLinkTypeCode(const QVariant & code)
   }
 }
 
-/**
-QVariant mdtClArticleLinkDialog::linkTypeCode() const
-{
-  return pvLinkData.linkTypeCode();
-}
-*/
-
 void mdtClArticleLinkDialog::setLinkDirectionCode(const QVariant & code)
 {
   QModelIndex index;
   int row;
   QVariant data;
 
-  ///pvLinkData.setLinkDirectionCode(code);
   pvLinkData.setValue("LinkDirection_Code_FK", code);
   for(row = 0; row < pvLinkDirectionModel->rowCount(); ++row){
     index = pvLinkDirectionModel->index(row, 0);
@@ -125,62 +116,23 @@ void mdtClArticleLinkDialog::setLinkDirectionCode(const QVariant & code)
   }
 }
 
-/**
-QVariant mdtClArticleLinkDialog::linkDirectionCode() const
-{
-  return pvLinkData.linkDirectionCode();
-}
-*/
-
-
 void mdtClArticleLinkDialog::setValue(const QVariant & value)
 {
-  ///pvLinkData.setValue(value);
   pvLinkData.setValue("Value", value);
   sbValue->setValue(value.toDouble());
 }
 
-/**
-QVariant mdtClArticleLinkDialog::value() const
-{
-  return pvLinkData.value();
-}
-*/
-
 void mdtClArticleLinkDialog::setStartConnectionId(const QVariant & id)
 {
-  ///pvLinkData.setArticleConnectionStartId(id);
   pvLinkData.setValue("ArticleConnectionStart_Id_FK", id);
   displayCurrentSelectedStartConnection();
 }
 
-/**
-QVariant mdtClArticleLinkDialog::startConnectionId() const
-{
-  return pvLinkData.articleConnectionStartId();
-}
-*/
-
 void mdtClArticleLinkDialog::setEndConnectionId(const QVariant & id)
 {
-  ///pvLinkData.setArticleConnectionEndId(id);
   pvLinkData.setValue("ArticleConnectionEnd_Id_FK", id);
   displayCurrentSelectedEndConnection();
 }
-
-/**
-QVariant mdtClArticleLinkDialog::endConnectionId() const
-{
-  return pvLinkData.articleConnectionEndId();
-}
-*/
-
-/**
-mdtClLinkData mdtClArticleLinkDialog::linkData()
-{
-  return pvLinkData;
-}
-*/
 
 mdtSqlRecord mdtClArticleLinkDialog::linkData() const
 {
@@ -252,7 +204,6 @@ void mdtClArticleLinkDialog::selectStartConnection()
   }
   // Store result
   Q_ASSERT(dialog.selectionResult().size() == 1);
-  ///pvLinkData.setArticleConnectionStartId(dialog.selectionResult().at(0));
   pvLinkData.setValue("ArticleConnectionStart_Id_FK", dialog.selectionResult().at(0));
   // Update GUI
   displayCurrentSelectedStartConnection();
@@ -280,7 +231,6 @@ void mdtClArticleLinkDialog::selectEndConnection()
   }
   // Store result
   Q_ASSERT(dialog.selectionResult().size() == 1);
-  ///pvLinkData.setArticleConnectionEndId(dialog.selectionResult().at(0));
   pvLinkData.setValue("ArticleConnectionEnd_Id_FK", dialog.selectionResult().at(0));
   // Update GUI
   displayCurrentSelectedEndConnection();
@@ -294,25 +244,20 @@ void mdtClArticleLinkDialog::accept()
 
   // Store and check link type
   storeCurrentSelectedLinkType();
-  ///if(pvLinkData.linkTypeCode().isNull()){
   if(pvLinkData.value("LinkType_Code_FK").isNull()){
     errorList << tr("Link type is not set");
   }
   // Store and check link direction
   storeCurrentSelectedLinkDirection();
-  ///if(pvLinkData.linkDirectionCode().isNull()){
   if(pvLinkData.value("LinkDirection_Code_FK").isNull()){
     errorList << tr("Direction is not set");
   }
   // Store value
-  ///pvLinkData.setValue(sbValue->value());
   pvLinkData.setValue("Value", sbValue->value());
   // Start and end connections are allready set afetr selection by user
-  ///if(pvLinkData.articleConnectionStartId().isNull()){
   if(pvLinkData.value("ArticleConnectionStart_Id_FK").isNull()){
     errorList << tr("Start connection is not set");
   }
-  ///if(pvLinkData.articleConnectionEndId().isNull()){
   if(pvLinkData.value("ArticleConnectionEnd_Id_FK").isNull()){
     errorList << tr("End connection is not set");
   }
@@ -347,12 +292,10 @@ void mdtClArticleLinkDialog::storeCurrentSelectedLinkType()
 
   row = cbLinkType->currentIndex();
   if(row < 0){
-    ///pvLinkData.setLinkTypeCode(QVariant());
     pvLinkData.setValue("LinkType_Code_FK", QVariant());
     return;
   }
   index = pvLinkTypeModel->index(row, 0);
-  ///pvLinkData.setLinkTypeCode(pvLinkTypeModel->data(index));
   pvLinkData.setValue("LinkType_Code_FK", pvLinkTypeModel->data(index));
 }
 
@@ -363,12 +306,10 @@ void mdtClArticleLinkDialog::storeCurrentSelectedLinkDirection()
 
   row = cbLinkDirection->currentIndex();
   if(row < 0){
-    ///pvLinkData.setLinkDirectionCode(QVariant());
     pvLinkData.setValue("LinkDirection_Code_FK", QVariant());
     return;
   }
   index = pvLinkDirectionModel->index(row, 0);
-  ///pvLinkData.setLinkDirectionCode(pvLinkDirectionModel->data(index));
   pvLinkData.setValue("LinkDirection_Code_FK", pvLinkDirectionModel->data(index));
 }
 
@@ -378,7 +319,6 @@ void mdtClArticleLinkDialog::displayCurrentSelectedStartConnection()
   QVariant data;
   int row;
 
-  ///if(pvLinkData.articleConnectionStartId().isNull()){
   if(pvLinkData.value("ArticleConnectionStart_Id_FK").isNull()){
     lbStartConnectorName->clear();
     lbStartContactName->clear();
@@ -407,7 +347,6 @@ void mdtClArticleLinkDialog::displayCurrentSelectedEndConnection()
   QVariant data;
   int row;
 
-  ///if(pvLinkData.articleConnectionEndId().isNull()){
   if(pvLinkData.value("ArticleConnectionEnd_Id_FK").isNull()){
     lbEndConnectorName->clear();
     lbEndContactName->clear();

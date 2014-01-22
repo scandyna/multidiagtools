@@ -21,7 +21,6 @@
 #ifndef MDT_CL_ARTICLE_CONNECTION_DIALOG_H
 #define MDT_CL_ARTICLE_CONNECTION_DIALOG_H
 
-///#include "mdtClArticleConnectionData.h"
 #include "ui_mdtClArticleConnectionDialog.h"
 #include "mdtSqlRecord.h"
 #include <QDialog>
@@ -54,10 +53,6 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
   void setArticleConnectorModel(QSqlQueryModel *model);
 
   /*! \brief Set connection data
-   */
-  ///void setData(const mdtClArticleConnectionData & data);
-
-  /*! \brief Set connection data
    *
    * \pre Following fields must exit in data:
    *       - ArticleContactName
@@ -71,7 +66,6 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
 
   /*! \brief Get connection data
    */
-  ///mdtClArticleConnectionData data() const;
   mdtSqlRecord data() const;
 
  private slots:
@@ -88,7 +82,6 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
 
   Q_DISABLE_COPY(mdtClArticleConnectionDialog);
 
-  ///mdtClArticleConnectionData pvData;
   mdtSqlRecord pvData;
   QSqlQueryModel *pvArticleConnectorModel;
 };

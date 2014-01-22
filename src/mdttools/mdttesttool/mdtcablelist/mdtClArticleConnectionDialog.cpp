@@ -44,13 +44,6 @@ void mdtClArticleConnectionDialog::setArticleConnectorModel(QSqlQueryModel *mode
   pbSelectArticleConnector->setEnabled(true);
 }
 
-/**
-void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & data) 
-{
-  pvData = data;
-}
-*/
-
 void mdtClArticleConnectionDialog::setData(const QSqlRecord & data)
 {
   pvData = data;
@@ -62,13 +55,6 @@ void mdtClArticleConnectionDialog::setData(const QSqlRecord & data)
   Q_ASSERT(pvData.contains("FunctionFR"));
   Q_ASSERT(pvData.contains("FunctionIT"));
 }
-
-/**
-mdtClArticleConnectionData mdtClArticleConnectionDialog::data() const
-{
-  return pvData;
-}
-*/
 
 mdtSqlRecord mdtClArticleConnectionDialog::data() const
 {
@@ -92,7 +78,6 @@ void mdtClArticleConnectionDialog::selectArticleConnector()
   }
   // Store selected article connector ID
   Q_ASSERT(dialog.selectionResult().size() == 2);
-  ///pvData.setArticleConnectorId(dialog.selectionResult().at(0));
   pvData.setValue("ArticleConnector_Id_FK", dialog.selectionResult().at(0));
   // Display connector name
   connectorName = dialog.selectionResult().at(1).toString().trimmed();
@@ -111,13 +96,5 @@ void mdtClArticleConnectionDialog::accept()
   pvData.setValue("FunctionFR", fld_FunctionFR->text());
   pvData.setValue("FunctionDE", fld_FunctionDE->text());
   pvData.setValue("FunctionIT", fld_FunctionIT->text());
-  /**
-  pvData.setContactName(fld_ArticleContactName->text());
-  pvData.setIoType(fld_IoType->text());
-  pvData.setFunctionEN(fld_FunctionEN->text());
-  pvData.setFunctionFR(fld_FunctionFR->text());
-  pvData.setFunctionDE(fld_FunctionDE->text());
-  pvData.setFunctionIT(fld_FunctionIT->text());
-  */
   QDialog::accept();
 }

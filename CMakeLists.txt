@@ -260,6 +260,9 @@ if(UNIX)
   # mdtTestToolTest
   add_test (mdtTestToolTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttesttooltest)
 
+  # mdtCableListTest
+  add_test (mdtCableListTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtcablelisttest)
+
 endif(UNIX)
 
 # * Tools - mdt cable list *

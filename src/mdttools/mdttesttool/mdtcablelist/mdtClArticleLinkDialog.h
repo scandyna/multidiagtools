@@ -23,7 +23,6 @@
 
 #include "ui_mdtClArticleLinkDialog.h"
 #include "mdtSqlRecord.h"
-//#include "mdtClLinkData.h"
 #include <QDialog>
 #include <QVariant>
 #include <QSqlDatabase>
@@ -51,45 +50,24 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   void setLinkTypeCode(const QVariant & code);
 
-  /*! \brief Get selected link type code
-   */
-  ///QVariant linkTypeCode() const;
-
   /*! \brief Display link direction in combobox
    */
   void setLinkDirectionCode(const QVariant & code);
-
-  /*! \brief Get selected link direction code
-   */
-  ///QVariant linkDirectionCode() const;
 
   /*! \brief Display value
    */
   void setValue(const QVariant & value);
 
-  /*! \brief Get value
-   */
-  ///QVariant value() const;
-
   /*! \brief Store id as current selected start connection and display it
    */
   void setStartConnectionId(const QVariant & id);
-
-  /*! \brief Get start connection ID
-   */
-  ///QVariant startConnectionId() const;
 
   /*! \brief Store id as current selected end connection and display it
    */
   void setEndConnectionId(const QVariant & id);
 
-  /*! \brief Get end connection ID
-   */
-  ///QVariant endConnectionId() const;
-
   /*! \brief Get link data
    */
-  ///mdtClLinkData linkData();
   mdtSqlRecord linkData() const;
 
  private slots:
@@ -138,7 +116,6 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   Q_DISABLE_COPY(mdtClArticleLinkDialog);
 
-  ///mdtClLinkData pvLinkData;
   mdtSqlRecord pvLinkData;
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvLinkTypeModel;

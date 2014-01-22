@@ -1,14 +1,16 @@
-window_sizes 1280 1004 474 800 951 0
+window_sizes 1024 721 147 871 668 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 739586 // CableListAllTables
-    800 951 90 17 169 449
+    871 668 90 17 384 358
   classdiagram_ref 766338 // mdtClArticleLinkDialog
     120 106 100 4 228 0
   classdiagram_ref 1040002 // Dialogs
     931 951 80 3 0 0
 end
 show_stereotypes
+selected 
+  package_ref 129 // multiDiagTools
 open
   classview_ref 602498 // Data
   

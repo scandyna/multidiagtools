@@ -148,6 +148,19 @@ class mdtTtBase : public QObject
    */
   bool removeData(const QString & tableName, const QString & fieldName, const QVariant & matchData);
 
+  /*! \brief Remove data from given table
+   *
+   * This variant is typically usefull for tables containing 2 primary keys.
+   *  Will only remove rows that match the 2 fields (condition 1 AND condition 2).
+   *
+   * \param tableName Name of table in witch data must be removed .
+   * \param fieldName1 Name of first field that contains delete condition .
+   * \param matchData1 Data that match delete condition for first field.
+   * \param fieldName2 Name of second field that contains delete condition .
+   * \param matchData2 Data that match delete condition for second field.
+   */
+  bool removeData(const QString & tableName, const QString & fieldName1, const QVariant & matchData1, const QString & fieldName2, const QVariant & matchData2);
+
  protected:
 
   /*! \brief Beginn manually a new transaction

@@ -83,18 +83,18 @@ const QVariant mdtClArticleComponentDialog::qtyUnit() const
 void mdtClArticleComponentDialog::selectComponent()
 {
   mdtSqlSelectionDialog dialog(this);
-  QSqlQueryModel *articleModel;
+  QSqlQueryModel articleModel;
   mdtClArticle art(this, pvDatabase);
   QModelIndex index;
   QVariant data;
   int row;
 
   // Setup and show dialog
-  ///articleModel.setQuery("SELECT Id_PK, ArticleCode, Unit, DesignationEN FROM Article_tbl", pvDatabase);
-  articleModel = art.articleModelForComponentSelection(pvArticleId);
-  Q_ASSERT(articleModel != 0);
+  ///articleModel = art.articleModelForComponentSelection(pvArticleId);
+  articleModel.setQuery(art.sqlForArticleComponentSelection(pvArticleId), pvDatabase);
+  ///Q_ASSERT(articleModel != 0);
   dialog.setMessage(tr("Please select a article"));
-  dialog.setModel(articleModel, false);
+  dialog.setModel(&articleModel, false);
   /**
   dialog.setColumnHidden("Id_PK", true);
   dialog.setHeaderData("ArticleConnectorName", "Connector");
@@ -113,18 +113,18 @@ void mdtClArticleComponentDialog::selectComponent()
   // Update GUI
   row = dialog.selectionResults().at(0).row();
   // Article code
-  index = articleModel->index(row, 1);
-  data = articleModel->data(index);
+  index = articleModel.index(row, 1);
+  data = articleModel.data(index);
   lbArticleCode->setText(data.toString());
   // Article designation EN
-  index = articleModel->index(row, 3);
-  data = articleModel->data(index);
+  index = articleModel.index(row, 3);
+  data = articleModel.data(index);
   lbArticleDesignationEN->setText(data.toString());
   // Qty
   sbQty->setValue(1.0);
   // Qty unit
-  index = articleModel->index(row, 2);
-  data = articleModel->data(index);
+  index = articleModel.index(row, 2);
+  data = articleModel.data(index);
   lbUnit->setText(data.toString());
 }
 
