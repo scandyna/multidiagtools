@@ -22,7 +22,8 @@
 #define MDT_CL_ARTICLE_LINK_DIALOG_H
 
 #include "ui_mdtClArticleLinkDialog.h"
-#include "mdtClLinkData.h"
+#include "mdtSqlRecord.h"
+//#include "mdtClLinkData.h"
 #include <QDialog>
 #include <QVariant>
 #include <QSqlDatabase>
@@ -52,7 +53,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   /*! \brief Get selected link type code
    */
-  QVariant linkTypeCode() const;
+  ///QVariant linkTypeCode() const;
 
   /*! \brief Display link direction in combobox
    */
@@ -60,7 +61,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   /*! \brief Get selected link direction code
    */
-  QVariant linkDirectionCode() const;
+  ///QVariant linkDirectionCode() const;
 
   /*! \brief Display value
    */
@@ -68,7 +69,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   /*! \brief Get value
    */
-  QVariant value() const;
+  ///QVariant value() const;
 
   /*! \brief Store id as current selected start connection and display it
    */
@@ -76,7 +77,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   /*! \brief Get start connection ID
    */
-  QVariant startConnectionId() const;
+  ///QVariant startConnectionId() const;
 
   /*! \brief Store id as current selected end connection and display it
    */
@@ -84,11 +85,12 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   /*! \brief Get end connection ID
    */
-  QVariant endConnectionId() const;
+  ///QVariant endConnectionId() const;
 
   /*! \brief Get link data
    */
-  mdtClLinkData linkData();
+  ///mdtClLinkData linkData();
+  mdtSqlRecord linkData() const;
 
  private slots:
 
@@ -136,7 +138,8 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   Q_DISABLE_COPY(mdtClArticleLinkDialog);
 
-  mdtClLinkData pvLinkData;
+  ///mdtClLinkData pvLinkData;
+  mdtSqlRecord pvLinkData;
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvLinkTypeModel;
   QSqlQueryModel *pvLinkDirectionModel;

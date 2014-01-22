@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -32,9 +32,13 @@
 #include <boost/config.hpp>
 #include <vector>
 #include <string>
+#include <utility> // std::pair
+#include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <boost/graph/breadth_first_search.hpp>
+
+///#include <boost/optional.hpp>
 
 class mdtClPathGraphicsConnection;
 class mdtClPathGraphicsLink;
@@ -65,10 +69,20 @@ namespace mdtClPathGraphPrivate
   typedef boost::adjacency_list<
     boost::vecS, boost::vecS, boost::directedS, // OutEdgeList: vecS (std::vector) , VertexList: vecS (std::vector) , Directed: directedS (Directed graph)
     boost::no_property,                         // VertexProperties: no_property (None)
+    mdtClPathGraphEdgeData,                     // EdgeProperties: our custom struct
+    boost::no_property,                         // GraphProperties: no_property (None)
+    boost::listS                                // EdgeList: listS (std::list)
+  > graph_t;
+
+  /**
+  typedef boost::adjacency_list<
+    boost::vecS, boost::vecS, boost::directedS, // OutEdgeList: vecS (std::vector) , VertexList: vecS (std::vector) , Directed: directedS (Directed graph)
+    boost::no_property,                         // VertexProperties: no_property (None)
     boost::property<boost::edge_bundle_t, mdtClPathGraphEdgeData>,
     boost::no_property,                         // GraphProperties: no_property (None)
     boost::listS                                // EdgeList: listS (std::list)
   > graph_t;
+  */
 
   // Set vertex and edge types
   typedef boost::graph_traits<graph_t>::vertex_descriptor vertex_t;

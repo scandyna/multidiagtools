@@ -32,10 +32,12 @@
 #include "mdtClArticleConnectionDialog.h"
 #include "mdtClArticleLinkDialog.h"
 #include "mdtClArticle.h"
+#include "mdtSqlRecord.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QSqlRecord>
 #include <QPushButton>
 #include <QStringList>
 #include <QString>
@@ -81,7 +83,7 @@ void mdtClArticleEditor::addComponent()
     return;
   }
   // Update component table
-  form()->select("ArticleComponent_view");
+  select("ArticleComponent_view");
 }
 
 void mdtClArticleEditor::editComponent()
@@ -91,7 +93,7 @@ void mdtClArticleEditor::editComponent()
   QVariant currentComponentId;
   mdtClArticle art(this, database());
 
-  widget = form()->sqlTableWidget("ArticleComponent_view");
+  widget = sqlTableWidget("ArticleComponent_view");
   Q_ASSERT(widget != 0);
   // Setup and show dialog
   currentArtId = currentArticleId();
@@ -114,7 +116,7 @@ void mdtClArticleEditor::editComponent()
     return;
   }
   // Update component table
-  form()->select("ArticleComponent_view");
+  select("ArticleComponent_view");
 }
 
 void mdtClArticleEditor::editComponent(const QModelIndex &index)
@@ -131,7 +133,7 @@ void mdtClArticleEditor::removeComponents()
   QSqlError sqlError;
   int ret;
 
-  widget = form()->sqlTableWidget("ArticleComponent_view");
+  widget = sqlTableWidget("ArticleComponent_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
   indexes = widget->indexListOfSelectedRows("Component_Id_PK");
@@ -160,13 +162,14 @@ void mdtClArticleEditor::removeComponents()
     return;
   }
   // Update component table
-  form()->select("ArticleComponent_view");
+  select("ArticleComponent_view");
 }
 
 void mdtClArticleEditor::addConnection()
 {
   QVariant articleId;
-  mdtClArticleConnectionData data;
+  ///mdtClArticleConnectionData data;
+  mdtSqlRecord data;
   mdtClArticleConnectionDialog dialog;
   mdtClArticle art(this, database());
   QSqlQueryModel model;
@@ -185,7 +188,8 @@ void mdtClArticleEditor::addConnection()
   }
   // Get and update data
   data = dialog.data();
-  data.setArticleId(articleId);
+  ///data.setArticleId(articleId);
+  data.setValue("Article_Id_FK", articleId);
   // Add connection
   if(!art.addConnection(data)){
     pvLastError = art.lastError();
@@ -193,7 +197,7 @@ void mdtClArticleEditor::addConnection()
     return;
   }
   // Update connections table
-  form()->select("ArticleConnection_view");
+  select("ArticleConnection_view");
 }
 
 void mdtClArticleEditor::removeConnections()
@@ -205,7 +209,7 @@ void mdtClArticleEditor::removeConnections()
   QSqlError sqlError;
   int ret;
 
-  widget = form()->sqlTableWidget("ArticleConnection_view");
+  widget = sqlTableWidget("ArticleConnection_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
   indexes = widget->indexListOfSelectedRows("Id_PK");
@@ -229,7 +233,7 @@ void mdtClArticleEditor::removeConnections()
     return;
   }
   // Update component table
-  form()->select("ArticleConnection_view");
+  select("ArticleConnection_view");
 }
 
 void mdtClArticleEditor::addConnector()
@@ -238,12 +242,21 @@ void mdtClArticleEditor::addConnector()
   QVariant connectorId;
   QString connectorName;
   QList<QVariant> selectedContacts;
-  QList<mdtClArticleConnectionData> dataList;
+  mdtSqlRecord connectorData;
+  QList<QSqlRecord> connectionDataList;
+  ///QList<mdtClArticleConnectionData> dataList;
   mdtClArticle art(this, database());
-  int i;
+  ///int i;
+  bool ok;
 
   articleId = currentArticleId();
   if(articleId.isNull()){
+    return;
+  }
+  // Build article connector data
+  if(!connectorData.addAllFields("ArticleConnector_tbl", database())){
+    pvLastError = connectorData.lastError();
+    displayLastError();
     return;
   }
   // Let user choose connector
@@ -261,24 +274,34 @@ void mdtClArticleEditor::addConnector()
   if(connectorName.isEmpty()){
     return;
   }
+  connectorData.setValue("Article_Id_FK", articleId);
+  connectorData.setValue("Connector_Id_FK", connectorId);
+  connectorData.setValue("Name", connectorName);
   // Let user choose connector contacts
   selectedContacts = selectConnectorContacts(connectorId);
   if(selectedContacts.isEmpty()){
     return;
   }
   // Get contact data and add connector to table
-  dataList = art.connectorContactData(selectedContacts);
+  connectionDataList = art.connectorContactData(selectedContacts, &ok);
+  if(!ok){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  /**
   for(i = 0; i < dataList.size(); ++i){
     dataList[i].setArticleId(articleId);
     dataList[i].setConnectorName(connectorName);
   }
-  if(!art.addConnector(dataList)){
+  */
+  if(!art.addConnector(connectorData, connectionDataList)){
     pvLastError = art.lastError();
     displayLastError();
     return;
   }
   // Update connections table
-  form()->select("ArticleConnection_view");
+  select("ArticleConnection_view");
 }
 
 void mdtClArticleEditor::removeConnectors()
@@ -308,7 +331,7 @@ void mdtClArticleEditor::removeConnectors()
     return;
   }
   // Update connections table
-  form()->select("ArticleConnection_view");
+  select("ArticleConnection_view");
 }
 
 void mdtClArticleEditor::addLink()
@@ -317,7 +340,7 @@ void mdtClArticleEditor::addLink()
   mdtClArticle art(this, database());
 
   // Check if some connection exists
-  if(form()->rowCount("ArticleConnection_view") < 1){
+  if(rowCount("ArticleConnection_view") < 1){
     QMessageBox msgBox;
     msgBox.setText(tr("There is no connection available for current article"));
     msgBox.setInformativeText(tr("You must add connections to be able to link them"));
@@ -330,7 +353,8 @@ void mdtClArticleEditor::addLink()
     return;
   }
   // Add link
-  if(!art.addLink(dialog.startConnectionId(), dialog.endConnectionId(), dialog.value().toDouble(), dialog.linkDirectionCode(), dialog.linkTypeCode())){
+  ///if(!art.addLink(dialog.startConnectionId(), dialog.endConnectionId(), dialog.value().toDouble(), dialog.linkDirectionCode(), dialog.linkTypeCode())){
+  if(!art.addLink(dialog.linkData())){
     QMessageBox msgBox;
     msgBox.setText(tr("Link insertion failed"));
     msgBox.setInformativeText(tr("Please see details for more informations"));
@@ -340,7 +364,7 @@ void mdtClArticleEditor::addLink()
     return;
   }
   // Update link table
-  form()->select("ArticleLink_view");
+  select("ArticleLink_view");
 }
 
 void mdtClArticleEditor::editLink()
@@ -349,28 +373,33 @@ void mdtClArticleEditor::editLink()
   int row;
   mdtAbstractSqlWidget *widget;
   mdtClArticle art(this, database());
+  QVariant articleConnectionStartId, articleConnectionEndId;
 
   if(currentArticleId().isNull()){
     return;
   }
-  widget = form()->sqlWidget("ArticleLink_view");
+  widget = sqlWidget("ArticleLink_view");
   Q_ASSERT(widget != 0);
   // Check that a link is selected
   row = widget->rowCount();
   if(row < 0){
     return;
   }
+  // Get start and end connection ID
+  /// \todo OK if Null ??
+  articleConnectionStartId = widget->currentData("ArticleConnectionStart_Id_FK");
+  articleConnectionEndId = widget->currentData("ArticleConnectionEnd_Id_FK");
   // Setup and show dialog
   dialog.setLinkTypeCode(widget->currentData("LinkType_Code_FK"));
   dialog.setLinkDirectionCode(widget->currentData("LinkDirection_Code_FK"));
   dialog.setValue(widget->currentData("Value"));
-  dialog.setStartConnectionId(widget->currentData("ArticleConnectionStart_Id_FK"));
-  dialog.setEndConnectionId(widget->currentData("ArticleConnectionEnd_Id_FK"));
+  dialog.setStartConnectionId(articleConnectionStartId);
+  dialog.setEndConnectionId(articleConnectionEndId);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Edit link
-  if(!art.editLink(widget->currentData("ArticleConnectionStart_Id_FK"), widget->currentData("ArticleConnectionEnd_Id_FK"), dialog.linkData())){
+  if(!art.editLink(articleConnectionStartId, articleConnectionEndId, dialog.linkData())){
     QMessageBox msgBox;
     msgBox.setText(tr("Link insertion failed"));
     msgBox.setInformativeText(tr("Please see details for more informations"));
@@ -380,7 +409,7 @@ void mdtClArticleEditor::editLink()
     return;
   }
   // Update link table
-  form()->select("ArticleLink_view");
+  select("ArticleLink_view");
 }
 
 void mdtClArticleEditor::removeLinks()
@@ -394,7 +423,7 @@ void mdtClArticleEditor::removeLinks()
   QSqlError sqlError;
   int ret;
 
-  widget = form()->sqlTableWidget("ArticleLink_view");
+  widget = sqlTableWidget("ArticleLink_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
   fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK";
@@ -424,7 +453,7 @@ void mdtClArticleEditor::removeLinks()
     return;
   }
   // Update link table
-  form()->select("ArticleLink_view");
+  select("ArticleLink_view");
 }
 
 bool mdtClArticleEditor::setupTables()
@@ -457,9 +486,9 @@ bool mdtClArticleEditor::setupTables()
 
 QVariant mdtClArticleEditor::currentArticleId()
 {
-  Q_ASSERT(form() != 0);
+  ///Q_ASSERT(form() != 0);
 
-  return form()->currentData("Article_tbl", "Id_PK");
+  return currentData("Article_tbl", "Id_PK");
 }
 
 QVariant mdtClArticleEditor::selectConnector()
@@ -600,22 +629,16 @@ QList<QVariant> mdtClArticleEditor::selectArticleConnectors()
 
 bool mdtClArticleEditor::setupArticleTable()
 {
-  Q_ASSERT(form() != 0);
+  //////Q_ASSERT(form() != 0);
 
   Ui::mdtClArticleEditor ae;
 
   // Setup main form widget
-  ae.setupUi(form()->mainSqlWidget());
-  ///connect(this, SIGNAL(unitEdited()), form()->mainSqlWidget(), SIGNAL(dataEdited()));
+  ae.setupUi(mainSqlWidget());
+  ///connect(this, SIGNAL(unitEdited()), mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
-  if(!form()->setTable("Article_tbl", "Article", database())){
+  if(!setMainTable("Article_tbl", "Article", database())){
     return false;
-  }
-  if(sqlWindow() != 0){
-    sqlWindow()->enableNavigation();
-    sqlWindow()->enableEdition();
-    sqlWindow()->resize(800, 500);
-    sqlWindow()->setWindowTitle(tr("Article edition"));
   }
 
   return true;
@@ -623,20 +646,20 @@ bool mdtClArticleEditor::setupArticleTable()
 
 bool mdtClArticleEditor::setupArticleComponentTable()
 {
-  Q_ASSERT(form() != 0);
+  //////Q_ASSERT(form() != 0);
 
   mdtSqlTableWidget *widget;
   QPushButton *pbAddComponent;
   QPushButton *pbEditComponent;
   QPushButton *pbRemoveComponents;
 
-  if(!form()->addChildTable("ArticleComponent_view", tr("Components"), database())){
+  if(!addChildTable("ArticleComponent_view", tr("Components"), database())){
     return false;
   }
-  if(!form()->addRelation("Id_PK", "ArticleComponent_view", "Article_Id_PK")){
+  if(!addRelation("Id_PK", "ArticleComponent_view", "Article_Id_PK")){
     return false;
   }
-  widget = form()->sqlTableWidget("ArticleComponent_view");
+  widget = sqlTableWidget("ArticleComponent_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("Article_Id_PK", true);
@@ -665,17 +688,17 @@ bool mdtClArticleEditor::setupArticleComponentTable()
 
 bool mdtClArticleEditor::setupArticleUsedByTable()
 {
-  Q_ASSERT(form() != 0);
+  //////Q_ASSERT(form() != 0);
 
   mdtSqlTableWidget *widget;
 
-  if(!form()->addChildTable("ArticleComponentUsage_view", tr("Used by"), database())){
+  if(!addChildTable("ArticleComponentUsage_view", tr("Used by"), database())){
     return false;
   }
-  if(!form()->addRelation("Id_PK", "ArticleComponentUsage_view", "Component_Id_PK")){
+  if(!addRelation("Id_PK", "ArticleComponentUsage_view", "Component_Id_PK")){
     return false;
   }
-  widget = form()->sqlTableWidget("ArticleComponentUsage_view");
+  widget = sqlTableWidget("ArticleComponentUsage_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("Article_Id_PK", true);
@@ -691,7 +714,7 @@ bool mdtClArticleEditor::setupArticleUsedByTable()
 
 bool mdtClArticleEditor::setupArticleConnectionTable()
 {
-  Q_ASSERT(form() != 0);
+  //////Q_ASSERT(form() != 0);
 
   mdtSqlTableWidget *widget;
   QPushButton *pbAddConnector;
@@ -699,13 +722,13 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   QPushButton *pbAddConnection;
   QPushButton *pbRemoveConnections;
 
-  if(!form()->addChildTable("ArticleConnection_view", tr("Connections"), database())){
+  if(!addChildTable("ArticleConnection_view", tr("Connections"), database())){
     return false;
   }
-  if(!form()->addRelation("Id_PK", "ArticleConnection_view", "Article_Id_FK")){
+  if(!addRelation("Id_PK", "ArticleConnection_view", "Article_Id_FK")){
     return false;
   }
-  widget = form()->sqlTableWidget("ArticleConnection_view");
+  widget = sqlTableWidget("ArticleConnection_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("Id_PK", true);
@@ -737,23 +760,23 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
 
 bool mdtClArticleEditor::setupArticleLinkTable()
 {
-  Q_ASSERT(form() != 0);
+  ///Q_ASSERT(form() != 0);
 
   mdtSqlTableWidget *widget;
   QPushButton *pbAddLink;
   QPushButton *pbEditLink;
   QPushButton *pbRemoveLinks;
 
-  if(!form()->addChildTable("ArticleLink_view", tr("Links"), database())){
+  if(!addChildTable("ArticleLink_view", tr("Links"), database())){
     return false;
   }
-  if(!form()->addRelation("Id_PK", "ArticleLink_view", "StartArticle_Id_FK")){
+  if(!addRelation("Id_PK", "ArticleLink_view", "StartArticle_Id_FK")){
     return false;
   }
-  if(!form()->addRelation("Id_PK", "ArticleLink_view", "EndArticle_Id_FK")){
+  if(!addRelation("Id_PK", "ArticleLink_view", "EndArticle_Id_FK")){
     return false;
   }
-  widget = form()->sqlTableWidget("ArticleLink_view");
+  widget = sqlTableWidget("ArticleLink_view");
   Q_ASSERT(widget != 0);
   Q_ASSERT(widget->tableView() != 0);
   // Hide technical fields

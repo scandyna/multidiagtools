@@ -44,12 +44,33 @@ void mdtClArticleConnectionDialog::setArticleConnectorModel(QSqlQueryModel *mode
   pbSelectArticleConnector->setEnabled(true);
 }
 
+/**
 void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & data) 
 {
   pvData = data;
 }
+*/
 
+void mdtClArticleConnectionDialog::setData(const QSqlRecord & data)
+{
+  pvData = data;
+
+  Q_ASSERT(pvData.contains("ArticleContactName"));
+  Q_ASSERT(pvData.contains("IoType"));
+  Q_ASSERT(pvData.contains("FunctionEN"));
+  Q_ASSERT(pvData.contains("FunctionDE"));
+  Q_ASSERT(pvData.contains("FunctionFR"));
+  Q_ASSERT(pvData.contains("FunctionIT"));
+}
+
+/**
 mdtClArticleConnectionData mdtClArticleConnectionDialog::data() const
+{
+  return pvData;
+}
+*/
+
+mdtSqlRecord mdtClArticleConnectionDialog::data() const
 {
   return pvData;
 }
@@ -71,7 +92,8 @@ void mdtClArticleConnectionDialog::selectArticleConnector()
   }
   // Store selected article connector ID
   Q_ASSERT(dialog.selectionResult().size() == 2);
-  pvData.setArticleConnectorId(dialog.selectionResult().at(0));
+  ///pvData.setArticleConnectorId(dialog.selectionResult().at(0));
+  pvData.setValue("ArticleConnector_Id_FK", dialog.selectionResult().at(0));
   // Display connector name
   connectorName = dialog.selectionResult().at(1).toString().trimmed();
   if(connectorName.isEmpty()){
@@ -83,11 +105,19 @@ void mdtClArticleConnectionDialog::selectArticleConnector()
 void mdtClArticleConnectionDialog::accept()
 {
   // Store data
+  pvData.setValue("ArticleContactName", fld_ArticleContactName->text());
+  pvData.setValue("IoType", fld_IoType->text());
+  pvData.setValue("FunctionEN", fld_FunctionEN->text());
+  pvData.setValue("FunctionFR", fld_FunctionFR->text());
+  pvData.setValue("FunctionDE", fld_FunctionDE->text());
+  pvData.setValue("FunctionIT", fld_FunctionIT->text());
+  /**
   pvData.setContactName(fld_ArticleContactName->text());
   pvData.setIoType(fld_IoType->text());
   pvData.setFunctionEN(fld_FunctionEN->text());
   pvData.setFunctionFR(fld_FunctionFR->text());
   pvData.setFunctionDE(fld_FunctionDE->text());
   pvData.setFunctionIT(fld_FunctionIT->text());
+  */
   QDialog::accept();
 }

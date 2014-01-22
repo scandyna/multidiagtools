@@ -23,8 +23,10 @@
 
 ///#include "mdtClArticleConnectionData.h"
 #include "ui_mdtClArticleConnectionDialog.h"
+#include "mdtSqlRecord.h"
 #include <QDialog>
 #include <QVariant>
+#include <QSqlRecord>
 
 class QWidget;
 class QSqlQueryModel;
@@ -46,16 +48,31 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
   ~mdtClArticleConnectionDialog();
 
   /*! \brief Set model for article connector model
+   *
+   * \todo replace model by a SQL query (handle model internally..)
    */
   void setArticleConnectorModel(QSqlQueryModel *model);
 
   /*! \brief Set connection data
    */
-  void setData(const mdtClArticleConnectionData & data);
+  ///void setData(const mdtClArticleConnectionData & data);
+
+  /*! \brief Set connection data
+   *
+   * \pre Following fields must exit in data:
+   *       - ArticleContactName
+   *       - IoType
+   *       - FunctionEN
+   *       - FunctionDE
+   *       - FunctionFR
+   *       - FunctionIT
+   */
+  void setData(const QSqlRecord & data);
 
   /*! \brief Get connection data
    */
-  mdtClArticleConnectionData data() const;
+  ///mdtClArticleConnectionData data() const;
+  mdtSqlRecord data() const;
 
  private slots:
 
@@ -71,7 +88,8 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
 
   Q_DISABLE_COPY(mdtClArticleConnectionDialog);
 
-  mdtClArticleConnectionData pvData;
+  ///mdtClArticleConnectionData pvData;
+  mdtSqlRecord pvData;
   QSqlQueryModel *pvArticleConnectorModel;
 };
 

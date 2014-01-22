@@ -1,6 +1,6 @@
 format 204
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 4
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -287,6 +287,7 @@ ${inlines}
     
     activitydiagramsettings
      end
+    associated_deployment_view deploymentview_ref 481026 // Article
     classdiagram 759810 "mdtClArticle"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
@@ -460,7 +461,7 @@ ${inlines}
       operation 1740930 "addConnection"
 	public explicit_return_type "bool"
 	nparams 1
-	  param in name "data" type class_ref 952706 // mdtClArticleConnectionData
+	  param in name "data" explicit_type "mdtClArticleConnectionData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -533,6 +534,53 @@ ${inlines}
     classdiagram 1033474 "mdtClArticleComponentDialog"
       classdiagramsettings member_max_width 0 end
       size A4
+    end
+
+    class 1093634 "mdtClArticleComponentDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1369602 // <generalisation>
+	relation 1356674 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1369602 // <generalisation>
+	  b parent class_ref 1100162 // Ui::mdtClArticleComponentDialog
+      end
+
+      classrelation 1369730 // <generalisation>
+	relation 1356802 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1369730 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+    end
+
+    class 966146 "Ui::mdtClArticleConnectionDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
 
     classdiagram 766338 "mdtClArticleLinkDialog"
@@ -644,6 +692,23 @@ ${inlines}
 "
 	    classrelation_ref 1024130 // <directional composition>
 	  b parent class_ref 505218 // QComboBox
+      end
+
+      operation 1454850 "mdtClArticleLinkDialog"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "parent" type class_ref 316162 // QWidget
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	  param in name "articleId" type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 1453058 "onCbLinkTypeCurrentIndexChanged"
@@ -861,22 +926,6 @@ ${inlines}
 	
 	
       end
-
-      operation 1454850 "mdtClArticleLinkDialog"
-	public explicit_return_type ""
-	nparams 2
-	  param in name "parent" type class_ref 316162 // QWidget
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
 
     class 812162 "Ui::mdtClArticleLinkDialog"
@@ -929,15 +978,6 @@ ${inlines}
 	  b parent class_ref 966146 // Ui::mdtClArticleConnectionDialog
       end
 
-      classrelation 1212162 // pvData (<unidirectional association>)
-	relation 1199234 --->
-	  a role_name "pvData" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1212162 // pvData (<unidirectional association>)
-	  b parent class_ref 952706 // mdtClArticleConnectionData
-      end
-
       operation 1747458 "mdtClArticleConnectionDialog"
 	public explicit_return_type ""
 	nparams 1
@@ -972,7 +1012,7 @@ ${inlines}
       operation 1748098 "setData"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "data" type class_ref 952706 // mdtClArticleConnectionData
+	  param in name "data" explicit_type "mdtClArticleConnectionData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -986,7 +1026,7 @@ ${inlines}
       end
 
       operation 1748226 "data"
-	public return_type class_ref 952706 // mdtClArticleConnectionData
+	public explicit_return_type "mdtClArticleConnectionData"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1011,38 +1051,6 @@ ${inlines}
 	
 	
       end
-    end
-
-    class 966146 "Ui::mdtClArticleConnectionDialog"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 1093634 "mdtClArticleComponentDialog"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
   end
 
@@ -1619,24 +1627,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      classrelation 1197698 // pvArticleConnectionStart (<directional composition>)
-	relation 1184770 *-->
-	  a role_name "pvArticleConnectionStart" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1197698 // pvArticleConnectionStart (<directional composition>)
-	  b parent class_ref 952706 // mdtClArticleConnectionData
-      end
-
-      classrelation 1197826 // pvArticleConnectionEnd (<directional composition>)
-	relation 1184898 *-->
-	  a role_name "pvArticleConnectionEnd" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1197826 // pvArticleConnectionEnd (<directional composition>)
-	  b parent class_ref 952706 // mdtClArticleConnectionData
       end
 
       classrelation 1197954 // pvUnitConnectionEnd (<directional composition>)
@@ -3175,6 +3165,14 @@ ${inlines}
 	
 	
       end
+
+      classrelation 1369858 // <generalisation>
+	relation 1356930 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1369858 // <generalisation>
+	  b parent class_ref 1100290 // Ui::mdtClArticleConnectionDialog
+      end
     end
 
     class 819202 "Ui::mdtClUnitConnectionDialog"
@@ -3217,6 +3215,35 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 1232258 // <generalisation>
 	  b parent class_ref 952322 // mdtClEditor
+      end
+    end
+  end
+
+  deploymentview 481026 "Article"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 683650 "mdtClArticleComponentDialog"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 1093634 // mdtClArticleComponentDialog
       end
     end
   end

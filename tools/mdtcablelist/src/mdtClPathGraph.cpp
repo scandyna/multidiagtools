@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,6 +29,7 @@
 #include <QString>
 #include <QModelIndex>
 #include <QObject>
+///#include <boost/property_map/property_map.hpp>
 
 //#include <QDebug>
 
@@ -54,7 +55,9 @@ void mdtClPathGraphVisitor::examine_edge(edge_t e, const graph_t &g)
 {
   Q_ASSERT(pvEdgeQueue != 0);
 
-  mdtClPathGraphEdgeData edgeData = get(boost::edge_bundle, g)[e];
+  mdtClPathGraphEdgeData edgeData = g[e];
+  ///mdtClPathGraphEdgeData edgeData = get(boost::edge_bundle, g)[e];
+  ///mdtClPathGraphEdgeData edgeData = get(boost::edge_bundle, g, e);
   pvEdgeQueue->enqueue(edgeData);
 }
 

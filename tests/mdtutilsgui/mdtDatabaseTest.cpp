@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,7 +35,7 @@
 #include "mdtSqlFormOld.h"
 #include "mdtSqlFormWindow.h"
 #include "mdtSqlFormDialog.h"
-#include "mdtSqlSelectionDialog.h"
+///#include "mdtSqlSelectionDialog.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlDatabaseManager.h"
 #include <QTemporaryFile>
@@ -1311,119 +1311,6 @@ void mdtDatabaseTest::sqlFormDialogTest()
   */
 
   delete uif;
-}
-
-void mdtDatabaseTest::sqlSelectionDialogTest()
-{
-  mdtSqlSelectionDialog *dialog;
-  QSqlQueryModel model;
-  QSqlQuery q;
-  QString sql;
-  QModelIndex index;
-
-  // Create a table
-  sql = "CREATE TABLE 'somedata' (";
-  sql += "'id_PK' INTEGER PRIMARY KEY AUTOINCREMENT, ";
-  sql += "'name' VARCHAR(50) , ";
-  sql += "'remarks' VARCHAR(50) );";
-  QVERIFY(q.exec(sql));
-  // Insert some data in DB
-  QVERIFY(q.exec("INSERT INTO 'somedata' ('id_PK', 'name', 'remarks') VALUES(1, 'Andy', 'REM Andy')"));
-  QVERIFY(q.exec("INSERT INTO 'somedata' ('id_PK', 'name', 'remarks') VALUES(2, 'Bety', 'REM Bety')"));
-
-  /*
-   * Check single selection with 1 field, at column 0
-   */
-  sql = "SELECT * FROM somedata";
-  model.setQuery(sql);
-  QVERIFY(!model.lastError().isValid());
-  dialog = new mdtSqlSelectionDialog;
-  dialog->setModel(&model);
-  dialog->addSelectionResultColumn("id_PK");
-  dialog->selectRows("name", "Andy");
-  QTimer::singleShot(50, dialog, SLOT(accept()));
-  QVERIFY(dialog->exec() == QDialog::Accepted);
-  QCOMPARE(dialog->selectionResult().size(), 1);
-  QCOMPARE(dialog->selectionResult().at(0), QVariant(1));
-  delete dialog;
-  /*
-   * Check single selection with 1 field, at column 2
-   */
-  sql = "SELECT name, remarks, id_PK FROM somedata";
-  model.setQuery(sql);
-  QVERIFY(!model.lastError().isValid());
-  dialog = new mdtSqlSelectionDialog;
-  dialog->setModel(&model);
-  dialog->addSelectionResultColumn("id_PK");
-  dialog->selectRows("name", "Andy");
-  QTimer::singleShot(50, dialog, SLOT(accept()));
-  QVERIFY(dialog->exec() == QDialog::Accepted);
-  QCOMPARE(dialog->selectionResult().size(), 1);
-  QCOMPARE(dialog->selectionResult().at(0), QVariant(1));
-  delete dialog;
-  /*
-   * Check single selection with 2 fields
-   */
-  sql = "SELECT * FROM somedata";
-  model.setQuery(sql);
-  QVERIFY(!model.lastError().isValid());
-  dialog = new mdtSqlSelectionDialog;
-  dialog->setModel(&model);
-  dialog->addSelectionResultColumn("id_PK");
-  dialog->addSelectionResultColumn("name");
-  dialog->selectRows("id_PK", 2);
-  QTimer::singleShot(50, dialog, SLOT(accept()));
-  QVERIFY(dialog->exec() == QDialog::Accepted);
-  QCOMPARE(dialog->selectionResult().size(), 2);
-  QCOMPARE(dialog->selectionResult().at(0), QVariant(2));
-  QCOMPARE(dialog->selectionResult().at(1), QVariant("Bety"));
-  delete dialog;
-  /*
-   * Check multiple selection with 1 field
-   */
-  sql = "SELECT * FROM somedata";
-  model.setQuery(sql);
-  QVERIFY(!model.lastError().isValid());
-  dialog = new mdtSqlSelectionDialog;
-  dialog->setModel(&model, true);
-  dialog->addSelectionResultColumn("id_PK");
-  dialog->selectRows("id_PK", 1);
-  dialog->selectRows("id_PK", 2);
-  QTimer::singleShot(50, dialog, SLOT(accept()));
-  QVERIFY(dialog->exec() == QDialog::Accepted);
-  QCOMPARE(dialog->selectionResults().size(), 2);
-  QCOMPARE(dialog->selectionResults().at(0).data(), QVariant(1));
-  QCOMPARE(dialog->selectedData(0, "id_PK"), QVariant(1));
-  QCOMPARE(dialog->selectionResults().at(1).data(), QVariant(2));
-  QCOMPARE(dialog->selectedData(1, "id_PK"), QVariant(2));
-  delete dialog;
-  /*
-   * Check multiple selection with 2 fields
-   */
-  sql = "SELECT * FROM somedata";
-  model.setQuery(sql);
-  QVERIFY(!model.lastError().isValid());
-  dialog = new mdtSqlSelectionDialog;
-  dialog->setModel(&model, true);
-  dialog->addSelectionResultColumn("id_PK");
-  dialog->addSelectionResultColumn("name");
-  dialog->selectRows("id_PK", 1);
-  dialog->selectRows("id_PK", 2);
-  QTimer::singleShot(50, dialog, SLOT(accept()));
-  QVERIFY(dialog->exec() == QDialog::Accepted);
-  QCOMPARE(dialog->selectionResults().size(), 4);
-  QCOMPARE(dialog->selectionResults().at(0).data(), QVariant(1));
-  QCOMPARE(dialog->selectedData(0, "id_PK"), QVariant(1));
-  QCOMPARE(dialog->selectionResults().at(1).data(), QVariant("Andy"));
-  QCOMPARE(dialog->selectedData(0, "name"), QVariant("Andy"));
-  QCOMPARE(dialog->selectionResults().at(2).data(), QVariant(2));
-  QCOMPARE(dialog->selectedData(1, "id_PK"), QVariant(2));
-  QCOMPARE(dialog->selectionResults().at(3).data(), QVariant("Bety"));
-  QCOMPARE(dialog->selectedData(1, "name"), QVariant("Bety"));
-  delete dialog;
-
-  // delete created table
-  QVERIFY(q.exec("DROP TABLE 'somedata'"));
 }
 
 void mdtDatabaseTest::databaseManagerTest()

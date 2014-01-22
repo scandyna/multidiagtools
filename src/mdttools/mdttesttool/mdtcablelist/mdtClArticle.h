@@ -131,11 +131,16 @@ class mdtClArticle : public mdtTtBase
 
   /*! \brief Add a connector and its contacts
    *
-   * Note: in given articleConnectionDataList, Article_Id_FK and ArticleConnector_Id_FK
-   *        are not relevant, because they are token from articleConnectorData.
+   * \param articleConnectorData Article connector data part. Must contain following fields:
+   *                      - Article_Id_FK
+   *                      - Name
+   *                      Can also contain Connector_Id_FK.
+   * \param articleConnectionDataList List of article connection data part.
+   *                      Note: Article_Id_FK and ArticleConnector_Id_FK
+   *                            are not relevant, because they are token from articleConnectorData.
    */
   ///bool addConnector(const QList<mdtClArticleConnectionData> & dataList);
-  bool addConnector(const mdtSqlRecord & articleConnectorData, const QList<mdtSqlRecord> & articleConnectionDataList);
+  bool addConnector(const mdtSqlRecord & articleConnectorData, const QList<QSqlRecord> & articleConnectionDataList);
 
   /*! \brief Remove a connector and all its contacts
    */
@@ -150,25 +155,26 @@ class mdtClArticle : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool addLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value, const QVariant & directionCode, const QVariant & typeCode);
+  ///bool addLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value, const QVariant & directionCode, const QVariant & typeCode);
+  bool addLink(const mdtSqlRecord & linkData);
 
   /*! \brief Add a link of type resistor
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool addResistor(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value);
+  //bool addResistor(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value);
 
   /*! \brief Add a link of type diode
    */
-  bool addDiode(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double Vf, const QVariant & directionCode);
+  //bool addDiode(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double Vf, const QVariant & directionCode);
 
   /*! \brief Add a link of type bridge
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool addBridge(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
+  //bool addBridge(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
 
   /*! \brief Edit a record in Link table
    *

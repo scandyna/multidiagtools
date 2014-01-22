@@ -35,11 +35,12 @@ class mdtDatabaseTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
-  /// \todo Add mdtSqlDialog test
   /// \todo Add mdtSqlForm test
   /// \todo Add mdtSqlWindow test
 
   void sqlRecordTest();
+
+  void sqlSelectionDialogTest();
 
  private:
 

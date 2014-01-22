@@ -1,6 +1,6 @@
 format 204
 "mdttesttool" // mdttools::mdttesttool
-  revision 8
+  revision 11
   modified_by 2 "philippe"
   // class settings
   
@@ -335,6 +335,43 @@ ${inlines}
 	
 	
       end
+    end
+
+    classdiagram 1040002 "Dialogs"
+      classdiagramsettings member_max_width 0 end
+      size A3
+    end
+
+    class 1100162 "Ui::mdtClArticleComponentDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 1100290 "Ui::mdtClArticleConnectionDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 
@@ -2015,206 +2052,6 @@ ${inlines}
 	
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 993154 // FunctionIT
-      end
-    end
-
-    class 952706 "mdtClArticleConnectionData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 1197442 // <generalisation>
-	relation 1184514 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1197442 // <generalisation>
-	  b parent class_ref 952578 // mdtClConnectionData
-      end
-
-      attribute 971906 "ArticleId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1717762 // ArticleId
-	set_oper operation_ref 1717890 // setArticleId
-      end
-
-      attribute 992642 "ArticleConnectorId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1732994 // ArticleConnectorId
-	set_oper operation_ref 1733122 // setArticleConnectorId
-      end
-
-      attribute 993282 "IoType"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1734274 // IoType
-	set_oper operation_ref 1734402 // setIoType
-      end
-
-      operation 1717890 "setArticleId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvArticleId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 971906 // ArticleId
-      end
-
-      operation 1717762 "ArticleId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvArticleId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 971906 // ArticleId
-      end
-
-      operation 1733122 "setArticleConnectorId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvArticleConnectorId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 992642 // ArticleConnectorId
-      end
-
-      operation 1732994 "ArticleConnectorId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvArticleConnectorId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 992642 // ArticleConnectorId
-      end
-
-      operation 1734402 "setIoType"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvIoType = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 993282 // IoType
-      end
-
-      operation 1734274 "IoType"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvIoType;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 993282 // IoType
       end
     end
 

@@ -417,7 +417,7 @@ endif(UNIX)
 #### dev package ####
 if(UNIX)
   file(WRITE  package_debian_dev.cmake "SET(CPACK_CMAKE_GENERATOR \"Unix Makefiles\")\n")
-  file(APPEND package_debian_dev.cmake "SET(CPACK_DEBIAN_PACKAGE_DEPENDS \"libqt4-dev (>= 4:4.7.0), make, libusb-1.0-0-dev (>=1.0), ${CMAKE_PROJECT_NAME}${MDTLIB_VERSION_SUFFIX}-lib (>= ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH})\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_DEBIAN_PACKAGE_DEPENDS \"libqt4-dev (>= 4:4.7.0), make, libusb-1.0-0-dev (>=1.0), libboost-graph-dev, ${CMAKE_PROJECT_NAME}${MDTLIB_VERSION_SUFFIX}-lib (>= ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH})\")\n")
   file(APPEND package_debian_dev.cmake "SET(CPACK_DEBIAN_PACKAGE_PRIORITY \"optional\")\n")
   file(APPEND package_debian_dev.cmake "SET(CPACK_DEBIAN_PACKAGE_SECTION \"libs\")\n")
   file(APPEND package_debian_dev.cmake "SET(CPACK_GENERATOR \"DEB\")\n")

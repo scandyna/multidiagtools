@@ -503,7 +503,7 @@ bool mdtClArticle::addConnector(const QList<mdtClArticleConnectionData> & dataLi
 }
 */
 
-bool mdtClArticle::addConnector(const mdtSqlRecord & articleConnectorData, const QList<mdtSqlRecord> & articleConnectionDataList)
+bool mdtClArticle::addConnector(const mdtSqlRecord & articleConnectorData, const QList<QSqlRecord> & articleConnectionDataList)
 {
   QString sql;
   QSqlQuery query(database());
@@ -516,7 +516,7 @@ bool mdtClArticle::addConnector(const mdtSqlRecord & articleConnectorData, const
   if(articleConnectionDataList.isEmpty()){
     return true;
   }
-  _articleConnectionDataList = articleConnectionDataList;
+  ///_articleConnectionDataList = articleConnectionDataList;
 
   // Because we add connector and get its ID for connections insertion, we use a transaction for the whole process
   if(!beginTransaction()){
@@ -547,10 +547,12 @@ bool mdtClArticle::addConnector(const mdtSqlRecord & articleConnectorData, const
     rollbackTransaction();
     return false;
   }
-  // Update FKs in connection data
-  for(i = 0; i < _articleConnectionDataList.size(); ++i){
-    _articleConnectionDataList[i].setValue("Article_Id_FK", articleId);
-    _articleConnectionDataList[i].setValue("ArticleConnector_Id_FK", articleConnectorId);
+  // Update connection data
+  for(i = 0; i < articleConnectionDataList.size(); ++i){
+    mdtSqlRecord record = articleConnectionDataList.at(i);
+    record.setValue("Article_Id_FK", articleId);
+    record.setValue("ArticleConnector_Id_FK", articleConnectorId);
+    _articleConnectionDataList.append(record);
   }
   // Add connections
   if(!addConnections(_articleConnectionDataList, false)){
@@ -619,6 +621,7 @@ bool mdtClArticle::removeConnectors(const QList<QVariant> & articleConnectorIdLi
   return true;
 }
 
+/**
 bool mdtClArticle::addLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value, const QVariant & directionCode, const QVariant & typeCode)
 {
   QString sql;
@@ -652,7 +655,14 @@ bool mdtClArticle::addLink(const QVariant & articleConnectionStartId, const QVar
 
   return true;
 }
+*/
 
+bool mdtClArticle::addLink(const mdtSqlRecord & linkData)
+{
+  return addRecord(linkData, "ArticleLink_tbl");
+}
+
+/*
 bool mdtClArticle::addResistor(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value)
 {
   return addLink(articleConnectionStartId, articleConnectionEndId, value, "BID", "RESISTOR");
@@ -667,6 +677,7 @@ bool mdtClArticle::addBridge(const QVariant & articleConnectionStartId, const QV
 {
   return addLink(articleConnectionStartId, articleConnectionEndId, 0.0, "BID", "ARTBRIDGE");
 }
+*/
 
 /**
 bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtClLinkData &data)

@@ -36,6 +36,18 @@ mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db,
  : QDialog(parent)
 {
   pvDatabase = db;
+  // Setup data
+  if(!pvLinkData.addAllFields("ArticleLink_tbl", pvDatabase)){
+    /// \todo Check if this works
+    QMessageBox msgBox;
+    msgBox.setText(pvLinkData.lastError().text());
+    msgBox.setDetailedText(pvLinkData.lastError().systemText());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.setWindowTitle(tr("Article link error"));
+    msgBox.exec();
+    reject();
+    return;
+  }
   // Setup UI
   setupUi(this);
   setWindowTitle(tr("Article link edition"));
@@ -76,7 +88,8 @@ void mdtClArticleLinkDialog::setLinkTypeCode(const QVariant & code)
   int row;
   QVariant data;
 
-  pvLinkData.setLinkTypeCode(code);
+  ///pvLinkData.setLinkTypeCode(code);
+  pvLinkData.setValue("LinkType_Code_FK", code);
   for(row = 0; row < pvLinkTypeModel->rowCount(); ++row){
     index = pvLinkTypeModel->index(row, 0);
     data = pvLinkTypeModel->data(index);
@@ -87,10 +100,12 @@ void mdtClArticleLinkDialog::setLinkTypeCode(const QVariant & code)
   }
 }
 
+/**
 QVariant mdtClArticleLinkDialog::linkTypeCode() const
 {
   return pvLinkData.linkTypeCode();
 }
+*/
 
 void mdtClArticleLinkDialog::setLinkDirectionCode(const QVariant & code)
 {
@@ -98,7 +113,8 @@ void mdtClArticleLinkDialog::setLinkDirectionCode(const QVariant & code)
   int row;
   QVariant data;
 
-  pvLinkData.setLinkDirectionCode(code);
+  ///pvLinkData.setLinkDirectionCode(code);
+  pvLinkData.setValue("LinkDirection_Code_FK", code);
   for(row = 0; row < pvLinkDirectionModel->rowCount(); ++row){
     index = pvLinkDirectionModel->index(row, 0);
     data = pvLinkDirectionModel->data(index);
@@ -109,48 +125,68 @@ void mdtClArticleLinkDialog::setLinkDirectionCode(const QVariant & code)
   }
 }
 
+/**
 QVariant mdtClArticleLinkDialog::linkDirectionCode() const
 {
   return pvLinkData.linkDirectionCode();
 }
+*/
+
 
 void mdtClArticleLinkDialog::setValue(const QVariant & value)
 {
-  pvLinkData.setValue(value);
+  ///pvLinkData.setValue(value);
+  pvLinkData.setValue("Value", value);
   sbValue->setValue(value.toDouble());
 }
 
+/**
 QVariant mdtClArticleLinkDialog::value() const
 {
   return pvLinkData.value();
 }
+*/
 
 void mdtClArticleLinkDialog::setStartConnectionId(const QVariant & id)
 {
-  pvLinkData.setArticleConnectionStartId(id);
+  ///pvLinkData.setArticleConnectionStartId(id);
+  pvLinkData.setValue("ArticleConnectionStart_Id_FK", id);
   displayCurrentSelectedStartConnection();
 }
 
+/**
 QVariant mdtClArticleLinkDialog::startConnectionId() const
 {
   return pvLinkData.articleConnectionStartId();
 }
+*/
 
 void mdtClArticleLinkDialog::setEndConnectionId(const QVariant & id)
 {
-  pvLinkData.setArticleConnectionEndId(id);
+  ///pvLinkData.setArticleConnectionEndId(id);
+  pvLinkData.setValue("ArticleConnectionEnd_Id_FK", id);
   displayCurrentSelectedEndConnection();
 }
 
+/**
 QVariant mdtClArticleLinkDialog::endConnectionId() const
 {
   return pvLinkData.articleConnectionEndId();
 }
+*/
 
+/**
 mdtClLinkData mdtClArticleLinkDialog::linkData()
 {
   return pvLinkData;
 }
+*/
+
+mdtSqlRecord mdtClArticleLinkDialog::linkData() const
+{
+  return pvLinkData;
+}
+
 
 void mdtClArticleLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
 {
@@ -216,7 +252,8 @@ void mdtClArticleLinkDialog::selectStartConnection()
   }
   // Store result
   Q_ASSERT(dialog.selectionResult().size() == 1);
-  pvLinkData.setArticleConnectionStartId(dialog.selectionResult().at(0));
+  ///pvLinkData.setArticleConnectionStartId(dialog.selectionResult().at(0));
+  pvLinkData.setValue("ArticleConnectionStart_Id_FK", dialog.selectionResult().at(0));
   // Update GUI
   displayCurrentSelectedStartConnection();
 }
@@ -243,7 +280,8 @@ void mdtClArticleLinkDialog::selectEndConnection()
   }
   // Store result
   Q_ASSERT(dialog.selectionResult().size() == 1);
-  pvLinkData.setArticleConnectionEndId(dialog.selectionResult().at(0));
+  ///pvLinkData.setArticleConnectionEndId(dialog.selectionResult().at(0));
+  pvLinkData.setValue("ArticleConnectionEnd_Id_FK", dialog.selectionResult().at(0));
   // Update GUI
   displayCurrentSelectedEndConnection();
 }
@@ -256,21 +294,26 @@ void mdtClArticleLinkDialog::accept()
 
   // Store and check link type
   storeCurrentSelectedLinkType();
-  if(pvLinkData.linkTypeCode().isNull()){
+  ///if(pvLinkData.linkTypeCode().isNull()){
+  if(pvLinkData.value("LinkType_Code_FK").isNull()){
     errorList << tr("Link type is not set");
   }
   // Store and check link direction
   storeCurrentSelectedLinkDirection();
-  if(pvLinkData.linkDirectionCode().isNull()){
+  ///if(pvLinkData.linkDirectionCode().isNull()){
+  if(pvLinkData.value("LinkDirection_Code_FK").isNull()){
     errorList << tr("Direction is not set");
   }
   // Store value
-  pvLinkData.setValue(sbValue->value());
+  ///pvLinkData.setValue(sbValue->value());
+  pvLinkData.setValue("Value", sbValue->value());
   // Start and end connections are allready set afetr selection by user
-  if(pvLinkData.articleConnectionStartId().isNull()){
+  ///if(pvLinkData.articleConnectionStartId().isNull()){
+  if(pvLinkData.value("ArticleConnectionStart_Id_FK").isNull()){
     errorList << tr("Start connection is not set");
   }
-  if(pvLinkData.articleConnectionEndId().isNull()){
+  ///if(pvLinkData.articleConnectionEndId().isNull()){
+  if(pvLinkData.value("ArticleConnectionEnd_Id_FK").isNull()){
     errorList << tr("End connection is not set");
   }
   // If something is missing, display a message to the user
@@ -304,11 +347,13 @@ void mdtClArticleLinkDialog::storeCurrentSelectedLinkType()
 
   row = cbLinkType->currentIndex();
   if(row < 0){
-    pvLinkData.setLinkTypeCode(QVariant());
+    ///pvLinkData.setLinkTypeCode(QVariant());
+    pvLinkData.setValue("LinkType_Code_FK", QVariant());
     return;
   }
   index = pvLinkTypeModel->index(row, 0);
-  pvLinkData.setLinkTypeCode(pvLinkTypeModel->data(index));
+  ///pvLinkData.setLinkTypeCode(pvLinkTypeModel->data(index));
+  pvLinkData.setValue("LinkType_Code_FK", pvLinkTypeModel->data(index));
 }
 
 void mdtClArticleLinkDialog::storeCurrentSelectedLinkDirection()
@@ -318,11 +363,13 @@ void mdtClArticleLinkDialog::storeCurrentSelectedLinkDirection()
 
   row = cbLinkDirection->currentIndex();
   if(row < 0){
-    pvLinkData.setLinkDirectionCode(QVariant());
+    ///pvLinkData.setLinkDirectionCode(QVariant());
+    pvLinkData.setValue("LinkDirection_Code_FK", QVariant());
     return;
   }
   index = pvLinkDirectionModel->index(row, 0);
-  pvLinkData.setLinkDirectionCode(pvLinkDirectionModel->data(index));
+  ///pvLinkData.setLinkDirectionCode(pvLinkDirectionModel->data(index));
+  pvLinkData.setValue("LinkDirection_Code_FK", pvLinkDirectionModel->data(index));
 }
 
 void mdtClArticleLinkDialog::displayCurrentSelectedStartConnection()
@@ -331,7 +378,8 @@ void mdtClArticleLinkDialog::displayCurrentSelectedStartConnection()
   QVariant data;
   int row;
 
-  if(pvLinkData.articleConnectionStartId().isNull()){
+  ///if(pvLinkData.articleConnectionStartId().isNull()){
+  if(pvLinkData.value("ArticleConnectionStart_Id_FK").isNull()){
     lbStartConnectorName->clear();
     lbStartContactName->clear();
     return;
@@ -339,7 +387,7 @@ void mdtClArticleLinkDialog::displayCurrentSelectedStartConnection()
   for(row = 0; row < pvArticleConnectionModel->rowCount(); ++row){
     index = pvArticleConnectionModel->index(row, 0);
     data = pvArticleConnectionModel->data(index);
-    if(data == pvLinkData.articleConnectionStartId()){
+    if(data == pvLinkData.value("ArticleConnectionStart_Id_FK")){
       // Set connector name
       index = pvArticleConnectionModel->index(row, 1);
       data = pvArticleConnectionModel->data(index);
@@ -359,7 +407,8 @@ void mdtClArticleLinkDialog::displayCurrentSelectedEndConnection()
   QVariant data;
   int row;
 
-  if(pvLinkData.articleConnectionEndId().isNull()){
+  ///if(pvLinkData.articleConnectionEndId().isNull()){
+  if(pvLinkData.value("ArticleConnectionEnd_Id_FK").isNull()){
     lbEndConnectorName->clear();
     lbEndContactName->clear();
     return;
@@ -367,7 +416,7 @@ void mdtClArticleLinkDialog::displayCurrentSelectedEndConnection()
   for(row = 0; row < pvArticleConnectionModel->rowCount(); ++row){
     index = pvArticleConnectionModel->index(row, 0);
     data = pvArticleConnectionModel->data(index);
-    if(data == pvLinkData.articleConnectionEndId()){
+    if(data == pvLinkData.value("ArticleConnectionEnd_Id_FK")){
       // Set connector name
       index = pvArticleConnectionModel->index(row, 1);
       data = pvArticleConnectionModel->data(index);

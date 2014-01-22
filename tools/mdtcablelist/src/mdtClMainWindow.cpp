@@ -32,6 +32,7 @@
 #include "mdtTtTestModelItemEditor.h"
 #include "mdtTtCableChecker.h"
 #include "mdtTtCableCheckerWindow.h"
+#include <boost/concept_check.hpp>
 #include <QAction>
 #include <QMessageBox>
 #include <QApplication>
@@ -50,9 +51,13 @@ mdtClMainWindow::mdtClMainWindow()
   ///openDatabaseSqlite();
   // Editors - Will be setup on first call
   pvVehicleTypeEditor = 0;
+  pvVehicleTypeEditorWindow = 0;
   pvConnectorEditor = 0;
-  pvUnitEditor = 0;
+  pvConnectorEditorWindow = 0;
   pvArticleEditor = 0;
+  pvArticleEditorWindow = 0;
+
+  pvUnitEditor = 0;
   pvTestNodeEditor = 0;
   pvTestConnectionCableEditor = 0;
   pvTestConnectionCableEditorWindow = 0;
@@ -176,7 +181,7 @@ void mdtClMainWindow::editArticle()
 {
   if(pvArticleEditor == 0){
     pvArticleEditor = new mdtClArticleEditor(this, pvDatabaseManager->database());
-    if(!pvArticleEditor->setupAsWindow()){
+    if(!pvArticleEditor->setupTables()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup article editor."));
       msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
@@ -187,9 +192,16 @@ void mdtClMainWindow::editArticle()
       pvArticleEditor = 0;
       return;
     }
+    pvArticleEditorWindow = new mdtSqlWindow(this);
+    pvArticleEditorWindow->setSqlForm(pvArticleEditor);
+    pvArticleEditorWindow->resize(800, 500);
+    pvArticleEditorWindow->enableNavigation();
+    pvArticleEditorWindow->enableEdition();
   }
   Q_ASSERT(pvArticleEditor != 0);
-  pvArticleEditor->show();
+  Q_ASSERT(pvArticleEditorWindow != 0);
+  pvArticleEditor->select();
+  pvArticleEditorWindow->show();
 }
 
 void mdtClMainWindow::editTestConnectionCable()
