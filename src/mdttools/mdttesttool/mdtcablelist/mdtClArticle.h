@@ -156,6 +156,10 @@ class mdtClArticle : public mdtTtBase
    */
   bool addLink(const mdtSqlRecord & linkData);
 
+  /*! \brief Add a cable link
+   */
+  bool addCableLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R);
+
   /*! \brief Add a link of type resistor
    *
    * \return True on success, false else.

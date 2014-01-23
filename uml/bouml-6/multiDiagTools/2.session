@@ -2,7 +2,7 @@ window_sizes 1024 721 147 871 668 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 739586 // CableListAllTables
-    871 668 90 17 384 358
+    871 668 90 17 204 336
   classdiagram_ref 766338 // mdtClArticleLinkDialog
     120 106 100 4 228 0
   classdiagram_ref 1040002 // Dialogs
@@ -10,11 +10,11 @@ diagrams
 end
 show_stereotypes
 selected 
-  package_ref 129 // multiDiagTools
+package_ref 129 // multiDiagTools
 open
   classview_ref 602498 // Data
   
-  package_ref 227842 // DatabaseLogical
+package_ref 227842 // DatabaseLogical
   classview_ref 549634 // mdtClConnectionData
   class_ref 966146 // Ui::mdtClArticleConnectionDialog
   classview_ref 490498 // Unit

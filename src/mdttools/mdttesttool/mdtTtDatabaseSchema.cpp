@@ -2283,11 +2283,11 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
   selectSql = "SELECT\n"\
               " LNK.Identification ,\n"\
               " US.SchemaPosition AS StartSchemaPosition ,\n"\
-              /**" UCNXS.UnitConnectorName AS StartUnitConnectorName ,\n"\*/
+              /**" UCNXS.UnitConnectorName AS StartUnitConnectorName ,\n"\ */
               " UCS.Name AS StartUnitConnectorName ,\n"\
               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
               " UE.SchemaPosition AS EndSchemaPosition ,\n"\
-              /**" UCNXE.UnitConnectorName AS EndUnitConnectorName ,\n"\*/
+              /**" UCNXE.UnitConnectorName AS EndUnitConnectorName ,\n"\ */
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
               " LNK.SinceVersion ,\n"\
@@ -2397,7 +2397,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " US.SchemaPosition AS StartSchemaPosition,\n"\
               " US.Cabinet AS StartCabinet,\n"\
               " US.Coordinate AS StartCoordinate ,\n"\
-              /**" UCNXS.UnitConnectorName AS StartUnitConnectorName ,\n"\*/
+              /**" UCNXS.UnitConnectorName AS StartUnitConnectorName ,\n"\ */
               " UCS.Name AS StartUnitConnectorName ,\n"\
               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
               " VE.Type AS EndVehicleType ,\n"\
@@ -2407,7 +2407,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " UE.SchemaPosition AS EndSchemaPosition,\n"\
               " UE.Cabinet AS EndCabinet,\n"\
               " UE.Coordinate AS EndCoordinate ,\n"\
-              /**" UCNXE.UnitConnectorName AS EndUnitConnectorName ,\n"\*/
+              /**" UCNXE.UnitConnectorName AS EndUnitConnectorName ,\n"\ */
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName\n";
   sql = "CREATE VIEW LinkList_view AS\n";
@@ -2878,7 +2878,7 @@ bool mdtTtDatabaseSchema::populateLinkTypeTable()
   }
   // Cable link type
   data.clear();
-  data << "CONNECTMION" << "Connection" << "Anschluss" << "Raccordement" << "Collegamento" << "Ohm";
+  data << "CONNECTION" << "Connection" << "Anschluss" << "Raccordement" << "Collegamento" << "Ohm";
   if(!insertDataIntoTable("LinkType_tbl", fields, data)){
     return false;
   }

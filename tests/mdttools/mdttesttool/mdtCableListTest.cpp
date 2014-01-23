@@ -194,6 +194,7 @@ void mdtCableListTest::articleTest()
   QVERIFY(connectionData.addAllFields("ArticleConnection_tbl", pvDatabaseManager.database()));
   for(int i = 0; i < 11; ++i){
     connectionData.clearValues();
+    connectionData.setValue("Id_PK", i+1);
     connectionData.setValue("ArticleContactName", QString::number(i));
     connectionData.setValue("FunctionEN", "Contact " + QString::number(i));
     dataList.append(connectionData);
@@ -206,6 +207,7 @@ void mdtCableListTest::articleTest()
   QCOMPARE(dataList.size(), 11);
   for(int i = 0; i < dataList.size(); ++i){
     data = dataList.at(i);
+    QCOMPARE(data.value("Id_PK"), QVariant(i+1));
     QCOMPARE(data.value("Article_Id_FK"), QVariant(1));
     QCOMPARE(data.value("ArticleConnector_Id_FK"), QVariant(1));
     QCOMPARE(data.value("ArticleConnectorName"), QVariant("X1"));
@@ -214,8 +216,58 @@ void mdtCableListTest::articleTest()
   }
 
   /*
-   * Article link
+   * Article link + link path
    */
+
+  // Initially, we have no article link
+  dataList = art.getData("SELECT * FROM ArticleLink_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  // Add a link from CNN ID 1 to 2
+  QVERIFY(art.addCableLink(1, 2, "1-2", 0.1));
+  dataList = art.getData("SELECT * FROM ArticleLink_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  data = dataList.at(0);
+  QCOMPARE(data.value("ArticleConnectionStart_Id_FK"), QVariant(1));
+  QCOMPARE(data.value("ArticleConnectionEnd_Id_FK"), QVariant(2));
+  QCOMPARE(data.value("LinkType_Code_FK"), QVariant("CABLELINK"));
+  QCOMPARE(data.value("LinkDirection_Code_FK"), QVariant("BID"));
+  QCOMPARE(data.value("Identification"), QVariant("1-2"));
+  QCOMPARE(data.value("Value"), QVariant(0.1));
+  QCOMPARE(data.value("ValueUnit"), QVariant("Ohm"));
+  // Check that we cannot remove CNN ID 1
+  QVERIFY(!art.removeConnection(1));
+  dataList = art.getData("SELECT * FROM ArticleConnection_view WHERE Id_PK = 1", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  // Remove link
+  QVERIFY(art.removeLink(1, 2));
+  dataList = art.getData("SELECT * FROM ArticleLink_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+
+  /*
+   * Remove data
+   */
+
+  // Remove connector
+  QVERIFY(art.removeConnector(1));
+  dataList = art.getData("SELECT * FROM ArticleConnection_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  dataList = art.getData("SELECT * FROM ArticleConnector_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  // Remove article
+  QVERIFY(art.removeData("Article_tbl", "Id_PK", 1));
+  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QVERIFY(art.removeData("Article_tbl", "Id_PK", 2));
+  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
 }
 
 /*

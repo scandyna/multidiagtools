@@ -453,6 +453,24 @@ bool mdtClArticle::addLink(const mdtSqlRecord & linkData)
   return addRecord(linkData, "ArticleLink_tbl");
 }
 
+bool mdtClArticle::addCableLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("ArticleLink_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  record.setValue("ArticleConnectionStart_Id_FK", articleConnectionStartId);
+  record.setValue("ArticleConnectionEnd_Id_FK", articleConnectionEndId);
+  record.setValue("LinkType_Code_FK", "CABLELINK");
+  record.setValue("LinkDirection_Code_FK", "BID");
+  record.setValue("Identification", identification);
+  record.setValue("Value", R);
+
+  return addRecord(record, "ArticleLink_tbl");
+}
+
 /*
 bool mdtClArticle::addResistor(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value)
 {
@@ -491,6 +509,8 @@ bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVa
 
 bool mdtClArticle::removeLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId)
 {
+  return removeData("ArticleLink_tbl", "ArticleConnectionStart_Id_FK", articleConnectionStartId, "ArticleConnectionEnd_Id_FK", articleConnectionEndId);
+  /**
   QString sql;
   QSqlQuery query(database());
 
@@ -508,6 +528,7 @@ bool mdtClArticle::removeLink(const QVariant & articleConnectionStartId, const Q
   }
 
   return true;
+  */
 }
 
 bool mdtClArticle::removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows)
