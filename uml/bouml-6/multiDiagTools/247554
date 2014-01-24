@@ -1,6 +1,6 @@
 format 204
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 7
+  revision 8
   modified_by 2 "philippe"
   // class settings
   
@@ -287,7 +287,6 @@ ${inlines}
     
     activitydiagramsettings
      end
-    associated_deployment_view deploymentview_ref 481026 // Article
     classdiagram 759810 "mdtClArticle"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
@@ -3219,32 +3218,4 @@ ${inlines}
     end
   end
 
-  deploymentview 481026 "Article"
-    //deployment diagram settings
-    deploymentdiagramsettings
-     end
-    artifact 683650 "mdtClArticleComponentDialog"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-
-#endif // #ifndef ${NAME}_H
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 1093634 // mdtClArticleComponentDialog
-      end
-    end
-  end
 end

@@ -31,12 +31,19 @@ class mdtCableListTest : public mdtTest
 
  private slots:
 
-  // Will create database schema (see createDatabaseSchema() )
+  /*
+   * Will create database schema (see createDatabaseSchema() )
+   * No data is inserted in tables by this method.
+   * Each test also has a empty schema at startup,
+   *  and must assure that they finish with a empty schema at end.
+   */
   void initTestCase();
 
   void cleanupTestCase();
 
   void articleTest();
+
+  void pathGraphTest();
 
  private:
 

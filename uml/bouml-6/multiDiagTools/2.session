@@ -1,22 +1,15 @@
-window_sizes 1024 721 147 871 668 0
+window_sizes 1280 1005 359 915 952 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 739586 // CableListAllTables
-    871 668 90 17 204 336
-  classdiagram_ref 766338 // mdtClArticleLinkDialog
-    120 106 100 4 228 0
-  classdiagram_ref 1040002 // Dialogs
-    931 951 80 3 0 0
+  classdiagram_ref 739586 // CableListAllTables
+    791 669 90 17 0 222
+  active  classdiagram_ref 753154 // mdtClUnitVehicle
+    915 952 100 4 0 0
 end
 show_stereotypes
-selected 
-package_ref 129 // multiDiagTools
+selected classdiagram_ref 753154 // mdtClUnitVehicle
 open
   classview_ref 602498 // Data
-  
-package_ref 227842 // DatabaseLogical
-  classview_ref 549634 // mdtClConnectionData
-  class_ref 966146 // Ui::mdtClArticleConnectionDialog
   classview_ref 490498 // Unit
 end
 end

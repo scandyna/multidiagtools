@@ -27,7 +27,7 @@
 #include <QModelIndex>
 #include <QSqlError>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClArticleComponentDialog::mdtClArticleComponentDialog(QWidget *parent, QSqlDatabase db, QVariant articleId, QVariant componentId)
  : QDialog(parent)
@@ -90,9 +90,7 @@ void mdtClArticleComponentDialog::selectComponent()
   int row;
 
   // Setup and show dialog
-  ///articleModel = art.articleModelForComponentSelection(pvArticleId);
   articleModel.setQuery(art.sqlForArticleComponentSelection(pvArticleId), pvDatabase);
-  ///Q_ASSERT(articleModel != 0);
   dialog.setMessage(tr("Please select a article"));
   dialog.setModel(&articleModel, false);
   /**
@@ -134,7 +132,6 @@ void mdtClArticleComponentDialog::displayCurrentComponent()
   QVariant data;
   int row;
 
-  qDebug() << "Display article for component ID: " << pvComponentId;
   if(pvComponentId.isNull()){
     lbArticleCode->clear();
     lbArticleDesignationEN->clear();
@@ -146,7 +143,6 @@ void mdtClArticleComponentDialog::displayCurrentComponent()
   for(row = 0; row < pvArticleComponentModel->rowCount(); ++row){
     index = pvArticleComponentModel->index(row, 1);
     data = pvArticleComponentModel->data(index);
-    qDebug() << "-> Compnent: " << data;
     if(data == pvComponentId){
       // Display article code
       index = pvArticleComponentModel->index(row, 2);

@@ -2094,6 +2094,7 @@ bool mdtTtDatabaseSchema::createArticleConnectionView()
 
   sql = "CREATE VIEW ArticleConnection_view AS\n"\
         "SELECT\n"\
+        "ArticleConnector_tbl.Connector_Id_FK,\n"\
         "ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
         "ArticleConnection_tbl.*\n"\
         "FROM ArticleConnection_tbl\n"\

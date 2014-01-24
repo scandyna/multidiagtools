@@ -176,7 +176,14 @@ void mdtClArticleEditor::addConnection()
   if(articleId.isNull()){
     return;
   }
+  // Setup data
+  if(!data.addAllFields("ArticleConnection_tbl", database())){
+    pvLastError = data.lastError();
+    displayLastError();
+    return;
+  }
   // Setup and show dialog
+  dialog.setData(data);
   sql = "SELECT Id_PK, Name FROM ArticleConnector_tbl WHERE Article_Id_FK = " + currentArticleId().toString();
   model.setQuery(sql, database());
   dialog.setArticleConnectorModel(&model);
@@ -240,9 +247,7 @@ void mdtClArticleEditor::addConnector()
   QList<QVariant> selectedContacts;
   mdtSqlRecord connectorData;
   QList<QSqlRecord> connectionDataList;
-  ///QList<mdtClArticleConnectionData> dataList;
   mdtClArticle art(this, database());
-  ///int i;
   bool ok;
 
   articleId = currentArticleId();
@@ -279,7 +284,7 @@ void mdtClArticleEditor::addConnector()
     return;
   }
   // Get contact data and add connector to table
-  connectionDataList = art.connectorContactData(selectedContacts, &ok);
+  connectionDataList = art.getConnectionDataListFromConnectorContactDataList(selectedContacts, &ok);
   if(!ok){
     pvLastError = art.lastError();
     displayLastError();

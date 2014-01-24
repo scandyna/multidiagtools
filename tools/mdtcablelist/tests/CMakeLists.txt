@@ -25,7 +25,7 @@ set (TEST_HEADER_FILES
           ../src/mdtClTerminalEditorDialog.h
           #../src/mdtClArticleComponentDialog.h
           #../src/mdtClArticleLinkDialog.h
-          ../src/mdtClPathGraphDialog.h
+          #../src/mdtClPathGraphDialog.h
           ../src/mdtClMainWindow.h
           ../src/mdtCcTestConnectionCableEditor.h
           ../src/mdtTtTestNodeEditor.h
@@ -60,10 +60,10 @@ set (TEST_SOURCES_FILES
           #../src/mdtClArticleComponentDialog.cpp
           #../src/mdtClArticleLinkDialog.cpp
           #../src/mdtClArticle.cpp
-          ../src/mdtClPathGraphicsConnection.cpp
-          ../src/mdtClPathGraphicsLink.cpp
-          ../src/mdtClPathGraph.cpp
-          ../src/mdtClPathGraphDialog.cpp
+          #../src/mdtClPathGraphicsConnection.cpp
+          #../src/mdtClPathGraphicsLink.cpp
+          #../src/mdtClPathGraph.cpp
+          #../src/mdtClPathGraphDialog.cpp
           #../src/mdtClDatabaseSchema.cpp
           ../src/mdtClMainWindow.cpp
           ../src/mdtCcTestConnectionCable.cpp
@@ -96,7 +96,7 @@ set (TEST_FORM_FILES
           ../src/mdtClTerminalBlockEditor.ui
           #../src/mdtClArticleComponentDialog.ui
           #../src/mdtClArticleLinkDialog.ui
-          ../src/mdtClPathGraphDialog.ui
+          #../src/mdtClPathGraphDialog.ui
           ../src/mdtClMainWindow.ui
           ../src/mdtTtTestNodeEditor.ui
           ../src/mdtTtTestModelEditor.ui

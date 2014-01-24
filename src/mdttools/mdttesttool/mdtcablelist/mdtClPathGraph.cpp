@@ -29,7 +29,6 @@
 #include <QString>
 #include <QModelIndex>
 #include <QObject>
-///#include <boost/property_map/property_map.hpp>
 
 //#include <QDebug>
 

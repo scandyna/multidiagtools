@@ -38,8 +38,6 @@
 #include <boost/tuple/tuple.hpp>
 #include <boost/graph/breadth_first_search.hpp>
 
-///#include <boost/optional.hpp>
-
 class mdtClPathGraphicsConnection;
 class mdtClPathGraphicsLink;
 class QSqlQueryModel;

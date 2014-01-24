@@ -60,6 +60,12 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
   int i;
 
   indexList = record.fieldIndexesWithValue();
+  if(indexList.isEmpty()){
+    pvLastError.setError(tr("Cannot inertion data in table '") + tableName + tr("' : given record contains no data to update."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
+    pvLastError.commit();
+    return false;
+  }
   sql = record.sqlForInsert(tableName);
   // Prepare query
   if(!query.prepare(sql)){

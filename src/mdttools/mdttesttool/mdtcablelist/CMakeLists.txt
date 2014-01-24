@@ -13,6 +13,7 @@ set (HEADER_FILES
           mdtClArticleComponentDialog.h
           mdtClArticleConnectionDialog.h
           mdtClArticleLinkDialog.h
+          mdtClPathGraphDialog.h
     )
 
 # Liste des fichiers sources
@@ -24,6 +25,10 @@ set (SOURCES_FILES
           mdtClArticleComponentDialog.cpp
           mdtClArticleConnectionDialog.cpp
           mdtClArticleLinkDialog.cpp
+          mdtClPathGraph.cpp
+          mdtClPathGraphDialog.cpp
+          mdtClPathGraphicsConnection.cpp
+          mdtClPathGraphicsLink.cpp
     )
 
 # Liste des fichiers ui
@@ -34,6 +39,7 @@ set (FORM_FILES
           mdtClArticleComponentDialog.ui
           mdtClArticleConnectionDialog.ui
           mdtClArticleLinkDialog.ui
+          mdtClPathGraphDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)

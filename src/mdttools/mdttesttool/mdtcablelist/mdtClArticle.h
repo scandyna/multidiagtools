@@ -46,13 +46,6 @@ class mdtClArticle : public mdtTtBase
    */
   ~mdtClArticle();
 
-  /*! \brief Get a model with articles for compononent selection
-   *
-   * Will setup a query model witch contains all articles except articleId
-   *  and articles that allready are component of articleID .
-   */
-  ///QSqlQueryModel *articleModelForComponentSelection(const QVariant &articleId);
-
   /*! \brief Get SQL statement for article component selection
    */
   QString sqlForArticleComponentSelection(const QVariant &articleId) const;
@@ -89,8 +82,19 @@ class mdtClArticle : public mdtTtBase
   bool removeComponents(const QVariant &articleId, const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief Get a list of connector contact data for given connector contact ID list
+   *
+   * Note: result will contain data from ConnectorContact_tbl
    */
-  QList<QSqlRecord> connectorContactData(const QList<QVariant> & connectorContactIdList, bool *ok);
+  QList<QSqlRecord> getConnectorContactDataList(const QList<QVariant> & connectorContactIdList, bool *ok);
+
+  /*! \brief Get a list of article connection data for given connector contact ID list
+   *
+   * Result will contain all fields from ArticleConnection_tbl.
+   *
+   * Following data are set:
+   *  - ArticleContactName: is a copy from ConnectorContact_tbl.Name
+   */
+  QList<QSqlRecord> getConnectionDataListFromConnectorContactDataList(const QList<QVariant> & connectorContactIdList, bool *ok);
 
   /*! \brief Add a connection
    */
@@ -195,10 +199,6 @@ class mdtClArticle : public mdtTtBase
   /*! \brief Remove each unit link that is contained in selection
    */
   bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
-
- ///private:
-
-  ///QSqlQueryModel *pvArticleModel;
 };
 
 #endif  // #ifndef MDT_CL_ARTICLE_H

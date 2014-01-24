@@ -29,32 +29,11 @@
 mdtClArticle::mdtClArticle(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
 {
-  ///pvArticleModel = new QSqlQueryModel;
 }
 
 mdtClArticle::~mdtClArticle()
 {
-  ///delete pvArticleModel;
 }
-
-/**
-QSqlQueryModel *mdtClArticle::articleModelForComponentSelection(const QVariant &articleId)
-{
-  QString sql;
-
-  sql =  "SELECT Id_PK, ArticleCode, Unit, DesignationEN "\
-         "FROM Article_tbl "\
-         "WHERE ( Id_PK <> " + articleId.toString() + " ) "\
-         "AND ( Id_PK NOT IN ( "\
-         " SELECT Component_Id_FK "\
-         " FROM ArticleComponent_tbl "\
-         " WHERE Composite_Id_FK = " + articleId.toString() + " ) "\
-         " ) ";
-  pvArticleModel->setQuery(sql, database());
-
-  return pvArticleModel;
-}
-*/
 
 QString mdtClArticle::sqlForArticleComponentSelection(const QVariant &articleId) const
 {
@@ -145,13 +124,6 @@ bool mdtClArticle::editComponent(const QVariant &articleId, const QVariant &curr
 bool mdtClArticle::removeComponent(const QVariant &articleId, const QVariant &componentId)
 {
   return removeData("ArticleComponent_tbl", "Composite_Id_FK", articleId, "Component_Id_FK", componentId);
-  /**
-  QList<QVariant> idList;
-
-  idList.append(componentId);
-
-  return removeComponents(articleId, idList);
-  */
 }
 
 bool mdtClArticle::removeComponents(const QVariant &articleId, const QList<QVariant> &componentIdList)
@@ -200,7 +172,7 @@ bool mdtClArticle::removeComponents(const QVariant &articleId, const QModelIndex
   return removeComponents(articleId, idList);
 }
 
-QList<QSqlRecord> mdtClArticle::connectorContactData(const QList<QVariant> & connectorContactIdList, bool *ok)
+QList<QSqlRecord> mdtClArticle::getConnectorContactDataList(const QList<QVariant> & connectorContactIdList, bool *ok)
 {
   Q_ASSERT(ok != 0);
 
@@ -223,6 +195,36 @@ QList<QSqlRecord> mdtClArticle::connectorContactData(const QList<QVariant> & con
   expectedFields << "Id_PK" << "Connector_Id_FK" << "Name";
 
   return getData(sql, ok, expectedFields);
+}
+
+QList<QSqlRecord> mdtClArticle::getConnectionDataListFromConnectorContactDataList(const QList<QVariant> & connectorContactIdList, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QList<QSqlRecord> connectorContactDataList;
+  QList<QSqlRecord> articleConnectionDataList;
+  mdtSqlRecord articleConnectionData;
+  int i;
+
+  // Get connector contact data
+  connectorContactDataList = getConnectorContactDataList(connectorContactIdList, ok);
+  if(!*ok){
+    return articleConnectionDataList;
+  }
+  // Create article contact data list
+  if(!articleConnectionData.addAllFields("ArticleConnection_tbl", database())){
+    pvLastError = articleConnectionData.lastError();
+    *ok = false;
+    return articleConnectionDataList;
+  }
+  for(i = 0; i < connectorContactDataList.size(); ++i){
+    articleConnectionData.clearValues();
+    articleConnectionData.setValue("ArticleContactName", connectorContactDataList.at(i).value("Name"));
+    articleConnectionDataList.append(articleConnectionData);
+  }
+  *ok = true;
+
+  return articleConnectionDataList;
 }
 
 bool mdtClArticle::addConnection(const mdtSqlRecord &data)
@@ -510,25 +512,6 @@ bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVa
 bool mdtClArticle::removeLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId)
 {
   return removeData("ArticleLink_tbl", "ArticleConnectionStart_Id_FK", articleConnectionStartId, "ArticleConnectionEnd_Id_FK", articleConnectionEndId);
-  /**
-  QString sql;
-  QSqlQuery query(database());
-
-  // Remove links
-  sql = "DELETE FROM ArticleLink_tbl ";
-  sql += " WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString();
-  sql += " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
-  if(!query.exec(sql)){
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query to remove link", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
-    pvLastError.commit();
-    return false;
-  }
-
-  return true;
-  */
 }
 
 bool mdtClArticle::removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows)
