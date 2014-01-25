@@ -29,10 +29,27 @@
 /*! \brief Data container class for article connection data
  *
  * Permit to echange data with ArticleConnection_tbl.
+ *
+ * This class was made for data edition.
+ *  It is also mandatory that fields matches ArticleConnection_tbl.
+ *  To get data from a view, witch also can miss fields, 
+ *  or have different field name, considere QSqlRecord.
  */
 class mdtClArticleConnectionData : public mdtSqlRecord
 {
  public:
+
+  /*! \brief Construct a empty mdtClArticleConnectionData
+   */
+  mdtClArticleConnectionData();
+
+  /*! \brief Contruct a mdtClArticleConnectionData from a QSqlRecord
+   *
+   * Note: if this method is used, setup is not relevant.
+   *
+   * \pre All fields from UnitConnection_tbl must exist in record
+   */
+  mdtClArticleConnectionData(const QSqlRecord & record);
 
   /*! \brief Setup fields from ArticleConnection_tbl
    */

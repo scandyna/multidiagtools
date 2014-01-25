@@ -21,6 +21,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClUnitConnectionData.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClUnitConnectionDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClUnitEditor.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClLinkData.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClUnitLinkDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClUnitVehicleType.cpp
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClVehicleTypeEditor.ui

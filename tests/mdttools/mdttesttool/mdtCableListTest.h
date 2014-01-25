@@ -23,6 +23,7 @@
 
 #include "mdtTest.h"
 #include "mdtSqlDatabaseManager.h"
+#include <boost/graph/graph_concepts.hpp>
 #include <QMessageBox>
 
 class mdtCableListTest : public mdtTest
@@ -41,7 +42,10 @@ class mdtCableListTest : public mdtTest
 
   void cleanupTestCase();
 
+  void articleConnectionDataTest();
   void articleTest();
+
+  void unitConnectionDataTest();
 
   void pathGraphTest();
 

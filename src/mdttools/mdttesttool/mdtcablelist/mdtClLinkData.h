@@ -18,29 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClArticleConnectionData.h"
+#ifndef MDT_CL_LINK_DATA_H
+#define MDT_CL_LINK_DATA_H
 
-mdtClArticleConnectionData::mdtClArticleConnectionData()
- : mdtSqlRecord()
+#include "mdtSqlRecord.h"
+#include <QList>
+#include <QVariant>
+#include <QSqlDatabase>
+#include <QSqlRecord>
+
+/*! \brief Data container class for link data
+ *
+ * Permit to echange data with Link_tbl.
+ *
+ * This class was made for data edition.
+ *  It is also mandatory that fields matches Link_tbl.
+ *  To get data from a view, witch also can miss fields, 
+ *  or have different field name, considere QSqlRecord.
+ */
+class mdtClLinkData : public mdtSqlRecord
 {
-}
+ public:
 
-mdtClArticleConnectionData::mdtClArticleConnectionData(const QSqlRecord& record)
- : mdtSqlRecord(record)
-{
-  Q_ASSERT(indexOf("Id_PK") >= 0);
-  Q_ASSERT(indexOf("Article_Id_FK") >= 0);
-  Q_ASSERT(indexOf("ArticleConnector_Id_FK") >= 0);
-  Q_ASSERT(indexOf("ArticleContactName") >= 0);
-  Q_ASSERT(indexOf("IoType") >= 0);
-  Q_ASSERT(indexOf("FunctionEN") >= 0);
-  Q_ASSERT(indexOf("FunctionFR") >= 0);
-  Q_ASSERT(indexOf("FunctionDE") >= 0);
-  Q_ASSERT(indexOf("FunctionIT") >= 0);
-}
+  /*! \brief Construct a empty mdtClLinkData
+   */
+  mdtClLinkData();
 
-bool mdtClArticleConnectionData::setup(const QSqlDatabase & db) 
-{
-  return addAllFields("ArticleConnection_tbl", db);
-}
+  /*! \brief Contruct a mdtClLinkData from a QSqlRecord
+   *
+   * Note: if this method is used, setup is not relevant.
+   *
+   * \pre All fields from Link_tbl must exist in record
+   */
+  mdtClLinkData(const QSqlRecord & record);
 
+  /*! \brief Setup fields from Link_tbl
+   */
+  bool setup(const QSqlDatabase & db);
+
+};
+
+#endif // #ifndef MDT_CL_LINK_DATA_H

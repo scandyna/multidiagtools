@@ -18,29 +18,28 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClArticleConnectionData.h"
+#include "mdtClLinkData.h"
 
-mdtClArticleConnectionData::mdtClArticleConnectionData()
- : mdtSqlRecord()
+mdtClLinkData::mdtClLinkData() 
 {
 }
 
-mdtClArticleConnectionData::mdtClArticleConnectionData(const QSqlRecord& record)
- : mdtSqlRecord(record)
+mdtClLinkData::mdtClLinkData(const QSqlRecord & record) 
 {
-  Q_ASSERT(indexOf("Id_PK") >= 0);
-  Q_ASSERT(indexOf("Article_Id_FK") >= 0);
-  Q_ASSERT(indexOf("ArticleConnector_Id_FK") >= 0);
-  Q_ASSERT(indexOf("ArticleContactName") >= 0);
-  Q_ASSERT(indexOf("IoType") >= 0);
-  Q_ASSERT(indexOf("FunctionEN") >= 0);
-  Q_ASSERT(indexOf("FunctionFR") >= 0);
-  Q_ASSERT(indexOf("FunctionDE") >= 0);
-  Q_ASSERT(indexOf("FunctionIT") >= 0);
+  Q_ASSERT(indexOf("UnitConnectionStart_Id_FK") >= 0);
+  Q_ASSERT(indexOf("UnitConnectionEnd_Id_FK") >= 0);
+  Q_ASSERT(indexOf("LinkType_Code_FK") >= 0);
+  Q_ASSERT(indexOf("LinkDirection_Code_FK") >= 0);
+  Q_ASSERT(indexOf("ArticleConnectionStart_Id_FK") >= 0);
+  Q_ASSERT(indexOf("ArticleConnectionEnd_Id_FK") >= 0);
+  Q_ASSERT(indexOf("Identification") >= 0);
+  Q_ASSERT(indexOf("SinceVersion") >= 0);
+  Q_ASSERT(indexOf("Modification") >= 0);
+  Q_ASSERT(indexOf("Value") >= 0);
 }
 
-bool mdtClArticleConnectionData::setup(const QSqlDatabase & db) 
+bool mdtClLinkData::setup(const QSqlDatabase & db) 
 {
-  return addAllFields("ArticleConnection_tbl", db);
+  return addAllFields("Link_tbl", db);
 }
 

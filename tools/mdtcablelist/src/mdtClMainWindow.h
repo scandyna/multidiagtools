@@ -166,10 +166,13 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   // Articel editor
   mdtClArticleEditor *pvArticleEditor;
   mdtSqlWindow *pvArticleEditorWindow;
+  // Unit editor
+  mdtClUnitEditor *pvUnitEditor;
+  mdtSqlWindow *pvUnitEditorWindow;
   
   // Editors
   
-  mdtClUnitEditor *pvUnitEditor;
+  
   
   mdtTtTestNodeEditor *pvTestNodeEditor;
   // Test connection cable editor

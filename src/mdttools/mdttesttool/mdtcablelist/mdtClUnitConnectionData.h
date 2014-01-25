@@ -22,21 +22,54 @@
 #define MDT_CL_UNIT_CONNECTION_DATA_H
 
 #include "mdtSqlRecord.h"
+#include "mdtClArticleConnectionData.h"
 #include <QList>
 #include <QVariant>
 #include <QSqlDatabase>
+#include <QSqlRecord>
 
-/*! \brief Data container class for article connection data
+/*! \brief Data container class for unit connection data
  *
  * Permit to echange data with UnitConnection_tbl.
+ *
+ * This class was made for data edition.
+ *  It is also mandatory that fields matches UnitConnection_tbl.
+ *  To get data from a view, witch also can miss fields, 
+ *  or have different field name, considere QSqlRecord.
  */
 class mdtClUnitConnectionData : public mdtSqlRecord
 {
  public:
 
-  /*! \brief Setup fields from UnitConnection_tbl
+  /*! \brief Construct a empty mdtClUnitConnectionData
    */
-  bool setup(const QSqlDatabase & db);
+  mdtClUnitConnectionData();
+
+  /*! \brief Contruct a mdtClUnitConnectionData from a QSqlRecord
+   *
+   * Note: if this method is used, setup is not relevant.
+   *
+   * \pre All fields from UnitConnection_tbl must exist in record
+   */
+  mdtClUnitConnectionData(const QSqlRecord & record);
+
+  /*! \brief Setup fields from UnitConnection_tbl
+   *
+   * \param setupAcd If true, fields from article connection part are also added.
+   */
+  bool setup(const QSqlDatabase & db, bool setupAcd);
+
+  /*! \brief Access article connection data (RD)
+   */
+  const mdtClArticleConnectionData & articleConnectionData() const;
+
+  /*! \brief Access article connection data (WR)
+   */
+  mdtClArticleConnectionData & articleConnectionData();
+
+ private:
+
+  mdtClArticleConnectionData pvArticleConnectionData;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_DATA_H

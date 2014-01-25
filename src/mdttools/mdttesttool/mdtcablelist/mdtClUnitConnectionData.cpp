@@ -20,8 +20,45 @@
  ****************************************************************************/
 #include "mdtClUnitConnectionData.h"
 
-bool mdtClUnitConnectionData::setup(const QSqlDatabase & db) 
+mdtClUnitConnectionData::mdtClUnitConnectionData()
+ : mdtSqlRecord()
 {
-  return addAllFields("UnitConnection_tbl", db);
 }
 
+/// \todo Check that the generated flag is updated (use hasData() for check...)
+mdtClUnitConnectionData::mdtClUnitConnectionData(const QSqlRecord & record)
+ : mdtSqlRecord(record)
+{
+  Q_ASSERT(indexOf("Id_PK") >= 0);
+  Q_ASSERT(indexOf("Unit_Id_FK") >= 0);
+  Q_ASSERT(indexOf("UnitConnector_Id_FK") >= 0);
+  Q_ASSERT(indexOf("ArticleConnection_Id_FK") >= 0);
+  Q_ASSERT(indexOf("UnitContactName") >= 0);
+  Q_ASSERT(indexOf("SchemaPage") >= 0);
+  Q_ASSERT(indexOf("SwAddress") >= 0);
+  Q_ASSERT(indexOf("FunctionEN") >= 0);
+  Q_ASSERT(indexOf("FunctionFR") >= 0);
+  Q_ASSERT(indexOf("FunctionDE") >= 0);
+  Q_ASSERT(indexOf("FunctionIT") >= 0);
+}
+
+bool mdtClUnitConnectionData::setup(const QSqlDatabase & db, bool setupAcd) 
+{
+  if(!addAllFields("UnitConnection_tbl", db)){
+    return false;
+  }
+  if(setupAcd){
+    return pvArticleConnectionData.setup(db);
+  }
+  return true;
+}
+
+const mdtClArticleConnectionData & mdtClUnitConnectionData::articleConnectionData() const
+{
+  return pvArticleConnectionData;
+}
+
+mdtClArticleConnectionData & mdtClUnitConnectionData::articleConnectionData()
+{
+  return pvArticleConnectionData;
+}

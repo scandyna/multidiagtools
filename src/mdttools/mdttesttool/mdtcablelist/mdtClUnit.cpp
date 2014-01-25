@@ -118,6 +118,24 @@ QString mdtClUnit::sqlForArticleConnectionLinkedToUnitConnectorSelection(const Q
   return sql;
 }
 
+mdtClUnitConnectionData mdtClUnit::getConnectionData(const QVariant & unitConnectionId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QString sql;
+
+  if(unitConnectionId.isNull()){
+    pvLastError.setError("Trying to get unit connection data for a NULL unit connection ID", mdtError::Warning);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
+    pvLastError.commit();
+    *ok = false;
+    return mdtClUnitConnectionData();
+  }
+  sql = "SELECT * FROM UnitConnection_tbl WHERE Id_PK = " + unitConnectionId.toString();
+
+  return getConnectionDataPv(sql, ok);
+}
+
 /**
 mdtClUnitConnectionData mdtClUnit::getBaseConnectorContactData(const QVariant & contactId, mdtClUnitConnectionData data)
 {
@@ -869,7 +887,8 @@ bool mdtClUnit::removeUnitConnections(const QModelIndexList & indexListOfSelecte
 bool mdtClUnit::addRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData) {
 }
 
-mdtClLinkData mdtClUnit::getUnitLinkData(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId)
+/**
+mdtClLinkData mdtClUnit::getUnitLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId)
 {
   QString sql;
   QSqlError sqlError;
@@ -923,8 +942,30 @@ mdtClLinkData mdtClUnit::getUnitLinkData(const QVariant &unitConnectionStartId, 
 
   return data;
 }
+*/
 
-bool mdtClUnit::addLink(const mdtClLinkData &data)
+mdtClLinkData mdtClUnit::getUnitLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QList<QSqlRecord> dataList;
+  mdtClLinkData data;
+  QString sql;
+
+  // Get Link_tbl part
+  sql = "SELECT * FROM Link_tbl WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return data;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  data = dataList.at(0);
+  /// \todo Implement VehicleType_Link_tbl part !
+}
+
+/**
+bool mdtClUnit::addLink(const mdtClLinkData & data)
 {
   QString sql;
   QSqlError sqlError;
@@ -988,9 +1029,28 @@ bool mdtClUnit::addLink(const mdtClLinkData &data)
 
   return true;
 }
+*/
+
+bool mdtClUnit::addLink(const mdtClLinkData & data)
+{
+  QSqlQuery query(database());
+
+  // We want to update 2 tables, so manually ask to beginn a transaction
+  if(!beginTransaction()){
+    return false;
+  }
+  // Add Link_tbl part
+  if(!addRecord(data, "Link_tbl", query)){
+    rollbackTransaction();
+    return false;
+  }
+  /// \todo Implement VehicleType_Link_tbl part !!
+
+}
 
 bool mdtClUnit::editLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, const mdtClLinkData &data)
 {
+  /**
   QString sql;
   QSqlError sqlError;
   QList<QPair<QVariant, QVariant> > vehicleTypeList;
@@ -1070,10 +1130,12 @@ bool mdtClUnit::editLink(const QVariant &unitConnectionStartId, const QVariant &
   commitTransaction();
 
   return true;
+  */
 }
 
 bool mdtClUnit::removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId)
 {
+  /**
   mdtClLinkData data;
   QList<QPair<QVariant, QVariant> > vehicleTypeList;
   QString sql;
@@ -1115,6 +1177,7 @@ bool mdtClUnit::removeLink(const QVariant &unitConnectionStartId, const QVariant
   }
 
   return true;
+  */
 }
 
 bool mdtClUnit::removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows)
@@ -1131,6 +1194,39 @@ bool mdtClUnit::removeLinks(const QList<QModelIndexList> &indexListOfSelectedRow
   }
 
   return true;
+}
+
+mdtClUnitConnectionData mdtClUnit::getConnectionDataPv(const QString & sql, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  mdtClUnitConnectionData data;
+  QList<QSqlRecord> dataList;
+  QVariant articleConnectionId;
+  QString acSql;
+
+  // Get unit connection data part
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return data;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  data = dataList.at(0);
+  // If data is based on article connection, get article connection data
+  articleConnectionId = data.value("ArticleConnection_Id_FK");
+  if(!articleConnectionId.isNull()){
+    acSql = "SELECT * FROM ArticleConnection_tbl WHERE Id_PK = " + articleConnectionId.toString();
+    dataList = getData(acSql, ok);
+    if(!*ok){
+      return data;
+    }
+    Q_ASSERT(dataList.size() == 1);
+    data.articleConnectionData() = dataList.at(0);
+  }
+  // Done
+  *ok = true;
+
+  return data;
 }
 
 bool mdtClUnit::addLinkToVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId)

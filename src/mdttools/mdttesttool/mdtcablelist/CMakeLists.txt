@@ -5,7 +5,7 @@
 # Project
 project (multidiagtools)
 
-include_directories(../../../../tools/mdtcablelist/src)
+# include_directories(../../../../tools/mdtcablelist/src)
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
@@ -42,6 +42,7 @@ set (SOURCES_FILES
           mdtClUnitConnectionData.cpp
           mdtClUnitConnectionDialog.cpp
           mdtClUnitEditor.cpp
+          mdtClLinkData.cpp
           mdtClUnitLinkDialog.cpp
           mdtClUnitVehicleType.cpp
           # NOTE: provisoire !!!!!!!!!!!!!!!!!!!!

@@ -79,6 +79,13 @@ class mdtClUnit : public mdtTtBase
    */
   QString sqlForArticleConnectionLinkedToUnitConnectorSelection(const QVariant & unitConnectorId, const QVariant & unitId) const;
 
+  /*! \brief Get unit connection data for given unit connection ID
+   *
+   * If given unit connection is based on a article connection,
+   *  the article connection data part will also be set.
+   */
+  mdtClUnitConnectionData getConnectionData(const QVariant & unitConnectionId, bool *ok);
+
   /*! \brief Get connector contact data (from ConnectorContact_tbl) for a given contact ID
    * \brief Get (unit) connection data from connector contact data (ConnectorContact_tbl)
    *
@@ -241,7 +248,7 @@ class mdtClUnit : public mdtTtBase
 
   /*! \brief Get a data object for a given link
    */
-  mdtClLinkData getUnitLinkData(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
+  mdtClLinkData getUnitLinkData(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool *ok);
 
   /*! \brief Add a unit link
    */
@@ -262,6 +269,13 @@ class mdtClUnit : public mdtTtBase
   bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
 
  private:
+
+  /*! \brief Get unit connection data and article connection data if based on
+   *
+   * \pre Given SQL statement must return 1 unit connection row
+   * \pre ok must be valid
+   */
+  mdtClUnitConnectionData getConnectionDataPv(const QString & sql, bool *ok);
 
   /*! \brief Add link to vehicle type table
    */

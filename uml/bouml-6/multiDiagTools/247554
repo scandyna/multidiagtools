@@ -1,6 +1,6 @@
 format 204
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 12
+  revision 14
   modified_by 2 "philippe"
   // class settings
   
@@ -1049,922 +1049,6 @@ ${inlines}
 	
 	
 	
-      end
-    end
-  end
-
-  classview 503554 "Link"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 772866 "mdtClLink"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 818690 "mdtClLink"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      operation 1468034 "mdtClLink"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1468162 "~mdtClLink"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1468290 "id"
-	public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 1030786 // pvLinkModel (<directional composition>)
-	relation 1019650 *-->
-	  a role_name "pvLinkModel" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1030786 // pvLinkModel (<directional composition>)
-	  b parent class_ref 174338 // QSqlQueryModel
-      end
-
-      classrelation 1030914 // pvDatabase (<unidirectional association>)
-	relation 1019778 --->
-	  a role_name "pvDatabase" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1030914 // pvDatabase (<unidirectional association>)
-	  b parent class_ref 405122 // QSqlDatabase
-      end
-    end
-
-    classdiagram 852610 "mdtClLinkData"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 888194 "mdtClLinkData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 893058 "pvSinceVersion"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 893186 "pvModification"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 893314 "pvIdentification"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 893442 "pvLinkDirectionCode"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 893570 "pvLinkTypeCode"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 893698 "pvValue"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 893826 "pvVehicleTypeStartIdList"
-	private explicit_type "QList<QVariant>"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 893954 "pvVehicleTypeEndIdList"
-	private explicit_type "QList<QVariant>"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 1625602 "setArticleLinkId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1625730 "articleLinkId"
-	force_body_gen const public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1625858 "setUnitConnectionStartId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1625986 "unitConnectionStartId"
-	force_body_gen const public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1626114 "setUnitConnectionEndId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1626242 "unitConnectionEndId"
-	force_body_gen const public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1626370 "setSinceVersion"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1626498 "sinceVersion"
-	force_body_gen const public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1626626 "setModification"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1626754 "modification"
-	force_body_gen const public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1626882 "setIdentification"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1627010 "identification"
-	force_body_gen const public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1627138 "setLinkDirectionCode"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1627266 "linkDirectionCode"
-	force_body_gen const public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1627394 "setLinkTypeCode"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1627522 "linkTypeCode"
-	force_body_gen const public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1627650 "setValue"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1627778 "value"
-	force_body_gen const public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1627906 "setVehicleTypeStartIdList"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "idList" type class_ref 161154 // QVariant
-	multiplicity "*"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const QList<${t0}> & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const QList<${t0}> & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1628034 "vehicleTypeStartIdList"
-	force_body_gen const public explicit_return_type "QList<QVariant>"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} &${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}const ${type} &${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1628162 "setVehicleTypeEndIdList"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "idList" type class_ref 161154 // QVariant
-	multiplicity "*"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const QList<${t0}> & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const QList<${t0}> & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-
-      operation 1628290 "vehicleTypeEndIdList"
-	force_body_gen const public explicit_return_type "QList<QVariant>"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} &${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}const ${type} &${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}
-}
-"
-	
-	
-	
-	
-      end
-    end
-
-    classdiagram 859138 "LinkPath"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    classdiagram 867714 "mdtClPathGraphicsConnection"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 903554 "mdtClPathGraphicsConnection"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 1116802 // <association>
-	relation_ref 1105410 // <association>
-      end
-
-      operation 1644162 "mdtClPathGraphicsConnection"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1644418 "addLink"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "link" type class_ref 903682 // mdtClPathGraphicsLink
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1644546 "links"
-	stereotype "list"
-	public return_type class_ref 903682 // mdtClPathGraphicsLink
-	multiplicity "*"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 1116930 // <generalisation>
-	relation 1105538 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1116930 // <generalisation>
-	  b parent class_ref 895234 // QGraphicsItem
-      end
-
-      operation 1644674 "type"
-	const cpp_virtual public explicit_return_type "int"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1644802 "boundingRect"
-	const cpp_virtual public return_type class_ref 902914 // QRectF
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1644930 "shape"
-	const cpp_virtual public return_type class_ref 903042 // QPainterPath
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1645058 "paint"
-	cpp_virtual public explicit_return_type "void"
-	nparams 3
-	  param in name "painter" type class_ref 903170 // QPainter
-	  param in name "option" type class_ref 903298 // QStyleOptionGraphicsItem
-	  param in name "widget" type class_ref 316162 // QWidget
-	    defaultvalue "0"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1652866 "nextPosition"
-	public explicit_return_type "QPointF"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    classdiagram 867842 "mdtClPathGraphicsLink"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 903682 "mdtClPathGraphicsLink"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 1116674 // <association>
-	relation 1105410 ----
-	  a role_name "" multiplicity "2" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${multiplicity}${value};
-"
-	    classrelation_ref 1116674 // <association>
-	  b role_name "pvLinkList" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
-"
-	    classrelation_ref 1116802 // <association>
-      end
-
-      operation 1644290 "mdtClPathGraphicsLink"
-	public explicit_return_type ""
-	nparams 2
-	  param in name "startConnection" type class_ref 903554 // mdtClPathGraphicsConnection
-	  param in name "endConnection" type class_ref 903554 // mdtClPathGraphicsConnection
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 1117058 // <generalisation>
-	relation 1105666 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1117058 // <generalisation>
-	  b parent class_ref 895234 // QGraphicsItem
-      end
-
-      operation 1645186 "startConnection"
-	public return_type class_ref 903554 // mdtClPathGraphicsConnection
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1645314 "endConnection"
-	public return_type class_ref 903554 // mdtClPathGraphicsConnection
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1645442 "adjust"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1645570 "type"
-	const cpp_virtual public explicit_return_type "int"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1645698 "boundingRect"
-	const cpp_virtual public return_type class_ref 902914 // QRectF
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1645826 "paint"
-	cpp_virtual public explicit_return_type "void"
-	nparams 3
-	  param in name "painter" type class_ref 903170 // QPainter
-	  param in name "option" type class_ref 903298 // QStyleOptionGraphicsItem
-	  param in name "widget" type class_ref 316162 // QWidget
-	    defaultvalue "0"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      attribute 907394 "pvStartPoint"
-	private explicit_type "QPointF"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 907522 "pvEndPoint"
-	private explicit_type "QPointF"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
       end
     end
   end
@@ -3220,6 +2304,518 @@ ${inlines}
     end
   end
 
+  classview 503554 "Link"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    associated_deployment_view deploymentview_ref 487554 // Link
+    classdiagram 772866 "mdtClLink"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 818690 "mdtClLink"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 1468034 "mdtClLink"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1468162 "~mdtClLink"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1468290 "id"
+	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1030786 // pvLinkModel (<directional composition>)
+	relation 1019650 *-->
+	  a role_name "pvLinkModel" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1030786 // pvLinkModel (<directional composition>)
+	  b parent class_ref 174338 // QSqlQueryModel
+      end
+
+      classrelation 1030914 // pvDatabase (<unidirectional association>)
+	relation 1019778 --->
+	  a role_name "pvDatabase" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1030914 // pvDatabase (<unidirectional association>)
+	  b parent class_ref 405122 // QSqlDatabase
+      end
+    end
+
+    classdiagram 852610 "mdtClLinkData"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 888194 "mdtClLinkData"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1391362 // <generalisation>
+	relation 1378434 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1391362 // <generalisation>
+	  b parent class_ref 1067266 // mdtSqlRecord
+      end
+
+      operation 1898370 "mdtClLinkData"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1898498 "mdtClLinkData"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "record" type class_ref 404994 // QSqlRecord
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1898626 "setup"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 859138 "LinkPath"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 867714 "mdtClPathGraphicsConnection"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 903554 "mdtClPathGraphicsConnection"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1116802 // <association>
+	relation_ref 1105410 // <association>
+      end
+
+      operation 1644162 "mdtClPathGraphicsConnection"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1644418 "addLink"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "link" type class_ref 903682 // mdtClPathGraphicsLink
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1644546 "links"
+	stereotype "list"
+	public return_type class_ref 903682 // mdtClPathGraphicsLink
+	multiplicity "*"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1116930 // <generalisation>
+	relation 1105538 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1116930 // <generalisation>
+	  b parent class_ref 895234 // QGraphicsItem
+      end
+
+      operation 1644674 "type"
+	const cpp_virtual public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1644802 "boundingRect"
+	const cpp_virtual public return_type class_ref 902914 // QRectF
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1644930 "shape"
+	const cpp_virtual public return_type class_ref 903042 // QPainterPath
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645058 "paint"
+	cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "painter" type class_ref 903170 // QPainter
+	  param in name "option" type class_ref 903298 // QStyleOptionGraphicsItem
+	  param in name "widget" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1652866 "nextPosition"
+	public explicit_return_type "QPointF"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 867842 "mdtClPathGraphicsLink"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 903682 "mdtClPathGraphicsLink"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1116674 // <association>
+	relation 1105410 ----
+	  a role_name "" multiplicity "2" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${multiplicity}${value};
+"
+	    classrelation_ref 1116674 // <association>
+	  b role_name "pvLinkList" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1116802 // <association>
+      end
+
+      operation 1644290 "mdtClPathGraphicsLink"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "startConnection" type class_ref 903554 // mdtClPathGraphicsConnection
+	  param in name "endConnection" type class_ref 903554 // mdtClPathGraphicsConnection
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1117058 // <generalisation>
+	relation 1105666 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1117058 // <generalisation>
+	  b parent class_ref 895234 // QGraphicsItem
+      end
+
+      operation 1645186 "startConnection"
+	public return_type class_ref 903554 // mdtClPathGraphicsConnection
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645314 "endConnection"
+	public return_type class_ref 903554 // mdtClPathGraphicsConnection
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645442 "adjust"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645570 "type"
+	const cpp_virtual public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645698 "boundingRect"
+	const cpp_virtual public return_type class_ref 902914 // QRectF
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1645826 "paint"
+	cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "painter" type class_ref 903170 // QPainter
+	  param in name "option" type class_ref 903298 // QStyleOptionGraphicsItem
+	  param in name "widget" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 907394 "pvStartPoint"
+	private explicit_type "QPointF"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 907522 "pvEndPoint"
+	private explicit_type "QPointF"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+  end
+
   deploymentview 481026 "Unit"
     //deployment diagram settings
     deploymentdiagramsettings
@@ -3269,6 +2865,35 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 1113730 // mdtClArticleConnectionData
+      end
+    end
+  end
+
+  deploymentview 487554 "Link"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 690306 "mdtClLinkData"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 888194 // mdtClLinkData
       end
     end
   end

@@ -27,12 +27,14 @@
 #include <QVariant>
 #include <QList>
 #include "mdtSqlFormWindow.h"
-#include "mdtClEditor.h"
+#include "mdtSqlForm.h"
 #include "mdtClUnitConnectionData.h"
+
+class QWidget;
 
 /*! \brief Cable list's device editor
  */
-class mdtClUnitEditor : public mdtClEditor
+class mdtClUnitEditor : public mdtSqlForm
 {
  Q_OBJECT
 
@@ -40,11 +42,15 @@ class mdtClUnitEditor : public mdtClEditor
 
   /*! \brief Contruct a cable editor
    */
-  mdtClUnitEditor(QObject *parent, QSqlDatabase db);
+  mdtClUnitEditor(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
   ~mdtClUnitEditor();
+
+  /*! \brief Setup tables
+   */
+  bool setupTables();
 
  private slots:
 
@@ -173,10 +179,6 @@ class mdtClUnitEditor : public mdtClEditor
   /*! \brief Select a article connection related to given article ID
    */
   QVariant selectByArticleIdArticleConnectionId(const QVariant & articleId, const QVariant & unitId);
-
-  /*! \brief Setup tables
-   */
-  bool setupTables();
 
   /*! \brief Setup Unit table and widget
    */

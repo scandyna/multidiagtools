@@ -102,6 +102,18 @@ bool mdtSqlRecord::addAllFields(const QString & tableName, const QSqlDatabase & 
   return true;
 }
 
+QStringList mdtSqlRecord::fieldNames() const
+{
+  QStringList names;
+  int i;
+
+  for(i = 0; i < count(); ++i){
+    names.append(fieldName(i));
+  }
+
+  return names;
+}
+
 bool mdtSqlRecord::hasValue(int fieldIndex) const
 {
   return isGenerated(fieldIndex);

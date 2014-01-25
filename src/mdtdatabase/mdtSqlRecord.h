@@ -25,6 +25,7 @@
 #include <QSqlRecord>
 #include <QSqlDatabase>
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 #include <QVector>
 
@@ -83,6 +84,10 @@ class mdtSqlRecord : public QSqlRecord
    * \sa addField()
    */
   bool addAllFields(const QString & tableName, const QSqlDatabase & db);
+
+  /*! \brief Get a list with all field names
+   */
+  QStringList fieldNames() const;
 
   /*! \brief Check if a value was set
    *

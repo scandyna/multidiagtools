@@ -214,7 +214,7 @@ void mdtClUnitLinkDialog::setStartVehicleTypes(const QVariant &unitId)
   pvStartVehicleTypesModel->setHeaderData(2, Qt::Horizontal, tr("Serie"));
   twStartVehicles->setColumnHidden(3, true);
   twStartVehicles->resizeColumnsToContents();
-  pvLinkData.setVehicleTypeStartIdList(startVehicleTypeIdList());
+  ///pvLinkData.setVehicleTypeStartIdList(startVehicleTypeIdList());
 }
 
 const QList<QVariant> mdtClUnitLinkDialog::startVehicleTypeIdList() const
@@ -243,7 +243,7 @@ void mdtClUnitLinkDialog::setEndVehicleTypes(const QVariant &unitId)
   pvEndVehicleTypesModel->setHeaderData(2, Qt::Horizontal, tr("Serie"));
   twEndVehicles->setColumnHidden(3, true);
   twEndVehicles->resizeColumnsToContents();
-  pvLinkData.setVehicleTypeEndIdList(endVehicleTypeIdList());
+  ///pvLinkData.setVehicleTypeEndIdList(endVehicleTypeIdList());
 }
 
 const QList<QVariant> mdtClUnitLinkDialog::endVehicleTypeIdList() const
@@ -327,12 +327,12 @@ QVariant mdtClUnitLinkDialog::linkDirectionCode() const
 void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
 {
   pvLinkData = data;
-  leIdentification->setText(data.identification().toString());
-  updateModificationCombobox(data.modification());
-  updateSinceVersionCombobox(data.sinceVersion());
-  setLinkTypeCode(data.linkTypeCode());
-  setLinkDirectionCode(data.linkDirectionCode());
-  sbValue->setValue(data.value().toDouble());
+  leIdentification->setText(data.value("Identification").toString());
+  updateModificationCombobox(data.value("Modification"));
+  updateSinceVersionCombobox(data.value("SinceVersion"));
+  setLinkTypeCode(data.value("LinkType_Code_FK"));
+  setLinkDirectionCode(data.value("LinkDirection_Code_FK"));
+  sbValue->setValue(data.value("Value").toDouble());
 }
 
 mdtClLinkData &mdtClUnitLinkDialog::linkData()
@@ -366,7 +366,7 @@ void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
   data = pvLinkTypeModel->data(index);
   lbUnit->setText("[" + data.toString() + "]");
   // Update link data
-  pvLinkData.setLinkTypeCode(linkTypeCode());
+  pvLinkData.setValue("LinkType_Code_FK", linkTypeCode());
 }
 
 void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
@@ -383,7 +383,7 @@ void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
   data = pvLinkDirectionModel->data(index);
   lbLinkDirectionAsciiPicture->setText(data.toString());
   // Update link data
-  pvLinkData.setLinkDirectionCode(linkDirectionCode());
+  pvLinkData.setValue("LinkDirection_Code_FK", linkDirectionCode());
 }
 
 void mdtClUnitLinkDialog::selectStartUnit()
@@ -703,10 +703,10 @@ void mdtClUnitLinkDialog::selectEndVehicleTypes()
 void mdtClUnitLinkDialog::accept()
 {
   // Most of data are dynamically stored during edition, but some are to do here
-  pvLinkData.setIdentification(leIdentification->text());
-  pvLinkData.setModification(cbModification->currentText());
-  pvLinkData.setSinceVersion(cbSinceVersion->currentText());
-  pvLinkData.setValue(sbValue->value());
+  pvLinkData.setValue("Identification", leIdentification->text());
+  pvLinkData.setValue("Modification", cbModification->currentText());
+  pvLinkData.setValue("SinceVersion", cbSinceVersion->currentText());
+  pvLinkData.setValue("Value", sbValue->value());
   
   /// \todo checks
   

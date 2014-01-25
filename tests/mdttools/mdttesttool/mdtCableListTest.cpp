@@ -65,6 +65,11 @@ void mdtCableListTest::cleanupTestCase()
 {
 }
 
+void mdtCableListTest::articleConnectionDataTest()
+{
+  QFAIL("Test not implemented yet");
+}
+
 void mdtCableListTest::articleTest()
 {
   mdtClArticle art(0, pvDatabaseManager.database());
@@ -333,6 +338,12 @@ void mdtCableListTest::articleTest()
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
 }
+
+void mdtCableListTest::unitConnectionDataTest()
+{
+  QFAIL("Test not implemented yet");
+}
+
 
 void mdtCableListTest::pathGraphTest()
 {

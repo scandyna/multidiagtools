@@ -38,6 +38,7 @@
 #include <QAbstractButton>
 #include <QComboBox>
 #include <QString>
+#include <QStringList>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
@@ -66,6 +67,7 @@ void mdtDatabaseTest::sqlRecordTest()
   QSqlQuery query(pvDatabase);
   QString sql;
   mdtSqlRecord matchData;
+  QStringList expectedFieldNames;
 
   // Set database data
   clearTestDatabaseData();
@@ -76,24 +78,34 @@ void mdtDatabaseTest::sqlRecordTest()
    */
 
   // Add existing fields
+  expectedFieldNames.clear();
+  expectedFieldNames << "Id_PK";
   QVERIFY(record.addField("Id_PK", "Client_tbl", pvDatabase));
   QCOMPARE(record.count(), 1);
   QCOMPARE(record.field(0).name(), QString("Id_PK"));
+  QCOMPARE(record.fieldNames(), expectedFieldNames);
+  expectedFieldNames << "FirstName";
   QVERIFY(record.addField("FirstName", "Client_tbl", pvDatabase));
   QCOMPARE(record.count(), 2);
   QCOMPARE(record.field(1).name(), QString("FirstName"));
+  QCOMPARE(record.fieldNames(), expectedFieldNames);
   // Try to add a non existing field
   QVERIFY(!record.addField("jkhhdsh dhaskhd sah asdk", "Client_tbl", pvDatabase));
   QCOMPARE(record.count(), 2);
+  QCOMPARE(record.fieldNames(), expectedFieldNames);
   // Clear fields
   record.clear();
   QCOMPARE(record.count(), 0);
+  expectedFieldNames.clear();
+  QCOMPARE(record.fieldNames(), expectedFieldNames);
+  expectedFieldNames << "Id_PK" << "FirstName" << "Remarks";
   // Add all fields of Client_tbl and check
   QVERIFY(record.addAllFields("Client_tbl", pvDatabase));
   QCOMPARE(record.count(), 3);
   QCOMPARE(record.field(0).name(), QString("Id_PK"));
   QCOMPARE(record.field(1).name(), QString("FirstName"));
   QCOMPARE(record.field(2).name(), QString("Remarks"));
+  QCOMPARE(record.fieldNames(), expectedFieldNames);
 
   /*
    * Edition
