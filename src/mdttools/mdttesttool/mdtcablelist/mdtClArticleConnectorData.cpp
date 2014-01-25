@@ -21,6 +21,8 @@
 #include "mdtClArticleConnectorData.h"
 #include <QString>
 
+//#include <QDebug>
+
 bool mdtClArticleConnectorData::setup(const QSqlDatabase & db, bool setupCd)
 {
   if(!addAllFields("ArticleConnector_tbl", db)){
@@ -44,15 +46,15 @@ QList<mdtClArticleConnectionData> mdtClArticleConnectorData::connectionDataList(
 
 void mdtClArticleConnectorData::addConnectionData(const mdtClArticleConnectionData & data) 
 {
-  Q_ASSERT(data.indexOf("Id_PK") > 0);
-  Q_ASSERT(data.indexOf("Article_Id_FK") > 0);
-  Q_ASSERT(data.indexOf("ArticleConnector_Id_FK") > 0);
-  Q_ASSERT(data.indexOf("ArticleContactName") > 0);
-  Q_ASSERT(data.indexOf("IoType") > 0);
-  Q_ASSERT(data.indexOf("FunctionEN") > 0);
-  Q_ASSERT(data.indexOf("FunctionFR") > 0);
-  Q_ASSERT(data.indexOf("FunctionDE") > 0);
-  Q_ASSERT(data.indexOf("FunctionFR") > 0);
+  Q_ASSERT(data.indexOf("Id_PK") >= 0);
+  Q_ASSERT(data.indexOf("Article_Id_FK") >= 0);
+  Q_ASSERT(data.indexOf("ArticleConnector_Id_FK") >= 0);
+  Q_ASSERT(data.indexOf("ArticleContactName") >= 0);
+  Q_ASSERT(data.indexOf("IoType") >= 0);
+  Q_ASSERT(data.indexOf("FunctionEN") >= 0);
+  Q_ASSERT(data.indexOf("FunctionFR") >= 0);
+  Q_ASSERT(data.indexOf("FunctionDE") >= 0);
+  Q_ASSERT(data.indexOf("FunctionFR") >= 0);
 
   pvConnectionDataList.append(data);
 }
@@ -94,7 +96,20 @@ mdtClArticleConnectionData mdtClArticleConnectorData::connectionData(const QVari
 
 }
 
+void mdtClArticleConnectorData::setConnectorData(const mdtClConnectorData & data)
+{
+  Q_ASSERT(!data.value("Id_PK").isNull());
+
+  setValue("Connector_Id_FK", data.value("Id_PK"));
+  pvConnectorData = data;
+}
+
 mdtClConnectorData mdtClArticleConnectorData::connectorData() const
 {
   return pvConnectorData;
+}
+
+bool mdtClArticleConnectorData::isBasedOnConnector() const
+{
+  return !value("Connector_Id_FK").isNull();
 }

@@ -85,9 +85,21 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    */
   mdtClArticleConnectionData connectionData(const QVariant & connectionId, bool *ok) const;
 
+  /*! \brief Set connector data
+   *
+   * Will also update Connector_Id_FK
+   *
+   * \pre data must contain a non Null Id_PK
+   */
+  void setConnectorData(const mdtClConnectorData & data);
+
   /*! \brief Get connector data (from Connector_tbl)
    */
   mdtClConnectorData connectorData() const;
+
+  /*! \brief Check if current artice connector is based on a connector
+   */
+  bool isBasedOnConnector() const;
 
  private:
 

@@ -43,9 +43,12 @@ class mdtCableListTest : public mdtTest
   void cleanupTestCase();
 
   void articleConnectionDataTest();
+  void articleConnectorDataTest();
   void articleTest();
 
   void unitConnectionDataTest();
+
+  void mdtClLinkDataTest();
 
   void pathGraphTest();
 

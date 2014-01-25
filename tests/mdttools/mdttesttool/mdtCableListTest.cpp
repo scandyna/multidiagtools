@@ -24,6 +24,11 @@
 #include "mdtSqlRecord.h"
 #include "mdtTtBase.h"
 #include "mdtClArticle.h"
+#include "mdtClConnectorData.h"
+#include "mdtClArticleConnectorData.h"
+#include "mdtClArticleConnectorData.h"
+#include "mdtClUnitConnectionData.h"
+#include "mdtClUnitConnectorData.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -68,6 +73,57 @@ void mdtCableListTest::cleanupTestCase()
 void mdtCableListTest::articleConnectionDataTest()
 {
   QFAIL("Test not implemented yet");
+}
+
+void mdtCableListTest::articleConnectorDataTest()
+{
+  mdtClConnectorData connectorData;
+  mdtClArticleConnectorData data;
+  mdtClArticleConnectionData connectionData;
+  bool ok;
+
+  // Check setup
+  QVERIFY(data.setup(pvDatabaseManager.database(), true));
+  QVERIFY(!data.isBasedOnConnector());
+  QCOMPARE(data.connectionDataList().size(), 0);
+  // Set values and check
+  data.setValue("Id_PK", 1);
+  data.setValue("Article_Id_FK", 10);
+  data.setValue("Connector_Id_FK", 100);
+  QCOMPARE(data.value("Id_PK"), QVariant(1));
+  QCOMPARE(data.value("Article_Id_FK"), QVariant(10));
+  QCOMPARE(data.value("Connector_Id_FK"), QVariant(100));
+  QVERIFY(data.isBasedOnConnector());
+  // Add some connection data
+  QVERIFY(connectionData.setup(pvDatabaseManager.database()));
+  connectionData.setValue("Id_PK", 2);
+  connectionData.setValue("Article_Id_FK", 10);
+  connectionData.setValue("ArticleConnector_Id_FK", 1);
+  data.addConnectionData(connectionData);
+  QCOMPARE(data.connectionDataList().size(), 1);
+  QCOMPARE(data.connectionDataList().at(0).value("Id_PK"), QVariant(2));
+  QCOMPARE(data.connectionDataList().at(0).value("Article_Id_FK"), QVariant(10));
+  QCOMPARE(data.connectionDataList().at(0).value("ArticleConnector_Id_FK"), QVariant(1));
+  // Get data by connection ID - Existing ID
+  connectionData.clear();
+  QCOMPARE(connectionData.count(), 0);
+  connectionData = data.connectionData(2, &ok);
+  QVERIFY(ok);
+  QVERIFY(connectionData.count() > 0);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(2));
+  QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(10));
+  QCOMPARE(connectionData.value("ArticleConnector_Id_FK"), QVariant(1));
+  // Get data by connection ID - Not existing ID
+  connectionData = data.connectionData(25, &ok);
+  QVERIFY(!ok);
+  // Assign a connector
+  QVERIFY(connectorData.setup(pvDatabaseManager.database()));
+  connectorData.setValue("Id_PK", 50);
+  data.setConnectorData(connectorData);
+  QVERIFY(data.isBasedOnConnector());
+  QCOMPARE(data.value("Connector_Id_FK"), QVariant(50));
+
+
 }
 
 void mdtCableListTest::articleTest()
@@ -340,6 +396,11 @@ void mdtCableListTest::articleTest()
 }
 
 void mdtCableListTest::unitConnectionDataTest()
+{
+  QFAIL("Test not implemented yet");
+}
+
+void mdtCableListTest::mdtClLinkDataTest()
 {
   QFAIL("Test not implemented yet");
 }
