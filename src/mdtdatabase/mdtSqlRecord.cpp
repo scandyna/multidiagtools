@@ -222,8 +222,10 @@ QString mdtSqlRecord::sqlDataDelimiter(QVariant::Type type)
   }
 }
 
+/**
 mdtError & mdtSqlRecord::lastErrorW() 
 {
   return pvLastError;
 }
+*/
 

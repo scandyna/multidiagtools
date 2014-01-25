@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -83,7 +83,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   /*! \brief Set the start connection data
    */
-  void setStartConnectionData(const mdtClUnitConnectionData &data);
+  ///void setStartConnectionData(const mdtClUnitConnectionData &data);
 
   /*! \brief Get selected start connection data
    */
@@ -91,7 +91,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   /*! \brief Set the end connection data
    */
-  void setEndConnectionData(const mdtClUnitConnectionData &data);
+  ///void setEndConnectionData(const mdtClUnitConnectionData &data);
 
   /*! \brief Get selected end connection data
    */

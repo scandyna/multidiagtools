@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtClUnit.h"
 #include <QSqlQuery>
-#include <QSqlRecord>
 #include <QSqlField>
 #include <QPair>
 
@@ -119,6 +118,7 @@ QString mdtClUnit::sqlForArticleConnectionLinkedToUnitConnectorSelection(const Q
   return sql;
 }
 
+/**
 mdtClUnitConnectionData mdtClUnit::getBaseConnectorContactData(const QVariant & contactId, mdtClUnitConnectionData data)
 {
   ///mdtClUnitConnectionData data;
@@ -128,7 +128,7 @@ mdtClUnitConnectionData mdtClUnit::getBaseConnectorContactData(const QVariant & 
   QSqlQuery query(database());
 
   if(contactId.isNull()){
-    pvLastError.setError("Trying to get connactor contact data for a NULL contact ID", mdtError::Warning);
+    pvLastError.setError("Trying to get connector contact data for a NULL contact ID", mdtError::Warning);
     MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
     pvLastError.commit();
     return data;
@@ -154,7 +154,25 @@ mdtClUnitConnectionData mdtClUnit::getBaseConnectorContactData(const QVariant & 
 
   return data;
 }
+*/
 
+/**
+mdtSqlRecord mdtClUnit::getBaseConnectorContactData(const QVariant & connectorContactId, bool *ok, mdtSqlRecord data)
+{
+  Q_ASSERT(ok != 0);
+
+  QList<QSqlRecord> connectorContactData;
+
+  // If data is empty, add fields, else check that Connector_Id_FK and Name exists
+  if(data.count() < 1){
+    if(!data.addAllFields("")
+  }else{
+    
+  }
+}
+*/
+
+/**
 mdtClUnitConnectionData mdtClUnit::getConnectionDataByUnitConnectionId(const QVariant & unitConnectionId)
 {
   mdtClUnitConnectionData data;
@@ -194,7 +212,9 @@ mdtClUnitConnectionData mdtClUnit::getConnectionDataByUnitConnectionId(const QVa
 
   return data;
 }
+*/
 
+/**
 mdtClUnitConnectionData mdtClUnit::getConnectionDataByArticleConnectionId(const QVariant & articleConnectionId, const QVariant & unitId)
 {
   mdtClUnitConnectionData data;
@@ -235,7 +255,9 @@ mdtClUnitConnectionData mdtClUnit::getConnectionDataByArticleConnectionId(const 
 
   return getConnectionDataByUnitConnectionId(query.value(0));
 }
+*/
 
+/**
 mdtClUnitConnectionData mdtClUnit::getArticleConnectionData(const QVariant & articleConnectionId, mdtClUnitConnectionData data)
 {
   if(articleConnectionId.isNull()){
@@ -260,7 +282,9 @@ mdtClUnitConnectionData mdtClUnit::getArticleConnectionData(const QVariant & art
 
   return data;
 }
+*/
 
+/**
 mdtClUnitConnectionData mdtClUnit::getUnitConnectorData(const QVariant & unitConnectorId, mdtClUnitConnectionData data)
 {
   if(unitConnectorId.isNull()){
@@ -276,7 +300,9 @@ mdtClUnitConnectionData mdtClUnit::getUnitConnectorData(const QVariant & unitCon
 
   return data;
 }
+*/
 
+/**
 mdtClUnitConnectionData mdtClUnit::getArticleConnectorData(const QVariant & articleConnectorId, mdtClUnitConnectionData data)
 {
   if(articleConnectorId.isNull()){
@@ -292,7 +318,9 @@ mdtClUnitConnectionData mdtClUnit::getArticleConnectorData(const QVariant & arti
 
   return data;
 }
+*/
 
+/**
 mdtClUnitConnectionData mdtClUnit::getUnitConnectorDataByArticleConnectorId(const QVariant & articleConnectorId, const QVariant & unitId, mdtClUnitConnectionData data)
 {
   QString sql;
@@ -333,6 +361,7 @@ mdtClUnitConnectionData mdtClUnit::getUnitConnectorDataByArticleConnectorId(cons
 
   return data;
 }
+*/
 
 QSqlQueryModel *mdtClUnit::unitModelForComponentSelection(const QVariant &unitId)
 {
@@ -602,6 +631,7 @@ bool mdtClUnit::addConnector(const QVariant & unitId, const QVariant & baseConne
   return true;
 }
 
+/**
 bool mdtClUnit::addConnector(const QVariant & unitId, const QVariant & baseConnectorId, const QVariant & articleConnectorId, const QVariant & name, const QList<mdtClUnitConnectionData> connectionList)
 {
   int i;
@@ -655,6 +685,7 @@ bool mdtClUnit::addConnector(const QVariant & unitId, const QVariant & baseConne
 
   return true;
 }
+*/
 
 bool mdtClUnit::removeConnector(const QVariant & unitConnectorId)
 {
@@ -676,6 +707,7 @@ bool mdtClUnit::removeConnector(const QVariant & unitConnectorId)
   return true;
 }
 
+/**
 bool mdtClUnit::addUnitConnection(const mdtClUnitConnectionData & data)
 {
   QString sql;
@@ -720,7 +752,9 @@ bool mdtClUnit::addUnitConnection(const mdtClUnitConnectionData & data)
 
   return true;
 }
+*/
 
+/**
 bool mdtClUnit::editUnitConnection(const mdtClUnitConnectionData & data)
 {
   QString sql;
@@ -774,6 +808,7 @@ bool mdtClUnit::editUnitConnection(const mdtClUnitConnectionData & data)
 
   return true;
 }
+*/
 
 bool mdtClUnit::removeUnitConnection(const QVariant & unitConnectionId)
 {
@@ -1158,6 +1193,7 @@ bool mdtClUnit::removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, co
   return true;
 }
 
+/**
 bool mdtClUnit::fillUnitConnectionDataPart(mdtClUnitConnectionData & data, const QVariant & unitConnectionId)
 {
   Q_ASSERT(!unitConnectionId.isNull());
@@ -1304,3 +1340,4 @@ bool mdtClUnit::fillArticleConnectorDataPart(mdtClUnitConnectionData & data, con
 
   return true;
 }
+*/

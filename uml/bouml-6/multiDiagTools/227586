@@ -1,6 +1,6 @@
 format 204
 "mdttesttool" // mdttools::mdttesttool
-  revision 11
+  revision 13
   modified_by 2 "philippe"
   // class settings
   
@@ -1052,7 +1052,7 @@ ${inlines}
       end
 
       operation 1652482 "getUnitConnectionStartDataFromModel"
-	private return_type class_ref 818946 // mdtClUnitConnectionData
+	private explicit_return_type "mdtClUnitConnectionData"
 	nparams 1
 	  param in name "row" explicit_type "int"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
@@ -1068,7 +1068,7 @@ ${inlines}
       end
 
       operation 1652610 "getUnitConnectionEndDataFromModel"
-	private return_type class_ref 818946 // mdtClUnitConnectionData
+	private explicit_return_type "mdtClUnitConnectionData"
 	nparams 1
 	  param in name "row" explicit_type "int"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
@@ -1123,15 +1123,6 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
 "
 	    classrelation_ref 1106818 // <unidirectional association>
 	  b parent class_ref 888194 // mdtClLinkData
-      end
-
-      classrelation 1106946 // <unidirectional association>
-	relation 1095682 --->
-	  a role_name "" multiplicity "0..2" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
-"
-	    classrelation_ref 1106946 // <unidirectional association>
-	  b parent class_ref 818946 // mdtClUnitConnectionData
       end
 
       operation 1635586 "mdtClPathGraphEdgeData"
@@ -1198,7 +1189,7 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
       operation 1636098 "setUnitConnectionStartData"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "data" type class_ref 818946 // mdtClUnitConnectionData
+	  param in name "data" explicit_type "mdtClUnitConnectionData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1212,7 +1203,7 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
       end
 
       operation 1636226 "unitConnectionStartData"
-	public return_type class_ref 818946 // mdtClUnitConnectionData
+	public explicit_return_type "mdtClUnitConnectionData"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1229,7 +1220,7 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
       operation 1636354 "setUnitConnectionEndData"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "data" type class_ref 818946 // mdtClUnitConnectionData
+	  param in name "data" explicit_type "mdtClUnitConnectionData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1243,7 +1234,7 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
       end
 
       operation 1636482 "unitConnectionEndData"
-	public return_type class_ref 818946 // mdtClUnitConnectionData
+	public explicit_return_type "mdtClUnitConnectionData"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2052,88 +2043,6 @@ ${inlines}
 	
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 993154 // FunctionIT
-      end
-    end
-
-    class 952834 "mdtClUnitConnectionData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 1197570 // <generalisation>
-	relation 1184642 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1197570 // <generalisation>
-	  b parent class_ref 952578 // mdtClConnectionData
-      end
-
-      attribute 972034 "UnitId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1718018 // UnitId
-	set_oper operation_ref 1718146 // setUnitId
-      end
-
-      operation 1718146 "setUnitId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvUnitId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 972034 // UnitId
-      end
-
-      operation 1718018 "UnitId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvUnitId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 972034 // UnitId
       end
     end
   end

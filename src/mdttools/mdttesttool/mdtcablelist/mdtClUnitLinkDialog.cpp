@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -122,7 +122,7 @@ void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId, const QVariant &s
   pvStartUnitId = unitId;
   lbStartSchemaPosition->setText(schemaPosition.toString());
   lbStartCabinet->setText(cabinet.toString());
-  setStartConnectionData(mdtClUnitConnectionData());
+  ///setStartConnectionData(mdtClUnitConnectionData());
   setStartVehicleTypes(unitId);
 }
 
@@ -163,7 +163,7 @@ void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId, const QVariant &sch
   pvEndUnitId = unitId;
   lbEndSchemaPosition->setText(schemaPosition.toString());
   lbEndCabinet->setText(cabinet.toString());
-  setEndConnectionData(mdtClUnitConnectionData());
+  ///setEndConnectionData(mdtClUnitConnectionData());
   setEndVehicleTypes(unitId);
 }
 
@@ -172,6 +172,7 @@ QVariant mdtClUnitLinkDialog::endUnitId() const
   return pvEndUnitId;
 }
 
+/**
 void mdtClUnitLinkDialog::setStartConnectionData(const mdtClUnitConnectionData &data)
 {
   pvStartConnectionData = data;
@@ -179,12 +180,14 @@ void mdtClUnitLinkDialog::setStartConnectionData(const mdtClUnitConnectionData &
   lbStartConnectorName->setText(pvStartConnectionData.connectorName().toString());
   lbStartContactName->setText(pvStartConnectionData.contactName().toString());
 }
+*/
 
 mdtClUnitConnectionData mdtClUnitLinkDialog::startConnectionData() const
 {
   return pvStartConnectionData;
 }
 
+/**
 void mdtClUnitLinkDialog::setEndConnectionData(const mdtClUnitConnectionData &data)
 {
   pvEndConnectionData = data;
@@ -192,6 +195,7 @@ void mdtClUnitLinkDialog::setEndConnectionData(const mdtClUnitConnectionData &da
   lbEndConnectorName->setText(pvEndConnectionData.connectorName().toString());
   lbEndContactName->setText(pvEndConnectionData.contactName().toString());
 }
+*/
 
 mdtClUnitConnectionData mdtClUnitLinkDialog::endConnectionData() const
 {
@@ -500,8 +504,8 @@ void mdtClUnitLinkDialog::selectStartConnection()
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
   // Get connection data and update
-  data = unit.getConnectionDataByUnitConnectionId(result.at(0));
-  setStartConnectionData(data);
+  ///data = unit.getConnectionDataByUnitConnectionId(result.at(0));
+  ///setStartConnectionData(data);
 }
 
 void mdtClUnitLinkDialog::selectEndConnection()
@@ -540,8 +544,8 @@ void mdtClUnitLinkDialog::selectEndConnection()
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
   // Get connection data and update
-  data = unit.getConnectionDataByUnitConnectionId(result.at(0));
-  setEndConnectionData(data);
+  ///data = unit.getConnectionDataByUnitConnectionId(result.at(0));
+  ///setEndConnectionData(data);
 }
 
 void mdtClUnitLinkDialog::selectStartVehicleTypes()

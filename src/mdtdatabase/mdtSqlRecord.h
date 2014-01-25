@@ -172,11 +172,11 @@ class mdtSqlRecord : public QSqlRecord
    *
    * Can be used by subclass to set the last error.
    */
-  mdtError & lastErrorW();
+  ///mdtError & lastErrorW();
 
- private:
+ ///private:
 
-    mdtError pvLastError;
+  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_SQL_RECORD_H

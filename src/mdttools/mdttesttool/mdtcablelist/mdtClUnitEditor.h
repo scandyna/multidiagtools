@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -70,15 +70,15 @@ class mdtClUnitEditor : public mdtClEditor
 
   /*! \brief Add a free connector (based on nothing) to unit connector table
    */
-  void addConnector();
+  ///void addConnector();
 
   /*! \brief Add a connector based on a one from Connector_tbl to unit connector table
    */
-  void addConnectorBasedConnector();
+  ///void addConnectorBasedConnector();
 
   /*! \brief Add a connector based on article connector to unit connector table
    */
-  void addArticleConnectorBasedConnector();
+  ///void addArticleConnectorBasedConnector();
 
   /*! \brief Remove a connector
    */
@@ -88,11 +88,11 @@ class mdtClUnitEditor : public mdtClEditor
    *
    * Will let user choose to start from a (unit) connector or not
    */
-  void addConnection();
+  ///void addConnection();
 
   /*! \brief Add a connection based on a article connection
    */
-  void addArticleConnectionBasedConnection();
+  ///void addArticleConnectionBasedConnection();
 
   /*! \brief Add a connection to unit connection table
    */
@@ -100,7 +100,7 @@ class mdtClUnitEditor : public mdtClEditor
 
   /*! \brief Edit a connection
    */
-  void editConnection();
+  ///void editConnection();
 
   /*! \brief Remove connection from unit connection table
    */
@@ -112,7 +112,7 @@ class mdtClUnitEditor : public mdtClEditor
 
   /*! \brief Edit selected link
    */
-  void editLink();
+  ///void editLink();
 
   /*! \brief Remove  links
    */

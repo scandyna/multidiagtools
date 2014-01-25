@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -295,6 +295,7 @@ void mdtClUnitEditor::removeComponents()
   form()->select("UnitComponent_view");
 }
 
+/**
 void mdtClUnitEditor::addConnector()
 {
   QVariant unitId;
@@ -326,7 +327,9 @@ void mdtClUnitEditor::addConnector()
   // Update connections view
   form()->select("UnitConnection_view");
 }
+*/
 
+/**
 void mdtClUnitEditor::addConnectorBasedConnector()
 {
   QVariant unitId;
@@ -372,7 +375,9 @@ void mdtClUnitEditor::addConnectorBasedConnector()
   // Update connections view
   form()->select("UnitConnection_view");
 }
+*/
 
+/**
 void mdtClUnitEditor::addArticleConnectorBasedConnector()
 {
   QVariant unitId;
@@ -429,6 +434,7 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
   // Update connections view
   form()->select("UnitConnection_view");
 }
+*/
 
 void mdtClUnitEditor::removeConnector()
 {
@@ -448,6 +454,7 @@ void mdtClUnitEditor::removeConnector()
   form()->select("UnitConnection_view");
 }
 
+/**
 void mdtClUnitEditor::addConnection()
 {
   mdtClUnitConnectionDialog connectionDialog(0, database());
@@ -468,6 +475,7 @@ void mdtClUnitEditor::addConnection()
   if(!unitConnectorId.isNull()){
     data = unit.getUnitConnectorData(unitConnectorId);
   }
+  */
   /*
    * Here we have several cases:
    *  - 1) A unit connector was choosen, and it is based on a article connector
@@ -475,6 +483,7 @@ void mdtClUnitEditor::addConnection()
    *  - 3) A unit connector was choosen, but it is based on nothing (free connector)
    *  - 4) No unit connector was choosen
    */
+  /**
   if(!data.articleConnectionData().articleConnectorId().isNull()){
     // Case 1)
     articleConnectionId = selectByArticleConnectorIdArticleConnectionId(data.articleConnectionData().articleConnectorId() , unitId);
@@ -484,19 +493,6 @@ void mdtClUnitEditor::addConnection()
     contactId = selectBaseConnectorContactId(data.connectorId());
     data = unit.getBaseConnectorContactData(contactId, data);
   }
-  /**
-  // If connector is based on a article connector, let user choose article connection
-  if(!data.articleConnectionData().connectorId().isNull()){
-    ///articleConnectionId = selectArticleConnection(data.articleConnectionData().connectorId());
-    articleConnectionId = selectArticleConnectionLinkedToUnitConnector(unitConnectorId, unitId);
-    if(articleConnectionId.isNull()){
-      return;
-    }
-    // Get article connection data
-    data = unit.getArticleConnectionData(articleConnectionId, data);
-    data.copyArticleConnectionAttributes();
-  }
-  */
   // Setup and show unit connection edition dialog
   data.setUnitId(unitId);
   connectionDialog.setData(data);
@@ -512,7 +508,9 @@ void mdtClUnitEditor::addConnection()
   // Update connections view
   form()->select("UnitConnection_view");
 }
+*/
 
+  /**
 void mdtClUnitEditor::addArticleConnectionBasedConnection()
 {
   mdtClUnitConnectionDialog connectionDialog(0, database());
@@ -539,11 +537,13 @@ void mdtClUnitEditor::addArticleConnectionBasedConnection()
   }
   data = unit.getArticleConnectionData(articleConnectionId, data);
   data.copyArticleConnectionAttributes();
+  */
   /*
    * Check if seleced article connection is based on a article connector,
    *  wich is used as base of a unit connector used in current unit .
    *  If true, get unit connector data .
    */
+  /**
   if(!data.articleConnectionData().articleConnectorId().isNull()){
     data = unit.getUnitConnectorDataByArticleConnectorId(data.articleConnectionData().articleConnectorId(), unitId, data);
   }
@@ -562,6 +562,7 @@ void mdtClUnitEditor::addArticleConnectionBasedConnection()
   // Update connections view
   form()->select("UnitConnection_view");
 }
+*/
 
 /**
 void mdtClUnitEditor::addFreeConnection()
@@ -588,6 +589,7 @@ void mdtClUnitEditor::addFreeConnection()
 }
 */
 
+/**
 void mdtClUnitEditor::editConnection()
 {
   mdtSqlTableWidget *widget;
@@ -618,7 +620,9 @@ void mdtClUnitEditor::editConnection()
   // Update connections view
   form()->select("UnitConnection_view");
 }
+*/
 
+/**
 void mdtClUnitEditor::removeConnections()
 {
   mdtSqlTableWidget *widget;
@@ -664,6 +668,7 @@ void mdtClUnitEditor::removeConnections()
   // Update connections table
   form()->select("UnitConnection_view");
 }
+*/
 
 void mdtClUnitEditor::addLink()
 {
@@ -699,6 +704,7 @@ void mdtClUnitEditor::addLink()
   form()->select("UnitLink_view");
 }
 
+/**
 void mdtClUnitEditor::editLink()
 {
   mdtSqlFormWidget *unitWidget;
@@ -768,6 +774,7 @@ void mdtClUnitEditor::editLink()
   // Update links view
   form()->select("UnitLink_view");
 }
+*/
 
 void mdtClUnitEditor::removeLinks()
 {

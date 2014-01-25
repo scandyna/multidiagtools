@@ -16,11 +16,11 @@ set (TEST_HEADER_FILES
           #../src/mdtClConnectorEditor.h
           #../src/mdtClArticleEditor.h
           #../src/mdtClArticleConnectionDialog.h
-          ../src/mdtClUnitEditor.h
-          ../src/mdtClLinkEditor.h
-          ../src/mdtClUnitConnectionDialog.h
-          ../src/mdtClUnitConnectionSelectionDialog.h
-          ../src/mdtClUnitLinkDialog.h
+#           ../src/mdtClUnitEditor.h
+#           ../src/mdtClLinkEditor.h
+#           ../src/mdtClUnitConnectionDialog.h
+#           ../src/mdtClUnitConnectionSelectionDialog.h
+#           ../src/mdtClUnitLinkDialog.h
           ../src/mdtClTerminalBlockEditor.h
           ../src/mdtClTerminalEditorDialog.h
           #../src/mdtClArticleComponentDialog.h
@@ -46,17 +46,17 @@ set (TEST_SOURCES_FILES
           ../src/mdtClArticleConnectionData.cpp
           #../src/mdtClArticleEditor.cpp
           #../src/mdtClArticleConnectionDialog.cpp
-          ../src/mdtClUnit.cpp
-          ../src/mdtClUnitEditor.cpp
-          ../src/mdtClUnitConnectionData.cpp
-          ../src/mdtClLinkEditor.cpp
-          ../src/mdtClUnitConnectionDialog.cpp
-          ../src/mdtClUnitConnectionSelectionDialog.cpp
-          ../src/mdtClUnitLinkDialog.cpp
+#           ../src/mdtClUnit.cpp
+#           ../src/mdtClUnitEditor.cpp
+#           ../src/mdtClUnitConnectionData.cpp
+#           ../src/mdtClLinkEditor.cpp
+#           ../src/mdtClUnitConnectionDialog.cpp
+#           ../src/mdtClUnitConnectionSelectionDialog.cpp
+#           ../src/mdtClUnitLinkDialog.cpp
           ../src/mdtClLinkData.cpp
           ../src/mdtClTerminalBlockEditor.cpp
           ../src/mdtClTerminalEditorDialog.cpp
-          ../src/mdtClUnitVehicleType.cpp
+#           ../src/mdtClUnitVehicleType.cpp
           #../src/mdtClArticleComponentDialog.cpp
           #../src/mdtClArticleLinkDialog.cpp
           #../src/mdtClArticle.cpp
@@ -88,11 +88,11 @@ set (TEST_FORM_FILES
           #../src/mdtClConnectorEditor.ui
           #../src/mdtClArticleEditor.ui
           #../src/mdtClArticleConnectionDialog.ui
-          ../src/mdtClUnitEditor.ui
-          ../src/mdtClUnitConnectionDialog.ui
-          ../src/mdtClUnitLinkDialog.ui
+#           ../src/mdtClUnitEditor.ui
+#           ../src/mdtClUnitConnectionDialog.ui
+#           ../src/mdtClUnitLinkDialog.ui
 #          ../src/mdtClUnitConnectionEditor.ui
-          ../src/mdtClLinkEditor.ui
+#           ../src/mdtClLinkEditor.ui
           ../src/mdtClTerminalBlockEditor.ui
           #../src/mdtClArticleComponentDialog.ui
           #../src/mdtClArticleLinkDialog.ui

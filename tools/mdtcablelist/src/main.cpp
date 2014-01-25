@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,7 +25,7 @@
 #include <QSqlDatabase>
 ///#include "mdtSqlWindow.h"
 
-#include "mdtClLinkEditor.h"
+///#include "mdtClLinkEditor.h"
 #include "mdtClTerminalBlockEditor.h"
 
 
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
   ///mdtSqlWindow terminalBlockEditorWindow;
   mdtClTerminalBlockEditor *terminalBlockEditor;
   // Link editor
-  mdtClLinkEditor *linkEditor;
+  ///mdtClLinkEditor *linkEditor;
   ///mdtSqlWindow linkEditorWindow;
 
   // Init app, we allow multiple instances

@@ -8,9 +8,4 @@ classcanvas 128258 class_ref 952834 // mdtClUnitConnectionData
   classdiagramsettings member_max_width 0 end
   xyz 426 697 2000
 end
-relationcanvas 128770 relation_ref 1184642 // <generalisation>
-  from ref 128258 z 2001 to ref 128002
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 end

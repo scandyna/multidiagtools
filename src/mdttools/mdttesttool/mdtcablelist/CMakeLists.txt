@@ -5,6 +5,8 @@
 # Project
 project (multidiagtools)
 
+include_directories(../../../../tools/mdtcablelist/src)
+
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
           mdtClVehicleTypeEditor.h
@@ -14,13 +16,19 @@ set (HEADER_FILES
           mdtClArticleConnectionDialog.h
           mdtClArticleLinkDialog.h
           mdtClPathGraphDialog.h
+          mdtClUnitConnectionDialog.h
+          mdtClUnitEditor.h
+          mdtClUnitLinkDialog.h
     )
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
           mdtClVehicleTypeEditor.cpp
+          mdtClConnectorData.cpp
           mdtClConnectorEditor.cpp
           mdtClArticle.cpp
+          mdtClArticleConnectorData.cpp
+          mdtClArticleConnectionData.cpp
           mdtClArticleEditor.cpp
           mdtClArticleComponentDialog.cpp
           mdtClArticleConnectionDialog.cpp
@@ -29,6 +37,16 @@ set (SOURCES_FILES
           mdtClPathGraphDialog.cpp
           mdtClPathGraphicsConnection.cpp
           mdtClPathGraphicsLink.cpp
+          mdtClUnit.cpp
+          mdtClUnitConnectorData.cpp
+          mdtClUnitConnectionData.cpp
+          mdtClUnitConnectionDialog.cpp
+          mdtClUnitEditor.cpp
+          mdtClUnitLinkDialog.cpp
+          mdtClUnitVehicleType.cpp
+          # NOTE: provisoire !!!!!!!!!!!!!!!!!!!!
+          #../../../../tools/mdtcablelist/src/mdtClUnitConnectionData.cpp
+          #../../../../tools/mdtcablelist/src/mdtClLinkData.cpp
     )
 
 # Liste des fichiers ui
@@ -40,6 +58,9 @@ set (FORM_FILES
           mdtClArticleConnectionDialog.ui
           mdtClArticleLinkDialog.ui
           mdtClPathGraphDialog.ui
+          mdtClUnitConnectionDialog.ui
+          mdtClUnitEditor.ui
+          mdtClUnitLinkDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)
