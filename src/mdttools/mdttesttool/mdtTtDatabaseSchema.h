@@ -270,6 +270,10 @@ class mdtTtDatabaseSchema
 
   /*! \brief Create article connection view
    */
+  bool createArticleConnectorView();
+
+  /*! \brief Create article connection view
+   */
   bool createArticleConnectionView();
 
   /*! \brief

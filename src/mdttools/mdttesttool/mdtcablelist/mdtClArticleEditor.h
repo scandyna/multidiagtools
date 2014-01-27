@@ -117,7 +117,7 @@ class mdtClArticleEditor : public mdtSqlForm
 
   /*! \brief Select a list of article connectors
    */
-  QList<QVariant> selectArticleConnectors();
+  ///QList<QVariant> selectArticleConnectors();
 
   /*! \brief Setup Article table
    */
@@ -130,6 +130,10 @@ class mdtClArticleEditor : public mdtSqlForm
   /*! \brief Setup Article-Component usage table
    */
   bool setupArticleUsedByTable();
+
+  /*! \brief Setup Article-Connector table
+   */
+  bool setupArticleConnectorTable();
 
   /*! \brief Setup Article-Connection table
    */

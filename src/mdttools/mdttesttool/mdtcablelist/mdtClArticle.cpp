@@ -398,13 +398,49 @@ bool mdtClArticle::addConnector(const mdtSqlRecord & articleConnectorData, const
 
 bool mdtClArticle::removeConnector(const QVariant & articleConnectorId)
 {
-  QList<QVariant> idList;
+  if(!beginTransaction()){
+    return false;
+  }
+  // Remove connections
+  if(!removeData("ArticleConnection_tbl", "ArticleConnector_Id_FK", articleConnectorId)){
+    rollbackTransaction();
+    return false;
+  }
+  // Remove connector
+  if(!removeData("ArticleConnector_tbl", "Id_PK", articleConnectorId)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
 
-  idList.append(articleConnectorId);
-
-  return removeConnectors(idList);
+  return true;
 }
 
+bool mdtClArticle::removeConnectors(const QModelIndexList & indexListOfSelectedRows)
+{
+  if(!beginTransaction()){
+    return false;
+  }
+  // Remove connections
+  if(!removeData("ArticleConnection_tbl", "ArticleConnector_Id_FK", indexListOfSelectedRows)){
+    rollbackTransaction();
+    return false;
+  }
+  // Remove connectors
+  if(!removeData("ArticleConnector_tbl", "Id_PK", indexListOfSelectedRows)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
+/**
 bool mdtClArticle::removeConnectors(const QList<QVariant> & articleConnectorIdList)
 {
   int i;
@@ -449,6 +485,7 @@ bool mdtClArticle::removeConnectors(const QList<QVariant> & articleConnectorIdLi
 
   return true;
 }
+*/
 
 bool mdtClArticle::addLink(const mdtSqlRecord & linkData)
 {

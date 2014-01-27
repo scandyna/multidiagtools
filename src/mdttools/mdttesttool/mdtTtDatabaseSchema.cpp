@@ -299,6 +299,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createArticleComponentUsageView()){
     return false;
   }
+  if(!createArticleConnectorView()){
+    return false;
+  }
   if(!createArticleConnectionView()){
     return false;
   }
@@ -2086,6 +2089,28 @@ bool mdtTtDatabaseSchema::createArticleComponentView()
         "  ON Article_tbl.Id_PK = ArticleComponent_tbl.Component_Id_FK";
 
   return createView("ArticleComponent_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createArticleConnectorView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW ArticleConnector_view AS\n"\
+        "SELECT\n"\
+        "ArticleConnector_tbl.Id_PK,\n"\
+        "ArticleConnector_tbl.Article_Id_FK,\n"\
+        "ArticleConnector_tbl.Connector_Id_FK,\n"\
+        "ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
+        "Connector_tbl.Gender,\n"\
+        "Connector_tbl.Form,\n"\
+        "Connector_tbl.Manufacturer,\n"\
+        "Connector_tbl.ManufacturerConfigCode,\n"\
+        "Connector_tbl.ManufacturerArticleCode\n"\
+        "FROM ArticleConnector_tbl\n"\
+        " LEFT JOIN Connector_tbl\n"\
+        "  ON Connector_tbl.Id_PK = ArticleConnector_tbl.Connector_Id_FK";
+
+  return createView("ArticleConnector_view", sql);
 }
 
 bool mdtTtDatabaseSchema::createArticleConnectionView()

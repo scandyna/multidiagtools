@@ -209,8 +209,6 @@ void mdtClArticleEditor::removeConnections()
   mdtClArticle art(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
-  QSqlError sqlError;
-  int ret;
 
   widget = sqlTableWidget("ArticleConnection_view");
   Q_ASSERT(widget != 0);
@@ -225,8 +223,7 @@ void mdtClArticleEditor::removeConnections()
   msgBox.setIcon(QMessageBox::Warning);
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
   msgBox.setDefaultButton(QMessageBox::No);
-  ret = msgBox.exec();
-  if(ret != QMessageBox::Yes){
+  if(msgBox.exec() != QMessageBox::Yes){
     return;
   }
   // Delete seleced rows
@@ -296,13 +293,46 @@ void mdtClArticleEditor::addConnector()
     return;
   }
   // Update connections table
+  select("ArticleConnector_view");
   select("ArticleConnection_view");
 }
 
 void mdtClArticleEditor::removeConnectors()
 {
+  mdtSqlTableWidget *widget;
+  mdtClArticle art(this, database());
+  QMessageBox msgBox;
+  QModelIndexList indexes;
+
+  widget = sqlTableWidget("ArticleConnector_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  indexes = widget->indexListOfSelectedRows("Id_PK");
+  if(indexes.size() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove connectors and related connections from current article."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!art.removeConnectors(indexes)){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  // Update connectors and connections views
+  select("ArticleConnector_view");
+  select("ArticleConnection_view");
+  /**
   QList<QVariant> articleConnectorIdList;
   mdtClArticle art(this, database());
+  QModelIndexList indexes;
   QMessageBox msgBox;
 
   // Let user select article connectors
@@ -326,7 +356,9 @@ void mdtClArticleEditor::removeConnectors()
     return;
   }
   // Update connections table
+  select("ArticleConnector_view");
   select("ArticleConnection_view");
+  */
 }
 
 void mdtClArticleEditor::addLink()
@@ -465,6 +497,10 @@ bool mdtClArticleEditor::setupTables()
   if(!setupArticleUsedByTable()){
     return false;
   }
+  // Setup connector table
+  if(!setupArticleConnectorTable()){
+    return false;
+  }
   // Setup connection table
   if(!setupArticleConnectionTable()){
     return false;
@@ -569,6 +605,7 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
   return contactIds;
 }
 
+/**
 QList<QVariant> mdtClArticleEditor::selectArticleConnectors()
 {
   QString sql;
@@ -617,6 +654,7 @@ QList<QVariant> mdtClArticleEditor::selectArticleConnectors()
 
   return articleConnectorIdList;
 }
+*/
 
 bool mdtClArticleEditor::setupArticleTable()
 {
@@ -703,13 +741,43 @@ bool mdtClArticleEditor::setupArticleUsedByTable()
   return true;
 }
 
-bool mdtClArticleEditor::setupArticleConnectionTable()
+bool mdtClArticleEditor::setupArticleConnectorTable()
 {
-  //////Q_ASSERT(form() != 0);
-
   mdtSqlTableWidget *widget;
   QPushButton *pbAddConnector;
   QPushButton *pbRemoveConnectors;
+
+  if(!addChildTable("ArticleConnector_view", tr("Connectors"), database())){
+    return false;
+  }
+  if(!addRelation("Id_PK", "ArticleConnector_view", "Article_Id_FK")){
+    return false;
+  }
+  widget = sqlTableWidget("ArticleConnector_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("Article_Id_FK", true);
+  widget->setColumnHidden("Connector_Id_FK", true);
+  widget->setColumnHidden("ArticleConnector_Id_FK", true);
+  // Set fields a user friendly name
+  widget->setHeaderData("ArticleConnectorName", tr("Connector"));
+  widget->setHeaderData("ArticleContactName", tr("Contact"));
+  // Add edition buttons
+  pbAddConnector = new QPushButton(tr("Add connector ..."));
+  connect(pbAddConnector, SIGNAL(clicked()), this, SLOT(addConnector()));
+  widget->addWidgetToLocalBar(pbAddConnector);
+  pbRemoveConnectors = new QPushButton(tr("Remove connectors"));
+  connect(pbRemoveConnectors, SIGNAL(clicked()), this, SLOT(removeConnectors()));
+  widget->addWidgetToLocalBar(pbRemoveConnectors);
+  widget->addStretchToLocalBar();
+
+  return true;
+}
+
+bool mdtClArticleEditor::setupArticleConnectionTable()
+{
+  mdtSqlTableWidget *widget;
   QPushButton *pbAddConnection;
   QPushButton *pbRemoveConnections;
 
@@ -732,12 +800,6 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   widget->setHeaderData("IoType", tr("I/O type"));
   widget->setHeaderData("FunctionEN", tr("Function EN"));
   // Add edition buttons
-  pbAddConnector = new QPushButton(tr("Add connector ..."));
-  connect(pbAddConnector, SIGNAL(clicked()), this, SLOT(addConnector()));
-  widget->addWidgetToLocalBar(pbAddConnector);
-  pbRemoveConnectors = new QPushButton(tr("Remove connectors"));
-  connect(pbRemoveConnectors, SIGNAL(clicked()), this, SLOT(removeConnectors()));
-  widget->addWidgetToLocalBar(pbRemoveConnectors);
   pbAddConnection = new QPushButton(tr("Add connection ..."));
   connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
   widget->addWidgetToLocalBar(pbAddConnection);

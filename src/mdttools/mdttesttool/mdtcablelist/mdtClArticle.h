@@ -149,9 +149,20 @@ class mdtClArticle : public mdtTtBase
    */
   bool removeConnector(const QVariant & articleConnectorId);
 
+  /*! \brief Remove each connector that is contained in selection
+   *
+   * Will also remove related connections.
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeConnectors(const QModelIndexList & indexListOfSelectedRows);
+
   /*! \brief Remove a list of connectors and all related contacts
    */
-  bool removeConnectors(const QList<QVariant> & articleConnectorIdList);
+  ///bool removeConnectors(const QList<QVariant> & articleConnectorIdList);
 
   /*! \brief Add a record in Link table
    *

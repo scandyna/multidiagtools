@@ -47,7 +47,7 @@ class mdtClArticleConnectionData : public mdtSqlRecord
    *
    * Note: if this method is used, setup is not relevant.
    *
-   * \pre All fields from UnitConnection_tbl must exist in record
+   * \pre All fields from ArticleConnection_tbl must exist in record
    */
   mdtClArticleConnectionData(const QSqlRecord & record);
 
