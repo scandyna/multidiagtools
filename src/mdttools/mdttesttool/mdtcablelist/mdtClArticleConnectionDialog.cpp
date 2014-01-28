@@ -23,10 +23,10 @@
 #include <QWidget>
 #include <QSqlQueryModel>
 
-mdtClArticleConnectionDialog::mdtClArticleConnectionDialog(QWidget *parent)
+mdtClArticleConnectionDialog::mdtClArticleConnectionDialog(QWidget *parent, const QSqlDatabase & db)
  : QDialog(parent)
 {
-  pvArticleConnectorModel = 0;
+  pvDatabase = db;
   setupUi(this);
   pbSelectArticleConnector->setEnabled(false);
   connect(pbSelectArticleConnector, SIGNAL(clicked()), this, SLOT(selectArticleConnector()));
@@ -36,18 +36,13 @@ mdtClArticleConnectionDialog::~mdtClArticleConnectionDialog()
 {
 }
 
-void mdtClArticleConnectionDialog::setArticleConnectorModel(QSqlQueryModel *model)
-{
-  Q_ASSERT(model != 0);
-
-  pvArticleConnectorModel = model;
-  pbSelectArticleConnector->setEnabled(true);
-}
-
-void mdtClArticleConnectionDialog::setData(const QSqlRecord & data)
+void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & data)
 {
   pvData = data;
 
+  Q_ASSERT(pvData.contains("Id_PK"));
+  Q_ASSERT(pvData.contains("Article_Id_FK"));
+  Q_ASSERT(pvData.contains("ArticleConnector_Id_FK"));
   Q_ASSERT(pvData.contains("ArticleContactName"));
   Q_ASSERT(pvData.contains("IoType"));
   Q_ASSERT(pvData.contains("FunctionEN"));
@@ -56,20 +51,22 @@ void mdtClArticleConnectionDialog::setData(const QSqlRecord & data)
   Q_ASSERT(pvData.contains("FunctionIT"));
 }
 
-mdtSqlRecord mdtClArticleConnectionDialog::data() const
+mdtClArticleConnectionData mdtClArticleConnectionDialog::data() const
 {
   return pvData;
 }
 
 void mdtClArticleConnectionDialog::selectArticleConnector()
 {
-  Q_ASSERT(pvArticleConnectorModel != 0);
-
   mdtSqlSelectionDialog dialog(this);
   QString connectorName;
+  QSqlQueryModel model;
+  QString sql;
 
   // Setup and show dialog
-  dialog.setModel(pvArticleConnectorModel, false);
+  sql = "SELECT Id_PK, Name FROM ArticleConnector_tbl WHERE Article_Id_FK = " + pvData.value("Article_Id_FK").toString();
+  model.setQuery(sql, pvDatabase);
+  dialog.setModel(&model, false);
   dialog.setColumnHidden("Id_PK", true);
   dialog.addSelectionResultColumn("Id_PK");
   dialog.addSelectionResultColumn("Name");
@@ -89,12 +86,26 @@ void mdtClArticleConnectionDialog::selectArticleConnector()
 
 void mdtClArticleConnectionDialog::accept()
 {
-  // Store data
+  updateData();
+  QDialog::accept();
+}
+
+void mdtClArticleConnectionDialog::updateDialog()
+{
+  fld_ArticleContactName->setText(pvData.value("ArticleContactName").toString());
+  fld_IoType->setText(pvData.value("IoType").toString());
+  fld_FunctionEN->setText(pvData.value("FunctionEN").toString());
+  fld_FunctionFR->setText(pvData.value("FunctionFR").toString());
+  fld_FunctionDE->setText(pvData.value("FunctionDE").toString());
+  fld_FunctionIT->setText(pvData.value("FunctionIT").toString());
+}
+
+void mdtClArticleConnectionDialog::updateData()
+{
   pvData.setValue("ArticleContactName", fld_ArticleContactName->text());
   pvData.setValue("IoType", fld_IoType->text());
   pvData.setValue("FunctionEN", fld_FunctionEN->text());
   pvData.setValue("FunctionFR", fld_FunctionFR->text());
   pvData.setValue("FunctionDE", fld_FunctionDE->text());
   pvData.setValue("FunctionIT", fld_FunctionIT->text());
-  QDialog::accept();
 }

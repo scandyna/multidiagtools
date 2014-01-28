@@ -30,6 +30,9 @@
 #include "mdtClArticleConnectionDialog.h"
 #include "mdtClArticleLinkDialog.h"
 #include "mdtClArticle.h"
+#include "mdtClConnectorData.h"
+#include "mdtClArticleConnectorData.h"
+#include "mdtClArticleConnectionData.h"
 #include "mdtSqlRecord.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
@@ -165,34 +168,37 @@ void mdtClArticleEditor::removeComponents()
 void mdtClArticleEditor::addConnection()
 {
   QVariant articleId;
-  ///mdtClArticleConnectionData data;
-  mdtSqlRecord data;
-  mdtClArticleConnectionDialog dialog;
+  mdtClArticleConnectionData data;
+  ///mdtSqlRecord data;
+  mdtClArticleConnectionDialog dialog(this, database());
   mdtClArticle art(this, database());
-  QSqlQueryModel model;
-  QString sql;
+  ///QSqlQueryModel model;
+  ///QString sql;
 
   articleId = currentArticleId();
   if(articleId.isNull()){
     return;
   }
   // Setup data
-  if(!data.addAllFields("ArticleConnection_tbl", database())){
+  if(!data.setup(database())){
     pvLastError = data.lastError();
     displayLastError();
     return;
   }
+  data.setValue("Article_Id_FK", articleId);
   // Setup and show dialog
   dialog.setData(data);
+  /**
   sql = "SELECT Id_PK, Name FROM ArticleConnector_tbl WHERE Article_Id_FK = " + currentArticleId().toString();
   model.setQuery(sql, database());
   dialog.setArticleConnectorModel(&model);
+  */
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Get and update data
   data = dialog.data();
-  data.setValue("Article_Id_FK", articleId);
+  ///data.setValue("Article_Id_FK", articleId);
   // Add connection
   if(!art.addConnection(data)){
     pvLastError = art.lastError();
@@ -239,27 +245,28 @@ void mdtClArticleEditor::removeConnections()
 void mdtClArticleEditor::addConnector()
 {
   QVariant articleId;
-  QVariant connectorId;
+  QVariant baseConnectorId;
   QString connectorName;
   QList<QVariant> selectedContacts;
-  mdtSqlRecord connectorData;
-  QList<QSqlRecord> connectionDataList;
+  ///mdtSqlRecord connectorData;
+  mdtClArticleConnectorData connectorData;
+  ///QList<QSqlRecord> connectionDataList;
   mdtClArticle art(this, database());
-  bool ok;
+  ///bool ok;
 
   articleId = currentArticleId();
   if(articleId.isNull()){
     return;
   }
   // Build article connector data
-  if(!connectorData.addAllFields("ArticleConnector_tbl", database())){
+  if(!connectorData.setup(database(), false)){
     pvLastError = connectorData.lastError();
     displayLastError();
     return;
   }
-  // Let user choose connector
-  connectorId = selectConnector();
-  if(connectorId.isNull()){
+  // Let user choose a base connector
+  baseConnectorId = selectConnector();
+  if(baseConnectorId.isNull()){
     return;
   }
   // Let user give a connector name
@@ -273,21 +280,22 @@ void mdtClArticleEditor::addConnector()
     return;
   }
   connectorData.setValue("Article_Id_FK", articleId);
-  connectorData.setValue("Connector_Id_FK", connectorId);
+  connectorData.setValue("Connector_Id_FK", baseConnectorId);
   connectorData.setValue("Name", connectorName);
   // Let user choose connector contacts
-  selectedContacts = selectConnectorContacts(connectorId);
+  selectedContacts = selectConnectorContacts(baseConnectorId);
   if(selectedContacts.isEmpty()){
     return;
   }
-  // Get contact data and add connector to table
-  connectionDataList = art.getConnectionDataListFromConnectorContactDataList(selectedContacts, &ok);
-  if(!ok){
+  // Add connection based on selected base connector contacts
+  if(!art.addConnectionDataListFromConnectorContactIdList(connectorData, selectedContacts)){
     pvLastError = art.lastError();
     displayLastError();
     return;
   }
-  if(!art.addConnector(connectorData, connectionDataList)){
+  // Get contact data and add connector to table
+  ///connectionDataList = art.getConnectionDataListFromConnectorContactDataList(selectedContacts, &ok);
+  if(!art.addConnector(connectorData)){
     pvLastError = art.lastError();
     displayLastError();
     return;

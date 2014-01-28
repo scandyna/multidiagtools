@@ -21,6 +21,18 @@
 #include "mdtClConnectorData.h"
 #include <QString>
 
+mdtClConnectorData::mdtClConnectorData()
+{
+}
+
+mdtClConnectorData::mdtClConnectorData(const QSqlRecord& record)
+ : mdtSqlRecord(record)
+{
+  Q_ASSERT(contains("Id_PK"));
+  /// \todo Once fields are defined, complete this part
+}
+
+
 bool mdtClConnectorData::setup(const QSqlDatabase & db)
 {
   if(!addAllFields("Connector_tbl", db)){

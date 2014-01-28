@@ -25,6 +25,7 @@
 #include <QList>
 #include <QVariant>
 #include <QSqlDatabase>
+#include <QSqlRecord>
 
 /*! \brief Data container class for connector data
  *
@@ -33,6 +34,18 @@
 class mdtClConnectorData : public mdtSqlRecord
 {
  public:
+
+  /*! \brief Construct a empty mdtClConnectorData
+   */
+  mdtClConnectorData();
+
+  /*! \brief Contruct a mdtClConnectorData from a QSqlRecord
+   *
+   * Note: if this method is used, setup is not relevant.
+   *
+   * \pre All fields from Connector_tbl must exist in record
+   */
+  mdtClConnectorData(const QSqlRecord & record);
 
   /*! \brief Setup fields from Connector_tbl
    */

@@ -22,13 +22,14 @@
 #define MDT_CL_ARTICLE_CONNECTION_DIALOG_H
 
 #include "ui_mdtClArticleConnectionDialog.h"
-#include "mdtSqlRecord.h"
+#include "mdtClArticleConnectionData.h"
+#include <boost/graph/graph_concepts.hpp>
 #include <QDialog>
 #include <QVariant>
 #include <QSqlRecord>
+#include <QSqlDatabase>
 
 class QWidget;
-class QSqlQueryModel;
 
 /*! \brief Dialog for article connection edition
  */
@@ -40,33 +41,21 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
 
   /*! \brief Constructor
    */
-  mdtClArticleConnectionDialog(QWidget *parent = 0);
+  mdtClArticleConnectionDialog(QWidget *parent, const QSqlDatabase & db);
 
   /*! \brief Destructor
    */
   ~mdtClArticleConnectionDialog();
 
-  /*! \brief Set model for article connector model
-   *
-   * \todo replace model by a SQL query (handle model internally..)
-   */
-  void setArticleConnectorModel(QSqlQueryModel *model);
-
   /*! \brief Set connection data
    *
-   * \pre Following fields must exit in data:
-   *       - ArticleContactName
-   *       - IoType
-   *       - FunctionEN
-   *       - FunctionDE
-   *       - FunctionFR
-   *       - FunctionIT
+   * \pre All fields from ArticleConnection_tbl must exists in data.
    */
-  void setData(const QSqlRecord & data);
+  void setData(const mdtClArticleConnectionData & data);
 
   /*! \brief Get connection data
    */
-  mdtSqlRecord data() const;
+  mdtClArticleConnectionData data() const;
 
  private slots:
 
@@ -80,10 +69,18 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
 
  private:
 
+  /*! \brief Display data conetent to dialog's widget
+   */
+  void updateDialog();
+
+  /*! \brief Update data from dialog's widgets
+   */
+  void updateData();
+
   Q_DISABLE_COPY(mdtClArticleConnectionDialog);
 
-  mdtSqlRecord pvData;
-  QSqlQueryModel *pvArticleConnectorModel;
+  mdtClArticleConnectionData pvData;
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_CL_ARTICLE_CONNECTION_DIALOG_H

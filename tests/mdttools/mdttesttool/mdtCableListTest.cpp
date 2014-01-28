@@ -132,7 +132,9 @@ void mdtCableListTest::articleTest()
   mdtSqlRecord record;
   QSqlRecord data;
   QList<QSqlRecord> dataList;
-  mdtSqlRecord connectorData, connectionData;
+  mdtClConnectorData baseConnectorData;
+  mdtClArticleConnectorData connectorData;
+  mdtClArticleConnectionData connectionData;
   QList<QVariant> connectorContactIdList;
   bool ok;
 
@@ -209,7 +211,7 @@ void mdtCableListTest::articleTest()
 
   record.clear();
   QVERIFY(record.addAllFields("ArticleConnection_tbl", pvDatabaseManager.database()));
-  // Initially we have not connections
+  // Initially we have no connections
   dataList = art.getData("SELECT * FROM ArticleConnection_view", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
@@ -247,22 +249,22 @@ void mdtCableListTest::articleTest()
 
   // Setup connector data for article ID 1
   connectorData.clear();
-  QVERIFY(connectorData.addAllFields("ArticleConnector_tbl", pvDatabaseManager.database()));
+  QVERIFY(connectorData.setup(pvDatabaseManager.database(), false));
   connectorData.setValue("Id_PK", 1);
   connectorData.setValue("Article_Id_FK", 1);
   connectorData.setValue("Name", "X1");
   // Setup connection data
   connectionData.clear();
-  QVERIFY(connectionData.addAllFields("ArticleConnection_tbl", pvDatabaseManager.database()));
+  QVERIFY(connectionData.setup(pvDatabaseManager.database()));
   for(int i = 0; i < 11; ++i){
     connectionData.clearValues();
     connectionData.setValue("Id_PK", i+1);
     connectionData.setValue("ArticleContactName", QString::number(i));
     connectionData.setValue("FunctionEN", "Contact " + QString::number(i));
-    dataList.append(connectionData);
+    connectorData.addConnectionData(connectionData);
   }
   // Add connector
-  QVERIFY(art.addConnector(connectorData, dataList));
+  QVERIFY(art.addConnector(connectorData));
   // Check back
   dataList = art.getData("SELECT * FROM ArticleConnection_view", &ok);
   QVERIFY(ok);
@@ -282,10 +284,10 @@ void mdtCableListTest::articleTest()
    */
 
   // Setup a Connector
-  record.clear();
-  QVERIFY(record.addAllFields("Connector_tbl", pvDatabaseManager.database()));
-  record.setValue("Id_PK", 1);
-  QVERIFY(art.addRecord(record, "Connector_tbl"));
+  baseConnectorData.clear();
+  QVERIFY(baseConnectorData.setup(pvDatabaseManager.database()));
+  baseConnectorData.setValue("Id_PK", 1);
+  QVERIFY(art.addRecord(baseConnectorData, "Connector_tbl"));
   // Add contacts to this connector
   record.clear();
   QVERIFY(record.addAllFields("ConnectorContact_tbl", pvDatabaseManager.database()));
@@ -303,7 +305,7 @@ void mdtCableListTest::articleTest()
   QVERIFY(art.addRecord(record, "ConnectorContact_tbl"));
   // Setup article connector data for article ID 1
   connectorData.clear();
-  QVERIFY(connectorData.addAllFields("ArticleConnector_tbl", pvDatabaseManager.database()));
+  QVERIFY(connectorData.setup(pvDatabaseManager.database(), false));
   connectorData.setValue("Id_PK", 2);
   connectorData.setValue("Article_Id_FK", 1);
   connectorData.setValue("Connector_Id_FK", 1);
@@ -311,10 +313,11 @@ void mdtCableListTest::articleTest()
   // Setup connection data
   connectorContactIdList.clear();
   connectorContactIdList << 1 << 2 << 3;
-  dataList = art.getConnectionDataListFromConnectorContactDataList(connectorContactIdList, &ok);
-  QVERIFY(ok);
+  QCOMPARE(connectorData.connectionDataList().size(), 0);
+  QVERIFY(art.addConnectionDataListFromConnectorContactIdList(connectorData, connectorContactIdList));
+  QCOMPARE(connectorData.connectionDataList().size(), 3);
   // Add connector
-  QVERIFY(art.addConnector(connectorData, dataList));
+  QVERIFY(art.addConnector(connectorData));
   // Check back
   dataList = art.getData("SELECT * FROM ArticleConnection_view WHERE Connector_Id_FK = 1", &ok);
   QVERIFY(ok);

@@ -23,8 +23,23 @@
 
 //#include <QDebug>
 
+mdtClArticleConnectorData::mdtClArticleConnectorData()
+{
+}
+
+mdtClArticleConnectorData::mdtClArticleConnectorData(const QSqlRecord& record)
+ : mdtSqlRecord(record)
+{
+  Q_ASSERT(contains("Id_PK"));
+  Q_ASSERT(contains("Article_Id_FK"));
+  Q_ASSERT(contains("Connector_Id_FK"));
+  Q_ASSERT(contains("Name"));
+}
+
+
 bool mdtClArticleConnectorData::setup(const QSqlDatabase & db, bool setupCd)
 {
+  pvConnectionDataList.clear();
   if(!addAllFields("ArticleConnector_tbl", db)){
     return false;
   }
@@ -39,7 +54,7 @@ void mdtClArticleConnectorData::setConnectionDataList(const QList<mdtClArticleCo
   pvConnectionDataList = dataList;
 }
 
-QList<mdtClArticleConnectionData> mdtClArticleConnectorData::connectionDataList() const
+const QList<mdtClArticleConnectionData> & mdtClArticleConnectorData::connectionDataList() const
 {
   return pvConnectionDataList;
 }

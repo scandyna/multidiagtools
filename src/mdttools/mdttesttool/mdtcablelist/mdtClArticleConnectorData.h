@@ -36,6 +36,18 @@ class mdtClArticleConnectorData : public mdtSqlRecord
 {
  public:
 
+  /*! \brief Construct a empty mdtClArticleConnectorData
+   */
+  mdtClArticleConnectorData();
+
+  /*! \brief Contruct a mdtClArticleConnectorData from a QSqlRecord
+   *
+   * Note: if this method is used, setup is not relevant.
+   *
+   * \pre All fields from ArticleConnector_tbl must exist in record
+   */
+  mdtClArticleConnectorData(const QSqlRecord & record);
+
   /*! \brief Setup fields from ArticleConnector_tbl
    *
    * \param setupCd If true, fields from connector part are also added.
@@ -53,7 +65,7 @@ class mdtClArticleConnectorData : public mdtSqlRecord
 
   /*! \brief Get list of connection data
    */
-  QList<mdtClArticleConnectionData> connectionDataList() const;
+  const QList<mdtClArticleConnectionData> & connectionDataList() const;
 
   /*! \brief Add connection data
    *

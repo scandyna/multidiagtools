@@ -23,6 +23,8 @@
 
 #include "mdtTtBase.h"
 #include "mdtSqlRecord.h"
+#include "mdtClArticleConnectionData.h"
+#include "mdtClArticleConnectorData.h"
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <QSqlRecord>
@@ -94,11 +96,37 @@ class mdtClArticle : public mdtTtBase
    * Following data are set:
    *  - ArticleContactName: is a copy from ConnectorContact_tbl.Name
    */
-  QList<QSqlRecord> getConnectionDataListFromConnectorContactDataList(const QList<QVariant> & connectorContactIdList, bool *ok);
+  ///QList<QSqlRecord> getConnectionDataListFromConnectorContactDataList(const QList<QVariant> & connectorContactIdList, bool *ok);
+
+  /*! \brief Get article connection data for given article connection ID
+   *
+   * \pre ok must be a valid pointer.
+   */
+  mdtClArticleConnectionData getConnectionData(const QVariant & articleConnectionId, bool *ok);
+
+  /*! \brief Get article connector data for given article connector ID
+   *
+   * \param includeConnectionData If true, and SQL statement points to a article connector
+   *            that contains article connections, result will be populated with these article connection data.
+   * \param includeBaseConnectorData If true, and SQL statement points to a article connector
+   *            that is based on a connector (from Connector_tbl), result will be populated with these connector data.
+   * \pre ok must be valid
+   */
+  mdtClArticleConnectorData getConnectorData(const QVariant & articleConnectorId, bool *ok, bool includeConnectionData, bool includeBaseConnectorData);
+
+  /*! \brief Add article connections into article connector data based on a list of given connector contact ID list
+   *
+   * Will also get some values from data (ArticleConnector_tbl) and set it to created connections (ArticleConnection_tbl):
+   *  - ArticleConnector_tbl.Id_PK -> ArticleConnection_tbl.ArticleConnector_Id_FK
+   *  - ArticleConnector_tbl.Article_Id_FK -> ArticleConnection_tbl.Article_Id_FK
+   *
+   * Note: will only update given data, nothing is written to database.
+   */
+  bool addConnectionDataListFromConnectorContactIdList(mdtClArticleConnectorData & data, const QList<QVariant> & connectorContactIdList);
 
   /*! \brief Add a connection
    */
-  bool addConnection(const mdtSqlRecord & data);
+  bool addConnection(const mdtClArticleConnectionData & data);
 
   /*! \brief Add many connections
    *
@@ -143,7 +171,18 @@ class mdtClArticle : public mdtTtBase
    *                      Note: Article_Id_FK and ArticleConnector_Id_FK
    *                            are not relevant, because they are token from articleConnectorData.
    */
-  bool addConnector(const mdtSqlRecord & articleConnectorData, const QList<QSqlRecord> & articleConnectionDataList);
+  ///bool addConnector(const mdtSqlRecord & articleConnectorData, const QList<QSqlRecord> & articleConnectionDataList);
+
+  /*! \brief Add a connector
+   *
+   * If given article connector contains connections,
+   *  they will be added.
+   *
+   * Note: in connection data (contained in data),
+   *  Article_Id_FK and ArticleConnector_Id_FK are not relevant,
+   *  because they are token from data directly.
+   */
+  bool addConnector(const mdtClArticleConnectorData & data);
 
   /*! \brief Remove a connector and all its contacts
    */
@@ -210,6 +249,26 @@ class mdtClArticle : public mdtTtBase
   /*! \brief Remove each unit link that is contained in selection
    */
   bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
+
+ private:
+
+  /*! \brief Get article connection data
+   *
+   * \pre Given SQL statement must return 1 article connection row
+   * \pre ok must be valid
+   */
+  mdtClArticleConnectionData getConnectionDataPv(const QString & sql, bool *ok);
+
+  /*! \brief Get article connector data
+   *
+   * \param includeConnectionData If true, and SQL statement points to a article connector
+   *            that contains article connections, result will be populated with these article connection data.
+   * \param includeBaseConnectorData If true, and SQL statement points to a article connector
+   *            that is based on a connector (from Connector_tbl), result will be populated with these connector data.
+   * \pre Given SQL statement must return 1 article connector row
+   * \pre ok must be valid
+   */
+  mdtClArticleConnectorData getConnectorDataPv(const QString & sql, bool *ok, bool includeConnectionData, bool includeBaseConnectorData);
 };
 
 #endif  // #ifndef MDT_CL_ARTICLE_H
