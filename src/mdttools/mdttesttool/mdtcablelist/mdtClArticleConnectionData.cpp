@@ -43,4 +43,3 @@ bool mdtClArticleConnectionData::setup(const QSqlDatabase & db)
 {
   return addAllFields("ArticleConnection_tbl", db);
 }
-

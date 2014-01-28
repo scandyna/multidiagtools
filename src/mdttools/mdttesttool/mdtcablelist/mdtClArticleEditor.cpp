@@ -169,11 +169,8 @@ void mdtClArticleEditor::addConnection()
 {
   QVariant articleId;
   mdtClArticleConnectionData data;
-  ///mdtSqlRecord data;
   mdtClArticleConnectionDialog dialog(this, database());
   mdtClArticle art(this, database());
-  ///QSqlQueryModel model;
-  ///QString sql;
 
   articleId = currentArticleId();
   if(articleId.isNull()){
@@ -188,17 +185,11 @@ void mdtClArticleEditor::addConnection()
   data.setValue("Article_Id_FK", articleId);
   // Setup and show dialog
   dialog.setData(data);
-  /**
-  sql = "SELECT Id_PK, Name FROM ArticleConnector_tbl WHERE Article_Id_FK = " + currentArticleId().toString();
-  model.setQuery(sql, database());
-  dialog.setArticleConnectorModel(&model);
-  */
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Get and update data
   data = dialog.data();
-  ///data.setValue("Article_Id_FK", articleId);
   // Add connection
   if(!art.addConnection(data)){
     pvLastError = art.lastError();
@@ -208,6 +199,52 @@ void mdtClArticleEditor::addConnection()
   // Update connections table
   select("ArticleConnection_view");
 }
+
+void mdtClArticleEditor::editConnection()
+{
+  mdtSqlTableWidget *widget;
+  QVariant articleId;
+  QVariant connectionId;
+  mdtClArticleConnectionData data;
+  mdtClArticleConnectionDialog dialog(this, database());
+  mdtClArticle art(this, database());
+  bool ok;
+
+  widget = sqlTableWidget("ArticleConnection_view");
+  Q_ASSERT(widget != 0);
+
+  // Get current article ID and selected article connection ID
+  articleId = currentArticleId();
+  if(articleId.isNull()){
+    return;
+  }
+  connectionId = widget->currentData("Id_PK");
+  if(connectionId.isNull()){
+    return;
+  }
+  // Get current connection data
+  data = art.getConnectionData(connectionId, &ok);
+  if(!ok){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  // Setup and show dialog
+  dialog.setData(data);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Get data and update
+  data = dialog.data();
+  if(!art.editConnection(connectionId, data)){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  // Update connections table
+  select("ArticleConnection_view");
+}
+
 
 void mdtClArticleEditor::removeConnections()
 {
@@ -248,11 +285,8 @@ void mdtClArticleEditor::addConnector()
   QVariant baseConnectorId;
   QString connectorName;
   QList<QVariant> selectedContacts;
-  ///mdtSqlRecord connectorData;
   mdtClArticleConnectorData connectorData;
-  ///QList<QSqlRecord> connectionDataList;
   mdtClArticle art(this, database());
-  ///bool ok;
 
   articleId = currentArticleId();
   if(articleId.isNull()){
@@ -293,8 +327,7 @@ void mdtClArticleEditor::addConnector()
     displayLastError();
     return;
   }
-  // Get contact data and add connector to table
-  ///connectionDataList = art.getConnectionDataListFromConnectorContactDataList(selectedContacts, &ok);
+  // Add connector to table
   if(!art.addConnector(connectorData)){
     pvLastError = art.lastError();
     displayLastError();
@@ -337,36 +370,6 @@ void mdtClArticleEditor::removeConnectors()
   // Update connectors and connections views
   select("ArticleConnector_view");
   select("ArticleConnection_view");
-  /**
-  QList<QVariant> articleConnectorIdList;
-  mdtClArticle art(this, database());
-  QModelIndexList indexes;
-  QMessageBox msgBox;
-
-  // Let user select article connectors
-  articleConnectorIdList = selectArticleConnectors();
-  if(articleConnectorIdList.isEmpty()){
-    return;
-  }
-  // We ask confirmation to the user
-  msgBox.setText(tr("You are about to remove connectors and all related connections from current article."));
-  msgBox.setInformativeText(tr("Do you want to continue ?"));
-  msgBox.setIcon(QMessageBox::Warning);
-  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-  msgBox.setDefaultButton(QMessageBox::No);
-  if(msgBox.exec() != QMessageBox::Yes){
-    return;
-  }
-  // Remove connectors
-  if(!art.removeConnectors(articleConnectorIdList)){
-    pvLastError = art.lastError();
-    displayLastError();
-    return;
-  }
-  // Update connections table
-  select("ArticleConnector_view");
-  select("ArticleConnection_view");
-  */
 }
 
 void mdtClArticleEditor::addLink()
@@ -613,61 +616,8 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
   return contactIds;
 }
 
-/**
-QList<QVariant> mdtClArticleEditor::selectArticleConnectors()
-{
-  QString sql;
-  QSqlQueryModel model;
-  QSqlError sqlError;
-  QVariant articleId;
-  QModelIndexList selectedItems;
-  QList<QVariant> articleConnectorIdList;
-  mdtSqlSelectionDialog selectionDialog;
-  int i;
-
-  // Get current article ID
-  articleId = currentArticleId();
-  if(articleId.isNull()){
-    return articleConnectorIdList;
-  }
-  // Setup model to list current article related connectors
-  sql = "SELECT Id_PK, Name FROM ArticleConnector_tbl WHERE Article_Id_FK = " + articleId.toString();
-  model.setQuery(sql, database());
-  sqlError = model.lastError();
-  if(sqlError.isValid()){
-    pvLastError.setError(tr("Unable to get to current article related connectors list."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
-    pvLastError.commit();
-    displayLastError();
-    return articleConnectorIdList;
-  }
-  if(model.rowCount() < 1){
-    return articleConnectorIdList;
-  }
-  // Setup and show dialog
-  selectionDialog.setMessage("Please select connectors to remove.");
-  selectionDialog.setModel(&model, true);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  ///selectionDialog.setHeaderData("", tr(""));
-  selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(500, 300);
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return articleConnectorIdList;
-  }
-  selectedItems = selectionDialog.selectionResults();
-  for(i = 0; i < selectedItems.size(); ++i){
-    articleConnectorIdList.append(selectedItems.at(i).data());
-  }
-
-  return articleConnectorIdList;
-}
-*/
-
 bool mdtClArticleEditor::setupArticleTable()
 {
-  //////Q_ASSERT(form() != 0);
-
   Ui::mdtClArticleEditor ae;
 
   // Setup main form widget
@@ -683,8 +633,6 @@ bool mdtClArticleEditor::setupArticleTable()
 
 bool mdtClArticleEditor::setupArticleComponentTable()
 {
-  //////Q_ASSERT(form() != 0);
-
   mdtSqlTableWidget *widget;
   QPushButton *pbAddComponent;
   QPushButton *pbEditComponent;
@@ -725,8 +673,6 @@ bool mdtClArticleEditor::setupArticleComponentTable()
 
 bool mdtClArticleEditor::setupArticleUsedByTable()
 {
-  //////Q_ASSERT(form() != 0);
-
   mdtSqlTableWidget *widget;
 
   if(!addChildTable("ArticleComponentUsage_view", tr("Used by"), database())){
@@ -787,6 +733,7 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddConnection;
+  QPushButton *pbEditConnection;
   QPushButton *pbRemoveConnections;
 
   if(!addChildTable("ArticleConnection_view", tr("Connections"), database())){
@@ -811,6 +758,9 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   pbAddConnection = new QPushButton(tr("Add connection ..."));
   connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
   widget->addWidgetToLocalBar(pbAddConnection);
+  pbEditConnection = new QPushButton(tr("Edit connection ..."));
+  connect(pbEditConnection, SIGNAL(clicked()), this, SLOT(editConnection()));
+  widget->addWidgetToLocalBar(pbEditConnection);
   pbRemoveConnections = new QPushButton(tr("Remove connections"));
   connect(pbRemoveConnections, SIGNAL(clicked()), this, SLOT(removeConnections()));
   widget->addWidgetToLocalBar(pbRemoveConnections);

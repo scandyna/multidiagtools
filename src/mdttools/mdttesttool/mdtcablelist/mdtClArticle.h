@@ -89,15 +89,6 @@ class mdtClArticle : public mdtTtBase
    */
   QList<QSqlRecord> getConnectorContactDataList(const QList<QVariant> & connectorContactIdList, bool *ok);
 
-  /*! \brief Get a list of article connection data for given connector contact ID list
-   *
-   * Result will contain all fields from ArticleConnection_tbl.
-   *
-   * Following data are set:
-   *  - ArticleContactName: is a copy from ConnectorContact_tbl.Name
-   */
-  ///QList<QSqlRecord> getConnectionDataListFromConnectorContactDataList(const QList<QVariant> & connectorContactIdList, bool *ok);
-
   /*! \brief Get article connection data for given article connection ID
    *
    * \pre ok must be a valid pointer.
@@ -128,11 +119,9 @@ class mdtClArticle : public mdtTtBase
    */
   bool addConnection(const mdtClArticleConnectionData & data);
 
-  /*! \brief Add many connections
-   *
-   * If single transaction is set, a transaction is used .
+  /*! \brief Edit a article connection
    */
-  bool addConnections(const QList<mdtSqlRecord> & dataList, bool singleTransaction);
+  bool editConnection(const QVariant & connectionId, const mdtClArticleConnectionData & data);
 
   /*! \brief Remove a single connection
    */
@@ -161,18 +150,6 @@ class mdtClArticle : public mdtTtBase
    */
   bool removeConnectorsConnections(const QList<QVariant> & articleConnectorIdList);
 
-  /*! \brief Add a connector and its contacts
-   *
-   * \param articleConnectorData Article connector data part. Must contain following fields:
-   *                      - Article_Id_FK
-   *                      - Name
-   *                      Can also contain Connector_Id_FK.
-   * \param articleConnectionDataList List of article connection data part.
-   *                      Note: Article_Id_FK and ArticleConnector_Id_FK
-   *                            are not relevant, because they are token from articleConnectorData.
-   */
-  ///bool addConnector(const mdtSqlRecord & articleConnectorData, const QList<QSqlRecord> & articleConnectionDataList);
-
   /*! \brief Add a connector
    *
    * If given article connector contains connections,
@@ -198,10 +175,6 @@ class mdtClArticle : public mdtTtBase
    *          To get reason of failure, use lastError() .
    */
   bool removeConnectors(const QModelIndexList & indexListOfSelectedRows);
-
-  /*! \brief Remove a list of connectors and all related contacts
-   */
-  ///bool removeConnectors(const QList<QVariant> & articleConnectorIdList);
 
   /*! \brief Add a record in Link table
    *

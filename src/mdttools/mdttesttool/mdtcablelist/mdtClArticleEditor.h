@@ -71,6 +71,10 @@ class mdtClArticleEditor : public mdtSqlForm
    */
   void addConnection();
 
+  /*! \brief Edit a connection
+   */
+  void editConnection();
+
   /*! \brief Remove connections
    */
   void removeConnections();
@@ -114,10 +118,6 @@ class mdtClArticleEditor : public mdtSqlForm
    * \return A list of selected connector contact IDs or a empty list if nothing was selected or error occured .
    */
   QList<QVariant> selectConnectorContacts(const QVariant &connectorId);
-
-  /*! \brief Select a list of article connectors
-   */
-  ///QList<QVariant> selectArticleConnectors();
 
   /*! \brief Setup Article table
    */

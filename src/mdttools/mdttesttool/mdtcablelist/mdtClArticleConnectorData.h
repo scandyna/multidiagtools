@@ -30,7 +30,7 @@
 
 /*! \brief Data container class for article connector data
  *
- * Permit to echange data with ArticleConnector_tbl and ArticleConnection_tbl.
+ * Permit to exchange data with ArticleConnector_tbl and ArticleConnection_tbl.
  */
 class mdtClArticleConnectorData : public mdtSqlRecord
 {

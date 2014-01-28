@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtClArticleConnectionDialog.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtClArticleConnectorData.h"
+#include "mdtClArticle.h"
 #include <QWidget>
 #include <QSqlQueryModel>
 
@@ -28,7 +30,7 @@ mdtClArticleConnectionDialog::mdtClArticleConnectionDialog(QWidget *parent, cons
 {
   pvDatabase = db;
   setupUi(this);
-  pbSelectArticleConnector->setEnabled(false);
+  ///pbSelectArticleConnector->setEnabled(false);
   connect(pbSelectArticleConnector, SIGNAL(clicked()), this, SLOT(selectArticleConnector()));
 }
 
@@ -39,7 +41,6 @@ mdtClArticleConnectionDialog::~mdtClArticleConnectionDialog()
 void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & data)
 {
   pvData = data;
-
   Q_ASSERT(pvData.contains("Id_PK"));
   Q_ASSERT(pvData.contains("Article_Id_FK"));
   Q_ASSERT(pvData.contains("ArticleConnector_Id_FK"));
@@ -49,6 +50,7 @@ void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & da
   Q_ASSERT(pvData.contains("FunctionDE"));
   Q_ASSERT(pvData.contains("FunctionFR"));
   Q_ASSERT(pvData.contains("FunctionIT"));
+  updateDialog();
 }
 
 mdtClArticleConnectionData mdtClArticleConnectionDialog::data() const
@@ -59,7 +61,6 @@ mdtClArticleConnectionData mdtClArticleConnectionDialog::data() const
 void mdtClArticleConnectionDialog::selectArticleConnector()
 {
   mdtSqlSelectionDialog dialog(this);
-  QString connectorName;
   QSqlQueryModel model;
   QString sql;
 
@@ -69,19 +70,13 @@ void mdtClArticleConnectionDialog::selectArticleConnector()
   dialog.setModel(&model, false);
   dialog.setColumnHidden("Id_PK", true);
   dialog.addSelectionResultColumn("Id_PK");
-  dialog.addSelectionResultColumn("Name");
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Store selected article connector ID
-  Q_ASSERT(dialog.selectionResult().size() == 2);
+  Q_ASSERT(dialog.selectionResult().size() == 1);
   pvData.setValue("ArticleConnector_Id_FK", dialog.selectionResult().at(0));
-  // Display connector name
-  connectorName = dialog.selectionResult().at(1).toString().trimmed();
-  if(connectorName.isEmpty()){
-    connectorName = tr("<None>");
-  }
-  lbArticleConnectorName->setText(connectorName);
+  updateDialog();
 }
 
 void mdtClArticleConnectionDialog::accept()
@@ -92,12 +87,26 @@ void mdtClArticleConnectionDialog::accept()
 
 void mdtClArticleConnectionDialog::updateDialog()
 {
+  mdtClArticle art(0, pvDatabase);
+  mdtClArticleConnectorData connectorData;
+  bool ok;
+
+  // Update article connections data
   fld_ArticleContactName->setText(pvData.value("ArticleContactName").toString());
   fld_IoType->setText(pvData.value("IoType").toString());
   fld_FunctionEN->setText(pvData.value("FunctionEN").toString());
   fld_FunctionFR->setText(pvData.value("FunctionFR").toString());
   fld_FunctionDE->setText(pvData.value("FunctionDE").toString());
   fld_FunctionIT->setText(pvData.value("FunctionIT").toString());
+  // Update article connector data if one is set
+  if(!pvData.value("ArticleConnector_Id_FK").isNull()){
+    connectorData = art.getConnectorData(pvData.value("ArticleConnector_Id_FK"), &ok, false, false);
+    if(ok){
+      lbArticleConnectorName->setText(connectorData.value("Name").toString());
+    }else{
+      lbArticleConnectorName->setText("<Error!>");
+    }
+  }
 }
 
 void mdtClArticleConnectionDialog::updateData()
