@@ -1,10 +1,10 @@
-window_sizes 1016 741 258 752 688 0
+window_sizes 1280 1005 258 1016 952 0
 cleanlooks_style
 diagrams
   classdiagram_ref 739586 // CableListAllTables
     791 669 90 17 12 296
   active  classdiagram_ref 1046530 // ConnectionData
-    752 688 80 17 241 103
+    1016 952 80 17 37 71
   classdiagram_ref 772866 // mdtClLink
     120 106 100 4 72 0
   classdiagram_ref 852610 // mdtClLinkData

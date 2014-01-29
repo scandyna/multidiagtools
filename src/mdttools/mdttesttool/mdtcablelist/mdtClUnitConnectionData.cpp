@@ -58,7 +58,13 @@ const mdtClArticleConnectionData & mdtClUnitConnectionData::articleConnectionDat
   return pvArticleConnectionData;
 }
 
-mdtClArticleConnectionData & mdtClUnitConnectionData::articleConnectionData()
+void mdtClUnitConnectionData::setArticleConnectionData(const mdtClArticleConnectionData& data)
 {
-  return pvArticleConnectionData;
+  setValue("ArticleConnection_Id_FK", data.value("Id_PK"));
+  pvArticleConnectionData = data;
+}
+
+bool mdtClUnitConnectionData::isBasedOnArticleConnection() const
+{
+  return !value("ArticleConnection_Id_FK").isNull();
 }

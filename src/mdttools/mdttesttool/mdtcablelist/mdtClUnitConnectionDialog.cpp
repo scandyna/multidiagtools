@@ -19,7 +19,15 @@
  **
  ****************************************************************************/
 #include "mdtClUnitConnectionDialog.h"
+///#include "mdtClConnectorData.h"
+///#include "mdtClArticleConnectorData.h"
+#include "mdtClArticleConnectionData.h"
+#include "mdtSqlSelectionDialog.h"
+#include <QSqlQueryModel>
+#include <QSqlError>
 #include <QMessageBox>
+
+#include <QDebug>
 
 mdtClUnitConnectionDialog::mdtClUnitConnectionDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
@@ -34,13 +42,15 @@ mdtClUnitConnectionDialog::mdtClUnitConnectionDialog(QWidget *parent, QSqlDataba
   connect(pbCopyContactName, SIGNAL(clicked()), this, SLOT(copyContactName()));
   hideArticleConnectionWidgets();
   /// \todo Currently, changing unit connector is not implemented
-  pbSelectUnitConnector->setEnabled(false);
+  connect(pbSelectUnitConnector, SIGNAL(clicked()), this, SLOT(selectUnitConnector()));
+  ///pbSelectUnitConnector->setEnabled(false);
 }
 
 mdtClUnitConnectionDialog::~mdtClUnitConnectionDialog()
 {
 }
 
+/**
 void mdtClUnitConnectionDialog::setUnitId(const QVariant & id)
 {
   pvData.setValue("Id_PK", id);
@@ -50,81 +60,14 @@ void mdtClUnitConnectionDialog::setArticleConnectionId(const QVariant & id)
 {
   pvData.articleConnectionData().setValue("Id_PK", id);
 }
+*/
 
 void mdtClUnitConnectionDialog::setData(const mdtClUnitConnectionData &data)
 {
-  // Update GUI - Article connection data part
-  /** \todo Currently, changing unit connector is not implemented
-  if(data.articleConnectionData().connectorName().isNull()){
-    lbArticleConnectorName->setVisible(false);
-    pbCopyConnectorName->setVisible(false);
-  }else{
-    lbArticleConnectorName->setVisible(true);
-    pbCopyConnectorName->setVisible(true);
-    lbArticleConnectorName->setText(data.articleConnectionData().connectorName().toString());
-  }
-  */
+  Q_ASSERT(!data.value("Unit_Id_FK").isNull());
 
-  if(data.articleConnectionData().value("ArticleContactName").isNull()){
-    lbArticleContactName->setVisible(false);
-    pbCopyContactName->setVisible(false);
-  }else{
-    lbArticleContactName->setVisible(true);
-    pbCopyContactName->setVisible(true);
-    lbArticleContactName->setText(data.articleConnectionData().value("ArticleContactName").toString());
-  }
-  if(data.articleConnectionData().value("IoType").isNull()){
-    lbArticleIoType->setVisible(false);
-    lbArticleIoTypeLabel->setVisible(false);
-  }else{
-    lbArticleIoType->setVisible(true);
-    lbArticleIoTypeLabel->setVisible(true);
-    lbArticleIoType->setText(data.articleConnectionData().value("IoType").toString());
-  }
-  if(data.articleConnectionData().value("FunctionEN").isNull()){
-    lbArticleFunctionEN->setVisible(false);
-    pbCopyFunctionEN->setVisible(false);
-  }else{
-    lbArticleFunctionEN->setVisible(true);
-    pbCopyFunctionEN->setVisible(true);
-    lbArticleFunctionEN->setText(data.articleConnectionData().value("FunctionEN").toString());
-  }
-  if(data.articleConnectionData().value("FunctionFR").isNull()){
-    lbArticleFunctionFR->setVisible(false);
-    pbCopyFunctionFR->setVisible(false);
-  }else{
-    lbArticleFunctionFR->setVisible(true);
-    pbCopyFunctionFR->setVisible(true);
-    lbArticleFunctionFR->setText(data.articleConnectionData().value("FunctionFR").toString());
-  }
-  if(data.articleConnectionData().value("FunctionDE").isNull()){
-    lbArticleFunctionDE->setVisible(false);
-    pbCopyFunctionDE->setVisible(false);
-  }else{
-    lbArticleFunctionDE->setVisible(true);
-    pbCopyFunctionDE->setVisible(true);
-    lbArticleFunctionDE->setText(data.articleConnectionData().value("FunctionDE").toString());
-  }
-  if(data.articleConnectionData().value("FunctionIT").isNull()){
-    lbArticleFunctionIT->setVisible(false);
-    pbCopyFunctionIT->setVisible(false);
-  }else{
-    lbArticleFunctionIT->setVisible(true);
-    pbCopyFunctionIT->setVisible(true);
-    lbArticleFunctionIT->setText(data.articleConnectionData().value("FunctionIT").toString());
-  }
-  // Update GUI - Unit connection data part
-  leSchemaPage->setText(data.value("SchemaPage").toString());
-  leFunctionEN->setText(data.value("FunctionEN").toString());
-  leFunctionFR->setText(data.value("FunctionFR").toString());
-  leFunctionDE->setText(data.value("FunctionDE").toString());
-  leFunctionIT->setText(data.value("FunctionIT").toString());
-  leSignalName->setText(data.value("SignalName").toString());
-  sbSwAddress->setValue(data.value("SwAddress").toInt());
-  lbUnitConnectorName->setText(data.value("???").toString());
-  leUnitContactName->setText(data.value("UnitContactName").toString());
-  // Store data
   pvData = data;
+  updateDialog();
 }
 
 const mdtClUnitConnectionData &mdtClUnitConnectionDialog::data() const
@@ -198,6 +141,23 @@ void mdtClUnitConnectionDialog::copyFunctionIT()
 
 void mdtClUnitConnectionDialog::selectUnitConnector()
 {
+  mdtSqlSelectionDialog dialog(this);
+  QSqlQueryModel model;
+  QString sql;
+
+  // Setup and show dialog
+  sql = "SELECT Id_PK, Name FROM UnitConnector_tbl WHERE Unit_Id_FK = " + pvData.value("Unit_Id_FK").toString();
+  model.setQuery(sql, pvDatabase);
+  dialog.setModel(&model, false);
+  dialog.setColumnHidden("Id_PK", true);
+  dialog.addSelectionResultColumn("Id_PK");
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Store selected article connector ID
+  Q_ASSERT(dialog.selectionResult().size() == 1);
+  pvData.setValue("UnitConnector_Id_FK", dialog.selectionResult().at(0));
+  updateDialog();
 }
 
 void mdtClUnitConnectionDialog::copyConnectorName()
@@ -250,7 +210,92 @@ void mdtClUnitConnectionDialog::accept()
     }
   }
   */
-  // Store data
+  // Store data and accept
+  updateData();
+  QDialog::accept();
+}
+
+void mdtClUnitConnectionDialog::reject()
+{
+  pvData.clear();
+  QDialog::reject();
+}
+
+void mdtClUnitConnectionDialog::updateDialog()
+{
+  // Article connection data part
+  /**
+  if(pvData.articleConnectionData().connectorName().isNull()){
+    lbArticleConnectorName->setVisible(false);
+    pbCopyConnectorName->setVisible(false);
+  }else{
+    lbArticleConnectorName->setVisible(true);
+    pbCopyConnectorName->setVisible(true);
+    lbArticleConnectorName->setText(pvData.articleConnectionData().connectorName().toString());
+  }
+  */
+  if(pvData.articleConnectionData().value("ArticleContactName").isNull()){
+    lbArticleContactName->setVisible(false);
+    pbCopyContactName->setVisible(false);
+  }else{
+    lbArticleContactName->setVisible(true);
+    pbCopyContactName->setVisible(true);
+    lbArticleContactName->setText(pvData.articleConnectionData().value("ArticleContactName").toString());
+  }
+  if(pvData.articleConnectionData().value("IoType").isNull()){
+    lbArticleIoType->setVisible(false);
+    lbArticleIoTypeLabel->setVisible(false);
+  }else{
+    lbArticleIoType->setVisible(true);
+    lbArticleIoTypeLabel->setVisible(true);
+    lbArticleIoType->setText(pvData.articleConnectionData().value("IoType").toString());
+  }
+  if(pvData.articleConnectionData().value("FunctionEN").isNull()){
+    lbArticleFunctionEN->setVisible(false);
+    pbCopyFunctionEN->setVisible(false);
+  }else{
+    lbArticleFunctionEN->setVisible(true);
+    pbCopyFunctionEN->setVisible(true);
+    lbArticleFunctionEN->setText(pvData.articleConnectionData().value("FunctionEN").toString());
+  }
+  if(pvData.articleConnectionData().value("FunctionFR").isNull()){
+    lbArticleFunctionFR->setVisible(false);
+    pbCopyFunctionFR->setVisible(false);
+  }else{
+    lbArticleFunctionFR->setVisible(true);
+    pbCopyFunctionFR->setVisible(true);
+    lbArticleFunctionFR->setText(pvData.articleConnectionData().value("FunctionFR").toString());
+  }
+  if(pvData.articleConnectionData().value("FunctionDE").isNull()){
+    lbArticleFunctionDE->setVisible(false);
+    pbCopyFunctionDE->setVisible(false);
+  }else{
+    lbArticleFunctionDE->setVisible(true);
+    pbCopyFunctionDE->setVisible(true);
+    lbArticleFunctionDE->setText(pvData.articleConnectionData().value("FunctionDE").toString());
+  }
+  if(pvData.articleConnectionData().value("FunctionIT").isNull()){
+    lbArticleFunctionIT->setVisible(false);
+    pbCopyFunctionIT->setVisible(false);
+  }else{
+    lbArticleFunctionIT->setVisible(true);
+    pbCopyFunctionIT->setVisible(true);
+    lbArticleFunctionIT->setText(pvData.articleConnectionData().value("FunctionIT").toString());
+  }
+  // Update GUI - Unit connection pvData part
+  leSchemaPage->setText(pvData.value("SchemaPage").toString());
+  leFunctionEN->setText(pvData.value("FunctionEN").toString());
+  leFunctionFR->setText(pvData.value("FunctionFR").toString());
+  leFunctionDE->setText(pvData.value("FunctionDE").toString());
+  leFunctionIT->setText(pvData.value("FunctionIT").toString());
+  leSignalName->setText(pvData.value("SignalName").toString());
+  sbSwAddress->setValue(pvData.value("SwAddress").toInt());
+  lbUnitConnectorName->setText(pvData.value("???").toString());
+  leUnitContactName->setText(pvData.value("UnitContactName").toString());
+}
+
+void mdtClUnitConnectionDialog::updateData()
+{
   if(!leSchemaPage->text().isEmpty()){
     pvData.setValue("SchemaPage", leSchemaPage->text());
   }
@@ -280,14 +325,8 @@ void mdtClUnitConnectionDialog::accept()
   if(!leUnitContactName->text().isEmpty()){
     pvData.setValue("UnitContactName", leUnitContactName->text());
   }
-  QDialog::accept();
 }
 
-void mdtClUnitConnectionDialog::reject()
-{
-  pvData.clear();
-  QDialog::reject();
-}
 
 void mdtClUnitConnectionDialog::hideArticleConnectionWidgets()
 {

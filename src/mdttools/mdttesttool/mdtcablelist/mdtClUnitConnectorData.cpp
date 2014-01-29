@@ -49,18 +49,18 @@ QList<mdtClUnitConnectionData> mdtClUnitConnectorData::connectionDataList() cons
 
 void mdtClUnitConnectorData::addConnectionData(const mdtClUnitConnectionData & data) 
 {
-  Q_ASSERT(data.indexOf("Id_PK") > 0);
-  Q_ASSERT(data.indexOf("Unit_Id_FK") > 0);
-  Q_ASSERT(data.indexOf("UnitConnector_Id_FK") > 0);
-  Q_ASSERT(data.indexOf("ArticleConnection_Id_FK") > 0);
-  Q_ASSERT(data.indexOf("UnitContactName") > 0);
-  Q_ASSERT(data.indexOf("SchemaPage") > 0);
-  Q_ASSERT(data.indexOf("SignalName") > 0);
-  Q_ASSERT(data.indexOf("SwAddress") > 0);
-  Q_ASSERT(data.indexOf("FunctionEN") > 0);
-  Q_ASSERT(data.indexOf("FunctionFR") > 0);
-  Q_ASSERT(data.indexOf("FunctionDE") > 0);
-  Q_ASSERT(data.indexOf("FunctionFR") > 0);
+  Q_ASSERT(data.contains("Id_PK"));
+  Q_ASSERT(data.contains("Unit_Id_FK"));
+  Q_ASSERT(data.contains("UnitConnector_Id_FK"));
+  Q_ASSERT(data.contains("ArticleConnection_Id_FK"));
+  Q_ASSERT(data.contains("UnitContactName"));
+  Q_ASSERT(data.contains("SchemaPage"));
+  Q_ASSERT(data.contains("SignalName"));
+  Q_ASSERT(data.contains("SwAddress"));
+  Q_ASSERT(data.contains("FunctionEN"));
+  Q_ASSERT(data.contains("FunctionFR"));
+  Q_ASSERT(data.contains("FunctionDE"));
+  Q_ASSERT(data.contains("FunctionFR"));
 
   pvConnectionDataList.append(data);
 }
@@ -102,6 +102,12 @@ mdtClUnitConnectionData mdtClUnitConnectorData::connectionData(const QVariant & 
 
 }
 
+void mdtClUnitConnectorData::setConnectorData(const mdtClConnectorData & data)
+{
+  setValue("Connector_Id_FK", data.value("Id_PK"));
+  pvConnectorData = data;
+}
+
 mdtClConnectorData mdtClUnitConnectorData::connectorData() const
 {
   return pvConnectorData;
@@ -110,4 +116,14 @@ mdtClConnectorData mdtClUnitConnectorData::connectorData() const
 mdtClArticleConnectorData mdtClUnitConnectorData::articleConnectorData() const
 {
   return pvArticleConnectorData;
+}
+
+bool mdtClUnitConnectorData::isBasedOnArticleConnector() const
+{
+  return !value("ArticleConnection_Id_FK").isNull();
+}
+
+bool mdtClUnitConnectorData::isBasedOnConnector() const
+{
+  return !value("Connector_Id_FK").isNull();
 }

@@ -1204,6 +1204,7 @@ mdtClUnitConnectionData mdtClUnit::getConnectionDataPv(const QString & sql, bool
   QList<QSqlRecord> dataList;
   QVariant articleConnectionId;
   QString acSql;
+  mdtClArticleConnectionData articleConnectionData;
 
   // Get unit connection data part
   dataList = getData(sql, ok);
@@ -1221,7 +1222,9 @@ mdtClUnitConnectionData mdtClUnit::getConnectionDataPv(const QString & sql, bool
       return data;
     }
     Q_ASSERT(dataList.size() == 1);
-    data.articleConnectionData() = dataList.at(0);
+    ///data.articleConnectionData() = dataList.at(0);
+    articleConnectionData = dataList.at(0);
+    data.setArticleConnectionData(articleConnectionData);
   }
   // Done
   *ok = true;

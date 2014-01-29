@@ -277,6 +277,28 @@ class mdtClUnit : public mdtTtBase
    */
   mdtClUnitConnectionData getConnectionDataPv(const QString & sql, bool *ok);
 
+  /*! \brief Get unit connector data
+   *
+   * \param includeConnectionData If true, and SQL statement points to a unit connector
+   *            that contains unit connections, result will be populated with these unit connection data.
+   *            For each unit connection data that is based on a article connection,
+   *             article connection data will be included.
+   * \param includeArticleConnectorData If true, article connector data will be included.
+   *            Note: article connection data related to article connector are not included.
+   *                  To get article connection data, set the includeConnectionData flag to true,
+   *                  so it's possible to get article connection data related to unit connection data.
+   * \param includeBaseConnectorData If true, and SQL statement points to a unit connector
+   *            that is based on a connector (from Connector_tbl), result will be populated with these connector data.
+   *
+   * Note: if both includeArticleConnectorData and includeBaseConnectorData are set,
+   *       and UnitConnector_tbl.Connector_Id_FK is different from ArticleConnector_tbl.Connector_Id_FK,
+   *       an error will be generated and this method will fail, because this is not coherent.
+   *
+   * \pre Given SQL statement must return 1 unit connector row
+   * \pre ok must be valid
+   */
+  ///mdtClUnitConnectorData getConnectorDataPv(const QString & sql, bool *ok, bool includeConnectionData, bool includeArticleConnectorData, bool includeBaseConnectorData);
+
   /*! \brief Add link to vehicle type table
    */
   bool addLinkToVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);

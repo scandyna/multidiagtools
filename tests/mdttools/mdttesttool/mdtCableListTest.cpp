@@ -400,8 +400,112 @@ void mdtCableListTest::articleTest()
 
 void mdtCableListTest::unitConnectionDataTest()
 {
+  mdtClUnitConnectionData connectionData;
+  mdtClArticleConnectionData articleConnectionData;
+
+  // Setup and initial flags
+  QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
+  QVERIFY(!connectionData.isBasedOnArticleConnection());
+
+  // Set a free unit connection
+  connectionData.setValue("Id_PK", 1);
+  connectionData.setValue("Unit_Id_FK", 10);
+  connectionData.setValue("UnitContactName", "Contact 1");
+  QVERIFY(!connectionData.isBasedOnArticleConnection());
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(1));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(10));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Contact 1"));
+
+  // Set a article based unit connection
+  connectionData.setValue("Id_PK", 2);
+  connectionData.setValue("Unit_Id_FK", 20);
+  connectionData.setValue("ArticleConnection_Id_FK", 200);
+  connectionData.setValue("UnitContactName", "Contact 2");
+  QVERIFY(connectionData.isBasedOnArticleConnection());
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(2));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(20));
+  QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(200));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Contact 2"));
+
+  // Clear
+  connectionData.clearValues();
+  QVERIFY(!connectionData.isBasedOnArticleConnection());
+
+  // Setup a artice connection data and set it to unit connection data
+  QVERIFY(articleConnectionData.setup(pvDatabaseManager.database()));
+  articleConnectionData.setValue("Id_PK", 100);
+  connectionData.setArticleConnectionData(articleConnectionData);
+  QVERIFY(connectionData.isBasedOnArticleConnection());
+  QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(100));
+}
+
+void mdtCableListTest::unitConnectorDataTest()
+{
+  mdtClUnitConnectorData data;
+  mdtClUnitConnectionData connectionData;
+  mdtClArticleConnectorData articleConnectorData;
+  mdtClArticleConnectionData articleConnectionData;
+  mdtClConnectorData connectorData;
+  bool ok;
+
+  // Setup and initial flags
+  QVERIFY(data.setup(pvDatabaseManager.database(), true, true));
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QVERIFY(!data.isBasedOnConnector());
+  QCOMPARE(data.connectionDataList().size(), 0);
+
+  // Set some data and check
+  data.setValue("Id_PK", 1);
+  data.setValue("Unit_Id_FK", 10);
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QVERIFY(!data.isBasedOnConnector());
+  QCOMPARE(data.value("Id_PK"), QVariant(1));
+  QCOMPARE(data.value("Unit_Id_FK"), QVariant(10));
+  QCOMPARE(data.connectionDataList().size(), 0);
+
+  // Setup connection data and add
+  QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
+  connectionData.setValue("Id_PK", 100);
+  data.addConnectionData(connectionData);
+  QCOMPARE(data.connectionDataList().size(), 1);
+  connectionData.clear();
+  QCOMPARE(connectionData.value("Id_PK"), QVariant());
+  connectionData = data.connectionData(100, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(100));
+
+  // Setup a connector and set it as base of unit connector
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QVERIFY(!data.isBasedOnConnector());
+  QVERIFY(connectorData.setup(pvDatabaseManager.database()));
+  connectorData.setValue("Id_PK", 1000);
+  data.setConnectorData(connectorData);
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QVERIFY(data.isBasedOnConnector());
+  connectorData.clear();
+  QCOMPARE(connectorData.value("Id_PK"), QVariant());
+  connectorData = data.connectorData();
+  QCOMPARE(connectorData.value("Id_PK"), QVariant(1000));
+
+  
+  /** \todo
+   *  - Build free article connector, set and check
+   *  - Build artice connector based on connector, set and check
+   *  - Set a connector: should this fail ? should this detach article connector ??
+   */
+  
+  // Setup a article connector and set it as base of unit connector
+  QVERIFY(articleConnectorData.setup(pvDatabaseManager.database(), true));
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QVERIFY(!data.isBasedOnConnector());
+  /// \todo continue !!
+}
+
+void mdtCableListTest::unitTest()
+{
   QFAIL("Test not implemented yet");
 }
+
 
 void mdtCableListTest::mdtClLinkDataTest()
 {

@@ -59,13 +59,19 @@ class mdtClUnitConnectionData : public mdtSqlRecord
    */
   bool setup(const QSqlDatabase & db, bool setupAcd);
 
+  /*! \brief Set article connection data
+   *
+   * Will also update ArticleConnection_Id_FK
+   */
+  void setArticleConnectionData(const mdtClArticleConnectionData & data);
+
   /*! \brief Access article connection data (RD)
    */
   const mdtClArticleConnectionData & articleConnectionData() const;
 
-  /*! \brief Access article connection data (WR)
+  /*! \brief Check if connection is based on a article connection
    */
-  mdtClArticleConnectionData & articleConnectionData();
+  bool isBasedOnArticleConnection() const;
 
  private:
 

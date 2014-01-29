@@ -288,6 +288,10 @@ class mdtTtDatabaseSchema
    */
   bool createUnitComponentView();
 
+  /*! \brief Create unit connector view
+   */
+  bool createUnitConnectorView();
+
   /*! \brief
    */
   bool createUnitConnectionView();

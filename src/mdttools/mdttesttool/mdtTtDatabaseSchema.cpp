@@ -323,6 +323,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createUnitComponentView()){
     return false;
   }
+  if(!createUnitConnectorView()){
+    return false;
+  }
   if(!createUnitConnectionView()){
     return false;
   }
@@ -2097,15 +2100,15 @@ bool mdtTtDatabaseSchema::createArticleConnectorView()
 
   sql = "CREATE VIEW ArticleConnector_view AS\n"\
         "SELECT\n"\
-        "ArticleConnector_tbl.Id_PK,\n"\
-        "ArticleConnector_tbl.Article_Id_FK,\n"\
-        "ArticleConnector_tbl.Connector_Id_FK,\n"\
-        "ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
-        "Connector_tbl.Gender,\n"\
-        "Connector_tbl.Form,\n"\
-        "Connector_tbl.Manufacturer,\n"\
-        "Connector_tbl.ManufacturerConfigCode,\n"\
-        "Connector_tbl.ManufacturerArticleCode\n"\
+        " ArticleConnector_tbl.Id_PK,\n"\
+        " ArticleConnector_tbl.Article_Id_FK,\n"\
+        " ArticleConnector_tbl.Connector_Id_FK,\n"\
+        " ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
+        " Connector_tbl.Gender,\n"\
+        " Connector_tbl.Form,\n"\
+        " Connector_tbl.Manufacturer,\n"\
+        " Connector_tbl.ManufacturerConfigCode,\n"\
+        " Connector_tbl.ManufacturerArticleCode\n"\
         "FROM ArticleConnector_tbl\n"\
         " LEFT JOIN Connector_tbl\n"\
         "  ON Connector_tbl.Id_PK = ArticleConnector_tbl.Connector_Id_FK";
@@ -2119,9 +2122,9 @@ bool mdtTtDatabaseSchema::createArticleConnectionView()
 
   sql = "CREATE VIEW ArticleConnection_view AS\n"\
         "SELECT\n"\
-        "ArticleConnector_tbl.Connector_Id_FK,\n"\
-        "ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
-        "ArticleConnection_tbl.*\n"\
+        " ArticleConnector_tbl.Connector_Id_FK,\n"\
+        " ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
+        " ArticleConnection_tbl.*\n"\
         "FROM ArticleConnection_tbl\n"\
         " LEFT JOIN ArticleConnector_tbl\n"\
         "  ON ArticleConnection_tbl.ArticleConnector_Id_FK = ArticleConnector_tbl.Id_PK";
@@ -2236,6 +2239,33 @@ bool mdtTtDatabaseSchema::createUnitComponentView()
 
   return createView("UnitComponent_view", sql);
 }
+
+bool mdtTtDatabaseSchema::createUnitConnectorView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW UnitConnector_view AS\n"\
+        "SELECT\n"\
+        " UnitConnector_tbl.Id_PK,\n"\
+        " UnitConnector_tbl.Unit_Id_FK,\n"\
+        " UnitConnector_tbl.Connector_Id_FK,\n"\
+        " UnitConnector_tbl.ArticleConnector_Id_FK,\n"\
+        " UnitConnector_tbl.Name AS UnitConnectorName,\n"\
+        " ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
+        " Connector_tbl.Gender,\n"\
+        " Connector_tbl.Form,\n"\
+        " Connector_tbl.Manufacturer,\n"\
+        " Connector_tbl.ManufacturerConfigCode,\n"\
+        " Connector_tbl.ManufacturerArticleCode\n"\
+        "FROM UnitConnector_tbl\n"\
+        " LEFT JOIN Connector_tbl\n"\
+        "  ON Connector_tbl.Id_PK = UnitConnector_tbl.Connector_Id_FK\n"\
+        " LEFT JOIN ArticleConnector_tbl\n"\
+        "  ON ArticleConnector_tbl.Id_PK = UnitConnector_tbl.ArticleConnector_Id_FK";
+
+  return createView("UnitConnector_view", sql);
+}
+
 
 bool mdtTtDatabaseSchema::createUnitConnectionView() 
 {

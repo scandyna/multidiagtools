@@ -46,16 +46,18 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
 
   /*! \brief Set unit ID
    */
-  void setUnitId(const QVariant & id);
+  ///void setUnitId(const QVariant & id);
 
   /*! \brief Set article connection ID
    */
-  void setArticleConnectionId(const QVariant & id);
+  ///void setArticleConnectionId(const QVariant & id);
 
   /*! \brief Set data
    *
    * Fields that are realated to article connection,
    *  and thoses that are not null in data, will be enabled.
+   *
+   * \pre Field Unit_Id_FK must contain a valid ID (not Null)
    */
   void setData(const mdtClUnitConnectionData &data);
 
@@ -102,6 +104,14 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
   void reject();
 
  private:
+
+  /*! \brief Update dialog's widgets from data
+   */
+  void updateDialog();
+
+  /*! \brief Update data from dialog's widgets
+   */
+  void updateData();
 
   /*! \brief Hide all widgets related to article connection
    */

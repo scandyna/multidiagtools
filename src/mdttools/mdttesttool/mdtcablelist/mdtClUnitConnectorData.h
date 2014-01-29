@@ -90,6 +90,12 @@ class mdtClUnitConnectorData : public mdtSqlRecord
    */
   mdtClUnitConnectionData connectionData(const QVariant & connectionId, bool *ok) const;
 
+  /*! \brief Set connector data
+   *
+   * Will also update Connector_Id_FK
+   */
+  void setConnectorData(const mdtClConnectorData & data);
+
   /*! \brief Get connector data (from Connector_tbl)
    */
   mdtClConnectorData connectorData() const;
@@ -97,6 +103,14 @@ class mdtClUnitConnectorData : public mdtSqlRecord
   /*! \brief Get article connector data
    */
   mdtClArticleConnectorData articleConnectorData() const;
+
+  /*! \brief Check if unit connector is based on a article connector
+   */
+  bool isBasedOnArticleConnector() const;
+
+  /*! \brief Check if unit connector is based on a connector (from Connector_tbl)
+   */
+  bool isBasedOnConnector() const;
 
  private:
 

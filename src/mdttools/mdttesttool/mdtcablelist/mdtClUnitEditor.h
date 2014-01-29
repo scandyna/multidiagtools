@@ -102,7 +102,7 @@ class mdtClUnitEditor : public mdtSqlForm
 
   /*! \brief Add a connection to unit connection table
    */
-  ///void addFreeConnection();
+  void addFreeConnection();
 
   /*! \brief Edit a connection
    */
@@ -187,6 +187,10 @@ class mdtClUnitEditor : public mdtSqlForm
   /*! \brief Setup unit component table and widget
    */
   bool setupUnitComponentTable();
+
+  /*! \brief Setup unit connector table and widget
+   */
+  bool setupUnitConnectorTable();
 
   /*! \brief Setup unit connection table and widget
    */
