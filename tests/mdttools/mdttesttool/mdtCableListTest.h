@@ -49,6 +49,7 @@ class mdtCableListTest : public mdtTest
   void unitConnectionDataTest();
   void unitConnectorDataTest();
   void unitTest();
+  /// Créer des fonction (pas slot) qui construisent à mesure un sénario
 
   void mdtClLinkDataTest();
 

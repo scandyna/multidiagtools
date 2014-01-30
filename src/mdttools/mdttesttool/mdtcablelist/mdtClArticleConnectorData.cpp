@@ -49,6 +49,21 @@ bool mdtClArticleConnectorData::setup(const QSqlDatabase & db, bool setupCd)
   return true;
 }
 
+void mdtClArticleConnectorData::clearValues()
+{
+  pvConnectionDataList.clear();
+  pvConnectorData.clearValues();
+  mdtSqlRecord::clearValues();
+}
+
+void mdtClArticleConnectorData::clear()
+{
+  pvConnectionDataList.clear();
+  pvConnectorData.clear();
+  mdtSqlRecord::clear();
+}
+
+
 void mdtClArticleConnectorData::setConnectionDataList(const QList<mdtClArticleConnectionData> & dataList) 
 {
   pvConnectionDataList = dataList;

@@ -61,7 +61,7 @@ class mdtSqlRecord : public QSqlRecord
 
   /*! \brief Destructor
    */
-  ~mdtSqlRecord();
+  virtual ~mdtSqlRecord();
 
   /*! \brief Add a field to record
    *
@@ -124,7 +124,7 @@ class mdtSqlRecord : public QSqlRecord
    *
    * Will clear value and hasValue flag for all fields.
    */
-  void clearValues();
+  virtual void clearValues();
 
   /*! \brief Get last error
    */

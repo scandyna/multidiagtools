@@ -37,6 +37,23 @@ bool mdtClUnitConnectorData::setup(const QSqlDatabase & db, bool setupCd, bool s
   return true;
 }
 
+void mdtClUnitConnectorData::clearValues()
+{
+  pvConnectionDataList.clear();
+  pvArticleConnectorData.clearValues();
+  pvConnectorData.clearValues();
+  mdtSqlRecord::clearValues();
+}
+
+void mdtClUnitConnectorData::clear()
+{
+  pvConnectionDataList.clear();
+  pvArticleConnectorData.clear();
+  pvConnectorData.clear();
+  mdtSqlRecord::clear();
+}
+
+
 void mdtClUnitConnectorData::setConnectionDataList(const QList<mdtClUnitConnectionData> & dataList) 
 {
   pvConnectionDataList = dataList;
@@ -105,12 +122,22 @@ mdtClUnitConnectionData mdtClUnitConnectorData::connectionData(const QVariant & 
 void mdtClUnitConnectorData::setConnectorData(const mdtClConnectorData & data)
 {
   setValue("Connector_Id_FK", data.value("Id_PK"));
+  setValue("ArticleConnector_Id_FK", QVariant());
+  pvArticleConnectorData.clearValues();
   pvConnectorData = data;
 }
 
 mdtClConnectorData mdtClUnitConnectorData::connectorData() const
 {
   return pvConnectorData;
+}
+
+void mdtClUnitConnectorData::setArticleConnectorData(const mdtClArticleConnectorData & data)
+{
+  setValue("ArticleConnector_Id_FK", data.value("Id_PK"));
+  setValue("Connector_Id_FK", data.value("Connector_Id_FK"));
+  pvArticleConnectorData = data;
+  pvConnectorData = data.connectorData();
 }
 
 mdtClArticleConnectorData mdtClUnitConnectorData::articleConnectorData() const
@@ -120,7 +147,7 @@ mdtClArticleConnectorData mdtClUnitConnectorData::articleConnectorData() const
 
 bool mdtClUnitConnectorData::isBasedOnArticleConnector() const
 {
-  return !value("ArticleConnection_Id_FK").isNull();
+  return !value("ArticleConnector_Id_FK").isNull();
 }
 
 bool mdtClUnitConnectorData::isBasedOnConnector() const

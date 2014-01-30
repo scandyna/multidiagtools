@@ -44,6 +44,20 @@ class mdtClUnitConnectorData : public mdtSqlRecord
    */
   bool setup(const QSqlDatabase & db, bool setupCd, bool setupAcd);
 
+  /*! \brief Clear values
+   *
+   * Will clear values, including connection data.
+   *  Fields are keeped.
+   */
+  void clearValues();
+
+  /*! \brief Clear values and fields
+   *
+   * Will clear values, including connection data.
+   *  Fields are also removed.
+   */
+  void clear();
+
   /*! \brief Add a list of connection data
    *
    * By using this method, the caller is responsible to give
@@ -92,13 +106,19 @@ class mdtClUnitConnectorData : public mdtSqlRecord
 
   /*! \brief Set connector data
    *
-   * Will also update Connector_Id_FK
+   * Will also update Connector_Id_FK and set ArticleConnector_Id_FK to Null.
    */
   void setConnectorData(const mdtClConnectorData & data);
 
   /*! \brief Get connector data (from Connector_tbl)
    */
   mdtClConnectorData connectorData() const;
+
+  /*! \brief Set article connector data
+   *
+   * Will also update Connector_Id_FK and ArticleConnector_Id_FK
+   */
+  void setArticleConnectorData(const mdtClArticleConnectorData & data);
 
   /*! \brief Get article connector data
    */

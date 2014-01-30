@@ -54,6 +54,20 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    */
   bool setup(const QSqlDatabase & db, bool setupCd);
 
+  /*! \brief Clear values
+   *
+   * Will clear values, including connection data.
+   *  Fields are keeped.
+   */
+  void clearValues();
+
+  /*! \brief Clear values and fields
+   *
+   * Will clear values, including connection data.
+   *  Fields are also removed.
+   */
+  void clear();
+
   /*! \brief Add a list of connection data
    *
    * By using this method, the caller is responsible to give
