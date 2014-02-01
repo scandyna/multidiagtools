@@ -21,7 +21,7 @@
 #ifndef MDT_CL_UNIT_H
 #define MDT_CL_UNIT_H
 
-///#include "mdtClUnitConnectionData.h"
+#include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtClLinkData.h"
 #include "mdtTtBase.h"
@@ -86,6 +86,39 @@ class mdtClUnit : public mdtTtBase
    */
   mdtClUnitConnectionData getConnectionData(const QVariant & unitConnectionId, bool *ok);
 
+  /*! \brief Get unit connector data
+   *
+   * \param unitConnectorId Unit connector ID
+   * \param includeConnectionData If true, and SQL statement points to a unit connector
+   *            that contains unit connections, result will be populated with these unit connection data.
+   *            For each unit connection data that is based on a article connection,
+   *             article connection data will be included.
+   * \param includeArticleConnectorData If true, article connector data will be included.
+   *            Note: article connection data related to article connector are not included.
+   *                  To get article connection data, set the includeConnectionData flag to true,
+   *                  so it's possible to get article connection data related to unit connection data.
+   * \param includeBaseConnectorData If true, and SQL statement points to a unit connector
+   *            that is based on a connector (from Connector_tbl), result will be populated with these connector data.
+   *
+   * Note: if both includeArticleConnectorData and includeBaseConnectorData are set,
+   *       and UnitConnector_tbl.Connector_Id_FK is different from ArticleConnector_tbl.Connector_Id_FK,
+   *       an error will be generated and this method will fail, because this is not coherent.
+   *
+   * \pre Given SQL statement must return 1 unit connector row
+   * \pre ok must be valid
+   */
+  mdtClUnitConnectorData getConnectorData(const QVariant & unitConnectorId, bool *ok, bool includeConnectionData, bool includeArticleConnectorData, bool includeBaseConnectorData);
+
+  /*! \brief Add unit connections into unit connector data based on a list of given connector contact ID list
+   *
+   * Will also get some values from data (UnitConnector_tbl) and set it to created connections (UnitConnection_tbl):
+   *  - UnitConnector_tbl.Id_PK -> UnitConnection_tbl.UnitConnector_Id_FK
+   *  - UnitConnector_tbl.Article_Id_FK -> UnitConnection_tbl.Unit_Id_FK
+   *
+   * Note: will only update given data, nothing is written to database.
+   */
+  bool addConnectionDataListFromConnectorContactIdList(mdtClUnitConnectorData & data, const QList<QVariant> & connectorContactIdList);
+
   /*! \brief Get connector contact data (from ConnectorContact_tbl) for a given contact ID
    * \brief Get (unit) connection data from connector contact data (ConnectorContact_tbl)
    *
@@ -93,12 +126,6 @@ class mdtClUnit : public mdtTtBase
    */
   ///mdtClUnitConnectionData getBaseConnectorContactData(const QVariant & contactId, mdtClUnitConnectionData data = mdtClUnitConnectionData());
   ///mdtSqlRecord getConnectionDataFromConnectorContact(const QVariant & connectorContactId, bool *ok, mdtSqlRecord data = mdtSqlRecord());
-
-  /*! \brief Get unit connection data for given unit connection ID
-   *
-   * Will also get unit connector data and article connector + connection data if unit connection is based on article connection .
-   */
-  ///mdtClUnitConnectionData getConnectionDataByUnitConnectionId(const QVariant & unitConnectionId);
 
   /*! \brief Get unit connection data for given article connection ID and unit ID
    *
@@ -198,13 +225,16 @@ class mdtClUnit : public mdtTtBase
    */
   bool addConnection(const mdtClUnitConnectionData & data);
 
+  /*! \brief Edit a unit connection
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data);
+
   /*! \brief Remove a single unit connection
    */
   bool removeConnection(const QVariant & unitConnectionId);
-
-  /*! \brief Remove a list of unit connections
-   */
-  ///bool removeUnitConnections(const QList<QVariant> &unitConnectionIdList);
 
   /*! \brief Remove each unit connection that is contained in selection
    *
@@ -217,33 +247,28 @@ class mdtClUnit : public mdtTtBase
 
   /*! \brief Add a unit connector
    *
+   * If data contains connections,
+   *  they will be added.
+   *
+   * Note: in connection data (contained in data),
+   *  Unit_Id_FK and UnitConnector_Id_FK are not relevant,
+   *  because they are token from data directly.
+   */
+  bool addConnector(const mdtClUnitConnectorData & data);
+
+  /*! \brief Add a unit connector
+   *
    * Note: will only add connector, not the connections .
    */
-  bool addConnector(const QVariant & unitId, const QVariant & baseConnectorId, const QVariant & articleConnectorId, const QVariant & name);
+  ///bool addConnector(const QVariant & unitId, const QVariant & baseConnectorId, const QVariant & articleConnectorId, const QVariant & name);
 
   /*! \brief Add a unit connector and a list of connections
    */
   ///bool addConnector(const QVariant & unitId, const QVariant & baseConnectorId, const QVariant & articleConnectorId, const QVariant & name, const QList<mdtClUnitConnectionData> connectionList);
 
-  /*! \brief Remove a unit connector
-   *
-   * Note: will only remove unit connector
+  /*! \brief Remove a unit connector and its contacts
    */
   bool removeConnector(const QVariant & unitConnectorId);
-
-  /*! \brief Add a unit connection
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  ///bool addUnitConnection(const mdtClUnitConnectionData & data);
-
-  /*! \brief Edit a unit connection
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  ///bool editUnitConnection(const mdtClUnitConnectionData & data);
 
 
   /*! \brief
@@ -301,7 +326,11 @@ class mdtClUnit : public mdtTtBase
    * \pre Given SQL statement must return 1 unit connector row
    * \pre ok must be valid
    */
-  ///mdtClUnitConnectorData getConnectorDataPv(const QString & sql, bool *ok, bool includeConnectionData, bool includeArticleConnectorData, bool includeBaseConnectorData);
+  mdtClUnitConnectorData getConnectorDataPv(const QString & sql, bool *ok, bool includeConnectionData, bool includeArticleConnectorData, bool includeBaseConnectorData);
+
+  /*! \brief Do some coherence check on unit connector data
+   */
+  bool checkConnectorData(const mdtClUnitConnectorData & data);
 
   /*! \brief Add link to vehicle type table
    */

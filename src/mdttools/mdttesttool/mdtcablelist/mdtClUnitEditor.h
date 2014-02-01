@@ -76,11 +76,11 @@ class mdtClUnitEditor : public mdtSqlForm
 
   /*! \brief Add a free connector (based on nothing) to unit connector table
    */
-  ///void addConnector();
+  void addConnector();
 
   /*! \brief Add a connector based on a one from Connector_tbl to unit connector table
    */
-  ///void addConnectorBasedConnector();
+  void addConnectorBasedConnector();
 
   /*! \brief Add a connector based on article connector to unit connector table
    */
@@ -106,7 +106,7 @@ class mdtClUnitEditor : public mdtSqlForm
 
   /*! \brief Edit a connection
    */
-  ///void editConnection();
+  void editConnection();
 
   /*! \brief Remove connection from unit connection table
    */

@@ -325,14 +325,19 @@ void mdtClUnitEditor::removeComponents()
   select("UnitComponent_view");
 }
 
-/**
 void mdtClUnitEditor::addConnector()
 {
   QVariant unitId;
   QVariant connectorName;
   mdtClUnit unit(this, database());
+  mdtClUnitConnectorData data;
   QInputDialog dialog;
 
+  if(!data.setup(database(), false, false)){
+    pvLastError = data.lastError();
+    displayLastError();
+    return;
+  }
   // Get unit ID
   unitId = currentUnitId();
   if(unitId.isNull()){
@@ -349,27 +354,27 @@ void mdtClUnitEditor::addConnector()
     return;
   }
   // Add connector
-  if(!unit.addConnector(unitId, QVariant(), QVariant(), connectorName)){
+  data.setValue("Unit_Id_FK", unitId);
+  data.setValue("Name", connectorName);
+  if(!unit.addConnector(data)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
   // Update connections view
   select("UnitConnection_view");
+  select("UnitConnector_view");
 }
-*/
 
-/**
 void mdtClUnitEditor::addConnectorBasedConnector()
 {
+  mdtClUnit unit(this, database());
+  mdtClUnitConnectorData connectorData;
   QVariant unitId;
   QVariant baseConnectorId;
   QVariant connectorName;
   QList<QVariant> contactList;
-  QList<mdtClUnitConnectionData> contactDataList;
-  mdtClUnit unit(this, database());
   QInputDialog dialog;
-  int i;
 
   // Get unit ID
   unitId = currentUnitId();
@@ -393,19 +398,31 @@ void mdtClUnitEditor::addConnectorBasedConnector()
   }
   // Select contacts
   contactList = selectBaseConnectorContactIdList(baseConnectorId);
-  for(i = 0; i < contactList.size(); ++i){
-    contactDataList.append(unit.getBaseConnectorContactData(contactList.at(i)));
+  // Setup unit connector data
+  if(!connectorData.setup(database(), true, false)){
+    pvLastError = connectorData.lastError();
+    displayLastError();
+    return;
+  }
+  connectorData.setValue("Unit_Id_FK", unitId);
+  connectorData.setValue("Connector_Id_FK", baseConnectorId);
+  connectorData.setValue("Name", connectorName);
+  // Add contacts to unit connector data
+  if(!unit.addConnectionDataListFromConnectorContactIdList(connectorData, contactList)){
+    pvLastError = unit.lastError();
+    displayLastError();
+    return;
   }
   // Add connector
-  if(!unit.addConnector(unitId, baseConnectorId, QVariant(), connectorName, contactDataList)){
+  if(!unit.addConnector(connectorData)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
   // Update connections view
+  select("UnitConnector_view");
   select("UnitConnection_view");
 }
-*/
 
 /**
 void mdtClUnitEditor::addArticleConnectorBasedConnector()
@@ -481,6 +498,7 @@ void mdtClUnitEditor::removeConnector()
     return;
   }
   // Update connections view
+  select("UnitConnector_view");
   select("UnitConnection_view");
 }
 
@@ -627,22 +645,27 @@ void mdtClUnitEditor::addFreeConnection()
   select("UnitConnection_view");
 }
 
-/**
 void mdtClUnitEditor::editConnection()
 {
   mdtSqlTableWidget *widget;
   mdtClUnitConnectionDialog dialog(0, database());
   mdtClUnit unit(this, database());
+  QVariant connectionId;
   mdtClUnitConnectionData data;
+  bool ok;
 
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
 
-  // Get current item's data
-  ///data = unit.getUnitConnectionData(widget->currentData("UnitConnection_Id_PK"));
-  data = unit.getConnectionDataByUnitConnectionId(widget->currentData("UnitConnection_Id_PK"));
-  if(!data.isValid()){
+  // Get current unit connection data
+  connectionId = widget->currentData("UnitConnection_Id_PK");
+  if(connectionId.isNull()){
     return;
+  }
+  data = unit.getConnectionData(connectionId, &ok);
+  if(!ok){
+    pvLastError = unit.lastError();
+    displayLastError();
   }
   // Setup and show dialog
   dialog.setData(data);
@@ -650,7 +673,7 @@ void mdtClUnitEditor::editConnection()
     return;
   }
   // Edit connection
-  if(!unit.editUnitConnection(dialog.data())){
+  if(!unit.editConnection(connectionId, dialog.data())){
     pvLastError = unit.lastError();
     displayLastError();
     return;
@@ -658,7 +681,6 @@ void mdtClUnitEditor::editConnection()
   // Update connections view
   select("UnitConnection_view");
 }
-*/
 
 void mdtClUnitEditor::removeConnections()
 {

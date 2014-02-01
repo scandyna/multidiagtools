@@ -37,6 +37,18 @@ class mdtClUnitConnectorData : public mdtSqlRecord
 {
  public:
 
+  /*! \brief Construct a empty mdtClUnitConnectorData
+   */
+  mdtClUnitConnectorData();
+
+  /*! \brief Contruct a mdtClUnitConnectorData from a QSqlRecord
+   *
+   * Note: if this method is used, setup is not relevant.
+   *
+   * \pre All fields from UnitConnector_tbl must exist in record
+   */
+  mdtClUnitConnectorData(const QSqlRecord & record);
+
   /*! \brief Setup fields from UnitConnector_tbl
    *
    * \param setupCd If true, fields from connector part are also added.
@@ -69,7 +81,7 @@ class mdtClUnitConnectorData : public mdtSqlRecord
 
   /*! \brief Get list of connection data
    */
-  QList<mdtClUnitConnectionData> connectionDataList() const;
+  const QList<mdtClUnitConnectionData> & connectionDataList() const;
 
   /*! \brief Add connection data
    *

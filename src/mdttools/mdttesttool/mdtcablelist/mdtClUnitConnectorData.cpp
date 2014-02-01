@@ -21,6 +21,21 @@
 #include "mdtClUnitConnectorData.h"
 #include <QString>
 
+mdtClUnitConnectorData::mdtClUnitConnectorData()
+{
+}
+
+mdtClUnitConnectorData::mdtClUnitConnectorData(const QSqlRecord& record)
+ : mdtSqlRecord(record)
+{
+  Q_ASSERT(contains("Id_PK"));
+  Q_ASSERT(contains("Unit_Id_FK"));
+  Q_ASSERT(contains("Connector_Id_FK"));
+  Q_ASSERT(contains("ArticleConnector_Id_FK"));
+  Q_ASSERT(contains("Name"));
+}
+
+
 bool mdtClUnitConnectorData::setup(const QSqlDatabase & db, bool setupCd, bool setupAcd)
 {
   if(!addAllFields("UnitConnector_tbl", db)){
@@ -59,7 +74,7 @@ void mdtClUnitConnectorData::setConnectionDataList(const QList<mdtClUnitConnecti
   pvConnectionDataList = dataList;
 }
 
-QList<mdtClUnitConnectionData> mdtClUnitConnectorData::connectionDataList() const
+const QList<mdtClUnitConnectionData> & mdtClUnitConnectorData::connectionDataList() const
 {
   return pvConnectionDataList;
 }
