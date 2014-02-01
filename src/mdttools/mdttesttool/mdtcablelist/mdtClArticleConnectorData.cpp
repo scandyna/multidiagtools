@@ -76,17 +76,21 @@ const QList<mdtClArticleConnectionData> & mdtClArticleConnectorData::connectionD
 
 void mdtClArticleConnectorData::addConnectionData(const mdtClArticleConnectionData & data) 
 {
-  Q_ASSERT(data.indexOf("Id_PK") >= 0);
-  Q_ASSERT(data.indexOf("Article_Id_FK") >= 0);
-  Q_ASSERT(data.indexOf("ArticleConnector_Id_FK") >= 0);
-  Q_ASSERT(data.indexOf("ArticleContactName") >= 0);
-  Q_ASSERT(data.indexOf("IoType") >= 0);
-  Q_ASSERT(data.indexOf("FunctionEN") >= 0);
-  Q_ASSERT(data.indexOf("FunctionFR") >= 0);
-  Q_ASSERT(data.indexOf("FunctionDE") >= 0);
-  Q_ASSERT(data.indexOf("FunctionFR") >= 0);
+  Q_ASSERT(data.contains("Id_PK"));
+  Q_ASSERT(data.contains("Article_Id_FK"));
+  Q_ASSERT(data.contains("ArticleConnector_Id_FK"));
+  Q_ASSERT(data.contains("ArticleContactName"));
+  Q_ASSERT(data.contains("IoType"));
+  Q_ASSERT(data.contains("FunctionEN"));
+  Q_ASSERT(data.contains("FunctionFR"));
+  Q_ASSERT(data.contains("FunctionDE"));
+  Q_ASSERT(data.contains("FunctionFR"));
 
-  pvConnectionDataList.append(data);
+  mdtClArticleConnectionData _data = data;
+
+  _data.setValue("Article_Id_FK", value("Article_Id_FK"));
+  _data.setValue("ArticleConnector_Id_FK", value("Id_PK"));
+  pvConnectionDataList.append(_data);
 }
 
 bool mdtClArticleConnectorData::setConnectionData(const QVariant & connectionId, const mdtClArticleConnectionData & data) 

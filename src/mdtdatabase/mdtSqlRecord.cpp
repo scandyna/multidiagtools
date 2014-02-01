@@ -234,6 +234,24 @@ QString mdtSqlRecord::sqlDataDelimiter(QVariant::Type type)
   }
 }
 
+QString mdtSqlRecord::dataToUpdateInfo() const
+{
+  QString str;
+  QVector<int> indexList;
+  int i;
+
+  indexList = fieldIndexesWithValue();
+  for(i = 0; i < indexList.size(); ++i){
+    str += fieldName(indexList.at(i));
+    str += ": '" + value(indexList.at(i)).toString() + "'";
+    if(i < (indexList.size()-1)){
+      str += " , ";
+    }
+  }
+
+  return str;
+}
+
 /**
 mdtError & mdtSqlRecord::lastErrorW() 
 {

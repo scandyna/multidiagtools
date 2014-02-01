@@ -1,9 +1,9 @@
 window_sizes 1280 1005 258 1016 952 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 739586 // CableListAllTables
-    791 669 90 17 12 296
-  active  classdiagram_ref 1046530 // ConnectionData
+  active  classdiagram_ref 739586 // CableListAllTables
+    1016 952 80 17 0 149
+  classdiagram_ref 1046530 // ConnectionData
     1016 952 80 17 37 71
   classdiagram_ref 772866 // mdtClLink
     120 106 100 4 72 0
@@ -11,9 +11,10 @@ diagrams
     1016 952 90 18 0 0
 end
 show_stereotypes
-selected operation_ref 1898626 // setup
+selected attribute_ref 1102210 // ManufacturerIdentificationDocument
 open
   classview_ref 602498 // Data
+  class_ref 764674 // Article_tbl
   classview_ref 549634 // mdtClConnectionData
   class_ref 888194 // mdtClLinkData
 end

@@ -171,6 +171,10 @@ class mdtSqlRecord : public QSqlRecord
    */
   static QString sqlDataDelimiter(QVariant::Type type);
 
+  /*! \brief Get information about data that has a value to update (for debug)
+   */
+  QString dataToUpdateInfo() const;
+
  protected:
 
   /*! \brief Get last error for write access

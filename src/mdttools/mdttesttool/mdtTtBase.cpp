@@ -69,8 +69,11 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
   sql = record.sqlForInsert(tableName);
   // Prepare query
   if(!query.prepare(sql)){
+    QString msg;
     QSqlError sqlError = query.lastError();
-    pvLastError.setError(tr("Cannot prepare query for inertion in table '") + tableName + tr("'"), mdtError::Error);
+    msg = tr("Cannot prepare query for inertion in table '") + tableName + tr("'. ");
+    msg += tr("Data: ") + record.dataToUpdateInfo() + tr(".");
+    pvLastError.setError(msg, mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
@@ -81,8 +84,11 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
     query.bindValue(i, record.value(indexList.at(i)));
   }
   if(!query.exec()){
+    QString msg;
     QSqlError sqlError = query.lastError();
-    pvLastError.setError(tr("Cannot exec query for inertion in table '") + tableName + tr("'"), mdtError::Error);
+    msg = tr("Cannot exec query for inertion in table '") + tableName + tr("'. ");
+    msg += tr("Data: ") + record.dataToUpdateInfo() + tr(".");
+    pvLastError.setError(msg, mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
@@ -266,8 +272,11 @@ bool mdtTtBase::removeData(const QString & tableName, const QStringList & fields
   QSqlQuery query(database());
   if(!query.exec(sql)){
     QSqlError sqlError;
+    QString msg;
     sqlError = query.lastError();
-    pvLastError.setError(tr("Cannot remove rows from table '") + tableName + tr("'."), mdtError::Error);
+    msg = tr("Cannot remove rows from table '") + tableName + tr("'.");
+    msg += "\n" + tr("SQL statement : '") + sql + tr("'.");
+    pvLastError.setError(msg, mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();
@@ -294,8 +303,11 @@ bool mdtTtBase::removeData(const QString & tableName, const QString & fieldName,
   QSqlQuery query(database());
   if(!query.exec(sql)){
     QSqlError sqlError;
+    QString msg;
     sqlError = query.lastError();
-    pvLastError.setError(tr("Cannot remove row from table '") + tableName + tr("'."), mdtError::Error);
+    msg = tr("Cannot remove rows from table '") + tableName + tr("'.");
+    msg += "\n" + tr("SQL statement : '") + sql + tr("'.");
+    pvLastError.setError(msg, mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();

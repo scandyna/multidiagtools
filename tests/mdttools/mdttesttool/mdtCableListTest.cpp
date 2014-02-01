@@ -98,8 +98,8 @@ void mdtCableListTest::articleConnectorDataTest()
   // Add some connection data
   QVERIFY(connectionData.setup(pvDatabaseManager.database()));
   connectionData.setValue("Id_PK", 2);
-  connectionData.setValue("Article_Id_FK", 10);
-  connectionData.setValue("ArticleConnector_Id_FK", 1);
+  ///connectionData.setValue("Article_Id_FK", 10);
+  ///connectionData.setValue("ArticleConnector_Id_FK", 1);
   data.addConnectionData(connectionData);
   QCOMPARE(data.connectionDataList().size(), 1);
   QCOMPARE(data.connectionDataList().at(0).value("Id_PK"), QVariant(2));
@@ -413,6 +413,28 @@ void mdtCableListTest::articleTest()
   dataList = art.getData("SELECT * FROM Article_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
+  // Remove base connector
+  QVERIFY(art.removeData("ConnectorContact_tbl", "Id_PK", 1));
+  QVERIFY(art.removeData("ConnectorContact_tbl", "Id_PK", 2));
+  QVERIFY(art.removeData("ConnectorContact_tbl", "Id_PK", 3));
+  QVERIFY(art.removeData("Connector_tbl", "Id_PK", 1));
+  dataList = art.getData("SELECT * FROM Connector_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+
+  /*
+   * Check helper methods
+   */
+  createTestArticles();
+  createTestConnectors();
+  createTestArticleConnections();
+  createTestArticleLinks();
+  createTestArticleConnectors();
+  removeTestArticleLinks();
+  removeTestArticleConnections();
+  removeTestArticleConnectors();
+  removeTestConnectors();
+  removeTestArticles();
 }
 
 void mdtCableListTest::unitConnectionDataTest()
@@ -580,7 +602,21 @@ void mdtCableListTest::unitConnectorDataTest()
 
 void mdtCableListTest::unitTest()
 {
-  QFAIL("Test not implemented yet");
+  createTestArticles();
+  createTestConnectors();
+  createTestArticleConnections();
+  createTestArticleLinks();
+  createTestArticleConnectors();
+  createTestUnits();
+  createTestUnitConnections();
+  
+  removeTestUnitConnections();
+  removeTestUnits();
+  removeTestArticleLinks();
+  removeTestArticleConnections();
+  removeTestArticleConnectors();
+  removeTestConnectors();
+  removeTestArticles();
 }
 
 void mdtCableListTest::mdtClLinkDataTest()
@@ -593,6 +629,326 @@ void mdtCableListTest::pathGraphTest()
 {
   QFAIL("Test not implemented yet");
 }
+
+/*
+ * Test data manipulation methods
+ */
+
+void mdtCableListTest::createTestConnectors()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  mdtClConnectorData connectorData;
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  // Add connector 1
+  QVERIFY(connectorData.setup(pvDatabaseManager.database()));
+  connectorData.setValue("Id_PK", 1);
+  QVERIFY(art.addRecord(connectorData, "Connector_tbl"));
+  // Check back
+  dataList = art.getData("SELECT * FROM Connector_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(1));
+}
+
+void mdtCableListTest::removeTestConnectors()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(art.removeData("Connector_tbl", "Id_PK", 1));
+  dataList = art.getData("SELECT * FROM Connector_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+}
+
+
+void mdtCableListTest::createTestArticles()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  mdtSqlRecord record;
+  QSqlRecord data;
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  // Add a article 1
+  QVERIFY(record.addAllFields("Article_tbl", pvDatabaseManager.database()));
+  record.setValue("Id_PK", 1);
+  record.setValue("ArticleCode", "1234");
+  record.setValue("DesignationEN", "Article 1");
+  QVERIFY(art.addRecord(record, "Article_tbl"));
+  // Check added article
+  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(1));
+  QCOMPARE(data.value("ArticleCode"), QVariant("1234"));
+  QCOMPARE(data.value("DesignationEN"), QVariant("Article 1"));
+  // Add a article 2
+  QVERIFY(record.addAllFields("Article_tbl", pvDatabaseManager.database()));
+  record.setValue("Id_PK", 2);
+  record.setValue("ArticleCode", "5678");
+  record.setValue("DesignationEN", "Article 2");
+  QVERIFY(art.addRecord(record, "Article_tbl"));
+  // Check added article
+  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 2);
+  data = dataList.at(1);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QCOMPARE(data.value("ArticleCode"), QVariant("5678"));
+  QCOMPARE(data.value("DesignationEN"), QVariant("Article 2"));
+
+}
+
+void mdtCableListTest::removeTestArticles()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(art.removeData("Article_tbl", "Id_PK", 1));
+  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QVERIFY(art.removeData("Article_tbl", "Id_PK", 2));
+  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+}
+
+void mdtCableListTest::createTestArticleConnections()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  mdtClArticleConnectionData connectionData;
+  bool ok;
+
+  // Add contact ID 10 to article ID 1
+  QVERIFY(connectionData.setup(pvDatabaseManager.database()));
+  connectionData.setValue("Id_PK", 10);
+  connectionData.setValue("Article_Id_FK", 1);
+  connectionData.setValue("ArticleContactName", "10");
+  QVERIFY(art.addConnection(connectionData));
+  // Add contact ID 20 to article ID 2
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 20);
+  connectionData.setValue("Article_Id_FK", 2);
+  connectionData.setValue("ArticleContactName", "20");
+  QVERIFY(art.addConnection(connectionData));
+  // Add contact ID 21 to article ID 2
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 21);
+  connectionData.setValue("Article_Id_FK", 2);
+  connectionData.setValue("ArticleContactName", "21");
+  QVERIFY(art.addConnection(connectionData));
+  // Check back data
+  connectionData = art.getConnectionData(10, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(10));
+  QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(1));
+  QCOMPARE(connectionData.value("ArticleContactName"), QVariant("10"));
+  connectionData = art.getConnectionData(20, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(20));
+  QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+  QCOMPARE(connectionData.value("ArticleContactName"), QVariant("20"));
+  connectionData = art.getConnectionData(21, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(21));
+  QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+  QCOMPARE(connectionData.value("ArticleContactName"), QVariant("21"));
+}
+
+void mdtCableListTest::removeTestArticleConnections()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(art.removeConnection(10));
+  QVERIFY(art.removeConnection(20));
+  QVERIFY(art.removeConnection(21));
+  dataList = art.getData("SELECT * FROM ArticleConnection_view", &ok);
+  QVERIFY(ok);
+}
+
+void mdtCableListTest::createTestArticleConnectors()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  mdtClArticleConnectorData connectorData;
+  mdtClArticleConnectionData connectionsData;
+  bool ok;
+
+  // Setup data
+  QVERIFY(connectorData.setup(pvDatabaseManager.database(), true));
+  QVERIFY(connectionsData.setup(pvDatabaseManager.database()));
+  /*
+   * Article connector 100
+   */
+  // Setup connector 100
+  connectorData.setValue("Id_PK", 100);
+  connectorData.setValue("Article_Id_FK", 1);
+  connectorData.setValue("Name", "Article connector 100");
+  // Setup connection 15
+  connectionsData.setValue("Id_PK", 15);
+  connectionsData.setValue("ArticleContactName", "Article contact 15");
+  connectorData.addConnectionData(connectionsData);
+  // Add connector and check
+  QVERIFY(art.addConnector(connectorData));
+  connectorData = art.getConnectorData(100, &ok, true, true);
+  QVERIFY(ok);
+  QCOMPARE(connectorData.value("Id_PK"), QVariant(100));
+  QCOMPARE(connectorData.value("Article_Id_FK"), QVariant(1));
+  QCOMPARE(connectorData.value("Name"), QVariant("Article connector 100"));
+  /*
+   * Article connector 200
+   */
+  connectorData.clearValues();
+  // Setup connector 200
+  connectorData.setValue("Id_PK", 200);
+  connectorData.setValue("Article_Id_FK", 2);
+  connectorData.setValue("Connector_Id_FK", 1);
+  connectorData.setValue("Name", "Article connector 200");
+  // Setup connection 15
+  connectionsData.setValue("Id_PK", 25);
+  connectionsData.setValue("ArticleContactName", "Article contact 25");
+  connectorData.addConnectionData(connectionsData);
+  // Add connector and check
+  QVERIFY(art.addConnector(connectorData));
+  connectorData = art.getConnectorData(200, &ok, true, true);
+  QVERIFY(ok);
+  QCOMPARE(connectorData.value("Id_PK"), QVariant(200));
+  QCOMPARE(connectorData.value("Article_Id_FK"), QVariant(2));
+  QCOMPARE(connectorData.value("Connector_Id_FK"), QVariant(1));
+  QCOMPARE(connectorData.value("Name"), QVariant("Article connector 200"));
+}
+
+void mdtCableListTest::removeTestArticleConnectors()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(art.removeConnector(100));
+  QVERIFY(art.removeConnector(200));
+  dataList = art.getData("SELECT * FROM ArticleConnector_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+}
+
+void mdtCableListTest::createTestArticleLinks()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(art.addCableLink(10, 20, "", 0.0));
+  QVERIFY(art.addCableLink(21, 20, "", 0.0));
+  dataList = art.getData("SELECT * FROM ArticleLink_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 2);
+  QCOMPARE(dataList.at(0).value("ArticleConnectionStart_Id_FK"), QVariant(10));
+  QCOMPARE(dataList.at(0).value("ArticleConnectionEnd_Id_FK"), QVariant(20));
+  QCOMPARE(dataList.at(1).value("ArticleConnectionStart_Id_FK"), QVariant(21));
+  QCOMPARE(dataList.at(1).value("ArticleConnectionEnd_Id_FK"), QVariant(20));
+}
+
+void mdtCableListTest::removeTestArticleLinks()
+{
+  mdtClArticle art(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(art.removeLink(10, 20));
+  QVERIFY(art.removeLink(21, 20));
+  dataList = art.getData("SELECT * FROM ArticleLink_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+}
+
+void mdtCableListTest::createTestUnits()
+{
+  mdtClUnit unit(0, pvDatabaseManager.database());
+  mdtSqlRecord data;
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(data.addAllFields("Unit_tbl", pvDatabaseManager.database()));
+  // Add and check unit 1000
+  data.setValue("Id_PK", 1000);
+  data.setValue("SchemaPosition", "Position 1000");
+  QVERIFY(unit.addRecord(data, "Unit_tbl"));
+  dataList = unit.getData("SELECT * FROM Unit_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(1000));
+  QCOMPARE(dataList.at(0).value("SchemaPosition"), QVariant("Position 1000"));
+  // Add and check unit 2000
+  data.setValue("Id_PK", 2000);
+  data.setValue("Article_Id_FK", 2);
+  data.setValue("SchemaPosition", "Position 2000");
+  QVERIFY(unit.addRecord(data, "Unit_tbl"));
+  dataList = unit.getData("SELECT * FROM Unit_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 2);
+  QCOMPARE(dataList.at(1).value("Id_PK"), QVariant(2000));
+  QCOMPARE(dataList.at(1).value("Article_Id_FK"), QVariant(2));
+  QCOMPARE(dataList.at(1).value("SchemaPosition"), QVariant("Position 2000"));
+}
+
+void mdtCableListTest::removeTestUnits()
+{
+  mdtClUnit unit(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(unit.removeData("Unit_tbl", "Id_PK", 1000));
+  QVERIFY(unit.removeData("Unit_tbl", "Id_PK", 2000));
+  dataList = unit.getData("SELECT * FROM Unit_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+}
+
+void mdtCableListTest::createTestUnitConnections()
+{
+  mdtClUnit unit(0, pvDatabaseManager.database());
+  mdtClUnitConnectionData connectionData;
+  ///QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
+  // Add and chek unit connection 10000
+  connectionData.setValue("Id_PK", 10000);
+  connectionData.setValue("Unit_Id_FK", 1000);
+  connectionData.setValue("UnitContactName", "Unit contact 10000");
+  QVERIFY(unit.addConnection(connectionData));
+  
+  
+  
+  // Add and chek unit connection 20000
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 20000);
+  connectionData.setValue("Unit_Id_FK", 2000);
+  connectionData.setValue("ArticleConnection_Id_FK", 20);
+  connectionData.setValue("UnitContactName", "Unit contact 20000");
+  QVERIFY(unit.addConnection(connectionData));
+}
+
+void mdtCableListTest::removeTestUnitConnections()
+{
+  mdtClUnit unit(0, pvDatabaseManager.database());
+  ///QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(unit.removeConnection(10000));
+  QVERIFY(unit.removeConnection(20000));
+  
+}
+
 
 /*
  * Test database helper methods
@@ -609,6 +965,7 @@ void mdtCableListTest::createDatabaseSchema()
   QVERIFY(dbFile.open());
   dbFile.close();
   dbFileInfo.setFile(dbFile.fileName() + ".db");
+  ///dbFileInfo.setFile("tests.db");
   mdtTtDatabaseSchema schema(&pvDatabaseManager);
   QVERIFY(schema.createSchemaSqlite(dbFileInfo));
   QVERIFY(pvDatabaseManager.database().isOpen());

@@ -83,6 +83,9 @@ class mdtClArticleConnectorData : public mdtSqlRecord
 
   /*! \brief Add connection data
    *
+   * Will also get Article_Id_FK and ArticleConnector_Id_FK from article connector data,
+   *  so these 2 fields are not relevant in given data.
+   *
    * \pre data must contains following fields:
    *  - Id_PK
    *  - Article_Id_FK

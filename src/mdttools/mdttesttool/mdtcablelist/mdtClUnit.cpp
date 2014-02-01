@@ -615,6 +615,75 @@ QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QMode
   return toUnitRelatedLinksListStr(unitId, idList);
 }
 
+
+bool mdtClUnit::addConnection(const mdtClUnitConnectionData & data)
+{
+  return addRecord(data, "UnitConnection_tbl");
+}
+
+bool mdtClUnit::removeConnection(const QVariant & unitConnectionId)
+{
+  return removeData("UnitConnection_tbl", "Id_PK", unitConnectionId);
+  /**
+  QList<QVariant> idList;
+
+  idList.append(unitConnectionId);
+
+  return removeUnitConnections(idList);
+  */
+}
+
+/**
+bool mdtClUnit::removeConnections(const QList<QVariant> &unitConnectionIdList)
+{
+  int i;
+  QSqlError sqlError;
+  QString sql;
+
+  if(unitConnectionIdList.size() < 1){
+    return true;
+  }
+  // Generate SQL
+  sql = "DELETE FROM UnitConnection_tbl ";
+  for(i = 0; i < unitConnectionIdList.size(); ++i){
+    if(i == 0){
+      sql += " WHERE ( ";
+    }else{
+      sql += " OR ";
+    }
+    sql += " Id_PK = " + unitConnectionIdList.at(i).toString();
+  }
+  sql += " ) ";
+  // Submit query
+  QSqlQuery query(database());
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Cannot execute query for unit connection deletion", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+*/
+
+bool mdtClUnit::removeConnections(const QModelIndexList & indexListOfSelectedRows)
+{
+  return removeData("UnitConnection_tbl", "Id_PK", indexListOfSelectedRows);
+  /**
+  int i;
+  QList<QVariant> idList;
+
+  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
+    idList.append(indexListOfSelectedRows.at(i).data());
+  }
+
+  return removeUnitConnections(idList);
+  */
+}
+
 bool mdtClUnit::addConnector(const QVariant & unitId, const QVariant & baseConnectorId, const QVariant & articleConnectorId, const QVariant & name)
 {
   QString sql;
@@ -828,60 +897,6 @@ bool mdtClUnit::editUnitConnection(const mdtClUnitConnectionData & data)
 }
 */
 
-bool mdtClUnit::removeUnitConnection(const QVariant & unitConnectionId)
-{
-  QList<QVariant> idList;
-
-  idList.append(unitConnectionId);
-
-  return removeUnitConnections(idList);
-}
-
-bool mdtClUnit::removeUnitConnections(const QList<QVariant> &unitConnectionIdList)
-{
-  int i;
-  QSqlError sqlError;
-  QString sql;
-
-  if(unitConnectionIdList.size() < 1){
-    return true;
-  }
-  // Generate SQL
-  sql = "DELETE FROM UnitConnection_tbl ";
-  for(i = 0; i < unitConnectionIdList.size(); ++i){
-    if(i == 0){
-      sql += " WHERE ( ";
-    }else{
-      sql += " OR ";
-    }
-    sql += " Id_PK = " + unitConnectionIdList.at(i).toString();
-  }
-  sql += " ) ";
-  // Submit query
-  QSqlQuery query(database());
-  if(!query.exec(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query for unit connection deletion", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
-    pvLastError.commit();
-    return false;
-  }
-
-  return true;
-}
-
-bool mdtClUnit::removeUnitConnections(const QModelIndexList & indexListOfSelectedRows)
-{
-  int i;
-  QList<QVariant> idList;
-
-  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
-    idList.append(indexListOfSelectedRows.at(i).data());
-  }
-
-  return removeUnitConnections(idList);
-}
 
 
 bool mdtClUnit::addRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData) {

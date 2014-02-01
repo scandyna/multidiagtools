@@ -194,6 +194,26 @@ class mdtClUnit : public mdtTtBase
    */
   QString toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows);
 
+  /*! \brief Add unit connection
+   */
+  bool addConnection(const mdtClUnitConnectionData & data);
+
+  /*! \brief Remove a single unit connection
+   */
+  bool removeConnection(const QVariant & unitConnectionId);
+
+  /*! \brief Remove a list of unit connections
+   */
+  ///bool removeUnitConnections(const QList<QVariant> &unitConnectionIdList);
+
+  /*! \brief Remove each unit connection that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeConnections(const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief Add a unit connector
    *
@@ -225,22 +245,6 @@ class mdtClUnit : public mdtTtBase
    */
   ///bool editUnitConnection(const mdtClUnitConnectionData & data);
 
-  /*! \brief Remove a single unit connection
-   */
-  bool removeUnitConnection(const QVariant & unitConnectionId);
-
-  /*! \brief Remove a list of unit connections
-   */
-  bool removeUnitConnections(const QList<QVariant> &unitConnectionIdList);
-
-  /*! \brief Remove each unit connection that is contained in selection
-   *
-   * This is usefull used together with mdtSqlTableWidget .
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  bool removeUnitConnections(const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief
    */

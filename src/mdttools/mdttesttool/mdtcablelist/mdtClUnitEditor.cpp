@@ -618,13 +618,11 @@ void mdtClUnitEditor::addFreeConnection()
     return;
   }
   // Add connection
-  /**
-  if(!unit.addUnitConnection(dialog.data())){
+  if(!unit.addConnection(dialog.data())){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
-  */
   // Update connections view
   select("UnitConnection_view");
 }
@@ -699,7 +697,7 @@ void mdtClUnitEditor::removeConnections()
     return;
   }
   // Delete seleced rows
-  if(!unit.removeUnitConnections(indexes)){
+  if(!unit.removeConnections(indexes)){
     pvLastError = unit.lastError();
     displayLastError();
     return;

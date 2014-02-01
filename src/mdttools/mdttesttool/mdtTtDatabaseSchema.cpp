@@ -644,6 +644,12 @@ bool mdtTtDatabaseSchema::setupArticleTable()
   field.setType(QVariant::String);
   field.setLength(150);
   table.addField(field, false);
+  // IdentificationDocument
+  field = QSqlField();
+  field.setName("IdentificationDocument");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  table.addField(field, false);
   // Manufacturer
   field = QSqlField();
   field.setName("Manufacturer");
@@ -659,6 +665,12 @@ bool mdtTtDatabaseSchema::setupArticleTable()
   // Manufacturer type
   field = QSqlField();
   field.setName("ManufacturerCode");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  table.addField(field, false);
+  // ManufacturerIdentificationDocument
+  field = QSqlField();
+  field.setName("ManufacturerIdentificationDocument");
   field.setType(QVariant::String);
   field.setLength(100);
   table.addField(field, false);

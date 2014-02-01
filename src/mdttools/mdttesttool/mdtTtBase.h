@@ -134,9 +134,9 @@ class mdtTtBase : public QObject
 
   /*! \brief Remove data from given table
    *
-   * \overload removeData(const QString &, const QStringList &, const QModelIndexList &)
-   *
    * This method works for a single field .
+   *
+   * \sa removeData(const QString &, const QStringList &, const QModelIndexList &)
    */
   bool removeData(const QString & tableName, const QString & fieldName, const QModelIndexList & indexes);
 

@@ -57,6 +57,84 @@ class mdtCableListTest : public mdtTest
 
  private:
 
+  /*
+   * Create some connectors for tests:
+   *  - Id_PK : 1
+   */
+  void createTestConnectors();
+  /*
+   * Remove test connectors
+   */
+  void removeTestConnectors();
+
+  /*
+   * Create some articles for tests:
+   *  - Id_PK : 1 , ArticleCode : 1234 , DesignationEN : Article 1
+   *  - Id_PK : 2 , ArticleCode : 5678 , DesignationEN : Article 2
+   * Will FAIL on problem
+   */
+  void createTestArticles();
+  /*
+   * Remove test articles
+   */
+  void removeTestArticles();
+  /*
+   * Create some article connections for tests:
+   *  - Id_PK : 10 , Article_Id_FK : 1 , ArticleContactName : Article contact 10
+   *  - Id_PK : 20 , Article_Id_FK : 2 , ArticleContactName : Article contact 20
+   *  - Id_PK : 21 , Article_Id_FK : 2 , ArticleContactName : Article contact 21
+   */
+  void createTestArticleConnections();
+  /*
+   * Remove test article connections
+   */
+  void removeTestArticleConnections();
+  /*
+   * Create some article connectors for tests:
+   *
+   *  - Id_PK : 100 , Article_Id_FK : 1 , Connector_Id_FK : NULL , Name : Article connector 100
+   *   -> Connection: Id_PK : 15 (, Article_Id_FK : 1 , ArticleConnector_Id_FK : 100) , ArticleContactName : Article contact 15
+   *
+   *  - Id_PK : 200 , Article_Id_FK : 2 , Connector_Id_FK : 1 , Name : Article connector 200
+   *   -> Connection: Id_PK : 25 (, Article_Id_FK : 2 , ArticleConnector_Id_FK : 200) , ArticleContactName : Article contact 25
+   */
+  void createTestArticleConnectors();
+  /*
+   * Remove test article connectors
+   */
+  void removeTestArticleConnectors();
+  /*
+   * Create some article links for tests:
+   *  - ArticleConnectionStart_Id_FK : 10 , ArticleConnectionEnd_Id_FK : 20 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
+   *  - ArticleConnectionStart_Id_FK : 21 , ArticleConnectionEnd_Id_FK : 20 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
+   */
+  void createTestArticleLinks();
+  /*
+   * Remove test article links
+   */
+  void removeTestArticleLinks();
+
+  /*
+   * Create some units for tests:
+   *  - Id_PK : 1000 , Article_Id_FK : NULL , SchemaPosition : Position 1000
+   *  - Id_PK : 2000 , Article_Id_FK : 2    , SchemaPosition : Position 2000
+   */
+  void createTestUnits();
+  /*
+   * Remove test units
+   */
+  void removeTestUnits();
+  /*
+   * Create some unit connections for tests:
+   *  - Id_PK : 10000 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , UnitContactName : Unit contact 10000
+   *  - Id_PK : 20000 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 20 , UnitContactName : Unit contact 20000
+   */
+  void createTestUnitConnections();
+  /*
+   * Remove test unit connections
+   */
+  void removeTestUnitConnections();
+
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
