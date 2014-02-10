@@ -1,6 +1,6 @@
 format 204
 "mdtdatabase" // mdtdatabase
-  revision 9
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -679,14 +679,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 1329666 // <generalisation>
-	relation 1316738 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1329666 // <generalisation>
-	  b parent class_ref 404994 // QSqlRecord
-      end
-
       operation 1844354 "mdtSqlRecord"
 	public explicit_return_type ""
 	nparams 0
@@ -737,7 +729,7 @@ ${inlines}
 
       classrelation 1329794 // pvLastError (<directional composition>)
 	relation 1316866 *-->
-	  a role_name "pvLastError" multiplicity "1" private
+	  a role_name "pvLastError" multiplicity "1" protected
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1329794 // pvLastError (<directional composition>)
@@ -759,19 +751,13 @@ ${inlines}
 	
       end
 
-      operation 1845250 "lastErrorW"
-	protected return_type class_ref 182402 // mdtError
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      classrelation 1397890 // pvRecord (<directional composition>)
+	relation 1384962 *-->
+	  a role_name "pvRecord" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
+	    classrelation_ref 1397890 // pvRecord (<directional composition>)
+	  b parent class_ref 404994 // QSqlRecord
       end
     end
   end

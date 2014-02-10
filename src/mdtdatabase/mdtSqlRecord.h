@@ -224,14 +224,6 @@ class mdtSqlRecord
 
  protected:
 
-  /*! \brief Get last error for write access
-   *
-   * Can be used by subclass to set the last error.
-   */
-  ///mdtError & lastErrorW();
-
- ///private:
-
   mdtError pvLastError;
 
  private:

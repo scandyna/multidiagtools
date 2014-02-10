@@ -137,7 +137,7 @@ class mdtCcTestConnectionCable : public mdtTtBase
 
   /*! \brief Get test link data for given test cable ID
    */
-  QList<mdtClLinkData> getTestLinkDataByTestCableId(const QVariant & testCableId);
+  ///QList<mdtClLinkData> getTestLinkDataByTestCableId(const QVariant & testCableId);
 
   /*! \brief Disconnect a test cable
    */

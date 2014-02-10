@@ -475,6 +475,7 @@ bool mdtCcTestConnectionCable::addLinks(const QVariant & nodeId, const QList<QVa
 }
 */
 
+/**
 QList<mdtClLinkData> mdtCcTestConnectionCable::getTestLinkDataByTestCableId(const QVariant & testCableId)
 {
   QString sql;
@@ -508,9 +509,13 @@ QList<mdtClLinkData> mdtCcTestConnectionCable::getTestLinkDataByTestCableId(cons
 
   return dataList;
 }
+*/
 
 bool mdtCcTestConnectionCable::connectTestCable(const QVariant & testCableId, const QVariant & testNodeId, const QVariant & dutVehicleTypeId)
 {
+  qDebug() << "mdtCcTestConnectionCable::connectTestCable() - CURRENTLY NOT IMPLEMENTED !!";
+  return false;
+  /**
   QList<mdtClLinkData> testLinkDataList;
   mdtClLinkData data;
   mdtClUnit unit(this, database());
@@ -537,12 +542,16 @@ bool mdtCcTestConnectionCable::connectTestCable(const QVariant & testCableId, co
     }
     qDebug() << "->Link added";
   }
+  */
 
   return true;
 }
 
 bool mdtCcTestConnectionCable::disconnectTestCable(const QVariant & testCableId)
 {
+  qDebug() << "mdtCcTestConnectionCable::disconnectTestCable() - CURRENTLY NOT IMPLEMENTED !!";
+  return false;
+  /**
   QList<mdtClLinkData> testLinkDataList;
   mdtClLinkData data;
   mdtClUnit unit(this, database());
@@ -562,6 +571,7 @@ bool mdtCcTestConnectionCable::disconnectTestCable(const QVariant & testCableId)
     }
     qDebug() << "->Link removed";
   }
+  */
 
   return true;
 }

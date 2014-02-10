@@ -51,6 +51,12 @@ class mdtClUnit : public mdtTtBase
    */
   ~mdtClUnit();
 
+  /*! \brief Get SQL statement for component selection
+   *
+   * List all units, expected those that are allready component of given unitId
+   */
+  QString sqlForComponentSelection(const QVariant & unitId) const;
+
   /*! \brief Get SQL statement for connector contacts selection
    *
    * List all connector contacts for given connector ID (from Connector_tbl).
@@ -77,20 +83,6 @@ class mdtClUnit : public mdtTtBase
    *  and that are not used by a given unit ID .
    */
   QString sqlForArticleConnectionLinkedToArticleConnectorSelection(const QVariant & articleConnectorId, const QVariant & unitId) const;
-
-  /*! \brief Get SQL statement for article connection selection
-   *
-   * List all article connections for a given article ID,
-   *  and that are not used by a given unit ID .
-   */
-  QString sqlForArticleConnectionLinkedToArticleSelection(const QVariant & articleId, const QVariant & unitId) const;
-
-  /*! \brief Get SQL statement for article connection linked to a unit connector selection
-   *
-   * List all article connections that are related to given unit connector,
-   *  and that are not allready used in given unit .
-   */
-  QString sqlForArticleConnectionLinkedToUnitConnectorSelection(const QVariant & unitConnectorId, const QVariant & unitId) const;
 
   /*! \brief Get unit connection data for given unit connection ID
    *
@@ -161,48 +153,6 @@ class mdtClUnit : public mdtTtBase
    */
   bool addConnectionDataListFromArticleConnectionIdList(mdtClUnitConnectorData & data, const QList<QVariant> & articleConnectionIdList, bool copyContactName);
 
-  /*! \brief Get connector contact data (from ConnectorContact_tbl) for a given contact ID
-   * \brief Get (unit) connection data from connector contact data (ConnectorContact_tbl)
-   *
-   * 
-   */
-  ///mdtClUnitConnectionData getBaseConnectorContactData(const QVariant & contactId, mdtClUnitConnectionData data = mdtClUnitConnectionData());
-  ///mdtSqlRecord getConnectionDataFromConnectorContact(const QVariant & connectorContactId, bool *ok, mdtSqlRecord data = mdtSqlRecord());
-
-  /*! \brief Get unit connection data for given article connection ID and unit ID
-   *
-   * \sa getConnectionDataByUnitConnectionId()
-   */
-  ///mdtClUnitConnectionData getConnectionDataByArticleConnectionId(const QVariant & articleConnectionId, const QVariant & unitId);
-
-  /*! \brief Get article connection data
-   *
-   * Will get article connection data and article connector data .
-   */
-  ///mdtClUnitConnectionData getArticleConnectionData(const QVariant & articleConnectionId, mdtClUnitConnectionData data = mdtClUnitConnectionData());
-
-  /*! \brief Get unit connector data for given unit connector ID
-   */
-  ///mdtClUnitConnectionData getUnitConnectorData(const QVariant & unitConnectorId, mdtClUnitConnectionData data = mdtClUnitConnectionData());
-
-  /*! \brief Get article connector data for given article connector ID
-   */
-  ///mdtClUnitConnectionData getArticleConnectorData(const QVariant & articleConnectorId, mdtClUnitConnectionData data = mdtClUnitConnectionData());
-
-  /*! \brief Get unit connector data for a given article connector ID and unit ID
-   *
-   * If given unit has no connector based on given article connector,
-   *  data will not be updated
-   */
-  ///mdtClUnitConnectionData getUnitConnectorDataByArticleConnectorId(const QVariant & articleConnectorId, const QVariant & unitId, mdtClUnitConnectionData data = mdtClUnitConnectionData());
-
-  /*! \brief Get a model with units for compononent selection
-   *
-   * Will setup a query model witch contains all units except unitId
-   *  and units that allready are component of unitId .
-   */
-  QSqlQueryModel *unitModelForComponentSelection(const QVariant &unitId);
-
   /*! \brief Add a unit as component
    *
    * \return True on success, false else.
@@ -233,10 +183,6 @@ class mdtClUnit : public mdtTtBase
    *         On error, use lastError() to check what goes wrong.
    */
   int toUnitRelatedArticleConnectionCount(const QVariant & unitId);
-
-  /*! \brief
-   */
-  QSqlQueryModel *toUnitConnectionRelatedRangesModel(const QVariant & unitConnectionId);
 
   /*! \brief Get a model that contains links that are related to given unit ID and a list of unit connection IDs
    */
@@ -297,16 +243,6 @@ class mdtClUnit : public mdtTtBase
    *  because they are token from data directly.
    */
   bool addConnector(const mdtClUnitConnectorData & data);
-
-  /*! \brief Add a unit connector
-   *
-   * Note: will only add connector, not the connections .
-   */
-  ///bool addConnector(const QVariant & unitId, const QVariant & baseConnectorId, const QVariant & articleConnectorId, const QVariant & name);
-
-  /*! \brief Add a unit connector and a list of connections
-   */
-  ///bool addConnector(const QVariant & unitId, const QVariant & baseConnectorId, const QVariant & articleConnectorId, const QVariant & name, const QList<mdtClUnitConnectionData> connectionList);
 
   /*! \brief Remove a unit connector and its contacts
    */
@@ -390,34 +326,8 @@ class mdtClUnit : public mdtTtBase
    */
   bool removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, QSqlQuery &query);
 
-  /*! \brief Fill unit connection data part
-   *
-   * This method is used by getConnectionDataByUnitConnectionId() and getConnectionDataByArticleConnectionId() .
-   */
-  ///bool fillUnitConnectionDataPart(mdtClUnitConnectionData & data, const QVariant & unitConnectionId);
-
-  /*! \brief Fill unit connector data part
-   *
-   * This method is used by getConnectionDataByUnitConnectionId() and getConnectionDataByArticleConnectionId() .
-   */
-  ///bool fillUnitConnectorDataPart(mdtClUnitConnectionData & data, const QVariant & unitConnectorId);
-
-  /*! \brief Fill article connection data part
-   *
-   * This method is used by getConnectionDataByUnitConnectionId() and getConnectionDataByArticleConnectionId() .
-   */
-  ///bool fillArticleConnectionDataPart(mdtClUnitConnectionData & data, const QVariant & articleConnectionId);
-
-  /*! \brief Fill article connector data part
-   *
-   * This method is used by getConnectionDataByUnitConnectionId() and getConnectionDataByArticleConnectionId() .
-   */
-  ///bool fillArticleConnectorDataPart(mdtClUnitConnectionData & data, const QVariant & articleConnectorId);
-
   Q_DISABLE_COPY(mdtClUnit);
 
-  QSqlQueryModel *pvToUnitConnectionRelatedRangesModel;
-  QSqlQueryModel *pvUnitModel;
   QSqlQueryModel *pvUnitLinkModel;
 };
 

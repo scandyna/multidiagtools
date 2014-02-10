@@ -44,14 +44,6 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
    */
   ~mdtClUnitConnectionDialog();
 
-  /*! \brief Set unit ID
-   */
-  ///void setUnitId(const QVariant & id);
-
-  /*! \brief Set article connection ID
-   */
-  ///void setArticleConnectionId(const QVariant & id);
-
   /*! \brief Set data
    *
    * Fields that are realated to article connection,
@@ -91,14 +83,10 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
    */
   void setNoConnector();
 
-  /*! \brief Copy article connector name to unit connector name
-   */
-  void copyConnectorName();
-
   /*! \brief Select article connection or base connector connection
    *
    * Depending on what is based unit connector, this method will do:
-   *  - If no unit connector was set: \todo Store base article ID...
+   *  - If no unit connector was set:
    *     List article connections related to current unit, and based on no article connector,
    *     let the user choose one and copy its contact name.
    *  - If unit connector is based on a article connector:

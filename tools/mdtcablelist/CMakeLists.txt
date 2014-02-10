@@ -53,7 +53,7 @@ set (SOURCES_FILES
 #           src/mdtClUnitConnectionDialog.cpp
 #           src/mdtClUnitConnectionSelectionDialog.cpp
 #           src/mdtClUnitLinkDialog.cpp
-          src/mdtClLinkData.cpp
+#          src/mdtClLinkData.cpp
           src/mdtClTerminalBlockEditor.cpp
           src/mdtClTerminalEditorDialog.cpp
 #           src/mdtClUnitVehicleType.cpp

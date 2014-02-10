@@ -21,15 +21,12 @@
 #include "mdtClUnitConnectionDialog.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtClUnit.h"
-///#include "mdtClConnectorData.h"
-///#include "mdtClArticleConnectorData.h"
-#include "mdtClArticleConnectionData.h"
 #include "mdtSqlSelectionDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlError>
 #include <QMessageBox>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClUnitConnectionDialog::mdtClUnitConnectionDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
@@ -40,31 +37,16 @@ mdtClUnitConnectionDialog::mdtClUnitConnectionDialog(QWidget *parent, QSqlDataba
   connect(pbCopyFunctionFR, SIGNAL(clicked()), this, SLOT(copyFunctionFR()));
   connect(pbCopyFunctionDE, SIGNAL(clicked()), this, SLOT(copyFunctionDE()));
   connect(pbCopyFunctionIT, SIGNAL(clicked()), this, SLOT(copyFunctionIT()));
-  ///connect(pbCopyConnectorName, SIGNAL(clicked()), this, SLOT(copyConnectorName()));
   connect(pbCopyContactName, SIGNAL(clicked()), this, SLOT(copyContactName()));
   hideArticleConnectionWidgets();
-  /// \todo Currently, changing unit connector is not implemented
   connect(pbSelectUnitConnector, SIGNAL(clicked()), this, SLOT(selectUnitConnector()));
   connect(pbSelectContact, SIGNAL(clicked()), this, SLOT(selectConnection()));
   connect(pbSetNoConnector, SIGNAL(clicked()), this, SLOT(setNoConnector()));
-  ///pbSelectUnitConnector->setEnabled(false);
 }
 
 mdtClUnitConnectionDialog::~mdtClUnitConnectionDialog()
 {
 }
-
-/**
-void mdtClUnitConnectionDialog::setUnitId(const QVariant & id)
-{
-  pvData.setValue("Id_PK", id);
-}
-
-void mdtClUnitConnectionDialog::setArticleConnectionId(const QVariant & id)
-{
-  pvData.articleConnectionData().setValue("Id_PK", id);
-}
-*/
 
 void mdtClUnitConnectionDialog::setData(const mdtClUnitConnectionData &data, const QVariant & baseArticleId)
 {
@@ -175,25 +157,6 @@ void mdtClUnitConnectionDialog::setNoConnector()
   pvData.setValue("UnitContactName", QVariant());
   pvData.articleConnectionData().setValue("ArticleContactName", QVariant());
   updateDialog();
-}
-
-
-void mdtClUnitConnectionDialog::copyConnectorName()
-{
-  /**
-  if(!leUnitConnectorName->text().isEmpty()){
-    QMessageBox msgBox(this);
-    msgBox.setText(tr("Connector name has allready data."));
-    msgBox.setInformativeText(tr("Do you want to overwrite ?"));
-    msgBox.setIcon(QMessageBox::Warning);
-    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-    msgBox.setDefaultButton(QMessageBox::No);
-    if(msgBox.exec() != QMessageBox::Yes){
-      return;
-    }
-  }
-  leUnitConnectorName->setText(lbArticleConnectorName->text());
-  */
 }
 
 void mdtClUnitConnectionDialog::selectConnection()
@@ -444,22 +407,11 @@ void mdtClUnitConnectionDialog::updateConnectorData()
   }
 }
 
-
 void mdtClUnitConnectionDialog::updateDialog()
 {
   // Connector part
   updateConnectorData();
   // Article connection data part
-  /**
-  if(pvData.articleConnectionData().connectorName().isNull()){
-    lbArticleConnectorName->setVisible(false);
-    ///pbCopyConnectorName->setVisible(false);
-  }else{
-    lbArticleConnectorName->setVisible(true);
-    ///pbCopyConnectorName->setVisible(true);
-    lbArticleConnectorName->setText(pvData.articleConnectionData().connectorName().toString());
-  }
-  */
   if(pvData.articleConnectionData().value("ArticleContactName").isNull()){
     lbContactName->setVisible(false);
     pbCopyContactName->setVisible(false);
@@ -516,7 +468,6 @@ void mdtClUnitConnectionDialog::updateDialog()
   leFunctionIT->setText(pvData.value("FunctionIT").toString());
   leSignalName->setText(pvData.value("SignalName").toString());
   sbSwAddress->setValue(pvData.value("SwAddress").toInt());
-  ///lbUnitConnectorName->setText(pvData.value("???").toString());
   leUnitContactName->setText(pvData.value("UnitContactName").toString());
 }
 
@@ -543,11 +494,6 @@ void mdtClUnitConnectionDialog::updateData()
   if(sbSwAddress->value() > 0){
     pvData.setValue("SwAddress", sbSwAddress->value());
   }
-  /**
-  if(!leUnitConnectorName->text().isEmpty()){
-    pvData.setConnectorName(leUnitConnectorName->text());
-  }
-  */
   if(!leUnitContactName->text().isEmpty()){
     pvData.setValue("UnitContactName", leUnitContactName->text());
   }
@@ -568,7 +514,6 @@ void mdtClUnitConnectionDialog::hideArticleConnectionWidgets()
   pbCopyFunctionIT->setVisible(false);
   lbArticleConnectorName->setVisible(false);
   lbArticleConnectorNameLabel->setVisible(false);
-  ///lbArticleContactName->setVisible(false);
   pbCopyContactName->setVisible(false);
 }
 
@@ -586,6 +531,5 @@ void mdtClUnitConnectionDialog::showArticleConnectionWidgets()
   pbCopyFunctionIT->setVisible(true);
   lbArticleConnectorName->setVisible(true);
   lbArticleConnectorNameLabel->setVisible(true);
-  ///lbArticleContactName->setVisible(true);
   pbCopyContactName->setVisible(true);
 }

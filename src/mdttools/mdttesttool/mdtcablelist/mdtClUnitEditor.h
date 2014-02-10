@@ -90,19 +90,9 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   void removeConnectors();
 
-  /*! \brief Add a connection
-   *
-   * Will let user choose to start from a (unit) connector or not
-   */
-  ///void addConnection();
-
-  /*! \brief Add a connection based on a article connection
-   */
-  ///void addArticleConnectionBasedConnection();
-
   /*! \brief Add a connection to unit connection table
    */
-  void addFreeConnection();
+  void addConnection();
 
   /*! \brief Edit a connection
    */
@@ -152,14 +142,6 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   QVariant selectBaseConnectorContactId(const QVariant & connectorId);
 
-  /*! \brief Select a connector assigned to current unit
-   */
-  QVariant selectUnitConnector();
-
-  /*! \brief Let user select a article connection related to a unit connector
-   */
-  QVariant selectArticleConnectionLinkedToUnitConnector(const QVariant & unitConnectorId, const QVariant & unitId);
-
   /*! \brief Let user choose a connector from those that are related to current article
    */
   QVariant selectArticleConnector();
@@ -167,18 +149,6 @@ class mdtClUnitEditor : public mdtSqlForm
   /*! \brief Select article connections related to given article connector ID
    */
   QList<QVariant> selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection = true);
-
-  /*! \brief Select a article connection related to given article connector ID
-   */
-  QVariant selectByArticleConnectorIdArticleConnectionId(const QVariant & articleConnectorId, const QVariant & unitId);
-
-  /*! \brief Select article connections related to given article ID
-   */
-  QList<QVariant> selectByArticleIdArticleConnectionIdList(const QVariant & articleId, const QVariant & unitId, bool multiSelection = true);
-
-  /*! \brief Select a article connection related to given article ID
-   */
-  QVariant selectByArticleIdArticleConnectionId(const QVariant & articleId, const QVariant & unitId);
 
   /*! \brief Setup Unit table and widget
    */

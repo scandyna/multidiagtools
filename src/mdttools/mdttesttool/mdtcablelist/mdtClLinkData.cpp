@@ -20,11 +20,13 @@
  ****************************************************************************/
 #include "mdtClLinkData.h"
 
-mdtClLinkData::mdtClLinkData() 
+mdtClLinkData::mdtClLinkData()
+ : mdtSqlRecord()
 {
 }
 
-mdtClLinkData::mdtClLinkData(const QSqlRecord & record) 
+mdtClLinkData::mdtClLinkData(const QSqlRecord & record)
+ : mdtSqlRecord(record)
 {
   Q_ASSERT(indexOf("UnitConnectionStart_Id_FK") >= 0);
   Q_ASSERT(indexOf("UnitConnectionEnd_Id_FK") >= 0);
