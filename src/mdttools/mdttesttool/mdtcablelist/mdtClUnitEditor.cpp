@@ -424,34 +424,41 @@ void mdtClUnitEditor::addConnectorBasedConnector()
   select("UnitConnection_view");
 }
 
-/**
 void mdtClUnitEditor::addArticleConnectorBasedConnector()
 {
   QVariant unitId;
   QVariant connectorName;
-  mdtClUnitConnectionData connectorData;
+  mdtClUnitConnectorData connectorData;
   QVariant articleConnectorId;
-  QList<QVariant> articleConnectionList;
-  QList<mdtClUnitConnectionData> connectionDataList;
-  mdtClUnit unit(this, database());
+  QList<QVariant> articleConnectionIdList;
+  mdtClUnit unit(0, database());
   QInputDialog dialog;
-  int i;
 
+  // Setup data
+  if(!connectorData.setup(database(), true, true)){
+    pvLastError = connectorData.lastError();
+    displayLastError();
+    return;
+  }
   // Get unit ID
   unitId = currentUnitId();
   if(unitId.isNull()){
     return;
   }
+  connectorData.setValue("Unit_Id_FK", unitId);
   // Let user choose a article connector
   articleConnectorId = selectArticleConnector();
   if(articleConnectorId.isNull()){
     return;
   }
-  // Get article connector data
-  connectorData = unit.getArticleConnectorData(articleConnectorId);
+  // Add connector data
+  if(!unit.addArticleConnectorData(connectorData, articleConnectorId, true)){
+    pvLastError = unit.lastError();
+    displayLastError();
+    return;
+  }
   // Set connector name
-  ///connectorName = unit.getArticleConnectorName(articleConnectorId);
-  connectorName = connectorData.articleConnectionData().connectorName();
+  connectorName = connectorData.value("Name");
   dialog.setLabelText(tr("Connector name:"));
   dialog.setTextValue(connectorName.toString());
   if(dialog.exec() != QDialog::Accepted){
@@ -461,38 +468,54 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
   if(connectorName.isNull()){
     return;
   }
-  connectorData.setConnectorName(connectorName);
+  connectorData.setValue("Name", connectorName);
   // Select article connections to use
-  articleConnectionList = selectByArticleConnectorIdArticleConnectionIdList(articleConnectorId, unitId);
-  if(articleConnectionList.isEmpty()){
+  articleConnectionIdList = selectByArticleConnectorIdArticleConnectionIdList(articleConnectorId, unitId);
+  if(articleConnectionIdList.isEmpty()){
     return;
   }
-  // Get connections data
-  for(i = 0; i < articleConnectionList.size(); ++i){
-    connectionDataList.append(unit.getArticleConnectionData(articleConnectionList.at(i)));
-    connectionDataList[i].copyArticleConnectionAttributes();
+  // Add connections
+  if(!unit.addConnectionDataListFromArticleConnectionIdList(connectorData, articleConnectionIdList, true)){
+    pvLastError = unit.lastError();
+    displayLastError();
+    return;
   }
   // Add connector
-  if(!unit.addConnector(unitId, QVariant(), articleConnectorId, connectorName, connectionDataList)){
+  if(!unit.addConnector(connectorData)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
   // Update connections view
+  select("UnitConnector_view");
   select("UnitConnection_view");
 }
-*/
 
-void mdtClUnitEditor::removeConnector()
+void mdtClUnitEditor::removeConnectors()
 {
-  QVariant connectorId;
+  mdtSqlTableWidget *widget;
   mdtClUnit unit(this, database());
+  QMessageBox msgBox;
+  QModelIndexList indexes;
 
-  connectorId = selectUnitConnector();
-  if(connectorId.isNull()){
+  widget = sqlTableWidget("UnitConnector_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  indexes = widget->indexListOfSelectedRows("Id_PK");
+  if(indexes.size() < 1){
     return;
   }
-  if(!unit.removeConnector(connectorId)){
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove connectors from current unit. This will also remove related connections."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove connectors
+  if(!unit.removeConnectors(indexes)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
@@ -558,7 +581,7 @@ void mdtClUnitEditor::addConnection()
 }
 */
 
-  /**
+/**
 void mdtClUnitEditor::addArticleConnectionBasedConnection()
 {
   mdtClUnitConnectionDialog connectionDialog(0, database());
@@ -585,7 +608,6 @@ void mdtClUnitEditor::addArticleConnectionBasedConnection()
   }
   data = unit.getArticleConnectionData(articleConnectionId, data);
   data.copyArticleConnectionAttributes();
-  */
   /*
    * Check if seleced article connection is based on a article connector,
    *  wich is used as base of a unit connector used in current unit .
@@ -631,7 +653,7 @@ void mdtClUnitEditor::addFreeConnection()
   }
   data.setValue("Unit_Id_FK", unitId);
   // Setup and show dialog
-  dialog.setData(data);
+  dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
@@ -668,7 +690,7 @@ void mdtClUnitEditor::editConnection()
     displayLastError();
   }
   // Setup and show dialog
-  dialog.setData(data);
+  dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
@@ -1344,7 +1366,7 @@ bool mdtClUnitEditor::setupUnitConnectorTable()
   QPushButton *pbAddConnector;
   QPushButton *pbAddConnectorBasedConnector;
   QPushButton *pbAddArticleConnectorBasedConnector;
-  QPushButton *pbRemoveConnector;
+  QPushButton *pbRemoveConnectors;
 
   if(!addChildTable("UnitConnector_view", tr("Connectors"), database())){
     return false;
@@ -1355,22 +1377,26 @@ bool mdtClUnitEditor::setupUnitConnectorTable()
   widget = sqlTableWidget("UnitConnector_view");
   Q_ASSERT(widget != 0);
   // Hide relation fields and PK
-  widget->setColumnHidden("", true);
+  widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("Unit_Id_FK", true);
+  widget->setColumnHidden("Connector_Id_FK", true);
+  widget->setColumnHidden("ArticleConnector_Id_FK", true);
   // Give fields a user friendly name
-  widget->setHeaderData("", tr(""));
+  widget->setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
+  widget->setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
   // Add edition buttons
   pbAddConnector = new QPushButton(tr("Add free connector ..."));
   pbAddConnectorBasedConnector = new QPushButton(tr("Add connector ..."));
   pbAddArticleConnectorBasedConnector = new QPushButton(tr("Add art. connector ..."));
-  pbRemoveConnector = new QPushButton(tr("Rem. connector"));
+  pbRemoveConnectors = new QPushButton(tr("Rem. connector"));
   connect(pbAddConnector, SIGNAL(clicked()), this, SLOT(addConnector()));
   connect(pbAddConnectorBasedConnector, SIGNAL(clicked()), this, SLOT(addConnectorBasedConnector()));
   connect(pbAddArticleConnectorBasedConnector, SIGNAL(clicked()), this, SLOT(addArticleConnectorBasedConnector()));
-  connect(pbRemoveConnector, SIGNAL(clicked()), this, SLOT(removeConnector()));
+  connect(pbRemoveConnectors, SIGNAL(clicked()), this, SLOT(removeConnectors()));
   widget->addWidgetToLocalBar(pbAddConnector);
   widget->addWidgetToLocalBar(pbAddConnectorBasedConnector);
   widget->addWidgetToLocalBar(pbAddArticleConnectorBasedConnector);
-  widget->addWidgetToLocalBar(pbRemoveConnector);
+  widget->addWidgetToLocalBar(pbRemoveConnectors);
   widget->addStretchToLocalBar();widget->addStretchToLocalBar();
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();

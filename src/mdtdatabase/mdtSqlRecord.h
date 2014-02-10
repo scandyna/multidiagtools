@@ -23,6 +23,7 @@
 
 #include "mdtError.h"
 #include <QSqlRecord>
+#include <QSqlField>
 #include <QSqlDatabase>
 #include <QString>
 #include <QStringList>
@@ -44,10 +45,8 @@
  *  - On error, use clear()  (from QSqlRecord).
  *  - The user can also check if data record instance is valid by using
  *     isEmpty() (from QSqlRecord) and lastError().
- *
- * \sa Qt's QSqlRecord documentation
  */
-class mdtSqlRecord : public QSqlRecord
+class mdtSqlRecord
 {
  public:
 
@@ -62,6 +61,10 @@ class mdtSqlRecord : public QSqlRecord
   /*! \brief Destructor
    */
   virtual ~mdtSqlRecord();
+
+  /*! \brief Get QSqlRecord version
+   */
+  operator QSqlRecord();
 
   /*! \brief Add a field to record
    *
@@ -85,6 +88,34 @@ class mdtSqlRecord : public QSqlRecord
    */
   bool addAllFields(const QString & tableName, const QSqlDatabase & db);
 
+  /*! \brief Returns the number of fields in the record.
+   */
+  inline int count() const { return pvRecord.count(); }
+
+  /*! \brief Returns true if there are no fields in the record; otherwise returns false.
+   */
+  inline bool isEmpty() const { return pvRecord.isEmpty(); }
+
+  /*! \brief Returns the field at position index.
+   *
+   * If the index is out of range, function returns a default-constructed value.
+   */
+  inline QSqlField field(int index) const { return pvRecord.field(index); }
+
+  /*! \brief Returns the field called name.
+   */
+  inline QSqlField field(const QString & name) const { return pvRecord.field(name); }
+
+  /*! \brief Returns the position of the field called name within the record, or -1 if it cannot be found.
+   *
+   * Field names are not case-sensitive. If more than one field matches, the first one is returned.
+   */
+  inline int indexOf(const QString & name) const { return pvRecord.indexOf(name); }
+
+  /*! \brief Returns true if there is a field in the record called name; otherwise returns false.
+   */
+  inline bool contains(const QString & name) const { return pvRecord.contains(name); }
+
   /*! \brief Get a list with all field names
    */
   QStringList fieldNames() const;
@@ -100,13 +131,13 @@ class mdtSqlRecord : public QSqlRecord
    *
    * Note: internally, QSqlRecord::isGenerated() is used.
    */
-  bool hasValue(int fieldIndex) const;
+  inline bool hasValue(int fieldIndex) const { return pvRecord.isGenerated(fieldIndex); }
 
   /*! \brief Check if a value was set
    *
    * \sa hasValue(int)
    */
-  bool hasValue(const QString & fieldName) const;
+  inline bool hasValue(const QString & fieldName) const { return pvRecord.isGenerated(fieldName); }
 
   /*! \brief Set value
    *
@@ -119,6 +150,22 @@ class mdtSqlRecord : public QSqlRecord
    * \sa setValue(int)
    */
   void setValue(const QString & fieldName, const QVariant & val);
+
+  /*! \brief Returns the value of the field located at position index in the record.
+   *
+   * If index is out of bounds, an invalid QVariant is returned.
+   */
+  inline QVariant value(int index) const { return pvRecord.value(index); }
+
+  /*! \brief Returns the value of the field called name in the record.
+   *
+   * If field name does not exist an invalid variant is returned.
+   */
+  inline QVariant value(const QString & name) const { return pvRecord.value(name); }
+
+  /*! \brief Removes all the record's fields.
+   */
+  virtual void clear();
 
   /*! \brief Clear values
    *
@@ -186,6 +233,10 @@ class mdtSqlRecord : public QSqlRecord
  ///private:
 
   mdtError pvLastError;
+
+ private:
+
+  QSqlRecord pvRecord;
 };
 
 #endif // #ifndef MDT_SQL_RECORD_H

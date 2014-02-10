@@ -53,7 +53,7 @@ class mdtClArticleConnectionData : public mdtSqlRecord
 
   /*! \brief Setup fields from ArticleConnection_tbl
    */
-  bool setup(const QSqlDatabase & db);
+  bool setup(QSqlDatabase db);
 };
 
 #endif // #ifndef MDT_CL_ARTICLE_CONNECTION_DATA_H

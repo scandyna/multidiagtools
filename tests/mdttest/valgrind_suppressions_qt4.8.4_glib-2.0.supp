@@ -1,0 +1,580 @@
+# Rules generated with minimalApp base
+{
+   Invalid address during a memory access (size 4) in libfontconfig
+   Memcheck:Addr4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   fun:FcConfigFilename
+   fun:FcConfigParseAndLoad
+   obj:*
+}
+{
+   Invalid address during a memory access (size 4) in libfontconfig
+   Memcheck:Addr4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:*
+}
+{
+   Invalid address during a memory access (size 4) in libfontconfig
+   Memcheck:Addr4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   fun:FcConfigParseAndLoad
+   fun:FcConfigParseAndLoad
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+}
+{
+   Invalid address during a memory access (size 4) in libfontconfig
+   Memcheck:Addr4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   fun:FcConfigParseAndLoad
+   fun:FcConfigParseAndLoad
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+}
+{
+   Invalid address during a memory access (size 4) in libfontconfig
+   Memcheck:Addr4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:*
+}
+{
+   Invalid address during a memory access (size 4) in libfontconfig
+   Memcheck:Addr4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:*
+}
+{
+   Memory leak in libQtGui/libglib
+   Memcheck:Leak
+   fun:memalign
+   fun:posix_memalign
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_slice_alloc
+   fun:g_slist_prepend
+   fun:g_strsplit
+   fun:g_get_language_names
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_thread_init_glib
+   fun:g_thread_init
+   fun:_ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+}
+{
+   Memory leak in libQtGui/libxcb
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+   obj:/usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+   fun:xcb_connect_to_display_with_auth_info
+   fun:xcb_connect
+   fun:_XConnectXCB
+   fun:XOpenDisplay
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   obj:*
+}
+{
+   Memory leak in libfontconfig
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   Memory leak in libQtGui
+   Memcheck:Leak
+   fun:malloc
+   fun:nss_parse_service_list
+   fun:__nss_database_lookup
+   obj:*
+   obj:*
+   fun:getpwuid_r@@GLIBC_2.1.2
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+   fun:_SmcProcessMessage
+   fun:IceProcessMessages
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+   obj:*
+}
+{
+   Memory leak in libfontconfig
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   Memory leak in function _ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+   Memcheck:Leak
+   fun:calloc
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_malloc0
+   fun:g_malloc0_n
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_get_language_names
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_thread_init_glib
+   fun:g_thread_init
+   fun:_ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+}
+{
+   Memory leak in function _ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext (libQtGui/libglib)
+   Memcheck:Leak
+   fun:memalign
+   fun:posix_memalign
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_slice_alloc
+   fun:g_slist_prepend
+   fun:g_strsplit
+   fun:g_get_language_names
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_thread_init_glib
+   fun:g_thread_init
+   fun:_ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+}
+{
+   Memory leak in _ZN19QApplicationPrivate21createEventDispatcherEv
+   Memcheck:Leak
+   fun:malloc
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_malloc
+   fun:g_strdup
+   fun:g_get_language_names
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_thread_init_glib
+   fun:g_thread_init
+   fun:_ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+   fun:_ZN19QApplicationPrivate21createEventDispatcherEv
+}
+{
+   Memory leak in _ZN19QApplicationPrivate21createEventDispatcherEv (function memalign)
+   Memcheck:Leak
+   fun:memalign
+   fun:posix_memalign
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_slice_alloc
+   fun:g_hash_table_new_full
+   fun:g_hash_table_new
+   fun:g_get_language_names
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_thread_init_glib
+   fun:g_thread_init
+   fun:_ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+}
+{
+   Memory leak in libX11 (function malloc)
+   Memcheck:Leak
+   fun:realloc
+   obj:/usr/lib/i386-linux-gnu/libX11.so.6.3.0
+   obj:/usr/lib/i386-linux-gnu/libX11.so.6.3.0
+   obj:/usr/lib/i386-linux-gnu/libX11.so.6.3.0
+   fun:_XlcCreateLC
+   fun:_XlcUtf8Loader
+   fun:_XOpenLC
+   fun:_XrmInitParseInfo
+   obj:/usr/lib/i386-linux-gnu/libX11.so.6.3.0
+   fun:XrmGetStringDatabase
+   obj:/usr/lib/i386-linux-gnu/libX11.so.6.3.0
+   fun:XGetDefault
+}
+{
+   Memory leak in _ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext (function memalign)
+   Memcheck:Leak
+   fun:memalign
+   fun:posix_memalign
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_slice_alloc
+   fun:g_array_sized_new
+   fun:g_array_new
+   fun:g_static_private_set
+   fun:g_get_filename_charsets
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_thread_init_glib
+   fun:g_thread_init
+   fun:_ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+}
+{
+   Memory leak in _ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext (function memalign)
+   Memcheck:Leak
+   fun:memalign
+   fun:posix_memalign
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_slice_alloc
+   fun:g_hash_table_new_full
+   fun:g_hash_table_new
+   fun:g_get_language_names
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_thread_init_glib
+   fun:g_thread_init
+   fun:_ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+   obj:/usr/lib/i386-linux-gnu/libQtGui.so.4.7.4
+}
+
+# Suppression file from: http://www.developer.nokia.com/Community/Wiki/images/a/af/Qt47supp.txt?20101015135533
+{
+   Qt47supp from http://www.developer.nokia.com/Community
+   Memcheck:Cond
+   fun:_ZN20QSharedMemoryPrivate6detachEv
+   fun:_ZN13QSharedMemory6detachEv
+   fun:_ZN13QSharedMemory6setKeyERK7QString
+   fun:_ZN13QSharedMemoryD1Ev
+   fun:_ZN20QRasterWindowSurface5flushEP7QWidgetRK7QRegionRK6QPoint
+   fun:_Z8qt_flushP7QWidgetRK7QRegionP14QWindowSurfaceS0_RK6QPoint
+   fun:_ZN19QWidgetBackingStore5flushEP7QWidgetP14QWindowSurface
+   fun:_ZN19QWidgetBackingStore8endPaintERK7QRegionP14QWindowSurfaceP14BeginPaintInfo
+   fun:_ZN19QWidgetBackingStore4syncEv
+   fun:_ZN14QWidgetPrivate16syncBackingStoreEv
+   fun:_ZN7QWidget5eventEP6QEvent
+   fun:_ZN11QMainWindow5eventEP6QEvent
+}
+
+# Suppression file from: http://www.developer.nokia.com/Community/Wiki/images/a/af/Qt47supp.txt?20101015135533
+{
+   Qt47supp from http://www.developer.nokia.com/Community
+   Memcheck:Leak
+   fun:_Znwm
+   fun:_ZN18QtSimulatorPrivate15connectToServerEv
+   fun:_ZN18QtSimulatorPrivate19SimulatorConnection18connectToSimulatorEv
+   fun:_ZN18QtSimulatorPrivate19SimulatorConnection8instanceEv
+   fun:_ZN9QColormap10initializeEv
+   fun:_Z7qt_initP19QApplicationPrivatei
+   fun:_ZN19QApplicationPrivate9constructEv
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:main
+}
+
+# Rules generated with minimalApp base after adding QProgressDialog
+{
+   Memory leak in _ZN18QFontEngineMultiFTC1EP11QFontEngineP10_FcPatternS3_iRK8QFontDef after adding QProgressDialog (function: realloc)
+   Memcheck:Leak
+   fun:realloc
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   fun:FcPatternDuplicate
+   fun:_ZN18QFontEngineMultiFTC1EP11QFontEngineP10_FcPatternS3_iRK8QFontDef
+   obj:*
+}
+{
+   Memory leak in libfontconfig after adding QProgressDialog (function: realloc)
+   Memcheck:Leak
+   fun:realloc
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:/usr/lib/i386-linux-gnu/libfontconfig.so.1.4.4
+   obj:*
+}
+{
+   Memory leak in FcPatternCreate after adding QProgressDialog (function: malloc)
+   Memcheck:Leak
+   fun:malloc
+   fun:FcPatternCreate
+   obj:*
+}
+{
+   Memory leak in _ZN13QFontDatabase4loadEPK12QFontPrivatei after adding QProgressDialog
+   Memcheck:Leak
+   fun:_Znwj
+   fun:_ZN13QFontDatabase4loadEPK12QFontPrivatei
+   obj:*
+}
+{
+   Conditionnal jump depending on uninitialized value in QTextLine::layout_helper
+   Memcheck:Cond
+   fun:_ZN9QTextLine13layout_helperEi
+}
+{
+   Conditionnal jump depending on uninitialized value in QTextLine::layout_helper
+   Memcheck:Value4
+   fun:_ZN9QTextLine13layout_helperEi
+}
+
+# Rules generated with minimalApp base after adding QThread
+{
+   Memory leak with QThread and glib
+   Memcheck:Leak
+   fun:memalign
+   fun:posix_memalign
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_slice_alloc
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   obj:/lib/i386-linux-gnu/libglib-2.0.so.0.3000.0
+   fun:g_main_context_new
+   fun:_ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+   fun:_ZN20QEventDispatcherGlibC1EP7QObject
+   fun:_ZN14QThreadPrivate21createEventDispatcherEP11QThreadData
+   fun:_ZN14QThreadPrivate5startEPv
+   fun:clone
+}
+
+##################################################################
+# Rules added with x86_64 with Qt 4.8.4 - With minimalApp
+##################################################################
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:realloc
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   fun:_XlcCreateLC
+   fun:_XlcUtf8Loader
+   fun:_XOpenLC
+   fun:_XrmInitParseInfo
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   fun:XrmGetStringDatabase
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   fun:XGetDefault
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.7.0
+   obj:/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.7.0
+   obj:/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.7.0
+   obj:/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.7.0
+   obj:/lib/x86_64-linux-gnu/libexpat.so.1.6.0
+   obj:/lib/x86_64-linux-gnu/libexpat.so.1.6.0
+   obj:/lib/x86_64-linux-gnu/libexpat.so.1.6.0
+   obj:/lib/x86_64-linux-gnu/libexpat.so.1.6.0
+   fun:XML_ParseBuffer
+   fun:FcConfigParseAndLoad
+   fun:FcConfigParseAndLoad
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN14QFactoryLoader9updateDirERK7QStringR9QSettings
+   fun:_ZN14QFactoryLoader6updateEv
+   fun:_ZN14QFactoryLoaderC1EPKcRK7QStringN2Qt15CaseSensitivityE
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate18x11_apply_settingsEv
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN14QFactoryLoader9updateDirERK7QStringR9QSettings
+   fun:_ZN14QFactoryLoader6updateEv
+   fun:_ZN14QFactoryLoaderC1EPKcRK7QStringN2Qt15CaseSensitivityE
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN13QStyleFactory6createERK7QString
+   fun:_ZN12QApplication5styleEv
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN8QLibrary21setFileNameAndVersionERK7QStringi
+   fun:_ZN8QLibraryC1ERK7QStringiP7QObject
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN8QLibrary21setFileNameAndVersionERK7QStringS2_
+   fun:_ZN8QLibraryC1ERK7QStringS2_P7QObject
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN14QLocalePrivate19updateSystemPrivateEv
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN7QLocaleC1Ev
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN9QFileInfoC1ERK7QString
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN8QLibrary21setFileNameAndVersionERK7QStringi
+   fun:_ZN8QLibraryC1ERK7QStringiP7QObject
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:main
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN8QLibrary21setFileNameAndVersionERK7QStringi
+   fun:_ZN8QLibraryC1ERK7QStringiP7QObject
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN8QLibrary21setFileNameAndVersionERK7QStringS2_
+   fun:_ZN8QLibraryC1ERK7QStringS2_P7QObject
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN14QLocalePrivate19updateSystemPrivateEv
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN7QLocaleC1Ev
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN9QFileInfoC1ERK7QString
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN8QLibrary21setFileNameAndVersionERK7QStringi
+   fun:_ZN8QLibraryC1ERK7QStringiP7QObject
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN8QLibrary21setFileNameAndVersionERK7QStringi
+   fun:_ZN8QLibraryC1ERK7QStringiP7QObject
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:main
+}
+
+##################################################################
+# Other rules added with x86_64 with Qt 4.8.4
+##################################################################
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN8QLibrary21setFileNameAndVersionERK7QStringi
+   fun:_ZN8QLibraryC1ERK7QStringiP7QObject
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPcbi
+   fun:_ZN19QtSingleApplicationC1ERiPPcb
+   fun:_ZN14mdtApplicationC1ERiPPcb
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN14QFactoryLoader9updateDirERK7QStringR9QSettings
+   fun:_ZN14QFactoryLoader6updateEv
+   fun:_ZN14QFactoryLoaderC1EPKcRK7QStringN2Qt15CaseSensitivityE
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate18x11_apply_settingsEv
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPcbi
+   fun:_ZN19QtSingleApplicationC1ERiPPcb
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN14QFactoryLoader9updateDirERK7QStringR9QSettings
+   fun:_ZN14QFactoryLoader6updateEv
+   fun:_ZN14QFactoryLoaderC1EPKcRK7QStringN2Qt15CaseSensitivityE
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN13QStyleFactory6createERK7QString
+   fun:_ZN12QApplication5styleEv
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPcbi
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:_Znwm
+   obj:/usr/lib/x86_64-linux-gnu/libQtCore.so.4.8.4
+   fun:_ZN8QLibrary21setFileNameAndVersionERK7QStringi
+   fun:_ZN8QLibraryC1ERK7QStringiP7QObject
+   obj:/usr/lib/x86_64-linux-gnu/libQtGui.so.4.8.4
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPcbi
+   fun:_ZN19QtSingleApplicationC1ERiPPcb
+   fun:_ZN14mdtApplicationC1ERiPPcb
+   fun:main
+}
+
+
+# Some other rules
+{
+   Possible memory leak in Pango (harfbuzz-buffer.c)
+   Memcheck:Leak
+   fun:realloc
+   fun:_hb_realloc
+   fun:hb_buffer_ensure
+   fun:hb_buffer_add_glyph
+   obj:*
+}
+
+# XCB in licX11.so.6.3.0
+{
+   Possible memory leak in libxcb
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+   obj:/usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+   fun:xcb_connect_to_display_with_auth_info
+   fun:xcb_connect
+   fun:_XConnectXCB
+   fun:XOpenDisplay
+   fun:_Z7qt_initP19QApplicationPrivateiP9_XDisplaymm
+}
+

@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtClUnitConnectionData.h"
 
+#include <QDebug>
+
 mdtClUnitConnectionData::mdtClUnitConnectionData()
  : mdtSqlRecord()
 {
@@ -58,7 +60,12 @@ const mdtClArticleConnectionData & mdtClUnitConnectionData::articleConnectionDat
   return pvArticleConnectionData;
 }
 
-void mdtClUnitConnectionData::setArticleConnectionData(const mdtClArticleConnectionData& data)
+mdtClArticleConnectionData& mdtClUnitConnectionData::articleConnectionData()
+{
+  return pvArticleConnectionData;
+}
+
+void mdtClUnitConnectionData::setArticleConnectionData(const mdtClArticleConnectionData & data)
 {
   setValue("ArticleConnection_Id_FK", data.value("Id_PK"));
   pvArticleConnectionData = data;

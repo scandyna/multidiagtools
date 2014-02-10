@@ -59,7 +59,7 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
    *
    * \pre Field Unit_Id_FK must contain a valid ID (not Null)
    */
-  void setData(const mdtClUnitConnectionData &data);
+  void setData(const mdtClUnitConnectionData &data, const QVariant & baseArticleId);
 
   /*! \brief Get data
    */
@@ -87,9 +87,27 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
    */
   void selectUnitConnector();
 
+  /*! \brief Set unit connection based on no connector
+   */
+  void setNoConnector();
+
   /*! \brief Copy article connector name to unit connector name
    */
   void copyConnectorName();
+
+  /*! \brief Select article connection or base connector connection
+   *
+   * Depending on what is based unit connector, this method will do:
+   *  - If no unit connector was set: \todo Store base article ID...
+   *     List article connections related to current unit, and based on no article connector,
+   *     let the user choose one and copy its contact name.
+   *  - If unit connector is based on a article connector:
+   *     List article connections based on article connector,
+   *     let the user choose one and copy its contact name.
+   *  - If unit connector is based on a connector (but not on a article connector):
+   *     Let the user select a contact (from ConnectorContact_tbl) to use, and copy its contact name
+   */
+  void selectConnection();
 
   /*! \brief Copy article contact name to unit contact name
    */
@@ -104,6 +122,31 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
   void reject();
 
  private:
+
+  /*! \brief Set unit connection based on a free article connection
+   *
+   * Will list article connections based on base article, but NOT on a article connector,
+   *  let the user select one and set unit connection based on it.
+   */
+  void setConnectionFromFreeArticleConnection();
+
+  /*! \brief Set unit connection based on a article connection choosen by article connector
+   *
+   * Will list article connections based on given article connector,
+   *  let the user select one and set unit connection based on it.
+   */
+  void setConnectionFromArticleConnectorConnection(const QVariant & articleConnectorId);
+
+  /*! \brief Set unit connection based on a connector contact
+   *
+   * Will list connector contacts based on given connector,
+   *  let the user select one and set unit connection based on it.
+   */
+  void setConnectionFromConnectorContact(const QVariant & connectorId);
+
+  /*! \brief Get connector data from database and update widgets
+   */
+  void updateConnectorData();
 
   /*! \brief Update dialog's widgets from data
    */
@@ -125,6 +168,7 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
 
   QSqlDatabase pvDatabase;
   mdtClUnitConnectionData pvData;
+  QVariant pvBaseArticleId;       // Used to list article related connections
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_DIALOG_H

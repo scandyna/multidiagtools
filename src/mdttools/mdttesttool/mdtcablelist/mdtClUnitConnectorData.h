@@ -83,6 +83,10 @@ class mdtClUnitConnectorData : public mdtSqlRecord
    */
   const QList<mdtClUnitConnectionData> & connectionDataList() const;
 
+  /*! \brief Get list of connection data
+   */
+  QList<mdtClUnitConnectionData> & connectionDataList();
+
   /*! \brief Add connection data
    *
    * \pre data must contains following fields:

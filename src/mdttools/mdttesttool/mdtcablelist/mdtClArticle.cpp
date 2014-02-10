@@ -216,6 +216,46 @@ mdtClArticleConnectionData mdtClArticle::getConnectionData(const QVariant & arti
   return getConnectionDataPv(sql, ok);
 }
 
+QList<mdtClArticleConnectionData> mdtClArticle::getConnectionDataListFromConnectionIdList(const QList<QVariant> & connectionIdList, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QString sql;
+  QSqlQuery query(database());
+  QList<mdtClArticleConnectionData> connectionDataList;
+  int i;
+
+  /// \todo Is this a error or not ?
+  if(connectionIdList.isEmpty()){
+    return connectionDataList;
+  }
+  // Setup query
+  sql = "SELECT * "\
+        "FROM ArticleConnection_tbl ";
+  Q_ASSERT(connectionIdList.size() > 0);
+  sql += "WHERE Id_PK = " + connectionIdList.at(0).toString();
+  for(i = 1; i < connectionIdList.size(); ++i){
+    sql += " OR Id_PK = " + connectionIdList.at(i).toString();
+  }
+  // Submit query
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot execute query to get article connections."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    *ok = false;
+    return connectionDataList;
+  }
+  // Fill data
+  while(query.next()){
+    connectionDataList.append(query.record());
+  }
+  *ok = true;
+
+  return connectionDataList;
+}
+
 mdtClArticleConnectorData mdtClArticle::getConnectorData(const QVariant & articleConnectorId, bool *ok, bool includeConnectionData, bool includeBaseConnectorData)
 {
   Q_ASSERT(ok != 0);

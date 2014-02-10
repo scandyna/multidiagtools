@@ -43,7 +43,7 @@ set (SOURCES_FILES
           #src/mdtClVehicleTypeEditor.cpp
           #src/mdtClConnectorEditor.cpp
           src/mdtClConnectionData.cpp
-          src/mdtClArticleConnectionData.cpp
+#          src/mdtClArticleConnectionData.cpp
           #src/mdtClArticleEditor.cpp
           #src/mdtClArticleConnectionDialog.cpp
 #           src/mdtClUnit.cpp

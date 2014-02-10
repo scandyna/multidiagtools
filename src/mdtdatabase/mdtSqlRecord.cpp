@@ -29,13 +29,19 @@ mdtSqlRecord::mdtSqlRecord()
 }
 
 mdtSqlRecord::mdtSqlRecord(const QSqlRecord & sqlRecord)
- : QSqlRecord(sqlRecord)
+{
+  pvRecord = sqlRecord;
+}
+
+mdtSqlRecord::~mdtSqlRecord()
 {
 }
 
-mdtSqlRecord::~mdtSqlRecord() 
+mdtSqlRecord::operator QSqlRecord()
 {
+  return pvRecord;
 }
+
 
 bool mdtSqlRecord::addField(const QString & fieldName, const QString & tableName, const QSqlDatabase & db) 
 {
@@ -63,7 +69,7 @@ bool mdtSqlRecord::addField(const QString & fieldName, const QString & tableName
     return false;
   }
   fld.setGenerated(false);
-  append(fld);
+  pvRecord.append(fld);
 
   return true;
 }
@@ -96,7 +102,7 @@ bool mdtSqlRecord::addAllFields(const QString & tableName, const QSqlDatabase & 
       return false;
     }
     fld.setGenerated(false);
-    append(fld);
+    pvRecord.append(fld);
   }
 
   return true;
@@ -108,31 +114,27 @@ QStringList mdtSqlRecord::fieldNames() const
   int i;
 
   for(i = 0; i < count(); ++i){
-    names.append(fieldName(i));
+    names.append(pvRecord.fieldName(i));
   }
 
   return names;
 }
 
-bool mdtSqlRecord::hasValue(int fieldIndex) const
-{
-  return isGenerated(fieldIndex);
-}
-
-bool mdtSqlRecord::hasValue(const QString & fieldName) const
-{
-  return isGenerated(fieldName);
-}
-
 void mdtSqlRecord::setValue(int fieldIndex, const QVariant & val)
 {
-  setGenerated(fieldIndex, true);
-  QSqlRecord::setValue(fieldIndex, val);
+  pvRecord.setGenerated(fieldIndex, true);
+  pvRecord.setValue(fieldIndex, val);
 }
 
 void mdtSqlRecord::setValue(const QString & fieldName, const QVariant & val)
 {
-  setValue(indexOf(fieldName), val);
+  setValue(pvRecord.indexOf(fieldName), val);
+}
+
+void mdtSqlRecord::clear()
+{
+  pvLastError.clear();
+  pvRecord.clear();
 }
 
 void mdtSqlRecord::clearValues()
@@ -140,9 +142,9 @@ void mdtSqlRecord::clearValues()
   int i;
 
   for(i = 0; i < count(); ++i){
-    setGenerated(i, false);
+    pvRecord.setGenerated(i, false);
   }
-  QSqlRecord::clearValues();
+  pvRecord.clearValues();
 }
 
 mdtError mdtSqlRecord::lastError() const
@@ -173,7 +175,7 @@ QString mdtSqlRecord::sqlForInsert(const QString & tableName) const
   indexList = fieldIndexesWithValue();
   sql = "INSERT INTO " + tableName + " (";
   for(i = 0; i < indexList.size(); ++i){
-    sql += fieldName(indexList.at(i));
+    sql += pvRecord.fieldName(indexList.at(i));
     if(i < (indexList.size()-1)){
       sql += ",";
     }
@@ -204,7 +206,7 @@ QString mdtSqlRecord::sqlForUpdate(const QString & tableName, const QSqlRecord &
   sql = "UPDATE " + tableName + " SET ";
   for(i = 0; i < indexList.size(); ++i){
     index = indexList.at(i);
-    sql += fieldName(index) + "=?";
+    sql += pvRecord.fieldName(index) + "=?";
     if(i < (indexList.size()-1)){
       sql += ",";
     }
@@ -242,8 +244,8 @@ QString mdtSqlRecord::dataToUpdateInfo() const
 
   indexList = fieldIndexesWithValue();
   for(i = 0; i < indexList.size(); ++i){
-    str += fieldName(indexList.at(i));
-    str += ": '" + value(indexList.at(i)).toString() + "'";
+    str += pvRecord.fieldName(indexList.at(i));
+    str += ": '" + pvRecord.value(indexList.at(i)).toString() + "'";
     if(i < (indexList.size()-1)){
       str += " , ";
     }
@@ -251,11 +253,3 @@ QString mdtSqlRecord::dataToUpdateInfo() const
 
   return str;
 }
-
-/**
-mdtError & mdtSqlRecord::lastErrorW() 
-{
-  return pvLastError;
-}
-*/
-

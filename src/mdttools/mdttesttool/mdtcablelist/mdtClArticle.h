@@ -95,6 +95,10 @@ class mdtClArticle : public mdtTtBase
    */
   mdtClArticleConnectionData getConnectionData(const QVariant & articleConnectionId, bool *ok);
 
+  /*! \brief Get a list af article connection data from given article connection ID list
+   */
+  QList<mdtClArticleConnectionData> getConnectionDataListFromConnectionIdList(const QList<QVariant> & connectionIdList, bool *ok);
+
   /*! \brief Get article connector data for given article connector ID
    *
    * \param includeConnectionData If true, and SQL statement points to a article connector

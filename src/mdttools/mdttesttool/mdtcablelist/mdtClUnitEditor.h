@@ -84,11 +84,11 @@ class mdtClUnitEditor : public mdtSqlForm
 
   /*! \brief Add a connector based on article connector to unit connector table
    */
-  ///void addArticleConnectorBasedConnector();
+  void addArticleConnectorBasedConnector();
 
   /*! \brief Remove a connector
    */
-  void removeConnector();
+  void removeConnectors();
 
   /*! \brief Add a connection
    *

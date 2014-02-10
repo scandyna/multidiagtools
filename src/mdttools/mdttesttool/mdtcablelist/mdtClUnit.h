@@ -51,12 +51,25 @@ class mdtClUnit : public mdtTtBase
    */
   ~mdtClUnit();
 
+  /*! \brief Get SQL statement for connector contacts selection
+   *
+   * List all connector contacts for given connector ID (from Connector_tbl).
+   */
+  QString sqlForConnectorContactSelection(const QVariant & connectorId) const;
+
   /*! \brief Get SQL statement for article connector selection
    *
    * List all article connectors for given articleId wich are not
    *  used by given unitId .
    */
   QString sqlForArticleConnectorSelection(const QVariant & articleId, const QVariant & unitId) const;
+
+  /*! \brief Get SQL statement free for article connection selection
+   *
+   * List all article connections that are not based on a article connector for given article ID,
+   *  and that are not used by a given unit ID.
+   */
+  QString sqlForFreeArticleConnectionSelection(const QVariant & articleId, const QVariant & unitId) const;
 
   /*! \brief Get SQL statement for article connection selection
    *
@@ -118,6 +131,35 @@ class mdtClUnit : public mdtTtBase
    * Note: will only update given data, nothing is written to database.
    */
   bool addConnectionDataListFromConnectorContactIdList(mdtClUnitConnectorData & data, const QList<QVariant> & connectorContactIdList);
+
+  /*! \brief Add article connector data part into unit connector
+   *
+   * Will update some value in data (UnitConnector_tbl):
+   *  - Connector_Id_FK : will be copied from article connector data
+   *  - ArticleConnector_Id_FK : will be copied from article connector data
+   *
+   * \param data Unit connector data to update
+   * \param articleConnectorId ID of article connector
+   * \param copyConnectorName If true, unit connector name will be copied from article connector name
+   *
+   * Note: will only update given data, nothing is written to database.
+   */
+  bool addArticleConnectorData(mdtClUnitConnectorData & data, const QVariant & articleConnectorId, bool copyConnectorName);
+
+  /*! \brief Add unit connections into unit connector data based on given article connection ID list
+   * \todo What is better ? 2 methods ?? Should coherence between article connection and article connector be done ? Or let addConnector() do it ?
+   *
+   * Will also set some values to newly created article connections (ArticleConnection_tbl):
+   *  - Unit_Id_FK : will be copied from unit connector data
+   *  - UnitConnector_Id_FK : will be copied from unit connector data
+   *  - ArticleConnection_Id_FK : will be copied from articleConnectionIdList
+   *  - UnitContactName : if copyContactName is true, it will be copied from article connection data
+   *
+   * \param data Unit connector data to update
+   * \param articleConnectionIdList For each ID in list, a unit connection is created on base of article connection data.
+   * \param copyContactName If true, unit contact name will be copied from article contact name.
+   */
+  bool addConnectionDataListFromArticleConnectionIdList(mdtClUnitConnectorData & data, const QList<QVariant> & articleConnectionIdList, bool copyContactName);
 
   /*! \brief Get connector contact data (from ConnectorContact_tbl) for a given contact ID
    * \brief Get (unit) connection data from connector contact data (ConnectorContact_tbl)
@@ -270,6 +312,14 @@ class mdtClUnit : public mdtTtBase
    */
   bool removeConnector(const QVariant & unitConnectorId);
 
+  /*! \brief Remove each unit connector that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeConnectors(const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief
    */

@@ -20,12 +20,14 @@
  ****************************************************************************/
 #include "mdtClArticleConnectionData.h"
 
+//#include <QDebug>
+
 mdtClArticleConnectionData::mdtClArticleConnectionData()
  : mdtSqlRecord()
 {
 }
 
-mdtClArticleConnectionData::mdtClArticleConnectionData(const QSqlRecord& record)
+mdtClArticleConnectionData::mdtClArticleConnectionData(const QSqlRecord & record)
  : mdtSqlRecord(record)
 {
   Q_ASSERT(indexOf("Id_PK") >= 0);
@@ -39,7 +41,7 @@ mdtClArticleConnectionData::mdtClArticleConnectionData(const QSqlRecord& record)
   Q_ASSERT(indexOf("FunctionIT") >= 0);
 }
 
-bool mdtClArticleConnectionData::setup(const QSqlDatabase & db) 
+bool mdtClArticleConnectionData::setup(QSqlDatabase db) 
 {
   return addAllFields("ArticleConnection_tbl", db);
 }

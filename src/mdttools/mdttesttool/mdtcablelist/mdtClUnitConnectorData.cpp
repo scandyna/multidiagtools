@@ -79,6 +79,11 @@ const QList<mdtClUnitConnectionData> & mdtClUnitConnectorData::connectionDataLis
   return pvConnectionDataList;
 }
 
+QList<mdtClUnitConnectionData> & mdtClUnitConnectorData::connectionDataList()
+{
+  return pvConnectionDataList;
+}
+
 void mdtClUnitConnectorData::addConnectionData(const mdtClUnitConnectionData & data) 
 {
   Q_ASSERT(data.contains("Id_PK"));

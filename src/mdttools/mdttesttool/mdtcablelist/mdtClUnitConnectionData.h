@@ -69,6 +69,10 @@ class mdtClUnitConnectionData : public mdtSqlRecord
    */
   const mdtClArticleConnectionData & articleConnectionData() const;
 
+  /*! \brief Access article connection data (WR)
+   */
+  mdtClArticleConnectionData & articleConnectionData();
+
   /*! \brief Check if connection is based on a article connection
    */
   bool isBasedOnArticleConnection() const;

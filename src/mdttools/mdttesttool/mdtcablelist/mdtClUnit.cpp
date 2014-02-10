@@ -41,6 +41,15 @@ mdtClUnit::~mdtClUnit()
   delete pvUnitLinkModel;
 }
 
+QString mdtClUnit::sqlForConnectorContactSelection(const QVariant & connectorId) const
+{
+  QString sql;
+
+  sql = "SELECT * FROM ConnectorContact_tbl WHERE Connector_Id_FK = " + connectorId.toString();
+
+  return sql;
+}
+
 QString mdtClUnit::sqlForArticleConnectorSelection(const QVariant & articleId, const QVariant & unitId) const
 {
   QString sql;
@@ -54,6 +63,22 @@ QString mdtClUnit::sqlForArticleConnectorSelection(const QVariant & articleId, c
          " FROM UnitConnector_tbl "\
          " WHERE ( Unit_Id_FK = " + unitId.toString() + " ) "\
          " AND ( ArticleConnector_Id_FK IS NOT NULL ) )";
+
+  return sql;
+}
+
+QString mdtClUnit::sqlForFreeArticleConnectionSelection(const QVariant& articleId, const QVariant& unitId) const
+{
+  QString sql;
+
+  sql = "SELECT * FROM ArticleConnection_tbl ";
+  sql += "WHERE Article_Id_FK = " + articleId.toString();
+  sql += " AND ArticleConnector_Id_FK IS NULL ";
+  sql += " AND Id_PK NOT IN ("\
+         "  SELECT ArticleConnection_Id_FK"\
+         "  FROM UnitConnection_tbl"\
+         "  WHERE Unit_Id_FK = " + unitId.toString();
+  sql += "  AND ArticleConnection_Id_FK IS NOT NULL)";
 
   return sql;
 }
@@ -178,6 +203,62 @@ bool mdtClUnit::addConnectionDataListFromConnectorContactIdList(mdtClUnitConnect
     unitConnectionData.setValue("UnitContactName", connectorContactDataList.at(i).value("Name"));
     unitConnectionData.setValue("Unit_Id_FK", data.value("Unit_Id_FK"));
     unitConnectionData.setValue("UnitConnector_Id_FK", data.value("Id_PK"));
+    data.addConnectionData(unitConnectionData);
+  }
+
+  return true;
+}
+
+bool mdtClUnit::addArticleConnectorData(mdtClUnitConnectorData & data, const QVariant & articleConnectorId, bool copyConnectorName)
+{
+  mdtClArticle art(0, database());
+  mdtClArticleConnectorData articleConnectorData;
+  bool ok;
+
+  // Get article connector data
+  articleConnectorData = art.getConnectorData(articleConnectorId, &ok, false, true);
+  if(!ok){
+    pvLastError = art.lastError();
+    return false;
+  }
+  // Update unit connector data
+  data.setArticleConnectorData(articleConnectorData);
+  if(copyConnectorName){
+    data.setValue("Name", articleConnectorData.value("Name"));
+  }
+
+  return true;
+}
+
+bool mdtClUnit::addConnectionDataListFromArticleConnectionIdList(mdtClUnitConnectorData & data, const QList<QVariant> & articleConnectionIdList, bool copyContactName)
+{
+  mdtClArticle art(0, database());
+  mdtClArticleConnectionData articleConnectionData;
+  QList<mdtClArticleConnectionData> articleConnectionDataList;
+  mdtClUnitConnectionData unitConnectionData;
+  bool ok;
+  int i;
+
+  // Get article connection data list
+  articleConnectionDataList = art.getConnectionDataListFromConnectionIdList(articleConnectionIdList, &ok);
+  if(!ok){
+    pvLastError = art.lastError();
+    return false;
+  }
+  // Create unit connections
+  if(!unitConnectionData.setup(database(), false)){
+    pvLastError = unitConnectionData.lastError();
+    return false;
+  }
+  for(i = 0; i < articleConnectionDataList.size(); ++i){
+    mdtClArticleConnectionData articleConnectionData = articleConnectionDataList.at(i);
+    unitConnectionData.clearValues();
+    unitConnectionData.setValue("Unit_Id_FK", data.value("Unit_Id_FK"));
+    unitConnectionData.setValue("UnitConnector_Id_FK", data.value("Id_PK"));
+    unitConnectionData.setArticleConnectionData(articleConnectionData);
+    if(copyContactName){
+      unitConnectionData.setValue("UnitContactName", articleConnectionData.value("ArticleContactName"));
+    }
     data.addConnectionData(unitConnectionData);
   }
 
@@ -829,6 +910,19 @@ bool mdtClUnit::removeConnector(const QVariant& unitConnectorId)
   }
   if(!commitTransaction()){
     return false;
+  }
+
+  return true;
+}
+
+bool mdtClUnit::removeConnectors(const QModelIndexList & indexListOfSelectedRows)
+{
+  int i;
+
+  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
+    if(!removeConnector(indexListOfSelectedRows.at(i).data())){
+      return false;
+    }
   }
 
   return true;
