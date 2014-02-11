@@ -92,9 +92,10 @@ void mdtClUnitEditor::assignVehicle()
 {
   mdtSqlSelectionDialog selectionDialog;
   QVariant unitId;
-  QSqlError sqlError;
   QModelIndexList selectedVehicles;
-  mdtClUnitVehicleType uvt(database());
+  mdtClUnitVehicleType uvt(0, database());
+  QString sql;
+  QSqlQueryModel model;
 
   // Get current unit ID
   unitId = currentUnitId();
@@ -102,8 +103,10 @@ void mdtClUnitEditor::assignVehicle()
     return;
   }
   // Setup and show dialog
+  sql = uvt.sqlForVehicleTypeNotAssignedToUnit(unitId);
+  model.setQuery(sql, database());
   selectionDialog.setMessage("Please select a vehicle");
-  selectionDialog.setModel(&uvt.vehicleTypeNotAssignedToUnitModel(unitId), true);
+  selectionDialog.setModel(&model, true);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setHeaderData("SubType", tr("Variant"));
   selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
@@ -115,13 +118,8 @@ void mdtClUnitEditor::assignVehicle()
   // Proceed insertion
   selectedVehicles = selectionDialog.selectionResults();
   if(!uvt.addUnitVehicleTypeAssignments(unitId, selectedVehicles)){
-    sqlError = uvt.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Could not assign vehicle"));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = uvt.lastError();
+    displayLastError();
     return;
   }
   select("Unit_VehicleType_view");
@@ -135,7 +133,7 @@ void mdtClUnitEditor::removeVehicleAssignation()
   QMessageBox msgBox;
   mdtSqlTableWidget *vehicleTypeWidget;
   QModelIndexList indexes;
-  mdtClUnitVehicleType uvt(database());
+  mdtClUnitVehicleType uvt(0, database());
 
   // Get vehicle widget
   vehicleTypeWidget = sqlTableWidget("Unit_VehicleType_view");
@@ -163,13 +161,8 @@ void mdtClUnitEditor::removeVehicleAssignation()
   }
   // Delete seleced rows
   if(!uvt.removeUnitVehicleAssignments(unitId, indexes)){
-    sqlError = uvt.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Assignation removing failed."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = uvt.lastError();
+    displayLastError();
     return;
   }
   select("Unit_VehicleType_view");

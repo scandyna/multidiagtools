@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,21 +20,21 @@
  ****************************************************************************/
 #include "mdtClUnitVehicleType.h"
 #include "mdtError.h"
-#include <QString>
 #include <QSqlQuery>
+#include <QSqlError>
 
 #include <QDebug>
 
-mdtClUnitVehicleType::mdtClUnitVehicleType(QSqlDatabase db)
+mdtClUnitVehicleType::mdtClUnitVehicleType(QObject *parent, QSqlDatabase db)
+ : mdtTtBase(parent, db)
 {
-  pvDatabase = db;
 }
 
 mdtClUnitVehicleType::~mdtClUnitVehicleType()
 {
 }
 
-QSqlQueryModel &mdtClUnitVehicleType::vehicleTypeNotAssignedToUnitModel(const QVariant & unitId)
+QString mdtClUnitVehicleType::sqlForVehicleTypeNotAssignedToUnit(const QVariant& unitId) const
 {
   QString sql;
 
@@ -46,43 +46,48 @@ QSqlQueryModel &mdtClUnitVehicleType::vehicleTypeNotAssignedToUnitModel(const QV
         " FROM VehicleType_Unit_tbl "\
         " WHERE Unit_Id_FK = " + unitId.toString() + " ) "\
         "ORDER BY Type ASC, SubType ASC, SeriesNumber ASC;";
-  pvVehicleTypeNotAssignedToUnitModel.setQuery(sql, pvDatabase);
 
-  return pvVehicleTypeNotAssignedToUnitModel;
+  return sql;
 }
 
-bool mdtClUnitVehicleType::addUnitVehicleTypeAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList)
+bool mdtClUnitVehicleType::addUnitVehicleTypeAssignment(const QVariant & unitId, const QVariant & vehicleTypeId)
 {
-  QSqlQuery query(pvDatabase);
+  QList<QVariant> idList;
+
+  idList.append(vehicleTypeId);
+
+  return addUnitVehicleTypeAssignments(unitId, idList);
+}
+
+bool mdtClUnitVehicleType::addUnitVehicleTypeAssignments(const QVariant & unitId, const QList<QVariant> & vehicleTypeIdList)
+{
+  QSqlQuery query(database());
   QString sql;
   int i;
-
-  clearLastError();
 
   // Prepare query for insertion
   sql = "INSERT INTO VehicleType_Unit_tbl "\
         "(Unit_Id_FK, VehicleType_Id_FK) "\
         "VALUES (:Unit_Id_FK, :VehicleType_Id_FK)";
   if(!query.prepare(sql)){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot prepare query for unit <-> vehicle type assignment inertion", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClUnitVehicleType");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot prepare query for unit <-> vehicle type assignment inertion"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitVehicleType");
+    pvLastError.commit();
     return false;
   }
   // Add entries for each vehicle type ID
   for(i = 0; i < vehicleTypeIdList.size(); ++i){
-    Q_ASSERT(vehicleTypeIdList.at(i).column() == 0);
     query.bindValue(":Unit_Id_FK", unitId);
-    query.bindValue(":VehicleType_Id_FK", vehicleTypeIdList.at(i).data());
+    query.bindValue(":VehicleType_Id_FK", vehicleTypeIdList.at(i));
     // Exec query
     if(!query.exec()){
-      pvLastError = query.lastError();
-      mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for unit <-> vehicle type assignment inertion", mdtError::Error);
-      e.setSystemError(pvLastError.number(), pvLastError.text());
-      MDT_ERROR_SET_SRC(e, "mdtClUnitVehicleType");
-      e.commit();
+      QSqlError sqlError = query.lastError();
+      pvLastError.setError(tr("Cannot execute query for unit <-> vehicle type assignment inertion"), mdtError::Error);
+      pvLastError.setSystemError(sqlError.number(), sqlError.text());
+      MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitVehicleType");
+      pvLastError.commit();
       return false;
     }
   }
@@ -90,7 +95,30 @@ bool mdtClUnitVehicleType::addUnitVehicleTypeAssignments(const QVariant & unitId
   return true;
 }
 
-bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList)
+bool mdtClUnitVehicleType::addUnitVehicleTypeAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList)
+{
+  QList<QVariant> idList;
+  int i;
+
+  // Add entries for each vehicle type ID
+  for(i = 0; i < vehicleTypeIdList.size(); ++i){
+    Q_ASSERT(vehicleTypeIdList.at(i).column() == 0);
+    idList.append(vehicleTypeIdList.at(i).data());
+  }
+
+  return addUnitVehicleTypeAssignments(unitId, idList);
+}
+
+bool mdtClUnitVehicleType::removeUnitVehicleAssignment(const QVariant& unitId, const QVariant& vehicleTypeId)
+{
+  QList<QVariant> idList;
+
+  idList.append(vehicleTypeId);
+
+  return removeUnitVehicleAssignments(unitId, idList);
+}
+
+bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant& unitId, const QList< QVariant >& vehicleTypeIdList)
 {
   int i;
   QString sql;
@@ -107,33 +135,32 @@ bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant & unitId,
     }else{
       sql += " OR ";
     }
-    sql += "VehicleType_Id_FK = " + vehicleTypeIdList.at(i).data().toString();
+    sql += "VehicleType_Id_FK = " + vehicleTypeIdList.at(i).toString();
   }
   sql += " ) ";
   // Submit query
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(database());
   if(!query.exec(sql)){
-    pvLastError = query.lastError();
-    mdtError e(MDT_DATABASE_ERROR, "Cannot execute query for unit <-> vehicle type assignment deletion", mdtError::Error);
-    e.setSystemError(pvLastError.number(), pvLastError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClUnitVehicleType");
-    e.commit();
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot execute query for unit <-> vehicle type assignment deletion"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitVehicleType");
+    pvLastError.commit();
     return false;
   }
 
   return true;
 }
 
-QSqlError mdtClUnitVehicleType::lastError() const
+bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList)
 {
-  return pvLastError;
-}
+  QList<QVariant> idList;
+  int i;
 
-void mdtClUnitVehicleType::clearLastError()
-{
-  pvLastError.setDatabaseText(QString());
-  pvLastError.setDriverText(QString());
-  pvLastError.setNumber(-1);
-  pvLastError.setType(QSqlError::NoError);
-  Q_ASSERT(!pvLastError.isValid());
+  // Add entries for each vehicle type ID
+  for(i = 0; i < vehicleTypeIdList.size(); ++i){
+    idList.append(vehicleTypeIdList.at(i).data());
+  }
+
+  return removeUnitVehicleAssignments(unitId, idList);
 }

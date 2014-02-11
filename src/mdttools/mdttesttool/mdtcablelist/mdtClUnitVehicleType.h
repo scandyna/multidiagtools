@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,30 +21,40 @@
 #ifndef MDT_CL_UNIT_VEHICLE_TYPE_H
 #define MDT_CL_UNIT_VEHICLE_TYPE_H
 
+#include "mdtTtBase.h"
 #include <QSqlDatabase>
-#include <QSqlError>
-#include <QSqlQueryModel>
 #include <QList>
 #include <QVariant>
+#include <QString>
 #include <QModelIndex>
 
 /*! \brief Helper class for Unit <-> VehicleType assignments
  */
-class mdtClUnitVehicleType
+class mdtClUnitVehicleType : public mdtTtBase
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtClUnitVehicleType(QSqlDatabase db);
+  mdtClUnitVehicleType(QObject *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
   ~mdtClUnitVehicleType();
 
-  /*! \brief Get a list of vehicle type that are not assigned to given unit
+  /*! \brief Get SQL statement for vehicle type assignment selection
+   *
+   * List all vehicle types that are not assigned to given unit
    */
-  QSqlQueryModel &vehicleTypeNotAssignedToUnitModel(const QVariant &unitId);
+  QString sqlForVehicleTypeNotAssignedToUnit(const QVariant & unitId) const;
+
+  /*! \brief Add unit <-> vehicle type assignment
+   */
+  bool addUnitVehicleTypeAssignment(const QVariant & unitId, const QVariant & vehicleTypeId);
+
+  /*! \brief Add unit <-> vehicle type assignments
+   */
+  bool addUnitVehicleTypeAssignments(const QVariant & unitId, const QList<QVariant> & vehicleTypeIdList);
 
   /*! \brief Add unit <-> vehicle type assignments
    *
@@ -52,25 +62,21 @@ class mdtClUnitVehicleType
    */
   bool addUnitVehicleTypeAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList);
 
+  /*! \brief Remove unit <-> vehicle type assignment
+   */
+  bool removeUnitVehicleAssignment(const QVariant & unitId, const QVariant & vehicleTypeId);
+
+  /*! \brief Remove unit <-> vehicle type assignments
+   */
+  bool removeUnitVehicleAssignments(const QVariant & unitId, const QList<QVariant> & vehicleTypeIdList);
+
   /*! \brief Remove unit <-> vehicle type assignments
    */
   bool removeUnitVehicleAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList);
 
-  /*! \brief Get last occured error
-   */
-  QSqlError lastError() const;
-
  private:
 
-  /*! \brief Clear last error and set it invalid
-   */
-  void clearLastError();
-
   Q_DISABLE_COPY(mdtClUnitVehicleType);
-
-  QSqlQueryModel pvVehicleTypeNotAssignedToUnitModel;
-  QSqlDatabase pvDatabase;
-  QSqlError pvLastError;
 };
 
 #endif  // #ifndef MDT_CL_UNIT_VEHICLE_TYPE_H

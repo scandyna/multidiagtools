@@ -58,6 +58,17 @@ class mdtCableListTest : public mdtTest
  private:
 
   /*
+   * Create some vehicle types for tests:
+   *  - Id_PK : 1 , Type : Vehicle type 1
+   *  - Id_PK : 2 , Type : Vehicle type 2
+   */
+  void createTestVehicleTypes();
+  /*
+   * Remove test vehicle types
+   */
+  void removeTestVehicleTypes();
+
+  /*
    * Create some connectors for tests:
    *  - Id_PK : 1
    *  - Id_PK : 2
@@ -125,6 +136,15 @@ class mdtCableListTest : public mdtTest
    * Remove test units
    */
   void removeTestUnits();
+  /*
+   * Create some VehicleType-Unit assignations for tests:
+   *  - Unit_Id_FK : 1000 , VehicleType_Id_FK : 1
+   */
+  void createTestVehicleTypeUnitAssignations();
+  /*
+   * Remove VehicleType-Unit assignations
+   */
+  void removeTestVehicleTypeUnitAssignations();
   /*
    * Create some unit connections for tests:
    *  - Id_PK : 10000 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , UnitContactName : Unit contact 10000
