@@ -45,3 +45,35 @@ bool mdtClLinkData::setup(const QSqlDatabase & db)
   return addAllFields("Link_tbl", db);
 }
 
+void mdtClLinkData::clearValues()
+{
+  mdtSqlRecord::clearValues();
+  pvStartConnectionData.clearValues();
+  pvEndConnectionData.clearValues();
+  pvVehicleTypeLinkDataList.clear();
+}
+
+void mdtClLinkData::setConnectionData(const mdtClUnitConnectionData & startCnnData, const mdtClUnitConnectionData & endCnnData)
+{
+  int i;
+
+  setValue("UnitConnectionStart_Id_FK", startCnnData.value("Id_PK"));
+  setValue("UnitConnectionEnd_Id_FK", endCnnData.value("Id_PK"));
+  setValue("ArticleConnectionStart_Id_FK", startCnnData.value("ArticleConnection_Id_FK"));
+  setValue("ArticleConnectionEnd_Id_FK", endCnnData.value("ArticleConnection_Id_FK"));
+  pvStartConnectionData = startCnnData;
+  pvEndConnectionData = endCnnData;
+  for(i = 0; i < pvVehicleTypeLinkDataList.size(); ++i){
+    pvVehicleTypeLinkDataList[i].setUnitConnectionStartId(value("UnitConnectionStart_Id_FK"));
+    pvVehicleTypeLinkDataList[i].setUnitConnectionEndId(value("UnitConnectionEnd_Id_FK"));
+  }
+}
+
+void mdtClLinkData::addVehicleTypeLinkData(const mdtClVehicleTypeLinkData& data)
+{
+  mdtClVehicleTypeLinkData _data = data;
+
+  _data.setUnitConnectionStartId(value("UnitConnectionStart_Id_FK"));
+  _data.setUnitConnectionEndId(value("UnitConnectionEnd_Id_FK"));
+  pvVehicleTypeLinkDataList.append(_data);
+}

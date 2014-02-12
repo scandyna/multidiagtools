@@ -52,6 +52,7 @@ class mdtCableListTest : public mdtTest
   /// Créer des fonction (pas slot) qui construisent à mesure un sénario
 
   void mdtClLinkDataTest();
+  void linkTest();
 
   void pathGraphTest();
 

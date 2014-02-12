@@ -43,6 +43,8 @@ set (SOURCES_FILES
           mdtClUnitConnectionDialog.cpp
           mdtClUnitEditor.cpp
           mdtClLinkData.cpp
+          mdtClVehicleTypeLinkData.cpp
+          mdtClLink.cpp
           mdtClUnitLinkDialog.cpp
           mdtClUnitVehicleType.cpp
           # NOTE: provisoire !!!!!!!!!!!!!!!!!!!!

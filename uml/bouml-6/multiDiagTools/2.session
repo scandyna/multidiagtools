@@ -1,20 +1,22 @@
-window_sizes 1280 1005 391 883 952 0
+window_sizes 1024 722 186 832 669 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 739586 // CableListAllTables
+  classdiagram_ref 739586 // CableListAllTables
     883 952 80 17 0 149
   classdiagram_ref 772866 // mdtClLink
     120 106 100 4 72 0
-  classdiagram_ref 852610 // mdtClLinkData
-    1016 952 90 18 0 0
+  active  classdiagram_ref 852610 // mdtClLinkData
+    832 669 90 18 138 74
 end
 show_stereotypes
-selected classview_ref 497026 // Article
+selected operation_ref 1912834 // endConnectionData
 open
   classview_ref 602498 // Data
-  class_ref 764674 // Article_tbl
-  classview_ref 549634 // mdtClConnectionData
   classview_ref 609154 // GlobalView
-  classview_ref 490498 // Unit
+  classview_ref 497026 // Article
+  classrelation_ref 1404418 // <directional composition>
+  classrelation_ref 1404674 // pvVehicleTypeLinks (<directional composition>)
+  operation_ref 1912962 // clearValues
+  class_ref 1120386 // mdtClVehicleTypeLinkData
 end
 end

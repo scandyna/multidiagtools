@@ -2344,6 +2344,7 @@ bool mdtTtDatabaseSchema::createArticleLinkUnitConnectionView()
   return createView("ArticleLink_UnitConnection_view", sql);
 }
 
+/**
 bool mdtTtDatabaseSchema::createUnitLinkView() 
 {
   QString sql, selectSql;
@@ -2351,11 +2352,9 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
   selectSql = "SELECT\n"\
               " LNK.Identification ,\n"\
               " US.SchemaPosition AS StartSchemaPosition ,\n"\
-              /**" UCNXS.UnitConnectorName AS StartUnitConnectorName ,\n"\ */
               " UCS.Name AS StartUnitConnectorName ,\n"\
               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
               " UE.SchemaPosition AS EndSchemaPosition ,\n"\
-              /**" UCNXE.UnitConnectorName AS EndUnitConnectorName ,\n"\ */
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
               " LNK.SinceVersion ,\n"\
@@ -2427,6 +2426,71 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
 
   return createView("UnitLink_view", sql);
 }
+*/
+
+bool mdtTtDatabaseSchema::createUnitLinkView()
+{
+  QString sql, selectSql;
+
+  selectSql = "SELECT\n"\
+              " LNK.Identification ,\n"\
+              " US.SchemaPosition AS StartSchemaPosition ,\n"\
+              " UCS.Name AS StartUnitConnectorName ,\n"\
+              " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
+              " UE.SchemaPosition AS EndSchemaPosition ,\n"\
+              " UCE.Name AS EndUnitConnectorName ,\n"\
+              " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
+              " LNK.SinceVersion ,\n"\
+              " LNK.Modification ,\n"\
+              " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
+              " LNK.Value ,\n"\
+              " LinkType_tbl.ValueUnit ,\n"\
+              " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
+              " UCNXS.SchemaPage AS StartSchemaPage ,\n"\
+              " UCNXS.FunctionEN AS StartFunctionEN ,\n"\
+              " UCNXS.SignalName AS StartSignalName ,\n"\
+              " UCNXS.SwAddress AS StartSwAddress ,\n"\
+              " UCNXE.SchemaPage AS EndSchemaPage ,\n"\
+              " UCNXE.FunctionEN AS EndFunctionEN ,\n"\
+              " UCNXE.SignalName AS EndSignalName ,\n"\
+              " UCNXE.SwAddress AS EndSwAddress ,\n"\
+              " LNK.UnitConnectionStart_Id_FK ,\n"\
+              " LNK.UnitConnectionEnd_Id_FK ,\n"\
+              " UCNXS.Unit_Id_FK AS StartUnit_Id_FK ,\n"\
+              " UCNXE.Unit_Id_FK AS EndUnit_Id_FK ,\n"\
+              " LNK.LinkType_Code_FK ,\n"\
+              " LNK.LinkDirection_Code_FK ,\n"\
+              " LNK.ArticleConnectionStart_Id_FK ,\n"\
+              " LNK.ArticleConnectionEnd_Id_FK\n";
+  sql = "CREATE VIEW UnitLink_view AS\n";
+  sql += selectSql;
+  sql += "FROM Link_tbl LNK\n"\
+         " JOIN UnitConnection_tbl UCNXS\n"\
+         "  ON UCNXS.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
+         " JOIN UnitConnection_tbl UCNXE\n"\
+         "  ON UCNXE.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
+          " LEFT JOIN UnitConnector_tbl UCS\n"\
+          "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+          " LEFT JOIN UnitConnector_tbl UCE\n"\
+          "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
+          " JOIN Unit_tbl US\n"\
+          "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
+          " JOIN Unit_tbl UE\n"\
+          "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
+          " LEFT JOIN VehicleType_Link_tbl\n"\
+          "  ON LNK.UnitConnectionStart_Id_FK = VehicleType_Link_tbl.UnitConnectionStart_Id_FK\n"\
+          "  AND LNK.UnitConnectionEnd_Id_FK = VehicleType_Link_tbl.UnitConnectionEnd_Id_FK\n"\
+          " LEFT JOIN VehicleType_tbl VS\n"\
+          "  ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK\n"\
+          " LEFT JOIN VehicleType_tbl VE\n"\
+          "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK"\
+          " JOIN LinkType_tbl\n"\
+          "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
+          " JOIN LinkDirection_tbl\n"\
+          "  ON LinkDirection_tbl.Code_PK = LNK.LinkDirection_Code_FK\n";
+
+  return createView("UnitLink_view", sql);
+}
 
 bool mdtTtDatabaseSchema::createUnitVehicleTypeView() 
 {
@@ -2446,6 +2510,7 @@ bool mdtTtDatabaseSchema::createUnitVehicleTypeView()
   return createView("Unit_VehicleType_view", sql);
 }
 
+/**
 bool mdtTtDatabaseSchema::createLinkListView() 
 {
   QString sql, selectSql;
@@ -2465,7 +2530,6 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " US.SchemaPosition AS StartSchemaPosition,\n"\
               " US.Cabinet AS StartCabinet,\n"\
               " US.Coordinate AS StartCoordinate ,\n"\
-              /**" UCNXS.UnitConnectorName AS StartUnitConnectorName ,\n"\ */
               " UCS.Name AS StartUnitConnectorName ,\n"\
               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
               " VE.Type AS EndVehicleType ,\n"\
@@ -2475,7 +2539,6 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " UE.SchemaPosition AS EndSchemaPosition,\n"\
               " UE.Cabinet AS EndCabinet,\n"\
               " UE.Coordinate AS EndCoordinate ,\n"\
-              /**" UCNXE.UnitConnectorName AS EndUnitConnectorName ,\n"\ */
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName\n";
   sql = "CREATE VIEW LinkList_view AS\n";
@@ -2528,6 +2591,67 @@ bool mdtTtDatabaseSchema::createLinkListView()
           "  ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK\n"\
           " LEFT JOIN VehicleType_tbl VE\n"\
           "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK";
+
+  return createView("LinkList_view", sql);
+}
+*/
+
+bool mdtTtDatabaseSchema::createLinkListView()
+{
+  QString sql, selectSql;
+
+  selectSql = "SELECT\n"\
+              " LNK.UnitConnectionStart_Id_FK ,\n"\
+              " LNK.UnitConnectionEnd_Id_FK ,\n"\
+              " VS.Type AS StartVehicleType ,\n"\
+              " VS.SubType AS StartVehicleSubType ,\n"\
+              " VS.SeriesNumber AS StartVehicleSerie,\n"\
+              " LNK.SinceVersion ,\n"\
+              " LNK.Modification ,\n"\
+              " LNK.Identification ,\n"\
+              " LNK.LinkDirection_Code_FK ,\n"\
+              " LNK.LinkType_Code_FK ,\n"\
+              " US.Id_PK AS UnitStart_Id_PK ,\n"\
+              " US.SchemaPosition AS StartSchemaPosition,\n"\
+              " US.Cabinet AS StartCabinet,\n"\
+              " US.Coordinate AS StartCoordinate ,\n"\
+              " UCS.Name AS StartUnitConnectorName ,\n"\
+              " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
+              " VE.Type AS EndVehicleType ,\n"\
+              " VE.SubType AS EndVehicleSubType ,\n"\
+              " VE.SeriesNumber AS EndVehicleSerie,\n"\
+              " UE.Id_PK AS UnitEnd_Id_PK ,\n"\
+              " UE.SchemaPosition AS EndSchemaPosition,\n"\
+              " UE.Cabinet AS EndCabinet,\n"\
+              " UE.Coordinate AS EndCoordinate ,\n"\
+              " UCE.Name AS EndUnitConnectorName ,\n"\
+              " UCNXE.UnitContactName AS EndUnitContactName\n";
+  sql = "CREATE VIEW LinkList_view AS\n";
+  sql += selectSql;
+  sql += "FROM Link_tbl LNK\n"\
+         " JOIN UnitConnection_tbl UCNXS\n"\
+         "  ON UCNXS.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
+         " JOIN UnitConnection_tbl UCNXE\n"\
+         "  ON UCNXE.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
+          " LEFT JOIN UnitConnector_tbl UCS\n"\
+          "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+          " LEFT JOIN UnitConnector_tbl UCE\n"\
+          "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
+          " JOIN Unit_tbl US\n"\
+          "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
+          " JOIN Unit_tbl UE\n"\
+          "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
+          " LEFT JOIN VehicleType_Link_tbl\n"\
+          "  ON LNK.UnitConnectionStart_Id_FK = VehicleType_Link_tbl.UnitConnectionStart_Id_FK\n"\
+          "  AND LNK.UnitConnectionEnd_Id_FK = VehicleType_Link_tbl.UnitConnectionEnd_Id_FK\n"\
+          " LEFT JOIN VehicleType_tbl VS\n"\
+          "  ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK\n"\
+          " LEFT JOIN VehicleType_tbl VE\n"\
+          "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK"\
+          " JOIN LinkType_tbl\n"\
+          "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
+          " JOIN LinkDirection_tbl\n"\
+          "  ON LinkDirection_tbl.Code_PK = LNK.LinkDirection_Code_FK\n";
 
   return createView("LinkList_view", sql);
 }

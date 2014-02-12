@@ -2,15 +2,53 @@ format 204
 
 classcanvas 128002 class_ref 888194 // mdtClLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 254.2 210.1 2000
+  xyz 58.3 277 2000
 end
 classcanvas 128130 class_ref 1067266 // mdtSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 329.9 107.3 2000
+  xyz 419.5 61.8 2000
+end
+classcanvas 128514 class_ref 1113858 // mdtClUnitConnectionData
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 691.5 203.6 2006
+end
+classcanvas 128770 class_ref 1113730 // mdtClArticleConnectionData
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 678 60.1 3005
+end
+classcanvas 129794 class_ref 1120386 // mdtClVehicleTypeLinkData
+  classdiagramsettings member_max_width 0 end
+  xyz 647.9 537.6 2000
 end
 relationcanvas 128386 relation_ref 1378434 // <generalisation>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 1371522 // <generalisation>
+  from ref 128514 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 1371650 // <generalisation>
+  from ref 128770 z 3006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 1371394 // <directional composition>
+  from ref 128514 z 3006 to ref 128770
+  role_a_pos 786 109 3000 no_role_b
+  multiplicity_a_pos 754 109 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 1391490 // <directional composition>
+  decenter_begin 740
+  from ref 128002 z 2007 to ref 128514
+  no_role_a no_role_b
+  multiplicity_a_pos 715 245 3000 no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 1391746 // <directional composition>
+  from ref 128002 z 2001 stereotype "<<list>>" xyz 590.5 519.5 3000 to ref 129794
+  role_a_pos 520 534 3000 no_role_b
+  multiplicity_a_pos 620 566 3000 no_multiplicity_b
 end
 end

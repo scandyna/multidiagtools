@@ -31,6 +31,9 @@
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtClUnitVehicleType.h"
+#include "mdtClLink.h"
+#include "mdtClLinkData.h"
+#include "mdtClVehicleTypeLinkData.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -651,7 +654,60 @@ void mdtCableListTest::unitTest()
 
 void mdtCableListTest::mdtClLinkDataTest()
 {
-  QFAIL("Test not implemented yet");
+  mdtClLinkData linkData;
+  mdtClUnitConnectionData startConnectionData, endConnectionData;
+  mdtClVehicleTypeLinkData vtLinkData;
+
+  QVERIFY(linkData.setup(pvDatabaseManager.database()));
+  QVERIFY(startConnectionData.setup(pvDatabaseManager.database(), true));
+  QVERIFY(endConnectionData.setup(pvDatabaseManager.database(), true));
+
+  // Setup connections data
+  startConnectionData.setValue("Id_PK", 1);
+  endConnectionData.setValue("Id_PK", 2);
+  // Setup vehicle type link data
+  vtLinkData.setVehicleTypeStartId(10);
+  vtLinkData.setVehicleTypeEndId(20);
+  // Set link data
+  linkData.setConnectionData(startConnectionData, endConnectionData);
+  linkData.setValue("Identification", "Link 12");
+  linkData.addVehicleTypeLinkData(vtLinkData);
+  // Check
+  QCOMPARE(linkData.value("Identification"), QVariant("Link 12"));
+  QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(1));
+  QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(1));
+  QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(2));
+  QCOMPARE(linkData.endConnectionData().value("Id_PK"), QVariant(2));
+  QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
+  QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 1);
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId() , QVariant(10));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId() , QVariant(20));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId() , QVariant(1));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId() , QVariant(2));
+  // Change start/end connection data and check
+  startConnectionData.setValue("Id_PK", 3);
+  endConnectionData.setValue("Id_PK", 4);
+  linkData.setConnectionData(startConnectionData, endConnectionData);
+  QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(3));
+  QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(4));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId() , QVariant(3));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId() , QVariant(4));
+  // Clear
+  linkData.clearValues();
+  QCOMPARE(linkData.value("Identification"), QVariant(QVariant::String));
+  QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(QVariant::Int));
+  QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(QVariant::Int));
+  QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(QVariant::Int));
+  QCOMPARE(linkData.endConnectionData().value("Id_PK"), QVariant(QVariant::Int));
+  QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
+  QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 0);
+}
+
+void mdtCableListTest::linkTest()
+{
+  mdtClLink lnk(0, pvDatabaseManager.database());
 }
 
 
