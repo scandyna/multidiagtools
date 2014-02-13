@@ -24,6 +24,9 @@
 #include "mdtTtBase.h"
 #include "mdtClLinkData.h"
 #include <QSqlDatabase>
+#include <QList>
+#include <QVariant>
+#include <QModelIndex>
 
 /*! \brief Helper class for link management
  */
@@ -39,7 +42,48 @@ class mdtClLink : public mdtTtBase
    */
   ~mdtClLink();
 
+  /*! \brief Build vehicle type link data based on given start and end vehicle ID lists
+   *
+   * The list is built regarding distinct cases:
+   *  - If both start and end vehicle types lists contains exactly the same count of items,
+   *     each start ID is put together with each end ID , in the order of both lists.
+   *  - If one vehicle types list has only 1 item, and the other has many items,
+   *     the ID of the 1 item list is copied to the other list
+   *     (case of 1 vehicle type linked to many vehicle types) .
+   *  - All other cases are wrong.
+   */
+  bool buildVehicleTypeLinkDataList(mdtClLinkData & linkData, const QList<QVariant> & vtStartIdList, const QList<QVariant> & vtEndIdList);
+
+  /*! \brief Add a link
+   *
+   * Will also add required vehicle type links stored in linkData.
+   *  To generate vehicle type links, use buildVehicleTypeLinkDataList().
+   */
+  bool addLink(const mdtClLinkData & linkData);
+
+  /*! \brief Remove a unit link
+   *
+   * Will also remove all vehicle type related links
+   */
+  bool removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
+
+  /*! \brief Remove each unit link that is contained in selection
+   */
+  bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
+
  private:
+
+  /*! \brief Check vehicle type start and end ID lists
+   */
+  bool checkVehicleTypeStartEndIdLists(const QList<QVariant> & vtStartIdList, const QList<QVariant> & vtEndIdList);
+
+  /*! \brief Add link to vehicle type table
+   */
+  bool addLinkToVehicleType(const mdtClVehicleTypeLinkData & data);
+
+  /*! \brief Add a list of links to vehicle type table
+   */
+  bool addLinkToVehicleTypeList(const QList<mdtClVehicleTypeLinkData> & dataList);
 
   Q_DISABLE_COPY(mdtClLink);
 };

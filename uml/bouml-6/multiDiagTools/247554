@@ -1,6 +1,6 @@
 format 204
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 17
+  revision 18
   modified_by 2 "philippe"
   // class settings
   

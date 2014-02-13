@@ -77,3 +77,8 @@ void mdtClLinkData::addVehicleTypeLinkData(const mdtClVehicleTypeLinkData& data)
   _data.setUnitConnectionEndId(value("UnitConnectionEnd_Id_FK"));
   pvVehicleTypeLinkDataList.append(_data);
 }
+
+void mdtClLinkData::clearVehicleTypeLinkDataList()
+{
+  pvVehicleTypeLinkDataList.clear();
+}

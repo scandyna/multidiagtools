@@ -149,7 +149,9 @@ class mdtCableListTest : public mdtTest
   /*
    * Create some unit connections for tests:
    *  - Id_PK : 10000 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , UnitContactName : Unit contact 10000
+   *  - Id_PK : 10001 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , UnitContactName : Unit contact 10001
    *  - Id_PK : 20000 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 20 , UnitContactName : Unit contact 20000
+   *  - Id_PK : 20001 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 21 , UnitContactName : Unit contact 20001
    */
   void createTestUnitConnections();
   /*
@@ -170,6 +172,17 @@ class mdtCableListTest : public mdtTest
    * Remove test unit connectors
    */
   void removeTestUnitConnectors();
+
+  /*
+   * Create links for tests:
+   *  - UnitConnectionStart_Id_FK : 10000 , UnitConnectionEnd_Id_FK : 10001
+   *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 1
+   */
+  void createTestLinks();
+  /*
+   * Remove test links
+   */
+  void removeTestLinks();
 
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();

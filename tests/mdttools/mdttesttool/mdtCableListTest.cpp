@@ -708,6 +708,81 @@ void mdtCableListTest::mdtClLinkDataTest()
 void mdtCableListTest::linkTest()
 {
   mdtClLink lnk(0, pvDatabaseManager.database());
+  QList<QVariant> vtStartIdList, vtEndIdList;
+  mdtClLinkData linkData;
+
+  QVERIFY(linkData.setup(pvDatabaseManager.database()));
+
+  /*
+   * Check vehicle type link data list
+   */
+
+  // Add 1 start vehicle - Case Error (one list empty)
+  vtStartIdList.append(10);
+  QVERIFY(!lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 0);
+  // Add 1 end vehicle - Case 1 start -> 1 end
+  vtEndIdList.append(20);
+  QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 1);
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId(), QVariant(10));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId(), QVariant(20));
+  // Add a second start vehicle - Case 2 start -> 1 end
+  vtStartIdList.append(11);
+  QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 2);
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId(), QVariant(10));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId(), QVariant(20));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(1).vehicleTypeStartId(), QVariant(11));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(1).vehicleTypeEndId(), QVariant(20));
+  // Add a second end vehicle - Case 2*(1 start -> 1 end)
+  vtEndIdList.append(21);
+  QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 2);
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId(), QVariant(10));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId(), QVariant(20));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(1).vehicleTypeStartId(), QVariant(11));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(1).vehicleTypeEndId(), QVariant(21));
+  // Clear start list - Case Error (one list empty)
+  vtStartIdList.clear();
+  QVERIFY(!lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 0);
+  // Add 1 start vehicle - Case 1 start -> 2 end
+  vtStartIdList.append(12);
+  QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 2);
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId(), QVariant(12));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId(), QVariant(20));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(1).vehicleTypeStartId(), QVariant(12));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(1).vehicleTypeEndId(), QVariant(21));
+
+  /// \todo suite
+  // Create base structure
+  createTestVehicleTypes();
+  createTestArticles();
+  createTestConnectors();
+  createTestArticleConnections();
+  createTestArticleLinks();
+  createTestArticleConnectors();
+  createTestUnits();
+  createTestVehicleTypeUnitAssignations();
+  createTestUnitConnections();
+
+  // Add links
+  createTestLinks();
+
+  // Cleanup
+  removeTestLinks();
+  removeTestUnitConnections();
+  removeTestUnitConnectors();
+  removeTestVehicleTypeUnitAssignations();
+  removeTestUnits();
+  removeTestArticleLinks();
+  removeTestArticleConnections();
+  removeTestArticleConnectors();
+  removeTestConnectors();
+  removeTestArticles();
+  removeTestVehicleTypes();
 }
 
 
@@ -1119,6 +1194,17 @@ void mdtCableListTest::createTestUnitConnections()
   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
   QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
+  // Add and chek unit connection 10001
+  connectionData.setValue("Id_PK", 10001);
+  connectionData.setValue("Unit_Id_FK", 1000);
+  connectionData.setValue("UnitContactName", "Unit contact 10001");
+  QVERIFY(unit.addConnection(connectionData));
+  connectionData = unit.getConnectionData(10001, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(10001));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10001"));
+  QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
   // Add and chek unit connection 20000
   connectionData.clearValues();
   connectionData.setValue("Id_PK", 20000);
@@ -1133,6 +1219,21 @@ void mdtCableListTest::createTestUnitConnections()
   QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(20));
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 20000"));
   QCOMPARE(connectionData.articleConnectionData().value("Id_PK"), QVariant(20));
+  // Add and chek unit connection 20001
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 20001);
+  connectionData.setValue("Unit_Id_FK", 2000);
+  connectionData.setValue("ArticleConnection_Id_FK", 21);
+  connectionData.setValue("UnitContactName", "Unit contact 20001");
+  QVERIFY(unit.addConnection(connectionData));
+  connectionData = unit.getConnectionData(20001, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(20001));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(2000));
+  QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(21));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 20001"));
+  QCOMPARE(connectionData.articleConnectionData().value("Id_PK"), QVariant(21));
+
 }
 
 void mdtCableListTest::removeTestUnitConnections()
@@ -1142,7 +1243,9 @@ void mdtCableListTest::removeTestUnitConnections()
   bool ok;
 
   QVERIFY(unit.removeConnection(10000));
+  QVERIFY(unit.removeConnection(10001));
   QVERIFY(unit.removeConnection(20000));
+  QVERIFY(unit.removeConnection(20001));
   dataList = unit.getData("SELECT * FROM UnitConnection_tbl", &ok);
   QVERIFY(ok);
 }
@@ -1235,6 +1338,58 @@ void mdtCableListTest::removeTestUnitConnectors()
   QVERIFY(unit.removeConnector(100000));
   QVERIFY(unit.removeConnector(200000));
   dataList = unit.getData("SELECT * FROM UnitConnector_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+}
+
+void mdtCableListTest::createTestLinks()
+{
+  mdtClLink lnk(0, pvDatabaseManager.database());
+  mdtClUnit unit(0, pvDatabaseManager.database());
+  QList<QVariant> vtStartIdList, vtEndIdList;
+  mdtClLinkData linkData;
+  mdtClUnitConnectionData startConnectionData, endConnectionData;
+  bool ok;
+
+  QVERIFY(linkData.setup(pvDatabaseManager.database()));
+
+  /*
+   * Add link with unit connections not based on article connections
+   */
+  // Setup connections data
+  startConnectionData = unit.getConnectionData(10000, &ok);
+  QVERIFY(ok);
+  endConnectionData = unit.getConnectionData(10001, &ok);
+  QVERIFY(ok);
+  
+  // Setup vehicle link data
+  vtStartIdList.append(1);
+  vtEndIdList.append(1);
+  // Setup link data
+  linkData.setConnectionData(startConnectionData, endConnectionData);
+  linkData.setValue("LinkType_Code_FK", "CABLELINK");
+  linkData.setValue("LinkDirection_Code_FK", "BID");
+  QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
+  // Add link
+  QVERIFY(lnk.addLink(linkData));
+  
+  /// \todo Edit link
+  
+  /// \todo Links with U CNN based on ART CNN
+  
+}
+
+void mdtCableListTest::removeTestLinks()
+{
+  mdtClLink lnk(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  QVERIFY(lnk.removeLink(10000, 10001));
+  dataList = lnk.getData("SELECT * FROM VehicleType_Link_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  dataList = lnk.getData("SELECT * FROM Link_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
 }

@@ -2,23 +2,23 @@ format 204
 
 classcanvas 128002 class_ref 888194 // mdtClLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 58.3 277 2000
+  xyz 98.4 271 2000
 end
 classcanvas 128130 class_ref 1067266 // mdtSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 419.5 61.8 2000
+  xyz 419.5 61.6 2000
 end
 classcanvas 128514 class_ref 1113858 // mdtClUnitConnectionData
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 691.5 203.6 2006
+  xyz 691.6 203.2 2006
 end
 classcanvas 128770 class_ref 1113730 // mdtClArticleConnectionData
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 678 60.1 3005
+  xyz 678.7 60 3005
 end
 classcanvas 129794 class_ref 1120386 // mdtClVehicleTypeLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 647.9 537.6 2000
+  xyz 647 537.8 2000
 end
 relationcanvas 128386 relation_ref 1378434 // <generalisation>
   from ref 128002 z 2001 to ref 128130
@@ -44,11 +44,11 @@ relationcanvas 129154 relation_ref 1391490 // <directional composition>
   decenter_begin 740
   from ref 128002 z 2007 to ref 128514
   no_role_a no_role_b
-  multiplicity_a_pos 715 245 3000 no_multiplicity_b
+  multiplicity_a_pos 725 245 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1391746 // <directional composition>
-  from ref 128002 z 2001 stereotype "<<list>>" xyz 590.5 519.5 3000 to ref 129794
-  role_a_pos 520 534 3000 no_role_b
-  multiplicity_a_pos 620 566 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<list>>" xyz 612.5 515.5 3000 to ref 129794
+  role_a_pos 540 536 3000 no_role_b
+  multiplicity_a_pos 640 569 3000 no_multiplicity_b
 end
 end

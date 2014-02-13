@@ -93,6 +93,10 @@ class mdtClLinkData : public mdtSqlRecord
    */
   inline const QList<mdtClVehicleTypeLinkData> & vehicleTypeLinkDataList() const { return pvVehicleTypeLinkDataList; }
 
+  /*! \brief Clear only vehicle type link data list
+   */
+  void clearVehicleTypeLinkDataList();
+
  private:
   
   mdtClUnitConnectionData pvStartConnectionData;
