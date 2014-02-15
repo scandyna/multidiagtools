@@ -52,7 +52,7 @@ class mdtCableListTest : public mdtTest
   /// Créer des fonction (pas slot) qui construisent à mesure un sénario
 
   void mdtClLinkDataTest();
-  void linkTest();
+  void linkTest();  /// \todo Ne pas oublier: UnitLink_view et LinkList_view !
 
   void pathGraphTest();
 
@@ -90,6 +90,7 @@ class mdtCableListTest : public mdtTest
   /*
    * Remove test articles
    */
+
   void removeTestArticles();
   /*
    * Create some article connections for tests:
@@ -102,6 +103,7 @@ class mdtCableListTest : public mdtTest
    * Remove test article connections
    */
   void removeTestArticleConnections();
+
   /*
    * Create some article connectors for tests:
    *
@@ -116,6 +118,7 @@ class mdtCableListTest : public mdtTest
    * Remove test article connectors
    */
   void removeTestArticleConnectors();
+
   /*
    * Create some article links for tests:
    *  - ArticleConnectionStart_Id_FK : 10 , ArticleConnectionEnd_Id_FK : 20 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
@@ -137,27 +140,33 @@ class mdtCableListTest : public mdtTest
    * Remove test units
    */
   void removeTestUnits();
+
   /*
    * Create some VehicleType-Unit assignations for tests:
    *  - Unit_Id_FK : 1000 , VehicleType_Id_FK : 1
+   *  - Unit_Id_FK : 2000 , VehicleType_Id_FK : 2
    */
   void createTestVehicleTypeUnitAssignations();
   /*
    * Remove VehicleType-Unit assignations
    */
   void removeTestVehicleTypeUnitAssignations();
+
   /*
    * Create some unit connections for tests:
    *  - Id_PK : 10000 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , UnitContactName : Unit contact 10000
    *  - Id_PK : 10001 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , UnitContactName : Unit contact 10001
    *  - Id_PK : 20000 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 20 , UnitContactName : Unit contact 20000
    *  - Id_PK : 20001 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 21 , UnitContactName : Unit contact 20001
+   *
+   * Will also add a link from unit connection 20000 to 20001
    */
   void createTestUnitConnections();
   /*
    * Remove test unit connections
    */
   void removeTestUnitConnections();
+
   /*
    * Create some unit connectors for tests:
    *

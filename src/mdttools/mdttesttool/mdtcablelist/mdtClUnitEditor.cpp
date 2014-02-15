@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtClUnitEditor.h"
 #include "mdtClUnit.h"
+#include "mdtClLink.h"
 #include "ui_mdtClUnitEditor.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
@@ -520,7 +521,7 @@ void mdtClUnitEditor::removeConnectors()
     displayLastError();
     return;
   }
-  // Update connections view
+  // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
 }
@@ -556,6 +557,7 @@ void mdtClUnitEditor::addConnection()
   }
   // Update connections view
   select("UnitConnection_view");
+  select("UnitLink_view");
 }
 
 void mdtClUnitEditor::editConnection()
@@ -646,7 +648,7 @@ void mdtClUnitEditor::addLink()
   mdtSqlFormWidget *widget;
   mdtClUnitLinkDialog dialog(0, database());
   QVariant unitId;
-  mdtClUnit unit(this, database());
+  mdtClLink lnk(0, database());
 
   widget = sqlFormWidget("Unit_tbl");
   Q_ASSERT(widget != 0);
@@ -659,17 +661,9 @@ void mdtClUnitEditor::addLink()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  /**
-  if(!dialog.linkData().buildVehicleTypeStartEndIdList()){
-    /// \todo MsgBox with error
-    qDebug() << "ERROR building VJC list";
-    return;
-  }
-  qDebug() << "Editor, vhcs: " << dialog.linkData().vehicleTypeStartEndIdList();
-  */
   // Add link
-  if(!unit.addLink(dialog.linkData())){
-    pvLastError = unit.lastError();
+  if(!lnk.addLink(dialog.linkData())){
+    pvLastError = lnk.lastError();
     displayLastError();
     return;
   }
@@ -752,7 +746,8 @@ void mdtClUnitEditor::editLink()
 void mdtClUnitEditor::removeLinks()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(this, database());
+  ///mdtClUnit unit(this, database());
+  mdtClLink lnk(0, database());
   QMessageBox msgBox;
   QList<QModelIndexList> indexes;
   QSqlError sqlError;
@@ -776,8 +771,8 @@ void mdtClUnitEditor::removeLinks()
     return;
   }
   // Delete seleced rows
-  if(!unit.removeLinks(indexes)){
-    pvLastError = unit.lastError();
+  if(!lnk.removeLinks(indexes)){
+    pvLastError = lnk.lastError();
     displayLastError();
     return;
   }
@@ -1167,9 +1162,9 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->addWidgetToLocalBar(pbRemoveConnection);
   widget->addStretchToLocalBar();
   // Hide relation fields and PK
-  widget->setColumnHidden("UnitConnection_Id_PK", true);
+  ///widget->setColumnHidden("UnitConnection_Id_PK", true);
   widget->setColumnHidden("Unit_Id_FK", true);
-  widget->setColumnHidden("ArticleConnection_Id_FK", true);
+  ///widget->setColumnHidden("ArticleConnection_Id_FK", true);
   // Give fields a user friendly name
   widget->setHeaderData("SchemaPage", tr("Schema\npage"));
   widget->setHeaderData("UnitFunctionEN", tr("Unit\nfunction\n(English)"));

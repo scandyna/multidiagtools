@@ -211,7 +211,7 @@ class mdtClUnit : public mdtTtBase
 
   /*! \brief Add unit connection
    */
-  bool addConnection(const mdtClUnitConnectionData & data);
+  bool addConnection(const mdtClUnitConnectionData & data, bool singleTransaction = true);
 
   /*! \brief Edit a unit connection
    *
@@ -263,25 +263,11 @@ class mdtClUnit : public mdtTtBase
 
   /*! \brief Get a data object for a given link
    */
-  mdtClLinkData getUnitLinkData(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool *ok);
-
-  /*! \brief Add a unit link
-   */
-  bool addLink(const mdtClLinkData &data);
+  ///mdtClLinkData getUnitLinkData(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool *ok);
 
   /*! \brief Edit a unit link
    */
   bool editLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, const mdtClLinkData &data);
-
-  /*! \brief Remove a unit link
-   *
-   * Will also remove all vehicle type related links
-   */
-  bool removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
-
-  /*! \brief Remove each unit link that is contained in selection
-   */
-  bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
 
  private:
 
@@ -317,6 +303,12 @@ class mdtClUnit : public mdtTtBase
   /*! \brief Do some coherence check on unit connector data
    */
   bool checkConnectorData(const mdtClUnitConnectorData & data);
+
+  /*! \brief Get a list of article links that uses given unit connection
+   *
+   * Note: returned list of link data also contains vehicle type links.
+   */
+  QList<mdtClLinkData> getArticleLinkListUsingConnectionId(const mdtClUnitConnectionData & unitConnectionData, bool *ok);
 
   /*! \brief Add link to vehicle type table
    */

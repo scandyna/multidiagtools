@@ -1,6 +1,6 @@
 format 204
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 25
+  revision 26
   modified_by 2 "philippe"
   // class settings
   
@@ -1503,6 +1503,7 @@ ${inlines}
 
       attribute 964098 "LinkType_Code_FK"
 	private explicit_type "string"
+	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1515,6 +1516,7 @@ ${inlines}
 
       attribute 964226 "LinkDirection_Code_FK"
 	private explicit_type "string"
+	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1555,18 +1557,6 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 963970 "Value"
-	private explicit_type "double"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       classrelation 1188610 // <unidirectional association>
 	relation 1176066 --->
 	  a role_name "" private
@@ -1583,6 +1573,42 @@ ${inlines}
 "
 	    classrelation_ref 1188738 // <unidirectional association>
 	  b parent class_ref 805506 // LinkDirection_tbl
+      end
+
+      attribute 1115650 "SinceVersion"
+	private explicit_type "float"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1115778 "Modification"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 963970 "Value"
+	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 

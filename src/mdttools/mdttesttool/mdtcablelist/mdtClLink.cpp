@@ -76,26 +76,59 @@ bool mdtClLink::buildVehicleTypeLinkDataList(mdtClLinkData & linkData, const QLi
   return true;
 }
 
-bool mdtClLink::addLink(const mdtClLinkData & linkData)
+bool mdtClLink::addLink(const mdtClLinkData & linkData, bool handleTransaction)
 {
   // We want to update 2 tables, so manually ask to beginn a transaction
-  if(!beginTransaction()){
-    return false;
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
   }
   // Add Link_tbl part
   if(!addRecord(linkData, "Link_tbl")){
-    rollbackTransaction();
+    if(handleTransaction){
+      rollbackTransaction();
+    }
     return false;
   }
   // Add vehicle type link part
   if(!addLinkToVehicleTypeList(linkData.vehicleTypeLinkDataList())){
-    rollbackTransaction();
+    if(handleTransaction){
+      rollbackTransaction();
+    }
     return false;
   }
-  if(!commitTransaction()){
-    return false;
+  if(handleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
   }
-  /// \todo Implement article link part
+
+  return true;
+}
+
+bool mdtClLink::addLinks(const QList<mdtClLinkData> & linkDataList, bool handleTransaction)
+{
+  int i;
+
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
+  }
+  for(i = 0; i < linkDataList.size(); ++i){
+    if(!addLink(linkDataList.at(i), false)){
+      if(handleTransaction){
+        rollbackTransaction();
+      }
+      return false;
+    }
+  }
+  if(handleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
+  }
 
   return true;
 }
@@ -119,7 +152,6 @@ bool mdtClLink::removeLink(const QVariant & unitConnectionStartId, const QVarian
   if(!commitTransaction()){
     return false;
   }
-  /// \todo Implement article link part
 
   return true;
 }

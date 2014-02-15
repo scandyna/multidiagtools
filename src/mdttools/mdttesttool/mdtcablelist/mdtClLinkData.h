@@ -74,13 +74,21 @@ class mdtClLinkData : public mdtSqlRecord
    */
   void setConnectionData(const mdtClUnitConnectionData & startCnnData, const mdtClUnitConnectionData & endCnnData);
 
-  /*! \brief Get start connection data
+  /*! \brief Get start connection data (RD)
    */
-  inline mdtClUnitConnectionData startConnectionData() const { return pvStartConnectionData; }
+  inline const mdtClUnitConnectionData & startConnectionData() const { return pvStartConnectionData; }
 
-  /*! \brief Get end connection data
+  /*! \brief Get start connection data (WR)
    */
-  inline mdtClUnitConnectionData endConnectionData() const { return pvEndConnectionData; }
+  inline mdtClUnitConnectionData & startConnectionData() { return pvStartConnectionData; }
+
+  /*! \brief Get end connection data (RD)
+   */
+  inline const mdtClUnitConnectionData & endConnectionData() const { return pvEndConnectionData; }
+
+  /*! \brief Get end connection data (WR)
+   */
+  inline mdtClUnitConnectionData & endConnectionData() { return pvEndConnectionData; }
 
   /*! \brief Add vehicle type link data
    *

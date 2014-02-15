@@ -42,7 +42,19 @@ mdtClLinkData::mdtClLinkData(const QSqlRecord & record)
 
 bool mdtClLinkData::setup(const QSqlDatabase & db) 
 {
-  return addAllFields("Link_tbl", db);
+  clear();
+  pvStartConnectionData.clear();
+  pvEndConnectionData.clear();
+  if(!addAllFields("Link_tbl", db)){
+    return false;
+  }
+  if(!pvStartConnectionData.setup(db, true)){
+    return false;
+  }
+  if(!pvEndConnectionData.setup(db, true)){
+    return false;
+  }
+  return true;
 }
 
 void mdtClLinkData::clearValues()

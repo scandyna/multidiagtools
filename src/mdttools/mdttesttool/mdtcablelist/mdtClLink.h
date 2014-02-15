@@ -59,7 +59,13 @@ class mdtClLink : public mdtTtBase
    * Will also add required vehicle type links stored in linkData.
    *  To generate vehicle type links, use buildVehicleTypeLinkDataList().
    */
-  bool addLink(const mdtClLinkData & linkData);
+  bool addLink(const mdtClLinkData & linkData, bool handleTransaction = true);
+
+  /*! \brief Add a list of links
+   *
+   * \sa addLink().
+   */
+  bool addLinks(const QList<mdtClLinkData> & linkDataList, bool handleTransaction = true);
 
   /*! \brief Remove a unit link
    *

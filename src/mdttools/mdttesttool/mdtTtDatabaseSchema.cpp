@@ -2315,6 +2315,7 @@ bool mdtTtDatabaseSchema::createUnitConnectionView()
   return createView("UnitConnection_view", sql);
 }
 
+/**
 bool mdtTtDatabaseSchema::createArticleLinkUnitConnectionView()
 {
   QString sql;
@@ -2340,6 +2341,32 @@ bool mdtTtDatabaseSchema::createArticleLinkUnitConnectionView()
         "  ON UCS.ArticleConnection_Id_FK = ArticleLink_tbl.ArticleConnectionStart_Id_FK\n"\
         " JOIN UnitConnection_tbl UCE\n"\
         "  ON UCE.ArticleConnection_Id_FK = ArticleLink_tbl.ArticleConnectionEnd_Id_FK\n";
+
+  return createView("ArticleLink_UnitConnection_view", sql);
+}
+*/
+
+bool mdtTtDatabaseSchema::createArticleLinkUnitConnectionView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW ArticleLink_UnitConnection_view AS\n"\
+        "SELECT\n"\
+        " UCNXS.Id_PK AS UnitConnectionStart_Id_FK,\n"\
+        " UCNXE.Id_PK AS UnitConnectionEnd_Id_FK,\n"\
+        " AL.ArticleConnectionStart_Id_FK,\n"\
+        " AL.ArticleConnectionEnd_Id_FK,\n"\
+        " AL.LinkType_Code_FK,\n"\
+        " AL.LinkDirection_Code_FK,\n"\
+        " AL.Identification,\n"\
+        " AL.Value,\n"\
+        " AL.SinceVersion,\n"\
+        " AL.Modification\n"\
+        "FROM ArticleLink_tbl AL\n"\
+        " JOIN UnitConnection_tbl UCNXS\n"\
+        "  ON UCNXS.ArticleConnection_Id_FK = AL.ArticleConnectionStart_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXE\n"\
+        "  ON UCNXE.ArticleConnection_Id_FK = AL.ArticleConnectionEnd_Id_FK\n";
 
   return createView("ArticleLink_UnitConnection_view", sql);
 }
@@ -2428,6 +2455,112 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
 }
 */
 
+/**
+bool mdtTtDatabaseSchema::createUnitLinkView() 
+{
+  QString sql;
+
+  sql = "CREATE VIEW UnitLink_view AS\n"\
+        "SELECT\n"\
+        " LNK.Identification ,\n"\
+        " US.SchemaPosition AS StartSchemaPosition ,\n"\
+        " UCS.Name AS StartUnitConnectorName ,\n"\
+        " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
+        " UE.SchemaPosition AS EndSchemaPosition ,\n"\
+        " UCE.Name AS EndUnitConnectorName ,\n"\
+        " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
+        " LNK.SinceVersion ,\n"\
+        " LNK.Modification ,\n"\
+        " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
+        " LNK.Value ,\n"\
+        " LinkType_tbl.ValueUnit ,\n"\
+        " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
+        " UCNXS.SchemaPage AS StartSchemaPage ,\n"\
+        " UCNXS.FunctionEN AS StartFunctionEN ,\n"\
+        " UCNXS.SignalName AS StartSignalName ,\n"\
+        " UCNXS.SwAddress AS StartSwAddress ,\n"\
+        " UCNXE.SchemaPage AS EndSchemaPage ,\n"\
+        " UCNXE.FunctionEN AS EndFunctionEN ,\n"\
+        " UCNXE.SignalName AS EndSignalName ,\n"\
+        " UCNXE.SwAddress AS EndSwAddress ,\n"\
+        " LNK.UnitConnectionStart_Id_FK ,\n"\
+        " LNK.UnitConnectionEnd_Id_FK ,\n"\
+        " UCNXS.Unit_Id_FK AS StartUnit_Id_FK ,\n"\
+        " UCNXE.Unit_Id_FK AS EndUnit_Id_FK ,\n"\
+        " LNK.LinkType_Code_FK ,\n"\
+        " LNK.LinkDirection_Code_FK ,\n"\
+        " LNK.ArticleConnectionStart_Id_FK ,\n"\
+        " LNK.ArticleConnectionEnd_Id_FK\n"\
+        "FROM Link_tbl LNK\n"\
+        " JOIN UnitConnection_tbl UCNXS\n"\
+        "  ON LNK.UnitConnectionStart_Id_FK = UCNXS.Id_PK\n"\
+        " JOIN UnitConnection_tbl UCNXE\n"\
+        "  ON LNK.UnitConnectionEnd_Id_FK = UCNXE.Id_PK\n"\
+        " LEFT JOIN UnitConnector_tbl UCS\n"\
+        "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+        " LEFT JOIN UnitConnector_tbl UCE\n"\
+        "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
+        " JOIN Unit_tbl US\n"\
+        "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
+        " JOIN Unit_tbl UE\n"\
+        "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
+        " JOIN LinkType_tbl\n"\
+        "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
+        " JOIN LinkDirection_tbl\n"\
+        "  ON LinkDirection_tbl.Code_PK = LNK.LinkDirection_Code_FK\n"
+        "UNION\n"\
+        "SELECT\n"\
+        " AL.Identification ,\n"\
+        " US.SchemaPosition AS StartSchemaPosition ,\n"\
+        " UCS.Name AS StartUnitConnectorName ,\n"\
+        " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
+        " UE.SchemaPosition AS EndSchemaPosition ,\n"\
+        " UCE.Name AS EndUnitConnectorName ,\n"\
+        " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
+        " AL.SinceVersion ,\n"\
+        " AL.Modification ,\n"\
+        " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
+        " AL.Value ,\n"\
+        " LinkType_tbl.ValueUnit ,\n"\
+        " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
+        " UCNXS.SchemaPage AS StartSchemaPage ,\n"\
+        " UCNXS.FunctionEN AS StartFunctionEN ,\n"\
+        " UCNXS.SignalName AS StartSignalName ,\n"\
+        " UCNXS.SwAddress AS StartSwAddress ,\n"\
+        " UCNXE.SchemaPage AS EndSchemaPage ,\n"\
+        " UCNXE.FunctionEN AS EndFunctionEN ,\n"\
+        " UCNXE.SignalName AS EndSignalName ,\n"\
+        " UCNXE.SwAddress AS EndSwAddress ,\n"\
+        " UCNXS.Id_PK AS UnitConnectionStart_Id_FK ,\n"\
+        " UCNXE.Id_PK AS UnitConnectionEnd_Id_FK ,\n"\
+        " UCNXS.Unit_Id_FK AS StartUnit_Id_FK ,\n"\
+        " UCNXE.Unit_Id_FK AS EndUnit_Id_FK ,\n"\
+        " AL.LinkType_Code_FK ,\n"\
+        " AL.LinkDirection_Code_FK ,\n"\
+        " AL.ArticleConnectionStart_Id_FK ,\n"\
+        " AL.ArticleConnectionEnd_Id_FK\n"\
+        "FROM ArticleLink_tbl AL\n"\
+        " JOIN UnitConnection_tbl UCNXS\n"\
+        "  ON UCNXS.ArticleConnection_Id_FK = AL.ArticleConnectionStart_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXE\n"\
+        "  ON UCNXE.ArticleConnection_Id_FK = AL.ArticleConnectionEnd_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCS\n"\
+        "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+        " LEFT JOIN UnitConnector_tbl UCE\n"\
+        "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
+        " JOIN Unit_tbl US\n"\
+        "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
+        " JOIN Unit_tbl UE\n"\
+        "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
+        " JOIN LinkType_tbl\n"\
+        "  ON LinkType_tbl.Code_PK = AL.LinkType_Code_FK\n"\
+        " JOIN LinkDirection_tbl\n"\
+        "  ON LinkDirection_tbl.Code_PK = AL.LinkDirection_Code_FK\n";
+
+  return createView("UnitLink_view", sql);
+}
+*/
+
 bool mdtTtDatabaseSchema::createUnitLinkView()
 {
   QString sql, selectSql;
@@ -2468,7 +2601,7 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
          " JOIN UnitConnection_tbl UCNXS\n"\
          "  ON UCNXS.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
          " JOIN UnitConnection_tbl UCNXE\n"\
-         "  ON UCNXE.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
+         "  ON UCNXE.Id_PK = LNK.UnitConnectionEnd_Id_FK\n"\
           " LEFT JOIN UnitConnector_tbl UCS\n"\
           "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
           " LEFT JOIN UnitConnector_tbl UCE\n"\
@@ -2596,6 +2729,150 @@ bool mdtTtDatabaseSchema::createLinkListView()
 }
 */
 
+/**
+bool mdtTtDatabaseSchema::createLinkListView() 
+{
+  QString sql;
+
+  sql = "CREATE VIEW LinkList_view AS\n"\
+        "SELECT\n"\
+        " LNK.Identification,\n"\
+        " US.Id_PK AS UnitStart_Id_PK,\n"\
+        " UE.Id_PK AS UnitEnd_Id_PK,\n"\
+        " US.SchemaPosition AS StartSchemaPosition,\n"\
+        " US.Cabinet AS StartCabinet,\n"\
+        " US.Coordinate AS StartCoordinate,\n"\
+        " UCS.Name AS StartUnitConnectorName,\n"\
+        " UCNXS.UnitContactName AS StartUnitContactName,\n"\
+        " UE.SchemaPosition AS EndSchemaPosition,\n"\
+        " UE.Cabinet AS EndCabinet,\n"\
+        " UE.Coordinate AS EndCoordinate,\n"\
+        " UCE.Name AS EndUnitConnectorName,\n"\
+        " UCNXE.UnitContactName AS EndUnitContactName,\n"\
+        " LNK.SinceVersion,\n"\
+        " LNK.Modification,\n"\
+        " LinkType_tbl.NameEN AS LinkTypeNameEN,\n"\
+        " LNK.Value,\n"\
+        " LinkType_tbl.ValueUnit ,\n"\
+        " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
+        " UCNXS.SchemaPage AS StartSchemaPage ,\n"\
+        " UCNXS.FunctionEN AS StartFunctionEN ,\n"\
+        " UCNXS.SignalName AS StartSignalName ,\n"\
+        " UCNXS.SwAddress AS StartSwAddress ,\n"\
+        " UCNXE.SchemaPage AS EndSchemaPage ,\n"\
+        " UCNXE.FunctionEN AS EndFunctionEN ,\n"\
+        " UCNXE.SignalName AS EndSignalName ,\n"\
+        " UCNXE.SwAddress AS EndSwAddress,\n"\
+        " LNK.UnitConnectionStart_Id_FK ,\n"\
+        " LNK.UnitConnectionEnd_Id_FK ,\n"\
+        " UCNXS.Unit_Id_FK AS StartUnit_Id_FK ,\n"\
+        " UCNXE.Unit_Id_FK AS EndUnit_Id_FK ,\n"\
+        " LNK.LinkType_Code_FK ,\n"\
+        " LNK.LinkDirection_Code_FK ,\n"\
+        " LNK.ArticleConnectionStart_Id_FK ,\n"\
+        " LNK.ArticleConnectionEnd_Id_FK,\n"\
+        " VS.Type AS StartVehicleType ,\n"\
+        " VS.SubType AS StartVehicleSubType ,\n"\
+        " VS.SeriesNumber AS StartVehicleSerie,\n"\
+        " VE.Type AS EndVehicleType ,\n"\
+        " VE.SubType AS EndVehicleSubType ,\n"\
+        " VE.SeriesNumber AS EndVehicleSerie\n"\
+        "FROM Link_tbl LNK\n"\
+        " JOIN UnitConnection_tbl UCNXS\n"\
+        "  ON LNK.UnitConnectionStart_Id_FK = UCNXS.Id_PK\n"\
+        " JOIN UnitConnection_tbl UCNXE\n"\
+        "  ON LNK.UnitConnectionEnd_Id_FK = UCNXE.Id_PK\n"\
+        " LEFT JOIN UnitConnector_tbl UCS\n"\
+        "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+        " LEFT JOIN UnitConnector_tbl UCE\n"\
+        "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
+        " JOIN Unit_tbl US\n"\
+        "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
+        " JOIN Unit_tbl UE\n"\
+        "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
+        " JOIN LinkType_tbl\n"\
+        "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
+        " JOIN LinkDirection_tbl\n"\
+        "  ON LinkDirection_tbl.Code_PK = LNK.LinkDirection_Code_FK\n"
+        " LEFT JOIN VehicleType_Link_tbl\n"\
+        "  ON LNK.UnitConnectionStart_Id_FK = VehicleType_Link_tbl.UnitConnectionStart_Id_FK\n"\
+        "  AND LNK.UnitConnectionEnd_Id_FK = VehicleType_Link_tbl.UnitConnectionEnd_Id_FK\n"\
+        " LEFT JOIN VehicleType_tbl VS\n"\
+        "  ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK\n"\
+        " LEFT JOIN VehicleType_tbl VE\n"\
+        "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK\n"\
+        "UNION\n"\
+        "SELECT\n"\
+        " AL.Identification ,\n"\
+        " US.Id_PK AS UnitStart_Id_PK ,\n"\
+        " UE.Id_PK AS UnitEnd_Id_PK ,\n"\
+        " US.SchemaPosition AS StartSchemaPosition ,\n"\
+        " US.Cabinet AS StartCabinet,\n"\
+        " US.Coordinate AS StartCoordinate ,\n"\
+        " UCS.Name AS StartUnitConnectorName ,\n"\
+        " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
+        " UE.SchemaPosition AS EndSchemaPosition ,\n"\
+        " UE.Cabinet AS EndCabinet,\n"\
+        " UE.Coordinate AS EndCoordinate ,\n"\
+        " UCE.Name AS EndUnitConnectorName ,\n"\
+        " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
+        " AL.SinceVersion ,\n"\
+        " AL.Modification ,\n"\
+        " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
+        " AL.Value ,\n"\
+        " LinkType_tbl.ValueUnit ,\n"\
+        " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
+        " UCNXS.SchemaPage AS StartSchemaPage ,\n"\
+        " UCNXS.FunctionEN AS StartFunctionEN ,\n"\
+        " UCNXS.SignalName AS StartSignalName ,\n"\
+        " UCNXS.SwAddress AS StartSwAddress ,\n"\
+        " UCNXE.SchemaPage AS EndSchemaPage ,\n"\
+        " UCNXE.FunctionEN AS EndFunctionEN ,\n"\
+        " UCNXE.SignalName AS EndSignalName ,\n"\
+        " UCNXE.SwAddress AS EndSwAddress ,\n"\
+        " UCNXS.Id_PK AS UnitConnectionStart_Id_FK ,\n"\
+        " UCNXE.Id_PK AS UnitConnectionEnd_Id_FK ,\n"\
+        " UCNXS.Unit_Id_FK AS StartUnit_Id_FK ,\n"\
+        " UCNXE.Unit_Id_FK AS EndUnit_Id_FK ,\n"\
+        " AL.LinkType_Code_FK ,\n"\
+        " AL.LinkDirection_Code_FK ,\n"\
+        " AL.ArticleConnectionStart_Id_FK ,\n"\
+        " AL.ArticleConnectionEnd_Id_FK,\n"\
+        " VS.Type AS StartVehicleType ,\n"\
+        " VS.SubType AS StartVehicleSubType ,\n"\
+        " VS.SeriesNumber AS StartVehicleSerie,\n"\
+        " VE.Type AS EndVehicleType ,\n"\
+        " VE.SubType AS EndVehicleSubType ,\n"\
+        " VE.SeriesNumber AS EndVehicleSerie\n"\
+        "FROM ArticleLink_tbl AL\n"\
+        " JOIN UnitConnection_tbl UCNXS\n"\
+        "  ON UCNXS.ArticleConnection_Id_FK = AL.ArticleConnectionStart_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXE\n"\
+        "  ON UCNXE.ArticleConnection_Id_FK = AL.ArticleConnectionEnd_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCS\n"\
+        "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+        " LEFT JOIN UnitConnector_tbl UCE\n"\
+        "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
+        " JOIN Unit_tbl US\n"\
+        "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
+        " JOIN Unit_tbl UE\n"\
+        "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
+        " JOIN LinkType_tbl\n"\
+        "  ON LinkType_tbl.Code_PK = AL.LinkType_Code_FK\n"\
+        " JOIN LinkDirection_tbl\n"\
+        "  ON LinkDirection_tbl.Code_PK = AL.LinkDirection_Code_FK\n"\
+        " LEFT JOIN VehicleType_Link_tbl\n"\
+        "  ON UCNXS.Id_PK = VehicleType_Link_tbl.UnitConnectionStart_Id_FK\n"\
+        "  AND UCNXE.Id_PK = VehicleType_Link_tbl.UnitConnectionEnd_Id_FK\n"\
+        " LEFT JOIN VehicleType_tbl VS\n"\
+        "  ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK\n"\
+        " LEFT JOIN VehicleType_tbl VE\n"\
+        "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK";
+
+  return createView("LinkList_view", sql);
+}
+*/
+
 bool mdtTtDatabaseSchema::createLinkListView()
 {
   QString sql, selectSql;
@@ -2632,7 +2909,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
          " JOIN UnitConnection_tbl UCNXS\n"\
          "  ON UCNXS.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
          " JOIN UnitConnection_tbl UCNXE\n"\
-         "  ON UCNXE.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
+         "  ON UCNXE.Id_PK = LNK.UnitConnectionEnd_Id_FK\n"\
           " LEFT JOIN UnitConnector_tbl UCS\n"\
           "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
           " LEFT JOIN UnitConnector_tbl UCE\n"\
