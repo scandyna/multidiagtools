@@ -30,12 +30,12 @@
 mdtClUnit::mdtClUnit(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
 {
-  pvUnitLinkModel = 0;
+  ///pvUnitLinkModel = 0;
 }
 
 mdtClUnit::~mdtClUnit()
 {
-  delete pvUnitLinkModel;
+  ///delete pvUnitLinkModel;
 }
 
 QString mdtClUnit::sqlForComponentSelection(const QVariant& unitId) const
@@ -107,7 +107,7 @@ QString mdtClUnit::sqlForArticleConnectionLinkedToArticleConnectorSelection(cons
   return sql;
 }
 
-mdtClUnitConnectionData mdtClUnit::getConnectionData(const QVariant & unitConnectionId, bool *ok)
+mdtClUnitConnectionData mdtClUnit::getConnectionData(const QVariant & unitConnectionId, bool includeArticleConnectionData, bool *ok)
 {
   Q_ASSERT(ok != 0);
 
@@ -122,7 +122,7 @@ mdtClUnitConnectionData mdtClUnit::getConnectionData(const QVariant & unitConnec
   }
   sql = "SELECT * FROM UnitConnection_tbl WHERE Id_PK = " + unitConnectionId.toString();
 
-  return getConnectionDataPv(sql, ok);
+  return getConnectionDataPv(sql, includeArticleConnectionData, ok);
 }
 
 mdtClUnitConnectorData mdtClUnit::getConnectorData(const QVariant& unitConnectorId, bool* ok, bool includeConnectionData, bool includeArticleConnectorData, bool includeBaseConnectorData)
@@ -344,6 +344,7 @@ int mdtClUnit::toUnitRelatedArticleConnectionCount(const QVariant & unitId)
   return -1;
 }
 
+/**
 QSqlQueryModel *mdtClUnit::toUnitRelatedLinksModel(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList)
 {
   QString sql;
@@ -380,7 +381,9 @@ QSqlQueryModel *mdtClUnit::toUnitRelatedLinksModel(const QVariant &unitId, const
 
   return pvUnitLinkModel;
 }
+*/
 
+/**
 QStringList mdtClUnit::toUnitRelatedLinksList(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList)
 {
   int row, col;
@@ -417,14 +420,73 @@ QStringList mdtClUnit::toUnitRelatedLinksList(const QVariant &unitId, const QLis
 
   return linksList;
 }
+*/
 
-QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList)
+QStringList mdtClUnit::toUnitRelatedLinksList(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList, bool *ok)
 {
+  Q_ASSERT(ok != 0);
+
+  QString sql;
+  QList<QSqlRecord> dataList;
+  QSqlRecord data;
+  QString link;
+  QStringList linksList;
+  int i;
+
+  // Build SQL statement
+  sql = "SELECT * FROM UnitLink_view "\
+        "WHERE ( StartUnit_Id_FK = " + unitId.toString() + " "\
+        "OR EndUnit_Id_FK = " + unitId.toString() + " ) ";
+  sql += " AND ( ArticleConnectionStart_Id_FK IS NULL AND ArticleConnectionEnd_Id_FK IS NULL ) ";
+  if(unitConnectionIdList.size() > 0){
+    sql += " AND ( ";
+  }
+  for(i = 0; i < unitConnectionIdList.size(); ++i){
+    if(i > 0){
+      sql += " OR ";
+    }
+    sql += " UnitConnectionStart_Id_FK = " + unitConnectionIdList.at(i).toString();
+    sql += " OR UnitConnectionEnd_Id_FK = " + unitConnectionIdList.at(i).toString();
+  }
+  if(unitConnectionIdList.size() > 0){
+    sql += " ) ";
+  }
+  // Get link data
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return linksList;
+  }
+  // Build link strings
+  for(i = 0; i < dataList.size(); ++i){
+    data = dataList.at(i);
+    link = data.value("Identification").toString();
+    link += "-(";
+    link += data.value("StartUnitConnectorName").toString();
+    link += ";";
+    link += data.value("StartUnitContactName").toString();
+    link += "-";
+    link += data.value("EndUnitConnectorName").toString();
+    link += ";";
+    link += data.value("EndUnitContactName").toString();
+    link += ")";
+    linksList.append(link);
+  }
+
+  return linksList;
+}
+
+QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
   QStringList linksList;
   QString str;
   int i;
 
-  linksList = toUnitRelatedLinksList(unitId, unitConnectionIdList);
+  linksList = toUnitRelatedLinksList(unitId, unitConnectionIdList, ok);
+  if(!*ok){
+    return str;
+  }
   for(i = 0; i < linksList.size(); ++i){
     str += linksList.at(i) + "\n";
   }
@@ -432,8 +494,10 @@ QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QList
   return str;
 }
 
-QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows)
+QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows, bool *ok)
 {
+  Q_ASSERT(ok != 0);
+
   int i;
   QList<QVariant> idList;
 
@@ -441,7 +505,7 @@ QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QMode
     idList.append(indexListOfSelectedRows.at(i).data());
   }
 
-  return toUnitRelatedLinksListStr(unitId, idList);
+  return toUnitRelatedLinksListStr(unitId, idList, ok);
 }
 
 bool mdtClUnit::addConnection(const mdtClUnitConnectionData & data, bool singleTransaction)
@@ -482,6 +546,7 @@ bool mdtClUnit::addConnection(const mdtClUnitConnectionData & data, bool singleT
 
 bool mdtClUnit::editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data)
 {
+  /// \todo WRONG !
   return updateRecord("UnitConnection_tbl", data, "Id_PK", connectionId);
 }
 
@@ -491,7 +556,7 @@ bool mdtClUnit::removeConnection(const QVariant & unitConnectionId, bool handleT
   bool ok;
 
   // We need some information about connection, because we possibly have to remove some links
-  connectionData = getConnectionData(unitConnectionId, &ok);
+  connectionData = getConnectionData(unitConnectionId, true, &ok);
   if(!ok){
     return false;
   }
@@ -838,7 +903,7 @@ bool mdtClUnit::editLink(const QVariant &unitConnectionStartId, const QVariant &
   */
 }
 
-mdtClUnitConnectionData mdtClUnit::getConnectionDataPv(const QString & sql, bool *ok)
+mdtClUnitConnectionData mdtClUnit::getConnectionDataPv(const QString & sql, bool includeArticleConnectionData, bool *ok)
 {
   Q_ASSERT(ok != 0);
 
@@ -855,14 +920,19 @@ mdtClUnitConnectionData mdtClUnit::getConnectionDataPv(const QString & sql, bool
   }
   Q_ASSERT(dataList.size() == 1);
   data = dataList.at(0);
-  // If data is based on article connection, get article connection data
-  articleConnectionId = data.value("ArticleConnection_Id_FK");
-  if(!articleConnectionId.isNull()){
-    articleConnectionData = art.getConnectionData(articleConnectionId, ok);
-    if(!*ok){
-      return data;
+  if(includeArticleConnectionData){
+    // If data is based on article connection, get article connection data
+    articleConnectionId = data.value("ArticleConnection_Id_FK");
+    if(!articleConnectionId.isNull()){
+      articleConnectionData = art.getConnectionData(articleConnectionId, ok);
+      if(!*ok){
+        return data;
+      }
+      data.setArticleConnectionData(articleConnectionData);
     }
-    data.setArticleConnectionData(articleConnectionData);
+  }else{
+    // This is important for link insersion
+    data.setValue("ArticleConnection_Id_FK", QVariant(QVariant::Int));
   }
   // Done
   *ok = true;

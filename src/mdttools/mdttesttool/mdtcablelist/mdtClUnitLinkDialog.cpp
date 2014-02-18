@@ -659,7 +659,7 @@ void mdtClUnitLinkDialog::updateStartConnection()
     lbStartConnectorName->setText("");
     return;
   }
-  connectionData = unit.getConnectionData(connectionData.value("Id_PK"), &ok);
+  connectionData = unit.getConnectionData(connectionData.value("Id_PK"), false, &ok);
   if(!ok){
     lbStartContactName->setText("<Error!>");
   }else{
@@ -692,7 +692,7 @@ void mdtClUnitLinkDialog::updateEndConnection()
     lbEndConnectorName->setText("");
     return;
   }
-  connectionData = unit.getConnectionData(connectionData.value("Id_PK"), &ok);
+  connectionData = unit.getConnectionData(connectionData.value("Id_PK"), false, &ok);
   if(!ok){
     lbEndContactName->setText("<Error!>");
   }else{

@@ -577,7 +577,7 @@ void mdtClUnitEditor::editConnection()
   if(connectionId.isNull()){
     return;
   }
-  data = unit.getConnectionData(connectionId, &ok);
+  data = unit.getConnectionData(connectionId, true, &ok);
   if(!ok){
     pvLastError = unit.lastError();
     displayLastError();
@@ -604,6 +604,7 @@ void mdtClUnitEditor::removeConnections()
   QMessageBox msgBox;
   QModelIndexList indexes;
   QString linksMsg;
+  bool ok;
 
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
@@ -613,7 +614,12 @@ void mdtClUnitEditor::removeConnections()
     return;
   }
   // Check that selected connections are not related to some links
-  linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), indexes);
+  linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), indexes, &ok);
+  if(!ok){
+    pvLastError = unit.lastError();
+    displayLastError();
+    return;
+  }
   linksMsg = linksMsg.trimmed();
   if(!linksMsg.isEmpty()){
     msgBox.setText(tr("Unable to remove selected connections."));

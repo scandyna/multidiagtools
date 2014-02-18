@@ -28,7 +28,7 @@
 #include "mdtError.h"
 #include "mdtSqlRecord.h"
 #include <QSqlDatabase>
-#include <QSqlQueryModel>
+///#include <QSqlQueryModel>
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QVariant>
@@ -89,7 +89,7 @@ class mdtClUnit : public mdtTtBase
    * If given unit connection is based on a article connection,
    *  the article connection data part will also be set.
    */
-  mdtClUnitConnectionData getConnectionData(const QVariant & unitConnectionId, bool *ok);
+  mdtClUnitConnectionData getConnectionData(const QVariant & unitConnectionId, bool includeArticleConnectionData, bool *ok);
 
   /*! \brief Get unit connector data
    *
@@ -186,28 +186,28 @@ class mdtClUnit : public mdtTtBase
 
   /*! \brief Get a model that contains links that are related to given unit ID and a list of unit connection IDs
    */
-  QSqlQueryModel *toUnitRelatedLinksModel(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList);
+  ///QSqlQueryModel *toUnitRelatedLinksModel(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList);
 
   /*! \brief Get a list of links that are related to given unit ID
    *
    * This is a helper method to display a message to the user in a simple way.
    *  Do not use the result for technical processing.
    */
-  QStringList toUnitRelatedLinksList(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList);
+  QStringList toUnitRelatedLinksList(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList, bool *ok);
 
   /*! \brief Get a list of links that are related to given unit ID
    *
    * This is a helper method to display a message to the user in a simple way.
    *  Do not use the result for technical processing.
    */
-  QString toUnitRelatedLinksListStr(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList);
+  QString toUnitRelatedLinksListStr(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList, bool *ok);
 
   /*! \brief Get a list of links that are related to given unit ID
    *
    * This is a helper method to display a message to the user in a simple way.
    *  Do not use the result for technical processing.
    */
-  QString toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows);
+  QString toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows, bool *ok);
 
   /*! \brief Add unit connection
    */
@@ -276,7 +276,7 @@ class mdtClUnit : public mdtTtBase
    * \pre Given SQL statement must return 1 unit connection row
    * \pre ok must be valid
    */
-  mdtClUnitConnectionData getConnectionDataPv(const QString & sql, bool *ok);
+  mdtClUnitConnectionData getConnectionDataPv(const QString & sql, bool includeArticleConnectionData, bool *ok);
 
   /*! \brief Get unit connector data
    *
@@ -338,7 +338,7 @@ class mdtClUnit : public mdtTtBase
 
   Q_DISABLE_COPY(mdtClUnit);
 
-  QSqlQueryModel *pvUnitLinkModel;
+  ///QSqlQueryModel *pvUnitLinkModel;
 };
 
 #endif  // #ifndef MDT_CL_UNIT_H

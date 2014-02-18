@@ -188,8 +188,12 @@ class mdtCableListTest : public mdtTest
 
   /*
    * Create links for tests:
+   *
    *  - UnitConnectionStart_Id_FK : 10000 , UnitConnectionEnd_Id_FK : 10001
    *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 1
+   *
+   *  - UnitConnectionStart_Id_FK : 10001 , UnitConnectionEnd_Id_FK : 20000
+   *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 2
    */
   void createTestLinks();
   /*
