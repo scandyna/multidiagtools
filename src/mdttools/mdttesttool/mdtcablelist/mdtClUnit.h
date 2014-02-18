@@ -222,7 +222,7 @@ class mdtClUnit : public mdtTtBase
 
   /*! \brief Remove a single unit connection
    */
-  bool removeConnection(const QVariant & unitConnectionId);
+  bool removeConnection(const QVariant & unitConnectionId, bool handleTransaction = true);
 
   /*! \brief Remove each unit connection that is contained in selection
    *
@@ -309,6 +309,24 @@ class mdtClUnit : public mdtTtBase
    * Note: returned list of link data also contains vehicle type links.
    */
   QList<mdtClLinkData> getArticleLinkListUsingConnectionId(const mdtClUnitConnectionData & unitConnectionData, bool *ok);
+
+  /*! \brief Add link that is based on a article link
+   *
+   * Will check if given unit connection,
+   *  and a second existing unit connection,
+   *  are base of a article link,
+   *  and add a link based on it if missing.
+   */
+  bool addArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData);
+
+  /*! \brief Remove link that is based on a article link
+   *
+   * Will check if given unit connection,
+   *  and a second existing unit connection,
+   *  are base of a article link,
+   *  and remove link
+   */
+  bool removeArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData);
 
   /*! \brief Add link to vehicle type table
    */

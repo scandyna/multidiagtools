@@ -23,6 +23,7 @@
 #include "mdtError.h"
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QSqlRecord>
 
 mdtClLink::mdtClLink(QObject* parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
@@ -133,24 +134,48 @@ bool mdtClLink::addLinks(const QList<mdtClLinkData> & linkDataList, bool handleT
   return true;
 }
 
-bool mdtClLink::removeLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId)
+bool mdtClLink::linkExists(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool* ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK FROM Link_tbl ";
+  sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
+  dataList = getData(sql, ok);
+
+  return (dataList.size() > 0);
+}
+
+
+bool mdtClLink::removeLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool handleTransaction)
 {
   // We want to update 2 tables, so manually ask to beginn a transaction
-  if(!beginTransaction()){
-    return false;
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
   }
   // Remove vehicle type links
   if(!removeData("VehicleType_Link_tbl", "UnitConnectionStart_Id_FK", unitConnectionStartId, "UnitConnectionEnd_Id_FK", unitConnectionEndId)){
-    rollbackTransaction();
+    if(handleTransaction){
+      rollbackTransaction();
+    }
     return false;
   }
   // Remove vehicle type links
   if(!removeData("Link_tbl", "UnitConnectionStart_Id_FK", unitConnectionStartId, "UnitConnectionEnd_Id_FK", unitConnectionEndId)){
-    rollbackTransaction();
+    if(handleTransaction){
+      rollbackTransaction();
+    }
     return false;
   }
-  if(!commitTransaction()){
-    return false;
+  if(handleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
   }
 
   return true;

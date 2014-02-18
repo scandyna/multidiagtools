@@ -134,6 +134,7 @@ class mdtCableListTest : public mdtTest
    * Create some units for tests:
    *  - Id_PK : 1000 , Article_Id_FK : NULL , SchemaPosition : Position 1000
    *  - Id_PK : 2000 , Article_Id_FK : 2    , SchemaPosition : Position 2000
+   *  - Id_PK : 2001 , Article_Id_FK : 2    , SchemaPosition : Position 2001
    */
   void createTestUnits();
   /*
@@ -145,6 +146,7 @@ class mdtCableListTest : public mdtTest
    * Create some VehicleType-Unit assignations for tests:
    *  - Unit_Id_FK : 1000 , VehicleType_Id_FK : 1
    *  - Unit_Id_FK : 2000 , VehicleType_Id_FK : 2
+   *  - Unit_Id_FK : 2001 , VehicleType_Id_FK : 2
    */
   void createTestVehicleTypeUnitAssignations();
   /*
@@ -158,8 +160,10 @@ class mdtCableListTest : public mdtTest
    *  - Id_PK : 10001 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , UnitContactName : Unit contact 10001
    *  - Id_PK : 20000 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 20 , UnitContactName : Unit contact 20000
    *  - Id_PK : 20001 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 21 , UnitContactName : Unit contact 20001
+   *  - Id_PK : 20002 , Unit_Id_FK : 2001 , ArticleConnection_Id_FK : 20 , UnitContactName : Unit contact 20002
+   *  - Id_PK : 20003 , Unit_Id_FK : 2001 , ArticleConnection_Id_FK : 21 , UnitContactName : Unit contact 20003
    *
-   * Will also add a link from unit connection 20000 to 20001
+   * Will also add a link from unit connection 20000 to 20001 and 20002 to 20003
    */
   void createTestUnitConnections();
   /*

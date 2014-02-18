@@ -67,11 +67,15 @@ class mdtClLink : public mdtTtBase
    */
   bool addLinks(const QList<mdtClLinkData> & linkDataList, bool handleTransaction = true);
 
+  /*! \brief Check if a link exists
+   */
+  bool linkExists(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool *ok);
+
   /*! \brief Remove a unit link
    *
    * Will also remove all vehicle type related links
    */
-  bool removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
+  bool removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool handleTransaction = true);
 
   /*! \brief Remove each unit link that is contained in selection
    */

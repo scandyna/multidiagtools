@@ -2354,6 +2354,8 @@ bool mdtTtDatabaseSchema::createArticleLinkUnitConnectionView()
         "SELECT\n"\
         " UCNXS.Id_PK AS UnitConnectionStart_Id_FK,\n"\
         " UCNXE.Id_PK AS UnitConnectionEnd_Id_FK,\n"\
+        " UCNXS.Unit_Id_FK AS StartUnit_Id_FK,\n"\
+        " UCNXE.Unit_Id_FK AS EndUnit_Id_FK,\n"\
         " AL.ArticleConnectionStart_Id_FK,\n"\
         " AL.ArticleConnectionEnd_Id_FK,\n"\
         " AL.LinkType_Code_FK,\n"\
