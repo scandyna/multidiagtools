@@ -53,25 +53,17 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    *
    * This will also clear start connection and set start vehicle types.
    */
-  void setStartUnit(const QVariant &unitId, const QVariant &schemaPosition, const QVariant &cabinet);
+  void setStartUnit(const QVariant &unitId/**, const QVariant &schemaPosition, const QVariant &cabinet*/);
 
   /*! \brief Set end unit
    *
    * This will also clear end connection and set end vehicle types.
    */
-  void setEndUnit(const QVariant &unitId, const QVariant &schemaPosition, const QVariant &cabinet);
-
-  /*! \brief Set start vehicle types
-   */
-  void setStartVehicleTypes(const QVariant &unitId);
+  void setEndUnit(const QVariant &unitId/**, const QVariant &schemaPosition, const QVariant &cabinet*/);
 
   /*! \brief Get selected start vehicle types
    */
   const QList<QVariant> startVehicleTypeIdList() const;
-
-  /*! \brief Set end vehicle types
-   */
-  void setEndVehicleTypes(const QVariant &unitId);
 
   /*! \brief Get selected end vehicle types
    */
@@ -149,6 +141,14 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void updateSinceVersionCombobox(const QVariant &data);
 
+  /*! \brief Update start unit
+   */
+  void updateStartUnit();
+
+  /*! \brief Update end unit
+   */
+  void updateEndUnit();
+
   /*! \brief Update start connection
    */
   void updateStartConnection();
@@ -157,6 +157,22 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void updateEndConnection();
 
+  /*! \brief Set start vehicle types
+   */
+  void setStartVehicleTypes(const QVariant &unitId);
+
+  /*! \brief Update start vehicle types
+   */
+  void updateStartVehicleTypes();
+
+  /*! \brief Set end vehicle types
+   */
+  void setEndVehicleTypes(const QVariant &unitId);
+
+  /*! \brief Update end vehicle types
+   */
+  void updateEndVehicleTypes();
+
   /*! \brief Build vehicle type link data list
    */
   bool buildVehicleTypeLinkDataList();
@@ -164,11 +180,15 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   Q_DISABLE_COPY(mdtClUnitLinkDialog);
 
   QSqlDatabase pvDatabase;
+  QVariant pvStartUnitId;
+  QVariant pvEndUnitId;
   QSqlQueryModel *pvLinkTypeModel;
   QSqlQueryModel *pvLinkDirectionModel;
   mdtClLinkData pvLinkData;
   QSqlQueryModel *pvStartVehicleTypesModel;
+  QList<QVariant> pvStartVehicleTypesIdList;
   QSqlQueryModel *pvEndVehicleTypesModel;
+  QList<QVariant> pvEndVehicleTypesIdList;
 };
 
 #endif // #ifndef MDT_CL_UNIT_LINK_DIALOG_H

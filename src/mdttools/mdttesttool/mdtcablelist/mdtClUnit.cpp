@@ -30,12 +30,10 @@
 mdtClUnit::mdtClUnit(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
 {
-  ///pvUnitLinkModel = 0;
 }
 
 mdtClUnit::~mdtClUnit()
 {
-  ///delete pvUnitLinkModel;
 }
 
 QString mdtClUnit::sqlForComponentSelection(const QVariant& unitId) const
@@ -344,84 +342,6 @@ int mdtClUnit::toUnitRelatedArticleConnectionCount(const QVariant & unitId)
   return -1;
 }
 
-/**
-QSqlQueryModel *mdtClUnit::toUnitRelatedLinksModel(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList)
-{
-  QString sql;
-  QSqlError sqlError;
-  int i;
-
-  if(pvUnitLinkModel == 0){
-    pvUnitLinkModel = new QSqlQueryModel;
-  }
-  sql = "SELECT * FROM UnitLink_view "\
-        "WHERE ( StartUnit_Id_FK = " + unitId.toString() + " "\
-        "OR EndUnit_Id_FK = " + unitId.toString() + " ) ";
-  if(unitConnectionIdList.size() > 0){
-    sql += " AND ( ";
-  }
-  for(i = 0; i < unitConnectionIdList.size(); ++i){
-    if(i > 0){
-      sql += " OR ";
-    }
-    sql += " UnitConnectionStart_Id_FK = " + unitConnectionIdList.at(i).toString();
-    sql += " OR UnitConnectionEnd_Id_FK = " + unitConnectionIdList.at(i).toString();
-  }
-  if(unitConnectionIdList.size() > 0){
-    sql += " ) ";
-  }
-  pvUnitLinkModel->setQuery(sql, database());
-  sqlError = pvUnitLinkModel->lastError();
-  if(sqlError.isValid()){
-    pvLastError.setError("Cannot execute query to get links related to unit", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
-    pvLastError.commit();
-  }
-
-  return pvUnitLinkModel;
-}
-*/
-
-/**
-QStringList mdtClUnit::toUnitRelatedLinksList(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList)
-{
-  int row, col;
-  QSqlQueryModel *model;
-  QModelIndex index;
-  QString link;
-  QStringList linksList;
-
-  model = toUnitRelatedLinksModel(unitId, unitConnectionIdList);
-  Q_ASSERT(model != 0);
-  for(row = 0; row < model->rowCount(); ++row){
-    col = model->record().indexOf("Identification");
-    index = model->index(row, col);
-    link = model->data(index).toString();
-    link += "-(";
-    col = model->record().indexOf("StartUnitConnectorName");
-    index = model->index(row, col);
-    link += model->data(index).toString();
-    link += ";";
-    col = model->record().indexOf("StartUnitContactName");
-    index = model->index(row, col);
-    link += model->data(index).toString();
-    link += "-";
-    col = model->record().indexOf("EndUnitConnectorName");
-    index = model->index(row, col);
-    link += model->data(index).toString();
-    link += ";";
-    col = model->record().indexOf("EndUnitContactName");
-    index = model->index(row, col);
-    link += model->data(index).toString();
-    link += ")";
-    linksList.append(link);
-  }
-
-  return linksList;
-}
-*/
-
 QStringList mdtClUnit::toUnitRelatedLinksList(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList, bool *ok)
 {
   Q_ASSERT(ok != 0);
@@ -544,10 +464,10 @@ bool mdtClUnit::addConnection(const mdtClUnitConnectionData & data, bool singleT
   return true;
 }
 
-bool mdtClUnit::editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data)
+bool mdtClUnit::editConnection(const mdtClUnitConnectionData & data)
 {
-  /// \todo WRONG !
-  return updateRecord("UnitConnection_tbl", data, "Id_PK", connectionId);
+  Q_ASSERT(!data.value("Id_PK").isNull());
+  return updateRecord("UnitConnection_tbl", data, "Id_PK", data.value("Id_PK"));
 }
 
 bool mdtClUnit::removeConnection(const QVariant & unitConnectionId, bool handleTransaction)
@@ -615,7 +535,6 @@ bool mdtClUnit::removeConnections(const QModelIndexList & indexListOfSelectedRow
 bool mdtClUnit::addConnector(const mdtClUnitConnectorData & data)
 {
   QSqlQuery query(database());
-  ///QList<mdtSqlRecord> unitConnectionRecordList;
   mdtClUnitConnectionData connectionData;
   QVariant unitId;
   QVariant unitConnectorId;
@@ -657,20 +576,7 @@ bool mdtClUnit::addConnector(const mdtClUnitConnectorData & data)
       rollbackTransaction();
       return false;
     }
-    /**
-    mdtSqlRecord record = data.connectionDataList().at(i);
-    record.setValue("Unit_Id_FK", unitId);
-    record.setValue("UnitConnector_Id_FK", unitConnectorId);
-    unitConnectionRecordList.append(record);
-    */
   }
-  // Add connections
-  /**
-  if(!addRecordList(unitConnectionRecordList, "UnitConnection_tbl", false)){
-    rollbackTransaction();
-    return false;
-  }
-  */
   // Commit
   if(!commitTransaction()){
     return false;
@@ -703,13 +609,6 @@ bool mdtClUnit::removeConnector(const QVariant& unitConnectorId)
       return false;
     }
   }
-  /// \todo Use remove connections, because links must be handled - OR NOT
-  /**
-  if(!removeData("UnitConnection_tbl", "UnitConnector_Id_FK", unitConnectorId)){
-    rollbackTransaction();
-    return false;
-  }
-  */
   // Remove connector
   if(!removeData("UnitConnector_tbl", "Id_PK", unitConnectorId)){
     rollbackTransaction();
@@ -1174,8 +1073,6 @@ bool mdtClUnit::addLinkToVehicleType(const QVariant &vehicleTypeStartId, const Q
   QSqlError sqlError;
   QSqlQuery query(database());
 
-  qDebug() << "Adding link in vehicles links table, Unit start CNN ID: " << unitConnectionStartId << " , end CNN ID: " << unitConnectionEndId;
-  
   // Prepare query for insertion in VehicleType_Link table
   sql = "INSERT INTO VehicleType_Link_tbl (VehicleTypeStart_Id_FK, VehicleTypeEnd_Id_FK, UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK) "\
         "VALUES (:VehicleTypeStart_Id_FK, :VehicleTypeEnd_Id_FK, :UnitConnectionStart_Id_FK, :UnitConnectionEnd_Id_FK)";
@@ -1208,7 +1105,6 @@ bool mdtClUnit::removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, co
 {
   QString sql;
   QSqlError sqlError;
-  ///QSqlQuery query(database());
 
   sql = "DELETE FROM VehicleType_Link_tbl "\
         "WHERE VehicleTypeStart_Id_FK = " + vehicleTypeStartId.toString();

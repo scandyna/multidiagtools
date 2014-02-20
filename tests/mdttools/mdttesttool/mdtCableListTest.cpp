@@ -639,9 +639,59 @@ void mdtCableListTest::unitTest()
   QVERIFY(!unit.addConnector(connectorData));
   createTestUnitConnectors();
 
-  
+  // Remove base structure
   removeTestUnitConnections();
   removeTestUnitConnectors();
+  removeTestVehicleTypeUnitAssignations();
+  removeTestUnits();
+  removeTestArticleLinks();
+  removeTestArticleConnections();
+  removeTestArticleConnectors();
+  removeTestConnectors();
+  removeTestArticles();
+  removeTestVehicleTypes();
+}
+
+void mdtCableListTest::unitConnectionTest()
+{
+  mdtClUnit unit(0, pvDatabaseManager.database());
+  mdtClLink lnk(0, pvDatabaseManager.database());
+  mdtClUnitConnectionData connectionData;
+  bool ok;
+
+  // Create base structure
+  createTestVehicleTypes();
+  createTestArticles();
+  createTestConnectors();
+  createTestArticleConnections();
+  createTestArticleLinks();
+  createTestArticleConnectors();
+  createTestUnits();
+  createTestVehicleTypeUnitAssignations();
+  createTestUnitConnections();
+
+  /*
+   * Check basic connection edition
+   *  - Change unit connection 10000 : set UnitContactName : Edited contact
+   */
+  connectionData = unit.getConnectionData(10000, true, &ok);
+  QVERIFY(ok);
+  connectionData.setValue("UnitContactName", "Edited contact");
+  QVERIFY(unit.editConnection(connectionData));
+  connectionData.clearValues();
+  connectionData = unit.getConnectionData(10000, true, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Edited contact"));
+  // Edit back to original values
+  connectionData.setValue("UnitContactName", "Unit contact 10000");
+  QVERIFY(unit.editConnection(connectionData));
+  connectionData.clearValues();
+  connectionData = unit.getConnectionData(10000, true, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
+
+  // Remove base structure
+  removeTestUnitConnections();
   removeTestVehicleTypeUnitAssignations();
   removeTestUnits();
   removeTestArticleLinks();
@@ -1368,10 +1418,6 @@ void mdtCableListTest::removeTestUnitConnections()
   dataList = unit.getData("SELECT * FROM UnitLink_view", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 2);
-  /**
-  QVERIFY(lnk.removeLink(20001, 20000));
-  QVERIFY(lnk.removeLink(20003, 20002));
-  */
   // Remove unit connection 20000
   QVERIFY(unit.removeConnection(20000));
   // Check that link 20001 to 20000 was removed from Link_tbl
@@ -1583,9 +1629,26 @@ void mdtCableListTest::createTestLinks()
   dataList = lnk.getData("SELECT * FROM VehicleType_Link_tbl WHERE UnitConnectionStart_Id_FK = 10001 AND UnitConnectionEnd_Id_FK = 20000 AND VehicleTypeStart_Id_FK = 1 AND VehicleTypeEnd_Id_FK = 2", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
+  // Check also with getLinkData
+  linkData = lnk.getLinkData(10001, 20000, true, true, &ok);
+  QVERIFY(ok);
+  QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(10001));
+  QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(20000));
+  QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(10001));
+  QCOMPARE(linkData.endConnectionData().value("Id_PK"), QVariant(20000));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 1);
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId(), QVariant(2));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId(), QVariant(10001));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId(), QVariant(20000));
 
-
+  
   /// \todo Edit link
+  
+  
+  /// \todo Units with more than 1 vehicle type association - 1-1
+  
+  /// \todo Units with more than 1 vehicle type association - 1-n
   
   /// \todo Links with U CNN based on ART CNN
   

@@ -65,20 +65,34 @@ void mdtClLinkData::clearValues()
   pvVehicleTypeLinkDataList.clear();
 }
 
-void mdtClLinkData::setConnectionData(const mdtClUnitConnectionData & startCnnData, const mdtClUnitConnectionData & endCnnData)
+void mdtClLinkData::setStartConnectionData(const mdtClUnitConnectionData & cnnData)
 {
   int i;
 
-  setValue("UnitConnectionStart_Id_FK", startCnnData.value("Id_PK"));
-  setValue("UnitConnectionEnd_Id_FK", endCnnData.value("Id_PK"));
-  setValue("ArticleConnectionStart_Id_FK", startCnnData.value("ArticleConnection_Id_FK"));
-  setValue("ArticleConnectionEnd_Id_FK", endCnnData.value("ArticleConnection_Id_FK"));
-  pvStartConnectionData = startCnnData;
-  pvEndConnectionData = endCnnData;
+  setValue("UnitConnectionStart_Id_FK", cnnData.value("Id_PK"));
+  setValue("ArticleConnectionStart_Id_FK", cnnData.value("ArticleConnection_Id_FK"));
+  pvStartConnectionData = cnnData;
   for(i = 0; i < pvVehicleTypeLinkDataList.size(); ++i){
     pvVehicleTypeLinkDataList[i].setUnitConnectionStartId(value("UnitConnectionStart_Id_FK"));
+  }
+}
+
+void mdtClLinkData::setEndConnectionData(const mdtClUnitConnectionData & cnnData)
+{
+  int i;
+
+  setValue("UnitConnectionEnd_Id_FK", cnnData.value("Id_PK"));
+  setValue("ArticleConnectionEnd_Id_FK", cnnData.value("ArticleConnection_Id_FK"));
+  pvEndConnectionData = cnnData;
+  for(i = 0; i < pvVehicleTypeLinkDataList.size(); ++i){
     pvVehicleTypeLinkDataList[i].setUnitConnectionEndId(value("UnitConnectionEnd_Id_FK"));
   }
+}
+
+void mdtClLinkData::setConnectionData(const mdtClUnitConnectionData & startCnnData, const mdtClUnitConnectionData & endCnnData)
+{
+  setStartConnectionData(startCnnData);
+  setEndConnectionData(endCnnData);
 }
 
 void mdtClLinkData::addVehicleTypeLinkData(const mdtClVehicleTypeLinkData& data)

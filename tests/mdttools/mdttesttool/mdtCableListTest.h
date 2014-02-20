@@ -49,6 +49,7 @@ class mdtCableListTest : public mdtTest
   void unitConnectionDataTest();
   void unitConnectorDataTest();
   void unitTest();
+  void unitConnectionTest();
   /// Créer des fonction (pas slot) qui construisent à mesure un sénario
 
   void mdtClLinkDataTest();
@@ -163,7 +164,7 @@ class mdtCableListTest : public mdtTest
    *  - Id_PK : 20002 , Unit_Id_FK : 2001 , ArticleConnection_Id_FK : 20 , UnitContactName : Unit contact 20002
    *  - Id_PK : 20003 , Unit_Id_FK : 2001 , ArticleConnection_Id_FK : 21 , UnitContactName : Unit contact 20003
    *
-   * Will also add a link from unit connection 20000 to 20001 and 20002 to 20003
+   * Will also add a link from unit connection 20001 to 20000 and 20003 to 20002
    */
   void createTestUnitConnections();
   /*

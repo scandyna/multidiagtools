@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "mdtClLink.h"
+#include "mdtClUnit.h"
+#include "mdtClUnitConnectionData.h"
 #include "mdtClVehicleTypeLinkData.h"
 #include "mdtError.h"
 #include <QSqlQuery>
@@ -149,7 +151,47 @@ bool mdtClLink::linkExists(const QVariant & unitConnectionStartId, const QVarian
   return (dataList.size() > 0);
 }
 
+mdtClLinkData mdtClLink::getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData, bool *ok)
+{
+  Q_ASSERT(ok != 0);
 
+  mdtClLinkData linkData;
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  // Get link data part
+  sql = "SELECT * FROM Link_tbl";
+  sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return linkData;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  linkData = dataList.at(0);
+  // Get unit connection data part if required
+  if(includeConnectionData){
+    if(!getConnectionData(linkData, unitConnectionStartId, unitConnectionEndId)){
+      *ok = false;
+      return linkData;
+    }
+  }
+  // Get vehicle type link data if required
+  if(includeVehicleTypeLinkData){
+    if(!getVehicleTypeLinkData(linkData, unitConnectionStartId, unitConnectionEndId)){
+      *ok = false;
+      return linkData;
+    }
+  }
+  // Done
+  *ok = true;
+
+  return linkData;
+}
+
+/** \todo Wrong way for delete: will delete links for all vehicle type assoc.
+ * Check about a overloaded method that limits vehicle type assoc. , that only remove the link in Link_tbl when no entry exists in VehicleType_Link_tbl
+ */
 bool mdtClLink::removeLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool handleTransaction)
 {
   // We want to update 2 tables, so manually ask to beginn a transaction
@@ -165,7 +207,7 @@ bool mdtClLink::removeLink(const QVariant & unitConnectionStartId, const QVarian
     }
     return false;
   }
-  // Remove vehicle type links
+  // Remove links
   if(!removeData("Link_tbl", "UnitConnectionStart_Id_FK", unitConnectionStartId, "UnitConnectionEnd_Id_FK", unitConnectionEndId)){
     if(handleTransaction){
       rollbackTransaction();
@@ -271,3 +313,56 @@ bool mdtClLink::addLinkToVehicleTypeList(const QList<mdtClVehicleTypeLinkData> &
   return true;
 }
 
+bool mdtClLink::getConnectionData(mdtClLinkData  & linkData, const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId)
+{
+  mdtClUnit unit(0, database());
+  mdtClUnitConnectionData connectionData;
+  bool ok;
+
+  // Get start connection data
+  connectionData = unit.getConnectionData(unitConnectionStartId, false, &ok);
+  if(!ok){
+    pvLastError = unit.lastError();
+    return false;
+  }
+  linkData.setStartConnectionData(connectionData);
+  // Get end connection data
+  connectionData = unit.getConnectionData(unitConnectionEndId, false, &ok);
+  if(!ok){
+    pvLastError = unit.lastError();
+    return false;
+  }
+  linkData.setEndConnectionData(connectionData);
+
+  return true;
+}
+
+
+bool mdtClLink::getVehicleTypeLinkData(mdtClLinkData & linkData, const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId)
+{
+  QList<QSqlRecord> dataList;
+  QSqlRecord data;
+  QString sql;
+  bool ok;
+  int i;
+
+  linkData.clearVehicleTypeLinkDataList();
+  sql = "SELECT * FROM VehicleType_Link_tbl";
+  sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
+  dataList = getData(sql, &ok);
+  if(!ok){
+    return false;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    mdtClVehicleTypeLinkData vtlData;
+    data = dataList.at(i);
+    vtlData.setUnitConnectionStartId(data.value("UnitConnectionStart_Id_FK"));
+    vtlData.setUnitConnectionEndId(data.value("UnitConnectionEnd_Id_FK"));
+    vtlData.setVehicleTypeStartId(data.value("VehicleTypeStart_Id_FK"));
+    vtlData.setVehicleTypeEndId(data.value("VehicleTypeEnd_Id_FK"));
+    linkData.addVehicleTypeLinkData(vtlData);
+  }
+
+  return true;
+}

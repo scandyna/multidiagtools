@@ -62,7 +62,27 @@ class mdtClLinkData : public mdtSqlRecord
    */
   void clearValues();
 
-  /*! \brief Set connection data
+  /*! \brief Set start connection data
+   *
+   * Will also update following data:
+   *  - UnitConnectionStart_Id_FK
+   *  - ArticleConnectionStart_Id_FK
+   *
+   * Internal vehicle type link data list is also updated with new start unit connection IDs
+   */
+  void setStartConnectionData(const mdtClUnitConnectionData & cnnData);
+
+  /*! \brief Set end connection data
+   *
+   * Will also update following data:
+   *  - UnitConnectionEnd_Id_FK
+   *  - ArticleConnectionEnd_Id_FK
+   *
+   * Internal vehicle type link data list is also updated with new end unit connection IDs
+   */
+  void setEndConnectionData(const mdtClUnitConnectionData & cnnData);
+
+  /*! \brief Set start and end connection data
    *
    * Will also update following data:
    *  - UnitConnectionStart_Id_FK
@@ -80,7 +100,7 @@ class mdtClLinkData : public mdtSqlRecord
 
   /*! \brief Get start connection data (WR)
    */
-  inline mdtClUnitConnectionData & startConnectionData() { return pvStartConnectionData; }
+  ///inline mdtClUnitConnectionData & startConnectionData() { return pvStartConnectionData; }
 
   /*! \brief Get end connection data (RD)
    */
@@ -88,7 +108,7 @@ class mdtClLinkData : public mdtSqlRecord
 
   /*! \brief Get end connection data (WR)
    */
-  inline mdtClUnitConnectionData & endConnectionData() { return pvEndConnectionData; }
+  ///inline mdtClUnitConnectionData & endConnectionData() { return pvEndConnectionData; }
 
   /*! \brief Add vehicle type link data
    *

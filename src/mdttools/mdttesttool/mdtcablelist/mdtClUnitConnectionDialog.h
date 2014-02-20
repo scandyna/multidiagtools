@@ -36,9 +36,16 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
 
  public:
 
+  /*! \brief Mode
+   */
+  enum mode_t {
+                Add,  /*!< In this mode, user can select connection from connector */
+                Edit  /*!< In this mode, user cannot change connection, only edit other data */
+              };
+
   /*! \brief Constructor
    */
-  mdtClUnitConnectionDialog(QWidget *parent, QSqlDatabase db);
+  mdtClUnitConnectionDialog(QWidget *parent, QSqlDatabase db, mode_t mode);
 
   /*! \brief Destructor
    */
@@ -157,6 +164,7 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
   QSqlDatabase pvDatabase;
   mdtClUnitConnectionData pvData;
   QVariant pvBaseArticleId;       // Used to list article related connections
+  mode_t pvMode;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_DIALOG_H

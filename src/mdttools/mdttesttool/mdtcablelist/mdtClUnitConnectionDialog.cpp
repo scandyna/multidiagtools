@@ -28,10 +28,11 @@
 
 //#include <QDebug>
 
-mdtClUnitConnectionDialog::mdtClUnitConnectionDialog(QWidget *parent, QSqlDatabase db)
+mdtClUnitConnectionDialog::mdtClUnitConnectionDialog(QWidget *parent, QSqlDatabase db, mode_t mode)
  : QDialog(parent)
 {
   pvDatabase = db;
+  pvMode = mode;
   setupUi(this);
   connect(pbCopyFunctionEN, SIGNAL(clicked()), this, SLOT(copyFunctionEN()));
   connect(pbCopyFunctionFR, SIGNAL(clicked()), this, SLOT(copyFunctionFR()));
@@ -42,6 +43,13 @@ mdtClUnitConnectionDialog::mdtClUnitConnectionDialog(QWidget *parent, QSqlDataba
   connect(pbSelectUnitConnector, SIGNAL(clicked()), this, SLOT(selectUnitConnector()));
   connect(pbSelectContact, SIGNAL(clicked()), this, SLOT(selectConnection()));
   connect(pbSetNoConnector, SIGNAL(clicked()), this, SLOT(setNoConnector()));
+  // In edition mode, we cannot act on unit connector
+  if(pvMode != Add){
+    pbSetNoConnector->setVisible(false);
+    pbSelectUnitConnector->setVisible(false);
+  }
+  // Currently, ranges functionnality is not implemented
+  gbRanges->setVisible(false);
 }
 
 mdtClUnitConnectionDialog::~mdtClUnitConnectionDialog()
@@ -381,7 +389,7 @@ void mdtClUnitConnectionDialog::updateConnectorData()
     lbUnitConnectorName->setText("");
     lbArticleConnectorNameLabel->setVisible(false);
     lbArticleConnectorName->setVisible(false);
-    if(pvBaseArticleId.isNull()){
+    if((pvBaseArticleId.isNull())||(pvMode != Add)){
       pbSelectContact->setVisible(false);
     }else{
       pbSelectContact->setVisible(true);
@@ -395,7 +403,11 @@ void mdtClUnitConnectionDialog::updateConnectorData()
   }
   // Update unit connector part
   lbUnitConnectorName->setText(data.value("Name").toString());
-  pbSelectContact->setVisible(true);
+  if(pvMode == Add){
+    pbSelectContact->setVisible(true);
+  }else{
+    pbSelectContact->setVisible(false);
+  }
   // Update article connector part
   if(data.value("ArticleConnector_Id_FK").isNull()){
     lbArticleConnectorNameLabel->setVisible(false);

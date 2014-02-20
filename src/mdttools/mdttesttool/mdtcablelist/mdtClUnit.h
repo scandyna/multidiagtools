@@ -28,7 +28,6 @@
 #include "mdtError.h"
 #include "mdtSqlRecord.h"
 #include <QSqlDatabase>
-///#include <QSqlQueryModel>
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QVariant>
@@ -184,10 +183,6 @@ class mdtClUnit : public mdtTtBase
    */
   int toUnitRelatedArticleConnectionCount(const QVariant & unitId);
 
-  /*! \brief Get a model that contains links that are related to given unit ID and a list of unit connection IDs
-   */
-  ///QSqlQueryModel *toUnitRelatedLinksModel(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList);
-
   /*! \brief Get a list of links that are related to given unit ID
    *
    * This is a helper method to display a message to the user in a simple way.
@@ -216,9 +211,9 @@ class mdtClUnit : public mdtTtBase
   /*! \brief Edit a unit connection
    *
    * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
+   *          To get reason of failure, use lastError().
    */
-  bool editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data);
+  bool editConnection(const mdtClUnitConnectionData & data);
 
   /*! \brief Remove a single unit connection
    */
@@ -337,8 +332,6 @@ class mdtClUnit : public mdtTtBase
   bool removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, QSqlQuery &query);
 
   Q_DISABLE_COPY(mdtClUnit);
-
-  ///QSqlQueryModel *pvUnitLinkModel;
 };
 
 #endif  // #ifndef MDT_CL_UNIT_H

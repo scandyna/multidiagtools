@@ -71,6 +71,10 @@ class mdtClLink : public mdtTtBase
    */
   bool linkExists(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool *ok);
 
+  /*! \brief Get link data
+   */
+  mdtClLinkData getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData , bool *ok);
+
   /*! \brief Remove a unit link
    *
    * Will also remove all vehicle type related links
@@ -94,6 +98,18 @@ class mdtClLink : public mdtTtBase
   /*! \brief Add a list of links to vehicle type table
    */
   bool addLinkToVehicleTypeList(const QList<mdtClVehicleTypeLinkData> & dataList);
+
+  /*! \brief Get start and end connection data
+   *
+   * Note: will set start and end connection data in given link data
+   */
+  bool getConnectionData(mdtClLinkData & linkData, const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId);
+
+  /*! \brief Get data from vehicle type link table
+   *
+   * Note: will fill list in given link data
+   */
+  bool getVehicleTypeLinkData(mdtClLinkData & linkData, const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId);
 
   Q_DISABLE_COPY(mdtClLink);
 };

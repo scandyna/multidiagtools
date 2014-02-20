@@ -108,7 +108,7 @@ class mdtClUnitEditor : public mdtSqlForm
 
   /*! \brief Edit selected link
    */
-  ///void editLink();
+  void editLink();
 
   /*! \brief Remove  links
    */
