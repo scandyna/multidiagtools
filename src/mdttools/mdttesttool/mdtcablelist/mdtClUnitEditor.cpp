@@ -750,6 +750,12 @@ void mdtClUnitEditor::editLink()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  // Edit link
+  if(!lnk.editLink(startConnectionId, endConnectionId, dialog.linkData())){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
   /**
   if(!dialog.linkData().buildVehicleTypeStartEndIdList()){
     /// \todo MsgBox with error

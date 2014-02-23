@@ -23,6 +23,7 @@
 #include "mdtClUnitConnectionData.h"
 #include "mdtClVehicleTypeLinkData.h"
 #include "mdtError.h"
+#include <boost/graph/graph_concepts.hpp>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
@@ -167,6 +168,16 @@ mdtClLinkData mdtClLink::getLinkData(const QVariant & unitConnectionStartId, con
   if(!*ok){
     return linkData;
   }
+  if(dataList.isEmpty()){
+    QString msg;
+    msg = tr("No link exists from UnitConnectionStart_Id_FK ") + unitConnectionStartId.toString();
+    msg += tr(" to UnitConnectionEnd_Id_FK ") + unitConnectionEndId.toString();
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    *ok = false;
+    return linkData;
+  }
   Q_ASSERT(dataList.size() == 1);
   linkData = dataList.at(0);
   // Get unit connection data part if required
@@ -188,6 +199,28 @@ mdtClLinkData mdtClLink::getLinkData(const QVariant & unitConnectionStartId, con
 
   return linkData;
 }
+
+bool mdtClLink::editLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, const mdtClLinkData & linkData)
+{
+  // We update many tables, so use manually a transaction
+  if(!beginTransaction()){
+    return false;
+  }
+  if(!removeLink(unitConnectionStartId, unitConnectionEndId, false)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!addLink(linkData, false)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
 
 /** \todo Wrong way for delete: will delete links for all vehicle type assoc.
  * Check about a overloaded method that limits vehicle type assoc. , that only remove the link in Link_tbl when no entry exists in VehicleType_Link_tbl

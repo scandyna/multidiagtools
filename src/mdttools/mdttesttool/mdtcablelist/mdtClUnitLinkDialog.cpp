@@ -34,7 +34,7 @@
 #include <QString>
 #include <QMessageBox>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
@@ -848,9 +848,6 @@ void mdtClUnitLinkDialog::updateStartVehicleTypes()
     sql += " ) AND Unit_Id_FK = " + pvStartUnitId.toString();
   }
   sql += " ORDER BY VehicleType_Id_FK ASC";
-  
-  qDebug() << "SQL: " << sql;
-  
   pvStartVehicleTypesModel->setQuery(sql, pvDatabase);
   sqlError = pvStartVehicleTypesModel->lastError();
   if(sqlError.isValid()){
@@ -907,9 +904,6 @@ void mdtClUnitLinkDialog::updateEndVehicleTypes()
     sql += " ) AND Unit_Id_FK = " + pvEndUnitId.toString();
   }
   sql += " ORDER BY VehicleType_Id_FK ASC";
-  
-  qDebug() << "SQL: " << sql;
-  
   pvEndVehicleTypesModel->setQuery(sql, pvDatabase);
   sqlError = pvEndVehicleTypesModel->lastError();
   if(sqlError.isValid()){

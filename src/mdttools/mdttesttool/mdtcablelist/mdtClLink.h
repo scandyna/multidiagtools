@@ -75,6 +75,10 @@ class mdtClLink : public mdtTtBase
    */
   mdtClLinkData getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData , bool *ok);
 
+  /*! \brief Edit a unit link
+   */
+  bool editLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, const mdtClLinkData & linkData);
+
   /*! \brief Remove a unit link
    *
    * Will also remove all vehicle type related links

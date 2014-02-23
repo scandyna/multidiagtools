@@ -190,10 +190,10 @@ class mdtCableListTest : public mdtTest
   /*
    * Create links for tests:
    *
-   *  - UnitConnectionStart_Id_FK : 10000 , UnitConnectionEnd_Id_FK : 10001
+   *  - UnitConnectionStart_Id_FK : 10000 , UnitConnectionEnd_Id_FK : 10001 , Identification : Link 10000<->10001 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
    *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 1
    *
-   *  - UnitConnectionStart_Id_FK : 10001 , UnitConnectionEnd_Id_FK : 20000
+   *  - UnitConnectionStart_Id_FK : 10001 , UnitConnectionEnd_Id_FK : 20000 , Identification : Link 10001<->20000 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
    *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 2
    */
   void createTestLinks();

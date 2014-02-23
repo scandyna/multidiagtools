@@ -2882,6 +2882,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
   selectSql = "SELECT\n"\
               " LNK.UnitConnectionStart_Id_FK ,\n"\
               " LNK.UnitConnectionEnd_Id_FK ,\n"\
+              " VS.Id_PK AS StartVehicleType_Id_PK,\n"\
               " VS.Type AS StartVehicleType ,\n"\
               " VS.SubType AS StartVehicleSubType ,\n"\
               " VS.SeriesNumber AS StartVehicleSerie,\n"\
@@ -2890,16 +2891,17 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " LNK.Identification ,\n"\
               " LNK.LinkDirection_Code_FK ,\n"\
               " LNK.LinkType_Code_FK ,\n"\
-              " US.Id_PK AS UnitStart_Id_PK ,\n"\
+              " US.Id_PK AS StartUnit_Id_PK ,\n"\
               " US.SchemaPosition AS StartSchemaPosition,\n"\
               " US.Cabinet AS StartCabinet,\n"\
               " US.Coordinate AS StartCoordinate ,\n"\
               " UCS.Name AS StartUnitConnectorName ,\n"\
               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
+              " VE.Id_PK AS EndVehicleType_Id_PK,\n"\
               " VE.Type AS EndVehicleType ,\n"\
               " VE.SubType AS EndVehicleSubType ,\n"\
               " VE.SeriesNumber AS EndVehicleSerie,\n"\
-              " UE.Id_PK AS UnitEnd_Id_PK ,\n"\
+              " UE.Id_PK AS EndUnit_Id_PK ,\n"\
               " UE.SchemaPosition AS EndSchemaPosition,\n"\
               " UE.Cabinet AS EndCabinet,\n"\
               " UE.Coordinate AS EndCoordinate ,\n"\
