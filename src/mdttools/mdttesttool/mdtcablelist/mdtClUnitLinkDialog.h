@@ -53,13 +53,13 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    *
    * This will also clear start connection and set start vehicle types.
    */
-  void setStartUnit(const QVariant &unitId/**, const QVariant &schemaPosition, const QVariant &cabinet*/);
+  void setStartUnit(const QVariant &unitId);
 
   /*! \brief Set end unit
    *
    * This will also clear end connection and set end vehicle types.
    */
-  void setEndUnit(const QVariant &unitId/**, const QVariant &schemaPosition, const QVariant &cabinet*/);
+  void setEndUnit(const QVariant &unitId);
 
   /*! \brief Get selected start vehicle types
    */

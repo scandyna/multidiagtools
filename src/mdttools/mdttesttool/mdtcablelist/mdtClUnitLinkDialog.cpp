@@ -94,32 +94,20 @@ mdtClUnitLinkDialog::~mdtClUnitLinkDialog()
 {
 }
 
-void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId/**, const QVariant &schemaPosition, const QVariant &cabinet*/)
+void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId)
 {
-  ///pvLinkData.startConnectionData().clearValues();
-  ///pvLinkData.startConnectionData().setValue("Unit_Id_FK", unitId);
   pvLinkData.setStartConnectionData(mdtClUnitConnectionData());
   pvStartUnitId = unitId;
   updateStartUnit();
-  /**
-  lbStartSchemaPosition->setText(schemaPosition.toString());
-  lbStartCabinet->setText(cabinet.toString());
-  */
   updateStartConnection();
   setStartVehicleTypes(unitId);
 }
 
-void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId/**, const QVariant &schemaPosition, const QVariant &cabinet*/)
+void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId)
 {
-  ///pvLinkData.endConnectionData().clearValues();
-  ///pvLinkData.endConnectionData().setValue("Unit_Id_FK", unitId);
   pvLinkData.setEndConnectionData(mdtClUnitConnectionData());
   pvEndUnitId = unitId;
   updateEndUnit();
-  /**
-  lbEndSchemaPosition->setText(schemaPosition.toString());
-  lbEndCabinet->setText(cabinet.toString());
-  */
   updateEndConnection();
   setEndVehicleTypes(unitId);
 }
@@ -325,17 +313,13 @@ void mdtClUnitLinkDialog::selectStartUnit()
   selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
   selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
   selectionDialog.addSelectionResultColumn("Unit_Id_PK");
-  ///selectionDialog.addSelectionResultColumn("SchemaPosition");
-  ///selectionDialog.addSelectionResultColumn("Cabinet");
   selectionDialog.resize(800, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
   result = selectionDialog.selectionResult();
-  ///Q_ASSERT(result.size() == 3);
   Q_ASSERT(result.size() == 1);
   // Store unit and update GUI
-  ///setStartUnit(result.at(0), result.at(1), result.at(2));
   setStartUnit(result.at(0));
 }
 
@@ -364,19 +348,13 @@ void mdtClUnitLinkDialog::selectEndUnit()
   selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
   selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
   selectionDialog.addSelectionResultColumn("Unit_Id_PK");
-  /**
-  selectionDialog.addSelectionResultColumn("SchemaPosition");
-  selectionDialog.addSelectionResultColumn("Cabinet");
-  */
   selectionDialog.resize(800, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
   result = selectionDialog.selectionResult();
-  ///Q_ASSERT(result.size() == 3);
   Q_ASSERT(result.size() == 1);
   // Store unit and update GUI
-  ///setEndUnit(result.at(0), result.at(1), result.at(2));
   setEndUnit(result.at(0));
 }
 
@@ -416,7 +394,6 @@ void mdtClUnitLinkDialog::selectStartConnection()
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
   // Get connection data and update
-  ///pvLinkData.startConnectionData().setValue("Id_PK", result.at(0));
   pvLinkData.setValue("UnitConnectionStart_Id_FK", result.at(0));
   updateStartConnection();
 }
@@ -457,7 +434,6 @@ void mdtClUnitLinkDialog::selectEndConnection()
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
   // Get connection data and update
-  ///pvLinkData.endConnectionData().setValue("Id_PK", result.at(0));
   pvLinkData.setValue("UnitConnectionEnd_Id_FK", result.at(0));
   updateEndConnection();
 }
@@ -510,40 +486,6 @@ void mdtClUnitLinkDialog::selectStartVehicleTypes()
     pvStartVehicleTypesIdList.append(vehicleIdList.at(row).data());
   }
   updateStartVehicleTypes();
-  /**
-  // Set new query to vehicle types model
-  if(vehicleIdList.isEmpty()){
-    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE VehicleType_Id_FK = -1";
-  }else{
-    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view ";
-    for(row = 0; row < vehicleIdList.size(); ++row){
-      if(row == 0){
-        sql += " WHERE ( ";
-      }else{
-        sql += " OR ";
-      }
-      sql += " VehicleType_Id_FK = " + vehicleIdList.at(row).data().toString();
-    }
-    sql += " ) AND Unit_Id_FK = " + pvStartUnitId.toString();
-  }
-  sql += " ORDER BY VehicleType_Id_FK ASC";
-  pvStartVehicleTypesModel->setQuery(sql, pvDatabase);
-  sqlError = pvStartVehicleTypesModel->lastError();
-  if(sqlError.isValid()){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot get start vehicle type list.", mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClUnitLinkDialog");
-    e.commit();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Cannot get start vehicle type list."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
-    return;
-  }
-  twStartVehicles->resizeColumnsToContents();
-  */
 }
 
 void mdtClUnitLinkDialog::selectEndVehicleTypes()
@@ -594,40 +536,6 @@ void mdtClUnitLinkDialog::selectEndVehicleTypes()
     pvEndVehicleTypesIdList.append(vehicleIdList.at(row).data());
   }
   updateEndVehicleTypes();
-/**
-  // Set new query to vehicle types model
-  if(vehicleIdList.isEmpty()){
-    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE VehicleType_Id_FK = -1";
-  }else{
-    sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view ";
-    for(row = 0; row < vehicleIdList.size(); ++row){
-      if(row == 0){
-        sql += " WHERE ( ";
-      }else{
-        sql += " OR ";
-      }
-      sql += " VehicleType_Id_FK = " + vehicleIdList.at(row).data().toString();
-    }
-    sql += " ) AND Unit_Id_FK = " + pvEndUnitId.toString();
-  }
-  sql += " ORDER BY VehicleType_Id_FK ASC";
-  pvEndVehicleTypesModel->setQuery(sql, pvDatabase);
-  sqlError = pvEndVehicleTypesModel->lastError();
-  if(sqlError.isValid()){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot get end vehicle type list.", mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClUnitLinkDialog");
-    e.commit();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Cannot get end vehicle type list."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(sqlError.text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
-    return;
-  }
-  twEndVehicles->resizeColumnsToContents();
-  */
 }
 
 void mdtClUnitLinkDialog::accept()
@@ -737,14 +645,6 @@ void mdtClUnitLinkDialog::updateStartConnection()
   bool ok;
 
   // Set connection name
-  /**
-  connectionData = pvLinkData.startConnectionData();
-  if(connectionData.value("Id_PK").isNull()){
-    lbStartContactName->setText("");
-    lbStartConnectorName->setText("");
-    return;
-  }
-  */
   if(pvLinkData.value("UnitConnectionStart_Id_FK").isNull()){
     lbStartContactName->setText("");
     lbStartConnectorName->setText("");
@@ -756,7 +656,6 @@ void mdtClUnitLinkDialog::updateStartConnection()
     lbStartContactName->setText("<Error!>");
   }else{
     lbStartContactName->setText(connectionData.value("UnitContactName").toString());
-    ///pvLinkData.setConnectionData(connectionData, pvLinkData.endConnectionData());
     pvLinkData.setStartConnectionData(connectionData);
   }
   // Set connector name
@@ -779,14 +678,6 @@ void mdtClUnitLinkDialog::updateEndConnection()
   bool ok;
 
   // Set connection name
-  /**
-  connectionData = pvLinkData.endConnectionData();
-  if(connectionData.value("Id_PK").isNull()){
-    lbEndContactName->setText("");
-    lbEndConnectorName->setText("");
-    return;
-  }
-  */
   if(pvLinkData.value("UnitConnectionEnd_Id_FK").isNull()){
     lbEndContactName->setText("");
     lbEndConnectorName->setText("");
@@ -798,7 +689,6 @@ void mdtClUnitLinkDialog::updateEndConnection()
     lbEndContactName->setText("<Error!>");
   }else{
     lbEndContactName->setText(connectionData.value("UnitContactName").toString());
-    ///pvLinkData.setConnectionData(pvLinkData.startConnectionData(), connectionData);
     pvLinkData.setEndConnectionData(connectionData);
   }
   // Set connector name

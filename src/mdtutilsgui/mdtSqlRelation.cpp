@@ -23,7 +23,7 @@
 #include "mdtError.h"
 #include <QSqlField>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlRelation::mdtSqlRelation(QObject *parent)
  : QObject(parent)
@@ -174,6 +174,7 @@ void mdtSqlRelation::setChildForeingKeyValues(QSqlRecord &parentRecord, QSqlReco
       data = parentRecord.value(item->parentFieldIndex());
       // Pust to child's field
       childRecord.setValue(item->childFieldIndex(), data);
+      childRecord.setGenerated(item->childFieldIndex(), true);
     }
   }
 }

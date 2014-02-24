@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtClUnitVehicleType.h"
+#include "mdtClLink.h"
 #include "mdtError.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -122,9 +123,18 @@ bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant& unitId, 
 {
   int i;
   QString sql;
+  mdtClLink lnk(0, database());
 
   if(vehicleTypeIdList.size() < 1){
     return true;
+  }
+  if(!beginTransaction()){
+    return false;
+  }
+  // Remove vehicle type links
+  if(!lnk.removeVehicleTypeLinkByUnitId(unitId, false)){
+    rollbackTransaction();
+    return false;
   }
   // Generate SQL
   sql = "DELETE FROM VehicleType_Unit_tbl "\
@@ -141,11 +151,15 @@ bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant& unitId, 
   // Submit query
   QSqlQuery query(database());
   if(!query.exec(sql)){
+    rollbackTransaction();
     QSqlError sqlError = query.lastError();
     pvLastError.setError(tr("Cannot execute query for unit <-> vehicle type assignment deletion"), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitVehicleType");
     pvLastError.commit();
+    return false;
+  }
+  if(!commitTransaction()){
     return false;
   }
 

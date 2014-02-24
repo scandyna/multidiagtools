@@ -89,6 +89,18 @@ class mdtClLink : public mdtTtBase
    */
   bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
 
+  /*! \brief Get vehicle type link data for given unit ID
+   */
+  QList<mdtClVehicleTypeLinkData> getVehicleTypeLinkDataByUnitId(const QVariant & unitId, bool *ok);
+
+  /*! \brief Remove vehicle type links for given unit ID
+   */
+  bool removeVehicleTypeLinkByUnitId(const QVariant & unitId, bool handleTransaction);
+
+  /*! \brief Remove vehicle type links
+   */
+  bool removeVehicleTypeLinks(const QList<mdtClVehicleTypeLinkData> & vtLinkList, bool handleTransaction);
+
  private:
 
   /*! \brief Check vehicle type start and end ID lists

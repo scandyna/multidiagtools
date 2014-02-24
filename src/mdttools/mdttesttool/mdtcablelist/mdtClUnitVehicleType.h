@@ -67,6 +67,8 @@ class mdtClUnitVehicleType : public mdtTtBase
   bool removeUnitVehicleAssignment(const QVariant & unitId, const QVariant & vehicleTypeId);
 
   /*! \brief Remove unit <-> vehicle type assignments
+   *
+   * Will also remove vehicle type links (from VehicleType_Link_tbl) using given unit ID.
    */
   bool removeUnitVehicleAssignments(const QVariant & unitId, const QList<QVariant> & vehicleTypeIdList);
 

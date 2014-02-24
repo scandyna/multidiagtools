@@ -28,6 +28,8 @@
 #include <QSqlError>
 #include <QSqlRecord>
 
+//#include <QDebug>
+
 mdtClLink::mdtClLink(QObject* parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
 {
@@ -265,6 +267,104 @@ bool mdtClLink::removeLinks(const QList<QModelIndexList> & indexListOfSelectedRo
     indexes = indexListOfSelectedRowsByRows.at(row);
     Q_ASSERT(indexes.size() == 2);
     if(!removeLink(indexes.at(0).data(), indexes.at(1).data())){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+QList<mdtClVehicleTypeLinkData> mdtClLink::getVehicleTypeLinkDataByUnitId(const QVariant & unitId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QString sql;
+  QSqlQuery query(database());
+  QSqlRecord data;
+  QList<QSqlRecord> dataList;
+  QList<mdtClVehicleTypeLinkData> vtLinkDataList;
+  int i;
+
+  sql = "SELECT DISTINCT VTL.VehicleTypeStart_Id_FK, VTL.VehicleTypeEnd_Id_FK, VTL.UnitConnectionStart_Id_FK, VTL.UnitConnectionEnd_Id_FK ";
+  sql += "FROM VehicleType_Link_tbl VTL";
+  sql += " JOIN UnitConnection_tbl UCNX";
+  sql += "  ON UCNX.Id_PK = VTL.UnitConnectionStart_Id_FK";
+  sql += "  OR UCNX.Id_PK = VTL.UnitConnectionEnd_Id_FK";
+  sql += " WHERE UCNX.Unit_Id_FK = " + unitId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return vtLinkDataList;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    data = dataList.at(i);
+    mdtClVehicleTypeLinkData vtLinkData;
+    vtLinkData.setVehicleTypeStartId(data.value("VehicleTypeStart_Id_FK"));
+    vtLinkData.setVehicleTypeEndId(data.value("VehicleTypeEnd_Id_FK"));
+    vtLinkData.setUnitConnectionStartId(data.value("UnitConnectionStart_Id_FK"));
+    vtLinkData.setUnitConnectionEndId(data.value("UnitConnectionEnd_Id_FK"));
+    vtLinkDataList.append(vtLinkData);
+  }
+
+  return vtLinkDataList;
+}
+
+bool mdtClLink::removeVehicleTypeLinkByUnitId(const QVariant & unitId, bool handleTransaction)
+{
+  QList<mdtClVehicleTypeLinkData> vtLinkDataList;
+  bool ok;
+
+  vtLinkDataList = getVehicleTypeLinkDataByUnitId(unitId, &ok);
+  if(!ok){
+    return false;
+  }
+
+  return removeVehicleTypeLinks(vtLinkDataList, handleTransaction);
+}
+
+bool mdtClLink::removeVehicleTypeLinks(const QList<mdtClVehicleTypeLinkData> & vtLinkList, bool handleTransaction)
+{
+  int i;
+  QString sql;
+  QSqlQuery query(database());
+  mdtClVehicleTypeLinkData vtLinkData;
+
+  if(vtLinkList.size() < 1){
+    return true;
+  }
+  // Build SQL statement
+  vtLinkData = vtLinkList.at(0);
+  sql = "DELETE FROM VehicleType_Link_tbl ";
+  sql += " WHERE (VehicleTypeStart_Id_FK = " + vtLinkData.vehicleTypeStartId().toString();
+  sql += " AND VehicleTypeEnd_Id_FK = " + vtLinkData.vehicleTypeEndId().toString();
+  sql += " AND UnitConnectionStart_Id_FK = " + vtLinkData.unitConnectionStartId().toString();
+  sql += " AND UnitConnectionEnd_Id_FK = " + vtLinkData.unitConnectionEndId().toString();
+  sql += ") ";
+  for(i = 1; i < vtLinkList.size(); ++i){
+    vtLinkData = vtLinkList.at(i);
+    sql += " OR (VehicleTypeStart_Id_FK = " + vtLinkData.vehicleTypeStartId().toString();
+    sql += " AND  VehicleTypeEnd_Id_FK = " + vtLinkData.vehicleTypeEndId().toString();
+    sql += " AND  UnitConnectionStart_Id_FK = " + vtLinkData.unitConnectionStartId().toString();
+    sql += " AND  UnitConnectionEnd_Id_FK = " + vtLinkData.unitConnectionEndId().toString();
+    sql += ") ";
+  }
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
+  }
+  if(!query.exec(sql)){
+    if(handleTransaction){
+      rollbackTransaction();
+    }
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot remove vehicle type link. SQL: ") + sql + tr("."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    return false;
+  }
+  if(handleTransaction){
+    if(!commitTransaction()){
       return false;
     }
   }

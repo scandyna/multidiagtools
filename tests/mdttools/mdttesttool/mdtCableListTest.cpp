@@ -763,7 +763,8 @@ void mdtCableListTest::linkTest()
   QList<QVariant> vtStartIdList, vtEndIdList;
   mdtClLinkData linkData;
   mdtClUnitConnectionData connectionData;
-  QList<QSqlRecord> dataList;
+  ///QList<QSqlRecord> dataList;
+  QList<mdtClVehicleTypeLinkData> vtLinkDataList;
   QString sql;
   bool ok;
 
@@ -941,18 +942,26 @@ void mdtCableListTest::linkTest()
   /*
    * Remove unit - vehicle type assignation and check that vehicle type links are removed
    *
-   *  Remove Unit_Id_FK : 2000 , VehicleType_Id_FK : 2
+   *  Remove Unit_Id_FK : 1000 , VehicleType_Id_FK : 1
    */
-  /// \todo This still is a buggy part !!
-  sql = "SELECT * FROM LinkList_view ";
-  sql += " WHERE (StartVehicleType_Id_PK = 2 OR EndVehicleType_Id_PK = 2) ";
-  sql += " AND (StartUnit_Id_PK = 2000 OR EndUnit_Id_PK = 2000)";
-  dataList = uvt.getData(sql, &ok);
+  // Check that we have expected vehicle type links
+  vtLinkDataList = lnk.getVehicleTypeLinkDataByUnitId(1000, &ok);
   QVERIFY(ok);
-  
-  qDebug() << dataList;
-  
-  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(vtLinkDataList.size(), 2);
+  QCOMPARE(vtLinkDataList.at(0).unitConnectionStartId(), QVariant(10000));
+  QCOMPARE(vtLinkDataList.at(0).unitConnectionEndId(), QVariant(10001));
+  QCOMPARE(vtLinkDataList.at(0).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(vtLinkDataList.at(0).vehicleTypeEndId(), QVariant(1));
+  QCOMPARE(vtLinkDataList.at(1).unitConnectionStartId(), QVariant(10001));
+  QCOMPARE(vtLinkDataList.at(1).unitConnectionEndId(), QVariant(20000));
+  QCOMPARE(vtLinkDataList.at(1).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(vtLinkDataList.at(1).vehicleTypeEndId(), QVariant(2));
+  // Remove assignation
+  QVERIFY(uvt.removeUnitVehicleAssignment(1000, 1));
+  // Check that links no longer exists
+  vtLinkDataList = lnk.getVehicleTypeLinkDataByUnitId(1000, &ok);
+  QVERIFY(ok);
+  QCOMPARE(vtLinkDataList.size(), 0);
   
   /// \todo Units with more than 1 vehicle type association - 1-1
   
@@ -974,7 +983,6 @@ void mdtCableListTest::linkTest()
   removeTestArticles();
   removeTestVehicleTypes();
 }
-
 
 void mdtCableListTest::pathGraphTest()
 {

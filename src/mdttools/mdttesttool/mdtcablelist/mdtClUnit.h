@@ -256,14 +256,6 @@ class mdtClUnit : public mdtTtBase
    */
   bool addRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData);
 
-  /*! \brief Get a data object for a given link
-   */
-  ///mdtClLinkData getUnitLinkData(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool *ok);
-
-  /*! \brief Edit a unit link
-   */
-  bool editLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, const mdtClLinkData &data);
-
  private:
 
   /*! \brief Get unit connection data and article connection data if based on
@@ -322,14 +314,6 @@ class mdtClUnit : public mdtTtBase
    *  and remove link
    */
   bool removeArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData);
-
-  /*! \brief Add link to vehicle type table
-   */
-  bool addLinkToVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId);
-
-  /*! \brief Remove a link from vehicle type table
-   */
-  bool removeLinkFromVehicleType(const QVariant &vehicleTypeStartId, const QVariant &vehicleTypeEndId, const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, QSqlQuery &query);
 
   Q_DISABLE_COPY(mdtClUnit);
 };

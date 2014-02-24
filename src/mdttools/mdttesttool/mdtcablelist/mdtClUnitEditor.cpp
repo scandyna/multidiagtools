@@ -651,21 +651,15 @@ void mdtClUnitEditor::removeConnections()
 
 void mdtClUnitEditor::addLink()
 {
-  ///mdtSqlFormWidget *widget;
   mdtClUnitLinkDialog dialog(0, database());
   QVariant unitId;
   mdtClLink lnk(0, database());
 
-  /**
-  widget = sqlFormWidget("Unit_tbl");
-  Q_ASSERT(widget != 0);
-  */
   // Setup and show dialog
   unitId = currentUnitId();
   if(unitId.isNull()){
     return;
   }
-  ///dialog.setStartUnit(unitId, widget->currentData("SchemaPosition"), widget->currentData("Cabinet"));
   dialog.setStartUnit(unitId);
   if(dialog.exec() != QDialog::Accepted){
     return;
@@ -682,19 +676,13 @@ void mdtClUnitEditor::addLink()
 
 void mdtClUnitEditor::editLink()
 {
-  mdtSqlFormWidget *unitWidget;
   mdtSqlTableWidget *linkWidget;
   mdtClUnitLinkDialog dialog(0, database());
   QVariant unitId, startConnectionId, endConnectionId;
-  ///mdtClUnitConnectionData startConnectionData;
-  ///mdtClUnitConnectionData endConnectionData;
   mdtClLinkData linkData;
   mdtClLink lnk(0, database());
-  ///mdtClUnit unit(this, database());
   bool ok;
 
-  unitWidget = sqlFormWidget("Unit_tbl");
-  Q_ASSERT(unitWidget != 0);
   linkWidget = sqlTableWidget("UnitLink_view");
   Q_ASSERT(linkWidget != 0);
   // Get unit ID
@@ -719,33 +707,7 @@ void mdtClUnitEditor::editLink()
     displayLastError();
     return;
   }
-  /**
-  startConnectionData = unit.getConnectionDataByUnitConnectionId(startConnectionId);
-  if(!startConnectionData.isValid()){
-    pvLastError = unit.lastError();
-    displayLastError();
-    return;
-  }
-  endConnectionData = unit.getConnectionDataByUnitConnectionId(endConnectionId);
-  if(!endConnectionData.isValid()){
-    pvLastError = unit.lastError();
-    displayLastError();
-    return;
-  }
-  linkData = unit.getUnitLinkData(startConnectionId, endConnectionId);
-  if(!linkData.isValid()){
-    pvLastError = unit.lastError();
-    displayLastError();
-    return;
-  }
-  */
   // Setup and show dialog
-  
-  ///dialog.setStartUnit(unitId, unitWidget->currentData("SchemaPosition"), unitWidget->currentData("Cabinet"));
-  ///dialog.setStartConnectionData(startConnectionData);
-  /// \bug This displays allways current unit, this is wrong !!
-  ///dialog.setEndUnit(unitId, unitWidget->currentData("SchemaPosition"), unitWidget->currentData("Cabinet"));
-  ///dialog.setEndConnectionData(endConnectionData);
   dialog.setLinkData(linkData);
   if(dialog.exec() != QDialog::Accepted){
     return;
@@ -756,21 +718,6 @@ void mdtClUnitEditor::editLink()
     displayLastError();
     return;
   }
-  /**
-  if(!dialog.linkData().buildVehicleTypeStartEndIdList()){
-    /// \todo MsgBox with error
-    qDebug() << "ERROR building VJC list";
-    return;
-  }
-  */
-  // Add link
-  /**
-  if(!unit.editLink(startConnectionId, endConnectionId, dialog.linkData())){
-    pvLastError = unit.lastError();
-    displayLastError();
-    return;
-  }
-  */
   // Update links view
   select("UnitLink_view");
 }
@@ -778,7 +725,6 @@ void mdtClUnitEditor::editLink()
 void mdtClUnitEditor::removeLinks()
 {
   mdtSqlTableWidget *widget;
-  ///mdtClUnit unit(this, database());
   mdtClLink lnk(0, database());
   QMessageBox msgBox;
   QList<QModelIndexList> indexes;

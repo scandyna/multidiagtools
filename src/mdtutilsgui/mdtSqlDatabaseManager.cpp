@@ -184,16 +184,16 @@ bool mdtSqlDatabaseManager::openDatabaseSqlite(const QFileInfo & fileInfo, const
     /// \todo Close here ??
     return false;
   }
-  /**
   QSqlQuery query(pvDatabase);
-  if(!query.exec("PRAGMA foreign_keys = ON")){
-    pvLastError.setError(tr("Cannot enable foreign keys support on database '") + pvDatabaseName + "'", mdtError::Error);
+  // At defoult, synchronous write is set to FULL. This is safe, but really slow..
+  if(!query.exec("PRAGMA synchronous = NORMAL")){
+    pvLastError.setError(tr("Cannot set PRAGMA synchronous to NORMAL (its probably set to FULL now). Database: '") + pvDatabaseName + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
     pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
     pvLastError.commit();
+    /// \todo Error ? Close here ?
     return false;
   }
-  */
 
   return true;
 }
@@ -359,12 +359,29 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QFileInfo & fileInfo, cre
   Q_ASSERT(pvDatabase.isValid());
   Q_ASSERT(pvDatabase.isOpen());
   // Enable foreign key support
+  /**
   QSqlQuery query(pvDatabase);
   if(!query.exec("PRAGMA foreign_keys = ON")){
     pvLastError.setError(tr("Cannot enable foreign keys support on database '") + pvDatabaseName + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
     pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
     pvLastError.commit();
+    return false;
+  }
+  */
+  // Enable foreign key support
+  if(!setForeignKeysEnabled(true)){
+    /// \todo Close here ??
+    return false;
+  }
+  QSqlQuery query(pvDatabase);
+  // At defoult, synchronous write is set to FULL. This is safe, but really slow..
+  if(!query.exec("PRAGMA synchronous = NORMAL")){
+    pvLastError.setError(tr("Cannot set PRAGMA synchronous to NORMAL (its probably set to FULL now). Database: '") + pvDatabaseName + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+    pvLastError.commit();
+    /// \todo Error ? Close here ?
     return false;
   }
 
