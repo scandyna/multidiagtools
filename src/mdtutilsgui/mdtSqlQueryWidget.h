@@ -31,6 +31,7 @@
 #include <QPair>
 
 class QSqlQueryModel;
+class mdtSortFilterProxyModel;
 
 /*! \brief Widget for data queriyng
  */
@@ -94,6 +95,7 @@ class mdtSqlQueryWidget : public QWidget, Ui::mdtSqlQueryWidget
   Q_DISABLE_COPY(mdtSqlQueryWidget);
 
   QSqlQueryModel *pvModel;
+  mdtSortFilterProxyModel *pvProxyModel;
   QSqlDatabase pvDb;
   QHash<QString, QString> pvHeaderTextsByFieldNames;  // For model's header
   QHash<QString, QString> pvFieldNamesBySelectorDisplayTexts; // Used with selector dialog

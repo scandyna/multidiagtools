@@ -55,6 +55,8 @@ set (HEADER_FILES
           mdtFieldListEditionDialog.h
           mdtSqlQueryWidget.h
           mdtItemsSelectorDialog.h
+          mdtMvColumnSelectionDialog.h
+          mdtMvSortingSetupDialog.h
           mdtSqlRelation.h
           mdtSqlFieldHandler.h
           mdtAbstractSqlWidget.h
@@ -100,6 +102,9 @@ set (SOURCES_FILES
           mdtFieldListEditionDialog.cpp
           mdtSqlQueryWidget.cpp
           mdtItemsSelectorDialog.cpp
+          mdtItemsSelectorDialogItem.cpp
+          mdtMvColumnSelectionDialog.cpp
+          mdtMvSortingSetupDialog.cpp
           mdtSqlRelation.cpp
           mdtSqlRelationItem.cpp
           mdtSqlFieldHandler.cpp

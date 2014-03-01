@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_ITEMS_SELECTOR_DIALOG_H
 
 #include "ui_mdtItemsSelectorDialog.h"
+#include "mdtItemsSelectorDialogItem.h"
 #include <QDialog>
 #include <QWidget>
 #include <QString>
@@ -48,6 +49,10 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
    */
   ~mdtItemsSelectorDialog();
 
+  /*! \brief Clear dialog
+   */
+  void clear();
+
   /*! \brief Enable/diseable sort option
    */
   void setSortOptionEnabled(bool enabled);
@@ -58,19 +63,44 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
 
   /*! \brief Set the Available items
    */
+  void setAvailableItems(const QList<mdtItemsSelectorDialogItem> & items);
+
+  /*! \brief Set the Available items
+   * 
+   * \todo Obselete !
+   */
   void setAvailableItems(const QStringList &items);
 
   /*! \brief Set the selected items label text
    */
   void setSelectedItemsLabelText(const QString &text);
 
+  /*! \brief Set the Available items
+   */
+  void setSelectedItems(const QList<mdtItemsSelectorDialogItem> & items);
+
   /*! \brief Set the selected items
+   *
+   * \todo Obselete !
    */
   void setSelectedItems(const QStringList &items);
 
   /*! \brief Get list of selected items
    */
-  QStringList selectedItems() const;
+  ///QStringList selectedItems() const;
+  const QList<mdtItemsSelectorDialogItem> & selectedItems() const;
+
+  /*! \brief Get list of selected items texts
+   */
+  QStringList selectedItemsTexts() const;
+
+  /*! \brief Get list of selected items names
+   */
+  QStringList selectedItemsNames() const;
+
+  /*! \brief Get list of not selected items
+   */
+  const QList<mdtItemsSelectorDialogItem> & notSelectedItems() const;
 
  private slots:
 
@@ -125,11 +155,30 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
    */
   bool addItemToAvailableItemsModel(const QVariant &data);
 
+  /*! \brief Move a item from selected items list
+   *
+   * Will move item at row itemRow to newRow.
+   *  If itemRow or newRow is out of range,
+   *  this method does simply nothing.
+   */
+  void moveSelectedItem(int itemRow, int newRow, bool selectNewRow);
+
+  /*! \brief Update available items model and view
+   */
+  void updateAvailableItems(int currentRow);
+
+  /*! \brief Update selected items model and view
+   */
+  void updateSelectedItems(int currentRow);
+
   Q_DISABLE_COPY(mdtItemsSelectorDialog);
 
   QStringListModel *pvAvailableItemsModel;
   QStringListModel *pvSelectedItemsModel;
   QList<QPair<QString, int> > pvSelectedItemsWithSortOrder; // Used to store sort order (ASC, DESC)
+  
+  QList<mdtItemsSelectorDialogItem> pvAvailableItems;
+  QList<mdtItemsSelectorDialogItem> pvSelectedItems;
 };
 
 #endif  // #ifndef MDT_ITEMS_SELECTOR_DIALOG_H

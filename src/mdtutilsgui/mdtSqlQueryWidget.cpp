@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,10 @@
  **
  ****************************************************************************/
 #include "mdtSqlQueryWidget.h"
+#include "mdtSortFilterProxyModel.h"
 #include "mdtItemsSelectorDialog.h"
+#include "mdtMvColumnSelectionDialog.h"
+#include "mdtMvSortingSetupDialog.h"
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QSqlError>
@@ -35,7 +38,9 @@ mdtSqlQueryWidget::mdtSqlQueryWidget(QWidget *parent)
   setupUi(this);
   // Setup data part
   pvModel = new QSqlQueryModel(this);
-  twData->setModel(pvModel);
+  pvProxyModel = new mdtSortFilterProxyModel(this);
+  pvProxyModel->setSourceModel(pvModel);
+  twData->setModel(pvProxyModel);
   
   connect(pbRefresh, SIGNAL(clicked()), this, SLOT(select()));
   connect(pbTables, SIGNAL(clicked()), this, SLOT(chooseTables()));
@@ -68,6 +73,12 @@ void mdtSqlQueryWidget::select()
   
   sql = "SELECT * FROM example_dwn_tbl;";
   
+  if(pvTables.isEmpty()){
+    qDebug() << "NO table selected";
+  }
+  sql = "SELECT * FROM " + pvTables.at(0);
+  
+  /**
   sql = "SELECT ";
   for(i=0; i<pvFields.size(); ++i){
     sql += " \"" + pvFields.at(i) + "\" ";
@@ -97,6 +108,7 @@ void mdtSqlQueryWidget::select()
       }
     }
   }
+  */
   
   qDebug() << "SQL: " << sql;
   if(!query.exec(sql)){
@@ -112,6 +124,7 @@ void mdtSqlQueryWidget::chooseTables()
 {
   mdtItemsSelectorDialog *dialog;
   QStringList availableTables, tmpTables;
+  QList<mdtItemsSelectorDialogItem> availableTableList;
   int retval;
   int i;
 
@@ -119,7 +132,10 @@ void mdtSqlQueryWidget::chooseTables()
   tmpTables = pvDb.tables();
   for(i=0; i<tmpTables.size(); ++i){
     if(!pvTables.contains(tmpTables.at(i))){
-      availableTables.append(tmpTables.at(i));
+      mdtItemsSelectorDialogItem availableTable;
+      availableTable.setName(tmpTables.at(i));
+      availableTable.setText(tmpTables.at(i));
+      availableTableList.append(availableTable);
     }
   }
   // Setup and show dialog
@@ -127,19 +143,26 @@ void mdtSqlQueryWidget::chooseTables()
   dialog->setWindowTitle(tr("Choose tables"));
   dialog->setSortOptionEnabled(false);
   dialog->setAvailableItemsLabelText(tr("Available tables"));
-  dialog->setAvailableItems(availableTables);
+  dialog->setAvailableItems(availableTableList);
   dialog->setSelectedItemsLabelText(tr("Selected tables"));
   dialog->setSelectedItems(pvTables);
   retval = dialog->exec();
   if(retval == QDialog::Accepted){
-    pvTables = dialog->selectedItems();
+    pvTables = dialog->selectedItemsNames();
     qDebug() << "Selected tables: " << pvTables;
   }
 
   delete dialog;
 }
 
+void mdtSqlQueryWidget::chooseFields()
+{
+  mdtMvColumnSelectionDialog dialog(this, pvModel, twData);
+  dialog.exec();
+}
+
 /// \bug Allready selected fields are displayed in disorder in selected items list in chooser
+/**
 void mdtSqlQueryWidget::chooseFields()
 {
   mdtItemsSelectorDialog *dialog;
@@ -147,15 +170,34 @@ void mdtSqlQueryWidget::chooseFields()
   int retval;
   int tableIndex, fieldIndex;
   QString fieldDisplayText;
-  QStringList availableFields;
-  QStringList selectedFields;
+
+  ///QStringList availableFields;
+  ///QStringList selectedFields;
+
   QHash<QString, QString> tmpFieldNamesBySelectorDisplayTexts;
   QString fieldName;
+  
+  QList<mdtItemsSelectorDialogItem> availableFields;
+  QList<mdtItemsSelectorDialogItem> selectedFields;
 
   // Build available fields list
   if(pvTables.size() < 1){
     return;
   }
+  if(pvTables.size() == 1){
+    rec = pvDb.record(pvTables.at(0));
+    for(fieldIndex = 0; fieldIndex < rec.count(); ++fieldIndex){
+      mdtItemsSelectorDialogItem item;
+      item.setColumnIndex(fieldIndex);
+      item.setName(rec.fieldName(fieldIndex));
+      item.setText(pvHeaderTextsByFieldNames.value(item.name()));
+      availableFields.append(item);
+    }
+  }else{
+    qDebug() << "mdtSqlQueryWidget::chooseFields() - Multi table selection not implemented yet";
+    return;
+  }
+  
   if(pvTables.size() == 1){
     rec = pvDb.record(pvTables.at(0));
     for(fieldIndex=0; fieldIndex<rec.count(); ++fieldIndex){
@@ -182,6 +224,7 @@ void mdtSqlQueryWidget::chooseFields()
     fieldDisplayText = pvFieldSelectorDisplayTextsByNames.value(pvFields.at(fieldIndex));
     selectedFields.append(fieldDisplayText);
   }
+
   ///selectedFields = pvFieldNamesBySelectorDisplayTexts.keys();
   // Setup and show dialog
   dialog = new mdtItemsSelectorDialog(this);
@@ -190,13 +233,14 @@ void mdtSqlQueryWidget::chooseFields()
   dialog->setAvailableItemsLabelText(tr("Available fields"));
   dialog->setAvailableItems(availableFields);
   dialog->setSelectedItemsLabelText(tr("Selected fields"));
-  dialog->setSelectedItems(selectedFields);
+  ///dialog->setSelectedItems(selectedFields);
   retval = dialog->exec();
   if(retval == QDialog::Accepted){
     selectedFields = dialog->selectedItems();
     pvFields.clear();
     pvFieldNamesBySelectorDisplayTexts.clear();
     pvFieldSelectorDisplayTextsByNames.clear();
+
     for(fieldIndex=0; fieldIndex<selectedFields.size(); ++fieldIndex){
       fieldDisplayText = selectedFields.at(fieldIndex);
       fieldName = tmpFieldNamesBySelectorDisplayTexts.value(fieldDisplayText);
@@ -204,6 +248,13 @@ void mdtSqlQueryWidget::chooseFields()
       pvFieldSelectorDisplayTextsByNames.insert(fieldName, fieldDisplayText);
       pvFields.append(fieldName);
     }
+
+    mdtItemsSelectorDialogItem item;
+    for(fieldIndex = 0; fieldIndex < selectedFields.size(); ++fieldIndex){
+      item = selectedFields.at(fieldIndex);
+      pvFields.append(item.name());
+    }
+    
     removeNonExistantFieldsInSortingFields();
     ///qDebug() << "Selected fields: " << pvFields;
     ///select();
@@ -211,7 +262,23 @@ void mdtSqlQueryWidget::chooseFields()
 
   delete dialog;
 }
+*/
 
+void mdtSqlQueryWidget::chooseFieldsSort()
+{
+  // If model is empty, canFetchMore will allways return true, prevent this
+  if(pvModel->rowCount() < 1){
+    return;
+  }
+  mdtMvSortingSetupDialog dialog(this, pvModel, pvProxyModel);
+  dialog.exec();
+  while(pvModel->canFetchMore()){
+    pvModel->fetchMore();
+  }
+  twData->sortByColumn(0);
+}
+
+/**
 void mdtSqlQueryWidget::chooseFieldsSort()
 {
   mdtItemsSelectorDialog *dialog;
@@ -249,7 +316,7 @@ void mdtSqlQueryWidget::chooseFieldsSort()
   retval = dialog->exec();
   if(retval == QDialog::Accepted){
     // Store selected items in sort fields (with technical names)
-    sortedFields = dialog->selectedItems();
+    ///sortedFields = dialog->selectedItems();
     pvSortingFields.clear();
     pvSortingFieldsWithOrder.clear();
     for(fieldIndex=0; fieldIndex<sortedFields.size(); ++fieldIndex){
@@ -263,6 +330,7 @@ void mdtSqlQueryWidget::chooseFieldsSort()
   }
   delete dialog;
 }
+*/
 
 void mdtSqlQueryWidget::updateHeaderTexts()
 {

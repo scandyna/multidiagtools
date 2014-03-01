@@ -1710,7 +1710,7 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(csvHeader.at(2), QString("value"));
   delete model;
 
-  return;
+  ///return;
 
   /*
    * Playing ...

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,8 @@
 #include <QItemSelectionModel>
 #include <QItemSelection>
 #include <QModelIndex>
+#include <algorithm>
+#include <vector>
 
 #include <QDebug>
 
@@ -61,6 +63,12 @@ mdtItemsSelectorDialog::~mdtItemsSelectorDialog()
 {
 }
 
+void mdtItemsSelectorDialog::clear()
+{
+  pvAvailableItems.clear();
+  /// \todo update models
+}
+
 void mdtItemsSelectorDialog::setSortOptionEnabled(bool enabled)
 {
   if(enabled){
@@ -77,10 +85,16 @@ void mdtItemsSelectorDialog::setAvailableItemsLabelText(const QString &text)
   lbAvailableItems->setText(text);
 }
 
+void mdtItemsSelectorDialog::setAvailableItems(const QList< mdtItemsSelectorDialogItem >& items)
+{
+  pvAvailableItems = items;
+  updateAvailableItems(-1);
+}
+
 void mdtItemsSelectorDialog::setAvailableItems(const QStringList &items)
 {
   pvAvailableItemsModel->setStringList(items);
-  pvAvailableItemsModel->sort(0);
+  ///pvAvailableItemsModel->sort(0);
 }
 
 void mdtItemsSelectorDialog::setSelectedItemsLabelText(const QString &text)
@@ -88,14 +102,56 @@ void mdtItemsSelectorDialog::setSelectedItemsLabelText(const QString &text)
   lbSelectedItems->setText(text);
 }
 
+void mdtItemsSelectorDialog::setSelectedItems(const QList<mdtItemsSelectorDialogItem> & items)
+{
+  pvSelectedItems = items;
+  updateSelectedItems(-1);
+}
+
 void mdtItemsSelectorDialog::setSelectedItems(const QStringList &items)
 {
   pvSelectedItemsModel->setStringList(items);
 }
 
+/**
 QStringList mdtItemsSelectorDialog::selectedItems() const
 {
   return pvSelectedItemsModel->stringList();
+}
+*/
+
+const QList<mdtItemsSelectorDialogItem> & mdtItemsSelectorDialog::selectedItems() const
+{
+  return pvSelectedItems;
+}
+
+QStringList mdtItemsSelectorDialog::selectedItemsTexts() const
+{
+  QStringList lst;
+  int i;
+
+  for(i = 0; i < pvSelectedItems.size(); ++i){
+    lst.append(pvSelectedItems.at(i).text());
+  }
+
+  return lst;
+}
+
+QStringList mdtItemsSelectorDialog::selectedItemsNames() const
+{
+  QStringList lst;
+  int i;
+
+  for(i = 0; i < pvSelectedItems.size(); ++i){
+    lst.append(pvSelectedItems.at(i).name());
+  }
+
+  return lst;
+}
+
+const QList<mdtItemsSelectorDialogItem> & mdtItemsSelectorDialog::notSelectedItems() const
+{
+  return pvAvailableItems;
 }
 
 void mdtItemsSelectorDialog::transferSelectedItemsToSelectedItems()
@@ -104,11 +160,37 @@ void mdtItemsSelectorDialog::transferSelectedItemsToSelectedItems()
 
   QModelIndexList indexes = lwAvailableItems->selectionModel()->selectedIndexes();
   QModelIndex index;
-  QStringList availableItemsList;
-  QStringList selectedItemsList;
-  int i;
-  int itemIndex;
+  ///QStringList availableItemsList;
+  ///QStringList selectedItemsList;
+  ///int i;
+  ///int itemIndex;
+  unsigned int ui;
+  std::vector<int> rowList;
+  mdtItemsSelectorDialogItem item;
 
+  // Build list of rows to remove from available items
+  foreach(index, indexes){
+    rowList.push_back(index.row());
+  }
+  // Transfer items
+  for(ui = 0; ui < rowList.size(); ++ui){
+    Q_ASSERT(rowList[ui] < pvAvailableItems.size());
+    item = pvAvailableItems.at(rowList[ui]);
+    pvSelectedItems.append(item);
+  }
+  // Remove transfered items
+  std::sort(rowList.rbegin(), rowList.rend());
+  for(ui = 0; ui < rowList.size(); ++ui){
+    Q_ASSERT(rowList[ui] < pvAvailableItems.size());
+    pvAvailableItems.removeAt(rowList[ui]);
+  }
+  // Update models
+  updateAvailableItems(-1);
+  updateSelectedItems(-1);
+
+/**
+  return;
+  
   // Transfer items
   foreach(index, indexes){
     if(!addItemToSelectedItemsModel(pvAvailableItemsModel->data(index, Qt::DisplayRole))){
@@ -127,6 +209,7 @@ void mdtItemsSelectorDialog::transferSelectedItemsToSelectedItems()
   }
   pvAvailableItemsModel->setStringList(availableItemsList);
   pvAvailableItemsModel->sort(0);
+  */
 }
 
 void mdtItemsSelectorDialog::transferSelectedItemsToAvailableItems()
@@ -135,11 +218,38 @@ void mdtItemsSelectorDialog::transferSelectedItemsToAvailableItems()
 
   QModelIndexList indexes = lwSelectedItems->selectionModel()->selectedIndexes();
   QModelIndex index;
+  /**
   QStringList availableItemsList;
   QStringList selectedItemsList;
   int i;
   int itemIndex;
+  */
+  unsigned int ui;
+  std::vector<int> rowList;
+  mdtItemsSelectorDialogItem item;
 
+  // Build list of rows to remove from selected items
+  foreach(index, indexes){
+    rowList.push_back(index.row());
+  }
+  // Transfer items
+  for(ui = 0; ui < rowList.size(); ++ui){
+    Q_ASSERT(rowList[ui] < pvSelectedItems.size());
+    item = pvSelectedItems.at(rowList[ui]);
+    pvAvailableItems.append(item);
+  }
+  // Remove transfered items
+  std::sort(rowList.rbegin(), rowList.rend());
+  for(ui = 0; ui < rowList.size(); ++ui){
+    Q_ASSERT(rowList[ui] < pvSelectedItems.size());
+    pvSelectedItems.removeAt(rowList[ui]);
+  }
+  // Update models
+  updateAvailableItems(-1);
+  updateSelectedItems(-1);
+
+  
+  /**
   // Transfer items
   foreach(index, indexes){
     if(!addItemToAvailableItemsModel(pvSelectedItemsModel->data(index, Qt::DisplayRole))){
@@ -157,6 +267,7 @@ void mdtItemsSelectorDialog::transferSelectedItemsToAvailableItems()
   }
   pvSelectedItemsModel->setStringList(selectedItemsList);
   pvAvailableItemsModel->sort(0);
+  */
 }
 
 void mdtItemsSelectorDialog::selectAllAvailableItems()
@@ -167,8 +278,6 @@ void mdtItemsSelectorDialog::selectAllAvailableItems()
   QModelIndex bottomIndex = pvAvailableItemsModel->index(pvAvailableItemsModel->rowCount()-1, 0);
   QItemSelection selection(topIndex, bottomIndex);
 
-  qDebug() << "Selected " << selection.size() << " items in available list";
-  
   lwAvailableItems->selectionModel()->select(selection, QItemSelectionModel::Select);
 }
 
@@ -210,13 +319,19 @@ void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListUp()
   Q_ASSERT(lwSelectedItems->selectionModel() != 0);
 
   QModelIndex index = lwSelectedItems->selectionModel()->currentIndex();
-  QVariant itemData;
+  ///QVariant itemData;
   int row;
 
   if(!index.isValid()){
     return;
   }
+  
   row = index.row();
+  moveSelectedItem(row, row - 1, true);
+  
+  /**
+  return;
+  
   if(row < 1){
     return;
   }
@@ -234,6 +349,7 @@ void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListUp()
   // Update selection
   unselectAllSelectedItems();
   lwSelectedItems->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+  */
 }
 
 void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListOnTop()
@@ -241,9 +357,21 @@ void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListOnTop()
   Q_ASSERT(lwSelectedItems->selectionModel() != 0);
 
   QModelIndex index;
-  QVariant itemData;
+  ///QVariant itemData;
   int row;
 
+
+  index = lwSelectedItems->selectionModel()->currentIndex();
+  if(!index.isValid()){
+    return;
+  }
+
+  row = index.row();
+  moveSelectedItem(row, 0, true);
+
+  /**
+  return;
+  
   while(1){
     index = lwSelectedItems->selectionModel()->currentIndex();
     if(!index.isValid()){
@@ -269,6 +397,7 @@ void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListOnTop()
     pvSelectedItemsModel->setData(index, itemData);
     lwSelectedItems->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
   }
+  */
 }
 
 void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListDown()
@@ -276,12 +405,20 @@ void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListDown()
   Q_ASSERT(lwSelectedItems->selectionModel() != 0);
 
   QModelIndex index = lwSelectedItems->selectionModel()->currentIndex();
-  QVariant itemData;
+  ///QVariant itemData;
   int row;
 
   if(!index.isValid()){
     return;
   }
+  
+  row = index.row();
+  moveSelectedItem(row, row + 1, true);
+  
+  /**
+  return;
+
+  
   row = index.row();
   if(row >= (pvSelectedItemsModel->rowCount()-1)){
     return;
@@ -300,6 +437,7 @@ void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListDown()
   // Update selection
   unselectAllSelectedItems();
   lwSelectedItems->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+  */
 }
 
 /**
@@ -342,4 +480,64 @@ bool mdtItemsSelectorDialog::addItemToAvailableItemsModel(const QVariant &data)
   }
 
   return true;
+}
+
+void mdtItemsSelectorDialog::moveSelectedItem(int itemRow, int newRow, bool selectNewRow)
+{
+  mdtItemsSelectorDialogItem item;
+
+  // Check indexes
+  if((itemRow < 0)||(itemRow >= pvSelectedItems.size())){
+    return;
+  }
+  if((newRow < 0)||(newRow >= pvSelectedItems.size())){
+    return;
+  }
+  // Move item
+  pvSelectedItems.move(itemRow, newRow);
+  // Update model
+  if(selectNewRow){
+    updateSelectedItems(newRow);
+  }else{
+    updateSelectedItems(-1);
+  }
+}
+
+
+void mdtItemsSelectorDialog::updateAvailableItems(int currentRow)
+{
+  QStringList itemsTexts;
+  QModelIndex index;
+  int i;
+
+  qSort(pvAvailableItems.begin(), pvAvailableItems.end());
+  for(i = 0; i < pvAvailableItems.size(); ++i){
+    itemsTexts.append(pvAvailableItems.at(i).text());
+  }
+  pvAvailableItemsModel->setStringList(itemsTexts);
+  ///pvAvailableItemsModel->sort(0);
+  // Update selection
+  if(lwAvailableItems->selectionModel() != 0){
+    unselectAllAvailableItems();
+    index = pvAvailableItemsModel->index(currentRow, 0);
+    lwAvailableItems->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+  }
+}
+
+void mdtItemsSelectorDialog::updateSelectedItems(int currentRow)
+{
+  QStringList itemsTexts;
+  QModelIndex index;
+  int i;
+
+  for(i = 0; i < pvSelectedItems.size(); ++i){
+    itemsTexts.append(pvSelectedItems.at(i).text());
+  }
+  pvSelectedItemsModel->setStringList(itemsTexts);
+  // Update selection
+  if(lwSelectedItems->selectionModel() != 0){
+    unselectAllSelectedItems();
+    index = pvSelectedItemsModel->index(currentRow, 0);
+    lwSelectedItems->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+  }
 }

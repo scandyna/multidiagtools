@@ -1,19 +1,22 @@
-window_sizes 1280 1005 151 1123 952 0
+window_sizes 1280 1005 328 946 952 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 739586 // CableListAllTables
+  classdiagram_ref 739586 // CableListAllTables
     1123 952 80 17 49 149
+  classdiagram_ref 1059586 // mdtItemsSelectorDialog
+    1027 952 100 4 0 0
+  classdiagram_ref 1066114 // mdtMvColumnSelectionDialog
+    1027 952 100 4 0 0
+  active  classdiagram_ref 1066370 // mdtMvSortingSetupDialog
+    946 952 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 963970 // Value
+selected operation_ref 1936130 // displaySortedColumns
 open
-  classview_ref 602498 // Data
-  attribute_ref 963970 // Value
-  classview_ref 609154 // GlobalView
-  classview_ref 497026 // Article
-  classrelation_ref 1404418 // <directional composition>
-  classrelation_ref 1404674 // pvVehicleTypeLinks (<directional composition>)
-  operation_ref 1912962 // clearValues
-  class_ref 1120386 // mdtClVehicleTypeLinkData
+  operation_ref 1935362 // clearColumnsSortOrder
+  operation_ref 1352322 // lessThan
+  classview_ref 424962 // mdtSqlQueryWidget
+  operation_ref 1927170 // accept
+  operation_ref 1927298 // accept
 end
 end

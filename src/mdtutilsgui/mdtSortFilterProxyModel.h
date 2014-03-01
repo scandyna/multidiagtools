@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 
 #include <QSortFilterProxyModel>
 #include <QList>
+#include <QVector>
 #include <QPair>
 #include <QString>
 
@@ -66,13 +67,17 @@ class mdtSortFilterProxyModel : public QSortFilterProxyModel
 
   /*! \brief Add a field to columns sort order
    *
-   * \overload addColumnToSortOrder(int, Qt::SortOrder)
-   *
    * Here it's possible to define a field name.
    *  Note that this method does nothing if 
    *  sourceModel is not based on QSqlQueryModel.
    */
   void addColumnToSortOrder(const QString &fieldName, Qt::SortOrder order = Qt::AscendingOrder);
+
+  /*! \brief Get list of indexes of columns that are in sort order
+   *
+   * Note: each call of this method will rebuild the list.
+   */
+  QVector<int> sortedColumns() const;
 
  private:
 

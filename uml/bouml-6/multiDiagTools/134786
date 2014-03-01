@@ -1,6 +1,6 @@
 format 204
 "Qt4" // Qt4
-  revision 72
+  revision 73
   modified_by 2 "philippe"
   // class settings
   
@@ -3111,6 +3111,42 @@ ${inlines}
 	
 	
       end
+    end
+
+    class 638338 "QTableView"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 1066242 "QHeaderView"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1133570 "QHeaderView"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

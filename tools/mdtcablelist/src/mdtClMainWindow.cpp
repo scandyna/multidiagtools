@@ -150,6 +150,7 @@ void mdtClMainWindow::editConnector()
     pvConnectorEditorWindow->resize(800, 500);
     pvConnectorEditorWindow->enableNavigation();
     pvConnectorEditorWindow->enableEdition();
+    pvConnectorEditorWindow->setWindowTitle(tr("Connector edition"));
   }
   Q_ASSERT(pvConnectorEditor != 0);
   Q_ASSERT(pvConnectorEditorWindow != 0);
@@ -177,6 +178,7 @@ void mdtClMainWindow::editUnit()
     pvUnitEditorWindow->resize(800, 500);
     pvUnitEditorWindow->enableNavigation();
     pvUnitEditorWindow->enableEdition();
+    pvUnitEditorWindow->setWindowTitle(tr("Unit edition"));
   }
   Q_ASSERT(pvUnitEditor != 0);
   Q_ASSERT(pvUnitEditorWindow != 0);
@@ -204,6 +206,7 @@ void mdtClMainWindow::editArticle()
     pvArticleEditorWindow->resize(800, 500);
     pvArticleEditorWindow->enableNavigation();
     pvArticleEditorWindow->enableEdition();
+    pvArticleEditorWindow->setWindowTitle(tr("Article edition"));
   }
   Q_ASSERT(pvArticleEditor != 0);
   Q_ASSERT(pvArticleEditorWindow != 0);

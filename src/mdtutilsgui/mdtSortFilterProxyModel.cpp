@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,7 +24,7 @@
 #include <QSqlQueryModel>
 #include <QSqlRecord>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtSortFilterProxyModel::mdtSortFilterProxyModel(QObject *parent)
  : QSortFilterProxyModel(parent)
@@ -66,6 +66,18 @@ void mdtSortFilterProxyModel::addColumnToSortOrder(const QString &fieldName, Qt:
   if(column >= 0){
     addColumnToSortOrder(column, order);
   }
+}
+
+QVector<int> mdtSortFilterProxyModel::sortedColumns() const
+{
+  QVector<int> lst;
+  int i;
+
+  for(i = (pvColumnsSortOrder.size() - 1); i >= 0; --i){
+    lst.append(pvColumnsSortOrder.at(i).first);
+  }
+
+  return lst;
 }
 
 bool mdtSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const

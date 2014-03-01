@@ -76,8 +76,8 @@ bool mdtClConnectorEditor::setupConnectorContactTable()
   // Enable edition
   widget->enableLocalEdition();
   // Hide technical fields
-  ///widget->setColumnHidden("Id_PK", true);
-  ///widget->setColumnHidden("Connector_Id_FK", true);
+  widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("Connector_Id_FK", true);
   // Set fields a user friendly name
   ///widget->setHeaderData("", tr(""));
 
