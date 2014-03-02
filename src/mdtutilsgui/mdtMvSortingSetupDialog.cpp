@@ -27,6 +27,8 @@
 #include <QList>
 #include <QVector>
 
+#include <QDebug>
+
 mdtMvSortingSetupDialog::mdtMvSortingSetupDialog(QWidget *parent, QAbstractTableModel *model, mdtSortFilterProxyModel *proxyModel)
  : mdtItemsSelectorDialog(parent)
 {
@@ -39,7 +41,7 @@ mdtMvSortingSetupDialog::mdtMvSortingSetupDialog(QWidget *parent, QAbstractTable
   setSortOptionEnabled(false);
   setAvailableItemsLabelText(tr("Available fields"));
   setSelectedItemsLabelText(tr("Selected fields"));
-
+  setSortOptionEnabled(true);
   displayAvailableColumns();
   displaySortedColumns();
 }
@@ -88,6 +90,8 @@ void mdtMvSortingSetupDialog::displaySortedColumns()
     col = sortedColums.at(i);
     item.setColumnIndex(col);
     item.setText(pvModel->headerData(col, Qt::Horizontal).toString());
+    item.setSortOrder(pvProxyModel->sortOrder(col));
+    qDebug() << "Sort order for col " << col << ": " << pvProxyModel->sortOrder(col);
     items.append(item);
   }
   setSelectedItems(items);
@@ -107,6 +111,7 @@ void mdtMvSortingSetupDialog::applySelectedColumns()
   for(i = 0; i < items.size(); ++i){
     item = items.at(i);
     pvProxyModel->addColumnToSortOrder(item.columnIndex(), item.sortOrder());
+    qDebug() << "Sort order for col " << item.columnIndex() << ": " << pvProxyModel->sortOrder(item.columnIndex());
   }
 }
 

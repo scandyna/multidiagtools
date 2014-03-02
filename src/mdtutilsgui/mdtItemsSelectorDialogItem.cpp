@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtItemsSelectorDialogItem.h"
+#include <QObject>
 
 mdtItemsSelectorDialogItem::mdtItemsSelectorDialogItem()
 {
@@ -29,6 +30,14 @@ mdtItemsSelectorDialogItem::mdtItemsSelectorDialogItem()
 void mdtItemsSelectorDialogItem::setText(const QString& text)
 {
   pvText = text;
+}
+
+QString mdtItemsSelectorDialogItem::text(bool includeSortOrderText) const
+{
+  if(includeSortOrderText){
+    return pvText + " (" + sortOrderText() + ")";
+  }
+  return pvText;
 }
 
 void mdtItemsSelectorDialogItem::setColumnIndex(int index)
@@ -44,6 +53,17 @@ void mdtItemsSelectorDialogItem::setName(const QString& name)
 void mdtItemsSelectorDialogItem::setSortOrder(Qt::SortOrder order)
 {
   pvSortOrder = order;
+}
+
+QString mdtItemsSelectorDialogItem::sortOrderText() const
+{
+  switch(pvSortOrder){
+    case Qt::AscendingOrder:
+      return QObject::tr("Ascending");
+    case Qt::DescendingOrder:
+      return QObject::tr("Descending");
+  }
+  return "???";
 }
 
 bool mdtItemsSelectorDialogItem::operator<(const mdtItemsSelectorDialogItem & other) const

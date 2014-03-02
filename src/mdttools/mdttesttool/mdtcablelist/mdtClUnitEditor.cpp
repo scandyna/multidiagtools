@@ -96,7 +96,7 @@ void mdtClUnitEditor::assignVehicle()
   QModelIndexList selectedVehicles;
   mdtClUnitVehicleType uvt(0, database());
   QString sql;
-  QSqlQueryModel model;
+  ///QSqlQueryModel model;
 
   // Get current unit ID
   unitId = currentUnitId();
@@ -105,9 +105,10 @@ void mdtClUnitEditor::assignVehicle()
   }
   // Setup and show dialog
   sql = uvt.sqlForVehicleTypeNotAssignedToUnit(unitId);
-  model.setQuery(sql, database());
+  ///model.setQuery(sql, database());
   selectionDialog.setMessage("Please select a vehicle");
-  selectionDialog.setModel(&model, true);
+  ///selectionDialog.setModel(&model, true);
+  selectionDialog.setQuery(sql, database(), true);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setHeaderData("SubType", tr("Variant"));
   selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
@@ -173,7 +174,7 @@ void mdtClUnitEditor::setBaseArticle()
 {
   mdtClUnit unit(this, database());
   mdtSqlSelectionDialog selectionDialog;
-  QSqlQueryModel model;
+  ///QSqlQueryModel model;
   int ret;
   QString sql;
   QList<QVariant> selectedItem;
@@ -219,9 +220,10 @@ void mdtClUnitEditor::setBaseArticle()
   }
   // Setup article selection dialog and show it to user
   sql = "SELECT * FROM Article_tbl;";
-  model.setQuery(sql, database());
+  ///model.setQuery(sql, database());
   selectionDialog.setMessage("Please select article");
-  selectionDialog.setModel(&model);
+  ///selectionDialog.setModel(&model);
+  selectionDialog.setQuery(sql, database(), false);
   ///selectionDialog.setColumnHidden("Id_PK", true);
   ///selectionDialog.setHeaderData("SubType", tr("Variant"));
   ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
@@ -243,8 +245,8 @@ void mdtClUnitEditor::addComponent()
 {
   mdtClUnit unit(this, database());
   mdtSqlSelectionDialog dialog;
-  QSqlQueryModel model;
-  QSqlError sqlError;
+  ///QSqlQueryModel model;
+  ///QSqlError sqlError;
   QString sql;
   QVariant unitId;
 
@@ -254,6 +256,7 @@ void mdtClUnitEditor::addComponent()
   }
   // Setup model
   sql = unit.sqlForComponentSelection(unitId);
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -264,9 +267,11 @@ void mdtClUnitEditor::addComponent()
     displayLastError();
     return;
   }
+  */
   // Setup and show dialog
   dialog.setMessage(tr("Please select a unit"));
-  dialog.setModel(&model, false);
+  ///dialog.setModel(&model, false);
+  dialog.setQuery(sql, database(), false);
   /**
   dialog.setColumnHidden("Id_PK", true);
   dialog.setHeaderData("ArticleConnectorName", "Connector");
@@ -794,8 +799,8 @@ QVariant mdtClUnitEditor::currentUnitId()
 QVariant mdtClUnitEditor::selectBaseConnector()
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
 
   if(currentUnitId().isNull()){
@@ -803,6 +808,7 @@ QVariant mdtClUnitEditor::selectBaseConnector()
   }
   // Setup model to show available connectors
   sql = "SELECT * FROM Connector_tbl";
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -813,9 +819,11 @@ QVariant mdtClUnitEditor::selectBaseConnector()
     displayLastError();
     return QVariant();
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage("Please select a connector.");
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   ///selectionDialog.setColumnHidden("Id_PK", true);
   ///selectionDialog.setHeaderData("SubType", tr("Variant"));
   ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
@@ -832,8 +840,8 @@ QVariant mdtClUnitEditor::selectBaseConnector()
 QList<QVariant> mdtClUnitEditor::selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection)
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
   QModelIndexList selectedItems;
   QList<QVariant> idList;
@@ -845,6 +853,7 @@ QList<QVariant> mdtClUnitEditor::selectBaseConnectorContactIdList(const QVariant
   // Setup model to show available connectors
   sql = "SELECT * FROM ConnectorContact_tbl ";
   sql += " WHERE Connector_Id_FK = " + connectorId.toString();
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -855,9 +864,11 @@ QList<QVariant> mdtClUnitEditor::selectBaseConnectorContactIdList(const QVariant
     displayLastError();
     return idList;
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage("Please select contacts to use.");
-  selectionDialog.setModel(&model, multiSelection);
+  ///selectionDialog.setModel(&model, multiSelection);
+  selectionDialog.setQuery(sql, database(), multiSelection);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("Connector_Id_FK", true);
   ///selectionDialog.setHeaderData("SubType", tr("Variant"));
@@ -890,8 +901,8 @@ QVariant mdtClUnitEditor::selectBaseConnectorContactId(const QVariant & connecto
 QVariant mdtClUnitEditor::selectArticleConnector()
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
   mdtClUnit unit(this, database());
   QVariant unitId;
@@ -908,6 +919,7 @@ QVariant mdtClUnitEditor::selectArticleConnector()
   }
   // Setup model to show available connectors
   sql = unit.sqlForArticleConnectorSelection(articleId, unitId);
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -915,9 +927,11 @@ QVariant mdtClUnitEditor::selectArticleConnector()
     displayLastError();
     return QVariant();
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage("Please select a connector.");
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.addSelectionResultColumn("Id_PK");
   selectionDialog.resize(500, 300);
@@ -932,8 +946,8 @@ QVariant mdtClUnitEditor::selectArticleConnector()
 QList<QVariant> mdtClUnitEditor::selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection)
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   mdtClUnit unit(this, database());
   QString sql;
   QModelIndexList selectedItems;
@@ -945,6 +959,7 @@ QList<QVariant> mdtClUnitEditor::selectByArticleConnectorIdArticleConnectionIdLi
   }
   // Setup model to show available article connections
   sql = unit.sqlForArticleConnectionLinkedToArticleConnectorSelection(articleConnectorId, unitId);
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -952,9 +967,11 @@ QList<QVariant> mdtClUnitEditor::selectByArticleConnectorIdArticleConnectionIdLi
     displayLastError();
     return idList;
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage("Please select article connections to use.");
-  selectionDialog.setModel(&model, multiSelection);
+  ///selectionDialog.setModel(&model, multiSelection);
+  selectionDialog.setQuery(sql, database(), multiSelection);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_FK", true);
   selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);

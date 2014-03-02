@@ -21,8 +21,8 @@ set (TEST_HEADER_FILES
 #           ../src/mdtClUnitConnectionDialog.h
 #           ../src/mdtClUnitConnectionSelectionDialog.h
 #           ../src/mdtClUnitLinkDialog.h
-          ../src/mdtClTerminalBlockEditor.h
-          ../src/mdtClTerminalEditorDialog.h
+          #../src/mdtClTerminalBlockEditor.h
+          #../src/mdtClTerminalEditorDialog.h
           #../src/mdtClArticleComponentDialog.h
           #../src/mdtClArticleLinkDialog.h
           #../src/mdtClPathGraphDialog.h
@@ -54,8 +54,8 @@ set (TEST_SOURCES_FILES
 #           ../src/mdtClUnitConnectionSelectionDialog.cpp
 #           ../src/mdtClUnitLinkDialog.cpp
 #          ../src/mdtClLinkData.cpp
-          ../src/mdtClTerminalBlockEditor.cpp
-          ../src/mdtClTerminalEditorDialog.cpp
+          #../src/mdtClTerminalBlockEditor.cpp
+          #../src/mdtClTerminalEditorDialog.cpp
 #           ../src/mdtClUnitVehicleType.cpp
           #../src/mdtClArticleComponentDialog.cpp
           #../src/mdtClArticleLinkDialog.cpp
@@ -93,7 +93,7 @@ set (TEST_FORM_FILES
 #           ../src/mdtClUnitLinkDialog.ui
 #          ../src/mdtClUnitConnectionEditor.ui
 #           ../src/mdtClLinkEditor.ui
-          ../src/mdtClTerminalBlockEditor.ui
+          #../src/mdtClTerminalBlockEditor.ui
           #../src/mdtClArticleComponentDialog.ui
           #../src/mdtClArticleLinkDialog.ui
           #../src/mdtClPathGraphDialog.ui

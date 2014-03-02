@@ -65,12 +65,6 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
    */
   void setAvailableItems(const QList<mdtItemsSelectorDialogItem> & items);
 
-  /*! \brief Set the Available items
-   * 
-   * \todo Obselete !
-   */
-  void setAvailableItems(const QStringList &items);
-
   /*! \brief Set the selected items label text
    */
   void setSelectedItemsLabelText(const QString &text);
@@ -79,15 +73,8 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
    */
   void setSelectedItems(const QList<mdtItemsSelectorDialogItem> & items);
 
-  /*! \brief Set the selected items
-   *
-   * \todo Obselete !
-   */
-  void setSelectedItems(const QStringList &items);
-
   /*! \brief Get list of selected items
    */
-  ///QStringList selectedItems() const;
   const QList<mdtItemsSelectorDialogItem> & selectedItems() const;
 
   /*! \brief Get list of selected items texts
@@ -142,18 +129,13 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
 
   /*! \brief Update cbSortOrder (enable/diseable and sort order regarding in selected list)
    */
-  ///void updateSortOrderInSelectedItemsList(const QModelIndex &current, const QModelIndex &previous);
-  ///void updateCbSortOrderBySelectedItem(const QModelIndex &current, const QModelIndex &previous);
+  void updateCbSortOrderBySelectedItem(const QModelIndex &current, const QModelIndex &previous);
+
+  /*! \brief Update sort order (ascending/desending) for current selected item
+   */
+  void updateSortOrderOfCurrentItemInSelectedItemsList(int cbSortOrderIndex);
 
  private:
-
-  /*! \brief Helper method to adda row into selected items model
-   */
-  bool addItemToSelectedItemsModel(const QVariant &data);
-
-  /*! \brief Helper method to adda row into selected items model
-   */
-  bool addItemToAvailableItemsModel(const QVariant &data);
 
   /*! \brief Move a item from selected items list
    *
@@ -175,10 +157,9 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
 
   QStringListModel *pvAvailableItemsModel;
   QStringListModel *pvSelectedItemsModel;
-  QList<QPair<QString, int> > pvSelectedItemsWithSortOrder; // Used to store sort order (ASC, DESC)
-  
   QList<mdtItemsSelectorDialogItem> pvAvailableItems;
   QList<mdtItemsSelectorDialogItem> pvSelectedItems;
+  bool pvSortOptionEnabled;
 };
 
 #endif  // #ifndef MDT_ITEMS_SELECTOR_DIALOG_H

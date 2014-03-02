@@ -145,7 +145,7 @@ void mdtSqlQueryWidget::chooseTables()
   dialog->setAvailableItemsLabelText(tr("Available tables"));
   dialog->setAvailableItems(availableTableList);
   dialog->setSelectedItemsLabelText(tr("Selected tables"));
-  dialog->setSelectedItems(pvTables);
+  ///dialog->setSelectedItems(pvTables);
   retval = dialog->exec();
   if(retval == QDialog::Accepted){
     pvTables = dialog->selectedItemsNames();

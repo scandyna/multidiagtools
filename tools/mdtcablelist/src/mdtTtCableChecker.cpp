@@ -242,12 +242,13 @@ void mdtTtCableChecker::runTest()
 QVariant mdtTtCableChecker::selectTestModel()
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
 
   // Setup model
   sql = "SELECT * FROM TestModel_tbl";
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -258,9 +259,11 @@ QVariant mdtTtCableChecker::selectTestModel()
     displayLastError();
     return QVariant();
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage(tr("Please select test"));
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Id_PK", true);
   ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
   selectionDialog.addSelectionResultColumn("Id_PK");

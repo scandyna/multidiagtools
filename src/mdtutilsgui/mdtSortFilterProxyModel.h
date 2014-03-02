@@ -79,6 +79,13 @@ class mdtSortFilterProxyModel : public QSortFilterProxyModel
    */
   QVector<int> sortedColumns() const;
 
+  /*! \brief Get sort order for given column
+   *
+   * If column is not in sorted columns list,
+   *  Qt::AscendingOrder is returnded
+   */
+  Qt::SortOrder sortOrder(int column) const;
+
  private:
 
   /*! \brief Overloads QSortFilterProxyModel to provide natural sort

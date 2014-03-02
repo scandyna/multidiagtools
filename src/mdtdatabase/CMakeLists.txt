@@ -26,6 +26,7 @@ set (SOURCES_FILES
 # Qt ui files
 set (FORM_FILES
 	  mdtSqlWindow.ui
+	  mdtSqlSelectionDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)

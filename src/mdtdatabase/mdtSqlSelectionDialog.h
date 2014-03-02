@@ -21,20 +21,25 @@
 #ifndef MDT_SQL_SELECTION_DIALOG_H
 #define MDT_SQL_SELECTION_DIALOG_H
 
+#include "ui_mdtSqlSelectionDialog.h"
 #include <QDialog>
 #include <QList>
 #include <QString>
 #include <QStringList>
 #include <QModelIndex>
 #include <QSqlRecord>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <Qt>
 
 class QTableView;
 class QSqlQueryModel;
+class mdtSortFilterProxyModel;
 class QLabel;
 
 /*! \brief Provide a way for the user to select row in a set of data
  */
-class mdtSqlSelectionDialog : public QDialog
+class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
 {
  Q_OBJECT
 
@@ -63,8 +68,14 @@ class mdtSqlSelectionDialog : public QDialog
   /*! \brief Set model that contain data to display
    *
    * \pre model must be a valid pointer.
+   * 
+   * \todo Obselete.
    */
-  void setModel(QSqlQueryModel *model, bool allowMultiSelection = false);
+  ///void setModel(QSqlQueryModel *model, bool allowMultiSelection = false);
+
+  /*! \brief Set SQL query to display data
+   */
+  void setQuery(const QString & sql, QSqlDatabase db, bool allowMultiSelection = false);
 
   /*! \brief Set a user friendly name for a column
    *
@@ -81,6 +92,46 @@ class mdtSqlSelectionDialog : public QDialog
    * \pre Model must be set with setModel() before using this method.
    */
   void setColumnHidden(const QString &fieldName, bool hide);
+
+  /*! \brief Clear columns sort order
+   *
+   * \sa addColumnToSortOrder()
+   */
+  void clearColumnsSortOrder();
+
+  /*! \brief Add a column to columns sort order
+   *
+   * Columns sort order is similar meaning
+   *  than SQL ORDER BY clause.
+   *
+   * For example, to sort columns in order 0, 2, 1
+   *  all ascending, call:
+   *  - clearColumnsSortOrder();
+   *  - addColumnToSortOrder(0, Qt::AscendingOrder);
+   *  - addColumnToSortOrder(2, Qt::AscendingOrder);
+   *  - addColumnToSortOrder(1, Qt::AscendingOrder);
+   *
+   * Note: if given column is out of bound, it will simply be ignored.
+   *
+   * Note: to apply sorting, call sort()
+   */
+  void addColumnToSortOrder(int column, Qt::SortOrder order = Qt::AscendingOrder);
+
+  /*! \brief Add a field to columns sort order
+   *
+   * Here it's possible to define a field name.
+   *  Note that this method does nothing if 
+   *  sourceModel is not based on QSqlQueryModel.
+   *
+   * Note: to apply sorting, call sort()
+   */
+  void addColumnToSortOrder(const QString &fieldName, Qt::SortOrder order = Qt::AscendingOrder);
+
+  /*! \brief Sort data
+   *
+   * \sa addColumnToSortOrder()
+   */
+  void sort();
 
   /*! \brief Select rows
    *
@@ -178,11 +229,16 @@ class mdtSqlSelectionDialog : public QDialog
    */
   void buildSelectionResults();
 
+  /*! \brief Log and display a sql error
+   */
+  void displaySqlError(const QSqlError & sqlError);
+
   Q_DISABLE_COPY(mdtSqlSelectionDialog);
 
-  QLabel *pvMessageLabel;
-  QTableView *pvTableView;
+  ///QLabel *pvMessageLabel;
+  ///QTableView *pvTableView;
   QSqlQueryModel *pvModel;
+  mdtSortFilterProxyModel *pvProxyModel;
   QList<int> pvSelectionResultColumns;
   QModelIndexList pvSelectionResults;
   bool pvAllowEmptyResult;            // If false, dialog cannot be accepted if nothing was selected

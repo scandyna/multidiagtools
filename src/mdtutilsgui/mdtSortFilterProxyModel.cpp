@@ -20,11 +20,12 @@
  ****************************************************************************/
 #include "mdtSortFilterProxyModel.h"
 #include "mdtAlgorithms.h"
+#include <boost/graph/graph_concepts.hpp>
 #include <QVariant>
 #include <QSqlQueryModel>
 #include <QSqlRecord>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSortFilterProxyModel::mdtSortFilterProxyModel(QObject *parent)
  : QSortFilterProxyModel(parent)
@@ -78,6 +79,19 @@ QVector<int> mdtSortFilterProxyModel::sortedColumns() const
   }
 
   return lst;
+}
+
+Qt::SortOrder mdtSortFilterProxyModel::sortOrder(int column) const
+{
+  int i;
+
+  for(i = 0; i < pvColumnsSortOrder.size(); ++i){
+    if(pvColumnsSortOrder.at(i).first == column){
+      return pvColumnsSortOrder.at(i).second;
+    }
+  }
+
+  return pvColumnsSortOrder.at(column).second;
 }
 
 bool mdtSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const

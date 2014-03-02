@@ -23,6 +23,7 @@
 #include <QSqlQueryModel>
 #include <QSqlRecord>
 #include <QSqlField>
+#include <QSqlQuery>
 #include <QModelIndex>
 #include <QVariant>
 #include <QString>
@@ -188,7 +189,8 @@ void mdtClArticleLinkDialog::selectStartConnection()
 
   // Setup and show dialog
   dialog.setMessage(tr("Please select the start connection"));
-  dialog.setModel(pvArticleConnectionModel, false);
+  ///dialog.setModel(pvArticleConnectionModel, false);
+  dialog.setQuery(pvArticleConnectionModel->query().lastQuery(), pvDatabase, false);
   dialog.setColumnHidden("Id_PK", true);
   dialog.setHeaderData("ArticleConnectorName", "Connector");
   dialog.setHeaderData("ArticleContactName", "Contact");
@@ -215,7 +217,8 @@ void mdtClArticleLinkDialog::selectEndConnection()
 
   // Setup and show dialog
   dialog.setMessage(tr("Please select the end connection"));
-  dialog.setModel(pvArticleConnectionModel, false);
+  ///dialog.setModel(pvArticleConnectionModel, false);
+  dialog.setQuery(pvArticleConnectionModel->query().lastQuery(), pvDatabase, false);
   dialog.setColumnHidden("Id_PK", true);
   dialog.setHeaderData("ArticleConnectorName", "Connector");
   dialog.setHeaderData("ArticleContactName", "Contact");

@@ -40,7 +40,7 @@ class mdtItemsSelectorDialogItem
 
   /*! \brief Get text
    */
-  inline QString text() const { return pvText; }
+  QString text(bool includeSortOrderText = false) const;
 
   /*! \brief Set column index
    */
@@ -69,6 +69,10 @@ class mdtItemsSelectorDialogItem
   /*! \brief Get sort order
    */
   inline Qt::SortOrder sortOrder() const { return pvSortOrder; }
+
+  /*! \brief Get sort order text
+   */
+  QString sortOrderText() const;
 
   /*! \brief Used by mdtItemsSelectorDialog to sort available items
    */

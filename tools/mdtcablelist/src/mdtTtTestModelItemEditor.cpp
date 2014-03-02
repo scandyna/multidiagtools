@@ -180,12 +180,13 @@ void mdtTtTestModelItemEditor::removeTestNodeUnitSetup()
 QVariant mdtTtTestModelItemEditor::selectTestLink(const QString & bus)
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
 
   // Setup model
   sql = "SELECT * FROM TestLink_view WHERE Bus = '" + bus + "'";
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -196,9 +197,11 @@ QVariant mdtTtTestModelItemEditor::selectTestLink(const QString & bus)
     displayLastError();
     return QVariant();
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage(tr("Please select link for bus '") + bus + tr("'"));
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("TestConnection_Id_FK", true);
   selectionDialog.setColumnHidden("DutConnection_Id_FK", true);

@@ -61,13 +61,14 @@ mdtClArticleConnectionData mdtClArticleConnectionDialog::data() const
 void mdtClArticleConnectionDialog::selectArticleConnector()
 {
   mdtSqlSelectionDialog dialog(this);
-  QSqlQueryModel model;
+  ///QSqlQueryModel model;
   QString sql;
 
   // Setup and show dialog
   sql = "SELECT Id_PK, Name FROM ArticleConnector_tbl WHERE Article_Id_FK = " + pvData.value("Article_Id_FK").toString();
-  model.setQuery(sql, pvDatabase);
-  dialog.setModel(&model, false);
+  ///model.setQuery(sql, pvDatabase);
+  ///dialog.setModel(&model, false);
+  dialog.setQuery(sql, pvDatabase, false);
   dialog.setColumnHidden("Id_PK", true);
   dialog.addSelectionResultColumn("Id_PK");
   if(dialog.exec() != QDialog::Accepted){

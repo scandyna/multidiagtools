@@ -137,13 +137,14 @@ void mdtClUnitConnectionDialog::copyFunctionIT()
 void mdtClUnitConnectionDialog::selectUnitConnector()
 {
   mdtSqlSelectionDialog dialog(this);
-  QSqlQueryModel model;
+  ///QSqlQueryModel model;
   QString sql;
 
   // Setup and show dialog
   sql = "SELECT Id_PK, Name FROM UnitConnector_tbl WHERE Unit_Id_FK = " + pvData.value("Unit_Id_FK").toString();
-  model.setQuery(sql, pvDatabase);
-  dialog.setModel(&model, false);
+  ///model.setQuery(sql, pvDatabase);
+  ///dialog.setModel(&model, false);
+  dialog.setQuery(sql, pvDatabase, false);
   dialog.setColumnHidden("Id_PK", true);
   dialog.addSelectionResultColumn("Id_PK");
   if(dialog.exec() != QDialog::Accepted){
@@ -247,8 +248,8 @@ void mdtClUnitConnectionDialog::reject()
 void mdtClUnitConnectionDialog::setConnectionFromFreeArticleConnection()
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   mdtClUnit unit(this, pvDatabase);
   QString sql;
   QVariant unitId;
@@ -259,15 +260,18 @@ void mdtClUnitConnectionDialog::setConnectionFromFreeArticleConnection()
   }
   // Setup model to show available article connections
   sql = unit.sqlForFreeArticleConnectionSelection(pvBaseArticleId, unitId);
+  /**
   model.setQuery(sql, pvDatabase);
   sqlError = model.lastError();
   if(sqlError.isValid()){
     lbContactName->setText("<Error!>");
     return;
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage("Please select article connection to use.");
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_FK", true);
   selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
@@ -294,8 +298,8 @@ void mdtClUnitConnectionDialog::setConnectionFromFreeArticleConnection()
 void mdtClUnitConnectionDialog::setConnectionFromArticleConnectorConnection(const QVariant & articleConnectorId)
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   mdtClUnit unit(this, pvDatabase);
   QString sql;
   QVariant unitId;
@@ -306,15 +310,18 @@ void mdtClUnitConnectionDialog::setConnectionFromArticleConnectorConnection(cons
   }
   // Setup model to show available article connections
   sql = unit.sqlForArticleConnectionLinkedToArticleConnectorSelection(articleConnectorId, unitId);
+  /**
   model.setQuery(sql, pvDatabase);
   sqlError = model.lastError();
   if(sqlError.isValid()){
     lbContactName->setText("<Error!>");
     return;
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage("Please select article connection to use.");
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_FK", true);
   selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
@@ -341,8 +348,8 @@ void mdtClUnitConnectionDialog::setConnectionFromArticleConnectorConnection(cons
 void mdtClUnitConnectionDialog::setConnectionFromConnectorContact(const QVariant & connectorId)
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   mdtClUnit unit(this, pvDatabase);
   QString sql;
 
@@ -351,15 +358,18 @@ void mdtClUnitConnectionDialog::setConnectionFromConnectorContact(const QVariant
   }
   // Setup model to show available connector contacts
   sql = unit.sqlForConnectorContactSelection(connectorId);
+  /**
   model.setQuery(sql, pvDatabase);
   sqlError = model.lastError();
   if(sqlError.isValid()){
     lbContactName->setText("<Error!>");
     return;
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage("Please select contact to use.");
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("Connector_Id_FK", true);
   selectionDialog.setHeaderData("Name", tr("Contact"));

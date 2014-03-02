@@ -52,15 +52,16 @@ mdtTtTestNodeEditor::mdtTtTestNodeEditor(QObject *parent, QSqlDatabase db)
 void mdtTtTestNodeEditor::setBaseVehicleType()
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlQueryModel model;
+  ///QSqlQueryModel model;
   QString sql;
   QVariant vehicleTypeId;
 
   // Setup vehicle type selection dialog and show it to user
   sql = "SELECT * FROM VehicleType_tbl;";
-  model.setQuery(sql, database());
+  ///model.setQuery(sql, database());
   selectionDialog.setMessage("Please select vehicle type.");
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   ///selectionDialog.setColumnHidden("Id_PK", true);
   ///selectionDialog.setHeaderData("SubType", tr("Variant"));
   ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
@@ -243,13 +244,14 @@ void mdtTtTestNodeEditor::removeUnits()
 QVariant mdtTtTestNodeEditor::selectTestNodeUnitType()
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
   QString msg;
 
   // Setup model
   sql = "SELECT * FROM TestNodeUnitType_tbl";
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -260,10 +262,12 @@ QVariant mdtTtTestNodeEditor::selectTestNodeUnitType()
     displayLastError();
     return QVariant();
   }
+  */
   // Setup and show dialog
   msg = tr("Select the type for units that will be linked.");
   selectionDialog.setMessage(msg);
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   ///selectionDialog.setColumnHidden("", true);
   ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
   selectionDialog.addSelectionResultColumn("Code_PK");
@@ -282,13 +286,14 @@ QVariant mdtTtTestNodeEditor::selectUnitToUseAsTestNode(const QVariant & vehicle
 
   mdtTtTestNode tn(this, database());
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
   QString msg;
 
   // Setup model
   sql = tn.sqlForUnitSelection(vehicleTypeId);
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -299,10 +304,12 @@ QVariant mdtTtTestNodeEditor::selectUnitToUseAsTestNode(const QVariant & vehicle
     displayLastError();
     return QVariant();
   }
+  */
   // Setup and show dialog
   msg = tr("Select a unit that is in group of those to use.");
   selectionDialog.setMessage(msg);
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   ///selectionDialog.setColumnHidden("", true);
   ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
   selectionDialog.addSelectionResultColumn("Unit_Id");
@@ -319,13 +326,14 @@ QVariant mdtTtTestNodeEditor::selectUnitConnection(const QVariant & unitId)
 {
   mdtTtTestNode tn(this, database());
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
   QString msg;
 
   // Setup model
   sql = tn.sqlForUnitConnectionSelection(unitId);
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -336,10 +344,12 @@ QVariant mdtTtTestNodeEditor::selectUnitConnection(const QVariant & unitId)
     displayLastError();
     return QVariant();
   }
+  */
   // Setup and show dialog
   msg = tr("Select a connection that is linked to a bus.");
   selectionDialog.setMessage(msg);
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   ///selectionDialog.setColumnHidden("", true);
   ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
   selectionDialog.addSelectionResultColumn("UnitConnection_Id");
@@ -356,8 +366,8 @@ QList<QVariant> mdtTtTestNodeEditor::selectUnitIdList(const QList<QVariant> & un
 {
   mdtTtTestNode tn(this, database());
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
   QString msg;
   QModelIndexList selectedItems;
@@ -366,6 +376,7 @@ QList<QVariant> mdtTtTestNodeEditor::selectUnitIdList(const QList<QVariant> & un
 
   // Setup model
   sql = tn.sqlForUnitSelectionByUnitIdList(unitIdList);
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -376,10 +387,12 @@ QList<QVariant> mdtTtTestNodeEditor::selectUnitIdList(const QList<QVariant> & un
     displayLastError();
     return selectedUnitIdList;
   }
+  */
   // Setup and show dialog
   msg = tr("Select units to use.");
   selectionDialog.setMessage(msg);
-  selectionDialog.setModel(&model, true);
+  ///selectionDialog.setModel(&model, true);
+  selectionDialog.setQuery(sql, database(), true);
   ///selectionDialog.setColumnHidden("", true);
   ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
   selectionDialog.addSelectionResultColumn("Unit_Id");

@@ -83,16 +83,17 @@ const QVariant mdtClArticleComponentDialog::qtyUnit() const
 void mdtClArticleComponentDialog::selectComponent()
 {
   mdtSqlSelectionDialog dialog(this);
-  QSqlQueryModel articleModel;
+  ///QSqlQueryModel articleModel;
   mdtClArticle art(this, pvDatabase);
-  QModelIndex index;
+  ///QModelIndex index;
   QVariant data;
-  int row;
+  ///int row;
 
   // Setup and show dialog
-  articleModel.setQuery(art.sqlForArticleComponentSelection(pvArticleId), pvDatabase);
+  ///articleModel.setQuery(art.sqlForArticleComponentSelection(pvArticleId), pvDatabase);
   dialog.setMessage(tr("Please select a article"));
-  dialog.setModel(&articleModel, false);
+  ///dialog.setModel(&articleModel, false);
+  dialog.setQuery(art.sqlForArticleComponentSelection(pvArticleId), pvDatabase, false);
   /**
   dialog.setColumnHidden("Id_PK", true);
   dialog.setHeaderData("ArticleConnectorName", "Connector");
@@ -101,28 +102,34 @@ void mdtClArticleComponentDialog::selectComponent()
   dialog.setHeaderData("FunctionEN", "Function");
   */
   dialog.addSelectionResultColumn("Id_PK");
+  dialog.addSelectionResultColumn("ArticleCode");
+  dialog.addSelectionResultColumn("DesignationEN");
+  dialog.addSelectionResultColumn("Unit");
   dialog.resize(600, 400);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Store result
-  Q_ASSERT(dialog.selectionResult().size() == 1);
+  Q_ASSERT(dialog.selectionResult().size() == 4);
   pvComponentId = dialog.selectionResult().at(0);
   // Update GUI
-  row = dialog.selectionResults().at(0).row();
+  ///row = dialog.selectionResults().at(0).row();
   // Article code
-  index = articleModel.index(row, 1);
-  data = articleModel.data(index);
+  ///index = articleModel.index(row, 1);
+  ///data = articleModel.data(index);
+  data = dialog.selectionResult().at(1);
   lbArticleCode->setText(data.toString());
   // Article designation EN
-  index = articleModel.index(row, 3);
-  data = articleModel.data(index);
+  ///index = articleModel.index(row, 3);
+  ///data = articleModel.data(index);
+  data = dialog.selectionResult().at(2);
   lbArticleDesignationEN->setText(data.toString());
   // Qty
   sbQty->setValue(1.0);
   // Qty unit
-  index = articleModel.index(row, 2);
-  data = articleModel.data(index);
+  ///index = articleModel.index(row, 2);
+  ///data = articleModel.data(index);
+  data = dialog.selectionResult().at(3);
   lbUnit->setText(data.toString());
 }
 

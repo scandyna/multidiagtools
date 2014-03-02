@@ -234,12 +234,13 @@ void mdtTtTestModelEditor::removeTestNodeUnitSetup()
 QVariant mdtTtTestModelEditor::selectTestCable()
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
 
   // Setup model
   sql = "SELECT * FROM TestCable_tbl";
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -250,9 +251,11 @@ QVariant mdtTtTestModelEditor::selectTestCable()
     displayLastError();
     return QVariant();
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage(tr("Please select test cable to use."));
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Id_PK", true);
   ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
   selectionDialog.addSelectionResultColumn("Id_PK");
@@ -268,12 +271,13 @@ QVariant mdtTtTestModelEditor::selectTestCable()
 QVariant mdtTtTestModelEditor::selectTestLink(const QVariant & cableId, const QString & bus)
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
-  QSqlQueryModel model;
+  ///QSqlError sqlError;
+  ///QSqlQueryModel model;
   QString sql;
 
   // Setup model
   sql = "SELECT * FROM TestLink_view WHERE TestCable_Id_FK = " + cableId.toString() + " AND Bus = '" + bus + "'";
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -284,9 +288,11 @@ QVariant mdtTtTestModelEditor::selectTestLink(const QVariant & cableId, const QS
     displayLastError();
     return QVariant();
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage(tr("Please select link for bus '") + bus + tr("'"));
-  selectionDialog.setModel(&model, false);
+  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("TestConnection_Id_FK", true);
   selectionDialog.setColumnHidden("DutConnection_Id_FK", true);

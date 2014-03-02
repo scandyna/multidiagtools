@@ -532,9 +532,7 @@ QVariant mdtClArticleEditor::currentArticleId()
 QVariant mdtClArticleEditor::selectConnector()
 {
   mdtSqlSelectionDialog selectionDialog;
-  QSqlError sqlError;
   QVariant articleId;
-  QSqlQueryModel model;
   QString sql;
 
   // Get current article ID
@@ -544,24 +542,21 @@ QVariant mdtClArticleEditor::selectConnector()
   }
   // Setup model to show available connectors
   sql = "SELECT * FROM Connector_tbl";
-  model.setQuery(sql, database());
-  sqlError = model.lastError();
-  if(sqlError.isValid()){
-    pvLastError.setError(tr("Unable to get connectors list."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticleEditor");
-    pvLastError.commit();
-    displayLastError();
-    return QVariant();
-  }
   // Setup and show dialog
-  selectionDialog.setMessage("Please select a connector.");
-  selectionDialog.setModel(&model, false);
-  ///selectionDialog.setColumnHidden("Id_PK", true);
-  ///selectionDialog.setHeaderData("SubType", tr("Variant"));
-  ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
+  selectionDialog.setMessage("Please select a connector:");
+  selectionDialog.setQuery(sql, database(), true);
+  selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.setHeaderData("ContactQty", tr("Contact\nQty"));
+  selectionDialog.setHeaderData("InsertRotation", tr("Insert\nRotation"));
+  selectionDialog.setHeaderData("ManufacturerConfigCode", tr("Manufacturer\nConfiguration code"));
+  selectionDialog.setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
+  selectionDialog.addColumnToSortOrder("Gender", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("ContactQty", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("ManufacturerConfigCode", Qt::AscendingOrder);
+  selectionDialog.sort();
   selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(500, 300);
+  selectionDialog.resize(700, 300);
+  selectionDialog.setWindowTitle(tr("Connector selection"));
   if(selectionDialog.exec() != QDialog::Accepted){
     return QVariant();
   }
@@ -577,7 +572,7 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QVariant articleId;
-  QSqlQueryModel model;
+  ///QSqlQueryModel model;
   QString sql;
   int i;
 
@@ -587,6 +582,7 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
   // Setup model to show available contacts
   sql = "SELECT * FROM ConnectorContact_tbl ";
   sql += "WHERE Connector_Id_FK = " + connectorId.toString();
+  /**
   model.setQuery(sql, database());
   sqlError = model.lastError();
   if(sqlError.isValid()){
@@ -597,9 +593,11 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
     displayLastError();
     return contactIds;
   }
+  */
   // Setup and show dialog
   selectionDialog.setMessage("Please select contacts.");
-  selectionDialog.setModel(&model, true);
+  ///selectionDialog.setModel(&model, true);
+  selectionDialog.setQuery(sql, database(), true);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("Connector_Id_FK", true);
   ///selectionDialog.setHeaderData("", tr(""));
