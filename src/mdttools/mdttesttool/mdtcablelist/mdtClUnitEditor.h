@@ -94,6 +94,10 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   void addConnection();
 
+  /*! \brief Add connections based on article connections
+   */
+  void addArticleConnectionsBasedConnections();
+
   /*! \brief Edit a connection
    */
   void editConnection();
@@ -149,6 +153,10 @@ class mdtClUnitEditor : public mdtSqlForm
   /*! \brief Select article connections related to given article connector ID
    */
   QList<QVariant> selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection = true);
+
+  /*! \brief Select article connections related to given article ID
+   */
+  QList<QVariant> selectByArticleIdArticleConnectionIdList(const QVariant & articleId, const QVariant & unitId, bool multiSelection = true);
 
   /*! \brief Setup Unit table and widget
    */

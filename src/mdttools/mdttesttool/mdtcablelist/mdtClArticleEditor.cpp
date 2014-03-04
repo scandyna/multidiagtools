@@ -392,12 +392,8 @@ void mdtClArticleEditor::addLink()
   }
   // Add link
   if(!art.addLink(dialog.linkData())){
-    QMessageBox msgBox;
-    msgBox.setText(tr("Link insertion failed"));
-    msgBox.setInformativeText(tr("Please see details for more informations"));
-    msgBox.setDetailedText(art.lastError().text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = art.lastError();
+    displayLastError();
     return;
   }
   // Update link table
@@ -437,12 +433,8 @@ void mdtClArticleEditor::editLink()
   }
   // Edit link
   if(!art.editLink(articleConnectionStartId, articleConnectionEndId, dialog.linkData())){
-    QMessageBox msgBox;
-    msgBox.setText(tr("Link insertion failed"));
-    msgBox.setInformativeText(tr("Please see details for more informations"));
-    msgBox.setDetailedText(art.lastError().text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = art.lastError();
+    displayLastError();
     return;
   }
   // Update link table
@@ -479,13 +471,8 @@ void mdtClArticleEditor::removeLinks()
   }
   // Delete seleced rows
   if(!art.removeLinks(indexes)){
-    ///sqlError = art.lastError();
-    QMessageBox msgBox;
-    msgBox.setText(tr("Links removing failed."));
-    ///msgBox.setInformativeText(tr("Please check if connect"));
-    msgBox.setDetailedText(art.lastError().text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    pvLastError = art.lastError();
+    displayLastError();
     return;
   }
   // Update link table
@@ -544,7 +531,7 @@ QVariant mdtClArticleEditor::selectConnector()
   sql = "SELECT * FROM Connector_tbl";
   // Setup and show dialog
   selectionDialog.setMessage("Please select a connector:");
-  selectionDialog.setQuery(sql, database(), true);
+  selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setHeaderData("ContactQty", tr("Contact\nQty"));
   selectionDialog.setHeaderData("InsertRotation", tr("Insert\nRotation"));
@@ -572,7 +559,6 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
   mdtSqlSelectionDialog selectionDialog;
   QSqlError sqlError;
   QVariant articleId;
-  ///QSqlQueryModel model;
   QString sql;
   int i;
 
@@ -582,25 +568,13 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
   // Setup model to show available contacts
   sql = "SELECT * FROM ConnectorContact_tbl ";
   sql += "WHERE Connector_Id_FK = " + connectorId.toString();
-  /**
-  model.setQuery(sql, database());
-  sqlError = model.lastError();
-  if(sqlError.isValid()){
-    pvLastError.setError(tr("Unable to get contacts list."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
-    pvLastError.commit();
-    displayLastError();
-    return contactIds;
-  }
-  */
   // Setup and show dialog
-  selectionDialog.setMessage("Please select contacts.");
-  ///selectionDialog.setModel(&model, true);
+  selectionDialog.setMessage("Please select contacts:");
   selectionDialog.setQuery(sql, database(), true);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("Connector_Id_FK", true);
-  ///selectionDialog.setHeaderData("", tr(""));
+  selectionDialog.addColumnToSortOrder("Name", Qt::AscendingOrder);
+  selectionDialog.sort();
   selectionDialog.addSelectionResultColumn("Id_PK");
   selectionDialog.resize(500, 300);
   if(selectionDialog.exec() != QDialog::Accepted){

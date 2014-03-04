@@ -65,14 +65,6 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    */
   void setAllowEmptyResult(bool allow);
 
-  /*! \brief Set model that contain data to display
-   *
-   * \pre model must be a valid pointer.
-   * 
-   * \todo Obselete.
-   */
-  ///void setModel(QSqlQueryModel *model, bool allowMultiSelection = false);
-
   /*! \brief Set SQL query to display data
    */
   void setQuery(const QString & sql, QSqlDatabase db, bool allowMultiSelection = false);
@@ -235,8 +227,6 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
 
   Q_DISABLE_COPY(mdtSqlSelectionDialog);
 
-  ///QLabel *pvMessageLabel;
-  ///QTableView *pvTableView;
   QSqlQueryModel *pvModel;
   mdtSortFilterProxyModel *pvProxyModel;
   QList<int> pvSelectionResultColumns;

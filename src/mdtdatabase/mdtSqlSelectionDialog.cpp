@@ -23,23 +23,18 @@
 #include "mdtError.h"
 #include <QSqlQueryModel>
 #include <QSqlField>
-///#include <QTableView>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QSqlRecord>
 #include <QItemSelectionModel>
-///#include <QLabel>
 #include <QMessageBox>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlSelectionDialog::mdtSqlSelectionDialog(QWidget *parent)
  : QDialog(parent)
 {
-  ///QVBoxLayout *layout;
-  ///QDialogButtonBox *buttonBox;
-
   setupUi(this);
   // Set defaults
   pvAllowEmptyResult = false;
@@ -50,36 +45,6 @@ mdtSqlSelectionDialog::mdtSqlSelectionDialog(QWidget *parent)
   // Setup view
   pvTableView->setModel(pvProxyModel);
   pvTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-
-  ///layout = new QVBoxLayout;
-
-  // Setup message label
-  /**
-  pvMessageLabel = new QLabel;
-  layout->addWidget(pvMessageLabel);
-  // 
-  // Setup table view
-  pvTableView = new QTableView;
-  pvTableView->setSortingEnabled(true);
-  pvTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-  pvTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-  layout->addWidget(pvTableView);
-  // Setup buttons
-  buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-  Q_ASSERT(buttonBox->button(QDialogButtonBox::Ok) != 0);
-  connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()), this, SLOT(accept()));
-  Q_ASSERT(buttonBox->button(QDialogButtonBox::Cancel) != 0);
-  connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()), this, SLOT(reject()));
-  layout->addWidget(buttonBox);
-  setLayout(layout);
-  */
-  
-  /**
-  Q_ASSERT(buttonBox->button(QDialogButtonBox::Ok) != 0);
-  connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()), this, SLOT(accept()));
-  Q_ASSERT(buttonBox->button(QDialogButtonBox::Cancel) != 0);
-  connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()), this, SLOT(reject()));
-  */
 }
 
 mdtSqlSelectionDialog::~mdtSqlSelectionDialog()
@@ -95,23 +60,6 @@ void mdtSqlSelectionDialog::setAllowEmptyResult(bool allow)
 {
   pvAllowEmptyResult = allow;
 }
-
-/**
-void mdtSqlSelectionDialog::setModel(QSqlQueryModel *model, bool allowMultiSelection)
-{
-  Q_ASSERT(model != 0);
-
-  pvModel = model;
-  pvTableView->setModel(model);
-  pvTableView->resizeColumnsToContents();
-  pvTableView->resizeRowsToContents();
-  if(allowMultiSelection){
-    pvTableView->setSelectionMode(QAbstractItemView::MultiSelection);
-  }else{
-    pvTableView->setSelectionMode(QAbstractItemView::SingleSelection);
-  }
-}
-*/
 
 void mdtSqlSelectionDialog::setQuery(const QString& sql, QSqlDatabase db, bool allowMultiSelection)
 {
@@ -202,6 +150,7 @@ void mdtSqlSelectionDialog::sort()
 void mdtSqlSelectionDialog::selectRows(const QString &fieldName, const QVariant &matchData)
 {
   Q_ASSERT(pvModel != 0);
+  Q_ASSERT(pvProxyModel != 0);
 
   int row, column;
   QModelIndex index;
@@ -210,9 +159,9 @@ void mdtSqlSelectionDialog::selectRows(const QString &fieldName, const QVariant 
   if(column < 0){
     return;
   }
-  for(row = 0; row < pvModel->rowCount(); ++row){
-    index = pvModel->index(row, column);
-    if(pvModel->data(index) == matchData){
+  for(row = 0; row < pvProxyModel->rowCount(); ++row){
+    index = pvProxyModel->index(row, column);
+    if(pvProxyModel->data(index) == matchData){
       pvTableView->selectRow(row);
     }
   }
@@ -241,7 +190,7 @@ void mdtSqlSelectionDialog::addSelectionResultColumn(const QString &field)
 
   column = pvModel->record().indexOf(field);
   if(column < 0){
-    mdtError e(MDT_DATABASE_ERROR, "Field '" + field + "' not found", mdtError::Error);
+    mdtError e(tr("Field") + " '" + field + "' " + tr("not found"), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSqlSelectionDialog");
     e.commit();
     return;
@@ -350,13 +299,11 @@ QVariant mdtSqlSelectionDialog::selectedData(int row, const QString &fieldName)
 
 void mdtSqlSelectionDialog::reject()
 {
-  qDebug() << "SLOT Reject..";
   QDialog::reject();
 }
 
 void mdtSqlSelectionDialog::accept()
 {
-  qDebug() << "SLOT accept..";
   buildSelectionResults();
   if((pvSelectionResults.isEmpty())&&(!pvAllowEmptyResult)){
     return;
@@ -367,6 +314,7 @@ void mdtSqlSelectionDialog::accept()
 void mdtSqlSelectionDialog::buildSelectionResults()
 {
   Q_ASSERT(pvModel != 0);
+  Q_ASSERT(pvProxyModel != 0);
   Q_ASSERT(pvTableView->selectionModel() != 0);
 
   int i;
@@ -376,8 +324,8 @@ void mdtSqlSelectionDialog::buildSelectionResults()
   pvSelectionResults.clear();
   selectedIndexes = pvTableView->selectionModel()->selectedIndexes();
   for(i = 0; i < selectedIndexes.size(); ++i){
-    // If
-    index = pvModel->index(selectedIndexes.at(i).row(), selectedIndexes.at(i).column());
+    index = pvProxyModel->index(selectedIndexes.at(i).row(), selectedIndexes.at(i).column());
+    index = pvProxyModel->mapToSource(index);
     if((index.isValid()) && (pvSelectionResultColumns.contains(index.column()))){
       pvSelectionResults.append(index);
     }
@@ -389,7 +337,7 @@ void mdtSqlSelectionDialog::displaySqlError(const QSqlError & sqlError)
   QMessageBox msgBox;
 
   // Log error
-  mdtError e(tr("Unable to get contacts list."), mdtError::Error);
+  mdtError e(tr("Unable to get data for given SQL query."), mdtError::Error);
   e.setSystemError(sqlError.number(), sqlError.text());
   MDT_ERROR_SET_SRC(e, "mdtClArticle");
   e.commit();

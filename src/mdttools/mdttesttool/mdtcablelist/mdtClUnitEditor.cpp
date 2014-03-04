@@ -565,6 +565,54 @@ void mdtClUnitEditor::addConnection()
   select("UnitLink_view");
 }
 
+void mdtClUnitEditor::addArticleConnectionsBasedConnections()
+{
+  mdtClUnit unit(this, database());
+  mdtClUnitConnectionData data;
+  QVariant unitId;
+  QVariant articleId;
+  QList<QVariant> articleConnectionIdList;
+  QList<mdtClUnitConnectionData> unitConnectionDataList;
+  bool ok;
+
+  unitId = currentUnitId();
+  if(unitId.isNull()){
+    return;
+  }
+  articleId = currentData("Unit_tbl", "Article_Id_FK");
+  if(articleId.isNull()){
+    return;
+  }
+  // Setup unit connection data
+  if(!data.setup(database(), true)){
+    pvLastError = data.lastError();
+    displayLastError();
+    return;
+  }
+  data.setValue("Unit_Id_FK", unitId);
+  // Let user select article connections
+  articleConnectionIdList = selectByArticleIdArticleConnectionIdList(articleId, unitId, true);
+  if(articleConnectionIdList.isEmpty()){
+    return;
+  }
+  // Get unit connection data
+  unitConnectionDataList = unit.getUnitConnectionDataListFromArticleConnectionIdList(unitId, QVariant(), articleConnectionIdList, true, &ok);
+  if(!ok){
+    pvLastError = unit.lastError();
+    displayLastError();
+    return;
+  }
+  // Add connections
+  if(!unit.addConnections(unitConnectionDataList)){
+    pvLastError = data.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("UnitConnection_view");
+  select("UnitLink_view");
+}
+
 void mdtClUnitEditor::editConnection()
 {
   mdtSqlTableWidget *widget;
@@ -957,7 +1005,7 @@ QList<QVariant> mdtClUnitEditor::selectByArticleConnectorIdArticleConnectionIdLi
   if((articleConnectorId.isNull())||(unitId.isNull())){
     return idList;
   }
-  // Setup model to show available article connections
+  // Setup and show dialog
   sql = unit.sqlForArticleConnectionLinkedToArticleConnectorSelection(articleConnectorId, unitId);
   /**
   model.setQuery(sql, database());
@@ -968,9 +1016,43 @@ QList<QVariant> mdtClUnitEditor::selectByArticleConnectorIdArticleConnectionIdLi
     return idList;
   }
   */
-  // Setup and show dialog
   selectionDialog.setMessage("Please select article connections to use.");
   ///selectionDialog.setModel(&model, multiSelection);
+  selectionDialog.setQuery(sql, database(), multiSelection);
+  selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.setColumnHidden("Article_Id_FK", true);
+  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
+  selectionDialog.setHeaderData("ArticleContactName", tr("Contact"));
+  selectionDialog.setHeaderData("IoType", tr("I/O type"));
+  selectionDialog.setHeaderData("FunctionEN", tr("Function\n(English)"));
+  selectionDialog.setHeaderData("FunctionFR", tr("Function\n(French)"));
+  selectionDialog.setHeaderData("FunctionDE", tr("Function\n(German)"));
+  selectionDialog.setHeaderData("FunctionIT", tr("Function\n(Italian)"));
+  selectionDialog.addSelectionResultColumn("Id_PK");
+  selectionDialog.resize(700, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return idList;
+  }
+  selectedItems = selectionDialog.selectionResults();
+  for(i = 0; i < selectedItems.size(); ++i){
+    idList.append(selectedItems.at(i).data());
+  }
+
+  return idList;
+}
+
+QList<QVariant> mdtClUnitEditor::selectByArticleIdArticleConnectionIdList(const QVariant & articleId, const QVariant & unitId, bool multiSelection)
+{
+  mdtSqlSelectionDialog selectionDialog;
+  mdtClUnit unit(this, database());
+  QString sql;
+  QModelIndexList selectedItems;
+  QList<QVariant> idList;
+  int i;
+
+  // Setup and show dialog
+  sql = unit.sqlForArticleConnectionLinkedToArticleSelection(articleId, unitId);
+  selectionDialog.setMessage("Please select article connections to use:");
   selectionDialog.setQuery(sql, database(), multiSelection);
   selectionDialog.setColumnHidden("Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_FK", true);
@@ -1129,7 +1211,7 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddConnection;
-  ///QPushButton *pbAddArticleConnectionBasedConnection;
+  QPushButton *pbAddArticleConnectionBasedConnection;
   QPushButton *pbEditConnection;
   QPushButton *pbRemoveConnection;
 
@@ -1143,23 +1225,22 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   Q_ASSERT(widget != 0);
   // Add the Add and remove buttons
   pbAddConnection = new QPushButton(tr("Add connection ..."));
-  ///pbAddArticleConnectionBasedConnection = new QPushButton(tr("Add art. connection ..."));
+  pbAddArticleConnectionBasedConnection = new QPushButton(tr("Add art. connection ..."));
   pbEditConnection = new QPushButton(tr("Edit connection ..."));
   pbRemoveConnection = new QPushButton(tr("Remove connections"));
-  ///connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
   connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
-  ///connect(pbAddArticleConnectionBasedConnection, SIGNAL(clicked()), this, SLOT(addArticleConnectionBasedConnection()));
+  connect(pbAddArticleConnectionBasedConnection, SIGNAL(clicked()), this, SLOT(addArticleConnectionsBasedConnections()));
   connect(pbEditConnection, SIGNAL(clicked()), this, SLOT(editConnection()));
   connect(pbRemoveConnection, SIGNAL(clicked()), this, SLOT(removeConnections()));
   widget->addWidgetToLocalBar(pbAddConnection);
-  ///widget->addWidgetToLocalBar(pbAddArticleConnectionBasedConnection);
+  widget->addWidgetToLocalBar(pbAddArticleConnectionBasedConnection);
   widget->addWidgetToLocalBar(pbEditConnection);
   widget->addWidgetToLocalBar(pbRemoveConnection);
   widget->addStretchToLocalBar();
   // Hide relation fields and PK
-  ///widget->setColumnHidden("UnitConnection_Id_PK", true);
+  widget->setColumnHidden("UnitConnection_Id_PK", true);
   widget->setColumnHidden("Unit_Id_FK", true);
-  ///widget->setColumnHidden("ArticleConnection_Id_FK", true);
+  widget->setColumnHidden("ArticleConnection_Id_FK", true);
   // Give fields a user friendly name
   widget->setHeaderData("SchemaPage", tr("Schema\npage"));
   widget->setHeaderData("UnitFunctionEN", tr("Unit\nfunction\n(English)"));

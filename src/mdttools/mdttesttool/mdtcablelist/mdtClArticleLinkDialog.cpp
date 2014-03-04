@@ -188,8 +188,7 @@ void mdtClArticleLinkDialog::selectStartConnection()
   mdtSqlSelectionDialog dialog(this);
 
   // Setup and show dialog
-  dialog.setMessage(tr("Please select the start connection"));
-  ///dialog.setModel(pvArticleConnectionModel, false);
+  dialog.setMessage(tr("Please select start connection:"));
   dialog.setQuery(pvArticleConnectionModel->query().lastQuery(), pvDatabase, false);
   dialog.setColumnHidden("Id_PK", true);
   dialog.setHeaderData("ArticleConnectorName", "Connector");
@@ -199,8 +198,12 @@ void mdtClArticleLinkDialog::selectStartConnection()
   dialog.setHeaderData("FunctionFR", "Function\n(French)");
   dialog.setHeaderData("FunctionDE", "Function\n(German)");
   dialog.setHeaderData("FunctionIT", "Function\n(Italian)");
+  dialog.addColumnToSortOrder("ArticleConnectorName", Qt::AscendingOrder);
+  dialog.addColumnToSortOrder("ArticleContactName", Qt::AscendingOrder);
+  dialog.sort();
   dialog.addSelectionResultColumn("Id_PK");
-  dialog.resize(800, 400);
+  dialog.resize(700, 400);
+  dialog.setWindowTitle(tr("Article start connection selection"));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
@@ -216,8 +219,7 @@ void mdtClArticleLinkDialog::selectEndConnection()
   mdtSqlSelectionDialog dialog(this);
 
   // Setup and show dialog
-  dialog.setMessage(tr("Please select the end connection"));
-  ///dialog.setModel(pvArticleConnectionModel, false);
+  dialog.setMessage(tr("Please select end connection:"));
   dialog.setQuery(pvArticleConnectionModel->query().lastQuery(), pvDatabase, false);
   dialog.setColumnHidden("Id_PK", true);
   dialog.setHeaderData("ArticleConnectorName", "Connector");
@@ -227,8 +229,12 @@ void mdtClArticleLinkDialog::selectEndConnection()
   dialog.setHeaderData("FunctionFR", "Function\n(French)");
   dialog.setHeaderData("FunctionDE", "Function\n(German)");
   dialog.setHeaderData("FunctionIT", "Function\n(Italian)");
+  dialog.addColumnToSortOrder("ArticleConnectorName", Qt::AscendingOrder);
+  dialog.addColumnToSortOrder("ArticleContactName", Qt::AscendingOrder);
+  dialog.sort();
   dialog.addSelectionResultColumn("Id_PK");
-  dialog.resize(800, 400);
+  dialog.resize(700, 400);
+  dialog.setWindowTitle(tr("Article end connection selection"));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }

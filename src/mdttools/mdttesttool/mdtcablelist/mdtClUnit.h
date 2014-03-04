@@ -83,6 +83,13 @@ class mdtClUnit : public mdtTtBase
    */
   QString sqlForArticleConnectionLinkedToArticleConnectorSelection(const QVariant & articleConnectorId, const QVariant & unitId) const;
 
+  /*! \brief Get SQL statement for article connection selection
+   *
+   * List all article connections for a given article ID,
+   *  and that are not used by a given unit ID .
+   */
+  QString sqlForArticleConnectionLinkedToArticleSelection(const QVariant & articleId, const QVariant & unitId) const;
+
   /*! \brief Get unit connection data for given unit connection ID
    *
    * If given unit connection is based on a article connection,
@@ -137,10 +144,20 @@ class mdtClUnit : public mdtTtBase
    */
   bool addArticleConnectorData(mdtClUnitConnectorData & data, const QVariant & articleConnectorId, bool copyConnectorName);
 
+  /*! \brief Get a list of unit connections based on article connection ID list
+   *
+   * Will also set some values to newly created unit connections (UnitConnection_tbl):
+   *  - Unit_Id_FK : will be copied from given unitId
+   *  - UnitConnector_Id_FK : will be copied from given unitConnectorId (can also be Null if unit connection is free, i.e. not based on a unit connector)
+   *  - ArticleConnection_Id_FK : will be copied from articleConnectionIdList
+   *  - UnitContactName : if copyContactName is true, it will be copied from article connection data
+   */
+  QList<mdtClUnitConnectionData> getUnitConnectionDataListFromArticleConnectionIdList(const QVariant & unitId, const QVariant & unitConnectorId, const QList<QVariant> & articleConnectionIdList, bool copyContactName, bool *ok);
+
   /*! \brief Add unit connections into unit connector data based on given article connection ID list
    * \todo What is better ? 2 methods ?? Should coherence between article connection and article connector be done ? Or let addConnector() do it ?
    *
-   * Will also set some values to newly created article connections (ArticleConnection_tbl):
+   * Will also set some values to newly created unit connections (UnitConnection_tbl):
    *  - Unit_Id_FK : will be copied from unit connector data
    *  - UnitConnector_Id_FK : will be copied from unit connector data
    *  - ArticleConnection_Id_FK : will be copied from articleConnectionIdList
@@ -207,6 +224,10 @@ class mdtClUnit : public mdtTtBase
   /*! \brief Add unit connection
    */
   bool addConnection(const mdtClUnitConnectionData & data, bool singleTransaction = true);
+
+  /*! \brief Add unit connections
+   */
+  bool addConnections(const QList<mdtClUnitConnectionData> & dataList, bool singleTransaction = true);
 
   /*! \brief Edit a unit connection
    *

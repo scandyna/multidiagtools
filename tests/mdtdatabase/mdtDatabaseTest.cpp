@@ -285,7 +285,6 @@ void mdtDatabaseTest::sqlRecordTest()
 void mdtDatabaseTest::sqlSelectionDialogTest()
 {
   mdtSqlSelectionDialog *dialog;
-  ///QSqlQueryModel model;
   QSqlQuery q;
   QString sql;
   QModelIndex index;
@@ -304,10 +303,7 @@ void mdtDatabaseTest::sqlSelectionDialogTest()
    * Check single selection with 1 field, at column 0
    */
   sql = "SELECT * FROM somedata";
-  ///model.setQuery(sql);
-  ///QVERIFY(!model.lastError().isValid());
   dialog = new mdtSqlSelectionDialog;
-  ///dialog->setModel(&model);
   dialog->setQuery(sql, QSqlDatabase());
   dialog->addSelectionResultColumn("id_PK");
   dialog->selectRows("name", "Andy");
@@ -315,15 +311,54 @@ void mdtDatabaseTest::sqlSelectionDialogTest()
   QVERIFY(dialog->exec() == QDialog::Accepted);
   QCOMPARE(dialog->selectionResult().size(), 1);
   QCOMPARE(dialog->selectionResult().at(0), QVariant(1));
+  QCOMPARE(dialog->selectedDataRecord().value("id_PK"), QVariant(1));
+  QCOMPARE(dialog->selectionResults().size(), 1);
+  QCOMPARE(dialog->selectionResults().at(0).data(), QVariant(1));
+  QCOMPARE(dialog->selectedData(0, "id_PK"), QVariant(1));
+  delete dialog;
+  /*
+   * Check single selection with 1 field, at column 0 + sorting ASC
+   */
+  sql = "SELECT * FROM somedata";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, QSqlDatabase());
+  dialog->addColumnToSortOrder("name", Qt::AscendingOrder);
+  dialog->sort();
+  dialog->addSelectionResultColumn("id_PK");
+  dialog->selectRows("name", "Andy");
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  QCOMPARE(dialog->selectionResult().size(), 1);
+  QCOMPARE(dialog->selectionResult().at(0), QVariant(1));
+  QCOMPARE(dialog->selectedDataRecord().value("id_PK"), QVariant(1));
+  QCOMPARE(dialog->selectionResults().size(), 1);
+  QCOMPARE(dialog->selectionResults().at(0).data(), QVariant(1));
+  QCOMPARE(dialog->selectedData(0, "id_PK"), QVariant(1));
+  delete dialog;
+  /*
+   * Check single selection with 1 field, at column 0 + sorting DESC
+   */
+  sql = "SELECT * FROM somedata";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, QSqlDatabase());
+  dialog->addColumnToSortOrder("name", Qt::DescendingOrder);
+  dialog->sort();
+  dialog->addSelectionResultColumn("id_PK");
+  dialog->selectRows("name", "Andy");
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  QCOMPARE(dialog->selectionResult().size(), 1);
+  QCOMPARE(dialog->selectionResult().at(0), QVariant(1));
+  QCOMPARE(dialog->selectedDataRecord().value("id_PK"), QVariant(1));
+  QCOMPARE(dialog->selectionResults().size(), 1);
+  QCOMPARE(dialog->selectionResults().at(0).data(), QVariant(1));
+  QCOMPARE(dialog->selectedData(0, "id_PK"), QVariant(1));
   delete dialog;
   /*
    * Check single selection with 1 field, at column 2
    */
   sql = "SELECT name, remarks, id_PK FROM somedata";
-  ///model.setQuery(sql);
-  ///QVERIFY(!model.lastError().isValid());
   dialog = new mdtSqlSelectionDialog;
-  ///dialog->setModel(&model);
   dialog->setQuery(sql, QSqlDatabase());
   dialog->addSelectionResultColumn("id_PK");
   dialog->selectRows("name", "Andy");
@@ -336,10 +371,7 @@ void mdtDatabaseTest::sqlSelectionDialogTest()
    * Check single selection with 2 fields
    */
   sql = "SELECT * FROM somedata";
-  ///model.setQuery(sql);
-  ///QVERIFY(!model.lastError().isValid());
   dialog = new mdtSqlSelectionDialog;
-  ///dialog->setModel(&model);
   dialog->setQuery(sql, QSqlDatabase());
   dialog->addSelectionResultColumn("id_PK");
   dialog->addSelectionResultColumn("name");
@@ -354,10 +386,7 @@ void mdtDatabaseTest::sqlSelectionDialogTest()
    * Check multiple selection with 1 field
    */
   sql = "SELECT * FROM somedata";
-  ///model.setQuery(sql);
-  ///QVERIFY(!model.lastError().isValid());
   dialog = new mdtSqlSelectionDialog;
-  ///dialog->setModel(&model, true);
   dialog->setQuery(sql, QSqlDatabase(), true);
   dialog->addSelectionResultColumn("id_PK");
   dialog->selectRows("id_PK", 1);
@@ -374,10 +403,7 @@ void mdtDatabaseTest::sqlSelectionDialogTest()
    * Check multiple selection with 2 fields
    */
   sql = "SELECT * FROM somedata";
-  ///model.setQuery(sql);
-  ///QVERIFY(!model.lastError().isValid());
   dialog = new mdtSqlSelectionDialog;
-  ///dialog->setModel(&model, true);
   dialog->setQuery(sql, QSqlDatabase(), true);
   dialog->addSelectionResultColumn("id_PK");
   dialog->addSelectionResultColumn("name");

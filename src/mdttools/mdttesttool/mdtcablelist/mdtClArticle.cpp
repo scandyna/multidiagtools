@@ -40,7 +40,7 @@ QString mdtClArticle::sqlForArticleComponentSelection(const QVariant &articleId)
 {
   QString sql;
 
-  sql =  "SELECT Id_PK, ArticleCode, Unit, DesignationEN "\
+  sql =  "SELECT Id_PK, ArticleCode, Unit, DesignationEN, DesignationFR, DesignationDE, DesignationIT "\
          "FROM Article_tbl "\
          "WHERE ( Id_PK <> " + articleId.toString() + " ) "\
          "AND ( Id_PK NOT IN ( "\
