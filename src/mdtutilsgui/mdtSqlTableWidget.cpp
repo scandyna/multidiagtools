@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -496,7 +496,8 @@ void mdtSqlTableWidget::onModelSelected()
   if(model()->rowCount() > 0){
     index = model()->index(0, pvDefaultColumnToSelect);
     pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
-    qDebug() << "onModelSelected() , selected index: " << index;
+    qDebug() << "mdtSqlTableWidget::onModelSelected() , selected index: " << index;
+    pvTableView->resizeRowsToContents();
   }else{
     onCurrentRowChanged(index, index);
   }

@@ -165,6 +165,10 @@ class mdtClArticle : public mdtTtBase
    */
   bool addConnector(const mdtClArticleConnectorData & data);
 
+  /*! \brief Edit connector name
+   */
+  bool editConnectorName(const QVariant & articleConnectorId, const QVariant & name);
+
   /*! \brief Remove a connector and all its contacts
    */
   bool removeConnector(const QVariant & articleConnectorId);

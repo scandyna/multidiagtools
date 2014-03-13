@@ -465,6 +465,20 @@ bool mdtClArticle::addConnector(const mdtClArticleConnectorData & data)
   return true;
 }
 
+bool mdtClArticle::editConnectorName(const QVariant & articleConnectorId, const QVariant & name)
+{
+  mdtClArticleConnectorData connectorData;
+  bool ok;
+
+  connectorData = getConnectorData(articleConnectorId, &ok, false, false);
+  if(!ok){
+    return false;
+  }
+  connectorData.setValue("Name", name);
+
+  return updateRecord("ArticleConnector_tbl", connectorData, "Id_PK", articleConnectorId);
+}
+
 bool mdtClArticle::removeConnector(const QVariant & articleConnectorId)
 {
   if(!beginTransaction()){

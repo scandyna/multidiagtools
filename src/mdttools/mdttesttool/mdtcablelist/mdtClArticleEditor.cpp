@@ -338,6 +338,41 @@ void mdtClArticleEditor::addConnector()
   select("ArticleConnection_view");
 }
 
+void mdtClArticleEditor::editConnectorName()
+{
+  QVariant articleConnectorId;
+  QVariant connectorName;
+  QString str;
+  QInputDialog dialog;
+  mdtClArticle art(this, database());
+
+  // Get current data
+  articleConnectorId = currentData("ArticleConnector_view", "Id_PK");
+  if(articleConnectorId.isNull()){
+    return;
+  }
+  connectorName = currentData("ArticleConnector_view", "ArticleConnectorName");
+  // Let user set connector name
+  dialog.setLabelText(tr("Connector name:"));
+  dialog.setTextValue(connectorName.toString());
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  str = dialog.textValue().trimmed();
+  if(!str.isEmpty()){
+    connectorName = str;
+  }
+  // Edit connector name
+  if(!art.editConnectorName(articleConnectorId, connectorName)){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("ArticleConnector_view");
+  select("ArticleConnection_view");
+}
+
 void mdtClArticleEditor::removeConnectors()
 {
   mdtSqlTableWidget *widget;
@@ -577,6 +612,7 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
   selectionDialog.sort();
   selectionDialog.addSelectionResultColumn("Id_PK");
   selectionDialog.resize(500, 300);
+  selectionDialog.setWindowTitle(tr("Contacts selection"));
   if(selectionDialog.exec() != QDialog::Accepted){
     return contactIds;
   }
@@ -671,6 +707,7 @@ bool mdtClArticleEditor::setupArticleConnectorTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddConnector;
+  QPushButton *pbEditConnectorName;
   QPushButton *pbRemoveConnectors;
 
   if(!addChildTable("ArticleConnector_view", tr("Connectors"), database())){
@@ -693,6 +730,9 @@ bool mdtClArticleEditor::setupArticleConnectorTable()
   pbAddConnector = new QPushButton(tr("Add connector ..."));
   connect(pbAddConnector, SIGNAL(clicked()), this, SLOT(addConnector()));
   widget->addWidgetToLocalBar(pbAddConnector);
+  pbEditConnectorName = new QPushButton(tr("Edit name"));
+  connect(pbEditConnectorName, SIGNAL(clicked()), this, SLOT(editConnectorName()));
+  widget->addWidgetToLocalBar(pbEditConnectorName);
   pbRemoveConnectors = new QPushButton(tr("Remove connectors"));
   connect(pbRemoveConnectors, SIGNAL(clicked()), this, SLOT(removeConnectors()));
   widget->addWidgetToLocalBar(pbRemoveConnectors);

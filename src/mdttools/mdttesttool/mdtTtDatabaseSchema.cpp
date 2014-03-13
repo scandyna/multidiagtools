@@ -544,7 +544,6 @@ bool mdtTtDatabaseSchema::setupConnectorTable()
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
-  
   // Series
   field = QSqlField();
   field.setName("Series");
@@ -569,8 +568,6 @@ bool mdtTtDatabaseSchema::setupConnectorTable()
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
-
-
   // ManufacturerConfigCode
   field = QSqlField();
   field.setName("ManufacturerConfigCode");
@@ -2261,6 +2258,7 @@ bool mdtTtDatabaseSchema::createUnitComponentView()
         " Unit_tbl.Coordinate ,\n"\
         " Unit_tbl.Cabinet ,\n"\
         " Unit_tbl.SchemaPosition ,\n"\
+        " Unit_tbl.Alias ,\n"\
         " Article_tbl.Id_PK AS Article_Id_PK ,\n"\
         " Article_tbl.ArticleCode ,\n"\
         " Article_tbl.DesignationEN,\n"\

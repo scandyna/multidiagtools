@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>159</height>
+    <width>673</width>
+    <height>206</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -16,6 +22,24 @@
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
     <widget class="QGroupBox" name="gbUnit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="title">
       <string>Unit data</string>
      </property>
@@ -23,7 +47,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="lb_SchemaPosition">
         <property name="text">
-         <string>Schema pos.</string>
+         <string>Vehicle schema pos.</string>
         </property>
        </widget>
       </item>
@@ -41,6 +65,12 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item row="1" column="0">
@@ -51,7 +81,14 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="fld_Alias"/>
+       <widget class="QLineEdit" name="fld_Alias">
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="lb_Cabinet">
@@ -95,6 +132,12 @@
    </item>
    <item>
     <widget class="QGroupBox" name="gbBaseArticle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>2</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
       <string>Base article</string>
      </property>
@@ -144,7 +187,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="lbArticleDesignationEN">
         <property name="text">
-         <string>Designation EN</string>
+         <string>Designation (English)</string>
         </property>
        </widget>
       </item>
@@ -155,21 +198,38 @@
         </property>
        </widget>
       </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="leArticleDesignationFR"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="leArticleDesignationDE"/>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="leArticleDesignationIT"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lbArticleDesignationFR">
+        <property name="text">
+         <string>Designation (Frensh)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lbArticleDesignationDE">
+        <property name="text">
+         <string>Designation (German)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="lbArticleDesignationIT">
+        <property name="text">
+         <string>Designation (Italian)</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>3</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

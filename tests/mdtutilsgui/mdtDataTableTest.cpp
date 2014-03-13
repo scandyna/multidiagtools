@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -1825,12 +1825,17 @@ void mdtDataTableTest::copyTableTest()
   field.setName("Alias");
   field.setType(QVariant::String);
   table.addField(field, false);
+  // Field Insert - Gave problem by copy (bug from 11.03.2013)
+  field = QSqlField();
+  field.setName("Insert");
+  field.setType(QVariant::String);
+  table.addField(field, false);
   fileInfo.setFile(f1);
   dbManager.setDatabase(db1);
   QVERIFY(dbManager.createDatabaseSqlite(fileInfo, mdtSqlDatabaseManager::OverwriteExisting, "source_db"));
   QVERIFY(dbManager.createTable(table, mdtSqlDatabaseManager::OverwriteExisting));
   db1 = dbManager.database();
-  // Create descond database and table
+  // Create sescond database and table
   table.clear();
   table.setTableName(destinationTableName);
   // Field PK
@@ -1849,6 +1854,11 @@ void mdtDataTableTest::copyTableTest()
   field.setName("Alias");
   field.setType(QVariant::String);
   table.addField(field, false);
+  // Field Insert - Gave problem by copy (bug from 11.03.2013)
+  field = QSqlField();
+  field.setName("Insert");
+  field.setType(QVariant::String);
+  table.addField(field, false);
   fileInfo.setFile(f2);
   dbManager.setDatabase(db2);
   QVERIFY(dbManager.createDatabaseSqlite(fileInfo, mdtSqlDatabaseManager::OverwriteExisting, "destination_db"));
@@ -1857,14 +1867,14 @@ void mdtDataTableTest::copyTableTest()
   // Insert data into first database
   QVERIFY(db1.isOpen());
   query = new QSqlQuery(db1);
-  sql = "INSERT INTO '" + sourceTableName + "' (Id_PK, Alias)";
-  sql += " VALUES (1, 'Alias 1')";
+  sql = "INSERT INTO '" + sourceTableName + "' (Id_PK, Alias, `Insert`)";
+  sql += " VALUES (1, 'Alias 1', 'Insert 1')";
   QVERIFY(query->exec(sql));
-  sql = "INSERT INTO '" + sourceTableName + "' (Id_PK, Alias)";
-  sql += " VALUES (2, 'Alias 2')";
+  sql = "INSERT INTO '" + sourceTableName + "' (Id_PK, Alias, `Insert`)";
+  sql += " VALUES (2, 'Alias 2', 'Insert 2')";
   QVERIFY(query->exec(sql));
-  sql = "INSERT INTO '" + sourceTableName + "' (Id_PK, Alias)";
-  sql += " VALUES (3, 'Alias 3')";
+  sql = "INSERT INTO '" + sourceTableName + "' (Id_PK, Alias, `Insert`)";
+  sql += " VALUES (3, 'Alias 3', 'Insert 3')";
   QVERIFY(query->exec(sql));
   delete query;
   // Copy
@@ -1873,23 +1883,26 @@ void mdtDataTableTest::copyTableTest()
   // Check copy
   QVERIFY(db2.isOpen());
   query = new QSqlQuery(db2);
-  sql = "SELECT Id_PK, Name, Alias FROM '" + destinationTableName + "'";
+  sql = "SELECT Id_PK, Name, Alias, `Insert` FROM '" + destinationTableName + "'";
   QVERIFY(query->exec(sql));
   QVERIFY(query->next());
-  QCOMPARE(query->record().count(), 3);
+  QCOMPARE(query->record().count(), 4);
   QCOMPARE(query->record().value("Id_PK"), QVariant(1));
   QCOMPARE(query->record().value("Name"), QVariant(""));
   QCOMPARE(query->record().value("Alias"), QVariant("Alias 1"));
+  QCOMPARE(query->record().value("Insert"), QVariant("Insert 1"));
   QVERIFY(query->next());
-  QCOMPARE(query->record().count(), 3);
+  QCOMPARE(query->record().count(), 4);
   QCOMPARE(query->record().value("Id_PK"), QVariant(2));
   QCOMPARE(query->record().value("Name"), QVariant(""));
   QCOMPARE(query->record().value("Alias"), QVariant("Alias 2"));
+  QCOMPARE(query->record().value("Insert"), QVariant("Insert 2"));
   QVERIFY(query->next());
-  QCOMPARE(query->record().count(), 3);
+  QCOMPARE(query->record().count(), 4);
   QCOMPARE(query->record().value("Id_PK"), QVariant(3));
   QCOMPARE(query->record().value("Name"), QVariant(""));
   QCOMPARE(query->record().value("Alias"), QVariant("Alias 3"));
+  QCOMPARE(query->record().value("Insert"), QVariant("Insert 3"));
   QVERIFY(!query->next());
   delete query;
 }

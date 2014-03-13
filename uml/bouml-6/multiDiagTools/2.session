@@ -3,15 +3,15 @@ cleanlooks_style
 diagrams
   classdiagram_ref 739586 // CableListAllTables
     1123 952 80 17 49 149
-  classdiagram_ref 1059586 // mdtItemsSelectorDialog
-    1027 952 100 4 0 0
+  active  classdiagram_ref 1059586 // mdtItemsSelectorDialog
+    946 952 100 4 0 0
   classdiagram_ref 1066114 // mdtMvColumnSelectionDialog
     1027 952 100 4 0 0
-  active  classdiagram_ref 1066370 // mdtMvSortingSetupDialog
-    946 952 100 4 0 0
+  classdiagram_ref 1066370 // mdtMvSortingSetupDialog
+    690 669 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1936130 // displaySortedColumns
+selected classdiagram_ref 1059586 // mdtItemsSelectorDialog
 open
   operation_ref 1935362 // clearColumnsSortOrder
   operation_ref 1352322 // lessThan

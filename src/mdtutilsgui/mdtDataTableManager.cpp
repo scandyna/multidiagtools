@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -33,6 +33,7 @@
 #include <QProgressDialog>
 #include <QApplication>
 #include <QTextCodec>
+#include <QSqlDriver>
 
 #include <QDebug>
 
@@ -388,6 +389,7 @@ bool mdtDataTableManager::copyTable(const QString & sourceTableName, const QStri
   QString sql;
   QSqlError sqlError;
   QString errorText;
+  QSqlDriver *sourceSqlDriver;
 
   // Build source fields list
   record = sourceDatabase.record(sourceTableName);
@@ -449,10 +451,12 @@ bool mdtDataTableManager::copyTable(const QString & sourceTableName, const QStri
     connect(progress, SIGNAL(canceled()), this, SLOT(setAbortFlag()));
     progress->show();
   }
+  sourceSqlDriver = sourceDatabase.driver();
+  Q_ASSERT(sourceSqlDriver != 0);
   sql = "SELECT ";
   sourceFields = pvFieldMap.mappedSourceFields();
   for(i = 0; i < sourceFields.size(); ++i){
-    sql += sourceFields.at(i).name();
+    sql += sourceSqlDriver->escapeIdentifier(sourceFields.at(i).name(), QSqlDriver::FieldName);
     if(i < (sourceFields.size() - 1)){
       sql += ",";
     }
@@ -460,8 +464,11 @@ bool mdtDataTableManager::copyTable(const QString & sourceTableName, const QStri
   sql += "\n FROM '" + sourceTableName +"'";
   QSqlQuery sourceDataQuery(sourceDatabase);
   if(!sourceDataQuery.exec(sql)){
+    QString msg;
     sqlError = sourceDataQuery.lastError();
-    pvLastError.setError(tr("Unable to get source data from table '") + sourceTableName + tr("' for copy."), mdtError::Error);
+    msg = tr("Unable to get source data from table '") + sourceTableName + tr("' for copy.");
+    msg += tr(" (Generated SQL statement: ") + sql + tr(")");
+    pvLastError.setError(msg, mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtDataTableManager");
     pvLastError.commit();
@@ -665,15 +672,18 @@ bool mdtDataTableManager::commitRowsToDatabase(const QList<QVariantList> &rows, 
 
 const QString mdtDataTableManager::insertBindValuesPrepareStatement(const QList<mdtFieldMapField> &fields, const QString & autoValuePkFieldName) const
 {
+  QSqlDriver *sqlDriver;
   QString sql;
   int i;
 
+  sqlDriver = pvDatabaseManager->database().driver();
+  Q_ASSERT(sqlDriver != 0);
   sql = "INSERT INTO " + pvDataSetTableName + " (";
   if(!autoValuePkFieldName.isEmpty()){
-    sql += autoValuePkFieldName + ",";
+    sql += sqlDriver->escapeIdentifier(autoValuePkFieldName, QSqlDriver::FieldName) + ",";
   }
   for(i = 0; i < fields.size(); ++i){
-    sql += fields.at(i).name();
+    sql += sqlDriver->escapeIdentifier(fields.at(i).name(),  QSqlDriver::FieldName);
     if(i < (fields.size() - 1)){
       sql += ",";
     }

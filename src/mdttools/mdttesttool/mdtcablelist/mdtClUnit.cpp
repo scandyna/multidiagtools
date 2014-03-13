@@ -40,7 +40,7 @@ QString mdtClUnit::sqlForComponentSelection(const QVariant& unitId) const
 {
   QString sql;
 
-  sql =  "SELECT Id_PK, SchemaPosition, Cabinet, Coordinate "\
+  sql =  "SELECT Id_PK, SchemaPosition, Alias, Cabinet, Coordinate "\
          "FROM Unit_tbl "\
          "WHERE ( Id_PK <> " + unitId.toString() + " "\
          "AND Composite_Id_FK IS NULL )";
@@ -247,10 +247,6 @@ QList<mdtClUnitConnectionData> mdtClUnit::getUnitConnectionDataListFromArticleCo
 
 bool mdtClUnit::addConnectionDataListFromArticleConnectionIdList(mdtClUnitConnectorData & data, const QList<QVariant> & articleConnectionIdList, bool copyContactName)
 {
-  ///mdtClArticle art(0, database());
-  ///mdtClArticleConnectionData articleConnectionData;
-  ///QList<mdtClArticleConnectionData> articleConnectionDataList;
-  ///mdtClUnitConnectionData unitConnectionData;
   bool ok;
   int i;
   QList<mdtClUnitConnectionData> unitConnectionDataList;
@@ -262,30 +258,6 @@ bool mdtClUnit::addConnectionDataListFromArticleConnectionIdList(mdtClUnitConnec
   for(i = 0; i < unitConnectionDataList.size(); ++i){
     data.addConnectionData(unitConnectionDataList.at(i));
   }
-  /**
-  // Get article connection data list
-  articleConnectionDataList = art.getConnectionDataListFromConnectionIdList(articleConnectionIdList, &ok);
-  if(!ok){
-    pvLastError = art.lastError();
-    return false;
-  }
-  // Create unit connections
-  if(!unitConnectionData.setup(database(), false)){
-    pvLastError = unitConnectionData.lastError();
-    return false;
-  }
-  for(i = 0; i < articleConnectionDataList.size(); ++i){
-    mdtClArticleConnectionData articleConnectionData = articleConnectionDataList.at(i);
-    unitConnectionData.clearValues();
-    unitConnectionData.setValue("Unit_Id_FK", data.value("Unit_Id_FK"));
-    unitConnectionData.setValue("UnitConnector_Id_FK", data.value("Id_PK"));
-    unitConnectionData.setArticleConnectionData(articleConnectionData);
-    if(copyContactName){
-      unitConnectionData.setValue("UnitContactName", articleConnectionData.value("ArticleContactName"));
-    }
-    data.addConnectionData(unitConnectionData);
-  }
-  */
 
   return true;
 }

@@ -1,4 +1,4 @@
-format 204
+format 206
 
 classcanvas 128002 class_ref 370434 // QDialog
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -6,7 +6,7 @@ classcanvas 128002 class_ref 370434 // QDialog
 end
 classcanvas 128130 class_ref 1126914 // mdtItemsSelectorDialog
   classdiagramsettings member_max_width 0 end
-  xyz 115 122 2006
+  xyz 113 124 2006
 end
 classcanvas 128386 class_ref 1127042 // mdtItemsSelectorDialogItem
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -41,7 +41,7 @@ relationcanvas 128514 relation_ref 1398402 // <directional composition>
   geometry HV
   decenter_begin 734
   decenter_end 941
-  from ref 128130 z 2013 to point 725 313
+  from ref 128130 z 2013 to point 725 315
   line 128770 z 2013 to ref 128386
   role_a_pos 737 97 3000 no_role_b
   multiplicity_a_pos 712 97 3000 no_multiplicity_b
@@ -49,7 +49,7 @@ end
 relationcanvas 128642 relation_ref 1398530 // <directional composition>
   geometry HV
   decenter_end 47
-  from ref 128130 z 2013 to point 556 251
+  from ref 128130 z 2013 to point 556 248
   line 128898 z 2013 to ref 128386
   role_a_pos 568 97 3000 no_role_b
   multiplicity_a_pos 543 97 3000 no_multiplicity_b
