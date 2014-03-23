@@ -21,11 +21,12 @@
 #include "mdtClUnit.h"
 #include "mdtClArticle.h"
 #include "mdtClLink.h"
+#include <boost/graph/graph_concepts.hpp>
 #include <QSqlQuery>
 #include <QSqlField>
 #include <QPair>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtClUnit::mdtClUnit(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
@@ -109,13 +110,14 @@ QString mdtClUnit::sqlForArticleConnectionLinkedToArticleSelection(const QVarian
 {
   QString sql;
 
-  sql = "SELECT * FROM ArticleConnection_tbl ";
+  sql = "SELECT * FROM ArticleConnection_view ";
   sql += "WHERE Article_Id_FK = " + articleId.toString();
   sql += " AND Id_PK NOT IN ("\
          "  SELECT ArticleConnection_Id_FK"\
          "  FROM UnitConnection_tbl"\
          "  WHERE Unit_Id_FK = " + unitId.toString();
   sql += "  AND ArticleConnection_Id_FK IS NOT NULL)";
+  qDebug() << "SQL: " << sql;
 
   return sql;
 }
@@ -204,6 +206,96 @@ bool mdtClUnit::addArticleConnectorData(mdtClUnitConnectorData & data, const QVa
   }
 
   return true;
+}
+
+QVariant mdtClUnit::getUnitConnectorIdBasedOnArticleConnectorId(const QVariant & articleConnectorId, const QVariant & unitId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QVariant unitConnectorId;
+  QString sql;
+  QList<QSqlRecord> dataList;
+
+  // If article connector is Null, no unit connector is concerned
+  if(articleConnectorId.isNull()){
+    *ok = true;
+    return unitConnectorId;
+  }
+  // Build SQL statement and get data
+  sql = "SELECT Id_PK FROM UnitConnector_tbl ";
+  sql += " WHERE ArticleConnector_Id_FK = " + articleConnectorId.toString();
+  sql += " AND Unit_Id_FK = " + unitId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return unitConnectorId;
+  }
+  // Check that we not have more than one result
+  if(dataList.size() > 1){
+    QString msg;
+    msg = tr("Getting unit connector ID based on article connector ID") + " " + articleConnectorId.toString() + " ";
+    msg += tr("and for usage in unit ID") + " " + unitId.toString() + " ";
+    msg += tr("failed because article connector is used more than once.");
+    pvLastError.setError(msg , mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
+    pvLastError.commit();
+    *ok = false;
+    return unitConnectorId;
+  }
+  // If we have no result, no unit connector was found
+  if(dataList.isEmpty()){
+    *ok = true;
+    return unitConnectorId;
+  }
+  // Here we found one unit connector
+  Q_ASSERT(dataList.size() == 1);
+  unitConnectorId = dataList.at(0).value("Id_PK");
+  *ok = true;
+
+  return unitConnectorId;
+}
+
+QList<mdtClUnitConnectionData> mdtClUnit::getUnitConnectionDataListFromArticleConnectionIdList(const QVariant & unitId, const QList<QVariant> & articleConnectionIdList, bool copyContactName, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  mdtClArticle art(0, database());
+  mdtClArticleConnectionData articleConnectionData;
+  QList<mdtClArticleConnectionData> articleConnectionDataList;
+  mdtClUnitConnectionData unitConnectionData;
+  QList<mdtClUnitConnectionData> unitConnectionDataList;
+  QVariant unitConnectorId;
+  int i;
+
+  // Get article connection data list
+  articleConnectionDataList = art.getConnectionDataListFromConnectionIdList(articleConnectionIdList, ok);
+  if(!*ok){
+    pvLastError = art.lastError();
+    return unitConnectionDataList;
+  }
+  // Create unit connections
+  if(!unitConnectionData.setup(database(), false)){
+    *ok = false;
+    pvLastError = unitConnectionData.lastError();
+    return unitConnectionDataList;
+  }
+  for(i = 0; i < articleConnectionDataList.size(); ++i){
+    mdtClArticleConnectionData articleConnectionData = articleConnectionDataList.at(i);
+    unitConnectionData.clearValues();
+    unitConnectionData.setValue("Unit_Id_FK", unitId);
+    unitConnectorId = getUnitConnectorIdBasedOnArticleConnectorId(articleConnectionData.value("ArticleConnector_Id_FK"), unitId, ok);
+    if(!*ok){
+      return unitConnectionDataList;
+    }
+    unitConnectionData.setValue("UnitConnector_Id_FK", unitConnectorId);
+    unitConnectionData.setArticleConnectionData(articleConnectionData);
+    if(copyContactName){
+      unitConnectionData.setValue("UnitContactName", articleConnectionData.value("ArticleContactName"));
+    }
+    unitConnectionDataList.append(unitConnectionData);
+  }
+  *ok = true;
+
+  return unitConnectionDataList;
 }
 
 QList<mdtClUnitConnectionData> mdtClUnit::getUnitConnectionDataListFromArticleConnectionIdList(const QVariant & unitId, const QVariant & unitConnectorId, const QList<QVariant> & articleConnectionIdList, bool copyContactName, bool *ok)
@@ -645,6 +737,20 @@ bool mdtClUnit::addConnector(const mdtClUnitConnectorData & data)
   return true;
 }
 
+bool mdtClUnit::editConnectorName(const QVariant & unitConnectorId, const QVariant & name)
+{
+  mdtClUnitConnectorData connectorData;
+  bool ok;
+
+  connectorData = getConnectorData(unitConnectorId, &ok, false, false, false);
+  if(!ok){
+    return false;
+  }
+  connectorData.setValue("Name", name);
+
+  return updateRecord("UnitConnector_tbl", connectorData, "Id_PK", unitConnectorId);
+}
+
 bool mdtClUnit::removeConnector(const QVariant& unitConnectorId)
 {
   QList<QSqlRecord> connectionIdList;
@@ -711,6 +817,9 @@ mdtClUnitConnectionData mdtClUnit::getConnectionDataPv(const QString & sql, bool
   // Get unit connection data part
   dataList = getData(sql, ok);
   if(!*ok){
+    return data;
+  }
+  if(dataList.isEmpty()){
     return data;
   }
   Q_ASSERT(dataList.size() == 1);

@@ -134,6 +134,20 @@ void mdtDatabaseTest::sqlRecordTest()
   QVERIFY(!record.hasValue("FirstName"));
   QVERIFY(!record.hasValue("Remarks"));
   QCOMPARE(record.fieldIndexesWithValue().size(), 0);
+  // Edit a field with a Null value and check
+  record.setValue("FirstName", QVariant());
+  QVERIFY(!record.hasValue("Id_PK"));
+  QVERIFY(record.hasValue("FirstName"));
+  QVERIFY(!record.hasValue("Remarks"));
+  QCOMPARE(record.fieldIndexesWithValue().size(), 1);
+  QCOMPARE(record.fieldIndexesWithValue().at(0), 1);
+  // Clear values and check
+  record.clearValues();
+  QCOMPARE(record.count(), 3);
+  QVERIFY(!record.hasValue("Id_PK"));
+  QVERIFY(!record.hasValue("FirstName"));
+  QVERIFY(!record.hasValue("Remarks"));
+  QCOMPARE(record.fieldIndexesWithValue().size(), 0);
 
   /*
    * Copy

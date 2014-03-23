@@ -144,6 +144,25 @@ class mdtClUnit : public mdtTtBase
    */
   bool addArticleConnectorData(mdtClUnitConnectorData & data, const QVariant & articleConnectorId, bool copyConnectorName);
 
+  /*! \brief Get unit connector ID witch is based on given article connector ID and that is used in given unit ID
+   *
+   * If given article connector is not used in given unit,
+   *  a Null will be returned.
+   *  If given article connector is used more than once,
+   *  this method fails (returns Null and ok will be false).
+   */
+  QVariant getUnitConnectorIdBasedOnArticleConnectorId(const QVariant & articleConnectorId, const QVariant & unitId, bool *ok);
+
+  /*! \brief Get a list of unit connections based on article connection ID list
+   *
+   * Will also set some values to newly created unit connections (UnitConnection_tbl):
+   *  - Unit_Id_FK : will be copied from given unitId
+   *  - UnitConnector_Id_FK : will be set by calling getUnitConnectorIdBasedOnArticleConnectorId()
+   *  - ArticleConnection_Id_FK : will be copied from articleConnectionIdList
+   *  - UnitContactName : if copyContactName is true, it will be copied from article connection data
+   */
+  QList<mdtClUnitConnectionData> getUnitConnectionDataListFromArticleConnectionIdList(const QVariant & unitId, const QList<QVariant> & articleConnectionIdList, bool copyContactName, bool *ok);
+
   /*! \brief Get a list of unit connections based on article connection ID list
    *
    * Will also set some values to newly created unit connections (UnitConnection_tbl):
@@ -259,6 +278,10 @@ class mdtClUnit : public mdtTtBase
    *  because they are token from data directly.
    */
   bool addConnector(const mdtClUnitConnectorData & data);
+
+  /*! \brief Edit connector name
+   */
+  bool editConnectorName(const QVariant & unitConnectorId, const QVariant & name);
 
   /*! \brief Remove a unit connector and its contacts
    */

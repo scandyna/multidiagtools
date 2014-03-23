@@ -199,13 +199,25 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="leArticleDesignationFR"/>
+       <widget class="QLineEdit" name="leArticleDesignationFR">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLineEdit" name="leArticleDesignationDE"/>
+       <widget class="QLineEdit" name="leArticleDesignationDE">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QLineEdit" name="leArticleDesignationIT"/>
+       <widget class="QLineEdit" name="leArticleDesignationIT">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="lbArticleDesignationFR">

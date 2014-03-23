@@ -155,6 +155,18 @@ void mdtTestToolTest::mdtTtBaseTest()
   data = dataList.at(0);
   QCOMPARE(data.value("Id_PK"), QVariant(2));
   QCOMPARE(data.value("Type"), QVariant("Vehicle type 22"));
+  // Edit row with null value
+  record.clearValues();
+  record.setValue("Type", QVariant());
+  QVERIFY(b.updateRecord("VehicleType_tbl", record, "Id_PK", 2));
+  // Get data and check
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getData(sql, &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QVERIFY(data.value("Type").isNull());
 }
 
 /*

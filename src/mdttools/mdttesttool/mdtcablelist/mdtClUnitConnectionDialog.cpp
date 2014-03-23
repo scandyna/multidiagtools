@@ -473,28 +473,44 @@ void mdtClUnitConnectionDialog::updateDialog()
 
 void mdtClUnitConnectionDialog::updateData()
 {
-  if(!leSchemaPage->text().isEmpty()){
+  if(leSchemaPage->text().isEmpty()){
+    pvData.setValue("SchemaPage", QVariant());
+  }else{
     pvData.setValue("SchemaPage", leSchemaPage->text());
   }
-  if(!leFunctionEN->text().isEmpty()){
+  if(leFunctionEN->text().isEmpty()){
+    pvData.setValue("FunctionEN", QVariant());
+  }else{
     pvData.setValue("FunctionEN", leFunctionEN->text());
   }
-  if(!leFunctionFR->text().isEmpty()){
+  if(leFunctionFR->text().isEmpty()){
+    pvData.setValue("FunctionFR", QVariant());
+  }else{
     pvData.setValue("FunctionFR", leFunctionFR->text());
   }
-  if(!leFunctionDE->text().isEmpty()){
+  if(leFunctionDE->text().isEmpty()){
+    pvData.setValue("FunctionDE", QVariant());
+  }else{
     pvData.setValue("FunctionDE", leFunctionDE->text());
   }
-  if(!leFunctionIT->text().isEmpty()){
+  if(leFunctionIT->text().isEmpty()){
+    pvData.setValue("FunctionIT", QVariant());
+  }else{
     pvData.setValue("FunctionIT", leFunctionIT->text());
   }
-  if(!leSignalName->text().isEmpty()){
+  if(leSignalName->text().isEmpty()){
+    pvData.setValue("SignalName", QVariant());
+  }else{
     pvData.setValue("SignalName", leSignalName->text());
   }
-  if(sbSwAddress->value() > 0){
+  if(sbSwAddress->value() == 0){
+    pvData.setValue("SwAddress", QVariant());
+  }else{
     pvData.setValue("SwAddress", sbSwAddress->value());
   }
-  if(!leUnitContactName->text().isEmpty()){
+  if(leUnitContactName->text().isEmpty()){
+    pvData.setValue("UnitContactName", QVariant());
+  }else{
     pvData.setValue("UnitContactName", leUnitContactName->text());
   }
 }

@@ -86,6 +86,10 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   void addArticleConnectorBasedConnector();
 
+  /*! \brief Edit connector name
+   */
+  void editConnectorName();
+
   /*! \brief Remove a connector
    */
   void removeConnectors();

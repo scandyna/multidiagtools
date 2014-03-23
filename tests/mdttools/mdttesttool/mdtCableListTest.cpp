@@ -1422,8 +1422,7 @@ void mdtCableListTest::createTestUnitConnections()
   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
   QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
-  
-  
+
   // Add and chek unit connection 10001
   connectionData.setValue("Id_PK", 10001);
   connectionData.setValue("Unit_Id_FK", 1000);
@@ -1435,7 +1434,10 @@ void mdtCableListTest::createTestUnitConnections()
   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10001"));
   QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
-  // Add and chek unit connection 20000
+  /*
+   * Add and chek unit connection 20000
+   */
+  // Add connection and check
   connectionData.clearValues();
   connectionData.setValue("Id_PK", 20000);
   connectionData.setValue("Unit_Id_FK", 2000);
@@ -1608,11 +1610,17 @@ void mdtCableListTest::createTestUnitConnectors()
   mdtClUnit unit(0, pvDatabaseManager.database());
   mdtClUnitConnectorData connectorData;
   mdtClUnitConnectionData connectionData;
+  QList<mdtClUnitConnectionData> connectionDataList;
   QList<QVariant> idList;
+  QVariant id;
   bool ok;
 
   QVERIFY(connectorData.setup(pvDatabaseManager.database(), true, true));
   QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
+  // Check unit connector ID by article connector ID method
+  id = unit.getUnitConnectorIdBasedOnArticleConnectorId(QVariant(), 1000, &ok);
+  QVERIFY(ok);
+  QVERIFY(id.isNull());
   /*
    * Unit connector 100000:
    *  - Id_PK : 100000 , Unit_Id_FK : 1000 , Connector_Id_FK : NULL , ArticleConnector_Id_FK : NULL , Name : Unit connector 100000
@@ -1633,6 +1641,10 @@ void mdtCableListTest::createTestUnitConnectors()
   QCOMPARE(connectorData.value("Id_PK"), QVariant(100000));
   QCOMPARE(connectorData.value("Unit_Id_FK"), QVariant(1000));
   QCOMPARE(connectorData.value("Name"), QVariant("Unit connector 100000"));
+  // Check unit connector ID by article connector ID method
+  id = unit.getUnitConnectorIdBasedOnArticleConnectorId(QVariant(), 1000, &ok);
+  QVERIFY(ok);
+  QVERIFY(id.isNull());
   // Check connection
   connectionData = connectorData.connectionData(10005, &ok);
   QVERIFY(ok);
@@ -1672,7 +1684,39 @@ void mdtCableListTest::createTestUnitConnectors()
   QCOMPARE(connectorData.value("Connector_Id_FK"), QVariant(1));
   QCOMPARE(connectorData.value("ArticleConnector_Id_FK"), QVariant(200));
   QCOMPARE(connectorData.value("Name"), QVariant("Unit connector 200000"));
+  // Check unit connector ID by article connector ID method
+  id = unit.getUnitConnectorIdBasedOnArticleConnectorId(200, 2000, &ok);
+  QVERIFY(ok);
+  QCOMPARE(id, QVariant(200000));
   // Check connection
+  connectionData = connectorData.connectionData(20005, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(20005));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(2000));
+  QCOMPARE(connectionData.value("UnitConnector_Id_FK"), QVariant(200000));
+  QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(25));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 20005"));
+
+  /*
+   * Now remove unit connection 20005.
+   * Then, add a unit connection based on artice connection ID 25.
+   * We know that article connection ID 25 is based on article connector ID 200,
+   *  and unit has unit connector ID 200000 wich is based on artice connector ID 200.
+   * So, check that adding a unit connection based on article connection ID 25
+   *  will make this unit connection based on unit connector ID 200000.
+   */
+  // Remove unit connection 20005
+  QVERIFY(unit.removeConnection(20005));
+  connectionData = unit.getConnectionData(20005, false, &ok);
+  QVERIFY(ok);
+  QVERIFY(connectionData.value("Id_PK").isNull());
+  // get unit connections based on article connections
+  idList.clear();
+  idList << 25;
+  connectionDataList = unit.getUnitConnectionDataListFromArticleConnectionIdList(2000, idList, true, &ok);
+  QVERIFY(ok);
+  // Add connection and check
+  QVERIFY(unit.addConnections(connectionDataList));
   connectionData = connectorData.connectionData(20005, &ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(20005));
