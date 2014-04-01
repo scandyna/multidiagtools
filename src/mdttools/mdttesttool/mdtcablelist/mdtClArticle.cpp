@@ -186,14 +186,14 @@ QList<QSqlRecord> mdtClArticle::getConnectorContactDataList(const QList<QVariant
     return QList<QSqlRecord>();
   }
   // Setup query
-  sql = "SELECT Id_PK, Connector_Id_FK, Name "\
+  sql = "SELECT Id_PK, Connector_Id_FK, ConnectionType_Code_FK, Name "\
         "FROM ConnectorContact_tbl ";
   Q_ASSERT(connectorContactIdList.size() > 0);
   sql += "WHERE Id_PK = " + connectorContactIdList.at(0).toString();
   for(i = 1; i < connectorContactIdList.size(); ++i){
     sql += " OR Id_PK = " + connectorContactIdList.at(i).toString();
   }
-  expectedFields << "Id_PK" << "Connector_Id_FK" << "Name";
+  expectedFields << "Id_PK" << "Connector_Id_FK" << "ConnectionType_Code_FK" << "Name";
 
   return getData(sql, ok, expectedFields);
 }
@@ -295,6 +295,7 @@ bool mdtClArticle::addConnectionDataListFromConnectorContactIdList(mdtClArticleC
     articleConnectionData.clearValues();
     articleConnectionData.setValue("ArticleContactName", connectorContactDataList.at(i).value("Name"));
     articleConnectionData.setValue("Article_Id_FK", data.value("Article_Id_FK"));
+    articleConnectionData.setValue("ConnectionType_Code_FK", connectorContactDataList.at(i).value("ConnectionType_Code_FK"));
     articleConnectionData.setValue("ArticleConnector_Id_FK", data.value("Id_PK"));
     data.addConnectionData(articleConnectionData);
   }

@@ -321,14 +321,17 @@ void mdtCableListTest::articleTest()
   QVERIFY(record.addAllFields("ConnectorContact_tbl", pvDatabaseManager.database()));
   record.setValue("Id_PK", 1);
   record.setValue("Connector_Id_FK", 1);
+  record.setValue("ConnectionType_Code_FK", "P");
   record.setValue("Name", "A");
   QVERIFY(art.addRecord(record, "ConnectorContact_tbl"));
   record.setValue("Id_PK", 2);
   record.setValue("Connector_Id_FK", 1);
+  record.setValue("ConnectionType_Code_FK", "P");
   record.setValue("Name", "B");
   QVERIFY(art.addRecord(record, "ConnectorContact_tbl"));
   record.setValue("Id_PK", 3);
   record.setValue("Connector_Id_FK", 1);
+  record.setValue("ConnectionType_Code_FK", "S");
   record.setValue("Name", "C");
   QVERIFY(art.addRecord(record, "ConnectorContact_tbl"));
   // Setup article connector data for article ID 1
@@ -353,14 +356,17 @@ void mdtCableListTest::articleTest()
   data = dataList.at(0);
   QCOMPARE(data.value("Connector_Id_FK"), QVariant(1));
   QCOMPARE(data.value("Article_Id_FK"), QVariant(1));
+  QCOMPARE(data.value("ConnectionType_Code_FK"), QVariant("P"));
   QCOMPARE(data.value("ArticleConnectorName"), QVariant("X2"));
   data = dataList.at(1);
   QCOMPARE(data.value("Connector_Id_FK"), QVariant(1));
   QCOMPARE(data.value("Article_Id_FK"), QVariant(1));
+  QCOMPARE(data.value("ConnectionType_Code_FK"), QVariant("P"));
   QCOMPARE(data.value("ArticleConnectorName"), QVariant("X2"));
   data = dataList.at(2);
   QCOMPARE(data.value("Connector_Id_FK"), QVariant(1));
   QCOMPARE(data.value("Article_Id_FK"), QVariant(1));
+  QCOMPARE(data.value("ConnectionType_Code_FK"), QVariant("S"));
   QCOMPARE(data.value("ArticleConnectorName"), QVariant("X2"));
 
   /*
@@ -1150,18 +1156,21 @@ void mdtCableListTest::createTestArticleConnections()
   QVERIFY(connectionData.setup(pvDatabaseManager.database()));
   connectionData.setValue("Id_PK", 10);
   connectionData.setValue("Article_Id_FK", 1);
+  connectionData.setValue("ConnectionType_Code_FK", "T");
   connectionData.setValue("ArticleContactName", "10");
   QVERIFY(art.addConnection(connectionData));
   // Add contact ID 20 to article ID 2
   connectionData.clearValues();
   connectionData.setValue("Id_PK", 20);
   connectionData.setValue("Article_Id_FK", 2);
+  connectionData.setValue("ConnectionType_Code_FK", "T");
   connectionData.setValue("ArticleContactName", "20");
   QVERIFY(art.addConnection(connectionData));
   // Add contact ID 21 to article ID 2
   connectionData.clearValues();
   connectionData.setValue("Id_PK", 21);
   connectionData.setValue("Article_Id_FK", 2);
+  connectionData.setValue("ConnectionType_Code_FK", "T");
   connectionData.setValue("ArticleContactName", "21");
   QVERIFY(art.addConnection(connectionData));
   // Check back data
@@ -1169,16 +1178,19 @@ void mdtCableListTest::createTestArticleConnections()
   QVERIFY(ok);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(10));
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(1));
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("10"));
   connectionData = art.getConnectionData(20, &ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(20));
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("20"));
   connectionData = art.getConnectionData(21, &ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(21));
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("21"));
   // Check connections data list getter method
   idList.clear();
@@ -1189,11 +1201,13 @@ void mdtCableListTest::createTestArticleConnections()
   connectionData = connectionDataList.at(0);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(20));
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("20"));
   connectionData = art.getConnectionData(21, &ok);
   connectionData = connectionDataList.at(1);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(21));
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("21"));
 }
 
@@ -1230,6 +1244,7 @@ void mdtCableListTest::createTestArticleConnectors()
   connectorData.setValue("Name", "Article connector 100");
   // Setup connection 15
   connectionsData.setValue("Id_PK", 15);
+  connectionsData.setValue("ConnectionType_Code_FK", "P");
   connectionsData.setValue("ArticleContactName", "Article contact 15");
   connectorData.addConnectionData(connectionsData);
   // Add connector and check
@@ -1250,6 +1265,7 @@ void mdtCableListTest::createTestArticleConnectors()
   connectorData.setValue("Name", "Article connector 200");
   // Setup connection 15
   connectionsData.setValue("Id_PK", 25);
+  connectionsData.setValue("ConnectionType_Code_FK", "S");
   connectionsData.setValue("ArticleContactName", "Article contact 25");
   connectorData.addConnectionData(connectionsData);
   // Add connector and check

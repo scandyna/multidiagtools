@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>240</height>
+    <width>502</width>
+    <height>255</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,13 +46,38 @@
     </layout>
    </item>
    <item row="1" column="0">
+    <widget class="QLabel" name="lbConnectionType">
+     <property name="text">
+      <string>Connection type:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QComboBox" name="cbConnectionType">
+       <property name="editable">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbConnectionTypeText">
+       <property name="text">
+        <string>Connection type text</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0">
     <widget class="QLabel" name="lbArticleContactName">
      <property name="text">
       <string>Contact:</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="2" column="1">
     <widget class="QLineEdit" name="fld_ArticleContactName">
      <property name="maximumSize">
       <size>
@@ -65,14 +90,14 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QLabel" name="lbIoType">
      <property name="text">
       <string>I/O type:</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="3" column="1">
     <widget class="QLineEdit" name="fld_IoType">
      <property name="maximumSize">
       <size>
@@ -85,63 +110,63 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QLabel" name="lbFunctionEN">
      <property name="text">
       <string>Function (English):</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="4" column="1">
     <widget class="QLineEdit" name="fld_FunctionEN">
      <property name="maxLength">
       <number>100</number>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="5" column="0">
     <widget class="QLabel" name="lbFunctionFR">
      <property name="text">
       <string>Function (French):</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
+   <item row="5" column="1">
     <widget class="QLineEdit" name="fld_FunctionFR">
      <property name="maxLength">
       <number>100</number>
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="6" column="0">
     <widget class="QLabel" name="lbFunctionDE">
      <property name="text">
       <string>Function (German):</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
+   <item row="6" column="1">
     <widget class="QLineEdit" name="fld_FunctionDE">
      <property name="maxLength">
       <number>100</number>
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="7" column="0">
     <widget class="QLabel" name="lbFunctionIT">
      <property name="text">
       <string>Function (Italian):</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
+   <item row="7" column="1">
     <widget class="QLineEdit" name="fld_FunctionIT">
      <property name="maxLength">
       <number>100</number>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="8" column="1">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

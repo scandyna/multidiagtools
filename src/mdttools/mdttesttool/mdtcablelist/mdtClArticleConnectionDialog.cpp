@@ -24,6 +24,11 @@
 #include "mdtClArticle.h"
 #include <QWidget>
 #include <QSqlQueryModel>
+#include <QList>
+#include <QSqlRecord>
+#include <QLocale>
+
+//#include <QDebug>
 
 mdtClArticleConnectionDialog::mdtClArticleConnectionDialog(QWidget *parent, const QSqlDatabase & db)
  : QDialog(parent)
@@ -32,6 +37,8 @@ mdtClArticleConnectionDialog::mdtClArticleConnectionDialog(QWidget *parent, cons
   setupUi(this);
   ///pbSelectArticleConnector->setEnabled(false);
   connect(pbSelectArticleConnector, SIGNAL(clicked()), this, SLOT(selectArticleConnector()));
+  connect(cbConnectionType, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(updateConnectionTypeText(const QString &)));
+  populateConnectionTypeComboBox();
 }
 
 mdtClArticleConnectionDialog::~mdtClArticleConnectionDialog() 
@@ -44,6 +51,7 @@ void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & da
   Q_ASSERT(pvData.contains("Id_PK"));
   Q_ASSERT(pvData.contains("Article_Id_FK"));
   Q_ASSERT(pvData.contains("ArticleConnector_Id_FK"));
+  Q_ASSERT(pvData.contains("ConnectionType_Code_FK"));
   Q_ASSERT(pvData.contains("ArticleContactName"));
   Q_ASSERT(pvData.contains("IoType"));
   Q_ASSERT(pvData.contains("FunctionEN"));
@@ -81,10 +89,82 @@ void mdtClArticleConnectionDialog::selectArticleConnector()
   updateDialog();
 }
 
+void mdtClArticleConnectionDialog::updateConnectionTypeText(const QString& type)
+{
+  QLocale locale;
+  mdtClArticle art(0, pvDatabase);
+  QString fieldName;
+  QString sql;
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  // Select field regarding language
+  switch(locale.language()){
+    case QLocale::French:
+      fieldName = "NameFR";
+      break;
+    case QLocale::German:
+      fieldName = "NameDE";
+      break;
+    case QLocale::Italian:
+      fieldName = "NameIT";
+      break;
+    default:
+      fieldName = "NameEN";
+  }
+  // Get text
+  sql = "SELECT " + fieldName + " FROM ConnectionType_tbl WHERE Code_PK = '" + type + "'";
+  dataList = art.getData(sql , &ok);
+  if(!ok){
+    lbConnectionTypeText->setText(tr("<Error!>"));
+    return;
+  }
+  if(dataList.size() < 1){
+    lbConnectionTypeText->setText("");
+    return;
+  }
+  lbConnectionTypeText->setText(dataList.at(0).value(fieldName).toString());
+}
+
 void mdtClArticleConnectionDialog::accept()
 {
   updateData();
   QDialog::accept();
+}
+
+void mdtClArticleConnectionDialog::populateConnectionTypeComboBox()
+{
+  mdtClArticle art(0, pvDatabase);
+  QList<QSqlRecord> dataList;
+  bool ok;
+  int i;
+
+  cbConnectionType->clear();
+  // Get available codes
+  dataList = art.getData("SELECT Code_PK FROM ConnectionType_tbl", &ok);
+  if(!ok){
+    cbConnectionType->addItem(tr("<Error!>"));
+    lbConnectionTypeText->setText(tr("<Error!>"));
+    return;
+  }
+  // Populate combo box
+  for(i = 0; i < dataList.size(); ++i){
+    cbConnectionType->addItem(dataList.at(i).value("Code_PK").toString());
+  }
+}
+
+void mdtClArticleConnectionDialog::setCurrentConnectionType(const QString& type)
+{
+  int idx;
+
+  for(idx = 0; idx < cbConnectionType->count(); ++idx){
+    if(cbConnectionType->itemText(idx) == type){
+      cbConnectionType->setCurrentIndex(idx);
+      return;
+    }
+  }
+  // type not found
+  cbConnectionType->setCurrentIndex(-1);
 }
 
 void mdtClArticleConnectionDialog::updateDialog()
@@ -100,6 +180,7 @@ void mdtClArticleConnectionDialog::updateDialog()
   fld_FunctionFR->setText(pvData.value("FunctionFR").toString());
   fld_FunctionDE->setText(pvData.value("FunctionDE").toString());
   fld_FunctionIT->setText(pvData.value("FunctionIT").toString());
+  setCurrentConnectionType(pvData.value("ConnectionType_Code_FK").toString());
   // Update article connector data if one is set
   if(!pvData.value("ArticleConnector_Id_FK").isNull()){
     connectorData = art.getConnectorData(pvData.value("ArticleConnector_Id_FK"), &ok, false, false);
@@ -113,6 +194,7 @@ void mdtClArticleConnectionDialog::updateDialog()
 
 void mdtClArticleConnectionDialog::updateData()
 {
+  pvData.setValue("ConnectionType_Code_FK", cbConnectionType->currentText());
   pvData.setValue("ArticleContactName", fld_ArticleContactName->text());
   pvData.setValue("IoType", fld_IoType->text());
   pvData.setValue("FunctionEN", fld_FunctionEN->text());

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,6 +21,8 @@
 #include "mdtClPathGraphicsConnection.h"
 #include "mdtClPathGraphicsLink.h"
 #include <QPainter>
+#include <QPen>
+#include <QBrush>
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsScene>
 #include <QTransform>
@@ -40,11 +42,28 @@ mdtClPathGraphicsConnection::mdtClPathGraphicsConnection()
   setFlag(ItemSendsGeometryChanges);
   setCacheMode(DeviceCoordinateCache);
   setZValue(-1);
-  setCircleDiameter(15);
+  ///setConnectionType(Terminal);
+  setConnectionType(Socket);
 }
 
 mdtClPathGraphicsConnection::~mdtClPathGraphicsConnection()
 {
+}
+
+void mdtClPathGraphicsConnection::setConnectionType(mdtClPathGraphicsConnection::ConnectionType t)
+{
+  pvConnectionType = t;
+  switch(pvConnectionType){
+    case Terminal:
+      setTerminalDiameter(15);
+      break;
+    case Pin:
+      setPinSize(10, 5);
+      break;
+    case Socket:
+      setSocketSize(10, 10);
+      break;
+  }
 }
 
 void mdtClPathGraphicsConnection::setText(const QString &text)
@@ -65,21 +84,42 @@ void mdtClPathGraphicsConnection::setText(const QString &text)
     height += fontMetrics.height();
   }
   pvTextRect.setX(-width/2.0);
-  pvTextRect.setY(pvCircleRect.y() - space - height);
+  pvTextRect.setY(pvConnectionRect.y() - space - height);
   pvTextRect.setWidth(width);
   pvTextRect.setHeight(height);
   updateBoundingRect();
 }
 
-void mdtClPathGraphicsConnection::setCircleDiameter(qreal diameter)
+///void mdtClPathGraphicsConnection::setCircleDiameter(qreal diameter)
+void mdtClPathGraphicsConnection::setTerminalDiameter(qreal diameter)
 {
-  pvCircleRect.setX(-diameter/2.0);
-  pvCircleRect.setY(-diameter/2.0);
-  pvCircleRect.setWidth(diameter);
-  pvCircleRect.setHeight(diameter);
+  pvConnectionRect.setX(-diameter/2.0);
+  pvConnectionRect.setY(-diameter/2.0);
+  pvConnectionRect.setWidth(diameter);
+  pvConnectionRect.setHeight(diameter);
   // Update text rect
   setText(pvText);
-  updateBoundingRect();
+  ///updateBoundingRect();
+}
+
+void mdtClPathGraphicsConnection::setPinSize(qreal width, qreal height)
+{
+  pvConnectionRect.setX(-width/2.0);
+  pvConnectionRect.setY(-height/2.0);
+  pvConnectionRect.setWidth(width);
+  pvConnectionRect.setHeight(height);
+  // Update text rect
+  setText(pvText);
+}
+
+void mdtClPathGraphicsConnection::setSocketSize(qreal width, qreal height)
+{
+  pvConnectionRect.setX(-width/2.0);
+  pvConnectionRect.setY(-height/2.0);
+  pvConnectionRect.setWidth(width);
+  pvConnectionRect.setHeight(height);
+  // Update text rect
+  setText(pvText);
 }
 
 QPointF mdtClPathGraphicsConnection::nextPos(bool reverse, qreal linkLength, qreal dAlpha) const
@@ -93,8 +133,8 @@ QPointF mdtClPathGraphicsConnection::nextPos(bool reverse, qreal linkLength, qre
     return QPointF();
   }
   // Get scene position of this item
-  x = mapToScene(pvCircleRect.center()).x();
-  y = mapToScene(pvCircleRect.center()).y();
+  x = mapToScene(pvConnectionRect.center()).x();
+  y = mapToScene(pvConnectionRect.center()).y();
   // Try to find a point directly on the right (or the left if reverse)
   newY = y;
   if(reverse){
@@ -172,7 +212,7 @@ QPainterPath mdtClPathGraphicsConnection::shape() const
 {
   QPainterPath path;
 
-  path.addEllipse(pvCircleRect);
+  path.addEllipse(pvConnectionRect);
 
   return path;
 }
@@ -182,9 +222,12 @@ void mdtClPathGraphicsConnection::paint(QPainter *painter, const QStyleOptionGra
   Q_ASSERT(painter != 0);
   Q_ASSERT(option != 0);
 
-  painter->setPen(Qt::NoPen);
-  painter->setBrush(Qt::blue);
-  painter->drawEllipse(pvCircleRect);
+  ///painter->setPen(Qt::NoPen);
+  ///painter->setPen(QPen(QBrush(Qt::black), 1.0));
+  ///painter->setBrush(Qt::blue);
+  ///painter->setBrush(Qt::white);
+  ///painter->drawEllipse(pvConnectionRect);
+  paintConnection(painter, option, widget);
   painter->setPen(Qt::black);
   painter->setBrush(Qt::red);
   painter->drawText(pvTextRect, Qt::AlignHCenter | Qt::TextDontClip, pvText);
@@ -208,15 +251,64 @@ QVariant mdtClPathGraphicsConnection::itemChange(GraphicsItemChange change, cons
   return QGraphicsItem::itemChange(change, value);
 }
 
+void mdtClPathGraphicsConnection::paintConnection(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+  Q_ASSERT(painter != 0);
+  Q_ASSERT(option != 0);
+
+  switch(pvConnectionType){
+    case Terminal:
+      paintTerminal(painter, option, widget);
+      break;
+    case Pin:
+      paintPin(painter, option, widget);
+      break;
+    case Socket:
+      paintSocket(painter, option, widget);
+      break;
+  }
+}
+
+void mdtClPathGraphicsConnection::paintTerminal(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+  Q_ASSERT(painter != 0);
+  Q_ASSERT(option != 0);
+
+  painter->setPen(QPen(QBrush(Qt::black), 1.0));
+  painter->setBrush(Qt::white);
+  painter->drawEllipse(pvConnectionRect);
+}
+
+void mdtClPathGraphicsConnection::paintPin(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+  Q_ASSERT(painter != 0);
+  Q_ASSERT(option != 0);
+
+  painter->setPen(Qt::NoPen);
+  painter->setBrush(Qt::black);
+  painter->drawRect(pvConnectionRect);
+}
+
+void mdtClPathGraphicsConnection::paintSocket(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+  Q_ASSERT(painter != 0);
+  Q_ASSERT(option != 0);
+
+  painter->setPen(Qt::black);
+  ///painter->setBrush(Qt::black);
+  ///painter->drawRect(pvConnectionRect);
+  painter->drawArc(pvConnectionRect, 1440.0, 2880.0);
+}
+
 void mdtClPathGraphicsConnection::updateBoundingRect()
 {
   qreal x, y, width, height;
   qreal margin = 2.0;
 
-  x = qMin(-pvCircleRect.width()/2.0, -pvTextRect.width()/2.0) - margin;
-  y = -pvCircleRect.height()/2.0 - pvTextRect.height() - margin;
-  width = qMax(pvCircleRect.width(), pvTextRect.width()) + 2.0*margin;
-  height = pvCircleRect.height() + pvTextRect.height() + 2.0*margin;
+  x = qMin(-pvConnectionRect.width()/2.0, -pvTextRect.width()/2.0) - margin;
+  y = -pvConnectionRect.height()/2.0 - pvTextRect.height() - margin;
+  width = qMax(pvConnectionRect.width(), pvTextRect.width()) + 2.0*margin;
+  height = pvConnectionRect.height() + pvTextRect.height() + 2.0*margin;
   pvBoundingRect.setX(x);
   pvBoundingRect.setY(y);
   pvBoundingRect.setWidth(width);

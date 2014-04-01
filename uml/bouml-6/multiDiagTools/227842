@@ -1,6 +1,6 @@
-format 204
+format 206
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 26
+  revision 28
   modified_by 2 "philippe"
   // class settings
   
@@ -276,6 +276,19 @@ ${inlines}
 	MysqlColumn
       end
 
+      attribute 1136770 "ConnectionType_Code_FK"
+	private explicit_type "string"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 814850 "ArticleContactName"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -346,6 +359,15 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      classrelation 1438210 // <unidirectional association>
+	relation 1425282 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1438210 // <unidirectional association>
+	  b parent class_ref 1140354 // ConnectionType_tbl
       end
     end
 
@@ -627,6 +649,19 @@ ${inlines}
 	MysqlColumn
       end
 
+      attribute 1136898 "ConnectionType_Code_FK"
+	private explicit_type "string"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 833282 "UnitConnection_Id_FK"
 	private explicit_type "int"
 	stereotype "FK"
@@ -770,6 +805,15 @@ ${inlines}
 "
 	    classrelation_ref 1218946 // <unidirectional association>
 	  b parent class_ref 972674 // UnitConnector_tbl
+      end
+
+      classrelation 1438338 // <unidirectional association>
+	relation 1425410 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1438338 // <unidirectional association>
+	  b parent class_ref 1140354 // ConnectionType_tbl
       end
     end
 
@@ -1761,6 +1805,19 @@ ${inlines}
 	MysqlColumn
       end
 
+      attribute 1130242 "ConnectionType_Code_FK"
+	private explicit_type "string"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 971522 "Name"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -1771,6 +1828,15 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      classrelation 1431682 // <unidirectional association>
+	relation 1418754 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1431682 // <unidirectional association>
+	  b parent class_ref 1140354 // ConnectionType_tbl
       end
     end
 
@@ -1864,6 +1930,81 @@ ${inlines}
       end
 
       attribute 1050114 "Identification"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 1140354 "ConnectionType_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 1129602 "Code_PK"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1129730 "NameEN"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1129858 "NameFR"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1129986 "NameDE"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1130114 "NameIT"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "

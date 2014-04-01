@@ -95,9 +95,9 @@ class mdtCableListTest : public mdtTest
   void removeTestArticles();
   /*
    * Create some article connections for tests:
-   *  - Id_PK : 10 , Article_Id_FK : 1 , ArticleContactName : Article contact 10
-   *  - Id_PK : 20 , Article_Id_FK : 2 , ArticleContactName : Article contact 20
-   *  - Id_PK : 21 , Article_Id_FK : 2 , ArticleContactName : Article contact 21
+   *  - Id_PK : 10 , Article_Id_FK : 1 , ConnectionType_Code_FK : T , ArticleContactName : Article contact 10
+   *  - Id_PK : 20 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : Article contact 20
+   *  - Id_PK : 21 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : Article contact 21
    */
   void createTestArticleConnections();
   /*
@@ -109,10 +109,10 @@ class mdtCableListTest : public mdtTest
    * Create some article connectors for tests:
    *
    *  - Id_PK : 100 , Article_Id_FK : 1 , Connector_Id_FK : NULL , Name : Article connector 100
-   *   -> Connection: Id_PK : 15 (, Article_Id_FK : 1 , ArticleConnector_Id_FK : 100) , ArticleContactName : Article contact 15
+   *   -> Connection: Id_PK : 15 (, Article_Id_FK : 1 , ArticleConnector_Id_FK : 100) , ConnectionType_Code_FK : P , ArticleContactName : Article contact 15
    *
    *  - Id_PK : 200 , Article_Id_FK : 2 , Connector_Id_FK : 1 , Name : Article connector 200
-   *   -> Connection: Id_PK : 25 (, Article_Id_FK : 2 , ArticleConnector_Id_FK : 200) , ArticleContactName : Article contact 25
+   *   -> Connection: Id_PK : 25 (, Article_Id_FK : 2 , ArticleConnector_Id_FK : 200) , ConnectionType_Code_FK : S , ArticleContactName : Article contact 25
    */
   void createTestArticleConnectors();
   /*

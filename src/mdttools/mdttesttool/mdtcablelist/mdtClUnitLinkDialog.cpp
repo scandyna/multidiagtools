@@ -34,7 +34,7 @@
 #include <QString>
 #include <QMessageBox>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
@@ -79,10 +79,12 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   connect(pbEndVehicles, SIGNAL(clicked()), this, SLOT(selectEndVehicleTypes()));
   // Clear field labels
   lbStartSchemaPosition->clear();
+  lbStartAlias->clear();
   lbStartCabinet->clear();
   lbStartConnectorName->clear();
   lbStartContactName->clear();
   lbEndSchemaPosition->clear();
+  lbEndAlias->clear();
   lbEndCabinet->clear();
   lbEndConnectorName->clear();
   lbEndContactName->clear();
@@ -292,7 +294,6 @@ void mdtClUnitLinkDialog::selectStartUnit()
 {
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
-  ///QSqlQueryModel model;
   QList<QVariant> result;
 
   // Setup and run query
@@ -300,10 +301,8 @@ void mdtClUnitLinkDialog::selectStartUnit()
   if(!pvStartUnitId.isNull()){
     sql += " WHERE Unit_Id_PK <> " + pvStartUnitId.toString();
   }
-  ///model.setQuery(sql, pvDatabase);
   // Setup and show dialog
-  selectionDialog.setMessage("Please select start unit");
-  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setMessage(tr("Please select start unit:"));
   selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("Unit_Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_PK", true);
@@ -313,6 +312,8 @@ void mdtClUnitLinkDialog::selectStartUnit()
   selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
   selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
   selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
+  selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  selectionDialog.sort();
   selectionDialog.addSelectionResultColumn("Unit_Id_PK");
   selectionDialog.resize(800, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
@@ -328,7 +329,6 @@ void mdtClUnitLinkDialog::selectEndUnit()
 {
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
-  ///QSqlQueryModel model;
   QList<QVariant> result;
 
   // Setup and run query
@@ -336,10 +336,8 @@ void mdtClUnitLinkDialog::selectEndUnit()
   if(!pvEndUnitId.isNull()){
     sql += " WHERE Unit_Id_PK <> " + pvEndUnitId.toString();
   }
-  ///model.setQuery(sql, pvDatabase);
   // Setup and show dialog
-  selectionDialog.setMessage("Please select end unit");
-  ///selectionDialog.setModel(&model, false);
+  selectionDialog.setMessage(tr("Please select end unit:"));
   selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("Unit_Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_PK", true);
@@ -349,6 +347,8 @@ void mdtClUnitLinkDialog::selectEndUnit()
   selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
   selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
   selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
+  selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  selectionDialog.sort();
   selectionDialog.addSelectionResultColumn("Unit_Id_PK");
   selectionDialog.resize(800, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
@@ -414,7 +414,7 @@ void mdtClUnitLinkDialog::selectEndConnection()
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvEndUnitId.toString();
   ///model.setQuery(sql, pvDatabase);
   // Setup and show dialog
-  selectionDialog.setMessage("Please select start connection");
+  selectionDialog.setMessage(tr("Please select end connection:"));
   ///selectionDialog.setModel(&model, false);
   selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
@@ -595,23 +595,25 @@ void mdtClUnitLinkDialog::updateStartUnit()
   QList<QSqlRecord> dataList;
   QSqlRecord data;
   bool ok;
-
   if(pvStartUnitId.isNull()){
     lbStartSchemaPosition->setText("");
+    lbStartAlias->setText("");
     lbStartCabinet->setText("");
     return;
   }
   // Get unit data
-  sql = "SELECT SchemaPosition, Cabinet FROM Unit_tbl WHERE Id_PK = " + pvStartUnitId.toString();
+  sql = "SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = " + pvStartUnitId.toString();
   dataList = unit.getData(sql, &ok);
   if(!ok){
     lbStartSchemaPosition->setText("<Error!>");
+    lbStartAlias->setText("<Error!>");
     lbStartCabinet->setText("<Error!>");
     return;
   }
   Q_ASSERT(dataList.size() == 1);
   data = dataList.at(0);
   lbStartSchemaPosition->setText(data.value("SchemaPosition").toString());
+  lbStartAlias->setText(data.value("Alias").toString());
   lbStartCabinet->setText(data.value("Cabinet").toString());
 }
 
@@ -625,20 +627,23 @@ void mdtClUnitLinkDialog::updateEndUnit()
 
   if(pvEndUnitId.isNull()){
     lbEndSchemaPosition->setText("");
+    lbEndAlias->setText("");
     lbEndCabinet->setText("");
     return;
   }
   // Get unit data
-  sql = "SELECT SchemaPosition, Cabinet FROM Unit_tbl WHERE Id_PK = " + pvEndUnitId.toString();
+  sql = "SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = " + pvEndUnitId.toString();
   dataList = unit.getData(sql, &ok);
   if(!ok){
     lbEndSchemaPosition->setText("<Error!>");
+    lbEndAlias->setText("<Error!>");
     lbEndCabinet->setText("<Error!>");
     return;
   }
   Q_ASSERT(dataList.size() == 1);
   data = dataList.at(0);
   lbEndSchemaPosition->setText(data.value("SchemaPosition").toString());
+  lbEndAlias->setText(data.value("Alias").toString());
   lbEndCabinet->setText(data.value("Cabinet").toString());
 }
 

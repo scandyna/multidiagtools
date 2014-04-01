@@ -1,22 +1,20 @@
-window_sizes 1280 1005 328 946 952 0
+window_sizes 1280 1005 106 1168 952 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 739586 // CableListAllTables
-    1123 952 80 17 49 149
-  active  classdiagram_ref 1059586 // mdtItemsSelectorDialog
-    946 952 100 4 0 0
-  classdiagram_ref 1066114 // mdtMvColumnSelectionDialog
-    1027 952 100 4 0 0
-  classdiagram_ref 1066370 // mdtMvSortingSetupDialog
-    690 669 100 4 0 0
+  active  classdiagram_ref 739586 // CableListAllTables
+    1168 952 80 17 0 89
 end
 show_stereotypes
-selected classdiagram_ref 1059586 // mdtItemsSelectorDialog
+selected attribute_ref 1136898 // ConnectionType_Code_FK
 open
-  operation_ref 1935362 // clearColumnsSortOrder
-  operation_ref 1352322 // lessThan
-  classview_ref 424962 // mdtSqlQueryWidget
-  operation_ref 1927170 // accept
-  operation_ref 1927298 // accept
+  attribute_ref 1136770 // ConnectionType_Code_FK
+  attribute_ref 1136898 // ConnectionType_Code_FK
+  class_ref 952194 // ConnectorContact_tbl
+  class_ref 1140354 // ConnectionType_tbl
+  classview_ref 549378 // mdtClConnector
+  classview_ref 497026 // Article
+  classview_ref 490498 // Unit
+  
+  package_ref 134530 // mdtTest
 end
 end

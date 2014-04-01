@@ -63,11 +63,23 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
    */
   void selectArticleConnector();
 
+  /*! \brief Update connection type text
+   */
+  void updateConnectionTypeText(const QString & type);
+
   /*! \brief Make some checks and accept dialog if ok
    */
   void accept();
 
  private:
+
+  /*! \brief Populate connection type cobobox with available types
+   */
+  void populateConnectionTypeComboBox();
+
+  /*! \brief Set connection type combobox current value
+   */
+  void setCurrentConnectionType(const QString & type);
 
   /*! \brief Display data conetent to dialog's widget
    */

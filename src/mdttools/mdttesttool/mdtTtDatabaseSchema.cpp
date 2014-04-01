@@ -139,6 +139,7 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   // We also remove the sqlite_sequence table
   sourceTables.removeAll("sqlite_sequence");
   // We also ignore some type tables
+  sourceTables.removeAll("ConnectionType_tbl");
   sourceTables.removeAll("LinkDirection_tbl");
   sourceTables.removeAll("LinkType_tbl");
   sourceTables.removeAll("TestNodeUnitType_tbl");
@@ -195,6 +196,9 @@ bool mdtTtDatabaseSchema::setupTables()
 {
   // We must build tables list in correct order, regarding dependencies
   if(!setupVehicleTypeTable()){
+    return false;
+  }
+  if(!setupConnectionTypeTable()){
     return false;
   }
   if(!setupConnectorTable()){
@@ -364,6 +368,9 @@ bool mdtTtDatabaseSchema::createViews()
 
 bool mdtTtDatabaseSchema::populateTables()
 {
+  if(!populateConnectionTypeTable()){
+    return false;
+  }
   if(!populateLinkTypeTable()){
     return false;
   }
@@ -510,6 +517,47 @@ bool mdtTtDatabaseSchema::setupVehicleTypeLinkTable()
   return true;
 }
 
+bool mdtTtDatabaseSchema::setupConnectionTypeTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("ConnectionType_tbl", "UTF8");
+  // Id_PK
+  field.setName("Code_PK");
+  field.setType(QVariant::String);
+  field.setLength(1);
+  table.addField(field, true);
+  // NameEN
+  field = QSqlField();
+  field.setName("NameEN");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // NameFR
+  field = QSqlField();
+  field.setName("NameFR");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // NameDE
+  field = QSqlField();
+  field.setName("NameDE");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // NameIT
+  field = QSqlField();
+  field.setName("NameIT");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
 bool mdtTtDatabaseSchema::setupConnectorTable()
 {
   mdtSqlSchemaTable table;
@@ -609,15 +657,32 @@ bool mdtTtDatabaseSchema::setupConnectorContactTable()
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
+  // ConnectionType_Code_FK [P/S/T] (Pin/Socket/Terminal)
+  field = QSqlField();
+  field.setName("ConnectionType_Code_FK");
+  field.setType(QVariant::String);
+  field.setLength(1);
+  ///field.setDefaultValue("T");
+  table.addField(field, false);
   // Indexes
   table.addIndex("Connector_Id_FK_idx", false);
   if(!table.addFieldToIndex("Connector_Id_FK_idx", "Connector_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
+  table.addIndex("ConnectionType_Code_FK_idx", false);
+  if(!table.addFieldToIndex("ConnectionType_Code_FK_idx", "ConnectionType_Code_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   // Foreign keys
   table.addForeignKey("Connector_Id_FK_fk", "Connector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Connector_Id_FK_fk", "Connector_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("ConnectionType_Code_FK_fk", "ConnectionType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("ConnectionType_Code_FK_fk", "ConnectionType_Code_FK", "Code_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -834,14 +899,14 @@ bool mdtTtDatabaseSchema::setupArticleConnectionTable()
   field.setName("ArticleConnector_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
-  // ArticleConnectorName
-  /**
+  // ConnectionType_Code_FK [P/S/T] (Pin/Socket/Terminal)
   field = QSqlField();
-  field.setName("ArticleConnectorName");
+  field.setName("ConnectionType_Code_FK");
   field.setType(QVariant::String);
-  field.setLength(30);
+  field.setLength(1);
+  /// \todo Remove default value
+  field.setDefaultValue("T");
   table.addField(field, false);
-  */
   // ArticleContactName
   field = QSqlField();
   field.setName("ArticleContactName");
@@ -889,6 +954,11 @@ bool mdtTtDatabaseSchema::setupArticleConnectionTable()
     pvLastError = table.lastError();
     return false;
   }
+  table.addIndex("ConnectionType_Code_FK_idx2", false);
+  if(!table.addFieldToIndex("ConnectionType_Code_FK_idx2", "ConnectionType_Code_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   // Foreign keys
   table.addForeignKey("Article_Id_FK_fk2", "Article_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Article_Id_FK_fk2", "Article_Id_FK", "Id_PK")){
@@ -897,6 +967,11 @@ bool mdtTtDatabaseSchema::setupArticleConnectionTable()
   }
   table.addForeignKey("ArticleConnector_Id_FK_fk", "ArticleConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("ArticleConnector_Id_FK_fk", "ArticleConnector_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("ConnectionType_Code_FK_fk2", "ConnectionType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("ConnectionType_Code_FK_fk2", "ConnectionType_Code_FK", "Code_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -1174,6 +1249,14 @@ bool mdtTtDatabaseSchema::setupUnitConnectionTable()
   field.setName("ArticleConnection_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
+  // ConnectionType_Code_FK [P/S/T] (Pin/Socket/Terminal)
+  field = QSqlField();
+  field.setName("ConnectionType_Code_FK");
+  field.setType(QVariant::String);
+  field.setLength(1);
+  /// \todo Remove default value
+  field.setDefaultValue("T");
+  table.addField(field, false);
   // IsATestPoint
   field = QSqlField();
   field.setName("IsATestPoint");
@@ -1220,14 +1303,6 @@ bool mdtTtDatabaseSchema::setupUnitConnectionTable()
   field.setName("SwAddress");
   field.setType(QVariant::Int);
   table.addField(field, false);
-  // UnitConnectorName
-  /**
-  field = QSqlField();
-  field.setName("UnitConnectorName");
-  field.setType(QVariant::String);
-  field.setLength(30);
-  table.addField(field, false);
-  */
   // UnitContactName
   field = QSqlField();
   field.setName("UnitContactName");
@@ -1254,6 +1329,11 @@ bool mdtTtDatabaseSchema::setupUnitConnectionTable()
     pvLastError = table.lastError();
     return false;
   }
+  table.addIndex("ConnectionType_Code_FK_idx3", false);
+  if(!table.addFieldToIndex("ConnectionType_Code_FK_idx3", "ConnectionType_Code_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   // Foreign keys
   table.addForeignKey("Unit_Id_FK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Unit_Id_FK_fk", "Unit_Id_FK", "Id_PK")){
@@ -1267,6 +1347,11 @@ bool mdtTtDatabaseSchema::setupUnitConnectionTable()
   }
   table.addForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("ConnectionType_Code_FK_fk3", "ConnectionType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("ConnectionType_Code_FK_fk3", "ConnectionType_Code_FK", "Code_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -2229,6 +2314,7 @@ bool mdtTtDatabaseSchema::createUnitView()
         " Unit_tbl.Coordinate ,\n"\
         " Unit_tbl.Cabinet ,\n"\
         " Unit_tbl.SchemaPosition ,\n"\
+        " Unit_tbl.Alias ,\n"\
         " Article_tbl.Id_PK AS Article_Id_PK ,\n"\
         " Article_tbl.ArticleCode ,\n"\
         " Article_tbl.DesignationEN,\n"\
@@ -2906,6 +2992,34 @@ QString mdtTtDatabaseSchema::sqlForDataEdition(const QString & tableName, const 
   sql += " WHERE " + fields.at(0) + " = " + dp + pkData.toString() + dp;
 
   return sql;
+}
+
+bool mdtTtDatabaseSchema::populateConnectionTypeTable()
+{
+  QStringList fields;
+  QList<QVariant> data;
+
+  fields << "Code_PK" << "NameEN" << "NameDE" << "NameFR" << "NameIT";
+
+  // Terminal type
+  data << "T" << "Terminal" << "Klemme" << "Borne" << "Terminale";
+  if(!insertDataIntoTable("ConnectionType_tbl", fields, data)){
+    return false;
+  }
+  // Pin type
+  data.clear();
+  data << "P" << "Pin (male)" << "Stift (männlich)" << "Contact (mâle)" << "perno (maschio)";
+  if(!insertDataIntoTable("ConnectionType_tbl", fields, data)){
+    return false;
+  }
+  // Socket type
+  data.clear();
+  data << "S" << "Socket (female)" << "Buchse (weiblich)" << "Douille (femelle)" << "presa (femminile)";
+  if(!insertDataIntoTable("ConnectionType_tbl", fields, data)){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtTtDatabaseSchema::populateLinkTypeTable()

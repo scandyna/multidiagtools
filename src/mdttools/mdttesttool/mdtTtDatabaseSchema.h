@@ -125,6 +125,10 @@ class mdtTtDatabaseSchema
    */
   bool setupVehicleTypeLinkTable();
 
+  /*! \brief Setup connection type table
+   */
+  bool setupConnectionTypeTable();
+
   /*! \brief Setup connector table
    */
   bool setupConnectorTable();
@@ -382,6 +386,10 @@ class mdtTtDatabaseSchema
   /*! \brief Get SQL statement for data edition
    */
   QString sqlForDataEdition(const QString & tableName, const QStringList & fields, const QList<QVariant> & data);
+
+  /*! \brief Populate Connection type table
+   */
+  bool populateConnectionTypeTable();
 
   /*! \brief Populate LinkType table
    */

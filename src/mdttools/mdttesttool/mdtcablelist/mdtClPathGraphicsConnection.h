@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -40,9 +40,21 @@ class mdtClPathGraphicsConnection : public QGraphicsItem
 {
  public:
 
+  /*! \brief GraphicsItem specific type
+   */
   enum { Type = UserType + 1};
 
+  /*! \brief Connection type
+   */
+  enum ConnectionType {
+                        Terminal ,  /*!< Terminal */
+                        Pin ,       /*!< Pin (male) */
+                        Socket      /*!< Socket (female) */
+                      };
+
   /*! \brief Constructor
+   *
+   * Will set connection type to Terminal
    */
   mdtClPathGraphicsConnection();
 
@@ -50,13 +62,33 @@ class mdtClPathGraphicsConnection : public QGraphicsItem
    */
   ~mdtClPathGraphicsConnection();
 
+  /*! \brief Set connection type
+   */
+  void setConnectionType(ConnectionType t);
+
+  /*! \brief Get connections type
+   */
+  inline ConnectionType connectionType() const { return pvConnectionType; }
+
   /*! \brief Set text
    */
   void setText(const QString &text);
 
   /*! \brief Set the circle diameter
    */
-  void setCircleDiameter(qreal diameter);
+  ///void setCircleDiameter(qreal diameter);
+
+  /*! \brief Set the terminal diameter
+   */
+  void setTerminalDiameter(qreal diameter);
+
+  /*! \brief Set pin size
+   */
+  void setPinSize(qreal width, qreal height);
+
+  /*! \brief Set socket size
+   */
+  void setSocketSize(qreal width, qreal height);
 
   /*! \brief Get the position for next connection (node)
    *
@@ -101,6 +133,22 @@ class mdtClPathGraphicsConnection : public QGraphicsItem
 
  private:
 
+  /*! \brief Paint connection
+   */
+  void paintConnection(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+  /*! \brief Paint terminal
+   */
+  void paintTerminal(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+  /*! \brief Paint pin
+   */
+  void paintPin(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+  /*! \brief Paint socket
+   */
+  void paintSocket(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
   /*! \brief Update the bounding rect regarding current text and circle sizes
    */
   void updateBoundingRect();
@@ -109,9 +157,11 @@ class mdtClPathGraphicsConnection : public QGraphicsItem
 
   QList<mdtClPathGraphicsLink *> pvLinkList;
   QString pvText;
-  QRectF pvCircleRect;
+  ///QRectF pvCircleRect;
+  QRectF pvConnectionRect;
   QRectF pvTextRect;
   QRectF pvBoundingRect;
+  ConnectionType pvConnectionType;
 };
 
 #endif // #ifndef MDT_CL_PATH_GRAPHICS_CONNECTION_H
