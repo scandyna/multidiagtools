@@ -50,7 +50,7 @@ namespace mdtClPathGraphPrivate
    * Edge data container
    *
    * Note:
-   *  We use e directed graph, so we can handle directed links (typically diodes).
+   *  We use a directed graph, so we can handle directed links (typically diodes).
    *  For a bidirectionnal link, we will also add 2 edges per link,
    *   The "normal" (start->end) and its complement (end->start) .
    */

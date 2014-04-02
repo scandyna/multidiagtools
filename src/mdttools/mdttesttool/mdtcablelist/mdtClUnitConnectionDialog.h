@@ -66,6 +66,10 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
 
  private slots:
 
+  /*! \brief Update connection type text
+   */
+  void updateConnectionTypeText(const QString & type);
+
   /*! \brief Copy article connection function EN to unit connection function EN
    */
   void copyFunctionEN();
@@ -117,6 +121,14 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
   void reject();
 
  private:
+
+  /*! \brief Populate connection type cobobox with available types
+   */
+  void populateConnectionTypeComboBox();
+
+  /*! \brief Set connection type combobox current value
+   */
+  void setCurrentConnectionType(const QString & type);
 
   /*! \brief Set unit connection based on a free article connection
    *

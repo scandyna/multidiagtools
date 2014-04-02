@@ -253,7 +253,7 @@ class mdtClUnit : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError().
    */
-  bool editConnection(const mdtClUnitConnectionData & data);
+  bool editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data);
 
   /*! \brief Remove a single unit connection
    */

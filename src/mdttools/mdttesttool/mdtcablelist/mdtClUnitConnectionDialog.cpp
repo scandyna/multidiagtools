@@ -25,6 +25,9 @@
 #include <QSqlQueryModel>
 #include <QSqlError>
 #include <QMessageBox>
+#include <QList>
+#include <QSqlRecord>
+#include <QLocale>
 
 //#include <QDebug>
 
@@ -50,6 +53,9 @@ mdtClUnitConnectionDialog::mdtClUnitConnectionDialog(QWidget *parent, QSqlDataba
   }
   // Currently, ranges functionnality is not implemented
   gbRanges->setVisible(false);
+  // Connection type
+  connect(cbConnectionType, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(updateConnectionTypeText(const QString &)));
+  populateConnectionTypeComboBox();
 }
 
 mdtClUnitConnectionDialog::~mdtClUnitConnectionDialog()
@@ -68,6 +74,43 @@ void mdtClUnitConnectionDialog::setData(const mdtClUnitConnectionData &data, con
 const mdtClUnitConnectionData &mdtClUnitConnectionDialog::data() const
 {
   return pvData;
+}
+
+void mdtClUnitConnectionDialog::updateConnectionTypeText(const QString& type)
+{
+  QLocale locale;
+  mdtClUnit unit(0, pvDatabase);
+  QString fieldName;
+  QString sql;
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  // Select field regarding language
+  switch(locale.language()){
+    case QLocale::French:
+      fieldName = "NameFR";
+      break;
+    case QLocale::German:
+      fieldName = "NameDE";
+      break;
+    case QLocale::Italian:
+      fieldName = "NameIT";
+      break;
+    default:
+      fieldName = "NameEN";
+  }
+  // Get text
+  sql = "SELECT " + fieldName + " FROM ConnectionType_tbl WHERE Code_PK = '" + type + "'";
+  dataList = unit.getData(sql , &ok);
+  if(!ok){
+    lbConnectionTypeText->setText(tr("<Error!>"));
+    return;
+  }
+  if(dataList.size() < 1){
+    lbConnectionTypeText->setText("");
+    return;
+  }
+  lbConnectionTypeText->setText(dataList.at(0).value(fieldName).toString());
 }
 
 void mdtClUnitConnectionDialog::copyFunctionEN()
@@ -245,6 +288,41 @@ void mdtClUnitConnectionDialog::reject()
 {
   pvData.clear();
   QDialog::reject();
+}
+
+void mdtClUnitConnectionDialog::populateConnectionTypeComboBox()
+{
+  mdtClUnit unit(0, pvDatabase);
+  QList<QSqlRecord> dataList;
+  bool ok;
+  int i;
+
+  cbConnectionType->clear();
+  // Get available codes
+  dataList = unit.getData("SELECT Code_PK FROM ConnectionType_tbl", &ok);
+  if(!ok){
+    cbConnectionType->addItem(tr("<Error!>"));
+    lbConnectionTypeText->setText(tr("<Error!>"));
+    return;
+  }
+  // Populate combo box
+  for(i = 0; i < dataList.size(); ++i){
+    cbConnectionType->addItem(dataList.at(i).value("Code_PK").toString());
+  }
+}
+
+void mdtClUnitConnectionDialog::setCurrentConnectionType(const QString& type)
+{
+  int idx;
+
+  for(idx = 0; idx < cbConnectionType->count(); ++idx){
+    if(cbConnectionType->itemText(idx) == type){
+      cbConnectionType->setCurrentIndex(idx);
+      return;
+    }
+  }
+  // type not found
+  cbConnectionType->setCurrentIndex(-1);
 }
 
 void mdtClUnitConnectionDialog::setConnectionFromFreeArticleConnection()
@@ -461,6 +539,7 @@ void mdtClUnitConnectionDialog::updateDialog()
     lbArticleFunctionIT->setText(pvData.articleConnectionData().value("FunctionIT").toString());
   }
   // Unit connection pvData part
+  setCurrentConnectionType(pvData.value("ConnectionType_Code_FK").toString());
   leSchemaPage->setText(pvData.value("SchemaPage").toString());
   leFunctionEN->setText(pvData.value("FunctionEN").toString());
   leFunctionFR->setText(pvData.value("FunctionFR").toString());
@@ -473,6 +552,7 @@ void mdtClUnitConnectionDialog::updateDialog()
 
 void mdtClUnitConnectionDialog::updateData()
 {
+  pvData.setValue("ConnectionType_Code_FK", cbConnectionType->currentText());
   if(leSchemaPage->text().isEmpty()){
     pvData.setValue("SchemaPage", QVariant());
   }else{

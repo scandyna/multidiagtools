@@ -42,8 +42,8 @@ mdtClPathGraphicsConnection::mdtClPathGraphicsConnection()
   setFlag(ItemSendsGeometryChanges);
   setCacheMode(DeviceCoordinateCache);
   setZValue(-1);
-  ///setConnectionType(Terminal);
-  setConnectionType(Socket);
+  setConnectionType(Terminal);
+  ///setConnectionType(Socket);
 }
 
 mdtClPathGraphicsConnection::~mdtClPathGraphicsConnection()

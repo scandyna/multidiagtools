@@ -662,7 +662,7 @@ void mdtClUnitEditor::editConnection()
     return;
   }
   // Edit connection
-  if(!unit.editConnection(dialog.data())){
+  if(!unit.editConnection(connectionId, dialog.data())){
     pvLastError = unit.lastError();
     displayLastError();
     return;

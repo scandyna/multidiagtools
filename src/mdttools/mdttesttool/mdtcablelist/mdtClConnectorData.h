@@ -66,8 +66,11 @@ class mdtClConnectorData : public mdtSqlRecord
 
   /*! \brief Add contact data
    *
+   * Will also update Connector_Id_FK in data.
+   *
    * \pre data must contains following fields:
    *  - Id_PK
+   *  - Connector_Id_FK
    */
   void addContactData(const mdtSqlRecord & data);
 

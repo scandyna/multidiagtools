@@ -73,7 +73,12 @@ class mdtCableListTest : public mdtTest
   /*
    * Create some connectors for tests:
    *  - Id_PK : 1
+   *
    *  - Id_PK : 2
+   *
+   *  - Id_PK : 3
+   *   -> Contact : Id_PK : 300 (, Connector_Id_FK : 3) , ConnectionType_Code_FK : P
+   *   -> Contact : Id_PK : 301 (, Connector_Id_FK : 3) , ConnectionType_Code_FK : S
    */
   void createTestConnectors();
   /*
@@ -176,10 +181,14 @@ class mdtCableListTest : public mdtTest
    * Create some unit connectors for tests:
    *
    *  - Id_PK : 100000 , Unit_Id_FK : 1000 , Connector_Id_FK : NULL , ArticleConnector_Id_FK : NULL , Name : Unit connector 100000
-   *   -> Connection: Id_PK 10005 , UnitContactName : Unit contact 10005
+   *   -> Connection: Id_PK 10005 , ConnectionType_Code_FK : T , UnitContactName : Unit contact 10005
    *
    *  - Id_PK : 200000 , Unit_Id_FK : 2000 , Connector_Id_FK : 1 , ArticleConnector_Id_FK : 200 , Name : Unit connector 200000
-   *   -> Connection: Id_PK 20005 , ArticleConnection_Id_FK : 25 , Name : Unit contact 20005
+   *   -> Connection: Id_PK 20005 , ArticleConnection_Id_FK : 25 , ConnectionType_Code_FK : S , Name : Unit contact 20005
+   *
+   *  - Id_PK : 300000 , Unit_Id_FK : 1000 , Connector_Id_FK : 3 , ArticleConnector_Id_FK : NULL , Name : Unit connector 300000
+   *   -> Connection: Id_PK 30005 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : P , Name : Unit contact 30005
+   *   -> Connection: Id_PK 30006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : Unit contact 30006
    */
   void createTestUnitConnectors();
   /*

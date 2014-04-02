@@ -5,9 +5,11 @@ diagrams
     1168 952 80 17 0 89
 end
 show_stereotypes
-selected attribute_ref 1136898 // ConnectionType_Code_FK
+selected attribute_ref 1143554 // DINcodeEtAutres
 open
   attribute_ref 1136770 // ConnectionType_Code_FK
+  classrelation_ref 1031810 // <unidirectional association>
+  attribute_ref 1143426 // Alias
   attribute_ref 1136898 // ConnectionType_Code_FK
   class_ref 952194 // ConnectorContact_tbl
   class_ref 1140354 // ConnectionType_tbl

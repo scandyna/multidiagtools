@@ -179,6 +179,7 @@ bool mdtClUnit::addConnectionDataListFromConnectorContactIdList(mdtClUnitConnect
   for(i = 0; i < connectorContactDataList.size(); ++i){
     unitConnectionData.clearValues();
     unitConnectionData.setValue("UnitContactName", connectorContactDataList.at(i).value("Name"));
+    unitConnectionData.setValue("ConnectionType_Code_FK", connectorContactDataList.at(i).value("ConnectionType_Code_FK"));
     unitConnectionData.setValue("Unit_Id_FK", data.value("Unit_Id_FK"));
     unitConnectionData.setValue("UnitConnector_Id_FK", data.value("Id_PK"));
     data.addConnectionData(unitConnectionData);
@@ -287,6 +288,7 @@ QList<mdtClUnitConnectionData> mdtClUnit::getUnitConnectionDataListFromArticleCo
       return unitConnectionDataList;
     }
     unitConnectionData.setValue("UnitConnector_Id_FK", unitConnectorId);
+    unitConnectionData.setValue("ConnectionType_Code_FK", articleConnectionData.value("ConnectionType_Code_FK"));
     unitConnectionData.setArticleConnectionData(articleConnectionData);
     if(copyContactName){
       unitConnectionData.setValue("UnitContactName", articleConnectionData.value("ArticleContactName"));
@@ -326,6 +328,7 @@ QList<mdtClUnitConnectionData> mdtClUnit::getUnitConnectionDataListFromArticleCo
     unitConnectionData.clearValues();
     unitConnectionData.setValue("Unit_Id_FK", unitId);
     unitConnectionData.setValue("UnitConnector_Id_FK", unitConnectorId);
+    unitConnectionData.setValue("ConnectionType_Code_FK", articleConnectionData.value("ConnectionType_Code_FK"));
     unitConnectionData.setArticleConnectionData(articleConnectionData);
     if(copyContactName){
       unitConnectionData.setValue("UnitContactName", articleConnectionData.value("ArticleContactName"));
@@ -616,10 +619,11 @@ bool mdtClUnit::addConnections(const QList<mdtClUnitConnectionData> & dataList, 
   return true;
 }
 
-bool mdtClUnit::editConnection(const mdtClUnitConnectionData & data)
+bool mdtClUnit::editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data)
 {
   Q_ASSERT(!data.value("Id_PK").isNull());
-  return updateRecord("UnitConnection_tbl", data, "Id_PK", data.value("Id_PK"));
+  ///return updateRecord("UnitConnection_tbl", data, "Id_PK", data.value("Id_PK"));
+  return updateRecord("UnitConnection_tbl", data, "Id_PK", connectionId);
 }
 
 bool mdtClUnit::removeConnection(const QVariant & unitConnectionId, bool handleTransaction)

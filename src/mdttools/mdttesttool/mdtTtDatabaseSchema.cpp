@@ -2554,6 +2554,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " US.Coordinate AS StartCoordinate ,\n"\
               " UCS.Name AS StartUnitConnectorName ,\n"\
               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
+              " UCNXS.ConnectionType_Code_FK AS StartConnectionType_Code_FK,\n"\
               " VE.Id_PK AS EndVehicleType_Id_PK,\n"\
               " VE.Type AS EndVehicleType ,\n"\
               " VE.SubType AS EndVehicleSubType ,\n"\
@@ -2563,7 +2564,8 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " UE.Cabinet AS EndCabinet,\n"\
               " UE.Coordinate AS EndCoordinate ,\n"\
               " UCE.Name AS EndUnitConnectorName ,\n"\
-              " UCNXE.UnitContactName AS EndUnitContactName\n";
+              " UCNXE.UnitContactName AS EndUnitContactName,\n"\
+              " UCNXE.ConnectionType_Code_FK AS EndConnectionType_Code_FK\n";
   sql = "CREATE VIEW LinkList_view AS\n";
   sql += selectSql;
   sql += "FROM Link_tbl LNK\n"\

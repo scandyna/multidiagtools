@@ -23,6 +23,7 @@
 #include "mdtClPathGraphicsLink.h"
 #include <QSqlQueryModel>
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QSqlError>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -311,10 +312,11 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
   QSqlError sqlError; 
   QVariant data;
   QSqlQuery query(pvDatabase);
+  QSqlRecord record;
   QString str;
 
-  sql = "SELECT StartVehicleType, StartVehicleSubType, StartCabinet, StartSchemaPosition, StartUnitConnectorName, StartUnitContactName, "\
-        "EndVehicleType, EndVehicleSubType, EndCabinet, EndSchemaPosition, EndUnitConnectorName, EndUnitContactName, Identification, "\
+  sql = "SELECT StartVehicleType, StartVehicleSubType, StartCabinet, StartSchemaPosition, StartUnitConnectorName, StartUnitContactName, StartConnectionType_Code_FK, "\
+        "EndVehicleType, EndVehicleSubType, EndCabinet, EndSchemaPosition, EndUnitConnectorName, EndUnitContactName, EndConnectionType_Code_FK, Identification, "\
         "LinkType_Code_FK "\
         "FROM LinkList_view ";
   sql += " WHERE UnitConnectionStart_Id_FK = " + QString::number(startConnectionId);
@@ -331,26 +333,45 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
     return false;
   }
   query.next();
+  record = query.record();
   // Set start data
-  str = query.value(0).toString() + "\n";
-  str += query.value(1).toString() + "\n";
-  str += query.value(2).toString() + "\n";
-  str += query.value(3).toString() + "\n";
-  str += query.value(4).toString() + ";";
-  str += query.value(5).toString();
+  str = record.value("StartVehicleType").toString() + "\n";
+  str += record.value("StartVehicleSubType").toString() + "\n";
+  str += record.value("StartCabinet").toString() + "\n";
+  str += record.value("StartSchemaPosition").toString() + "\n";
+  str += record.value("StartUnitConnectorName").toString() + ";";
+  str += record.value("StartUnitContactName").toString();
   startConnection->setText(str);
+  // Set start connection type
+  str = record.value("StartConnectionType_Code_FK").toString();
+  if(str == "P"){
+    startConnection->setConnectionType(mdtClPathGraphicsConnection::Pin);
+  }else if(str == "S"){
+    startConnection->setConnectionType(mdtClPathGraphicsConnection::Socket);
+  }else{
+    startConnection->setConnectionType(mdtClPathGraphicsConnection::Terminal);
+  }
   // Set end data
-  str = query.value(6).toString() + "\n";
-  str += query.value(7).toString() + "\n";
-  str += query.value(8).toString() + "\n";
-  str += query.value(9).toString() + "\n";
-  str += query.value(10).toString() + ";";
-  str += query.value(11).toString();
+  str = record.value("EndVehicleType").toString() + "\n";
+  str += record.value("EndVehicleSubType").toString() + "\n";
+  str += record.value("EndCabinet").toString() + "\n";
+  str += record.value("EndSchemaPosition").toString() + "\n";
+  str += record.value("EndUnitConnectorName").toString() + ";";
+  str += record.value("EndUnitContactName").toString();
   endConnection->setText(str);
+  // Set end connection type
+  str = record.value("EndConnectionType_Code_FK").toString();
+  if(str == "P"){
+    endConnection->setConnectionType(mdtClPathGraphicsConnection::Pin);
+  }else if(str == "S"){
+    endConnection->setConnectionType(mdtClPathGraphicsConnection::Socket);
+  }else{
+    endConnection->setConnectionType(mdtClPathGraphicsConnection::Terminal);
+  }
   // Set link data
-  str = query.value(12).toString();
+  str = record.value("Identification").toString();
   link->setText(str);
-  str = query.value(13).toString();
+  str = record.value("LinkType_Code_FK").toString();
   if(str == "CONNECTION"){
     link->setLinkType(mdtClPathGraphicsLink::Connection);
   }else{

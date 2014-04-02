@@ -1,6 +1,6 @@
 format 206
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 28
+  revision 29
   modified_by 2 "philippe"
   // class settings
   
@@ -419,6 +419,15 @@ ${inlines}
 	  b parent class_ref 764674 // Article_tbl
       end
 
+      classrelation 1031810 // <unidirectional association>
+	relation 1020674 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1031810 // <unidirectional association>
+	  b parent class_ref 764802 // Unit_tbl
+      end
+
       attribute 785026 "Article_Id_FK"
 	private explicit_type "string"
 	stereotype "FK"
@@ -444,13 +453,16 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 1031810 // <unidirectional association>
-	relation 1020674 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+      attribute 1143426 "Alias"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
-	    classrelation_ref 1031810 // <unidirectional association>
-	  b parent class_ref 764802 // Unit_tbl
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       attribute 833026 "Coordinate"
@@ -468,6 +480,18 @@ ${inlines}
       attribute 833154 "Cabinet"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1143554 "DINcodeEtAutres"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
 	php_decl ""

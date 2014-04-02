@@ -21,6 +21,8 @@
 #include "mdtClConnectorData.h"
 #include <QString>
 
+//#include <QDebug>
+
 mdtClConnectorData::mdtClConnectorData()
 {
 }
@@ -53,9 +55,12 @@ QList<mdtSqlRecord> mdtClConnectorData::contactDataList() const
 
 void mdtClConnectorData::addContactData(const mdtSqlRecord & data) 
 {
-  Q_ASSERT(data.indexOf("Id_PK") > 0);
+  Q_ASSERT(data.contains("Id_PK"));
+  Q_ASSERT(data.contains("Connector_Id_FK"));
 
-  pvContactDataList.append(data);
+  mdtSqlRecord _data = data;
+  _data.setValue("Connector_Id_FK", value("Id_PK"));
+  pvContactDataList.append(_data);
 }
 
 bool mdtClConnectorData::setContactData(const QVariant & contactId, const mdtSqlRecord & data) 

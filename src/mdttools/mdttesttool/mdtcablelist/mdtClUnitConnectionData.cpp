@@ -35,6 +35,7 @@ mdtClUnitConnectionData::mdtClUnitConnectionData(const QSqlRecord & record)
   Q_ASSERT(indexOf("Unit_Id_FK") >= 0);
   Q_ASSERT(indexOf("UnitConnector_Id_FK") >= 0);
   Q_ASSERT(indexOf("ArticleConnection_Id_FK") >= 0);
+  Q_ASSERT(contains("ConnectionType_Code_FK"));
   Q_ASSERT(indexOf("UnitContactName") >= 0);
   Q_ASSERT(indexOf("SchemaPage") >= 0);
   Q_ASSERT(indexOf("SwAddress") >= 0);
