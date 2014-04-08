@@ -65,14 +65,32 @@
 
 #include <QDebug>
 
+/**
+void mdtCableListTest::createSenario()
+{
+  createTestVehicleTypes();
+  createTestArticles();
+  createTestConnectors();
+  createTestArticleConnections();
+  createTestArticleLinks();
+  createTestArticleConnectors();
+  createTestUnits();
+  createTestVehicleTypeUnitAssignations();
+  createTestUnitConnections();
+  createTestLinks();
+}
+*/
+
 void mdtCableListTest::initTestCase()
 {
   createDatabaseSchema();
   QVERIFY(pvDatabaseManager.database().isOpen());
+  pvScenario = new mdtCableListTestScenario(pvDatabaseManager.database());
 }
 
 void mdtCableListTest::cleanupTestCase()
 {
+  delete pvScenario;
 }
 
 void mdtCableListTest::articleConnectionDataTest()
@@ -1217,6 +1235,9 @@ void mdtCableListTest::pathGraphTest()
 
 void mdtCableListTest::createTestVehicleTypes()
 {
+  pvScenario->createTestVehicleTypes();
+  
+  /**
   mdtTtBase tb(0, pvDatabaseManager.database());
   mdtSqlRecord record;
   QList<QSqlRecord> dataList;
@@ -1226,6 +1247,7 @@ void mdtCableListTest::createTestVehicleTypes()
   /*
    * Add Vehicle type 1
    */
+  /**
   record.setValue("Id_PK", 1);
   record.setValue("Type", "Vehicle type 1");
   QVERIFY(tb.addRecord(record, "VehicleType_tbl"));
@@ -1238,6 +1260,7 @@ void mdtCableListTest::createTestVehicleTypes()
   /*
    * Add Vehicle type 2
    */
+  /**
   record.setValue("Id_PK", 2);
   record.setValue("Type", "Vehicle type 2");
   QVERIFY(tb.addRecord(record, "VehicleType_tbl"));
@@ -1247,11 +1270,13 @@ void mdtCableListTest::createTestVehicleTypes()
   QCOMPARE(dataList.size(), 2);
   QCOMPARE(dataList.at(1).value("Id_PK"), QVariant(2));
   QCOMPARE(dataList.at(1).value("Type"), QVariant("Vehicle type 2"));
-
+*/
 }
 
 void mdtCableListTest::removeTestVehicleTypes()
 {
+  pvScenario->removeTestVehicleTypes();
+  /**
   mdtTtBase tb(0, pvDatabaseManager.database());
   QList<QSqlRecord> dataList;
   bool ok;
@@ -1261,6 +1286,7 @@ void mdtCableListTest::removeTestVehicleTypes()
   dataList = tb.getData("SELECT * FROM VehicleType_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
+  */
 }
 
 void mdtCableListTest::createTestConnectors()

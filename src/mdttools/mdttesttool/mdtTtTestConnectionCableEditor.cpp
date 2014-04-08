@@ -18,9 +18,9 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtCcTestConnectionCableEditor.h"
-#include "ui_mdtCcTestConnectionCableEditor.h"
-#include "mdtCcTestConnectionCable.h"
+#include "mdtTtTestConnectionCableEditor.h"
+#include "ui_mdtTtTestConnectionCableEditor.h"
+#include "mdtTtTestConnectionCable.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtTtTestNode.h"
 #include "mdtSqlFormWidget.h"
@@ -35,12 +35,12 @@
 
 #include <QDebug>
 
-mdtCcTestConnectionCableEditor::mdtCcTestConnectionCableEditor(QWidget *parent, QSqlDatabase db)
+mdtTtTestConnectionCableEditor::mdtTtTestConnectionCableEditor(QWidget *parent, QSqlDatabase db)
  : mdtSqlForm(parent, db)
 {
 }
 
-bool mdtCcTestConnectionCableEditor::setupTables()
+bool mdtTtTestConnectionCableEditor::setupTables()
 {
   if(!setupTestCableTable()){
     return false;
@@ -51,9 +51,9 @@ bool mdtCcTestConnectionCableEditor::setupTables()
   return true;
 }
 
-void mdtCcTestConnectionCableEditor::generateLinks()
+void mdtTtTestConnectionCableEditor::generateLinks()
 {
-  mdtCcTestConnectionCable tcc(this, database());
+  mdtTtTestConnectionCable tcc(this, database());
   mdtTtTestNode tn(this, database());
   QVariant cableId;
   QVariant dutVehicleId;
@@ -157,10 +157,10 @@ void mdtCcTestConnectionCableEditor::generateLinks()
   select("TestLink_view");
 }
 
-void mdtCcTestConnectionCableEditor::removeLinks()
+void mdtTtTestConnectionCableEditor::removeLinks()
 {
   mdtSqlTableWidget *widget;
-  mdtCcTestConnectionCable tcc(this, database());
+  mdtTtTestConnectionCable tcc(this, database());
   QMessageBox msgBox;
   QModelIndexList indexes;
 
@@ -191,9 +191,9 @@ void mdtCcTestConnectionCableEditor::removeLinks()
 }
 
 /**
-void mdtCcTestConnectionCableEditor::connectTestCable()
+void mdtTtTestConnectionCableEditor::connectTestCable()
 {
-  mdtCcTestConnectionCable tcc(this, database());
+  mdtTtTestConnectionCable tcc(this, database());
   QVariant testCableId;
   QVariant dutVehicleId;
   QVariant testNodeId;
@@ -222,9 +222,9 @@ void mdtCcTestConnectionCableEditor::connectTestCable()
 */
 
 /**
-void mdtCcTestConnectionCableEditor::disconnectTestCable()
+void mdtTtTestConnectionCableEditor::disconnectTestCable()
 {
-  mdtCcTestConnectionCable tcc(this, database());
+  mdtTtTestConnectionCable tcc(this, database());
   QVariant testCableId;
 
   // Let user choose a test cable to disconnect
@@ -239,7 +239,7 @@ void mdtCcTestConnectionCableEditor::disconnectTestCable()
 }
 */
 
-QVariant mdtCcTestConnectionCableEditor::selectDutVehicleId()
+QVariant mdtTtTestConnectionCableEditor::selectDutVehicleId()
 {
   mdtSqlSelectionDialog selectionDialog;
   ///QSqlError sqlError;
@@ -254,7 +254,7 @@ QVariant mdtCcTestConnectionCableEditor::selectDutVehicleId()
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get vhicle type list."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCableEditor");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCableEditor");
     pvLastError.commit();
     ///displayLastError();
     return QVariant();
@@ -278,7 +278,7 @@ QVariant mdtCcTestConnectionCableEditor::selectDutVehicleId()
   return selectionDialog.selectionResult().at(0);
 }
 
-QVariant mdtCcTestConnectionCableEditor::selectDutUnitId(const QVariant & vehicleId)
+QVariant mdtTtTestConnectionCableEditor::selectDutUnitId(const QVariant & vehicleId)
 {
   mdtSqlSelectionDialog selectionDialog;
   ///QSqlError sqlError;
@@ -293,7 +293,7 @@ QVariant mdtCcTestConnectionCableEditor::selectDutUnitId(const QVariant & vehicl
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get unit list."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCableEditor");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCableEditor");
     pvLastError.commit();
     ///displayLastError();
     return QVariant();
@@ -317,9 +317,9 @@ QVariant mdtCcTestConnectionCableEditor::selectDutUnitId(const QVariant & vehicl
   return selectionDialog.selectionResult().at(0);
 }
 
-QVariant mdtCcTestConnectionCableEditor::selectTestNode()
+QVariant mdtTtTestConnectionCableEditor::selectTestNode()
 {
-  mdtCcTestConnectionCable tcc(this, database());
+  mdtTtTestConnectionCable tcc(this, database());
   mdtSqlSelectionDialog selectionDialog;
   ///QSqlError sqlError;
   ///QSqlQueryModel model;
@@ -334,7 +334,7 @@ QVariant mdtCcTestConnectionCableEditor::selectTestNode()
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get test node list."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCableEditor");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCableEditor");
     pvLastError.commit();
     ///displayLastError();
     return QVariant();
@@ -358,9 +358,9 @@ QVariant mdtCcTestConnectionCableEditor::selectTestNode()
   return selectionDialog.selectionResult().at(0);
 }
 
-QVariant mdtCcTestConnectionCableEditor::selectTestCable()
+QVariant mdtTtTestConnectionCableEditor::selectTestCable()
 {
-  mdtCcTestConnectionCable tcc(this, database());
+  mdtTtTestConnectionCable tcc(this, database());
   mdtSqlSelectionDialog selectionDialog;
   ///QSqlError sqlError;
   ///QSqlQueryModel model;
@@ -374,7 +374,7 @@ QVariant mdtCcTestConnectionCableEditor::selectTestCable()
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get test cable list."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCableEditor");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCableEditor");
     pvLastError.commit();
     ///displayLastError();
     return QVariant();
@@ -396,9 +396,9 @@ QVariant mdtCcTestConnectionCableEditor::selectTestCable()
   return selectionDialog.selectionResult().at(0);
 }
 
-QVariant mdtCcTestConnectionCableEditor::selectStartConnectorId(const QVariant & dutUnitId) 
+QVariant mdtTtTestConnectionCableEditor::selectStartConnectorId(const QVariant & dutUnitId) 
 {
-  mdtCcTestConnectionCable tcc(this, database());
+  mdtTtTestConnectionCable tcc(this, database());
   mdtSqlSelectionDialog selectionDialog;
   ///QSqlError sqlError;
   ///QSqlQueryModel model;
@@ -412,7 +412,7 @@ QVariant mdtCcTestConnectionCableEditor::selectStartConnectorId(const QVariant &
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get unit connector list."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCableEditor");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCableEditor");
     pvLastError.commit();
     ///displayLastError();
     return QVariant();
@@ -436,9 +436,9 @@ QVariant mdtCcTestConnectionCableEditor::selectStartConnectorId(const QVariant &
   return selectionDialog.selectionResult().at(0);
 }
 
-QList<QVariant> mdtCcTestConnectionCableEditor::selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList) 
+QList<QVariant> mdtTtTestConnectionCableEditor::selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList) 
 {
-  mdtCcTestConnectionCable tcc(this, database());
+  mdtTtTestConnectionCable tcc(this, database());
   mdtSqlSelectionDialog selectionDialog;
   QModelIndexList selectedItems;
   QList<QVariant> idList;
@@ -455,7 +455,7 @@ QList<QVariant> mdtCcTestConnectionCableEditor::selectEndConnectorIdList(const Q
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get unit connector list."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtCcTestConnectionCableEditor");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCableEditor");
     pvLastError.commit();
     ///displayLastError();
     return idList;
@@ -482,9 +482,9 @@ QList<QVariant> mdtCcTestConnectionCableEditor::selectEndConnectorIdList(const Q
   return idList;  
 }
 
-bool mdtCcTestConnectionCableEditor::setupTestCableTable()
+bool mdtTtTestConnectionCableEditor::setupTestCableTable()
 {
-  Ui::mdtCcTestConnectionCableEditor tcce;
+  Ui::mdtTtTestConnectionCableEditor tcce;
 
   // Setup main form widget
   tcce.setupUi(mainSqlWidget());
@@ -498,7 +498,7 @@ bool mdtCcTestConnectionCableEditor::setupTestCableTable()
   return true;
 }
 
-bool mdtCcTestConnectionCableEditor::setupTestLinkTable()
+bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbGenerateLinks;

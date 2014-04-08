@@ -36,7 +36,7 @@ class mdtTtTestNodeEditor;
 class mdtTtTestModelEditor;
 class mdtTtTestModelItemEditor;
 class mdtSqlWindow;
-class mdtCcTestConnectionCableEditor;
+class mdtTtTestConnectionCableEditor;
 class mdtTtCableChecker;
 class mdtTtCableCheckerWindow;
 
@@ -176,7 +176,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   
   mdtTtTestNodeEditor *pvTestNodeEditor;
   // Test connection cable editor
-  mdtCcTestConnectionCableEditor *pvTestConnectionCableEditor;
+  mdtTtTestConnectionCableEditor *pvTestConnectionCableEditor;
   mdtSqlWindow *pvTestConnectionCableEditorWindow;
   // Test editor
   mdtTtTestModelEditor *pvTestEditor;

@@ -42,9 +42,9 @@
 #include <QGraphicsView>
 #include <QGraphicsSimpleTextItem>
 #include <QSqlDatabase>
-#include "mdtClPathGraphicsConnection.h"
-#include "mdtClPathGraphicsLink.h"
-#include "mdtClPathGraph.h"
+///#include "mdtClPathGraphicsConnection.h"
+///#include "mdtClPathGraphicsLink.h"
+///#include "mdtClPathGraph.h"
 
 #include <QMessageBox>
 #include <QInputDialog>
@@ -338,6 +338,7 @@ void mdtClSandbox::essais()
 {
 }
 
+/**
 void mdtClSandbox::graphicsView()
 {
   QSqlDatabase db;
@@ -379,6 +380,7 @@ void mdtClSandbox::graphicsView()
     QTest::qWait(500);
   }
 }
+*/
 
 /*
  * Main

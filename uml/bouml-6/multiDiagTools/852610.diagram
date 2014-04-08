@@ -1,29 +1,24 @@
-format 204
+format 206
 
 classcanvas 128002 class_ref 888194 // mdtClLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 98.4 271 2000
+  xyz 37.9 265.8 2000
 end
 classcanvas 128130 class_ref 1067266 // mdtSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 419.5 61.6 2000
+  xyz 419.5 61.4 2000
 end
 classcanvas 128514 class_ref 1113858 // mdtClUnitConnectionData
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 691.6 203.2 2006
+  xyz 691.7 203.8 2006
 end
 classcanvas 128770 class_ref 1113730 // mdtClArticleConnectionData
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 678.7 60 3005
+  xyz 678.4 60.9 3005
 end
 classcanvas 129794 class_ref 1120386 // mdtClVehicleTypeLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 647 537.8 2000
-end
-relationcanvas 128386 relation_ref 1378434 // <generalisation>
-  from ref 128002 z 2001 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  xyz 647.1 537 2000
 end
 relationcanvas 128642 relation_ref 1371522 // <generalisation>
   from ref 128514 z 2007 to ref 128130
@@ -44,11 +39,16 @@ relationcanvas 129154 relation_ref 1391490 // <directional composition>
   decenter_begin 740
   from ref 128002 z 2007 to ref 128514
   no_role_a no_role_b
-  multiplicity_a_pos 725 245 3000 no_multiplicity_b
+  multiplicity_a_pos 682 248 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1391746 // <directional composition>
-  from ref 128002 z 2001 stereotype "<<list>>" xyz 612.5 515.5 3000 to ref 129794
-  role_a_pos 540 536 3000 no_role_b
-  multiplicity_a_pos 640 569 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<list>>" xyz 611.5 548 3000 to ref 129794
+  role_a_pos 516 532 3000 no_role_b
+  multiplicity_a_pos 612 566 3000 no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 1432194 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

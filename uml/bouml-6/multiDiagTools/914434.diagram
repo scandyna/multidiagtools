@@ -1,6 +1,6 @@
 format 206
 
-classcanvas 128002 class_ref 979330 // mdtCcTestConnectionCable
+classcanvas 128002 class_ref 979330 // mdtTtTestConnectionCable
   classdiagramsettings member_max_width 0 end
   xyz 69 390 2000
 end

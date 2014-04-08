@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CC_TEST_CONNECTION_CABLE_H
-#define MDT_CC_TEST_CONNECTION_CABLE_H
+#ifndef MDT_TT_TEST_CONNECTION_CABLE_H
+#define MDT_TT_TEST_CONNECTION_CABLE_H
 
 #include "mdtTtBase.h"
 #include "mdtClLinkData.h"
@@ -31,21 +31,21 @@ class mdtClPathGraph;
 
 /*! \brief Helper class for test connection cable edition
  */
-class mdtCcTestConnectionCable : public mdtTtBase
+class mdtTtTestConnectionCable : public mdtTtBase
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtCcTestConnectionCable(QObject *parent, QSqlDatabase db);
+  mdtTtTestConnectionCable(QObject *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
-  ~mdtCcTestConnectionCable();
+  ~mdtTtTestConnectionCable();
 
   /*! \brief Get SQL statement for test node selection
    */
-  QString sqlForTestNodeSelection();
+  QString sqlForTestNodeSelection() const;
 
   /*! \brief Get SQL statement for start unit connector selection
    *
@@ -145,9 +145,9 @@ class mdtCcTestConnectionCable : public mdtTtBase
 
  private:
 
-  Q_DISABLE_COPY(mdtCcTestConnectionCable);
+  Q_DISABLE_COPY(mdtTtTestConnectionCable);
 
   mdtClPathGraph *pvPathGraph;
 };
 
-#endif // #ifndef MDT_CC_TEST_CONNECTION_CABLE_H
+#endif // #ifndef MDT_TT_TEST_CONNECTION_CABLE_H

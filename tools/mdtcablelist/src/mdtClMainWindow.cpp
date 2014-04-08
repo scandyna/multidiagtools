@@ -26,7 +26,7 @@
 #include "mdtClConnectorEditor.h"
 #include "mdtClUnitEditor.h"
 #include "mdtClArticleEditor.h"
-#include "mdtCcTestConnectionCableEditor.h"
+#include "mdtTtTestConnectionCableEditor.h"
 #include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestModelEditor.h"
 #include "mdtTtTestModelItemEditor.h"
@@ -217,7 +217,7 @@ void mdtClMainWindow::editArticle()
 void mdtClMainWindow::editTestConnectionCable()
 {
   if(pvTestConnectionCableEditor == 0){
-    pvTestConnectionCableEditor = new mdtCcTestConnectionCableEditor(0, pvDatabaseManager->database());
+    pvTestConnectionCableEditor = new mdtTtTestConnectionCableEditor(0, pvDatabaseManager->database());
     if(!pvTestConnectionCableEditor->setupTables()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup test connection cable editor."));
@@ -234,6 +234,7 @@ void mdtClMainWindow::editTestConnectionCable()
     pvTestConnectionCableEditorWindow->resize(800, 500);
     pvTestConnectionCableEditorWindow->enableNavigation();
     pvTestConnectionCableEditorWindow->enableEdition();
+    pvTestConnectionCableEditorWindow->setWindowTitle(tr("Test cable edition"));
   }
   Q_ASSERT(pvTestConnectionCableEditor != 0);
   Q_ASSERT(pvTestConnectionCableEditorWindow != 0);
@@ -336,21 +337,21 @@ void mdtClMainWindow::runCableChecker()
 /**
 void mdtClMainWindow::createTestConnectionCable()
 {
-  mdtCcTestConnectionCableEditor editor(this, pvDatabaseManager->database());
+  mdtTtTestConnectionCableEditor editor(this, pvDatabaseManager->database());
 
   editor.createCable();
 }
 
 void mdtClMainWindow::connectTestCable()
 {
-  mdtCcTestConnectionCableEditor editor(this, pvDatabaseManager->database());
+  mdtTtTestConnectionCableEditor editor(this, pvDatabaseManager->database());
 
   editor.connectTestCable();
 }
 
 void mdtClMainWindow::disconnectTestCable()
 {
-  mdtCcTestConnectionCableEditor editor(this, pvDatabaseManager->database());
+  mdtTtTestConnectionCableEditor editor(this, pvDatabaseManager->database());
 
   editor.disconnectTestCable();
 }

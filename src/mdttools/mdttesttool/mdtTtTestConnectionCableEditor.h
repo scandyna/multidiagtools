@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CC_TEST_CONNECTION_CABLE_EDITOR_H
-#define MDT_CC_TEST_CONNECTION_CABLE_EDITOR_H
+#ifndef MDT_TT_TEST_CONNECTION_CABLE_EDITOR_H
+#define MDT_TT_TEST_CONNECTION_CABLE_EDITOR_H
 
 ///#include "mdtError.h"
 #include "mdtSqlForm.h"
@@ -32,7 +32,7 @@ class QWidget;
 
 /*! \brief Class for test connection cable edition
  */
-class mdtCcTestConnectionCableEditor : public mdtSqlForm
+class mdtTtTestConnectionCableEditor : public mdtSqlForm
 {
  Q_OBJECT
 
@@ -40,7 +40,7 @@ class mdtCcTestConnectionCableEditor : public mdtSqlForm
 
   /*! \brief Constructor
    */
-  mdtCcTestConnectionCableEditor(QWidget *parent, QSqlDatabase db);
+  mdtTtTestConnectionCableEditor(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Setup all tables
    */
@@ -102,7 +102,7 @@ class mdtCcTestConnectionCableEditor : public mdtSqlForm
    */
   bool setupTestLinkTable();
 
-  Q_DISABLE_COPY(mdtCcTestConnectionCableEditor);
+  Q_DISABLE_COPY(mdtTtTestConnectionCableEditor);
 };
 
-#endif // #ifndef MDT_CC_TEST_CONNECTION_CABLE_EDITOR_H
+#endif // #ifndef MDT_TT_TEST_CONNECTION_CABLE_EDITOR_H

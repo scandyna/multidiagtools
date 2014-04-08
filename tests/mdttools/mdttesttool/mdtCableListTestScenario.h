@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,20 +18,32 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_SANDBOX_H 
-#define MDT_CL_SANDBOX_H
+#ifndef MDT_CABLE_LIST_TEST_SCENARIO_H
+#define MDT_CABLE_LIST_TEST_SCENARIO_H
 
-#include "mdtTest.h"
+#include <QSqlDatabase>
 
-class mdtClSandbox : public mdtTest
+class mdtCableListTestScenario
 {
- Q_OBJECT
+ public:
 
- private slots:
+  mdtCableListTestScenario(QSqlDatabase db);
 
-  void essais();
+  /*
+   * Create some vehicle types for tests:
+   *  - Id_PK : 1 , Type : Vehicle type 1
+   *  - Id_PK : 2 , Type : Vehicle type 2
+   */
+  void createTestVehicleTypes();
+  /*
+   * Remove test vehicle types
+   */
+  void removeTestVehicleTypes();
 
-  ///void graphicsView();
+
+ private:
+
+  QSqlDatabase pvDatabase;
 };
 
-#endif // #ifndef MDT_CL_SANDBOX_H
+#endif //#ifndef MDT_CABLE_LIST_TEST_SCENARIO_H

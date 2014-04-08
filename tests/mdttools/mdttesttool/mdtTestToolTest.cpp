@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTestToolTest.h"
+#include "mdtCableListTestScenario.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
@@ -58,6 +59,9 @@ void mdtTestToolTest::initTestCase()
 {
   createDatabaseSchema();
   QVERIFY(pvDatabaseManager.database().isOpen());
+  
+  
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
 }
 
 void mdtTestToolTest::cleanupTestCase()

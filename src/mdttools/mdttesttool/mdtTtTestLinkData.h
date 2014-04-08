@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,20 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_SANDBOX_H 
-#define MDT_CL_SANDBOX_H
+#ifndef MDT_TT_TEST_LINK_DATA_H
+#define MDT_TT_TEST_LINK_DATA_H
 
-#include "mdtTest.h"
+#include "mdtSqlRecord.h"
 
-class mdtClSandbox : public mdtTest
+/*! \brief Data container for test link
+ */
+class mdtTtTestLinkData : public mdtSqlRecord
 {
- Q_OBJECT
+  public:
 
- private slots:
+  /*! \brief Construct a empty test link data
+   */
+  mdtTtTestLinkData();
 
-  void essais();
+  /*! \brief Construct a test link data based on given record
+   *
+   * \pre record must contain all fields from TestLink_tbl
+   */
+  mdtTtTestLinkData(const QSqlRecord & record);
 
-  ///void graphicsView();
+  /*! \brief Setup test link data fields
+   */
+  bool setup(const QSqlDatabase & db);
 };
 
-#endif // #ifndef MDT_CL_SANDBOX_H
+#endif // #ifndef MDT_TT_TEST_LINK_DATA_H

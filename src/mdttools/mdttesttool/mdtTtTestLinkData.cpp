@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,20 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_SANDBOX_H 
-#define MDT_CL_SANDBOX_H
+#include "mdtTtTestLinkData.h"
 
-#include "mdtTest.h"
-
-class mdtClSandbox : public mdtTest
+mdtTtTestLinkData::mdtTtTestLinkData()
+ : mdtSqlRecord()
 {
- Q_OBJECT
+}
 
- private slots:
+mdtTtTestLinkData::mdtTtTestLinkData(const QSqlRecord & record)
+ : mdtSqlRecord(record)
+{
+  Q_ASSERT(contains("Id_PK"));
+  Q_ASSERT(contains("TestConnection_Id_FK"));
+  Q_ASSERT(contains("DutConnection_Id_FK"));
+  Q_ASSERT(contains("TestCable_Id_FK"));
+  Q_ASSERT(contains("Identification"));
+  Q_ASSERT(contains("Value"));
+}
 
-  void essais();
+bool mdtTtTestLinkData::setup(const QSqlDatabase & db) 
+{
+  clear();
+  if(!addAllFields("TestLink_tbl", db)){
+    return false;
+  }
+  return true;
+}
 
-  ///void graphicsView();
-};
-
-#endif // #ifndef MDT_CL_SANDBOX_H

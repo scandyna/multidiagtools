@@ -1,13 +1,15 @@
 window_sizes 1280 1005 412 862 952 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 914434 // mdtCcTestConnectionCable
+  active  classdiagram_ref 1073026 // mdtTtTestLinkData
     862 952 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 914434 // mdtCcTestConnectionCable
+selected operation_ref 1943810 // setup
 open
-  classview_ref 556418 // mdtCcTestConnectionCable
+  
+  package_ref 254082 // core
+  class_ref 1147394 // mdtTtTestLinkData
   
   package_ref 134530 // mdtTest
 end

@@ -22,13 +22,20 @@
 #define MDT_CABLE_LIST_TEST_H
 
 #include "mdtTest.h"
+#include "mdtCableListTestScenario.h"
 #include "mdtSqlDatabaseManager.h"
-#include <boost/graph/graph_concepts.hpp>
+#include <boost/graph/graph_concepts.hpp> /// \todo Utile ?
 #include <QMessageBox>
 
 class mdtCableListTest : public mdtTest
 {
  Q_OBJECT
+
+  /*
+   * Will populate tables with scenario.
+   *  See create* methods to know what data is inserted to DB
+   */
+  ///void createSenario();
 
  private slots:
 
@@ -61,7 +68,9 @@ class mdtCableListTest : public mdtTest
  private:
 
   /*
-   * Create some vehicle types for tests:
+   * Create some vehicle types for tests
+   *  See mdtCableListTestScenario class for details.
+   * 
    *  - Id_PK : 1 , Type : Vehicle type 1
    *  - Id_PK : 2 , Type : Vehicle type 2
    */
@@ -224,6 +233,7 @@ class mdtCableListTest : public mdtTest
   void createDatabaseSchema();
 
   mdtSqlDatabaseManager pvDatabaseManager;
+  mdtCableListTestScenario *pvScenario;
 };
 
 #endif // #ifndef MDT_CABLE_LIST_TEST_H
