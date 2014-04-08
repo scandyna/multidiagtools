@@ -44,4 +44,3 @@ bool mdtTtTestLinkData::setup(const QSqlDatabase & db)
   }
   return true;
 }
-

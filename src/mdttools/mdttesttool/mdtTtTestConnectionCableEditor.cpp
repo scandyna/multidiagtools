@@ -26,6 +26,7 @@
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
+#include "mdtTtTestLinkDialog.h"
 #include <QSqlQueryModel>
 #include <QTableView>
 #include <QSqlError>
@@ -50,6 +51,31 @@ bool mdtTtTestConnectionCableEditor::setupTables()
   }
   return true;
 }
+
+void mdtTtTestConnectionCableEditor::addLink()
+{
+  mdtTtTestLinkDialog dialog(this, database());
+
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+}
+
+void mdtTtTestConnectionCableEditor::editLink()
+{
+  mdtTtTestLinkDialog dialog(this, database());
+  ///QVariant testUnitId;
+  ///QVariant dutUnitId;
+
+  dialog.setTestUnit(2);
+  dialog.setDutUnit(3);
+  dialog.setTestConnection(170);
+  dialog.setDutConnection(171);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+}
+
 
 void mdtTtTestConnectionCableEditor::generateLinks()
 {
@@ -501,6 +527,8 @@ bool mdtTtTestConnectionCableEditor::setupTestCableTable()
 bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
 {
   mdtSqlTableWidget *widget;
+  QPushButton *pbAddLink;
+  QPushButton *pbEditLink;
   QPushButton *pbGenerateLinks;
   QPushButton *pbRemoveLinks;
 
@@ -539,6 +567,15 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   pbRemoveLinks = new QPushButton(tr("Remove links ..."));
   connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
   widget->addWidgetToLocalBar(pbRemoveLinks);
+  // Add link button
+  pbAddLink = new QPushButton(tr("Add link ..."));
+  connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
+  widget->addWidgetToLocalBar(pbAddLink);
+  // Edit link button
+  pbEditLink = new QPushButton(tr("Edit link"));
+  connect(pbEditLink, SIGNAL(clicked()), this, SLOT(editLink()));
+  widget->addWidgetToLocalBar(pbEditLink);
+  // Add stretch
   widget->addStretchToLocalBar();
 
   return true;

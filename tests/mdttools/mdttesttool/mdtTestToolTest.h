@@ -38,6 +38,9 @@ class mdtTestToolTest : public mdtTest
 
   void mdtTtBaseTest();
 
+  void mdtTtTestLinkDataTest();
+  
+
  private:
 
   // Create test database schema - Will FAIL on problem

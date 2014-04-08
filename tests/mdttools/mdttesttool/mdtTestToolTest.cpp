@@ -24,6 +24,7 @@
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
 #include "mdtTtBase.h"
+#include "mdtTtTestLinkData.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -60,8 +61,11 @@ void mdtTestToolTest::initTestCase()
   createDatabaseSchema();
   QVERIFY(pvDatabaseManager.database().isOpen());
   
-  
+  /**
   mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  scenario.createSenario();
+  scenario.removeScenario();
+  */
 }
 
 void mdtTestToolTest::cleanupTestCase()
@@ -172,6 +176,19 @@ void mdtTestToolTest::mdtTtBaseTest()
   QCOMPARE(data.value("Id_PK"), QVariant(2));
   QVERIFY(data.value("Type").isNull());
 }
+
+void mdtTestToolTest::mdtTtTestLinkDataTest()
+{
+  mdtTtTestLinkData data;
+
+  // Setup
+  QVERIFY(data.setup(pvDatabaseManager.database()));
+  QVERIFY(data.contains("Id_PK"));
+  // Set/get
+  data.setValue("Id_PK", 1);
+  QCOMPARE(data.value("Id_PK"), QVariant(1));
+}
+
 
 /*
  * Test database helper methods

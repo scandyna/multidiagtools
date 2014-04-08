@@ -1,0 +1,120 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+#ifndef MDT_TT_TEST_LINK_DIALOG_H
+#define MDT_TT_TEST_LINK_DIALOG_H
+
+#include "mdtTtTestLinkData.h"
+#include "ui_mdtTtTestLinkDialog.h"
+#include <QSqlDatabase>
+#include <QDialog>
+#include <QVariant>
+
+class QWidget;
+
+/*! \brief Dialog that provide test link edition
+ */
+class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
+{
+ Q_OBJECT
+
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtTtTestLinkDialog(QWidget *parent, QSqlDatabase db);
+
+  /*! \brief
+   */
+  ~mdtTtTestLinkDialog();
+
+  /*! \brief
+   */
+  void setTestUnit(const QVariant & unitId);
+
+  /*! \brief
+   */
+  void setDutUnit(const QVariant & unitId);
+
+  /*! \brief
+   */
+  void setTestConnection(const QVariant & unitConnectionId);
+
+  /*! \brief
+   */
+  void setDutConnection(const QVariant & unitConnectionId);
+
+  /*! \brief
+   */
+  inline mdtTtTestLinkData linkData() const { return pvLinkData; };
+
+ private slots:
+
+  /*! \brief Select test unit
+   */
+  void selectTestUnit();
+
+  /*! \brief Select DUT unit
+   */
+  void selectDutUnit();
+
+  /*! \brief Select test connection
+   */
+  void selectTestConnection();
+
+  /*! \brief Select DUT connection
+   */
+  void selectDutConnection();
+
+  /*! \brief
+   */
+  void accept();
+
+  /*! \brief Clear link data and reject dialog
+   */
+  void reject();
+
+ private:
+
+  /*! \brief Display test unit informations
+   */
+  void displayTestUnit();
+
+  /*! \brief Display DUT unit informations
+   */
+  void displayDutUnit();
+
+  /*! \brief
+   */
+  void displayTestConnection();
+
+  /*! \brief
+   */
+  void displayDutConnection();
+
+  Q_DISABLE_COPY(mdtTtTestLinkDialog);
+
+  QSqlDatabase pvDatabase;
+  mdtTtTestLinkData pvLinkData;
+  QVariant pvTestUnitId;
+  QVariant pvDutUnitId;
+};
+
+#endif // #ifndef MDT_TT_TEST_LINK_DIALOG_H

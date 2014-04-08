@@ -366,7 +366,7 @@ void mdtClUnitLinkDialog::selectStartConnection()
   QString sql;
   ///QSqlQueryModel model;
   QList<QVariant> result;
-  mdtClUnitConnectionData data;
+  ///mdtClUnitConnectionData data;
   mdtClUnit unit(this, pvDatabase);
 
   // Setup and run query
@@ -407,7 +407,7 @@ void mdtClUnitLinkDialog::selectEndConnection()
   QString sql;
   ///QSqlQueryModel model;
   QList<QVariant> result;
-  mdtClUnitConnectionData data;
+  ///mdtClUnitConnectionData data;
   mdtClUnit unit(this, pvDatabase);
 
   // Setup and run query

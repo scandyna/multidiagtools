@@ -8,6 +8,7 @@ project (multidiagtools)
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
           mdtTtTestConnectionCableEditor.h
+          mdtTtTestLinkDialog.h
     )
 
 # Liste des fichiers sources
@@ -15,6 +16,7 @@ set (SOURCES_FILES
           mdtTtBase.cpp
           mdtTtDatabaseSchema.cpp
           mdtTtTestLinkData.cpp
+          mdtTtTestLinkDialog.cpp
           mdtTtTestConnectionCable.cpp
           mdtTtTestConnectionCableEditor.cpp
           mdtTtTestNode.cpp
@@ -24,6 +26,7 @@ set (SOURCES_FILES
 # Liste des fichiers ui
 set (FORM_FILES
           mdtTtTestConnectionCableEditor.ui
+          mdtTtTestLinkDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)

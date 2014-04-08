@@ -60,6 +60,14 @@ class mdtTtTestConnectionCableEditor : public mdtSqlForm
 
  private slots:
 
+  /*! \brief Add a link
+   */
+  void addLink();
+
+  /*! \brief Edit a link
+   */
+  void editLink();
+
   /*! \brief Generate links
    */
   void generateLinks();
