@@ -977,7 +977,7 @@ void mdtCableListTest::linkTest()
   
   /// \todo Links with U CNN based on ART CNN
 
-  
+
   // Cleanup
   removeTestLinks();
   removeTestUnitConnections();
@@ -991,6 +991,220 @@ void mdtCableListTest::linkTest()
   removeTestArticles();
   removeTestVehicleTypes();
 }
+
+void mdtCableListTest::linkAutoConnectionTest()
+{
+  mdtClLink lnk(0, pvDatabaseManager.database());
+  QList<mdtClLinkData> cnnLinkDataList;
+  mdtClLinkData cnnLinkData;
+  mdtClUnitConnectionData a, b;
+  QList<mdtClUnitConnectionData> A, B;
+  QList<QVariant> vtStartIdList, vtEndIdList;
+  bool ok;
+
+  // Setup connection data
+  QVERIFY(a.setup(pvDatabaseManager.database(), false));
+  QVERIFY(b.setup(pvDatabaseManager.database(), false));
+
+  /*
+   * Case 1 :
+   *  - A and B contains same amount of connections
+   *  - A contains only pins
+   *  - B contains only sockets
+   */
+  A.clear();
+  B.clear();
+  // Create A list
+  a.clearValues();
+  a.setValue("Id_PK", 1);
+  a.setValue("UnitContactName", "1");
+  a.setValue("ConnectionType_Code_FK", "P");
+  A  << a;
+  a.clearValues();
+  a.setValue("Id_PK", 2);
+  a.setValue("UnitContactName", "2");
+  a.setValue("ConnectionType_Code_FK", "P");
+  A  << a;
+  a.clearValues();
+  a.setValue("Id_PK", 3);
+  a.setValue("UnitContactName", "3");
+  a.setValue("ConnectionType_Code_FK", "P");
+  A  << a;
+  // Create B list
+  b.clearValues();
+  b.setValue("Id_PK", 12);
+  b.setValue("UnitContactName", "2");
+  b.setValue("ConnectionType_Code_FK", "S");
+  B << b;
+  b.clearValues();
+  b.setValue("Id_PK", 11);
+  b.setValue("UnitContactName", "1");
+  b.setValue("ConnectionType_Code_FK", "S");
+  B << b;
+  b.clearValues();
+  b.setValue("Id_PK", 13);
+  b.setValue("UnitContactName", "3");
+  b.setValue("ConnectionType_Code_FK", "S");
+  B << b;
+  // Build link data list and check
+  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B);
+  QCOMPARE(cnnLinkDataList.size(), 3);
+  // Check base data
+  QCOMPARE(cnnLinkDataList.at(0).value("LinkType_Code_FK"), QVariant("CONNECTION"));
+  QCOMPARE(cnnLinkDataList.at(0).value("LinkDirection_Code_FK"), QVariant("BID"));
+  QCOMPARE(cnnLinkDataList.at(1).value("LinkType_Code_FK"), QVariant("CONNECTION"));
+  QCOMPARE(cnnLinkDataList.at(1).value("LinkDirection_Code_FK"), QVariant("BID"));
+  QCOMPARE(cnnLinkDataList.at(2).value("LinkType_Code_FK"), QVariant("CONNECTION"));
+  QCOMPARE(cnnLinkDataList.at(2).value("LinkDirection_Code_FK"), QVariant("BID"));
+  // Check connection - A and B have same size, so order is like A
+  a = cnnLinkDataList.at(0).startConnectionData();
+  b = cnnLinkDataList.at(0).endConnectionData();
+  QCOMPARE(a.value("UnitContactName"), b.value("UnitContactName"));
+  a = cnnLinkDataList.at(1).startConnectionData();
+  b = cnnLinkDataList.at(1).endConnectionData();
+  QCOMPARE(a.value("UnitContactName"), b.value("UnitContactName"));
+  a = cnnLinkDataList.at(2).startConnectionData();
+  b = cnnLinkDataList.at(2).endConnectionData();
+  QCOMPARE(a.value("UnitContactName"), b.value("UnitContactName"));
+  /*
+   * Case 2 :
+   *  - A < B
+   *  - A contains only pins
+   *  - B contains only sockets
+   */
+  A.clear();
+  B.clear();
+  // Create A list
+  a.clearValues();
+  a.setValue("Id_PK", 1);
+  a.setValue("UnitContactName", "1");
+  a.setValue("ConnectionType_Code_FK", "P");
+  A  << a;
+  // Create B list
+  b.clearValues();
+  b.setValue("Id_PK", 11);
+  b.setValue("UnitContactName", "1");
+  b.setValue("ConnectionType_Code_FK", "S");
+  B << b;
+  b.clearValues();
+  b.setValue("Id_PK", 12);
+  b.setValue("UnitContactName", "2");
+  b.setValue("ConnectionType_Code_FK", "S");
+  B << b;
+  // Build link data list and check
+  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B);
+  QCOMPARE(cnnLinkDataList.size(), 1);
+  // Check base data
+  QCOMPARE(cnnLinkDataList.at(0).value("LinkType_Code_FK"), QVariant("CONNECTION"));
+  QCOMPARE(cnnLinkDataList.at(0).value("LinkDirection_Code_FK"), QVariant("BID"));
+  // Check connection - A < B , so order is like A
+  a = cnnLinkDataList.at(0).startConnectionData();
+  b = cnnLinkDataList.at(0).endConnectionData();
+  QCOMPARE(a.value("UnitContactName"), b.value("UnitContactName"));
+  /*
+   * Case 3 :
+   *  - A > B
+   *  - A contains only pins
+   *  - B contains only sockets
+   */
+  A.clear();
+  B.clear();
+  // Create A list
+  a.clearValues();
+  a.setValue("Id_PK", 1);
+  a.setValue("UnitContactName", "1");
+  a.setValue("ConnectionType_Code_FK", "P");
+  A  << a;
+  a.clearValues();
+  a.setValue("Id_PK", 2);
+  a.setValue("UnitContactName", "2");
+  a.setValue("ConnectionType_Code_FK", "P");
+  A  << a;
+  // Create B list
+  b.clearValues();
+  b.setValue("Id_PK", 12);
+  b.setValue("UnitContactName", "2");
+  b.setValue("ConnectionType_Code_FK", "S");
+  B << b;
+  // Build link data list and check
+  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B);
+  QCOMPARE(cnnLinkDataList.size(), 1);
+  // Check base data
+  QCOMPARE(cnnLinkDataList.at(0).value("LinkType_Code_FK"), QVariant("CONNECTION"));
+  QCOMPARE(cnnLinkDataList.at(0).value("LinkDirection_Code_FK"), QVariant("BID"));
+  // Check connection
+  a = cnnLinkDataList.at(0).startConnectionData();
+  b = cnnLinkDataList.at(0).endConnectionData();
+  QCOMPARE(a.value("UnitContactName"), b.value("UnitContactName"));
+
+  /// \todo Combinaisons with non compatible P-S , with T, etc...
+
+  // Create base structure for next tests
+  createTestVehicleTypes();
+  createTestArticles();
+  createTestConnectors();
+  createTestArticleConnections();
+  createTestArticleLinks();
+  createTestArticleConnectors();
+  createTestUnits();
+  createTestVehicleTypeUnitAssignations();
+  createTestUnitConnectors();
+
+  /*
+   * Check connect method with following connectors:
+   *
+   *  - START connector: Id_PK : 400000 , Unit_Id_FK : 1000 , Connector_Id_FK : NULL , ArticleConnector_Id_FK : NULL , Name : Unit connector 400000
+   *   -> Connection: Id_PK 40005 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : P , Name : A
+   *   -> Connection: Id_PK 40006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : B
+   *
+   *  - END connector: Id_PK : 500000 , Unit_Id_FK : 2000 , Connector_Id_FK : NULL , ArticleConnector_Id_FK : NULL , Name : Unit connector 500000
+   *   -> Connection: Id_PK 50005 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : A
+   *   -> Connection: Id_PK 50006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : B
+   *
+   * For vehicle types, we take:
+   *
+   *  - START: Id_PK : 1
+   *  - END : Id_PK : 2
+   */
+  // Create connection (i.e. links)
+  QVERIFY(lnk.connectByContactName(400000, 500000, 1, 2));
+  /*
+   * Check link data
+   */
+  // Get link from connection 40005 -> 50005 : must exist
+  QVERIFY(lnk.linkExists(40005, 50005, &ok));
+  QVERIFY(ok);
+  cnnLinkData = lnk.getLinkData(40005, 50005, true, true, &ok);
+  QVERIFY(ok);
+  QCOMPARE(cnnLinkData.value("LinkType_Code_FK"), QVariant("CONNECTION"));
+  QCOMPARE(cnnLinkData.value("LinkDirection_Code_FK"), QVariant("BID"));
+  // Check that link from 40006 -> 50006 not exists
+  QVERIFY(!lnk.linkExists(40006, 50006, &ok));
+  QVERIFY(ok);
+
+
+  /*
+   * Check disconnect method
+   */
+  vtStartIdList.clear();
+  vtEndIdList.clear();
+  vtStartIdList << 1;
+  vtEndIdList << 2;
+  QVERIFY(lnk.disconnectConnectors(400000, 500000, vtStartIdList, vtEndIdList));
+  QVERIFY(!lnk.linkExists(40005, 50005, &ok));
+
+  // Remove base structure
+  removeTestUnitConnectors();
+  removeTestVehicleTypeUnitAssignations();
+  removeTestUnits();
+  removeTestArticleLinks();
+  removeTestArticleConnections();
+  removeTestArticleConnectors();
+  removeTestConnectors();
+  removeTestArticles();
+  removeTestVehicleTypes();
+}
+
 
 void mdtCableListTest::pathGraphTest()
 {
@@ -1734,6 +1948,7 @@ void mdtCableListTest::createTestUnitConnectors()
    * Unit connector 200000:
    *  - Id_PK : 200000 , Unit_Id_FK : 2000 , Connector_Id_FK : 1 , ArticleConnector_Id_FK : 200 , Name : Unit connector 200000
    *  -> Connection: Id_PK 20005 , ArticleConnection_Id_FK : 25 , ConnectionType_Code_FK : S , Name : Unit contact 20005
+   *  -> Connection: Id_PK 20006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : P , Name : A
    */
   connectorData.clearValues();
   // Setup and add unit connector
@@ -1752,6 +1967,7 @@ void mdtCableListTest::createTestUnitConnectors()
   connectionData.setValue("Id_PK", 20005);
   connectionData.setValue("UnitContactName", "Unit contact 20005");
   connectorData.connectionDataList()[0] = connectionData;
+  // Add connector
   QVERIFY(unit.addConnector(connectorData));
   // Check connector
   connectorData = unit.getConnectorData(200000, &ok, true, true, true);
@@ -1765,7 +1981,7 @@ void mdtCableListTest::createTestUnitConnectors()
   id = unit.getUnitConnectorIdBasedOnArticleConnectorId(200, 2000, &ok);
   QVERIFY(ok);
   QCOMPARE(id, QVariant(200000));
-  // Check connection
+  // Check connection ID 20005
   connectionData = connectorData.connectionData(20005, &ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(20005));
@@ -1851,6 +2067,116 @@ void mdtCableListTest::createTestUnitConnectors()
   connectionData.setValue("Id_PK", 30006);
   QVERIFY(unit.editConnection(30006, connectionData));
 
+  /*
+   * Unit connector:
+   *  - Id_PK : 400000 , Unit_Id_FK : 1000 , Connector_Id_FK : NULL , ArticleConnector_Id_FK : NULL , Name : Unit connector 400000
+   *   -> Connection: Id_PK 40005 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : P , Name : A
+   *   -> Connection: Id_PK 40006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : B
+   */
+  // Setup unit connector
+  connectorData.clearValues();
+  connectorData.setValue("Id_PK", 400000);
+  connectorData.setValue("Unit_Id_FK", 1000);
+  connectorData.setValue("Name", "Unit connector 400000");
+  // Add connection ID 40005
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 40005);
+  connectionData.setValue("ConnectionType_Code_FK", "P");
+  connectionData.setValue("UnitContactName", "A");
+  connectorData.addConnectionData(connectionData);
+  // Add connection ID 40006
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 40006);
+  connectionData.setValue("ConnectionType_Code_FK", "S");
+  connectionData.setValue("UnitContactName", "B");
+  connectorData.addConnectionData(connectionData);
+  // Add connector
+  QVERIFY(unit.addConnector(connectorData));
+  // Check connector
+  connectorData = unit.getConnectorData(400000, &ok, true, true, true);
+  QVERIFY(ok);
+  QCOMPARE(connectorData.value("Id_PK"), QVariant(400000));
+  QCOMPARE(connectorData.value("Unit_Id_FK"), QVariant(1000));
+  QCOMPARE(connectorData.value("Name"), QVariant("Unit connector 400000"));
+  /*
+   * Check connections
+   */
+  connectionDataList = connectorData.connectionDataList();
+  QCOMPARE(connectionDataList.size(), 2);
+  // Check connection ID 40005
+  connectionData = connectorData.connectionData(40005, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(40005));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
+  QCOMPARE(connectionData.value("UnitConnector_Id_FK"), QVariant(400000));
+  QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("P"));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("A"));
+  // Check connection ID 40006
+  connectionData = connectorData.connectionData(40006, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(40006));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
+  QCOMPARE(connectionData.value("UnitConnector_Id_FK"), QVariant(400000));
+  QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("S"));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("B"));
+
+  /*
+   * Unit connector:
+   *  - Id_PK : 500000 , Unit_Id_FK : 2000 , Connector_Id_FK : NULL , ArticleConnector_Id_FK : NULL , Name : Unit connector 500000
+   *   -> Connection: Id_PK 50005 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : A
+   *   -> Connection: Id_PK 50006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : B
+   */
+  // Setup unit connector
+  connectorData.clearValues();
+  connectorData.setValue("Id_PK", 500000);
+  connectorData.setValue("Unit_Id_FK", 2000);
+  connectorData.setValue("Name", "Unit connector 500000");
+  // Add connection ID 50005
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 50005);
+  connectionData.setValue("ConnectionType_Code_FK", "S");
+  connectionData.setValue("UnitContactName", "A");
+  connectorData.addConnectionData(connectionData);
+  // Add connection ID 50006
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 50006);
+  connectionData.setValue("ConnectionType_Code_FK", "S");
+  connectionData.setValue("UnitContactName", "B");
+  connectorData.addConnectionData(connectionData);
+  // Add connector
+  QVERIFY(unit.addConnector(connectorData));
+  // Check connector
+  connectorData = unit.getConnectorData(500000, &ok, true, true, true);
+  QVERIFY(ok);
+  QCOMPARE(connectorData.value("Id_PK"), QVariant(500000));
+  QCOMPARE(connectorData.value("Unit_Id_FK"), QVariant(2000));
+  QCOMPARE(connectorData.value("Name"), QVariant("Unit connector 500000"));
+  /*
+   * Check connections
+   */
+  connectionDataList = connectorData.connectionDataList();
+  QCOMPARE(connectionDataList.size(), 2);
+  // Check connection ID 50005
+  connectionData = connectorData.connectionData(50005, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(50005));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(2000));
+  QCOMPARE(connectionData.value("UnitConnector_Id_FK"), QVariant(500000));
+  QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("S"));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("A"));
+  // Check connection ID 50006
+  connectionData = connectorData.connectionData(50006, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(50006));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(2000));
+  QCOMPARE(connectionData.value("UnitConnector_Id_FK"), QVariant(500000));
+  QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("S"));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("B"));
+
 }
 
 void mdtCableListTest::removeTestUnitConnectors()
@@ -1862,6 +2188,8 @@ void mdtCableListTest::removeTestUnitConnectors()
   QVERIFY(unit.removeConnector(100000));
   QVERIFY(unit.removeConnector(200000));
   QVERIFY(unit.removeConnector(300000));
+  QVERIFY(unit.removeConnector(400000));
+  QVERIFY(unit.removeConnector(500000));
   dataList = unit.getData("SELECT * FROM UnitConnector_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);

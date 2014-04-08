@@ -860,9 +860,142 @@ void mdtClUnitEditor::viewPath()
   dialog.exec();
 }
 
+
+/// \todo Add start and end vehicle type(s) selection to finish ...
+void mdtClUnitEditor::connectConnectors()
+{
+  mdtClLink lnk(0, database());
+  QString sql;
+  QVariant startVehicleTypeId, endVehicleTypeId;
+  QVariant startConnectorId, endConnectorId;
+  QVariant startUnitId, endUnitId;
+  bool ok;
+
+  // Get current unit ID
+  startUnitId = currentUnitId();
+  if(startUnitId.isNull()){
+    return;
+  }
+  // Select start connector
+  sql = "SELECT * FROM UnitConnector_view WHERE Unit_Id_FK = " + startUnitId.toString();
+  startConnectorId = selectUnitConnector(tr("Select start connector:"), sql);
+  if(startConnectorId.isNull()){
+    return;
+  }
+  // Select start vehicle type
+  sql = "SELECT DISTINCT VehicleType_Id_FK, Type, SubType, SeriesNumber FROM Unit_VehicleType_view WHERE Unit_Id_FK = " + startUnitId.toString();
+  startVehicleTypeId = selectVehicleType(tr("Select start vehicle type:"), sql);
+  if(startVehicleTypeId.isNull()){
+    return;
+  }
+  // Select end vehicle type
+  sql = "SELECT DISTINCT VehicleType_Id_FK, Type, SubType, SeriesNumber FROM Unit_VehicleType_view";
+  endVehicleTypeId = selectVehicleType(tr("Select end vehicle type:"), sql);
+  if(endVehicleTypeId.isNull()){
+    return;
+  }
+  // Select end unit
+  sql = "SELECT * FROM Unit_view WHERE Unit_Id_PK <> " + startUnitId.toString();
+  sql += " AND VehicleType_Id_PK = " + endVehicleTypeId.toString();
+  endUnitId = selectUnit(tr("Select end unit:"), sql);
+  if(endUnitId.isNull()){
+    return;
+  }
+  // Select end connector
+  sql = lnk.sqlForConnectableUnitConnectorsSelection(startConnectorId, endUnitId, &ok);
+  if(!ok){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
+  endConnectorId = selectUnitConnector(tr("Select end connector:"), sql);
+  if(endConnectorId.isNull()){
+    return;
+  }
+  // Make connection
+  if(!lnk.connectByContactName(startConnectorId, endConnectorId, startVehicleTypeId, endVehicleTypeId)){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
+  // Update viewa
+  select("UnitLink_view");
+}
+
 QVariant mdtClUnitEditor::currentUnitId()
 {
   return currentData("Unit_tbl", "Id_PK");
+}
+
+QVariant mdtClUnitEditor::selectVehicleType(const QString & message, const QString & sql)
+{
+  mdtSqlSelectionDialog selectionDialog;
+
+  // Setup and show dialog
+  selectionDialog.setMessage(message);
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setColumnHidden("VehicleType_Id_FK", true);
+  ///selectionDialog.setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
+  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.addSelectionResultColumn("VehicleType_Id_FK");
+  selectionDialog.resize(700, 400);
+  selectionDialog.setWindowTitle(tr("Vehicle type selection"));
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
+}
+
+QVariant mdtClUnitEditor::selectUnit(const QString & message, const QString & sql)
+{
+  mdtSqlSelectionDialog selectionDialog;
+
+  // Setup and show dialog
+  selectionDialog.setMessage(message);
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setColumnHidden("Unit_Id_PK", true);
+  ///selectionDialog.setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
+  selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.addSelectionResultColumn("Unit_Id_PK");
+  selectionDialog.resize(700, 400);
+  selectionDialog.setWindowTitle(tr("Unit selection"));
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
+}
+
+QVariant mdtClUnitEditor::selectUnitConnector(const QString & message, const QString & sql)
+{
+  mdtSqlSelectionDialog selectionDialog;
+
+  // Setup and show dialog
+  selectionDialog.setMessage(message);
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.setColumnHidden("Unit_Id_FK", true);
+  selectionDialog.setColumnHidden("Connector_Id_FK", true);
+  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
+  selectionDialog.setHeaderData("UnitConnectorName", tr("Unit\nConnector name"));
+  selectionDialog.setHeaderData("ArticleConnectorName", tr("Article\nConnector name"));
+  ///selectionDialog.setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
+  selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.addSelectionResultColumn("Id_PK");
+  selectionDialog.resize(700, 400);
+  selectionDialog.setWindowTitle(tr("Connector selection"));
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+
+  return selectionDialog.selectionResult().at(0);
 }
 
 QVariant mdtClUnitEditor::selectBaseConnector()
@@ -1234,6 +1367,9 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->addWidgetToLocalBar(pbEditConnection);
   widget->addWidgetToLocalBar(pbRemoveConnection);
   widget->addStretchToLocalBar();
+  // On double click, we edit connection
+  Q_ASSERT(widget->tableView() != 0);
+  connect(widget->tableView(), SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(editConnection()));
   // Hide relation fields and PK
   widget->setColumnHidden("UnitConnection_Id_PK", true);
   widget->setColumnHidden("Unit_Id_FK", true);
@@ -1268,6 +1404,7 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   QPushButton *pbEditLink;
   QPushButton *pbRemoveLinks;
   QPushButton *pbViewPath;
+  QPushButton *pbConnectConnectors;
 
   if(!addChildTable("UnitLink_view", tr("Links"), database())){
     return false;
@@ -1293,6 +1430,11 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   pbViewPath = new QPushButton(tr("View path"));
   connect(pbViewPath, SIGNAL(clicked()), this, SLOT(viewPath()));
   widget->addWidgetToLocalBar(pbViewPath);
+  // Connect connectors button
+  pbConnectConnectors = new QPushButton(tr("Connect connectors ..."));
+  connect(pbConnectConnectors, SIGNAL(clicked()), this, SLOT(connectConnectors()));
+  widget->addWidgetToLocalBar(pbConnectConnectors);
+  // Strech
   widget->addStretchToLocalBar();
   
   // Hide relation fields and PK

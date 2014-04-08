@@ -126,6 +126,10 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   void viewPath();
 
+  /*! \brief Connect connectors
+   */
+  void connectConnectors();
+
  signals:
 
   /*! \brief Used to tell unit widget that we have edited some data
@@ -137,6 +141,24 @@ class mdtClUnitEditor : public mdtSqlForm
   /*! \brief Get current Unit ID
    */
   QVariant currentUnitId();
+
+  /*! \brief Select a vehicle type
+   *
+   * \return ID of selected vehicle type
+   */
+  QVariant selectVehicleType(const QString & message, const QString & sql);
+
+  /*! \brief Select a unit
+   *
+   * \return ID of selected unit
+   */
+  QVariant selectUnit(const QString & message, const QString & sql);
+
+  /*! \brief Select a unit connector
+   *
+   * \return ID of selected unit connector
+   */
+  QVariant selectUnitConnector(const QString & message, const QString & sql);
 
   /*! \brief Let user choose a connector (from Connector table)
    */

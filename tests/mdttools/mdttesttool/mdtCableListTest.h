@@ -54,6 +54,7 @@ class mdtCableListTest : public mdtTest
 
   void mdtClLinkDataTest();
   void linkTest();  /// \todo Ne pas oublier: UnitLink_view et LinkList_view !
+  void linkAutoConnectionTest();
 
   void pathGraphTest();
 
@@ -189,6 +190,14 @@ class mdtCableListTest : public mdtTest
    *  - Id_PK : 300000 , Unit_Id_FK : 1000 , Connector_Id_FK : 3 , ArticleConnector_Id_FK : NULL , Name : Unit connector 300000
    *   -> Connection: Id_PK 30005 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : P , Name : Unit contact 30005
    *   -> Connection: Id_PK 30006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : Unit contact 30006
+   *
+   *  - Id_PK : 400000 , Unit_Id_FK : 1000 , Connector_Id_FK : NULL , ArticleConnector_Id_FK : NULL , Name : Unit connector 400000
+   *   -> Connection: Id_PK 40005 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : P , Name : A
+   *   -> Connection: Id_PK 40006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : B
+   *
+   *  - Id_PK : 500000 , Unit_Id_FK : 2000 , Connector_Id_FK : NULL , ArticleConnector_Id_FK : NULL , Name : Unit connector 500000
+   *   -> Connection: Id_PK 50005 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : A
+   *   -> Connection: Id_PK 50006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : S , Name : B
    */
   void createTestUnitConnectors();
   /*

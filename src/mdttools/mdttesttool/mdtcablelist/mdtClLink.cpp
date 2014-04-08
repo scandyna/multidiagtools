@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtClLink.h"
 #include "mdtClUnit.h"
-#include "mdtClUnitConnectionData.h"
 #include "mdtClVehicleTypeLinkData.h"
 #include "mdtError.h"
 #include <boost/graph/graph_concepts.hpp>
@@ -371,6 +370,247 @@ bool mdtClLink::removeVehicleTypeLinks(const QList<mdtClVehicleTypeLinkData> & v
 
   return true;
 }
+
+QList<mdtClLinkData> mdtClLink::getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B)
+{
+  mdtClLinkData data;
+  QList<mdtClLinkData> linkDataList;
+  mdtClUnitConnectionData c;
+  const QList<mdtClUnitConnectionData> *C = 0;
+  mdtClUnitConnectionData d;
+  const QList<mdtClUnitConnectionData> *D = 0;
+  QVariant var;
+  QString cCt, dCt;
+  int i, j;
+
+  // Assign lists
+  if(A.size() >= B.size()){
+    C = &A;
+    D = &B;
+  }else{
+    C = &B;
+    D = &A;
+  }
+  Q_ASSERT(C != 0);
+  Q_ASSERT(D != 0);
+  Q_ASSERT(C->size() >= D->size());
+  // Setup link data
+  if(!data.setup(database())){
+    return linkDataList;
+  }
+  // Search in C
+  for(i = 0; i < C->size(); ++i){
+    c = C->at(i);
+    var = c.value("UnitContactName");
+    // Search connection with same name in D
+    for(j = 0; j < D->size(); ++j){
+      if(D->at(j).value("UnitContactName") == var){
+        d = D->at(j);
+        // Has the same value, check if we cann connect them
+        cCt = c.value("ConnectionType_Code_FK").toString();
+        dCt = d.value("ConnectionType_Code_FK").toString();
+        if(((cCt == "P") && (dCt == "S")) || ((cCt == "S") && (dCt == "P"))){
+          // Ok, create and add link
+          data.clearValues();
+          data.setStartConnectionData(c);
+          data.setEndConnectionData(d);
+          data.setValue("LinkType_Code_FK", "CONNECTION");
+          data.setValue("LinkDirection_Code_FK", "BID");
+          linkDataList.append(data);
+          break;
+        }
+      }
+    }
+  }
+
+  return linkDataList;
+}
+
+bool mdtClLink::canConnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E)
+{
+  return (getConnectionLinkListByName(S.connectionDataList(), E.connectionDataList()).size() > 0);
+}
+
+bool mdtClLink::canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  mdtClUnit unit(0, database());
+  mdtClUnitConnectorData S, E;
+
+  // Get start and end connector data
+  S = unit.getConnectorData(startUnitConnectorId, ok, true, false, false);
+  if(!*ok){
+    pvLastError = unit.lastError();
+    return false;
+  }
+  E = unit.getConnectorData(endUnitConnectorId, ok, true, false, false);
+  if(!*ok){
+    pvLastError = unit.lastError();
+    return false;
+  }
+  *ok = true;
+
+  return canConnectConnectors(S, E);
+}
+
+QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QVariant & unitId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QString sql;
+  QList<QSqlRecord> dataList;
+  QVariant id;
+  QList<QVariant> idList;
+  int i;
+
+  /*
+   * Get a list of all unit connectors
+   */
+  sql = "SELECT Id_PK FROM UnitConnector_view ";
+  if(!unitId.isNull()){
+    sql += " WHERE Unit_Id_FK = " + unitId.toString();
+  }
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return QString();
+  }
+  /*
+   * For each unit connector ID, that is not given ID, check if it is connectable to given connector ID
+   */
+  for(i = 0; i < dataList.size(); ++i){
+    id = dataList.at(i).value("Id_PK");
+    if(id != unitConnectorId){
+      if(canConnectConnectors(unitConnectorId, id, ok)){
+        if(!*ok){
+          return QString();
+        }
+        idList.append(id);
+      }
+    }
+  }
+  /*
+   * Generate SQL statement
+   */
+  if(idList.isEmpty()){
+    pvLastError.setError(tr("Could not find connectable connectors."), mdtError::Warning);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    *ok = false;
+    return QString();
+  }
+  sql = "SELECT * FROM UnitConnector_view ";
+  if(unitId.isNull()){
+    sql += " WHERE ";
+  }else{
+    sql += " WHERE (Unit_Id_FK = " + unitId.toString() + ") AND ";
+  }
+  Q_ASSERT(idList.size() > 0);
+  sql += " Id_PK = " + idList.at(0).toString();
+  for(i = 1; i < idList.size(); ++i){
+    sql += " OR Id_PK = " + idList.at(i).toString();
+  }
+  *ok = true;
+
+  return sql;
+}
+
+bool mdtClLink::connectByContactName(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId)
+{
+  QList<mdtClLinkData> linkDataList;
+  QList<QVariant> vtStartIdList, vtEndIdList;
+  int i;
+
+  // Get connection links
+  linkDataList = getConnectionLinkListByName(S.connectionDataList(), E.connectionDataList());
+  if(linkDataList.isEmpty()){
+    QString msg;
+    msg = tr("Could not find connections that can be connected from connector:");
+    msg += " '" + S.value("Name").toString() + "' ";
+    msg += tr("to");
+    msg += " '" + E.value("Name").toString() + "'.";
+    pvLastError.setError(msg, mdtError::Warning);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    return false;
+  }
+  // Add start/end vehicle types to link data
+  vtStartIdList.append(startVehicleTypeId);
+  vtEndIdList.append(endVehicleTypeId);
+  for(i = 0; i < linkDataList.size(); ++i){
+    if(!buildVehicleTypeLinkDataList(linkDataList[i], vtStartIdList, vtEndIdList)){
+      return false;
+    }
+  }
+
+  return addLinks(linkDataList, true);
+}
+
+bool mdtClLink::connectByContactName(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId)
+{
+  mdtClUnit unit(0, database());
+  mdtClUnitConnectorData S, E;
+  bool ok;
+
+  // Get start and end connector data
+  S = unit.getConnectorData(startUnitConnectorId, &ok, true, false, false);
+  if(!ok){
+    pvLastError = unit.lastError();
+    return false;
+  }
+  E = unit.getConnectorData(endUnitConnectorId, &ok, true, false, false);
+  if(!ok){
+    pvLastError = unit.lastError();
+    return false;
+  }
+
+  return connectByContactName(S, E, startVehicleTypeId, endVehicleTypeId);
+}
+
+/**
+bool mdtClLink::disconnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList)
+{
+  QList<mdtClLinkData> linkDataList;
+  int i;
+
+}
+*/
+
+bool mdtClLink::disconnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList)
+{
+  QString sql;
+  QList<QSqlRecord> dataList;
+  bool ok;
+  int i;
+
+  // Create SQL statement to get start and end connection ID list
+  sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK FROM LinkList_view ";
+  sql += " WHERE UnitConnectorStart_Id_FK = " + startUnitConnectorId.toString();
+  sql += " AND UnitConnectorEnd_Id_FK = " + endUnitConnectorId.toString();
+  // Get list of links
+  dataList = getData(sql, &ok);
+  if(!ok){
+    return false;
+  }
+  // Begin transaction
+  if(!beginTransaction()){
+    return false;
+  }
+  // Remove links
+  for(i = 0; i < dataList.size(); ++i){
+    if(!removeLink(dataList.at(i).value(0), dataList.at(i).value(1), false)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  // Commit
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
 
 bool mdtClLink::checkVehicleTypeStartEndIdLists(const QList<QVariant> & vtStartIdList, const QList<QVariant> & vtEndIdList)
 {

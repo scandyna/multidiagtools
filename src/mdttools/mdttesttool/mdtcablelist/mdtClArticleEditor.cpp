@@ -245,6 +245,10 @@ void mdtClArticleEditor::editConnection()
   select("ArticleConnection_view");
 }
 
+void mdtClArticleEditor::editConnection(const QModelIndex &)
+{
+  editConnection();
+}
 
 void mdtClArticleEditor::removeConnections()
 {
@@ -777,6 +781,9 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   connect(pbRemoveConnections, SIGNAL(clicked()), this, SLOT(removeConnections()));
   widget->addWidgetToLocalBar(pbRemoveConnections);
   widget->addStretchToLocalBar();
+  // On double click, we edit connection
+  Q_ASSERT(widget->tableView() != 0);
+  connect(widget->tableView(), SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(editConnection(const QModelIndex &)));
 
   return true;
 }

@@ -2307,6 +2307,7 @@ bool mdtTtDatabaseSchema::createUnitView()
 
   sql = "CREATE VIEW Unit_view AS\n"\
         "SELECT\n"\
+        " VehicleType_tbl.Id_PK AS VehicleType_Id_PK,\n"\
         " VehicleType_tbl.Type,\n"\
         " VehicleType_tbl.SubType,\n"\
         " VehicleType_tbl.SeriesNumber,\n"\
@@ -2552,6 +2553,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " US.SchemaPosition AS StartSchemaPosition,\n"\
               " US.Cabinet AS StartCabinet,\n"\
               " US.Coordinate AS StartCoordinate ,\n"\
+              " UCS.Id_PK AS UnitConnectorStart_Id_FK,\n"\
               " UCS.Name AS StartUnitConnectorName ,\n"\
               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
               " UCNXS.ConnectionType_Code_FK AS StartConnectionType_Code_FK,\n"\
@@ -2563,6 +2565,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " UE.SchemaPosition AS EndSchemaPosition,\n"\
               " UE.Cabinet AS EndCabinet,\n"\
               " UE.Coordinate AS EndCoordinate ,\n"\
+              " UCE.Id_PK AS UnitConnectorEnd_Id_FK,\n"\
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName,\n"\
               " UCNXE.ConnectionType_Code_FK AS EndConnectionType_Code_FK\n";

@@ -75,6 +75,10 @@ class mdtClArticleEditor : public mdtSqlForm
    */
   void editConnection();
 
+  /*! \brief Edit a connection
+   */
+  void editConnection(const QModelIndex &);
+
   /*! \brief Remove connections
    */
   void removeConnections();

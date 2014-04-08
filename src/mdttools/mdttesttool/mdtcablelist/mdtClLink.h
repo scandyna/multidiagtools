@@ -23,9 +23,12 @@
 
 #include "mdtTtBase.h"
 #include "mdtClLinkData.h"
+#include "mdtClUnitConnectionData.h"
+#include "mdtClUnitConnectorData.h"
 #include <QSqlDatabase>
 #include <QList>
 #include <QVariant>
+#include <QString>
 #include <QModelIndex>
 
 /*! \brief Helper class for link management
@@ -100,6 +103,74 @@ class mdtClLink : public mdtTtBase
   /*! \brief Remove vehicle type links
    */
   bool removeVehicleTypeLinks(const QList<mdtClVehicleTypeLinkData> & vtLinkList, bool handleTransaction);
+
+  /*! \brief Get a list of connection links between A and B connections, by name
+   *
+   * Will search connections that have the same name, and that can be connected together, in A and B list.
+   *  Currently, connections can be connected if item of A is a pin and item of B is a socket,
+   *  or in reverse case.
+   *
+   * This method is typically used to create connections links between 2 connectors (i.e. connect them).
+   *
+   * For each link that was found, following fields are also set:
+   *  - UnitConnectionStart_Id_FK : ID of item in A
+   *  - UnitConnectionEnd_Id_FK : ID of item in B
+   *  - LinkType_Code_FK : CONNECTION
+   *  - LinkDirection_Code_FK : BID
+   */
+  QList<mdtClLinkData> getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B);
+
+  /*! \brief Check if unit connector S can be connected with unit connector E
+   *
+   * Currently, this method will only check if at least S and E have
+   *  a socket/pin (or pin/socket) that have the same contact name.
+   */
+  bool canConnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E);
+
+  /*! \brief Check if unit connector start can be connected with unit connector end
+   *
+   * Currently, this method will only check if at least S and E have
+   *  a socket/pin (or pin/socket) that have the same contact name.
+   */
+  bool canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, bool *ok);
+
+  /*! \brief Get SQL statement for connectable unit connector selection
+   *
+   * SQL statement will select unit connectors that can be connected
+   *  to given start unit connector ID.
+   *  If given unit ID is not null, only connectors related to this unit will be included.
+   *
+   * \return SQL statement, or empty string on error.
+   */
+  QString sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QVariant & unitId, bool *ok);
+
+  /*! \brief Connect start and end connector by contact name
+   *
+   * Will create a link of type CONNECTION for each
+   *  connection from start connector to a connection of end connector
+   *  that can be connected. See getConnectionLinkListByName() for details.
+   */
+  bool connectByContactName(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId);
+
+  /*! \brief Connect start and end connector by contact name
+   *
+   * Will create a link of type CONNECTION for each
+   *  connection from start connector to a connection of end connector
+   *  that can be connected. See getConnectionLinkListByName() for details.
+   */
+  bool connectByContactName(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId);
+
+  /*! \brief Disconnect connector S from E
+   *
+   * \todo In current version, vehicle type list are not token in acount. This will be the case once removeLink() is fixed.
+   */
+  ///bool disconnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList);
+
+  /*! \brief Disconnect connector S from E
+   *
+   * \todo In current version, vehicle type list are not token in acount. This will be the case once removeLink() is fixed.
+   */
+  bool disconnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList);
 
  private:
 
