@@ -22,7 +22,8 @@
 #define MDT_TT_TEST_CONNECTION_CABLE_H
 
 #include "mdtTtBase.h"
-#include "mdtClLinkData.h"
+#include "mdtClLinkData.h"  /// \todo Obselete ??
+#include "mdtTtTestLinkData.h"
 #include <QString>
 #include <QVariant>
 #include <QList>
@@ -113,17 +114,35 @@ class mdtTtTestConnectionCable : public mdtTtBase
    */
   bool createTestCable(const QVariant & nodeId, const QList<QVariant> & busAtestConnectionIdList, const QList<QVariant> & busAdutConnectionIdList, const QList<QVariant> & busBtestConnectionIdList, const QList<QVariant> & busBdutConnectionIdList);
 
+  /*! \brief Get test link data
+   */
+  mdtTtTestLinkData getLinkData(const QVariant & testConnectionId, const QVariant & dutConnectionId, bool *ok);
+
+  /*! \brief Add a link into test link table
+   */
+  bool addLink(const mdtTtTestLinkData & data);
+
   /*! \brief Add links in link table
    *
    * \pre dutConnectionIdList size must be <= testConnectionIdList
    */
   bool addLinks(const QVariant & nodeId, const QVariant & testCableId, const QList<QVariant> & testConnectionIdList, const QList<QVariant> & dutConnectionIdList);
 
+  /*! \brief Edit a test link
+   */
+  bool editLink(const QVariant & testConnectionId, const QVariant & dutConnectionId, const mdtTtTestLinkData & linkData);
+
+  /*! \brief Remove a test link
+   */
+  bool removeLink(const QVariant & testConnectionId, const QVariant & dutConnectionId);
+
   /*! \brief Add a cable into test cable table
    */
   bool addCable(const QVariant & identification);
 
   /*! \brief Add a link into test link table
+   *
+   * \todo Obselete this version
    */
   bool addLink(const QVariant & testConnectionId, const QVariant & dutConnectionId, const QVariant & testCableId, const QVariant & identification, const QVariant & value);
 

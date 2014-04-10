@@ -54,28 +54,127 @@ bool mdtTtTestConnectionCableEditor::setupTables()
 
 void mdtTtTestConnectionCableEditor::addLink()
 {
+  mdtTtTestConnectionCable tcc(this, database());
   mdtTtTestLinkDialog dialog(this, database());
+  QVariant cableId;
+  mdtTtTestLinkData linkData;
 
+  // Get cable ID
+  cableId = currentData("TestCable_tbl", "Id_PK");
+  if(cableId.isNull()){
+    return;
+  }
+  // Show dialog
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  // Update data with cable ID
+  linkData = dialog.linkData();
+  linkData.setValue("TestCable_Id_FK", cableId);
+  // Add to DB
+  if(!tcc.addLink(linkData)){
+    pvLastError = tcc.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestLink_view");
 }
 
 void mdtTtTestConnectionCableEditor::editLink()
 {
+  mdtSqlTableWidget *widget;
+  mdtTtTestConnectionCable tcc(this, database());
   mdtTtTestLinkDialog dialog(this, database());
-  ///QVariant testUnitId;
-  ///QVariant dutUnitId;
+  QVariant testNodeId;
+  QVariant dutUnitId;
+  QVariant testConnectionId, dutConnectionId;
+  mdtTtTestLinkData linkData;
+  bool ok;
 
-  dialog.setTestUnit(2);
-  dialog.setDutUnit(3);
-  dialog.setTestConnection(170);
-  dialog.setDutConnection(171);
+  widget = sqlTableWidget("TestLink_view");
+  Q_ASSERT(widget != 0);
+
+  // Get test node and DUT unit IDs
+  testNodeId = widget->currentData("VehicleType_Id_FK_PK");
+  if(testNodeId.isNull()){
+    return;
+  }
+  dutUnitId = widget->currentData("DutUnitId");
+  if(dutUnitId.isNull()){
+    return;
+  }
+  // Get test and DUT connection IDs
+  testConnectionId = widget->currentData("TestConnection_Id_FK");
+  if(testConnectionId.isNull()){
+    return;
+  }
+  dutConnectionId = widget->currentData("DutConnection_Id_FK");
+  if(dutConnectionId.isNull()){
+    return;
+  }
+  // Get link data
+  linkData = tcc.getLinkData(testConnectionId, dutConnectionId, &ok);
+  if(!ok){
+    pvLastError = tcc.lastError();
+    displayLastError();
+    return;
+  }
+  
+  qDebug() << "Cable ID (1): " << linkData.value("TestCable_Id_FK");
+  
+  // Set data to dialog and show
+  dialog.setTestNode(testNodeId);
+  dialog.setDutUnit(dutUnitId);
+  dialog.setLinkData(linkData);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  // Edit link data in DB
+  
+  qDebug() << "Cable ID (1): " << dialog.linkData().value("TestCable_Id_FK");
+  
+  if(!tcc.editLink(testConnectionId, dutConnectionId, dialog.linkData())){
+    pvLastError = tcc.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestLink_view");
 }
 
+void mdtTtTestConnectionCableEditor::removeLinks()
+{
+  mdtSqlTableWidget *widget;
+  mdtTtTestConnectionCable tcc(this, database());
+  QMessageBox msgBox;
+  QModelIndexList indexes;
+
+  widget = sqlTableWidget("TestLink_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  indexes = widget->indexListOfSelectedRows("Id_PK");
+  if(indexes.size() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove selected links."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!tcc.removeData("TestLink_tbl", "Id_PK", indexes)){
+    pvLastError = tcc.lastError();
+    displayLastError();
+    return;
+  }
+  // Update GUI
+  select("TestLink_view");
+}
 
 void mdtTtTestConnectionCableEditor::generateLinks()
 {
@@ -183,38 +282,6 @@ void mdtTtTestConnectionCableEditor::generateLinks()
   select("TestLink_view");
 }
 
-void mdtTtTestConnectionCableEditor::removeLinks()
-{
-  mdtSqlTableWidget *widget;
-  mdtTtTestConnectionCable tcc(this, database());
-  QMessageBox msgBox;
-  QModelIndexList indexes;
-
-  widget = sqlTableWidget("TestLink_view");
-  Q_ASSERT(widget != 0);
-  // Get selected rows
-  indexes = widget->indexListOfSelectedRows("Id_PK");
-  if(indexes.size() < 1){
-    return;
-  }
-  // We ask confirmation to the user
-  msgBox.setText(tr("You are about to remove selected links."));
-  msgBox.setInformativeText(tr("Do you want to continue ?"));
-  msgBox.setIcon(QMessageBox::Warning);
-  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-  msgBox.setDefaultButton(QMessageBox::No);
-  if(msgBox.exec() != QMessageBox::Yes){
-    return;
-  }
-  // Delete seleced rows
-  if(!tcc.removeData("TestLink_tbl", "Id_PK", indexes)){
-    pvLastError = tcc.lastError();
-    displayLastError();
-    return;
-  }
-  // Update GUI
-  select("TestLink_view");
-}
 
 /**
 void mdtTtTestConnectionCableEditor::connectTestCable()
@@ -545,6 +612,9 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   widget->setColumnHidden("TestCable_Id_FK", true);
   widget->setColumnHidden("TestConnection_Id_FK", true);
   widget->setColumnHidden("DutConnection_Id_FK", true);
+  widget->setColumnHidden("VehicleType_Id_FK_PK", true);
+  widget->setColumnHidden("Unit_Id_FK_PK", true);
+  widget->setColumnHidden("DutUnitId", true);
   // Set fields a user friendly name
   widget->setHeaderData("TestNodeType", tr("Test node\nType"));
   widget->setHeaderData("TestNodeSubType", tr("Test node\nSub type"));
@@ -553,9 +623,10 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nUnit"));
   widget->setHeaderData("TestConnectorName", tr("Test\nConnector"));
   widget->setHeaderData("TestContactName", tr("Test\nContact"));
-  widget->setHeaderData("TestLinkIdentification", tr("Identification"));
-  widget->setHeaderData("TestLinkValue", tr("R [Ohm]"));
-  widget->setHeaderData("DutUnitSchemaPosition", tr("DUT"));
+  widget->setHeaderData("TestLinkIdentification", tr("Test link\nIdentification"));
+  widget->setHeaderData("TestLinkValue", tr("Test link\nR [Ohm]"));
+  widget->setHeaderData("DutUnitSchemaPosition", tr("DUT\nSchema pos."));
+  widget->setHeaderData("DutUnitAlias", tr("DUT\nAlias"));
   widget->setHeaderData("DutConnectorName", tr("DUT\nConnector"));
   widget->setHeaderData("DutContactName", tr("DUT\nContact"));
   // Set some attributes on table view
@@ -564,9 +635,6 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   pbGenerateLinks = new QPushButton(tr("Generate links ..."));
   connect(pbGenerateLinks, SIGNAL(clicked()), this, SLOT(generateLinks()));
   widget->addWidgetToLocalBar(pbGenerateLinks);
-  pbRemoveLinks = new QPushButton(tr("Remove links ..."));
-  connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
-  widget->addWidgetToLocalBar(pbRemoveLinks);
   // Add link button
   pbAddLink = new QPushButton(tr("Add link ..."));
   connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
@@ -575,6 +643,10 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   pbEditLink = new QPushButton(tr("Edit link"));
   connect(pbEditLink, SIGNAL(clicked()), this, SLOT(editLink()));
   widget->addWidgetToLocalBar(pbEditLink);
+  // Remove links button
+  pbRemoveLinks = new QPushButton(tr("Remove links ..."));
+  connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
+  widget->addWidgetToLocalBar(pbRemoveLinks);
   // Add stretch
   widget->addStretchToLocalBar();
 

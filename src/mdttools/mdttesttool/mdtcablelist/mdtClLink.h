@@ -80,7 +80,7 @@ class mdtClLink : public mdtTtBase
 
   /*! \brief Edit a unit link
    */
-  bool editLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, const mdtClLinkData & linkData);
+  bool editLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, const mdtClLinkData & linkData);
 
   /*! \brief Remove a unit link
    *

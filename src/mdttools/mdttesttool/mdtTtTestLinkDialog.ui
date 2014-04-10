@@ -50,7 +50,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QLabel" name="lbTestUnitLabel">
+         <widget class="QLabel" name="lbTestNodeLabel">
           <property name="font">
            <font>
             <weight>75</weight>
@@ -61,7 +61,7 @@
            <string notr="true"/>
           </property>
           <property name="text">
-           <string>Unit</string>
+           <string>Test node</string>
           </property>
          </widget>
         </item>
@@ -70,44 +70,44 @@
           <item>
            <layout class="QFormLayout" name="formLayout">
             <item row="0" column="0">
-             <widget class="QLabel" name="lbTestSchemaPositionLabel">
+             <widget class="QLabel" name="lbTestNodeTypeLabel">
               <property name="text">
-               <string>Schema position:</string>
+               <string>Type:</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="lbTestSchemaPosition">
+             <widget class="QLabel" name="lbTestNodeType">
               <property name="text">
-               <string>Schema position</string>
+               <string>Type</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="lbTestAliasLabel">
+             <widget class="QLabel" name="lbTestNodeSubTypeLabel">
               <property name="text">
-               <string>Alias:</string>
+               <string>Sub type:</string>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="lbTestAlias">
+             <widget class="QLabel" name="lbTestNodeSubType">
               <property name="text">
-               <string>Alias</string>
+               <string>Sub type</string>
               </property>
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="lbTestCabinetLabel">
+             <widget class="QLabel" name="lbTestNodeNodeIdLabel">
               <property name="text">
-               <string>Cabinet:</string>
+               <string>Node ID:</string>
               </property>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLabel" name="lbTestCabinet">
+             <widget class="QLabel" name="lbTestNodeNodeId">
               <property name="text">
-               <string>Cabinet</string>
+               <string>Node ID</string>
               </property>
              </widget>
             </item>

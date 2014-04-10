@@ -1769,6 +1769,7 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
   field = QSqlField();
   field.setName("TestCable_Id_FK");
   field.setType(QVariant::Int);
+  field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
   // Identification
   field = QSqlField();
@@ -2612,13 +2613,17 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " VTN.Type AS TestNodeType,\n"\
         " VTN.SubType AS TestNodeSubType,\n"\
         " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
+        " TN.VehicleType_Id_FK_PK,\n"\
         " TN.NodeId,\n"\
+        " TNU.Unit_Id_FK_PK,\n"\
         " TNU.Bus,\n"\
         " TNU.IoPosition,\n"\
         " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
         " UCT.Name AS TestConnectorName,\n"\
         " UCNXT.UnitContactName AS TestContactName,\n"\
+        " UD.Id_PK AS DutUnitId,\n"\
         " UD.SchemaPosition AS DutUnitSchemaPosition,\n"\
+        " UD.Alias AS DutUnitAlias,\n"\
         " UCD.Name AS DutConnectorName,\n"\
         " UCNXD.UnitContactName AS DutContactName,\n"\
         " LNK.Identification AS TestLinkIdentification,\n"\

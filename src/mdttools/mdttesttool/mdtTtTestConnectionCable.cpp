@@ -320,6 +320,45 @@ bool mdtTtTestConnectionCable::createTestCable(const QVariant & nodeId, const QL
   return true;
 }
 
+mdtTtTestLinkData mdtTtTestConnectionCable::getLinkData(const QVariant & testConnectionId, const QVariant & dutConnectionId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  mdtTtTestLinkData linkData;
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  // Get link data part
+  sql = "SELECT * FROM TestLink_tbl";
+  sql += " WHERE TestConnection_Id_FK = " + testConnectionId.toString();
+  sql += " AND DutConnection_Id_FK = " + dutConnectionId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return linkData;
+  }
+  if(dataList.isEmpty()){
+    QString msg;
+    msg = tr("No link exists from TestConnection_Id_FK ") + testConnectionId.toString();
+    msg += tr(" to DutConnection_Id_FK ") + dutConnectionId.toString();
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    pvLastError.commit();
+    *ok = false;
+    return linkData;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  linkData = dataList.at(0);
+  // Done
+  *ok = true;
+
+  return linkData;
+}
+
+bool mdtTtTestConnectionCable::addLink(const mdtTtTestLinkData & data)
+{
+  return addRecord(data, "TestLink_tbl");
+}
+
 bool mdtTtTestConnectionCable::addLinks(const QVariant & nodeId, const QVariant & testCableId, const QList<QVariant> & testConnectionIdList, const QList<QVariant> & dutConnectionIdList)
 {
   Q_ASSERT(dutConnectionIdList.size() <= testConnectionIdList.size());
@@ -336,6 +375,32 @@ bool mdtTtTestConnectionCable::addLinks(const QVariant & nodeId, const QVariant 
   }
 
   return true;
+
+}
+
+bool mdtTtTestConnectionCable::editLink(const QVariant & testConnectionId, const QVariant & dutConnectionId, const mdtTtTestLinkData & linkData)
+{
+  if(!beginTransaction()){
+    return false;
+  }
+  if(!removeLink(testConnectionId, dutConnectionId)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!addLink(linkData)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTestConnectionCable::removeLink(const QVariant & testConnectionId, const QVariant & dutConnectionId)
+{
+  return removeData("TestLink_tbl", "TestConnection_Id_FK", testConnectionId, "DutConnection_Id_FK", dutConnectionId);
 }
 
 bool mdtTtTestConnectionCable::addCable(const QVariant & identification)

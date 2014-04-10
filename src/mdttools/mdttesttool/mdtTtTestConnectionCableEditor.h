@@ -68,13 +68,14 @@ class mdtTtTestConnectionCableEditor : public mdtSqlForm
    */
   void editLink();
 
+  /*! \brief Remove links
+   */
+  void removeLinks();
+
   /*! \brief Generate links
    */
   void generateLinks();
 
-  /*! \brief Remove links
-   */
-  void removeLinks();
 
  private:
 
