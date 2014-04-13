@@ -39,7 +39,10 @@ class mdtTestToolTest : public mdtTest
   void mdtTtBaseTest();
 
   void mdtTtTestLinkDataTest();
-  
+
+  void mdtTtTestNodeUnitDataTest();
+
+  void mdtTtTestNodeUnitTest();
 
  private:
 

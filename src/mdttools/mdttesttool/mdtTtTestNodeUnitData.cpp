@@ -21,11 +21,52 @@
 #include "mdtTtTestNodeUnitData.h"
 #include <QString>
 
-mdtTtTestNodeUnitData::mdtTtTestNodeUnitData(const QSqlDatabase & db)
+mdtTtTestNodeUnitData::mdtTtTestNodeUnitData()
 {
-  if(!addAllFields("TestNodeUnit_tbl", db)){
-    clear();
-    return;
-  }
 }
 
+mdtTtTestNodeUnitData::mdtTtTestNodeUnitData(const QSqlRecord & record)
+ : mdtSqlRecord(record)
+{
+  Q_ASSERT(contains("Unit_Id_FK_PK"));
+  Q_ASSERT(contains("TestConnection_Id_FK"));
+  Q_ASSERT(contains("DutConnection_Id_FK"));
+  Q_ASSERT(contains("TestCable_Id_FK"));
+  Q_ASSERT(contains("Identification"));
+  Q_ASSERT(contains("Value"));
+}
+
+bool mdtTtTestNodeUnitData::setup(const QSqlDatabase& db, bool setupConnectionData)
+{
+  if(!addAllFields("TestNodeUnit_tbl", db)){
+    return false;
+  }
+  if(!pvUnitData.addAllFields("Unit_tbl", db)){
+    pvLastError = pvUnitData.lastError();
+    return false;
+  }
+  if(setupConnectionData){
+    if(!pvTestConnectionData.setup(db, false)){
+      pvLastError = pvTestConnectionData.lastError();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void mdtTtTestNodeUnitData::setUnitData(const mdtSqlRecord& data)
+{
+  Q_ASSERT(data.contains("Id_PK"));
+  Q_ASSERT(data.contains("Article_Id_FK"));
+  Q_ASSERT(data.contains("SchemaPosition"));
+  Q_ASSERT(data.contains("Alias"));
+
+  setValue("Unit_Id_FK_PK", data.value("Id_PK"));
+  pvUnitData = data;
+}
+
+void mdtTtTestNodeUnitData::setTestConnectionData(const mdtClUnitConnectionData& data)
+{
+  pvTestConnectionData = data;
+}

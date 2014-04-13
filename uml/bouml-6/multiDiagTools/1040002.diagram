@@ -22,7 +22,7 @@ classcanvas 128514 class_ref 1100162 // Ui::mdtClArticleComponentDialog
 end
 classcanvas 128642 class_ref 370434 // QDialog
   classdiagramsettings member_max_width 0 end
-  xyz 425.4 0.5 2006
+  xyz 416.4 8.5 2006
 end
 classcanvas 129410 class_ref 812162 // Ui::mdtClArticleLinkDialog
   classdiagramsettings member_max_width 0 end

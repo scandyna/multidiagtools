@@ -21,15 +21,13 @@
 #include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestNode.h"
 #include "ui_mdtTtTestNodeEditor.h"
-#include "mdtSqlFormOld.h"
 #include "mdtSqlFormWidget.h"
-#include "mdtSqlWindowOld.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtTtTestNodeUnitData.h"
-#include "mdtTtTestNodeUnitEditor.h"
-#include "mdtSqlDialog.h"
+#include "mdtTtTestNodeUnitDialog.h"
+///#include "mdtSqlDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -44,9 +42,20 @@
 
 #include <QDebug>
 
-mdtTtTestNodeEditor::mdtTtTestNodeEditor(QObject *parent, QSqlDatabase db)
- : mdtClEditor(parent, db)
+mdtTtTestNodeEditor::mdtTtTestNodeEditor(QWidget *parent, QSqlDatabase db)
+ : mdtSqlForm(parent, db)
 {
+}
+
+bool mdtTtTestNodeEditor::setupTables()
+{
+  if(!setupTestNodeTable()){
+    return false;
+  }
+  if(!setupTestNodeUnitTable()){
+    return false;
+  }
+  return true;
 }
 
 void mdtTtTestNodeEditor::setBaseVehicleType()
@@ -73,11 +82,36 @@ void mdtTtTestNodeEditor::setBaseVehicleType()
   Q_ASSERT(selectionDialog.selectionResult().size() == 1);
   vehicleTypeId = selectionDialog.selectionResult().at(0);
   qDebug() << "VHC ID: " << vehicleTypeId;
-  if(!form()->setCurrentData("TestNode_tbl", "VehicleType_Id_FK_PK", vehicleTypeId)){
+  if(!setCurrentData("TestNode_tbl", "VehicleType_Id_FK_PK", vehicleTypeId)){
     return;
   }
 }
 
+void mdtTtTestNodeEditor::addUnit()
+{
+  mdtTtTestNodeUnitDialog dialog(this, database());
+  QVariant nodeId;
+  mdtTtTestNodeUnitData data;
+
+  // Get ids
+  nodeId = currentData("TestNode_tbl", "VehicleType_Id_FK_PK");
+  if(nodeId.isNull()){
+    return;
+  }
+  // Setup data
+  if(!data.setup(database(), true)){
+    pvLastError = data.lastError();
+    displayLastError();
+    return;
+  }
+  data.setValue("TestNode_Id_FK", nodeId);
+  dialog.setData(data);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+}
+
+/**
 void mdtTtTestNodeEditor::addUnits()
 {
   mdtTtTestNode tn(this, database());
@@ -162,13 +196,13 @@ void mdtTtTestNodeEditor::addUnits()
     displayLastError();
     return;
   }
-  /**
+  
   if(!tn.addTestNodeUnits(unitIdList, baseVehicleTypeId, typeCode, busName)){
     pvLastError = tn.lastError();
     displayLastError();
     return;
   }
-  */
+  
   // Assign test connection to each test node unit
   if(!assignTestConnectionToTestNodeUnitLits(unitIdList, unitConnectionIdList)){
     displayLastError();
@@ -176,9 +210,11 @@ void mdtTtTestNodeEditor::addUnits()
   // Update TestNodeUnit_view
   form()->select("TestNodeUnit_view");
 }
+*/
 
 void mdtTtTestNodeEditor::editUnit()
 {
+  /**
   mdtTtTestNodeUnitEditor *tnue;
   mdtSqlDialog dialog;
   QVariant testNodeUnitId;
@@ -206,6 +242,7 @@ void mdtTtTestNodeEditor::editUnit()
   dialog.exec();
   // Update TestNodeUnit_view
   form()->select("TestNodeUnit_view");
+  */
 }
 
 void mdtTtTestNodeEditor::removeUnits()
@@ -215,7 +252,7 @@ void mdtTtTestNodeEditor::removeUnits()
   QMessageBox msgBox;
   QModelIndexList indexes;
 
-  widget = form()->sqlTableWidget("TestNodeUnit_view");
+  widget = sqlTableWidget("TestNodeUnit_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
   indexes = widget->indexListOfSelectedRows("Unit_Id_FK_PK");
@@ -238,7 +275,7 @@ void mdtTtTestNodeEditor::removeUnits()
     return;
   }
   // Update TestNodeUnit_view
-  form()->select("TestNodeUnit_view");
+  select("TestNodeUnit_view");
 }
 
 QVariant mdtTtTestNodeEditor::selectTestNodeUnitType()
@@ -477,16 +514,6 @@ bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnitLits(const QList<QVa
   return true;
 }
 
-bool mdtTtTestNodeEditor::setupTables()
-{
-  if(!setupTestNodeTable()){
-    return false;
-  }
-  if(!setupTestNodeUnitTable()){
-    return false;
-  }
-  return true;
-}
 
 bool mdtTtTestNodeEditor::setupTestNodeTable()
 {
@@ -497,21 +524,23 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
   mdtSqlRelation *baseVehicleTypeRelation;
 
   // Setup main form widget
-  tne.setupUi(form()->mainSqlWidget());
+  tne.setupUi(mainSqlWidget());
   connect(tne.pbSetVehicleType, SIGNAL(clicked()), this, SLOT(setBaseVehicleType()));
   ///connect(this, SIGNAL(unitEdited()), form()->mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
-  if(!form()->setTable("TestNode_tbl", "Test node", database())){
+  if(!setMainTable("TestNode_tbl", "Test node", database())){
     return false;
   }
+  /**
   sqlWindow()->enableNavigation();
   sqlWindow()->enableEdition();
   sqlWindow()->resize(800, 500);
   sqlWindow()->setWindowTitle(tr("Test node edition"));
+  */
   /*
    * Setup base unit widget mapping
    */
-  testNodeModel = form()->model("TestNode_tbl");
+  testNodeModel = model("TestNode_tbl");
   Q_ASSERT(testNodeModel != 0);
   // Setup base article model
   baseVehicleTypeModel = new QSqlTableModel(this, database());
@@ -532,11 +561,11 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
   if(!baseVehicleTypeRelation->addRelation("VehicleType_Id_FK_PK", "Id_PK", false)){
     return false;
   }
-  connect(form()->mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseVehicleTypeRelation, SLOT(setParentCurrentIndex(int)));
+  connect(mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseVehicleTypeRelation, SLOT(setParentCurrentIndex(int)));
   connect(baseVehicleTypeRelation, SIGNAL(childModelFilterApplied()), baseVehicleTypeMapper, SLOT(toFirst()));
   connect(baseVehicleTypeRelation, SIGNAL(childModelIsEmpty()), baseVehicleTypeMapper, SLOT(revert()));
   // Force a update
-  form()->mainSqlWidget()->setCurrentIndex(form()->mainSqlWidget()->currentRow());
+  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   return true;
 }
@@ -548,13 +577,13 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   QPushButton *pbEditUnit;
   QPushButton *pbRemoveUnit;
 
-  if(!form()->addChildTable("TestNodeUnit_view", tr("Units"), database())){
+  if(!addChildTable("TestNodeUnit_view", tr("Units"), database())){
     return false;
   }
-  if(!form()->addRelation("VehicleType_Id_FK_PK", "TestNodeUnit_view", "TestNode_Id_FK")){
+  if(!addRelation("VehicleType_Id_FK_PK", "TestNodeUnit_view", "TestNode_Id_FK")){
     return false;
   }
-  widget = form()->sqlTableWidget("TestNodeUnit_view");
+  widget = sqlTableWidget("TestNodeUnit_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("Unit_Id_FK_PK", true);
@@ -578,8 +607,8 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons
-  pbAddUnit = new QPushButton(tr("Add units ..."));
-  connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addUnits()));
+  pbAddUnit = new QPushButton(tr("Add unit ..."));
+  connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addUnit()));
   widget->addWidgetToLocalBar(pbAddUnit);
   pbEditUnit = new QPushButton(tr("Edit unit"));
   connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));

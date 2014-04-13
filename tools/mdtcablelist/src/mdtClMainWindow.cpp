@@ -217,7 +217,7 @@ void mdtClMainWindow::editArticle()
 void mdtClMainWindow::editTestConnectionCable()
 {
   if(pvTestConnectionCableEditor == 0){
-    pvTestConnectionCableEditor = new mdtTtTestConnectionCableEditor(0, pvDatabaseManager->database());
+    pvTestConnectionCableEditor = new mdtTtTestConnectionCableEditor(this, pvDatabaseManager->database());
     if(!pvTestConnectionCableEditor->setupTables()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup test connection cable editor."));
@@ -246,7 +246,7 @@ void mdtClMainWindow::editTestNode()
 {
   if(pvTestNodeEditor == 0){
     pvTestNodeEditor = new mdtTtTestNodeEditor(this, pvDatabaseManager->database());
-    if(!pvTestNodeEditor->setupAsWindow()){
+    if(!pvTestNodeEditor->setupTables()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup test node editor."));
       msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
@@ -257,9 +257,17 @@ void mdtClMainWindow::editTestNode()
       pvTestNodeEditor = 0;
       return;
     }
+    pvTestNodeEditorWindow = new mdtSqlWindow(this);
+    pvTestNodeEditorWindow->setSqlForm(pvTestNodeEditor);
+    pvTestNodeEditorWindow->resize(800, 500);
+    pvTestNodeEditorWindow->enableNavigation();
+    pvTestNodeEditorWindow->enableEdition();
+    pvTestNodeEditorWindow->setWindowTitle(tr("Test node edition"));
   }
   Q_ASSERT(pvTestNodeEditor != 0);
-  pvTestNodeEditor->show();
+  Q_ASSERT(pvTestNodeEditorWindow != 0);
+  pvTestNodeEditor->select();
+  pvTestNodeEditorWindow->show();
 }
 
 void mdtClMainWindow::editTest()

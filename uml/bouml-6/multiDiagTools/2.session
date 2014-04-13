@@ -1,16 +1,23 @@
 window_sizes 1280 1005 412 862 952 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1073154 // mdtTtTestLinkDialog
+  classdiagram_ref 1007106 // mdtTtTestNodeUnitData
+    862 952 90 18 0 73
+  classdiagram_ref 1013634 // mdtTtTestNodeUnitEditor
+    120 106 100 4 0 0
+  classdiagram_ref 1079810 // mdtTtTestNodeUnit
+    120 106 100 4 0 0
+  active  classdiagram_ref 1079938 // mdtTtTestNodeUnitDialog
     862 952 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1951874 // displayDutConnection
+selected operation_ref 1967362 // data
 open
-  
-  package_ref 254082 // core
-  operation_ref 1950978 // setTestConnection
-  operation_ref 1951106 // setDutConnection
+  attribute_ref 1150082 // TypeModel
+  operation_ref 1967362 // data
+  operation_ref 1967106 // setupTypeCpmboBox
+  classview_ref 563074 // mdtTbCoupler
+  classview_ref 628738 // Dialogs
   
   package_ref 134530 // mdtTest
 end

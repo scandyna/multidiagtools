@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,13 +21,17 @@
 #ifndef MDT_TT_TEST_NODE_EDITOR_H
 #define MDT_TT_TEST_NODE_EDITOR_H
 
-#include "mdtClEditor.h"
+#include "mdtSqlFormWindow.h"
+#include "mdtSqlForm.h"
+
 #include <QSqlDatabase>
 #include <QList>
 
+class QWidget;
+
 /*! \brief This class provides a test node editor
  */
-class mdtTtTestNodeEditor : public mdtClEditor
+class mdtTtTestNodeEditor : public mdtSqlForm
 {
  Q_OBJECT
 
@@ -35,7 +39,11 @@ class mdtTtTestNodeEditor : public mdtClEditor
 
   /*! \brief Constructor
    */
-  mdtTtTestNodeEditor(QObject *parent, QSqlDatabase db);
+  mdtTtTestNodeEditor(QWidget *parent, QSqlDatabase db);
+
+  /*! \brief Setup tables
+   */
+  bool setupTables();
 
  private slots:
 
@@ -43,9 +51,13 @@ class mdtTtTestNodeEditor : public mdtClEditor
    */
   void setBaseVehicleType();
 
+  /*! \brief Add a test node unit
+   */
+  void addUnit();
+
   /*! \brief Add test node units
    */
-  void addUnits();
+  ///void addUnits();
 
   /*! \brief Edit a node unit
    */
@@ -93,10 +105,6 @@ class mdtTtTestNodeEditor : public mdtClEditor
    * \sa assignTestConnectionToTestNodeUnit()
    */
   bool assignTestConnectionToTestNodeUnitLits(const QList<QVariant> & testNodeUnitIdList, const QList<QVariant> & busSideTestNodeUnitConnectionIdList);
-
-  /*! \brief Setup tables
-   */
-  bool setupTables();
 
   /*! \brief Setup TestNode table (main form)
    */

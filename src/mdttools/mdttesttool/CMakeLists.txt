@@ -1,6 +1,6 @@
 # Project file for Multi Diag Tools
 # * Part: mdttesttool *
-# * Directory: mdttesttool/mdttesttool *
+# * Directory: mdttools/mdttesttool *
 
 # Project
 project (multidiagtools)
@@ -9,6 +9,8 @@ project (multidiagtools)
 set (HEADER_FILES 
           mdtTtTestConnectionCableEditor.h
           mdtTtTestLinkDialog.h
+          mdtTtTestNodeEditor.h
+          mdtTtTestNodeUnitDialog.h
     )
 
 # Liste des fichiers sources
@@ -20,13 +22,18 @@ set (SOURCES_FILES
           mdtTtTestConnectionCable.cpp
           mdtTtTestConnectionCableEditor.cpp
           mdtTtTestNode.cpp
+          mdtTtTestNodeEditor.cpp
+          mdtTtTestNodeUnit.cpp
           mdtTtTestNodeUnitData.cpp
+          mdtTtTestNodeUnitDialog.cpp
     )
 
 # Liste des fichiers ui
 set (FORM_FILES
           mdtTtTestConnectionCableEditor.ui
           mdtTtTestLinkDialog.ui
+          mdtTtTestNodeEditor.ui
+          mdtTtTestNodeUnitDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)

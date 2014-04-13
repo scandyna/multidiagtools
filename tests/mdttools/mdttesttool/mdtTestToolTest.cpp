@@ -25,6 +25,8 @@
 #include "mdtSqlRecord.h"
 #include "mdtTtBase.h"
 #include "mdtTtTestLinkData.h"
+#include "mdtTtTestNodeUnit.h"
+#include "mdtTtTestNodeUnitData.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -189,6 +191,30 @@ void mdtTestToolTest::mdtTtTestLinkDataTest()
   QCOMPARE(data.value("Id_PK"), QVariant(1));
 }
 
+void mdtTestToolTest::mdtTtTestNodeUnitDataTest()
+{
+  mdtTtTestNodeUnitData data;
+  mdtSqlRecord unitData;
+
+  // Setup
+  QVERIFY(data.setup(pvDatabaseManager.database(), true));
+  QVERIFY(data.contains("Unit_Id_FK_PK"));
+  // Check setUnitData()
+  QVERIFY(unitData.addAllFields("Unit_tbl", pvDatabaseManager.database()));
+  unitData.setValue("Id_PK", 5);
+  data.setUnitData(unitData);
+  QCOMPARE(data.value("Unit_Id_FK_PK"), QVariant(5));
+  QCOMPARE(data.unitData().value("Id_PK"), QVariant(5));
+
+}
+
+void mdtTestToolTest::mdtTtTestNodeUnitTest()
+{
+  mdtTtTestNodeUnit tnu(this, pvDatabaseManager.database());
+  
+
+  
+}
 
 /*
  * Test database helper methods

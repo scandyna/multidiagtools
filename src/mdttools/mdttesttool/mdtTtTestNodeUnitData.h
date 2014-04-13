@@ -22,6 +22,8 @@
 #define MDT_TT_TEST_NODE_UNIT_DATA_H
 
 #include "mdtSqlRecord.h"
+#include "mdtClUnitConnectionData.h"
+#include <QSqlDatabase>
 
 /*! \brief Storage class for test node unit
  */
@@ -29,15 +31,48 @@ class mdtTtTestNodeUnitData : public mdtSqlRecord
 {
  public:
 
-  /*! \brief Constructor
-   *
-   * Will add relevent fields.
-   *  To check validity, use isEmpty() and lastError().
-   *
-   * \sa mdtSqlRecord
+  /*! \brief Construct a empty test node data container
    */
-  mdtTtTestNodeUnitData(const QSqlDatabase & db);
+  mdtTtTestNodeUnitData();
 
+  /*! \brief Construct a test node data based on a QSqlRecord
+   *
+   * \pre record must contain all fields from TestNodeUnit_tbl
+   */
+  mdtTtTestNodeUnitData(const QSqlRecord & record);
+
+  /*! \brief Setup fields from TestNodeUnit_tbl
+   *
+   * \param setupConnectionData If true, internal unit connection data will also be setup.
+   *
+   * Note: unit data part is allways setup.
+   */
+  bool setup(const QSqlDatabase & db, bool setupConnectionData);
+
+  /*! \brief Set unit data part
+   *
+   * Will also update Unit_Id_FK_PK field.
+   *
+   * \pre data must contain all fields from Unit_tbl
+   */
+  void setUnitData(const mdtSqlRecord & data);
+
+  /*! \brief Get unit data part
+   */
+  inline mdtSqlRecord unitData() const { return pvUnitData; }
+
+  /*! \brief Set test connection data
+   */
+  void setTestConnectionData(const mdtClUnitConnectionData & data);
+
+  /*! \brief Get test connection data
+   */
+  inline mdtClUnitConnectionData testConnectionData() const { return pvTestConnectionData; }
+
+ private:
+
+  mdtSqlRecord pvUnitData;  // Unit_tbl data part
+  mdtClUnitConnectionData pvTestConnectionData;
 };
 
 #endif // #ifndef MDT_TT_TEST_NODE_UNIT_DATA_H
