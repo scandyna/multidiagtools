@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtTtTestNodeUnit.h"
 #include "mdtClUnit.h"
+#include "mdtClPathGraph.h"
 #include <QSqlRecord>
 
 #include <QDebug>
@@ -27,6 +28,72 @@
 mdtTtTestNodeUnit::mdtTtTestNodeUnit(QObject *parent, const QSqlDatabase & db)
  : mdtTtBase(parent, db)
 {
+}
+
+QString mdtTtTestNodeUnit::sqlForTestConnectionSelection(const QList<QVariant> connectionIdList) const
+{
+  QString sql;
+  int i;
+
+  if(connectionIdList.isEmpty()){
+    return sql;
+  }
+  sql = "SELECT * FROM UnitConnection_view ";
+  Q_ASSERT(connectionIdList.size() > 0);
+  sql += " WHERE UnitConnection_Id_PK = " + connectionIdList.at(0).toString();
+  for(i = 1; i < connectionIdList.size(); ++i){
+    sql += " OR UnitConnection_Id_PK = " + connectionIdList.at(i).toString();
+  }
+
+  return sql;
+}
+
+QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & unitId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QList<QVariant> idList;
+  QList<QSqlRecord> dataList;
+  QString sql;
+  int i;
+
+  sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + unitId.toString();
+  dataList = mdtTtBase::getData(sql, ok);
+  if(!*ok){
+    return idList;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    idList.append(dataList.at(i).value(0));
+  }
+  *ok = true;
+
+  return idList;
+}
+
+QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList(const QList<QVariant> connectionIdList, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QList<QVariant> idList;
+  QList<QVariant> linkedConnectionIdList;
+  mdtClPathGraph graph(database());
+  int i;
+
+  // Load link list
+  if(!graph.loadLinkList()){
+    pvLastError = graph.lastError();
+    *ok = false;
+    return idList;
+  }
+  // Add linked connection IDs for each given connection ID
+  for(i = 0; i < connectionIdList.size(); ++i){
+    Q_ASSERT(!connectionIdList.at(i).isNull());
+    linkedConnectionIdList = graph.getLinkedConnectionIdList(connectionIdList.at(i)); /// \todo Have no error checking..
+    idList.append(linkedConnectionIdList);
+  }
+  *ok = true;
+
+  return idList;
 }
 
 mdtSqlRecord mdtTtTestNodeUnit::getUnitData(const QVariant & unitId, bool *ok)
@@ -93,7 +160,7 @@ mdtTtTestNodeUnitData mdtTtTestNodeUnit::getData(const QVariant & nodeUnitId, bo
     data.clearValues();
     return data;
   }
-  data.setUnitData(dataList.at(0));
+  data.setUnitData(unitData);
   // Get test connection data, if required
   if(includeTestConnectionData){
     mdtClUnitConnectionData connectionData;
@@ -111,10 +178,12 @@ mdtTtTestNodeUnitData mdtTtTestNodeUnit::getData(const QVariant & nodeUnitId, bo
 
 bool mdtTtTestNodeUnit::add(const mdtTtTestNodeUnitData & data) 
 {
+  return addRecord(data, "TestNodeUnit_tbl");
 }
 
 bool mdtTtTestNodeUnit::edit(const QVariant & nodeUnitId, const mdtTtTestNodeUnitData & data) 
 {
+  return updateRecord("TestNodeUnit_tbl", data, "Unit_Id_FK_PK", nodeUnitId);
 }
 
 bool mdtTtTestNodeUnit::remove(const QVariant & nodeUnitId) 

@@ -195,6 +195,7 @@ void mdtTestToolTest::mdtTtTestNodeUnitDataTest()
 {
   mdtTtTestNodeUnitData data;
   mdtSqlRecord unitData;
+  mdtClUnitConnectionData connectionData;
 
   // Setup
   QVERIFY(data.setup(pvDatabaseManager.database(), true));
@@ -205,6 +206,17 @@ void mdtTestToolTest::mdtTtTestNodeUnitDataTest()
   data.setUnitData(unitData);
   QCOMPARE(data.value("Unit_Id_FK_PK"), QVariant(5));
   QCOMPARE(data.unitData().value("Id_PK"), QVariant(5));
+  // Check setTestConnectionData()
+  QVERIFY(connectionData.setup(pvDatabaseManager.database(), false));
+  connectionData.setValue("Id_PK", 3);
+  data.setTestConnectionData(connectionData);
+  QCOMPARE(data.value("TestConnection_Id_FK"), QVariant(3));
+  QCOMPARE(data.testConnectionData().value("Id_PK"), QVariant(3));
+  // Clear values
+  data.clearValues();
+  QVERIFY(data.value("Unit_Id_FK_PK").isNull());
+  QVERIFY(data.unitData().value("Id_PK").isNull());
+  QVERIFY(data.testConnectionData().value("Id_PK").isNull());
 
 }
 

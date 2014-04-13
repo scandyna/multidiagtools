@@ -49,6 +49,10 @@ class mdtTtTestNodeUnitData : public mdtSqlRecord
    */
   bool setup(const QSqlDatabase & db, bool setupConnectionData);
 
+  /*! \brief Clear values
+   */
+  void clearValues();
+
   /*! \brief Set unit data part
    *
    * Will also update Unit_Id_FK_PK field.
@@ -62,6 +66,8 @@ class mdtTtTestNodeUnitData : public mdtSqlRecord
   inline mdtSqlRecord unitData() const { return pvUnitData; }
 
   /*! \brief Set test connection data
+   *
+   * Will also update TestConnection_Id_FK
    */
   void setTestConnectionData(const mdtClUnitConnectionData & data);
 

@@ -25,7 +25,9 @@
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtTtBase.h"
 #include <QVariant>
+#include <QList>
 #include <QSqlDatabase>
+#include <QString>
 
 class QObject;
 
@@ -38,6 +40,18 @@ class mdtTtTestNodeUnit : public mdtTtBase
   /*! \brief Constructor
    */
   mdtTtTestNodeUnit(QObject *parent, const QSqlDatabase & db);
+
+  /*! \brief Get SQL statement for test connection selection
+   */
+  QString sqlForTestConnectionSelection(const QList<QVariant> connectionIdList) const;
+
+  /*! \brief Get a list of unit connection IDs for given unit ID
+   */
+  QList<QVariant> getConnectionIdListOfUnitId(const QVariant & unitId, bool *ok);
+
+  /*! \brief Get unit connection IDs that are linked to given unit connection IDs
+   */
+  QList<QVariant> getConnectionIdListLinkedToConnectionIdList(const QList<QVariant> connectionIdList, bool *ok);
 
   /*! \brief Get unit data
    */

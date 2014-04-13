@@ -70,9 +70,17 @@ class mdtTtTestNodeUnitDialog : public QDialog, Ui::mdtTtTestNodeUnitDialog
    */
   void displayBus();
 
+  /*! \brief Store selected BUS to internal data
+   */
+  void storeBus();
+
   /*! \brief Update node unit type combo box regarding internal data
    */
   void displayType();
+
+  /*! \brief Store selected type to internal data
+   */
+  void storeType();
 
   /*! \brief Setup and populate BUS combo box
    */

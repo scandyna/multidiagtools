@@ -29,11 +29,11 @@ mdtTtTestNodeUnitData::mdtTtTestNodeUnitData(const QSqlRecord & record)
  : mdtSqlRecord(record)
 {
   Q_ASSERT(contains("Unit_Id_FK_PK"));
+  Q_ASSERT(contains("TestNode_Id_FK"));
+  Q_ASSERT(contains("Type_Code_FK"));
   Q_ASSERT(contains("TestConnection_Id_FK"));
-  Q_ASSERT(contains("DutConnection_Id_FK"));
-  Q_ASSERT(contains("TestCable_Id_FK"));
-  Q_ASSERT(contains("Identification"));
-  Q_ASSERT(contains("Value"));
+  Q_ASSERT(contains("Bus"));
+  Q_ASSERT(contains("IoPosition"));
 }
 
 bool mdtTtTestNodeUnitData::setup(const QSqlDatabase& db, bool setupConnectionData)
@@ -55,6 +55,13 @@ bool mdtTtTestNodeUnitData::setup(const QSqlDatabase& db, bool setupConnectionDa
   return true;
 }
 
+void mdtTtTestNodeUnitData::clearValues()
+{
+  pvUnitData.clearValues();
+  pvTestConnectionData.clearValues();
+  mdtSqlRecord::clearValues();
+}
+
 void mdtTtTestNodeUnitData::setUnitData(const mdtSqlRecord& data)
 {
   Q_ASSERT(data.contains("Id_PK"));
@@ -68,5 +75,6 @@ void mdtTtTestNodeUnitData::setUnitData(const mdtSqlRecord& data)
 
 void mdtTtTestNodeUnitData::setTestConnectionData(const mdtClUnitConnectionData& data)
 {
+  setValue("TestConnection_Id_FK", data.value("Id_PK"));
   pvTestConnectionData = data;
 }

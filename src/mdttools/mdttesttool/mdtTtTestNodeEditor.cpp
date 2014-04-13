@@ -25,6 +25,7 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtTtTestNodeUnit.h"
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtTtTestNodeUnitDialog.h"
 ///#include "mdtSqlDialog.h"
@@ -89,6 +90,7 @@ void mdtTtTestNodeEditor::setBaseVehicleType()
 
 void mdtTtTestNodeEditor::addUnit()
 {
+  mdtTtTestNodeUnit tnu(0, database());
   mdtTtTestNodeUnitDialog dialog(this, database());
   QVariant nodeId;
   mdtTtTestNodeUnitData data;
@@ -109,6 +111,14 @@ void mdtTtTestNodeEditor::addUnit()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  // Add unit
+  if(!tnu.add(dialog.data())){
+    pvLastError = tnu.lastError();
+    displayLastError();
+    return;
+  }
+  // Update UI
+  select("TestNodeUnit_view");
 }
 
 /**
@@ -214,6 +224,43 @@ void mdtTtTestNodeEditor::addUnits()
 
 void mdtTtTestNodeEditor::editUnit()
 {
+  mdtTtTestNodeUnit tnu(0, database());
+  mdtTtTestNodeUnitDialog dialog(this, database());
+  QVariant nodeId;
+  QVariant unitId;
+  mdtTtTestNodeUnitData data;
+  bool ok;
+
+  // Get ids
+  nodeId = currentData("TestNode_tbl", "VehicleType_Id_FK_PK");
+  if(nodeId.isNull()){
+    return;
+  }
+  unitId = currentData("TestNodeUnit_view", "Unit_Id_FK_PK");
+  if(unitId.isNull()){
+    return;
+  }
+  // Get current data
+  data = tnu.getData(unitId, &ok, true);
+  if(!ok){
+    pvLastError = tnu.lastError();
+    displayLastError();
+    return;
+  }
+  // Setup and show dialog
+  dialog.setData(data);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Update in DB
+  if(!tnu.edit(unitId, dialog.data())){
+    pvLastError = tnu.lastError();
+    displayLastError();
+    return;
+  }
+  // Update UI
+  select("TestNodeUnit_view");
+
   /**
   mdtTtTestNodeUnitEditor *tnue;
   mdtSqlDialog dialog;
