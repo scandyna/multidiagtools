@@ -110,6 +110,10 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   void removeConnections();
 
+  /*! \brief View linked Connections
+   */
+  void viewLinkedConnections();
+
   /*! \brief Add a link
    */
   void addLink();

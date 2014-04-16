@@ -19,6 +19,7 @@ set (HEADER_FILES
           mdtClUnitConnectionDialog.h
           mdtClUnitEditor.h
           mdtClUnitLinkDialog.h
+          mdtClLinkedUnitConnectionInfoDialog.h
     )
 
 # Liste des fichiers sources
@@ -47,6 +48,7 @@ set (SOURCES_FILES
           mdtClLink.cpp
           mdtClUnitLinkDialog.cpp
           mdtClUnitVehicleType.cpp
+          mdtClLinkedUnitConnectionInfoDialog.cpp
           # NOTE: provisoire !!!!!!!!!!!!!!!!!!!!
           #../../../../tools/mdtcablelist/src/mdtClUnitConnectionData.cpp
           #../../../../tools/mdtcablelist/src/mdtClLinkData.cpp
@@ -64,6 +66,7 @@ set (FORM_FILES
           mdtClUnitConnectionDialog.ui
           mdtClUnitEditor.ui
           mdtClUnitLinkDialog.ui
+          mdtClLinkedUnitConnectionInfoDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)

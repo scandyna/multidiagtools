@@ -2552,6 +2552,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " LNK.LinkType_Code_FK ,\n"\
               " US.Id_PK AS StartUnit_Id_PK ,\n"\
               " US.SchemaPosition AS StartSchemaPosition,\n"\
+              " US.Alias AS StartAlias,\n"\
               " US.Cabinet AS StartCabinet,\n"\
               " US.Coordinate AS StartCoordinate ,\n"\
               " UCS.Id_PK AS UnitConnectorStart_Id_FK,\n"\
@@ -2564,6 +2565,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " VE.SeriesNumber AS EndVehicleSerie,\n"\
               " UE.Id_PK AS EndUnit_Id_PK ,\n"\
               " UE.SchemaPosition AS EndSchemaPosition,\n"\
+              " UE.Alias AS EndAlias,\n"\
               " UE.Cabinet AS EndCabinet,\n"\
               " UE.Coordinate AS EndCoordinate ,\n"\
               " UCE.Id_PK AS UnitConnectorEnd_Id_FK,\n"\

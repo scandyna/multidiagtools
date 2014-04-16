@@ -32,7 +32,9 @@
 #include "mdtClUnitConnectionDialog.h"
 #include "mdtClLinkData.h"
 #include "mdtClUnitLinkDialog.h"
+#include "mdtClPathGraph.h"
 #include "mdtClPathGraphDialog.h"
+#include "mdtClLinkedUnitConnectionInfoDialog.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -723,6 +725,30 @@ void mdtClUnitEditor::removeConnections()
   select("UnitConnection_view");
 }
 
+void mdtClUnitEditor::viewLinkedConnections()
+{
+  mdtClLinkedUnitConnectionInfoDialog dialog(this, database());
+  mdtClPathGraph graph(database());
+  QVariant connectionId;
+  QList<QVariant> linkedConnectionsIdList;
+
+  // Get current unit connection ID
+  connectionId = currentData("UnitConnection_view", "UnitConnection_Id_PK");
+  if(connectionId.isNull()){
+    return;
+  }
+  // Load link list and get linked connections
+  if(!graph.loadLinkList()){
+    pvLastError = graph.lastError();
+    displayLastError();
+    return;
+  }
+  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId);
+  // Setup and show dialog
+  dialog.setConnections(connectionId, linkedConnectionsIdList);
+  dialog.exec();
+}
+
 void mdtClUnitEditor::addLink()
 {
   mdtClUnitLinkDialog dialog(0, database());
@@ -895,8 +921,12 @@ void mdtClUnitEditor::connectConnectors()
     return;
   }
   // Select end unit
+  /**
   sql = "SELECT * FROM Unit_view WHERE Unit_Id_PK <> " + startUnitId.toString();
   sql += " AND VehicleType_Id_PK = " + endVehicleTypeId.toString();
+  */
+  sql = "SELECT * FROM Unit_view ";
+  sql += " WHERE VehicleType_Id_PK = " + endVehicleTypeId.toString();
   endUnitId = selectUnit(tr("Select end unit:"), sql);
   if(endUnitId.isNull()){
     return;
@@ -1344,6 +1374,7 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   QPushButton *pbAddArticleConnectionBasedConnection;
   QPushButton *pbEditConnection;
   QPushButton *pbRemoveConnection;
+  QPushButton *pbViewLinkedConnections;
 
   if(!addChildTable("UnitConnection_view", tr("Connections"), database())){
     return false;
@@ -1366,6 +1397,11 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->addWidgetToLocalBar(pbAddArticleConnectionBasedConnection);
   widget->addWidgetToLocalBar(pbEditConnection);
   widget->addWidgetToLocalBar(pbRemoveConnection);
+  // View linked connections button
+  pbViewLinkedConnections = new QPushButton(tr("Linked connections"));
+  connect(pbViewLinkedConnections, SIGNAL(clicked()), this, SLOT(viewLinkedConnections()));
+  widget->addWidgetToLocalBar(pbViewLinkedConnections);
+  // Add stretch
   widget->addStretchToLocalBar();
   // On double click, we edit connection
   Q_ASSERT(widget->tableView() != 0);

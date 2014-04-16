@@ -389,6 +389,9 @@ void mdtClUnitLinkDialog::selectStartConnection()
   selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
   selectionDialog.setHeaderData("IoType", tr("I/O type"));
   selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
+  selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+  selectionDialog.sort();
   selectionDialog.addSelectionResultColumn("UnitConnection_Id_PK");
   selectionDialog.resize(700, 400);
   if(selectionDialog.exec() != QDialog::Accepted){
@@ -430,6 +433,9 @@ void mdtClUnitLinkDialog::selectEndConnection()
   selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
   selectionDialog.setHeaderData("IoType", tr("I/O type"));
   selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
+  selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+  selectionDialog.sort();
   selectionDialog.addSelectionResultColumn("UnitConnection_Id_PK");
   selectionDialog.resize(700, 400);
   if(selectionDialog.exec() != QDialog::Accepted){

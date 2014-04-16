@@ -1,6 +1,6 @@
 format 206
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 20
+  revision 22
   modified_by 2 "philippe"
   // class settings
   
@@ -2741,6 +2741,177 @@ ${inlines}
       mysql_decl ""
       
     end
+
+    classdiagram 1086466 "mdtClLinkedUnitConnectionInfoDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1173634 "mdtClLinkedUnitConnectionInfoDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1472386 // <generalisation>
+	relation 1459458 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1472386 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      classrelation 1472514 // <generalisation>
+	relation 1459586 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1472514 // <generalisation>
+	  b parent class_ref 1173762 // Ui::mdtClLinkedUnitConnectionInfoDialog
+      end
+
+      operation 1973890 "mdtClLinkedUnitConnectionInfoDialog"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 316162 // QWidget
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1472642 // pvProxyModel (<directional composition>)
+	relation 1459714 *-->
+	  a role_name "pvProxyModel" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1472642 // pvProxyModel (<directional composition>)
+	  b parent class_ref 720002 // mdtSortFilterProxyModel
+      end
+
+      classrelation 1472770 // pvModel (<directional composition>)
+	relation 1459842 *-->
+	  a role_name "pvModel" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1472770 // pvModel (<directional composition>)
+	  b parent class_ref 174338 // QSqlQueryModel
+      end
+
+      operation 1974018 "setConnections"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "unitConnectionId" type class_ref 161154 // QVariant
+	  param in name "linkedConnectionIdList" type class_ref 161154 // QVariant
+	multiplicity "*"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1974146 "displayConnection"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "connectionId" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1974274 "displayUnit"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "unitId" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1974530 "displayLinkedConnections"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "connectionIdList" type class_ref 161154 // QVariant
+	multiplicity "*"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1974402 "sqlForLinkedConnections"
+	private return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "connectionIdList" type class_ref 161154 // QVariant
+	multiplicity "*"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 1173762 "Ui::mdtClLinkedUnitConnectionInfoDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
   end
 
   classview 503554 "Link"
@@ -3670,6 +3841,30 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 1113730 // mdtClArticleConnectionData
+      end
+    end
+
+    artifact 742786 "mdtClLinkedUnitConnectionInfoDialog"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 1173634 // mdtClLinkedUnitConnectionInfoDialog
       end
     end
   end
