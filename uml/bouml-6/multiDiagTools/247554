@@ -1,6 +1,6 @@
 format 206
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 22
+  revision 23
   modified_by 2 "philippe"
   // class settings
   
@@ -2898,6 +2898,93 @@ ${inlines}
     end
 
     class 1173762 "Ui::mdtClLinkedUnitConnectionInfoDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 1092994 "mdtClLinkedUnitConnectorInfoDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1180290 "mdtClLinkedUnitConnectorInfoDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1479298 // <generalisation>
+	relation 1466370 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1479298 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      classrelation 1479426 // <generalisation>
+	relation 1466498 ---|>
+	  a private
+	    cpp default "${type}"
+	    classrelation_ref 1479426 // <generalisation>
+	  b parent class_ref 1180418 // Ui::mdtClLinkedUnitConnectorInfoDialog
+      end
+
+      classrelation 1479554 // pvProxyModel (<directional composition>)
+	relation 1466626 *-->
+	  a role_name "pvProxyModel" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1479554 // pvProxyModel (<directional composition>)
+	  b parent class_ref 720002 // mdtSortFilterProxyModel
+      end
+
+      classrelation 1479682 // pvModel (<directional composition>)
+	relation 1466754 *-->
+	  a role_name "pvModel" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1479682 // pvModel (<directional composition>)
+	  b parent class_ref 174338 // QSqlQueryModel
+      end
+
+      operation 1981058 "mdtClLinkedUnitConnectorInfoDialog"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 316162 // QWidget
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 1180418 "Ui::mdtClLinkedUnitConnectorInfoDialog"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

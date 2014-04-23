@@ -160,6 +160,10 @@ bool mdtClPathGraph::loadLinkList()
       edgeData.isComplement = true;
       boost::add_edge(endVertex, startVertex, edgeData, pvGraph);
     }
+    // Fetch more data if possible
+    if((row > 0)&&(pvLinkListModel->canFetchMore())){
+      pvLinkListModel->fetchMore();
+    }
   }
 
   return true;

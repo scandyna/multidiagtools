@@ -305,6 +305,7 @@ void mdtClUnitLinkDialog::selectStartUnit()
   selectionDialog.setMessage(tr("Please select start unit:"));
   selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("Unit_Id_PK", true);
+  selectionDialog.setColumnHidden("VehicleType_Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_PK", true);
   selectionDialog.setHeaderData("Vehicle", tr("Type"));
   selectionDialog.setHeaderData("SubType", tr("Sub type"));
@@ -340,6 +341,7 @@ void mdtClUnitLinkDialog::selectEndUnit()
   selectionDialog.setMessage(tr("Please select end unit:"));
   selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("Unit_Id_PK", true);
+  selectionDialog.setColumnHidden("VehicleType_Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_PK", true);
   selectionDialog.setHeaderData("Type", tr("Vehicle"));
   selectionDialog.setHeaderData("SubType", tr("Sub type"));

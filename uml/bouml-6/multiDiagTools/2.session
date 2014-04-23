@@ -1,16 +1,17 @@
 window_sizes 1280 1005 291 983 952 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1086466 // mdtClLinkedUnitConnectionInfoDialog
+  classdiagram_ref 1086466 // mdtClLinkedUnitConnectionInfoDialog
     983 952 100 4 0 0
   classdiagram_ref 1073282 // mdtClUnitLinkDialog
     120 106 100 4 0 0
+  active  classdiagram_ref 1092994 // mdtClLinkedUnitConnectorInfoDialog
+    983 952 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 772866 // mdtClLink
+selected classdiagram_ref 1092994 // mdtClLinkedUnitConnectorInfoDialog
 open
-  classview_ref 490498 // Unit
-  classview_ref 503554 // Link
+  class_ref 1180290 // mdtClLinkedUnitConnectorInfoDialog
   classview_ref 563074 // mdtTbCoupler
   classview_ref 628738 // Dialogs
   

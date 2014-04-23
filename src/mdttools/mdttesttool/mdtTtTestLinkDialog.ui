@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>574</width>
-    <height>273</height>
+    <width>566</width>
+    <height>301</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -367,6 +367,13 @@
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbLinkedConnectionsInfo">
+          <property name="text">
+           <string>View linked connections infos</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

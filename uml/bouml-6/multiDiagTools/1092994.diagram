@@ -1,0 +1,52 @@
+format 206
+
+classcanvas 128002 class_ref 1180290 // mdtClLinkedUnitConnectorInfoDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 19 270 2000
+end
+classcanvas 128130 class_ref 370434 // QDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 15 33 2000
+end
+classcanvas 128386 class_ref 1180418 // Ui::mdtClLinkedUnitConnectorInfoDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 484 68 2000
+end
+classcanvas 128642 class_ref 720002 // mdtSortFilterProxyModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 649 298 2000
+end
+classcanvas 128770 class_ref 174338 // QSqlQueryModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 679 397 2000
+end
+classcanvas 129154 class_ref 818818 // mdtClUnit
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 702 483 2006
+end
+relationcanvas 128258 relation_ref 1466370 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 1466498 // <generalisation>
+  from ref 128002 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 1466626 // <directional composition>
+  from ref 128002 z 2001 to ref 128642
+  role_a_pos 555 292 3000 no_role_b
+  multiplicity_a_pos 631 322 3000 no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 1466754 // <directional composition>
+  from ref 128002 z 2001 to ref 128770
+  role_a_pos 619 381 3000 no_role_b
+  multiplicity_a_pos 661 411 3000 no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 1019906 // <directional composition>
+  from ref 129154 z 2007 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

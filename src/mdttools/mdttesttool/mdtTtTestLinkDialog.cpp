@@ -23,6 +23,8 @@
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtClPathGraph.h"
+#include "mdtClLinkedUnitConnectionInfoDialog.h"
 #include <QMessageBox>
 #include <QSqlRecord>
 #include <QList>
@@ -49,8 +51,7 @@ mdtTtTestLinkDialog::mdtTtTestLinkDialog(QWidget *parent, QSqlDatabase db)
   connect(pbSelectDutUnit, SIGNAL(clicked()), this, SLOT(selectDutUnit()));
   connect(pbSelectTestConnection, SIGNAL(clicked()), this, SLOT(selectTestConnection()));
   connect(pbSelectDutConnection, SIGNAL(clicked()), this, SLOT(selectDutConnection()));
-  
-  
+  connect(pbLinkedConnectionsInfo, SIGNAL(clicked()), this, SLOT(viewDutLinkedConnections()));
   displayTestNode();
   displayDutUnit();
   displayTestConnection();
@@ -253,6 +254,32 @@ void mdtTtTestLinkDialog::selectDutConnection()
   // Get connection data and update
   pvLinkData.setValue("DutConnection_Id_FK", result.at(0));
   displayDutConnection();
+}
+
+void mdtTtTestLinkDialog::viewDutLinkedConnections()
+{
+  mdtClLinkedUnitConnectionInfoDialog dialog(this, pvDatabase);
+  mdtClPathGraph graph(pvDatabase);
+  QVariant connectionId;
+  QList<QVariant> linkedConnectionsIdList;
+
+  // Get current unit connection ID
+  connectionId = pvLinkData.value("DutConnection_Id_FK");
+  if(connectionId.isNull()){
+    return;
+  }
+  // Load link list and get linked connections
+  if(!graph.loadLinkList()){
+    /** \todo Error message
+    pvLastError = graph.lastError();
+    displayLastError();
+    */
+    return;
+  }
+  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId);
+  // Setup and show dialog
+  dialog.setConnections(connectionId, linkedConnectionsIdList);
+  dialog.exec();
 }
 
 void mdtTtTestLinkDialog::accept() 

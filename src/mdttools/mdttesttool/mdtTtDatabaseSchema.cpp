@@ -2459,9 +2459,11 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
   selectSql = "SELECT\n"\
               " LNK.Identification ,\n"\
               " US.SchemaPosition AS StartSchemaPosition ,\n"\
+              " US.Alias AS StartAlias,\n"\
               " UCS.Name AS StartUnitConnectorName ,\n"\
               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
               " UE.SchemaPosition AS EndSchemaPosition ,\n"\
+              " UE.Alias AS EndAlias,\n"\
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
               " LNK.SinceVersion ,\n"\

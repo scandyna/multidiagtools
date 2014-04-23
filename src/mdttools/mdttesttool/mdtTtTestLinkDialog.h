@@ -89,6 +89,10 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
    */
   void selectDutConnection();
 
+  /*! \brief Show DUT linked connections informations
+   */
+  void viewDutLinkedConnections();
+
   /*! \brief
    */
   void accept();

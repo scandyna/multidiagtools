@@ -987,6 +987,7 @@ QVariant mdtClUnitEditor::selectUnit(const QString & message, const QString & sq
   selectionDialog.setMessage(message);
   selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Unit_Id_PK", true);
+  selectionDialog.setColumnHidden("VehicleType_Id_PK", true);
   ///selectionDialog.setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
   selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   selectionDialog.sort();
@@ -1486,9 +1487,11 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->setColumnHidden("", true);
   // Give fields a user friendly name
   widget->setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
+  widget->setHeaderData("StartAlias", tr("Start\nalias"));
   widget->setHeaderData("StartUnitConnectorName", tr("Start\nconnector"));
   widget->setHeaderData("StartUnitContactName", tr("Start\ncontact"));
   widget->setHeaderData("EndSchemaPosition", tr("End\nschema pos."));
+  widget->setHeaderData("EndAlias", tr("End\nalias"));
   widget->setHeaderData("EndUnitConnectorName", tr("End\nconnector"));
   widget->setHeaderData("EndUnitContactName", tr("End\ncontact"));
   widget->setHeaderData("SinceVersion", tr("Since\nversion"));
