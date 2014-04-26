@@ -110,7 +110,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> ****************************************************************************/</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_connection_cable_editor_8h.html">mdtTtTestConnectionCableEditor.h</a>&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ui__mdt_tt_test_connection_cable_editor_8h.html">ui_mdtTtTestConnectionCableEditor.h</a>&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;ui_mdtTtTestConnectionCableEditor.h&quot;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_connection_cable_8h.html">mdtTtTestConnectionCable.h</a>&quot;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_selection_dialog_8h.html">mdtSqlSelectionDialog.h</a>&quot;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_node_8h.html">mdtTtTestNode.h</a>&quot;</span></div>
@@ -522,10 +522,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;</div>
 <div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;<span class="keywordtype">bool</span> mdtTtTestConnectionCableEditor::setupTestCableTable()</div>
 <div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;{</div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;  <a class="code" href="class_ui_1_1mdt_tt_test_connection_cable_editor.html">Ui::mdtTtTestConnectionCableEditor</a> tcce;</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;  Ui::mdtTtTestConnectionCableEditor tcce;</div>
 <div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;</div>
 <div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;  <span class="comment">// Setup main form widget</span></div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;  tcce.<a class="code" href="class_ui__mdt_tt_test_connection_cable_editor.html#a919a7fd9d845da19bb875790d324e2bd">setupUi</a>(<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>());</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;  tcce.setupUi(<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>());</div>
 <div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;  <span class="comment">// Setup form</span></div>
 <div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#ab03dd80e9de62362dd77161ef6bd6fc2" title="Set the main (or parent) table of the form. ">setMainTable</a>(<span class="stringliteral">&quot;TestCable_tbl&quot;</span>, <span class="stringliteral">&quot;Test cable&quot;</span>, <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>())){</div>
 <div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
@@ -600,7 +600,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 26 2014 13:09:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 26 2014 15:38:51 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

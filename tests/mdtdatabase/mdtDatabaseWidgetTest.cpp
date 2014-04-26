@@ -21,6 +21,7 @@
 #include "mdtDatabaseWidgetTest.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtApplication.h"
+#include "mdtSqlTableWidget.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -66,6 +67,32 @@ void mdtDatabaseWidgetTest::cleanupTestCase()
 {
   QFile::remove(pvDatabaseManager.database().databaseName());
 }
+
+
+void mdtDatabaseWidgetTest::sqlTableWidgetTest()
+{
+  mdtSqlTableWidget *sqlTableWidget;
+  QSqlTableModel model;
+
+  // Populate database
+  populateTestDatabase();
+  // Setup model + vidget
+  model.setTable("Client_tbl");
+  model.select();
+  sqlTableWidget = new mdtSqlTableWidget;
+  sqlTableWidget->setModel(&model);
+  sqlTableWidget->show();
+
+  /*
+   * Play
+   */
+  while(sqlTableWidget->isVisible()){
+    QTest::qWait(1000);
+  }
+  // Clear database data
+  clearTestDatabaseData();
+}
+
 
 /*
  * Helper methods

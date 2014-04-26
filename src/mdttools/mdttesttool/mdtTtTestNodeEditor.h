@@ -21,7 +21,6 @@
 #ifndef MDT_TT_TEST_NODE_EDITOR_H
 #define MDT_TT_TEST_NODE_EDITOR_H
 
-#include "mdtSqlFormWindow.h"
 #include "mdtSqlForm.h"
 
 #include <QSqlDatabase>

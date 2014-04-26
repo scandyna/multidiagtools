@@ -37,6 +37,8 @@ class mdtDatabaseWidgetTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
+  void sqlTableWidgetTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

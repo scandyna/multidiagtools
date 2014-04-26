@@ -1,6 +1,4 @@
 <map id="src/mdttools/mdttesttool/mdtTtTestNodeEditor.h" name="src/mdttools/mdttesttool/mdtTtTestNodeEditor.h">
-<area shape="rect" id="node3" href="$mdt_sql_form_window_8h.html" title="mdtSqlFormWindow.h" alt="" coords="5,101,155,131"/>
-<area shape="rect" id="node26" href="$mdt_sql_form_8h.html" title="mdtSqlForm.h" alt="" coords="409,179,513,208"/>
-<area shape="rect" id="node5" href="$mdt_sql_form_old_8h.html" title="mdtSqlFormOld.h" alt="" coords="229,179,352,208"/>
-<area shape="rect" id="node7" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="575,256,657,285"/>
+<area shape="rect" id="node3" href="$mdt_sql_form_8h.html" title="mdtSqlForm.h" alt="" coords="368,101,472,131"/>
+<area shape="rect" id="node5" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="93,179,176,208"/>
 </map>

@@ -12,6 +12,7 @@ set (HEADER_FILES
           mdtSqlWindow.h
           mdtSqlDialog.h
           mdtSqlSelectionDialog.h
+          mdtSqlTableWidget.h
     )
 
 # Liste des fichiers sources
@@ -21,6 +22,7 @@ set (SOURCES_FILES
           mdtSqlDialog.cpp
           mdtSqlRecord.cpp
           mdtSqlSelectionDialog.cpp
+          mdtSqlTableWidget.cpp
     )
 
 # Qt ui files

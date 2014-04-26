@@ -140,33 +140,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="comment">// Setup UI</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#ade2eec293670997759449026eab49152">setupUi</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  setupUi(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  setWindowTitle(tr(<span class="stringliteral">&quot;Article link edition&quot;</span>));</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_article_link_dialog.html#aebe10d3a87978da5ba9595889e6df946">pbStartConnection</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectStartConnection()));</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_article_link_dialog.html#ad917ee21faf606b8de07a303cd35c595">pbEndConnection</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectEndConnection()));</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  connect(pbStartConnection, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectStartConnection()));</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  connect(pbEndConnection, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectEndConnection()));</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="comment">// Setup link type</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  pvLinkTypeModel = <span class="keyword">new</span> QSqlQueryModel(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  pvLinkTypeModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Code_PK, NameEN, ValueUnit FROM LinkType_tbl ORDER BY NameEN&quot;</span>, pvDatabase);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a09604109a10657c71de819099aa2a9fe">cbLinkType</a>-&gt;setModel(pvLinkTypeModel);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a09604109a10657c71de819099aa2a9fe">cbLinkType</a>-&gt;setModelColumn(1);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a09604109a10657c71de819099aa2a9fe">cbLinkType</a>-&gt;setCurrentIndex(-1);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a09604109a10657c71de819099aa2a9fe">cbLinkType</a>, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onCbLinkTypeCurrentIndexChanged(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  cbLinkType-&gt;setModel(pvLinkTypeModel);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  cbLinkType-&gt;setModelColumn(1);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  cbLinkType-&gt;setCurrentIndex(-1);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  connect(cbLinkType, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onCbLinkTypeCurrentIndexChanged(<span class="keywordtype">int</span>)));</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="comment">// Setup link direction</span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  pvLinkDirectionModel = <span class="keyword">new</span> QSqlQueryModel(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  pvLinkDirectionModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Code_PK, NameEN FROM LinkDirection_tbl&quot;</span>, pvDatabase);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a68d436550895e816263e5fa070701247">cbLinkDirection</a>-&gt;setModel(pvLinkDirectionModel);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a68d436550895e816263e5fa070701247">cbLinkDirection</a>-&gt;setModelColumn(1);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a68d436550895e816263e5fa070701247">cbLinkDirection</a>, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onCbLinkDirectionCurrentIndexChanged(<span class="keywordtype">int</span>)));</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a68d436550895e816263e5fa070701247">cbLinkDirection</a>-&gt;setCurrentIndex(-1);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  cbLinkDirection-&gt;setModel(pvLinkDirectionModel);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  cbLinkDirection-&gt;setModelColumn(1);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  connect(cbLinkDirection, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onCbLinkDirectionCurrentIndexChanged(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  cbLinkDirection-&gt;setCurrentIndex(-1);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="comment">// Setup connections</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  pvArticleConnectionModel = <span class="keyword">new</span> QSqlQueryModel(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  pvArticleConnectionModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Id_PK, ArticleConnectorName, ArticleContactName, IoType, FunctionEN, FunctionFR, FunctionDE, FunctionIT \</span></div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="stringliteral">                                     FROM ArticleConnection_view WHERE Article_Id_FK = &quot;</span> + articleId.toString(), pvDatabase);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a7b96feb0c00fc3dcb432f022e0f64442">lbStartConnectorName</a>-&gt;clear();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a2f05b301e14e0b34f4b38d65c2822ab2">lbStartContactName</a>-&gt;clear();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a173b3c5ac4a1b46ed4ea209830ff0ba6">lbEndConnectorName</a>-&gt;clear();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#aa0163584a3ecb7d5a8ddff9c480b2e8a">lbEndContactName</a>-&gt;clear();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a16eae76f4a5b7309cd4e7ac12a9e9e77">lbUnit</a>-&gt;clear();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  lbStartConnectorName-&gt;clear();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  lbStartContactName-&gt;clear();</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  lbEndConnectorName-&gt;clear();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  lbEndContactName-&gt;clear();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  lbUnit-&gt;clear();</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
 <div class="line"><a name="l00082"></a><span class="lineno"><a class="code" href="classmdt_cl_article_link_dialog.html#ab245318cbe47717ac42a57becfcf1688">   82</a></span>&#160;<a class="code" href="classmdt_cl_article_link_dialog.html#ab245318cbe47717ac42a57becfcf1688" title="Destructor. ">mdtClArticleLinkDialog::~mdtClArticleLinkDialog</a>()</div>
@@ -184,7 +184,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    index = pvLinkTypeModel-&gt;index(row, 0);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    data = pvLinkTypeModel-&gt;data(index);</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">if</span>(data == code){</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a09604109a10657c71de819099aa2a9fe">cbLinkType</a>-&gt;setCurrentIndex(row);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      cbLinkType-&gt;setCurrentIndex(row);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  }</div>
@@ -201,7 +201,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    index = pvLinkDirectionModel-&gt;index(row, 0);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    data = pvLinkDirectionModel-&gt;data(index);</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">if</span>(data == code){</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a68d436550895e816263e5fa070701247">cbLinkDirection</a>-&gt;setCurrentIndex(row);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      cbLinkDirection-&gt;setCurrentIndex(row);</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  }</div>
@@ -210,7 +210,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00120"></a><span class="lineno"><a class="code" href="classmdt_cl_article_link_dialog.html#aa609d5af478e7103b138e9a6a245df53">  120</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_cl_article_link_dialog.html#aa609d5af478e7103b138e9a6a245df53" title="Display value. ">mdtClArticleLinkDialog::setValue</a>(<span class="keyword">const</span> QVariant &amp; value)</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;{</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Value&quot;</span>, value);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a00018187b69f670a46eee24b810eb27c">sbValue</a>-&gt;setValue(value.toDouble());</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  sbValue-&gt;setValue(value.toDouble());</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
 <div class="line"><a name="l00126"></a><span class="lineno"><a class="code" href="classmdt_cl_article_link_dialog.html#a302a9c5f64407b4e3efd76c68b3a5cb2">  126</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_cl_article_link_dialog.html#a302a9c5f64407b4e3efd76c68b3a5cb2" title="Store id as current selected start connection and display it. ">mdtClArticleLinkDialog::setStartConnectionId</a>(<span class="keyword">const</span> QVariant &amp; <span class="keywordtype">id</span>)</div>
@@ -237,7 +237,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  QVariant data;</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <span class="keywordflow">if</span>(row &lt; 0){</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a16eae76f4a5b7309cd4e7ac12a9e9e77">lbUnit</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    lbUnit-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  }</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <span class="comment">// We must update available directions regarding link type</span></div>
@@ -245,17 +245,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  data = pvLinkTypeModel-&gt;data(index);</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keywordflow">if</span>(data == QVariant(<span class="stringliteral">&quot;DIODE&quot;</span>)){</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    pvLinkDirectionModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK &lt;&gt; &#39;BID&#39;&quot;</span>, pvDatabase);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a68d436550895e816263e5fa070701247">cbLinkDirection</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a00018187b69f670a46eee24b810eb27c">sbValue</a>-&gt;setValue(0.7);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    cbLinkDirection-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    sbValue-&gt;setValue(0.7);</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  }<span class="keywordflow">else</span>{</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    pvLinkDirectionModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK = &#39;BID&#39;&quot;</span>, pvDatabase);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a68d436550895e816263e5fa070701247">cbLinkDirection</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a00018187b69f670a46eee24b810eb27c">sbValue</a>-&gt;setValue(0.0);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    cbLinkDirection-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    sbValue-&gt;setValue(0.0);</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  }</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="comment">// Update displayed unit (V, Ohm, ...)</span></div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  index = pvLinkTypeModel-&gt;index(row, 2);</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  data = pvLinkTypeModel-&gt;data(index);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a16eae76f4a5b7309cd4e7ac12a9e9e77">lbUnit</a>-&gt;setText(<span class="stringliteral">&quot;[&quot;</span> + data.toString() + <span class="stringliteral">&quot;]&quot;</span>);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  lbUnit-&gt;setText(<span class="stringliteral">&quot;[&quot;</span> + data.toString() + <span class="stringliteral">&quot;]&quot;</span>);</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="keywordtype">void</span> mdtClArticleLinkDialog::onCbLinkDirectionCurrentIndexChanged(<span class="keywordtype">int</span> row)</div>
@@ -264,13 +264,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  QVariant data;</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <span class="keywordflow">if</span>(row &lt; 0){</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#aa5dac2f5f98845adbc8fedceceeac71e">lbLinkDirectionAsciiPicture</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    lbLinkDirectionAsciiPicture-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  }</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="comment">// Update the ASCII picture</span></div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  index = pvLinkDirectionModel-&gt;index(row, 2);</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  data = pvLinkDirectionModel-&gt;data(index);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#aa5dac2f5f98845adbc8fedceceeac71e">lbLinkDirectionAsciiPicture</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  lbLinkDirectionAsciiPicture-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;}</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="keywordtype">void</span> mdtClArticleLinkDialog::selectStartConnection()</div>
@@ -352,7 +352,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    errorList &lt;&lt; tr(<span class="stringliteral">&quot;Direction is not set&quot;</span>);</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  }</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  <span class="comment">// Store value</span></div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Value&quot;</span>, <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a00018187b69f670a46eee24b810eb27c">sbValue</a>-&gt;value());</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Value&quot;</span>, sbValue-&gt;value());</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  <span class="comment">// Start and end connections are allready set afetr selection by user</span></div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;ArticleConnectionStart_Id_FK&quot;</span>).isNull()){</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    errorList &lt;&lt; tr(<span class="stringliteral">&quot;Start connection is not set&quot;</span>);</div>
@@ -389,7 +389,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  QModelIndex index;</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  row = <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a09604109a10657c71de819099aa2a9fe">cbLinkType</a>-&gt;currentIndex();</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  row = cbLinkType-&gt;currentIndex();</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  <span class="keywordflow">if</span>(row &lt; 0){</div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;LinkType_Code_FK&quot;</span>, QVariant());</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="keywordflow">return</span>;</div>
@@ -403,7 +403,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  QModelIndex index;</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  row = <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a68d436550895e816263e5fa070701247">cbLinkDirection</a>-&gt;currentIndex();</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  row = cbLinkDirection-&gt;currentIndex();</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  <span class="keywordflow">if</span>(row &lt; 0){</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;LinkDirection_Code_FK&quot;</span>, QVariant());</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keywordflow">return</span>;</div>
@@ -419,8 +419,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;ArticleConnectionStart_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a7b96feb0c00fc3dcb432f022e0f64442">lbStartConnectorName</a>-&gt;clear();</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a2f05b301e14e0b34f4b38d65c2822ab2">lbStartContactName</a>-&gt;clear();</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    lbStartConnectorName-&gt;clear();</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    lbStartContactName-&gt;clear();</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  }</div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  <span class="keywordflow">for</span>(row = 0; row &lt; pvArticleConnectionModel-&gt;rowCount(); ++row){</div>
@@ -430,11 +430,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;      <span class="comment">// Set connector name</span></div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      index = pvArticleConnectionModel-&gt;index(row, 1);</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      data = pvArticleConnectionModel-&gt;data(index);</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a7b96feb0c00fc3dcb432f022e0f64442">lbStartConnectorName</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;      lbStartConnectorName-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      <span class="comment">// Set contact name</span></div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;      index = pvArticleConnectionModel-&gt;index(row, 2);</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      data = pvArticleConnectionModel-&gt;data(index);</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a2f05b301e14e0b34f4b38d65c2822ab2">lbStartContactName</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;      lbStartContactName-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    }</div>
 <div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  }</div>
@@ -447,8 +447,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;ArticleConnectionEnd_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a173b3c5ac4a1b46ed4ea209830ff0ba6">lbEndConnectorName</a>-&gt;clear();</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#aa0163584a3ecb7d5a8ddff9c480b2e8a">lbEndContactName</a>-&gt;clear();</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    lbEndConnectorName-&gt;clear();</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    lbEndContactName-&gt;clear();</div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  }</div>
 <div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  <span class="keywordflow">for</span>(row = 0; row &lt; pvArticleConnectionModel-&gt;rowCount(); ++row){</div>
@@ -458,11 +458,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;      <span class="comment">// Set connector name</span></div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      index = pvArticleConnectionModel-&gt;index(row, 1);</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;      data = pvArticleConnectionModel-&gt;data(index);</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#a173b3c5ac4a1b46ed4ea209830ff0ba6">lbEndConnectorName</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      lbEndConnectorName-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;      <span class="comment">// Set contact name</span></div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;      index = pvArticleConnectionModel-&gt;index(row, 2);</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      data = pvArticleConnectionModel-&gt;data(index);</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_link_dialog.html#aa0163584a3ecb7d5a8ddff9c480b2e8a">lbEndContactName</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      lbEndContactName-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;      <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    }</div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;  }</div>
@@ -470,7 +470,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 26 2014 13:09:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 26 2014 15:38:51 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

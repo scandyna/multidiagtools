@@ -2,8 +2,6 @@
 <area shape="rect" id="node3" href="$mdt_abstract_sql_widget_8cpp.html" title="src/mdtutilsgui/mdtAbstract\lSqlWidget.cpp" alt="" coords="5,102,187,149"/>
 <area shape="rect" id="node5" href="$mdt_sql_data_validator_8cpp.html" title="src/mdtutilsgui/mdtSqlData\lValidator.cpp" alt="" coords="211,102,389,149"/>
 <area shape="rect" id="node7" href="$mdt_sql_form_widget_data_validator_8h.html" title="src/mdtutilsgui/mdtSqlForm\lWidgetDataValidator.h" alt="" coords="413,102,595,149"/>
-<area shape="rect" id="node15" href="$moc__mdt_sql_data_validator_8cxx.html" title="src/mdtutilsgui/moc\l_mdtSqlDataValidator.cxx" alt="" coords="619,102,792,149"/>
-<area shape="rect" id="node9" href="$mdt_sql_form_widget_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lWidget.cpp" alt="" coords="208,198,389,245"/>
-<area shape="rect" id="node11" href="$mdt_sql_form_widget_data_validator_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lWidgetDataValidator.cpp" alt="" coords="413,198,595,245"/>
-<area shape="rect" id="node13" href="$moc__mdt_sql_form_widget_data_validator_8cxx.html" title="src/mdtutilsgui/moc\l_mdtSqlFormWidgetDataValidator.cxx" alt="" coords="619,198,864,245"/>
+<area shape="rect" id="node9" href="$mdt_sql_form_widget_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lWidget.cpp" alt="" coords="311,198,492,245"/>
+<area shape="rect" id="node11" href="$mdt_sql_form_widget_data_validator_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lWidgetDataValidator.cpp" alt="" coords="516,198,697,245"/>
 </map>

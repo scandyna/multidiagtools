@@ -9,24 +9,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # Header files containing Qt Q_OBJECT macro
 set (HEADER_FILES
-          src/mdtClEditor.h
-          #src/mdtClVehicleTypeEditor.h
-          #src/mdtClConnectorEditor.h
-          #src/mdtClArticleEditor.h
-          #src/mdtClArticleConnectionDialog.h
-          #src/mdtClUnitEditor.h
-          #src/mdtClLinkEditor.h
-          #src/mdtClUnitConnectionDialog.h
-          #src/mdtClUnitConnectionSelectionDialog.h
-          #src/mdtClUnitLinkDialog.h
-          #src/mdtClTerminalBlockEditor.h
-          #src/mdtClTerminalEditorDialog.h
-          #src/mdtClArticleComponentDialog.h
-          #src/mdtClArticleLinkDialog.h
-          #src/mdtClPathGraphDialog.h
           src/mdtClMainWindow.h
-          #src/mdtCcTestConnectionCableEditor.h
-          #src/mdtTtTestNodeEditor.h
           src/mdtTtTestModelEditor.h
           src/mdtTtTestModelItemEditor.h
           src/mdtTtCableChecker.h
@@ -38,38 +21,8 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           # Main
           src/main.cpp
-          #src/mdtClBase.cpp
-          src/mdtClEditor.cpp
-          #src/mdtClVehicleTypeEditor.cpp
-          #src/mdtClConnectorEditor.cpp
           src/mdtClConnectionData.cpp
-#          src/mdtClArticleConnectionData.cpp
-          #src/mdtClArticleEditor.cpp
-          #src/mdtClArticleConnectionDialog.cpp
-#           src/mdtClUnit.cpp
-#           src/mdtClUnitEditor.cpp
-#           src/mdtClUnitConnectionData.cpp
-#           src/mdtClLinkEditor.cpp
-#           src/mdtClUnitConnectionDialog.cpp
-#           src/mdtClUnitConnectionSelectionDialog.cpp
-#           src/mdtClUnitLinkDialog.cpp
-#          src/mdtClLinkData.cpp
-          #src/mdtClTerminalBlockEditor.cpp
-          #src/mdtClTerminalEditorDialog.cpp
-#           src/mdtClUnitVehicleType.cpp
-          #src/mdtClArticleComponentDialog.cpp
-          #src/mdtClArticleLinkDialog.cpp
-          #src/mdtClArticle.cpp
-          #src/mdtClPathGraphicsConnection.cpp
-          #src/mdtClPathGraphicsLink.cpp
-          #src/mdtClPathGraph.cpp
-          #src/mdtClPathGraphDialog.cpp
-          #src/mdtClDatabaseSchema.cpp
           src/mdtClMainWindow.cpp
-          #src/mdtCcTestConnectionCable.cpp
-          #src/mdtCcTestConnectionCableEditor.cpp
-          #src/mdtTtTestNodeEditor.cpp
-          #src/mdtTtTestNode.cpp
           src/mdtTtTestModelEditor.cpp
           src/mdtTtTestModel.cpp
           src/mdtTtTestModelItemEditor.cpp
@@ -78,30 +31,14 @@ set (SOURCES_FILES
           src/mdtTtCableChecker.cpp
           src/mdtTtCableCheckerWindow.cpp
           src/mdtTtTestNodeUnitSetupData.cpp
-          #src/mdtTtTestNodeUnitData.cpp
           src/mdtTtTestNodeUnitEditor.cpp
     )
 
 # Qt ui files
 set (FORM_FILES
-          #src/mdtClVehicleTypeEditor.ui
-          #src/mdtClConnectorEditor.ui
-          #src/mdtClArticleEditor.ui
-          #src/mdtClArticleConnectionDialog.ui
-#           src/mdtClUnitEditor.ui
-#           src/mdtClUnitConnectionDialog.ui
-#           src/mdtClUnitLinkDialog.ui
-#          src/mdtClUnitConnectionEditor.ui
-#           src/mdtClLinkEditor.ui
-          #src/mdtClTerminalBlockEditor.ui
-          #src/mdtClArticleComponentDialog.ui
-          #src/mdtClArticleLinkDialog.ui
-          #src/mdtClPathGraphDialog.ui
           src/mdtClMainWindow.ui
-          #src/mdtTtTestNodeEditor.ui
           src/mdtTtTestModelEditor.ui
           src/mdtTtTestModelItemEditor.ui
-          #src/mdtCcTestConnectionCableEditor.ui
           src/mdtTtCableChecker.ui
           src/mdtTtCableCheckerWindow.ui
           src/mdtTtTestNodeUnitEditor.ui

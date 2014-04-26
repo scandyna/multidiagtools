@@ -62,6 +62,7 @@ mdtClMainWindow::mdtClMainWindow()
   pvTestConnectionCableEditor = 0;
   pvTestConnectionCableEditorWindow = 0;
   pvTestEditor = 0;
+  pvTestEditorWindow = 0;
   pvTestItemEditor = 0;
   pvTestItemEditorWindow = 0;
   pvCableChecker = 0;
@@ -274,7 +275,7 @@ void mdtClMainWindow::editTest()
 {
   if(pvTestEditor == 0){
     pvTestEditor = new mdtTtTestModelEditor(this, pvDatabaseManager->database());
-    if(!pvTestEditor->setupAsWindow()){
+    if(!pvTestEditor->setupTables()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup test editor."));
       msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
@@ -285,9 +286,16 @@ void mdtClMainWindow::editTest()
       pvTestEditor = 0;
       return;
     }
+    pvTestEditorWindow = new mdtSqlWindow(this);
+    pvTestEditorWindow->setSqlForm(pvTestEditor);
+    pvTestEditorWindow->resize(800, 500);
+    pvTestEditorWindow->enableNavigation();
+    pvTestEditorWindow->enableEdition();
   }
   Q_ASSERT(pvTestEditor != 0);
-  pvTestEditor->show();
+  Q_ASSERT(pvTestEditorWindow != 0);
+  pvTestEditor->select();
+  pvTestEditorWindow->show();
 }
 
 void mdtClMainWindow::editTestItem()

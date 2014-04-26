@@ -5,34 +5,6 @@
 # Project
 project (multidiagtools)
 
-# Qwt library
-#find_library(Qwt REQUIRED)
-#find_package(Qwt REQUIRED)
-# if(NOT DEFINED QWT_FOUND)
-#   if(WIN32)
-#     include_directories("C:/qwt")
-#     include_directories("C:/qwt-6.0.0")
-#     include_directories("C:/qwt-6.0.1")
-#     include_directories("C:/qwt-6.0.2")
-#   else(WIN32)
-#     include_directories("/usr/local/include/qwt")
-#     include_directories("/usr/include/qwt")
-#   endif(WIN32)
-# endif(NOT DEFINED QWT_FOUND)
-#include_directories(${QWT_INCLUDE_DIRS})
-#message("qwt found : ${QWT_FOUND}")
-#message("qwt inc: ${QWT_INCLUDE_DIRS}")
-#message("qwt lib: ${QWT_LIBRARIES}")
-#find_path(QWT_LIBRARY_DIR NAMES ${QWT_LIBRARIES})
-#get_filename_component(QWT_LIBRARY_DIR ${QWT_LIBRARIES} PATH)
-#message("Qwt lib dir: ${QWT_LIBRARY_DIR}")
-#message("PATH: $ENV{PATH}")
-#list(FIND $ENV{PATH} ${QWT_LIBRARY_DIR} QWT_LIBRARY_DIR_IN_PATH)
-#message("lib dir in path: ${QWT_LIBRARY_DIR_IN_PATH}")
-
-#include_directories(${QWT_INCLUDE_DIRS})
-
-
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
           # mdtLed
@@ -61,16 +33,11 @@ set (HEADER_FILES
           mdtSqlFieldHandler.h
           mdtAbstractSqlWidget.h
           mdtSqlFormWidget.h
-          mdtSqlTableWidget.h
-          mdtSqlWindowOld.h
-          mdtSqlDialogOld.h
+          #mdtSqlTableWidget.h
           #mdtSqlSelectionDialog.h
           mdtSortFilterProxyModel.h
           mdtSqlDataValidator.h
           mdtSqlFormWidgetDataValidator.h
-          mdtSqlFormOld.h
-          mdtSqlFormWindow.h
-          mdtSqlFormDialog.h
           mdtSqlDatabaseManager.h
           # Essais
           mdtParentChildTableModel.h
@@ -110,16 +77,11 @@ set (SOURCES_FILES
           mdtSqlFieldHandler.cpp
           mdtAbstractSqlWidget.cpp
           mdtSqlFormWidget.cpp
-          mdtSqlTableWidget.cpp
-          mdtSqlWindowOld.cpp
-          mdtSqlDialogOld.cpp
+          #mdtSqlTableWidget.cpp
           #mdtSqlSelectionDialog.cpp
           mdtSortFilterProxyModel.cpp
           mdtSqlDataValidator.cpp
           mdtSqlFormWidgetDataValidator.cpp
-          mdtSqlFormOld.cpp
-          mdtSqlFormWindow.cpp
-          mdtSqlFormDialog.cpp
           mdtSqlSchemaTable.cpp
           mdtSqlDatabaseManager.cpp
           # Essais

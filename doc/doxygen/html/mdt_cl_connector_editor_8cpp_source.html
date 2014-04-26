@@ -110,72 +110,71 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> ****************************************************************************/</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_cl_connector_editor_8h.html">mdtClConnectorEditor.h</a>&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ui__mdt_cl_connector_editor_8h.html">ui_mdtClConnectorEditor.h</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_form_window_8h.html">mdtSqlFormWindow.h</a>&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_form_widget_8h.html">mdtSqlFormWidget.h</a>&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_table_widget_8h.html">mdtSqlTableWidget.h</a>&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="classmdt_cl_connector_editor.html#a70a6435ff7845b4ce137c5c53adf31fc">   27</a></span>&#160;<a class="code" href="classmdt_cl_connector_editor.html#a70a6435ff7845b4ce137c5c53adf31fc" title="Constructor. ">mdtClConnectorEditor::mdtClConnectorEditor</a>(<a class="code" href="class_q_widget.html">QWidget</a> *parent, QSqlDatabase db)</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; : <a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a>(parent, db)</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="classmdt_cl_connector_editor.html#a5b6495a4ff8f57bd46feb1dcdce4860a">   32</a></span>&#160;<a class="code" href="classmdt_cl_connector_editor.html#a5b6495a4ff8f57bd46feb1dcdce4860a" title="Destructor. ">mdtClConnectorEditor::~mdtClConnectorEditor</a>() </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="classmdt_cl_connector_editor.html#a6f3fdb1041ec8d562aac777471b7892f">   36</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_cl_connector_editor.html#a6f3fdb1041ec8d562aac777471b7892f" title="Setup tables. ">mdtClConnectorEditor::setupTables</a>()</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">if</span>(!setupConnectorTable()){</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordflow">if</span>(!setupConnectorContactTable()){</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">bool</span> mdtClConnectorEditor::setupConnectorTable()</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="class_ui_1_1mdt_cl_connector_editor.html">Ui::mdtClConnectorEditor</a> ce;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="comment">// Setup main form widget</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  ce.<a class="code" href="class_ui__mdt_cl_connector_editor.html#a9aff007152d61cd941197aa9b7b58414">setupUi</a>(<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>());</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="comment">// Setup form</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#ab03dd80e9de62362dd77161ef6bd6fc2" title="Set the main (or parent) table of the form. ">setMainTable</a>(<span class="stringliteral">&quot;Connector_tbl&quot;</span>, <span class="stringliteral">&quot;Connector&quot;</span>, <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>())){</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  setWindowTitle(tr(<span class="stringliteral">&quot;Connector edition&quot;</span>));</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">bool</span> mdtClConnectorEditor::setupConnectorContactTable()</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;{</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <a class="code" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a> *widget;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#a3504a54f26777ed38efce5cc151a1dbf" title="Add a child table to the form. ">addChildTable</a>(<span class="stringliteral">&quot;ConnectorContact_tbl&quot;</span>, tr(<span class="stringliteral">&quot;Contacts&quot;</span>), <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>())){</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#ab9bb1b548b71ef4e8547846b6aedec66" title="Add a relation between main table and a child table. ">addRelation</a>(<span class="stringliteral">&quot;Id_PK&quot;</span>, <span class="stringliteral">&quot;ConnectorContact_tbl&quot;</span>, <span class="stringliteral">&quot;Connector_Id_FK&quot;</span>)){</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  widget = <a class="code" href="classmdt_sql_form.html#a6a17f32077fb7cc33139c3dc26a8d011">sqlTableWidget</a>(<span class="stringliteral">&quot;ConnectorContact_tbl&quot;</span>);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  Q_ASSERT(widget != 0);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="comment">// Enable edition</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a39422fb9522ee73513f13d8bcb91a143" title="Enable local edition. ">enableLocalEdition</a>();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="comment">// Hide technical fields</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;Id_PK&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;Connector_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="comment">// Set fields a user friendly name</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;ui_mdtClConnectorEditor.h&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_form_widget_8h.html">mdtSqlFormWidget.h</a>&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_table_widget_8h.html">mdtSqlTableWidget.h</a>&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="classmdt_cl_connector_editor.html#a70a6435ff7845b4ce137c5c53adf31fc">   26</a></span>&#160;<a class="code" href="classmdt_cl_connector_editor.html#a70a6435ff7845b4ce137c5c53adf31fc" title="Constructor. ">mdtClConnectorEditor::mdtClConnectorEditor</a>(<a class="code" href="class_q_widget.html">QWidget</a> *parent, QSqlDatabase db)</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; : <a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a>(parent, db)</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="classmdt_cl_connector_editor.html#a5b6495a4ff8f57bd46feb1dcdce4860a">   31</a></span>&#160;<a class="code" href="classmdt_cl_connector_editor.html#a5b6495a4ff8f57bd46feb1dcdce4860a" title="Destructor. ">mdtClConnectorEditor::~mdtClConnectorEditor</a>() </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="classmdt_cl_connector_editor.html#a6f3fdb1041ec8d562aac777471b7892f">   35</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_cl_connector_editor.html#a6f3fdb1041ec8d562aac777471b7892f" title="Setup tables. ">mdtClConnectorEditor::setupTables</a>()</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">if</span>(!setupConnectorTable()){</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">if</span>(!setupConnectorContactTable()){</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">bool</span> mdtClConnectorEditor::setupConnectorTable()</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  Ui::mdtClConnectorEditor ce;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="comment">// Setup main form widget</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  ce.setupUi(<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>());</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">// Setup form</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#ab03dd80e9de62362dd77161ef6bd6fc2" title="Set the main (or parent) table of the form. ">setMainTable</a>(<span class="stringliteral">&quot;Connector_tbl&quot;</span>, <span class="stringliteral">&quot;Connector&quot;</span>, <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>())){</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  setWindowTitle(tr(<span class="stringliteral">&quot;Connector edition&quot;</span>));</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">bool</span> mdtClConnectorEditor::setupConnectorContactTable()</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;{</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a> *widget;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#a3504a54f26777ed38efce5cc151a1dbf" title="Add a child table to the form. ">addChildTable</a>(<span class="stringliteral">&quot;ConnectorContact_tbl&quot;</span>, tr(<span class="stringliteral">&quot;Contacts&quot;</span>), <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>())){</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#ab9bb1b548b71ef4e8547846b6aedec66" title="Add a relation between main table and a child table. ">addRelation</a>(<span class="stringliteral">&quot;Id_PK&quot;</span>, <span class="stringliteral">&quot;ConnectorContact_tbl&quot;</span>, <span class="stringliteral">&quot;Connector_Id_FK&quot;</span>)){</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  widget = <a class="code" href="classmdt_sql_form.html#a6a17f32077fb7cc33139c3dc26a8d011">sqlTableWidget</a>(<span class="stringliteral">&quot;ConnectorContact_tbl&quot;</span>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  Q_ASSERT(widget != 0);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="comment">// Enable edition</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a39422fb9522ee73513f13d8bcb91a143" title="Enable local edition. ">enableLocalEdition</a>();</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="comment">// Hide technical fields</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;Id_PK&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;Connector_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="comment">// Set fields a user friendly name</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 26 2014 13:09:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 26 2014 15:38:51 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

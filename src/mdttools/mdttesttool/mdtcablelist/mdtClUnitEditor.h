@@ -26,7 +26,6 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QList>
-#include "mdtSqlFormWindow.h"
 #include "mdtSqlForm.h"
 #include "mdtClUnitConnectionData.h"
 

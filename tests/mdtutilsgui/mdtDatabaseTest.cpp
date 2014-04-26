@@ -29,12 +29,8 @@
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSortFilterProxyModel.h"
-#include "mdtSqlWindowOld.h"
-#include "mdtSqlDialogOld.h"
+#include "mdtSqlWindow.h"
 #include "ui_mdtSqlFormWidgetTestForm.h"
-#include "mdtSqlFormOld.h"
-#include "mdtSqlFormWindow.h"
-#include "mdtSqlFormDialog.h"
 ///#include "mdtSqlSelectionDialog.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlDatabaseManager.h"
@@ -528,8 +524,11 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
 
 /// \todo Make data checks - Nothing is finished !!
 /// \todo Check about ' bugs
+/// \todo Rewrite using mdtSqlForm
 void mdtDatabaseTest::relationsTest()
 {
+  QFAIL("Not implemeted yet..");
+  /**
   QSqlTableModel parentModel;
   QSqlTableModel childModel;
   QModelIndex index;
@@ -537,7 +536,8 @@ void mdtDatabaseTest::relationsTest()
   mdtSqlFormWidget *clientWidget;
   mdtSqlTableWidget *addressWidget;
   Ui::mdtSqlFormWidgetTestForm form;
-  mdtSqlWindowOld window;
+  ///mdtSqlWindowOld window;
+  mdtSqlWindow window;
   QSqlQuery q(pvDb);
 
   // We start with a empty table
@@ -614,7 +614,8 @@ void mdtDatabaseTest::relationsTest()
   index = childModel.index(0, 2);
   QVERIFY(index.isValid());
   QCOMPARE(childModel.data(index), QVariant(1));
-
+*/
+  
   // Play...
   /**
   while(window.isVisible()){
@@ -759,7 +760,8 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
 void mdtDatabaseTest::sqlFormWidgetTest()
 {
   mdtSqlFormWidget *sqlFormWidget;
-  mdtSqlWindowOld window;
+  ///mdtSqlWindowOld window;
+  ///mdtSqlWindow window;
   Ui::mdtSqlFormWidgetTestForm form;
   QSqlTableModel model;
   QLineEdit *leFirstName = 0;
@@ -785,9 +787,10 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   form.setupUi(sqlFormWidget);
   sqlFormWidget->mapFormWidgets("fld_first_name");
   // Setup window
-  window.setSqlWidget(sqlFormWidget);
-  window.enableNavigation();
-  window.enableEdition();
+  ///window.setSqlWidget(sqlFormWidget);
+  ///window.setSqlForm(sqlFormWidget);
+  ///window.enableNavigation();
+  ///window.enableEdition();
   // We need access to form's line edits
   mappedWidgets = sqlFormWidget->mappedWidgets();
   for(int i = 0; i < mappedWidgets.size(); ++i){
@@ -802,7 +805,8 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QVERIFY(leFirstName != 0);
   QVERIFY(leRemarks != 0);
   
-  window.show();
+  ///window.show();
+  sqlFormWidget->show();
   
   /*
    * Check insertion
@@ -1032,39 +1036,6 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   */
 }
 
-void mdtDatabaseTest::sqlTableWidgetTest()
-{
-  mdtSqlTableWidget *sqlTableWidget;
-  mdtSqlWindowOld window;
-  QSqlTableModel model;
-  ///QWidget *w;
-  ///int rowCount;
-  ///int row;
-  QVariant data;
-
-  // Setup model + form view
-  model.setTable("Client");
-  model.select();
-  sqlTableWidget = new mdtSqlTableWidget;
-  ///QTest::qWait(50);
-  sqlTableWidget->setModel(&model);
-  // Setup window
-  window.setSqlWidget(sqlTableWidget);
-  window.enableNavigation();
-  window.enableEdition();
-
-  window.show();
-
-  /*
-   * Play
-   */
-  /*
-  while(window.isVisible()){
-    QTest::qWait(1000);
-  }
-  */
-}
-
 void mdtDatabaseTest::sortFilterProxyModelTest()
 {
   QSqlTableModel model;
@@ -1169,6 +1140,8 @@ void mdtDatabaseTest::sortFilterProxyModelTest()
 
 void mdtDatabaseTest::sqlDialogTest()
 {
+  QFAIL("Not implemented yet ..");
+  /**
   mdtSqlDialogOld dialog;
   QSqlTableModel parentModel;
   mdtSqlFormWidget *sqlFormWidget;
@@ -1204,113 +1177,7 @@ void mdtDatabaseTest::sqlDialogTest()
   dialog.setCurrentRow("Id_PK", 2);
   QTimer::singleShot(50, &dialog, SLOT(accept()));
   dialog.exec();
-
-  /*
-   * Play
-   */
-  /*
-  while(dialog.isVisible()){
-    QTest::qWait(1000);
-  }
   */
-}
-
-void mdtDatabaseTest::sqlFormWindowTest()
-{
-  mdtSqlFormWindow fw;
-  Ui::mdtSqlFormWidgetTestForm *uif = new Ui::mdtSqlFormWidgetTestForm;
-
-  // Setup Ui
-  uif->setupUi(fw.mainSqlWidget());
-  // Try some errors
-  QVERIFY(!fw.setTable("ABCD"));
-  QVERIFY(!fw.addChildTable("1234"));
-  // Setup form
-  QVERIFY(fw.setTable("Client"));
-  QVERIFY(fw.addChildTable("Address", tr("Client's addresses")));
-  QVERIFY(fw.addRelation("id_PK", "Address", "id_client_FK"));
-  fw.sqlWindow()->enableEdition();
-  fw.sqlWindow()->enableNavigation();
-  fw.show();
-  // Check that widgets can be found
-  QVERIFY(fw.sqlWidget("HuHbzg") == 0);
-  QVERIFY(fw.sqlWidget("Client") != 0);
-  QVERIFY(fw.sqlWidget("Address") != 0);
-  QVERIFY(fw.sqlFormWidget("Client") != 0);
-  QVERIFY(fw.sqlTableWidget("Client") == 0);
-  QVERIFY(fw.sqlFormWidget("Address") == 0);
-  QVERIFY(fw.sqlTableWidget("Address") != 0);
-  // Check that models can be found
-  QVERIFY(fw.model("JKh k") == 0);
-  QVERIFY(fw.model("Client") != 0);
-  QVERIFY(fw.model("Address") != 0);
-  // Check currentRow
-  QCOMPARE(fw.currentRow("Client"), 0);
-  QVERIFY(fw.currentRow("jhjkh") < 0);
-  // Check currentValue
-  QVERIFY(fw.currentData("Client", "id_PK").isValid());
-  QVERIFY(!fw.currentData("AA", "id_PK").isValid());
-  QVERIFY(!fw.currentData("Client", "JJ").isValid());
-
-  /*
-   * Play
-   */
-  /*
-  while(fw.sqlWindow()->isVisible()){
-    QTest::qWait(1000);
-  }
-  */
-
-  delete uif;
-}
-
-void mdtDatabaseTest::sqlFormDialogTest()
-{
-  mdtSqlFormDialog fd;
-  Ui::mdtSqlFormWidgetTestForm *uif = new Ui::mdtSqlFormWidgetTestForm;
-
-  // Setup Ui
-  uif->setupUi(fd.mainSqlWidget());
-  // Try some errors
-  QVERIFY(!fd.setTable("ABCD"));
-  QVERIFY(!fd.addChildTable("1234"));
-  // Setup form
-  QVERIFY(fd.setTable("Client"));
-  QVERIFY(fd.addChildTable("Address", tr("Client's addresses")));
-  QVERIFY(fd.addRelation("id_PK", "Address", "id_client_FK"));
-  // Check that widgets can be found
-  QVERIFY(fd.sqlWidget("HuHbzg") == 0);
-  QVERIFY(fd.sqlWidget("Client") != 0);
-  QVERIFY(fd.sqlWidget("Address") != 0);
-  QVERIFY(fd.sqlFormWidget("Client") != 0);
-  QVERIFY(fd.sqlTableWidget("Client") == 0);
-  QVERIFY(fd.sqlFormWidget("Address") == 0);
-  QVERIFY(fd.sqlTableWidget("Address") != 0);
-  // Check that models can be found
-  QVERIFY(fd.model("JKh k") == 0);
-  QVERIFY(fd.model("Client") != 0);
-  QVERIFY(fd.model("Address") != 0);
-  // Check currentRow
-  QCOMPARE(fd.currentRow("Client"), 0);
-  QVERIFY(fd.currentRow("jhjkh") < 0);
-  // Check currentValue
-  QVERIFY(fd.currentData("Client", "id_PK").isValid());
-  QVERIFY(!fd.currentData("AA", "id_PK").isValid());
-  QVERIFY(!fd.currentData("Client", "JJ").isValid());
-
-  QTimer::singleShot(50, fd.sqlDialog(), SLOT(accept()));
-  fd.exec();
-
-  /*
-   * Play
-   */
-  /*
-  while(fw.sqlWindow()->isVisible()){
-    QTest::qWait(1000);
-  }
-  */
-
-  delete uif;
 }
 
 void mdtDatabaseTest::databaseManagerTest()

@@ -1,8 +1,7 @@
 <map id="src/mdtutils/mdtUicNumberItem.h" name="src/mdtutils/mdtUicNumberItem.h">
 <area shape="rect" id="node3" href="$mdt_uic_number_8h.html" title="src/mdtutils/mdtUicNumber.h" alt="" coords="120,111,312,140"/>
-<area shape="rect" id="node13" href="$mdt_uic_number_item_8cpp.html" title="src/mdtutils/mdtUicNumber\lItem.cpp" alt="" coords="336,102,517,149"/>
+<area shape="rect" id="node11" href="$mdt_uic_number_item_8cpp.html" title="src/mdtutils/mdtUicNumber\lItem.cpp" alt="" coords="336,102,517,149"/>
 <area shape="rect" id="node5" href="$mdt_uic_number_8cpp.html" title="src/mdtutils/mdtUicNumber.cpp" alt="" coords="5,207,211,236"/>
 <area shape="rect" id="node7" href="$mdt_uic_number_widget_8h.html" title="src/mdtutils/mdtUicNumber\lWidget.h" alt="" coords="235,198,416,245"/>
-<area shape="rect" id="node9" href="$mdt_uic_number_widget_8cpp.html" title="src/mdtutils/mdtUicNumber\lWidget.cpp" alt="" coords="124,294,305,341"/>
-<area shape="rect" id="node11" href="$moc__mdt_uic_number_widget_8cxx.html" title="src/mdtutils/moc_mdtUicNumber\lWidget.cxx" alt="" coords="329,294,543,341"/>
+<area shape="rect" id="node9" href="$mdt_uic_number_widget_8cpp.html" title="src/mdtutils/mdtUicNumber\lWidget.cpp" alt="" coords="235,294,416,341"/>
 </map>

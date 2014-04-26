@@ -12,10 +12,9 @@
 <area shape="rect" id="node29" href="$classmdt_field_map_item_dialog.html" title="A dialog to setup a field map item. " alt="" coords="143,608,303,637"/>
 <area shape="rect" id="node31" href="$classmdt_items_selector_dialog.html" title="Provide the user a dialog in witch he can choose items. " alt="" coords="141,661,304,691"/>
 <area shape="rect" id="node37" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor. " alt="" coords="173,715,272,744"/>
-<area shape="rect" id="node39" href="$classmdt_sql_dialog_old.html" title="Dialog for a database table view/editor. " alt="" coords="163,768,283,797"/>
-<area shape="rect" id="node41" href="$classmdt_sql_selection_dialog.html" title="Provide a way for the user to select row in a set of data. " alt="" coords="145,821,300,851"/>
-<area shape="rect" id="node43" href="$classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. " alt="" coords="152,875,293,904"/>
-<area shape="rect" id="node45" href="$classmdt_tt_test_node_unit_dialog.html" title="Dialog for test node unit edition. " alt="" coords="136,928,309,957"/>
+<area shape="rect" id="node39" href="$classmdt_sql_selection_dialog.html" title="Provide a way for the user to select row in a set of data. " alt="" coords="145,768,300,797"/>
+<area shape="rect" id="node41" href="$classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. " alt="" coords="152,821,293,851"/>
+<area shape="rect" id="node43" href="$classmdt_tt_test_node_unit_dialog.html" title="Dialog for test node unit edition. " alt="" coords="136,875,309,904"/>
 <area shape="rect" id="node5" href="$classmdt_modbus_tcp_port_setup_dialog.html" title="mdtModbusTcpPortSetupDialog" alt="" coords="372,5,577,35"/>
 <area shape="rect" id="node7" href="$classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port. " alt="" coords="389,59,560,88"/>
 <area shape="rect" id="node9" href="$classmdt_usbtmc_port_setup_dialog.html" title="mdtUsbtmcPortSetupDialog" alt="" coords="383,112,567,141"/>

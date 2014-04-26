@@ -11,7 +11,7 @@ project (multidiagtools)
 
 # Header files containing Qt Q_OBJECT macro
 set (TEST_HEADER_FILES
-          ../src/mdtClEditor.h
+          #../src/mdtClEditor.h
           #../src/mdtClVehicleTypeEditor.h
           #../src/mdtClConnectorEditor.h
           #../src/mdtClArticleEditor.h
@@ -39,7 +39,7 @@ set (TEST_HEADER_FILES
 # Source files
 set (TEST_SOURCES_FILES 
           #../src/mdtClBase.cpp
-          ../src/mdtClEditor.cpp
+          #../src/mdtClEditor.cpp
           #../src/mdtClVehicleTypeEditor.cpp
           #../src/mdtClConnectorEditor.cpp
           ../src/mdtClConnectionData.cpp

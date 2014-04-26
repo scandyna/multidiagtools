@@ -1,6 +1,5 @@
 <map id="src/mdtutilsgui/mdtMvColumnSelectionDialog.cpp" name="src/mdtutilsgui/mdtMvColumnSelectionDialog.cpp">
-<area shape="rect" id="node3" href="$mdt_mv_column_selection_dialog_8h.html" title="mdtMvColumnSelectionDialog.h" alt="" coords="1116,101,1324,131"/>
-<area shape="rect" id="node37" href="$mdt_items_selector_dialog_item_8h.html" title="mdtItemsSelectorDialogItem.h" alt="" coords="105,256,303,285"/>
-<area shape="rect" id="node5" href="$mdt_items_selector_dialog_8h.html" title="mdtItemsSelectorDialog.h" alt="" coords="1115,179,1288,208"/>
-<area shape="rect" id="node7" href="$ui__mdt_items_selector_dialog_8h.html" title="ui_mdtItemsSelectorDialog.h" alt="" coords="847,256,1036,285"/>
+<area shape="rect" id="node3" href="$mdt_mv_column_selection_dialog_8h.html" title="mdtMvColumnSelectionDialog.h" alt="" coords="565,101,773,131"/>
+<area shape="rect" id="node9" href="$mdt_items_selector_dialog_item_8h.html" title="mdtItemsSelectorDialogItem.h" alt="" coords="5,256,203,285"/>
+<area shape="rect" id="node5" href="$mdt_items_selector_dialog_8h.html" title="mdtItemsSelectorDialog.h" alt="" coords="549,179,723,208"/>
 </map>

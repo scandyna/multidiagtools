@@ -44,15 +44,9 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlFormWidgetTest();
 
-  void sqlTableWidgetTest();
-
   void sortFilterProxyModelTest();
 
   void sqlDialogTest();
-
-  void sqlFormWindowTest();
-
-  void sqlFormDialogTest();
 
   ///void sqlSelectionDialogTest();
 

@@ -12,7 +12,8 @@ Handle parent/child relations between 2 Q\-Sql\-Table\-Models.
 
 
 
-Inheritance diagram for mdt\-Sql\-Relation\-:\nopagebreak
+Inheritance diagram for mdt\-Sql\-Relation\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,7 +22,8 @@ Inheritance diagram for mdt\-Sql\-Relation\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Sql\-Relation\-:\nopagebreak
+Collaboration diagram for mdt\-Sql\-Relation\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -163,7 +165,7 @@ References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-D\-A\-T
 
 
 
-Referenced by mdt\-Sql\-Form\-Old\-::add\-Relation(), and mdt\-Sql\-Form\-::add\-Relation().
+Referenced by mdt\-Sql\-Form\-::add\-Relation().
 
 \hypertarget{classmdt_sql_relation_a86656619d8156638ebfbde2b334d40e2}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!child\-Model\-Filter\-Applied@{child\-Model\-Filter\-Applied}}
 \index{child\-Model\-Filter\-Applied@{child\-Model\-Filter\-Applied}!mdtSqlRelation@{mdt\-Sql\-Relation}}
@@ -176,11 +178,7 @@ Referenced by mdt\-Sql\-Form\-Old\-::add\-Relation(), and mdt\-Sql\-Form\-::add\
 
 This signal is emitted once set\-Filter() was called on child model. 
 
-This can be usefull when update must be done after child model was updated. For example, when using a \hyperlink{class_q_data_widget_mapper}{Q\-Data\-Widget\-Mapper}, connect this signal to \hyperlink{class_q_data_widget_mapper}{Q\-Data\-Widget\-Mapper}'s to\-First() slot. 
-
-Definition at line 113 of file moc\-\_\-mdt\-Sql\-Relation.\-cxx.
-
-\hypertarget{classmdt_sql_relation_ae30eb691c46263cb4021f55b03d0d111}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!child\-Model\-Is\-Empty@{child\-Model\-Is\-Empty}}
+This can be usefull when update must be done after child model was updated. For example, when using a \hyperlink{class_q_data_widget_mapper}{Q\-Data\-Widget\-Mapper}, connect this signal to \hyperlink{class_q_data_widget_mapper}{Q\-Data\-Widget\-Mapper}'s to\-First() slot. \hypertarget{classmdt_sql_relation_ae30eb691c46263cb4021f55b03d0d111}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!child\-Model\-Is\-Empty@{child\-Model\-Is\-Empty}}
 \index{child\-Model\-Is\-Empty@{child\-Model\-Is\-Empty}!mdtSqlRelation@{mdt\-Sql\-Relation}}
 \subsubsection[{child\-Model\-Is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-::child\-Model\-Is\-Empty (
 \begin{DoxyParamCaption}
@@ -191,11 +189,7 @@ Definition at line 113 of file moc\-\_\-mdt\-Sql\-Relation.\-cxx.
 
 This signal is emitted after \hyperlink{classmdt_sql_relation_a86656619d8156638ebfbde2b334d40e2}{child\-Model\-Filter\-Applied()} if child model becomes empty. 
 
-Connect this signal to \hyperlink{class_q_data_widget_mapper}{Q\-Data\-Widget\-Mapper}'s revert() slot. \hyperlink{class_q_data_widget_mapper}{Q\-Data\-Widget\-Mapper} will not clear widgets if model becomes empty, so using this signal is a workaround.. 
-
-Definition at line 119 of file moc\-\_\-mdt\-Sql\-Relation.\-cxx.
-
-\hypertarget{classmdt_sql_relation_a01469fb1baf7327ca6ddbcd1595e0d7c}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!clear@{clear}}
+Connect this signal to \hyperlink{class_q_data_widget_mapper}{Q\-Data\-Widget\-Mapper}'s revert() slot. \hyperlink{class_q_data_widget_mapper}{Q\-Data\-Widget\-Mapper} will not clear widgets if model becomes empty, so using this signal is a workaround.. \hypertarget{classmdt_sql_relation_a01469fb1baf7327ca6ddbcd1595e0d7c}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!clear@{clear}}
 \index{clear@{clear}!mdtSqlRelation@{mdt\-Sql\-Relation}}
 \subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-::clear (
 \begin{DoxyParamCaption}
@@ -236,7 +230,7 @@ Definition at line 48 of file mdt\-Sql\-Relation.\-cpp.
 
 
 
-Referenced by mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), and mdt\-Sql\-Form\-::add\-Child\-Table().
+Referenced by mdt\-Sql\-Form\-::add\-Child\-Table().
 
 \hypertarget{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!set\-Parent\-Current\-Index@{set\-Parent\-Current\-Index}}
 \index{set\-Parent\-Current\-Index@{set\-Parent\-Current\-Index}!mdtSqlRelation@{mdt\-Sql\-Relation}}
@@ -260,7 +254,7 @@ Definition at line 108 of file mdt\-Sql\-Relation.\-cpp.
 
 
 
-Referenced by mdt\-Abstract\-Sql\-Widget\-::add\-Child\-Widget(), mdt\-Sql\-Form\-Old\-::add\-Relation(), mdt\-Sql\-Form\-::add\-Relation(), and set\-Parent\-Current\-Index().
+Referenced by mdt\-Abstract\-Sql\-Widget\-::add\-Child\-Widget(), mdt\-Sql\-Form\-::add\-Relation(), and set\-Parent\-Current\-Index().
 
 \hypertarget{classmdt_sql_relation_a4381f7f5bd39337fa5cbccf9b87ff0f6}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!set\-Parent\-Current\-Index@{set\-Parent\-Current\-Index}}
 \index{set\-Parent\-Current\-Index@{set\-Parent\-Current\-Index}!mdtSqlRelation@{mdt\-Sql\-Relation}}
@@ -333,12 +327,11 @@ Definition at line 41 of file mdt\-Sql\-Relation.\-cpp.
 
 
 
-Referenced by mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), and mdt\-Sql\-Form\-::add\-Child\-Table().
+Referenced by mdt\-Sql\-Form\-::add\-Child\-Table().
 
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
 src/mdtutilsgui/\hyperlink{mdt_sql_relation_8h}{mdt\-Sql\-Relation.\-h}\item 
-src/mdtutilsgui/\hyperlink{mdt_sql_relation_8cpp}{mdt\-Sql\-Relation.\-cpp}\item 
-src/mdtutilsgui/\hyperlink{moc__mdt_sql_relation_8cxx}{moc\-\_\-mdt\-Sql\-Relation.\-cxx}\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_sql_relation_8cpp}{mdt\-Sql\-Relation.\-cpp}\end{DoxyCompactItemize}

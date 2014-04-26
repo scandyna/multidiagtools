@@ -183,6 +183,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   mdtSqlWindow *pvTestConnectionCableEditorWindow;
   // Test editor
   mdtTtTestModelEditor *pvTestEditor;
+  mdtSqlWindow *pvTestEditorWindow;
   // Test item editor
   mdtTtTestModelItemEditor *pvTestItemEditor;
   mdtSqlWindow *pvTestItemEditorWindow;

@@ -1,18 +1,14 @@
 <map id="src/mdtutilsgui/mdtFieldMapItem.h" name="src/mdtutilsgui/mdtFieldMapItem.h">
-<area shape="rect" id="node3" href="$mdt_field_map_8h.html" title="src/mdtutilsgui/mdtField\lMap.h" alt="" coords="967,102,1127,149"/>
+<area shape="rect" id="node3" href="$mdt_field_map_8h.html" title="src/mdtutilsgui/mdtField\lMap.h" alt="" coords="655,102,815,149"/>
 <area shape="rect" id="node9" href="$mdt_data_table_manager_8cpp.html" title="src/mdtutilsgui/mdtDataTable\lManager.cpp" alt="" coords="5,294,197,341"/>
-<area shape="rect" id="node23" href="$mdt_field_map_dialog_8cpp.html" title="src/mdtutilsgui/mdtField\lMapDialog.cpp" alt="" coords="1245,294,1405,341"/>
-<area shape="rect" id="node30" href="$mdt_field_map_item_dialog_8cpp.html" title="src/mdtutilsgui/mdtField\lMapItemDialog.cpp" alt="" coords="1645,294,1805,341"/>
-<area shape="rect" id="node36" href="$mdt_field_map_item_8cpp.html" title="src/mdtutilsgui/mdtField\lMapItem.cpp" alt="" coords="1567,102,1727,149"/>
-<area shape="rect" id="node5" href="$mdt_data_table_manager_8h.html" title="src/mdtutilsgui/mdtDataTable\lManager.h" alt="" coords="357,198,549,245"/>
-<area shape="rect" id="node13" href="$mdt_data_table_model_8h.html" title="src/mdtutilsgui/mdtDataTable\lModel.h" alt="" coords="851,198,1043,245"/>
-<area shape="rect" id="node19" href="$mdt_field_map_8cpp.html" title="src/mdtutilsgui/mdtField\lMap.cpp" alt="" coords="667,198,827,245"/>
-<area shape="rect" id="node21" href="$mdt_field_map_dialog_8h.html" title="src/mdtutilsgui/mdtField\lMapDialog.h" alt="" coords="1067,198,1227,245"/>
-<area shape="rect" id="node27" href="$mdt_field_map_item_dialog_8h.html" title="src/mdtutilsgui/mdtField\lMapItemDialog.h" alt="" coords="1332,198,1492,245"/>
-<area shape="rect" id="node7" href="$mdt_tt_database_schema_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtDatabaseSchema.cpp" alt="" coords="432,294,621,341"/>
-<area shape="rect" id="node11" href="$moc__mdt_data_table_manager_8cxx.html" title="src/mdtutilsgui/moc\l_mdtDataTableManager.cxx" alt="" coords="221,294,408,341"/>
-<area shape="rect" id="node15" href="$mdt_data_table_model_8cpp.html" title="src/mdtutilsgui/mdtDataTable\lModel.cpp" alt="" coords="645,294,837,341"/>
-<area shape="rect" id="node17" href="$moc__mdt_data_table_model_8cxx.html" title="src/mdtutilsgui/moc\l_mdtDataTableModel.cxx" alt="" coords="861,294,1032,341"/>
-<area shape="rect" id="node25" href="$moc__mdt_field_map_dialog_8cxx.html" title="src/mdtutilsgui/moc\l_mdtFieldMapDialog.cxx" alt="" coords="1056,294,1221,341"/>
-<area shape="rect" id="node32" href="$moc__mdt_field_map_item_dialog_8cxx.html" title="src/mdtutilsgui/moc\l_mdtFieldMapItemDialog.cxx" alt="" coords="1429,294,1621,341"/>
+<area shape="rect" id="node19" href="$mdt_field_map_dialog_8cpp.html" title="src/mdtutilsgui/mdtField\lMapDialog.cpp" alt="" coords="923,294,1083,341"/>
+<area shape="rect" id="node24" href="$mdt_field_map_item_dialog_8cpp.html" title="src/mdtutilsgui/mdtField\lMapItemDialog.cpp" alt="" coords="1107,294,1267,341"/>
+<area shape="rect" id="node28" href="$mdt_field_map_item_8cpp.html" title="src/mdtutilsgui/mdtField\lMapItem.cpp" alt="" coords="1224,102,1384,149"/>
+<area shape="rect" id="node5" href="$mdt_data_table_manager_8h.html" title="src/mdtutilsgui/mdtDataTable\lManager.h" alt="" coords="139,198,331,245"/>
+<area shape="rect" id="node11" href="$mdt_data_table_model_8h.html" title="src/mdtutilsgui/mdtDataTable\lModel.h" alt="" coords="539,198,731,245"/>
+<area shape="rect" id="node15" href="$mdt_field_map_8cpp.html" title="src/mdtutilsgui/mdtField\lMap.cpp" alt="" coords="355,198,515,245"/>
+<area shape="rect" id="node17" href="$mdt_field_map_dialog_8h.html" title="src/mdtutilsgui/mdtField\lMapDialog.h" alt="" coords="755,198,915,245"/>
+<area shape="rect" id="node21" href="$mdt_field_map_item_dialog_8h.html" title="src/mdtutilsgui/mdtField\lMapItemDialog.h" alt="" coords="939,198,1099,245"/>
+<area shape="rect" id="node7" href="$mdt_tt_database_schema_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtDatabaseSchema.cpp" alt="" coords="221,294,411,341"/>
+<area shape="rect" id="node13" href="$mdt_data_table_model_8cpp.html" title="src/mdtutilsgui/mdtDataTable\lModel.cpp" alt="" coords="539,294,731,341"/>
 </map>

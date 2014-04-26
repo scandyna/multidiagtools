@@ -23,9 +23,7 @@
 #include "mdtTtTestModel.h"
 #include "mdtTtTestModelItem.h"
 #include "mdtTtTestModelItemEditor.h"
-#include "mdtSqlFormOld.h"
 #include "mdtSqlFormWidget.h"
-#include "mdtSqlWindowOld.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
@@ -45,9 +43,26 @@
 
 #include <QDebug>
 
-mdtTtTestModelEditor::mdtTtTestModelEditor(QObject *parent, QSqlDatabase db)
- : mdtClEditor(parent, db)
+mdtTtTestModelEditor::mdtTtTestModelEditor(QWidget *parent, QSqlDatabase db)
+ : mdtSqlForm(parent, db)
 {
+}
+
+bool mdtTtTestModelEditor::setupTables() 
+{
+  if(!setupTestTable()){
+    return false;
+  }
+  if(!setupTestItemTable()){
+    return false;
+  }
+  if(!setupTestNodeUnitSetupTable()){
+    return false;
+  }
+  if(!setupTestNodeTable()){
+    return false;
+  }
+  return true;
 }
 
 void mdtTtTestModelEditor::addTestItem() 
@@ -60,7 +75,7 @@ void mdtTtTestModelEditor::addTestItem()
   QVariant expectedValue;
 
   // Get current test ID
-  testId = form()->currentData("TestModel_tbl", "Id_PK");
+  testId = currentData("TestModel_tbl", "Id_PK");
   if(testId.isNull()){
     return;
   }
@@ -88,8 +103,8 @@ void mdtTtTestModelEditor::addTestItem()
     return;
   }
   // Update GUI
-  form()->select("TestModelItem_view");
-  form()->select("TestModelItemNode_view");
+  select("TestModelItem_view");
+  select("TestModelItemNode_view");
   // Generate setup
   generateTestNodeUnitSetupList();
 }
@@ -100,7 +115,7 @@ void mdtTtTestModelEditor::editTestItem()
   mdtSqlDialog dialog;
   QVariant currentTestItemId;
 
-  currentTestItemId = form()->currentData("TestModelItem_view", "Id_PK");
+  currentTestItemId = currentData("TestModelItem_view", "Id_PK");
   if(currentTestItemId.isNull()){
     return;
   }
@@ -121,9 +136,9 @@ void mdtTtTestModelEditor::editTestItem()
   dialog.enableEdition();
   dialog.exec();
   // Update connections table
-  form()->select("TestModelItem_view");
-  form()->select("TestModelItemNode_view");
-  form()->select("TestModelItemNodeUnitSetup_view");
+  select("TestModelItem_view");
+  select("TestModelItemNode_view");
+  select("TestModelItemNodeUnitSetup_view");
 }
 
 void mdtTtTestModelEditor::removeTestItem() 
@@ -133,7 +148,7 @@ void mdtTtTestModelEditor::removeTestItem()
   QMessageBox msgBox;
   QModelIndexList indexes;
 
-  widget = form()->sqlTableWidget("TestModelItem_view");
+  widget = sqlTableWidget("TestModelItem_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
   indexes = widget->indexListOfSelectedRows("Id_PK");
@@ -157,8 +172,8 @@ void mdtTtTestModelEditor::removeTestItem()
     return;
   }
   // Update connections table
-  form()->select("TestModelItem_view");
-  form()->select("TestModelItemNode_view");
+  select("TestModelItem_view");
+  select("TestModelItemNode_view");
 }
 
 void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
@@ -168,7 +183,7 @@ void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
   QList<QVariant> setupIdList;
 
   // Get current test ID
-  testId = form()->currentData("TestModel_tbl", "Id_PK");
+  testId = currentData("TestModel_tbl", "Id_PK");
   if(testId.isNull()){
     return;
   }
@@ -195,7 +210,7 @@ void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
     return;
   }
   // Update GUI
-  form()->select("TestModelItemNodeUnitSetup_view");
+  select("TestModelItemNodeUnitSetup_view");
 }
 
 void mdtTtTestModelEditor::removeTestNodeUnitSetup()
@@ -205,7 +220,7 @@ void mdtTtTestModelEditor::removeTestNodeUnitSetup()
   QMessageBox msgBox;
   QModelIndexList indexes;
 
-  widget = form()->sqlTableWidget("TestModelItemNodeUnitSetup_view");
+  widget = sqlTableWidget("TestModelItemNodeUnitSetup_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
   indexes = widget->indexListOfSelectedRows("Id_PK");
@@ -228,7 +243,7 @@ void mdtTtTestModelEditor::removeTestNodeUnitSetup()
     return;
   }
   // Update connections table
-  form()->select("TestModelItemNodeUnitSetup_view");
+  select("TestModelItemNodeUnitSetup_view");
 }
 
 QVariant mdtTtTestModelEditor::selectTestCable()
@@ -307,40 +322,19 @@ QVariant mdtTtTestModelEditor::selectTestLink(const QVariant & cableId, const QS
   return selectionDialog.selectionResult().at(0);
 }
 
-bool mdtTtTestModelEditor::setupTables() 
-{
-  if(!setupTestTable()){
-    return false;
-  }
-  if(!setupTestItemTable()){
-    return false;
-  }
-  if(!setupTestNodeUnitSetupTable()){
-    return false;
-  }
-  if(!setupTestNodeTable()){
-    return false;
-  }
-  return true;
-}
-
 bool mdtTtTestModelEditor::setupTestTable()
 {
   Ui::mdtTtTestModelEditor te;
 
   // Setup main form widget
-  te.setupUi(form()->mainSqlWidget());
+  te.setupUi(mainSqlWidget());
   connect(te.pbGenerateNodeUnitSetup, SIGNAL(clicked()), this, SLOT(generateTestNodeUnitSetupList()));
   // Setup form
-  if(!form()->setTable("TestModel_tbl", "Test", database())){
+  if(!setMainTable("TestModel_tbl", "Test", database())){
     return false;
   }
-  sqlWindow()->enableNavigation();
-  sqlWindow()->enableEdition();
-  sqlWindow()->resize(800, 500);
-  sqlWindow()->setWindowTitle(tr("Test edition"));
   // Force a update
-  form()->mainSqlWidget()->setCurrentIndex(form()->mainSqlWidget()->currentRow());
+  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   return true;
 }
@@ -352,13 +346,13 @@ bool mdtTtTestModelEditor::setupTestItemTable()
   QPushButton *pbEditTestItem;
   QPushButton *pbRemoveTestItem;
 
-  if(!form()->addChildTable("TestModelItem_view", tr("Test items"), database())){
+  if(!addChildTable("TestModelItem_view", tr("Test items"), database())){
     return false;
   }
-  if(!form()->addRelation("Id_PK", "TestModelItem_view", "TestModel_Id_FK")){
+  if(!addRelation("Id_PK", "TestModelItem_view", "TestModel_Id_FK")){
     return false;
   }
-  widget = form()->sqlTableWidget("TestModelItem_view");
+  widget = sqlTableWidget("TestModelItem_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("TestModel_Id_FK", true);
@@ -403,13 +397,13 @@ bool mdtTtTestModelEditor::setupTestNodeUnitSetupTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbRemoveTestNodeUnitSetup;
 
-  if(!form()->addChildTable("TestModelItemNodeUnitSetup_view", tr("Node unit setup"), database())){
+  if(!addChildTable("TestModelItemNodeUnitSetup_view", tr("Node unit setup"), database())){
     return false;
   }
-  if(!form()->addRelation("Id_PK", "TestModelItemNodeUnitSetup_view", "TestModel_Id_FK")){
+  if(!addRelation("Id_PK", "TestModelItemNodeUnitSetup_view", "TestModel_Id_FK")){
     return false;
   }
-  widget = form()->sqlTableWidget("TestModelItemNodeUnitSetup_view");
+  widget = sqlTableWidget("TestModelItemNodeUnitSetup_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("TestModel_Id_FK", true);
@@ -434,13 +428,13 @@ bool mdtTtTestModelEditor::setupTestNodeTable()
 {
   mdtSqlTableWidget *widget;
 
-  if(!form()->addChildTable("TestModelItemNode_view", tr("Used nodes"), database())){
+  if(!addChildTable("TestModelItemNode_view", tr("Used nodes"), database())){
     return false;
   }
-  if(!form()->addRelation("Id_PK", "TestModelItemNode_view", "TestModel_Id_FK")){
+  if(!addRelation("Id_PK", "TestModelItemNode_view", "TestModel_Id_FK")){
     return false;
   }
-  widget = form()->sqlTableWidget("TestModelItemNode_view");
+  widget = sqlTableWidget("TestModelItemNode_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   ///widget->setColumnHidden("", true);

@@ -8,9 +8,5 @@
 <area shape="rect" id="node15" href="$mdt_cl_vehicle_type_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClVehicleType\lEditor.cpp" alt="" coords="1531,101,1736,165"/>
 <area shape="rect" id="node17" href="$mdt_tt_test_connection_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCableEditor.cpp" alt="" coords="1760,110,2005,157"/>
 <area shape="rect" id="node19" href="$mdt_tt_test_node_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeEditor.cpp" alt="" coords="2029,110,2205,157"/>
-<area shape="rect" id="node21" href="$mdt_sql_form_dialog_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lDialog.cpp" alt="" coords="2229,110,2411,157"/>
-<area shape="rect" id="node23" href="$mdt_sql_form_old_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lOld.cpp" alt="" coords="2435,110,2616,157"/>
-<area shape="rect" id="node25" href="$mdt_sql_form_widget_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lWidget.cpp" alt="" coords="2640,110,2821,157"/>
-<area shape="rect" id="node27" href="$mdt_sql_form_window_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lWindow.cpp" alt="" coords="2845,110,3027,157"/>
-<area shape="rect" id="node29" href="$moc__mdt_sql_form_widget_8cxx.html" title="src/mdtutilsgui/moc\l_mdtSqlFormWidget.cxx" alt="" coords="3051,110,3216,157"/>
+<area shape="rect" id="node21" href="$mdt_sql_form_widget_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lWidget.cpp" alt="" coords="2229,110,2411,157"/>
 </map>

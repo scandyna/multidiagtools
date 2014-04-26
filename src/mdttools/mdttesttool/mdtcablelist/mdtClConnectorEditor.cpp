@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtClConnectorEditor.h"
 #include "ui_mdtClConnectorEditor.h"
-#include "mdtSqlFormWindow.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 

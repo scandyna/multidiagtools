@@ -1,9 +1,7 @@
 <map id="src/mdttools/mdttesttool/mdtcablelist/mdtClUnitEditor.h" name="src/mdttools/mdttesttool/mdtcablelist/mdtClUnitEditor.h">
-<area shape="rect" id="node13" href="$mdt_sql_form_window_8h.html" title="mdtSqlFormWindow.h" alt="" coords="597,179,747,208"/>
-<area shape="rect" id="node34" href="$mdt_sql_form_8h.html" title="mdtSqlForm.h" alt="" coords="312,256,416,285"/>
-<area shape="rect" id="node46" href="$mdt_cl_unit_connection_data_8h.html" title="mdtClUnitConnectionData.h" alt="" coords="928,101,1115,131"/>
-<area shape="rect" id="node15" href="$mdt_sql_form_old_8h.html" title="mdtSqlFormOld.h" alt="" coords="492,256,615,285"/>
-<area shape="rect" id="node17" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="512,333,595,363"/>
-<area shape="rect" id="node48" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="943,256,1057,285"/>
-<area shape="rect" id="node62" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="923,179,1120,208"/>
+<area shape="rect" id="node13" href="$mdt_sql_form_8h.html" title="mdtSqlForm.h" alt="" coords="329,256,433,285"/>
+<area shape="rect" id="node34" href="$mdt_cl_unit_connection_data_8h.html" title="mdtClUnitConnectionData.h" alt="" coords="760,101,947,131"/>
+<area shape="rect" id="node15" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="693,333,776,363"/>
+<area shape="rect" id="node36" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="836,256,951,285"/>
+<area shape="rect" id="node50" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="755,179,952,208"/>
 </map>

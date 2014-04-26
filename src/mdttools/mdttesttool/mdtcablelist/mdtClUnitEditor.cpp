@@ -27,7 +27,6 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
-#include "mdtSqlFormWindow.h"
 #include "mdtClUnitVehicleType.h"
 #include "mdtClUnitConnectionDialog.h"
 #include "mdtClLinkData.h"
