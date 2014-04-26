@@ -1,228 +1,346 @@
-\hypertarget{classmdt_state}{
-\section{mdtState Class Reference}
-\label{classmdt_state}\index{mdtState@{mdtState}}
+\hypertarget{classmdt_state}{\section{mdt\-State Class Reference}
+\label{classmdt_state}\index{mdt\-State@{mdt\-State}}
 }
 
 
-Representation of a state in \hyperlink{classmdt_state_machine}{mdtStateMachine}.  
+Representation of a state in \hyperlink{classmdt_state_machine}{mdt\-State\-Machine}.  
 
 
 
 
-{\ttfamily \#include $<$mdtState.h$>$}
+{\ttfamily \#include $<$mdt\-State.\-h$>$}
 
+
+
+Inheritance diagram for mdt\-State\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=136pt]{classmdt_state__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-State\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=136pt]{classmdt_state__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_state_af439b403568bc41b3db70e037bfd8456}{entered} (\hyperlink{classmdt_state}{mdtState} $\ast$state)
+void \hyperlink{classmdt_state_af439b403568bc41b3db70e037bfd8456}{entered} (\hyperlink{classmdt_state}{mdt\-State} $\ast$state)
 \begin{DoxyCompactList}\small\item\em Emited each time state was enterd. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_state_a8a6c3059b9ace83fc20feb0fcc7159df}{mdtState} (int id, QState $\ast$parent=0)
+\hyperlink{classmdt_state_a8a6c3059b9ace83fc20feb0fcc7159df}{mdt\-State} (int \hyperlink{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}{id}, \hyperlink{class_q_state}{Q\-State} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_state_a64560fbb87511491a0247d0c0ec9613a}{
-\hyperlink{classmdt_state_a64560fbb87511491a0247d0c0ec9613a}{$\sim$mdtState} ()}
-\label{classmdt_state_a64560fbb87511491a0247d0c0ec9613a}
-
+\hyperlink{classmdt_state_a64560fbb87511491a0247d0c0ec9613a}{$\sim$mdt\-State} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_state_aece398b67e5bd5a6d1bcc83f109a1dff}{setId} (int id)
-\begin{DoxyCompactList}\small\item\em Set state ID. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_aece398b67e5bd5a6d1bcc83f109a1dff}{set\-Id} (int \hyperlink{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}{id})
+\begin{DoxyCompactList}\small\item\em Set state I\-D. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}{id} () const 
-\begin{DoxyCompactList}\small\item\em Get ID. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_state_a29e0ba7724b674ee25954a89c66544e2}{
-void \hyperlink{classmdt_state_a29e0ba7724b674ee25954a89c66544e2}{setText} (const QString \&text)}
-\label{classmdt_state_a29e0ba7724b674ee25954a89c66544e2}
-
+\begin{DoxyCompactList}\small\item\em Get I\-D. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_a29e0ba7724b674ee25954a89c66544e2}{set\-Text} (const Q\-String \&\hyperlink{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}{text})
 \begin{DoxyCompactList}\small\item\em Set text of the state. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}{
-QString \hyperlink{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}{text} () const }
-\label{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}
-
+Q\-String \hyperlink{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}{text} () const 
 \begin{DoxyCompactList}\small\item\em Get text of the state. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_state_a0a8a66a96a1e37cefc4367e3a5d71d8b}{setLedColorId} (int colorId)
-\begin{DoxyCompactList}\small\item\em Set LED color ID. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_state_ab75a482b70c27fb0e585fd1c0c343a6d}{ledColorId} () const 
-\begin{DoxyCompactList}\small\item\em Get LED color ID. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_state_a6e0bb7e259c160209e41af7d31892648}{
-void \hyperlink{classmdt_state_a6e0bb7e259c160209e41af7d31892648}{setLedOn} (bool on)}
-\label{classmdt_state_a6e0bb7e259c160209e41af7d31892648}
-
-\begin{DoxyCompactList}\small\item\em Set LED ON state. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_state_a7daacab2967f6f9ab2c0e156e6295545}{
-bool \hyperlink{classmdt_state_a7daacab2967f6f9ab2c0e156e6295545}{ledIsOn} () const }
-\label{classmdt_state_a7daacab2967f6f9ab2c0e156e6295545}
-
-\begin{DoxyCompactList}\small\item\em Get LED ON state. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_state_a366f2dac01b3a4150c8966d355ecfba7}{setNotifyEnteredToUi} (bool notify)
-\begin{DoxyCompactList}\small\item\em Set notifyEnteredToUi flag. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_state_a8097cd281438cc58b39b9a195076d841}{notifyEnteredToUi} () const 
-\begin{DoxyCompactList}\small\item\em Get notifyEnteredToUi flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_state_a0a8a66a96a1e37cefc4367e3a5d71d8b}{set\-Led\-Color\-Id} (int color\-Id)
+\begin{DoxyCompactList}\small\item\em Set L\-E\-D color I\-D. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_state_ab75a482b70c27fb0e585fd1c0c343a6d}{led\-Color\-Id} () const 
+\begin{DoxyCompactList}\small\item\em Get L\-E\-D color I\-D. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_a6e0bb7e259c160209e41af7d31892648}{set\-Led\-On} (bool on)
+\begin{DoxyCompactList}\small\item\em Set L\-E\-D O\-N state. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_state_a7daacab2967f6f9ab2c0e156e6295545}{led\-Is\-On} () const 
+\begin{DoxyCompactList}\small\item\em Get L\-E\-D O\-N state. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_a366f2dac01b3a4150c8966d355ecfba7}{set\-Notify\-Entered\-To\-Ui} (bool notify)
+\begin{DoxyCompactList}\small\item\em Set notify\-Entered\-To\-Ui flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_state_a8097cd281438cc58b39b9a195076d841}{notify\-Entered\-To\-Ui} () const 
+\begin{DoxyCompactList}\small\item\em Get notify\-Entered\-To\-Ui flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Representation of a state in \hyperlink{classmdt_state_machine}{mdtStateMachine}. 
+Representation of a state in \hyperlink{classmdt_state_machine}{mdt\-State\-Machine}. 
 
-This class is based on QState, and add some properties.
+This class is based on \hyperlink{class_q_state}{Q\-State}, and add some properties.
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_state_machine}{mdtStateMachine} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_state_machine}{mdt\-State\-Machine} 
 \end{DoxySeeAlso}
 
 
-Definition at line 33 of file mdtState.h.
+Definition at line 33 of file mdt\-State.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_state_a8a6c3059b9ace83fc20feb0fcc7159df}{
-\index{mdtState@{mdtState}!mdtState@{mdtState}}
-\index{mdtState@{mdtState}!mdtState@{mdtState}}
-\subsubsection[{mdtState}]{\setlength{\rightskip}{0pt plus 5cm}mdtState::mdtState (
+\hypertarget{classmdt_state_a8a6c3059b9ace83fc20feb0fcc7159df}{\index{mdt\-State@{mdt\-State}!mdt\-State@{mdt\-State}}
+\index{mdt\-State@{mdt\-State}!mdtState@{mdt\-State}}
+\subsubsection[{mdt\-State}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-State\-::mdt\-State (
 \begin{DoxyParamCaption}
 \item[{int}]{id, }
-\item[{QState $\ast$}]{parent = {\ttfamily 0}}
+\item[{{\bf Q\-State} $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_state_a8a6c3059b9ace83fc20feb0fcc7159df}
+)}}\label{classmdt_state_a8a6c3059b9ace83fc20feb0fcc7159df}
 
 
 Constructor. 
 
-Will set given id, let a empty text and set notifyEnteredToUi flag false. 
+Will set given id, let a empty text and set notify\-Entered\-To\-Ui flag false. 
 
-Definition at line 26 of file mdtState.cpp.
+Definition at line 26 of file mdt\-State.\-cpp.
+
+
+
+References entered(), and id().
+
+\hypertarget{classmdt_state_a64560fbb87511491a0247d0c0ec9613a}{\index{mdt\-State@{mdt\-State}!$\sim$mdt\-State@{$\sim$mdt\-State}}
+\index{$\sim$mdt\-State@{$\sim$mdt\-State}!mdtState@{mdt\-State}}
+\subsubsection[{$\sim$mdt\-State}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-State\-::$\sim$mdt\-State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_state_a64560fbb87511491a0247d0c0ec9613a}
+
+
+Destructor. 
+
+
+
+Definition at line 37 of file mdt\-State.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_state_af439b403568bc41b3db70e037bfd8456}{
-\index{mdtState@{mdtState}!entered@{entered}}
-\index{entered@{entered}!mdtState@{mdtState}}
-\subsubsection[{entered}]{\setlength{\rightskip}{0pt plus 5cm}void mdtState::entered (
+\hypertarget{classmdt_state_af439b403568bc41b3db70e037bfd8456}{\index{mdt\-State@{mdt\-State}!entered@{entered}}
+\index{entered@{entered}!mdtState@{mdt\-State}}
+\subsubsection[{entered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-::entered (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtState} $\ast$}]{state}
+\item[{{\bf mdt\-State} $\ast$}]{state}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_state_af439b403568bc41b3db70e037bfd8456}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_state_af439b403568bc41b3db70e037bfd8456}
 
 
 Emited each time state was enterd. 
 
-Note: this signal is used by \hyperlink{classmdt_state_machine}{mdtStateMachine} and should not be used directly. \hypertarget{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}{
-\index{mdtState@{mdtState}!id@{id}}
-\index{id@{id}!mdtState@{mdtState}}
-\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int mdtState::id (
+Note\-: this signal is used by \hyperlink{classmdt_state_machine}{mdt\-State\-Machine} and should not be used directly. 
+
+Definition at line 100 of file moc\-\_\-mdt\-State.\-cxx.
+
+
+
+Referenced by mdt\-State().
+
+\hypertarget{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}{\index{mdt\-State@{mdt\-State}!id@{id}}
+\index{id@{id}!mdtState@{mdt\-State}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-State\-::id (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}
+) const}}\label{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}
 
 
-Get ID. 
+Get I\-D. 
 
-The id can typically be used with enums (STATE\_\-READY, ...) 
+The id can typically be used with enums (S\-T\-A\-T\-E\-\_\-\-R\-E\-A\-D\-Y, ...) 
 
-Definition at line 46 of file mdtState.cpp.
+Definition at line 46 of file mdt\-State.\-cpp.
 
-\hypertarget{classmdt_state_ab75a482b70c27fb0e585fd1c0c343a6d}{
-\index{mdtState@{mdtState}!ledColorId@{ledColorId}}
-\index{ledColorId@{ledColorId}!mdtState@{mdtState}}
-\subsubsection[{ledColorId}]{\setlength{\rightskip}{0pt plus 5cm}int mdtState::ledColorId (
+
+
+Referenced by mdt\-State\-Machine\-::current\-State(), mdt\-State(), mdt\-State\-Machine\-::notify\-Current\-State(), and set\-Id().
+
+\hypertarget{classmdt_state_ab75a482b70c27fb0e585fd1c0c343a6d}{\index{mdt\-State@{mdt\-State}!led\-Color\-Id@{led\-Color\-Id}}
+\index{led\-Color\-Id@{led\-Color\-Id}!mdtState@{mdt\-State}}
+\subsubsection[{led\-Color\-Id}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-State\-::led\-Color\-Id (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_state_ab75a482b70c27fb0e585fd1c0c343a6d}
+) const}}\label{classmdt_state_ab75a482b70c27fb0e585fd1c0c343a6d}
 
 
-Get LED color ID. 
+Get L\-E\-D color I\-D. 
 
-The color ID can, for example, be used with \hyperlink{classmdt_led}{mdtLed} color enum. It was choosen store this id in int format, because \hyperlink{classmdt_led}{mdtLed} is in mdtUtilsGui package (we not want to depend on it). 
+The color I\-D can, for example, be used with \hyperlink{classmdt_led}{mdt\-Led} color enum. It was choosen store this id in int format, because \hyperlink{classmdt_led}{mdt\-Led} is in mdt\-Utils\-Gui package (we not want to depend on it). 
 
-Definition at line 66 of file mdtState.cpp.
+Definition at line 66 of file mdt\-State.\-cpp.
 
-\hypertarget{classmdt_state_a8097cd281438cc58b39b9a195076d841}{
-\index{mdtState@{mdtState}!notifyEnteredToUi@{notifyEnteredToUi}}
-\index{notifyEnteredToUi@{notifyEnteredToUi}!mdtState@{mdtState}}
-\subsubsection[{notifyEnteredToUi}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtState::notifyEnteredToUi (
+
+
+Referenced by mdt\-State\-Machine\-::notify\-Current\-State().
+
+\hypertarget{classmdt_state_a7daacab2967f6f9ab2c0e156e6295545}{\index{mdt\-State@{mdt\-State}!led\-Is\-On@{led\-Is\-On}}
+\index{led\-Is\-On@{led\-Is\-On}!mdtState@{mdt\-State}}
+\subsubsection[{led\-Is\-On}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-State\-::led\-Is\-On (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_state_a8097cd281438cc58b39b9a195076d841}
+) const}}\label{classmdt_state_a7daacab2967f6f9ab2c0e156e6295545}
 
 
-Get notifyEnteredToUi flag. 
+Get L\-E\-D O\-N state. 
 
-If notifyEnteredToUi is true, \hyperlink{classmdt_state_machine}{mdtStateMachine} will emit stateChangedForUi() signal each time this state was entered. 
 
-Definition at line 86 of file mdtState.cpp.
 
-\hypertarget{classmdt_state_aece398b67e5bd5a6d1bcc83f109a1dff}{
-\index{mdtState@{mdtState}!setId@{setId}}
-\index{setId@{setId}!mdtState@{mdtState}}
-\subsubsection[{setId}]{\setlength{\rightskip}{0pt plus 5cm}void mdtState::setId (
+Definition at line 76 of file mdt\-State.\-cpp.
+
+
+
+Referenced by mdt\-State\-Machine\-::notify\-Current\-State().
+
+\hypertarget{classmdt_state_a8097cd281438cc58b39b9a195076d841}{\index{mdt\-State@{mdt\-State}!notify\-Entered\-To\-Ui@{notify\-Entered\-To\-Ui}}
+\index{notify\-Entered\-To\-Ui@{notify\-Entered\-To\-Ui}!mdtState@{mdt\-State}}
+\subsubsection[{notify\-Entered\-To\-Ui}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-State\-::notify\-Entered\-To\-Ui (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_state_a8097cd281438cc58b39b9a195076d841}
+
+
+Get notify\-Entered\-To\-Ui flag. 
+
+If notify\-Entered\-To\-Ui is true, \hyperlink{classmdt_state_machine}{mdt\-State\-Machine} will emit state\-Changed\-For\-Ui() signal each time this state was entered. 
+
+Definition at line 86 of file mdt\-State.\-cpp.
+
+
+
+Referenced by mdt\-State\-Machine\-::notify\-Current\-State().
+
+\hypertarget{classmdt_state_aece398b67e5bd5a6d1bcc83f109a1dff}{\index{mdt\-State@{mdt\-State}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!mdtState@{mdt\-State}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-::set\-Id (
 \begin{DoxyParamCaption}
 \item[{int}]{id}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_state_aece398b67e5bd5a6d1bcc83f109a1dff}
+)}}\label{classmdt_state_aece398b67e5bd5a6d1bcc83f109a1dff}
 
 
-Set state ID. 
+Set state I\-D. 
 
-\begin{DoxySeeAlso}{See also}
+\begin{DoxySeeAlso}{See Also}
 \hyperlink{classmdt_state_a034345dce9f3d0c976d5987bd42dc1cf}{id()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 41 of file mdtState.cpp.
+Definition at line 41 of file mdt\-State.\-cpp.
 
-\hypertarget{classmdt_state_a0a8a66a96a1e37cefc4367e3a5d71d8b}{
-\index{mdtState@{mdtState}!setLedColorId@{setLedColorId}}
-\index{setLedColorId@{setLedColorId}!mdtState@{mdtState}}
-\subsubsection[{setLedColorId}]{\setlength{\rightskip}{0pt plus 5cm}void mdtState::setLedColorId (
+
+
+References id().
+
+\hypertarget{classmdt_state_a0a8a66a96a1e37cefc4367e3a5d71d8b}{\index{mdt\-State@{mdt\-State}!set\-Led\-Color\-Id@{set\-Led\-Color\-Id}}
+\index{set\-Led\-Color\-Id@{set\-Led\-Color\-Id}!mdtState@{mdt\-State}}
+\subsubsection[{set\-Led\-Color\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-::set\-Led\-Color\-Id (
 \begin{DoxyParamCaption}
-\item[{int}]{colorId}
+\item[{int}]{color\-Id}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_state_a0a8a66a96a1e37cefc4367e3a5d71d8b}
+)}}\label{classmdt_state_a0a8a66a96a1e37cefc4367e3a5d71d8b}
 
 
-Set LED color ID. 
+Set L\-E\-D color I\-D. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_state_ab75a482b70c27fb0e585fd1c0c343a6d}{ledColorId()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_state_ab75a482b70c27fb0e585fd1c0c343a6d}{led\-Color\-Id()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 61 of file mdtState.cpp.
+Definition at line 61 of file mdt\-State.\-cpp.
 
-\hypertarget{classmdt_state_a366f2dac01b3a4150c8966d355ecfba7}{
-\index{mdtState@{mdtState}!setNotifyEnteredToUi@{setNotifyEnteredToUi}}
-\index{setNotifyEnteredToUi@{setNotifyEnteredToUi}!mdtState@{mdtState}}
-\subsubsection[{setNotifyEnteredToUi}]{\setlength{\rightskip}{0pt plus 5cm}void mdtState::setNotifyEnteredToUi (
+
+
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Connected\-Sub\-Machine(), mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and mdt\-Port\-Manager\-State\-Machine\-::build\-Running\-Sub\-Machine().
+
+\hypertarget{classmdt_state_a6e0bb7e259c160209e41af7d31892648}{\index{mdt\-State@{mdt\-State}!set\-Led\-On@{set\-Led\-On}}
+\index{set\-Led\-On@{set\-Led\-On}!mdtState@{mdt\-State}}
+\subsubsection[{set\-Led\-On}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-::set\-Led\-On (
+\begin{DoxyParamCaption}
+\item[{bool}]{on}
+\end{DoxyParamCaption}
+)}}\label{classmdt_state_a6e0bb7e259c160209e41af7d31892648}
+
+
+Set L\-E\-D O\-N state. 
+
+
+
+Definition at line 71 of file mdt\-State.\-cpp.
+
+
+
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Connected\-Sub\-Machine(), mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and mdt\-Port\-Manager\-State\-Machine\-::build\-Running\-Sub\-Machine().
+
+\hypertarget{classmdt_state_a366f2dac01b3a4150c8966d355ecfba7}{\index{mdt\-State@{mdt\-State}!set\-Notify\-Entered\-To\-Ui@{set\-Notify\-Entered\-To\-Ui}}
+\index{set\-Notify\-Entered\-To\-Ui@{set\-Notify\-Entered\-To\-Ui}!mdtState@{mdt\-State}}
+\subsubsection[{set\-Notify\-Entered\-To\-Ui}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-::set\-Notify\-Entered\-To\-Ui (
 \begin{DoxyParamCaption}
 \item[{bool}]{notify}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_state_a366f2dac01b3a4150c8966d355ecfba7}
+)}}\label{classmdt_state_a366f2dac01b3a4150c8966d355ecfba7}
 
 
-Set notifyEnteredToUi flag. 
+Set notify\-Entered\-To\-Ui flag. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_state_a8097cd281438cc58b39b9a195076d841}{notifyEnteredToUi()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_state_a8097cd281438cc58b39b9a195076d841}{notify\-Entered\-To\-Ui()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 81 of file mdtState.cpp.
+Definition at line 81 of file mdt\-State.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Connected\-Sub\-Machine(), mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and mdt\-Port\-Manager\-State\-Machine\-::build\-Running\-Sub\-Machine().
+
+\hypertarget{classmdt_state_a29e0ba7724b674ee25954a89c66544e2}{\index{mdt\-State@{mdt\-State}!set\-Text@{set\-Text}}
+\index{set\-Text@{set\-Text}!mdtState@{mdt\-State}}
+\subsubsection[{set\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-::set\-Text (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{text}
+\end{DoxyParamCaption}
+)}}\label{classmdt_state_a29e0ba7724b674ee25954a89c66544e2}
+
+
+Set text of the state. 
+
+
+
+Definition at line 51 of file mdt\-State.\-cpp.
+
+
+
+References text().
+
+
+
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Connected\-Sub\-Machine(), mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and mdt\-Port\-Manager\-State\-Machine\-::build\-Running\-Sub\-Machine().
+
+\hypertarget{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}{\index{mdt\-State@{mdt\-State}!text@{text}}
+\index{text@{text}!mdtState@{mdt\-State}}
+\subsubsection[{text}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-State\-::text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_state_ab6dabbc771acb33f16c3caf169414d53}
+
+
+Get text of the state. 
+
+
+
+Definition at line 56 of file mdt\-State.\-cpp.
+
+
+
+Referenced by mdt\-State\-Machine\-::notify\-Current\-State(), and set\-Text().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtState.h\item 
-src/mdtutils/mdtState.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_state_8h}{mdt\-State.\-h}\item 
+src/mdtutils/\hyperlink{mdt_state_8cpp}{mdt\-State.\-cpp}\item 
+src/mdtutils/\hyperlink{moc__mdt_state_8cxx}{moc\-\_\-mdt\-State.\-cxx}\end{DoxyCompactItemize}

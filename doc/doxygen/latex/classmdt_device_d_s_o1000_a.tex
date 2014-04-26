@@ -1,10 +1,13 @@
-\hypertarget{classmdt_device_d_s_o1000_a}{
-\section{mdtDeviceDSO1000A Class Reference}
-\label{classmdt_device_d_s_o1000_a}\index{mdtDeviceDSO1000A@{mdtDeviceDSO1000A}}
+\hypertarget{classmdt_device_d_s_o1000_a}{\section{mdt\-Device\-D\-S\-O1000\-A Class Reference}
+\label{classmdt_device_d_s_o1000_a}\index{mdt\-Device\-D\-S\-O1000\-A@{mdt\-Device\-D\-S\-O1000\-A}}
 }
 
 
-Inheritance diagram for mdtDeviceDSO1000A:\nopagebreak
+{\ttfamily \#include $<$mdt\-Device\-D\-S\-O1000\-A.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Device\-D\-S\-O1000\-A\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,59 +16,69 @@ Inheritance diagram for mdtDeviceDSO1000A:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceDSO1000A:\nopagebreak
+Collaboration diagram for mdt\-Device\-D\-S\-O1000\-A\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=400pt]{classmdt_device_d_s_o1000_a__coll__graph}
+\includegraphics[width=350pt]{classmdt_device_d_s_o1000_a__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_device_d_s_o1000_a_a3c4cd1418250864589284a3540353fdb}{mdtDeviceDSO1000A} (QObject $\ast$parent=0)
+\hyperlink{classmdt_device_d_s_o1000_a_a3c4cd1418250864589284a3540353fdb}{mdt\-Device\-D\-S\-O1000\-A} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_d_s_o1000_a_a84431cf929750a8a25d5218893736c72}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
+\hyperlink{classmdt_device_d_s_o1000_a_a43f7e76a08f8b855f04fe4d1cb3010e1}{$\sim$mdt\-Device\-D\-S\-O1000\-A} ()
+\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_device_d_s_o1000_a_a84431cf929750a8a25d5218893736c72}{connect\-To\-Device} (const \hyperlink{classmdt_device_info}{mdt\-Device\-Info} \&dev\-Info)
 \begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 28 of file mdtDeviceDSO1000A.h.
+Definition at line 28 of file mdt\-Device\-D\-S\-O1000\-A.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_device_d_s_o1000_a_a3c4cd1418250864589284a3540353fdb}{
-\index{mdtDeviceDSO1000A@{mdtDeviceDSO1000A}!mdtDeviceDSO1000A@{mdtDeviceDSO1000A}}
-\index{mdtDeviceDSO1000A@{mdtDeviceDSO1000A}!mdtDeviceDSO1000A@{mdtDeviceDSO1000A}}
-\subsubsection[{mdtDeviceDSO1000A}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceDSO1000A::mdtDeviceDSO1000A (
+\hypertarget{classmdt_device_d_s_o1000_a_a3c4cd1418250864589284a3540353fdb}{\index{mdt\-Device\-D\-S\-O1000\-A@{mdt\-Device\-D\-S\-O1000\-A}!mdt\-Device\-D\-S\-O1000\-A@{mdt\-Device\-D\-S\-O1000\-A}}
+\index{mdt\-Device\-D\-S\-O1000\-A@{mdt\-Device\-D\-S\-O1000\-A}!mdtDeviceDSO1000A@{mdt\-Device\-D\-S\-O1000\-A}}
+\subsubsection[{mdt\-Device\-D\-S\-O1000\-A}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Device\-D\-S\-O1000\-A\-::mdt\-Device\-D\-S\-O1000\-A (
 \begin{DoxyParamCaption}
-\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_device_d_s_o1000_a_a3c4cd1418250864589284a3540353fdb}
+)}}\label{classmdt_device_d_s_o1000_a_a3c4cd1418250864589284a3540353fdb}
 
 
-connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString\&, const QString\&)), this, SLOT(setStateFromPortError(int, const QString\&, const QString\&))); 
+Definition at line 25 of file mdt\-Device\-D\-S\-O1000\-A.\-cpp.
 
 
 
-Definition at line 25 of file mdtDeviceDSO1000A.cpp.
+References mdt\-Port\-Manager\-::config(), mdt\-Device\-Scpi\-::port\-Manager(), mdt\-Device\-Scpi\-::pv\-Usbtmc\-Port\-Manager, mdt\-Port\-Config\-::set\-Read\-Frame\-Size(), mdt\-Port\-Config\-::set\-Read\-Queue\-Size(), mdt\-Port\-Config\-::set\-Read\-Timeout(), mdt\-Port\-Config\-::set\-Write\-Frame\-Size(), mdt\-Port\-Config\-::set\-Write\-Queue\-Size(), and mdt\-Device\-::state\-Changed().
+
+\hypertarget{classmdt_device_d_s_o1000_a_a43f7e76a08f8b855f04fe4d1cb3010e1}{\index{mdt\-Device\-D\-S\-O1000\-A@{mdt\-Device\-D\-S\-O1000\-A}!$\sim$mdt\-Device\-D\-S\-O1000\-A@{$\sim$mdt\-Device\-D\-S\-O1000\-A}}
+\index{$\sim$mdt\-Device\-D\-S\-O1000\-A@{$\sim$mdt\-Device\-D\-S\-O1000\-A}!mdtDeviceDSO1000A@{mdt\-Device\-D\-S\-O1000\-A}}
+\subsubsection[{$\sim$mdt\-Device\-D\-S\-O1000\-A}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Device\-D\-S\-O1000\-A\-::$\sim$mdt\-Device\-D\-S\-O1000\-A (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_d_s_o1000_a_a43f7e76a08f8b855f04fe4d1cb3010e1}
+
+
+Definition at line 40 of file mdt\-Device\-D\-S\-O1000\-A.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_device_d_s_o1000_a_a84431cf929750a8a25d5218893736c72}{
-\index{mdtDeviceDSO1000A@{mdtDeviceDSO1000A}!connectToDevice@{connectToDevice}}
-\index{connectToDevice@{connectToDevice}!mdtDeviceDSO1000A@{mdtDeviceDSO1000A}}
-\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceDSO1000A::connectToDevice (
+\hypertarget{classmdt_device_d_s_o1000_a_a84431cf929750a8a25d5218893736c72}{\index{mdt\-Device\-D\-S\-O1000\-A@{mdt\-Device\-D\-S\-O1000\-A}!connect\-To\-Device@{connect\-To\-Device}}
+\index{connect\-To\-Device@{connect\-To\-Device}!mdtDeviceDSO1000A@{mdt\-Device\-D\-S\-O1000\-A}}
+\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Device\-D\-S\-O1000\-A\-::connect\-To\-Device (
 \begin{DoxyParamCaption}
-\item[{const {\bf mdtDeviceInfo} \&}]{devInfo}
+\item[{const {\bf mdt\-Device\-Info} \&}]{dev\-Info}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_device_d_s_o1000_a_a84431cf929750a8a25d5218893736c72}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_device_d_s_o1000_a_a84431cf929750a8a25d5218893736c72}
 
 
 Search and connect to physical device. 
@@ -74,23 +87,27 @@ Will scan available ports and open the first port that has device attached machi
 
 
 \begin{DoxyParams}{Parameters}
-{\em devInfo} & Requested device's informations. Note: Vendor ID and/or product ID are automatically set. (in other words, a empty \hyperlink{classmdt_device_info}{mdtDeviceInfo} can be passed). Optionnaly, a serial ID can be set (usefull if many U3606A devices are connected) \\
+{\em dev\-Info} & Requested device's informations. Note\-: Vendor I\-D and/or product I\-D are automatically set. (in other words, a empty \hyperlink{classmdt_device_info}{mdt\-Device\-Info} can be passed). Optionnaly, a serial I\-D can be set (usefull if many U3606\-A devices are connected) \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} (NoError on success) 
+A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} (No\-Error on success) 
 \end{DoxyReturn}
 
 
-Reimplemented from \hyperlink{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}{mdtDeviceScpi}.
+Reimplemented from \hyperlink{classmdt_device_abab1b6e45af527880ce469ae318474c0}{mdt\-Device}.
 
 
 
-Definition at line 45 of file mdtDeviceDSO1000A.cpp.
+Definition at line 45 of file mdt\-Device\-D\-S\-O1000\-A.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References mdt\-Device\-Scpi\-::connect\-To\-Device(), mdt\-Device\-Info\-::set\-Product\-Id(), and mdt\-Device\-Info\-::set\-Vendor\-Id().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtdevice/mdtDeviceDSO1000A.h\item 
-src/mdtdevice/mdtDeviceDSO1000A.cpp\end{DoxyCompactItemize}
+src/mdtdevice/\hyperlink{mdt_device_d_s_o1000_a_8h}{mdt\-Device\-D\-S\-O1000\-A.\-h}\item 
+src/mdtdevice/\hyperlink{mdt_device_d_s_o1000_a_8cpp}{mdt\-Device\-D\-S\-O1000\-A.\-cpp}\end{DoxyCompactItemize}

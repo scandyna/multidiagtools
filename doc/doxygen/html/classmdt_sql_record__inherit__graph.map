@@ -1,0 +1,10 @@
+<map id="mdtSqlRecord" name="mdtSqlRecord">
+<area shape="rect" id="node3" href="$classmdt_cl_article_connection_data.html" title="Data container class for article connection data. " alt="" coords="161,5,348,35"/>
+<area shape="rect" id="node5" href="$classmdt_cl_article_connector_data.html" title="Data container class for article connector data. " alt="" coords="164,59,345,88"/>
+<area shape="rect" id="node7" href="$classmdt_cl_connector_data.html" title="Data container class for connector data. " alt="" coords="183,112,327,141"/>
+<area shape="rect" id="node9" href="$classmdt_cl_link_data.html" title="Data container class for link data. " alt="" coords="200,165,309,195"/>
+<area shape="rect" id="node11" href="$classmdt_cl_unit_connection_data.html" title="Data container class for unit connection data. " alt="" coords="168,219,341,248"/>
+<area shape="rect" id="node13" href="$classmdt_cl_unit_connector_data.html" title="Data container class for article connector data. " alt="" coords="171,272,339,301"/>
+<area shape="rect" id="node15" href="$classmdt_tt_test_link_data.html" title="Data container for test link. " alt="" coords="188,325,321,355"/>
+<area shape="rect" id="node17" href="$classmdt_tt_test_node_unit_data.html" title="Storage class for test node unit. " alt="" coords="172,379,337,408"/>
+</map>

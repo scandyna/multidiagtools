@@ -1,16 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_abstract_port_setup_dialog.html" title="Base class to build a port setup dialog." alt="" coords="143,587,329,616"/>
-<area shape="rect" id="node4" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="357,491,475,520"/>
-<area shape="rect" id="node29" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager." alt="" coords="353,587,540,616"/>
-<area shape="rect" id="node6" href="$classmdt_port_manager_state_machine.html" title="State machine for port manager." alt="" coords="123,360,320,389"/>
-<area shape="rect" id="node8" href="$classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine." alt="" coords="272,183,395,212"/>
-<area shape="rect" id="node10" href="$classmdt_state.html" title="Representation of a state in mdtStateMachine." alt="" coords="172,5,247,35"/>
-<area shape="rect" id="node13" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="344,360,451,389"/>
-<area shape="rect" id="node22" href="$classmdt_port_status_widget.html" title="Helper class to display port/device state and messages." alt="" coords="92,491,239,520"/>
-<area shape="rect" id="node15" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="429,183,547,212"/>
-<area shape="rect" id="node17" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="435,5,541,35"/>
-<area shape="rect" id="node19" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="569,360,660,389"/>
-<area shape="rect" id="node24" href="$classmdt_blink_led.html" title="Blinking LED." alt="" coords="5,360,99,389"/>
-<area shape="rect" id="node26" href="$classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="20,183,84,212"/>
-<area shape="rect" id="node33" href="$classmdt_port_info_cb_handler.html" title="Handle the port info comboBox and the device info comboBox." alt="" coords="661,587,813,616"/>
+<map id="mdtModbusTcpPortSetupDialog" name="mdtModbusTcpPortSetupDialog">
+<area shape="rect" id="node2" href="$classmdt_abstract_port_setup_dialog.html" title="Base class to build a port setup dialog. " alt="" coords="191,280,377,309"/>
+<area shape="rect" id="node4" href="$class_q_dialog.html" title="QDialog" alt="" coords="205,191,275,220"/>
+<area shape="rect" id="node6" href="$class_ui_1_1mdt_abstract_port_setup_dialog.html" title="Ui::mdtAbstractPortSetup\lDialog" alt="" coords="299,182,469,229"/>
+<area shape="rect" id="node8" href="$class_ui__mdt_abstract_port_setup_dialog.html" title="Ui_mdtAbstractPortSetupDialog" alt="" coords="280,101,488,131"/>
 </map>

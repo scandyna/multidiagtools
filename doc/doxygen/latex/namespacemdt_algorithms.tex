@@ -1,6 +1,5 @@
-\hypertarget{namespacemdt_algorithms}{
-\section{mdtAlgorithms Namespace Reference}
-\label{namespacemdt_algorithms}\index{mdtAlgorithms@{mdtAlgorithms}}
+\hypertarget{namespacemdt_algorithms}{\section{mdt\-Algorithms Namespace Reference}
+\label{namespacemdt_algorithms}\index{mdt\-Algorithms@{mdt\-Algorithms}}
 }
 
 
@@ -10,27 +9,21 @@ Some usefull little (unefficient) algoritms.
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-QStringList \hyperlink{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}{naturalSort} (QStringList \&list, Qt::CaseSensitivity caseSensitivity)
+Q\-String\-List \hyperlink{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}{natural\-Sort} (Q\-String\-List \&list, Qt\-::\-Case\-Sensitivity case\-Sensitivity)
 \begin{DoxyCompactList}\small\item\em Sort a string list using natural sort. \end{DoxyCompactList}\item 
-bool \hyperlink{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}{naturalCompareLessThan} (const QString \&str1, const QString \&str2, Qt::CaseSensitivity caseSensitivity)
+bool \hyperlink{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}{natural\-Compare\-Less\-Than} (const Q\-String \&str1, const Q\-String \&str2, Qt\-::\-Case\-Sensitivity case\-Sensitivity)
 \begin{DoxyCompactList}\small\item\em Compare 2 strings using natural sort. \end{DoxyCompactList}\item 
-\hypertarget{namespacemdt_algorithms_aa5af30feb9cfecb2971d6ae90c9c5fdf}{
-bool \hyperlink{namespacemdt_algorithms_aa5af30feb9cfecb2971d6ae90c9c5fdf}{naturalCompareLessThanCaseSensitive} (const QString \&str1, const QString \&str2)}
-\label{namespacemdt_algorithms_aa5af30feb9cfecb2971d6ae90c9c5fdf}
-
+bool \hyperlink{namespacemdt_algorithms_aa5af30feb9cfecb2971d6ae90c9c5fdf}{natural\-Compare\-Less\-Than\-Case\-Sensitive} (const Q\-String \&str1, const Q\-String \&str2)
 \begin{DoxyCompactList}\small\item\em Compare 2 strings using natural sort -\/ case sensitive version. \end{DoxyCompactList}\item 
-\hypertarget{namespacemdt_algorithms_a3cdc3655f7adfbc5ce03fd39e8d1e986}{
-bool \hyperlink{namespacemdt_algorithms_a3cdc3655f7adfbc5ce03fd39e8d1e986}{naturalCompareLessThanCaseInsensitive} (const QString \&str1, const QString \&str2)}
-\label{namespacemdt_algorithms_a3cdc3655f7adfbc5ce03fd39e8d1e986}
-
+bool \hyperlink{namespacemdt_algorithms_a3cdc3655f7adfbc5ce03fd39e8d1e986}{natural\-Compare\-Less\-Than\-Case\-Insensitive} (const Q\-String \&str1, const Q\-String \&str2)
 \begin{DoxyCompactList}\small\item\em Compare 2 strings using natural sort -\/ case insensitive version. \end{DoxyCompactList}\item 
-QByteArray \hyperlink{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{hexStringToByteArray} (const QString \&hexStr)
+Q\-Byte\-Array \hyperlink{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{hex\-String\-To\-Byte\-Array} (const Q\-String \&hex\-Str)
 \begin{DoxyCompactList}\small\item\em Convert a hexadecimal formated string to numerical bytes array. \end{DoxyCompactList}\item 
-QString \hyperlink{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}{byteArrayToHexString} (const QByteArray \&byteArray)
+Q\-String \hyperlink{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}{byte\-Array\-To\-Hex\-String} (const Q\-Byte\-Array \&byte\-Array)
 \begin{DoxyCompactList}\small\item\em Convert a byte array to a hexadecimal string. \end{DoxyCompactList}\item 
-QString \hyperlink{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}{unprotectedString} (const QString \&str, const QString \&dataProtection, const QChar \&escapeChar, int $\ast$strEndOffset=0, int strStartOffset=-\/1)
+Q\-String \hyperlink{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}{unprotected\-String} (const Q\-String \&str, const Q\-String \&data\-Protection, const Q\-Char \&escape\-Char, int $\ast$str\-End\-Offset=0, int str\-Start\-Offset=-\/1)
 \begin{DoxyCompactList}\small\item\em Get unprotected string. \end{DoxyCompactList}\item 
-QStringList \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{splitString} (const QString \&str, const QString \&separator, const QString \&dataProtection, const QChar \&escapeChar=QChar())
+Q\-String\-List \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{split\-String} (const Q\-String \&str, const Q\-String \&separator, const Q\-String \&data\-Protection, const Q\-Char \&escape\-Char=Q\-Char())
 \begin{DoxyCompactList}\small\item\em Split a string reagrding a separator and data protection. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -38,92 +31,136 @@ QStringList \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf
 Some usefull little (unefficient) algoritms. 
 
 \subsection{Function Documentation}
-\hypertarget{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}{
-\index{mdtAlgorithms@{mdtAlgorithms}!byteArrayToHexString@{byteArrayToHexString}}
-\index{byteArrayToHexString@{byteArrayToHexString}!mdtAlgorithms@{mdtAlgorithms}}
-\subsubsection[{byteArrayToHexString}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtAlgorithms::byteArrayToHexString (
+\hypertarget{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}{\index{mdt\-Algorithms@{mdt\-Algorithms}!byte\-Array\-To\-Hex\-String@{byte\-Array\-To\-Hex\-String}}
+\index{byte\-Array\-To\-Hex\-String@{byte\-Array\-To\-Hex\-String}!mdtAlgorithms@{mdt\-Algorithms}}
+\subsubsection[{byte\-Array\-To\-Hex\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Algorithms\-::byte\-Array\-To\-Hex\-String (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{byteArray}
+\item[{const Q\-Byte\-Array \&}]{byte\-Array}
 \end{DoxyParamCaption}
-)}}
-\label{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}
+)}}\label{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}
 
 
 Convert a byte array to a hexadecimal string. 
 
-For example, byte array with 44,18,95 numerical values will generate a string with \char`\"{}2C 12 5F\char`\"{}. 
+For example, byte array with 44,18,95 numerical values will generate a string with \char`\"{}2\-C 12 5\-F\char`\"{}. 
 
-Definition at line 224 of file mdtAlgorithms.cpp.
+Definition at line 224 of file mdt\-Algorithms.\-cpp.
 
-\hypertarget{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{
-\index{mdtAlgorithms@{mdtAlgorithms}!hexStringToByteArray@{hexStringToByteArray}}
-\index{hexStringToByteArray@{hexStringToByteArray}!mdtAlgorithms@{mdtAlgorithms}}
-\subsubsection[{hexStringToByteArray}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtAlgorithms::hexStringToByteArray (
+\hypertarget{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{\index{mdt\-Algorithms@{mdt\-Algorithms}!hex\-String\-To\-Byte\-Array@{hex\-String\-To\-Byte\-Array}}
+\index{hex\-String\-To\-Byte\-Array@{hex\-String\-To\-Byte\-Array}!mdtAlgorithms@{mdt\-Algorithms}}
+\subsubsection[{hex\-String\-To\-Byte\-Array}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Byte\-Array mdt\-Algorithms\-::hex\-String\-To\-Byte\-Array (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{hexStr}
+\item[{const Q\-String \&}]{hex\-Str}
 \end{DoxyParamCaption}
-)}}
-\label{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}
+)}}\label{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}
 
 
 Convert a hexadecimal formated string to numerical bytes array. 
 
-Hexadecimal string is, for example, 2C 12 5F , witch will be converted to 44,18,95 numeric byte array.
+Hexadecimal string is, for example, 2\-C 12 5\-F , witch will be converted to 44,18,95 numeric byte array.
 
 \begin{DoxyPrecond}{Precondition}
-hexStr must contain multiple of 2 valid chars. F.ex: 2C 12 5 is not valid. 
+hex\-Str must contain multiple of 2 valid chars. F.\-ex\-: 2\-C 12 5 is not valid. 
 
-hexStr must contain valid chars (0-\/9 , a-\/f, A-\/F). F.ex: 2Z is not valid. 
+hex\-Str must contain valid chars (0-\/9 , a-\/f, A-\/\-F). F.\-ex\-: 2\-Z is not valid. 
 \end{DoxyPrecond}
 
 
-Definition at line 199 of file mdtAlgorithms.cpp.
+Definition at line 199 of file mdt\-Algorithms.\-cpp.
 
-\hypertarget{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}{
-\index{mdtAlgorithms@{mdtAlgorithms}!naturalCompareLessThan@{naturalCompareLessThan}}
-\index{naturalCompareLessThan@{naturalCompareLessThan}!mdtAlgorithms@{mdtAlgorithms}}
-\subsubsection[{naturalCompareLessThan}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAlgorithms::naturalCompareLessThan (
+\hypertarget{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}{\index{mdt\-Algorithms@{mdt\-Algorithms}!natural\-Compare\-Less\-Than@{natural\-Compare\-Less\-Than}}
+\index{natural\-Compare\-Less\-Than@{natural\-Compare\-Less\-Than}!mdtAlgorithms@{mdt\-Algorithms}}
+\subsubsection[{natural\-Compare\-Less\-Than}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Algorithms\-::natural\-Compare\-Less\-Than (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{str1, }
-\item[{const QString \&}]{str2, }
-\item[{Qt::CaseSensitivity}]{caseSensitivity}
+\item[{const Q\-String \&}]{str1, }
+\item[{const Q\-String \&}]{str2, }
+\item[{Qt\-::\-Case\-Sensitivity}]{case\-Sensitivity}
 \end{DoxyParamCaption}
-)}}
-\label{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}
+)}}\label{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}
 
 
 Compare 2 strings using natural sort. 
 
-This method chops the input str1 and str2 into pieces of digits and non-\/digits (a1.05 becomes $|$a$|$1$|$.$|$05) and compare these pieces of str1 and str2 to each other (first with first, second with second, ...).
+This method chops the input str1 and str2 into pieces of digits and non-\/digits (a1.\-05 becomes $|$a$|$1$|$.$|$05) and compare these pieces of str1 and str2 to each other (first with first, second with second, ...).
 
-This function is based on KDE KStringHandler::naturalCompare(): \href{http://api.kde.org/4.10-api/kdelibs-apidocs/kdecore/html/kstringhandler_8cpp_source.html}{\tt http://api.kde.org/4.10-\/api/kdelibs-\/apidocs/kdecore/html/kstringhandler\_\-8cpp\_\-source.html}
+This function is based on K\-D\-E K\-String\-Handler\-::natural\-Compare()\-: \href{http://api.kde.org/4.10-api/kdelibs-apidocs/kdecore/html/kstringhandler_8cpp_source.html}{\tt http\-://api.\-kde.\-org/4.\-10-\/api/kdelibs-\/apidocs/kdecore/html/kstringhandler\-\_\-8cpp\-\_\-source.\-html}
 
-KStringHandler itself is based on the natural sort order code from Martin Pool: \href{http://sourcefrog.net/projects/natsort/}{\tt http://sourcefrog.net/projects/natsort/}
+K\-String\-Handler itself is based on the natural sort order code from Martin Pool\-: \href{http://sourcefrog.net/projects/natsort/}{\tt http\-://sourcefrog.\-net/projects/natsort/}
 
-Please note that this version is not the original one. Unexpected behaviours cannot be due to KDE or Martin Pool.
+Please note that this version is not the original one. Unexpected behaviours cannot be due to K\-D\-E or Martin Pool.
 
 \begin{DoxyReturn}{Returns}
 True if str1 $<$ str2. 
 \end{DoxyReturn}
 
 
-Definition at line 38 of file mdtAlgorithms.cpp.
+Definition at line 38 of file mdt\-Algorithms.\-cpp.
 
-\hypertarget{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}{
-\index{mdtAlgorithms@{mdtAlgorithms}!naturalSort@{naturalSort}}
-\index{naturalSort@{naturalSort}!mdtAlgorithms@{mdtAlgorithms}}
-\subsubsection[{naturalSort}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtAlgorithms::naturalSort (
+
+
+Referenced by natural\-Compare\-Less\-Than\-Case\-Insensitive(), and natural\-Compare\-Less\-Than\-Case\-Sensitive().
+
+\hypertarget{namespacemdt_algorithms_a3cdc3655f7adfbc5ce03fd39e8d1e986}{\index{mdt\-Algorithms@{mdt\-Algorithms}!natural\-Compare\-Less\-Than\-Case\-Insensitive@{natural\-Compare\-Less\-Than\-Case\-Insensitive}}
+\index{natural\-Compare\-Less\-Than\-Case\-Insensitive@{natural\-Compare\-Less\-Than\-Case\-Insensitive}!mdtAlgorithms@{mdt\-Algorithms}}
+\subsubsection[{natural\-Compare\-Less\-Than\-Case\-Insensitive}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Algorithms\-::natural\-Compare\-Less\-Than\-Case\-Insensitive (
 \begin{DoxyParamCaption}
-\item[{QStringList \&}]{list, }
-\item[{Qt::CaseSensitivity}]{caseSensitivity}
+\item[{const Q\-String \&}]{str1, }
+\item[{const Q\-String \&}]{str2}
 \end{DoxyParamCaption}
-)}}
-\label{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}
+)}}\label{namespacemdt_algorithms_a3cdc3655f7adfbc5ce03fd39e8d1e986}
+
+
+Compare 2 strings using natural sort -\/ case insensitive version. 
+
+
+
+Definition at line 194 of file mdt\-Algorithms.\-cpp.
+
+
+
+References natural\-Compare\-Less\-Than().
+
+
+
+Referenced by natural\-Sort().
+
+\hypertarget{namespacemdt_algorithms_aa5af30feb9cfecb2971d6ae90c9c5fdf}{\index{mdt\-Algorithms@{mdt\-Algorithms}!natural\-Compare\-Less\-Than\-Case\-Sensitive@{natural\-Compare\-Less\-Than\-Case\-Sensitive}}
+\index{natural\-Compare\-Less\-Than\-Case\-Sensitive@{natural\-Compare\-Less\-Than\-Case\-Sensitive}!mdtAlgorithms@{mdt\-Algorithms}}
+\subsubsection[{natural\-Compare\-Less\-Than\-Case\-Sensitive}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Algorithms\-::natural\-Compare\-Less\-Than\-Case\-Sensitive (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{str1, }
+\item[{const Q\-String \&}]{str2}
+\end{DoxyParamCaption}
+)}}\label{namespacemdt_algorithms_aa5af30feb9cfecb2971d6ae90c9c5fdf}
+
+
+Compare 2 strings using natural sort -\/ case sensitive version. 
+
+
+
+Definition at line 189 of file mdt\-Algorithms.\-cpp.
+
+
+
+References natural\-Compare\-Less\-Than().
+
+
+
+Referenced by natural\-Sort().
+
+\hypertarget{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}{\index{mdt\-Algorithms@{mdt\-Algorithms}!natural\-Sort@{natural\-Sort}}
+\index{natural\-Sort@{natural\-Sort}!mdtAlgorithms@{mdt\-Algorithms}}
+\subsubsection[{natural\-Sort}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Algorithms\-::natural\-Sort (
+\begin{DoxyParamCaption}
+\item[{Q\-String\-List \&}]{list, }
+\item[{Qt\-::\-Case\-Sensitivity}]{case\-Sensitivity}
+\end{DoxyParamCaption}
+)}}\label{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}
 
 
 Sort a string list using natural sort. 
 
-Usefull for directory entry list. By default, QDir sorts the entries at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 , the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ... With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ...
+Usefull for directory entry list. By default, Q\-Dir sorts the entries at alphabetic order. For exemple, if we have tty\-S0, tty\-S1, tty\-S2, ... , tty\-S10 , the entries will be sorted\-: tty\-S0, tty\-S1, tty\-S10 , tty\-S2, ... With this function, the result will be\-: tty\-S0, tty\-S1, tty\-S2, ..., tty\-S10, ...
 
 
 \begin{DoxyParams}{Parameters}
@@ -135,27 +172,33 @@ The sorted list
 \end{DoxyReturn}
 
 
-Definition at line 27 of file mdtAlgorithms.cpp.
+Definition at line 27 of file mdt\-Algorithms.\-cpp.
 
-\hypertarget{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{
-\index{mdtAlgorithms@{mdtAlgorithms}!splitString@{splitString}}
-\index{splitString@{splitString}!mdtAlgorithms@{mdtAlgorithms}}
-\subsubsection[{splitString}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtAlgorithms::splitString (
+
+
+References natural\-Compare\-Less\-Than\-Case\-Insensitive(), and natural\-Compare\-Less\-Than\-Case\-Sensitive().
+
+
+
+Referenced by mdt\-Serial\-Port\-Manager\-::scan().
+
+\hypertarget{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{\index{mdt\-Algorithms@{mdt\-Algorithms}!split\-String@{split\-String}}
+\index{split\-String@{split\-String}!mdtAlgorithms@{mdt\-Algorithms}}
+\subsubsection[{split\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Algorithms\-::split\-String (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{str, }
-\item[{const QString \&}]{separator, }
-\item[{const QString \&}]{dataProtection, }
-\item[{const QChar \&}]{escapeChar = {\ttfamily QChar()}}
+\item[{const Q\-String \&}]{str, }
+\item[{const Q\-String \&}]{separator, }
+\item[{const Q\-String \&}]{data\-Protection, }
+\item[{const Q\-Char \&}]{escape\-Char = {\ttfamily QChar()}}
 \end{DoxyParamCaption}
-)}}
-\label{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}
+)}}\label{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}
 
 
 Split a string reagrding a separator and data protection. 
 
-QString has a totally functionnal split method, but it does not support data proection. For example, if we have to split a string: \char`\"{}123\char`\"{};\char`\"{}AB;C\char`\"{} witch uses ; char as separator and " as protection, we must have a list with 2 items: 123 and AB;C.
+Q\-String has a totally functionnal split method, but it does not support data proection. For example, if we have to split a string\-: \char`\"{}123\char`\"{};\char`\"{}\-A\-B;\-C\char`\"{} witch uses ; char as separator and " as protection, we must have a list with 2 items\-: 123 and A\-B;C.
 
-Some details:
+Some details\-:
 \begin{DoxyItemize}
 \item If str is empty, a empty list is returned
 \item Empty records (data around separator) are added to list
@@ -165,11 +208,11 @@ Some details:
 \begin{DoxyParams}{Parameters}
 {\em str} & The input string to parse \\
 \hline
-{\em separator} & Separator to use (typical: ; ) \\
+{\em separator} & Separator to use (typical\-: ; ) \\
 \hline
-{\em dataProtection} & Data protection (typical: " ) \\
+{\em data\-Protection} & Data protection (typical\-: " ) \\
 \hline
-{\em escapeChar} & Escape char (typical: $\backslash$ ). Note: has only effect to escape dataProtection. \\
+{\em escape\-Char} & Escape char (typical\-: \textbackslash{} ). Note\-: has only effect to escape data\-Protection. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -177,48 +220,58 @@ The list of found fields
 \end{DoxyReturn}
 
 
-Definition at line 325 of file mdtAlgorithms.cpp.
+Definition at line 325 of file mdt\-Algorithms.\-cpp.
 
-\hypertarget{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}{
-\index{mdtAlgorithms@{mdtAlgorithms}!unprotectedString@{unprotectedString}}
-\index{unprotectedString@{unprotectedString}!mdtAlgorithms@{mdtAlgorithms}}
-\subsubsection[{unprotectedString}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtAlgorithms::unprotectedString (
+
+
+References unprotected\-String().
+
+
+
+Referenced by mdt\-Frame\-Codec\-Scpi\-::decode\-Error(), mdt\-Csv\-File\-::read\-Line(), and mdt\-Csv\-File\-::read\-Lines().
+
+\hypertarget{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}{\index{mdt\-Algorithms@{mdt\-Algorithms}!unprotected\-String@{unprotected\-String}}
+\index{unprotected\-String@{unprotected\-String}!mdtAlgorithms@{mdt\-Algorithms}}
+\subsubsection[{unprotected\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Algorithms\-::unprotected\-String (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{str, }
-\item[{const QString \&}]{dataProtection, }
-\item[{const QChar \&}]{escapeChar, }
-\item[{int $\ast$}]{strEndOffset = {\ttfamily 0}, }
-\item[{int}]{strStartOffset = {\ttfamily -\/1}}
+\item[{const Q\-String \&}]{str, }
+\item[{const Q\-String \&}]{data\-Protection, }
+\item[{const Q\-Char \&}]{escape\-Char, }
+\item[{int $\ast$}]{str\-End\-Offset = {\ttfamily 0}, }
+\item[{int}]{str\-Start\-Offset = {\ttfamily -\/1}}
 \end{DoxyParamCaption}
-)}}
-\label{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}
+)}}\label{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}
 
 
 Get unprotected string. 
 
-It can happen that a protected string, f.ex. \char`\"{}Hello\char`\"{}, must be extracted. Additionnally, escape chars can be inside. This is a helper function used by \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{splitString()}.
+It can happen that a protected string, f.\-ex. \char`\"{}\-Hello\char`\"{}, must be extracted. Additionnally, escape chars can be inside. This is a helper function used by \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{split\-String()}.
 
-For example, if data protection is \char`\"{} and escape char is $\backslash$ ,
-  \char`\"{}A"BC"D\char`\"{} will return A\char`\"{}BC"D. If escape char is alone, nothing will happen: \char`\"{}A$\backslash$BCD\char`\"{} will return A. If data proection not exists, a empty string will be returned. Note that exactly one protected section will be parsed. For example, \char`\"{}AB\char`\"{}CD\char`\"{}EF\char`\"{} will return AB, CD\char`\"{}EF\char`\"{} will simply be ignored.
+For example, if data protection is \char`\"{} and escape char is \textbackslash{} ,
+ \char`\"{}A"B\-C"D\char`\"{} will return A\char`\"{}B\-C"D. If escape char is alone, nothing will happen\-: \char`\"{}\-A\textbackslash{}\-B\-C\-D\char`\"{} will return A. If data proection not exists, a empty string will be returned. Note that exactly one protected section will be parsed. For example, \char`\"{}\-A\-B\char`\"{}C\-D\char`\"{}\-E\-F\char`\"{} will return A\-B, C\-D\char`\"{}\-E\-F\char`\"{} will simply be ignored.
 
 
 \begin{DoxyParams}{Parameters}
 {\em str} & The input string to parse \\
 \hline
-{\em dataProtection} & Data protection (typical: " ) \\
+{\em data\-Protection} & Data protection (typical\-: " ) \\
 \hline
-{\em escapeChar} & Escape char (typical: $\backslash$ ) \\
+{\em escape\-Char} & Escape char (typical\-: \textbackslash{} ) \\
 \hline
-{\em strEndOffset} & If not Null, the offset (of first char) of closing dataProtection, before removing escape chars, is stored to this parameter. This is used by \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{splitString()}. Some examples with \char`\"{} as dataProtection and $\backslash$ as escapeChar:
-                       -\/ For \char`\"{}A"BC"D\char`\"{} : value will be 9
-                       -\/ For \char`\"{}A\char`\"{} : value will be 6
-                       -\/ For \char`\"{}A : value will be -\/1 (no closing \char`\"{} found)
-                       -\/ For A : value will be -\/1 (no \char`\"{} found) \\
+{\em str\-End\-Offset} & If not Null, the offset (of first char) of closing data\-Protection, before removing escape chars, is stored to this parameter. This is used by \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{split\-String()}. Some examples with \char`\"{} as data\-Protection and \textbackslash{} as escape\-Char\-:
+                      -\/ For \char`\"{}A"B\-C"D\char`\"{} \-: value will be 9
+                      -\/ For \char`\"{}A\char`\"{} \-: value will be 6
+                      -\/ For \char`\"{}A \-: value will be -\/1 (no closing \char`\"{} found)
+                      -\/ For A \-: value will be -\/1 (no \char`\"{} found) \\
 \hline
-{\em strStartOffset} & If $>$ -\/1, parsing will begin a this position in str \\
+{\em str\-Start\-Offset} & If $>$ -\/1, parsing will begin a this position in str \\
 \hline
 \end{DoxyParams}
 
 
-Definition at line 246 of file mdtAlgorithms.cpp.
+Definition at line 246 of file mdt\-Algorithms.\-cpp.
+
+
+
+Referenced by split\-String().
 

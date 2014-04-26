@@ -1,4 +1,9 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$classmdt_sql_form_dialog.html" title="SQL form dialog." alt="" coords="5,83,136,112"/>
-<area shape="rect" id="node5" href="$classmdt_sql_form_window.html" title="SQL form window." alt="" coords="160,83,299,112"/>
+<map id="mdtSqlForm" name="mdtSqlForm">
+<area shape="rect" id="node5" href="$classmdt_cl_article_editor.html" title="Cable list&#39;s article editor. " alt="" coords="297,5,425,35"/>
+<area shape="rect" id="node7" href="$classmdt_cl_connector_editor.html" title="Class for connector edition. " alt="" coords="287,59,436,88"/>
+<area shape="rect" id="node9" href="$classmdt_cl_unit_editor.html" title="Cable list&#39;s device editor. " alt="" coords="304,112,419,141"/>
+<area shape="rect" id="node11" href="$classmdt_cl_vehicle_type_editor.html" title="Vehicle type editor. " alt="" coords="280,165,443,195"/>
+<area shape="rect" id="node13" href="$classmdt_tt_test_connection_cable_editor.html" title="Class for test connection cable edition. " alt="" coords="271,218,452,265"/>
+<area shape="rect" id="node15" href="$classmdt_tt_test_node_editor.html" title="This class provides a test node editor. " alt="" coords="288,288,435,317"/>
+<area shape="rect" id="node2" href="$class_q_widget.html" title="QWidget" alt="" coords="7,139,79,168"/>
 </map>

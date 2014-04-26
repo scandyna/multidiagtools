@@ -1,4 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$class_ui_1_1mdt_sql_query_widget.html" title="Ui::mdtSqlQueryWidget" alt="" coords="5,83,165,112"/>
-<area shape="rect" id="node4" href="$class_ui__mdt_sql_query_widget.html" title="Ui_mdtSqlQueryWidget" alt="" coords="7,5,164,35"/>
+<map id="mdtSqlQueryWidget" name="mdtSqlQueryWidget">
+<area shape="rect" id="node2" href="$class_q_widget.html" title="QWidget" alt="" coords="524,153,596,183"/>
+<area shape="rect" id="node4" href="$class_ui_1_1mdt_sql_query_widget.html" title="Ui::mdtSqlQueryWidget" alt="" coords="480,207,640,236"/>
+<area shape="rect" id="node6" href="$class_ui__mdt_sql_query_widget.html" title="Ui_mdtSqlQueryWidget" alt="" coords="271,207,428,236"/>
 </map>

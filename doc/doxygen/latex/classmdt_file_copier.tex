@@ -1,6 +1,5 @@
-\hypertarget{classmdt_file_copier}{
-\section{mdtFileCopier Class Reference}
-\label{classmdt_file_copier}\index{mdtFileCopier@{mdtFileCopier}}
+\hypertarget{classmdt_file_copier}{\section{mdt\-File\-Copier Class Reference}
+\label{classmdt_file_copier}\index{mdt\-File\-Copier@{mdt\-File\-Copier}}
 }
 
 
@@ -9,228 +8,371 @@ Helper class for file copy.
 
 
 
-{\ttfamily \#include $<$mdtFileCopier.h$>$}
+{\ttfamily \#include $<$mdt\-File\-Copier.\-h$>$}
 
+
+
+Inheritance diagram for mdt\-File\-Copier\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=156pt]{classmdt_file_copier__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-File\-Copier\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=156pt]{classmdt_file_copier__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_file_copier_ab9a0a4121a3fa0c70652413ad7917714}{
-void \hyperlink{classmdt_file_copier_ab9a0a4121a3fa0c70652413ad7917714}{cancelCopy} ()}
-\label{classmdt_file_copier_ab9a0a4121a3fa0c70652413ad7917714}
-
+void \hyperlink{classmdt_file_copier_ab9a0a4121a3fa0c70652413ad7917714}{cancel\-Copy} ()
 \begin{DoxyCompactList}\small\item\em Cancel running copy (used internally for progress dialog) \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{classmdt_file_copier_a808f01eb2a319e82a9fec5bb978ccb85}{finished} (bool success)
 \begin{DoxyCompactList}\small\item\em Emitted when copy process is done. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_file_copier_a4c6c815614ab929ebe36f62f09296f25}{
-void \hyperlink{classmdt_file_copier_a4c6c815614ab929ebe36f62f09296f25}{newProgressRange} (int min, int max)}
-\label{classmdt_file_copier_a4c6c815614ab929ebe36f62f09296f25}
-
+void \hyperlink{classmdt_file_copier_a4c6c815614ab929ebe36f62f09296f25}{new\-Progress\-Range} (int min, int max)
 \begin{DoxyCompactList}\small\item\em Emitted when new progress range is set (used internally for proegress dialog) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_file_copier_a48c337249ec54bd9f672b079fca3116f}{
-void \hyperlink{classmdt_file_copier_a48c337249ec54bd9f672b079fca3116f}{newProgressValue} (int value)}
-\label{classmdt_file_copier_a48c337249ec54bd9f672b079fca3116f}
-
+void \hyperlink{classmdt_file_copier_a48c337249ec54bd9f672b079fca3116f}{new\-Progress\-Value} (int value)
 \begin{DoxyCompactList}\small\item\em Emitted when new progress value is set (used internally for proegress dialog) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_file_copier_a70626ba282633b15d2bdb398081c71be}{
-void \hyperlink{classmdt_file_copier_a70626ba282633b15d2bdb398081c71be}{newProgressLabelText} (const QString \&text)}
-\label{classmdt_file_copier_a70626ba282633b15d2bdb398081c71be}
-
+void \hyperlink{classmdt_file_copier_a70626ba282633b15d2bdb398081c71be}{new\-Progress\-Label\-Text} (const Q\-String \&text)
 \begin{DoxyCompactList}\small\item\em Emitted when new progress label text is set (used internally for proegress dialog) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_file_copier_aad51a259e0e55a67698d599e43dc1264}{
-void \hyperlink{classmdt_file_copier_aad51a259e0e55a67698d599e43dc1264}{copyEnded} (const QString \&failedCopies, const QString \&informativeText=QString())}
-\label{classmdt_file_copier_aad51a259e0e55a67698d599e43dc1264}
-
+void \hyperlink{classmdt_file_copier_aad51a259e0e55a67698d599e43dc1264}{copy\-Ended} (const Q\-String \&failed\-Copies, const Q\-String \&informative\-Text=Q\-String())
 \begin{DoxyCompactList}\small\item\em Emitted when copy is ended or aborted (used internally to display copy result) \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_file_copier_a32fc7a1c4d796ce0f3781c24257a0a02}{
-{\bfseries mdtFileCopier} (QObject $\ast$parent=0)}
-\label{classmdt_file_copier_a32fc7a1c4d796ce0f3781c24257a0a02}
-
+\hyperlink{classmdt_file_copier_a32fc7a1c4d796ce0f3781c24257a0a02}{mdt\-File\-Copier} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \item 
-void \hyperlink{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}{setDirectDestOverwrite} (bool directOverwrite)
+\hyperlink{classmdt_file_copier_a818453c5591e4ec9c6de6adc67bc4e00}{$\sim$mdt\-File\-Copier} ()
+\item 
+void \hyperlink{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}{set\-Direct\-Dest\-Overwrite} (bool direct\-Overwrite)
 \begin{DoxyCompactList}\small\item\em Permit direct destination overwrite. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_file_copier_a868ce61ec7d8f590002dd350276413a4}{setDefaultSetup} ()
+void \hyperlink{classmdt_file_copier_a868ce61ec7d8f590002dd350276413a4}{set\-Default\-Setup} ()
 \begin{DoxyCompactList}\small\item\em Set the default setup. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_file_copier_ad0730aae81b3ba64eec4563390b852a3}{addCopy} (const QString \&srcFilePath, const QString \&destFilePath, bool syncAfterCopy=false, bool checkAfterCopy=false)
+void \hyperlink{classmdt_file_copier_ad0730aae81b3ba64eec4563390b852a3}{add\-Copy} (const Q\-String \&src\-File\-Path, const Q\-String \&dest\-File\-Path, bool sync\-After\-Copy=false, bool check\-After\-Copy=false)
 \begin{DoxyCompactList}\small\item\em Add a source and destination file path to copy. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{startCopy} ()
+bool \hyperlink{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{start\-Copy} ()
 \begin{DoxyCompactList}\small\item\em Start the copy. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}{waitFinished} ()
+bool \hyperlink{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}{wait\-Finished} ()
 \begin{DoxyCompactList}\small\item\em Wait until copies are done. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}{setTestMode} (bool enable)
+void \hyperlink{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}{set\-Test\-Mode} (bool enable)
 \begin{DoxyCompactList}\small\item\em If set true, message boxes will not be displayed, and some default decisions will be taken. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Helper class for file copy. 
 
-When files must be copied in a GUI application, some common situation must be handled:
+When files must be copied in a G\-U\-I application, some common situation must be handled\-:
 \begin{DoxyItemize}
 \item Display a message box when source file not exists, or cannot be read
 \item Ask the user if allready existing destination file must be overwritten
 \item Display a progress bar during a long copy
 \item ...\par
  This class was made to simplify this process.\par
- The copy is done in a separated thread. Notes:
-\item For a simple and efficient copy, it's better to use system provided functions, QFile or others.
+ The copy is done in a separated thread. Notes\-:
+\item For a simple and efficient copy, it's better to use system provided functions, \hyperlink{class_q_file}{Q\-File} or others.
 \item If a file exists at destination, user will be asked about what to do. But, the ask operation, and the effective copy are not a atomic operation. So it can happen that another process creates the destination, and that file is then overwritten during copy ! 
 \end{DoxyItemize}
 
-Definition at line 53 of file mdtFileCopier.h.
+Definition at line 53 of file mdt\-File\-Copier.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_file_copier_a32fc7a1c4d796ce0f3781c24257a0a02}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!mdt\-File\-Copier@{mdt\-File\-Copier}}
+\index{mdt\-File\-Copier@{mdt\-File\-Copier}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{mdt\-File\-Copier}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-File\-Copier\-::mdt\-File\-Copier (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_file_copier_a32fc7a1c4d796ce0f3781c24257a0a02}
+
+
+Definition at line 40 of file mdt\-File\-Copier.\-cpp.
+
+
+
+References cancel\-Copy(), copy\-Ended(), new\-Progress\-Label\-Text(), new\-Progress\-Range(), new\-Progress\-Value(), and set\-Default\-Setup().
+
+\hypertarget{classmdt_file_copier_a818453c5591e4ec9c6de6adc67bc4e00}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!$\sim$mdt\-File\-Copier@{$\sim$mdt\-File\-Copier}}
+\index{$\sim$mdt\-File\-Copier@{$\sim$mdt\-File\-Copier}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{$\sim$mdt\-File\-Copier}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-File\-Copier\-::$\sim$mdt\-File\-Copier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_file_copier_a818453c5591e4ec9c6de6adc67bc4e00}
+
+
+Definition at line 67 of file mdt\-File\-Copier.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_file_copier_ad0730aae81b3ba64eec4563390b852a3}{
-\index{mdtFileCopier@{mdtFileCopier}!addCopy@{addCopy}}
-\index{addCopy@{addCopy}!mdtFileCopier@{mdtFileCopier}}
-\subsubsection[{addCopy}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFileCopier::addCopy (
+\hypertarget{classmdt_file_copier_ad0730aae81b3ba64eec4563390b852a3}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!add\-Copy@{add\-Copy}}
+\index{add\-Copy@{add\-Copy}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{add\-Copy}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::add\-Copy (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{srcFilePath, }
-\item[{const QString \&}]{destFilePath, }
-\item[{bool}]{syncAfterCopy = {\ttfamily false}, }
-\item[{bool}]{checkAfterCopy = {\ttfamily false}}
+\item[{const Q\-String \&}]{src\-File\-Path, }
+\item[{const Q\-String \&}]{dest\-File\-Path, }
+\item[{bool}]{sync\-After\-Copy = {\ttfamily false}, }
+\item[{bool}]{check\-After\-Copy = {\ttfamily false}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_file_copier_ad0730aae81b3ba64eec4563390b852a3}
+)}}\label{classmdt_file_copier_ad0730aae81b3ba64eec4563390b852a3}
 
 
 Add a source and destination file path to copy. 
 
-At this point, the copy is enqueued. To process copy, call \hyperlink{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{startCopy()}. \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{startCopy()} 
+At this point, the copy is enqueued. To process copy, call \hyperlink{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{start\-Copy()}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{start\-Copy()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 88 of file mdtFileCopier.cpp.
+Definition at line 88 of file mdt\-File\-Copier.\-cpp.
 
-\hypertarget{classmdt_file_copier_a808f01eb2a319e82a9fec5bb978ccb85}{
-\index{mdtFileCopier@{mdtFileCopier}!finished@{finished}}
-\index{finished@{finished}!mdtFileCopier@{mdtFileCopier}}
-\subsubsection[{finished}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFileCopier::finished (
+
+
+References mdt\-File\-Copier\-Item\-::set\-Check\-After\-Copy(), and mdt\-File\-Copier\-Item\-::set\-Sync\-After\-Copy().
+
+\hypertarget{classmdt_file_copier_ab9a0a4121a3fa0c70652413ad7917714}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!cancel\-Copy@{cancel\-Copy}}
+\index{cancel\-Copy@{cancel\-Copy}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{cancel\-Copy}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::cancel\-Copy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_file_copier_ab9a0a4121a3fa0c70652413ad7917714}
+
+
+Cancel running copy (used internally for progress dialog) 
+
+
+
+Definition at line 328 of file mdt\-File\-Copier.\-cpp.
+
+
+
+References finished().
+
+
+
+Referenced by mdt\-File\-Copier().
+
+\hypertarget{classmdt_file_copier_aad51a259e0e55a67698d599e43dc1264}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!copy\-Ended@{copy\-Ended}}
+\index{copy\-Ended@{copy\-Ended}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{copy\-Ended}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::copy\-Ended (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{failed\-Copies, }
+\item[{const Q\-String \&}]{informative\-Text = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_file_copier_aad51a259e0e55a67698d599e43dc1264}
+
+
+Emitted when copy is ended or aborted (used internally to display copy result) 
+
+
+
+Definition at line 149 of file moc\-\_\-mdt\-File\-Copier.\-cxx.
+
+
+
+Referenced by mdt\-File\-Copier().
+
+\hypertarget{classmdt_file_copier_a808f01eb2a319e82a9fec5bb978ccb85}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!finished@{finished}}
+\index{finished@{finished}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{finished}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::finished (
 \begin{DoxyParamCaption}
 \item[{bool}]{success}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_file_copier_a808f01eb2a319e82a9fec5bb978ccb85}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_file_copier_a808f01eb2a319e82a9fec5bb978ccb85}
 
 
 Emitted when copy process is done. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em success} & True on success, false on failure (errors are displayed to the user, and logged with \hyperlink{classmdt_error}{mdtError} system) \\
+{\em success} & True on success, false on failure (errors are displayed to the user, and logged with \hyperlink{classmdt_error}{mdt\-Error} system) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classmdt_file_copier_a868ce61ec7d8f590002dd350276413a4}{
-\index{mdtFileCopier@{mdtFileCopier}!setDefaultSetup@{setDefaultSetup}}
-\index{setDefaultSetup@{setDefaultSetup}!mdtFileCopier@{mdtFileCopier}}
-\subsubsection[{setDefaultSetup}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFileCopier::setDefaultSetup (
+
+
+Definition at line 121 of file moc\-\_\-mdt\-File\-Copier.\-cxx.
+
+
+
+Referenced by cancel\-Copy(), start\-Copy(), and wait\-Finished().
+
+\hypertarget{classmdt_file_copier_a70626ba282633b15d2bdb398081c71be}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!new\-Progress\-Label\-Text@{new\-Progress\-Label\-Text}}
+\index{new\-Progress\-Label\-Text@{new\-Progress\-Label\-Text}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{new\-Progress\-Label\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::new\-Progress\-Label\-Text (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_file_copier_a70626ba282633b15d2bdb398081c71be}
+
+
+Emitted when new progress label text is set (used internally for proegress dialog) 
+
+
+
+Definition at line 142 of file moc\-\_\-mdt\-File\-Copier.\-cxx.
+
+
+
+Referenced by mdt\-File\-Copier().
+
+\hypertarget{classmdt_file_copier_a4c6c815614ab929ebe36f62f09296f25}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!new\-Progress\-Range@{new\-Progress\-Range}}
+\index{new\-Progress\-Range@{new\-Progress\-Range}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{new\-Progress\-Range}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::new\-Progress\-Range (
+\begin{DoxyParamCaption}
+\item[{int}]{min, }
+\item[{int}]{max}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_file_copier_a4c6c815614ab929ebe36f62f09296f25}
+
+
+Emitted when new progress range is set (used internally for proegress dialog) 
+
+
+
+Definition at line 128 of file moc\-\_\-mdt\-File\-Copier.\-cxx.
+
+
+
+Referenced by mdt\-File\-Copier().
+
+\hypertarget{classmdt_file_copier_a48c337249ec54bd9f672b079fca3116f}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!new\-Progress\-Value@{new\-Progress\-Value}}
+\index{new\-Progress\-Value@{new\-Progress\-Value}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{new\-Progress\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::new\-Progress\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_file_copier_a48c337249ec54bd9f672b079fca3116f}
+
+
+Emitted when new progress value is set (used internally for proegress dialog) 
+
+
+
+Definition at line 135 of file moc\-\_\-mdt\-File\-Copier.\-cxx.
+
+
+
+Referenced by mdt\-File\-Copier().
+
+\hypertarget{classmdt_file_copier_a868ce61ec7d8f590002dd350276413a4}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!set\-Default\-Setup@{set\-Default\-Setup}}
+\index{set\-Default\-Setup@{set\-Default\-Setup}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{set\-Default\-Setup}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::set\-Default\-Setup (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_file_copier_a868ce61ec7d8f590002dd350276413a4}
+)}}\label{classmdt_file_copier_a868ce61ec7d8f590002dd350276413a4}
 
 
 Set the default setup. 
 
-Default setup is:
+Default setup is\-:
 \begin{DoxyItemize}
 \item Test mode is diseabled
-\item Direct overwrite diseabled, user will be asked if destination allready exists This method is called by constructor. \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}{setTestMode()} 
+\item Direct overwrite diseabled, user will be asked if destination allready exists This method is called by constructor. \begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}{set\-Test\-Mode()} 
 
-\hyperlink{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}{setDirectDestOverwrite()} 
+\hyperlink{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}{set\-Direct\-Dest\-Overwrite()} 
 \end{DoxySeeAlso}
 
 \end{DoxyItemize}
 
-Definition at line 82 of file mdtFileCopier.cpp.
+Definition at line 82 of file mdt\-File\-Copier.\-cpp.
 
-\hypertarget{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}{
-\index{mdtFileCopier@{mdtFileCopier}!setDirectDestOverwrite@{setDirectDestOverwrite}}
-\index{setDirectDestOverwrite@{setDirectDestOverwrite}!mdtFileCopier@{mdtFileCopier}}
-\subsubsection[{setDirectDestOverwrite}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFileCopier::setDirectDestOverwrite (
+
+
+Referenced by mdt\-File\-Copier().
+
+\hypertarget{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!set\-Direct\-Dest\-Overwrite@{set\-Direct\-Dest\-Overwrite}}
+\index{set\-Direct\-Dest\-Overwrite@{set\-Direct\-Dest\-Overwrite}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{set\-Direct\-Dest\-Overwrite}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::set\-Direct\-Dest\-Overwrite (
 \begin{DoxyParamCaption}
-\item[{bool}]{directOverwrite}
+\item[{bool}]{direct\-Overwrite}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}
+)}}\label{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}
 
 
 Permit direct destination overwrite. 
 
 If set false, the user will be asked about what to do if destination allready exists. 
 
-Definition at line 77 of file mdtFileCopier.cpp.
+Definition at line 77 of file mdt\-File\-Copier.\-cpp.
 
-\hypertarget{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}{
-\index{mdtFileCopier@{mdtFileCopier}!setTestMode@{setTestMode}}
-\index{setTestMode@{setTestMode}!mdtFileCopier@{mdtFileCopier}}
-\subsubsection[{setTestMode}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFileCopier::setTestMode (
+\hypertarget{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!set\-Test\-Mode@{set\-Test\-Mode}}
+\index{set\-Test\-Mode@{set\-Test\-Mode}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{set\-Test\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-File\-Copier\-::set\-Test\-Mode (
 \begin{DoxyParamCaption}
 \item[{bool}]{enable}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}
+)}}\label{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}
 
 
 If set true, message boxes will not be displayed, and some default decisions will be taken. 
 
 Used by unit tests. Please never use this flag without you know that it can happen ! 
 
-Definition at line 322 of file mdtFileCopier.cpp.
+Definition at line 322 of file mdt\-File\-Copier.\-cpp.
 
-\hypertarget{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{
-\index{mdtFileCopier@{mdtFileCopier}!startCopy@{startCopy}}
-\index{startCopy@{startCopy}!mdtFileCopier@{mdtFileCopier}}
-\subsubsection[{startCopy}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFileCopier::startCopy (
+\hypertarget{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!start\-Copy@{start\-Copy}}
+\index{start\-Copy@{start\-Copy}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{start\-Copy}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-File\-Copier\-::start\-Copy (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}
+)}}\label{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}
 
 
 Start the copy. 
 
 For all enqueued copies, some checks will be done, when ok, copies will then processed.\par
- To know when copy is finished, use \hyperlink{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}{waitFinished()}, or connect to the \hyperlink{classmdt_file_copier_a808f01eb2a319e82a9fec5bb978ccb85}{finished()} signal. \begin{DoxyReturn}{Returns}
+ To know when copy is finished, use \hyperlink{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}{wait\-Finished()}, or connect to the \hyperlink{classmdt_file_copier_a808f01eb2a319e82a9fec5bb978ccb85}{finished()} signal. \begin{DoxyReturn}{Returns}
 true if copy will be processed, or false if no copy can be done, or user cancelled copy because of some problems. 
 \end{DoxyReturn}
 
 
-Definition at line 97 of file mdtFileCopier.cpp.
+Definition at line 97 of file mdt\-File\-Copier.\-cpp.
 
-\hypertarget{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}{
-\index{mdtFileCopier@{mdtFileCopier}!waitFinished@{waitFinished}}
-\index{waitFinished@{waitFinished}!mdtFileCopier@{mdtFileCopier}}
-\subsubsection[{waitFinished}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFileCopier::waitFinished (
+
+
+References mdt\-File\-Copier\-Item\-::dest\-File\-Path(), mdt\-Error\-::\-Error, finished(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, mdt\-File\-Copier\-Item\-::set\-Dest\-Directory\-Path(), mdt\-File\-Copier\-Item\-::set\-Dest\-File\-Name(), mdt\-File\-Copier\-Item\-::set\-Dest\-File\-Path(), mdt\-File\-Copier\-Item\-::set\-File\-Size(), mdt\-File\-Copier\-Item\-::set\-Src\-Directory\-Path(), mdt\-File\-Copier\-Item\-::set\-Src\-File\-Name(), mdt\-File\-Copier\-Item\-::set\-Src\-File\-Path(), mdt\-Error\-::set\-System\-Error(), and mdt\-File\-Copier\-Item\-::src\-File\-Path().
+
+\hypertarget{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}{\index{mdt\-File\-Copier@{mdt\-File\-Copier}!wait\-Finished@{wait\-Finished}}
+\index{wait\-Finished@{wait\-Finished}!mdtFileCopier@{mdt\-File\-Copier}}
+\subsubsection[{wait\-Finished}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-File\-Copier\-::wait\-Finished (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}
+)}}\label{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}
 
 
 Wait until copies are done. 
 
-This function will only return when copy process is done. Internally, a couple of msleep()/process event will be called, so Qt's GUI event loop is not broken, and application will not freeze. \begin{DoxyReturn}{Returns}
-True on success, false on failure or abort (errors are displayed to the user, and logged with \hyperlink{classmdt_error}{mdtError} system) 
+This function will only return when copy process is done. Internally, a couple of \hyperlink{mdt_port_thread_helper_8cpp_a6d5214d1f7774c98bbfb5a2f18a4d95c}{msleep()}/process event will be called, so Qt's G\-U\-I event loop is not broken, and application will not freeze. \begin{DoxyReturn}{Returns}
+True on success, false on failure or abort (errors are displayed to the user, and logged with \hyperlink{classmdt_error}{mdt\-Error} system) 
 \end{DoxyReturn}
 
 
-Definition at line 304 of file mdtFileCopier.cpp.
+Definition at line 304 of file mdt\-File\-Copier.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References finished(), and msleep.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtFileCopier.h\item 
-src/mdtutils/mdtFileCopier.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_file_copier_8h}{mdt\-File\-Copier.\-h}\item 
+src/mdtutils/\hyperlink{mdt_file_copier_8cpp}{mdt\-File\-Copier.\-cpp}\item 
+src/mdtutils/\hyperlink{moc__mdt_file_copier_8cxx}{moc\-\_\-mdt\-File\-Copier.\-cxx}\end{DoxyCompactItemize}

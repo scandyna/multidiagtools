@@ -1,19 +1,18 @@
-\hypertarget{classmdt_state_machine}{
-\section{mdtStateMachine Class Reference}
-\label{classmdt_state_machine}\index{mdtStateMachine@{mdtStateMachine}}
+\hypertarget{classmdt_state_machine}{\section{mdt\-State\-Machine Class Reference}
+\label{classmdt_state_machine}\index{mdt\-State\-Machine@{mdt\-State\-Machine}}
 }
 
 
-Extend Qt's QStateMachine.  
+Extend Qt's \hyperlink{class_q_state_machine}{Q\-State\-Machine}.  
 
 
 
 
-{\ttfamily \#include $<$mdtStateMachine.h$>$}
+{\ttfamily \#include $<$mdt\-State\-Machine.\-h$>$}
 
 
 
-Inheritance diagram for mdtStateMachine:\nopagebreak
+Inheritance diagram for mdt\-State\-Machine\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,138 +21,194 @@ Inheritance diagram for mdtStateMachine:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtStateMachine:\nopagebreak
+Collaboration diagram for mdt\-State\-Machine\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=193pt]{classmdt_state_machine__coll__graph}
+\includegraphics[width=172pt]{classmdt_state_machine__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{
-void \hyperlink{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{stateChanged} (int id)}
-\label{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}
-
+void \hyperlink{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{state\-Changed} (int id)
 \begin{DoxyCompactList}\small\item\em Emitted each time the state changed. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{stateChangedForUi} (int id, const QString \&text, int ledColorId, bool ledIsOn)
+void \hyperlink{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{state\-Changed\-For\-Ui} (int id, const Q\-String \&text, int led\-Color\-Id, bool led\-Is\-On)
 \begin{DoxyCompactList}\small\item\em Emitted only if a state that must be notified is entered. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_state_machine_af2b15b9b0bbf48c6adb75a69dd255718}{mdtStateMachine} (QObject $\ast$parent=0)
+\hyperlink{classmdt_state_machine_af2b15b9b0bbf48c6adb75a69dd255718}{mdt\-State\-Machine} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}{
-virtual \hyperlink{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}{$\sim$mdtStateMachine} ()}
-\label{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}
-
+virtual \hyperlink{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}{$\sim$mdt\-State\-Machine} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{
-int \hyperlink{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{currentState} () const }
-\label{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}
-
+int \hyperlink{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{current\-State} () const 
 \begin{DoxyCompactList}\small\item\em Get current state. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{waitOnState} (int state, int timeout=-\/1)
+bool \hyperlink{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{wait\-On\-State} (int state, int timeout=-\/1)
 \begin{DoxyCompactList}\small\item\em Wait until a state is reached. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}{notifyCurrentState} ()
+void \hyperlink{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}{notify\-Current\-State} ()
 \begin{DoxyCompactList}\small\item\em Notify current state. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Extend Qt's QStateMachine. 
+Extend Qt's \hyperlink{class_q_state_machine}{Q\-State\-Machine}. 
 
-QStateMachine provides all that is needed to build a state machine. But, for some application, some other things can be usefull:
+\hyperlink{class_q_state_machine}{Q\-State\-Machine} provides all that is needed to build a state machine. But, for some application, some other things can be usefull\-:
 \begin{DoxyItemize}
 \item Get current state
 \item Wait until a state was reached
-\item Notify only some states to the (G)UI
+\item Notify only some states to the (G)U\-I
 \end{DoxyItemize}
 
-Usually, a system based on a state machine is only event driven, and QStateMachine was build this way. But, for some application, we need to be able to wait until a state is reached, without breaking application's event loop, before we can continue. 
+Usually, a system based on a state machine is only event driven, and \hyperlink{class_q_state_machine}{Q\-State\-Machine} was build this way. But, for some application, we need to be able to wait until a state is reached, without breaking application's event loop, before we can continue. 
 
-Definition at line 43 of file mdtStateMachine.h.
+Definition at line 43 of file mdt\-State\-Machine.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_state_machine_af2b15b9b0bbf48c6adb75a69dd255718}{
-\index{mdtStateMachine@{mdtStateMachine}!mdtStateMachine@{mdtStateMachine}}
-\index{mdtStateMachine@{mdtStateMachine}!mdtStateMachine@{mdtStateMachine}}
-\subsubsection[{mdtStateMachine}]{\setlength{\rightskip}{0pt plus 5cm}mdtStateMachine::mdtStateMachine (
+\hypertarget{classmdt_state_machine_af2b15b9b0bbf48c6adb75a69dd255718}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!mdt\-State\-Machine@{mdt\-State\-Machine}}
+\index{mdt\-State\-Machine@{mdt\-State\-Machine}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{mdt\-State\-Machine}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-State\-Machine\-::mdt\-State\-Machine (
 \begin{DoxyParamCaption}
-\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_state_machine_af2b15b9b0bbf48c6adb75a69dd255718}
+)}}\label{classmdt_state_machine_af2b15b9b0bbf48c6adb75a69dd255718}
 
 
 Constructor. 
 
 Current state will be set to -\/1 (invalid). 
 
-Definition at line 27 of file mdtStateMachine.cpp.
+Definition at line 27 of file mdt\-State\-Machine.\-cpp.
+
+\hypertarget{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!$\sim$mdt\-State\-Machine@{$\sim$mdt\-State\-Machine}}
+\index{$\sim$mdt\-State\-Machine@{$\sim$mdt\-State\-Machine}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{$\sim$mdt\-State\-Machine}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-State\-Machine\-::$\sim$mdt\-State\-Machine (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}
+
+
+Destructor. 
+
+
+
+Definition at line 37 of file mdt\-State\-Machine.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}{
-\index{mdtStateMachine@{mdtStateMachine}!notifyCurrentState@{notifyCurrentState}}
-\index{notifyCurrentState@{notifyCurrentState}!mdtStateMachine@{mdtStateMachine}}
-\subsubsection[{notifyCurrentState}]{\setlength{\rightskip}{0pt plus 5cm}void mdtStateMachine::notifyCurrentState (
+\hypertarget{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!current\-State@{current\-State}}
+\index{current\-State@{current\-State}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{current\-State}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-State\-Machine\-::current\-State (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}
+) const}}\label{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}
+
+
+Get current state. 
+
+
+
+Definition at line 41 of file mdt\-State\-Machine.\-cpp.
+
+
+
+References mdt\-State\-::id().
+
+
+
+Referenced by mdt\-Port\-Manager\-::current\-State(), and wait\-On\-State().
+
+\hypertarget{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!notify\-Current\-State@{notify\-Current\-State}}
+\index{notify\-Current\-State@{notify\-Current\-State}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{notify\-Current\-State}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-Machine\-::notify\-Current\-State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}
 
 
 Notify current state. 
 
-Will emit \hyperlink{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{stateChanged()} and \hyperlink{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{stateChangedForUi()} (if required by state).
+Will emit \hyperlink{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{state\-Changed()} and \hyperlink{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{state\-Changed\-For\-Ui()} (if required by state).
 
-In normal way, signals are emitted when state changes. In some situation, it can be usefull to call this method explicitly (see \hyperlink{classmdt_port_manager_a0c460b47b12e38e708321be79f6343d8}{mdtPortManager::notifyCurrentState()} for a example). 
+In normal way, signals are emitted when state changes. In some situation, it can be usefull to call this method explicitly (see \hyperlink{classmdt_port_manager_a0c460b47b12e38e708321be79f6343d8}{mdt\-Port\-Manager\-::notify\-Current\-State()} for a example). 
 
-Definition at line 69 of file mdtStateMachine.cpp.
+Definition at line 69 of file mdt\-State\-Machine.\-cpp.
 
-\hypertarget{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{
-\index{mdtStateMachine@{mdtStateMachine}!stateChangedForUi@{stateChangedForUi}}
-\index{stateChangedForUi@{stateChangedForUi}!mdtStateMachine@{mdtStateMachine}}
-\subsubsection[{stateChangedForUi}]{\setlength{\rightskip}{0pt plus 5cm}void mdtStateMachine::stateChangedForUi (
+
+
+References mdt\-State\-::id(), mdt\-State\-::led\-Color\-Id(), mdt\-State\-::led\-Is\-On(), mdt\-State\-::notify\-Entered\-To\-Ui(), state\-Changed(), state\-Changed\-For\-Ui(), and mdt\-State\-::text().
+
+
+
+Referenced by mdt\-Port\-Manager\-::notify\-Current\-State().
+
+\hypertarget{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!state\-Changed@{state\-Changed}}
+\index{state\-Changed@{state\-Changed}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{state\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-Machine\-::state\-Changed (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}
+
+
+Emitted each time the state changed. 
+
+
+
+Definition at line 107 of file moc\-\_\-mdt\-State\-Machine.\-cxx.
+
+
+
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and notify\-Current\-State().
+
+\hypertarget{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!state\-Changed\-For\-Ui@{state\-Changed\-For\-Ui}}
+\index{state\-Changed\-For\-Ui@{state\-Changed\-For\-Ui}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{state\-Changed\-For\-Ui}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-Machine\-::state\-Changed\-For\-Ui (
 \begin{DoxyParamCaption}
 \item[{int}]{id, }
-\item[{const QString \&}]{text, }
-\item[{int}]{ledColorId, }
-\item[{bool}]{ledIsOn}
+\item[{const Q\-String \&}]{text, }
+\item[{int}]{led\-Color\-Id, }
+\item[{bool}]{led\-Is\-On}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}
 
 
 Emitted only if a state that must be notified is entered. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_state_a8097cd281438cc58b39b9a195076d841}{mdtState::notifyEnteredToUi()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_state_a8097cd281438cc58b39b9a195076d841}{mdt\-State\-::notify\-Entered\-To\-Ui()} 
 \end{DoxySeeAlso}
-\hypertarget{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{
-\index{mdtStateMachine@{mdtStateMachine}!waitOnState@{waitOnState}}
-\index{waitOnState@{waitOnState}!mdtStateMachine@{mdtStateMachine}}
-\subsubsection[{waitOnState}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtStateMachine::waitOnState (
+
+
+Definition at line 114 of file moc\-\_\-mdt\-State\-Machine.\-cxx.
+
+
+
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and notify\-Current\-State().
+
+\hypertarget{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!wait\-On\-State@{wait\-On\-State}}
+\index{wait\-On\-State@{wait\-On\-State}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{wait\-On\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-State\-Machine\-::wait\-On\-State (
 \begin{DoxyParamCaption}
 \item[{int}]{state, }
 \item[{int}]{timeout = {\ttfamily -\/1}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}
+)}}\label{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}
 
 
 Wait until a state is reached. 
 
-This wait method will let the application's event loop continue working, so it will not freeze GUI.
+This wait method will let the application's event loop continue working, so it will not freeze G\-U\-I.
 
 
 \begin{DoxyParams}{Parameters}
-{\em state} & ID if state on witch to wait. \\
+{\em state} & I\-D if state on witch to wait. \\
 \hline
 {\em timeout} & Maximum time to wait \mbox{[}ms\mbox{]}. Value $<$ 0 means a infinite timeout. \\
 \hline
@@ -163,11 +218,20 @@ True on success, false on timeout.
 \end{DoxyReturn}
 
 
-Definition at line 49 of file mdtStateMachine.cpp.
+Definition at line 49 of file mdt\-State\-Machine.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References current\-State().
+
+
+
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and mdt\-Port\-Manager\-::stop().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtStateMachine.h\item 
-src/mdtutils/mdtStateMachine.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_state_machine_8h}{mdt\-State\-Machine.\-h}\item 
+src/mdtutils/\hyperlink{mdt_state_machine_8cpp}{mdt\-State\-Machine.\-cpp}\item 
+src/mdtutils/\hyperlink{moc__mdt_state_machine_8cxx}{moc\-\_\-mdt\-State\-Machine.\-cxx}\end{DoxyCompactItemize}

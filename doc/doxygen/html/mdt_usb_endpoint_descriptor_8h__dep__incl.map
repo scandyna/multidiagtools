@@ -1,0 +1,9 @@
+<map id="src/mdtport/mdtUsbEndpointDescriptor.h" name="src/mdtport/mdtUsbEndpointDescriptor.h">
+<area shape="rect" id="node3" href="$mdt_usb_device_descriptor_8h.html" title="src/mdtport/mdtUsbDevice\lDescriptor.h" alt="" coords="329,102,508,149"/>
+<area shape="rect" id="node13" href="$mdt_usb_endpoint_descriptor_8cpp.html" title="src/mdtport/mdtUsbEndpoint\lDescriptor.cpp" alt="" coords="532,102,721,149"/>
+<area shape="rect" id="node15" href="$mdt_usb_interface_descriptor_8cpp.html" title="src/mdtport/mdtUsbInterface\lDescriptor.cpp" alt="" coords="745,102,935,149"/>
+<area shape="rect" id="node5" href="$mdt_usb_device_descriptor_8cpp.html" title="src/mdtport/mdtUsbDevice\lDescriptor.cpp" alt="" coords="5,198,184,245"/>
+<area shape="rect" id="node7" href="$mdt_usb_port_8cpp.html" title="src/mdtport/mdtUsbPort.cpp" alt="" coords="208,207,395,236"/>
+<area shape="rect" id="node9" href="$mdt_usb_port_manager_8cpp.html" title="src/mdtport/mdtUsbPortManager.cpp" alt="" coords="419,207,656,236"/>
+<area shape="rect" id="node11" href="$mdt_usbtmc_port_manager_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lManager.cpp" alt="" coords="680,198,864,245"/>
+</map>

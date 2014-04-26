@@ -1,4 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$class_ui_1_1mdt_items_selector_dialog.html" title="Ui::mdtItemsSelectorDialog" alt="" coords="5,83,187,112"/>
-<area shape="rect" id="node4" href="$class_ui__mdt_items_selector_dialog.html" title="Ui_mdtItemsSelectorDialog" alt="" coords="5,5,187,35"/>
+<map id="mdtItemsSelectorDialog" name="mdtItemsSelectorDialog">
+<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="639,356,708,385"/>
+<area shape="rect" id="node4" href="$class_ui_1_1mdt_items_selector_dialog.html" title="Ui::mdtItemsSelectorDialog" alt="" coords="583,409,764,439"/>
+<area shape="rect" id="node6" href="$class_ui__mdt_items_selector_dialog.html" title="Ui_mdtItemsSelectorDialog" alt="" coords="348,409,529,439"/>
 </map>

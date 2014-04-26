@@ -1,105 +1,236 @@
-\hypertarget{class_qt_local_peer}{
-\section{QtLocalPeer Class Reference}
-\label{class_qt_local_peer}\index{QtLocalPeer@{QtLocalPeer}}
+\hypertarget{class_qt_local_peer}{\section{Qt\-Local\-Peer Class Reference}
+\label{class_qt_local_peer}\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}}
 }
 
 
-Collaboration diagram for QtLocalPeer:\nopagebreak
+{\ttfamily \#include $<$qtlocalpeer.\-h$>$}
+
+
+
+Inheritance diagram for Qt\-Local\-Peer\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=154pt]{class_qt_local_peer__coll__graph}
+\includegraphics[width=150pt]{class_qt_local_peer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Qt\-Local\-Peer\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_qt_local_peer__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_qt_local_peer_a4436ad976edb6f177de1300b5aab9bfe}{
-void {\bfseries messageReceived} (const QString \&message)}
-\label{class_qt_local_peer_a4436ad976edb6f177de1300b5aab9bfe}
-
+void \hyperlink{class_qt_local_peer_a4436ad976edb6f177de1300b5aab9bfe}{message\-Received} (const Q\-String \&message)
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_qt_local_peer_a7f6f94203a6ece5b14c8c800da1e40ab}{
-{\bfseries QtLocalPeer} (QObject $\ast$parent=0, const QString \&appId=QString())}
-\label{class_qt_local_peer_a7f6f94203a6ece5b14c8c800da1e40ab}
-
+\hyperlink{class_qt_local_peer_a7f6f94203a6ece5b14c8c800da1e40ab}{Qt\-Local\-Peer} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0, const Q\-String \&app\-Id=Q\-String())
 \item 
-bool \hyperlink{class_qt_local_peer_a72f4ec6cda404661094778f98296d2a9}{isClient} ()
+bool \hyperlink{class_qt_local_peer_a72f4ec6cda404661094778f98296d2a9}{is\-Client} ()
 \item 
-\hypertarget{class_qt_local_peer_ab239cb6dcea36512d43df6ca07881ea7}{
-bool {\bfseries sendMessage} (const QString \&message, int timeout)}
-\label{class_qt_local_peer_ab239cb6dcea36512d43df6ca07881ea7}
-
+bool \hyperlink{class_qt_local_peer_ab239cb6dcea36512d43df6ca07881ea7}{send\-Message} (const Q\-String \&message, int timeout)
 \item 
-\hypertarget{class_qt_local_peer_a2f7d615b1eebd738a4025894d8e213d4}{
-QString {\bfseries applicationId} () const }
-\label{class_qt_local_peer_a2f7d615b1eebd738a4025894d8e213d4}
-
+Q\-String \hyperlink{class_qt_local_peer_a2f7d615b1eebd738a4025894d8e213d4}{application\-Id} () const 
 \end{DoxyCompactItemize}
 \subsection*{Protected Slots}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_qt_local_peer_afb29397e8af380cac78af0b7535121d2}{
-void {\bfseries receiveConnection} ()}
-\label{class_qt_local_peer_afb29397e8af380cac78af0b7535121d2}
-
+void \hyperlink{class_qt_local_peer_afb29397e8af380cac78af0b7535121d2}{receive\-Connection} ()
 \end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_qt_local_peer_a89ee3139c0e2515e081a2b5de98beda6}{
-QString {\bfseries id}}
-\label{class_qt_local_peer_a89ee3139c0e2515e081a2b5de98beda6}
-
+Q\-String \hyperlink{class_qt_local_peer_a89ee3139c0e2515e081a2b5de98beda6}{id}
 \item 
-\hypertarget{class_qt_local_peer_a2c86a18c237bdfe4bd0565d3cc413cd8}{
-QString {\bfseries socketName}}
-\label{class_qt_local_peer_a2c86a18c237bdfe4bd0565d3cc413cd8}
-
+Q\-String \hyperlink{class_qt_local_peer_a2c86a18c237bdfe4bd0565d3cc413cd8}{socket\-Name}
 \item 
-\hypertarget{class_qt_local_peer_af400ab8eb001ef4790541069a5d0e292}{
-QLocalServer $\ast$ {\bfseries server}}
-\label{class_qt_local_peer_af400ab8eb001ef4790541069a5d0e292}
-
+Q\-Local\-Server $\ast$ \hyperlink{class_qt_local_peer_af400ab8eb001ef4790541069a5d0e292}{server}
 \item 
-\hypertarget{class_qt_local_peer_ab72488160eed35c9518ef3de1e6062cf}{
-\hyperlink{class_qt_locked_file}{QtLockedFile} \hyperlink{class_qt_local_peer_ab72488160eed35c9518ef3de1e6062cf}{lockFile}}
-\label{class_qt_local_peer_ab72488160eed35c9518ef3de1e6062cf}
-
-\begin{DoxyCompactList}\small\item\em QtLP\_\-Private::QtLockedFile lockFile;. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{class_qt_locked_file}{Qt\-Locked\-File} \hyperlink{class_qt_local_peer_ab72488160eed35c9518ef3de1e6062cf}{lock\-File}
+\begin{DoxyCompactList}\small\item\em Qt\-L\-P\-\_\-\-Private\-::\-Qt\-Locked\-File lock\-File;. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 49 of file qtlocalpeer.h.
+Definition at line 49 of file qtlocalpeer.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_qt_local_peer_a7f6f94203a6ece5b14c8c800da1e40ab}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!Qt\-Local\-Peer@{Qt\-Local\-Peer}}
+\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{Qt\-Local\-Peer}]{\setlength{\rightskip}{0pt plus 5cm}Qt\-Local\-Peer\-::\-Qt\-Local\-Peer (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}, }
+\item[{const Q\-String \&}]{app\-Id = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)}}\label{class_qt_local_peer_a7f6f94203a6ece5b14c8c800da1e40ab}
+
+
+Definition at line 69 of file qtlocalpeer.\-cpp.
+
+
+
+References id, lock\-File, Qt\-Locked\-File\-::open(), server, and socket\-Name.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_qt_local_peer_a72f4ec6cda404661094778f98296d2a9}{
-\index{QtLocalPeer@{QtLocalPeer}!isClient@{isClient}}
-\index{isClient@{isClient}!QtLocalPeer@{QtLocalPeer}}
-\subsubsection[{isClient}]{\setlength{\rightskip}{0pt plus 5cm}bool QtLocalPeer::isClient (
+\hypertarget{class_qt_local_peer_a2f7d615b1eebd738a4025894d8e213d4}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!application\-Id@{application\-Id}}
+\index{application\-Id@{application\-Id}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{application\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Qt\-Local\-Peer\-::application\-Id (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{class_qt_local_peer_a72f4ec6cda404661094778f98296d2a9}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_qt_local_peer_a2f7d615b1eebd738a4025894d8e213d4}
 
 
-if (!lockFile.lock(QtLP\_\-Private::QtLockedFile::WriteLock, false)) 
-
-
-
-Definition at line 112 of file qtlocalpeer.cpp.
+Definition at line 57 of file qtlocalpeer.\-h.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References id.
+
+
+
+Referenced by Qt\-Single\-Application\-::id().
+
+\hypertarget{class_qt_local_peer_a72f4ec6cda404661094778f98296d2a9}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!is\-Client@{is\-Client}}
+\index{is\-Client@{is\-Client}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{is\-Client}]{\setlength{\rightskip}{0pt plus 5cm}bool Qt\-Local\-Peer\-::is\-Client (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_qt_local_peer_a72f4ec6cda404661094778f98296d2a9}
+
+
+Definition at line 112 of file qtlocalpeer.\-cpp.
+
+
+
+References Qt\-Locked\-File\-::is\-Locked(), Qt\-Locked\-File\-::lock(), lock\-File, receive\-Connection(), server, socket\-Name, and Qt\-Locked\-File\-::\-Write\-Lock.
+
+
+
+Referenced by Qt\-Single\-Application\-::is\-Running(), and send\-Message().
+
+\hypertarget{class_qt_local_peer_a4436ad976edb6f177de1300b5aab9bfe}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!message\-Received@{message\-Received}}
+\index{message\-Received@{message\-Received}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{message\-Received}]{\setlength{\rightskip}{0pt plus 5cm}void Qt\-Local\-Peer\-::message\-Received (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_qt_local_peer_a4436ad976edb6f177de1300b5aab9bfe}
+
+
+Definition at line 100 of file moc\-\_\-qtlocalpeer.\-cxx.
+
+
+
+Referenced by receive\-Connection().
+
+\hypertarget{class_qt_local_peer_afb29397e8af380cac78af0b7535121d2}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!receive\-Connection@{receive\-Connection}}
+\index{receive\-Connection@{receive\-Connection}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{receive\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}void Qt\-Local\-Peer\-::receive\-Connection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}}\label{class_qt_local_peer_afb29397e8af380cac78af0b7535121d2}
+
+
+Definition at line 173 of file qtlocalpeer.\-cpp.
+
+
+
+References message\-Received(), and server.
+
+
+
+Referenced by is\-Client().
+
+\hypertarget{class_qt_local_peer_ab239cb6dcea36512d43df6ca07881ea7}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!send\-Message@{send\-Message}}
+\index{send\-Message@{send\-Message}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{send\-Message}]{\setlength{\rightskip}{0pt plus 5cm}bool Qt\-Local\-Peer\-::send\-Message (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{message, }
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{class_qt_local_peer_ab239cb6dcea36512d43df6ca07881ea7}
+
+
+Definition at line 136 of file qtlocalpeer.\-cpp.
+
+
+
+References is\-Client(), and socket\-Name.
+
+
+
+Referenced by Qt\-Single\-Application\-::send\-Message().
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_qt_local_peer_a89ee3139c0e2515e081a2b5de98beda6}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!id@{id}}
+\index{id@{id}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Qt\-Local\-Peer\-::id\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_qt_local_peer_a89ee3139c0e2515e081a2b5de98beda6}
+
+
+Definition at line 67 of file qtlocalpeer.\-h.
+
+
+
+Referenced by application\-Id(), and Qt\-Local\-Peer().
+
+\hypertarget{class_qt_local_peer_ab72488160eed35c9518ef3de1e6062cf}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!lock\-File@{lock\-File}}
+\index{lock\-File@{lock\-File}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{lock\-File}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Qt\-Locked\-File} Qt\-Local\-Peer\-::lock\-File\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_qt_local_peer_ab72488160eed35c9518ef3de1e6062cf}
+
+
+Qt\-L\-P\-\_\-\-Private\-::\-Qt\-Locked\-File lock\-File;. 
+
+
+
+Definition at line 71 of file qtlocalpeer.\-h.
+
+
+
+Referenced by is\-Client(), and Qt\-Local\-Peer().
+
+\hypertarget{class_qt_local_peer_af400ab8eb001ef4790541069a5d0e292}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!server@{server}}
+\index{server@{server}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{server}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Local\-Server$\ast$ Qt\-Local\-Peer\-::server\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_qt_local_peer_af400ab8eb001ef4790541069a5d0e292}
+
+
+Definition at line 69 of file qtlocalpeer.\-h.
+
+
+
+Referenced by is\-Client(), Qt\-Local\-Peer(), and receive\-Connection().
+
+\hypertarget{class_qt_local_peer_a2c86a18c237bdfe4bd0565d3cc413cd8}{\index{Qt\-Local\-Peer@{Qt\-Local\-Peer}!socket\-Name@{socket\-Name}}
+\index{socket\-Name@{socket\-Name}!QtLocalPeer@{Qt\-Local\-Peer}}
+\subsubsection[{socket\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Qt\-Local\-Peer\-::socket\-Name\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_qt_local_peer_a2c86a18c237bdfe4bd0565d3cc413cd8}
+
+
+Definition at line 68 of file qtlocalpeer.\-h.
+
+
+
+Referenced by is\-Client(), Qt\-Local\-Peer(), and send\-Message().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/qt-\/solutions/qtsingleapplication/qtlocalpeer.h\item 
-src/qt-\/solutions/qtsingleapplication/qtlocalpeer.cpp\end{DoxyCompactItemize}
+src/qt-\/solutions/qtsingleapplication/\hyperlink{qtlocalpeer_8h}{qtlocalpeer.\-h}\item 
+src/qt-\/solutions/qtsingleapplication/\hyperlink{moc__qtlocalpeer_8cxx}{moc\-\_\-qtlocalpeer.\-cxx}\item 
+src/qt-\/solutions/qtsingleapplication/\hyperlink{qtlocalpeer_8cpp}{qtlocalpeer.\-cpp}\end{DoxyCompactItemize}

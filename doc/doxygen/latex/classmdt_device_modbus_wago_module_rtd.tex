@@ -1,19 +1,18 @@
-\hypertarget{classmdt_device_modbus_wago_module_rtd}{
-\section{mdtDeviceModbusWagoModuleRtd Class Reference}
-\label{classmdt_device_modbus_wago_module_rtd}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
+\hypertarget{classmdt_device_modbus_wago_module_rtd}{\section{mdt\-Device\-Modbus\-Wago\-Module\-Rtd Class Reference}
+\label{classmdt_device_modbus_wago_module_rtd}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
 }
 
 
-Helper class for RTD modules.  
+Helper class for R\-T\-D modules.  
 
 
 
 
-{\ttfamily \#include $<$mdtDeviceModbusWagoModuleRtd.h$>$}
+{\ttfamily \#include $<$mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-h$>$}
 
 
 
-Inheritance diagram for mdtDeviceModbusWagoModuleRtd:\nopagebreak
+Inheritance diagram for mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,374 +21,240 @@ Inheritance diagram for mdtDeviceModbusWagoModuleRtd:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceModbusWagoModuleRtd:\nopagebreak
+Collaboration diagram for mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=400pt]{classmdt_device_modbus_wago_module_rtd__coll__graph}
+\includegraphics[width=250pt]{classmdt_device_modbus_wago_module_rtd__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}{psrrMode\_\-t} \{ \hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a4be76121444e7a6774fd6e0ba99ac984}{Psrr50Hz}, 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a50892e6683a97e25279a8ff1e3f4bcd6}{Psrr60Hz}, 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a49f4e552e53ed0d5f7390ae9ca035f4e}{Psrr5060Hz}, 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a1c0550705e77e2f48a09ba6f0525efd2}{PsrrUnknown}
+enum \hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}{psrr\-Mode\-\_\-t} \{ \hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a4be76121444e7a6774fd6e0ba99ac984}{Psrr50\-Hz}, 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a50892e6683a97e25279a8ff1e3f4bcd6}{Psrr60\-Hz}, 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a49f4e552e53ed0d5f7390ae9ca035f4e}{Psrr5060\-Hz}, 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a1c0550705e77e2f48a09ba6f0525efd2}{Psrr\-Unknown}
  \}
-\begin{DoxyCompactList}\small\item\em PSRR mode. \end{DoxyCompactList}\item 
-enum \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}{sensorType\_\-t} \{ \par
+\begin{DoxyCompactList}\small\item\em P\-S\-R\-R mode. \end{DoxyCompactList}\item 
+enum \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}{sensor\-Type\-\_\-t} \{ \\*
 \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae8100af1e6f3854d65750dbcb9d57113}{Unknown}, 
 \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a92b751ccf35ea0f0675f8019ec6ff825}{Pt100}, 
 \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab444c547443f3cdfac1d44ce2dacea14}{Ni100}, 
 \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a4b53d63c91b84731eba51a12c0672f29}{Pt1000}, 
-\par
+\\*
 \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a261c6ea17e3bcdf14205387f78bb42d5}{Pt500}, 
 \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a18c1e9a0f121b7d595a06b439468608f}{Pt200}, 
 \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae6d6319f43f7777e52515e4a2bf1a305}{Ni1000}, 
 \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab9b60b3cdedd72643221f2a2a9bbb7d1}{Ni120}, 
-\par
-\hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a9ed11083207762f672db510a516953d5}{Ni1000TK}, 
+\\*
+\hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a9ed11083207762f672db510a516953d5}{Ni1000\-T\-K}, 
 \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0add19df3664c05146cb8f70ac8159e7a5}{Potentiometer}, 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a0690048c3a5da4a12499c19f41796411}{R10R5000}, 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a49dced9911f2b03c950071afcdb1e30f}{R10R1200}
+\hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a0690048c3a5da4a12499c19f41796411}{R10\-R5000}, 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a49dced9911f2b03c950071afcdb1e30f}{R10\-R1200}
  \}
 \begin{DoxyCompactList}\small\item\em Sensor type. \end{DoxyCompactList}\item 
-enum \hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}{processValueRepresentation\_\-t} \{ \hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a46b618df5f4f98c2284b015c76e2d5b6}{C2}, 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a2dbc0577b6cee124301b6f3d35240a42}{AmountSign}, 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8ae19394d1163ada7da4f546e64468df76}{C2S5}, 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8abb5c362af8e7317be54a4346e0915d13}{AmountSignS5}
+enum \hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}{process\-Value\-Representation\-\_\-t} \{ \hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a46b618df5f4f98c2284b015c76e2d5b6}{C2}, 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a2dbc0577b6cee124301b6f3d35240a42}{Amount\-Sign}, 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8ae19394d1163ada7da4f546e64468df76}{C2\-S5}, 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8abb5c362af8e7317be54a4346e0915d13}{Amount\-Sign\-S5}
  \}
 \begin{DoxyCompactList}\small\item\em Process calue representation. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_a4d48b7646a6a1da76126f8b32aa6f499}{mdtDeviceModbusWagoModuleRtd} (bool autoDeleteIos, \hyperlink{classmdt_device_modbus_wago}{mdtDeviceModbusWago} $\ast$device)
+\hyperlink{classmdt_device_modbus_wago_module_rtd_a4d48b7646a6a1da76126f8b32aa6f499}{mdt\-Device\-Modbus\-Wago\-Module\-Rtd} (bool auto\-Delete\-Ios, \hyperlink{classmdt_device_modbus_wago}{mdt\-Device\-Modbus\-Wago} $\ast$device)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_adb24199c383fdefc7ec5359996a838cd}{$\sim$mdtDeviceModbusWagoModuleRtd} ()
+\hyperlink{classmdt_device_modbus_wago_module_rtd_adb24199c383fdefc7ec5359996a838cd}{$\sim$mdt\-Device\-Modbus\-Wago\-Module\-Rtd} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_modbus_wago_module_rtd_a2865bb4247e46306ee2279e39a3b5a48}{setIoCount} (int count)
-\begin{DoxyCompactList}\small\item\em Set the I/O count. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a03caaa6473f4237f105596f9b2d35c03}{
-void \hyperlink{classmdt_device_modbus_wago_module_rtd_a03caaa6473f4237f105596f9b2d35c03}{setPsrrMode} (\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}{psrrMode\_\-t} mode)}
-\label{classmdt_device_modbus_wago_module_rtd_a03caaa6473f4237f105596f9b2d35c03}
-
-\begin{DoxyCompactList}\small\item\em Set the PSRR mode. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a6caf3ac10935128b182e558249107302}{
-\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}{psrrMode\_\-t} \hyperlink{classmdt_device_modbus_wago_module_rtd_a6caf3ac10935128b182e558249107302}{psrrMode} () const }
-\label{classmdt_device_modbus_wago_module_rtd_a6caf3ac10935128b182e558249107302}
-
-\begin{DoxyCompactList}\small\item\em Get the PSRR mode. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_modbus_wago_module_rtd_a91fc8fa26b323ac8a8d3f925df78dbc6}{setSensorType} (int channel, \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}{sensorType\_\-t} type)
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a2865bb4247e46306ee2279e39a3b5a48}{set\-Io\-Count} (int count)
+\begin{DoxyCompactList}\small\item\em Set the I/\-O count. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a03caaa6473f4237f105596f9b2d35c03}{set\-Psrr\-Mode} (\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}{psrr\-Mode\-\_\-t} mode)
+\begin{DoxyCompactList}\small\item\em Set the P\-S\-R\-R mode. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}{psrr\-Mode\-\_\-t} \hyperlink{classmdt_device_modbus_wago_module_rtd_a6caf3ac10935128b182e558249107302}{psrr\-Mode} () const 
+\begin{DoxyCompactList}\small\item\em Get the P\-S\-R\-R mode. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a91fc8fa26b323ac8a8d3f925df78dbc6}{set\-Sensor\-Type} (int channel, \hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}{sensor\-Type\-\_\-t} \hyperlink{classmdt_device_modbus_wago_module_a32a3ee554941240682fb1b166c1217ff}{type})
 \begin{DoxyCompactList}\small\item\em Set the sensor type for given channel. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}{sensorType\_\-t} \hyperlink{classmdt_device_modbus_wago_module_rtd_aaee7df330e87d5facbbc6f73e3f356ce}{sensorType} (int channel) const 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}{sensor\-Type\-\_\-t} \hyperlink{classmdt_device_modbus_wago_module_rtd_aaee7df330e87d5facbbc6f73e3f356ce}{sensor\-Type} (int channel) const 
 \begin{DoxyCompactList}\small\item\em Get the sensor type of given channel. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a95c5db06b1245b8f3526fda60c307a89}{
-void {\bfseries setConnectionTypeWiresCount} (int channel, int wiresCount)}
-\label{classmdt_device_modbus_wago_module_rtd_a95c5db06b1245b8f3526fda60c307a89}
-
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a95c5db06b1245b8f3526fda60c307a89}{set\-Connection\-Type\-Wires\-Count} (int channel, int wires\-Count)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_af16255b0e876f971dfe3ea0139f040e1}{
-int {\bfseries connectionTypeWiresCount} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_af16255b0e876f971dfe3ea0139f040e1}
-
+int \hyperlink{classmdt_device_modbus_wago_module_rtd_af16255b0e876f971dfe3ea0139f040e1}{connection\-Type\-Wires\-Count} (int channel) const 
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a1b55d99a6ddf7ce95d18aeb081aafd73}{
-void {\bfseries setWatchdogTimerEnabled} (int channel, bool enable)}
-\label{classmdt_device_modbus_wago_module_rtd_a1b55d99a6ddf7ce95d18aeb081aafd73}
-
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a1b55d99a6ddf7ce95d18aeb081aafd73}{set\-Watchdog\-Timer\-Enabled} (int channel, bool enable)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a708c35425e024374e840c5ccc0b77d8b}{
-bool {\bfseries watchdogTimerIsEnabled} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a708c35425e024374e840c5ccc0b77d8b}
-
+bool \hyperlink{classmdt_device_modbus_wago_module_rtd_a708c35425e024374e840c5ccc0b77d8b}{watchdog\-Timer\-Is\-Enabled} (int channel) const 
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a49080955e90c46ab5d05b2a427d67721}{
-void {\bfseries setAverageValueFilterEnabled} (int channel, bool enable)}
-\label{classmdt_device_modbus_wago_module_rtd_a49080955e90c46ab5d05b2a427d67721}
-
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a49080955e90c46ab5d05b2a427d67721}{set\-Average\-Value\-Filter\-Enabled} (int channel, bool enable)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a2ea9a2eeb55e1ef943d951bffc49f163}{
-bool {\bfseries averageValueFilterIsEnabled} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a2ea9a2eeb55e1ef943d951bffc49f163}
-
+bool \hyperlink{classmdt_device_modbus_wago_module_rtd_a2ea9a2eeb55e1ef943d951bffc49f163}{average\-Value\-Filter\-Is\-Enabled} (int channel) const 
 \item 
-void \hyperlink{classmdt_device_modbus_wago_module_rtd_a012c6438f55b5653c7320dbe477d93b5}{setProcessValueRepresentation} (int channel, \hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}{processValueRepresentation\_\-t} representation)
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a012c6438f55b5653c7320dbe477d93b5}{set\-Process\-Value\-Representation} (int channel, \hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}{process\-Value\-Representation\-\_\-t} representation)
 \begin{DoxyCompactList}\small\item\em Set process value representation for given channel. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}{processValueRepresentation\_\-t} \hyperlink{classmdt_device_modbus_wago_module_rtd_af84714e285705c3ef3415648892beae7}{processValueRepresentation} (int channel) const 
+\hyperlink{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}{process\-Value\-Representation\-\_\-t} \hyperlink{classmdt_device_modbus_wago_module_rtd_af84714e285705c3ef3415648892beae7}{process\-Value\-Representation} (int channel) const 
 \begin{DoxyCompactList}\small\item\em Get process value representation for given channel. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a0815ffe86f6c8c1a437af2b87f14ea60}{
-bool {\bfseries siemensFormatIsEnabled} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a0815ffe86f6c8c1a437af2b87f14ea60}
-
+bool \hyperlink{classmdt_device_modbus_wago_module_rtd_a0815ffe86f6c8c1a437af2b87f14ea60}{siemens\-Format\-Is\-Enabled} (int channel) const 
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a5562d06610347baae6a9e6b639142d80}{
-void {\bfseries setWireBreakShortCircuitIndicationEnabled} (int channel, bool enable)}
-\label{classmdt_device_modbus_wago_module_rtd_a5562d06610347baae6a9e6b639142d80}
-
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a5562d06610347baae6a9e6b639142d80}{set\-Wire\-Break\-Short\-Circuit\-Indication\-Enabled} (int channel, bool enable)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a01ed3710a2f7a22a686fa06fd747219a}{
-bool {\bfseries wireBreakShortCircuitIndicationIsEnabled} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a01ed3710a2f7a22a686fa06fd747219a}
-
+bool \hyperlink{classmdt_device_modbus_wago_module_rtd_a01ed3710a2f7a22a686fa06fd747219a}{wire\-Break\-Short\-Circuit\-Indication\-Is\-Enabled} (int channel) const 
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a0ff6dacdf0f7b4b079e46f51341822d9}{
-void {\bfseries setOutOfRangeIndicationEnabled} (int channel, bool enable)}
-\label{classmdt_device_modbus_wago_module_rtd_a0ff6dacdf0f7b4b079e46f51341822d9}
-
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a0ff6dacdf0f7b4b079e46f51341822d9}{set\-Out\-Of\-Range\-Indication\-Enabled} (int channel, bool enable)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_aaf6560fbb5cd285c072cf5df1dfad803}{
-bool {\bfseries outOfRangeIndicationIsEnabled} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_aaf6560fbb5cd285c072cf5df1dfad803}
-
+bool \hyperlink{classmdt_device_modbus_wago_module_rtd_aaf6560fbb5cd285c072cf5df1dfad803}{out\-Of\-Range\-Indication\-Is\-Enabled} (int channel) const 
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_ab99db407dd15a4250e41168e5c592a3e}{
-void {\bfseries setOutOfRangeIndicationLimits} (int channel, int underrange, int overrange)}
-\label{classmdt_device_modbus_wago_module_rtd_ab99db407dd15a4250e41168e5c592a3e}
-
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_ab99db407dd15a4250e41168e5c592a3e}{set\-Out\-Of\-Range\-Indication\-Limits} (int channel, int underrange, int overrange)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_ac3ebf8a90c7f87e1de7b45ea99ca3eac}{
-int {\bfseries underrangeIndicationLimit} (int channel)}
-\label{classmdt_device_modbus_wago_module_rtd_ac3ebf8a90c7f87e1de7b45ea99ca3eac}
-
+int \hyperlink{classmdt_device_modbus_wago_module_rtd_ac3ebf8a90c7f87e1de7b45ea99ca3eac}{underrange\-Indication\-Limit} (int channel)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_ad213401994beb43511ef70ca14098b9d}{
-int {\bfseries overrangeIndicationLimit} (int channel)}
-\label{classmdt_device_modbus_wago_module_rtd_ad213401994beb43511ef70ca14098b9d}
-
+int \hyperlink{classmdt_device_modbus_wago_module_rtd_ad213401994beb43511ef70ca14098b9d}{overrange\-Indication\-Limit} (int channel)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_add51b8d17f05661fa4e439f024094738}{
-void {\bfseries setManufacturerCalibration} (int channel)}
-\label{classmdt_device_modbus_wago_module_rtd_add51b8d17f05661fa4e439f024094738}
-
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_add51b8d17f05661fa4e439f024094738}{set\-Manufacturer\-Calibration} (int channel)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a74188cf0391b3875adc599055bc8d459}{
-void {\bfseries setUserCalibration} (int channel, double offset, double gain)}
-\label{classmdt_device_modbus_wago_module_rtd_a74188cf0391b3875adc599055bc8d459}
-
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a74188cf0391b3875adc599055bc8d459}{set\-User\-Calibration} (int channel, double offset, double gain)
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a675d78379e2a0727f8d250499d7d82ca}{
-double {\bfseries calibrationOffset} () const }
-\label{classmdt_device_modbus_wago_module_rtd_a675d78379e2a0727f8d250499d7d82ca}
-
+double \hyperlink{classmdt_device_modbus_wago_module_rtd_a675d78379e2a0727f8d250499d7d82ca}{calibration\-Offset} () const 
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a22e025ae3b60ae3dce4632ca2ea86b6c}{
-double {\bfseries calibrationGain} () const }
-\label{classmdt_device_modbus_wago_module_rtd_a22e025ae3b60ae3dce4632ca2ea86b6c}
-
+double \hyperlink{classmdt_device_modbus_wago_module_rtd_a22e025ae3b60ae3dce4632ca2ea86b6c}{calibration\-Gain} () const 
 \item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a67ab613e399574816cc9df0b7eca0496}{
-void \hyperlink{classmdt_device_modbus_wago_module_rtd_a67ab613e399574816cc9df0b7eca0496}{setScaling} (int channel, bool useManufacturerScaling, bool useUserScaling, double userOffset, double userGain, double twoWireOffset)}
-\label{classmdt_device_modbus_wago_module_rtd_a67ab613e399574816cc9df0b7eca0496}
-
+void \hyperlink{classmdt_device_modbus_wago_module_rtd_a67ab613e399574816cc9df0b7eca0496}{set\-Scaling} (int channel, bool use\-Manufacturer\-Scaling, bool use\-User\-Scaling, double user\-Offset, double user\-Gain, double \hyperlink{classmdt_device_modbus_wago_module_rtd_a110c774e640f45309e1f14a8b65a7b0e}{two\-Wire\-Offset})
 \begin{DoxyCompactList}\small\item\em Set scaling. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a1e2cc22d3edb80b4f086575adea75e6b}{
-bool \hyperlink{classmdt_device_modbus_wago_module_rtd_a1e2cc22d3edb80b4f086575adea75e6b}{manufacturerScalingIsEnabled} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a1e2cc22d3edb80b4f086575adea75e6b}
-
+bool \hyperlink{classmdt_device_modbus_wago_module_rtd_a1e2cc22d3edb80b4f086575adea75e6b}{manufacturer\-Scaling\-Is\-Enabled} (int channel) const 
 \begin{DoxyCompactList}\small\item\em Check if manufacturer scaling is used. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_aa0b24b290c75132ccf6a964b51b9c8c4}{
-double \hyperlink{classmdt_device_modbus_wago_module_rtd_aa0b24b290c75132ccf6a964b51b9c8c4}{manufacturerScalingOffset} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_aa0b24b290c75132ccf6a964b51b9c8c4}
-
+double \hyperlink{classmdt_device_modbus_wago_module_rtd_aa0b24b290c75132ccf6a964b51b9c8c4}{manufacturer\-Scaling\-Offset} (int channel) const 
 \begin{DoxyCompactList}\small\item\em Get manufacturer scaling offset. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a39989cd76ae2195d0dec147ca128a96a}{
-double \hyperlink{classmdt_device_modbus_wago_module_rtd_a39989cd76ae2195d0dec147ca128a96a}{manufacturerScalingGain} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a39989cd76ae2195d0dec147ca128a96a}
-
+double \hyperlink{classmdt_device_modbus_wago_module_rtd_a39989cd76ae2195d0dec147ca128a96a}{manufacturer\-Scaling\-Gain} (int channel) const 
 \begin{DoxyCompactList}\small\item\em Get manufacturer scaling gain. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a6144f959f5ecb425d1526871ef99a4d0}{
-bool \hyperlink{classmdt_device_modbus_wago_module_rtd_a6144f959f5ecb425d1526871ef99a4d0}{userScalingIsEnabled} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a6144f959f5ecb425d1526871ef99a4d0}
-
+bool \hyperlink{classmdt_device_modbus_wago_module_rtd_a6144f959f5ecb425d1526871ef99a4d0}{user\-Scaling\-Is\-Enabled} (int channel) const 
 \begin{DoxyCompactList}\small\item\em Check if user scaling is used. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a0a1c2980fe4b3b0fb774b1f41280d890}{
-double \hyperlink{classmdt_device_modbus_wago_module_rtd_a0a1c2980fe4b3b0fb774b1f41280d890}{userScalingOffset} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a0a1c2980fe4b3b0fb774b1f41280d890}
-
+double \hyperlink{classmdt_device_modbus_wago_module_rtd_a0a1c2980fe4b3b0fb774b1f41280d890}{user\-Scaling\-Offset} (int channel) const 
 \begin{DoxyCompactList}\small\item\em Get user scaling offset. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a5bf6697432dc475533db1e36889a6ad4}{
-double \hyperlink{classmdt_device_modbus_wago_module_rtd_a5bf6697432dc475533db1e36889a6ad4}{userScalingGain} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a5bf6697432dc475533db1e36889a6ad4}
-
+double \hyperlink{classmdt_device_modbus_wago_module_rtd_a5bf6697432dc475533db1e36889a6ad4}{user\-Scaling\-Gain} (int channel) const 
 \begin{DoxyCompactList}\small\item\em Get user scaling gain. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a110c774e640f45309e1f14a8b65a7b0e}{
-double {\bfseries twoWireOffset} (int channel) const }
-\label{classmdt_device_modbus_wago_module_rtd_a110c774e640f45309e1f14a8b65a7b0e}
-
+double \hyperlink{classmdt_device_modbus_wago_module_rtd_a110c774e640f45309e1f14a8b65a7b0e}{two\-Wire\-Offset} (int channel) const 
 \end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
-Helper class for RTD modules. 
+Helper class for R\-T\-D modules. 
 
-Current version implements following modules:
+Current version implements following modules\-:
 \begin{DoxyItemize}
-\item 750-\/464 2/4 AI RTD 
+\item 750-\/464 2/4 A\-I R\-T\-D 
 \end{DoxyItemize}
 
-Definition at line 34 of file mdtDeviceModbusWagoModuleRtd.h.
+Definition at line 34 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-h.
 
 
 
 \subsection{Member Enumeration Documentation}
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!processValueRepresentation\_\-t@{processValueRepresentation\_\-t}}
-\index{processValueRepresentation\_\-t@{processValueRepresentation\_\-t}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{processValueRepresentation\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtDeviceModbusWagoModuleRtd::processValueRepresentation\_\-t}}}
-\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!process\-Value\-Representation\-\_\-t@{process\-Value\-Representation\-\_\-t}}
+\index{process\-Value\-Representation\-\_\-t@{process\-Value\-Representation\-\_\-t}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{process\-Value\-Representation\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::process\-Value\-Representation\-\_\-t}}}\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8}
 
 
 Process calue representation. 
 
 \begin{Desc}
-\item[Enumerator: ]\par
+\item[Enumerator]\par
 \begin{description}
-\index{C2@{C2}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!C2@{C2}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a46b618df5f4f98c2284b015c76e2d5b6}{
-C2}
-\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a46b618df5f4f98c2284b015c76e2d5b6}
-}]Two's complement representation \index{AmountSign@{AmountSign}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!AmountSign@{AmountSign}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a2dbc0577b6cee124301b6f3d35240a42}{
-AmountSign}
-\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a2dbc0577b6cee124301b6f3d35240a42}
-}]Amount / sign representation \index{C2S5@{C2S5}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!C2S5@{C2S5}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8ae19394d1163ada7da4f546e64468df76}{
-C2S5}
-\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8ae19394d1163ada7da4f546e64468df76}
-}]S5-\/FB250 with two's complement representation \index{AmountSignS5@{AmountSignS5}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!AmountSignS5@{AmountSignS5}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8abb5c362af8e7317be54a4346e0915d13}{
-AmountSignS5}
-\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8abb5c362af8e7317be54a4346e0915d13}
-}]S5-\/FB250 with amount / sign representation \end{description}
+\index{C2@{C2}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!C2@{C2}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a46b618df5f4f98c2284b015c76e2d5b6}{C2}\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a46b618df5f4f98c2284b015c76e2d5b6}
+}]Two's complement representation \index{Amount\-Sign@{Amount\-Sign}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Amount\-Sign@{Amount\-Sign}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a2dbc0577b6cee124301b6f3d35240a42}{Amount\-Sign}\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8a2dbc0577b6cee124301b6f3d35240a42}
+}]Amount / sign representation \index{C2\-S5@{C2\-S5}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!C2\-S5@{C2\-S5}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8ae19394d1163ada7da4f546e64468df76}{C2\-S5}\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8ae19394d1163ada7da4f546e64468df76}
+}]S5-\/\-F\-B250 with two's complement representation \index{Amount\-Sign\-S5@{Amount\-Sign\-S5}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Amount\-Sign\-S5@{Amount\-Sign\-S5}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8abb5c362af8e7317be54a4346e0915d13}{Amount\-Sign\-S5}\label{classmdt_device_modbus_wago_module_rtd_a6edcc72b85641ca88d66ca45a7650ca8abb5c362af8e7317be54a4346e0915d13}
+}]S5-\/\-F\-B250 with amount / sign representation \end{description}
 \end{Desc}
 
 
+Definition at line 66 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-h.
 
-Definition at line 66 of file mdtDeviceModbusWagoModuleRtd.h.
-
-\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!psrrMode\_\-t@{psrrMode\_\-t}}
-\index{psrrMode\_\-t@{psrrMode\_\-t}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{psrrMode\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtDeviceModbusWagoModuleRtd::psrrMode\_\-t}}}
-\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}
+\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!psrr\-Mode\-\_\-t@{psrr\-Mode\-\_\-t}}
+\index{psrr\-Mode\-\_\-t@{psrr\-Mode\-\_\-t}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{psrr\-Mode\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::psrr\-Mode\-\_\-t}}}\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037}
 
 
-PSRR mode. 
+P\-S\-R\-R mode. 
 
 \begin{Desc}
-\item[Enumerator: ]\par
+\item[Enumerator]\par
 \begin{description}
-\index{Psrr50Hz@{Psrr50Hz}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Psrr50Hz@{Psrr50Hz}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a4be76121444e7a6774fd6e0ba99ac984}{
-Psrr50Hz}
-\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a4be76121444e7a6774fd6e0ba99ac984}
-}]50Hz \index{Psrr60Hz@{Psrr60Hz}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Psrr60Hz@{Psrr60Hz}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a50892e6683a97e25279a8ff1e3f4bcd6}{
-Psrr60Hz}
-\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a50892e6683a97e25279a8ff1e3f4bcd6}
-}]60Hz \index{Psrr5060Hz@{Psrr5060Hz}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Psrr5060Hz@{Psrr5060Hz}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a49f4e552e53ed0d5f7390ae9ca035f4e}{
-Psrr5060Hz}
-\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a49f4e552e53ed0d5f7390ae9ca035f4e}
-}]50/60Hz \index{PsrrUnknown@{PsrrUnknown}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!PsrrUnknown@{PsrrUnknown}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a1c0550705e77e2f48a09ba6f0525efd2}{
-PsrrUnknown}
-\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a1c0550705e77e2f48a09ba6f0525efd2}
+\index{Psrr50\-Hz@{Psrr50\-Hz}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Psrr50\-Hz@{Psrr50\-Hz}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a4be76121444e7a6774fd6e0ba99ac984}{Psrr50\-Hz}\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a4be76121444e7a6774fd6e0ba99ac984}
+}]50\-Hz \index{Psrr60\-Hz@{Psrr60\-Hz}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Psrr60\-Hz@{Psrr60\-Hz}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a50892e6683a97e25279a8ff1e3f4bcd6}{Psrr60\-Hz}\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a50892e6683a97e25279a8ff1e3f4bcd6}
+}]60\-Hz \index{Psrr5060\-Hz@{Psrr5060\-Hz}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Psrr5060\-Hz@{Psrr5060\-Hz}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a49f4e552e53ed0d5f7390ae9ca035f4e}{Psrr5060\-Hz}\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a49f4e552e53ed0d5f7390ae9ca035f4e}
+}]50/60\-Hz \index{Psrr\-Unknown@{Psrr\-Unknown}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Psrr\-Unknown@{Psrr\-Unknown}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a1c0550705e77e2f48a09ba6f0525efd2}{Psrr\-Unknown}\label{classmdt_device_modbus_wago_module_rtd_ae235a58228b7c648e7ab89af05ea5037a1c0550705e77e2f48a09ba6f0525efd2}
 }]Unknow/illegal \end{description}
 \end{Desc}
 
 
+Definition at line 40 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-h.
 
-Definition at line 40 of file mdtDeviceModbusWagoModuleRtd.h.
-
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!sensorType\_\-t@{sensorType\_\-t}}
-\index{sensorType\_\-t@{sensorType\_\-t}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{sensorType\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtDeviceModbusWagoModuleRtd::sensorType\_\-t}}}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!sensor\-Type\-\_\-t@{sensor\-Type\-\_\-t}}
+\index{sensor\-Type\-\_\-t@{sensor\-Type\-\_\-t}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{sensor\-Type\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::sensor\-Type\-\_\-t}}}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0}
 
 
 Sensor type. 
 
 \begin{Desc}
-\item[Enumerator: ]\par
+\item[Enumerator]\par
 \begin{description}
-\index{Unknown@{Unknown}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Unknown@{Unknown}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae8100af1e6f3854d65750dbcb9d57113}{
-Unknown}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae8100af1e6f3854d65750dbcb9d57113}
-}]Unknown (for reserved bits) \index{Pt100@{Pt100}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Pt100@{Pt100}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a92b751ccf35ea0f0675f8019ec6ff825}{
-Pt100}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a92b751ccf35ea0f0675f8019ec6ff825}
-}]Pt100 (IEC 751) \index{Ni100@{Ni100}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Ni100@{Ni100}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab444c547443f3cdfac1d44ce2dacea14}{
-Ni100}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab444c547443f3cdfac1d44ce2dacea14}
-}]Ni100 (DIN 43760) \index{Pt1000@{Pt1000}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Pt1000@{Pt1000}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a4b53d63c91b84731eba51a12c0672f29}{
-Pt1000}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a4b53d63c91b84731eba51a12c0672f29}
-}]Pt1000 (IEC 751) \index{Pt500@{Pt500}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Pt500@{Pt500}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a261c6ea17e3bcdf14205387f78bb42d5}{
-Pt500}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a261c6ea17e3bcdf14205387f78bb42d5}
-}]Pt500 (IEC 751) \index{Pt200@{Pt200}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Pt200@{Pt200}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a18c1e9a0f121b7d595a06b439468608f}{
-Pt200}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a18c1e9a0f121b7d595a06b439468608f}
-}]Pt200 (IEC 751) \index{Ni1000@{Ni1000}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Ni1000@{Ni1000}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae6d6319f43f7777e52515e4a2bf1a305}{
-Ni1000}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae6d6319f43f7777e52515e4a2bf1a305}
-}]Ni1000 (DIN 43760) \index{Ni120@{Ni120}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Ni120@{Ni120}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab9b60b3cdedd72643221f2a2a9bbb7d1}{
-Ni120}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab9b60b3cdedd72643221f2a2a9bbb7d1}
-}]Ni120 (Minco) \index{Ni1000TK@{Ni1000TK}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Ni1000TK@{Ni1000TK}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a9ed11083207762f672db510a516953d5}{
-Ni1000TK}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a9ed11083207762f672db510a516953d5}
-}]Ni1000 (TK 5000) \index{Potentiometer@{Potentiometer}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!Potentiometer@{Potentiometer}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0add19df3664c05146cb8f70ac8159e7a5}{
-Potentiometer}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0add19df3664c05146cb8f70ac8159e7a5}
-}]Potentiometer \index{R10R5000@{R10R5000}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!R10R5000@{R10R5000}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a0690048c3a5da4a12499c19f41796411}{
-R10R5000}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a0690048c3a5da4a12499c19f41796411}
-}]10 to 5000 Ohm \index{R10R1200@{R10R1200}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!R10R1200@{R10R1200}}\item[{\em 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a49dced9911f2b03c950071afcdb1e30f}{
-R10R1200}
-\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a49dced9911f2b03c950071afcdb1e30f}
+\index{Unknown@{Unknown}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Unknown@{Unknown}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae8100af1e6f3854d65750dbcb9d57113}{Unknown}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae8100af1e6f3854d65750dbcb9d57113}
+}]Unknown (for reserved bits) \index{Pt100@{Pt100}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Pt100@{Pt100}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a92b751ccf35ea0f0675f8019ec6ff825}{Pt100}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a92b751ccf35ea0f0675f8019ec6ff825}
+}]Pt100 (I\-E\-C 751) \index{Ni100@{Ni100}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Ni100@{Ni100}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab444c547443f3cdfac1d44ce2dacea14}{Ni100}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab444c547443f3cdfac1d44ce2dacea14}
+}]Ni100 (D\-I\-N 43760) \index{Pt1000@{Pt1000}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Pt1000@{Pt1000}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a4b53d63c91b84731eba51a12c0672f29}{Pt1000}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a4b53d63c91b84731eba51a12c0672f29}
+}]Pt1000 (I\-E\-C 751) \index{Pt500@{Pt500}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Pt500@{Pt500}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a261c6ea17e3bcdf14205387f78bb42d5}{Pt500}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a261c6ea17e3bcdf14205387f78bb42d5}
+}]Pt500 (I\-E\-C 751) \index{Pt200@{Pt200}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Pt200@{Pt200}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a18c1e9a0f121b7d595a06b439468608f}{Pt200}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a18c1e9a0f121b7d595a06b439468608f}
+}]Pt200 (I\-E\-C 751) \index{Ni1000@{Ni1000}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Ni1000@{Ni1000}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae6d6319f43f7777e52515e4a2bf1a305}{Ni1000}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ae6d6319f43f7777e52515e4a2bf1a305}
+}]Ni1000 (D\-I\-N 43760) \index{Ni120@{Ni120}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Ni120@{Ni120}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab9b60b3cdedd72643221f2a2a9bbb7d1}{Ni120}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0ab9b60b3cdedd72643221f2a2a9bbb7d1}
+}]Ni120 (Minco) \index{Ni1000\-T\-K@{Ni1000\-T\-K}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Ni1000\-T\-K@{Ni1000\-T\-K}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a9ed11083207762f672db510a516953d5}{Ni1000\-T\-K}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a9ed11083207762f672db510a516953d5}
+}]Ni1000 (T\-K 5000) \index{Potentiometer@{Potentiometer}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!Potentiometer@{Potentiometer}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0add19df3664c05146cb8f70ac8159e7a5}{Potentiometer}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0add19df3664c05146cb8f70ac8159e7a5}
+}]Potentiometer \index{R10\-R5000@{R10\-R5000}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!R10\-R5000@{R10\-R5000}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a0690048c3a5da4a12499c19f41796411}{R10\-R5000}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a0690048c3a5da4a12499c19f41796411}
+}]10 to 5000 Ohm \index{R10\-R1200@{R10\-R1200}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!R10\-R1200@{R10\-R1200}}\item[{\em 
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a49dced9911f2b03c950071afcdb1e30f}{R10\-R1200}\label{classmdt_device_modbus_wago_module_rtd_a3ef847ef5be945559be1271e15905fb0a49dced9911f2b03c950071afcdb1e30f}
 }]10 to 1200 Ohm \end{description}
 \end{Desc}
 
 
-
-Definition at line 49 of file mdtDeviceModbusWagoModuleRtd.h.
+Definition at line 49 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a4d48b7646a6a1da76126f8b32aa6f499}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{mdtDeviceModbusWagoModuleRtd}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceModbusWagoModuleRtd::mdtDeviceModbusWagoModuleRtd (
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a4d48b7646a6a1da76126f8b32aa6f499}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::mdt\-Device\-Modbus\-Wago\-Module\-Rtd (
 \begin{DoxyParamCaption}
-\item[{bool}]{autoDeleteIos, }
-\item[{{\bf mdtDeviceModbusWago} $\ast$}]{device}
+\item[{bool}]{auto\-Delete\-Ios, }
+\item[{{\bf mdt\-Device\-Modbus\-Wago} $\ast$}]{device}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_device_modbus_wago_module_rtd_a4d48b7646a6a1da76126f8b32aa6f499}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a4d48b7646a6a1da76126f8b32aa6f499}
 
 
 Constructor. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em autoDeleteIos} & If true, internally created I/O's are deleted when this object is destroyed \\
+{\em auto\-Delete\-Ios} & If true, internally created I/\-O's are deleted when this object is destroyed \\
 \hline
 {\em device} & Pointer to device (used for register service access) \\
 \hline
@@ -399,47 +264,148 @@ device must be a valid pointer
 \end{DoxyPrecond}
 
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000022}{Todo}]Finish/correct setIoCount(4); \end{Desc}
-
-
-setSensorType(0, Pt100); setSensorType(1, Pt100); setSensorType(2, Pt100); setSensorType(3, Pt100);
-
-setProcessValueRepresentation(2, C2); setProcessValueRepresentation(3, C2);
+Definition at line 27 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
 
 
 
-Definition at line 27 of file mdtDeviceModbusWagoModuleRtd.cpp.
+References C2, Pt100, Pt1000, set\-Io\-Count(), set\-Process\-Value\-Representation(), and set\-Sensor\-Type().
 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_adb24199c383fdefc7ec5359996a838cd}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!$\sim$mdtDeviceModbusWagoModuleRtd@{$\sim$mdtDeviceModbusWagoModuleRtd}}
-\index{$\sim$mdtDeviceModbusWagoModuleRtd@{$\sim$mdtDeviceModbusWagoModuleRtd}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{$\sim$mdtDeviceModbusWagoModuleRtd}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceModbusWagoModuleRtd::$\sim$mdtDeviceModbusWagoModuleRtd (
+\hypertarget{classmdt_device_modbus_wago_module_rtd_adb24199c383fdefc7ec5359996a838cd}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!$\sim$mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{$\sim$mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\index{$\sim$mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{$\sim$mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{$\sim$mdt\-Device\-Modbus\-Wago\-Module\-Rtd}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::$\sim$mdt\-Device\-Modbus\-Wago\-Module\-Rtd (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_device_modbus_wago_module_rtd_adb24199c383fdefc7ec5359996a838cd}
+)}}\label{classmdt_device_modbus_wago_module_rtd_adb24199c383fdefc7ec5359996a838cd}
 
 
 Destructor. 
 
-If autoDeleteIos is true, internal I/O's are deleted 
+If auto\-Delete\-Ios is true, internal I/\-O's are deleted 
 
-Definition at line 50 of file mdtDeviceModbusWagoModuleRtd.cpp.
+Definition at line 50 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_device_modbus_wago_module_rtd_af84714e285705c3ef3415648892beae7}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!processValueRepresentation@{processValueRepresentation}}
-\index{processValueRepresentation@{processValueRepresentation}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{processValueRepresentation}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDeviceModbusWagoModuleRtd::processValueRepresentation\_\-t} mdtDeviceModbusWagoModuleRtd::processValueRepresentation (
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a2ea9a2eeb55e1ef943d951bffc49f163}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!average\-Value\-Filter\-Is\-Enabled@{average\-Value\-Filter\-Is\-Enabled}}
+\index{average\-Value\-Filter\-Is\-Enabled@{average\-Value\-Filter\-Is\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{average\-Value\-Filter\-Is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::average\-Value\-Filter\-Is\-Enabled (
 \begin{DoxyParamCaption}
 \item[{int}]{channel}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_device_modbus_wago_module_rtd_af84714e285705c3ef3415648892beae7}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a2ea9a2eeb55e1ef943d951bffc49f163}
+
+
+Definition at line 122 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a22e025ae3b60ae3dce4632ca2ea86b6c}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!calibration\-Gain@{calibration\-Gain}}
+\index{calibration\-Gain@{calibration\-Gain}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{calibration\-Gain}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::calibration\-Gain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a22e025ae3b60ae3dce4632ca2ea86b6c}
+
+
+Definition at line 186 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a675d78379e2a0727f8d250499d7d82ca}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!calibration\-Offset@{calibration\-Offset}}
+\index{calibration\-Offset@{calibration\-Offset}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{calibration\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::calibration\-Offset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a675d78379e2a0727f8d250499d7d82ca}
+
+
+Definition at line 182 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_af16255b0e876f971dfe3ea0139f040e1}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!connection\-Type\-Wires\-Count@{connection\-Type\-Wires\-Count}}
+\index{connection\-Type\-Wires\-Count@{connection\-Type\-Wires\-Count}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{connection\-Type\-Wires\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::connection\-Type\-Wires\-Count (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_af16255b0e876f971dfe3ea0139f040e1}
+
+
+Definition at line 106 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a39989cd76ae2195d0dec147ca128a96a}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!manufacturer\-Scaling\-Gain@{manufacturer\-Scaling\-Gain}}
+\index{manufacturer\-Scaling\-Gain@{manufacturer\-Scaling\-Gain}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{manufacturer\-Scaling\-Gain}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::manufacturer\-Scaling\-Gain (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a39989cd76ae2195d0dec147ca128a96a}
+
+
+Get manufacturer scaling gain. 
+
+
+
+Definition at line 202 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a1e2cc22d3edb80b4f086575adea75e6b}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!manufacturer\-Scaling\-Is\-Enabled@{manufacturer\-Scaling\-Is\-Enabled}}
+\index{manufacturer\-Scaling\-Is\-Enabled@{manufacturer\-Scaling\-Is\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{manufacturer\-Scaling\-Is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::manufacturer\-Scaling\-Is\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a1e2cc22d3edb80b4f086575adea75e6b}
+
+
+Check if manufacturer scaling is used. 
+
+
+
+Definition at line 194 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_aa0b24b290c75132ccf6a964b51b9c8c4}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!manufacturer\-Scaling\-Offset@{manufacturer\-Scaling\-Offset}}
+\index{manufacturer\-Scaling\-Offset@{manufacturer\-Scaling\-Offset}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{manufacturer\-Scaling\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::manufacturer\-Scaling\-Offset (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_aa0b24b290c75132ccf6a964b51b9c8c4}
+
+
+Get manufacturer scaling offset. 
+
+
+
+Definition at line 198 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_aaf6560fbb5cd285c072cf5df1dfad803}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!out\-Of\-Range\-Indication\-Is\-Enabled@{out\-Of\-Range\-Indication\-Is\-Enabled}}
+\index{out\-Of\-Range\-Indication\-Is\-Enabled@{out\-Of\-Range\-Indication\-Is\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{out\-Of\-Range\-Indication\-Is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::out\-Of\-Range\-Indication\-Is\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_aaf6560fbb5cd285c072cf5df1dfad803}
+
+
+Definition at line 158 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_ad213401994beb43511ef70ca14098b9d}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!overrange\-Indication\-Limit@{overrange\-Indication\-Limit}}
+\index{overrange\-Indication\-Limit@{overrange\-Indication\-Limit}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{overrange\-Indication\-Limit}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::overrange\-Indication\-Limit (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_ad213401994beb43511ef70ca14098b9d}
+
+
+Definition at line 170 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_af84714e285705c3ef3415648892beae7}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!process\-Value\-Representation@{process\-Value\-Representation}}
+\index{process\-Value\-Representation@{process\-Value\-Representation}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{process\-Value\-Representation}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::process\-Value\-Representation\-\_\-t} mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::process\-Value\-Representation (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_af84714e285705c3ef3415648892beae7}
 
 
 Get process value representation for given channel. 
@@ -449,17 +415,30 @@ Channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 134 of file mdtDeviceModbusWagoModuleRtd.cpp.
+Definition at line 134 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_aaee7df330e87d5facbbc6f73e3f356ce}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!sensorType@{sensorType}}
-\index{sensorType@{sensorType}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{sensorType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDeviceModbusWagoModuleRtd::sensorType\_\-t} mdtDeviceModbusWagoModuleRtd::sensorType (
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a6caf3ac10935128b182e558249107302}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!psrr\-Mode@{psrr\-Mode}}
+\index{psrr\-Mode@{psrr\-Mode}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{psrr\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::psrr\-Mode\-\_\-t} mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::psrr\-Mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a6caf3ac10935128b182e558249107302}
+
+
+Get the P\-S\-R\-R mode. 
+
+
+
+Definition at line 81 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_aaee7df330e87d5facbbc6f73e3f356ce}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!sensor\-Type@{sensor\-Type}}
+\index{sensor\-Type@{sensor\-Type}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{sensor\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::sensor\-Type\-\_\-t} mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::sensor\-Type (
 \begin{DoxyParamCaption}
 \item[{int}]{channel}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_device_modbus_wago_module_rtd_aaee7df330e87d5facbbc6f73e3f356ce}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_aaee7df330e87d5facbbc6f73e3f356ce}
 
 
 Get the sensor type of given channel. 
@@ -469,40 +448,104 @@ Channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 94 of file mdtDeviceModbusWagoModuleRtd.cpp.
+Definition at line 94 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a2865bb4247e46306ee2279e39a3b5a48}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!setIoCount@{setIoCount}}
-\index{setIoCount@{setIoCount}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{setIoCount}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModuleRtd::setIoCount (
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a49080955e90c46ab5d05b2a427d67721}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Average\-Value\-Filter\-Enabled@{set\-Average\-Value\-Filter\-Enabled}}
+\index{set\-Average\-Value\-Filter\-Enabled@{set\-Average\-Value\-Filter\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Average\-Value\-Filter\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Average\-Value\-Filter\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a49080955e90c46ab5d05b2a427d67721}
+
+
+Definition at line 118 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a95c5db06b1245b8f3526fda60c307a89}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Connection\-Type\-Wires\-Count@{set\-Connection\-Type\-Wires\-Count}}
+\index{set\-Connection\-Type\-Wires\-Count@{set\-Connection\-Type\-Wires\-Count}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Connection\-Type\-Wires\-Count}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Connection\-Type\-Wires\-Count (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{int}]{wires\-Count}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a95c5db06b1245b8f3526fda60c307a89}
+
+
+Definition at line 102 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a2865bb4247e46306ee2279e39a3b5a48}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Io\-Count@{set\-Io\-Count}}
+\index{set\-Io\-Count@{set\-Io\-Count}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Io\-Count}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Io\-Count (
 \begin{DoxyParamCaption}
 \item[{int}]{count}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_device_modbus_wago_module_rtd_a2865bb4247e46306ee2279e39a3b5a48}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a2865bb4247e46306ee2279e39a3b5a48}
 
 
-Set the I/O count. 
+Set the I/\-O count. 
 
-Note that analog inputs (\hyperlink{classmdt_analog_io}{mdtAnalogIo} objects) are not created here. They will be created by \hyperlink{classmdt_device_modbus_wago_module_adf7431cd4d41d7839b42cc21badeabc5}{mdtDeviceModbusWagoModule::setupFromRegisterWord()} .
+Note that analog inputs (\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} objects) are not created here. They will be created by \hyperlink{classmdt_device_modbus_wago_module_adf7431cd4d41d7839b42cc21badeabc5}{mdt\-Device\-Modbus\-Wago\-Module\-::setup\-From\-Register\-Word()} .
 
 \begin{DoxyPrecond}{Precondition}
 count must be 2 or 4 
 \end{DoxyPrecond}
 
 
-Definition at line 54 of file mdtDeviceModbusWagoModuleRtd.cpp.
+Definition at line 54 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a012c6438f55b5653c7320dbe477d93b5}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!setProcessValueRepresentation@{setProcessValueRepresentation}}
-\index{setProcessValueRepresentation@{setProcessValueRepresentation}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{setProcessValueRepresentation}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModuleRtd::setProcessValueRepresentation (
+
+
+References mdt\-Device\-Modbus\-Wago\-Module\-::analog\-Inputs(), C2, and Pt100.
+
+
+
+Referenced by mdt\-Device\-Modbus\-Wago\-Module\-Rtd().
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_add51b8d17f05661fa4e439f024094738}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Manufacturer\-Calibration@{set\-Manufacturer\-Calibration}}
+\index{set\-Manufacturer\-Calibration@{set\-Manufacturer\-Calibration}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Manufacturer\-Calibration}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Manufacturer\-Calibration (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_add51b8d17f05661fa4e439f024094738}
+
+
+Definition at line 174 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a0ff6dacdf0f7b4b079e46f51341822d9}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Out\-Of\-Range\-Indication\-Enabled@{set\-Out\-Of\-Range\-Indication\-Enabled}}
+\index{set\-Out\-Of\-Range\-Indication\-Enabled@{set\-Out\-Of\-Range\-Indication\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Out\-Of\-Range\-Indication\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Out\-Of\-Range\-Indication\-Enabled (
 \begin{DoxyParamCaption}
 \item[{int}]{channel, }
-\item[{{\bf processValueRepresentation\_\-t}}]{representation}
+\item[{bool}]{enable}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_device_modbus_wago_module_rtd_a012c6438f55b5653c7320dbe477d93b5}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a0ff6dacdf0f7b4b079e46f51341822d9}
+
+
+Definition at line 154 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_ab99db407dd15a4250e41168e5c592a3e}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Out\-Of\-Range\-Indication\-Limits@{set\-Out\-Of\-Range\-Indication\-Limits}}
+\index{set\-Out\-Of\-Range\-Indication\-Limits@{set\-Out\-Of\-Range\-Indication\-Limits}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Out\-Of\-Range\-Indication\-Limits}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Out\-Of\-Range\-Indication\-Limits (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{int}]{underrange, }
+\item[{int}]{overrange}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_ab99db407dd15a4250e41168e5c592a3e}
+
+
+Definition at line 162 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a012c6438f55b5653c7320dbe477d93b5}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Process\-Value\-Representation@{set\-Process\-Value\-Representation}}
+\index{set\-Process\-Value\-Representation@{set\-Process\-Value\-Representation}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Process\-Value\-Representation}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Process\-Value\-Representation (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{{\bf process\-Value\-Representation\-\_\-t}}]{representation}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a012c6438f55b5653c7320dbe477d93b5}
 
 
 Set process value representation for given channel. 
@@ -512,18 +555,55 @@ Channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 126 of file mdtDeviceModbusWagoModuleRtd.cpp.
+Definition at line 126 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
 
-\hypertarget{classmdt_device_modbus_wago_module_rtd_a91fc8fa26b323ac8a8d3f925df78dbc6}{
-\index{mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}!setSensorType@{setSensorType}}
-\index{setSensorType@{setSensorType}!mdtDeviceModbusWagoModuleRtd@{mdtDeviceModbusWagoModuleRtd}}
-\subsubsection[{setSensorType}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbusWagoModuleRtd::setSensorType (
+
+
+Referenced by mdt\-Device\-Modbus\-Wago\-Module\-Rtd().
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a03caaa6473f4237f105596f9b2d35c03}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Psrr\-Mode@{set\-Psrr\-Mode}}
+\index{set\-Psrr\-Mode@{set\-Psrr\-Mode}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Psrr\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Psrr\-Mode (
+\begin{DoxyParamCaption}
+\item[{{\bf psrr\-Mode\-\_\-t}}]{mode}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a03caaa6473f4237f105596f9b2d35c03}
+
+
+Set the P\-S\-R\-R mode. 
+
+
+
+Definition at line 76 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a67ab613e399574816cc9df0b7eca0496}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Scaling@{set\-Scaling}}
+\index{set\-Scaling@{set\-Scaling}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Scaling}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Scaling (
 \begin{DoxyParamCaption}
 \item[{int}]{channel, }
-\item[{{\bf sensorType\_\-t}}]{type}
+\item[{bool}]{use\-Manufacturer\-Scaling, }
+\item[{bool}]{use\-User\-Scaling, }
+\item[{double}]{user\-Offset, }
+\item[{double}]{user\-Gain, }
+\item[{double}]{two\-Wire\-Offset}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_device_modbus_wago_module_rtd_a91fc8fa26b323ac8a8d3f925df78dbc6}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a67ab613e399574816cc9df0b7eca0496}
+
+
+Set scaling. 
+
+
+
+Definition at line 190 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a91fc8fa26b323ac8a8d3f925df78dbc6}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Sensor\-Type@{set\-Sensor\-Type}}
+\index{set\-Sensor\-Type@{set\-Sensor\-Type}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Sensor\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Sensor\-Type (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{{\bf sensor\-Type\-\_\-t}}]{type}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a91fc8fa26b323ac8a8d3f925df78dbc6}
 
 
 Set the sensor type for given channel. 
@@ -533,11 +613,156 @@ Channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 86 of file mdtDeviceModbusWagoModuleRtd.cpp.
+Definition at line 86 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References mdt\-Device\-Modbus\-Wago\-Module\-::type().
+
+
+
+Referenced by mdt\-Device\-Modbus\-Wago\-Module\-Rtd().
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a74188cf0391b3875adc599055bc8d459}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-User\-Calibration@{set\-User\-Calibration}}
+\index{set\-User\-Calibration@{set\-User\-Calibration}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-User\-Calibration}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-User\-Calibration (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{double}]{offset, }
+\item[{double}]{gain}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a74188cf0391b3875adc599055bc8d459}
+
+
+Definition at line 178 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a1b55d99a6ddf7ce95d18aeb081aafd73}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Watchdog\-Timer\-Enabled@{set\-Watchdog\-Timer\-Enabled}}
+\index{set\-Watchdog\-Timer\-Enabled@{set\-Watchdog\-Timer\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Watchdog\-Timer\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Watchdog\-Timer\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a1b55d99a6ddf7ce95d18aeb081aafd73}
+
+
+Definition at line 110 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a5562d06610347baae6a9e6b639142d80}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!set\-Wire\-Break\-Short\-Circuit\-Indication\-Enabled@{set\-Wire\-Break\-Short\-Circuit\-Indication\-Enabled}}
+\index{set\-Wire\-Break\-Short\-Circuit\-Indication\-Enabled@{set\-Wire\-Break\-Short\-Circuit\-Indication\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{set\-Wire\-Break\-Short\-Circuit\-Indication\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::set\-Wire\-Break\-Short\-Circuit\-Indication\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_a5562d06610347baae6a9e6b639142d80}
+
+
+Definition at line 146 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a0815ffe86f6c8c1a437af2b87f14ea60}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!siemens\-Format\-Is\-Enabled@{siemens\-Format\-Is\-Enabled}}
+\index{siemens\-Format\-Is\-Enabled@{siemens\-Format\-Is\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{siemens\-Format\-Is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::siemens\-Format\-Is\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a0815ffe86f6c8c1a437af2b87f14ea60}
+
+
+Definition at line 142 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a110c774e640f45309e1f14a8b65a7b0e}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!two\-Wire\-Offset@{two\-Wire\-Offset}}
+\index{two\-Wire\-Offset@{two\-Wire\-Offset}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{two\-Wire\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::two\-Wire\-Offset (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a110c774e640f45309e1f14a8b65a7b0e}
+
+
+Definition at line 218 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_ac3ebf8a90c7f87e1de7b45ea99ca3eac}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!underrange\-Indication\-Limit@{underrange\-Indication\-Limit}}
+\index{underrange\-Indication\-Limit@{underrange\-Indication\-Limit}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{underrange\-Indication\-Limit}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::underrange\-Indication\-Limit (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_modbus_wago_module_rtd_ac3ebf8a90c7f87e1de7b45ea99ca3eac}
+
+
+Definition at line 166 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a5bf6697432dc475533db1e36889a6ad4}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!user\-Scaling\-Gain@{user\-Scaling\-Gain}}
+\index{user\-Scaling\-Gain@{user\-Scaling\-Gain}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{user\-Scaling\-Gain}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::user\-Scaling\-Gain (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a5bf6697432dc475533db1e36889a6ad4}
+
+
+Get user scaling gain. 
+
+
+
+Definition at line 214 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a6144f959f5ecb425d1526871ef99a4d0}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!user\-Scaling\-Is\-Enabled@{user\-Scaling\-Is\-Enabled}}
+\index{user\-Scaling\-Is\-Enabled@{user\-Scaling\-Is\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{user\-Scaling\-Is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::user\-Scaling\-Is\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a6144f959f5ecb425d1526871ef99a4d0}
+
+
+Check if user scaling is used. 
+
+
+
+Definition at line 206 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a0a1c2980fe4b3b0fb774b1f41280d890}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!user\-Scaling\-Offset@{user\-Scaling\-Offset}}
+\index{user\-Scaling\-Offset@{user\-Scaling\-Offset}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{user\-Scaling\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::user\-Scaling\-Offset (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a0a1c2980fe4b3b0fb774b1f41280d890}
+
+
+Get user scaling offset. 
+
+
+
+Definition at line 210 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a708c35425e024374e840c5ccc0b77d8b}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!watchdog\-Timer\-Is\-Enabled@{watchdog\-Timer\-Is\-Enabled}}
+\index{watchdog\-Timer\-Is\-Enabled@{watchdog\-Timer\-Is\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{watchdog\-Timer\-Is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::watchdog\-Timer\-Is\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a708c35425e024374e840c5ccc0b77d8b}
+
+
+Definition at line 114 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_rtd_a01ed3710a2f7a22a686fa06fd747219a}{\index{mdt\-Device\-Modbus\-Wago\-Module\-Rtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}!wire\-Break\-Short\-Circuit\-Indication\-Is\-Enabled@{wire\-Break\-Short\-Circuit\-Indication\-Is\-Enabled}}
+\index{wire\-Break\-Short\-Circuit\-Indication\-Is\-Enabled@{wire\-Break\-Short\-Circuit\-Indication\-Is\-Enabled}!mdtDeviceModbusWagoModuleRtd@{mdt\-Device\-Modbus\-Wago\-Module\-Rtd}}
+\subsubsection[{wire\-Break\-Short\-Circuit\-Indication\-Is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Modbus\-Wago\-Module\-Rtd\-::wire\-Break\-Short\-Circuit\-Indication\-Is\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_modbus_wago_module_rtd_a01ed3710a2f7a22a686fa06fd747219a}
+
+
+Definition at line 150 of file mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtdevice/mdtDeviceModbusWagoModuleRtd.h\item 
-src/mdtdevice/mdtDeviceModbusWagoModuleRtd.cpp\end{DoxyCompactItemize}
+src/mdtdevice/\hyperlink{mdt_device_modbus_wago_module_rtd_8h}{mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-h}\item 
+src/mdtdevice/\hyperlink{mdt_device_modbus_wago_module_rtd_8cpp}{mdt\-Device\-Modbus\-Wago\-Module\-Rtd.\-cpp}\end{DoxyCompactItemize}

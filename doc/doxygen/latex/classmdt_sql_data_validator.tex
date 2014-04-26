@@ -1,6 +1,5 @@
-\hypertarget{classmdt_sql_data_validator}{
-\section{mdtSqlDataValidator Class Reference}
-\label{classmdt_sql_data_validator}\index{mdtSqlDataValidator@{mdtSqlDataValidator}}
+\hypertarget{classmdt_sql_data_validator}{\section{mdt\-Sql\-Data\-Validator Class Reference}
+\label{classmdt_sql_data_validator}\index{mdt\-Sql\-Data\-Validator@{mdt\-Sql\-Data\-Validator}}
 }
 
 
@@ -9,68 +8,72 @@ Helper class for data validation.
 
 
 
-{\ttfamily \#include $<$mdtSqlDataValidator.h$>$}
+{\ttfamily \#include $<$mdt\-Sql\-Data\-Validator.\-h$>$}
 
 
 
-Inheritance diagram for mdtSqlDataValidator:\nopagebreak
+Inheritance diagram for mdt\-Sql\-Data\-Validator\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=240pt]{classmdt_sql_data_validator__inherit__graph}
 \end{center}
 \end{figure}
+
+
+Collaboration diagram for mdt\-Sql\-Data\-Validator\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{classmdt_sql_data_validator__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_sql_data_validator_a609bc3f4378f092a74e47907dc3e0222}{mdtSqlDataValidator} (QSqlTableModel $\ast$model, QObject $\ast$parent=0)
+\hyperlink{classmdt_sql_data_validator_a609bc3f4378f092a74e47907dc3e0222}{mdt\-Sql\-Data\-Validator} (\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$\hyperlink{classmdt_sql_data_validator_a4970687a15ac3c8099c13164fba58291}{model}, \hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_data_validator_a2d1348a7035ac4fcf4f4cd47a6c2fa52}{
-virtual \hyperlink{classmdt_sql_data_validator_a2d1348a7035ac4fcf4f4cd47a6c2fa52}{$\sim$mdtSqlDataValidator} ()}
-\label{classmdt_sql_data_validator_a2d1348a7035ac4fcf4f4cd47a6c2fa52}
-
+virtual \hyperlink{classmdt_sql_data_validator_a2d1348a7035ac4fcf4f4cd47a6c2fa52}{$\sim$mdt\-Sql\-Data\-Validator} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-QSqlTableModel $\ast$ \hyperlink{classmdt_sql_data_validator_a4970687a15ac3c8099c13164fba58291}{model} ()
+\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$ \hyperlink{classmdt_sql_data_validator_a4970687a15ac3c8099c13164fba58291}{model} ()
 \begin{DoxyCompactList}\small\item\em Get model. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_sql_data_validator_af291c18e9c8994085ed4664db3fdcb7c}{checkBeforeSubmit} ()
+virtual bool \hyperlink{classmdt_sql_data_validator_af291c18e9c8994085ed4664db3fdcb7c}{check\-Before\-Submit} ()
 \begin{DoxyCompactList}\small\item\em Checks to be done before data are submitted. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_data_validator_aef49b35ed8861accd9547b35aabc4ef4}{displayWarning} (const QString \&text, const QString \&informativeText, const QSqlError \&sqlError=QSqlError())
+void \hyperlink{classmdt_sql_data_validator_aef49b35ed8861accd9547b35aabc4ef4}{display\-Warning} (const Q\-String \&text, const Q\-String \&informative\-Text, const Q\-Sql\-Error \&sql\-Error=Q\-Sql\-Error())
 \begin{DoxyCompactList}\small\item\em Display a warning to the user. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_data_validator_a9d21a05e4e426235c908ba16437e9554}{displayError} (const QString \&text, const QString \&informativeText, const QSqlError \&sqlError=QSqlError())
+void \hyperlink{classmdt_sql_data_validator_a9d21a05e4e426235c908ba16437e9554}{display\-Error} (const Q\-String \&text, const Q\-String \&informative\-Text, const Q\-Sql\-Error \&sql\-Error=Q\-Sql\-Error())
 \begin{DoxyCompactList}\small\item\em Display a error to the user. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Helper class for data validation. 
 
-The SQL widget classes witch are usefull to create database GUI are event driven. A internal state machine tries to keep GUI coherent. When, f.ex., the user wants to save data, a trigger is activated and state changes (if current state permit it) to a sort of saving state. The drawback of this solution is that there is no way to handle the save steps. This class was made to help on such process.
+The S\-Q\-L widget classes witch are usefull to create database G\-U\-I are event driven. A internal state machine tries to keep G\-U\-I coherent. When, f.\-ex., the user wants to save data, a trigger is activated and state changes (if current state permit it) to a sort of saving state. The drawback of this solution is that there is no way to handle the save steps. This class was made to help on such process.
 
-For example, if you need to do some check before the real submit beginns, you can subclass \hyperlink{classmdt_sql_data_validator}{mdtSqlDataValidator} and reimplement \hyperlink{classmdt_sql_data_validator_af291c18e9c8994085ed4664db3fdcb7c}{checkBeforeSubmit()}. If this method fails, the submit is not done.
+For example, if you need to do some check before the real submit beginns, you can subclass \hyperlink{classmdt_sql_data_validator}{mdt\-Sql\-Data\-Validator} and reimplement \hyperlink{classmdt_sql_data_validator_af291c18e9c8994085ed4664db3fdcb7c}{check\-Before\-Submit()}. If this method fails, the submit is not done.
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_abstract_sql_widget}{mdt\-Abstract\-Sql\-Widget} 
 
-\hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} 
+\hyperlink{classmdt_sql_form_widget}{mdt\-Sql\-Form\-Widget} 
 
-\hyperlink{classmdt_sql_table_widget}{mdtSqlTableWidget} 
+\hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget} 
 \end{DoxySeeAlso}
 
 
-Definition at line 48 of file mdtSqlDataValidator.h.
+Definition at line 48 of file mdt\-Sql\-Data\-Validator.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_sql_data_validator_a609bc3f4378f092a74e47907dc3e0222}{
-\index{mdtSqlDataValidator@{mdtSqlDataValidator}!mdtSqlDataValidator@{mdtSqlDataValidator}}
-\index{mdtSqlDataValidator@{mdtSqlDataValidator}!mdtSqlDataValidator@{mdtSqlDataValidator}}
-\subsubsection[{mdtSqlDataValidator}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlDataValidator::mdtSqlDataValidator (
+\hypertarget{classmdt_sql_data_validator_a609bc3f4378f092a74e47907dc3e0222}{\index{mdt\-Sql\-Data\-Validator@{mdt\-Sql\-Data\-Validator}!mdt\-Sql\-Data\-Validator@{mdt\-Sql\-Data\-Validator}}
+\index{mdt\-Sql\-Data\-Validator@{mdt\-Sql\-Data\-Validator}!mdtSqlDataValidator@{mdt\-Sql\-Data\-Validator}}
+\subsubsection[{mdt\-Sql\-Data\-Validator}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Data\-Validator\-::mdt\-Sql\-Data\-Validator (
 \begin{DoxyParamCaption}
-\item[{QSqlTableModel $\ast$}]{model, }
-\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\item[{{\bf Q\-Sql\-Table\-Model} $\ast$}]{model, }
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_data_validator_a609bc3f4378f092a74e47907dc3e0222}
+)}}\label{classmdt_sql_data_validator_a609bc3f4378f092a74e47907dc3e0222}
 
 
 Constructor. 
@@ -80,20 +83,37 @@ model must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 26 of file mdtSqlDataValidator.cpp.
+Definition at line 26 of file mdt\-Sql\-Data\-Validator.\-cpp.
+
+
+
+References model().
+
+\hypertarget{classmdt_sql_data_validator_a2d1348a7035ac4fcf4f4cd47a6c2fa52}{\index{mdt\-Sql\-Data\-Validator@{mdt\-Sql\-Data\-Validator}!$\sim$mdt\-Sql\-Data\-Validator@{$\sim$mdt\-Sql\-Data\-Validator}}
+\index{$\sim$mdt\-Sql\-Data\-Validator@{$\sim$mdt\-Sql\-Data\-Validator}!mdtSqlDataValidator@{mdt\-Sql\-Data\-Validator}}
+\subsubsection[{$\sim$mdt\-Sql\-Data\-Validator}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Data\-Validator\-::$\sim$mdt\-Sql\-Data\-Validator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_data_validator_a2d1348a7035ac4fcf4f4cd47a6c2fa52}
+
+
+Destructor. 
+
+
+
+Definition at line 34 of file mdt\-Sql\-Data\-Validator.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_data_validator_af291c18e9c8994085ed4664db3fdcb7c}{
-\index{mdtSqlDataValidator@{mdtSqlDataValidator}!checkBeforeSubmit@{checkBeforeSubmit}}
-\index{checkBeforeSubmit@{checkBeforeSubmit}!mdtSqlDataValidator@{mdtSqlDataValidator}}
-\subsubsection[{checkBeforeSubmit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlDataValidator::checkBeforeSubmit (
+\hypertarget{classmdt_sql_data_validator_af291c18e9c8994085ed4664db3fdcb7c}{\index{mdt\-Sql\-Data\-Validator@{mdt\-Sql\-Data\-Validator}!check\-Before\-Submit@{check\-Before\-Submit}}
+\index{check\-Before\-Submit@{check\-Before\-Submit}!mdtSqlDataValidator@{mdt\-Sql\-Data\-Validator}}
+\subsubsection[{check\-Before\-Submit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Data\-Validator\-::check\-Before\-Submit (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_sql_data_validator_af291c18e9c8994085ed4664db3fdcb7c}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_data_validator_af291c18e9c8994085ed4664db3fdcb7c}
 
 
 Checks to be done before data are submitted. 
@@ -103,63 +123,69 @@ This default implementation does nothing and returns allways false.
 \end{DoxyReturn}
 
 
-Reimplemented in \hyperlink{classmdt_sql_form_widget_data_validator_aa577e4acf4d0f371c45a67c18c59a924}{mdtSqlFormWidgetDataValidator}.
+Reimplemented in \hyperlink{classmdt_sql_form_widget_data_validator_aa577e4acf4d0f371c45a67c18c59a924}{mdt\-Sql\-Form\-Widget\-Data\-Validator}.
 
 
 
-Definition at line 45 of file mdtSqlDataValidator.cpp.
+Definition at line 45 of file mdt\-Sql\-Data\-Validator.\-cpp.
 
-\hypertarget{classmdt_sql_data_validator_a9d21a05e4e426235c908ba16437e9554}{
-\index{mdtSqlDataValidator@{mdtSqlDataValidator}!displayError@{displayError}}
-\index{displayError@{displayError}!mdtSqlDataValidator@{mdtSqlDataValidator}}
-\subsubsection[{displayError}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDataValidator::displayError (
+\hypertarget{classmdt_sql_data_validator_a9d21a05e4e426235c908ba16437e9554}{\index{mdt\-Sql\-Data\-Validator@{mdt\-Sql\-Data\-Validator}!display\-Error@{display\-Error}}
+\index{display\-Error@{display\-Error}!mdtSqlDataValidator@{mdt\-Sql\-Data\-Validator}}
+\subsubsection[{display\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Data\-Validator\-::display\-Error (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{text, }
-\item[{const QString \&}]{informativeText, }
-\item[{const QSqlError \&}]{sqlError = {\ttfamily QSqlError()}}
+\item[{const Q\-String \&}]{text, }
+\item[{const Q\-String \&}]{informative\-Text, }
+\item[{const Q\-Sql\-Error \&}]{sql\-Error = {\ttfamily QSqlError()}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_data_validator_a9d21a05e4e426235c908ba16437e9554}
+)}}\label{classmdt_sql_data_validator_a9d21a05e4e426235c908ba16437e9554}
 
 
 Display a error to the user. 
 
-text and informativeText text are the same meaning as Qt's QMessageBox. Error will be logged with \hyperlink{classmdt_error}{mdtError} system.
+text and informative\-Text text are the same meaning as Qt's Q\-Message\-Box. Error will be logged with \hyperlink{classmdt_error}{mdt\-Error} system.
 
-If sqlError is valid, it will be added in the detailed text of QMessageBox, and as system error in \hyperlink{classmdt_error}{mdtError} log. 
+If sql\-Error is valid, it will be added in the detailed text of Q\-Message\-Box, and as system error in \hyperlink{classmdt_error}{mdt\-Error} log. 
 
-Definition at line 71 of file mdtSqlDataValidator.cpp.
+Definition at line 71 of file mdt\-Sql\-Data\-Validator.\-cpp.
 
-\hypertarget{classmdt_sql_data_validator_aef49b35ed8861accd9547b35aabc4ef4}{
-\index{mdtSqlDataValidator@{mdtSqlDataValidator}!displayWarning@{displayWarning}}
-\index{displayWarning@{displayWarning}!mdtSqlDataValidator@{mdtSqlDataValidator}}
-\subsubsection[{displayWarning}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDataValidator::displayWarning (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_sql_data_validator_aef49b35ed8861accd9547b35aabc4ef4}{\index{mdt\-Sql\-Data\-Validator@{mdt\-Sql\-Data\-Validator}!display\-Warning@{display\-Warning}}
+\index{display\-Warning@{display\-Warning}!mdtSqlDataValidator@{mdt\-Sql\-Data\-Validator}}
+\subsubsection[{display\-Warning}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Data\-Validator\-::display\-Warning (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{text, }
-\item[{const QString \&}]{informativeText, }
-\item[{const QSqlError \&}]{sqlError = {\ttfamily QSqlError()}}
+\item[{const Q\-String \&}]{text, }
+\item[{const Q\-String \&}]{informative\-Text, }
+\item[{const Q\-Sql\-Error \&}]{sql\-Error = {\ttfamily QSqlError()}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_data_validator_aef49b35ed8861accd9547b35aabc4ef4}
+)}}\label{classmdt_sql_data_validator_aef49b35ed8861accd9547b35aabc4ef4}
 
 
 Display a warning to the user. 
 
-text and informativeText text are the same meaning as Qt's QMessageBox. Warning will be logged with \hyperlink{classmdt_error}{mdtError} system.
+text and informative\-Text text are the same meaning as Qt's Q\-Message\-Box. Warning will be logged with \hyperlink{classmdt_error}{mdt\-Error} system.
 
-If sqlError is valid, it will be added in the detailed text of QMessageBox, and as system error in \hyperlink{classmdt_error}{mdtError} log. 
+If sql\-Error is valid, it will be added in the detailed text of Q\-Message\-Box, and as system error in \hyperlink{classmdt_error}{mdt\-Error} log. 
 
-Definition at line 50 of file mdtSqlDataValidator.cpp.
+Definition at line 50 of file mdt\-Sql\-Data\-Validator.\-cpp.
 
-\hypertarget{classmdt_sql_data_validator_a4970687a15ac3c8099c13164fba58291}{
-\index{mdtSqlDataValidator@{mdtSqlDataValidator}!model@{model}}
-\index{model@{model}!mdtSqlDataValidator@{mdtSqlDataValidator}}
-\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}QSqlTableModel $\ast$ mdtSqlDataValidator::model (
+
+
+References mdt\-Error\-::commit(), M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Error\-::set\-System\-Error(), and mdt\-Error\-::\-Warning.
+
+
+
+Referenced by mdt\-Sql\-Form\-Widget\-Data\-Validator\-::check\-Before\-Submit().
+
+\hypertarget{classmdt_sql_data_validator_a4970687a15ac3c8099c13164fba58291}{\index{mdt\-Sql\-Data\-Validator@{mdt\-Sql\-Data\-Validator}!model@{model}}
+\index{model@{model}!mdtSqlDataValidator@{mdt\-Sql\-Data\-Validator}}
+\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Q\-Sql\-Table\-Model} $\ast$ mdt\-Sql\-Data\-Validator\-::model (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_data_validator_a4970687a15ac3c8099c13164fba58291}
+)}}\label{classmdt_sql_data_validator_a4970687a15ac3c8099c13164fba58291}
 
 
 Get model. 
@@ -169,11 +195,15 @@ Returned pointer is allways valid.
 \end{DoxyPostcond}
 
 
-Definition at line 38 of file mdtSqlDataValidator.cpp.
+Definition at line 38 of file mdt\-Sql\-Data\-Validator.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Referenced by mdt\-Sql\-Data\-Validator().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtSqlDataValidator.h\item 
-src/mdtutilsgui/mdtSqlDataValidator.cpp\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_sql_data_validator_8h}{mdt\-Sql\-Data\-Validator.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_sql_data_validator_8cpp}{mdt\-Sql\-Data\-Validator.\-cpp}\end{DoxyCompactItemize}

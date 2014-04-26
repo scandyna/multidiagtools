@@ -1,142 +1,128 @@
-\hypertarget{classmdt_usb_endpoint_descriptor}{
-\section{mdtUsbEndpointDescriptor Class Reference}
-\label{classmdt_usb_endpoint_descriptor}\index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
+\hypertarget{classmdt_usb_endpoint_descriptor}{\section{mdt\-Usb\-Endpoint\-Descriptor Class Reference}
+\label{classmdt_usb_endpoint_descriptor}\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
 }
 
 
-USB endpoint descriptor.  
+U\-S\-B endpoint descriptor.  
 
 
 
 
-{\ttfamily \#include $<$mdtUsbEndpointDescriptor.h$>$}
+{\ttfamily \#include $<$mdt\-Usb\-Endpoint\-Descriptor.\-h$>$}
 
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_usb_endpoint_descriptor_af001cef68ba1e177a63b1f9ba02ddc6c}{fetchAttributes} (libusb\_\-endpoint\_\-descriptor $\ast$descriptor)
+\hyperlink{classmdt_usb_endpoint_descriptor_adf827037bb0a066e8eeabf9d96145e7f}{mdt\-Usb\-Endpoint\-Descriptor} ()
+\item 
+\hyperlink{classmdt_usb_endpoint_descriptor_a44cf8f039efd58015fca837f8bd8e59f}{$\sim$mdt\-Usb\-Endpoint\-Descriptor} ()
+\item 
+void \hyperlink{classmdt_usb_endpoint_descriptor_af001cef68ba1e177a63b1f9ba02ddc6c}{fetch\-Attributes} (libusb\-\_\-endpoint\-\_\-descriptor $\ast$descriptor)
 \begin{DoxyCompactList}\small\item\em Ftech the endpoint descriptor's attributes. \end{DoxyCompactList}\item 
 quint8 \hyperlink{classmdt_usb_endpoint_descriptor_a478bc4bdec482184c0fc9af3218afad9}{address} ()
 \begin{DoxyCompactList}\small\item\em Endpoint address (number) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a8f6bc6b31b436f21c3ad34f909f35ccf}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a8f6bc6b31b436f21c3ad34f909f35ccf}{isDirectionIN} ()}
-\label{classmdt_usb_endpoint_descriptor_a8f6bc6b31b436f21c3ad34f909f35ccf}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a8f6bc6b31b436f21c3ad34f909f35ccf}{is\-Direction\-I\-N} ()
 \begin{DoxyCompactList}\small\item\em Endpoint direction. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_ae45b2407d6f973c25ff0058eb941857a}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_ae45b2407d6f973c25ff0058eb941857a}{isDirectionOUT} ()}
-\label{classmdt_usb_endpoint_descriptor_ae45b2407d6f973c25ff0058eb941857a}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_ae45b2407d6f973c25ff0058eb941857a}{is\-Direction\-O\-U\-T} ()
 \begin{DoxyCompactList}\small\item\em Endpoint direction. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a98313de5a27b8d9f21dd626a03fa9d3f}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a98313de5a27b8d9f21dd626a03fa9d3f}{isTransfertTypeControl} ()}
-\label{classmdt_usb_endpoint_descriptor_a98313de5a27b8d9f21dd626a03fa9d3f}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a98313de5a27b8d9f21dd626a03fa9d3f}{is\-Transfert\-Type\-Control} ()
 \begin{DoxyCompactList}\small\item\em Endpoint transfert type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a4e70988edb576768b41a9d2c3093c62e}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a4e70988edb576768b41a9d2c3093c62e}{isTransfertTypeIsochronus} ()}
-\label{classmdt_usb_endpoint_descriptor_a4e70988edb576768b41a9d2c3093c62e}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a4e70988edb576768b41a9d2c3093c62e}{is\-Transfert\-Type\-Isochronus} ()
 \begin{DoxyCompactList}\small\item\em Endpoint transfert type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a7bb6ffc5624d3059289a00da48632e93}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a7bb6ffc5624d3059289a00da48632e93}{isTransfertTypeBulk} ()}
-\label{classmdt_usb_endpoint_descriptor_a7bb6ffc5624d3059289a00da48632e93}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a7bb6ffc5624d3059289a00da48632e93}{is\-Transfert\-Type\-Bulk} ()
 \begin{DoxyCompactList}\small\item\em Endpoint transfert type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a25f980aace01311474813f588d1618df}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a25f980aace01311474813f588d1618df}{isTransfertTypeInterrupt} ()}
-\label{classmdt_usb_endpoint_descriptor_a25f980aace01311474813f588d1618df}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a25f980aace01311474813f588d1618df}{is\-Transfert\-Type\-Interrupt} ()
 \begin{DoxyCompactList}\small\item\em Endpoint transfert type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a9e758fcd2f85d4a41a7a95241585ce29}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a9e758fcd2f85d4a41a7a95241585ce29}{isAsynchronous} ()}
-\label{classmdt_usb_endpoint_descriptor_a9e758fcd2f85d4a41a7a95241585ce29}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a9e758fcd2f85d4a41a7a95241585ce29}{is\-Asynchronous} ()
 \begin{DoxyCompactList}\small\item\em Endpoint synchronization type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a4547eeba32592fc49d56c73a53c49584}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a4547eeba32592fc49d56c73a53c49584}{isAdaptative} ()}
-\label{classmdt_usb_endpoint_descriptor_a4547eeba32592fc49d56c73a53c49584}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a4547eeba32592fc49d56c73a53c49584}{is\-Adaptative} ()
 \begin{DoxyCompactList}\small\item\em Endpoint synchronization type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a83d8d0ae021ca27067044a6ecc72cff6}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a83d8d0ae021ca27067044a6ecc72cff6}{isSynchronous} ()}
-\label{classmdt_usb_endpoint_descriptor_a83d8d0ae021ca27067044a6ecc72cff6}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a83d8d0ae021ca27067044a6ecc72cff6}{is\-Synchronous} ()
 \begin{DoxyCompactList}\small\item\em Endpoint synchronization type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_af7f74090d6964f908fb556a04853c873}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_af7f74090d6964f908fb556a04853c873}{isDataEndpoint} ()}
-\label{classmdt_usb_endpoint_descriptor_af7f74090d6964f908fb556a04853c873}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_af7f74090d6964f908fb556a04853c873}{is\-Data\-Endpoint} ()
 \begin{DoxyCompactList}\small\item\em Endpoint usage type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a4a0da79423ca913e32016b89e5b48e5c}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a4a0da79423ca913e32016b89e5b48e5c}{isFeedbackEndpoint} ()}
-\label{classmdt_usb_endpoint_descriptor_a4a0da79423ca913e32016b89e5b48e5c}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a4a0da79423ca913e32016b89e5b48e5c}{is\-Feedback\-Endpoint} ()
 \begin{DoxyCompactList}\small\item\em Endpoint usage type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_endpoint_descriptor_a9a22e038a2e227af30e77d596f4990fa}{
-bool \hyperlink{classmdt_usb_endpoint_descriptor_a9a22e038a2e227af30e77d596f4990fa}{isImplicitFeedbackEndpoint} ()}
-\label{classmdt_usb_endpoint_descriptor_a9a22e038a2e227af30e77d596f4990fa}
-
+bool \hyperlink{classmdt_usb_endpoint_descriptor_a9a22e038a2e227af30e77d596f4990fa}{is\-Implicit\-Feedback\-Endpoint} ()
 \begin{DoxyCompactList}\small\item\em Endpoint usage type. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_usb_endpoint_descriptor_ae7bdf4803a50206fdb9b30008b9bc230}{maxPacketSize} ()
+int \hyperlink{classmdt_usb_endpoint_descriptor_ae7bdf4803a50206fdb9b30008b9bc230}{max\-Packet\-Size} ()
 \begin{DoxyCompactList}\small\item\em Maximum packet size. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_usb_endpoint_descriptor_acc5881f4e94f4b1014ecbe9f6a3f3405}{transactionsCountPerMicroFrame} ()
+int \hyperlink{classmdt_usb_endpoint_descriptor_acc5881f4e94f4b1014ecbe9f6a3f3405}{transactions\-Count\-Per\-Micro\-Frame} ()
 \begin{DoxyCompactList}\small\item\em Transactions per microframe. \end{DoxyCompactList}\item 
-quint8 \hyperlink{classmdt_usb_endpoint_descriptor_ab2b12df2f8bd4024f118fe1293bc3bf4}{bInterval} ()
+quint8 \hyperlink{classmdt_usb_endpoint_descriptor_ab2b12df2f8bd4024f118fe1293bc3bf4}{b\-Interval} ()
 \begin{DoxyCompactList}\small\item\em Interval for polling endpoint for data transfers. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-USB endpoint descriptor. 
+U\-S\-B endpoint descriptor. 
 
-Definition at line 29 of file mdtUsbEndpointDescriptor.h.
+Definition at line 29 of file mdt\-Usb\-Endpoint\-Descriptor.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usb_endpoint_descriptor_adf827037bb0a066e8eeabf9d96145e7f}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{mdt\-Usb\-Endpoint\-Descriptor}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Endpoint\-Descriptor\-::mdt\-Usb\-Endpoint\-Descriptor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_adf827037bb0a066e8eeabf9d96145e7f}
+
+
+Definition at line 25 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a44cf8f039efd58015fca837f8bd8e59f}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!$\sim$mdt\-Usb\-Endpoint\-Descriptor@{$\sim$mdt\-Usb\-Endpoint\-Descriptor}}
+\index{$\sim$mdt\-Usb\-Endpoint\-Descriptor@{$\sim$mdt\-Usb\-Endpoint\-Descriptor}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{$\sim$mdt\-Usb\-Endpoint\-Descriptor}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Endpoint\-Descriptor\-::$\sim$mdt\-Usb\-Endpoint\-Descriptor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a44cf8f039efd58015fca837f8bd8e59f}
+
+
+Definition at line 33 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_usb_endpoint_descriptor_a478bc4bdec482184c0fc9af3218afad9}{
-\index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!address@{address}}
-\index{address@{address}!mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
-\subsubsection[{address}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtUsbEndpointDescriptor::address (
+\hypertarget{classmdt_usb_endpoint_descriptor_a478bc4bdec482184c0fc9af3218afad9}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!address@{address}}
+\index{address@{address}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{address}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Endpoint\-Descriptor\-::address (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_usb_endpoint_descriptor_a478bc4bdec482184c0fc9af3218afad9}
+)}}\label{classmdt_usb_endpoint_descriptor_a478bc4bdec482184c0fc9af3218afad9}
 
 
 Endpoint address (number) 
 
-Note: this is the decoded address, i.e. bits 3..0 extracted from bEndpointAddress 
+Note\-: this is the decoded address, i.\-e. bits 3..0 extracted from b\-Endpoint\-Address 
 
-Definition at line 48 of file mdtUsbEndpointDescriptor.cpp.
+Definition at line 48 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
 
-\hypertarget{classmdt_usb_endpoint_descriptor_ab2b12df2f8bd4024f118fe1293bc3bf4}{
-\index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!bInterval@{bInterval}}
-\index{bInterval@{bInterval}!mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
-\subsubsection[{bInterval}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtUsbEndpointDescriptor::bInterval (
+\hypertarget{classmdt_usb_endpoint_descriptor_ab2b12df2f8bd4024f118fe1293bc3bf4}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!b\-Interval@{b\-Interval}}
+\index{b\-Interval@{b\-Interval}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{b\-Interval}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Endpoint\-Descriptor\-::b\-Interval (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_usb_endpoint_descriptor_ab2b12df2f8bd4024f118fe1293bc3bf4}
+)}}\label{classmdt_usb_endpoint_descriptor_ab2b12df2f8bd4024f118fe1293bc3bf4}
 
 
 Interval for polling endpoint for data transfers. 
 
-Value is returned as read in bInterval field (in libusb strcture) 
+Value is returned as read in b\-Interval field (in libusb strcture) 
 
-Definition at line 123 of file mdtUsbEndpointDescriptor.cpp.
+Definition at line 123 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
 
-\hypertarget{classmdt_usb_endpoint_descriptor_af001cef68ba1e177a63b1f9ba02ddc6c}{
-\index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!fetchAttributes@{fetchAttributes}}
-\index{fetchAttributes@{fetchAttributes}!mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
-\subsubsection[{fetchAttributes}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbEndpointDescriptor::fetchAttributes (
+\hypertarget{classmdt_usb_endpoint_descriptor_af001cef68ba1e177a63b1f9ba02ddc6c}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!fetch\-Attributes@{fetch\-Attributes}}
+\index{fetch\-Attributes@{fetch\-Attributes}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{fetch\-Attributes}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Endpoint\-Descriptor\-::fetch\-Attributes (
 \begin{DoxyParamCaption}
-\item[{libusb\_\-endpoint\_\-descriptor $\ast$}]{descriptor}
+\item[{libusb\-\_\-endpoint\-\_\-descriptor $\ast$}]{descriptor}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_usb_endpoint_descriptor_af001cef68ba1e177a63b1f9ba02ddc6c}
+)}}\label{classmdt_usb_endpoint_descriptor_af001cef68ba1e177a63b1f9ba02ddc6c}
 
 
 Ftech the endpoint descriptor's attributes. 
@@ -146,45 +132,249 @@ descriptor must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 37 of file mdtUsbEndpointDescriptor.cpp.
+Definition at line 37 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
 
-\hypertarget{classmdt_usb_endpoint_descriptor_ae7bdf4803a50206fdb9b30008b9bc230}{
-\index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!maxPacketSize@{maxPacketSize}}
-\index{maxPacketSize@{maxPacketSize}!mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
-\subsubsection[{maxPacketSize}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbEndpointDescriptor::maxPacketSize (
+
+
+Referenced by mdt\-Usb\-Interface\-Descriptor\-::fetch\-Attributes().
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a4547eeba32592fc49d56c73a53c49584}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Adaptative@{is\-Adaptative}}
+\index{is\-Adaptative@{is\-Adaptative}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Adaptative}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Adaptative (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_usb_endpoint_descriptor_ae7bdf4803a50206fdb9b30008b9bc230}
+)}}\label{classmdt_usb_endpoint_descriptor_a4547eeba32592fc49d56c73a53c49584}
+
+
+Endpoint synchronization type. 
+
+
+
+Definition at line 88 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a9e758fcd2f85d4a41a7a95241585ce29}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Asynchronous@{is\-Asynchronous}}
+\index{is\-Asynchronous@{is\-Asynchronous}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Asynchronous}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Asynchronous (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a9e758fcd2f85d4a41a7a95241585ce29}
+
+
+Endpoint synchronization type. 
+
+
+
+Definition at line 83 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_af7f74090d6964f908fb556a04853c873}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Data\-Endpoint@{is\-Data\-Endpoint}}
+\index{is\-Data\-Endpoint@{is\-Data\-Endpoint}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Data\-Endpoint}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Data\-Endpoint (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_af7f74090d6964f908fb556a04853c873}
+
+
+Endpoint usage type. 
+
+
+
+Definition at line 98 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+
+
+Referenced by mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-In\-Endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-Out\-Endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-In\-Endpoint(), and mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-Out\-Endpoint().
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a8f6bc6b31b436f21c3ad34f909f35ccf}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Direction\-I\-N@{is\-Direction\-I\-N}}
+\index{is\-Direction\-I\-N@{is\-Direction\-I\-N}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Direction\-I\-N}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Direction\-I\-N (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a8f6bc6b31b436f21c3ad34f909f35ccf}
+
+
+Endpoint direction. 
+
+
+
+Definition at line 53 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+
+
+Referenced by mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-In\-Endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-In\-Endpoint(), and is\-Direction\-O\-U\-T().
+
+\hypertarget{classmdt_usb_endpoint_descriptor_ae45b2407d6f973c25ff0058eb941857a}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Direction\-O\-U\-T@{is\-Direction\-O\-U\-T}}
+\index{is\-Direction\-O\-U\-T@{is\-Direction\-O\-U\-T}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Direction\-O\-U\-T}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Direction\-O\-U\-T (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_ae45b2407d6f973c25ff0058eb941857a}
+
+
+Endpoint direction. 
+
+
+
+Definition at line 58 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+
+
+References is\-Direction\-I\-N().
+
+
+
+Referenced by mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-Out\-Endpoint(), and mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-Out\-Endpoint().
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a4a0da79423ca913e32016b89e5b48e5c}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Feedback\-Endpoint@{is\-Feedback\-Endpoint}}
+\index{is\-Feedback\-Endpoint@{is\-Feedback\-Endpoint}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Feedback\-Endpoint}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Feedback\-Endpoint (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a4a0da79423ca913e32016b89e5b48e5c}
+
+
+Endpoint usage type. 
+
+
+
+Definition at line 103 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a9a22e038a2e227af30e77d596f4990fa}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Implicit\-Feedback\-Endpoint@{is\-Implicit\-Feedback\-Endpoint}}
+\index{is\-Implicit\-Feedback\-Endpoint@{is\-Implicit\-Feedback\-Endpoint}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Implicit\-Feedback\-Endpoint}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Implicit\-Feedback\-Endpoint (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a9a22e038a2e227af30e77d596f4990fa}
+
+
+Endpoint usage type. 
+
+
+
+Definition at line 108 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a83d8d0ae021ca27067044a6ecc72cff6}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Synchronous@{is\-Synchronous}}
+\index{is\-Synchronous@{is\-Synchronous}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Synchronous}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Synchronous (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a83d8d0ae021ca27067044a6ecc72cff6}
+
+
+Endpoint synchronization type. 
+
+
+
+Definition at line 93 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a7bb6ffc5624d3059289a00da48632e93}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Transfert\-Type\-Bulk@{is\-Transfert\-Type\-Bulk}}
+\index{is\-Transfert\-Type\-Bulk@{is\-Transfert\-Type\-Bulk}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Transfert\-Type\-Bulk}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Transfert\-Type\-Bulk (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a7bb6ffc5624d3059289a00da48632e93}
+
+
+Endpoint transfert type. 
+
+
+
+Definition at line 73 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+
+
+Referenced by mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-In\-Endpoint(), and mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-Out\-Endpoint().
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a98313de5a27b8d9f21dd626a03fa9d3f}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Transfert\-Type\-Control@{is\-Transfert\-Type\-Control}}
+\index{is\-Transfert\-Type\-Control@{is\-Transfert\-Type\-Control}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Transfert\-Type\-Control}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Transfert\-Type\-Control (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a98313de5a27b8d9f21dd626a03fa9d3f}
+
+
+Endpoint transfert type. 
+
+
+
+Definition at line 63 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a25f980aace01311474813f588d1618df}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Transfert\-Type\-Interrupt@{is\-Transfert\-Type\-Interrupt}}
+\index{is\-Transfert\-Type\-Interrupt@{is\-Transfert\-Type\-Interrupt}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Transfert\-Type\-Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Transfert\-Type\-Interrupt (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a25f980aace01311474813f588d1618df}
+
+
+Endpoint transfert type. 
+
+
+
+Definition at line 78 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+
+
+Referenced by mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-In\-Endpoint(), and mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-Out\-Endpoint().
+
+\hypertarget{classmdt_usb_endpoint_descriptor_a4e70988edb576768b41a9d2c3093c62e}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!is\-Transfert\-Type\-Isochronus@{is\-Transfert\-Type\-Isochronus}}
+\index{is\-Transfert\-Type\-Isochronus@{is\-Transfert\-Type\-Isochronus}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{is\-Transfert\-Type\-Isochronus}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Endpoint\-Descriptor\-::is\-Transfert\-Type\-Isochronus (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_a4e70988edb576768b41a9d2c3093c62e}
+
+
+Endpoint transfert type. 
+
+
+
+Definition at line 68 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_ae7bdf4803a50206fdb9b30008b9bc230}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!max\-Packet\-Size@{max\-Packet\-Size}}
+\index{max\-Packet\-Size@{max\-Packet\-Size}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{max\-Packet\-Size}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Usb\-Endpoint\-Descriptor\-::max\-Packet\-Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_endpoint_descriptor_ae7bdf4803a50206fdb9b30008b9bc230}
 
 
 Maximum packet size. 
 
-Note: this is the decoded size, i.e. bits 10..0 extracted from wMaxPacketSize 
+Note\-: this is the decoded size, i.\-e. bits 10..0 extracted from w\-Max\-Packet\-Size 
 
-Definition at line 113 of file mdtUsbEndpointDescriptor.cpp.
+Definition at line 113 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
 
-\hypertarget{classmdt_usb_endpoint_descriptor_acc5881f4e94f4b1014ecbe9f6a3f3405}{
-\index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!transactionsCountPerMicroFrame@{transactionsCountPerMicroFrame}}
-\index{transactionsCountPerMicroFrame@{transactionsCountPerMicroFrame}!mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
-\subsubsection[{transactionsCountPerMicroFrame}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbEndpointDescriptor::transactionsCountPerMicroFrame (
+\hypertarget{classmdt_usb_endpoint_descriptor_acc5881f4e94f4b1014ecbe9f6a3f3405}{\index{mdt\-Usb\-Endpoint\-Descriptor@{mdt\-Usb\-Endpoint\-Descriptor}!transactions\-Count\-Per\-Micro\-Frame@{transactions\-Count\-Per\-Micro\-Frame}}
+\index{transactions\-Count\-Per\-Micro\-Frame@{transactions\-Count\-Per\-Micro\-Frame}!mdtUsbEndpointDescriptor@{mdt\-Usb\-Endpoint\-Descriptor}}
+\subsubsection[{transactions\-Count\-Per\-Micro\-Frame}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Usb\-Endpoint\-Descriptor\-::transactions\-Count\-Per\-Micro\-Frame (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_usb_endpoint_descriptor_acc5881f4e94f4b1014ecbe9f6a3f3405}
+)}}\label{classmdt_usb_endpoint_descriptor_acc5881f4e94f4b1014ecbe9f6a3f3405}
 
 
 Transactions per microframe. 
 
-Note: this is the decoded value + 1, i.e. bits 12..11 extracted from wMaxPacketSize Bit 12..11 give additionnal value, and this method returns the extracted value + 1 (f.ex. if bit 12..11 give 00 as result, this method returns 1) 
+Note\-: this is the decoded value + 1, i.\-e. bits 12..11 extracted from w\-Max\-Packet\-Size Bit 12..11 give additionnal value, and this method returns the extracted value + 1 (f.\-ex. if bit 12..11 give 00 as result, this method returns 1) 
 
-Definition at line 118 of file mdtUsbEndpointDescriptor.cpp.
+Definition at line 118 of file mdt\-Usb\-Endpoint\-Descriptor.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtport/mdtUsbEndpointDescriptor.h\item 
-src/mdtport/mdtUsbEndpointDescriptor.cpp\end{DoxyCompactItemize}
+src/mdtport/\hyperlink{mdt_usb_endpoint_descriptor_8h}{mdt\-Usb\-Endpoint\-Descriptor.\-h}\item 
+src/mdtport/\hyperlink{mdt_usb_endpoint_descriptor_8cpp}{mdt\-Usb\-Endpoint\-Descriptor.\-cpp}\end{DoxyCompactItemize}

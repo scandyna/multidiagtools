@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="5,83,152,112"/>
-<area shape="rect" id="node4" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="20,5,137,35"/>
+<map id="mdtFrameCodecScpi" name="mdtFrameCodecScpi">
+<area shape="rect" id="node2" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="165,197,312,227"/>
+<area shape="rect" id="node4" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="11,101,128,131"/>
 </map>

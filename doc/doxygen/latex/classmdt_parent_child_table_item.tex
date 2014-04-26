@@ -1,81 +1,54 @@
-\hypertarget{classmdt_parent_child_table_item}{
-\section{mdtParentChildTableItem Class Reference}
-\label{classmdt_parent_child_table_item}\index{mdtParentChildTableItem@{mdtParentChildTableItem}}
+\hypertarget{classmdt_parent_child_table_item}{\section{mdt\-Parent\-Child\-Table\-Item Class Reference}
+\label{classmdt_parent_child_table_item}\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}}
 }
 
 
-Collaboration diagram for mdtParentChildTableItem:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=285pt]{classmdt_parent_child_table_item__coll__graph}
-\end{center}
-\end{figure}
+{\ttfamily \#include $<$mdt\-Parent\-Child\-Table\-Item.\-h$>$}
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_parent_child_table_item_afd38823879e25db1dca8099fb138042c}{mdtParentChildTableItem} (QAbstractItemModel $\ast$model, int modelRow, \hyperlink{classmdt_parent_child_table_item}{mdtParentChildTableItem} $\ast$parent)
+\hyperlink{classmdt_parent_child_table_item_afd38823879e25db1dca8099fb138042c}{mdt\-Parent\-Child\-Table\-Item} (\hyperlink{class_q_abstract_item_model}{Q\-Abstract\-Item\-Model} $\ast$\hyperlink{classmdt_parent_child_table_item_aceb2319dfd2707cfe8d93705f56bc43c}{model}, int model\-Row, \hyperlink{classmdt_parent_child_table_item}{mdt\-Parent\-Child\-Table\-Item} $\ast$\hyperlink{classmdt_parent_child_table_item_ac4491aa3959249d1a1a6f1582b975589}{parent})
 \begin{DoxyCompactList}\small\item\em Table item constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_parent_child_table_item_ad1a5c00ca1d0367d631548fa5732d41c}{
-\hyperlink{classmdt_parent_child_table_item_ad1a5c00ca1d0367d631548fa5732d41c}{mdtParentChildTableItem} ()}
-\label{classmdt_parent_child_table_item_ad1a5c00ca1d0367d631548fa5732d41c}
-
+\hyperlink{classmdt_parent_child_table_item_ad1a5c00ca1d0367d631548fa5732d41c}{mdt\-Parent\-Child\-Table\-Item} ()
 \begin{DoxyCompactList}\small\item\em Table item constructor Use this constructor to create the root item of the model. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_parent_child_table_item_a182fff209f0a7c9319cbcf72908df69f}{
-void {\bfseries appendChild} (\hyperlink{classmdt_parent_child_table_item}{mdtParentChildTableItem} $\ast$child)}
-\label{classmdt_parent_child_table_item_a182fff209f0a7c9319cbcf72908df69f}
-
+\hyperlink{classmdt_parent_child_table_item_ac715724930bdad5795b227908c24c5e2}{$\sim$mdt\-Parent\-Child\-Table\-Item} ()
 \item 
-\hypertarget{classmdt_parent_child_table_item_ab6c36c72d8eb49fac2035d7e2b9474a3}{
-\hyperlink{classmdt_parent_child_table_item}{mdtParentChildTableItem} $\ast$ {\bfseries child} (int row)}
-\label{classmdt_parent_child_table_item_ab6c36c72d8eb49fac2035d7e2b9474a3}
-
+void \hyperlink{classmdt_parent_child_table_item_a182fff209f0a7c9319cbcf72908df69f}{append\-Child} (\hyperlink{classmdt_parent_child_table_item}{mdt\-Parent\-Child\-Table\-Item} $\ast$\hyperlink{classmdt_parent_child_table_item_ab6c36c72d8eb49fac2035d7e2b9474a3}{child})
 \item 
-\hypertarget{classmdt_parent_child_table_item_ac2168fc5f960d506f090b7aafcb4fec2}{
-int {\bfseries childCount} () const }
-\label{classmdt_parent_child_table_item_ac2168fc5f960d506f090b7aafcb4fec2}
-
+\hyperlink{classmdt_parent_child_table_item}{mdt\-Parent\-Child\-Table\-Item} $\ast$ \hyperlink{classmdt_parent_child_table_item_ab6c36c72d8eb49fac2035d7e2b9474a3}{child} (int \hyperlink{classmdt_parent_child_table_item_ab2defb25c5033398a6fc4fcd7f015c95}{row})
 \item 
-\hypertarget{classmdt_parent_child_table_item_ac4491aa3959249d1a1a6f1582b975589}{
-\hyperlink{classmdt_parent_child_table_item}{mdtParentChildTableItem} $\ast$ {\bfseries parent} ()}
-\label{classmdt_parent_child_table_item_ac4491aa3959249d1a1a6f1582b975589}
-
+int \hyperlink{classmdt_parent_child_table_item_ac2168fc5f960d506f090b7aafcb4fec2}{child\-Count} () const 
 \item 
-int \hyperlink{classmdt_parent_child_table_item_aca8d9e7b872c412d67f4125a88312c5a}{columnCount} () const 
+\hyperlink{classmdt_parent_child_table_item}{mdt\-Parent\-Child\-Table\-Item} $\ast$ \hyperlink{classmdt_parent_child_table_item_ac4491aa3959249d1a1a6f1582b975589}{parent} ()
+\item 
+int \hyperlink{classmdt_parent_child_table_item_aca8d9e7b872c412d67f4125a88312c5a}{column\-Count} () const 
 \begin{DoxyCompactList}\small\item\em Columns count of the stored model. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_parent_child_table_item_a7150ac4c6a082887e7076f05a37f4781}{data} (int column, int role) const 
+Q\-Variant \hyperlink{classmdt_parent_child_table_item_a7150ac4c6a082887e7076f05a37f4781}{data} (int column, int role) const 
 \begin{DoxyCompactList}\small\item\em Returns the data of the stored model at stored row The row is set by constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_parent_child_table_item_ab2defb25c5033398a6fc4fcd7f015c95}{
-int {\bfseries row} () const }
-\label{classmdt_parent_child_table_item_ab2defb25c5033398a6fc4fcd7f015c95}
-
+int \hyperlink{classmdt_parent_child_table_item_ab2defb25c5033398a6fc4fcd7f015c95}{row} () const 
 \item 
-\hypertarget{classmdt_parent_child_table_item_aceb2319dfd2707cfe8d93705f56bc43c}{
-QAbstractItemModel $\ast$ {\bfseries model} ()}
-\label{classmdt_parent_child_table_item_aceb2319dfd2707cfe8d93705f56bc43c}
-
+\hyperlink{class_q_abstract_item_model}{Q\-Abstract\-Item\-Model} $\ast$ \hyperlink{classmdt_parent_child_table_item_aceb2319dfd2707cfe8d93705f56bc43c}{model} ()
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 10 of file mdtParentChildTableItem.h.
+Definition at line 10 of file mdt\-Parent\-Child\-Table\-Item.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_parent_child_table_item_afd38823879e25db1dca8099fb138042c}{
-\index{mdtParentChildTableItem@{mdtParentChildTableItem}!mdtParentChildTableItem@{mdtParentChildTableItem}}
-\index{mdtParentChildTableItem@{mdtParentChildTableItem}!mdtParentChildTableItem@{mdtParentChildTableItem}}
-\subsubsection[{mdtParentChildTableItem}]{\setlength{\rightskip}{0pt plus 5cm}mdtParentChildTableItem::mdtParentChildTableItem (
+\hypertarget{classmdt_parent_child_table_item_afd38823879e25db1dca8099fb138042c}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}}
+\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{mdt\-Parent\-Child\-Table\-Item}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Parent\-Child\-Table\-Item\-::mdt\-Parent\-Child\-Table\-Item (
 \begin{DoxyParamCaption}
-\item[{QAbstractItemModel $\ast$}]{model, }
-\item[{int}]{modelRow, }
-\item[{{\bf mdtParentChildTableItem} $\ast$}]{parent}
+\item[{{\bf Q\-Abstract\-Item\-Model} $\ast$}]{model, }
+\item[{int}]{model\-Row, }
+\item[{{\bf mdt\-Parent\-Child\-Table\-Item} $\ast$}]{parent}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_parent_child_table_item_afd38823879e25db1dca8099fb138042c}
+)}}\label{classmdt_parent_child_table_item_afd38823879e25db1dca8099fb138042c}
 
 
 Table item constructor. 
@@ -86,25 +59,90 @@ Table item constructor.
 \hline
 {\em model} & The table model to reference (let it null when creating the root object) \\
 \hline
-{\em modelRow} & Set the row from the model that must be referenced \\
+{\em model\-Row} & Set the row from the model that must be referenced \\
 \hline
 \end{DoxyParams}
 
 
-Definition at line 8 of file mdtParentChildTableItem.cpp.
+Definition at line 8 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
+
+\hypertarget{classmdt_parent_child_table_item_ad1a5c00ca1d0367d631548fa5732d41c}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}}
+\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{mdt\-Parent\-Child\-Table\-Item}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Parent\-Child\-Table\-Item\-::mdt\-Parent\-Child\-Table\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_parent_child_table_item_ad1a5c00ca1d0367d631548fa5732d41c}
+
+
+Table item constructor Use this constructor to create the root item of the model. 
+
+
+
+Definition at line 15 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
+
+\hypertarget{classmdt_parent_child_table_item_ac715724930bdad5795b227908c24c5e2}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!$\sim$mdt\-Parent\-Child\-Table\-Item@{$\sim$mdt\-Parent\-Child\-Table\-Item}}
+\index{$\sim$mdt\-Parent\-Child\-Table\-Item@{$\sim$mdt\-Parent\-Child\-Table\-Item}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{$\sim$mdt\-Parent\-Child\-Table\-Item}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Parent\-Child\-Table\-Item\-::$\sim$mdt\-Parent\-Child\-Table\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_parent_child_table_item_ac715724930bdad5795b227908c24c5e2}
+
+
+Definition at line 22 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_parent_child_table_item_aca8d9e7b872c412d67f4125a88312c5a}{
-\index{mdtParentChildTableItem@{mdtParentChildTableItem}!columnCount@{columnCount}}
-\index{columnCount@{columnCount}!mdtParentChildTableItem@{mdtParentChildTableItem}}
-\subsubsection[{columnCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtParentChildTableItem::columnCount (
+\hypertarget{classmdt_parent_child_table_item_a182fff209f0a7c9319cbcf72908df69f}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!append\-Child@{append\-Child}}
+\index{append\-Child@{append\-Child}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{append\-Child}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Parent\-Child\-Table\-Item\-::append\-Child (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Parent\-Child\-Table\-Item} $\ast$}]{child}
+\end{DoxyParamCaption}
+)}}\label{classmdt_parent_child_table_item_a182fff209f0a7c9319cbcf72908df69f}
+
+
+Definition at line 28 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
+
+\hypertarget{classmdt_parent_child_table_item_ab6c36c72d8eb49fac2035d7e2b9474a3}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!child@{child}}
+\index{child@{child}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{child}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Parent\-Child\-Table\-Item} $\ast$ mdt\-Parent\-Child\-Table\-Item\-::child (
+\begin{DoxyParamCaption}
+\item[{int}]{row}
+\end{DoxyParamCaption}
+)}}\label{classmdt_parent_child_table_item_ab6c36c72d8eb49fac2035d7e2b9474a3}
+
+
+Definition at line 33 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
+
+
+
+Referenced by mdt\-Parent\-Child\-Table\-Model\-::column\-Count(), and mdt\-Parent\-Child\-Table\-Model\-::index().
+
+\hypertarget{classmdt_parent_child_table_item_ac2168fc5f960d506f090b7aafcb4fec2}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!child\-Count@{child\-Count}}
+\index{child\-Count@{child\-Count}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{child\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Parent\-Child\-Table\-Item\-::child\-Count (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_parent_child_table_item_aca8d9e7b872c412d67f4125a88312c5a}
+) const}}\label{classmdt_parent_child_table_item_ac2168fc5f960d506f090b7aafcb4fec2}
+
+
+Definition at line 38 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
+
+
+
+Referenced by mdt\-Parent\-Child\-Table\-Model\-::row\-Count().
+
+\hypertarget{classmdt_parent_child_table_item_aca8d9e7b872c412d67f4125a88312c5a}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!column\-Count@{column\-Count}}
+\index{column\-Count@{column\-Count}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{column\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Parent\-Child\-Table\-Item\-::column\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_parent_child_table_item_aca8d9e7b872c412d67f4125a88312c5a}
 
 
 Columns count of the stored model. 
@@ -114,24 +152,26 @@ Columns count of the stored model
 \end{DoxyReturn}
 
 
-Definition at line 56 of file mdtParentChildTableItem.cpp.
+Definition at line 56 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
 
-\hypertarget{classmdt_parent_child_table_item_a7150ac4c6a082887e7076f05a37f4781}{
-\index{mdtParentChildTableItem@{mdtParentChildTableItem}!data@{data}}
-\index{data@{data}!mdtParentChildTableItem@{mdtParentChildTableItem}}
-\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtParentChildTableItem::data (
+
+
+Referenced by mdt\-Parent\-Child\-Table\-Model\-::column\-Count().
+
+\hypertarget{classmdt_parent_child_table_item_a7150ac4c6a082887e7076f05a37f4781}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!data@{data}}
+\index{data@{data}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Parent\-Child\-Table\-Item\-::data (
 \begin{DoxyParamCaption}
 \item[{int}]{column, }
 \item[{int}]{role}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_parent_child_table_item_a7150ac4c6a082887e7076f05a37f4781}
+) const}}\label{classmdt_parent_child_table_item_a7150ac4c6a082887e7076f05a37f4781}
 
 
 Returns the data of the stored model at stored row The row is set by constructor. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_parent_child_table_item_ad1a5c00ca1d0367d631548fa5732d41c}{mdtParentChildTableItem()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_parent_child_table_item_ad1a5c00ca1d0367d631548fa5732d41c}{mdt\-Parent\-Child\-Table\-Item()} 
 \end{DoxySeeAlso}
 
 \begin{DoxyParams}{Parameters}
@@ -142,11 +182,56 @@ Returns the data of the stored model at stored row The row is set by constructor
 \end{DoxyParams}
 
 
-Definition at line 62 of file mdtParentChildTableItem.cpp.
+Definition at line 62 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Referenced by mdt\-Parent\-Child\-Table\-Model\-::data().
+
+\hypertarget{classmdt_parent_child_table_item_aceb2319dfd2707cfe8d93705f56bc43c}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!model@{model}}
+\index{model@{model}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Q\-Abstract\-Item\-Model} $\ast$ mdt\-Parent\-Child\-Table\-Item\-::model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_parent_child_table_item_aceb2319dfd2707cfe8d93705f56bc43c}
+
+
+Definition at line 51 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
+
+\hypertarget{classmdt_parent_child_table_item_ac4491aa3959249d1a1a6f1582b975589}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!parent@{parent}}
+\index{parent@{parent}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{parent}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Parent\-Child\-Table\-Item} $\ast$ mdt\-Parent\-Child\-Table\-Item\-::parent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_parent_child_table_item_ac4491aa3959249d1a1a6f1582b975589}
+
+
+Definition at line 70 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
+
+
+
+Referenced by mdt\-Parent\-Child\-Table\-Model\-::parent().
+
+\hypertarget{classmdt_parent_child_table_item_ab2defb25c5033398a6fc4fcd7f015c95}{\index{mdt\-Parent\-Child\-Table\-Item@{mdt\-Parent\-Child\-Table\-Item}!row@{row}}
+\index{row@{row}!mdtParentChildTableItem@{mdt\-Parent\-Child\-Table\-Item}}
+\subsubsection[{row}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Parent\-Child\-Table\-Item\-::row (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_parent_child_table_item_ab2defb25c5033398a6fc4fcd7f015c95}
+
+
+Definition at line 43 of file mdt\-Parent\-Child\-Table\-Item.\-cpp.
+
+
+
+Referenced by mdt\-Parent\-Child\-Table\-Model\-::column\-Count(), and mdt\-Parent\-Child\-Table\-Model\-::parent().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtParentChildTableItem.h\item 
-src/mdtutilsgui/mdtParentChildTableItem.cpp\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_parent_child_table_item_8h}{mdt\-Parent\-Child\-Table\-Item.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_parent_child_table_item_8cpp}{mdt\-Parent\-Child\-Table\-Item.\-cpp}\end{DoxyCompactItemize}

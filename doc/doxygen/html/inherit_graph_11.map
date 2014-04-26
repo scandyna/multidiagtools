@@ -1,3 +1,3 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_device_info.html" title="Contains informations about a device (attached to a port)" alt="" coords="5,5,112,35"/>
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classmdt_field_map_item.html" title="Provide informations for mdtFieldMap. " alt="" coords="5,5,128,35"/>
 </map>

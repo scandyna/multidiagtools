@@ -1,0 +1,448 @@
+\hypertarget{classmdt_cl_unit_connector_data}{\section{mdt\-Cl\-Unit\-Connector\-Data Class Reference}
+\label{classmdt_cl_unit_connector_data}\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}}
+}
+
+
+Data container class for article connector data.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Unit\-Connector\-Data.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Cl\-Unit\-Connector\-Data\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classmdt_cl_unit_connector_data__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Cl\-Unit\-Connector\-Data\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classmdt_cl_unit_connector_data__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_cl_unit_connector_data_a67140bc54965063f71d6f40d0a38ccca}{mdt\-Cl\-Unit\-Connector\-Data} ()
+\begin{DoxyCompactList}\small\item\em Construct a empty \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data}. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_unit_connector_data_af70e73e59544ed4282fb10567634b4f4}{mdt\-Cl\-Unit\-Connector\-Data} (const Q\-Sql\-Record \&record)
+\begin{DoxyCompactList}\small\item\em Contruct a \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} from a Q\-Sql\-Record. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_unit_connector_data_a16e730eedccb32a198987ce26d4aa524}{setup} (const Q\-Sql\-Database \&db, bool setup\-Cd, bool setup\-Acd)
+\begin{DoxyCompactList}\small\item\em Setup fields from Unit\-Connector\-\_\-tbl. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_unit_connector_data_a77be8b03d9cc6711aa30c4770fea4419}{clear\-Values} ()
+\begin{DoxyCompactList}\small\item\em Clear values. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_unit_connector_data_a55918c459b5d4c67bbe12cffe9d006df}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear values and fields. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_unit_connector_data_a46f01384d0310957841721f4d4f8d0e9}{set\-Connection\-Data\-List} (const Q\-List$<$ \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} $>$ \&data\-List)
+\begin{DoxyCompactList}\small\item\em Add a list of connection data. \end{DoxyCompactList}\item 
+const Q\-List\\*
+$<$ \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} $>$ \& \hyperlink{classmdt_cl_unit_connector_data_a10ea3c0102f56aa77d6a1b7ffa30151b}{connection\-Data\-List} () const 
+\begin{DoxyCompactList}\small\item\em Get list of connection data. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} $>$ \& \hyperlink{classmdt_cl_unit_connector_data_ad755cd666838422309013a520df98352}{connection\-Data\-List} ()
+\begin{DoxyCompactList}\small\item\em Get list of connection data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_unit_connector_data_a6129c9065b7be402650ae7ec10f0f185}{add\-Connection\-Data} (const \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Add connection data. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_unit_connector_data_a120e62edfba826f8221bb4e29a0c5da3}{set\-Connection\-Data} (const Q\-Variant \&connection\-Id, const \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Update existing connection data. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \hyperlink{classmdt_cl_unit_connector_data_afae98e4e29b14763cd2dec917d379f98}{connection\-Data} (const Q\-Variant \&connection\-Id, bool $\ast$ok) const 
+\begin{DoxyCompactList}\small\item\em Get connection data for given connection I\-D. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_unit_connector_data_af7530002a396d3e200fa0e3ab7cb1185}{set\-Connector\-Data} (const \hyperlink{classmdt_cl_connector_data}{mdt\-Cl\-Connector\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Set connector data. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_connector_data}{mdt\-Cl\-Connector\-Data} \hyperlink{classmdt_cl_unit_connector_data_a2b454946f0f09287ddd34b692ccc1c1b}{connector\-Data} () const 
+\begin{DoxyCompactList}\small\item\em Get connector data (from Connector\-\_\-tbl) \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_unit_connector_data_a5a9eae080f09216a482e58581e195e35}{set\-Article\-Connector\-Data} (const \hyperlink{classmdt_cl_article_connector_data}{mdt\-Cl\-Article\-Connector\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Set article connector data. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_article_connector_data}{mdt\-Cl\-Article\-Connector\-Data} \hyperlink{classmdt_cl_unit_connector_data_a3226d440ac8468c1bf5906943fac40c1}{article\-Connector\-Data} () const 
+\begin{DoxyCompactList}\small\item\em Get article connector data. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_unit_connector_data_a2b805d341aaffbf1bb5235ef753e58b6}{is\-Based\-On\-Article\-Connector} () const 
+\begin{DoxyCompactList}\small\item\em Check if unit connector is based on a article connector. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_unit_connector_data_aebec32027c53c788bf5fd564ba8dea67}{is\-Based\-On\-Connector} () const 
+\begin{DoxyCompactList}\small\item\em Check if unit connector is based on a connector (from Connector\-\_\-tbl) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Data container class for article connector data. 
+
+Permit to echange data with Unit\-Connector\-\_\-tbl and Unit\-Connection\-\_\-tbl. 
+
+Definition at line 36 of file mdt\-Cl\-Unit\-Connector\-Data.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_cl_unit_connector_data_a67140bc54965063f71d6f40d0a38ccca}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}}
+\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{mdt\-Cl\-Unit\-Connector\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Unit\-Connector\-Data\-::mdt\-Cl\-Unit\-Connector\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connector_data_a67140bc54965063f71d6f40d0a38ccca}
+
+
+Construct a empty \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data}. 
+
+
+
+Definition at line 24 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_unit_connector_data_af70e73e59544ed4282fb10567634b4f4}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}}
+\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{mdt\-Cl\-Unit\-Connector\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Unit\-Connector\-Data\-::mdt\-Cl\-Unit\-Connector\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Record \&}]{record}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connector_data_af70e73e59544ed4282fb10567634b4f4}
+
+
+Contruct a \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} from a Q\-Sql\-Record. 
+
+Note\-: if this method is used, setup is not relevant.
+
+\begin{DoxyPrecond}{Precondition}
+All fields from Unit\-Connector\-\_\-tbl must exist in record 
+\end{DoxyPrecond}
+
+
+Definition at line 28 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::contains().
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_unit_connector_data_a6129c9065b7be402650ae7ec10f0f185}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!add\-Connection\-Data@{add\-Connection\-Data}}
+\index{add\-Connection\-Data@{add\-Connection\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{add\-Connection\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Unit\-Connector\-Data\-::add\-Connection\-Data (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Cl\-Unit\-Connection\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connector_data_a6129c9065b7be402650ae7ec10f0f185}
+
+
+Add connection data. 
+
+\begin{DoxyPrecond}{Precondition}
+data must contains following fields\-:
+\begin{DoxyItemize}
+\item Id\-\_\-\-P\-K
+\item Unit\-\_\-\-Id\-\_\-\-F\-K
+\item Unit\-Connector\-\_\-\-Id\-\_\-\-F\-K
+\item Article\-Connection\-\_\-\-Id\-\_\-\-F\-K
+\item Unit\-Contact\-Name
+\item Schema\-Page
+\item Signal\-Name
+\item Sw\-Address
+\item Function\-E\-N
+\item Function\-F\-R
+\item Function\-D\-E
+\item Function\-I\-T 
+\end{DoxyItemize}
+\end{DoxyPrecond}
+
+
+Definition at line 87 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::contains().
+
+
+
+Referenced by mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), and mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List().
+
+\hypertarget{classmdt_cl_unit_connector_data_a3226d440ac8468c1bf5906943fac40c1}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!article\-Connector\-Data@{article\-Connector\-Data}}
+\index{article\-Connector\-Data@{article\-Connector\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{article\-Connector\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Cl\-Article\-Connector\-Data} mdt\-Cl\-Unit\-Connector\-Data\-::article\-Connector\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_unit_connector_data_a3226d440ac8468c1bf5906943fac40c1}
+
+
+Get article connector data. 
+
+
+
+Definition at line 163 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_unit_connector_data_a55918c459b5d4c67bbe12cffe9d006df}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!clear@{clear}}
+\index{clear@{clear}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Unit\-Connector\-Data\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_cl_unit_connector_data_a55918c459b5d4c67bbe12cffe9d006df}
+
+
+Clear values and fields. 
+
+Will clear values, including connection data. Fields are also removed. 
+
+Reimplemented from \hyperlink{classmdt_sql_record_ad1058337837b2891d2e282001ad889d9}{mdt\-Sql\-Record}.
+
+
+
+Definition at line 63 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Cl\-Article\-Connector\-Data\-::clear(), and mdt\-Sql\-Record\-::clear().
+
+\hypertarget{classmdt_cl_unit_connector_data_a77be8b03d9cc6711aa30c4770fea4419}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!clear\-Values@{clear\-Values}}
+\index{clear\-Values@{clear\-Values}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{clear\-Values}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Unit\-Connector\-Data\-::clear\-Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_cl_unit_connector_data_a77be8b03d9cc6711aa30c4770fea4419}
+
+
+Clear values. 
+
+Will clear values, including connection data. Fields are keeped. 
+
+Reimplemented from \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{mdt\-Sql\-Record}.
+
+
+
+Definition at line 55 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Cl\-Article\-Connector\-Data\-::clear\-Values(), and mdt\-Sql\-Record\-::clear\-Values().
+
+\hypertarget{classmdt_cl_unit_connector_data_afae98e4e29b14763cd2dec917d379f98}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!connection\-Data@{connection\-Data}}
+\index{connection\-Data@{connection\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{connection\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Cl\-Unit\-Connection\-Data} mdt\-Cl\-Unit\-Connector\-Data\-::connection\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{connection\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_unit_connector_data_afae98e4e29b14763cd2dec917d379f98}
+
+
+Get connection data for given connection I\-D. 
+
+Return the connection data for witch Id\-\_\-\-P\-K matches given connection\-Id. ok will be set to false if connection\-Id was not found. 
+
+Definition at line 123 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_unit_connector_data_a10ea3c0102f56aa77d6a1b7ffa30151b}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!connection\-Data\-List@{connection\-Data\-List}}
+\index{connection\-Data\-List@{connection\-Data\-List}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{connection\-Data\-List}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-List$<$ {\bf mdt\-Cl\-Unit\-Connection\-Data} $>$ \& mdt\-Cl\-Unit\-Connector\-Data\-::connection\-Data\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_unit_connector_data_a10ea3c0102f56aa77d6a1b7ffa30151b}
+
+
+Get list of connection data. 
+
+
+
+Definition at line 77 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+Referenced by mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Cl\-Link\-::can\-Connect\-Connectors(), and mdt\-Cl\-Link\-::connect\-By\-Contact\-Name().
+
+\hypertarget{classmdt_cl_unit_connector_data_ad755cd666838422309013a520df98352}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!connection\-Data\-List@{connection\-Data\-List}}
+\index{connection\-Data\-List@{connection\-Data\-List}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{connection\-Data\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Cl\-Unit\-Connection\-Data} $>$ \& mdt\-Cl\-Unit\-Connector\-Data\-::connection\-Data\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connector_data_ad755cd666838422309013a520df98352}
+
+
+Get list of connection data. 
+
+
+
+Definition at line 82 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_unit_connector_data_a2b454946f0f09287ddd34b692ccc1c1b}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!connector\-Data@{connector\-Data}}
+\index{connector\-Data@{connector\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{connector\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Cl\-Connector\-Data} mdt\-Cl\-Unit\-Connector\-Data\-::connector\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_unit_connector_data_a2b454946f0f09287ddd34b692ccc1c1b}
+
+
+Get connector data (from Connector\-\_\-tbl) 
+
+
+
+Definition at line 150 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_unit_connector_data_a2b805d341aaffbf1bb5235ef753e58b6}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!is\-Based\-On\-Article\-Connector@{is\-Based\-On\-Article\-Connector}}
+\index{is\-Based\-On\-Article\-Connector@{is\-Based\-On\-Article\-Connector}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{is\-Based\-On\-Article\-Connector}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Unit\-Connector\-Data\-::is\-Based\-On\-Article\-Connector (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_unit_connector_data_a2b805d341aaffbf1bb5235ef753e58b6}
+
+
+Check if unit connector is based on a article connector. 
+
+
+
+Definition at line 168 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::value().
+
+\hypertarget{classmdt_cl_unit_connector_data_aebec32027c53c788bf5fd564ba8dea67}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!is\-Based\-On\-Connector@{is\-Based\-On\-Connector}}
+\index{is\-Based\-On\-Connector@{is\-Based\-On\-Connector}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{is\-Based\-On\-Connector}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Unit\-Connector\-Data\-::is\-Based\-On\-Connector (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_unit_connector_data_aebec32027c53c788bf5fd564ba8dea67}
+
+
+Check if unit connector is based on a connector (from Connector\-\_\-tbl) 
+
+
+
+Definition at line 173 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::value().
+
+\hypertarget{classmdt_cl_unit_connector_data_a5a9eae080f09216a482e58581e195e35}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!set\-Article\-Connector\-Data@{set\-Article\-Connector\-Data}}
+\index{set\-Article\-Connector\-Data@{set\-Article\-Connector\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{set\-Article\-Connector\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Unit\-Connector\-Data\-::set\-Article\-Connector\-Data (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Cl\-Article\-Connector\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connector_data_a5a9eae080f09216a482e58581e195e35}
+
+
+Set article connector data. 
+
+Will also update Connector\-\_\-\-Id\-\_\-\-F\-K and Article\-Connector\-\_\-\-Id\-\_\-\-F\-K 
+
+Definition at line 155 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Cl\-Article\-Connector\-Data\-::connector\-Data(), mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
+
+
+
+Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data().
+
+\hypertarget{classmdt_cl_unit_connector_data_a120e62edfba826f8221bb4e29a0c5da3}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!set\-Connection\-Data@{set\-Connection\-Data}}
+\index{set\-Connection\-Data@{set\-Connection\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{set\-Connection\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connection\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{connection\-Id, }
+\item[{const {\bf mdt\-Cl\-Unit\-Connection\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connector_data_a120e62edfba826f8221bb4e29a0c5da3}
+
+
+Update existing connection data. 
+
+Will update connection data for witch Id\-\_\-\-P\-K matches given connection\-Id.
+
+\begin{DoxyReturn}{Returns}
+False if connection\-Id was not found. 
+\end{DoxyReturn}
+
+
+Definition at line 105 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Sql\-Record\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_cl_unit_connector_data_a46f01384d0310957841721f4d4f8d0e9}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!set\-Connection\-Data\-List@{set\-Connection\-Data\-List}}
+\index{set\-Connection\-Data\-List@{set\-Connection\-Data\-List}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{set\-Connection\-Data\-List}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connection\-Data\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Cl\-Unit\-Connection\-Data} $>$ \&}]{data\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connector_data_a46f01384d0310957841721f4d4f8d0e9}
+
+
+Add a list of connection data. 
+
+By using this method, the caller is responsible to give valid records, that contains needed fields.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_cl_unit_connector_data_a6129c9065b7be402650ae7ec10f0f185}{add\-Connection\-Data()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 72 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_unit_connector_data_af7530002a396d3e200fa0e3ab7cb1185}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!set\-Connector\-Data@{set\-Connector\-Data}}
+\index{set\-Connector\-Data@{set\-Connector\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{set\-Connector\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connector\-Data (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Cl\-Connector\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connector_data_af7530002a396d3e200fa0e3ab7cb1185}
+
+
+Set connector data. 
+
+Will also update Connector\-\_\-\-Id\-\_\-\-F\-K and set Article\-Connector\-\_\-\-Id\-\_\-\-F\-K to Null. 
+
+Definition at line 142 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Cl\-Article\-Connector\-Data\-::clear\-Values(), mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
+
+\hypertarget{classmdt_cl_unit_connector_data_a16e730eedccb32a198987ce26d4aa524}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!setup@{setup}}
+\index{setup@{setup}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Unit\-Connector\-Data\-::setup (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Database \&}]{db, }
+\item[{bool}]{setup\-Cd, }
+\item[{bool}]{setup\-Acd}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connector_data_a16e730eedccb32a198987ce26d4aa524}
+
+
+Setup fields from Unit\-Connector\-\_\-tbl. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em setup\-Cd} & If true, fields from connector part are also added. \\
+\hline
+{\em setup\-Acd} & If true, fields from article connector part are also added. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 39 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Cl\-Connector\-Data\-::setup(), and mdt\-Cl\-Article\-Connector\-Data\-::setup().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_unit_connector_data_8h}{mdt\-Cl\-Unit\-Connector\-Data.\-h}\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_unit_connector_data_8cpp}{mdt\-Cl\-Unit\-Connector\-Data.\-cpp}\end{DoxyCompactItemize}

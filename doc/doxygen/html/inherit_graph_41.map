@@ -1,3 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_port_lock.html" title="NOTE:" alt="" coords="5,5,101,35"/>
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_q_shared_data.html" title="QSharedData" alt="" coords="5,5,107,35"/>
+<area shape="rect" id="node3" href="$classmdt_field_map_data.html" title="mdtFieldMapData" alt="" coords="155,5,280,35"/>
 </map>

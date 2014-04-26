@@ -1,4 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments." alt="" coords="25,83,135,112"/>
-<area shape="rect" id="node4" href="$classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="37,5,123,35"/>
+<map id="mdtDeviceDSO1000A" name="mdtDeviceDSO1000A">
+<area shape="rect" id="node2" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="25,160,135,189"/>
+<area shape="rect" id="node4" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="37,83,123,112"/>
+<area shape="rect" id="node6" href="$class_q_object.html" title="QObject" alt="" coords="45,5,115,35"/>
 </map>

@@ -1,6 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;" alt="" coords="7,165,151,195"/>
-<area shape="rect" id="node4" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="5,85,152,115"/>
-<area shape="rect" id="node6" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="20,5,137,35"/>
-<area shape="rect" id="node8" href="$classmdt_value.html" title="Conatins a value with some attributes." alt="" coords="175,165,252,195"/>
+<map id="mdtFrameCodecScpiU3606A" name="mdtFrameCodecScpiU3606A">
+<area shape="rect" id="node2" href="$classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt; " alt="" coords="167,277,311,307"/>
+<area shape="rect" id="node4" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="165,197,312,227"/>
+<area shape="rect" id="node6" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="11,101,128,131"/>
 </map>

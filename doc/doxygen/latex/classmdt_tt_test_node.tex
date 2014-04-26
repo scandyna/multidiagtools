@@ -1,0 +1,369 @@
+\hypertarget{classmdt_tt_test_node}{\section{mdt\-Tt\-Test\-Node Class Reference}
+\label{classmdt_tt_test_node}\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}}
+}
+
+
+Helper class for test node edition.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Test\-Node.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Tt\-Test\-Node\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=164pt]{classmdt_tt_test_node__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Tt\-Test\-Node\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{classmdt_tt_test_node__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_tt_test_node_a6a3513f05c9d76f60d7a27bd26c5ecc3}{mdt\-Tt\-Test\-Node} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent, Q\-Sql\-Database db)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_tt_test_node_ae1c4ba44984fb21ec36aa4aa15207ad4}{sql\-For\-Unit\-Selection} (const Q\-Variant \&Vehicle\-Type\-Id)
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for units selection. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_tt_test_node_a98245190a8c199d1a7238b2d1c557830}{sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List} (const Q\-List$<$ Q\-Variant $>$ \&unit\-Id\-List)
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for unit selection for given list of unit I\-Ds. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_tt_test_node_a0dcbf96a31c631f8ce62e1526688ba9f}{sql\-For\-Unit\-Connection\-Selection} (const Q\-Variant \&unit\-Id)
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for unit connection selection. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_node_a3a0e95628454016a49202dfb7a40e871}{get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id} (const Q\-Variant \&unit\-Connection\-Id)
+\begin{DoxyCompactList}\small\item\em Get a list of unit connection I\-Ds that are linked (meaning wiered) to given unit connection I\-D. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_node_a6e72542d6a7e1773cc228d9cfc9f3be8}{get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List} (const Q\-List$<$ Q\-Variant $>$ \&unit\-Connection\-Id\-List)
+\begin{DoxyCompactList}\small\item\em Get a list of unit I\-Ds for given list of unit connection I\-Ds. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_node_aedbfa25bedac04b859b1cb3ef6a16510}{get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit} (const Q\-Variant \&unit\-Id)
+\begin{DoxyCompactList}\small\item\em Get a list of unit connection I\-Ds that are part of given unit I\-D. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_node_a07b8cd098d61c3f14d3ba226c1d1f1cb}{get\-Channel\-Test\-Connection\-Id\-List} (const Q\-Variant \&test\-Node\-Id, const Q\-Variant \&bus\-Name)
+\begin{DoxyCompactList}\small\item\em Get a list of channel test connections for given bus name and node I\-D. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_a9885f086f4496b49d2bc4ac299c55e89}{add\-Test\-Node\-Unit} (const \hyperlink{classmdt_tt_test_node_unit_data}{mdt\-Tt\-Test\-Node\-Unit\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Add a test node unit. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_ac323fd694967fb49145eb9238622c866}{add\-Test\-Node\-Units} (const Q\-List$<$ \hyperlink{classmdt_tt_test_node_unit_data}{mdt\-Tt\-Test\-Node\-Unit\-Data} $>$ \&data\-List)
+\begin{DoxyCompactList}\small\item\em Add a list of test node units. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_a7accbc1143114adf6c61d467b7e8e211}{add\-Test\-Node\-Unit} (const Q\-Variant \&Unit\-Id, const Q\-Variant \&Test\-Node\-Id, const Q\-Variant \&type\-Code, const Q\-Variant \&bus\-Name)
+\begin{DoxyCompactList}\small\item\em Add a test node unit. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_a5057a13fb3d7fababcbebccf82ee3ed6}{add\-Test\-Node\-Units} (const Q\-List$<$ Q\-Variant $>$ \&unit\-Id\-List, const Q\-Variant \&test\-Node\-Id, const Q\-Variant \&type\-Code, const Q\-Variant \&bus\-Name)
+\begin{DoxyCompactList}\small\item\em Add a list of test node units. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_a961a9fedcce41ac28fc0eb616a8968cf}{remove\-Test\-Node\-Units} (const Q\-List$<$ Q\-Variant $>$ \&Test\-Node\-Id\-List)
+\begin{DoxyCompactList}\small\item\em Remove test node units. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_a86209521bed056b11a27431a19cd4747}{remove\-Test\-Node\-Units} (const Q\-Model\-Index\-List \&index\-List\-Of\-Selected\-Rows)
+\begin{DoxyCompactList}\small\item\em Remove test node units. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_a63a7f4a4509de45526303f92c4bdbf83}{set\-Test\-Connection} (const Q\-Variant \&test\-Node\-Unit\-Id, const Q\-Variant \&test\-Connection\-Id)
+\begin{DoxyCompactList}\small\item\em Set test connection to given test node unit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Helper class for test node edition. 
+
+Definition at line 33 of file mdt\-Tt\-Test\-Node.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_tt_test_node_a6a3513f05c9d76f60d7a27bd26c5ecc3}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}}
+\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{mdt\-Tt\-Test\-Node}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Node\-::mdt\-Tt\-Test\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent, }
+\item[{Q\-Sql\-Database}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a6a3513f05c9d76f60d7a27bd26c5ecc3}
+
+
+Constructor. 
+
+
+
+Definition at line 26 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_test_node_a9885f086f4496b49d2bc4ac299c55e89}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!add\-Test\-Node\-Unit@{add\-Test\-Node\-Unit}}
+\index{add\-Test\-Node\-Unit@{add\-Test\-Node\-Unit}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{add\-Test\-Node\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-::add\-Test\-Node\-Unit (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Tt\-Test\-Node\-Unit\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a9885f086f4496b49d2bc4ac299c55e89}
+
+
+Add a test node unit. 
+
+
+
+Definition at line 187 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::add\-Record().
+
+
+
+Referenced by add\-Test\-Node\-Units().
+
+\hypertarget{classmdt_tt_test_node_a7accbc1143114adf6c61d467b7e8e211}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!add\-Test\-Node\-Unit@{add\-Test\-Node\-Unit}}
+\index{add\-Test\-Node\-Unit@{add\-Test\-Node\-Unit}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{add\-Test\-Node\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-::add\-Test\-Node\-Unit (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{Unit\-Id, }
+\item[{const Q\-Variant \&}]{Test\-Node\-Id, }
+\item[{const Q\-Variant \&}]{type\-Code, }
+\item[{const Q\-Variant \&}]{bus\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a7accbc1143114adf6c61d467b7e8e211}
+
+
+Add a test node unit. 
+
+
+
+Definition at line 213 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_node_ac323fd694967fb49145eb9238622c866}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!add\-Test\-Node\-Units@{add\-Test\-Node\-Units}}
+\index{add\-Test\-Node\-Units@{add\-Test\-Node\-Units}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{add\-Test\-Node\-Units}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-::add\-Test\-Node\-Units (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Tt\-Test\-Node\-Unit\-Data} $>$ \&}]{data\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_ac323fd694967fb49145eb9238622c866}
+
+
+Add a list of test node units. 
+
+
+
+Definition at line 192 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+\hypertarget{classmdt_tt_test_node_a5057a13fb3d7fababcbebccf82ee3ed6}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!add\-Test\-Node\-Units@{add\-Test\-Node\-Units}}
+\index{add\-Test\-Node\-Units@{add\-Test\-Node\-Units}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{add\-Test\-Node\-Units}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-::add\-Test\-Node\-Units (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{unit\-Id\-List, }
+\item[{const Q\-Variant \&}]{test\-Node\-Id, }
+\item[{const Q\-Variant \&}]{type\-Code, }
+\item[{const Q\-Variant \&}]{bus\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a5057a13fb3d7fababcbebccf82ee3ed6}
+
+
+Add a list of test node units. 
+
+
+
+Definition at line 247 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References add\-Test\-Node\-Unit(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+\hypertarget{classmdt_tt_test_node_a07b8cd098d61c3f14d3ba226c1d1f1cb}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!get\-Channel\-Test\-Connection\-Id\-List@{get\-Channel\-Test\-Connection\-Id\-List}}
+\index{get\-Channel\-Test\-Connection\-Id\-List@{get\-Channel\-Test\-Connection\-Id\-List}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{get\-Channel\-Test\-Connection\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-Node\-::get\-Channel\-Test\-Connection\-Id\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Node\-Id, }
+\item[{const Q\-Variant \&}]{bus\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a07b8cd098d61c3f14d3ba226c1d1f1cb}
+
+
+Get a list of channel test connections for given bus name and node I\-D. 
+
+
+
+Definition at line 164 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_node_a3a0e95628454016a49202dfb7a40e871}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id@{get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id}}
+\index{get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id@{get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connection\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a3a0e95628454016a49202dfb7a40e871}
+
+
+Get a list of unit connection I\-Ds that are linked (meaning wiered) to given unit connection I\-D. 
+
+
+
+Definition at line 87 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::database(), and mdt\-Tt\-Base\-::pv\-Last\-Error.
+
+\hypertarget{classmdt_tt_test_node_aedbfa25bedac04b859b1cb3ef6a16510}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit@{get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit}}
+\index{get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit@{get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_aedbfa25bedac04b859b1cb3ef6a16510}
+
+
+Get a list of unit connection I\-Ds that are part of given unit I\-D. 
+
+
+
+Definition at line 141 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_node_a6e72542d6a7e1773cc228d9cfc9f3be8}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List@{get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List}}
+\index{get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List@{get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{unit\-Connection\-Id\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a6e72542d6a7e1773cc228d9cfc9f3be8}
+
+
+Get a list of unit I\-Ds for given list of unit connection I\-Ds. 
+
+
+
+Definition at line 108 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_node_a961a9fedcce41ac28fc0eb616a8968cf}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!remove\-Test\-Node\-Units@{remove\-Test\-Node\-Units}}
+\index{remove\-Test\-Node\-Units@{remove\-Test\-Node\-Units}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{remove\-Test\-Node\-Units}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-::remove\-Test\-Node\-Units (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{Test\-Node\-Id\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a961a9fedcce41ac28fc0eb616a8968cf}
+
+
+Remove test node units. 
+
+
+
+Definition at line 267 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by remove\-Test\-Node\-Units().
+
+\hypertarget{classmdt_tt_test_node_a86209521bed056b11a27431a19cd4747}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!remove\-Test\-Node\-Units@{remove\-Test\-Node\-Units}}
+\index{remove\-Test\-Node\-Units@{remove\-Test\-Node\-Units}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{remove\-Test\-Node\-Units}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-::remove\-Test\-Node\-Units (
+\begin{DoxyParamCaption}
+\item[{const Q\-Model\-Index\-List \&}]{index\-List\-Of\-Selected\-Rows}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a86209521bed056b11a27431a19cd4747}
+
+
+Remove test node units. 
+
+
+
+Definition at line 301 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References remove\-Test\-Node\-Units().
+
+\hypertarget{classmdt_tt_test_node_a63a7f4a4509de45526303f92c4bdbf83}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!set\-Test\-Connection@{set\-Test\-Connection}}
+\index{set\-Test\-Connection@{set\-Test\-Connection}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{set\-Test\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-::set\-Test\-Connection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Node\-Unit\-Id, }
+\item[{const Q\-Variant \&}]{test\-Connection\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a63a7f4a4509de45526303f92c4bdbf83}
+
+
+Set test connection to given test node unit. 
+
+
+
+Definition at line 313 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_node_a0dcbf96a31c631f8ce62e1526688ba9f}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!sql\-For\-Unit\-Connection\-Selection@{sql\-For\-Unit\-Connection\-Selection}}
+\index{sql\-For\-Unit\-Connection\-Selection@{sql\-For\-Unit\-Connection\-Selection}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{sql\-For\-Unit\-Connection\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Tt\-Test\-Node\-::sql\-For\-Unit\-Connection\-Selection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a0dcbf96a31c631f8ce62e1526688ba9f}
+
+
+Get S\-Q\-L statement for unit connection selection. 
+
+
+
+Definition at line 67 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+\hypertarget{classmdt_tt_test_node_ae1c4ba44984fb21ec36aa4aa15207ad4}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!sql\-For\-Unit\-Selection@{sql\-For\-Unit\-Selection}}
+\index{sql\-For\-Unit\-Selection@{sql\-For\-Unit\-Selection}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{sql\-For\-Unit\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Tt\-Test\-Node\-::sql\-For\-Unit\-Selection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{Vehicle\-Type\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_ae1c4ba44984fb21ec36aa4aa15207ad4}
+
+
+Get S\-Q\-L statement for units selection. 
+
+Give a list of units related to given Test\-Node\-Id (i.\-e. Vehicle\-Type I\-D) that are not currently linked to a Test\-Node\-Unit . 
+
+Definition at line 31 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+\hypertarget{classmdt_tt_test_node_a98245190a8c199d1a7238b2d1c557830}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List@{sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List}}
+\index{sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List@{sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Tt\-Test\-Node\-::sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{unit\-Id\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a98245190a8c199d1a7238b2d1c557830}
+
+
+Get S\-Q\-L statement for unit selection for given list of unit I\-Ds. 
+
+
+
+Definition at line 48 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_node_8h}{mdt\-Tt\-Test\-Node.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_node_8cpp}{mdt\-Tt\-Test\-Node.\-cpp}\end{DoxyCompactItemize}

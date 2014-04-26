@@ -1,0 +1,239 @@
+\hypertarget{classmdt_tt_database_schema}{\section{mdt\-Tt\-Database\-Schema Class Reference}
+\label{classmdt_tt_database_schema}\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}}
+}
+
+
+Build database schema.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Database\-Schema.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_tt_database_schema_aa97c5fc104705a0ed9b941e40cf784cd}{mdt\-Tt\-Database\-Schema} (\hyperlink{classmdt_sql_database_manager}{mdt\-Sql\-Database\-Manager} $\ast$db\-Manager)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_database_schema_a5da7511641b7e81ef6981b442469b4ac}{$\sim$mdt\-Tt\-Database\-Schema} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_database_schema_a1b2638c661257fe8138ed5c4b3368027}{create\-Schema\-Sqlite} (const Q\-Dir \&start\-Directory)
+\begin{DoxyCompactList}\small\item\em Create schema using Sqlite. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_database_schema_ae2c6d44a90b472e773c1b952b11cc8fa}{create\-Schema\-Sqlite} (const Q\-File\-Info \&db\-File\-Info)
+\begin{DoxyCompactList}\small\item\em Create schema using Sqlite. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_database_schema_a14989dee0eb16a76f0630f8b820456e5}{create\-Schema\-Sqlite} ()
+\begin{DoxyCompactList}\small\item\em Create schema using Sqlite. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_database_schema_ae3621033c2a58266cfe18d5521c7cc10}{import\-Database} (const Q\-Dir \&start\-Directory)
+\begin{DoxyCompactList}\small\item\em Import a database. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_database_schema_aeb25021e1ef2ff3c99149de7dfb5c64c}{import\-Database} (const Q\-File\-Info source\-Db\-File\-Info)
+\begin{DoxyCompactList}\small\item\em Import a database. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_database_schema_ace92b340a68ce07ad477502a68de4514}{check\-Schema} ()
+\begin{DoxyCompactList}\small\item\em Check validity of a schema. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_tt_database_schema_aaece3ae101f7d819e71a938b19e642ea}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Build database schema. 
+
+Definition at line 38 of file mdt\-Tt\-Database\-Schema.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_tt_database_schema_aa97c5fc104705a0ed9b941e40cf784cd}{\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}}
+\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!mdtTtDatabaseSchema@{mdt\-Tt\-Database\-Schema}}
+\subsubsection[{mdt\-Tt\-Database\-Schema}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Database\-Schema\-::mdt\-Tt\-Database\-Schema (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Sql\-Database\-Manager} $\ast$}]{db\-Manager}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_database_schema_aa97c5fc104705a0ed9b941e40cf784cd}
+
+
+Constructor. 
+
+
+
+Definition at line 32 of file mdt\-Tt\-Database\-Schema.\-cpp.
+
+\hypertarget{classmdt_tt_database_schema_a5da7511641b7e81ef6981b442469b4ac}{\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!$\sim$mdt\-Tt\-Database\-Schema@{$\sim$mdt\-Tt\-Database\-Schema}}
+\index{$\sim$mdt\-Tt\-Database\-Schema@{$\sim$mdt\-Tt\-Database\-Schema}!mdtTtDatabaseSchema@{mdt\-Tt\-Database\-Schema}}
+\subsubsection[{$\sim$mdt\-Tt\-Database\-Schema}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Database\-Schema\-::$\sim$mdt\-Tt\-Database\-Schema (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_database_schema_a5da7511641b7e81ef6981b442469b4ac}
+
+
+Destructor. 
+
+
+
+Definition at line 39 of file mdt\-Tt\-Database\-Schema.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_database_schema_ace92b340a68ce07ad477502a68de4514}{\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!check\-Schema@{check\-Schema}}
+\index{check\-Schema@{check\-Schema}!mdtTtDatabaseSchema@{mdt\-Tt\-Database\-Schema}}
+\subsubsection[{check\-Schema}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Database\-Schema\-::check\-Schema (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_database_schema_ace92b340a68ce07ad477502a68de4514}
+
+
+Check validity of a schema. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000052}{Todo}]Current version only checks that all expected tables exists .\end{DoxyRefDesc}
+
+
+\begin{DoxyPrecond}{Precondition}
+A database must allready be open . 
+\end{DoxyPrecond}
+
+
+Definition at line 166 of file mdt\-Tt\-Database\-Schema.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Sql\-Database\-Manager\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by create\-Schema\-Sqlite().
+
+\hypertarget{classmdt_tt_database_schema_a1b2638c661257fe8138ed5c4b3368027}{\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!create\-Schema\-Sqlite@{create\-Schema\-Sqlite}}
+\index{create\-Schema\-Sqlite@{create\-Schema\-Sqlite}!mdtTtDatabaseSchema@{mdt\-Tt\-Database\-Schema}}
+\subsubsection[{create\-Schema\-Sqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Database\-Schema\-::create\-Schema\-Sqlite (
+\begin{DoxyParamCaption}
+\item[{const Q\-Dir \&}]{start\-Directory}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_database_schema_a1b2638c661257fe8138ed5c4b3368027}
+
+
+Create schema using Sqlite. 
+
+Ask the user to enter a path and create schema . The start\-Directory is used as directory to go when displaying the file dialog . 
+
+Definition at line 43 of file mdt\-Tt\-Database\-Schema.\-cpp.
+
+
+
+References mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite(), and create\-Schema\-Sqlite().
+
+\hypertarget{classmdt_tt_database_schema_ae2c6d44a90b472e773c1b952b11cc8fa}{\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!create\-Schema\-Sqlite@{create\-Schema\-Sqlite}}
+\index{create\-Schema\-Sqlite@{create\-Schema\-Sqlite}!mdtTtDatabaseSchema@{mdt\-Tt\-Database\-Schema}}
+\subsubsection[{create\-Schema\-Sqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Database\-Schema\-::create\-Schema\-Sqlite (
+\begin{DoxyParamCaption}
+\item[{const Q\-File\-Info \&}]{db\-File\-Info}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_database_schema_ae2c6d44a90b472e773c1b952b11cc8fa}
+
+
+Create schema using Sqlite. 
+
+Will overwrite database if exists . 
+
+Definition at line 51 of file mdt\-Tt\-Database\-Schema.\-cpp.
+
+
+
+References mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite(), create\-Schema\-Sqlite(), and mdt\-Sql\-Database\-Manager\-::\-Overwrite\-Existing.
+
+\hypertarget{classmdt_tt_database_schema_a14989dee0eb16a76f0630f8b820456e5}{\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!create\-Schema\-Sqlite@{create\-Schema\-Sqlite}}
+\index{create\-Schema\-Sqlite@{create\-Schema\-Sqlite}!mdtTtDatabaseSchema@{mdt\-Tt\-Database\-Schema}}
+\subsubsection[{create\-Schema\-Sqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Database\-Schema\-::create\-Schema\-Sqlite (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_database_schema_a14989dee0eb16a76f0630f8b820456e5}
+
+
+Create schema using Sqlite. 
+
+\begin{DoxyPrecond}{Precondition}
+A database must allready be open . 
+\end{DoxyPrecond}
+
+
+Definition at line 59 of file mdt\-Tt\-Database\-Schema.\-cpp.
+
+
+
+References check\-Schema(), and mdt\-Sql\-Database\-Manager\-::database().
+
+
+
+Referenced by create\-Schema\-Sqlite().
+
+\hypertarget{classmdt_tt_database_schema_ae3621033c2a58266cfe18d5521c7cc10}{\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!import\-Database@{import\-Database}}
+\index{import\-Database@{import\-Database}!mdtTtDatabaseSchema@{mdt\-Tt\-Database\-Schema}}
+\subsubsection[{import\-Database}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Database\-Schema\-::import\-Database (
+\begin{DoxyParamCaption}
+\item[{const Q\-Dir \&}]{start\-Directory}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_database_schema_ae3621033c2a58266cfe18d5521c7cc10}
+
+
+Import a database. 
+
+Will ask the user to choose a source database and import it to currently open database . The start\-Directory is used as directory to go when displaying the file dialog .
+
+\begin{DoxyPrecond}{Precondition}
+A database (witch is destination database) must allready be open . 
+\end{DoxyPrecond}
+
+
+Definition at line 88 of file mdt\-Tt\-Database\-Schema.\-cpp.
+
+
+
+References mdt\-Sql\-Database\-Manager\-::choose\-Database\-Sqlite(), and mdt\-Sql\-Database\-Manager\-::database().
+
+\hypertarget{classmdt_tt_database_schema_aeb25021e1ef2ff3c99149de7dfb5c64c}{\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!import\-Database@{import\-Database}}
+\index{import\-Database@{import\-Database}!mdtTtDatabaseSchema@{mdt\-Tt\-Database\-Schema}}
+\subsubsection[{import\-Database}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Database\-Schema\-::import\-Database (
+\begin{DoxyParamCaption}
+\item[{const Q\-File\-Info}]{source\-Db\-File\-Info}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_database_schema_aeb25021e1ef2ff3c99149de7dfb5c64c}
+
+
+Import a database. 
+
+Will import database given by source\-Db\-File\-Info into current open database .
+
+\begin{DoxyPrecond}{Precondition}
+A database (witch is destination database) must allready be open . 
+\end{DoxyPrecond}
+
+
+Definition at line 103 of file mdt\-Tt\-Database\-Schema.\-cpp.
+
+
+
+References mdt\-Data\-Table\-Manager\-::clear\-Field\-Map(), mdt\-Error\-::commit(), mdt\-Data\-Table\-Manager\-::copy\-Table(), mdt\-Sql\-Database\-Manager\-::database(), mdt\-Error\-::\-Error, mdt\-Sql\-Database\-Manager\-::\-Keep\-Existing, mdt\-Data\-Table\-Manager\-::last\-Error(), mdt\-Sql\-Database\-Manager\-::last\-Error(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Error\-::set\-Error(), mdt\-Sql\-Database\-Manager\-::set\-Foreign\-Keys\-Enabled(), and mdt\-Error\-::\-Warning.
+
+\hypertarget{classmdt_tt_database_schema_aaece3ae101f7d819e71a938b19e642ea}{\index{mdt\-Tt\-Database\-Schema@{mdt\-Tt\-Database\-Schema}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtTtDatabaseSchema@{mdt\-Tt\-Database\-Schema}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Tt\-Database\-Schema\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_tt_database_schema_aaece3ae101f7d819e71a938b19e642ea}
+
+
+Get last error. 
+
+
+
+Definition at line 190 of file mdt\-Tt\-Database\-Schema.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_database_schema_8h}{mdt\-Tt\-Database\-Schema.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_database_schema_8cpp}{mdt\-Tt\-Database\-Schema.\-cpp}\end{DoxyCompactItemize}

@@ -1,233 +1,413 @@
-\hypertarget{classmdt_sql_schema_table}{
-\section{mdtSqlSchemaTable Class Reference}
-\label{classmdt_sql_schema_table}\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}}
+\hypertarget{classmdt_sql_schema_table}{\section{mdt\-Sql\-Schema\-Table Class Reference}
+\label{classmdt_sql_schema_table}\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}}
 }
 
 
-Helper class that generate SQL table creation string.  
+Helper class that generate S\-Q\-L table creation string.  
 
 
 
 
-{\ttfamily \#include $<$mdtSqlSchemaTable.h$>$}
+{\ttfamily \#include $<$mdt\-Sql\-Schema\-Table.\-h$>$}
 
-
-
-Collaboration diagram for mdtSqlSchemaTable:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=186pt]{classmdt_sql_schema_table__coll__graph}
-\end{center}
-\end{figure}
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}{foreignKeyAction\_\-t} \{ \hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea69dd241f7f53962080a7f2ba14a8a203}{Cascade}, 
-\hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea1c16892bf8fa377f987abbb4d1c5644a}{SetNull}, 
-\hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea88f6f3c8088eba177e18cb26f518d61d}{NoAction}, 
+enum \hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}{foreign\-Key\-Action\-\_\-t} \{ \hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea69dd241f7f53962080a7f2ba14a8a203}{Cascade}, 
+\hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea1c16892bf8fa377f987abbb4d1c5644a}{Set\-Null}, 
+\hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea88f6f3c8088eba177e18cb26f518d61d}{No\-Action}, 
 \hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea63478da446745c0346acfc6f5665abfe}{Restrict}
  \}
 \begin{DoxyCompactList}\small\item\em Action on update or on delete. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_schema_table_a0f4d89a81a175e51b664de84ad39de65}{
-\hyperlink{classmdt_sql_schema_table_a0f4d89a81a175e51b664de84ad39de65}{mdtSqlSchemaTable} ()}
-\label{classmdt_sql_schema_table_a0f4d89a81a175e51b664de84ad39de65}
-
+\hyperlink{classmdt_sql_schema_table_a0f4d89a81a175e51b664de84ad39de65}{mdt\-Sql\-Schema\-Table} ()
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a39be8d436117529ecdb881e0855e1403}{
-\hyperlink{classmdt_sql_schema_table_a39be8d436117529ecdb881e0855e1403}{$\sim$mdtSqlSchemaTable} ()}
-\label{classmdt_sql_schema_table_a39be8d436117529ecdb881e0855e1403}
-
+\hyperlink{classmdt_sql_schema_table_a39be8d436117529ecdb881e0855e1403}{$\sim$mdt\-Sql\-Schema\-Table} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a3ee39e0981fc152c6f811114b78068aa}{
-void \hyperlink{classmdt_sql_schema_table_a3ee39e0981fc152c6f811114b78068aa}{clear} ()}
-\label{classmdt_sql_schema_table_a3ee39e0981fc152c6f811114b78068aa}
-
+void \hyperlink{classmdt_sql_schema_table_a3ee39e0981fc152c6f811114b78068aa}{clear} ()
 \begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_schema_table_a3518d03c95486589222610b69abe6ee8}{setDriverName} (const QString \&name)
+void \hyperlink{classmdt_sql_schema_table_a3518d03c95486589222610b69abe6ee8}{set\-Driver\-Name} (const Q\-String \&name)
 \begin{DoxyCompactList}\small\item\em Set the driver name. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_aa9a99e27383cd6ba34231d5b2eb60dd8}{
-void \hyperlink{classmdt_sql_schema_table_aa9a99e27383cd6ba34231d5b2eb60dd8}{setDatabaseName} (const QString \&name)}
-\label{classmdt_sql_schema_table_aa9a99e27383cd6ba34231d5b2eb60dd8}
-
+void \hyperlink{classmdt_sql_schema_table_aa9a99e27383cd6ba34231d5b2eb60dd8}{set\-Database\-Name} (const Q\-String \&name)
 \begin{DoxyCompactList}\small\item\em Set database name. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a36b5b28c64ad9cfa69a65e775fc33cbd}{
-void \hyperlink{classmdt_sql_schema_table_a36b5b28c64ad9cfa69a65e775fc33cbd}{setTableName} (const QString \&name, const QString \&charset=QString(), Qt::CaseSensitivity cs=Qt::CaseInsensitive)}
-\label{classmdt_sql_schema_table_a36b5b28c64ad9cfa69a65e775fc33cbd}
-
+void \hyperlink{classmdt_sql_schema_table_a36b5b28c64ad9cfa69a65e775fc33cbd}{set\-Table\-Name} (const Q\-String \&name, const Q\-String \&charset=Q\-String(), Qt\-::\-Case\-Sensitivity cs=Qt\-::\-Case\-Insensitive)
 \begin{DoxyCompactList}\small\item\em Set table name. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a24def48594abf674f96852a4c0d5e9c1}{
-QString \hyperlink{classmdt_sql_schema_table_a24def48594abf674f96852a4c0d5e9c1}{tableName} () const }
-\label{classmdt_sql_schema_table_a24def48594abf674f96852a4c0d5e9c1}
-
+Q\-String \hyperlink{classmdt_sql_schema_table_a24def48594abf674f96852a4c0d5e9c1}{table\-Name} () const 
 \begin{DoxyCompactList}\small\item\em Get table name. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a175f4d150a816bd46bd1a8b3fccbe059}{
-void \hyperlink{classmdt_sql_schema_table_a175f4d150a816bd46bd1a8b3fccbe059}{setStorageEngineName} (const QString \&name)}
-\label{classmdt_sql_schema_table_a175f4d150a816bd46bd1a8b3fccbe059}
-
-\begin{DoxyCompactList}\small\item\em Set the Maria DB/MySQL storage engine (XtraDB, Inno DB, ...) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{
-void \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{addField} (const QSqlField \&field, bool isPartOfPrimaryKey)}
-\label{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}
-
+void \hyperlink{classmdt_sql_schema_table_a175f4d150a816bd46bd1a8b3fccbe059}{set\-Storage\-Engine\-Name} (const Q\-String \&name)
+\begin{DoxyCompactList}\small\item\em Set the Maria D\-B/\-My\-S\-Q\-L storage engine (Xtra\-D\-B, Inno D\-B, ...) \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{add\-Field} (const Q\-Sql\-Field \&field, bool is\-Part\-Of\-Primary\-Key)
 \begin{DoxyCompactList}\small\item\em Add a field. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a24a9e8f260bc96f96219711981124d87}{
-int \hyperlink{classmdt_sql_schema_table_a24a9e8f260bc96f96219711981124d87}{fieldCount} () const }
-\label{classmdt_sql_schema_table_a24a9e8f260bc96f96219711981124d87}
-
+int \hyperlink{classmdt_sql_schema_table_a24a9e8f260bc96f96219711981124d87}{field\-Count} () const 
 \begin{DoxyCompactList}\small\item\em Get number of fields. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}{addIndex} (const QString \&name, bool unique)
+void \hyperlink{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}{add\-Index} (const Q\-String \&name, bool unique)
 \begin{DoxyCompactList}\small\item\em Add a index. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_schema_table_a3deb6f2b10178c252afbaabefb687722}{addFieldToIndex} (const QString \&indexName, const QString \&fieldName)
+bool \hyperlink{classmdt_sql_schema_table_a3deb6f2b10178c252afbaabefb687722}{add\-Field\-To\-Index} (const Q\-String \&index\-Name, const Q\-String \&field\-Name)
 \begin{DoxyCompactList}\small\item\em Add a field to a index. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}{
-void \hyperlink{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}{addForeignKey} (const QString \&name, const QString \&referingTableName, const \hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}{foreignKeyAction\_\-t} \&actionOnDelete, const \hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}{foreignKeyAction\_\-t} \&actionOnUpdate)}
-\label{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}
-
+void \hyperlink{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}{add\-Foreign\-Key} (const Q\-String \&name, const Q\-String \&refering\-Table\-Name, const \hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}{foreign\-Key\-Action\-\_\-t} \&action\-On\-Delete, const \hyperlink{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}{foreign\-Key\-Action\-\_\-t} \&action\-On\-Update)
 \begin{DoxyCompactList}\small\item\em Add a foreign key contraint. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_schema_table_a0909cc0e3ad602312ddf44de397d9fe4}{addFieldToForeignKey} (const QString \&foreignKeyName, const QString \&fieldName, const QString \&referingFieldName)
+bool \hyperlink{classmdt_sql_schema_table_a0909cc0e3ad602312ddf44de397d9fe4}{add\-Field\-To\-Foreign\-Key} (const Q\-String \&foreign\-Key\-Name, const Q\-String \&field\-Name, const Q\-String \&refering\-Field\-Name)
 \begin{DoxyCompactList}\small\item\em Add a field to a foreign key. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a8a072145d85a6a2c183e01aaa6d91a5d}{
-QString \hyperlink{classmdt_sql_schema_table_a8a072145d85a6a2c183e01aaa6d91a5d}{sqlForCreateTable} () const }
-\label{classmdt_sql_schema_table_a8a072145d85a6a2c183e01aaa6d91a5d}
-
-\begin{DoxyCompactList}\small\item\em Get SQL statement for table creation. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a35fd4ed657f48013747973fef78be345}{
-QString \hyperlink{classmdt_sql_schema_table_a35fd4ed657f48013747973fef78be345}{sqlForDropTable} () const }
-\label{classmdt_sql_schema_table_a35fd4ed657f48013747973fef78be345}
-
-\begin{DoxyCompactList}\small\item\em Get SQL statement for table deleteion. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_schema_table_a8199d144499e7fd77ad168049a3c2ca7}{
-\hyperlink{classmdt_error}{mdtError} \hyperlink{classmdt_sql_schema_table_a8199d144499e7fd77ad168049a3c2ca7}{lastError} () const }
-\label{classmdt_sql_schema_table_a8199d144499e7fd77ad168049a3c2ca7}
-
+Q\-String \hyperlink{classmdt_sql_schema_table_a8a072145d85a6a2c183e01aaa6d91a5d}{sql\-For\-Create\-Table} () const 
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for table creation. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_sql_schema_table_a35fd4ed657f48013747973fef78be345}{sql\-For\-Drop\-Table} () const 
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for table deleteion. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_sql_schema_table_a8199d144499e7fd77ad168049a3c2ca7}{last\-Error} () const 
 \begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Helper class that generate SQL table creation string. 
+Helper class that generate S\-Q\-L table creation string. 
 
-Definition at line 46 of file mdtSqlSchemaTable.h.
+Definition at line 46 of file mdt\-Sql\-Schema\-Table.\-h.
 
 
 
 \subsection{Member Enumeration Documentation}
-\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}{
-\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}!foreignKeyAction\_\-t@{foreignKeyAction\_\-t}}
-\index{foreignKeyAction\_\-t@{foreignKeyAction\_\-t}!mdtSqlSchemaTable@{mdtSqlSchemaTable}}
-\subsubsection[{foreignKeyAction\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtSqlSchemaTable::foreignKeyAction\_\-t}}}
-\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}
+\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!foreign\-Key\-Action\-\_\-t@{foreign\-Key\-Action\-\_\-t}}
+\index{foreign\-Key\-Action\-\_\-t@{foreign\-Key\-Action\-\_\-t}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{foreign\-Key\-Action\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Sql\-Schema\-Table\-::foreign\-Key\-Action\-\_\-t}}}\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911be}
 
 
 Action on update or on delete. 
 
 \begin{Desc}
-\item[Enumerator: ]\par
+\item[Enumerator]\par
 \begin{description}
-\index{Cascade@{Cascade}!mdtSqlSchemaTable@{mdtSqlSchemaTable}}\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}!Cascade@{Cascade}}\item[{\em 
-\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea69dd241f7f53962080a7f2ba14a8a203}{
-Cascade}
-\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea69dd241f7f53962080a7f2ba14a8a203}
-}]Cascade \index{SetNull@{SetNull}!mdtSqlSchemaTable@{mdtSqlSchemaTable}}\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}!SetNull@{SetNull}}\item[{\em 
-\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea1c16892bf8fa377f987abbb4d1c5644a}{
-SetNull}
-\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea1c16892bf8fa377f987abbb4d1c5644a}
-}]Set null \index{NoAction@{NoAction}!mdtSqlSchemaTable@{mdtSqlSchemaTable}}\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}!NoAction@{NoAction}}\item[{\em 
-\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea88f6f3c8088eba177e18cb26f518d61d}{
-NoAction}
-\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea88f6f3c8088eba177e18cb26f518d61d}
-}]No action \index{Restrict@{Restrict}!mdtSqlSchemaTable@{mdtSqlSchemaTable}}\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}!Restrict@{Restrict}}\item[{\em 
-\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea63478da446745c0346acfc6f5665abfe}{
-Restrict}
-\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea63478da446745c0346acfc6f5665abfe}
+\index{Cascade@{Cascade}!mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}}\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!Cascade@{Cascade}}\item[{\em 
+\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea69dd241f7f53962080a7f2ba14a8a203}{Cascade}\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea69dd241f7f53962080a7f2ba14a8a203}
+}]Cascade \index{Set\-Null@{Set\-Null}!mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}}\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!Set\-Null@{Set\-Null}}\item[{\em 
+\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea1c16892bf8fa377f987abbb4d1c5644a}{Set\-Null}\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea1c16892bf8fa377f987abbb4d1c5644a}
+}]Set null \index{No\-Action@{No\-Action}!mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}}\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!No\-Action@{No\-Action}}\item[{\em 
+\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea88f6f3c8088eba177e18cb26f518d61d}{No\-Action}\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea88f6f3c8088eba177e18cb26f518d61d}
+}]No action \index{Restrict@{Restrict}!mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}}\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!Restrict@{Restrict}}\item[{\em 
+\hypertarget{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea63478da446745c0346acfc6f5665abfe}{Restrict}\label{classmdt_sql_schema_table_a1738e443f03dc69b914edb967cb911bea63478da446745c0346acfc6f5665abfe}
 }]Restrict \end{description}
 \end{Desc}
 
 
+Definition at line 52 of file mdt\-Sql\-Schema\-Table.\-h.
 
-Definition at line 52 of file mdtSqlSchemaTable.h.
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_schema_table_a0f4d89a81a175e51b664de84ad39de65}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}}
+\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{mdt\-Sql\-Schema\-Table}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Schema\-Table\-::mdt\-Sql\-Schema\-Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_a0f4d89a81a175e51b664de84ad39de65}
+
+
+Constructor. 
+
+
+
+Definition at line 25 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+\hypertarget{classmdt_sql_schema_table_a39be8d436117529ecdb881e0855e1403}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!$\sim$mdt\-Sql\-Schema\-Table@{$\sim$mdt\-Sql\-Schema\-Table}}
+\index{$\sim$mdt\-Sql\-Schema\-Table@{$\sim$mdt\-Sql\-Schema\-Table}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{$\sim$mdt\-Sql\-Schema\-Table}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Schema\-Table\-::$\sim$mdt\-Sql\-Schema\-Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_a39be8d436117529ecdb881e0855e1403}
+
+
+Destructor. 
+
+
+
+Definition at line 29 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_schema_table_a0909cc0e3ad602312ddf44de397d9fe4}{
-\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}!addFieldToForeignKey@{addFieldToForeignKey}}
-\index{addFieldToForeignKey@{addFieldToForeignKey}!mdtSqlSchemaTable@{mdtSqlSchemaTable}}
-\subsubsection[{addFieldToForeignKey}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlSchemaTable::addFieldToForeignKey (
+\hypertarget{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!add\-Field@{add\-Field}}
+\index{add\-Field@{add\-Field}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{add\-Field}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Schema\-Table\-::add\-Field (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{foreignKeyName, }
-\item[{const QString \&}]{fieldName, }
-\item[{const QString \&}]{referingFieldName}
+\item[{const Q\-Sql\-Field \&}]{field, }
+\item[{bool}]{is\-Part\-Of\-Primary\-Key}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_schema_table_a0909cc0e3ad602312ddf44de397d9fe4}
+)}}\label{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}
+
+
+Add a field. 
+
+
+
+Definition at line 75 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+Referenced by mdt\-Data\-Table\-Manager\-::copy\-Table(), and mdt\-Data\-Table\-Manager\-::import\-From\-Csv\-File().
+
+\hypertarget{classmdt_sql_schema_table_a0909cc0e3ad602312ddf44de397d9fe4}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!add\-Field\-To\-Foreign\-Key@{add\-Field\-To\-Foreign\-Key}}
+\index{add\-Field\-To\-Foreign\-Key@{add\-Field\-To\-Foreign\-Key}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{add\-Field\-To\-Foreign\-Key}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Schema\-Table\-::add\-Field\-To\-Foreign\-Key (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{foreign\-Key\-Name, }
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-String \&}]{refering\-Field\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_a0909cc0e3ad602312ddf44de397d9fe4}
 
 
 Add a field to a foreign key. 
 
-Field must allready be created with \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{addField()} and foreign key also with \hyperlink{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}{addForeignKey()} . If foreign key with name foreignKeyName does not exists, or field with fieldName not exists, this method returns false. 
+Field must allready be created with \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{add\-Field()} and foreign key also with \hyperlink{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}{add\-Foreign\-Key()} . If foreign key with name foreign\-Key\-Name does not exists, or field with field\-Name not exists, this method returns false. 
 
-Definition at line 140 of file mdtSqlSchemaTable.cpp.
+Definition at line 140 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
-\hypertarget{classmdt_sql_schema_table_a3deb6f2b10178c252afbaabefb687722}{
-\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}!addFieldToIndex@{addFieldToIndex}}
-\index{addFieldToIndex@{addFieldToIndex}!mdtSqlSchemaTable@{mdtSqlSchemaTable}}
-\subsubsection[{addFieldToIndex}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlSchemaTable::addFieldToIndex (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_sql_schema_table_a3deb6f2b10178c252afbaabefb687722}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!add\-Field\-To\-Index@{add\-Field\-To\-Index}}
+\index{add\-Field\-To\-Index@{add\-Field\-To\-Index}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{add\-Field\-To\-Index}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Schema\-Table\-::add\-Field\-To\-Index (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{indexName, }
-\item[{const QString \&}]{fieldName}
+\item[{const Q\-String \&}]{index\-Name, }
+\item[{const Q\-String \&}]{field\-Name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_schema_table_a3deb6f2b10178c252afbaabefb687722}
+)}}\label{classmdt_sql_schema_table_a3deb6f2b10178c252afbaabefb687722}
 
 
 Add a field to a index. 
 
-Field must allready be created with \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{addField()} and index also with \hyperlink{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}{addIndex()} . If index with name indexName does not exists, or field with fieldName not exists, this method returns false. 
+Field must allready be created with \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{add\-Field()} and index also with \hyperlink{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}{add\-Index()} . If index with name index\-Name does not exists, or field with field\-Name not exists, this method returns false. 
 
-Definition at line 97 of file mdtSqlSchemaTable.cpp.
+Definition at line 97 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
-\hypertarget{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}{
-\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}!addIndex@{addIndex}}
-\index{addIndex@{addIndex}!mdtSqlSchemaTable@{mdtSqlSchemaTable}}
-\subsubsection[{addIndex}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSchemaTable::addIndex (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!add\-Foreign\-Key@{add\-Foreign\-Key}}
+\index{add\-Foreign\-Key@{add\-Foreign\-Key}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{add\-Foreign\-Key}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Schema\-Table\-::add\-Foreign\-Key (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{name, }
+\item[{const Q\-String \&}]{name, }
+\item[{const Q\-String \&}]{refering\-Table\-Name, }
+\item[{const {\bf foreign\-Key\-Action\-\_\-t} \&}]{action\-On\-Delete, }
+\item[{const {\bf foreign\-Key\-Action\-\_\-t} \&}]{action\-On\-Update}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}
+
+
+Add a foreign key contraint. 
+
+
+
+Definition at line 127 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+References mdt\-Sql\-Schema\-Table\-Foreign\-Key\-Info\-::action\-On\-Delete, mdt\-Sql\-Schema\-Table\-Foreign\-Key\-Info\-::action\-On\-Update, and mdt\-Sql\-Schema\-Table\-Foreign\-Key\-Info\-::refering\-Table\-Name.
+
+\hypertarget{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!add\-Index@{add\-Index}}
+\index{add\-Index@{add\-Index}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{add\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Schema\-Table\-::add\-Index (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name, }
 \item[{bool}]{unique}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}
+)}}\label{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}
 
 
 Add a index. 
 
 If name allready exists, it will not be appended 
 
-Definition at line 88 of file mdtSqlSchemaTable.cpp.
+Definition at line 88 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
-\hypertarget{classmdt_sql_schema_table_a3518d03c95486589222610b69abe6ee8}{
-\index{mdtSqlSchemaTable@{mdtSqlSchemaTable}!setDriverName@{setDriverName}}
-\index{setDriverName@{setDriverName}!mdtSqlSchemaTable@{mdtSqlSchemaTable}}
-\subsubsection[{setDriverName}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSchemaTable::setDriverName (
+\hypertarget{classmdt_sql_schema_table_a3ee39e0981fc152c6f811114b78068aa}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!clear@{clear}}
+\index{clear@{clear}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Schema\-Table\-::clear (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{name}
+{}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_schema_table_a3518d03c95486589222610b69abe6ee8}
+)}}\label{classmdt_sql_schema_table_a3ee39e0981fc152c6f811114b78068aa}
+
+
+Clear. 
+
+
+
+Definition at line 33 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+\hypertarget{classmdt_sql_schema_table_a24a9e8f260bc96f96219711981124d87}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!field\-Count@{field\-Count}}
+\index{field\-Count@{field\-Count}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{field\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Sql\-Schema\-Table\-::field\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_schema_table_a24a9e8f260bc96f96219711981124d87}
+
+
+Get number of fields. 
+
+
+
+Definition at line 83 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+Referenced by mdt\-Data\-Table\-Manager\-::import\-From\-Csv\-File().
+
+\hypertarget{classmdt_sql_schema_table_a8199d144499e7fd77ad168049a3c2ca7}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Schema\-Table\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_schema_table_a8199d144499e7fd77ad168049a3c2ca7}
+
+
+Get last error. 
+
+
+
+Definition at line 219 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+\hypertarget{classmdt_sql_schema_table_aa9a99e27383cd6ba34231d5b2eb60dd8}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!set\-Database\-Name@{set\-Database\-Name}}
+\index{set\-Database\-Name@{set\-Database\-Name}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{set\-Database\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Schema\-Table\-::set\-Database\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_aa9a99e27383cd6ba34231d5b2eb60dd8}
+
+
+Set database name. 
+
+
+
+Definition at line 53 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+\hypertarget{classmdt_sql_schema_table_a3518d03c95486589222610b69abe6ee8}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!set\-Driver\-Name@{set\-Driver\-Name}}
+\index{set\-Driver\-Name@{set\-Driver\-Name}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{set\-Driver\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Schema\-Table\-::set\-Driver\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_a3518d03c95486589222610b69abe6ee8}
 
 
 Set the driver name. 
 
-Driver name must be given in format returned by QSqlDatabase::driverName() . 
+Driver name must be given in format returned by Q\-Sql\-Database\-::driver\-Name() . 
 
-Definition at line 48 of file mdtSqlSchemaTable.cpp.
+Definition at line 48 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Referenced by mdt\-Sql\-Database\-Manager\-::create\-Table().
+
+\hypertarget{classmdt_sql_schema_table_a175f4d150a816bd46bd1a8b3fccbe059}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!set\-Storage\-Engine\-Name@{set\-Storage\-Engine\-Name}}
+\index{set\-Storage\-Engine\-Name@{set\-Storage\-Engine\-Name}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{set\-Storage\-Engine\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Schema\-Table\-::set\-Storage\-Engine\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_a175f4d150a816bd46bd1a8b3fccbe059}
+
+
+Set the Maria D\-B/\-My\-S\-Q\-L storage engine (Xtra\-D\-B, Inno D\-B, ...) 
+
+
+
+Definition at line 70 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+\hypertarget{classmdt_sql_schema_table_a36b5b28c64ad9cfa69a65e775fc33cbd}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!set\-Table\-Name@{set\-Table\-Name}}
+\index{set\-Table\-Name@{set\-Table\-Name}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{set\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Schema\-Table\-::set\-Table\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name, }
+\item[{const Q\-String \&}]{charset = {\ttfamily QString()}, }
+\item[{Qt\-::\-Case\-Sensitivity}]{cs = {\ttfamily Qt\-:\-:CaseInsensitive}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_a36b5b28c64ad9cfa69a65e775fc33cbd}
+
+
+Set table name. 
+
+
+
+Definition at line 58 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+Referenced by mdt\-Data\-Table\-Manager\-::copy\-Table(), and mdt\-Data\-Table\-Manager\-::create\-Data\-Set().
+
+\hypertarget{classmdt_sql_schema_table_a8a072145d85a6a2c183e01aaa6d91a5d}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!sql\-For\-Create\-Table@{sql\-For\-Create\-Table}}
+\index{sql\-For\-Create\-Table@{sql\-For\-Create\-Table}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{sql\-For\-Create\-Table}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Schema\-Table\-::sql\-For\-Create\-Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_schema_table_a8a072145d85a6a2c183e01aaa6d91a5d}
+
+
+Get S\-Q\-L statement for table creation. 
+
+
+
+Definition at line 171 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R, and M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C.
+
+
+
+Referenced by mdt\-Sql\-Database\-Manager\-::create\-Table().
+
+\hypertarget{classmdt_sql_schema_table_a35fd4ed657f48013747973fef78be345}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!sql\-For\-Drop\-Table@{sql\-For\-Drop\-Table}}
+\index{sql\-For\-Drop\-Table@{sql\-For\-Drop\-Table}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{sql\-For\-Drop\-Table}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Schema\-Table\-::sql\-For\-Drop\-Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_schema_table_a35fd4ed657f48013747973fef78be345}
+
+
+Get S\-Q\-L statement for table deleteion. 
+
+
+
+Definition at line 197 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+Referenced by mdt\-Sql\-Database\-Manager\-::create\-Table().
+
+\hypertarget{classmdt_sql_schema_table_a24def48594abf674f96852a4c0d5e9c1}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!table\-Name@{table\-Name}}
+\index{table\-Name@{table\-Name}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Schema\-Table\-::table\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_schema_table_a24def48594abf674f96852a4c0d5e9c1}
+
+
+Get table name. 
+
+
+
+Definition at line 65 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+Referenced by mdt\-Sql\-Database\-Manager\-::create\-Table().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtSqlSchemaTable.h\item 
-src/mdtutilsgui/mdtSqlSchemaTable.cpp\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_sql_schema_table_8h}{mdt\-Sql\-Schema\-Table.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_sql_schema_table_8cpp}{mdt\-Sql\-Schema\-Table.\-cpp}\end{DoxyCompactItemize}

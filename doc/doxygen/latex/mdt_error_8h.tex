@@ -1,0 +1,136 @@
+\hypertarget{mdt_error_8h}{\section{src/mdtutils/mdt\-Error.h File Reference}
+\label{mdt_error_8h}\index{src/mdtutils/mdt\-Error.\-h@{src/mdtutils/mdt\-Error.\-h}}
+}
+{\ttfamily \#include $<$Q\-String$>$}\\*
+{\ttfamily \#include $<$Q\-Meta\-Type$>$}\\*
+{\ttfamily \#include $<$Q\-Message\-Box$>$}\\*
+Include dependency graph for mdt\-Error.\-h\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{mdt_error_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mdt_error_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmdt_error}{mdt\-Error}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classmdt_error}{mdt\-Error} contains informations about a error that occured \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{mdt_error_8h_ab7f3d790e64bb1392fbfc1dd706fc9ce}{M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C}(e, class\-Name)~e.\-set\-Source(\-\_\-\-\_\-\-F\-I\-L\-E\-\_\-\-\_\-, \-\_\-\-\_\-\-L\-I\-N\-E\-\_\-\-\_\-, class\-Name, \-\_\-\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-\_\-);
+\begin{DoxyCompactList}\small\item\em Add source information to error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5}{mdt\-\_\-error\-\_\-t} \{ \\*
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a3616d1be9cd93bbac906df6ee83b6871}{M\-D\-T\-\_\-\-N\-O\-\_\-\-E\-R\-R\-O\-R} = 0, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5af755e8d142994c8500acc1ab4d8da144}{M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R} = -\/1000, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a501d8e1f5106fe087ace9d81cfaa88c5}{M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a8ef2772eb32dc3618f38916508725ddd}{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}, 
+\\*
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ab3cbbdd2eff532f479dd101f5b394b6b}{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-Q\-U\-E\-U\-E\-\_\-\-E\-M\-P\-T\-Y\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a15d51db236465ba46d2e9126a3d637c4}{M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ab3152fa127d8d076e3851fe01d021fb5}{M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a6cc3b1524a19afac9ecae98b3415a7f0}{M\-D\-T\-\_\-\-T\-C\-P\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}, 
+\\*
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a02eec67fc4bc27df92311eb48b0c4d2e}{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aa3ddc7e7d3a3e6649112947a21288c1c}{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-E\-N\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aba6f11283d5d318eae7ac9979f7f3c8d}{M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ac95f17de14ec3543070835e09ed7a317}{M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R}, 
+\\*
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a7e794a8babdb710f4442175715121d58}{M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ae020c9fc555374f5dd4e62665687a06b}{M\-D\-T\-\_\-\-Q\-M\-\_\-\-F\-I\-L\-E\-\_\-\-L\-O\-A\-D\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a6ebb67e3a400eb0251a302a6bbeb3a41}{M\-D\-T\-\_\-\-M\-E\-M\-O\-R\-Y\-\_\-\-A\-L\-L\-O\-C\-\_\-\-E\-R\-R\-O\-R}, 
+\hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a19bf56f8bbd1afe273b97a8e6c32efa9}{M\-D\-T\-\_\-\-G\-U\-I\-\_\-\-E\-R\-R\-O\-R}
+ \}
+\begin{DoxyCompactList}\small\item\em error list \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{mdt_error_8h_ab7f3d790e64bb1392fbfc1dd706fc9ce}{\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C@{M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C}}
+\index{M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C@{M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C}!mdtError.h@{mdt\-Error.\-h}}
+\subsubsection[{M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C(
+\begin{DoxyParamCaption}
+\item[{}]{e, }
+\item[{}]{class\-Name}
+\end{DoxyParamCaption}
+)~e.\-set\-Source(\-\_\-\-\_\-\-F\-I\-L\-E\-\_\-\-\_\-, \-\_\-\-\_\-\-L\-I\-N\-E\-\_\-\-\_\-, class\-Name, \-\_\-\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-\_\-);}}\label{mdt_error_8h_ab7f3d790e64bb1392fbfc1dd706fc9ce}
+
+
+Add source information to error. 
+
+Source informations are file, file line and function name 
+
+Definition at line 59 of file mdt\-Error.\-h.
+
+
+
+Referenced by mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Test\-Connection\-Cable\-::add\-Cable(), mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), mdt\-Sql\-Form\-::add\-Child\-Table(), mdt\-Cl\-Article\-::add\-Component(), mdt\-Cl\-Unit\-::add\-Component(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Sql\-Record\-::add\-Field(), mdt\-Data\-Table\-Manager\-::add\-Field\-Mapping(), mdt\-Sql\-Schema\-Table\-::add\-Field\-To\-Foreign\-Key(), mdt\-Sql\-Schema\-Table\-::add\-Field\-To\-Index(), mdt\-Tt\-Test\-Connection\-Cable\-::add\-Link(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Sql\-Relation\-::add\-Relation(), mdt\-Sql\-Form\-Old\-::add\-Relation(), mdt\-Sql\-Form\-::add\-Relation(), mdt\-Sql\-Selection\-Dialog\-::add\-Selection\-Result\-Column(), mdt\-Tt\-Test\-Node\-::add\-Test\-Node\-Unit(), mdt\-Port\-Manager\-::add\-Transaction\-Pending(), mdt\-Application\-::add\-Translations\-Directory(), mdt\-Cl\-Unit\-Vehicle\-Type\-::add\-Unit\-Vehicle\-Type\-Assignments(), mdt\-Partition\-Attributes\-::available\-Partitions(), mdt\-Serial\-Port\-::baud\-Rate(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Usb\-Port\-::cancel\-Control\-Transfer(), mdt\-Usb\-Port\-::cancel\-Message\-In\-Transfer(), mdt\-Usb\-Port\-::cancel\-Read\-Transfer(), mdt\-Usb\-Port\-::cancel\-Write\-Transfer(), mdt\-Application\-::change\-Language(), mdt\-Tt\-Database\-Schema\-::check\-Schema(), mdt\-Frame\-Codec\-Ascii\-::clean(), mdt\-Usb\-Port\-::clear\-Read\-Endpoint\-Halt(), mdt\-Usb\-Port\-::clear\-Write\-Endpoint\-Halt(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Device\-Modbus\-::connect\-To\-Device(), mdt\-Usb\-Port\-::control\-Transfer\-Callback(), mdt\-Data\-Table\-Manager\-::copy\-Table(), mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite(), mdt\-Sql\-Database\-Manager\-::create\-Table(), mdt\-Tt\-Test\-Connection\-Cable\-::create\-Test\-Cable(), mdt\-Sql\-Form\-Old\-::current\-Data(), mdt\-Sql\-Form\-::current\-Data(), mdt\-Sql\-Form\-Old\-::current\-Row(), mdt\-Sql\-Form\-::current\-Row(), mdt\-Abstract\-Sql\-Widget\-::data(), mdt\-Sql\-Form\-Old\-::data(), mdt\-Sql\-Form\-::data(), mdt\-Serial\-Port\-::data\-Bits(), mdt\-Frame\-Codec\-K8055\-::decode(), mdt\-Frame\-Codec\-Modbus\-::decode(), mdt\-Frame\-Codec\-Scpi\-U3606\-A\-::decode\-Configure(), mdt\-Frame\-Codec\-Scpi\-::decode\-Error(), mdt\-Frame\-Codec\-Scpi\-::decode\-Function\-Parameters(), mdt\-Frame\-Codec\-Scpi\-::decode\-I\-E\-E\-Eblock(), mdt\-Frame\-Codec\-Scpi\-::decode\-Scpi\-Version(), mdt\-Frame\-Codec\-Scpi\-::decode\-Single\-Value\-Double(), mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Abstract\-Sql\-Widget\-::display\-Database\-Error(), mdt\-Sql\-Data\-Validator\-::display\-Error(), mdt\-Sql\-Data\-Validator\-::display\-Warning(), mdt\-Cl\-Path\-Graph\-::draw\-Path(), mdt\-Cl\-Article\-::edit\-Component(), mdt\-Frame\-Codec\-Modbus\-::encode\-Read\-Coils(), mdt\-Frame\-Codec\-Modbus\-::encode\-Read\-Discrete\-Inputs(), mdt\-Frame\-Codec\-Modbus\-::encode\-Read\-Holding\-Registers(), mdt\-Frame\-Codec\-Modbus\-::encode\-Read\-Input\-Registers(), mdt\-Frame\-Codec\-Modbus\-::encode\-Write\-Multiple\-Coils(), mdt\-Frame\-Codec\-Modbus\-::encode\-Write\-Multiple\-Registers(), mdt\-Usb\-Device\-Descriptor\-::fetch\-Attributes(), mdt\-Serial\-Port\-::flow\-Ctl\-Rts\-Cts\-On(), mdt\-Serial\-Port\-::flow\-Ctl\-Xon\-Xoff\-On(), mdt\-Usb\-Port\-Manager\-::from\-Thread\-Control\-Response\-Readen(), mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Device\-::get\-Analog\-Input\-Value(), mdt\-Device\-::get\-Analog\-Input\-Value\-At(), mdt\-Device\-::get\-Analog\-Output\-Value(), mdt\-Device\-::get\-Analog\-Output\-Value\-At(), mdt\-Tt\-Test\-Node\-::get\-Channel\-Test\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connection\-Data(), mdt\-Cl\-Unit\-::get\-Connection\-Data(), mdt\-Cl\-Article\-::get\-Connection\-Data\-List\-From\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connector\-Data(), mdt\-Cl\-Unit\-::get\-Connector\-Data(), mdt\-Serial\-Port\-::get\-Ctl\-States(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), mdt\-Tt\-Base\-::get\-Data(), mdt\-Device\-::get\-Digital\-Input\-Value(), mdt\-Device\-::get\-Digital\-Input\-Value\-At(), mdt\-Device\-::get\-Digital\-Output\-Value(), mdt\-Device\-::get\-Digital\-Output\-Value\-At(), mdt\-Field\-Map\-Field\-::get\-Field\-Name(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Link\-::get\-Link\-Data(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-Link\-Data(), mdt\-Cl\-Path\-Graph\-::get\-Linked\-Connection\-Id\-List(), mdt\-Port\-Thread\-Helper\-::get\-New\-Frame\-Read(), mdt\-Port\-Manager\-::get\-New\-Transaction(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connector\-Related\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connector\-Id\-Based\-On\-Article\-Connector\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Unit\-Data(), mdt\-Port\-Thread\-Helper\-::handle\-Common\-Read\-Errors(), mdt\-Port\-Thread\-Helper\-::handle\-Common\-Write\-Errors(), mdt\-Device\-Scpi\-::handle\-Device\-Error(), mdt\-Usb\-Port\-::handle\-Usb\-Events(), mdt\-Tt\-Database\-Schema\-::import\-Database(), mdt\-Data\-Table\-Manager\-::import\-From\-Csv\-File(), mdt\-Usb\-Port\-::init\-Message\-In\-Transfer(), mdt\-Usb\-Port\-::init\-Read\-Transfer(), mdt\-Usb\-Port\-::init\-Write\-Transfer(), mdt\-Uic\-Number\-::is\-Valid(), mdt\-Device\-Modbus\-Wago\-::is\-Wago750(), mdt\-Sql\-Form\-Old\-::last\-Sql\-Error(), mdt\-Uic\-Number\-::load\-Countries\-Db(), mdt\-Cl\-Path\-Graph\-::load\-Link\-List(), mdt\-Uic\-Number\-::load\-Speed\-And\-Heats\-Db(), mdt\-Uic\-Number\-::load\-Types\-Db(), mdt\-Uic\-Number\-::load\-Usages\-Db(), mdt\-Port\-Manager\-::lock\-Port\-Mutex(), mdt\-Device\-Scpi\-::log\-Device\-Error(), mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets(), mdt\-Cl\-Article\-Component\-Dialog\-::mdt\-Cl\-Article\-Component\-Dialog(), mdt\-Usb\-Port\-::mdt\-Usb\-Port(), mdt\-Usb\-Port\-::message\-In\-Transfer\-Callback(), mdt\-Sql\-Database\-Manager\-::open\-Database\-Sqlite(), mdt\-Port\-Lock\-::open\-Locked(), mdt\-Serial\-Port\-::parity(), mdt\-Port\-::read(), mdt\-Serial\-Port\-::read(), mdt\-Port\-Thread\-Helper\-Port\-::read\-From\-Port(), mdt\-Csv\-File\-::read\-Line(), mdt\-Csv\-File\-::read\-Lines(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Registers(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Status\-Bytes(), mdt\-Usb\-Port\-::read\-Transfer\-Callback(), mdt\-Usb\-Port\-Thread\-::read\-Until\-Short\-Packet\-Received(), mdt\-Port\-Thread\-::reconnect(), mdt\-Cl\-Article\-::remove\-Components(), mdt\-Cl\-Unit\-::remove\-Components(), mdt\-Cl\-Article\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connectors\-Connections(), mdt\-Tt\-Base\-::remove\-Data(), mdt\-Frame\-Codec\-Ascii\-::remove\-Eof\-Seq(), mdt\-Tt\-Test\-Node\-::remove\-Test\-Node\-Units(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Serial\-Port\-::resume\-Transmission(), mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Sql\-Form\-Old\-::row\-Count(), mdt\-Sql\-Form\-::row\-Count(), mdt\-Modbus\-Tcp\-Port\-Manager\-::save\-Scan\-Result(), mdt\-Serial\-Port\-Manager\-::scan(), mdt\-Usb\-Port\-Manager\-::scan(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), mdt\-Sql\-Form\-Old\-::select(), mdt\-Sql\-Form\-::select(), mdt\-Device\-::set\-Analog\-Output\-Value(), mdt\-Device\-::set\-Analog\-Output\-Value\-At(), mdt\-Abstract\-Port\-Setup\-Dialog\-::set\-Apply\-Button\-Enabled(), mdt\-Serial\-Port\-::set\-Baud\-Rate(), mdt\-Abstract\-Port\-Setup\-Dialog\-::set\-Cancel\-Button\-Enabled(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connection\-Data(), mdt\-Cl\-Connector\-Data\-::set\-Contact\-Data(), mdt\-Data\-Table\-Manager\-::set\-Csv\-Format(), mdt\-Sql\-Form\-Old\-::set\-Current\-Data(), mdt\-Sql\-Form\-::set\-Current\-Data(), mdt\-Serial\-Port\-::set\-Data\-Bits(), mdt\-Data\-Table\-Manager\-::set\-Data\-Set\-Directory(), mdt\-Sql\-Field\-Handler\-::set\-Data\-Widget(), mdt\-Device\-::set\-Digital\-Output\-Value(), mdt\-Device\-::set\-Digital\-Output\-Value\-At(), mdt\-Serial\-Port\-::set\-Dtr(), mdt\-Serial\-Port\-::set\-Flow\-Ctl\-Rts\-Cts(), mdt\-Serial\-Port\-::set\-Flow\-Ctl\-Xon\-Xoff(), mdt\-Sql\-Database\-Manager\-::set\-Foreign\-Keys\-Enabled(), mdt\-Sql\-Form\-::set\-Main\-Table(), mdt\-Sql\-Form\-::set\-Main\-Table\-Filter(), mdt\-Uic\-Number\-::set\-Number(), mdt\-Abstract\-Port\-Setup\-Dialog\-::set\-Ok\-Button\-Enabled(), mdt\-Serial\-Port\-::set\-Parity(), mdt\-Partition\-Attributes\-::set\-Path(), mdt\-Analog\-Io\-::set\-Range(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), mdt\-Serial\-Port\-::set\-Stop\-Bits(), mdt\-Sql\-Form\-Old\-::set\-Table(), mdt\-Tt\-Test\-Node\-::set\-Test\-Connection(), mdt\-Cl\-Link\-::sql\-For\-Connectable\-Unit\-Connectors\-Selection(), mdt\-Sql\-Schema\-Table\-::sql\-For\-Create\-Table(), mdt\-File\-Copier\-::start\-Copy(), mdt\-Port\-Thread\-::stop(), mdt\-Serial\-Port\-::stop\-Bits(), mdt\-Usb\-Port\-::submit\-Control\-Query(), mdt\-Serial\-Port\-::suspend\-Transmission(), mdt\-Cl\-Unit\-::to\-Unit\-Related\-Article\-Connection\-Count(), mdt\-Tt\-Base\-::update\-Record(), mdt\-Serial\-Port\-::wait\-Event\-Ctl(), mdt\-Port\-::wait\-Event\-Write\-Ready(), mdt\-Serial\-Port\-::wait\-Event\-Write\-Ready(), mdt\-Port\-::wait\-For\-Ready\-Read(), mdt\-Serial\-Port\-::wait\-For\-Ready\-Read(), mdt\-Usb\-Port\-Thread\-::wait\-On\-Control\-Transfer\-Possible(), mdt\-Port\-Manager\-::wait\-Transaction\-Done(), mdt\-Port\-::write(), mdt\-Serial\-Port\-::write(), mdt\-Device\-Modbus\-Wago\-Module\-::write\-Control\-Bytes(), mdt\-Csv\-File\-::write\-Line(), mdt\-Device\-Modbus\-Wago\-Module\-::write\-Registers(), mdt\-Port\-Thread\-Helper\-Port\-::write\-To\-Port(), and mdt\-Usb\-Port\-::write\-Transfer\-Callback().
+
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5}{\index{mdt\-Error.\-h@{mdt\-Error.\-h}!mdt\-\_\-error\-\_\-t@{mdt\-\_\-error\-\_\-t}}
+\index{mdt\-\_\-error\-\_\-t@{mdt\-\_\-error\-\_\-t}!mdtError.h@{mdt\-Error.\-h}}
+\subsubsection[{mdt\-\_\-error\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-\_\-error\-\_\-t}}}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5}
+
+
+error list 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000077}{Todo}]Check if this is not obselete ? Errors are very specific, and per module/class error enum seems to be better than a central, very big and incoherent enum ... \end{DoxyRefDesc}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{M\-D\-T\-\_\-\-N\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-N\-O\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-N\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-N\-O\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a3616d1be9cd93bbac906df6ee83b6871}{M\-D\-T\-\_\-\-N\-O\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a3616d1be9cd93bbac906df6ee83b6871}
+}]No error \index{M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5af755e8d142994c8500acc1ab4d8da144}{M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5af755e8d142994c8500acc1ab4d8da144}
+}]Unknow error \index{M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a501d8e1f5106fe087ace9d81cfaa88c5}{M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a501d8e1f5106fe087ace9d81cfaa88c5}
+}]File I/\-O error \index{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a8ef2772eb32dc3618f38916508725ddd}{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a8ef2772eb32dc3618f38916508725ddd}
+}]Unknow port I/\-O error \index{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-Q\-U\-E\-U\-E\-\_\-\-E\-M\-P\-T\-Y\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-Q\-U\-E\-U\-E\-\_\-\-E\-M\-P\-T\-Y\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-Q\-U\-E\-U\-E\-\_\-\-E\-M\-P\-T\-Y\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-Q\-U\-E\-U\-E\-\_\-\-E\-M\-P\-T\-Y\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ab3cbbdd2eff532f479dd101f5b394b6b}{M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-Q\-U\-E\-U\-E\-\_\-\-E\-M\-P\-T\-Y\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ab3cbbdd2eff532f479dd101f5b394b6b}
+}]A I/\-O Queue is empty\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_port_thread}{mdt\-Port\-Thread} 
+\end{DoxySeeAlso}
+\index{M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a15d51db236465ba46d2e9126a3d637c4}{M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a15d51db236465ba46d2e9126a3d637c4}
+}]\index{M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ab3152fa127d8d076e3851fe01d021fb5}{M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ab3152fa127d8d076e3851fe01d021fb5}
+}]\index{M\-D\-T\-\_\-\-T\-C\-P\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-T\-C\-P\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-T\-C\-P\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-T\-C\-P\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a6cc3b1524a19afac9ecae98b3415a7f0}{M\-D\-T\-\_\-\-T\-C\-P\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a6cc3b1524a19afac9ecae98b3415a7f0}
+}]\index{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a02eec67fc4bc27df92311eb48b0c4d2e}{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a02eec67fc4bc27df92311eb48b0c4d2e}
+}]\index{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-E\-N\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-E\-N\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-E\-N\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-E\-N\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aa3ddc7e7d3a3e6649112947a21288c1c}{M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-E\-N\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aa3ddc7e7d3a3e6649112947a21288c1c}
+}]\index{M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aba6f11283d5d318eae7ac9979f7f3c8d}{M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aba6f11283d5d318eae7ac9979f7f3c8d}
+}]\index{M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ac95f17de14ec3543070835e09ed7a317}{M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ac95f17de14ec3543070835e09ed7a317}
+}]Parsing error \index{M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a7e794a8babdb710f4442175715121d58}{M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a7e794a8babdb710f4442175715121d58}
+}]Database error \index{M\-D\-T\-\_\-\-Q\-M\-\_\-\-F\-I\-L\-E\-\_\-\-L\-O\-A\-D\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-Q\-M\-\_\-\-F\-I\-L\-E\-\_\-\-L\-O\-A\-D\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-Q\-M\-\_\-\-F\-I\-L\-E\-\_\-\-L\-O\-A\-D\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-Q\-M\-\_\-\-F\-I\-L\-E\-\_\-\-L\-O\-A\-D\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ae020c9fc555374f5dd4e62665687a06b}{M\-D\-T\-\_\-\-Q\-M\-\_\-\-F\-I\-L\-E\-\_\-\-L\-O\-A\-D\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5ae020c9fc555374f5dd4e62665687a06b}
+}]A translation file (.qm) could not be loaded \index{M\-D\-T\-\_\-\-M\-E\-M\-O\-R\-Y\-\_\-\-A\-L\-L\-O\-C\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-M\-E\-M\-O\-R\-Y\-\_\-\-A\-L\-L\-O\-C\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-M\-E\-M\-O\-R\-Y\-\_\-\-A\-L\-L\-O\-C\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-M\-E\-M\-O\-R\-Y\-\_\-\-A\-L\-L\-O\-C\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a6ebb67e3a400eb0251a302a6bbeb3a41}{M\-D\-T\-\_\-\-M\-E\-M\-O\-R\-Y\-\_\-\-A\-L\-L\-O\-C\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a6ebb67e3a400eb0251a302a6bbeb3a41}
+}]A memory allocation failed \index{M\-D\-T\-\_\-\-G\-U\-I\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-G\-U\-I\-\_\-\-E\-R\-R\-O\-R}!mdt\-Error.\-h@{mdt\-Error.\-h}}\index{mdt\-Error.\-h@{mdt\-Error.\-h}!M\-D\-T\-\_\-\-G\-U\-I\-\_\-\-E\-R\-R\-O\-R@{M\-D\-T\-\_\-\-G\-U\-I\-\_\-\-E\-R\-R\-O\-R}}\item[{\em 
+\hypertarget{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a19bf56f8bbd1afe273b97a8e6c32efa9}{M\-D\-T\-\_\-\-G\-U\-I\-\_\-\-E\-R\-R\-O\-R}\label{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a19bf56f8bbd1afe273b97a8e6c32efa9}
+}]G\-U\-I error (widget not found, ...) \end{description}
+\end{Desc}
+
+
+Definition at line 36 of file mdt\-Error.\-h.
+

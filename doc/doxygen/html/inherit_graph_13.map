@@ -1,3 +1,7 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_device_ios_segment.html" title="Store a segment of device I/O list." alt="" coords="5,5,160,35"/>
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node3" href="$classmdt_frame.html" title="Provide an array of bytes. " alt="" coords="145,85,225,115"/>
+<area shape="rect" id="node5" href="$classmdt_frame_ascii.html" title="mdtFrameAscii" alt="" coords="295,5,404,35"/>
+<area shape="rect" id="node7" href="$classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame. " alt="" coords="275,59,424,88"/>
+<area shape="rect" id="node9" href="$classmdt_frame_usb_control.html" title="USB Control frame. " alt="" coords="276,112,423,141"/>
+<area shape="rect" id="node11" href="$classmdt_frame_usb_tmc.html" title="USBTMC frame. " alt="" coords="284,165,415,195"/>
 </map>

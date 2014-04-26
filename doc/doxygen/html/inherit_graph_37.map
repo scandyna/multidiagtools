@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/>
-<area shape="rect" id="node3" href="$classmdt_serial_port_config.html" title="mdtSerialPortConfig" alt="" coords="160,5,299,35"/>
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_q_data_widget_mapper.html" title="QDataWidgetMapper" alt="" coords="5,5,149,35"/>
+<area shape="rect" id="node3" href="$classmdt_sql_data_widget_mapper.html" title="DataWidget mapper. " alt="" coords="199,5,372,35"/>
 </map>

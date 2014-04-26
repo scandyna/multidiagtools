@@ -1,6 +1,5 @@
-\hypertarget{classmdt_sql_database_manager}{
-\section{mdtSqlDatabaseManager Class Reference}
-\label{classmdt_sql_database_manager}\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
+\hypertarget{classmdt_sql_database_manager}{\section{mdt\-Sql\-Database\-Manager Class Reference}
+\label{classmdt_sql_database_manager}\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}}
 }
 
 
@@ -9,11 +8,20 @@ Helper class to create and open (connect to) database.
 
 
 
-{\ttfamily \#include $<$mdtSqlDatabaseManager.h$>$}
+{\ttfamily \#include $<$mdt\-Sql\-Database\-Manager.\-h$>$}
 
 
 
-Collaboration diagram for mdtSqlDatabaseManager:\nopagebreak
+Inheritance diagram for mdt\-Sql\-Database\-Manager\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classmdt_sql_database_manager__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Sql\-Database\-Manager\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,245 +31,343 @@ Collaboration diagram for mdtSqlDatabaseManager:\nopagebreak
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{createMode\_\-t} \{ \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d}{OverwriteExisting}, 
-\hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069}{KeepExisting}, 
-\hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a}{FailIfExists}, 
-\hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6}{AskUserIfExists}
+enum \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{create\-Mode\-\_\-t} \{ \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d}{Overwrite\-Existing}, 
+\hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069}{Keep\-Existing}, 
+\hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a}{Fail\-If\-Exists}, 
+\hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6}{Ask\-User\-If\-Exists}
  \}
 \begin{DoxyCompactList}\small\item\em Creation mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_database_manager_a8a9b487981f99ddc5d476776e5e0bb06}{
-\hyperlink{classmdt_sql_database_manager_a8a9b487981f99ddc5d476776e5e0bb06}{mdtSqlDatabaseManager} (QObject $\ast$parent=0)}
-\label{classmdt_sql_database_manager_a8a9b487981f99ddc5d476776e5e0bb06}
-
+\hyperlink{classmdt_sql_database_manager_a8a9b487981f99ddc5d476776e5e0bb06}{mdt\-Sql\-Database\-Manager} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_database_manager_affd97fb8d28d07617e860d748ff57c5f}{
-\hyperlink{classmdt_sql_database_manager_affd97fb8d28d07617e860d748ff57c5f}{$\sim$mdtSqlDatabaseManager} ()}
-\label{classmdt_sql_database_manager_affd97fb8d28d07617e860d748ff57c5f}
-
+\hyperlink{classmdt_sql_database_manager_affd97fb8d28d07617e860d748ff57c5f}{$\sim$mdt\-Sql\-Database\-Manager} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_database_manager_a6c6f2b1a7754193e3a9b80069c8df747}{
-void \hyperlink{classmdt_sql_database_manager_a6c6f2b1a7754193e3a9b80069c8df747}{setDatabase} (QSqlDatabase db)}
-\label{classmdt_sql_database_manager_a6c6f2b1a7754193e3a9b80069c8df747}
-
+void \hyperlink{classmdt_sql_database_manager_a6c6f2b1a7754193e3a9b80069c8df747}{set\-Database} (Q\-Sql\-Database db)
 \begin{DoxyCompactList}\small\item\em Set a allready existing database. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}{
-QSqlDatabase \hyperlink{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}{database} ()}
-\label{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}
-
+Q\-Sql\-Database \hyperlink{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}{database} ()
 \begin{DoxyCompactList}\small\item\em Get current database object. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}{
-bool \hyperlink{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}{setForeignKeysEnabled} (bool enable)}
-\label{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}
-
+bool \hyperlink{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}{set\-Foreign\-Keys\-Enabled} (bool enable)
 \begin{DoxyCompactList}\small\item\em Enable/disable foreing keys constraint. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_database_manager_a3da56635b2a4db98b768e5846e15fa83}{setForDialogParentWidget} (QWidget $\ast$widget)
+void \hyperlink{classmdt_sql_database_manager_a3da56635b2a4db98b768e5846e15fa83}{set\-For\-Dialog\-Parent\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$widget)
 \begin{DoxyCompactList}\small\item\em Set the parent widget for dialogs. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_database_manager_a7fb8458fb9fc10216c8dfbbeb2c3dc50}{
-\hyperlink{classmdt_error}{mdtError} \hyperlink{classmdt_sql_database_manager_a7fb8458fb9fc10216c8dfbbeb2c3dc50}{lastError} () const }
-\label{classmdt_sql_database_manager_a7fb8458fb9fc10216c8dfbbeb2c3dc50}
-
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_sql_database_manager_a7fb8458fb9fc10216c8dfbbeb2c3dc50}{last\-Error} () const 
 \begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
-QFileInfo \hyperlink{classmdt_sql_database_manager_ae6459276d25c6d3733b284249c1f1ab4}{chooseDatabaseSqlite} (const QDir \&startDirectory=QDir())
+Q\-File\-Info \hyperlink{classmdt_sql_database_manager_ae6459276d25c6d3733b284249c1f1ab4}{choose\-Database\-Sqlite} (const Q\-Dir \&start\-Directory=Q\-Dir())
 \begin{DoxyCompactList}\small\item\em Let the user choose a Sqlite database file. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}{openDatabaseSqlite} (const QFileInfo \&fileInfo, const QString \&connectionName=QString())
+bool \hyperlink{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}{open\-Database\-Sqlite} (const Q\-File\-Info \&file\-Info, const Q\-String \&connection\-Name=Q\-String())
 \begin{DoxyCompactList}\small\item\em Open a sqlite database. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_database_manager_a536f140060edf7721d8f0589f4d7de0d}{openDatabaseSqlite} (const QDir \&startDirectory=QDir(), const QString \&connectionName=QString())
+bool \hyperlink{classmdt_sql_database_manager_a536f140060edf7721d8f0589f4d7de0d}{open\-Database\-Sqlite} (const Q\-Dir \&start\-Directory=Q\-Dir(), const Q\-String \&connection\-Name=Q\-String())
 \begin{DoxyCompactList}\small\item\em Open a sqlite database. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_database_manager_ac9c9cac0342cc3a66e4c3510da8f97c9}{createDatabaseSqlite} (const QDir \&startDirectory=QDir(), const QString \&connectionName=QString())
+bool \hyperlink{classmdt_sql_database_manager_ac9c9cac0342cc3a66e4c3510da8f97c9}{create\-Database\-Sqlite} (const Q\-Dir \&start\-Directory=Q\-Dir(), const Q\-String \&connection\-Name=Q\-String())
 \begin{DoxyCompactList}\small\item\em Ask the user to give a path and create a Sqlite database. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_database_manager_ae2c4622505d90610d3990dd682662678}{createDatabaseSqlite} (const QFileInfo \&fileInfo, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{createMode\_\-t} createMode, const QString \&connectionName=QString())
+bool \hyperlink{classmdt_sql_database_manager_ae2c4622505d90610d3990dd682662678}{create\-Database\-Sqlite} (const Q\-File\-Info \&file\-Info, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{create\-Mode\-\_\-t} create\-Mode, const Q\-String \&connection\-Name=Q\-String())
 \begin{DoxyCompactList}\small\item\em Create a Sqlite database. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_database_manager_afe78562023f6b8d530a24a9362587ed5}{createTable} (\hyperlink{classmdt_sql_schema_table}{mdtSqlSchemaTable} \&table, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{createMode\_\-t} createMode)
+bool \hyperlink{classmdt_sql_database_manager_afe78562023f6b8d530a24a9362587ed5}{create\-Table} (\hyperlink{classmdt_sql_schema_table}{mdt\-Sql\-Schema\-Table} \&table, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{create\-Mode\-\_\-t} create\-Mode)
 \begin{DoxyCompactList}\small\item\em Create a table. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Helper class to create and open (connect to) database. 
 
-QSqlDatabase allready offers needed methods to open a database. This helper class use it, but gives some methods witch will deal with common problems. For example, with Sqlite, checking if a file exists, what to do if it exists and we are creating a new database, ... 
+Q\-Sql\-Database allready offers needed methods to open a database. This helper class use it, but gives some methods witch will deal with common problems. For example, with Sqlite, checking if a file exists, what to do if it exists and we are creating a new database, ... 
 
-Definition at line 41 of file mdtSqlDatabaseManager.h.
+Definition at line 41 of file mdt\-Sql\-Database\-Manager.\-h.
 
 
 
 \subsection{Member Enumeration Documentation}
-\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{
-\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!createMode\_\-t@{createMode\_\-t}}
-\index{createMode\_\-t@{createMode\_\-t}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
-\subsubsection[{createMode\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtSqlDatabaseManager::createMode\_\-t}}}
-\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}
+\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!create\-Mode\-\_\-t@{create\-Mode\-\_\-t}}
+\index{create\-Mode\-\_\-t@{create\-Mode\-\_\-t}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{create\-Mode\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Sql\-Database\-Manager\-::create\-Mode\-\_\-t}}}\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}
 
 
 Creation mode. 
 
 \begin{Desc}
-\item[Enumerator: ]\par
+\item[Enumerator]\par
 \begin{description}
-\index{OverwriteExisting@{OverwriteExisting}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!OverwriteExisting@{OverwriteExisting}}\item[{\em 
-\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d}{
-OverwriteExisting}
-\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d}
-}]If file/database/table allready exists, it will be overwritten \index{KeepExisting@{KeepExisting}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!KeepExisting@{KeepExisting}}\item[{\em 
-\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069}{
-KeepExisting}
-\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069}
-}]If file/database/table allready exists, it will simply be open \index{FailIfExists@{FailIfExists}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!FailIfExists@{FailIfExists}}\item[{\em 
-\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a}{
-FailIfExists}
-\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a}
-}]If file/database/table allready exists, create method will fail \index{AskUserIfExists@{AskUserIfExists}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!AskUserIfExists@{AskUserIfExists}}\item[{\em 
-\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6}{
-AskUserIfExists}
-\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6}
+\index{Overwrite\-Existing@{Overwrite\-Existing}!mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}}\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!Overwrite\-Existing@{Overwrite\-Existing}}\item[{\em 
+\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d}{Overwrite\-Existing}\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a4fc53f0ca5f4c3069d1f76363dd1c33d}
+}]If file/database/table allready exists, it will be overwritten \index{Keep\-Existing@{Keep\-Existing}!mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}}\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!Keep\-Existing@{Keep\-Existing}}\item[{\em 
+\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069}{Keep\-Existing}\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418acc4863e1f1744ee33870efa25d0f4069}
+}]If file/database/table allready exists, it will simply be open \index{Fail\-If\-Exists@{Fail\-If\-Exists}!mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}}\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!Fail\-If\-Exists@{Fail\-If\-Exists}}\item[{\em 
+\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a}{Fail\-If\-Exists}\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a8ce7ece0b37cefb97d7ebc4ca058691a}
+}]If file/database/table allready exists, create method will fail \index{Ask\-User\-If\-Exists@{Ask\-User\-If\-Exists}!mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}}\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!Ask\-User\-If\-Exists@{Ask\-User\-If\-Exists}}\item[{\em 
+\hypertarget{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6}{Ask\-User\-If\-Exists}\label{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6}
 }]If file/database/table allready exists, a dialog box will ask the user if it must be overwritten or not \end{description}
 \end{Desc}
 
 
+Definition at line 49 of file mdt\-Sql\-Database\-Manager.\-h.
 
-Definition at line 49 of file mdtSqlDatabaseManager.h.
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_database_manager_a8a9b487981f99ddc5d476776e5e0bb06}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}}
+\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{mdt\-Sql\-Database\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Database\-Manager\-::mdt\-Sql\-Database\-Manager (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_database_manager_a8a9b487981f99ddc5d476776e5e0bb06}
+
+
+Constructor. 
+
+
+
+Definition at line 32 of file mdt\-Sql\-Database\-Manager.\-cpp.
+
+\hypertarget{classmdt_sql_database_manager_affd97fb8d28d07617e860d748ff57c5f}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!$\sim$mdt\-Sql\-Database\-Manager@{$\sim$mdt\-Sql\-Database\-Manager}}
+\index{$\sim$mdt\-Sql\-Database\-Manager@{$\sim$mdt\-Sql\-Database\-Manager}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{$\sim$mdt\-Sql\-Database\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Database\-Manager\-::$\sim$mdt\-Sql\-Database\-Manager (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_database_manager_affd97fb8d28d07617e860d748ff57c5f}
+
+
+Destructor. 
+
+
+
+Definition at line 38 of file mdt\-Sql\-Database\-Manager.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_database_manager_ae6459276d25c6d3733b284249c1f1ab4}{
-\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!chooseDatabaseSqlite@{chooseDatabaseSqlite}}
-\index{chooseDatabaseSqlite@{chooseDatabaseSqlite}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
-\subsubsection[{chooseDatabaseSqlite}]{\setlength{\rightskip}{0pt plus 5cm}QFileInfo mdtSqlDatabaseManager::chooseDatabaseSqlite (
+\hypertarget{classmdt_sql_database_manager_ae6459276d25c6d3733b284249c1f1ab4}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!choose\-Database\-Sqlite@{choose\-Database\-Sqlite}}
+\index{choose\-Database\-Sqlite@{choose\-Database\-Sqlite}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{choose\-Database\-Sqlite}]{\setlength{\rightskip}{0pt plus 5cm}Q\-File\-Info mdt\-Sql\-Database\-Manager\-::choose\-Database\-Sqlite (
 \begin{DoxyParamCaption}
-\item[{const QDir \&}]{startDirectory = {\ttfamily QDir()}}
+\item[{const Q\-Dir \&}]{start\-Directory = {\ttfamily QDir()}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_database_manager_ae6459276d25c6d3733b284249c1f1ab4}
+)}}\label{classmdt_sql_database_manager_ae6459276d25c6d3733b284249c1f1ab4}
 
 
 Let the user choose a Sqlite database file. 
 
-The startDirectory is used as directory to go when displaying the file dialog 
+The start\-Directory is used as directory to go when displaying the file dialog 
 
-Definition at line 108 of file mdtSqlDatabaseManager.cpp.
+Definition at line 108 of file mdt\-Sql\-Database\-Manager.\-cpp.
 
-\hypertarget{classmdt_sql_database_manager_ac9c9cac0342cc3a66e4c3510da8f97c9}{
-\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!createDatabaseSqlite@{createDatabaseSqlite}}
-\index{createDatabaseSqlite@{createDatabaseSqlite}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
-\subsubsection[{createDatabaseSqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlDatabaseManager::createDatabaseSqlite (
+
+
+Referenced by mdt\-Tt\-Database\-Schema\-::import\-Database(), and open\-Database\-Sqlite().
+
+\hypertarget{classmdt_sql_database_manager_ac9c9cac0342cc3a66e4c3510da8f97c9}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!create\-Database\-Sqlite@{create\-Database\-Sqlite}}
+\index{create\-Database\-Sqlite@{create\-Database\-Sqlite}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{create\-Database\-Sqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite (
 \begin{DoxyParamCaption}
-\item[{const QDir \&}]{startDirectory = {\ttfamily QDir()}, }
-\item[{const QString \&}]{connectionName = {\ttfamily QString()}}
+\item[{const Q\-Dir \&}]{start\-Directory = {\ttfamily QDir()}, }
+\item[{const Q\-String \&}]{connection\-Name = {\ttfamily QString()}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_database_manager_ac9c9cac0342cc3a66e4c3510da8f97c9}
+)}}\label{classmdt_sql_database_manager_ac9c9cac0342cc3a66e4c3510da8f97c9}
 
 
 Ask the user to give a path and create a Sqlite database. 
 
-The startDirectory is used as directory to go when displaying the file dialog 
+The start\-Directory is used as directory to go when displaying the file dialog 
 
-Definition at line 219 of file mdtSqlDatabaseManager.cpp.
+Definition at line 219 of file mdt\-Sql\-Database\-Manager.\-cpp.
 
-\hypertarget{classmdt_sql_database_manager_ae2c4622505d90610d3990dd682662678}{
-\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!createDatabaseSqlite@{createDatabaseSqlite}}
-\index{createDatabaseSqlite@{createDatabaseSqlite}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
-\subsubsection[{createDatabaseSqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlDatabaseManager::createDatabaseSqlite (
+
+
+References mdt\-Error\-::informative\-Text(), mdt\-Error\-::level\-Icon(), Overwrite\-Existing, mdt\-Error\-::system\-Error\-String(), and mdt\-Error\-::text().
+
+
+
+Referenced by mdt\-Data\-Table\-Manager\-::create\-Data\-Set(), and mdt\-Tt\-Database\-Schema\-::create\-Schema\-Sqlite().
+
+\hypertarget{classmdt_sql_database_manager_ae2c4622505d90610d3990dd682662678}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!create\-Database\-Sqlite@{create\-Database\-Sqlite}}
+\index{create\-Database\-Sqlite@{create\-Database\-Sqlite}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{create\-Database\-Sqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite (
 \begin{DoxyParamCaption}
-\item[{const QFileInfo \&}]{fileInfo, }
-\item[{{\bf createMode\_\-t}}]{createMode, }
-\item[{const QString \&}]{connectionName = {\ttfamily QString()}}
+\item[{const Q\-File\-Info \&}]{file\-Info, }
+\item[{{\bf create\-Mode\-\_\-t}}]{create\-Mode, }
+\item[{const Q\-String \&}]{connection\-Name = {\ttfamily QString()}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_database_manager_ae2c4622505d90610d3990dd682662678}
+)}}\label{classmdt_sql_database_manager_ae2c4622505d90610d3990dd682662678}
 
 
 Create a Sqlite database. 
 
-Note: a open connection to database will not be closed by this method. The caller must close existing connection to target database explicitly before overwrite the same. 
+Note\-: a open connection to database will not be closed by this method. The caller must close existing connection to target database explicitly before overwrite the same. 
 
-Definition at line 253 of file mdtSqlDatabaseManager.cpp.
+Definition at line 253 of file mdt\-Sql\-Database\-Manager.\-cpp.
 
-\hypertarget{classmdt_sql_database_manager_afe78562023f6b8d530a24a9362587ed5}{
-\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!createTable@{createTable}}
-\index{createTable@{createTable}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
-\subsubsection[{createTable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlDatabaseManager::createTable (
+
+
+References Ask\-User\-If\-Exists, mdt\-Error\-::commit(), mdt\-Error\-::\-Error, Fail\-If\-Exists, Keep\-Existing, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, Overwrite\-Existing, mdt\-Error\-::set\-Error(), set\-Foreign\-Keys\-Enabled(), mdt\-Error\-::set\-Informative\-Text(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_sql_database_manager_afe78562023f6b8d530a24a9362587ed5}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!create\-Table@{create\-Table}}
+\index{create\-Table@{create\-Table}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{create\-Table}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Database\-Manager\-::create\-Table (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtSqlSchemaTable} \&}]{table, }
-\item[{{\bf createMode\_\-t}}]{createMode}
+\item[{{\bf mdt\-Sql\-Schema\-Table} \&}]{table, }
+\item[{{\bf create\-Mode\-\_\-t}}]{create\-Mode}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_database_manager_afe78562023f6b8d530a24a9362587ed5}
+)}}\label{classmdt_sql_database_manager_afe78562023f6b8d530a24a9362587ed5}
 
 
 Create a table. 
 
 Will also setup database specific thing (like driver name) on table. 
 
-Definition at line 374 of file mdtSqlDatabaseManager.cpp.
+Definition at line 391 of file mdt\-Sql\-Database\-Manager.\-cpp.
 
-\hypertarget{classmdt_sql_database_manager_a536f140060edf7721d8f0589f4d7de0d}{
-\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!openDatabaseSqlite@{openDatabaseSqlite}}
-\index{openDatabaseSqlite@{openDatabaseSqlite}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
-\subsubsection[{openDatabaseSqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlDatabaseManager::openDatabaseSqlite (
+
+
+References Ask\-User\-If\-Exists, mdt\-Error\-::commit(), mdt\-Error\-::\-Error, Fail\-If\-Exists, Keep\-Existing, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, Overwrite\-Existing, mdt\-Sql\-Schema\-Table\-::set\-Driver\-Name(), mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-System\-Error(), mdt\-Sql\-Schema\-Table\-::sql\-For\-Create\-Table(), mdt\-Sql\-Schema\-Table\-::sql\-For\-Drop\-Table(), mdt\-Sql\-Schema\-Table\-::table\-Name(), and mdt\-Error\-::\-Warning.
+
+
+
+Referenced by mdt\-Data\-Table\-Manager\-::copy\-Table(), and mdt\-Data\-Table\-Manager\-::create\-Data\-Set().
+
+\hypertarget{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!database@{database}}
+\index{database@{database}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Database mdt\-Sql\-Database\-Manager\-::database (
 \begin{DoxyParamCaption}
-\item[{const QDir \&}]{startDirectory = {\ttfamily QDir()}, }
-\item[{const QString \&}]{connectionName = {\ttfamily QString()}}
+{}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_database_manager_a536f140060edf7721d8f0589f4d7de0d}
+)}}\label{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}
+
+
+Get current database object. 
+
+
+
+Definition at line 48 of file mdt\-Sql\-Database\-Manager.\-cpp.
+
+
+
+Referenced by mdt\-Tt\-Database\-Schema\-::check\-Schema(), mdt\-Data\-Table\-Manager\-::close(), mdt\-Tt\-Database\-Schema\-::create\-Schema\-Sqlite(), mdt\-Data\-Table\-Manager\-::database(), and mdt\-Tt\-Database\-Schema\-::import\-Database().
+
+\hypertarget{classmdt_sql_database_manager_a7fb8458fb9fc10216c8dfbbeb2c3dc50}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Database\-Manager\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_database_manager_a7fb8458fb9fc10216c8dfbbeb2c3dc50}
+
+
+Get last error. 
+
+
+
+Definition at line 103 of file mdt\-Sql\-Database\-Manager.\-cpp.
+
+
+
+Referenced by mdt\-Data\-Table\-Manager\-::copy\-Table(), mdt\-Data\-Table\-Manager\-::create\-Data\-Set(), and mdt\-Tt\-Database\-Schema\-::import\-Database().
+
+\hypertarget{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!open\-Database\-Sqlite@{open\-Database\-Sqlite}}
+\index{open\-Database\-Sqlite@{open\-Database\-Sqlite}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{open\-Database\-Sqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Database\-Manager\-::open\-Database\-Sqlite (
+\begin{DoxyParamCaption}
+\item[{const Q\-File\-Info \&}]{file\-Info, }
+\item[{const Q\-String \&}]{connection\-Name = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}
 
 
 Open a sqlite database. 
 
-Will ask the user to choose a file and try to open it . The startDirectory is used as directory to go when displaying the file dialog . 
 
-Definition at line 201 of file mdtSqlDatabaseManager.cpp.
 
-\hypertarget{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}{
-\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!openDatabaseSqlite@{openDatabaseSqlite}}
-\index{openDatabaseSqlite@{openDatabaseSqlite}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
-\subsubsection[{openDatabaseSqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlDatabaseManager::openDatabaseSqlite (
+Definition at line 127 of file mdt\-Sql\-Database\-Manager.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Error\-::set\-Error(), set\-Foreign\-Keys\-Enabled(), mdt\-Error\-::set\-Informative\-Text(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by open\-Database\-Sqlite().
+
+\hypertarget{classmdt_sql_database_manager_a536f140060edf7721d8f0589f4d7de0d}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!open\-Database\-Sqlite@{open\-Database\-Sqlite}}
+\index{open\-Database\-Sqlite@{open\-Database\-Sqlite}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{open\-Database\-Sqlite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Database\-Manager\-::open\-Database\-Sqlite (
 \begin{DoxyParamCaption}
-\item[{const QFileInfo \&}]{fileInfo, }
-\item[{const QString \&}]{connectionName = {\ttfamily QString()}}
+\item[{const Q\-Dir \&}]{start\-Directory = {\ttfamily QDir()}, }
+\item[{const Q\-String \&}]{connection\-Name = {\ttfamily QString()}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}
+)}}\label{classmdt_sql_database_manager_a536f140060edf7721d8f0589f4d7de0d}
 
 
 Open a sqlite database. 
 
+Will ask the user to choose a file and try to open it . The start\-Directory is used as directory to go when displaying the file dialog . 
 
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000083}{Todo}]Close here ?? \end{Desc}
-
-
-QSqlQuery query(pvDatabase); if(!query.exec(\char`\"{}PRAGMA foreign\_\-keys = ON\char`\"{}))\{ pvLastError.setError(tr(\char`\"{}Cannot enable foreign keys support on database '\char`\"{}) + pvDatabaseName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); MDT\_\-ERROR\_\-SET\_\-SRC(pvLastError, \char`\"{}mdtSqlDatabaseManager\char`\"{}); pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text()); pvLastError.commit(); return false; \}
+Definition at line 201 of file mdt\-Sql\-Database\-Manager.\-cpp.
 
 
 
-Definition at line 127 of file mdtSqlDatabaseManager.cpp.
+References choose\-Database\-Sqlite(), mdt\-Error\-::clear(), and open\-Database\-Sqlite().
 
-\hypertarget{classmdt_sql_database_manager_a3da56635b2a4db98b768e5846e15fa83}{
-\index{mdtSqlDatabaseManager@{mdtSqlDatabaseManager}!setForDialogParentWidget@{setForDialogParentWidget}}
-\index{setForDialogParentWidget@{setForDialogParentWidget}!mdtSqlDatabaseManager@{mdtSqlDatabaseManager}}
-\subsubsection[{setForDialogParentWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDatabaseManager::setForDialogParentWidget (
+\hypertarget{classmdt_sql_database_manager_a6c6f2b1a7754193e3a9b80069c8df747}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!set\-Database@{set\-Database}}
+\index{set\-Database@{set\-Database}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{set\-Database}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Database\-Manager\-::set\-Database (
 \begin{DoxyParamCaption}
-\item[{QWidget $\ast$}]{widget}
+\item[{Q\-Sql\-Database}]{db}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_database_manager_a3da56635b2a4db98b768e5846e15fa83}
+)}}\label{classmdt_sql_database_manager_a6c6f2b1a7754193e3a9b80069c8df747}
+
+
+Set a allready existing database. 
+
+
+
+Definition at line 42 of file mdt\-Sql\-Database\-Manager.\-cpp.
+
+
+
+Referenced by mdt\-Data\-Table\-Manager\-::copy\-Table(), and mdt\-Data\-Table\-Manager\-::mdt\-Data\-Table\-Manager().
+
+\hypertarget{classmdt_sql_database_manager_a3da56635b2a4db98b768e5846e15fa83}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!set\-For\-Dialog\-Parent\-Widget@{set\-For\-Dialog\-Parent\-Widget}}
+\index{set\-For\-Dialog\-Parent\-Widget@{set\-For\-Dialog\-Parent\-Widget}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{set\-For\-Dialog\-Parent\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Database\-Manager\-::set\-For\-Dialog\-Parent\-Widget (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_database_manager_a3da56635b2a4db98b768e5846e15fa83}
 
 
 Set the parent widget for dialogs. 
 
 In interactive mode, some dialogs will be displayed. If widget is set, dialogs will be created as parent of it. 
 
-Definition at line 98 of file mdtSqlDatabaseManager.cpp.
+Definition at line 98 of file mdt\-Sql\-Database\-Manager.\-cpp.
+
+\hypertarget{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!set\-Foreign\-Keys\-Enabled@{set\-Foreign\-Keys\-Enabled}}
+\index{set\-Foreign\-Keys\-Enabled@{set\-Foreign\-Keys\-Enabled}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
+\subsubsection[{set\-Foreign\-Keys\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Database\-Manager\-::set\-Foreign\-Keys\-Enabled (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}
+
+
+Enable/disable foreing keys constraint. 
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Definition at line 53 of file mdt\-Sql\-Database\-Manager.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by create\-Database\-Sqlite(), mdt\-Tt\-Database\-Schema\-::import\-Database(), and open\-Database\-Sqlite().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtSqlDatabaseManager.h\item 
-src/mdtutilsgui/mdtSqlDatabaseManager.cpp\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_sql_database_manager_8h}{mdt\-Sql\-Database\-Manager.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_sql_database_manager_8cpp}{mdt\-Sql\-Database\-Manager.\-cpp}\end{DoxyCompactItemize}

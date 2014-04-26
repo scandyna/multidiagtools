@@ -1,6 +1,5 @@
-\hypertarget{classmdt_sql_selection_dialog}{
-\section{mdtSqlSelectionDialog Class Reference}
-\label{classmdt_sql_selection_dialog}\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
+\hypertarget{classmdt_sql_selection_dialog}{\section{mdt\-Sql\-Selection\-Dialog Class Reference}
+\label{classmdt_sql_selection_dialog}\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}}
 }
 
 
@@ -9,194 +8,379 @@ Provide a way for the user to select row in a set of data.
 
 
 
-{\ttfamily \#include $<$mdtSqlSelectionDialog.h$>$}
+{\ttfamily \#include $<$mdt\-Sql\-Selection\-Dialog.\-h$>$}
 
+
+
+Inheritance diagram for mdt\-Sql\-Selection\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{classmdt_sql_selection_dialog__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Sql\-Selection\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_sql_selection_dialog__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_selection_dialog_af8d08c3192c20d297439afa3a12229c6}{
-void \hyperlink{classmdt_sql_selection_dialog_af8d08c3192c20d297439afa3a12229c6}{accept} ()}
-\label{classmdt_sql_selection_dialog_af8d08c3192c20d297439afa3a12229c6}
-
-\begin{DoxyCompactList}\small\item\em Overloads QDialog to to build selection results. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_selection_dialog_a4277a8f432ee3470039311f9dda9c26d}{
-void \hyperlink{classmdt_sql_selection_dialog_a4277a8f432ee3470039311f9dda9c26d}{reject} ()}
-\label{classmdt_sql_selection_dialog_a4277a8f432ee3470039311f9dda9c26d}
-
-\begin{DoxyCompactList}\small\item\em Overloads QDialog to tell \hyperlink{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}{selectionResult()} that it must return a empty result. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_sql_selection_dialog_af8d08c3192c20d297439afa3a12229c6}{accept} ()
+\begin{DoxyCompactList}\small\item\em Overloads \hyperlink{class_q_dialog}{Q\-Dialog} to to build selection results. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_selection_dialog_a4277a8f432ee3470039311f9dda9c26d}{reject} ()
+\begin{DoxyCompactList}\small\item\em Overloads \hyperlink{class_q_dialog}{Q\-Dialog} to tell \hyperlink{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}{selection\-Result()} that it must return a empty result. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_selection_dialog_aaeb4d47e400bff8e58dec9f84f00517c}{
-\hyperlink{classmdt_sql_selection_dialog_aaeb4d47e400bff8e58dec9f84f00517c}{mdtSqlSelectionDialog} (QWidget $\ast$parent=0)}
-\label{classmdt_sql_selection_dialog_aaeb4d47e400bff8e58dec9f84f00517c}
-
+\hyperlink{classmdt_sql_selection_dialog_aaeb4d47e400bff8e58dec9f84f00517c}{mdt\-Sql\-Selection\-Dialog} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_selection_dialog_a586e3cb812e5e9634f42cb40bfd2d724}{
-\hyperlink{classmdt_sql_selection_dialog_a586e3cb812e5e9634f42cb40bfd2d724}{$\sim$mdtSqlSelectionDialog} ()}
-\label{classmdt_sql_selection_dialog_a586e3cb812e5e9634f42cb40bfd2d724}
-
+\hyperlink{classmdt_sql_selection_dialog_a586e3cb812e5e9634f42cb40bfd2d724}{$\sim$mdt\-Sql\-Selection\-Dialog} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_selection_dialog_ab5ea543ebded60b4354c7c0902ca021f}{
-void \hyperlink{classmdt_sql_selection_dialog_ab5ea543ebded60b4354c7c0902ca021f}{setMessage} (const QString \&message)}
-\label{classmdt_sql_selection_dialog_ab5ea543ebded60b4354c7c0902ca021f}
-
+void \hyperlink{classmdt_sql_selection_dialog_ab5ea543ebded60b4354c7c0902ca021f}{set\-Message} (const Q\-String \&message)
 \begin{DoxyCompactList}\small\item\em Set a message that will be displayed to the user. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_selection_dialog_a5265f64e773a64f34602ddf9b953821b}{setAllowEmptyResult} (bool allow)
+void \hyperlink{classmdt_sql_selection_dialog_a5265f64e773a64f34602ddf9b953821b}{set\-Allow\-Empty\-Result} (bool allow)
 \begin{DoxyCompactList}\small\item\em Set allow empty result. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_selection_dialog_aabe0554b9ca3f4a8d37a79e812dd8770}{setModel} (QSqlQueryModel $\ast$model, bool allowMultiSelection=false)
-\begin{DoxyCompactList}\small\item\em Set model that contain data to display. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_selection_dialog_afc29f8965c2d6cc103d021ab54298a84}{setHeaderData} (const QString \&fieldName, const QString \&data)
+void \hyperlink{classmdt_sql_selection_dialog_a7bc61efc9e0e0d141f6109cc86d1634d}{set\-Query} (const Q\-String \&sql, Q\-Sql\-Database db, bool allow\-Multi\-Selection=false)
+\begin{DoxyCompactList}\small\item\em Set S\-Q\-L query to display data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_selection_dialog_afc29f8965c2d6cc103d021ab54298a84}{set\-Header\-Data} (const Q\-String \&field\-Name, const Q\-String \&data)
 \begin{DoxyCompactList}\small\item\em Set a user friendly name for a column. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_selection_dialog_a8b7f8d24a959533ebe434443f19920c7}{
-void \hyperlink{classmdt_sql_selection_dialog_a8b7f8d24a959533ebe434443f19920c7}{setColumnHidden} (int column, bool hide)}
-\label{classmdt_sql_selection_dialog_a8b7f8d24a959533ebe434443f19920c7}
-
+void \hyperlink{classmdt_sql_selection_dialog_a8b7f8d24a959533ebe434443f19920c7}{set\-Column\-Hidden} (int column, bool hide)
 \begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_selection_dialog_a163280676920829583a4888b742fc96c}{setColumnHidden} (const QString \&fieldName, bool hide)
+void \hyperlink{classmdt_sql_selection_dialog_a163280676920829583a4888b742fc96c}{set\-Column\-Hidden} (const Q\-String \&field\-Name, bool hide)
 \begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_selection_dialog_ad28449f5ab1b3ad4fdbdf3f5a0fbb456}{selectRows} (const QString \&fieldName, const QVariant \&matchData)
+void \hyperlink{classmdt_sql_selection_dialog_a82df70e51cdc408dfbb9cd1047392403}{clear\-Columns\-Sort\-Order} ()
+\begin{DoxyCompactList}\small\item\em Clear columns sort order. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_selection_dialog_a9fe80365b3e41f88b0879fc098b8f6c0}{add\-Column\-To\-Sort\-Order} (int column, Qt\-::\-Sort\-Order order=Qt\-::\-Ascending\-Order)
+\begin{DoxyCompactList}\small\item\em Add a column to columns sort order. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_selection_dialog_a594df719c71d852e9ca318d729ec14d3}{add\-Column\-To\-Sort\-Order} (const Q\-String \&field\-Name, Qt\-::\-Sort\-Order order=Qt\-::\-Ascending\-Order)
+\begin{DoxyCompactList}\small\item\em Add a field to columns sort order. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_selection_dialog_a34941e9927a0af3a2c052356da2d36bd}{sort} ()
+\begin{DoxyCompactList}\small\item\em Sort data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_selection_dialog_ad28449f5ab1b3ad4fdbdf3f5a0fbb456}{select\-Rows} (const Q\-String \&field\-Name, const Q\-Variant \&match\-Data)
 \begin{DoxyCompactList}\small\item\em Select rows. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{setSelectionResultColumns} (const QList$<$ int $>$ \&columns)
+void \hyperlink{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{set\-Selection\-Result\-Columns} (const Q\-List$<$ int $>$ \&columns)
 \begin{DoxyCompactList}\small\item\em Set a list of column that will contain the selected data. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_selection_dialog_a5c5c36414bf3c432979f53ad27f985cb}{setSelectionResultColumns} (const QStringList \&fields)
+void \hyperlink{classmdt_sql_selection_dialog_a5c5c36414bf3c432979f53ad27f985cb}{set\-Selection\-Result\-Columns} (const Q\-String\-List \&fields)
 \begin{DoxyCompactList}\small\item\em Set a list of column that will contain the selected data. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_selection_dialog_ae5582bd717078a137dd71d5a1b9cc9f9}{addSelectionResultColumn} (const QString \&field)
+void \hyperlink{classmdt_sql_selection_dialog_ae5582bd717078a137dd71d5a1b9cc9f9}{add\-Selection\-Result\-Column} (const Q\-String \&field)
 \begin{DoxyCompactList}\small\item\em Add a column to the list of column that will contain the selected data. \end{DoxyCompactList}\item 
-QList$<$ QVariant $>$ \hyperlink{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}{selectionResult} ()
+Q\-Sql\-Record \hyperlink{classmdt_sql_selection_dialog_affdf9a9936509c8b6ca141b8ff415995}{selected\-Data\-Record} ()
+\begin{DoxyCompactList}\small\item\em Return a record containing data that user has selected. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}{selection\-Result} ()
 \begin{DoxyCompactList}\small\item\em Return data that user has selected. \end{DoxyCompactList}\item 
-QModelIndexList \hyperlink{classmdt_sql_selection_dialog_a85b7c1e3e156c141315d0873fa36d4b3}{selectionResults} ()
+Q\-Model\-Index\-List \hyperlink{classmdt_sql_selection_dialog_a85b7c1e3e156c141315d0873fa36d4b3}{selection\-Results} ()
 \begin{DoxyCompactList}\small\item\em Return data that user has selected. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_sql_selection_dialog_aab4943bc01e64f867791c15eea613e23}{selectedData} (int row, const QString \&fieldName)
+Q\-Variant \hyperlink{classmdt_sql_selection_dialog_aab4943bc01e64f867791c15eea613e23}{selected\-Data} (int row, const Q\-String \&field\-Name)
 \begin{DoxyCompactList}\small\item\em Return data that user has selected. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
 Provide a way for the user to select row in a set of data. 
 
-Definition at line 36 of file mdtSqlSelectionDialog.h.
+Definition at line 42 of file mdt\-Sql\-Selection\-Dialog.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_selection_dialog_aaeb4d47e400bff8e58dec9f84f00517c}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}}
+\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{mdt\-Sql\-Selection\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Selection\-Dialog\-::mdt\-Sql\-Selection\-Dialog (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_aaeb4d47e400bff8e58dec9f84f00517c}
+
+
+Constructor. 
+
+
+
+Definition at line 35 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View, and Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::setup\-Ui().
+
+\hypertarget{classmdt_sql_selection_dialog_a586e3cb812e5e9634f42cb40bfd2d724}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!$\sim$mdt\-Sql\-Selection\-Dialog@{$\sim$mdt\-Sql\-Selection\-Dialog}}
+\index{$\sim$mdt\-Sql\-Selection\-Dialog@{$\sim$mdt\-Sql\-Selection\-Dialog}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{$\sim$mdt\-Sql\-Selection\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Selection\-Dialog\-::$\sim$mdt\-Sql\-Selection\-Dialog (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_a586e3cb812e5e9634f42cb40bfd2d724}
+
+
+Destructor. 
+
+
+
+Definition at line 50 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_selection_dialog_ae5582bd717078a137dd71d5a1b9cc9f9}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!addSelectionResultColumn@{addSelectionResultColumn}}
-\index{addSelectionResultColumn@{addSelectionResultColumn}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{addSelectionResultColumn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSelectionDialog::addSelectionResultColumn (
+\hypertarget{classmdt_sql_selection_dialog_af8d08c3192c20d297439afa3a12229c6}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!accept@{accept}}
+\index{accept@{accept}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{accept}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::accept (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{field}
+{}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_ae5582bd717078a137dd71d5a1b9cc9f9}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_sql_selection_dialog_af8d08c3192c20d297439afa3a12229c6}
+
+
+Overloads \hyperlink{class_q_dialog}{Q\-Dialog} to to build selection results. 
+
+
+
+Definition at line 305 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+\hypertarget{classmdt_sql_selection_dialog_a9fe80365b3e41f88b0879fc098b8f6c0}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}}
+\index{add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{add\-Column\-To\-Sort\-Order}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::add\-Column\-To\-Sort\-Order (
+\begin{DoxyParamCaption}
+\item[{int}]{column, }
+\item[{Qt\-::\-Sort\-Order}]{order = {\ttfamily Qt\-:\-:AscendingOrder}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_a9fe80365b3e41f88b0879fc098b8f6c0}
+
+
+Add a column to columns sort order. 
+
+Columns sort order is similar meaning than S\-Q\-L O\-R\-D\-E\-R B\-Y clause.
+
+For example, to sort columns in order 0, 2, 1 all ascending, call\-:
+\begin{DoxyItemize}
+\item \hyperlink{classmdt_sql_selection_dialog_a82df70e51cdc408dfbb9cd1047392403}{clear\-Columns\-Sort\-Order()};
+\item add\-Column\-To\-Sort\-Order(0, Qt\-::\-Ascending\-Order);
+\item add\-Column\-To\-Sort\-Order(2, Qt\-::\-Ascending\-Order);
+\item add\-Column\-To\-Sort\-Order(1, Qt\-::\-Ascending\-Order);
+\end{DoxyItemize}
+
+Note\-: if given column is out of bound, it will simply be ignored.
+
+Note\-: to apply sorting, call \hyperlink{classmdt_sql_selection_dialog_a34941e9927a0af3a2c052356da2d36bd}{sort()} 
+
+Definition at line 124 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References mdt\-Sort\-Filter\-Proxy\-Model\-::add\-Column\-To\-Sort\-Order().
+
+\hypertarget{classmdt_sql_selection_dialog_a594df719c71d852e9ca318d729ec14d3}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}}
+\index{add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{add\-Column\-To\-Sort\-Order}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::add\-Column\-To\-Sort\-Order (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{Qt\-::\-Sort\-Order}]{order = {\ttfamily Qt\-:\-:AscendingOrder}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_a594df719c71d852e9ca318d729ec14d3}
+
+
+Add a field to columns sort order. 
+
+Here it's possible to define a field name. Note that this method does nothing if source\-Model is not based on Q\-Sql\-Query\-Model.
+
+Note\-: to apply sorting, call \hyperlink{classmdt_sql_selection_dialog_a34941e9927a0af3a2c052356da2d36bd}{sort()} 
+
+Definition at line 131 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References mdt\-Sort\-Filter\-Proxy\-Model\-::add\-Column\-To\-Sort\-Order().
+
+\hypertarget{classmdt_sql_selection_dialog_ae5582bd717078a137dd71d5a1b9cc9f9}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!add\-Selection\-Result\-Column@{add\-Selection\-Result\-Column}}
+\index{add\-Selection\-Result\-Column@{add\-Selection\-Result\-Column}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{add\-Selection\-Result\-Column}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::add\-Selection\-Result\-Column (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_ae5582bd717078a137dd71d5a1b9cc9f9}
 
 
 Add a column to the list of column that will contain the selected data. 
 
-Note: if a given field not exists, it will be simply ignored.
+Note\-: if a given field not exists, it will be simply ignored.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_sql_selection_dialog_aabe0554b9ca3f4a8d37a79e812dd8770}{setModel()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 161 of file mdtSqlSelectionDialog.cpp.
-
-\hypertarget{classmdt_sql_selection_dialog_aab4943bc01e64f867791c15eea613e23}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!selectedData@{selectedData}}
-\index{selectedData@{selectedData}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{selectedData}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtSqlSelectionDialog::selectedData (
-\begin{DoxyParamCaption}
-\item[{int}]{row, }
-\item[{const QString \&}]{fieldName}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_aab4943bc01e64f867791c15eea613e23}
+Definition at line 186 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
 
-Return data that user has selected. 
 
-Will return data from selection results that match given row, for given fieldName .
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, and M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C.
 
-Note that row to give does not match given model's row, but is the row in selection.
 
-This method alos works for multiple rows selection, but is slower than \hyperlink{classmdt_sql_selection_dialog_a85b7c1e3e156c141315d0873fa36d4b3}{selectionResults()} .
 
-If row is out of bound or fieldName not exists, a invalid QVariant is returned. 
+Referenced by set\-Selection\-Result\-Columns().
 
-Definition at line 207 of file mdtSqlSelectionDialog.cpp.
-
-\hypertarget{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!selectionResult@{selectionResult}}
-\index{selectionResult@{selectionResult}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{selectionResult}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ QVariant $>$ mdtSqlSelectionDialog::selectionResult (
+\hypertarget{classmdt_sql_selection_dialog_a82df70e51cdc408dfbb9cd1047392403}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!clear\-Columns\-Sort\-Order@{clear\-Columns\-Sort\-Order}}
+\index{clear\-Columns\-Sort\-Order@{clear\-Columns\-Sort\-Order}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{clear\-Columns\-Sort\-Order}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::clear\-Columns\-Sort\-Order (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}
+)}}\label{classmdt_sql_selection_dialog_a82df70e51cdc408dfbb9cd1047392403}
+
+
+Clear columns sort order. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_selection_dialog_a9fe80365b3e41f88b0879fc098b8f6c0}{add\-Column\-To\-Sort\-Order()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 117 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References mdt\-Sort\-Filter\-Proxy\-Model\-::clear\-Columns\-Sort\-Order().
+
+\hypertarget{classmdt_sql_selection_dialog_a4277a8f432ee3470039311f9dda9c26d}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!reject@{reject}}
+\index{reject@{reject}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{reject}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::reject (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_sql_selection_dialog_a4277a8f432ee3470039311f9dda9c26d}
+
+
+Overloads \hyperlink{class_q_dialog}{Q\-Dialog} to tell \hyperlink{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}{selection\-Result()} that it must return a empty result. 
+
+
+
+Definition at line 300 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+\hypertarget{classmdt_sql_selection_dialog_aab4943bc01e64f867791c15eea613e23}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!selected\-Data@{selected\-Data}}
+\index{selected\-Data@{selected\-Data}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{selected\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Sql\-Selection\-Dialog\-::selected\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{const Q\-String \&}]{field\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_aab4943bc01e64f867791c15eea613e23}
 
 
 Return data that user has selected. 
 
-The data are these that was specified with \hyperlink{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{setSelectionResultColumns()} , in the same order.
+Will return data from selection results that match given row, for given field\-Name .
+
+Note that row to give does not match given model's row, but is the row in selection.
+
+This method alos works for multiple rows selection, but is slower than \hyperlink{classmdt_sql_selection_dialog_a85b7c1e3e156c141315d0873fa36d4b3}{selection\-Results()} .
+
+If row is out of bound or field\-Name not exists, a invalid Q\-Variant is returned. 
+
+Definition at line 262 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
+\hypertarget{classmdt_sql_selection_dialog_affdf9a9936509c8b6ca141b8ff415995}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!selected\-Data\-Record@{selected\-Data\-Record}}
+\index{selected\-Data\-Record@{selected\-Data\-Record}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{selected\-Data\-Record}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Record mdt\-Sql\-Selection\-Dialog\-::selected\-Data\-Record (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_affdf9a9936509c8b6ca141b8ff415995}
+
+
+Return a record containing data that user has selected. 
+
+The data are these that was specified with \hyperlink{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{set\-Selection\-Result\-Columns()} , in the same order.
+
+If the user reject the dialog, a empty record is returned.
+
+This method works only for single row selection. 
+
+Definition at line 201 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
+\hypertarget{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!selection\-Result@{selection\-Result}}
+\index{selection\-Result@{selection\-Result}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{selection\-Result}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Sql\-Selection\-Dialog\-::selection\-Result (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}
+
+
+Return data that user has selected. 
+
+The data are these that was specified with \hyperlink{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{set\-Selection\-Result\-Columns()} , in the same order.
 
 If the user reject the dialog, a empty list is returned.
 
 This method works only for single row selection. 
 
-Definition at line 176 of file mdtSqlSelectionDialog.cpp.
+Definition at line 231 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
-\hypertarget{classmdt_sql_selection_dialog_a85b7c1e3e156c141315d0873fa36d4b3}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!selectionResults@{selectionResults}}
-\index{selectionResults@{selectionResults}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{selectionResults}]{\setlength{\rightskip}{0pt plus 5cm}QModelIndexList mdtSqlSelectionDialog::selectionResults (
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
+\hypertarget{classmdt_sql_selection_dialog_a85b7c1e3e156c141315d0873fa36d4b3}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!selection\-Results@{selection\-Results}}
+\index{selection\-Results@{selection\-Results}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{selection\-Results}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Model\-Index\-List mdt\-Sql\-Selection\-Dialog\-::selection\-Results (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_a85b7c1e3e156c141315d0873fa36d4b3}
+)}}\label{classmdt_sql_selection_dialog_a85b7c1e3e156c141315d0873fa36d4b3}
 
 
 Return data that user has selected. 
 
-The index list only contains columns that where set with \hyperlink{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{setSelectionResultColumns()} or \hyperlink{classmdt_sql_selection_dialog_ae5582bd717078a137dd71d5a1b9cc9f9}{addSelectionResultColumn()} .
+The index list only contains columns that where set with \hyperlink{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{set\-Selection\-Result\-Columns()} or \hyperlink{classmdt_sql_selection_dialog_ae5582bd717078a137dd71d5a1b9cc9f9}{add\-Selection\-Result\-Column()} .
 
 This method alos works for multiple rows selection. 
 
-Definition at line 202 of file mdtSqlSelectionDialog.cpp.
+Definition at line 257 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
-\hypertarget{classmdt_sql_selection_dialog_ad28449f5ab1b3ad4fdbdf3f5a0fbb456}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!selectRows@{selectRows}}
-\index{selectRows@{selectRows}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{selectRows}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSelectionDialog::selectRows (
+\hypertarget{classmdt_sql_selection_dialog_ad28449f5ab1b3ad4fdbdf3f5a0fbb456}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!select\-Rows@{select\-Rows}}
+\index{select\-Rows@{select\-Rows}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{select\-Rows}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::select\-Rows (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName, }
-\item[{const QVariant \&}]{matchData}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-Variant \&}]{match\-Data}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_ad28449f5ab1b3ad4fdbdf3f5a0fbb456}
+)}}\label{classmdt_sql_selection_dialog_ad28449f5ab1b3ad4fdbdf3f5a0fbb456}
 
 
 Select rows. 
 
-Will select rows for witch data in field (designated by fieldName) matches given matchData .
+Will select rows for witch data in field (designated by field\-Name) matches given match\-Data .
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_sql_selection_dialog_aabe0554b9ca3f4a8d37a79e812dd8770}{setModel()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 126 of file mdtSqlSelectionDialog.cpp.
+Definition at line 150 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
-\hypertarget{classmdt_sql_selection_dialog_a5265f64e773a64f34602ddf9b953821b}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!setAllowEmptyResult@{setAllowEmptyResult}}
-\index{setAllowEmptyResult@{setAllowEmptyResult}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{setAllowEmptyResult}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSelectionDialog::setAllowEmptyResult (
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
+\hypertarget{classmdt_sql_selection_dialog_a5265f64e773a64f34602ddf9b953821b}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Allow\-Empty\-Result@{set\-Allow\-Empty\-Result}}
+\index{set\-Allow\-Empty\-Result@{set\-Allow\-Empty\-Result}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{set\-Allow\-Empty\-Result}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Allow\-Empty\-Result (
 \begin{DoxyParamCaption}
 \item[{bool}]{allow}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_a5265f64e773a64f34602ddf9b953821b}
+)}}\label{classmdt_sql_selection_dialog_a5265f64e773a64f34602ddf9b953821b}
 
 
 Set allow empty result. 
@@ -205,118 +389,187 @@ If this flag is true, the dialog cannot be accepted if nothing was selected.
 
 Default is false. 
 
-Definition at line 74 of file mdtSqlSelectionDialog.cpp.
+Definition at line 59 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
-\hypertarget{classmdt_sql_selection_dialog_a163280676920829583a4888b742fc96c}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!setColumnHidden@{setColumnHidden}}
-\index{setColumnHidden@{setColumnHidden}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{setColumnHidden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSelectionDialog::setColumnHidden (
+\hypertarget{classmdt_sql_selection_dialog_a8b7f8d24a959533ebe434443f19920c7}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Column\-Hidden@{set\-Column\-Hidden}}
+\index{set\-Column\-Hidden@{set\-Column\-Hidden}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{set\-Column\-Hidden}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Column\-Hidden (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName, }
+\item[{int}]{column, }
 \item[{bool}]{hide}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_a163280676920829583a4888b742fc96c}
+)}}\label{classmdt_sql_selection_dialog_a8b7f8d24a959533ebe434443f19920c7}
+
+
+Set a coulumn as hidden. 
+
+
+
+Definition at line 99 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
+
+
+Referenced by set\-Column\-Hidden().
+
+\hypertarget{classmdt_sql_selection_dialog_a163280676920829583a4888b742fc96c}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Column\-Hidden@{set\-Column\-Hidden}}
+\index{set\-Column\-Hidden@{set\-Column\-Hidden}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{set\-Column\-Hidden}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Column\-Hidden (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{bool}]{hide}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_a163280676920829583a4888b742fc96c}
 
 
 Set a coulumn as hidden. 
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_sql_selection_dialog_aabe0554b9ca3f4a8d37a79e812dd8770}{setModel()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 113 of file mdtSqlSelectionDialog.cpp.
+Definition at line 104 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
-\hypertarget{classmdt_sql_selection_dialog_afc29f8965c2d6cc103d021ab54298a84}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!setHeaderData@{setHeaderData}}
-\index{setHeaderData@{setHeaderData}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{setHeaderData}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSelectionDialog::setHeaderData (
+
+
+References set\-Column\-Hidden().
+
+\hypertarget{classmdt_sql_selection_dialog_afc29f8965c2d6cc103d021ab54298a84}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Header\-Data@{set\-Header\-Data}}
+\index{set\-Header\-Data@{set\-Header\-Data}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{set\-Header\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Header\-Data (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName, }
-\item[{const QString \&}]{data}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-String \&}]{data}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_afc29f8965c2d6cc103d021ab54298a84}
+)}}\label{classmdt_sql_selection_dialog_afc29f8965c2d6cc103d021ab54298a84}
 
 
 Set a user friendly name for a column. 
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_sql_selection_dialog_aabe0554b9ca3f4a8d37a79e812dd8770}{setModel()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 94 of file mdtSqlSelectionDialog.cpp.
+Definition at line 85 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
-\hypertarget{classmdt_sql_selection_dialog_aabe0554b9ca3f4a8d37a79e812dd8770}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!setModel@{setModel}}
-\index{setModel@{setModel}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{setModel}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSelectionDialog::setModel (
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
+\hypertarget{classmdt_sql_selection_dialog_ab5ea543ebded60b4354c7c0902ca021f}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Message@{set\-Message}}
+\index{set\-Message@{set\-Message}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{set\-Message}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Message (
 \begin{DoxyParamCaption}
-\item[{QSqlQueryModel $\ast$}]{model, }
-\item[{bool}]{allowMultiSelection = {\ttfamily false}}
+\item[{const Q\-String \&}]{message}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_aabe0554b9ca3f4a8d37a79e812dd8770}
+)}}\label{classmdt_sql_selection_dialog_ab5ea543ebded60b4354c7c0902ca021f}
 
 
-Set model that contain data to display. 
-
-\begin{DoxyPrecond}{Precondition}
-model must be a valid pointer. 
-\end{DoxyPrecond}
+Set a message that will be displayed to the user. 
 
 
-Definition at line 79 of file mdtSqlSelectionDialog.cpp.
 
-\hypertarget{classmdt_sql_selection_dialog_a5c5c36414bf3c432979f53ad27f985cb}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!setSelectionResultColumns@{setSelectionResultColumns}}
-\index{setSelectionResultColumns@{setSelectionResultColumns}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{setSelectionResultColumns}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSelectionDialog::setSelectionResultColumns (
+Definition at line 54 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Message\-Label.
+
+\hypertarget{classmdt_sql_selection_dialog_a7bc61efc9e0e0d141f6109cc86d1634d}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Query@{set\-Query}}
+\index{set\-Query@{set\-Query}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{set\-Query}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Query (
 \begin{DoxyParamCaption}
-\item[{const QStringList \&}]{fields}
+\item[{const Q\-String \&}]{sql, }
+\item[{Q\-Sql\-Database}]{db, }
+\item[{bool}]{allow\-Multi\-Selection = {\ttfamily false}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_a5c5c36414bf3c432979f53ad27f985cb}
+)}}\label{classmdt_sql_selection_dialog_a7bc61efc9e0e0d141f6109cc86d1634d}
+
+
+Set S\-Q\-L query to display data. 
+
+
+
+Definition at line 64 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
+\hypertarget{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Selection\-Result\-Columns@{set\-Selection\-Result\-Columns}}
+\index{set\-Selection\-Result\-Columns@{set\-Selection\-Result\-Columns}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{set\-Selection\-Result\-Columns}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Selection\-Result\-Columns (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ int $>$ \&}]{columns}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}
 
 
 Set a list of column that will contain the selected data. 
 
-Note: if a given field not exists, it will be simply ignored.
+Note\-: if a given column is out of range, it will be simply ignored.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_sql_selection_dialog_aabe0554b9ca3f4a8d37a79e812dd8770}{setModel()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 150 of file mdtSqlSelectionDialog.cpp.
+Definition at line 170 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
-\hypertarget{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{
-\index{mdtSqlSelectionDialog@{mdtSqlSelectionDialog}!setSelectionResultColumns@{setSelectionResultColumns}}
-\index{setSelectionResultColumns@{setSelectionResultColumns}!mdtSqlSelectionDialog@{mdtSqlSelectionDialog}}
-\subsubsection[{setSelectionResultColumns}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlSelectionDialog::setSelectionResultColumns (
+\hypertarget{classmdt_sql_selection_dialog_a5c5c36414bf3c432979f53ad27f985cb}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Selection\-Result\-Columns@{set\-Selection\-Result\-Columns}}
+\index{set\-Selection\-Result\-Columns@{set\-Selection\-Result\-Columns}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{set\-Selection\-Result\-Columns}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Selection\-Result\-Columns (
 \begin{DoxyParamCaption}
-\item[{const QList$<$ int $>$ \&}]{columns}
+\item[{const Q\-String\-List \&}]{fields}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}
+)}}\label{classmdt_sql_selection_dialog_a5c5c36414bf3c432979f53ad27f985cb}
 
 
 Set a list of column that will contain the selected data. 
 
-Note: if a given column is out of range, it will be simply ignored.
+Note\-: if a given field not exists, it will be simply ignored.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_sql_selection_dialog_aabe0554b9ca3f4a8d37a79e812dd8770}{setModel()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 145 of file mdtSqlSelectionDialog.cpp.
+Definition at line 175 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References add\-Selection\-Result\-Column().
+
+\hypertarget{classmdt_sql_selection_dialog_a34941e9927a0af3a2c052356da2d36bd}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!sort@{sort}}
+\index{sort@{sort}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
+\subsubsection[{sort}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::sort (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_selection_dialog_a34941e9927a0af3a2c052356da2d36bd}
+
+
+Sort data. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_selection_dialog_a9fe80365b3e41f88b0879fc098b8f6c0}{add\-Column\-To\-Sort\-Order()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 138 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtSqlSelectionDialog.h\item 
-src/mdtutilsgui/mdtSqlSelectionDialog.cpp\end{DoxyCompactItemize}
+src/mdtdatabase/\hyperlink{mdt_sql_selection_dialog_8h}{mdt\-Sql\-Selection\-Dialog.\-h}\item 
+src/mdtdatabase/\hyperlink{mdt_sql_selection_dialog_8cpp}{mdt\-Sql\-Selection\-Dialog.\-cpp}\end{DoxyCompactItemize}

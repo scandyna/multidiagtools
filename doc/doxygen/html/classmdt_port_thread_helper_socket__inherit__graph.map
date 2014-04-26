@@ -1,3 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_port_thread_helper.html" title="Helper class for mdtPortThread and subclasses." alt="" coords="25,5,172,35"/>
+<map id="mdtPortThreadHelperSocket" name="mdtPortThreadHelperSocket">
+<area shape="rect" id="node2" href="$classmdt_port_thread_helper.html" title="Helper class for mdtPortThread and subclasses. " alt="" coords="25,83,172,112"/>
+<area shape="rect" id="node4" href="$class_q_object.html" title="QObject" alt="" coords="64,5,133,35"/>
 </map>

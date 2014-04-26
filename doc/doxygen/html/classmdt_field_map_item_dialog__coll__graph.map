@@ -1,4 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_field_map_item.html" title="Provide informations for mdtFieldMap." alt="" coords="24,117,147,147"/>
-<area shape="rect" id="node4" href="$classmdt_field_map_field.html" title="Container for information about field in field map." alt="" coords="23,5,148,35"/>
+<map id="mdtFieldMapItemDialog" name="mdtFieldMapItemDialog">
+<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="651,427,720,456"/>
+<area shape="rect" id="node4" href="$class_ui_1_1mdt_field_map_item_dialog.html" title="Ui::mdtFieldMapItemDialog" alt="" coords="595,480,776,509"/>
+<area shape="rect" id="node6" href="$class_ui__mdt_field_map_item_dialog.html" title="Ui_mdtFieldMapItemDialog" alt="" coords="364,480,543,509"/>
 </map>

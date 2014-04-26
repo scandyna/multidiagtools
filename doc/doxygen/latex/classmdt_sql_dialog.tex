@@ -1,6 +1,5 @@
-\hypertarget{classmdt_sql_dialog}{
-\section{mdtSqlDialog Class Reference}
-\label{classmdt_sql_dialog}\index{mdtSqlDialog@{mdtSqlDialog}}
+\hypertarget{classmdt_sql_dialog}{\section{mdt\-Sql\-Dialog Class Reference}
+\label{classmdt_sql_dialog}\index{mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}}
 }
 
 
@@ -9,109 +8,149 @@ Dialog for a database table view/editor.
 
 
 
-{\ttfamily \#include $<$mdtSqlDialog.h$>$}
+{\ttfamily \#include $<$mdt\-Sql\-Dialog.\-h$>$}
 
 
 
-Collaboration diagram for mdtSqlDialog:\nopagebreak
+Inheritance diagram for mdt\-Sql\-Dialog\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=259pt]{classmdt_sql_dialog__coll__graph}
+\includegraphics[width=154pt]{classmdt_sql_dialog__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Sql\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=154pt]{classmdt_sql_dialog__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{classmdt_sql_dialog_affba1732b5f32db150d0e700ecc339f8}{accept} ()
-\begin{DoxyCompactList}\small\item\em Overloads QDialog::accept() \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Overloads Q\-Dialog\-::accept() \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_dialog_ada1726d5861cb071fab7a1c31bc52abb}{reject} ()
-\begin{DoxyCompactList}\small\item\em Overloads QDialog::reject() \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Overloads Q\-Dialog\-::reject() \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_dialog_a9588f53afba818d79ff0f2e9eaeed50f}{
-\hyperlink{classmdt_sql_dialog_a9588f53afba818d79ff0f2e9eaeed50f}{mdtSqlDialog} (QWidget $\ast$parent=0)}
-\label{classmdt_sql_dialog_a9588f53afba818d79ff0f2e9eaeed50f}
-
+\hyperlink{classmdt_sql_dialog_a9588f53afba818d79ff0f2e9eaeed50f}{mdt\-Sql\-Dialog} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_dialog_a845d9f4eef1c590d5e854540e18b00a6}{
-\hyperlink{classmdt_sql_dialog_a845d9f4eef1c590d5e854540e18b00a6}{$\sim$mdtSqlDialog} ()}
-\label{classmdt_sql_dialog_a845d9f4eef1c590d5e854540e18b00a6}
-
+\hyperlink{classmdt_sql_dialog_a845d9f4eef1c590d5e854540e18b00a6}{$\sim$mdt\-Sql\-Dialog} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_dialog_aa4b143efbe21073e1668d75cdf262a39}{setSqlForm} (\hyperlink{classmdt_sql_form}{mdtSqlForm} $\ast$form)
-\begin{DoxyCompactList}\small\item\em Set the SQL form. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_dialog_a47de595aa2a117cdc3eb5de4a6bbf8f5}{enableEdition} ()
+void \hyperlink{classmdt_sql_dialog_aa4b143efbe21073e1668d75cdf262a39}{set\-Sql\-Form} (\hyperlink{classmdt_sql_form}{mdt\-Sql\-Form} $\ast$form)
+\begin{DoxyCompactList}\small\item\em Set the S\-Q\-L form. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_dialog_a47de595aa2a117cdc3eb5de4a6bbf8f5}{enable\-Edition} ()
 \begin{DoxyCompactList}\small\item\em Enable edition. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_dialog_a22e77e80b419d9bb23703c253b1a246e}{disableEdition} ()
+void \hyperlink{classmdt_sql_dialog_a22e77e80b419d9bb23703c253b1a246e}{disable\-Edition} ()
 \begin{DoxyCompactList}\small\item\em Disable edition. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Dialog for a database table view/editor. 
 
-This class offers some functionnality for the GUI part.
+This class offers some functionnality for the G\-U\-I part.
 
-It was designed to work with a subclass of \hyperlink{classmdt_sql_form}{mdtSqlForm} . 
+It was designed to work with a subclass of \hyperlink{classmdt_sql_form}{mdt\-Sql\-Form} . 
 
-Definition at line 43 of file mdtSqlDialog.h.
+Definition at line 43 of file mdt\-Sql\-Dialog.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_dialog_a9588f53afba818d79ff0f2e9eaeed50f}{\index{mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}!mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}}
+\index{mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}!mdtSqlDialog@{mdt\-Sql\-Dialog}}
+\subsubsection[{mdt\-Sql\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Dialog\-::mdt\-Sql\-Dialog (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_dialog_a9588f53afba818d79ff0f2e9eaeed50f}
+
+
+Constructor. 
+
+
+
+Definition at line 32 of file mdt\-Sql\-Dialog.\-cpp.
+
+
+
+References accept(), and reject().
+
+\hypertarget{classmdt_sql_dialog_a845d9f4eef1c590d5e854540e18b00a6}{\index{mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}!$\sim$mdt\-Sql\-Dialog@{$\sim$mdt\-Sql\-Dialog}}
+\index{$\sim$mdt\-Sql\-Dialog@{$\sim$mdt\-Sql\-Dialog}!mdtSqlDialog@{mdt\-Sql\-Dialog}}
+\subsubsection[{$\sim$mdt\-Sql\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Dialog\-::$\sim$mdt\-Sql\-Dialog (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_dialog_a845d9f4eef1c590d5e854540e18b00a6}
+
+
+Destructor. 
+
+
+
+Definition at line 58 of file mdt\-Sql\-Dialog.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_dialog_affba1732b5f32db150d0e700ecc339f8}{
-\index{mdtSqlDialog@{mdtSqlDialog}!accept@{accept}}
-\index{accept@{accept}!mdtSqlDialog@{mdtSqlDialog}}
-\subsubsection[{accept}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDialog::accept (
+\hypertarget{classmdt_sql_dialog_affba1732b5f32db150d0e700ecc339f8}{\index{mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}!accept@{accept}}
+\index{accept@{accept}!mdtSqlDialog@{mdt\-Sql\-Dialog}}
+\subsubsection[{accept}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Dialog\-::accept (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_sql_dialog_affba1732b5f32db150d0e700ecc339f8}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_sql_dialog_affba1732b5f32db150d0e700ecc339f8}
 
 
-Overloads QDialog::accept() 
-
-
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000001}{Todo}]Fix this ! \end{Desc}
+Overloads Q\-Dialog\-::accept() 
 
 
 
+Definition at line 99 of file mdt\-Sql\-Dialog.\-cpp.
 
-Definition at line 99 of file mdtSqlDialog.cpp.
 
-\hypertarget{classmdt_sql_dialog_a22e77e80b419d9bb23703c253b1a246e}{
-\index{mdtSqlDialog@{mdtSqlDialog}!disableEdition@{disableEdition}}
-\index{disableEdition@{disableEdition}!mdtSqlDialog@{mdtSqlDialog}}
-\subsubsection[{disableEdition}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDialog::disableEdition (
+
+References mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved(), and mdt\-Sql\-Form\-::main\-Sql\-Widget().
+
+
+
+Referenced by mdt\-Sql\-Dialog().
+
+\hypertarget{classmdt_sql_dialog_a22e77e80b419d9bb23703c253b1a246e}{\index{mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}!disable\-Edition@{disable\-Edition}}
+\index{disable\-Edition@{disable\-Edition}!mdtSqlDialog@{mdt\-Sql\-Dialog}}
+\subsubsection[{disable\-Edition}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Dialog\-::disable\-Edition (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_dialog_a22e77e80b419d9bb23703c253b1a246e}
+)}}\label{classmdt_sql_dialog_a22e77e80b419d9bb23703c253b1a246e}
 
 
 Disable edition. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_sql_dialog_a47de595aa2a117cdc3eb5de4a6bbf8f5}{enableEdition()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_dialog_a47de595aa2a117cdc3eb5de4a6bbf8f5}{enable\-Edition()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 90 of file mdtSqlDialog.cpp.
+Definition at line 90 of file mdt\-Sql\-Dialog.\-cpp.
 
-\hypertarget{classmdt_sql_dialog_a47de595aa2a117cdc3eb5de4a6bbf8f5}{
-\index{mdtSqlDialog@{mdtSqlDialog}!enableEdition@{enableEdition}}
-\index{enableEdition@{enableEdition}!mdtSqlDialog@{mdtSqlDialog}}
-\subsubsection[{enableEdition}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDialog::enableEdition (
+
+
+References mdt\-Sql\-Form\-::main\-Sql\-Widget().
+
+\hypertarget{classmdt_sql_dialog_a47de595aa2a117cdc3eb5de4a6bbf8f5}{\index{mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}!enable\-Edition@{enable\-Edition}}
+\index{enable\-Edition@{enable\-Edition}!mdtSqlDialog@{mdt\-Sql\-Dialog}}
+\subsubsection[{enable\-Edition}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Dialog\-::enable\-Edition (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_dialog_a47de595aa2a117cdc3eb5de4a6bbf8f5}
+)}}\label{classmdt_sql_dialog_a47de595aa2a117cdc3eb5de4a6bbf8f5}
 
 
 Enable edition. 
@@ -119,60 +158,62 @@ Enable edition.
 Will add save/revert buttons
 
 \begin{DoxyPrecond}{Precondition}
-Form must be set with \hyperlink{classmdt_sql_dialog_aa4b143efbe21073e1668d75cdf262a39}{setSqlForm()} before call this method. 
+Form must be set with \hyperlink{classmdt_sql_dialog_aa4b143efbe21073e1668d75cdf262a39}{set\-Sql\-Form()} before call this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 70 of file mdtSqlDialog.cpp.
+Definition at line 70 of file mdt\-Sql\-Dialog.\-cpp.
 
-\hypertarget{classmdt_sql_dialog_ada1726d5861cb071fab7a1c31bc52abb}{
-\index{mdtSqlDialog@{mdtSqlDialog}!reject@{reject}}
-\index{reject@{reject}!mdtSqlDialog@{mdtSqlDialog}}
-\subsubsection[{reject}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDialog::reject (
+
+
+References mdt\-Sql\-Form\-::main\-Sql\-Widget().
+
+\hypertarget{classmdt_sql_dialog_ada1726d5861cb071fab7a1c31bc52abb}{\index{mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}!reject@{reject}}
+\index{reject@{reject}!mdtSqlDialog@{mdt\-Sql\-Dialog}}
+\subsubsection[{reject}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Dialog\-::reject (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_sql_dialog_ada1726d5861cb071fab7a1c31bc52abb}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_sql_dialog_ada1726d5861cb071fab7a1c31bc52abb}
 
 
-Overloads QDialog::reject() 
-
-
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000002}{Todo}]Fix this ! \end{Desc}
+Overloads Q\-Dialog\-::reject() 
 
 
 
+Definition at line 107 of file mdt\-Sql\-Dialog.\-cpp.
 
-Definition at line 107 of file mdtSqlDialog.cpp.
 
-\hypertarget{classmdt_sql_dialog_aa4b143efbe21073e1668d75cdf262a39}{
-\index{mdtSqlDialog@{mdtSqlDialog}!setSqlForm@{setSqlForm}}
-\index{setSqlForm@{setSqlForm}!mdtSqlDialog@{mdtSqlDialog}}
-\subsubsection[{setSqlForm}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlDialog::setSqlForm (
+
+References mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved(), and mdt\-Sql\-Form\-::main\-Sql\-Widget().
+
+
+
+Referenced by mdt\-Sql\-Dialog().
+
+\hypertarget{classmdt_sql_dialog_aa4b143efbe21073e1668d75cdf262a39}{\index{mdt\-Sql\-Dialog@{mdt\-Sql\-Dialog}!set\-Sql\-Form@{set\-Sql\-Form}}
+\index{set\-Sql\-Form@{set\-Sql\-Form}!mdtSqlDialog@{mdt\-Sql\-Dialog}}
+\subsubsection[{set\-Sql\-Form}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Dialog\-::set\-Sql\-Form (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtSqlForm} $\ast$}]{form}
+\item[{{\bf mdt\-Sql\-Form} $\ast$}]{form}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_dialog_aa4b143efbe21073e1668d75cdf262a39}
+)}}\label{classmdt_sql_dialog_aa4b143efbe21073e1668d75cdf262a39}
 
 
-Set the SQL form. 
+Set the S\-Q\-L form. 
 
-Note: because form will be reparented, it will be deleted when this dialog is destroyed !
+Note\-: because form will be reparented, it will be deleted when this dialog is destroyed !
 
 \begin{DoxyPrecond}{Precondition}
 form must be a valid pointer . 
 \end{DoxyPrecond}
 
 
-Definition at line 62 of file mdtSqlDialog.cpp.
+Definition at line 62 of file mdt\-Sql\-Dialog.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtdatabase/mdtSqlDialog.h\item 
-src/mdtdatabase/mdtSqlDialog.cpp\end{DoxyCompactItemize}
+src/mdtdatabase/\hyperlink{mdt_sql_dialog_8h}{mdt\-Sql\-Dialog.\-h}\item 
+src/mdtdatabase/\hyperlink{mdt_sql_dialog_8cpp}{mdt\-Sql\-Dialog.\-cpp}\end{DoxyCompactItemize}

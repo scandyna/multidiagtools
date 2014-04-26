@@ -1,4 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node5" href="$classmdt_usbtmc_port_thread.html" title="mdtUsbtmcPortThread" alt="" coords="5,160,160,189"/>
-<area shape="rect" id="node2" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="29,5,136,35"/>
+<map id="mdtUsbPortThread" name="mdtUsbPortThread">
+<area shape="rect" id="node7" href="$classmdt_usbtmc_port_thread.html" title="mdtUsbtmcPortThread" alt="" coords="5,237,160,267"/>
+<area shape="rect" id="node2" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="29,83,136,112"/>
+<area shape="rect" id="node4" href="$class_q_thread.html" title="QThread" alt="" coords="47,5,119,35"/>
 </map>

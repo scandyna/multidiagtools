@@ -1,6 +1,5 @@
-\hypertarget{classmdt_sql_record}{
-\section{mdtSqlRecord Class Reference}
-\label{classmdt_sql_record}\index{mdtSqlRecord@{mdtSqlRecord}}
+\hypertarget{classmdt_sql_record}{\section{mdt\-Sql\-Record Class Reference}
+\label{classmdt_sql_record}\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}}
 }
 
 
@@ -9,60 +8,91 @@ Database record container class.
 
 
 
-{\ttfamily \#include $<$mdtSqlRecord.h$>$}
+{\ttfamily \#include $<$mdt\-Sql\-Record.\-h$>$}
 
 
 
-Collaboration diagram for mdtSqlRecord:
-\nopagebreak
+Inheritance diagram for mdt\-Sql\-Record\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=170pt]{classmdt_sql_record__coll__graph}
+\includegraphics[width=338pt]{classmdt_sql_record__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Sql\-Record\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=173pt]{classmdt_sql_record__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_record_a1b171d11ee1b270df4f56007c5609699}{
-\hyperlink{classmdt_sql_record_a1b171d11ee1b270df4f56007c5609699}{mdtSqlRecord} ()}
-\label{classmdt_sql_record_a1b171d11ee1b270df4f56007c5609699}
-
+\hyperlink{classmdt_sql_record_a1b171d11ee1b270df4f56007c5609699}{mdt\-Sql\-Record} ()
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_record_a6b658e74e8b1da998f610b7e8a731e0e}{
-\hyperlink{classmdt_sql_record_a6b658e74e8b1da998f610b7e8a731e0e}{mdtSqlRecord} (const QSqlRecord \&sqlRecord)}
-\label{classmdt_sql_record_a6b658e74e8b1da998f610b7e8a731e0e}
-
-\begin{DoxyCompactList}\small\item\em Build a \hyperlink{classmdt_sql_record}{mdtSqlRecord} on the base of a QSqlRecord. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_record_af7e8c8cd4f7265853d746807e063396f}{
-\hyperlink{classmdt_sql_record_af7e8c8cd4f7265853d746807e063396f}{$\sim$mdtSqlRecord} ()}
-\label{classmdt_sql_record_af7e8c8cd4f7265853d746807e063396f}
-
+\hyperlink{classmdt_sql_record_a6b658e74e8b1da998f610b7e8a731e0e}{mdt\-Sql\-Record} (const Q\-Sql\-Record \&sql\-Record)
+\begin{DoxyCompactList}\small\item\em Build a \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} on the base of a Q\-Sql\-Record. \end{DoxyCompactList}\item 
+virtual \hyperlink{classmdt_sql_record_af7e8c8cd4f7265853d746807e063396f}{$\sim$mdt\-Sql\-Record} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{addField} (const QString \&fieldName, const QString \&tableName, const QSqlDatabase \&db)
+\hyperlink{classmdt_sql_record_a323c41a0dd33cbb8b686a10685d5e809}{operator Q\-Sql\-Record} ()
+\begin{DoxyCompactList}\small\item\em Get Q\-Sql\-Record version. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{add\-Field} (const Q\-String \&field\-Name, const Q\-String \&table\-Name, const Q\-Sql\-Database \&db)
 \begin{DoxyCompactList}\small\item\em Add a field to record. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}{addAllFields} (const QString \&tableName, const QSqlDatabase \&db)
+bool \hyperlink{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}{add\-All\-Fields} (const Q\-String \&table\-Name, const Q\-Sql\-Database \&db)
 \begin{DoxyCompactList}\small\item\em Add all fields of given table to record. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{hasValue} (int fieldIndex) const 
+int \hyperlink{classmdt_sql_record_a7db54fc3e95195c221a193b083b4b95e}{count} () const 
+\begin{DoxyCompactList}\small\item\em Returns the number of fields in the record. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_record_a2d4e5e0834b9f1c884a117d89a5df31a}{is\-Empty} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if there are no fields in the record; otherwise returns false. \end{DoxyCompactList}\item 
+Q\-Sql\-Field \hyperlink{classmdt_sql_record_a11c45029e57b56f441ed2ce270212b89}{field} (int index) const 
+\begin{DoxyCompactList}\small\item\em Returns the field at position index. \end{DoxyCompactList}\item 
+Q\-Sql\-Field \hyperlink{classmdt_sql_record_a6f7071c2a052cbb45e004a706fa8407f}{field} (const Q\-String \&name) const 
+\begin{DoxyCompactList}\small\item\em Returns the field called name. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_sql_record_a72e73a47c93453253dde5c2d2938c052}{index\-Of} (const Q\-String \&name) const 
+\begin{DoxyCompactList}\small\item\em Returns the position of the field called name within the record, or -\/1 if it cannot be found. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_record_ab7f694f62b8db947deb9713762ab4f27}{contains} (const Q\-String \&name) const 
+\begin{DoxyCompactList}\small\item\em Returns true if there is a field in the record called name; otherwise returns false. \end{DoxyCompactList}\item 
+Q\-String\-List \hyperlink{classmdt_sql_record_af6754c9909ef1304ab382303809a7a0a}{field\-Names} () const 
+\begin{DoxyCompactList}\small\item\em Get a list with all field names. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{has\-Value} (int field\-Index) const 
 \begin{DoxyCompactList}\small\item\em Check if a value was set. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_record_a581595f4425f824c794994eb564873cd}{hasValue} (const QString \&fieldName) const 
+bool \hyperlink{classmdt_sql_record_a581595f4425f824c794994eb564873cd}{has\-Value} (const Q\-String \&field\-Name) const 
 \begin{DoxyCompactList}\small\item\em Check if a value was set. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{setValue} (int fieldIndex, const QVariant \&val)
+void \hyperlink{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{set\-Value} (int field\-Index, const Q\-Variant \&val)
 \begin{DoxyCompactList}\small\item\em Set value. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{setValue} (const QString \&fieldName, const QVariant \&val)
+void \hyperlink{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{set\-Value} (const Q\-String \&field\-Name, const Q\-Variant \&val)
 \begin{DoxyCompactList}\small\item\em Set value. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{clearValues} ()
+Q\-Variant \hyperlink{classmdt_sql_record_a373eef777b0e51d2e8dc0904f992d609}{value} (int index) const 
+\begin{DoxyCompactList}\small\item\em Returns the value of the field located at position index in the record. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_sql_record_abfa14a89fa5e525c57d28f7f93dbcac8}{value} (const Q\-String \&name) const 
+\begin{DoxyCompactList}\small\item\em Returns the value of the field called name in the record. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_sql_record_ad1058337837b2891d2e282001ad889d9}{clear} ()
+\begin{DoxyCompactList}\small\item\em Removes all the record's fields. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{clear\-Values} ()
 \begin{DoxyCompactList}\small\item\em Clear values. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{
-\hyperlink{classmdt_error}{mdtError} \hyperlink{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{lastError} () const }
-\label{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}
-
-\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Protected Member Functions}
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
+Q\-Vector$<$ int $>$ \hyperlink{classmdt_sql_record_a7be0d16ddc4651194ab12090065b2c1e}{field\-Indexes\-With\-Value} () const 
+\begin{DoxyCompactList}\small\item\em Get a list with field indexes that have a value. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_sql_record_a20396c886d184d0ae176f8dea72d971b}{sql\-For\-Insert} (const Q\-String \&table\-Name) const 
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for insertion with Q\-Sql\-Query. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_sql_record_a2ded0365b7ec9c94607bb6d8a5c16c98}{sql\-For\-Update} (const Q\-String \&table\-Name, const Q\-Sql\-Record \&match\-Data) const 
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for update with Q\-Sql\-Query. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_sql_record_a00c49b329d7170a8f840d7921f9b0f07}{data\-To\-Update\-Info} () const 
+\begin{DoxyCompactList}\small\item\em Get information about data that has a value to update (for debug) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_error}{mdtError} \& \hyperlink{classmdt_sql_record_a9a930216441a3a1234c3f2774d17eb11}{lastErrorW} ()
-\begin{DoxyCompactList}\small\item\em Get last error for write access. \end{DoxyCompactList}\end{DoxyCompactItemize}
+static Q\-String \hyperlink{classmdt_sql_record_a1bc8d0787c3aa941afcf444d661c07db}{sql\-Data\-Delimiter} (Q\-Variant\-::\-Type type)
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L data delimiter for given data type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_sql_record_ae320a7933f4d5a002efc509c4c9c5a12}{pv\-Last\-Error}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -70,205 +100,629 @@ Database record container class.
 
 This class can be useful to create data storage classes in application.
 
-Based on QSqlRecord , all field attributes and values are stored as QSqlField objects.
+Based on Q\-Sql\-Record , all field attributes and values are stored as Q\-Sql\-Field objects.
 
-To set a value, use \hyperlink{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{setValue(int, const QVariant \&)} or \hyperlink{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{setValue(const QString \&, const QVariant \&)}. To check if a value was set, use hasValue(int) or hasValue(const QString \&). To clear values and hasValue flags, use \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{clearValues()}.
+To set a value, use \hyperlink{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{set\-Value(int, const Q\-Variant \&)} or \hyperlink{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{set\-Value(const Q\-String \&, const Q\-Variant \&)}. To check if a value was set, use has\-Value(int) or has\-Value(const Q\-String \&). To clear values and has\-Value flags, use \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{clear\-Values()}.
 
-A possible way to create a sub class could be:
+A possible way to create a sub class could be\-:
 \begin{DoxyItemize}
-\item Create fields that are relevant, using \hyperlink{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{addField()} , or \hyperlink{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}{addAllFields()}.
-\item On error, use clear() (from QSqlRecord).
-\item The user can also check if data record instance is valid by using isEmpty() (from QSqlRecord) and \hyperlink{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{lastError()}.
+\item Create fields that are relevant, using \hyperlink{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{add\-Field()} , or \hyperlink{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}{add\-All\-Fields()}.
+\item On error, use \hyperlink{classmdt_sql_record_ad1058337837b2891d2e282001ad889d9}{clear()} (from Q\-Sql\-Record).
+\item The user can also check if data record instance is valid by using \hyperlink{classmdt_sql_record_a2d4e5e0834b9f1c884a117d89a5df31a}{is\-Empty()} (from Q\-Sql\-Record) and \hyperlink{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{last\-Error()}. 
 \end{DoxyItemize}
 
-\begin{DoxySeeAlso}{See also}
-Qt's QSqlRecord documentation 
-\end{DoxySeeAlso}
+Definition at line 49 of file mdt\-Sql\-Record.\-h.
 
 
-Definition at line 48 of file mdtSqlRecord.h.
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_record_a1b171d11ee1b270df4f56007c5609699}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!mdt\-Sql\-Record@{mdt\-Sql\-Record}}
+\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{mdt\-Sql\-Record}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Record\-::mdt\-Sql\-Record (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_record_a1b171d11ee1b270df4f56007c5609699}
+
+
+Constructor. 
+
+
+
+Definition at line 27 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+Referenced by mdt\-Cl\-Connector\-Data\-::contact\-Data().
+
+\hypertarget{classmdt_sql_record_a6b658e74e8b1da998f610b7e8a731e0e}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!mdt\-Sql\-Record@{mdt\-Sql\-Record}}
+\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{mdt\-Sql\-Record}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Record\-::mdt\-Sql\-Record (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Record \&}]{sql\-Record}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_record_a6b658e74e8b1da998f610b7e8a731e0e}
+
+
+Build a \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} on the base of a Q\-Sql\-Record. 
+
+
+
+Definition at line 31 of file mdt\-Sql\-Record.\-cpp.
+
+\hypertarget{classmdt_sql_record_af7e8c8cd4f7265853d746807e063396f}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!$\sim$mdt\-Sql\-Record@{$\sim$mdt\-Sql\-Record}}
+\index{$\sim$mdt\-Sql\-Record@{$\sim$mdt\-Sql\-Record}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{$\sim$mdt\-Sql\-Record}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Record\-::$\sim$mdt\-Sql\-Record (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_record_af7e8c8cd4f7265853d746807e063396f}
+
+
+Destructor. 
+
+
+
+Definition at line 36 of file mdt\-Sql\-Record.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}{
-\index{mdtSqlRecord@{mdtSqlRecord}!addAllFields@{addAllFields}}
-\index{addAllFields@{addAllFields}!mdtSqlRecord@{mdtSqlRecord}}
-\subsubsection[{addAllFields}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRecord::addAllFields (
+\hypertarget{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!add\-All\-Fields@{add\-All\-Fields}}
+\index{add\-All\-Fields@{add\-All\-Fields}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{add\-All\-Fields}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Record\-::add\-All\-Fields (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName, }
-\item[{const QSqlDatabase \&}]{db}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-Sql\-Database \&}]{db}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}
+)}}\label{classmdt_sql_record_a878c551b98df2653d642ec01b0101495}
 
 
 Add all fields of given table to record. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em tableName} & Name of table in database. \\
+{\em table\-Name} & Name of table in database. \\
 \hline
 {\em db} & Database to use. \\
 \hline
 \end{DoxyParams}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{addField()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{add\-Field()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 69 of file mdtSqlRecord.cpp.
+Definition at line 77 of file mdt\-Sql\-Record.\-cpp.
 
-\hypertarget{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{
-\index{mdtSqlRecord@{mdtSqlRecord}!addField@{addField}}
-\index{addField@{addField}!mdtSqlRecord@{mdtSqlRecord}}
-\subsubsection[{addField}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRecord::addField (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Cl\-Article\-Link\-Dialog\-::mdt\-Cl\-Article\-Link\-Dialog(), mdt\-Tt\-Test\-Link\-Data\-::setup(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::setup(), mdt\-Cl\-Connector\-Data\-::setup(), mdt\-Cl\-Article\-Connector\-Data\-::setup(), mdt\-Cl\-Article\-Connection\-Data\-::setup(), mdt\-Cl\-Unit\-Connector\-Data\-::setup(), mdt\-Cl\-Link\-Data\-::setup(), and mdt\-Cl\-Unit\-Connection\-Data\-::setup().
+
+\hypertarget{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!add\-Field@{add\-Field}}
+\index{add\-Field@{add\-Field}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{add\-Field}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Record\-::add\-Field (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName, }
-\item[{const QString \&}]{tableName, }
-\item[{const QSqlDatabase \&}]{db}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-Sql\-Database \&}]{db}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}
+)}}\label{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}
 
 
 Add a field to record. 
 
-Will use given db object and tableName to get requested fieldName attributes, and add it to fields list using QSqlRecord::append() method.
+Will use given db object and table\-Name to get requested field\-Name attributes, and add it to fields list using Q\-Sql\-Record\-::append() method.
 
 
 \begin{DoxyParams}{Parameters}
-{\em fieldName} & Name of the field to add. \\
+{\em field\-Name} & Name of the field to add. \\
 \hline
-{\em tableName} & Name of table in database (used to get fields attributes). \\
+{\em table\-Name} & Name of table in database (used to get fields attributes). \\
 \hline
-{\em db} & Database to use. Pass a empty object ( QSqlDatabase() ) to use default database. (This parameter is used to get fields attributes). \\
+{\em db} & Database to use. Pass a empty object ( Q\-Sql\-Database() ) to use default database. (This parameter is used to get fields attributes). \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-False if database is closed, if the table or field does not exists. Error is also available with \hyperlink{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{lastError()}. 
+False if database is closed, if the table or field does not exists. Error is also available with \hyperlink{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{last\-Error()}. 
 \end{DoxyReturn}
 
 
-Definition at line 38 of file mdtSqlRecord.cpp.
+Definition at line 46 of file mdt\-Sql\-Record.\-cpp.
 
-\hypertarget{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{
-\index{mdtSqlRecord@{mdtSqlRecord}!clearValues@{clearValues}}
-\index{clearValues@{clearValues}!mdtSqlRecord@{mdtSqlRecord}}
-\subsubsection[{clearValues}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRecord::clearValues (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by mdt\-Cl\-Article\-::edit\-Link(), and mdt\-Tt\-Base\-::update\-Record().
+
+\hypertarget{classmdt_sql_record_ad1058337837b2891d2e282001ad889d9}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!clear@{clear}}
+\index{clear@{clear}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Record\-::clear (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_record_ad1058337837b2891d2e282001ad889d9}
+
+
+Removes all the record's fields. 
+
+
+
+Reimplemented in \hyperlink{classmdt_cl_unit_connector_data_a55918c459b5d4c67bbe12cffe9d006df}{mdt\-Cl\-Unit\-Connector\-Data}, and \hyperlink{classmdt_cl_article_connector_data_a0ef0711ad63b3e80b54f9ddd3fd6e218}{mdt\-Cl\-Article\-Connector\-Data}.
+
+
+
+Definition at line 134 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+References mdt\-Error\-::clear(), and pv\-Last\-Error.
+
+
+
+Referenced by mdt\-Cl\-Article\-Connector\-Data\-::clear(), mdt\-Cl\-Unit\-Connector\-Data\-::clear(), mdt\-Tt\-Test\-Link\-Data\-::setup(), and mdt\-Cl\-Link\-Data\-::setup().
+
+\hypertarget{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!clear\-Values@{clear\-Values}}
+\index{clear\-Values@{clear\-Values}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{clear\-Values}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Record\-::clear\-Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}
 
 
 Clear values. 
 
-Will clear value and hasValue flag for all fields. 
+Will clear value and has\-Value flag for all fields. 
 
-Definition at line 124 of file mdtSqlRecord.cpp.
+Reimplemented in \hyperlink{classmdt_cl_unit_connector_data_a77be8b03d9cc6711aa30c4770fea4419}{mdt\-Cl\-Unit\-Connector\-Data}, \hyperlink{classmdt_cl_link_data_ae9505b7ba0d120d9c42e8fff20fe6ec7}{mdt\-Cl\-Link\-Data}, \hyperlink{classmdt_cl_article_connector_data_aeaacf0004607ce3c4f0908af538c900d}{mdt\-Cl\-Article\-Connector\-Data}, and \hyperlink{classmdt_tt_test_node_unit_data_a774da621d18566dcf42329664a356cad}{mdt\-Tt\-Test\-Node\-Unit\-Data}.
 
-\hypertarget{classmdt_sql_record_a581595f4425f824c794994eb564873cd}{
-\index{mdtSqlRecord@{mdtSqlRecord}!hasValue@{hasValue}}
-\index{hasValue@{hasValue}!mdtSqlRecord@{mdtSqlRecord}}
-\subsubsection[{hasValue}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRecord::hasValue (
+
+
+Definition at line 140 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+References count().
+
+
+
+Referenced by mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::clear\-Values(), mdt\-Cl\-Article\-Connector\-Data\-::clear\-Values(), mdt\-Cl\-Link\-Data\-::clear\-Values(), mdt\-Cl\-Unit\-Connector\-Data\-::clear\-Values(), and mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List().
+
+\hypertarget{classmdt_sql_record_ab7f694f62b8db947deb9713762ab4f27}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!contains@{contains}}
+\index{contains@{contains}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{contains}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Record\-::contains (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName}
+\item[{const Q\-String \&}]{name}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_sql_record_a581595f4425f824c794994eb564873cd}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_ab7f694f62b8db947deb9713762ab4f27}
 
 
-Check if a value was set. 
+Returns true if there is a field in the record called name; otherwise returns false. 
 
-\begin{DoxySeeAlso}{See also}
-hasValue(int) 
+
+
+Definition at line 117 of file mdt\-Sql\-Record.\-h.
+
+
+
+Referenced by mdt\-Cl\-Article\-Connector\-Data\-::add\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::add\-Connection\-Data(), mdt\-Cl\-Connector\-Data\-::add\-Contact\-Data(), mdt\-Cl\-Article\-Connector\-Data\-::mdt\-Cl\-Article\-Connector\-Data(), mdt\-Cl\-Connector\-Data\-::mdt\-Cl\-Connector\-Data(), mdt\-Cl\-Unit\-Connection\-Data\-::mdt\-Cl\-Unit\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::mdt\-Cl\-Unit\-Connector\-Data(), mdt\-Tt\-Test\-Link\-Data\-::mdt\-Tt\-Test\-Link\-Data(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::mdt\-Tt\-Test\-Node\-Unit\-Data(), mdt\-Cl\-Article\-Connection\-Dialog\-::set\-Data(), and mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Unit\-Data().
+
+\hypertarget{classmdt_sql_record_a7db54fc3e95195c221a193b083b4b95e}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!count@{count}}
+\index{count@{count}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Sql\-Record\-::count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_a7db54fc3e95195c221a193b083b4b95e}
+
+
+Returns the number of fields in the record. 
+
+
+
+Definition at line 93 of file mdt\-Sql\-Record.\-h.
+
+
+
+Referenced by clear\-Values(), field\-Indexes\-With\-Value(), and field\-Names().
+
+\hypertarget{classmdt_sql_record_a00c49b329d7170a8f840d7921f9b0f07}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!data\-To\-Update\-Info@{data\-To\-Update\-Info}}
+\index{data\-To\-Update\-Info@{data\-To\-Update\-Info}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{data\-To\-Update\-Info}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Record\-::data\-To\-Update\-Info (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_record_a00c49b329d7170a8f840d7921f9b0f07}
+
+
+Get information about data that has a value to update (for debug) 
+
+
+
+Definition at line 239 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+References field\-Indexes\-With\-Value().
+
+
+
+Referenced by mdt\-Tt\-Base\-::add\-Record().
+
+\hypertarget{classmdt_sql_record_a11c45029e57b56f441ed2ce270212b89}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!field@{field}}
+\index{field@{field}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{field}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Field mdt\-Sql\-Record\-::field (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_a11c45029e57b56f441ed2ce270212b89}
+
+
+Returns the field at position index. 
+
+If the index is out of range, function returns a default-\/constructed value. 
+
+Definition at line 103 of file mdt\-Sql\-Record.\-h.
+
+
+
+Referenced by sql\-For\-Update().
+
+\hypertarget{classmdt_sql_record_a6f7071c2a052cbb45e004a706fa8407f}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!field@{field}}
+\index{field@{field}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{field}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Field mdt\-Sql\-Record\-::field (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_a6f7071c2a052cbb45e004a706fa8407f}
+
+
+Returns the field called name. 
+
+
+
+Definition at line 107 of file mdt\-Sql\-Record.\-h.
+
+\hypertarget{classmdt_sql_record_a7be0d16ddc4651194ab12090065b2c1e}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!field\-Indexes\-With\-Value@{field\-Indexes\-With\-Value}}
+\index{field\-Indexes\-With\-Value@{field\-Indexes\-With\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{field\-Indexes\-With\-Value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Vector$<$ int $>$ mdt\-Sql\-Record\-::field\-Indexes\-With\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_record_a7be0d16ddc4651194ab12090065b2c1e}
+
+
+Get a list with field indexes that have a value. 
+
+Note\-: each time this method is called, the list will be generated.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{has\-Value()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 108 of file mdtSqlRecord.cpp.
+Definition at line 155 of file mdt\-Sql\-Record.\-cpp.
 
-\hypertarget{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{
-\index{mdtSqlRecord@{mdtSqlRecord}!hasValue@{hasValue}}
-\index{hasValue@{hasValue}!mdtSqlRecord@{mdtSqlRecord}}
-\subsubsection[{hasValue}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRecord::hasValue (
+
+
+References count(), and has\-Value().
+
+
+
+Referenced by mdt\-Tt\-Base\-::add\-Record(), data\-To\-Update\-Info(), sql\-For\-Insert(), sql\-For\-Update(), and mdt\-Tt\-Base\-::update\-Record().
+
+\hypertarget{classmdt_sql_record_af6754c9909ef1304ab382303809a7a0a}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!field\-Names@{field\-Names}}
+\index{field\-Names@{field\-Names}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{field\-Names}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Sql\-Record\-::field\-Names (
 \begin{DoxyParamCaption}
-\item[{int}]{fieldIndex}
+{}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}
+) const}}\label{classmdt_sql_record_af6754c9909ef1304ab382303809a7a0a}
+
+
+Get a list with all field names. 
+
+
+
+Definition at line 111 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+References count().
+
+\hypertarget{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!has\-Value@{has\-Value}}
+\index{has\-Value@{has\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{has\-Value}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Record\-::has\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{field\-Index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}
 
 
 Check if a value was set. 
 
 By insertion or edition in database, it can be important to know if a field must be updated or not. Because a Null value can be valid, it's not possible to use this flag. This method returns true once a value was set in given field.
 
-To clear this flag, use \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{clearValues()}.
+To clear this flag, use \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{clear\-Values()}.
 
-Note: internally, QSqlRecord::isGenerated() is used. 
+Note\-: internally, Q\-Sql\-Record\-::is\-Generated() is used. 
 
-Definition at line 103 of file mdtSqlRecord.cpp.
+Definition at line 134 of file mdt\-Sql\-Record.\-h.
 
-\hypertarget{classmdt_sql_record_a9a930216441a3a1234c3f2774d17eb11}{
-\index{mdtSqlRecord@{mdtSqlRecord}!lastErrorW@{lastErrorW}}
-\index{lastErrorW@{lastErrorW}!mdtSqlRecord@{mdtSqlRecord}}
-\subsubsection[{lastErrorW}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtError} \& mdtSqlRecord::lastErrorW (
+
+
+Referenced by field\-Indexes\-With\-Value().
+
+\hypertarget{classmdt_sql_record_a581595f4425f824c794994eb564873cd}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!has\-Value@{has\-Value}}
+\index{has\-Value@{has\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{has\-Value}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Record\-::has\-Value (
 \begin{DoxyParamCaption}
-{}
+\item[{const Q\-String \&}]{field\-Name}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_sql_record_a9a930216441a3a1234c3f2774d17eb11}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_a581595f4425f824c794994eb564873cd}
 
 
-Get last error for write access. 
+Check if a value was set. 
 
-Can be used by subclass to set the last error. 
-
-Definition at line 139 of file mdtSqlRecord.cpp.
-
-\hypertarget{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{
-\index{mdtSqlRecord@{mdtSqlRecord}!setValue@{setValue}}
-\index{setValue@{setValue}!mdtSqlRecord@{mdtSqlRecord}}
-\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRecord::setValue (
-\begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName, }
-\item[{const QVariant \&}]{val}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}
-
-
-Set value. 
-
-\begin{DoxySeeAlso}{See also}
-setValue(int) 
+\begin{DoxySeeAlso}{See Also}
+has\-Value(int) 
 \end{DoxySeeAlso}
 
 
-Definition at line 119 of file mdtSqlRecord.cpp.
+Definition at line 140 of file mdt\-Sql\-Record.\-h.
 
-\hypertarget{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{
-\index{mdtSqlRecord@{mdtSqlRecord}!setValue@{setValue}}
-\index{setValue@{setValue}!mdtSqlRecord@{mdtSqlRecord}}
-\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRecord::setValue (
+\hypertarget{classmdt_sql_record_a72e73a47c93453253dde5c2d2938c052}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!index\-Of@{index\-Of}}
+\index{index\-Of@{index\-Of}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{index\-Of}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Sql\-Record\-::index\-Of (
 \begin{DoxyParamCaption}
-\item[{int}]{fieldIndex, }
-\item[{const QVariant \&}]{val}
+\item[{const Q\-String \&}]{name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_a72e73a47c93453253dde5c2d2938c052}
+
+
+Returns the position of the field called name within the record, or -\/1 if it cannot be found. 
+
+Field names are not case-\/sensitive. If more than one field matches, the first one is returned. 
+
+Definition at line 113 of file mdt\-Sql\-Record.\-h.
+
+
+
+Referenced by mdt\-Cl\-Article\-Connection\-Data\-::mdt\-Cl\-Article\-Connection\-Data(), mdt\-Cl\-Link\-Data\-::mdt\-Cl\-Link\-Data(), and mdt\-Cl\-Unit\-Connection\-Data\-::mdt\-Cl\-Unit\-Connection\-Data().
+
+\hypertarget{classmdt_sql_record_a2d4e5e0834b9f1c884a117d89a5df31a}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Record\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_a2d4e5e0834b9f1c884a117d89a5df31a}
+
+
+Returns true if there are no fields in the record; otherwise returns false. 
+
+
+
+Definition at line 97 of file mdt\-Sql\-Record.\-h.
+
+\hypertarget{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Record\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_record_aa997bbc32402c3a254404ab74b9662f0}
+
+
+Get last error. 
+
+
+
+Definition at line 150 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+References pv\-Last\-Error.
+
+
+
+Referenced by mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Article\-Link\-Dialog\-::mdt\-Cl\-Article\-Link\-Dialog(), mdt\-Tt\-Test\-Link\-Dialog\-::mdt\-Tt\-Test\-Link\-Dialog(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::setup(), and mdt\-Tt\-Base\-::update\-Record().
+
+\hypertarget{classmdt_sql_record_a323c41a0dd33cbb8b686a10685d5e809}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!operator Q\-Sql\-Record@{operator Q\-Sql\-Record}}
+\index{operator Q\-Sql\-Record@{operator Q\-Sql\-Record}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{operator Q\-Sql\-Record}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Record\-::operator Q\-Sql\-Record (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_record_a323c41a0dd33cbb8b686a10685d5e809}
+
+
+Get Q\-Sql\-Record version. 
+
+
+
+Definition at line 40 of file mdt\-Sql\-Record.\-cpp.
+
+\hypertarget{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!set\-Value@{set\-Value}}
+\index{set\-Value@{set\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Record\-::set\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{field\-Index, }
+\item[{const Q\-Variant \&}]{val}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}
 
 
 Set value. 
 
-Set the hasValue flag and set value. 
+Set the has\-Value flag and set value. 
 
-Definition at line 113 of file mdtSqlRecord.cpp.
+Definition at line 123 of file mdt\-Sql\-Record.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-Connector\-Data\-::add\-Connection\-Data(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Cl\-Connector\-Data\-::add\-Contact\-Data(), mdt\-Cl\-Article\-::edit\-Connector\-Name(), mdt\-Cl\-Unit\-::edit\-Connector\-Name(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Unit\-Connection\-Data\-::set\-Article\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Article\-Connector\-Data(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Tt\-Test\-Link\-Dialog\-::set\-Dut\-Connection(), mdt\-Cl\-Link\-Data\-::set\-End\-Connection\-Data(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-End\-Connection\-Id(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Link\-Direction\-Code(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Link\-Type\-Code(), mdt\-Cl\-Link\-Data\-::set\-Start\-Connection\-Data(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Start\-Connection\-Id(), mdt\-Tt\-Test\-Link\-Dialog\-::set\-Test\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Test\-Connection\-Data(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Unit\-Data(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Value(), set\-Value(), and mdt\-Tt\-Base\-::update\-Record().
+
+\hypertarget{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!set\-Value@{set\-Value}}
+\index{set\-Value@{set\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Record\-::set\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-Variant \&}]{val}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}
+
+
+Set value. 
+
+\begin{DoxySeeAlso}{See Also}
+set\-Value(int) 
+\end{DoxySeeAlso}
+
+
+Definition at line 129 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+References set\-Value().
+
+\hypertarget{classmdt_sql_record_a1bc8d0787c3aa941afcf444d661c07db}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!sql\-Data\-Delimiter@{sql\-Data\-Delimiter}}
+\index{sql\-Data\-Delimiter@{sql\-Data\-Delimiter}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{sql\-Data\-Delimiter}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Record\-::sql\-Data\-Delimiter (
+\begin{DoxyParamCaption}
+\item[{Q\-Variant\-::\-Type}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classmdt_sql_record_a1bc8d0787c3aa941afcf444d661c07db}
+
+
+Get S\-Q\-L data delimiter for given data type. 
+
+
+
+Definition at line 229 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+Referenced by mdt\-Tt\-Base\-::sql\-Data\-Delimiter(), and sql\-For\-Update().
+
+\hypertarget{classmdt_sql_record_a20396c886d184d0ae176f8dea72d971b}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!sql\-For\-Insert@{sql\-For\-Insert}}
+\index{sql\-For\-Insert@{sql\-For\-Insert}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{sql\-For\-Insert}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Record\-::sql\-For\-Insert (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_record_a20396c886d184d0ae176f8dea72d971b}
+
+
+Get S\-Q\-L statement for insertion with Q\-Sql\-Query. 
+
+Will generate S\-Q\-L statement for insertion in given table name. The statement works with Q\-Sql\-Query values binding with positional placeholders. Example of a returned statement\-: I\-N\-S\-E\-R\-T I\-N\-T\-O table (Id\-\_\-\-P\-K, Name) V\-A\-L\-U\-E\-S (?, ?).
+
+Only fields that have a value are added in S\-Q\-L statement. 
+
+Definition at line 169 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+References field\-Indexes\-With\-Value().
+
+
+
+Referenced by mdt\-Tt\-Base\-::add\-Record().
+
+\hypertarget{classmdt_sql_record_a2ded0365b7ec9c94607bb6d8a5c16c98}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!sql\-For\-Update@{sql\-For\-Update}}
+\index{sql\-For\-Update@{sql\-For\-Update}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{sql\-For\-Update}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Record\-::sql\-For\-Update (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-Sql\-Record \&}]{match\-Data}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_record_a2ded0365b7ec9c94607bb6d8a5c16c98}
+
+
+Get S\-Q\-L statement for update with Q\-Sql\-Query. 
+
+Will generate S\-Q\-L statement for update in given table name. The statement works with Q\-Sql\-Query values binding with positional placeholders. Example of a returned statement\-: U\-P\-D\-A\-T\-E table S\-E\-T Id\-\_\-\-P\-K=?,Name=?.
+
+Only fields that have a value are added in S\-Q\-L statement.
+
+
+\begin{DoxyParams}{Parameters}
+{\em table\-Name} & Name of table to update. \\
+\hline
+{\em match\-Data} & For each field in match\-Data, a condition of type field\-Name=field\-Value is added. This will determine witch row to update. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 195 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+References field(), field\-Indexes\-With\-Value(), and sql\-Data\-Delimiter().
+
+
+
+Referenced by mdt\-Tt\-Base\-::update\-Record().
+
+\hypertarget{classmdt_sql_record_a373eef777b0e51d2e8dc0904f992d609}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!value@{value}}
+\index{value@{value}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Sql\-Record\-::value (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_a373eef777b0e51d2e8dc0904f992d609}
+
+
+Returns the value of the field located at position index in the record. 
+
+If index is out of bounds, an invalid Q\-Variant is returned. 
+
+Definition at line 158 of file mdt\-Sql\-Record.\-h.
+
+
+
+Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-Connector\-Data\-::add\-Connection\-Data(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Cl\-Connector\-Data\-::add\-Contact\-Data(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Cl\-Link\-Data\-::add\-Vehicle\-Type\-Link\-Data(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Cl\-Unit\-::edit\-Connection(), mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Unit\-Connection\-Data\-::is\-Based\-On\-Article\-Connection(), mdt\-Cl\-Unit\-Connector\-Data\-::is\-Based\-On\-Article\-Connector(), mdt\-Cl\-Article\-Connector\-Data\-::is\-Based\-On\-Connector(), mdt\-Cl\-Unit\-Connector\-Data\-::is\-Based\-On\-Connector(), mdt\-Cl\-Unit\-::remove\-Connection(), mdt\-Cl\-Unit\-Connection\-Data\-::set\-Article\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Article\-Connector\-Data(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Cl\-Unit\-Connection\-Dialog\-::set\-Data(), mdt\-Cl\-Link\-Data\-::set\-End\-Connection\-Data(), mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Link\-Data(), mdt\-Cl\-Link\-Data\-::set\-Start\-Connection\-Data(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Test\-Connection\-Data(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Unit\-Data(), and mdt\-Tt\-Base\-::update\-Record().
+
+\hypertarget{classmdt_sql_record_abfa14a89fa5e525c57d28f7f93dbcac8}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!value@{value}}
+\index{value@{value}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Sql\-Record\-::value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_abfa14a89fa5e525c57d28f7f93dbcac8}
+
+
+Returns the value of the field called name in the record. 
+
+If field name does not exist an invalid variant is returned. 
+
+Definition at line 164 of file mdt\-Sql\-Record.\-h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_sql_record_ae320a7933f4d5a002efc509c4c9c5a12}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!pv\-Last\-Error@{pv\-Last\-Error}}
+\index{pv\-Last\-Error@{pv\-Last\-Error}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Record\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_record_ae320a7933f4d5a002efc509c4c9c5a12}
+
+
+Definition at line 227 of file mdt\-Sql\-Record.\-h.
+
+
+
+Referenced by add\-All\-Fields(), add\-Field(), clear(), last\-Error(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connection\-Data(), mdt\-Cl\-Connector\-Data\-::set\-Contact\-Data(), and mdt\-Tt\-Test\-Node\-Unit\-Data\-::setup().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtdatabase/mdtSqlRecord.h\item 
-src/mdtdatabase/mdtSqlRecord.cpp\end{DoxyCompactItemize}
+src/mdtdatabase/\hyperlink{mdt_sql_record_8h}{mdt\-Sql\-Record.\-h}\item 
+src/mdtdatabase/\hyperlink{mdt_sql_record_8cpp}{mdt\-Sql\-Record.\-cpp}\end{DoxyCompactItemize}

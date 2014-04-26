@@ -1,6 +1,5 @@
-\hypertarget{classmdt_sql_query_widget}{
-\section{mdtSqlQueryWidget Class Reference}
-\label{classmdt_sql_query_widget}\index{mdtSqlQueryWidget@{mdtSqlQueryWidget}}
+\hypertarget{classmdt_sql_query_widget}{\section{mdt\-Sql\-Query\-Widget Class Reference}
+\label{classmdt_sql_query_widget}\index{mdt\-Sql\-Query\-Widget@{mdt\-Sql\-Query\-Widget}}
 }
 
 
@@ -9,47 +8,107 @@ Widget for data queriyng.
 
 
 
-{\ttfamily \#include $<$mdtSqlQueryWidget.h$>$}
+{\ttfamily \#include $<$mdt\-Sql\-Query\-Widget.\-h$>$}
 
+
+
+Inheritance diagram for mdt\-Sql\-Query\-Widget\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classmdt_sql_query_widget__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Sql\-Query\-Widget\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_sql_query_widget__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_query_widget_a164c6ea31fd4499109c6422f7a8f2bdf}{
-\hyperlink{classmdt_sql_query_widget_a164c6ea31fd4499109c6422f7a8f2bdf}{mdtSqlQueryWidget} (QWidget $\ast$parent=0)}
-\label{classmdt_sql_query_widget_a164c6ea31fd4499109c6422f7a8f2bdf}
-
+\hyperlink{classmdt_sql_query_widget_a164c6ea31fd4499109c6422f7a8f2bdf}{mdt\-Sql\-Query\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_query_widget_a03a4c8f444655f35d91b1a1b58a13b85}{
-\hyperlink{classmdt_sql_query_widget_a03a4c8f444655f35d91b1a1b58a13b85}{$\sim$mdtSqlQueryWidget} ()}
-\label{classmdt_sql_query_widget_a03a4c8f444655f35d91b1a1b58a13b85}
-
+\hyperlink{classmdt_sql_query_widget_a03a4c8f444655f35d91b1a1b58a13b85}{$\sim$mdt\-Sql\-Query\-Widget} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_query_widget_a69de231c33149a9f01df0215a91cf0bd}{
-void \hyperlink{classmdt_sql_query_widget_a69de231c33149a9f01df0215a91cf0bd}{setDatabase} (QSqlDatabase db)}
-\label{classmdt_sql_query_widget_a69de231c33149a9f01df0215a91cf0bd}
-
+void \hyperlink{classmdt_sql_query_widget_a69de231c33149a9f01df0215a91cf0bd}{set\-Database} (Q\-Sql\-Database db)
 \begin{DoxyCompactList}\small\item\em Set database. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_query_widget_a8ca0e1fbf8be78fe178ee1f2fc15522c}{setHeaderTextsByFieldNames} (const QHash$<$ QString, QString $>$ \&mapping)
+void \hyperlink{classmdt_sql_query_widget_a8ca0e1fbf8be78fe178ee1f2fc15522c}{set\-Header\-Texts\-By\-Field\-Names} (const Q\-Hash$<$ Q\-String, Q\-String $>$ \&mapping)
 \begin{DoxyCompactList}\small\item\em Set correspondence between fields name and texts to display in header. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
 Widget for data queriyng. 
 
-Definition at line 37 of file mdtSqlQueryWidget.h.
+Definition at line 38 of file mdt\-Sql\-Query\-Widget.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_query_widget_a164c6ea31fd4499109c6422f7a8f2bdf}{\index{mdt\-Sql\-Query\-Widget@{mdt\-Sql\-Query\-Widget}!mdt\-Sql\-Query\-Widget@{mdt\-Sql\-Query\-Widget}}
+\index{mdt\-Sql\-Query\-Widget@{mdt\-Sql\-Query\-Widget}!mdtSqlQueryWidget@{mdt\-Sql\-Query\-Widget}}
+\subsubsection[{mdt\-Sql\-Query\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Query\-Widget\-::mdt\-Sql\-Query\-Widget (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_query_widget_a164c6ea31fd4499109c6422f7a8f2bdf}
+
+
+Constructor. 
+
+
+
+Definition at line 35 of file mdt\-Sql\-Query\-Widget.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Query\-Widget\-::pb\-Fields, Ui\-\_\-mdt\-Sql\-Query\-Widget\-::pb\-Refresh, Ui\-\_\-mdt\-Sql\-Query\-Widget\-::pb\-Sort, Ui\-\_\-mdt\-Sql\-Query\-Widget\-::pb\-Tables, Ui\-\_\-mdt\-Sql\-Query\-Widget\-::setup\-Ui(), and Ui\-\_\-mdt\-Sql\-Query\-Widget\-::tw\-Data.
+
+\hypertarget{classmdt_sql_query_widget_a03a4c8f444655f35d91b1a1b58a13b85}{\index{mdt\-Sql\-Query\-Widget@{mdt\-Sql\-Query\-Widget}!$\sim$mdt\-Sql\-Query\-Widget@{$\sim$mdt\-Sql\-Query\-Widget}}
+\index{$\sim$mdt\-Sql\-Query\-Widget@{$\sim$mdt\-Sql\-Query\-Widget}!mdtSqlQueryWidget@{mdt\-Sql\-Query\-Widget}}
+\subsubsection[{$\sim$mdt\-Sql\-Query\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Query\-Widget\-::$\sim$mdt\-Sql\-Query\-Widget (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_query_widget_a03a4c8f444655f35d91b1a1b58a13b85}
+
+
+Destructor. 
+
+
+
+Definition at line 51 of file mdt\-Sql\-Query\-Widget.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_query_widget_a8ca0e1fbf8be78fe178ee1f2fc15522c}{
-\index{mdtSqlQueryWidget@{mdtSqlQueryWidget}!setHeaderTextsByFieldNames@{setHeaderTextsByFieldNames}}
-\index{setHeaderTextsByFieldNames@{setHeaderTextsByFieldNames}!mdtSqlQueryWidget@{mdtSqlQueryWidget}}
-\subsubsection[{setHeaderTextsByFieldNames}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlQueryWidget::setHeaderTextsByFieldNames (
+\hypertarget{classmdt_sql_query_widget_a69de231c33149a9f01df0215a91cf0bd}{\index{mdt\-Sql\-Query\-Widget@{mdt\-Sql\-Query\-Widget}!set\-Database@{set\-Database}}
+\index{set\-Database@{set\-Database}!mdtSqlQueryWidget@{mdt\-Sql\-Query\-Widget}}
+\subsubsection[{set\-Database}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Query\-Widget\-::set\-Database (
 \begin{DoxyParamCaption}
-\item[{const QHash$<$ QString, QString $>$ \&}]{mapping}
+\item[{Q\-Sql\-Database}]{db}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_query_widget_a8ca0e1fbf8be78fe178ee1f2fc15522c}
+)}}\label{classmdt_sql_query_widget_a69de231c33149a9f01df0215a91cf0bd}
+
+
+Set database. 
+
+
+
+Definition at line 55 of file mdt\-Sql\-Query\-Widget.\-cpp.
+
+\hypertarget{classmdt_sql_query_widget_a8ca0e1fbf8be78fe178ee1f2fc15522c}{\index{mdt\-Sql\-Query\-Widget@{mdt\-Sql\-Query\-Widget}!set\-Header\-Texts\-By\-Field\-Names@{set\-Header\-Texts\-By\-Field\-Names}}
+\index{set\-Header\-Texts\-By\-Field\-Names@{set\-Header\-Texts\-By\-Field\-Names}!mdtSqlQueryWidget@{mdt\-Sql\-Query\-Widget}}
+\subsubsection[{set\-Header\-Texts\-By\-Field\-Names}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Query\-Widget\-::set\-Header\-Texts\-By\-Field\-Names (
+\begin{DoxyParamCaption}
+\item[{const Q\-Hash$<$ Q\-String, Q\-String $>$ \&}]{mapping}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_query_widget_a8ca0e1fbf8be78fe178ee1f2fc15522c}
 
 
 Set correspondence between fields name and texts to display in header. 
@@ -61,11 +120,11 @@ Set correspondence between fields name and texts to display in header.
 \end{DoxyParams}
 
 
-Definition at line 55 of file mdtSqlQueryWidget.cpp.
+Definition at line 60 of file mdt\-Sql\-Query\-Widget.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtSqlQueryWidget.h\item 
-src/mdtutilsgui/mdtSqlQueryWidget.cpp\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_sql_query_widget_8h}{mdt\-Sql\-Query\-Widget.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_sql_query_widget_8cpp}{mdt\-Sql\-Query\-Widget.\-cpp}\end{DoxyCompactItemize}

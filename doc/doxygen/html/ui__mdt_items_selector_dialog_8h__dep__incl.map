@@ -1,0 +1,12 @@
+<map id="src/mdtutilsgui/ui_mdtItemsSelectorDialog.h" name="src/mdtutilsgui/ui_mdtItemsSelectorDialog.h">
+<area shape="rect" id="node3" href="$mdt_items_selector_dialog_8h.html" title="src/mdtutilsgui/mdtItems\lSelectorDialog.h" alt="" coords="488,102,653,149"/>
+<area shape="rect" id="node5" href="$mdt_items_selector_dialog_8cpp.html" title="src/mdtutilsgui/mdtItems\lSelectorDialog.cpp" alt="" coords="149,198,315,245"/>
+<area shape="rect" id="node7" href="$mdt_mv_column_selection_dialog_8h.html" title="src/mdtutilsgui/mdtMvColumn\lSelectionDialog.h" alt="" coords="339,198,533,245"/>
+<area shape="rect" id="node11" href="$mdt_sql_query_widget_8cpp.html" title="src/mdtutilsgui/mdtSqlQuery\lWidget.cpp" alt="" coords="477,294,664,341"/>
+<area shape="rect" id="node15" href="$mdt_mv_sorting_setup_dialog_8h.html" title="src/mdtutilsgui/mdtMvSorting\lSetupDialog.h" alt="" coords="608,198,800,245"/>
+<area shape="rect" id="node23" href="$moc__mdt_items_selector_dialog_8cxx.html" title="src/mdtutilsgui/moc\l_mdtItemsSelectorDialog.cxx" alt="" coords="824,198,1019,245"/>
+<area shape="rect" id="node9" href="$mdt_mv_column_selection_dialog_8cpp.html" title="src/mdtutilsgui/mdtMvColumn\lSelectionDialog.cpp" alt="" coords="5,294,200,341"/>
+<area shape="rect" id="node13" href="$moc__mdt_mv_column_selection_dialog_8cxx.html" title="src/mdtutilsgui/moc\l_mdtMvColumnSelectionDialog.cxx" alt="" coords="224,294,453,341"/>
+<area shape="rect" id="node17" href="$mdt_mv_sorting_setup_dialog_8cpp.html" title="src/mdtutilsgui/mdtMvSorting\lSetupDialog.cpp" alt="" coords="688,294,880,341"/>
+<area shape="rect" id="node20" href="$moc__mdt_mv_sorting_setup_dialog_8cxx.html" title="src/mdtutilsgui/moc\l_mdtMvSortingSetupDialog.cxx" alt="" coords="904,294,1109,341"/>
+</map>

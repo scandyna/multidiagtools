@@ -1,6 +1,5 @@
-\hypertarget{classmdt_serial_port_manager}{
-\section{mdtSerialPortManager Class Reference}
-\label{classmdt_serial_port_manager}\index{mdtSerialPortManager@{mdtSerialPortManager}}
+\hypertarget{classmdt_serial_port_manager}{\section{mdt\-Serial\-Port\-Manager Class Reference}
+\label{classmdt_serial_port_manager}\index{mdt\-Serial\-Port\-Manager@{mdt\-Serial\-Port\-Manager}}
 }
 
 
@@ -9,11 +8,11 @@ Serial port manager class.
 
 
 
-{\ttfamily \#include $<$mdtSerialPortManager.h$>$}
+{\ttfamily \#include $<$mdt\-Serial\-Port\-Manager.\-h$>$}
 
 
 
-Inheritance diagram for mdtSerialPortManager:\nopagebreak
+Inheritance diagram for mdt\-Serial\-Port\-Manager\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,134 +21,161 @@ Inheritance diagram for mdtSerialPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtSerialPortManager:\nopagebreak
+Collaboration diagram for mdt\-Serial\-Port\-Manager\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=400pt]{classmdt_serial_port_manager__coll__graph}
+\includegraphics[width=350pt]{classmdt_serial_port_manager__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}{mdtSerialPortManager} (QObject $\ast$parent=0)
+\hyperlink{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}{mdt\-Serial\-Port\-Manager} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Construct a serial port manager. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{$\sim$mdtSerialPortManager} ()
+\hyperlink{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{$\sim$mdt\-Serial\-Port\-Manager} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{scan} ()
+Q\-List$<$ \hyperlink{classmdt_port_info}{mdt\-Port\-Info} $\ast$ $>$ \hyperlink{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{scan} ()
 \begin{DoxyCompactList}\small\item\em Scan for available serial ports. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \& \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{config} ()
+\hyperlink{classmdt_serial_port_config}{mdt\-Serial\-Port\-Config} \& \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{config} ()
 \begin{DoxyCompactList}\small\item\em Get the config object. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} \& \hyperlink{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{port} ()
+\hyperlink{classmdt_abstract_serial_port}{mdt\-Abstract\-Serial\-Port} \& \hyperlink{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{port} ()
 \begin{DoxyCompactList}\small\item\em Get the serial port instance. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{
-\hyperlink{classmdt_serial_port_ctl_thread}{mdtSerialPortCtlThread} $\ast$ \hyperlink{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{ctlThread} ()}
-\label{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}
-
+\hyperlink{classmdt_serial_port_ctl_thread}{mdt\-Serial\-Port\-Ctl\-Thread} $\ast$ \hyperlink{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{ctl\-Thread} ()
 \begin{DoxyCompactList}\small\item\em Get the modem lines thread object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
 Serial port manager class. 
 
-This is the easiest way to use the serial port API.
+This is the easiest way to use the serial port A\-P\-I.
 
 All needed object are created by constructor. To alter configuration, use \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{config()}. To access the serial port object, use \hyperlink{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{port()}.
 
 Use \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()} to begin read/write and stop to end. 
 
-Definition at line 46 of file mdtSerialPortManager.h.
+Definition at line 46 of file mdt\-Serial\-Port\-Manager.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}{
-\index{mdtSerialPortManager@{mdtSerialPortManager}!mdtSerialPortManager@{mdtSerialPortManager}}
-\index{mdtSerialPortManager@{mdtSerialPortManager}!mdtSerialPortManager@{mdtSerialPortManager}}
-\subsubsection[{mdtSerialPortManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtSerialPortManager::mdtSerialPortManager (
+\hypertarget{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}{\index{mdt\-Serial\-Port\-Manager@{mdt\-Serial\-Port\-Manager}!mdt\-Serial\-Port\-Manager@{mdt\-Serial\-Port\-Manager}}
+\index{mdt\-Serial\-Port\-Manager@{mdt\-Serial\-Port\-Manager}!mdtSerialPortManager@{mdt\-Serial\-Port\-Manager}}
+\subsubsection[{mdt\-Serial\-Port\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Serial\-Port\-Manager\-::mdt\-Serial\-Port\-Manager (
 \begin{DoxyParamCaption}
-\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}
+)}}\label{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}
 
 
 Construct a serial port manager. 
 
-Creates a \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig}, a \hyperlink{classmdt_serial_port}{mdtSerialPort}, and threads objects. 
+Creates a \hyperlink{classmdt_serial_port_config}{mdt\-Serial\-Port\-Config}, a \hyperlink{classmdt_serial_port}{mdt\-Serial\-Port}, and threads objects. 
 
-Definition at line 32 of file mdtSerialPortManager.cpp.
+Definition at line 32 of file mdt\-Serial\-Port\-Manager.\-cpp.
 
-\hypertarget{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{
-\index{mdtSerialPortManager@{mdtSerialPortManager}!$\sim$mdtSerialPortManager@{$\sim$mdtSerialPortManager}}
-\index{$\sim$mdtSerialPortManager@{$\sim$mdtSerialPortManager}!mdtSerialPortManager@{mdtSerialPortManager}}
-\subsubsection[{$\sim$mdtSerialPortManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtSerialPortManager::$\sim$mdtSerialPortManager (
+
+
+References mdt\-Port\-Manager\-::add\-Thread(), config(), port(), mdt\-Abstract\-Port\-::set\-Config(), and mdt\-Port\-Manager\-::set\-Port().
+
+\hypertarget{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{\index{mdt\-Serial\-Port\-Manager@{mdt\-Serial\-Port\-Manager}!$\sim$mdt\-Serial\-Port\-Manager@{$\sim$mdt\-Serial\-Port\-Manager}}
+\index{$\sim$mdt\-Serial\-Port\-Manager@{$\sim$mdt\-Serial\-Port\-Manager}!mdtSerialPortManager@{mdt\-Serial\-Port\-Manager}}
+\subsubsection[{$\sim$mdt\-Serial\-Port\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Serial\-Port\-Manager\-::$\sim$mdt\-Serial\-Port\-Manager (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}
+)}}\label{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}
 
 
 Destructor. 
 
 Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
 
-Definition at line 48 of file mdtSerialPortManager.cpp.
+Definition at line 48 of file mdt\-Serial\-Port\-Manager.\-cpp.
+
+
+
+References mdt\-Abstract\-Port\-::config(), mdt\-Port\-Manager\-::detach\-Port(), and mdt\-Port\-Manager\-::pv\-Port.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{
-\index{mdtSerialPortManager@{mdtSerialPortManager}!config@{config}}
-\index{config@{config}!mdtSerialPortManager@{mdtSerialPortManager}}
-\subsubsection[{config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtSerialPortConfig} \& mdtSerialPortManager::config (
+\hypertarget{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{\index{mdt\-Serial\-Port\-Manager@{mdt\-Serial\-Port\-Manager}!config@{config}}
+\index{config@{config}!mdtSerialPortManager@{mdt\-Serial\-Port\-Manager}}
+\subsubsection[{config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Serial\-Port\-Config} \& mdt\-Serial\-Port\-Manager\-::config (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}
 
 
 Get the config object. 
 
 Usefull to alter internal port configuration 
 
-Reimplemented from \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{mdtPortManager}.
+Reimplemented from \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{mdt\-Port\-Manager}.
 
 
 
-Definition at line 135 of file mdtSerialPortManager.cpp.
+Definition at line 135 of file mdt\-Serial\-Port\-Manager.\-cpp.
 
-\hypertarget{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{
-\index{mdtSerialPortManager@{mdtSerialPortManager}!port@{port}}
-\index{port@{port}!mdtSerialPortManager@{mdtSerialPortManager}}
-\subsubsection[{port}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractSerialPort} \& mdtSerialPortManager::port (
+
+
+References mdt\-Abstract\-Serial\-Port\-::config(), and mdt\-Port\-Manager\-::pv\-Port.
+
+
+
+Referenced by mdt\-Serial\-Port\-Manager().
+
+\hypertarget{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{\index{mdt\-Serial\-Port\-Manager@{mdt\-Serial\-Port\-Manager}!ctl\-Thread@{ctl\-Thread}}
+\index{ctl\-Thread@{ctl\-Thread}!mdtSerialPortManager@{mdt\-Serial\-Port\-Manager}}
+\subsubsection[{ctl\-Thread}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Serial\-Port\-Ctl\-Thread} $\ast$ mdt\-Serial\-Port\-Manager\-::ctl\-Thread (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}
+)}}\label{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}
+
+
+Get the modem lines thread object. 
+
+
+
+Definition at line 156 of file mdt\-Serial\-Port\-Manager.\-cpp.
+
+\hypertarget{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{\index{mdt\-Serial\-Port\-Manager@{mdt\-Serial\-Port\-Manager}!port@{port}}
+\index{port@{port}!mdtSerialPortManager@{mdt\-Serial\-Port\-Manager}}
+\subsubsection[{port}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Serial\-Port} \& mdt\-Serial\-Port\-Manager\-::port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}
 
 
 Get the serial port instance. 
 
 \begin{DoxyPrecond}{Precondition}
-Port must be set with a \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} instance (not \hyperlink{classmdt_abstract_port}{mdtAbstractPort}) 
+Port must be set with a \hyperlink{classmdt_abstract_serial_port}{mdt\-Abstract\-Serial\-Port} instance (not \hyperlink{classmdt_abstract_port}{mdt\-Abstract\-Port}) 
 \end{DoxyPrecond}
 
 
-Definition at line 146 of file mdtSerialPortManager.cpp.
+Definition at line 146 of file mdt\-Serial\-Port\-Manager.\-cpp.
 
-\hypertarget{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{
-\index{mdtSerialPortManager@{mdtSerialPortManager}!scan@{scan}}
-\index{scan@{scan}!mdtSerialPortManager@{mdtSerialPortManager}}
-\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtPortInfo} $\ast$ $>$ mdtSerialPortManager::scan (
+
+
+References mdt\-Port\-Manager\-::pv\-Port.
+
+
+
+Referenced by mdt\-Serial\-Port\-Ctl\-Widget\-::make\-Connections(), mdt\-Serial\-Port\-Manager(), and scan().
+
+\hypertarget{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{\index{mdt\-Serial\-Port\-Manager@{mdt\-Serial\-Port\-Manager}!scan@{scan}}
+\index{scan@{scan}!mdtSerialPortManager@{mdt\-Serial\-Port\-Manager}}
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Port\-Info} $\ast$ $>$ mdt\-Serial\-Port\-Manager\-::scan (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}
 
 
 Scan for available serial ports. 
@@ -160,19 +186,23 @@ Try to open available ports on system and get some attributes. If both steps wor
 Manager must no running. 
 \end{DoxyPrecond}
 \begin{DoxyReturn}{Returns}
-List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows) 
+List of available serial ports on system (f.\-ex\-: /dev/tty\-S0 on Unix , or C\-O\-M1 on Windows) 
 \end{DoxyReturn}
 
 
-Reimplemented from \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{mdtPortManager}.
+Reimplemented from \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{mdt\-Port\-Manager}.
 
 
 
-Definition at line 56 of file mdtSerialPortManager.cpp.
+Definition at line 56 of file mdt\-Serial\-Port\-Manager.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References mdt\-Abstract\-Serial\-Port\-::close(), mdt\-Error\-::\-Error, mdt\-Port\-Manager\-::is\-Closed(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, mdt\-Algorithms\-::natural\-Sort(), mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Abstract\-Port\-::open(), port(), mdt\-Port\-Manager\-::port\-Info(), mdt\-Port\-Info\-::set\-Display\-Text(), mdt\-Port\-Info\-::set\-Port\-Name(), mdt\-Abstract\-Port\-::set\-Port\-Name(), mdt\-Abstract\-Serial\-Port\-::uart\-Type(), and mdt\-Abstract\-Serial\-Port\-::\-U\-T\-\_\-\-U\-N\-K\-N\-O\-W.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtserialport/mdtSerialPortManager.h\item 
-src/mdtserialport/mdtSerialPortManager.cpp\end{DoxyCompactItemize}
+src/mdtserialport/\hyperlink{mdt_serial_port_manager_8h}{mdt\-Serial\-Port\-Manager.\-h}\item 
+src/mdtserialport/\hyperlink{mdt_serial_port_manager_8cpp}{mdt\-Serial\-Port\-Manager.\-cpp}\end{DoxyCompactItemize}

@@ -1,10 +1,13 @@
-\hypertarget{classmdt_port_write_thread}{
-\section{mdtPortWriteThread Class Reference}
-\label{classmdt_port_write_thread}\index{mdtPortWriteThread@{mdtPortWriteThread}}
+\hypertarget{classmdt_port_write_thread}{\section{mdt\-Port\-Write\-Thread Class Reference}
+\label{classmdt_port_write_thread}\index{mdt\-Port\-Write\-Thread@{mdt\-Port\-Write\-Thread}}
 }
 
 
-Inheritance diagram for mdtPortWriteThread:\nopagebreak
+{\ttfamily \#include $<$mdt\-Port\-Write\-Thread.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Port\-Write\-Thread\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,85 +16,113 @@ Inheritance diagram for mdtPortWriteThread:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtPortWriteThread:\nopagebreak
+Collaboration diagram for mdt\-Port\-Write\-Thread\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=184pt]{classmdt_port_write_thread__coll__graph}
+\includegraphics[width=350pt]{classmdt_port_write_thread__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_port_write_thread_a994b96eafdd721ccff2f2410a5abd5e3}{
-{\bfseries mdtPortWriteThread} (QObject $\ast$parent=0)}
-\label{classmdt_port_write_thread_a994b96eafdd721ccff2f2410a5abd5e3}
-
+\hyperlink{classmdt_port_write_thread_a994b96eafdd721ccff2f2410a5abd5e3}{mdt\-Port\-Write\-Thread} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \item 
-\hypertarget{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}{
-void \hyperlink{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}{stop} ()}
-\label{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}
-
+void \hyperlink{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}{stop} ()
 \begin{DoxyCompactList}\small\item\em Stop the thread. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}{isReader} () const 
-\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}{isWriter} () const 
+bool \hyperlink{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}{is\-Reader} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{new\-Frame\-Readen()} signal. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}{is\-Writer} () const 
 \begin{DoxyCompactList}\small\item\em Returns true if this thread writes date. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 27 of file mdtPortWriteThread.h.
+Definition at line 27 of file mdt\-Port\-Write\-Thread.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_port_write_thread_a994b96eafdd721ccff2f2410a5abd5e3}{\index{mdt\-Port\-Write\-Thread@{mdt\-Port\-Write\-Thread}!mdt\-Port\-Write\-Thread@{mdt\-Port\-Write\-Thread}}
+\index{mdt\-Port\-Write\-Thread@{mdt\-Port\-Write\-Thread}!mdtPortWriteThread@{mdt\-Port\-Write\-Thread}}
+\subsubsection[{mdt\-Port\-Write\-Thread}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Port\-Write\-Thread\-::mdt\-Port\-Write\-Thread (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_write_thread_a994b96eafdd721ccff2f2410a5abd5e3}
+
+
+Definition at line 29 of file mdt\-Port\-Write\-Thread.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}{
-\index{mdtPortWriteThread@{mdtPortWriteThread}!isReader@{isReader}}
-\index{isReader@{isReader}!mdtPortWriteThread@{mdtPortWriteThread}}
-\subsubsection[{isReader}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortWriteThread::isReader (
+\hypertarget{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}{\index{mdt\-Port\-Write\-Thread@{mdt\-Port\-Write\-Thread}!is\-Reader@{is\-Reader}}
+\index{is\-Reader@{is\-Reader}!mdtPortWriteThread@{mdt\-Port\-Write\-Thread}}
+\subsubsection[{is\-Reader}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Port\-Write\-Thread\-::is\-Reader (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}
 
 
-Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. 
+Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{new\-Frame\-Readen()} signal. 
 
-\hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
+\hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{new\-Frame\-Readen()} signal, so it can connect it to his slot. 
 
-Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc324b1}{mdtPortThread}.
+Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc324b1}{mdt\-Port\-Thread}.
 
 
 
-Definition at line 42 of file mdtPortWriteThread.cpp.
+Definition at line 42 of file mdt\-Port\-Write\-Thread.\-cpp.
 
-\hypertarget{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}{
-\index{mdtPortWriteThread@{mdtPortWriteThread}!isWriter@{isWriter}}
-\index{isWriter@{isWriter}!mdtPortWriteThread@{mdtPortWriteThread}}
-\subsubsection[{isWriter}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortWriteThread::isWriter (
+\hypertarget{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}{\index{mdt\-Port\-Write\-Thread@{mdt\-Port\-Write\-Thread}!is\-Writer@{is\-Writer}}
+\index{is\-Writer@{is\-Writer}!mdtPortWriteThread@{mdt\-Port\-Write\-Thread}}
+\subsubsection[{is\-Writer}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Port\-Write\-Thread\-::is\-Writer (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}
 
 
 Returns true if this thread writes date. 
 
-Is used by \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()} to know if \hyperlink{classmdt_abstract_port_ae67c815f68317c70e398eaa86622af6b}{mdtAbstractPort::abortFrameToWriteWait()} must be called. 
+Is used by \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdt\-Port\-Thread\-::stop()} to know if \hyperlink{classmdt_abstract_port_ae67c815f68317c70e398eaa86622af6b}{mdt\-Abstract\-Port\-::abort\-Frame\-To\-Write\-Wait()} must be called. 
 
-Reimplemented from \hyperlink{classmdt_port_thread_a0122a12262052cf3643241a3eaa31c58}{mdtPortThread}.
-
-
-
-Definition at line 47 of file mdtPortWriteThread.cpp.
+Reimplemented from \hyperlink{classmdt_port_thread_a0122a12262052cf3643241a3eaa31c58}{mdt\-Port\-Thread}.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Definition at line 47 of file mdt\-Port\-Write\-Thread.\-cpp.
+
+\hypertarget{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}{\index{mdt\-Port\-Write\-Thread@{mdt\-Port\-Write\-Thread}!stop@{stop}}
+\index{stop@{stop}!mdtPortWriteThread@{mdt\-Port\-Write\-Thread}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Write\-Thread\-::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}
+
+
+Stop the thread. 
+
+
+
+Reimplemented from \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdt\-Port\-Thread}.
+
+
+
+Definition at line 34 of file mdt\-Port\-Write\-Thread.\-cpp.
+
+
+
+References mdt\-Abstract\-Port\-::abort\-Frame\-To\-Write\-Wait(), mdt\-Port\-Thread\-::pv\-Port, and mdt\-Port\-Thread\-::stop().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtport/mdtPortWriteThread.h\item 
-src/mdtport/mdtPortWriteThread.cpp\end{DoxyCompactItemize}
+src/mdtport/\hyperlink{mdt_port_write_thread_8h}{mdt\-Port\-Write\-Thread.\-h}\item 
+src/mdtport/\hyperlink{mdt_port_write_thread_8cpp}{mdt\-Port\-Write\-Thread.\-cpp}\end{DoxyCompactItemize}

@@ -1,6 +1,5 @@
-\hypertarget{classmdt_sort_filter_proxy_model}{
-\section{mdtSortFilterProxyModel Class Reference}
-\label{classmdt_sort_filter_proxy_model}\index{mdtSortFilterProxyModel@{mdtSortFilterProxyModel}}
+\hypertarget{classmdt_sort_filter_proxy_model}{\section{mdt\-Sort\-Filter\-Proxy\-Model Class Reference}
+\label{classmdt_sort_filter_proxy_model}\index{mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}}
 }
 
 
@@ -9,95 +8,191 @@ Provide natural sort for Qt model/view.
 
 
 
-{\ttfamily \#include $<$mdtSortFilterProxyModel.h$>$}
+{\ttfamily \#include $<$mdt\-Sort\-Filter\-Proxy\-Model.\-h$>$}
 
+
+
+Inheritance diagram for mdt\-Sort\-Filter\-Proxy\-Model\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{classmdt_sort_filter_proxy_model__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Sort\-Filter\-Proxy\-Model\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{classmdt_sort_filter_proxy_model__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sort_filter_proxy_model_a83bcd157f655c4d675e5a30d97fa16ba}{
-\hyperlink{classmdt_sort_filter_proxy_model_a83bcd157f655c4d675e5a30d97fa16ba}{mdtSortFilterProxyModel} (QObject $\ast$parent=0)}
-\label{classmdt_sort_filter_proxy_model_a83bcd157f655c4d675e5a30d97fa16ba}
-
+\hyperlink{classmdt_sort_filter_proxy_model_a83bcd157f655c4d675e5a30d97fa16ba}{mdt\-Sort\-Filter\-Proxy\-Model} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sort_filter_proxy_model_a5d1c4647657a13d4b225e790a6b8d1a3}{
-\hyperlink{classmdt_sort_filter_proxy_model_a5d1c4647657a13d4b225e790a6b8d1a3}{$\sim$mdtSortFilterProxyModel} ()}
-\label{classmdt_sort_filter_proxy_model_a5d1c4647657a13d4b225e790a6b8d1a3}
-
+\hyperlink{classmdt_sort_filter_proxy_model_a5d1c4647657a13d4b225e790a6b8d1a3}{$\sim$mdt\-Sort\-Filter\-Proxy\-Model} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sort_filter_proxy_model_aad45b85d23fe3c2eb6198a9eece685d2}{clearColumnsSortOrder} ()
+void \hyperlink{classmdt_sort_filter_proxy_model_aad45b85d23fe3c2eb6198a9eece685d2}{clear\-Columns\-Sort\-Order} ()
 \begin{DoxyCompactList}\small\item\em Clear columns sort order. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sort_filter_proxy_model_afaba32df90528901e671e0ff20f51e41}{addColumnToSortOrder} (int column, Qt::SortOrder order=Qt::AscendingOrder)
+void \hyperlink{classmdt_sort_filter_proxy_model_a22d0f84ebcc9af078f3c004dbe790fe8}{add\-Column\-To\-Sort\-Order} (int column, Qt\-::\-Sort\-Order order=Qt\-::\-Ascending\-Order)
 \begin{DoxyCompactList}\small\item\em Add a column to columns sort order. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sort_filter_proxy_model_ae447c8f1449b1314fac2448c8b004885}{
-void {\bfseries addColumnToSortOrder} (const QString \&fieldName, Qt::SortOrder order=Qt::AscendingOrder)}
-\label{classmdt_sort_filter_proxy_model_ae447c8f1449b1314fac2448c8b004885}
-
-\end{DoxyCompactItemize}
+void \hyperlink{classmdt_sort_filter_proxy_model_ae447c8f1449b1314fac2448c8b004885}{add\-Column\-To\-Sort\-Order} (const Q\-String \&field\-Name, Qt\-::\-Sort\-Order order=Qt\-::\-Ascending\-Order)
+\begin{DoxyCompactList}\small\item\em Add a field to columns sort order. \end{DoxyCompactList}\item 
+Q\-Vector$<$ int $>$ \hyperlink{classmdt_sort_filter_proxy_model_a1a4d9fcee3a6817ae668c07ca2ec472f}{sorted\-Columns} () const 
+\begin{DoxyCompactList}\small\item\em Get list of indexes of columns that are in sort order. \end{DoxyCompactList}\item 
+Qt\-::\-Sort\-Order \hyperlink{classmdt_sort_filter_proxy_model_a506fff2a1f483ff67989c64b2c4e3491}{sort\-Order} (int column) const 
+\begin{DoxyCompactList}\small\item\em Get sort order for given column. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Provide natural sort for Qt model/view. 
 
-Definition at line 31 of file mdtSortFilterProxyModel.h.
+Definition at line 32 of file mdt\-Sort\-Filter\-Proxy\-Model.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sort_filter_proxy_model_a83bcd157f655c4d675e5a30d97fa16ba}{\index{mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}!mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}}
+\index{mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}!mdtSortFilterProxyModel@{mdt\-Sort\-Filter\-Proxy\-Model}}
+\subsubsection[{mdt\-Sort\-Filter\-Proxy\-Model}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sort\-Filter\-Proxy\-Model\-::mdt\-Sort\-Filter\-Proxy\-Model (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sort_filter_proxy_model_a83bcd157f655c4d675e5a30d97fa16ba}
+
+
+Constructor. 
+
+
+
+Definition at line 30 of file mdt\-Sort\-Filter\-Proxy\-Model.\-cpp.
+
+\hypertarget{classmdt_sort_filter_proxy_model_a5d1c4647657a13d4b225e790a6b8d1a3}{\index{mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}!$\sim$mdt\-Sort\-Filter\-Proxy\-Model@{$\sim$mdt\-Sort\-Filter\-Proxy\-Model}}
+\index{$\sim$mdt\-Sort\-Filter\-Proxy\-Model@{$\sim$mdt\-Sort\-Filter\-Proxy\-Model}!mdtSortFilterProxyModel@{mdt\-Sort\-Filter\-Proxy\-Model}}
+\subsubsection[{$\sim$mdt\-Sort\-Filter\-Proxy\-Model}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sort\-Filter\-Proxy\-Model\-::$\sim$mdt\-Sort\-Filter\-Proxy\-Model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sort_filter_proxy_model_a5d1c4647657a13d4b225e790a6b8d1a3}
+
+
+Destructor. 
+
+
+
+Definition at line 35 of file mdt\-Sort\-Filter\-Proxy\-Model.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sort_filter_proxy_model_afaba32df90528901e671e0ff20f51e41}{
-\index{mdtSortFilterProxyModel@{mdtSortFilterProxyModel}!addColumnToSortOrder@{addColumnToSortOrder}}
-\index{addColumnToSortOrder@{addColumnToSortOrder}!mdtSortFilterProxyModel@{mdtSortFilterProxyModel}}
-\subsubsection[{addColumnToSortOrder}]{\setlength{\rightskip}{0pt plus 5cm}mdtSortFilterProxyModel::addColumnToSortOrder (
+\hypertarget{classmdt_sort_filter_proxy_model_a22d0f84ebcc9af078f3c004dbe790fe8}{\index{mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}!add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}}
+\index{add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}!mdtSortFilterProxyModel@{mdt\-Sort\-Filter\-Proxy\-Model}}
+\subsubsection[{add\-Column\-To\-Sort\-Order}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sort\-Filter\-Proxy\-Model\-::add\-Column\-To\-Sort\-Order (
 \begin{DoxyParamCaption}
 \item[{int}]{column, }
-\item[{Qt::SortOrder}]{order = {\ttfamily Qt::AscendingOrder}}
+\item[{Qt\-::\-Sort\-Order}]{order = {\ttfamily Qt\-:\-:AscendingOrder}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sort_filter_proxy_model_afaba32df90528901e671e0ff20f51e41}
+)}}\label{classmdt_sort_filter_proxy_model_a22d0f84ebcc9af078f3c004dbe790fe8}
 
 
 Add a column to columns sort order. 
 
-Columns sort order is similar meaning than SQL ORDER BY clause.
+Columns sort order is similar meaning than S\-Q\-L O\-R\-D\-E\-R B\-Y clause.
 
-For example, to sort columns in order 0, 2, 1 all ascending, call:
+For example, to sort columns in order 0, 2, 1 all ascending, call\-:
 \begin{DoxyItemize}
-\item \hyperlink{classmdt_sort_filter_proxy_model_aad45b85d23fe3c2eb6198a9eece685d2}{clearColumnsSortOrder()};
-\item addColumnToSortOrder(0, Qt::AscendingOrder);
-\item addColumnToSortOrder(2, Qt::AscendingOrder);
-\item addColumnToSortOrder(1, Qt::AscendingOrder);
+\item \hyperlink{classmdt_sort_filter_proxy_model_aad45b85d23fe3c2eb6198a9eece685d2}{clear\-Columns\-Sort\-Order()};
+\item add\-Column\-To\-Sort\-Order(0, Qt\-::\-Ascending\-Order);
+\item add\-Column\-To\-Sort\-Order(2, Qt\-::\-Ascending\-Order);
+\item add\-Column\-To\-Sort\-Order(1, Qt\-::\-Ascending\-Order);
 \end{DoxyItemize}
 
-Note: if given column is out of bound, it will simply be ignored.
+Note\-: if given column is out of bound, it will simply be ignored. 
 
-This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+Definition at line 44 of file mdt\-Sort\-Filter\-Proxy\-Model.\-cpp.
 
-Here it's possible to define a field name. Note that this method does nothing if sourceModel is not based on QSqlQueryModel. 
 
-Definition at line 43 of file mdtSortFilterProxyModel.cpp.
 
-\hypertarget{classmdt_sort_filter_proxy_model_aad45b85d23fe3c2eb6198a9eece685d2}{
-\index{mdtSortFilterProxyModel@{mdtSortFilterProxyModel}!clearColumnsSortOrder@{clearColumnsSortOrder}}
-\index{clearColumnsSortOrder@{clearColumnsSortOrder}!mdtSortFilterProxyModel@{mdtSortFilterProxyModel}}
-\subsubsection[{clearColumnsSortOrder}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSortFilterProxyModel::clearColumnsSortOrder (
+Referenced by add\-Column\-To\-Sort\-Order(), and mdt\-Sql\-Selection\-Dialog\-::add\-Column\-To\-Sort\-Order().
+
+\hypertarget{classmdt_sort_filter_proxy_model_ae447c8f1449b1314fac2448c8b004885}{\index{mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}!add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}}
+\index{add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}!mdtSortFilterProxyModel@{mdt\-Sort\-Filter\-Proxy\-Model}}
+\subsubsection[{add\-Column\-To\-Sort\-Order}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sort\-Filter\-Proxy\-Model\-::add\-Column\-To\-Sort\-Order (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{Qt\-::\-Sort\-Order}]{order = {\ttfamily Qt\-:\-:AscendingOrder}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sort_filter_proxy_model_ae447c8f1449b1314fac2448c8b004885}
+
+
+Add a field to columns sort order. 
+
+Here it's possible to define a field name. Note that this method does nothing if source\-Model is not based on Q\-Sql\-Query\-Model. 
+
+Definition at line 57 of file mdt\-Sort\-Filter\-Proxy\-Model.\-cpp.
+
+
+
+References add\-Column\-To\-Sort\-Order().
+
+\hypertarget{classmdt_sort_filter_proxy_model_aad45b85d23fe3c2eb6198a9eece685d2}{\index{mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}!clear\-Columns\-Sort\-Order@{clear\-Columns\-Sort\-Order}}
+\index{clear\-Columns\-Sort\-Order@{clear\-Columns\-Sort\-Order}!mdtSortFilterProxyModel@{mdt\-Sort\-Filter\-Proxy\-Model}}
+\subsubsection[{clear\-Columns\-Sort\-Order}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sort\-Filter\-Proxy\-Model\-::clear\-Columns\-Sort\-Order (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sort_filter_proxy_model_aad45b85d23fe3c2eb6198a9eece685d2}
+)}}\label{classmdt_sort_filter_proxy_model_aad45b85d23fe3c2eb6198a9eece685d2}
 
 
 Clear columns sort order. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_sort_filter_proxy_model_afaba32df90528901e671e0ff20f51e41}{addColumnToSortOrder()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sort_filter_proxy_model_a22d0f84ebcc9af078f3c004dbe790fe8}{add\-Column\-To\-Sort\-Order()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 38 of file mdtSortFilterProxyModel.cpp.
+Definition at line 39 of file mdt\-Sort\-Filter\-Proxy\-Model.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Referenced by mdt\-Sql\-Selection\-Dialog\-::clear\-Columns\-Sort\-Order().
+
+\hypertarget{classmdt_sort_filter_proxy_model_a1a4d9fcee3a6817ae668c07ca2ec472f}{\index{mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}!sorted\-Columns@{sorted\-Columns}}
+\index{sorted\-Columns@{sorted\-Columns}!mdtSortFilterProxyModel@{mdt\-Sort\-Filter\-Proxy\-Model}}
+\subsubsection[{sorted\-Columns}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Vector$<$ int $>$ mdt\-Sort\-Filter\-Proxy\-Model\-::sorted\-Columns (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sort_filter_proxy_model_a1a4d9fcee3a6817ae668c07ca2ec472f}
+
+
+Get list of indexes of columns that are in sort order. 
+
+Note\-: each call of this method will rebuild the list. 
+
+Definition at line 72 of file mdt\-Sort\-Filter\-Proxy\-Model.\-cpp.
+
+\hypertarget{classmdt_sort_filter_proxy_model_a506fff2a1f483ff67989c64b2c4e3491}{\index{mdt\-Sort\-Filter\-Proxy\-Model@{mdt\-Sort\-Filter\-Proxy\-Model}!sort\-Order@{sort\-Order}}
+\index{sort\-Order@{sort\-Order}!mdtSortFilterProxyModel@{mdt\-Sort\-Filter\-Proxy\-Model}}
+\subsubsection[{sort\-Order}]{\setlength{\rightskip}{0pt plus 5cm}Qt\-::\-Sort\-Order mdt\-Sort\-Filter\-Proxy\-Model\-::sort\-Order (
+\begin{DoxyParamCaption}
+\item[{int}]{column}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sort_filter_proxy_model_a506fff2a1f483ff67989c64b2c4e3491}
+
+
+Get sort order for given column. 
+
+If column is not in sorted columns list, Qt\-::\-Ascending\-Order is returnded 
+
+Definition at line 84 of file mdt\-Sort\-Filter\-Proxy\-Model.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtSortFilterProxyModel.h\item 
-src/mdtutilsgui/mdtSortFilterProxyModel.cpp\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_sort_filter_proxy_model_8h}{mdt\-Sort\-Filter\-Proxy\-Model.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_sort_filter_proxy_model_8cpp}{mdt\-Sort\-Filter\-Proxy\-Model.\-cpp}\end{DoxyCompactItemize}

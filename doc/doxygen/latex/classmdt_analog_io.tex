@@ -1,19 +1,18 @@
-\hypertarget{classmdt_analog_io}{
-\section{mdtAnalogIo Class Reference}
-\label{classmdt_analog_io}\index{mdtAnalogIo@{mdtAnalogIo}}
+\hypertarget{classmdt_analog_io}{\section{mdt\-Analog\-Io Class Reference}
+\label{classmdt_analog_io}\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}}
 }
 
 
-Representation of a analog I/O.  
+Representation of a analog I/\-O.  
 
 
 
 
-{\ttfamily \#include $<$mdtAnalogIo.h$>$}
+{\ttfamily \#include $<$mdt\-Analog\-Io.\-h$>$}
 
 
 
-Inheritance diagram for mdtAnalogIo:\nopagebreak
+Inheritance diagram for mdt\-Analog\-Io\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,140 +21,202 @@ Inheritance diagram for mdtAnalogIo:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtAnalogIo:\nopagebreak
+Collaboration diagram for mdt\-Analog\-Io\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=158pt]{classmdt_analog_io__coll__graph}
+\includegraphics[width=280pt]{classmdt_analog_io__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_analog_io_aa2c2fb87d67aad7bbba1b488cc8c1df2}{setValue} (const \hyperlink{classmdt_value}{mdtValue} \&value, bool emitValueChanged=false)
+void \hyperlink{classmdt_analog_io_aa2c2fb87d67aad7bbba1b488cc8c1df2}{set\-Value} (const \hyperlink{classmdt_value}{mdt\-Value} \&\hyperlink{classmdt_abstract_io_a839b0d3a4a1d4616e5b20d744c5f75a1}{value}, bool emit\-Value\-Changed=false)
 \begin{DoxyCompactList}\small\item\em Set the value to update display. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}{
-void {\bfseries unitChangedForUi} (const QString \&unit)}
-\label{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}
-
+void \hyperlink{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}{unit\-Changed\-For\-Ui} (const Q\-String \&\hyperlink{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{unit})
 \item 
-\hypertarget{classmdt_analog_io_a40735cbbf852790067a6f9b57aac4aa3}{
-void {\bfseries rangeChangedForUi} (double min, double max)}
-\label{classmdt_analog_io_a40735cbbf852790067a6f9b57aac4aa3}
-
+void \hyperlink{classmdt_analog_io_a40735cbbf852790067a6f9b57aac4aa3}{range\-Changed\-For\-Ui} (double min, double max)
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}{
-\hyperlink{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}{mdtAnalogIo} (QObject $\ast$parent=0)}
-\label{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}
-
+\hyperlink{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}{mdt\-Analog\-Io} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_analog_io_a7ec3c075b1d49c2d0917c09e4950b856}{
-\hyperlink{classmdt_analog_io_a7ec3c075b1d49c2d0917c09e4950b856}{$\sim$mdtAnalogIo} ()}
-\label{classmdt_analog_io_a7ec3c075b1d49c2d0917c09e4950b856}
-
+\hyperlink{classmdt_analog_io_a7ec3c075b1d49c2d0917c09e4950b856}{$\sim$mdt\-Analog\-Io} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}{
-void \hyperlink{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}{setUnit} (const QString \&unit)}
-\label{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}
-
-\begin{DoxyCompactList}\small\item\em Set the unit (V, A, °C, ...) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{
-QString \hyperlink{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{unit} () const }
-\label{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}
-
+void \hyperlink{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}{set\-Unit} (const Q\-String \&\hyperlink{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{unit})
+\begin{DoxyCompactList}\small\item\em Set the unit (V, A, °\-C, ...) \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{unit} () const 
 \begin{DoxyCompactList}\small\item\em Get unit. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}{setRange} (double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false, bool scaleFromMinToMax=true, double conversionFactor=1.0)
+bool \hyperlink{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}{set\-Range} (double min, double max, int int\-Value\-Bits\-Count, int int\-Value\-Lsb\-Index=0, bool int\-Value\-Signed=false, bool scale\-From\-Min\-To\-Max=true, double conversion\-Factor=1.\-0)
 \begin{DoxyCompactList}\small\item\em Specify the range of values and bits decode parameters. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{
-double \hyperlink{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{minimum} () const }
-\label{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}
-
+double \hyperlink{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{minimum} () const 
 \begin{DoxyCompactList}\small\item\em Get the minimum value of the range. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}{
-double \hyperlink{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}{maximum} () const }
-\label{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}
-
+double \hyperlink{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}{maximum} () const 
 \begin{DoxyCompactList}\small\item\em Get the maximum value of the range. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}{setValueInt} (int value, bool isValid, bool emitValueChanged)
+void \hyperlink{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}{set\-Value\-Int} (int \hyperlink{classmdt_abstract_io_a839b0d3a4a1d4616e5b20d744c5f75a1}{value}, bool is\-Valid, bool emit\-Value\-Changed)
 \begin{DoxyCompactList}\small\item\em Set the integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
-Representation of a analog I/O. 
+Representation of a analog I/\-O. 
 
-On wide range of automation applications, it is usefull to display a I/O to the user. For example, a analog I/O module, with a 8 bit encoding could be displayed with this class togther with \hyperlink{classmdt_analog_in_widget}{mdtAnalogInWidget} or \hyperlink{classmdt_analog_out_widget}{mdtAnalogOutWidget}. 
+On wide range of automation applications, it is usefull to display a I/\-O to the user. For example, a analog I/\-O module, with a 8 bit encoding could be displayed with this class togther with \hyperlink{classmdt_analog_in_widget}{mdt\-Analog\-In\-Widget} or \hyperlink{classmdt_analog_out_widget}{mdt\-Analog\-Out\-Widget}. 
 
-Definition at line 35 of file mdtAnalogIo.h.
+Definition at line 35 of file mdt\-Analog\-Io.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!mdt\-Analog\-Io@{mdt\-Analog\-Io}}
+\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{mdt\-Analog\-Io}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Analog\-Io\-::mdt\-Analog\-Io (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}
+
+
+Constructor. 
+
+
+
+Definition at line 28 of file mdt\-Analog\-Io.\-cpp.
+
+\hypertarget{classmdt_analog_io_a7ec3c075b1d49c2d0917c09e4950b856}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!$\sim$mdt\-Analog\-Io@{$\sim$mdt\-Analog\-Io}}
+\index{$\sim$mdt\-Analog\-Io@{$\sim$mdt\-Analog\-Io}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{$\sim$mdt\-Analog\-Io}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Analog\-Io\-::$\sim$mdt\-Analog\-Io (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_analog_io_a7ec3c075b1d49c2d0917c09e4950b856}
+
+
+Destructor. 
+
+
+
+Definition at line 46 of file mdt\-Analog\-Io.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}{
-\index{mdtAnalogIo@{mdtAnalogIo}!setRange@{setRange}}
-\index{setRange@{setRange}!mdtAnalogIo@{mdtAnalogIo}}
-\subsubsection[{setRange}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAnalogIo::setRange (
+\hypertarget{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!maximum@{maximum}}
+\index{maximum@{maximum}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{maximum}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Analog\-Io\-::maximum (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}
+
+
+Get the maximum value of the range. 
+
+
+
+Definition at line 127 of file mdt\-Analog\-Io.\-cpp.
+
+
+
+Referenced by mdt\-Analog\-In\-Widget\-::set\-Io(), and mdt\-Analog\-Out\-Widget\-::set\-Io().
+
+\hypertarget{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!minimum@{minimum}}
+\index{minimum@{minimum}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{minimum}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Analog\-Io\-::minimum (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}
+
+
+Get the minimum value of the range. 
+
+
+
+Definition at line 122 of file mdt\-Analog\-Io.\-cpp.
+
+
+
+Referenced by mdt\-Analog\-In\-Widget\-::set\-Io(), and mdt\-Analog\-Out\-Widget\-::set\-Io().
+
+\hypertarget{classmdt_analog_io_a40735cbbf852790067a6f9b57aac4aa3}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!range\-Changed\-For\-Ui@{range\-Changed\-For\-Ui}}
+\index{range\-Changed\-For\-Ui@{range\-Changed\-For\-Ui}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{range\-Changed\-For\-Ui}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Analog\-Io\-::range\-Changed\-For\-Ui (
+\begin{DoxyParamCaption}
+\item[{double}]{min, }
+\item[{double}]{max}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_analog_io_a40735cbbf852790067a6f9b57aac4aa3}
+
+
+Definition at line 116 of file moc\-\_\-mdt\-Analog\-Io.\-cxx.
+
+
+
+Referenced by set\-Range().
+
+\hypertarget{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!set\-Range@{set\-Range}}
+\index{set\-Range@{set\-Range}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{set\-Range}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Analog\-Io\-::set\-Range (
 \begin{DoxyParamCaption}
 \item[{double}]{min, }
 \item[{double}]{max, }
-\item[{int}]{intValueBitsCount, }
-\item[{int}]{intValueLsbIndex = {\ttfamily 0}, }
-\item[{bool}]{intValueSigned = {\ttfamily false}, }
-\item[{bool}]{scaleFromMinToMax = {\ttfamily true}, }
-\item[{double}]{conversionFactor = {\ttfamily 1.0}}
+\item[{int}]{int\-Value\-Bits\-Count, }
+\item[{int}]{int\-Value\-Lsb\-Index = {\ttfamily 0}, }
+\item[{bool}]{int\-Value\-Signed = {\ttfamily false}, }
+\item[{bool}]{scale\-From\-Min\-To\-Max = {\ttfamily true}, }
+\item[{double}]{conversion\-Factor = {\ttfamily 1.0}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}
+)}}\label{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}
 
 
 Specify the range of values and bits decode parameters. 
 
-Store the new range and set the value to the minimum. The \hyperlink{classmdt_abstract_io_a43feaa62996af78f64aea084122f1370}{valueChanged()} signal is emitted.
+Store the new range and set the value to the minimum. The \hyperlink{classmdt_abstract_io_a43feaa62996af78f64aea084122f1370}{value\-Changed()} signal is emitted.
 
-It can happen that a I/O module returns, f.ex., a integer value in a 16 bits packet, but with some additional flags. (example: Wago 750-\/457). In such case, the value is, f.ex., encoded in 12 bits only.
+It can happen that a I/\-O module returns, f.\-ex., a integer value in a 16 bits packet, but with some additional flags. (example\-: Wago 750-\/457). In such case, the value is, f.\-ex., encoded in 12 bits only.
 
-Take example of Wago 750-\/457:
+Take example of Wago 750-\/457\-:
 \begin{DoxyItemize}
 \item Value + flags are encoded in a 16 bits word
 \item Value is encoded in 12 bits, from b3 to b14 + 1 sign bit, b15
 \item Value is scaled from -\/10 V to 10 V
 \end{DoxyItemize}
 
-In this example, this method must be called with min = -\/10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 , intValueSigned = true , scaleFromMinToMax = true , conversionFactor = 1.0 .
+In this example, this method must be called with min = -\/10.\-0 , max = 10.\-0 , int\-Value\-Bits\-Count = 13 , int\-Value\-Lsb\-Index = 3 , int\-Value\-Signed = true , scale\-From\-Min\-To\-Max = true , conversion\-Factor = 1.\-0 .
 
-Here is another example with Wago 750-\/464 with Pt100 sensor and normal format:
+Here is another example with Wago 750-\/464 with Pt100 sensor and normal format\-:
 \begin{DoxyItemize}
 \item Value is encoded in 16 bits
 \item Scaling is allready done by device
-\item Value represents 0.1°C per digit -\/$>$ we have to apply a conversion factor of 0.1
+\item Value represents 0.\-1°\-C per digit -\/$>$ we have to apply a conversion factor of 0.\-1
 \end{DoxyItemize}
 
-In this example, this method must be called with min = -\/200.0 , max = 850.0 , intValueBitsCount = 16 , intValueLsbIndex = 0 , intValueSigned = true , scaleFromMinToMax = false , conversionFactor = 0.1 .
+In this example, this method must be called with min = -\/200.\-0 , max = 850.\-0 , int\-Value\-Bits\-Count = 16 , int\-Value\-Lsb\-Index = 0 , int\-Value\-Signed = true , scale\-From\-Min\-To\-Max = false , conversion\-Factor = 0.\-1 .
 
 
 \begin{DoxyParams}{Parameters}
-{\em min} & Minimum value to display (f.ex. 0V, or 4mA) \\
+{\em min} & Minimum value to display (f.\-ex. 0\-V, or 4m\-A) \\
 \hline
-{\em max} & Maximum value to display (f.ex. 10V, or 20mA) \\
+{\em max} & Maximum value to display (f.\-ex. 10\-V, or 20m\-A) \\
 \hline
-{\em intValueBitsCount} & Number of bits used for the value, including sign bit. \\
+{\em int\-Value\-Bits\-Count} & Number of bits used for the value, including sign bit. \\
 \hline
-{\em intValueLsbIndex} & Index of first bit to use for value extraction. \\
+{\em int\-Value\-Lsb\-Index} & Index of first bit to use for value extraction. \\
 \hline
-{\em intValueSigned} & If true, decoded value is considered as signed value, i.e. the most significant bit is the sign. \\
+{\em int\-Value\-Signed} & If true, decoded value is considered as signed value, i.\-e. the most significant bit is the sign. \\
 \hline
-{\em scaleFromMinToMax} & If true, given value INT will be scaled from min to max regarding LSB. LSB is determined from intValueBitsCount . \\
+{\em scale\-From\-Min\-To\-Max} & If true, given value I\-N\-T will be scaled from min to max regarding L\-S\-B. L\-S\-B is determined from int\-Value\-Bits\-Count . \\
 \hline
-{\em conversionFactor} & This factor is applied as follow (min, max scaling is ignored in this example):
+{\em conversion\-Factor} & This factor is applied as follow (min, max scaling is ignored in this example)\-:
 \begin{DoxyItemize}
-\item ValueDouble = valueInt $\ast$ LSB $\ast$ conversionFactor
-\item ValueInt = valueDouble / (LSB $\ast$ conversionFactor)\par
- LSB is determined from intValueBitsCount .
+\item Value\-Double = value\-Int $\ast$ L\-S\-B $\ast$ conversion\-Factor
+\item Value\-Int = value\-Double / (L\-S\-B $\ast$ conversion\-Factor)\par
+ L\-S\-B is determined from int\-Value\-Bits\-Count .
 \end{DoxyItemize}\\
 \hline
 \end{DoxyParams}
@@ -165,77 +226,139 @@ true on success. Some checks are done, and if one fails, false is returned and t
 \begin{DoxyPrecond}{Precondition}
 max must be $>$ min
 \end{DoxyPrecond}
-Note for UI developpers:
+Note for U\-I developpers\-:
 \begin{DoxyItemize}
-\item The signal rangeChangedForUi() is emited
-\item The signal \hyperlink{classmdt_abstract_io_a0241183736b9bc3abb021868b9bf4273}{valueChangedForUi()} is emited 
+\item The signal \hyperlink{classmdt_analog_io_a40735cbbf852790067a6f9b57aac4aa3}{range\-Changed\-For\-Ui()} is emited
+\item The signal \hyperlink{classmdt_abstract_io_a0241183736b9bc3abb021868b9bf4273}{value\-Changed\-For\-Ui()} is emited 
 \end{DoxyItemize}
 
-Definition at line 61 of file mdtAnalogIo.cpp.
+Definition at line 61 of file mdt\-Analog\-Io.\-cpp.
 
-\hypertarget{classmdt_analog_io_aa2c2fb87d67aad7bbba1b488cc8c1df2}{
-\index{mdtAnalogIo@{mdtAnalogIo}!setValue@{setValue}}
-\index{setValue@{setValue}!mdtAnalogIo@{mdtAnalogIo}}
-\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::setValue (
+
+
+References mdt\-Value\-::clear(), mdt\-Error\-::commit(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Abstract\-Io\-::pv\-Notify\-Ui, mdt\-Abstract\-Io\-::pv\-Value, range\-Changed\-For\-Ui(), mdt\-Value\-::set\-Default\-Value(), mdt\-Value\-::value\-Double(), mdt\-Value\-::value\-Int(), and mdt\-Error\-::\-Warning.
+
+\hypertarget{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!set\-Unit@{set\-Unit}}
+\index{set\-Unit@{set\-Unit}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{set\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Analog\-Io\-::set\-Unit (
 \begin{DoxyParamCaption}
-\item[{const {\bf mdtValue} \&}]{value, }
-\item[{bool}]{emitValueChanged = {\ttfamily false}}
+\item[{const Q\-String \&}]{unit}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
-\label{classmdt_analog_io_aa2c2fb87d67aad7bbba1b488cc8c1df2}
+)}}\label{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}
+
+
+Set the unit (V, A, °\-C, ...) 
+
+
+
+Definition at line 50 of file mdt\-Analog\-Io.\-cpp.
+
+
+
+References unit(), and unit\-Changed\-For\-Ui().
+
+\hypertarget{classmdt_analog_io_aa2c2fb87d67aad7bbba1b488cc8c1df2}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!set\-Value@{set\-Value}}
+\index{set\-Value@{set\-Value}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Analog\-Io\-::set\-Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{emit\-Value\-Changed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_analog_io_aa2c2fb87d67aad7bbba1b488cc8c1df2}
 
 
 Set the value to update display. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_abstract_io_a3f5fc9ed13c2ec2aad0987cd15d95e31}{mdtAbstractIo::setValue(const mdtValue\&, bool)} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_abstract_io_a3f5fc9ed13c2ec2aad0987cd15d95e31}{mdt\-Abstract\-Io\-::set\-Value(const mdt\-Value\&, bool)} 
 \end{DoxySeeAlso}
 
 
-Reimplemented from \hyperlink{classmdt_abstract_io_a3f5fc9ed13c2ec2aad0987cd15d95e31}{mdtAbstractIo}.
+Definition at line 143 of file mdt\-Analog\-Io.\-cpp.
 
 
 
-Definition at line 143 of file mdtAnalogIo.cpp.
+References mdt\-Value\-::has\-Value\-Double(), and mdt\-Abstract\-Io\-::pv\-Notify\-Ui.
 
-\hypertarget{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}{
-\index{mdtAnalogIo@{mdtAnalogIo}!setValueInt@{setValueInt}}
-\index{setValueInt@{setValueInt}!mdtAnalogIo@{mdtAnalogIo}}
-\subsubsection[{setValueInt}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::setValueInt (
+
+
+Referenced by mdt\-Device\-::get\-Analog\-Input\-Value(), mdt\-Device\-::get\-Analog\-Output\-Value(), and mdt\-Device\-::set\-Analog\-Output\-Value().
+
+\hypertarget{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!set\-Value\-Int@{set\-Value\-Int}}
+\index{set\-Value\-Int@{set\-Value\-Int}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{set\-Value\-Int}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Analog\-Io\-::set\-Value\-Int (
 \begin{DoxyParamCaption}
 \item[{int}]{value, }
-\item[{bool}]{isValid, }
-\item[{bool}]{emitValueChanged}
+\item[{bool}]{is\-Valid, }
+\item[{bool}]{emit\-Value\-Changed}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}
+)}}\label{classmdt_analog_io_a2b1fb3fd25580c4e470f1962f7640750}
 
 
 Set the integer value. 
 
-Will calculate the real value depending on resolution and update display. The resolution is set with \hyperlink{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}{setRange()} (intValueBitsCount parameter)
+Will calculate the real value depending on resolution and update display. The resolution is set with \hyperlink{classmdt_analog_io_a026624e890e4f2084c88377a6e4f1b47}{set\-Range()} (int\-Value\-Bits\-Count parameter)
 
-The \hyperlink{classmdt_abstract_io_a43feaa62996af78f64aea084122f1370}{valueChanged()} signal is emitted.
+The \hyperlink{classmdt_abstract_io_a43feaa62996af78f64aea084122f1370}{value\-Changed()} signal is emitted.
 
 
 \begin{DoxyParams}{Parameters}
 {\em value} & The value to store \\
 \hline
-{\em isValid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdtAbstractIo::hasValidData()} \\
+{\em is\-Valid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdt\-Abstract\-Io\-::has\-Valid\-Data()} \\
 \hline
-{\em emitValueChanged} & If true, \hyperlink{classmdt_abstract_io_a43feaa62996af78f64aea084122f1370}{valueChanged()} will not be emitted\\
+{\em emit\-Value\-Changed} & If true, \hyperlink{classmdt_abstract_io_a43feaa62996af78f64aea084122f1370}{value\-Changed()} will not be emitted\\
 \hline
 \end{DoxyParams}
-Note for UI developpers:
+Note for U\-I developpers\-:
 \begin{DoxyItemize}
-\item The signal \hyperlink{classmdt_abstract_io_a0241183736b9bc3abb021868b9bf4273}{valueChangedForUi()} is emited 
+\item The signal \hyperlink{classmdt_abstract_io_a0241183736b9bc3abb021868b9bf4273}{value\-Changed\-For\-Ui()} is emited 
 \end{DoxyItemize}
 
-Definition at line 132 of file mdtAnalogIo.cpp.
+Definition at line 132 of file mdt\-Analog\-Io.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References mdt\-Abstract\-Io\-::pv\-Notify\-Ui, and mdt\-Value\-::set\-Value().
+
+\hypertarget{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!unit@{unit}}
+\index{unit@{unit}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{unit}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Analog\-Io\-::unit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}
+
+
+Get unit. 
+
+
+
+Definition at line 56 of file mdt\-Analog\-Io.\-cpp.
+
+
+
+Referenced by mdt\-Analog\-In\-Widget\-::set\-Io(), mdt\-Analog\-Out\-Widget\-::set\-Io(), and set\-Unit().
+
+\hypertarget{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}{\index{mdt\-Analog\-Io@{mdt\-Analog\-Io}!unit\-Changed\-For\-Ui@{unit\-Changed\-For\-Ui}}
+\index{unit\-Changed\-For\-Ui@{unit\-Changed\-For\-Ui}!mdtAnalogIo@{mdt\-Analog\-Io}}
+\subsubsection[{unit\-Changed\-For\-Ui}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Analog\-Io\-::unit\-Changed\-For\-Ui (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{unit}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}
+
+
+Definition at line 109 of file moc\-\_\-mdt\-Analog\-Io.\-cxx.
+
+
+
+Referenced by set\-Unit().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtAnalogIo.h\item 
-src/mdtutils/mdtAnalogIo.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_analog_io_8h}{mdt\-Analog\-Io.\-h}\item 
+src/mdtutils/\hyperlink{mdt_analog_io_8cpp}{mdt\-Analog\-Io.\-cpp}\item 
+src/mdtutils/\hyperlink{moc__mdt_analog_io_8cxx}{moc\-\_\-mdt\-Analog\-Io.\-cxx}\end{DoxyCompactItemize}

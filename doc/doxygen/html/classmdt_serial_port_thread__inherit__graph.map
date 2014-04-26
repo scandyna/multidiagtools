@@ -1,5 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="5,83,163,112"/>
-<area shape="rect" id="node5" href="$classmdt_serial_port_rx_thread.html" title="mdtSerialPortRxThread" alt="" coords="187,83,344,112"/>
-<area shape="rect" id="node7" href="$classmdt_serial_port_tx_thread.html" title="mdtSerialPortTxThread" alt="" coords="368,83,523,112"/>
-</map>

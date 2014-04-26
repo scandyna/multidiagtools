@@ -1,115 +1,153 @@
-\hypertarget{classmdt_usb_config_descriptor}{
-\section{mdtUsbConfigDescriptor Class Reference}
-\label{classmdt_usb_config_descriptor}\index{mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}}
+\hypertarget{classmdt_usb_config_descriptor}{\section{mdt\-Usb\-Config\-Descriptor Class Reference}
+\label{classmdt_usb_config_descriptor}\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}}
 }
 
 
-USB configuration descriptor.  
+U\-S\-B configuration descriptor.  
 
 
 
 
-{\ttfamily \#include $<$mdtUsbConfigDescriptor.h$>$}
+{\ttfamily \#include $<$mdt\-Usb\-Config\-Descriptor.\-h$>$}
 
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_usb_config_descriptor_acece47193e1ab7184894082a40233f45}{fetchAttributes} (struct libusb\_\-config\_\-descriptor $\ast$descriptor)
+\hyperlink{classmdt_usb_config_descriptor_a27d865718f38302de291d85d1ed667c1}{mdt\-Usb\-Config\-Descriptor} ()
+\item 
+\hyperlink{classmdt_usb_config_descriptor_a181462448ef201e92fedc5873c79d899}{$\sim$mdt\-Usb\-Config\-Descriptor} ()
+\item 
+void \hyperlink{classmdt_usb_config_descriptor_acece47193e1ab7184894082a40233f45}{fetch\-Attributes} (struct libusb\-\_\-config\-\_\-descriptor $\ast$descriptor)
 \begin{DoxyCompactList}\small\item\em Ftech the configuration descriptor's attributes. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_config_descriptor_a7bac684b7862455bad66189a2ce9603b}{
-quint8 \hyperlink{classmdt_usb_config_descriptor_a7bac684b7862455bad66189a2ce9603b}{bDescriptorType} () const }
-\label{classmdt_usb_config_descriptor_a7bac684b7862455bad66189a2ce9603b}
-
-\begin{DoxyCompactList}\small\item\em CONFIGURATION Descriptor Type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_config_descriptor_ab61472d4050abb29a4815e194869ea88}{
-quint8 \hyperlink{classmdt_usb_config_descriptor_ab61472d4050abb29a4815e194869ea88}{bConfigurationValue} () const }
-\label{classmdt_usb_config_descriptor_ab61472d4050abb29a4815e194869ea88}
-
-\begin{DoxyCompactList}\small\item\em Value to use as an argument to the SetConfiguration() request to select this configuration. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_config_descriptor_a37b48b43509d4575d2dd714e745db57b}{
-quint8 \hyperlink{classmdt_usb_config_descriptor_a37b48b43509d4575d2dd714e745db57b}{iConfiguration} () const }
-\label{classmdt_usb_config_descriptor_a37b48b43509d4575d2dd714e745db57b}
-
+quint8 \hyperlink{classmdt_usb_config_descriptor_a7bac684b7862455bad66189a2ce9603b}{b\-Descriptor\-Type} () const 
+\begin{DoxyCompactList}\small\item\em C\-O\-N\-F\-I\-G\-U\-R\-A\-T\-I\-O\-N Descriptor Type. \end{DoxyCompactList}\item 
+quint8 \hyperlink{classmdt_usb_config_descriptor_ab61472d4050abb29a4815e194869ea88}{b\-Configuration\-Value} () const 
+\begin{DoxyCompactList}\small\item\em Value to use as an argument to the Set\-Configuration() request to select this configuration. \end{DoxyCompactList}\item 
+quint8 \hyperlink{classmdt_usb_config_descriptor_a37b48b43509d4575d2dd714e745db57b}{i\-Configuration} () const 
 \begin{DoxyCompactList}\small\item\em Index of string descriptor describing this configuration. \end{DoxyCompactList}\item 
-quint8 \hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bmAttributes} () const 
+quint8 \hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bm\-Attributes} () const 
 \begin{DoxyCompactList}\small\item\em Configuration characteristics. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_usb_config_descriptor_a5b8625a40bcca3025419606293b62650}{isSelfPowered} () const 
+bool \hyperlink{classmdt_usb_config_descriptor_a5b8625a40bcca3025419606293b62650}{is\-Self\-Powered} () const 
 \begin{DoxyCompactList}\small\item\em Return true if device is self powered with this configuration. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_usb_config_descriptor_a307f766cfd0cb917490b7d0e4dd7a3ec}{supportsRemoteWakeup} () const 
+bool \hyperlink{classmdt_usb_config_descriptor_a307f766cfd0cb917490b7d0e4dd7a3ec}{supports\-Remote\-Wakeup} () const 
 \begin{DoxyCompactList}\small\item\em Return true if device supports remote wakeup with this configuration. \end{DoxyCompactList}\item 
-quint8 \hyperlink{classmdt_usb_config_descriptor_af0bc21aa2f6ebba7069cd9403520a41b}{bMaxPower} () const 
-\begin{DoxyCompactList}\small\item\em Max power in 2 \mbox{[}mA\mbox{]} units. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_config_descriptor_ad5d10e65295be09359ebf3e775e2e1bd}{
-int \hyperlink{classmdt_usb_config_descriptor_ad5d10e65295be09359ebf3e775e2e1bd}{maxPower} () const }
-\label{classmdt_usb_config_descriptor_ad5d10e65295be09359ebf3e775e2e1bd}
-
-\begin{DoxyCompactList}\small\item\em Max power \mbox{[}mA\mbox{]}. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_config_descriptor_ae318f7d3572fdb3bdab9e4152fe7d80b}{
-QList$<$ \hyperlink{classmdt_usb_interface_descriptor}{mdtUsbInterfaceDescriptor} $\ast$ $>$ \& {\bfseries interfaces} ()}
-\label{classmdt_usb_config_descriptor_ae318f7d3572fdb3bdab9e4152fe7d80b}
-
+quint8 \hyperlink{classmdt_usb_config_descriptor_af0bc21aa2f6ebba7069cd9403520a41b}{b\-Max\-Power} () const 
+\begin{DoxyCompactList}\small\item\em Max power in 2 \mbox{[}m\-A\mbox{]} units. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usb_config_descriptor_ad5d10e65295be09359ebf3e775e2e1bd}{max\-Power} () const 
+\begin{DoxyCompactList}\small\item\em Max power \mbox{[}m\-A\mbox{]}. \end{DoxyCompactList}\item 
+Q\-List\\*
+$<$ \hyperlink{classmdt_usb_interface_descriptor}{mdt\-Usb\-Interface\-Descriptor} $\ast$ $>$ \& \hyperlink{classmdt_usb_config_descriptor_ae318f7d3572fdb3bdab9e4152fe7d80b}{interfaces} ()
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-USB configuration descriptor. 
+U\-S\-B configuration descriptor. 
 
-Definition at line 32 of file mdtUsbConfigDescriptor.h.
+Definition at line 32 of file mdt\-Usb\-Config\-Descriptor.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usb_config_descriptor_a27d865718f38302de291d85d1ed667c1}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}}
+\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{mdt\-Usb\-Config\-Descriptor}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Config\-Descriptor\-::mdt\-Usb\-Config\-Descriptor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_config_descriptor_a27d865718f38302de291d85d1ed667c1}
+
+
+Definition at line 24 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_config_descriptor_a181462448ef201e92fedc5873c79d899}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!$\sim$mdt\-Usb\-Config\-Descriptor@{$\sim$mdt\-Usb\-Config\-Descriptor}}
+\index{$\sim$mdt\-Usb\-Config\-Descriptor@{$\sim$mdt\-Usb\-Config\-Descriptor}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{$\sim$mdt\-Usb\-Config\-Descriptor}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Config\-Descriptor\-::$\sim$mdt\-Usb\-Config\-Descriptor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_config_descriptor_a181462448ef201e92fedc5873c79d899}
+
+
+Definition at line 33 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{
-\index{mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}!bmAttributes@{bmAttributes}}
-\index{bmAttributes@{bmAttributes}!mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}}
-\subsubsection[{bmAttributes}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtUsbConfigDescriptor::bmAttributes (
+\hypertarget{classmdt_usb_config_descriptor_ab61472d4050abb29a4815e194869ea88}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!b\-Configuration\-Value@{b\-Configuration\-Value}}
+\index{b\-Configuration\-Value@{b\-Configuration\-Value}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{b\-Configuration\-Value}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Config\-Descriptor\-::b\-Configuration\-Value (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}
+) const}}\label{classmdt_usb_config_descriptor_ab61472d4050abb29a4815e194869ea88}
+
+
+Value to use as an argument to the Set\-Configuration() request to select this configuration. 
+
+
+
+Definition at line 73 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_config_descriptor_a7bac684b7862455bad66189a2ce9603b}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!b\-Descriptor\-Type@{b\-Descriptor\-Type}}
+\index{b\-Descriptor\-Type@{b\-Descriptor\-Type}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{b\-Descriptor\-Type}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Config\-Descriptor\-::b\-Descriptor\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_config_descriptor_a7bac684b7862455bad66189a2ce9603b}
+
+
+C\-O\-N\-F\-I\-G\-U\-R\-A\-T\-I\-O\-N Descriptor Type. 
+
+
+
+Definition at line 68 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!bm\-Attributes@{bm\-Attributes}}
+\index{bm\-Attributes@{bm\-Attributes}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{bm\-Attributes}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Config\-Descriptor\-::bm\-Attributes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}
 
 
 Configuration characteristics. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_usb_config_descriptor_a5b8625a40bcca3025419606293b62650}{isSelfPowered()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_usb_config_descriptor_a5b8625a40bcca3025419606293b62650}{is\-Self\-Powered()} 
 
-\hyperlink{classmdt_usb_config_descriptor_a307f766cfd0cb917490b7d0e4dd7a3ec}{supportsRemoteWakeup()} 
+\hyperlink{classmdt_usb_config_descriptor_a307f766cfd0cb917490b7d0e4dd7a3ec}{supports\-Remote\-Wakeup()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 83 of file mdtUsbConfigDescriptor.cpp.
+Definition at line 83 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
 
-\hypertarget{classmdt_usb_config_descriptor_af0bc21aa2f6ebba7069cd9403520a41b}{
-\index{mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}!bMaxPower@{bMaxPower}}
-\index{bMaxPower@{bMaxPower}!mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}}
-\subsubsection[{bMaxPower}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtUsbConfigDescriptor::bMaxPower (
+\hypertarget{classmdt_usb_config_descriptor_af0bc21aa2f6ebba7069cd9403520a41b}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!b\-Max\-Power@{b\-Max\-Power}}
+\index{b\-Max\-Power@{b\-Max\-Power}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{b\-Max\-Power}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Config\-Descriptor\-::b\-Max\-Power (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_usb_config_descriptor_af0bc21aa2f6ebba7069cd9403520a41b}
+) const}}\label{classmdt_usb_config_descriptor_af0bc21aa2f6ebba7069cd9403520a41b}
 
 
-Max power in 2 \mbox{[}mA\mbox{]} units. 
+Max power in 2 \mbox{[}m\-A\mbox{]} units. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_usb_config_descriptor_ad5d10e65295be09359ebf3e775e2e1bd}{maxPower()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_usb_config_descriptor_ad5d10e65295be09359ebf3e775e2e1bd}{max\-Power()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 98 of file mdtUsbConfigDescriptor.cpp.
+Definition at line 98 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
 
-\hypertarget{classmdt_usb_config_descriptor_acece47193e1ab7184894082a40233f45}{
-\index{mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}!fetchAttributes@{fetchAttributes}}
-\index{fetchAttributes@{fetchAttributes}!mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}}
-\subsubsection[{fetchAttributes}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbConfigDescriptor::fetchAttributes (
+\hypertarget{classmdt_usb_config_descriptor_acece47193e1ab7184894082a40233f45}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!fetch\-Attributes@{fetch\-Attributes}}
+\index{fetch\-Attributes@{fetch\-Attributes}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{fetch\-Attributes}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Config\-Descriptor\-::fetch\-Attributes (
 \begin{DoxyParamCaption}
-\item[{struct libusb\_\-config\_\-descriptor $\ast$}]{descriptor}
+\item[{struct libusb\-\_\-config\-\_\-descriptor $\ast$}]{descriptor}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_usb_config_descriptor_acece47193e1ab7184894082a40233f45}
+)}}\label{classmdt_usb_config_descriptor_acece47193e1ab7184894082a40233f45}
 
 
 Ftech the configuration descriptor's attributes. 
@@ -119,51 +157,100 @@ descriptor must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 38 of file mdtUsbConfigDescriptor.cpp.
+Definition at line 38 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
 
-\hypertarget{classmdt_usb_config_descriptor_a5b8625a40bcca3025419606293b62650}{
-\index{mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}!isSelfPowered@{isSelfPowered}}
-\index{isSelfPowered@{isSelfPowered}!mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}}
-\subsubsection[{isSelfPowered}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbConfigDescriptor::isSelfPowered (
+
+
+References mdt\-Usb\-Interface\-Descriptor\-::fetch\-Attributes().
+
+
+
+Referenced by mdt\-Usb\-Device\-Descriptor\-::fetch\-Attributes().
+
+\hypertarget{classmdt_usb_config_descriptor_a37b48b43509d4575d2dd714e745db57b}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!i\-Configuration@{i\-Configuration}}
+\index{i\-Configuration@{i\-Configuration}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{i\-Configuration}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Config\-Descriptor\-::i\-Configuration (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_usb_config_descriptor_a5b8625a40bcca3025419606293b62650}
+) const}}\label{classmdt_usb_config_descriptor_a37b48b43509d4575d2dd714e745db57b}
+
+
+Index of string descriptor describing this configuration. 
+
+
+
+Definition at line 78 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_config_descriptor_ae318f7d3572fdb3bdab9e4152fe7d80b}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!interfaces@{interfaces}}
+\index{interfaces@{interfaces}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{interfaces}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Usb\-Interface\-Descriptor} $\ast$ $>$ \& mdt\-Usb\-Config\-Descriptor\-::interfaces (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_config_descriptor_ae318f7d3572fdb3bdab9e4152fe7d80b}
+
+
+Definition at line 108 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
+
+
+
+Referenced by mdt\-Usb\-Device\-Descriptor\-::interface(), and mdt\-Usb\-Port\-Manager\-::scan().
+
+\hypertarget{classmdt_usb_config_descriptor_a5b8625a40bcca3025419606293b62650}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!is\-Self\-Powered@{is\-Self\-Powered}}
+\index{is\-Self\-Powered@{is\-Self\-Powered}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{is\-Self\-Powered}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Config\-Descriptor\-::is\-Self\-Powered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_config_descriptor_a5b8625a40bcca3025419606293b62650}
 
 
 Return true if device is self powered with this configuration. 
 
-This is bit D6 from \hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bmAttributes()} \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bmAttributes()} 
+This is bit D6 from \hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bm\-Attributes()} \begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bm\-Attributes()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 88 of file mdtUsbConfigDescriptor.cpp.
+Definition at line 88 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
 
-\hypertarget{classmdt_usb_config_descriptor_a307f766cfd0cb917490b7d0e4dd7a3ec}{
-\index{mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}!supportsRemoteWakeup@{supportsRemoteWakeup}}
-\index{supportsRemoteWakeup@{supportsRemoteWakeup}!mdtUsbConfigDescriptor@{mdtUsbConfigDescriptor}}
-\subsubsection[{supportsRemoteWakeup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbConfigDescriptor::supportsRemoteWakeup (
+\hypertarget{classmdt_usb_config_descriptor_ad5d10e65295be09359ebf3e775e2e1bd}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!max\-Power@{max\-Power}}
+\index{max\-Power@{max\-Power}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{max\-Power}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Usb\-Config\-Descriptor\-::max\-Power (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_usb_config_descriptor_a307f766cfd0cb917490b7d0e4dd7a3ec}
+) const}}\label{classmdt_usb_config_descriptor_ad5d10e65295be09359ebf3e775e2e1bd}
+
+
+Max power \mbox{[}m\-A\mbox{]}. 
+
+
+
+Definition at line 103 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_config_descriptor_a307f766cfd0cb917490b7d0e4dd7a3ec}{\index{mdt\-Usb\-Config\-Descriptor@{mdt\-Usb\-Config\-Descriptor}!supports\-Remote\-Wakeup@{supports\-Remote\-Wakeup}}
+\index{supports\-Remote\-Wakeup@{supports\-Remote\-Wakeup}!mdtUsbConfigDescriptor@{mdt\-Usb\-Config\-Descriptor}}
+\subsubsection[{supports\-Remote\-Wakeup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Config\-Descriptor\-::supports\-Remote\-Wakeup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_config_descriptor_a307f766cfd0cb917490b7d0e4dd7a3ec}
 
 
 Return true if device supports remote wakeup with this configuration. 
 
-This is bit D5 from \hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bmAttributes()} \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bmAttributes()} 
+This is bit D5 from \hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bm\-Attributes()} \begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_usb_config_descriptor_a742b547cbf9e07de7cec89947095bb52}{bm\-Attributes()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 93 of file mdtUsbConfigDescriptor.cpp.
+Definition at line 93 of file mdt\-Usb\-Config\-Descriptor.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtport/mdtUsbConfigDescriptor.h\item 
-src/mdtport/mdtUsbConfigDescriptor.cpp\end{DoxyCompactItemize}
+src/mdtport/\hyperlink{mdt_usb_config_descriptor_8h}{mdt\-Usb\-Config\-Descriptor.\-h}\item 
+src/mdtport/\hyperlink{mdt_usb_config_descriptor_8cpp}{mdt\-Usb\-Config\-Descriptor.\-cpp}\end{DoxyCompactItemize}

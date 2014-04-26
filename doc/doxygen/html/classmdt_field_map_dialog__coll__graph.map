@@ -1,3 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_field_map.html" title="Map fields between a source and a destination data set." alt="" coords="24,5,120,35"/>
+<map id="mdtFieldMapDialog" name="mdtFieldMapDialog">
+<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="573,225,643,255"/>
+<area shape="rect" id="node4" href="$class_ui_1_1mdt_field_map_dialog.html" title="Ui::mdtFieldMapDialog" alt="" coords="531,279,685,308"/>
+<area shape="rect" id="node6" href="$class_ui__mdt_field_map_dialog.html" title="Ui_mdtFieldMapDialog" alt="" coords="325,279,480,308"/>
 </map>

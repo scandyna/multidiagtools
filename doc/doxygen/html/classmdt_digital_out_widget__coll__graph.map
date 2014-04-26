@@ -1,6 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_abstract_io_widget.html" title="Base class for I/O widgets." alt="" coords="5,181,149,211"/>
-<area shape="rect" id="node4" href="$classmdt_digital_io.html" title="Representation of a digital I/O." alt="" coords="173,181,264,211"/>
-<area shape="rect" id="node6" href="$classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI." alt="" coords="167,101,271,131"/>
-<area shape="rect" id="node8" href="$classmdt_value.html" title="Conatins a value with some attributes." alt="" coords="180,5,257,35"/>
+<map id="mdtDigitalOutWidget" name="mdtDigitalOutWidget">
+<area shape="rect" id="node2" href="$classmdt_abstract_io_widget.html" title="Base class for I/O widgets. " alt="" coords="84,101,228,131"/>
+<area shape="rect" id="node4" href="$class_q_widget.html" title="QWidget" alt="" coords="5,5,77,35"/>
 </map>

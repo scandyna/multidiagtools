@@ -1,342 +1,443 @@
-\hypertarget{classmdt_uic_number}{
-\section{mdtUicNumber Class Reference}
-\label{classmdt_uic_number}\index{mdtUicNumber@{mdtUicNumber}}
+\hypertarget{classmdt_uic_number}{\section{mdt\-Uic\-Number Class Reference}
+\label{classmdt_uic_number}\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}}
 }
 
 
-Parse a UIC number and get details.  
+Parse a U\-I\-C number and get details.  
 
 
 
 
-{\ttfamily \#include $<$mdtUicNumber.h$>$}
+{\ttfamily \#include $<$mdt\-Uic\-Number.\-h$>$}
 
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-bool \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber} (const QString \&uicNumber)
-\begin{DoxyCompactList}\small\item\em Set the UIC number. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_uic_number_a0eda9b614e91b32c0d99bc016d906eae}{formatedUicNumber} ()
-\begin{DoxyCompactList}\small\item\em Get the complete formated UIC number. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}{compact6UicNumber} ()
-\begin{DoxyCompactList}\small\item\em Get 6 digit compact unformated UIC number. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}{compact11UicNumber} ()
-\begin{DoxyCompactList}\small\item\em Get 11 digit compact unformated UIC number. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_uic_number_aac3c9e1adb6f9646216b4327645a621a}{isValid} ()
-\begin{DoxyCompactList}\small\item\em Check the UIC number validity. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{controlKey} ()
+\hyperlink{classmdt_uic_number_a94c4feebccb321bef873f193de1a1233}{mdt\-Uic\-Number} ()
+\item 
+\hyperlink{classmdt_uic_number_adc0a1c93fca982de4e7e014fea5fdd34}{$\sim$mdt\-Uic\-Number} ()
+\item 
+bool \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{set\-Number} (const Q\-String \&uic\-Number)
+\begin{DoxyCompactList}\small\item\em Set the U\-I\-C number. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_uic_number_a0eda9b614e91b32c0d99bc016d906eae}{formated\-Uic\-Number} ()
+\begin{DoxyCompactList}\small\item\em Get the complete formated U\-I\-C number. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}{compact6\-Uic\-Number} ()
+\begin{DoxyCompactList}\small\item\em Get 6 digit compact unformated U\-I\-C number. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}{compact11\-Uic\-Number} ()
+\begin{DoxyCompactList}\small\item\em Get 11 digit compact unformated U\-I\-C number. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_uic_number_aac3c9e1adb6f9646216b4327645a621a}{is\-Valid} ()
+\begin{DoxyCompactList}\small\item\em Check the U\-I\-C number validity. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{control\-Key} ()
 \begin{DoxyCompactList}\small\item\em Get the control key. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_uic_number_a7a66af4f41cfaf69d53b9db66f465c27}{controlKeyString} ()
+Q\-String \hyperlink{classmdt_uic_number_a7a66af4f41cfaf69d53b9db66f465c27}{control\-Key\-String} ()
 \begin{DoxyCompactList}\small\item\em Get the control key. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_uic_number_ad4fbefb268327d15c2d39d2a17f45180}{serialNumber} ()
+Q\-String \hyperlink{classmdt_uic_number_ad4fbefb268327d15c2d39d2a17f45180}{serial\-Number} ()
 \begin{DoxyCompactList}\small\item\em Get the serial number part. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_uic_number_ad7bb1405db0de8f1d247fa5a7bdb19ce}{loadCountriesDb} (const QString \&dbPath)
+bool \hyperlink{classmdt_uic_number_ad7bb1405db0de8f1d247fa5a7bdb19ce}{load\-Countries\-Db} (const Q\-String \&db\-Path)
 \begin{DoxyCompactList}\small\item\em Load the coutries database. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_uic_number_a36eec09823de2d9848e9f7b8135fa59d}{
-bool \hyperlink{classmdt_uic_number_a36eec09823de2d9848e9f7b8135fa59d}{countriesDbLoaded} ()}
-\label{classmdt_uic_number_a36eec09823de2d9848e9f7b8135fa59d}
-
-\begin{DoxyCompactList}\small\item\em Return true if Countries DB was successfully loaded. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_uic_number_af496e1fb75f696258287754fe2607561}{loadUsagesDb} (const QString \&dbPath)
+bool \hyperlink{classmdt_uic_number_a36eec09823de2d9848e9f7b8135fa59d}{countries\-Db\-Loaded} ()
+\begin{DoxyCompactList}\small\item\em Return true if Countries D\-B was successfully loaded. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_uic_number_af496e1fb75f696258287754fe2607561}{load\-Usages\-Db} (const Q\-String \&db\-Path)
 \begin{DoxyCompactList}\small\item\em Load the usage database. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_uic_number_a2090c7d80c75d1db42d271f82ff8f598}{
-bool \hyperlink{classmdt_uic_number_a2090c7d80c75d1db42d271f82ff8f598}{usagesDbLoaded} ()}
-\label{classmdt_uic_number_a2090c7d80c75d1db42d271f82ff8f598}
-
-\begin{DoxyCompactList}\small\item\em Return true if usages DB was successfully loaded. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_uic_number_a98c879c7bb7412caac4612a46586b76d}{loadTypesDb} (const QString \&dbPath)
+bool \hyperlink{classmdt_uic_number_a2090c7d80c75d1db42d271f82ff8f598}{usages\-Db\-Loaded} ()
+\begin{DoxyCompactList}\small\item\em Return true if usages D\-B was successfully loaded. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_uic_number_a98c879c7bb7412caac4612a46586b76d}{load\-Types\-Db} (const Q\-String \&db\-Path)
 \begin{DoxyCompactList}\small\item\em Load the vehicule type database. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_uic_number_a39fb254207bfe6dd6eaade2711030dac}{
-bool \hyperlink{classmdt_uic_number_a39fb254207bfe6dd6eaade2711030dac}{typesDbLoaded} ()}
-\label{classmdt_uic_number_a39fb254207bfe6dd6eaade2711030dac}
-
-\begin{DoxyCompactList}\small\item\em Return true if types DB was successfully loaded. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_uic_number_ab1d08c2ea34f310631866d2e46010363}{loadSpeedAndHeatsDb} (const QString \&dbPath)
+bool \hyperlink{classmdt_uic_number_a39fb254207bfe6dd6eaade2711030dac}{types\-Db\-Loaded} ()
+\begin{DoxyCompactList}\small\item\em Return true if types D\-B was successfully loaded. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_uic_number_ab1d08c2ea34f310631866d2e46010363}{load\-Speed\-And\-Heats\-Db} (const Q\-String \&db\-Path)
 \begin{DoxyCompactList}\small\item\em Load the vehicule speend and heat. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_uic_number_a42ec71258e2120337953c8c6bda63638}{
-bool \hyperlink{classmdt_uic_number_a42ec71258e2120337953c8c6bda63638}{speedAndHeatDbLoaded} ()}
-\label{classmdt_uic_number_a42ec71258e2120337953c8c6bda63638}
-
-\begin{DoxyCompactList}\small\item\em Return true if speed and heat DB was successfully loaded. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_uic_number_ab7d29b1cb5fe5ac58bef5bec787e83df}{loadDbs} (const QString \&dir)
-\begin{DoxyCompactList}\small\item\em Load all needed DBs. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_uic_number_ab684e8290b0a74a05e992699bf0fa7f4}{
-bool \hyperlink{classmdt_uic_number_ab684e8290b0a74a05e992699bf0fa7f4}{dbsLoaded} ()}
-\label{classmdt_uic_number_ab684e8290b0a74a05e992699bf0fa7f4}
-
-\begin{DoxyCompactList}\small\item\em Return true if all DBs was successfully loaded. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_uic_number_a7bb368e5de6a9e7af3a2516eb4282e04}{unloadDbs} ()
+bool \hyperlink{classmdt_uic_number_a42ec71258e2120337953c8c6bda63638}{speed\-And\-Heat\-Db\-Loaded} ()
+\begin{DoxyCompactList}\small\item\em Return true if speed and heat D\-B was successfully loaded. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_uic_number_ab7d29b1cb5fe5ac58bef5bec787e83df}{load\-Dbs} (const Q\-String \&dir)
+\begin{DoxyCompactList}\small\item\em Load all needed D\-Bs. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_uic_number_ab684e8290b0a74a05e992699bf0fa7f4}{dbs\-Loaded} ()
+\begin{DoxyCompactList}\small\item\em Return true if all D\-Bs was successfully loaded. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_uic_number_a7bb368e5de6a9e7af3a2516eb4282e04}{unload\-Dbs} ()
 \begin{DoxyCompactList}\small\item\em Unload databases. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_uic_number_item}{mdtUicNumberItem} \hyperlink{classmdt_uic_number_a69fea97b67a745980ad4386d5ffa9505}{country} ()
+\hyperlink{classmdt_uic_number_item}{mdt\-Uic\-Number\-Item} \hyperlink{classmdt_uic_number_a69fea97b67a745980ad4386d5ffa9505}{country} ()
 \begin{DoxyCompactList}\small\item\em Get the country. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_uic_number_item}{mdtUicNumberItem} \hyperlink{classmdt_uic_number_a8e2e1c1be4425b57e0fa60113410bfbc}{usage} ()
+\hyperlink{classmdt_uic_number_item}{mdt\-Uic\-Number\-Item} \hyperlink{classmdt_uic_number_a8e2e1c1be4425b57e0fa60113410bfbc}{usage} ()
 \begin{DoxyCompactList}\small\item\em Get the usage. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_uic_number_item}{mdtUicNumberItem} \hyperlink{classmdt_uic_number_ae7d6500d0e939956371e152d9ca17117}{type} ()
+\hyperlink{classmdt_uic_number_item}{mdt\-Uic\-Number\-Item} \hyperlink{classmdt_uic_number_ae7d6500d0e939956371e152d9ca17117}{type} ()
 \begin{DoxyCompactList}\small\item\em Get the vehicule type. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_uic_number_item}{mdtUicNumberItem} \hyperlink{classmdt_uic_number_af2c13420378ec5559ce4f1eaba1f38e7}{speedAndHeat} ()
+\hyperlink{classmdt_uic_number_item}{mdt\-Uic\-Number\-Item} \hyperlink{classmdt_uic_number_af2c13420378ec5559ce4f1eaba1f38e7}{speed\-And\-Heat} ()
 \begin{DoxyCompactList}\small\item\em Get the vehicule speed and heat. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Parse a UIC number and get details. 
+Parse a U\-I\-C number and get details. 
 
-\begin{DoxySeeAlso}{See also}
-\href{http://www.uic.org/spip.php?rubrique95}{\tt http://www.uic.org/spip.php?rubrique95} 
+\begin{DoxySeeAlso}{See Also}
+\href{http://www.uic.org/spip.php?rubrique95}{\tt http\-://www.\-uic.\-org/spip.\-php?rubrique95} 
 
-\href{http://en.wikipedia.org/wiki/UIC_wagon_numbers}{\tt http://en.wikipedia.org/wiki/UIC\_\-wagon\_\-numbers} 
+\href{http://en.wikipedia.org/wiki/UIC_wagon_numbers}{\tt http\-://en.\-wikipedia.\-org/wiki/\-U\-I\-C\-\_\-wagon\-\_\-numbers} 
 \end{DoxySeeAlso}
 
 
-Definition at line 35 of file mdtUicNumber.h.
+Definition at line 35 of file mdt\-Uic\-Number.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_uic_number_a94c4feebccb321bef873f193de1a1233}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!mdt\-Uic\-Number@{mdt\-Uic\-Number}}
+\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{mdt\-Uic\-Number}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Uic\-Number\-::mdt\-Uic\-Number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_uic_number_a94c4feebccb321bef873f193de1a1233}
+
+
+Definition at line 29 of file mdt\-Uic\-Number.\-cpp.
+
+\hypertarget{classmdt_uic_number_adc0a1c93fca982de4e7e014fea5fdd34}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!$\sim$mdt\-Uic\-Number@{$\sim$mdt\-Uic\-Number}}
+\index{$\sim$mdt\-Uic\-Number@{$\sim$mdt\-Uic\-Number}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{$\sim$mdt\-Uic\-Number}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Uic\-Number\-::$\sim$mdt\-Uic\-Number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_uic_number_adc0a1c93fca982de4e7e014fea5fdd34}
+
+
+Definition at line 33 of file mdt\-Uic\-Number.\-cpp.
+
+
+
+References unload\-Dbs().
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}{
-\index{mdtUicNumber@{mdtUicNumber}!compact11UicNumber@{compact11UicNumber}}
-\index{compact11UicNumber@{compact11UicNumber}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{compact11UicNumber}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUicNumber::compact11UicNumber (
+\hypertarget{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!compact11\-Uic\-Number@{compact11\-Uic\-Number}}
+\index{compact11\-Uic\-Number@{compact11\-Uic\-Number}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{compact11\-Uic\-Number}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Uic\-Number\-::compact11\-Uic\-Number (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}
+)}}\label{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}
 
 
-Get 11 digit compact unformated UIC number. 
+Get 11 digit compact unformated U\-I\-C number. 
 
-A 11 digit UIC number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber()}. \begin{DoxyReturn}{Returns}
-11 digit UIC number without space, without control key, or a empty string on error 
+A 11 digit U\-I\-C number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{set\-Number()}. \begin{DoxyReturn}{Returns}
+11 digit U\-I\-C number without space, without control key, or a empty string on error 
 \end{DoxyReturn}
 
 
-Definition at line 157 of file mdtUicNumber.cpp.
+Definition at line 157 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}{
-\index{mdtUicNumber@{mdtUicNumber}!compact6UicNumber@{compact6UicNumber}}
-\index{compact6UicNumber@{compact6UicNumber}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{compact6UicNumber}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUicNumber::compact6UicNumber (
+
+
+References is\-Valid().
+
+\hypertarget{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!compact6\-Uic\-Number@{compact6\-Uic\-Number}}
+\index{compact6\-Uic\-Number@{compact6\-Uic\-Number}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{compact6\-Uic\-Number}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Uic\-Number\-::compact6\-Uic\-Number (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}
+)}}\label{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}
 
 
-Get 6 digit compact unformated UIC number. 
+Get 6 digit compact unformated U\-I\-C number. 
 
-A 6 or 11 digit UIC number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber()}.\par
- Note: if a 11 digits UIC number is set, the 6 last digit (without control key) are returned.\par
- F.ex: if 94 85 7 560 256-\/0 is set, this method returns 560256. \begin{DoxyReturn}{Returns}
-6 digit UIC number without space, without control key, or a empty string on error 
+A 6 or 11 digit U\-I\-C number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{set\-Number()}.\par
+ Note\-: if a 11 digits U\-I\-C number is set, the 6 last digit (without control key) are returned.\par
+ F.\-ex\-: if 94 85 7 560 256-\/0 is set, this method returns 560256. \begin{DoxyReturn}{Returns}
+6 digit U\-I\-C number without space, without control key, or a empty string on error 
 \end{DoxyReturn}
 
 
-Definition at line 129 of file mdtUicNumber.cpp.
+Definition at line 129 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{
-\index{mdtUicNumber@{mdtUicNumber}!controlKey@{controlKey}}
-\index{controlKey@{controlKey}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{controlKey}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUicNumber::controlKey (
+
+
+References is\-Valid().
+
+\hypertarget{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!control\-Key@{control\-Key}}
+\index{control\-Key@{control\-Key}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{control\-Key}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Uic\-Number\-::control\-Key (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}
+)}}\label{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}
 
 
 Get the control key. 
 
-The UIC number must be set before. \begin{DoxyReturn}{Returns}
+The U\-I\-C number must be set before. \begin{DoxyReturn}{Returns}
 Control key, or value $<$ 0 on error 
 \end{DoxyReturn}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{set\-Number()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 196 of file mdtUicNumber.cpp.
+Definition at line 196 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_a7a66af4f41cfaf69d53b9db66f465c27}{
-\index{mdtUicNumber@{mdtUicNumber}!controlKeyString@{controlKeyString}}
-\index{controlKeyString@{controlKeyString}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{controlKeyString}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUicNumber::controlKeyString (
+
+
+References is\-Valid().
+
+
+
+Referenced by control\-Key\-String().
+
+\hypertarget{classmdt_uic_number_a7a66af4f41cfaf69d53b9db66f465c27}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!control\-Key\-String@{control\-Key\-String}}
+\index{control\-Key\-String@{control\-Key\-String}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{control\-Key\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Uic\-Number\-::control\-Key\-String (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_a7a66af4f41cfaf69d53b9db66f465c27}
+)}}\label{classmdt_uic_number_a7a66af4f41cfaf69d53b9db66f465c27}
 
 
 Get the control key. 
 
-The UIC number must be set before. \begin{DoxyReturn}{Returns}
+The U\-I\-C number must be set before. \begin{DoxyReturn}{Returns}
 Control key, $<$unknow$>$ on error 
 \end{DoxyReturn}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{controlKey()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{control\-Key()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 215 of file mdtUicNumber.cpp.
+Definition at line 215 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_a69fea97b67a745980ad4386d5ffa9505}{
-\index{mdtUicNumber@{mdtUicNumber}!country@{country}}
-\index{country@{country}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{country}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUicNumberItem} mdtUicNumber::country (
+
+
+References control\-Key().
+
+
+
+Referenced by formated\-Uic\-Number().
+
+\hypertarget{classmdt_uic_number_a36eec09823de2d9848e9f7b8135fa59d}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!countries\-Db\-Loaded@{countries\-Db\-Loaded}}
+\index{countries\-Db\-Loaded@{countries\-Db\-Loaded}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{countries\-Db\-Loaded}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::countries\-Db\-Loaded (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_a69fea97b67a745980ad4386d5ffa9505}
+)}}\label{classmdt_uic_number_a36eec09823de2d9848e9f7b8135fa59d}
+
+
+Return true if Countries D\-B was successfully loaded. 
+
+
+
+Definition at line 310 of file mdt\-Uic\-Number.\-cpp.
+
+
+
+Referenced by dbs\-Loaded().
+
+\hypertarget{classmdt_uic_number_a69fea97b67a745980ad4386d5ffa9505}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!country@{country}}
+\index{country@{country}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{country}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Uic\-Number\-Item} mdt\-Uic\-Number\-::country (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_uic_number_a69fea97b67a745980ad4386d5ffa9505}
 
 
 Get the country. 
 
-The UIC number must be set, and country database loaded before this method works. 
+The U\-I\-C number must be set, and country database loaded before this method works. 
 
-Definition at line 555 of file mdtUicNumber.cpp.
+Definition at line 555 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_a0eda9b614e91b32c0d99bc016d906eae}{
-\index{mdtUicNumber@{mdtUicNumber}!formatedUicNumber@{formatedUicNumber}}
-\index{formatedUicNumber@{formatedUicNumber}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{formatedUicNumber}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUicNumber::formatedUicNumber (
+\hypertarget{classmdt_uic_number_ab684e8290b0a74a05e992699bf0fa7f4}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!dbs\-Loaded@{dbs\-Loaded}}
+\index{dbs\-Loaded@{dbs\-Loaded}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{dbs\-Loaded}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::dbs\-Loaded (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_a0eda9b614e91b32c0d99bc016d906eae}
+)}}\label{classmdt_uic_number_ab684e8290b0a74a05e992699bf0fa7f4}
 
 
-Get the complete formated UIC number. 
+Return true if all D\-Bs was successfully loaded. 
 
-The UIC number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber()}. \begin{DoxyReturn}{Returns}
-7 or 12 digit formated UIC number, or $<$unknow$>$ on error 
+
+
+Definition at line 525 of file mdt\-Uic\-Number.\-cpp.
+
+
+
+References countries\-Db\-Loaded(), speed\-And\-Heat\-Db\-Loaded(), types\-Db\-Loaded(), and usages\-Db\-Loaded().
+
+\hypertarget{classmdt_uic_number_a0eda9b614e91b32c0d99bc016d906eae}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!formated\-Uic\-Number@{formated\-Uic\-Number}}
+\index{formated\-Uic\-Number@{formated\-Uic\-Number}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{formated\-Uic\-Number}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Uic\-Number\-::formated\-Uic\-Number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_uic_number_a0eda9b614e91b32c0d99bc016d906eae}
+
+
+Get the complete formated U\-I\-C number. 
+
+The U\-I\-C number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{set\-Number()}. \begin{DoxyReturn}{Returns}
+7 or 12 digit formated U\-I\-C number, or $<$unknow$>$ on error 
 \end{DoxyReturn}
 
 
-Definition at line 78 of file mdtUicNumber.cpp.
+Definition at line 78 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_aac3c9e1adb6f9646216b4327645a621a}{
-\index{mdtUicNumber@{mdtUicNumber}!isValid@{isValid}}
-\index{isValid@{isValid}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{isValid}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::isValid (
+
+
+References control\-Key\-String(), and is\-Valid().
+
+\hypertarget{classmdt_uic_number_aac3c9e1adb6f9646216b4327645a621a}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!is\-Valid@{is\-Valid}}
+\index{is\-Valid@{is\-Valid}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{is\-Valid}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::is\-Valid (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_aac3c9e1adb6f9646216b4327645a621a}
+)}}\label{classmdt_uic_number_aac3c9e1adb6f9646216b4327645a621a}
 
 
-Check the UIC number validity. 
+Check the U\-I\-C number validity. 
 
-A valid UIC number contains 6, 7, 11 or 12 digits. 
+A valid U\-I\-C number contains 6, 7, 11 or 12 digits. 
 
-Definition at line 183 of file mdtUicNumber.cpp.
+Definition at line 183 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_ad7bb1405db0de8f1d247fa5a7bdb19ce}{
-\index{mdtUicNumber@{mdtUicNumber}!loadCountriesDb@{loadCountriesDb}}
-\index{loadCountriesDb@{loadCountriesDb}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{loadCountriesDb}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::loadCountriesDb (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R.
+
+
+
+Referenced by compact11\-Uic\-Number(), compact6\-Uic\-Number(), control\-Key(), formated\-Uic\-Number(), and serial\-Number().
+
+\hypertarget{classmdt_uic_number_ad7bb1405db0de8f1d247fa5a7bdb19ce}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!load\-Countries\-Db@{load\-Countries\-Db}}
+\index{load\-Countries\-Db@{load\-Countries\-Db}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{load\-Countries\-Db}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::load\-Countries\-Db (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{dbPath}
+\item[{const Q\-String \&}]{db\-Path}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_ad7bb1405db0de8f1d247fa5a7bdb19ce}
+)}}\label{classmdt_uic_number_ad7bb1405db0de8f1d247fa5a7bdb19ce}
 
 
 Load the coutries database. 
 
-The database is a CSV file containing the correspondance between 2 digits number and the country. \begin{DoxySeeAlso}{See also}
-\href{http://www.uic.org/IMG/xls/country_code_applicable.xls}{\tt http://www.uic.org/IMG/xls/country\_\-code\_\-applicable.xls} 
+The database is a C\-S\-V file containing the correspondance between 2 digits number and the country. \begin{DoxySeeAlso}{See Also}
+\href{http://www.uic.org/IMG/xls/country_code_applicable.xls}{\tt http\-://www.\-uic.\-org/\-I\-M\-G/xls/country\-\_\-code\-\_\-applicable.\-xls} 
 \end{DoxySeeAlso}
 
 
-Definition at line 250 of file mdtUicNumber.cpp.
+Definition at line 250 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_ab7d29b1cb5fe5ac58bef5bec787e83df}{
-\index{mdtUicNumber@{mdtUicNumber}!loadDbs@{loadDbs}}
-\index{loadDbs@{loadDbs}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{loadDbs}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::loadDbs (
+
+
+References mdt\-Csv\-File\-::close(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Csv\-File\-::lines(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Uic\-Number\-Item\-::number(), mdt\-Csv\-File\-::read\-Lines(), mdt\-Uic\-Number\-Item\-::set\-Code(), mdt\-Uic\-Number\-Item\-::set\-Name\-De(), mdt\-Uic\-Number\-Item\-::set\-Name\-En(), mdt\-Uic\-Number\-Item\-::set\-Name\-Fr(), mdt\-Uic\-Number\-Item\-::set\-Number(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by load\-Dbs().
+
+\hypertarget{classmdt_uic_number_ab7d29b1cb5fe5ac58bef5bec787e83df}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!load\-Dbs@{load\-Dbs}}
+\index{load\-Dbs@{load\-Dbs}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{load\-Dbs}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::load\-Dbs (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{dir}
+\item[{const Q\-String \&}]{dir}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_ab7d29b1cb5fe5ac58bef5bec787e83df}
+)}}\label{classmdt_uic_number_ab7d29b1cb5fe5ac58bef5bec787e83df}
 
 
-Load all needed DBs. 
+Load all needed D\-Bs. 
 
-The directory that contains the databeses must be given as argument. This directory must contain following files:
+The directory that contains the databeses must be given as argument. This directory must contain following files\-:
 \begin{DoxyItemize}
-\item uic\_\-countries\_\-db.csv
-\item uic\_\-speedandheat\_\-db.csv
-\item uic\_\-types\_\-db.csv
-\item uic\_\-usages\_\-db.csv 
+\item uic\-\_\-countries\-\_\-db.\-csv
+\item uic\-\_\-speedandheat\-\_\-db.\-csv
+\item uic\-\_\-types\-\_\-db.\-csv
+\item uic\-\_\-usages\-\_\-db.\-csv 
 \end{DoxyItemize}
 
-Definition at line 507 of file mdtUicNumber.cpp.
+Definition at line 507 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_ab1d08c2ea34f310631866d2e46010363}{
-\index{mdtUicNumber@{mdtUicNumber}!loadSpeedAndHeatsDb@{loadSpeedAndHeatsDb}}
-\index{loadSpeedAndHeatsDb@{loadSpeedAndHeatsDb}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{loadSpeedAndHeatsDb}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::loadSpeedAndHeatsDb (
+
+
+References load\-Countries\-Db(), load\-Speed\-And\-Heats\-Db(), load\-Types\-Db(), and load\-Usages\-Db().
+
+\hypertarget{classmdt_uic_number_ab1d08c2ea34f310631866d2e46010363}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!load\-Speed\-And\-Heats\-Db@{load\-Speed\-And\-Heats\-Db}}
+\index{load\-Speed\-And\-Heats\-Db@{load\-Speed\-And\-Heats\-Db}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{load\-Speed\-And\-Heats\-Db}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::load\-Speed\-And\-Heats\-Db (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{dbPath}
+\item[{const Q\-String \&}]{db\-Path}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_ab1d08c2ea34f310631866d2e46010363}
+)}}\label{classmdt_uic_number_ab1d08c2ea34f310631866d2e46010363}
 
 
 Load the vehicule speend and heat. 
 
-The database is a CSV file containing the correspondance between 2 digits number and the vehicule type. 
+The database is a C\-S\-V file containing the correspondance between 2 digits number and the vehicule type. 
 
-Definition at line 443 of file mdtUicNumber.cpp.
+Definition at line 443 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_a98c879c7bb7412caac4612a46586b76d}{
-\index{mdtUicNumber@{mdtUicNumber}!loadTypesDb@{loadTypesDb}}
-\index{loadTypesDb@{loadTypesDb}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{loadTypesDb}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::loadTypesDb (
+
+
+References mdt\-Csv\-File\-::close(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Csv\-File\-::lines(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Uic\-Number\-Item\-::number(), mdt\-Csv\-File\-::read\-Lines(), mdt\-Uic\-Number\-Item\-::set\-Name\-De(), mdt\-Uic\-Number\-Item\-::set\-Name\-En(), mdt\-Uic\-Number\-Item\-::set\-Name\-Fr(), mdt\-Uic\-Number\-Item\-::set\-Number(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by load\-Dbs().
+
+\hypertarget{classmdt_uic_number_a98c879c7bb7412caac4612a46586b76d}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!load\-Types\-Db@{load\-Types\-Db}}
+\index{load\-Types\-Db@{load\-Types\-Db}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{load\-Types\-Db}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::load\-Types\-Db (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{dbPath}
+\item[{const Q\-String \&}]{db\-Path}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_a98c879c7bb7412caac4612a46586b76d}
+)}}\label{classmdt_uic_number_a98c879c7bb7412caac4612a46586b76d}
 
 
 Load the vehicule type database. 
 
-The database is a CSV file containing the correspondance between 2 digits number and the vehicule type. 
+The database is a C\-S\-V file containing the correspondance between 2 digits number and the vehicule type. 
 
-Definition at line 379 of file mdtUicNumber.cpp.
+Definition at line 379 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_af496e1fb75f696258287754fe2607561}{
-\index{mdtUicNumber@{mdtUicNumber}!loadUsagesDb@{loadUsagesDb}}
-\index{loadUsagesDb@{loadUsagesDb}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{loadUsagesDb}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::loadUsagesDb (
+
+
+References mdt\-Csv\-File\-::close(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Csv\-File\-::lines(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Uic\-Number\-Item\-::number(), mdt\-Csv\-File\-::read\-Lines(), mdt\-Uic\-Number\-Item\-::set\-Name\-De(), mdt\-Uic\-Number\-Item\-::set\-Name\-En(), mdt\-Uic\-Number\-Item\-::set\-Name\-Fr(), mdt\-Uic\-Number\-Item\-::set\-Number(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by load\-Dbs().
+
+\hypertarget{classmdt_uic_number_af496e1fb75f696258287754fe2607561}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!load\-Usages\-Db@{load\-Usages\-Db}}
+\index{load\-Usages\-Db@{load\-Usages\-Db}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{load\-Usages\-Db}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::load\-Usages\-Db (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{dbPath}
+\item[{const Q\-String \&}]{db\-Path}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_af496e1fb75f696258287754fe2607561}
+)}}\label{classmdt_uic_number_af496e1fb75f696258287754fe2607561}
 
 
 Load the usage database. 
 
-The database is a CSV file containing the correspondance between 2 digits number and the usage. 
+The database is a C\-S\-V file containing the correspondance between 2 digits number and the usage. 
 
-Definition at line 315 of file mdtUicNumber.cpp.
+Definition at line 315 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_ad4fbefb268327d15c2d39d2a17f45180}{
-\index{mdtUicNumber@{mdtUicNumber}!serialNumber@{serialNumber}}
-\index{serialNumber@{serialNumber}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{serialNumber}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUicNumber::serialNumber (
+
+
+References mdt\-Csv\-File\-::close(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Csv\-File\-::lines(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Uic\-Number\-Item\-::number(), mdt\-Csv\-File\-::read\-Lines(), mdt\-Uic\-Number\-Item\-::set\-Name\-De(), mdt\-Uic\-Number\-Item\-::set\-Name\-En(), mdt\-Uic\-Number\-Item\-::set\-Name\-Fr(), mdt\-Uic\-Number\-Item\-::set\-Number(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by load\-Dbs().
+
+\hypertarget{classmdt_uic_number_ad4fbefb268327d15c2d39d2a17f45180}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!serial\-Number@{serial\-Number}}
+\index{serial\-Number@{serial\-Number}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{serial\-Number}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Uic\-Number\-::serial\-Number (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_ad4fbefb268327d15c2d39d2a17f45180}
+)}}\label{classmdt_uic_number_ad4fbefb268327d15c2d39d2a17f45180}
 
 
 Get the serial number part. 
@@ -346,96 +447,155 @@ Serial number or $<$unknow$>$ on error
 \end{DoxyReturn}
 
 
-Definition at line 227 of file mdtUicNumber.cpp.
+Definition at line 227 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{
-\index{mdtUicNumber@{mdtUicNumber}!setNumber@{setNumber}}
-\index{setNumber@{setNumber}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{setNumber}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::setNumber (
+
+
+References is\-Valid().
+
+\hypertarget{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!set\-Number@{set\-Number}}
+\index{set\-Number@{set\-Number}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{set\-Number}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::set\-Number (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{uicNumber}
+\item[{const Q\-String \&}]{uic\-Number}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_aadf50072784344824c696da7cff5b445}
+)}}\label{classmdt_uic_number_aadf50072784344824c696da7cff5b445}
 
 
-Set the UIC number. 
+Set the U\-I\-C number. 
 
-The UIC number passed as argument is first checked. If ok, it is stored as list of digits. Note: some chars are allowed (space, -\/), but alpha (a-\/b, A-\/B) are not valid. 
+The U\-I\-C number passed as argument is first checked. If ok, it is stored as list of digits. Note\-: some chars are allowed (space, -\/), but alpha (a-\/b, A-\/\-B) are not valid. 
 
-Definition at line 40 of file mdtUicNumber.cpp.
+Definition at line 40 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_af2c13420378ec5559ce4f1eaba1f38e7}{
-\index{mdtUicNumber@{mdtUicNumber}!speedAndHeat@{speedAndHeat}}
-\index{speedAndHeat@{speedAndHeat}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{speedAndHeat}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUicNumberItem} mdtUicNumber::speedAndHeat (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and M\-D\-T\-\_\-\-P\-A\-R\-S\-E\-\_\-\-E\-R\-R\-O\-R.
+
+\hypertarget{classmdt_uic_number_af2c13420378ec5559ce4f1eaba1f38e7}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!speed\-And\-Heat@{speed\-And\-Heat}}
+\index{speed\-And\-Heat@{speed\-And\-Heat}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{speed\-And\-Heat}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Uic\-Number\-Item} mdt\-Uic\-Number\-::speed\-And\-Heat (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_af2c13420378ec5559ce4f1eaba1f38e7}
+)}}\label{classmdt_uic_number_af2c13420378ec5559ce4f1eaba1f38e7}
 
 
 Get the vehicule speed and heat. 
 
-The UIC number must be set, and type database loaded before this method works. 
+The U\-I\-C number must be set, and type database loaded before this method works. 
 
-Definition at line 622 of file mdtUicNumber.cpp.
+Definition at line 622 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_ae7d6500d0e939956371e152d9ca17117}{
-\index{mdtUicNumber@{mdtUicNumber}!type@{type}}
-\index{type@{type}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUicNumberItem} mdtUicNumber::type (
+\hypertarget{classmdt_uic_number_a42ec71258e2120337953c8c6bda63638}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!speed\-And\-Heat\-Db\-Loaded@{speed\-And\-Heat\-Db\-Loaded}}
+\index{speed\-And\-Heat\-Db\-Loaded@{speed\-And\-Heat\-Db\-Loaded}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{speed\-And\-Heat\-Db\-Loaded}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::speed\-And\-Heat\-Db\-Loaded (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_ae7d6500d0e939956371e152d9ca17117}
+)}}\label{classmdt_uic_number_a42ec71258e2120337953c8c6bda63638}
+
+
+Return true if speed and heat D\-B was successfully loaded. 
+
+
+
+Definition at line 502 of file mdt\-Uic\-Number.\-cpp.
+
+
+
+Referenced by dbs\-Loaded().
+
+\hypertarget{classmdt_uic_number_ae7d6500d0e939956371e152d9ca17117}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!type@{type}}
+\index{type@{type}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Uic\-Number\-Item} mdt\-Uic\-Number\-::type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_uic_number_ae7d6500d0e939956371e152d9ca17117}
 
 
 Get the vehicule type. 
 
-The UIC number must be set, and type database loaded before this method works. 
+The U\-I\-C number must be set, and type database loaded before this method works. 
 
-Definition at line 595 of file mdtUicNumber.cpp.
+Definition at line 595 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_a7bb368e5de6a9e7af3a2516eb4282e04}{
-\index{mdtUicNumber@{mdtUicNumber}!unloadDbs@{unloadDbs}}
-\index{unloadDbs@{unloadDbs}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{unloadDbs}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUicNumber::unloadDbs (
+\hypertarget{classmdt_uic_number_a39fb254207bfe6dd6eaade2711030dac}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!types\-Db\-Loaded@{types\-Db\-Loaded}}
+\index{types\-Db\-Loaded@{types\-Db\-Loaded}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{types\-Db\-Loaded}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::types\-Db\-Loaded (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_a7bb368e5de6a9e7af3a2516eb4282e04}
+)}}\label{classmdt_uic_number_a39fb254207bfe6dd6eaade2711030dac}
+
+
+Return true if types D\-B was successfully loaded. 
+
+
+
+Definition at line 438 of file mdt\-Uic\-Number.\-cpp.
+
+
+
+Referenced by dbs\-Loaded().
+
+\hypertarget{classmdt_uic_number_a7bb368e5de6a9e7af3a2516eb4282e04}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!unload\-Dbs@{unload\-Dbs}}
+\index{unload\-Dbs@{unload\-Dbs}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{unload\-Dbs}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Uic\-Number\-::unload\-Dbs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_uic_number_a7bb368e5de6a9e7af3a2516eb4282e04}
 
 
 Unload databases. 
 
-This will free memory used by load$\ast$Db(). This method is automatically called by destructor. 
+This will free memory used by load$\ast$\-Db(). This method is automatically called by destructor. 
 
-Definition at line 543 of file mdtUicNumber.cpp.
+Definition at line 543 of file mdt\-Uic\-Number.\-cpp.
 
-\hypertarget{classmdt_uic_number_a8e2e1c1be4425b57e0fa60113410bfbc}{
-\index{mdtUicNumber@{mdtUicNumber}!usage@{usage}}
-\index{usage@{usage}!mdtUicNumber@{mdtUicNumber}}
-\subsubsection[{usage}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUicNumberItem} mdtUicNumber::usage (
+
+
+Referenced by $\sim$mdt\-Uic\-Number().
+
+\hypertarget{classmdt_uic_number_a8e2e1c1be4425b57e0fa60113410bfbc}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!usage@{usage}}
+\index{usage@{usage}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{usage}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Uic\-Number\-Item} mdt\-Uic\-Number\-::usage (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_uic_number_a8e2e1c1be4425b57e0fa60113410bfbc}
+)}}\label{classmdt_uic_number_a8e2e1c1be4425b57e0fa60113410bfbc}
 
 
 Get the usage. 
 
-The UIC number must be set, and usage database loaded before this method works. 
+The U\-I\-C number must be set, and usage database loaded before this method works. 
 
-Definition at line 575 of file mdtUicNumber.cpp.
+Definition at line 575 of file mdt\-Uic\-Number.\-cpp.
+
+\hypertarget{classmdt_uic_number_a2090c7d80c75d1db42d271f82ff8f598}{\index{mdt\-Uic\-Number@{mdt\-Uic\-Number}!usages\-Db\-Loaded@{usages\-Db\-Loaded}}
+\index{usages\-Db\-Loaded@{usages\-Db\-Loaded}!mdtUicNumber@{mdt\-Uic\-Number}}
+\subsubsection[{usages\-Db\-Loaded}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Uic\-Number\-::usages\-Db\-Loaded (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_uic_number_a2090c7d80c75d1db42d271f82ff8f598}
+
+
+Return true if usages D\-B was successfully loaded. 
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Definition at line 374 of file mdt\-Uic\-Number.\-cpp.
+
+
+
+Referenced by dbs\-Loaded().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtUicNumber.h\item 
-src/mdtutils/mdtUicNumber.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_uic_number_8h}{mdt\-Uic\-Number.\-h}\item 
+src/mdtutils/\hyperlink{mdt_uic_number_8cpp}{mdt\-Uic\-Number.\-cpp}\end{DoxyCompactItemize}

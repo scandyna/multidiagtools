@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node5" href="$classmdt_modbus_io_tool.html" title="Minimal tool for MODBUS I/O." alt="" coords="16,160,141,189"/>
+<map id="Ui::mdtModbusIoTool" name="Ui::mdtModbusIoTool">
+<area shape="rect" id="node5" href="$classmdt_modbus_io_tool.html" title="Minimal tool for MODBUS I/O. " alt="" coords="16,160,141,189"/>
 <area shape="rect" id="node2" href="$class_ui__mdt_modbus_io_tool.html" title="Ui_mdtModbusIoTool" alt="" coords="5,5,152,35"/>
 </map>

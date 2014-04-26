@@ -1,0 +1,171 @@
+\hypertarget{classmdt_cl_unit_connection_dialog}{\section{mdt\-Cl\-Unit\-Connection\-Dialog Class Reference}
+\label{classmdt_cl_unit_connection_dialog}\index{mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}}
+}
+
+
+Dialog for edition of a unit connection.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Unit\-Connection\-Dialog.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Cl\-Unit\-Connection\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{classmdt_cl_unit_connection_dialog__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Cl\-Unit\-Connection\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_cl_unit_connection_dialog__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43}{mode\-\_\-t} \{ \hyperlink{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43a65365660e45940b053efbf543aa2c10c}{Add}, 
+\hyperlink{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43a855eaf8093ea6043e46688cc5115643f}{Edit}
+ \}
+\begin{DoxyCompactList}\small\item\em Mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_cl_unit_connection_dialog_adf4b609e4ba336afd698f5d40744756c}{mdt\-Cl\-Unit\-Connection\-Dialog} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, Q\-Sql\-Database db, \hyperlink{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43}{mode\-\_\-t} mode)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_unit_connection_dialog_a13e97c80ada11457bbf7b1c4173a09b1}{$\sim$mdt\-Cl\-Unit\-Connection\-Dialog} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_unit_connection_dialog_a1692e64b3b636cd1e10df1da0ae7fdf5}{set\-Data} (const \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \&\hyperlink{classmdt_cl_unit_connection_dialog_a32ab19b0b29e1d7b188518d26d6dd72e}{data}, const Q\-Variant \&base\-Article\-Id)
+\begin{DoxyCompactList}\small\item\em Set data. \end{DoxyCompactList}\item 
+const \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \& \hyperlink{classmdt_cl_unit_connection_dialog_a32ab19b0b29e1d7b188518d26d6dd72e}{data} () const 
+\begin{DoxyCompactList}\small\item\em Get data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Dialog for edition of a unit connection. 
+
+Definition at line 33 of file mdt\-Cl\-Unit\-Connection\-Dialog.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43}{\index{mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}!mode\-\_\-t@{mode\-\_\-t}}
+\index{mode\-\_\-t@{mode\-\_\-t}!mdtClUnitConnectionDialog@{mdt\-Cl\-Unit\-Connection\-Dialog}}
+\subsubsection[{mode\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Cl\-Unit\-Connection\-Dialog\-::mode\-\_\-t}}}\label{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43}
+
+
+Mode. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Add@{Add}!mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}}\index{mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}!Add@{Add}}\item[{\em 
+\hypertarget{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43a65365660e45940b053efbf543aa2c10c}{Add}\label{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43a65365660e45940b053efbf543aa2c10c}
+}]In this mode, user can select connection from connector \index{Edit@{Edit}!mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}}\index{mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}!Edit@{Edit}}\item[{\em 
+\hypertarget{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43a855eaf8093ea6043e46688cc5115643f}{Edit}\label{classmdt_cl_unit_connection_dialog_a754889f1591eddb79b69de4c51532f43a855eaf8093ea6043e46688cc5115643f}
+}]In this mode, user cannot change connection, only edit other data \end{description}
+\end{Desc}
+
+
+Definition at line 41 of file mdt\-Cl\-Unit\-Connection\-Dialog.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_cl_unit_connection_dialog_adf4b609e4ba336afd698f5d40744756c}{\index{mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}!mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}}
+\index{mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}!mdtClUnitConnectionDialog@{mdt\-Cl\-Unit\-Connection\-Dialog}}
+\subsubsection[{mdt\-Cl\-Unit\-Connection\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Unit\-Connection\-Dialog\-::mdt\-Cl\-Unit\-Connection\-Dialog (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{parent, }
+\item[{Q\-Sql\-Database}]{db, }
+\item[{{\bf mode\-\_\-t}}]{mode}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connection_dialog_adf4b609e4ba336afd698f5d40744756c}
+
+
+Constructor. 
+
+
+
+Definition at line 34 of file mdt\-Cl\-Unit\-Connection\-Dialog.\-cpp.
+
+
+
+References Add, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::cb\-Connection\-Type, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::gb\-Ranges, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::pb\-Copy\-Contact\-Name, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::pb\-Copy\-Function\-D\-E, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::pb\-Copy\-Function\-E\-N, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::pb\-Copy\-Function\-F\-R, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::pb\-Copy\-Function\-I\-T, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::pb\-Select\-Contact, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::pb\-Select\-Unit\-Connector, Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::pb\-Set\-No\-Connector, and Ui\-\_\-mdt\-Cl\-Unit\-Connection\-Dialog\-::setup\-Ui().
+
+\hypertarget{classmdt_cl_unit_connection_dialog_a13e97c80ada11457bbf7b1c4173a09b1}{\index{mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}!$\sim$mdt\-Cl\-Unit\-Connection\-Dialog@{$\sim$mdt\-Cl\-Unit\-Connection\-Dialog}}
+\index{$\sim$mdt\-Cl\-Unit\-Connection\-Dialog@{$\sim$mdt\-Cl\-Unit\-Connection\-Dialog}!mdtClUnitConnectionDialog@{mdt\-Cl\-Unit\-Connection\-Dialog}}
+\subsubsection[{$\sim$mdt\-Cl\-Unit\-Connection\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Unit\-Connection\-Dialog\-::$\sim$mdt\-Cl\-Unit\-Connection\-Dialog (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connection_dialog_a13e97c80ada11457bbf7b1c4173a09b1}
+
+
+Destructor. 
+
+
+
+Definition at line 61 of file mdt\-Cl\-Unit\-Connection\-Dialog.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_unit_connection_dialog_a32ab19b0b29e1d7b188518d26d6dd72e}{\index{mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}!data@{data}}
+\index{data@{data}!mdtClUnitConnectionDialog@{mdt\-Cl\-Unit\-Connection\-Dialog}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf mdt\-Cl\-Unit\-Connection\-Data} \& mdt\-Cl\-Unit\-Connection\-Dialog\-::data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_unit_connection_dialog_a32ab19b0b29e1d7b188518d26d6dd72e}
+
+
+Get data. 
+
+
+
+Definition at line 74 of file mdt\-Cl\-Unit\-Connection\-Dialog.\-cpp.
+
+
+
+Referenced by set\-Data().
+
+\hypertarget{classmdt_cl_unit_connection_dialog_a1692e64b3b636cd1e10df1da0ae7fdf5}{\index{mdt\-Cl\-Unit\-Connection\-Dialog@{mdt\-Cl\-Unit\-Connection\-Dialog}!set\-Data@{set\-Data}}
+\index{set\-Data@{set\-Data}!mdtClUnitConnectionDialog@{mdt\-Cl\-Unit\-Connection\-Dialog}}
+\subsubsection[{set\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Unit\-Connection\-Dialog\-::set\-Data (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Cl\-Unit\-Connection\-Data} \&}]{data, }
+\item[{const Q\-Variant \&}]{base\-Article\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_connection_dialog_a1692e64b3b636cd1e10df1da0ae7fdf5}
+
+
+Set data. 
+
+Fields that are realated to article connection, and thoses that are not null in data, will be enabled.
+
+\begin{DoxyPrecond}{Precondition}
+Field Unit\-\_\-\-Id\-\_\-\-F\-K must contain a valid I\-D (not Null) 
+\end{DoxyPrecond}
+
+
+Definition at line 65 of file mdt\-Cl\-Unit\-Connection\-Dialog.\-cpp.
+
+
+
+References data(), and mdt\-Sql\-Record\-::value().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_unit_connection_dialog_8h}{mdt\-Cl\-Unit\-Connection\-Dialog.\-h}\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_unit_connection_dialog_8cpp}{mdt\-Cl\-Unit\-Connection\-Dialog.\-cpp}\end{DoxyCompactItemize}

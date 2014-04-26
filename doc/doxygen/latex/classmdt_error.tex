@@ -1,300 +1,570 @@
-\hypertarget{classmdt_error}{
-\section{mdtError Class Reference}
-\label{classmdt_error}\index{mdtError@{mdtError}}
+\hypertarget{classmdt_error}{\section{mdt\-Error Class Reference}
+\label{classmdt_error}\index{mdt\-Error@{mdt\-Error}}
 }
 
 
-\hyperlink{classmdt_error}{mdtError} contains informations about a error that occured  
+\hyperlink{classmdt_error}{mdt\-Error} contains informations about a error that occured  
 
 
 
 
-{\ttfamily \#include $<$mdtError.h$>$}
+{\ttfamily \#include $<$mdt\-Error.\-h$>$}
 
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} \{ \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb}{NoError} =  0x00, 
-\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc}{Info} =  0x01, 
-\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}{Warning} =  0x02, 
-\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{Error} =  0x04
+enum \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\-\_\-t} \{ \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb}{No\-Error} = 0x00, 
+\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc}{Info} = 0x01, 
+\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}{Warning} = 0x02, 
+\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{Error} = 0x04
  \}
 \begin{DoxyCompactList}\small\item\em Error level. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_error_a78824dc8c0029107949baaf28c4a9df5}{
-\hyperlink{classmdt_error_a78824dc8c0029107949baaf28c4a9df5}{mdtError} ()}
-\label{classmdt_error_a78824dc8c0029107949baaf28c4a9df5}
-
+\hyperlink{classmdt_error_a78824dc8c0029107949baaf28c4a9df5}{mdt\-Error} ()
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{mdtError} (int number, const QString \&text, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} level)
+\hyperlink{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{mdt\-Error} (int \hyperlink{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}{number}, const Q\-String \&\hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\-\_\-t} \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level})
 \begin{DoxyCompactList}\small\item\em Construct new error. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a775542a251ef746f3433e7d790a48d85}{
-\hyperlink{classmdt_error_a775542a251ef746f3433e7d790a48d85}{mdtError} (const QString \&text, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} level)}
-\label{classmdt_error_a775542a251ef746f3433e7d790a48d85}
-
+\hyperlink{classmdt_error_a775542a251ef746f3433e7d790a48d85}{mdt\-Error} (const Q\-String \&\hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\-\_\-t} \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level})
 \begin{DoxyCompactList}\small\item\em Construct new error. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}{setError} (const QString \&text, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} level)
+void \hyperlink{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}{set\-Error} (const Q\-String \&\hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\-\_\-t} \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level})
 \begin{DoxyCompactList}\small\item\em Set error. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_error_ace38a9600c19ddf3628d46b1a6a7b414}{updateText} (const QString \&text)
+void \hyperlink{classmdt_error_ace38a9600c19ddf3628d46b1a6a7b414}{update\-Text} (const Q\-String \&\hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text})
 \begin{DoxyCompactList}\small\item\em Update error text. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}{
-void \hyperlink{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}{clear} ()}
-\label{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}
-
+void \hyperlink{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}{clear} ()
 \begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{
-void \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{setSystemError} (int number, const QString \&text)}
-\label{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}
-
+void \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{set\-System\-Error} (int \hyperlink{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}{number}, const Q\-String \&\hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text})
 \begin{DoxyCompactList}\small\item\em Add system returned error (for example, errno) \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_error_a8dd3203e11b308e6c2701d7f075af885}{setSource} (const QString \&filePath, int fileLine, const QString \&className, const QString \&functionName)
-\begin{DoxyCompactList}\small\item\em Add system error (for Windows API) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{
-void \hyperlink{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{commit} ()}
-\label{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}
-
+void \hyperlink{classmdt_error_a8dd3203e11b308e6c2701d7f075af885}{set\-Source} (const Q\-String \&file\-Path, int \hyperlink{classmdt_error_a7f5a9ac5e896ba24009bcadddcfe79cb}{file\-Line}, const Q\-String \&class\-Name, const Q\-String \&\hyperlink{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}{function\-Name})
+\begin{DoxyCompactList}\small\item\em Add system error (for Windows A\-P\-I) \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{commit} ()
 \begin{DoxyCompactList}\small\item\em Send error to output. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}{number} () const 
 \begin{DoxyCompactList}\small\item\em Error number. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{
-QString \hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text} () const }
-\label{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}
-
+Q\-String \hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text} () const 
 \begin{DoxyCompactList}\small\item\em Error text. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a8d8382d3008de890689df415deb7766e}{
-\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\_\-t} \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level} () const }
-\label{classmdt_error_a8d8382d3008de890689df415deb7766e}
-
-\begin{DoxyCompactList}\small\item\em Error level  level\_\-t. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}{
-QMessageBox::Icon \hyperlink{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}{levelIcon} () const }
-\label{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}
-
-\begin{DoxyCompactList}\small\item\em Map the level to a QMessageBox Icon. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}{
-int \hyperlink{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}{systemNumber} () const }
-\label{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}
-
+\hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{level\-\_\-t} \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level} () const 
+\begin{DoxyCompactList}\small\item\em Error level  level\-\_\-t. \end{DoxyCompactList}\item 
+Q\-Message\-Box\-::\-Icon \hyperlink{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}{level\-Icon} () const 
+\begin{DoxyCompactList}\small\item\em Map the level to a Q\-Message\-Box Icon. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}{system\-Number} () const 
 \begin{DoxyCompactList}\small\item\em Error number returned from system if available. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a6cd449e657f321b86d234269b5e92cda}{
-QString \hyperlink{classmdt_error_a6cd449e657f321b86d234269b5e92cda}{systemText} () const }
-\label{classmdt_error_a6cd449e657f321b86d234269b5e92cda}
-
+Q\-String \hyperlink{classmdt_error_a6cd449e657f321b86d234269b5e92cda}{system\-Text} () const 
 \begin{DoxyCompactList}\small\item\em Error text returned from system, if available. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{systemErrorString} (QObject $\ast$obj=0) const 
+Q\-String \hyperlink{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{system\-Error\-String} (\hyperlink{class_q_object}{Q\-Object} $\ast$obj=0) const 
 \begin{DoxyCompactList}\small\item\em Error number and text from system, if available. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}{
-void \hyperlink{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}{setInformativeText} (const QString \&text)}
-\label{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}
-
+void \hyperlink{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}{set\-Informative\-Text} (const Q\-String \&\hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text})
 \begin{DoxyCompactList}\small\item\em Set informative text. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_adcc1905f585c327cec8a2e31af616651}{
-QString \hyperlink{classmdt_error_adcc1905f585c327cec8a2e31af616651}{informativeText} () const }
-\label{classmdt_error_adcc1905f585c327cec8a2e31af616651}
-
+Q\-String \hyperlink{classmdt_error_adcc1905f585c327cec8a2e31af616651}{informative\-Text} () const 
 \begin{DoxyCompactList}\small\item\em Get informative text. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}{
-QString \hyperlink{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}{functionName} () const }
-\label{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}
-
+Q\-String \hyperlink{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}{function\-Name} () const 
 \begin{DoxyCompactList}\small\item\em Error source function. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_af7c2c371678ebd45698a990502addbd8}{
-QString \hyperlink{classmdt_error_af7c2c371678ebd45698a990502addbd8}{fileName} () const }
-\label{classmdt_error_af7c2c371678ebd45698a990502addbd8}
-
+Q\-String \hyperlink{classmdt_error_af7c2c371678ebd45698a990502addbd8}{file\-Name} () const 
 \begin{DoxyCompactList}\small\item\em Error source file (name only) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a7f5a9ac5e896ba24009bcadddcfe79cb}{
-int \hyperlink{classmdt_error_a7f5a9ac5e896ba24009bcadddcfe79cb}{fileLine} () const }
-\label{classmdt_error_a7f5a9ac5e896ba24009bcadddcfe79cb}
-
+int \hyperlink{classmdt_error_a7f5a9ac5e896ba24009bcadddcfe79cb}{file\-Line} () const 
 \begin{DoxyCompactList}\small\item\em Error source line. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\hyperlink{classmdt_error}{mdtError} contains informations about a error that occured 
+\hyperlink{classmdt_error}{mdt\-Error} contains informations about a error that occured 
 
-Currently, a \hyperlink{classmdt_error}{mdtError} contains several informations:
+Currently, a \hyperlink{classmdt_error}{mdt\-Error} contains several informations\-:
 \begin{DoxyItemize}
-\item text (mandatory) : a description of the error that occured . Access: \hyperlink{classmdt_error_a775542a251ef746f3433e7d790a48d85}{mdtError(const QString\&, level\_\-t)} , \hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text()} .
-\item level (mandatory) : the severity of the error . Access: \hyperlink{classmdt_error_a775542a251ef746f3433e7d790a48d85}{mdtError(const QString\&, level\_\-t)} , \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level()} , \hyperlink{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}{levelIcon()} .
-\item systemNumber (optional) : error number returned by a system (or other library) call . Access: \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{setSystemError()} , \hyperlink{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}{systemNumber()} , \hyperlink{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{systemErrorString()} .
-\item systemText (optional) : error text number returned by a system (or other library) call . Access: \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{setSystemError()} , \hyperlink{classmdt_error_a6cd449e657f321b86d234269b5e92cda}{systemText()} , \hyperlink{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{systemErrorString()} .
-\item informativeText (optional) : can be used the same way than QMessageBox . Access : \hyperlink{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}{setInformativeText()} , \hyperlink{classmdt_error_adcc1905f585c327cec8a2e31af616651}{informativeText()} .
+\item text (mandatory) \-: a description of the error that occured . Access\-: \hyperlink{classmdt_error_a775542a251ef746f3433e7d790a48d85}{mdt\-Error(const Q\-String\&, level\-\_\-t)} , \hyperlink{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{text()} .
+\item level (mandatory) \-: the severity of the error . Access\-: \hyperlink{classmdt_error_a775542a251ef746f3433e7d790a48d85}{mdt\-Error(const Q\-String\&, level\-\_\-t)} , \hyperlink{classmdt_error_a8d8382d3008de890689df415deb7766e}{level()} , \hyperlink{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}{level\-Icon()} .
+\item system\-Number (optional) \-: error number returned by a system (or other library) call . Access\-: \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{set\-System\-Error()} , \hyperlink{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}{system\-Number()} , \hyperlink{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{system\-Error\-String()} .
+\item system\-Text (optional) \-: error text number returned by a system (or other library) call . Access\-: \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{set\-System\-Error()} , \hyperlink{classmdt_error_a6cd449e657f321b86d234269b5e92cda}{system\-Text()} , \hyperlink{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{system\-Error\-String()} .
+\item informative\-Text (optional) \-: can be used the same way than Q\-Message\-Box . Access \-: \hyperlink{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}{set\-Informative\-Text()} , \hyperlink{classmdt_error_adcc1905f585c327cec8a2e31af616651}{informative\-Text()} .
 \end{DoxyItemize}
 
-number : currently used with mdt\_\-error\_\-t enum, but it seems that this is not a good idea, and this will change once a better one is found ...
+number \-: currently used with mdt\-\_\-error\-\_\-t enum, but it seems that this is not a good idea, and this will change once a better one is found ...
 
 This class contains the information of a error. To just put it to standard defined outputs, use \hyperlink{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{commit()} .
 
-Note: no copy constrctor/operator are defined, because only primitve and copiable objects are used, but a \hyperlink{classmdt_error}{mdtError} can be copied . 
+Note\-: no copy constrctor/operator are defined, because only primitve and copiable objects are used, but a \hyperlink{classmdt_error}{mdt\-Error} can be copied . 
 
-Definition at line 84 of file mdtError.h.
+Definition at line 84 of file mdt\-Error.\-h.
 
 
 
 \subsection{Member Enumeration Documentation}
-\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{
-\index{mdtError@{mdtError}!level\_\-t@{level\_\-t}}
-\index{level\_\-t@{level\_\-t}!mdtError@{mdtError}}
-\subsubsection[{level\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtError::level\_\-t}}}
-\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}{\index{mdt\-Error@{mdt\-Error}!level\-\_\-t@{level\-\_\-t}}
+\index{level\-\_\-t@{level\-\_\-t}!mdtError@{mdt\-Error}}
+\subsubsection[{level\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Error\-::level\-\_\-t}}}\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7}
 
 
 Error level. 
 
 \begin{Desc}
-\item[Enumerator: ]\par
+\item[Enumerator]\par
 \begin{description}
-\index{NoError@{NoError}!mdtError@{mdtError}}\index{mdtError@{mdtError}!NoError@{NoError}}\item[{\em 
-\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb}{
-NoError}
-\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb}
-}]No error . \index{Info@{Info}!mdtError@{mdtError}}\index{mdtError@{mdtError}!Info@{Info}}\item[{\em 
-\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc}{
-Info}
-\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc}
-}]Just a information, application continues to work in normal way . \index{Warning@{Warning}!mdtError@{mdtError}}\index{mdtError@{mdtError}!Warning@{Warning}}\item[{\em 
-\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}{
-Warning}
-\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}
-}]Error that could be handled \index{Error@{Error}!mdtError@{mdtError}}\index{mdtError@{mdtError}!Error@{Error}}\item[{\em 
-\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{
-Error}
-\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}
+\index{No\-Error@{No\-Error}!mdt\-Error@{mdt\-Error}}\index{mdt\-Error@{mdt\-Error}!No\-Error@{No\-Error}}\item[{\em 
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb}{No\-Error}\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a1ba619a7f332d8fe18fb3cd270ff86eb}
+}]No error . \index{Info@{Info}!mdt\-Error@{mdt\-Error}}\index{mdt\-Error@{mdt\-Error}!Info@{Info}}\item[{\em 
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc}{Info}\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a24688d5f5af0a3a54636fa1a4b2f60fc}
+}]Just a information, application continues to work in normal way . \index{Warning@{Warning}!mdt\-Error@{mdt\-Error}}\index{mdt\-Error@{mdt\-Error}!Warning@{Warning}}\item[{\em 
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}{Warning}\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}
+}]Error that could be handled \index{Error@{Error}!mdt\-Error@{mdt\-Error}}\index{mdt\-Error@{mdt\-Error}!Error@{Error}}\item[{\em 
+\hypertarget{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{Error}\label{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}
 }]Error that was not handled \end{description}
 \end{Desc}
 
 
-
-Definition at line 90 of file mdtError.h.
+Definition at line 90 of file mdt\-Error.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{
-\index{mdtError@{mdtError}!mdtError@{mdtError}}
-\index{mdtError@{mdtError}!mdtError@{mdtError}}
-\subsubsection[{mdtError}]{\setlength{\rightskip}{0pt plus 5cm}mdtError::mdtError (
+\hypertarget{classmdt_error_a78824dc8c0029107949baaf28c4a9df5}{\index{mdt\-Error@{mdt\-Error}!mdt\-Error@{mdt\-Error}}
+\index{mdt\-Error@{mdt\-Error}!mdtError@{mdt\-Error}}
+\subsubsection[{mdt\-Error}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Error\-::mdt\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_error_a78824dc8c0029107949baaf28c4a9df5}
+
+
+Constructor. 
+
+
+
+Definition at line 29 of file mdt\-Error.\-cpp.
+
+
+
+References No\-Error.
+
+\hypertarget{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{\index{mdt\-Error@{mdt\-Error}!mdt\-Error@{mdt\-Error}}
+\index{mdt\-Error@{mdt\-Error}!mdtError@{mdt\-Error}}
+\subsubsection[{mdt\-Error}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Error\-::mdt\-Error (
 \begin{DoxyParamCaption}
 \item[{int}]{number, }
-\item[{const QString \&}]{text, }
-\item[{{\bf mdtError::level\_\-t}}]{level}
+\item[{const Q\-String \&}]{text, }
+\item[{{\bf mdt\-Error\-::level\-\_\-t}}]{level}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}
+)}}\label{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}
 
 
 Construct new error. 
 
-\begin{Desc}
-\item[\hyperlink{deprecated__deprecated000001}{Deprecated}]If no good idea falls in for the usage of number , this constrctor should become obselete . \end{Desc}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000001}{Deprecated}]If no good idea falls in for the usage of number , this constrctor should become obselete . \end{DoxyRefDesc}
 
 
-Definition at line 34 of file mdtError.cpp.
+Definition at line 34 of file mdt\-Error.\-cpp.
+
+
+
+References level(), number(), and text().
+
+\hypertarget{classmdt_error_a775542a251ef746f3433e7d790a48d85}{\index{mdt\-Error@{mdt\-Error}!mdt\-Error@{mdt\-Error}}
+\index{mdt\-Error@{mdt\-Error}!mdtError@{mdt\-Error}}
+\subsubsection[{mdt\-Error}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Error\-::mdt\-Error (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{text, }
+\item[{{\bf level\-\_\-t}}]{level}
+\end{DoxyParamCaption}
+)}}\label{classmdt_error_a775542a251ef746f3433e7d790a48d85}
+
+
+Construct new error. 
+
+
+
+Definition at line 46 of file mdt\-Error.\-cpp.
+
+
+
+References level(), and text().
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}{
-\index{mdtError@{mdtError}!number@{number}}
-\index{number@{number}!mdtError@{mdtError}}
-\subsubsection[{number}]{\setlength{\rightskip}{0pt plus 5cm}int mdtError::number (
+\hypertarget{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}{\index{mdt\-Error@{mdt\-Error}!clear@{clear}}
+\index{clear@{clear}!mdtError@{mdt\-Error}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Error\-::clear (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}
+)}}\label{classmdt_error_a9fa7eb879fe7b26c4a4f0bd55fe29ffa}
+
+
+Clear. 
+
+
+
+Definition at line 70 of file mdt\-Error.\-cpp.
+
+
+
+References No\-Error.
+
+
+
+Referenced by mdt\-Sql\-Record\-::clear(), mdt\-Sql\-Database\-Manager\-::open\-Database\-Sqlite(), and set\-Error().
+
+\hypertarget{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{\index{mdt\-Error@{mdt\-Error}!commit@{commit}}
+\index{commit@{commit}!mdtError@{mdt\-Error}}
+\subsubsection[{commit}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Error\-::commit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}
+
+
+Send error to output. 
+
+
+
+Definition at line 113 of file mdt\-Error.\-cpp.
+
+
+
+References mdt\-Error\-Out\-::add\-Error().
+
+
+
+Referenced by mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Test\-Connection\-Cable\-::add\-Cable(), mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), mdt\-Sql\-Form\-::add\-Child\-Table(), mdt\-Cl\-Article\-::add\-Component(), mdt\-Cl\-Unit\-::add\-Component(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Sql\-Record\-::add\-Field(), mdt\-Data\-Table\-Manager\-::add\-Field\-Mapping(), mdt\-Sql\-Schema\-Table\-::add\-Field\-To\-Foreign\-Key(), mdt\-Sql\-Schema\-Table\-::add\-Field\-To\-Index(), mdt\-Tt\-Test\-Connection\-Cable\-::add\-Link(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Sql\-Relation\-::add\-Relation(), mdt\-Sql\-Form\-Old\-::add\-Relation(), mdt\-Sql\-Form\-::add\-Relation(), mdt\-Sql\-Selection\-Dialog\-::add\-Selection\-Result\-Column(), mdt\-Tt\-Test\-Node\-::add\-Test\-Node\-Unit(), mdt\-Port\-Manager\-::add\-Transaction\-Pending(), mdt\-Application\-::add\-Translations\-Directory(), mdt\-Cl\-Unit\-Vehicle\-Type\-::add\-Unit\-Vehicle\-Type\-Assignments(), mdt\-Partition\-Attributes\-::available\-Partitions(), mdt\-Serial\-Port\-::baud\-Rate(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Usb\-Port\-::cancel\-Control\-Transfer(), mdt\-Usb\-Port\-::cancel\-Message\-In\-Transfer(), mdt\-Usb\-Port\-::cancel\-Read\-Transfer(), mdt\-Usb\-Port\-::cancel\-Write\-Transfer(), mdt\-Application\-::change\-Language(), mdt\-Tt\-Database\-Schema\-::check\-Schema(), mdt\-Frame\-Codec\-Ascii\-::clean(), mdt\-Usb\-Port\-::clear\-Read\-Endpoint\-Halt(), mdt\-Usb\-Port\-::clear\-Write\-Endpoint\-Halt(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Device\-Modbus\-::connect\-To\-Device(), mdt\-Usb\-Port\-::control\-Transfer\-Callback(), mdt\-Data\-Table\-Manager\-::copy\-Table(), mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite(), mdt\-Sql\-Database\-Manager\-::create\-Table(), mdt\-Tt\-Test\-Connection\-Cable\-::create\-Test\-Cable(), mdt\-Sql\-Form\-Old\-::current\-Data(), mdt\-Sql\-Form\-::current\-Data(), mdt\-Sql\-Form\-Old\-::current\-Row(), mdt\-Sql\-Form\-::current\-Row(), mdt\-Sql\-Form\-Old\-::data(), mdt\-Sql\-Form\-::data(), mdt\-Serial\-Port\-::data\-Bits(), mdt\-Frame\-Codec\-K8055\-::decode(), mdt\-Frame\-Codec\-Modbus\-::decode(), mdt\-Frame\-Codec\-Scpi\-U3606\-A\-::decode\-Configure(), mdt\-Frame\-Codec\-Scpi\-::decode\-Error(), mdt\-Frame\-Codec\-Scpi\-::decode\-Function\-Parameters(), mdt\-Frame\-Codec\-Scpi\-::decode\-I\-E\-E\-Eblock(), mdt\-Frame\-Codec\-Scpi\-::decode\-Scpi\-Version(), mdt\-Frame\-Codec\-Scpi\-::decode\-Single\-Value\-Double(), mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Sql\-Data\-Validator\-::display\-Error(), mdt\-Sql\-Data\-Validator\-::display\-Warning(), mdt\-Cl\-Article\-::edit\-Component(), mdt\-Frame\-Codec\-Modbus\-::encode\-Read\-Coils(), mdt\-Frame\-Codec\-Modbus\-::encode\-Read\-Discrete\-Inputs(), mdt\-Frame\-Codec\-Modbus\-::encode\-Read\-Holding\-Registers(), mdt\-Frame\-Codec\-Modbus\-::encode\-Read\-Input\-Registers(), mdt\-Frame\-Codec\-Modbus\-::encode\-Write\-Multiple\-Coils(), mdt\-Frame\-Codec\-Modbus\-::encode\-Write\-Multiple\-Registers(), mdt\-Usb\-Device\-Descriptor\-::fetch\-Attributes(), mdt\-Serial\-Port\-::flow\-Ctl\-Rts\-Cts\-On(), mdt\-Serial\-Port\-::flow\-Ctl\-Xon\-Xoff\-On(), mdt\-Usb\-Port\-Manager\-::from\-Thread\-Control\-Response\-Readen(), mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Device\-::get\-Analog\-Input\-Value(), mdt\-Device\-::get\-Analog\-Input\-Value\-At(), mdt\-Device\-::get\-Analog\-Output\-Value(), mdt\-Device\-::get\-Analog\-Output\-Value\-At(), mdt\-Tt\-Test\-Node\-::get\-Channel\-Test\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connection\-Data(), mdt\-Cl\-Unit\-::get\-Connection\-Data(), mdt\-Cl\-Article\-::get\-Connection\-Data\-List\-From\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connector\-Data(), mdt\-Cl\-Unit\-::get\-Connector\-Data(), mdt\-Serial\-Port\-::get\-Ctl\-States(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), mdt\-Tt\-Base\-::get\-Data(), mdt\-Device\-::get\-Digital\-Input\-Value(), mdt\-Device\-::get\-Digital\-Input\-Value\-At(), mdt\-Device\-::get\-Digital\-Output\-Value(), mdt\-Device\-::get\-Digital\-Output\-Value\-At(), mdt\-Field\-Map\-Field\-::get\-Field\-Name(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Link\-::get\-Link\-Data(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-Link\-Data(), mdt\-Port\-Thread\-Helper\-::get\-New\-Frame\-Read(), mdt\-Port\-Manager\-::get\-New\-Transaction(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connector\-Related\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connector\-Id\-Based\-On\-Article\-Connector\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Unit\-Data(), mdt\-Port\-Thread\-Helper\-::handle\-Common\-Read\-Errors(), mdt\-Port\-Thread\-Helper\-::handle\-Common\-Write\-Errors(), mdt\-Device\-Scpi\-::handle\-Device\-Error(), mdt\-Usb\-Port\-::handle\-Usb\-Events(), mdt\-Tt\-Database\-Schema\-::import\-Database(), mdt\-Data\-Table\-Manager\-::import\-From\-Csv\-File(), mdt\-Usb\-Port\-::init\-Message\-In\-Transfer(), mdt\-Usb\-Port\-::init\-Read\-Transfer(), mdt\-Usb\-Port\-::init\-Write\-Transfer(), mdt\-Uic\-Number\-::is\-Valid(), mdt\-Device\-Modbus\-Wago\-::is\-Wago750(), mdt\-Sql\-Form\-Old\-::last\-Sql\-Error(), mdt\-Uic\-Number\-::load\-Countries\-Db(), mdt\-Uic\-Number\-::load\-Speed\-And\-Heats\-Db(), mdt\-Uic\-Number\-::load\-Types\-Db(), mdt\-Uic\-Number\-::load\-Usages\-Db(), mdt\-Port\-Manager\-::lock\-Port\-Mutex(), mdt\-Device\-Scpi\-::log\-Device\-Error(), mdt\-Cl\-Article\-Component\-Dialog\-::mdt\-Cl\-Article\-Component\-Dialog(), mdt\-Usb\-Port\-::mdt\-Usb\-Port(), mdt\-Usb\-Port\-::message\-In\-Transfer\-Callback(), mdt\-Sql\-Database\-Manager\-::open\-Database\-Sqlite(), mdt\-Port\-Lock\-::open\-Locked(), mdt\-Serial\-Port\-::parity(), mdt\-Port\-::read(), mdt\-Serial\-Port\-::read(), mdt\-Port\-Thread\-Helper\-Port\-::read\-From\-Port(), mdt\-Csv\-File\-::read\-Line(), mdt\-Csv\-File\-::read\-Lines(), mdt\-Usb\-Port\-::read\-Transfer\-Callback(), mdt\-Usb\-Port\-Thread\-::read\-Until\-Short\-Packet\-Received(), mdt\-Port\-Thread\-::reconnect(), mdt\-Cl\-Article\-::remove\-Components(), mdt\-Cl\-Unit\-::remove\-Components(), mdt\-Cl\-Article\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connectors\-Connections(), mdt\-Tt\-Base\-::remove\-Data(), mdt\-Frame\-Codec\-Ascii\-::remove\-Eof\-Seq(), mdt\-Tt\-Test\-Node\-::remove\-Test\-Node\-Units(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Serial\-Port\-::resume\-Transmission(), mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Sql\-Form\-Old\-::row\-Count(), mdt\-Sql\-Form\-::row\-Count(), mdt\-Usb\-Port\-Manager\-::scan(), mdt\-Sql\-Form\-Old\-::select(), mdt\-Sql\-Form\-::select(), mdt\-Device\-::set\-Analog\-Output\-Value(), mdt\-Device\-::set\-Analog\-Output\-Value\-At(), mdt\-Abstract\-Port\-Setup\-Dialog\-::set\-Apply\-Button\-Enabled(), mdt\-Serial\-Port\-::set\-Baud\-Rate(), mdt\-Abstract\-Port\-Setup\-Dialog\-::set\-Cancel\-Button\-Enabled(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connection\-Data(), mdt\-Cl\-Connector\-Data\-::set\-Contact\-Data(), mdt\-Data\-Table\-Manager\-::set\-Csv\-Format(), mdt\-Sql\-Form\-Old\-::set\-Current\-Data(), mdt\-Sql\-Form\-::set\-Current\-Data(), mdt\-Serial\-Port\-::set\-Data\-Bits(), mdt\-Data\-Table\-Manager\-::set\-Data\-Set\-Directory(), mdt\-Device\-::set\-Digital\-Output\-Value(), mdt\-Device\-::set\-Digital\-Output\-Value\-At(), mdt\-Serial\-Port\-::set\-Dtr(), mdt\-Serial\-Port\-::set\-Flow\-Ctl\-Rts\-Cts(), mdt\-Serial\-Port\-::set\-Flow\-Ctl\-Xon\-Xoff(), mdt\-Sql\-Database\-Manager\-::set\-Foreign\-Keys\-Enabled(), mdt\-Sql\-Form\-::set\-Main\-Table(), mdt\-Sql\-Form\-::set\-Main\-Table\-Filter(), mdt\-Uic\-Number\-::set\-Number(), mdt\-Abstract\-Port\-Setup\-Dialog\-::set\-Ok\-Button\-Enabled(), mdt\-Serial\-Port\-::set\-Parity(), mdt\-Partition\-Attributes\-::set\-Path(), mdt\-Analog\-Io\-::set\-Range(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), mdt\-Serial\-Port\-::set\-Stop\-Bits(), mdt\-Sql\-Form\-Old\-::set\-Table(), mdt\-Tt\-Test\-Node\-::set\-Test\-Connection(), mdt\-Cl\-Link\-::sql\-For\-Connectable\-Unit\-Connectors\-Selection(), mdt\-Sql\-Schema\-Table\-::sql\-For\-Create\-Table(), mdt\-Port\-Thread\-::stop(), mdt\-Serial\-Port\-::stop\-Bits(), mdt\-Usb\-Port\-::submit\-Control\-Query(), mdt\-Serial\-Port\-::suspend\-Transmission(), mdt\-Cl\-Unit\-::to\-Unit\-Related\-Article\-Connection\-Count(), mdt\-Tt\-Base\-::update\-Record(), mdt\-Serial\-Port\-::wait\-Event\-Ctl(), mdt\-Port\-::wait\-Event\-Write\-Ready(), mdt\-Serial\-Port\-::wait\-Event\-Write\-Ready(), mdt\-Port\-::wait\-For\-Ready\-Read(), mdt\-Serial\-Port\-::wait\-For\-Ready\-Read(), mdt\-Usb\-Port\-Thread\-::wait\-On\-Control\-Transfer\-Possible(), mdt\-Port\-Manager\-::wait\-Transaction\-Done(), mdt\-Port\-::write(), mdt\-Serial\-Port\-::write(), mdt\-Csv\-File\-::write\-Line(), mdt\-Port\-Thread\-Helper\-Port\-::write\-To\-Port(), and mdt\-Usb\-Port\-::write\-Transfer\-Callback().
+
+\hypertarget{classmdt_error_a7f5a9ac5e896ba24009bcadddcfe79cb}{\index{mdt\-Error@{mdt\-Error}!file\-Line@{file\-Line}}
+\index{file\-Line@{file\-Line}!mdtError@{mdt\-Error}}
+\subsubsection[{file\-Line}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Error\-::file\-Line (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_a7f5a9ac5e896ba24009bcadddcfe79cb}
+
+
+Error source line. 
+
+
+
+Definition at line 197 of file mdt\-Error.\-cpp.
+
+
+
+Referenced by mdt\-Error\-Out\-::add\-Error(), and set\-Source().
+
+\hypertarget{classmdt_error_af7c2c371678ebd45698a990502addbd8}{\index{mdt\-Error@{mdt\-Error}!file\-Name@{file\-Name}}
+\index{file\-Name@{file\-Name}!mdtError@{mdt\-Error}}
+\subsubsection[{file\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Error\-::file\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_af7c2c371678ebd45698a990502addbd8}
+
+
+Error source file (name only) 
+
+
+
+Definition at line 192 of file mdt\-Error.\-cpp.
+
+
+
+Referenced by mdt\-Error\-Out\-::add\-Error().
+
+\hypertarget{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}{\index{mdt\-Error@{mdt\-Error}!function\-Name@{function\-Name}}
+\index{function\-Name@{function\-Name}!mdtError@{mdt\-Error}}
+\subsubsection[{function\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Error\-::function\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_abff9bc71ff554f6f6189be88b0afa731}
+
+
+Error source function. 
+
+
+
+Definition at line 187 of file mdt\-Error.\-cpp.
+
+
+
+Referenced by mdt\-Error\-Out\-::add\-Error(), and set\-Source().
+
+\hypertarget{classmdt_error_adcc1905f585c327cec8a2e31af616651}{\index{mdt\-Error@{mdt\-Error}!informative\-Text@{informative\-Text}}
+\index{informative\-Text@{informative\-Text}!mdtError@{mdt\-Error}}
+\subsubsection[{informative\-Text}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Error\-::informative\-Text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_adcc1905f585c327cec8a2e31af616651}
+
+
+Get informative text. 
+
+
+
+Definition at line 182 of file mdt\-Error.\-cpp.
+
+
+
+Referenced by mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite().
+
+\hypertarget{classmdt_error_a8d8382d3008de890689df415deb7766e}{\index{mdt\-Error@{mdt\-Error}!level@{level}}
+\index{level@{level}!mdtError@{mdt\-Error}}
+\subsubsection[{level}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error\-::level\-\_\-t} mdt\-Error\-::level (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_a8d8382d3008de890689df415deb7766e}
+
+
+Error level  level\-\_\-t. 
+
+
+
+Definition at line 128 of file mdt\-Error.\-cpp.
+
+
+
+Referenced by mdt\-Error\-Out\-::add\-Error(), mdt\-Error(), and set\-Error().
+
+\hypertarget{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}{\index{mdt\-Error@{mdt\-Error}!level\-Icon@{level\-Icon}}
+\index{level\-Icon@{level\-Icon}!mdtError@{mdt\-Error}}
+\subsubsection[{level\-Icon}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Message\-Box\-::\-Icon mdt\-Error\-::level\-Icon (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_aac5a7cec9a5d4364f9331c80e1eafe99}
+
+
+Map the level to a Q\-Message\-Box Icon. 
+
+
+
+Definition at line 133 of file mdt\-Error.\-cpp.
+
+
+
+References Error, Info, No\-Error, and Warning.
+
+
+
+Referenced by mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite(), and mdt\-Sql\-Form\-::display\-Last\-Error().
+
+\hypertarget{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}{\index{mdt\-Error@{mdt\-Error}!number@{number}}
+\index{number@{number}!mdtError@{mdt\-Error}}
+\subsubsection[{number}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Error\-::number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_ad233adb8efe4180b85f584c5afdd49fc}
 
 
 Error number. 
 
-\begin{Desc}
-\item[\hyperlink{deprecated__deprecated000002}{Deprecated}]If no good idea falls in for the usage of number , this method should become obselete . \end{Desc}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000002}{Deprecated}]If no good idea falls in for the usage of number , this method should become obselete . \end{DoxyRefDesc}
 
 
-Definition at line 118 of file mdtError.cpp.
+Definition at line 118 of file mdt\-Error.\-cpp.
 
-\hypertarget{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}{
-\index{mdtError@{mdtError}!setError@{setError}}
-\index{setError@{setError}!mdtError@{mdtError}}
-\subsubsection[{setError}]{\setlength{\rightskip}{0pt plus 5cm}void mdtError::setError (
+
+
+Referenced by mdt\-Error\-Out\-::add\-Error(), mdt\-Error(), and set\-System\-Error().
+
+\hypertarget{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}{\index{mdt\-Error@{mdt\-Error}!set\-Error@{set\-Error}}
+\index{set\-Error@{set\-Error}!mdtError@{mdt\-Error}}
+\subsubsection[{set\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Error\-::set\-Error (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{text, }
-\item[{{\bf level\_\-t}}]{level}
+\item[{const Q\-String \&}]{text, }
+\item[{{\bf level\-\_\-t}}]{level}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}
+)}}\label{classmdt_error_a8e7961a665841c1b052116e4dd2eb855}
 
 
 Set error. 
 
 Will also clear current error . 
 
-Definition at line 58 of file mdtError.cpp.
+Definition at line 58 of file mdt\-Error.\-cpp.
 
-\hypertarget{classmdt_error_a8dd3203e11b308e6c2701d7f075af885}{
-\index{mdtError@{mdtError}!setSource@{setSource}}
-\index{setSource@{setSource}!mdtError@{mdtError}}
-\subsubsection[{setSource}]{\setlength{\rightskip}{0pt plus 5cm}void mdtError::setSource (
+
+
+References clear(), level(), and text().
+
+
+
+Referenced by mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Test\-Connection\-Cable\-::add\-Cable(), mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), mdt\-Sql\-Form\-::add\-Child\-Table(), mdt\-Cl\-Article\-::add\-Component(), mdt\-Cl\-Unit\-::add\-Component(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Sql\-Record\-::add\-Field(), mdt\-Data\-Table\-Manager\-::add\-Field\-Mapping(), mdt\-Sql\-Schema\-Table\-::add\-Field\-To\-Foreign\-Key(), mdt\-Sql\-Schema\-Table\-::add\-Field\-To\-Index(), mdt\-Tt\-Test\-Connection\-Cable\-::add\-Link(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Sql\-Form\-Old\-::add\-Relation(), mdt\-Sql\-Form\-::add\-Relation(), mdt\-Tt\-Test\-Node\-::add\-Test\-Node\-Unit(), mdt\-Cl\-Unit\-Vehicle\-Type\-::add\-Unit\-Vehicle\-Type\-Assignments(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Database\-Schema\-::check\-Schema(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Device\-Modbus\-::connect\-To\-Device(), mdt\-Data\-Table\-Manager\-::copy\-Table(), mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite(), mdt\-Sql\-Database\-Manager\-::create\-Table(), mdt\-Tt\-Test\-Connection\-Cable\-::create\-Test\-Cable(), mdt\-Sql\-Form\-Old\-::current\-Data(), mdt\-Sql\-Form\-::current\-Data(), mdt\-Sql\-Form\-Old\-::current\-Row(), mdt\-Sql\-Form\-::current\-Row(), mdt\-Sql\-Form\-Old\-::data(), mdt\-Sql\-Form\-::data(), mdt\-Cl\-Article\-::edit\-Component(), mdt\-Device\-::get\-Analog\-Input\-Value\-At(), mdt\-Device\-::get\-Analog\-Output\-Value\-At(), mdt\-Tt\-Test\-Node\-::get\-Channel\-Test\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connection\-Data(), mdt\-Cl\-Unit\-::get\-Connection\-Data(), mdt\-Cl\-Article\-::get\-Connection\-Data\-List\-From\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connector\-Data(), mdt\-Cl\-Unit\-::get\-Connector\-Data(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), mdt\-Tt\-Base\-::get\-Data(), mdt\-Device\-::get\-Digital\-Input\-Value\-At(), mdt\-Device\-::get\-Digital\-Output\-Value\-At(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Link\-::get\-Link\-Data(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-Link\-Data(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connector\-Related\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connector\-Id\-Based\-On\-Article\-Connector\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Unit\-Data(), mdt\-Tt\-Database\-Schema\-::import\-Database(), mdt\-Data\-Table\-Manager\-::import\-From\-Csv\-File(), mdt\-Sql\-Form\-Old\-::last\-Sql\-Error(), mdt\-Sql\-Database\-Manager\-::open\-Database\-Sqlite(), mdt\-Cl\-Article\-::remove\-Components(), mdt\-Cl\-Unit\-::remove\-Components(), mdt\-Cl\-Article\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connectors\-Connections(), mdt\-Tt\-Base\-::remove\-Data(), mdt\-Tt\-Test\-Node\-::remove\-Test\-Node\-Units(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Sql\-Form\-Old\-::row\-Count(), mdt\-Sql\-Form\-::row\-Count(), mdt\-Sql\-Form\-Old\-::select(), mdt\-Sql\-Form\-::select(), mdt\-Device\-::set\-Analog\-Output\-Value\-At(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connection\-Data(), mdt\-Cl\-Connector\-Data\-::set\-Contact\-Data(), mdt\-Data\-Table\-Manager\-::set\-Csv\-Format(), mdt\-Sql\-Form\-Old\-::set\-Current\-Data(), mdt\-Sql\-Form\-::set\-Current\-Data(), mdt\-Data\-Table\-Manager\-::set\-Data\-Set\-Directory(), mdt\-Device\-::set\-Digital\-Output\-Value\-At(), mdt\-Sql\-Database\-Manager\-::set\-Foreign\-Keys\-Enabled(), mdt\-Sql\-Form\-::set\-Main\-Table(), mdt\-Sql\-Form\-::set\-Main\-Table\-Filter(), mdt\-Sql\-Form\-Old\-::set\-Table(), mdt\-Tt\-Test\-Node\-::set\-Test\-Connection(), mdt\-Cl\-Link\-::sql\-For\-Connectable\-Unit\-Connectors\-Selection(), mdt\-Cl\-Unit\-::to\-Unit\-Related\-Article\-Connection\-Count(), and mdt\-Tt\-Base\-::update\-Record().
+
+\hypertarget{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}{\index{mdt\-Error@{mdt\-Error}!set\-Informative\-Text@{set\-Informative\-Text}}
+\index{set\-Informative\-Text@{set\-Informative\-Text}!mdtError@{mdt\-Error}}
+\subsubsection[{set\-Informative\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Error\-::set\-Informative\-Text (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{filePath, }
-\item[{int}]{fileLine, }
-\item[{const QString \&}]{className, }
-\item[{const QString \&}]{functionName}
+\item[{const Q\-String \&}]{text}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_error_a8dd3203e11b308e6c2701d7f075af885}
+)}}\label{classmdt_error_a8ef108a0502df7875f1b54bbb2a8919d}
 
 
-Add system error (for Windows API) 
+Set informative text. 
 
-When using Windows API, the standard mechanism is GetLastError() and FormatMessage(). Calling this method will do this internally.
+
+
+Definition at line 177 of file mdt\-Error.\-cpp.
+
+
+
+References text().
+
+
+
+Referenced by mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite(), and mdt\-Sql\-Database\-Manager\-::open\-Database\-Sqlite().
+
+\hypertarget{classmdt_error_a8dd3203e11b308e6c2701d7f075af885}{\index{mdt\-Error@{mdt\-Error}!set\-Source@{set\-Source}}
+\index{set\-Source@{set\-Source}!mdtError@{mdt\-Error}}
+\subsubsection[{set\-Source}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Error\-::set\-Source (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{file\-Path, }
+\item[{int}]{file\-Line, }
+\item[{const Q\-String \&}]{class\-Name, }
+\item[{const Q\-String \&}]{function\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_error_a8dd3203e11b308e6c2701d7f075af885}
+
+
+Add system error (for Windows A\-P\-I) 
+
+When using Windows A\-P\-I, the standard mechanism is Get\-Last\-Error() and Format\-Message(). Calling this method will do this internally.
 
 Add the source of error
 
-It's possible to use the helper macro MDT\_\-ERROR\_\-SET\_\-SRC() 
+It's possible to use the helper macro \hyperlink{mdt_error_8h_ab7f3d790e64bb1392fbfc1dd706fc9ce}{M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C()} 
 
-Definition at line 101 of file mdtError.cpp.
+Definition at line 101 of file mdt\-Error.\-cpp.
 
-\hypertarget{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{
-\index{mdtError@{mdtError}!systemErrorString@{systemErrorString}}
-\index{systemErrorString@{systemErrorString}!mdtError@{mdtError}}
-\subsubsection[{systemErrorString}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtError::systemErrorString (
+
+
+References file\-Line(), and function\-Name().
+
+\hypertarget{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{\index{mdt\-Error@{mdt\-Error}!set\-System\-Error@{set\-System\-Error}}
+\index{set\-System\-Error@{set\-System\-Error}!mdtError@{mdt\-Error}}
+\subsubsection[{set\-System\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Error\-::set\-System\-Error (
 \begin{DoxyParamCaption}
-\item[{QObject $\ast$}]{obj = {\ttfamily 0}}
+\item[{int}]{number, }
+\item[{const Q\-String \&}]{text}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}
+)}}\label{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}
+
+
+Add system returned error (for example, errno) 
+
+
+
+Definition at line 82 of file mdt\-Error.\-cpp.
+
+
+
+References number(), and text().
+
+
+
+Referenced by mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Test\-Connection\-Cable\-::add\-Cable(), mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), mdt\-Sql\-Form\-::add\-Child\-Table(), mdt\-Cl\-Article\-::add\-Component(), mdt\-Cl\-Unit\-::add\-Component(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Sql\-Record\-::add\-Field(), mdt\-Tt\-Test\-Connection\-Cable\-::add\-Link(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Test\-Node\-::add\-Test\-Node\-Unit(), mdt\-Cl\-Unit\-Vehicle\-Type\-::add\-Unit\-Vehicle\-Type\-Assignments(), mdt\-Partition\-Attributes\-::available\-Partitions(), mdt\-Serial\-Port\-::baud\-Rate(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Usb\-Port\-::cancel\-Control\-Transfer(), mdt\-Usb\-Port\-::cancel\-Message\-In\-Transfer(), mdt\-Usb\-Port\-::cancel\-Read\-Transfer(), mdt\-Usb\-Port\-::cancel\-Write\-Transfer(), mdt\-Usb\-Port\-::clear\-Read\-Endpoint\-Halt(), mdt\-Usb\-Port\-::clear\-Write\-Endpoint\-Halt(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Data\-Table\-Manager\-::copy\-Table(), mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite(), mdt\-Sql\-Database\-Manager\-::create\-Table(), mdt\-Tt\-Test\-Connection\-Cable\-::create\-Test\-Cable(), mdt\-Serial\-Port\-::data\-Bits(), mdt\-Abstract\-Sql\-Widget\-::display\-Database\-Error(), mdt\-Sql\-Data\-Validator\-::display\-Error(), mdt\-Sql\-Data\-Validator\-::display\-Warning(), mdt\-Cl\-Article\-::edit\-Component(), mdt\-Serial\-Port\-::flow\-Ctl\-Rts\-Cts\-On(), mdt\-Serial\-Port\-::flow\-Ctl\-Xon\-Xoff\-On(), mdt\-Tt\-Test\-Node\-::get\-Channel\-Test\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connection\-Data\-List\-From\-Connection\-Id\-List(), mdt\-Serial\-Port\-::get\-Ctl\-States(), mdt\-Tt\-Base\-::get\-Data(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connector\-Related\-Unit\-Connection\-Id\-List(), mdt\-Usb\-Port\-::handle\-Usb\-Events(), mdt\-Usb\-Port\-::init\-Message\-In\-Transfer(), mdt\-Usb\-Port\-::init\-Read\-Transfer(), mdt\-Usb\-Port\-::init\-Write\-Transfer(), mdt\-Uic\-Number\-::load\-Countries\-Db(), mdt\-Uic\-Number\-::load\-Speed\-And\-Heats\-Db(), mdt\-Uic\-Number\-::load\-Types\-Db(), mdt\-Uic\-Number\-::load\-Usages\-Db(), mdt\-Cl\-Article\-Component\-Dialog\-::mdt\-Cl\-Article\-Component\-Dialog(), mdt\-Usb\-Port\-::mdt\-Usb\-Port(), mdt\-Sql\-Database\-Manager\-::open\-Database\-Sqlite(), mdt\-Port\-Lock\-::open\-Locked(), mdt\-Serial\-Port\-::parity(), mdt\-Port\-::read(), mdt\-Serial\-Port\-::read(), mdt\-Cl\-Article\-::remove\-Components(), mdt\-Cl\-Unit\-::remove\-Components(), mdt\-Cl\-Article\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connectors\-Connections(), mdt\-Tt\-Base\-::remove\-Data(), mdt\-Tt\-Test\-Node\-::remove\-Test\-Node\-Units(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Serial\-Port\-::resume\-Transmission(), mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Serial\-Port\-::set\-Baud\-Rate(), mdt\-Serial\-Port\-::set\-Data\-Bits(), mdt\-Serial\-Port\-::set\-Dtr(), mdt\-Serial\-Port\-::set\-Flow\-Ctl\-Rts\-Cts(), mdt\-Serial\-Port\-::set\-Flow\-Ctl\-Xon\-Xoff(), mdt\-Sql\-Database\-Manager\-::set\-Foreign\-Keys\-Enabled(), mdt\-Sql\-Form\-::set\-Main\-Table(), mdt\-Serial\-Port\-::set\-Parity(), mdt\-Partition\-Attributes\-::set\-Path(), mdt\-Serial\-Port\-::set\-Stop\-Bits(), mdt\-Sql\-Form\-Old\-::set\-Table(), mdt\-Tt\-Test\-Node\-::set\-Test\-Connection(), mdt\-File\-Copier\-::start\-Copy(), mdt\-Port\-Thread\-::stop(), mdt\-Serial\-Port\-::stop\-Bits(), mdt\-Usb\-Port\-::submit\-Control\-Query(), mdt\-Serial\-Port\-::suspend\-Transmission(), mdt\-Cl\-Unit\-::to\-Unit\-Related\-Article\-Connection\-Count(), mdt\-Tt\-Base\-::update\-Record(), mdt\-Serial\-Port\-::wait\-Event\-Ctl(), mdt\-Port\-::wait\-Event\-Write\-Ready(), mdt\-Serial\-Port\-::wait\-Event\-Write\-Ready(), mdt\-Port\-::wait\-For\-Ready\-Read(), mdt\-Serial\-Port\-::wait\-For\-Ready\-Read(), mdt\-Port\-::write(), and mdt\-Serial\-Port\-::write().
+
+\hypertarget{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}{\index{mdt\-Error@{mdt\-Error}!system\-Error\-String@{system\-Error\-String}}
+\index{system\-Error\-String@{system\-Error\-String}!mdtError@{mdt\-Error}}
+\subsubsection[{system\-Error\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Error\-::system\-Error\-String (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{obj = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_a28d22c0b9341faacfef22a7deae2da3c}
 
 
 Error number and text from system, if available. 
 
-If obj is set, translation is used. (We not want to use the static QObject::tr() ). 
+If obj is set, translation is used. (We not want to use the static Q\-Object\-::tr() ). 
 
-Definition at line 158 of file mdtError.cpp.
+Definition at line 158 of file mdt\-Error.\-cpp.
 
-\hypertarget{classmdt_error_ace38a9600c19ddf3628d46b1a6a7b414}{
-\index{mdtError@{mdtError}!updateText@{updateText}}
-\index{updateText@{updateText}!mdtError@{mdtError}}
-\subsubsection[{updateText}]{\setlength{\rightskip}{0pt plus 5cm}void mdtError::updateText (
+
+
+Referenced by mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite().
+
+\hypertarget{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}{\index{mdt\-Error@{mdt\-Error}!system\-Number@{system\-Number}}
+\index{system\-Number@{system\-Number}!mdtError@{mdt\-Error}}
+\subsubsection[{system\-Number}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Error\-::system\-Number (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{text}
+{}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_error_ace38a9600c19ddf3628d46b1a6a7b414}
+) const}}\label{classmdt_error_a1be3f45cd56b3142f50c288df9f53204}
+
+
+Error number returned from system if available. 
+
+
+
+Definition at line 148 of file mdt\-Error.\-cpp.
+
+
+
+Referenced by mdt\-Error\-Out\-::add\-Error().
+
+\hypertarget{classmdt_error_a6cd449e657f321b86d234269b5e92cda}{\index{mdt\-Error@{mdt\-Error}!system\-Text@{system\-Text}}
+\index{system\-Text@{system\-Text}!mdtError@{mdt\-Error}}
+\subsubsection[{system\-Text}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Error\-::system\-Text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_a6cd449e657f321b86d234269b5e92cda}
+
+
+Error text returned from system, if available. 
+
+
+
+Definition at line 153 of file mdt\-Error.\-cpp.
+
+
+
+Referenced by mdt\-Error\-Out\-::add\-Error(), mdt\-Sql\-Form\-::display\-Last\-Error(), mdt\-Cl\-Article\-Link\-Dialog\-::mdt\-Cl\-Article\-Link\-Dialog(), and mdt\-Tt\-Test\-Link\-Dialog\-::mdt\-Tt\-Test\-Link\-Dialog().
+
+\hypertarget{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}{\index{mdt\-Error@{mdt\-Error}!text@{text}}
+\index{text@{text}!mdtError@{mdt\-Error}}
+\subsubsection[{text}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Error\-::text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_error_a8630bb6b21b70edfe3d13eaff82a1baf}
+
+
+Error text. 
+
+
+
+Definition at line 123 of file mdt\-Error.\-cpp.
+
+
+
+Referenced by mdt\-Error\-Out\-::add\-Error(), mdt\-Data\-Table\-Manager\-::copy\-Table(), mdt\-Sql\-Database\-Manager\-::create\-Database\-Sqlite(), mdt\-Sql\-Form\-::display\-Last\-Error(), mdt\-Cl\-Article\-Link\-Dialog\-::mdt\-Cl\-Article\-Link\-Dialog(), mdt\-Error(), mdt\-Tt\-Test\-Link\-Dialog\-::mdt\-Tt\-Test\-Link\-Dialog(), set\-Error(), set\-Informative\-Text(), set\-System\-Error(), and update\-Text().
+
+\hypertarget{classmdt_error_ace38a9600c19ddf3628d46b1a6a7b414}{\index{mdt\-Error@{mdt\-Error}!update\-Text@{update\-Text}}
+\index{update\-Text@{update\-Text}!mdtError@{mdt\-Error}}
+\subsubsection[{update\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Error\-::update\-Text (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{text}
+\end{DoxyParamCaption}
+)}}\label{classmdt_error_ace38a9600c19ddf3628d46b1a6a7b414}
 
 
 Update error text. 
 
 Will set error text, but does not clear error . 
 
-Definition at line 65 of file mdtError.cpp.
+Definition at line 65 of file mdt\-Error.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References text().
+
+
+
+Referenced by mdt\-Data\-Table\-Manager\-::copy\-Table().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtError.h\item 
-src/mdtutils/mdtError.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_error_8h}{mdt\-Error.\-h}\item 
+src/mdtutils/\hyperlink{mdt_error_8cpp}{mdt\-Error.\-cpp}\end{DoxyCompactItemize}

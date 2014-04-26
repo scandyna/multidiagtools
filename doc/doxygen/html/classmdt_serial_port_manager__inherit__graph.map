@@ -1,3 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="21,5,139,35"/>
+<map id="mdtSerialPortManager" name="mdtSerialPortManager">
+<area shape="rect" id="node2" href="$classmdt_port_manager.html" title="Port manager base class. " alt="" coords="21,83,139,112"/>
+<area shape="rect" id="node4" href="$class_q_object.html" title="QObject" alt="" coords="45,5,115,35"/>
 </map>

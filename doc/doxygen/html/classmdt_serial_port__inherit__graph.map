@@ -1,4 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_abstract_serial_port.html" title="NOTE:" alt="" coords="5,83,155,112"/>
-<area shape="rect" id="node4" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,5,139,35"/>
+<map id="mdtSerialPort" name="mdtSerialPort">
+<area shape="rect" id="node2" href="$classmdt_abstract_serial_port.html" title="NOTE: " alt="" coords="5,160,155,189"/>
+<area shape="rect" id="node4" href="$classmdt_abstract_port.html" title="Base class for port I/O. " alt="" coords="21,83,139,112"/>
+<area shape="rect" id="node6" href="$class_q_object.html" title="QObject" alt="" coords="45,5,115,35"/>
 </map>

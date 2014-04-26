@@ -1,5 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_graph_vertex.html" title="Vertex of mdtGraph." alt="" coords="19,101,136,131"/>
-<area shape="rect" id="node4" href="$classmdt_graph_vertex_data.html" title="Provide data storage for mdtGraph." alt="" coords="5,5,149,35"/>
-<area shape="rect" id="node6" href="$classmdt_graph_edge_data.html" title="Provide data storage for mdtGraph edge." alt="" coords="160,101,296,131"/>
-</map>

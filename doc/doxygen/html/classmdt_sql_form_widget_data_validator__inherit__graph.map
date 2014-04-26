@@ -1,3 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_sql_data_validator.html" title="Helper class for data validation." alt="" coords="41,5,183,35"/>
+<map id="mdtSqlFormWidgetDataValidator" name="mdtSqlFormWidgetDataValidator">
+<area shape="rect" id="node2" href="$classmdt_sql_data_validator.html" title="Helper class for data validation. " alt="" coords="41,83,183,112"/>
+<area shape="rect" id="node4" href="$class_q_object.html" title="QObject" alt="" coords="77,5,147,35"/>
 </map>

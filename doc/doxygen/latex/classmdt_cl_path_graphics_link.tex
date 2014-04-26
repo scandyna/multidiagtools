@@ -1,0 +1,282 @@
+\hypertarget{classmdt_cl_path_graphics_link}{\section{mdt\-Cl\-Path\-Graphics\-Link Class Reference}
+\label{classmdt_cl_path_graphics_link}\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}}
+}
+
+
+Item that represent a link in a graphics scene.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Path\-Graphics\-Link.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Cl\-Path\-Graphics\-Link\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{classmdt_cl_path_graphics_link__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Cl\-Path\-Graphics\-Link\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{classmdt_cl_path_graphics_link__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \hyperlink{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149aa723cdfcf53fb7f9035577f8b91e6651}{Type} = User\-Type + 2
+ \}
+\begin{DoxyCompactList}\small\item\em For Q\-Graphics\-View. \end{DoxyCompactList}\item 
+enum \hyperlink{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2d}{link\-Type\-\_\-t} \{ \hyperlink{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8b0111c49fc77799f8ac81624a5e6c56}{Cable\-Link}, 
+\hyperlink{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8da60a183772ac364b8e845e0f22430d}{Connection}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_cl_path_graphics_link_a31a182e084bd06785b6985eef7272580}{mdt\-Cl\-Path\-Graphics\-Link} (\hyperlink{classmdt_cl_path_graphics_connection}{mdt\-Cl\-Path\-Graphics\-Connection} $\ast$\hyperlink{classmdt_cl_path_graphics_link_a863277170ed3f2f893aee2ab7d768ac7}{start\-Connection}, \hyperlink{classmdt_cl_path_graphics_connection}{mdt\-Cl\-Path\-Graphics\-Connection} $\ast$\hyperlink{classmdt_cl_path_graphics_link_ada7934bce202c6b88c4aeacc612964e9}{end\-Connection})
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_path_graphics_link_ad3cbd811663e4b3b98d906bef622777c}{set\-Text} (const Q\-String \&text)
+\begin{DoxyCompactList}\small\item\em Set text. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_path_graphics_link_a93e79f03e2ee609edf6342a065f21deb}{set\-Link\-Type} (\hyperlink{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2d}{link\-Type\-\_\-t} \hyperlink{classmdt_cl_path_graphics_link_ab2f102d6d2dcac5da1e62188f19dbfcd}{type})
+\begin{DoxyCompactList}\small\item\em Set the link type. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_path_graphics_connection}{mdt\-Cl\-Path\-Graphics\-Connection} $\ast$ \hyperlink{classmdt_cl_path_graphics_link_a863277170ed3f2f893aee2ab7d768ac7}{start\-Connection} ()
+\begin{DoxyCompactList}\small\item\em Get start connection. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_path_graphics_connection}{mdt\-Cl\-Path\-Graphics\-Connection} $\ast$ \hyperlink{classmdt_cl_path_graphics_link_ada7934bce202c6b88c4aeacc612964e9}{end\-Connection} ()
+\begin{DoxyCompactList}\small\item\em Get end connection. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_path_graphics_link_aca6ea2d8ae9944b2739865072170c812}{adjust} ()
+\begin{DoxyCompactList}\small\item\em Adjust the start and end points of the link. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_cl_path_graphics_link_ab2f102d6d2dcac5da1e62188f19dbfcd}{type} () const 
+\begin{DoxyCompactList}\small\item\em Get type. \end{DoxyCompactList}\item 
+Q\-Rect\-F \hyperlink{classmdt_cl_path_graphics_link_a282899cce5aff82c7f1ff057dfd2a7e5}{bounding\-Rect} () const 
+\begin{DoxyCompactList}\small\item\em Get bounding rect. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_path_graphics_link_a7a50d75bff40311438d59a4ebb4302f8}{paint} (Q\-Painter $\ast$painter, const Q\-Style\-Option\-Graphics\-Item $\ast$option, \hyperlink{class_q_widget}{Q\-Widget} $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Paint the link. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Item that represent a link in a graphics scene. 
+
+Definition at line 39 of file mdt\-Cl\-Path\-Graphics\-Link.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149}{\subsubsection[{anonymous enum}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}}\label{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149}
+
+
+For Q\-Graphics\-View. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Type@{Type}!mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}}\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!Type@{Type}}\item[{\em 
+\hypertarget{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149aa723cdfcf53fb7f9035577f8b91e6651}{Type}\label{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149aa723cdfcf53fb7f9035577f8b91e6651}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 45 of file mdt\-Cl\-Path\-Graphics\-Link.\-h.
+
+\hypertarget{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2d}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!link\-Type\-\_\-t@{link\-Type\-\_\-t}}
+\index{link\-Type\-\_\-t@{link\-Type\-\_\-t}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{link\-Type\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Cl\-Path\-Graphics\-Link\-::link\-Type\-\_\-t}}}\label{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2d}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Cable\-Link@{Cable\-Link}!mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}}\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!Cable\-Link@{Cable\-Link}}\item[{\em 
+\hypertarget{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8b0111c49fc77799f8ac81624a5e6c56}{Cable\-Link}\label{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8b0111c49fc77799f8ac81624a5e6c56}
+}]\index{Connection@{Connection}!mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}}\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!Connection@{Connection}}\item[{\em 
+\hypertarget{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8da60a183772ac364b8e845e0f22430d}{Connection}\label{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8da60a183772ac364b8e845e0f22430d}
+}]Cable link. Connection \end{description}
+\end{Desc}
+
+
+Definition at line 49 of file mdt\-Cl\-Path\-Graphics\-Link.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_cl_path_graphics_link_a31a182e084bd06785b6985eef7272580}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}}
+\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{mdt\-Cl\-Path\-Graphics\-Link}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Path\-Graphics\-Link\-::mdt\-Cl\-Path\-Graphics\-Link (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Cl\-Path\-Graphics\-Connection} $\ast$}]{start\-Connection, }
+\item[{{\bf mdt\-Cl\-Path\-Graphics\-Connection} $\ast$}]{end\-Connection}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graphics_link_a31a182e084bd06785b6985eef7272580}
+
+
+Constructor. 
+
+
+
+Definition at line 32 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+
+
+
+References mdt\-Cl\-Path\-Graphics\-Connection\-::add\-Link(), adjust(), end\-Connection(), and start\-Connection().
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_path_graphics_link_aca6ea2d8ae9944b2739865072170c812}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!adjust@{adjust}}
+\index{adjust@{adjust}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{adjust}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Path\-Graphics\-Link\-::adjust (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graphics_link_aca6ea2d8ae9944b2739865072170c812}
+
+
+Adjust the start and end points of the link. 
+
+
+
+Definition at line 90 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+
+
+
+Referenced by mdt\-Cl\-Path\-Graphics\-Connection\-::add\-Link(), and mdt\-Cl\-Path\-Graphics\-Link().
+
+\hypertarget{classmdt_cl_path_graphics_link_a282899cce5aff82c7f1ff057dfd2a7e5}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!bounding\-Rect@{bounding\-Rect}}
+\index{bounding\-Rect@{bounding\-Rect}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{bounding\-Rect}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Rect\-F mdt\-Cl\-Path\-Graphics\-Link\-::bounding\-Rect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_path_graphics_link_a282899cce5aff82c7f1ff057dfd2a7e5}
+
+
+Get bounding rect. 
+
+
+
+Definition at line 110 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+
+\hypertarget{classmdt_cl_path_graphics_link_ada7934bce202c6b88c4aeacc612964e9}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!end\-Connection@{end\-Connection}}
+\index{end\-Connection@{end\-Connection}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{end\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Cl\-Path\-Graphics\-Connection} $\ast$ mdt\-Cl\-Path\-Graphics\-Link\-::end\-Connection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graphics_link_ada7934bce202c6b88c4aeacc612964e9}
+
+
+Get end connection. 
+
+
+
+Definition at line 85 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+
+
+
+Referenced by mdt\-Cl\-Path\-Graphics\-Link().
+
+\hypertarget{classmdt_cl_path_graphics_link_a7a50d75bff40311438d59a4ebb4302f8}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!paint@{paint}}
+\index{paint@{paint}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{paint}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Path\-Graphics\-Link\-::paint (
+\begin{DoxyParamCaption}
+\item[{Q\-Painter $\ast$}]{painter, }
+\item[{const Q\-Style\-Option\-Graphics\-Item $\ast$}]{option, }
+\item[{{\bf Q\-Widget} $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graphics_link_a7a50d75bff40311438d59a4ebb4302f8}
+
+
+Paint the link. 
+
+
+
+Definition at line 118 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+
+\hypertarget{classmdt_cl_path_graphics_link_a93e79f03e2ee609edf6342a065f21deb}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!set\-Link\-Type@{set\-Link\-Type}}
+\index{set\-Link\-Type@{set\-Link\-Type}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{set\-Link\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Path\-Graphics\-Link\-::set\-Link\-Type (
+\begin{DoxyParamCaption}
+\item[{{\bf link\-Type\-\_\-t}}]{type}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graphics_link_a93e79f03e2ee609edf6342a065f21deb}
+
+
+Set the link type. 
+
+This will affect the graphical representation of the link.
+
+\begin{DoxyNote}{Note}
+\-: current version will only change color of the link .. 
+\end{DoxyNote}
+
+
+Definition at line 68 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+
+
+
+References Cable\-Link, and Connection.
+
+\hypertarget{classmdt_cl_path_graphics_link_ad3cbd811663e4b3b98d906bef622777c}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!set\-Text@{set\-Text}}
+\index{set\-Text@{set\-Text}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{set\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Path\-Graphics\-Link\-::set\-Text (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{text}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graphics_link_ad3cbd811663e4b3b98d906bef622777c}
+
+
+Set text. 
+
+
+
+Definition at line 46 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+
+\hypertarget{classmdt_cl_path_graphics_link_a863277170ed3f2f893aee2ab7d768ac7}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!start\-Connection@{start\-Connection}}
+\index{start\-Connection@{start\-Connection}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{start\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Cl\-Path\-Graphics\-Connection} $\ast$ mdt\-Cl\-Path\-Graphics\-Link\-::start\-Connection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graphics_link_a863277170ed3f2f893aee2ab7d768ac7}
+
+
+Get start connection. 
+
+
+
+Definition at line 80 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+
+
+
+Referenced by mdt\-Cl\-Path\-Graphics\-Link().
+
+\hypertarget{classmdt_cl_path_graphics_link_ab2f102d6d2dcac5da1e62188f19dbfcd}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!type@{type}}
+\index{type@{type}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
+\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Cl\-Path\-Graphics\-Link\-::type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_path_graphics_link_ab2f102d6d2dcac5da1e62188f19dbfcd}
+
+
+Get type. 
+
+
+
+Definition at line 105 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+
+
+
+References Type.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_path_graphics_link_8h}{mdt\-Cl\-Path\-Graphics\-Link.\-h}\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_path_graphics_link_8cpp}{mdt\-Cl\-Path\-Graphics\-Link.\-cpp}\end{DoxyCompactItemize}

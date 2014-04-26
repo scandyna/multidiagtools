@@ -1,19 +1,18 @@
-\hypertarget{classmdt_port_thread_helper_port}{
-\section{mdtPortThreadHelperPort Class Reference}
-\label{classmdt_port_thread_helper_port}\index{mdtPortThreadHelperPort@{mdtPortThreadHelperPort}}
+\hypertarget{classmdt_port_thread_helper_port}{\section{mdt\-Port\-Thread\-Helper\-Port Class Reference}
+\label{classmdt_port_thread_helper_port}\index{mdt\-Port\-Thread\-Helper\-Port@{mdt\-Port\-Thread\-Helper\-Port}}
 }
 
 
-Helper class for \hyperlink{classmdt_port_thread}{mdtPortThread} and subclasses.  
+Helper class for \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread} and subclasses.  
 
 
 
 
-{\ttfamily \#include $<$mdtPortThreadHelperPort.h$>$}
+{\ttfamily \#include $<$mdt\-Port\-Thread\-Helper\-Port.\-h$>$}
 
 
 
-Inheritance diagram for mdtPortThreadHelperPort:\nopagebreak
+Inheritance diagram for mdt\-Port\-Thread\-Helper\-Port\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,189 +21,229 @@ Inheritance diagram for mdtPortThreadHelperPort:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtPortThreadHelperPort:\nopagebreak
+Collaboration diagram for mdt\-Port\-Thread\-Helper\-Port\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=342pt]{classmdt_port_thread_helper_port__coll__graph}
+\includegraphics[width=350pt]{classmdt_port_thread_helper_port__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_port_thread_helper_port_ab037d6f41e9f19145f06a964701181a3}{
-\hyperlink{classmdt_port_thread_helper_port_ab037d6f41e9f19145f06a964701181a3}{mdtPortThreadHelperPort} (QObject $\ast$parent=0)}
-\label{classmdt_port_thread_helper_port_ab037d6f41e9f19145f06a964701181a3}
-
+\hyperlink{classmdt_port_thread_helper_port_ab037d6f41e9f19145f06a964701181a3}{mdt\-Port\-Thread\-Helper\-Port} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_thread_helper_port_afd9117d9a6b4f6769fc3ab0c9fa4a1e8}{
-\hyperlink{classmdt_port_thread_helper_port_afd9117d9a6b4f6769fc3ab0c9fa4a1e8}{$\sim$mdtPortThreadHelperPort} ()}
-\label{classmdt_port_thread_helper_port_afd9117d9a6b4f6769fc3ab0c9fa4a1e8}
-
+\hyperlink{classmdt_port_thread_helper_port_afd9117d9a6b4f6769fc3ab0c9fa4a1e8}{$\sim$mdt\-Port\-Thread\-Helper\-Port} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_helper_port_a0404d78ce7372c4732e48197d4e88e3c}{reconnect} (bool notify)
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_port_thread_helper_port_a0404d78ce7372c4732e48197d4e88e3c}{reconnect} (bool notify)
 \begin{DoxyCompactList}\small\item\em Reconnect. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_port_thread_helper_port_a9b908f7675a9f5ab28f306bba282f68f}{readFromPort} (bool emitNewFrameReaden)
+int \hyperlink{classmdt_port_thread_helper_port_a9b908f7675a9f5ab28f306bba282f68f}{read\-From\-Port} (bool emit\-New\-Frame\-Readen)
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_port_thread_helper_port_a1d5cda8a61575825c3acd8b72f00fc6f}{writeDataToPort} (int maxSize)
+int \hyperlink{classmdt_port_thread_helper_port_a1d5cda8a61575825c3acd8b72f00fc6f}{write\-Data\-To\-Port} (int max\-Size)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_helper_port_a25c35855dc9e8edc489a9efad8d293f7}{writeToPort} (bool bytePerByteWrite, int interByteTime, int maxWriteTry=10)
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_port_thread_helper_port_a25c35855dc9e8edc489a9efad8d293f7}{write\-To\-Port} (bool byte\-Per\-Byte\-Write, int inter\-Byte\-Time, int max\-Write\-Try=10)
 \begin{DoxyCompactList}\small\item\em Write a complete frame to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
-Helper class for \hyperlink{classmdt_port_thread}{mdtPortThread} and subclasses. 
+Helper class for \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread} and subclasses. 
 
-This class is helpfull for blocking API based only on \hyperlink{classmdt_abstract_port}{mdtAbstractPort}. 
+This class is helpfull for blocking A\-P\-I based only on \hyperlink{classmdt_abstract_port}{mdt\-Abstract\-Port}. 
 
-Definition at line 31 of file mdtPortThreadHelperPort.h.
+Definition at line 31 of file mdt\-Port\-Thread\-Helper\-Port.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_port_thread_helper_port_ab037d6f41e9f19145f06a964701181a3}{\index{mdt\-Port\-Thread\-Helper\-Port@{mdt\-Port\-Thread\-Helper\-Port}!mdt\-Port\-Thread\-Helper\-Port@{mdt\-Port\-Thread\-Helper\-Port}}
+\index{mdt\-Port\-Thread\-Helper\-Port@{mdt\-Port\-Thread\-Helper\-Port}!mdtPortThreadHelperPort@{mdt\-Port\-Thread\-Helper\-Port}}
+\subsubsection[{mdt\-Port\-Thread\-Helper\-Port}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Port\-Thread\-Helper\-Port\-::mdt\-Port\-Thread\-Helper\-Port (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_thread_helper_port_ab037d6f41e9f19145f06a964701181a3}
+
+
+Constructor. 
+
+
+
+Definition at line 38 of file mdt\-Port\-Thread\-Helper\-Port.\-cpp.
+
+\hypertarget{classmdt_port_thread_helper_port_afd9117d9a6b4f6769fc3ab0c9fa4a1e8}{\index{mdt\-Port\-Thread\-Helper\-Port@{mdt\-Port\-Thread\-Helper\-Port}!$\sim$mdt\-Port\-Thread\-Helper\-Port@{$\sim$mdt\-Port\-Thread\-Helper\-Port}}
+\index{$\sim$mdt\-Port\-Thread\-Helper\-Port@{$\sim$mdt\-Port\-Thread\-Helper\-Port}!mdtPortThreadHelperPort@{mdt\-Port\-Thread\-Helper\-Port}}
+\subsubsection[{$\sim$mdt\-Port\-Thread\-Helper\-Port}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Port\-Thread\-Helper\-Port\-::$\sim$mdt\-Port\-Thread\-Helper\-Port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_thread_helper_port_afd9117d9a6b4f6769fc3ab0c9fa4a1e8}
+
+
+Destructor. 
+
+
+
+Definition at line 45 of file mdt\-Port\-Thread\-Helper\-Port.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_port_thread_helper_port_a9b908f7675a9f5ab28f306bba282f68f}{
-\index{mdtPortThreadHelperPort@{mdtPortThreadHelperPort}!readFromPort@{readFromPort}}
-\index{readFromPort@{readFromPort}!mdtPortThreadHelperPort@{mdtPortThreadHelperPort}}
-\subsubsection[{readFromPort}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortThreadHelperPort::readFromPort (
+\hypertarget{classmdt_port_thread_helper_port_a9b908f7675a9f5ab28f306bba282f68f}{\index{mdt\-Port\-Thread\-Helper\-Port@{mdt\-Port\-Thread\-Helper\-Port}!read\-From\-Port@{read\-From\-Port}}
+\index{read\-From\-Port@{read\-From\-Port}!mdtPortThreadHelperPort@{mdt\-Port\-Thread\-Helper\-Port}}
+\subsubsection[{read\-From\-Port}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Port\-Thread\-Helper\-Port\-::read\-From\-Port (
 \begin{DoxyParamCaption}
-\item[{bool}]{emitNewFrameReaden}
+\item[{bool}]{emit\-New\-Frame\-Readen}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_thread_helper_port_a9b908f7675a9f5ab28f306bba282f68f}
+)}}\label{classmdt_port_thread_helper_port_a9b908f7675a9f5ab28f306bba282f68f}
 
 
 Read data from port. 
 
 This is a helper method to read data from port and to store chunk of data into a frame.
 
-Note about port mutex handling:\par
+Note about port mutex handling\-:\par
  The port mutex must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
 
 
 \begin{DoxyParams}{Parameters}
-{\em emitNewFrameReaden} & If true, \hyperlink{classmdt_port_thread_helper_a751006665ed9f110ade8ced5264a5f50}{newFrameReaden()} will be emitted each time a complete frame was generated. \\
+{\em emit\-New\-Frame\-Readen} & If true, \hyperlink{classmdt_port_thread_helper_a751006665ed9f110ade8ced5264a5f50}{new\-Frame\-Readen()} will be emitted each time a complete frame was generated. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-The number of frames completed during the process. This can be helpful for query/reply protocols in witch the standard reply should be one frame. On error, one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} is returned and thread must handle error itself.
+The number of frames completed during the process. This can be helpful for query/reply protocols in witch the standard reply should be one frame. On error, one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} is returned and thread must handle error itself.
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
-Port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdtPortThreadHelper::setPort()}. 
+Port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdt\-Port\-Thread\-Helper\-::set\-Port()}. 
 
-Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{mdtPortThreadHelper::setThread()}. 
+Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{mdt\-Port\-Thread\-Helper\-::set\-Thread()}. 
 \end{DoxyPrecond}
 
 
-Definition at line 60 of file mdtPortThreadHelperPort.cpp.
+Definition at line 60 of file mdt\-Port\-Thread\-Helper\-Port.\-cpp.
 
-\hypertarget{classmdt_port_thread_helper_port_a0404d78ce7372c4732e48197d4e88e3c}{
-\index{mdtPortThreadHelperPort@{mdtPortThreadHelperPort}!reconnect@{reconnect}}
-\index{reconnect@{reconnect}!mdtPortThreadHelperPort@{mdtPortThreadHelperPort}}
-\subsubsection[{reconnect}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThreadHelperPort::reconnect (
+
+
+References mdt\-Error\-::commit(), mdt\-Port\-Thread\-Helper\-::current\-Read\-Frame(), mdt\-Error\-::\-Error, mdt\-Port\-Thread\-Helper\-::get\-New\-Frame\-Read(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-M\-E\-M\-O\-R\-Y\-\_\-\-A\-L\-L\-O\-C\-\_\-\-E\-R\-R\-O\-R, mdt\-Port\-Thread\-Helper\-::pv\-Port, mdt\-Port\-Thread\-Helper\-::pv\-Thread, mdt\-Abstract\-Port\-::read(), mdt\-Abstract\-Port\-::\-Read\-Pool\-Empty, and mdt\-Port\-Thread\-Helper\-::submit\-Readen\-Data().
+
+\hypertarget{classmdt_port_thread_helper_port_a0404d78ce7372c4732e48197d4e88e3c}{\index{mdt\-Port\-Thread\-Helper\-Port@{mdt\-Port\-Thread\-Helper\-Port}!reconnect@{reconnect}}
+\index{reconnect@{reconnect}!mdtPortThreadHelperPort@{mdt\-Port\-Thread\-Helper\-Port}}
+\subsubsection[{reconnect}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Port\-Thread\-Helper\-Port\-::reconnect (
 \begin{DoxyParamCaption}
 \item[{bool}]{notify}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_port_thread_helper_port_a0404d78ce7372c4732e48197d4e88e3c}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_port_thread_helper_port_a0404d78ce7372c4732e48197d4e88e3c}
 
 
 Reconnect. 
 
-This implementation calls \hyperlink{classmdt_abstract_port_aec74b2db1a629d98a95d8f042ea96653}{mdtAbstractPort::reconnect()} .
+This implementation calls \hyperlink{classmdt_abstract_port_aec74b2db1a629d98a95d8f042ea96653}{mdt\-Abstract\-Port\-::reconnect()} .
 
 \begin{DoxyPrecond}{Precondition}
-Port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdtPortThreadHelper::setPort()}. 
+Port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdt\-Port\-Thread\-Helper\-::set\-Port()}. 
 
-Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{mdtPortThreadHelper::setThread()}. 
+Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{mdt\-Port\-Thread\-Helper\-::set\-Thread()}. 
 \end{DoxyPrecond}
 
 
-Reimplemented from \hyperlink{classmdt_port_thread_helper_a1d0874434ae6442610e2bc685be6458f}{mdtPortThreadHelper}.
+Reimplemented from \hyperlink{classmdt_port_thread_helper_a1d0874434ae6442610e2bc685be6458f}{mdt\-Port\-Thread\-Helper}.
 
 
 
-Definition at line 51 of file mdtPortThreadHelperPort.cpp.
+Definition at line 51 of file mdt\-Port\-Thread\-Helper\-Port.\-cpp.
 
-\hypertarget{classmdt_port_thread_helper_port_a1d5cda8a61575825c3acd8b72f00fc6f}{
-\index{mdtPortThreadHelperPort@{mdtPortThreadHelperPort}!writeDataToPort@{writeDataToPort}}
-\index{writeDataToPort@{writeDataToPort}!mdtPortThreadHelperPort@{mdtPortThreadHelperPort}}
-\subsubsection[{writeDataToPort}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortThreadHelperPort::writeDataToPort (
+
+
+References mdt\-Port\-Thread\-Helper\-::pv\-Port, mdt\-Port\-Thread\-Helper\-::pv\-Thread, and mdt\-Abstract\-Port\-::reconnect().
+
+\hypertarget{classmdt_port_thread_helper_port_a1d5cda8a61575825c3acd8b72f00fc6f}{\index{mdt\-Port\-Thread\-Helper\-Port@{mdt\-Port\-Thread\-Helper\-Port}!write\-Data\-To\-Port@{write\-Data\-To\-Port}}
+\index{write\-Data\-To\-Port@{write\-Data\-To\-Port}!mdtPortThreadHelperPort@{mdt\-Port\-Thread\-Helper\-Port}}
+\subsubsection[{write\-Data\-To\-Port}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Port\-Thread\-Helper\-Port\-::write\-Data\-To\-Port (
 \begin{DoxyParamCaption}
-\item[{int}]{maxSize}
+\item[{int}]{max\-Size}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_thread_helper_port_a1d5cda8a61575825c3acd8b72f00fc6f}
+)}}\label{classmdt_port_thread_helper_port_a1d5cda8a61575825c3acd8b72f00fc6f}
 
 
 Write data to port. 
 
 This is a helper method to write some data from a frame to the port.
 
-Signal \hyperlink{classmdt_port_thread_helper_a80df5929776f6c617b96f2184e2bc96d}{writeProcessBegin()} is emitted.
+Signal \hyperlink{classmdt_port_thread_helper_a80df5929776f6c617b96f2184e2bc96d}{write\-Process\-Begin()} is emitted.
 
 
 \begin{DoxyParams}{Parameters}
-{\em maxSize} & If $>$= 0, maxSize will be written, else the frame size will be considered. \\
+{\em max\-Size} & If $>$= 0, max\-Size will be written, else the frame size will be considered. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Amount of bytes written or a \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} error.
+Amount of bytes written or a \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} error.
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
-Port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdtPortThreadHelper::setPort()}. 
+Port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdt\-Port\-Thread\-Helper\-::set\-Port()}. 
 
-Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{mdtPortThreadHelper::setThread()}. 
+Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{mdt\-Port\-Thread\-Helper\-::set\-Thread()}. 
 \end{DoxyPrecond}
 
 
-Definition at line 95 of file mdtPortThreadHelperPort.cpp.
+Definition at line 95 of file mdt\-Port\-Thread\-Helper\-Port.\-cpp.
 
-\hypertarget{classmdt_port_thread_helper_port_a25c35855dc9e8edc489a9efad8d293f7}{
-\index{mdtPortThreadHelperPort@{mdtPortThreadHelperPort}!writeToPort@{writeToPort}}
-\index{writeToPort@{writeToPort}!mdtPortThreadHelperPort@{mdtPortThreadHelperPort}}
-\subsubsection[{writeToPort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThreadHelperPort::writeToPort (
+
+
+References mdt\-Port\-Thread\-Helper\-::current\-Write\-Frame(), mdt\-Port\-Thread\-Helper\-::pv\-Port, mdt\-Port\-Thread\-Helper\-::pv\-Thread, mdt\-Frame\-::take(), mdt\-Abstract\-Port\-::write(), and mdt\-Port\-Thread\-Helper\-::write\-Process\-Begin().
+
+
+
+Referenced by write\-To\-Port().
+
+\hypertarget{classmdt_port_thread_helper_port_a25c35855dc9e8edc489a9efad8d293f7}{\index{mdt\-Port\-Thread\-Helper\-Port@{mdt\-Port\-Thread\-Helper\-Port}!write\-To\-Port@{write\-To\-Port}}
+\index{write\-To\-Port@{write\-To\-Port}!mdtPortThreadHelperPort@{mdt\-Port\-Thread\-Helper\-Port}}
+\subsubsection[{write\-To\-Port}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Port\-Thread\-Helper\-Port\-::write\-To\-Port (
 \begin{DoxyParamCaption}
-\item[{bool}]{bytePerByteWrite, }
-\item[{int}]{interByteTime, }
-\item[{int}]{maxWriteTry = {\ttfamily 10}}
+\item[{bool}]{byte\-Per\-Byte\-Write, }
+\item[{int}]{inter\-Byte\-Time, }
+\item[{int}]{max\-Write\-Try = {\ttfamily 10}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_thread_helper_port_a25c35855dc9e8edc489a9efad8d293f7}
+)}}\label{classmdt_port_thread_helper_port_a25c35855dc9e8edc489a9efad8d293f7}
 
 
 Write a complete frame to port. 
 
-This is a helper method to write a frame to the port. Internally, it will call \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort::waitEventWriteReady()} before writing.
+This is a helper method to write a frame to the port. Internally, it will call \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdt\-Abstract\-Port\-::wait\-Event\-Write\-Ready()} before writing.
 
 Note that frame will be put back to write pool after complete write, cancel, flush or error. That says that frame will not be valid after call of this method.
 
-Note about port mutex handling:\par
+Note about port mutex handling\-:\par
  The port mutex must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
 
 
 \begin{DoxyParams}{Parameters}
-{\em bytePerByteWrite} & If true, one byte will be written once. \\
+{\em byte\-Per\-Byte\-Write} & If true, one byte will be written once. \\
 \hline
-{\em interByteTime} & Time between each byte write \mbox{[}ms\mbox{]} (has only effect if bytePerByteWrite is true) \\
+{\em inter\-Byte\-Time} & Time between each byte write \mbox{[}ms\mbox{]} (has only effect if byte\-Per\-Byte\-Write is true) \\
 \hline
-{\em maxWriteTry} & Some port can return 0 byte or a timeout error if busy. If this happens, this method will sleep some time an try a write call again until write call works successfull or maxWriteTry is reached.\\
+{\em max\-Write\-Try} & Some port can return 0 byte or a timeout error if busy. If this happens, this method will sleep some time an try a write call again until write call works successfull or max\-Write\-Try is reached.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-NoError on success or a \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} error (See also \hyperlink{classmdt_port_thread_helper_a84871009b6128912f7d3869b14e37aa2}{mdtPortThreadHelper::handleCommonWriteErrors()} ).
+No\-Error on success or a \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} error (See also \hyperlink{classmdt_port_thread_helper_a84871009b6128912f7d3869b14e37aa2}{mdt\-Port\-Thread\-Helper\-::handle\-Common\-Write\-Errors()} ).
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
-Port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdtPortThreadHelper::setPort()}. 
+Port must be set with \hyperlink{classmdt_port_thread_helper_a4127c0b28dc63df06b5a36a4be8b3bb7}{mdt\-Port\-Thread\-Helper\-::set\-Port()}. 
 
-Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{mdtPortThreadHelper::setThread()}. 
+Thread must be set with \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{mdt\-Port\-Thread\-Helper\-::set\-Thread()}. 
 \end{DoxyPrecond}
 
 
-Definition at line 125 of file mdtPortThreadHelperPort.cpp.
+Definition at line 125 of file mdt\-Port\-Thread\-Helper\-Port.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References mdt\-Error\-::commit(), mdt\-Port\-Thread\-Helper\-::current\-Write\-Frame(), mdt\-Error\-::\-Error, mdt\-Abstract\-Port\-::\-Error\-Handled, mdt\-Abstract\-Port\-::flush\-Out\-Request\-Pending(), mdt\-Port\-Thread\-Helper\-::handle\-Common\-Write\-Errors(), mdt\-Abstract\-Port\-::lock\-Mutex(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, msleep, mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Port\-Thread\-Helper\-::notify\-Error(), mdt\-Port\-Thread\-Helper\-::pv\-Port, mdt\-Port\-Thread\-Helper\-::pv\-Thread, mdt\-Port\-Thread\-Helper\-::restore\-Current\-Write\-Frame\-To\-Pool(), mdt\-Port\-Thread\-::running\-Flag\-Set(), mdt\-Abstract\-Port\-::unlock\-Mutex(), mdt\-Abstract\-Port\-::wait\-Event\-Write\-Ready(), write\-Data\-To\-Port(), and mdt\-Abstract\-Port\-::\-Write\-Timeout.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtport/mdtPortThreadHelperPort.h\item 
-src/mdtport/mdtPortThreadHelperPort.cpp\end{DoxyCompactItemize}
+src/mdtport/\hyperlink{mdt_port_thread_helper_port_8h}{mdt\-Port\-Thread\-Helper\-Port.\-h}\item 
+src/mdtport/\hyperlink{mdt_port_thread_helper_port_8cpp}{mdt\-Port\-Thread\-Helper\-Port.\-cpp}\end{DoxyCompactItemize}

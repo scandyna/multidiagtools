@@ -1,6 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_sql_form.html" title="Base class for high level SQL widgets API." alt="" coords="51,181,144,211"/>
-<area shape="rect" id="node4" href="$classmdt_error.html" title="mdtError contains informations about a error that occured" alt="" coords="5,85,77,115"/>
-<area shape="rect" id="node6" href="$classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model." alt="" coords="101,85,235,115"/>
-<area shape="rect" id="node8" href="$classmdt_abstract_sql_widget.html" title="Base class to create database table GUI." alt="" coords="92,5,244,35"/>
+<map id="mdtSqlWindow" name="mdtSqlWindow">
+<area shape="rect" id="node2" href="$class_q_main_window.html" title="QMainWindow" alt="" coords="121,181,228,211"/>
+<area shape="rect" id="node4" href="$class_ui_1_1mdt_sql_window.html" title="Ui::mdtSqlWindow" alt="" coords="252,181,383,211"/>
+<area shape="rect" id="node6" href="$class_ui__mdt_sql_window.html" title="Ui_mdtSqlWindow" alt="" coords="252,101,383,131"/>
 </map>

@@ -1,0 +1,215 @@
+\hypertarget{classmdt_cl_article_link_dialog}{\section{mdt\-Cl\-Article\-Link\-Dialog Class Reference}
+\label{classmdt_cl_article_link_dialog}\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+}
+
+
+Dialog that let the user edit a article link.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Article\-Link\-Dialog.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Cl\-Article\-Link\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{classmdt_cl_article_link_dialog__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Cl\-Article\-Link\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_cl_article_link_dialog__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_cl_article_link_dialog_a6543c22308fff67f98c9d42581a10de7}{mdt\-Cl\-Article\-Link\-Dialog} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, Q\-Sql\-Database db, Q\-Variant article\-Id)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_article_link_dialog_ab245318cbe47717ac42a57becfcf1688}{$\sim$mdt\-Cl\-Article\-Link\-Dialog} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_article_link_dialog_a47d02d3d5a01dc5d2a764a68c376f0f4}{set\-Link\-Type\-Code} (const Q\-Variant \&code)
+\begin{DoxyCompactList}\small\item\em Display link type in combobox. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_article_link_dialog_ae911aa98e97e83ea6691facbb9c4762d}{set\-Link\-Direction\-Code} (const Q\-Variant \&code)
+\begin{DoxyCompactList}\small\item\em Display link direction in combobox. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_article_link_dialog_aa609d5af478e7103b138e9a6a245df53}{set\-Value} (const Q\-Variant \&value)
+\begin{DoxyCompactList}\small\item\em Display value. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_article_link_dialog_a302a9c5f64407b4e3efd76c68b3a5cb2}{set\-Start\-Connection\-Id} (const Q\-Variant \&id)
+\begin{DoxyCompactList}\small\item\em Store id as current selected start connection and display it. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_article_link_dialog_a8b47b3303742534116f36a7816f6ccaa}{set\-End\-Connection\-Id} (const Q\-Variant \&id)
+\begin{DoxyCompactList}\small\item\em Store id as current selected end connection and display it. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \hyperlink{classmdt_cl_article_link_dialog_ac3fbc6eac9aa68411afc4bd46cc11ae2}{link\-Data} () const 
+\begin{DoxyCompactList}\small\item\em Get link data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Dialog that let the user edit a article link. 
+
+Definition at line 35 of file mdt\-Cl\-Article\-Link\-Dialog.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_cl_article_link_dialog_a6543c22308fff67f98c9d42581a10de7}{\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}!mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}!mdtClArticleLinkDialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+\subsubsection[{mdt\-Cl\-Article\-Link\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Article\-Link\-Dialog\-::mdt\-Cl\-Article\-Link\-Dialog (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{parent, }
+\item[{Q\-Sql\-Database}]{db, }
+\item[{Q\-Variant}]{article\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_link_dialog_a6543c22308fff67f98c9d42581a10de7}
+
+
+Constructor. 
+
+
+
+Definition at line 36 of file mdt\-Cl\-Article\-Link\-Dialog.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-All\-Fields(), Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::cb\-Link\-Direction, Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::cb\-Link\-Type, mdt\-Sql\-Record\-::last\-Error(), Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::lb\-End\-Connector\-Name, Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::lb\-End\-Contact\-Name, Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::lb\-Start\-Connector\-Name, Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::lb\-Start\-Contact\-Name, Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::lb\-Unit, Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::pb\-End\-Connection, Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::pb\-Start\-Connection, Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::setup\-Ui(), mdt\-Error\-::system\-Text(), and mdt\-Error\-::text().
+
+\hypertarget{classmdt_cl_article_link_dialog_ab245318cbe47717ac42a57becfcf1688}{\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}!$\sim$mdt\-Cl\-Article\-Link\-Dialog@{$\sim$mdt\-Cl\-Article\-Link\-Dialog}}
+\index{$\sim$mdt\-Cl\-Article\-Link\-Dialog@{$\sim$mdt\-Cl\-Article\-Link\-Dialog}!mdtClArticleLinkDialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+\subsubsection[{$\sim$mdt\-Cl\-Article\-Link\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Article\-Link\-Dialog\-::$\sim$mdt\-Cl\-Article\-Link\-Dialog (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_link_dialog_ab245318cbe47717ac42a57becfcf1688}
+
+
+Destructor. 
+
+
+
+Definition at line 82 of file mdt\-Cl\-Article\-Link\-Dialog.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_article_link_dialog_ac3fbc6eac9aa68411afc4bd46cc11ae2}{\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}!link\-Data@{link\-Data}}
+\index{link\-Data@{link\-Data}!mdtClArticleLinkDialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+\subsubsection[{link\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Sql\-Record} mdt\-Cl\-Article\-Link\-Dialog\-::link\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_article_link_dialog_ac3fbc6eac9aa68411afc4bd46cc11ae2}
+
+
+Get link data. 
+
+
+
+Definition at line 138 of file mdt\-Cl\-Article\-Link\-Dialog.\-cpp.
+
+\hypertarget{classmdt_cl_article_link_dialog_a8b47b3303742534116f36a7816f6ccaa}{\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}!set\-End\-Connection\-Id@{set\-End\-Connection\-Id}}
+\index{set\-End\-Connection\-Id@{set\-End\-Connection\-Id}!mdtClArticleLinkDialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+\subsubsection[{set\-End\-Connection\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Article\-Link\-Dialog\-::set\-End\-Connection\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_link_dialog_a8b47b3303742534116f36a7816f6ccaa}
+
+
+Store id as current selected end connection and display it. 
+
+
+
+Definition at line 132 of file mdt\-Cl\-Article\-Link\-Dialog.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::set\-Value().
+
+\hypertarget{classmdt_cl_article_link_dialog_ae911aa98e97e83ea6691facbb9c4762d}{\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}!set\-Link\-Direction\-Code@{set\-Link\-Direction\-Code}}
+\index{set\-Link\-Direction\-Code@{set\-Link\-Direction\-Code}!mdtClArticleLinkDialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+\subsubsection[{set\-Link\-Direction\-Code}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Article\-Link\-Dialog\-::set\-Link\-Direction\-Code (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{code}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_link_dialog_ae911aa98e97e83ea6691facbb9c4762d}
+
+
+Display link direction in combobox. 
+
+
+
+Definition at line 103 of file mdt\-Cl\-Article\-Link\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::cb\-Link\-Direction, and mdt\-Sql\-Record\-::set\-Value().
+
+\hypertarget{classmdt_cl_article_link_dialog_a47d02d3d5a01dc5d2a764a68c376f0f4}{\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}!set\-Link\-Type\-Code@{set\-Link\-Type\-Code}}
+\index{set\-Link\-Type\-Code@{set\-Link\-Type\-Code}!mdtClArticleLinkDialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+\subsubsection[{set\-Link\-Type\-Code}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Article\-Link\-Dialog\-::set\-Link\-Type\-Code (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{code}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_link_dialog_a47d02d3d5a01dc5d2a764a68c376f0f4}
+
+
+Display link type in combobox. 
+
+
+
+Definition at line 86 of file mdt\-Cl\-Article\-Link\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::cb\-Link\-Type, and mdt\-Sql\-Record\-::set\-Value().
+
+\hypertarget{classmdt_cl_article_link_dialog_a302a9c5f64407b4e3efd76c68b3a5cb2}{\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}!set\-Start\-Connection\-Id@{set\-Start\-Connection\-Id}}
+\index{set\-Start\-Connection\-Id@{set\-Start\-Connection\-Id}!mdtClArticleLinkDialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+\subsubsection[{set\-Start\-Connection\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Article\-Link\-Dialog\-::set\-Start\-Connection\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_link_dialog_a302a9c5f64407b4e3efd76c68b3a5cb2}
+
+
+Store id as current selected start connection and display it. 
+
+
+
+Definition at line 126 of file mdt\-Cl\-Article\-Link\-Dialog.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::set\-Value().
+
+\hypertarget{classmdt_cl_article_link_dialog_aa609d5af478e7103b138e9a6a245df53}{\index{mdt\-Cl\-Article\-Link\-Dialog@{mdt\-Cl\-Article\-Link\-Dialog}!set\-Value@{set\-Value}}
+\index{set\-Value@{set\-Value}!mdtClArticleLinkDialog@{mdt\-Cl\-Article\-Link\-Dialog}}
+\subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Article\-Link\-Dialog\-::set\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{value}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_link_dialog_aa609d5af478e7103b138e9a6a245df53}
+
+
+Display value. 
+
+
+
+Definition at line 120 of file mdt\-Cl\-Article\-Link\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Cl\-Article\-Link\-Dialog\-::sb\-Value, and mdt\-Sql\-Record\-::set\-Value().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_article_link_dialog_8h}{mdt\-Cl\-Article\-Link\-Dialog.\-h}\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_article_link_dialog_8cpp}{mdt\-Cl\-Article\-Link\-Dialog.\-cpp}\end{DoxyCompactItemize}

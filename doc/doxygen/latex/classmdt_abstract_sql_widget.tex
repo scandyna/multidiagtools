@@ -1,39 +1,47 @@
-\hypertarget{classmdt_abstract_sql_widget}{
-\section{mdtAbstractSqlWidget Class Reference}
-\label{classmdt_abstract_sql_widget}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
+\hypertarget{classmdt_abstract_sql_widget}{\section{mdt\-Abstract\-Sql\-Widget Class Reference}
+\label{classmdt_abstract_sql_widget}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}
 }
 
 
-Base class to create database table GUI.  
+Base class to create database table G\-U\-I.  
 
 
 
 
-{\ttfamily \#include $<$mdtAbstractSqlWidget.h$>$}
+{\ttfamily \#include $<$mdt\-Abstract\-Sql\-Widget.\-h$>$}
 
 
 
-Inheritance diagram for mdtAbstractSqlWidget:\nopagebreak
+Inheritance diagram for mdt\-Abstract\-Sql\-Widget\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=300pt]{classmdt_abstract_sql_widget__inherit__graph}
 \end{center}
 \end{figure}
+
+
+Collaboration diagram for mdt\-Abstract\-Sql\-Widget\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=194pt]{classmdt_abstract_sql_widget__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072}{state\_\-t} \{ \par
-\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2}{Visualizing} =  0, 
+enum \hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072}{state\-\_\-t} \{ \\*
+\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2}{Visualizing} = 0, 
 \hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a8be2fce90475c910b73cab2734bbe451}{Reverting}, 
 \hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d}{Editing}, 
 \hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a2e228922d30b9b89056da058a84e5957}{Submitting}, 
-\par
+\\*
 \hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072af142155e59e6ec8b6575ad69f0386448}{Inserting}, 
-\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65}{EditingNewRow}, 
-\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec}{RevertingNewRow}, 
-\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c}{SubmittingNewRow}, 
-\par
+\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65}{Editing\-New\-Row}, 
+\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec}{Reverting\-New\-Row}, 
+\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c}{Submitting\-New\-Row}, 
+\\*
 \hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072aa5a44e5bb56cfe1dcd90af9097749697}{Removing}
  \}
 \begin{DoxyCompactList}\small\item\em State of edit/view widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -48,282 +56,221 @@ void \hyperlink{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}{
 \begin{DoxyCompactList}\small\item\em Insert a new row to model. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{remove} ()
 \begin{DoxyCompactList}\small\item\em Remove a row from model. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}{toFirst} ()=0
+virtual void \hyperlink{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}{to\-First} ()=0
 \begin{DoxyCompactList}\small\item\em Set first record as current record. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}{toLast} ()=0
+virtual void \hyperlink{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}{to\-Last} ()=0
 \begin{DoxyCompactList}\small\item\em Set last record as current record. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}{toPrevious} ()=0
+virtual void \hyperlink{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}{to\-Previous} ()=0
 \begin{DoxyCompactList}\small\item\em Set previous record as current record. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}{toNext} ()=0
+virtual void \hyperlink{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}{to\-Next} ()=0
 \begin{DoxyCompactList}\small\item\em Set next record as current record. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{setCurrentIndex} (int row)=0
+virtual void \hyperlink{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{set\-Current\-Index} (int row)=0
 \begin{DoxyCompactList}\small\item\em Set row as current record. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}{setCurrentRecord} (const QString \&fieldName, const QVariant \&value)
+bool \hyperlink{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}{set\-Current\-Record} (const Q\-String \&field\-Name, const Q\-Variant \&value)
 \begin{DoxyCompactList}\small\item\em Set the first record that matches given criteria as current record (index). \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_abstract_sql_widget_acc3e3e7e848a92a4a117f7147bc1f3c5}{toFirstEnabledStateChanged} (bool enabled)
-\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}{toFirst()} function goes enabled/disabled. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a9b7e32907ed336c74746f7a5c6d87d92}{toLastEnabledStateChanged} (bool enabled)
-\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}{toLast()} function goes enabled/disabled. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a388c169696cea80ac170b0ee060e4c9f}{toNextEnabledStateChanged} (bool enabled)
-\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}{toNext()} function goes enabled/disabled. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_acf241c34dcca6d283c8c1bf297841766}{toPreviousEnabledStateChanged} (bool enabled)
-\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}{toPrevious()} function goes enabled/disabled. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}{submitEnabledStateChanged} (bool enabled)
+void \hyperlink{classmdt_abstract_sql_widget_acc3e3e7e848a92a4a117f7147bc1f3c5}{to\-First\-Enabled\-State\-Changed} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}{to\-First()} function goes enabled/disabled. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_sql_widget_a9b7e32907ed336c74746f7a5c6d87d92}{to\-Last\-Enabled\-State\-Changed} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}{to\-Last()} function goes enabled/disabled. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_sql_widget_a388c169696cea80ac170b0ee060e4c9f}{to\-Next\-Enabled\-State\-Changed} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}{to\-Next()} function goes enabled/disabled. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_sql_widget_acf241c34dcca6d283c8c1bf297841766}{to\-Previous\-Enabled\-State\-Changed} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}{to\-Previous()} function goes enabled/disabled. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}{submit\-Enabled\-State\-Changed} (bool enabled)
 \begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}{submit()} function goes enabled/disabled. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_ada899f0c3f8388d2d3feac7c0c50884c}{revertEnabledStateChanged} (bool enabled)
+void \hyperlink{classmdt_abstract_sql_widget_ada899f0c3f8388d2d3feac7c0c50884c}{revert\-Enabled\-State\-Changed} (bool enabled)
 \begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}{revert()} function goes enabled/disabled. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a909ba5b675f596ee5c5980e159cd2878}{insertEnabledStateChanged} (bool enabled)
+void \hyperlink{classmdt_abstract_sql_widget_a909ba5b675f596ee5c5980e159cd2878}{insert\-Enabled\-State\-Changed} (bool enabled)
 \begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}{insert()} function goes enabled/disabled. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a9c536f5081b321e8df24316506fc19f3}{removeEnabledStateChanged} (bool enabled)
+void \hyperlink{classmdt_abstract_sql_widget_a9c536f5081b321e8df24316506fc19f3}{remove\-Enabled\-State\-Changed} (bool enabled)
 \begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{remove()} function goes enabled/disabled. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{
-void \hyperlink{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{submitTriggered} ()}
-\label{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}
-
+void \hyperlink{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{submit\-Triggered} ()
 \begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}{submit()} was called. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{
-void \hyperlink{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{revertTriggered} ()}
-\label{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}
-
+void \hyperlink{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{revert\-Triggered} ()
 \begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}{revert()} was called. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{
-void \hyperlink{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{insertTriggered} ()}
-\label{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}
-
+void \hyperlink{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{insert\-Triggered} ()
 \begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}{insert()} was called. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{
-void \hyperlink{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{removeTriggered} ()}
-\label{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}
-
+void \hyperlink{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{remove\-Triggered} ()
 \begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{remove()} was called. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a27d3a1a75cddf6653f919e5ff3f2e8b4}{
-void \hyperlink{classmdt_abstract_sql_widget_a27d3a1a75cddf6653f919e5ff3f2e8b4}{errorOccured} ()}
-\label{classmdt_abstract_sql_widget_a27d3a1a75cddf6653f919e5ff3f2e8b4}
-
+void \hyperlink{classmdt_abstract_sql_widget_a27d3a1a75cddf6653f919e5ff3f2e8b4}{error\-Occured} ()
 \begin{DoxyCompactList}\small\item\em Emitted when a error occured. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_aa514b36fecc323dfdf8eedeec7838dd1}{
-void \hyperlink{classmdt_abstract_sql_widget_aa514b36fecc323dfdf8eedeec7838dd1}{operationSucceed} ()}
-\label{classmdt_abstract_sql_widget_aa514b36fecc323dfdf8eedeec7838dd1}
-
+void \hyperlink{classmdt_abstract_sql_widget_aa514b36fecc323dfdf8eedeec7838dd1}{operation\-Succeed} ()
 \begin{DoxyCompactList}\small\item\em Emitted when a operation succeed. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a8ae6e67e3efb5051dc7a8b74571d4aa1}{
-void \hyperlink{classmdt_abstract_sql_widget_a8ae6e67e3efb5051dc7a8b74571d4aa1}{dataEdited} ()}
-\label{classmdt_abstract_sql_widget_a8ae6e67e3efb5051dc7a8b74571d4aa1}
-
+void \hyperlink{classmdt_abstract_sql_widget_a8ae6e67e3efb5051dc7a8b74571d4aa1}{data\-Edited} ()
 \begin{DoxyCompactList}\small\item\em Emitted when data was edited. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a4acc0adbe6e002cd559642d3ea8e2d3a}{
-void \hyperlink{classmdt_abstract_sql_widget_a4acc0adbe6e002cd559642d3ea8e2d3a}{stateVisualizingEntered} ()}
-\label{classmdt_abstract_sql_widget_a4acc0adbe6e002cd559642d3ea8e2d3a}
-
+void \hyperlink{classmdt_abstract_sql_widget_a4acc0adbe6e002cd559642d3ea8e2d3a}{state\-Visualizing\-Entered} ()
 \begin{DoxyCompactList}\small\item\em Emitted when Visualizing state was entered. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a8f2eda6e219e49c972834a1e5c39e8ff}{
-void \hyperlink{classmdt_abstract_sql_widget_a8f2eda6e219e49c972834a1e5c39e8ff}{stateVisualizingExited} ()}
-\label{classmdt_abstract_sql_widget_a8f2eda6e219e49c972834a1e5c39e8ff}
-
+void \hyperlink{classmdt_abstract_sql_widget_a8f2eda6e219e49c972834a1e5c39e8ff}{state\-Visualizing\-Exited} ()
 \begin{DoxyCompactList}\small\item\em Emitted when Visualizing state was exited. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a925485d7acc131d438f6ea251c9b1fb9}{
-void \hyperlink{classmdt_abstract_sql_widget_a925485d7acc131d438f6ea251c9b1fb9}{stateEditingExited} ()}
-\label{classmdt_abstract_sql_widget_a925485d7acc131d438f6ea251c9b1fb9}
-
+void \hyperlink{classmdt_abstract_sql_widget_a925485d7acc131d438f6ea251c9b1fb9}{state\-Editing\-Exited} ()
 \begin{DoxyCompactList}\small\item\em Emitted when Editing state was exited. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_af4ed2a005f55ffe23ce6382f1ed3f68e}{
-void \hyperlink{classmdt_abstract_sql_widget_af4ed2a005f55ffe23ce6382f1ed3f68e}{stateEditingNewRowExited} ()}
-\label{classmdt_abstract_sql_widget_af4ed2a005f55ffe23ce6382f1ed3f68e}
-
+void \hyperlink{classmdt_abstract_sql_widget_af4ed2a005f55ffe23ce6382f1ed3f68e}{state\-Editing\-New\-Row\-Exited} ()
 \begin{DoxyCompactList}\small\item\em Emitted when Editing state was exited. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a182972cd54cf7e00322c0b6973ecbde2}{currentRowChanged} (int row)
+void \hyperlink{classmdt_abstract_sql_widget_a182972cd54cf7e00322c0b6973ecbde2}{current\-Row\-Changed} (int row)
 \begin{DoxyCompactList}\small\item\em Emitted when current row has changed. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}{modelSelected} ()
-\begin{DoxyCompactList}\small\item\em Emitted when select() or setQuery() was called on (parent) model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}{model\-Selected} ()
+\begin{DoxyCompactList}\small\item\em Emitted when select() or set\-Query() was called on (parent) model. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_abstract_sql_widget_a74ef509a9487c3985fce7a4cbadbe1b3}{mdtAbstractSqlWidget} (QWidget $\ast$parent=0)
+\hyperlink{classmdt_abstract_sql_widget_a74ef509a9487c3985fce7a4cbadbe1b3}{mdt\-Abstract\-Sql\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a46dabe9e76aaea93ff20b28863e6c0ff}{
-virtual \hyperlink{classmdt_abstract_sql_widget_a46dabe9e76aaea93ff20b28863e6c0ff}{$\sim$mdtAbstractSqlWidget} ()}
-\label{classmdt_abstract_sql_widget_a46dabe9e76aaea93ff20b28863e6c0ff}
-
+virtual \hyperlink{classmdt_abstract_sql_widget_a46dabe9e76aaea93ff20b28863e6c0ff}{$\sim$mdt\-Abstract\-Sql\-Widget} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel} (QSqlTableModel $\ast$model)
+void \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model} (\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$\hyperlink{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{model})
 \begin{DoxyCompactList}\small\item\em Set the table model. \end{DoxyCompactList}\item 
-QSqlTableModel $\ast$ \hyperlink{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{model} ()
+\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$ \hyperlink{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{model} ()
 \begin{DoxyCompactList}\small\item\em Get current model. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}{addDataValidator} (\hyperlink{classmdt_sql_data_validator}{mdtSqlDataValidator} $\ast$validator, bool putAtTopPriority=false)
+void \hyperlink{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}{add\-Data\-Validator} (\hyperlink{classmdt_sql_data_validator}{mdt\-Sql\-Data\-Validator} $\ast$validator, bool put\-At\-Top\-Priority=false)
 \begin{DoxyCompactList}\small\item\em Add a data validator. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}{
-void \hyperlink{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}{setUserFriendlyTableName} (const QString \&name)}
-\label{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}
-
+void \hyperlink{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}{set\-User\-Friendly\-Table\-Name} (const Q\-String \&name)
 \begin{DoxyCompactList}\small\item\em Set the user friendly table name. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_abstract_sql_widget_a8207edaf31a7d988db5b86a4099ad4eb}{userFriendlyTableName} () const 
+Q\-String \hyperlink{classmdt_abstract_sql_widget_a8207edaf31a7d988db5b86a4099ad4eb}{user\-Friendly\-Table\-Name} () const 
 \begin{DoxyCompactList}\small\item\em Get the user friendly table name. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a7225af05f3b10e82db939f0ec0996167}{addChildWidget} (\hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} $\ast$widget, \hyperlink{classmdt_sql_relation}{mdtSqlRelation} $\ast$relation)
+void \hyperlink{classmdt_abstract_sql_widget_a7225af05f3b10e82db939f0ec0996167}{add\-Child\-Widget} (\hyperlink{classmdt_abstract_sql_widget}{mdt\-Abstract\-Sql\-Widget} $\ast$widget, \hyperlink{classmdt_sql_relation}{mdt\-Sql\-Relation} $\ast$relation)
 \begin{DoxyCompactList}\small\item\em Add a child (details) widget and relation. \end{DoxyCompactList}\item 
-QList$<$ \hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} $\ast$ $>$ \hyperlink{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}{sqlWidgets} ()
-\begin{DoxyCompactList}\small\item\em Get a list of all SQL widgets. \end{DoxyCompactList}\item 
-virtual int \hyperlink{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}{currentRow} () const =0
+Q\-List$<$ \hyperlink{classmdt_abstract_sql_widget}{mdt\-Abstract\-Sql\-Widget} $\ast$ $>$ \hyperlink{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}{sql\-Widgets} ()
+\begin{DoxyCompactList}\small\item\em Get a list of all S\-Q\-L widgets. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}{current\-Row} () const =0
 \begin{DoxyCompactList}\small\item\em Get the current row. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}{setCurrentData} (const QString \&fieldName, const QVariant \&data, bool submit=true)
+bool \hyperlink{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}{set\-Current\-Data} (const Q\-String \&field\-Name, const Q\-Variant \&\hyperlink{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}{data}, bool \hyperlink{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}{submit}=true)
 \begin{DoxyCompactList}\small\item\em Set (update) data of current row (record) for given field name. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_abstract_sql_widget_a10a2d7fff69ec7043db0df05cbbaa63c}{currentData} (const QString \&fieldName) const 
+Q\-Variant \hyperlink{classmdt_abstract_sql_widget_a10a2d7fff69ec7043db0df05cbbaa63c}{current\-Data} (const Q\-String \&field\-Name) const 
 \begin{DoxyCompactList}\small\item\em Get current data for given field name. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}{data} (int row, const QString \&fieldName) const 
+Q\-Variant \hyperlink{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}{data} (int row, const Q\-String \&field\-Name) const 
 \begin{DoxyCompactList}\small\item\em Get data for given row and field name. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_abstract_sql_widget_a5e25e4a2e0dc56c06c530c9b543366f2}{rowCount} () const 
+int \hyperlink{classmdt_abstract_sql_widget_a5e25e4a2e0dc56c06c530c9b543366f2}{row\-Count} () const 
 \begin{DoxyCompactList}\small\item\em Get row count. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}{
-\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072}{state\_\-t} \hyperlink{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}{currentState} () const }
-\label{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}
-
+\hyperlink{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072}{state\-\_\-t} \hyperlink{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}{current\-State} () const 
 \begin{DoxyCompactList}\small\item\em Get current state. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_sql_widget_a586e89097e9b4c27888695796ce945a0}{enableLocalNavigation} ()
+virtual void \hyperlink{classmdt_abstract_sql_widget_a586e89097e9b4c27888695796ce945a0}{enable\-Local\-Navigation} ()
 \begin{DoxyCompactList}\small\item\em Enable local navigation. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_sql_widget_a4ad94a530c77292d122d38eb041da6e9}{enableLocalEdition} ()
+virtual void \hyperlink{classmdt_abstract_sql_widget_a4ad94a530c77292d122d38eb041da6e9}{enable\-Local\-Edition} ()
 \begin{DoxyCompactList}\small\item\em Enable local edition. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}{allDataAreSaved} ()
+bool \hyperlink{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}{all\-Data\-Are\-Saved} ()
 \begin{DoxyCompactList}\small\item\em Check if all data are saved. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual void \hyperlink{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}{doSetModel} (QSqlTableModel $\ast$model)=0
+virtual void \hyperlink{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}{do\-Set\-Model} (\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$\hyperlink{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{model})=0
 \begin{DoxyCompactList}\small\item\em Set the table model. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_abstract_sql_widget_a7a97e9c9f3b9c22650e4b55d095543ef}{doSubmit} ()=0
+virtual bool \hyperlink{classmdt_abstract_sql_widget_a7a97e9c9f3b9c22650e4b55d095543ef}{do\-Submit} ()=0
 \begin{DoxyCompactList}\small\item\em Submit current row to model. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_abstract_sql_widget_a2c0cbbcd02be19767e68153ecbc2392d}{doRevert} ()=0
+virtual bool \hyperlink{classmdt_abstract_sql_widget_a2c0cbbcd02be19767e68153ecbc2392d}{do\-Revert} ()=0
 \begin{DoxyCompactList}\small\item\em Revert current row from model. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_abstract_sql_widget_aa79059c092c6bcda569ced7c0621a817}{doInsert} ()=0
+virtual bool \hyperlink{classmdt_abstract_sql_widget_aa79059c092c6bcda569ced7c0621a817}{do\-Insert} ()=0
 \begin{DoxyCompactList}\small\item\em Insert a row row to model. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_abstract_sql_widget_ac546802e2910fc49c007eda5dbb3b3f7}{doSubmitNewRow} ()=0
+virtual bool \hyperlink{classmdt_abstract_sql_widget_ac546802e2910fc49c007eda5dbb3b3f7}{do\-Submit\-New\-Row} ()=0
 \begin{DoxyCompactList}\small\item\em Submit new row to model. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_abstract_sql_widget_a048efd5f89be7c6e74d6988b7e95fc07}{doRevertNewRow} ()=0
+virtual bool \hyperlink{classmdt_abstract_sql_widget_a048efd5f89be7c6e74d6988b7e95fc07}{do\-Revert\-New\-Row} ()=0
 \begin{DoxyCompactList}\small\item\em Revert new row. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_abstract_sql_widget_a41c30652fa9775c7b3bc6cb51004d4d5}{doRemove} ()=0
+virtual bool \hyperlink{classmdt_abstract_sql_widget_a41c30652fa9775c7b3bc6cb51004d4d5}{do\-Remove} ()=0
 \begin{DoxyCompactList}\small\item\em Remove current row from model. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_widget_a3401020fed292da2c3b565a536f0be47}{displayDatabaseError} (QSqlError error)
+void \hyperlink{classmdt_abstract_sql_widget_a3401020fed292da2c3b565a536f0be47}{display\-Database\-Error} (Q\-Sql\-Error error)
 \begin{DoxyCompactList}\small\item\em Display a message to the user regarding error. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_aeeddeec556cc20c5c9a49559df7898d9}{
-QString \hyperlink{classmdt_abstract_sql_widget_aeeddeec556cc20c5c9a49559df7898d9}{getUserReadableTextFromSqliteError} (const QSqlError \&error)}
-\label{classmdt_abstract_sql_widget_aeeddeec556cc20c5c9a49559df7898d9}
-
-\begin{DoxyCompactList}\small\item\em Get message for the user regarding SQLite error number. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_a1081ced9b96f60b3b39c6085bfe305d4}{
-QString \hyperlink{classmdt_abstract_sql_widget_a1081ced9b96f60b3b39c6085bfe305d4}{getUserReadableTextFromMysqlError} (const QSqlError \&error)}
-\label{classmdt_abstract_sql_widget_a1081ced9b96f60b3b39c6085bfe305d4}
-
-\begin{DoxyCompactList}\small\item\em Get message for the user regarding MySql error number. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{childWidgetsAreInVisaluzingState} ()
+Q\-String \hyperlink{classmdt_abstract_sql_widget_aeeddeec556cc20c5c9a49559df7898d9}{get\-User\-Readable\-Text\-From\-Sqlite\-Error} (const Q\-Sql\-Error \&error)
+\begin{DoxyCompactList}\small\item\em Get message for the user regarding S\-Q\-Lite error number. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_abstract_sql_widget_a1081ced9b96f60b3b39c6085bfe305d4}{get\-User\-Readable\-Text\-From\-Mysql\-Error} (const Q\-Sql\-Error \&error)
+\begin{DoxyCompactList}\small\item\em Get message for the user regarding My\-Sql error number. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{child\-Widgets\-Are\-In\-Visaluzing\-State} ()
 \begin{DoxyCompactList}\small\item\em Check that child widgtes have no pending data. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_sql_widget_ad20a178299c96790587b53380bb68282}{
-void \hyperlink{classmdt_abstract_sql_widget_ad20a178299c96790587b53380bb68282}{warnUserAboutUnsavedRow} (const QString \&tableName)}
-\label{classmdt_abstract_sql_widget_ad20a178299c96790587b53380bb68282}
-
+void \hyperlink{classmdt_abstract_sql_widget_ad20a178299c96790587b53380bb68282}{warn\-User\-About\-Unsaved\-Row} (const Q\-String \&table\-Name)
 \begin{DoxyCompactList}\small\item\em Show a message box to the user to warn him that it should save/revert data. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_abstract_sql_widget_ac93226881ba03311a6a95ecd2ddaa003}{restorePrimaryKeyDataToModel} (const QSqlRecord \&previousRecord)
+bool \hyperlink{classmdt_abstract_sql_widget_ac93226881ba03311a6a95ecd2ddaa003}{restore\-Primary\-Key\-Data\-To\-Model} (const Q\-Sql\-Record \&previous\-Record)
 \begin{DoxyCompactList}\small\item\em Restore primary key data to (parent) model. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Base class to create database table GUI. 
+Base class to create database table G\-U\-I. 
 
-Main goal is to provide a standard way to use GUI object for database table. 
+Main goal is to provide a standard way to use G\-U\-I object for database table. 
 
-Definition at line 46 of file mdtAbstractSqlWidget.h.
+Definition at line 46 of file mdt\-Abstract\-Sql\-Widget.\-h.
 
 
 
 \subsection{Member Enumeration Documentation}
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!state\_\-t@{state\_\-t}}
-\index{state\_\-t@{state\_\-t}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{state\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtAbstractSqlWidget::state\_\-t}}}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072}
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!state\-\_\-t@{state\-\_\-t}}
+\index{state\-\_\-t@{state\-\_\-t}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{state\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Abstract\-Sql\-Widget\-::state\-\_\-t}}}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072}
 
 
 State of edit/view widget. 
 
 This state is set by internal state machine. \begin{Desc}
-\item[Enumerator: ]\par
+\item[Enumerator]\par
 \begin{description}
-\index{Visualizing@{Visualizing}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!Visualizing@{Visualizing}}\item[{\em 
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2}{
-Visualizing}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2}
-}]Visualizing state \index{Reverting@{Reverting}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!Reverting@{Reverting}}\item[{\em 
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a8be2fce90475c910b73cab2734bbe451}{
-Reverting}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a8be2fce90475c910b73cab2734bbe451}
-}]Reverting state \index{Editing@{Editing}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!Editing@{Editing}}\item[{\em 
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d}{
-Editing}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d}
-}]Editing state \index{Submitting@{Submitting}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!Submitting@{Submitting}}\item[{\em 
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a2e228922d30b9b89056da058a84e5957}{
-Submitting}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a2e228922d30b9b89056da058a84e5957}
-}]Submitting state \index{Inserting@{Inserting}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!Inserting@{Inserting}}\item[{\em 
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072af142155e59e6ec8b6575ad69f0386448}{
-Inserting}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072af142155e59e6ec8b6575ad69f0386448}
-}]Inserting state \index{EditingNewRow@{EditingNewRow}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!EditingNewRow@{EditingNewRow}}\item[{\em 
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65}{
-EditingNewRow}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65}
-}]Editing a new row \index{RevertingNewRow@{RevertingNewRow}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!RevertingNewRow@{RevertingNewRow}}\item[{\em 
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec}{
-RevertingNewRow}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec}
-}]RevertingNewRow state \index{SubmittingNewRow@{SubmittingNewRow}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!SubmittingNewRow@{SubmittingNewRow}}\item[{\em 
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c}{
-SubmittingNewRow}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c}
-}]SubmittingNewRow state \index{Removing@{Removing}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!Removing@{Removing}}\item[{\em 
-\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072aa5a44e5bb56cfe1dcd90af9097749697}{
-Removing}
-\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072aa5a44e5bb56cfe1dcd90af9097749697}
+\index{Visualizing@{Visualizing}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!Visualizing@{Visualizing}}\item[{\em 
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2}{Visualizing}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2}
+}]Visualizing state \index{Reverting@{Reverting}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!Reverting@{Reverting}}\item[{\em 
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a8be2fce90475c910b73cab2734bbe451}{Reverting}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a8be2fce90475c910b73cab2734bbe451}
+}]Reverting state \index{Editing@{Editing}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!Editing@{Editing}}\item[{\em 
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d}{Editing}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d}
+}]Editing state \index{Submitting@{Submitting}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!Submitting@{Submitting}}\item[{\em 
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a2e228922d30b9b89056da058a84e5957}{Submitting}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a2e228922d30b9b89056da058a84e5957}
+}]Submitting state \index{Inserting@{Inserting}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!Inserting@{Inserting}}\item[{\em 
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072af142155e59e6ec8b6575ad69f0386448}{Inserting}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072af142155e59e6ec8b6575ad69f0386448}
+}]Inserting state \index{Editing\-New\-Row@{Editing\-New\-Row}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!Editing\-New\-Row@{Editing\-New\-Row}}\item[{\em 
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65}{Editing\-New\-Row}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65}
+}]Editing a new row \index{Reverting\-New\-Row@{Reverting\-New\-Row}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!Reverting\-New\-Row@{Reverting\-New\-Row}}\item[{\em 
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec}{Reverting\-New\-Row}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072a6813a05df165990ab8d72121a1770cec}
+}]Reverting\-New\-Row state \index{Submitting\-New\-Row@{Submitting\-New\-Row}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!Submitting\-New\-Row@{Submitting\-New\-Row}}\item[{\em 
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c}{Submitting\-New\-Row}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072ad849c45d862423a014e8bf89a3468d0c}
+}]Submitting\-New\-Row state \index{Removing@{Removing}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!Removing@{Removing}}\item[{\em 
+\hypertarget{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072aa5a44e5bb56cfe1dcd90af9097749697}{Removing}\label{classmdt_abstract_sql_widget_a54e6a7f2b41fb3edfa1e4ed62abf4072aa5a44e5bb56cfe1dcd90af9097749697}
 }]Removing state \end{description}
 \end{Desc}
 
 
-
-Definition at line 56 of file mdtAbstractSqlWidget.h.
+Definition at line 56 of file mdt\-Abstract\-Sql\-Widget.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_abstract_sql_widget_a74ef509a9487c3985fce7a4cbadbe1b3}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{mdtAbstractSqlWidget}]{\setlength{\rightskip}{0pt plus 5cm}mdtAbstractSqlWidget::mdtAbstractSqlWidget (
+\hypertarget{classmdt_abstract_sql_widget_a74ef509a9487c3985fce7a4cbadbe1b3}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}}
+\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{mdt\-Abstract\-Sql\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Abstract\-Sql\-Widget\-::mdt\-Abstract\-Sql\-Widget (
 \begin{DoxyParamCaption}
-\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
+\item[{{\bf Q\-Widget} $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_sql_widget_a74ef509a9487c3985fce7a4cbadbe1b3}
+)}}\label{classmdt_abstract_sql_widget_a74ef509a9487c3985fce7a4cbadbe1b3}
 
 
 Constructor. 
 
 Will initialize internal state machine. 
 
-Definition at line 35 of file mdtAbstractSqlWidget.cpp.
+Definition at line 35 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+
+\hypertarget{classmdt_abstract_sql_widget_a46dabe9e76aaea93ff20b28863e6c0ff}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!$\sim$mdt\-Abstract\-Sql\-Widget@{$\sim$mdt\-Abstract\-Sql\-Widget}}
+\index{$\sim$mdt\-Abstract\-Sql\-Widget@{$\sim$mdt\-Abstract\-Sql\-Widget}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{$\sim$mdt\-Abstract\-Sql\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Abstract\-Sql\-Widget\-::$\sim$mdt\-Abstract\-Sql\-Widget (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_abstract_sql_widget_a46dabe9e76aaea93ff20b28863e6c0ff}
+
+
+Destructor. 
+
+
+
+Definition at line 42 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_abstract_sql_widget_a7225af05f3b10e82db939f0ec0996167}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!addChildWidget@{addChildWidget}}
-\index{addChildWidget@{addChildWidget}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{addChildWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::addChildWidget (
+\hypertarget{classmdt_abstract_sql_widget_a7225af05f3b10e82db939f0ec0996167}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!add\-Child\-Widget@{add\-Child\-Widget}}
+\index{add\-Child\-Widget@{add\-Child\-Widget}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{add\-Child\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::add\-Child\-Widget (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtAbstractSqlWidget} $\ast$}]{widget, }
-\item[{{\bf mdtSqlRelation} $\ast$}]{relation}
+\item[{{\bf mdt\-Abstract\-Sql\-Widget} $\ast$}]{widget, }
+\item[{{\bf mdt\-Sql\-Relation} $\ast$}]{relation}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_sql_widget_a7225af05f3b10e82db939f0ec0996167}
+)}}\label{classmdt_abstract_sql_widget_a7225af05f3b10e82db939f0ec0996167}
 
 
 Add a child (details) widget and relation. 
@@ -331,122 +278,144 @@ Add a child (details) widget and relation.
 Needed signal/slot connection between widget and relation is done internally.
 
 \begin{DoxyPrecond}{Precondition}
-(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
 
 widget must be a valid pointer 
 
-relation must be a valid pointer. Note: relation will be reparented, so it will be deleted automatically by Qt. 
+relation must be a valid pointer. Note\-: relation will be reparented, so it will be deleted automatically by Qt. 
 \end{DoxyPrecond}
 
 
-Definition at line 99 of file mdtAbstractSqlWidget.cpp.
+Definition at line 99 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!addDataValidator@{addDataValidator}}
-\index{addDataValidator@{addDataValidator}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{addDataValidator}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::addDataValidator (
+
+
+References current\-Row(), current\-Row\-Changed(), and mdt\-Sql\-Relation\-::set\-Parent\-Current\-Index().
+
+
+
+Referenced by mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), and mdt\-Sql\-Form\-::add\-Child\-Table().
+
+\hypertarget{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!add\-Data\-Validator@{add\-Data\-Validator}}
+\index{add\-Data\-Validator@{add\-Data\-Validator}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{add\-Data\-Validator}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::add\-Data\-Validator (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtSqlDataValidator} $\ast$}]{validator, }
-\item[{bool}]{putAtTopPriority = {\ttfamily false}}
+\item[{{\bf mdt\-Sql\-Data\-Validator} $\ast$}]{validator, }
+\item[{bool}]{put\-At\-Top\-Priority = {\ttfamily false}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}
+)}}\label{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}
 
 
 Add a data validator. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em validator} & A instance of \hyperlink{classmdt_sql_data_validator}{mdtSqlDataValidator} or subclass. \\
+{\em validator} & A instance of \hyperlink{classmdt_sql_data_validator}{mdt\-Sql\-Data\-Validator} or subclass. \\
 \hline
-{\em putAtTopPriority} & If true, validator will be called before allready stored ones. (validators are put into a queue).\\
+{\em put\-At\-Top\-Priority} & If true, validator will be called before allready stored ones. (validators are put into a queue).\\
 \hline
 \end{DoxyParams}
-Note: validator will be reparented, so it will be destroyed automatically when this class is destroyed.
+Note\-: validator will be reparented, so it will be destroyed automatically when this class is destroyed.
 
 \begin{DoxyPrecond}{Precondition}
-(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
 
 validator must be a valid pointer. 
 \end{DoxyPrecond}
 
 
-Definition at line 69 of file mdtAbstractSqlWidget.cpp.
+Definition at line 69 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!allDataAreSaved@{allDataAreSaved}}
-\index{allDataAreSaved@{allDataAreSaved}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{allDataAreSaved}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSqlWidget::allDataAreSaved (
+
+
+Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets().
+
+\hypertarget{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!all\-Data\-Are\-Saved@{all\-Data\-Are\-Saved}}
+\index{all\-Data\-Are\-Saved@{all\-Data\-Are\-Saved}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{all\-Data\-Are\-Saved}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}
+)}}\label{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}
 
 
 Check if all data are saved. 
 
-This will check state of main SQL widget (this widget) and state of all assigned child widgets. If one of them is not in Visualizing state, some data are not saved. In this case, a message box is displayed to the user.
+This will check state of main S\-Q\-L widget (this widget) and state of all assigned child widgets. If one of them is not in Visualizing state, some data are not saved. In this case, a message box is displayed to the user.
 
-This is used by \hyperlink{classmdt_sql_window}{mdtSqlWindow} and \hyperlink{classmdt_sql_dialog}{mdtSqlDialog} to check if it can close the window.
+This is used by \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} and \hyperlink{classmdt_sql_dialog}{mdt\-Sql\-Dialog} to check if it can close the window.
 
 \begin{DoxyReturn}{Returns}
-true if all data are saved, false if a SQL widget has pending data. 
+true if all data are saved, false if a S\-Q\-L widget has pending data. 
 \end{DoxyReturn}
 
 
-Definition at line 224 of file mdtAbstractSqlWidget.cpp.
+Definition at line 224 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!childWidgetsAreInVisaluzingState@{childWidgetsAreInVisaluzingState}}
-\index{childWidgetsAreInVisaluzingState@{childWidgetsAreInVisaluzingState}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{childWidgetsAreInVisaluzingState}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState (
+
+
+References child\-Widgets\-Are\-In\-Visaluzing\-State(), current\-State(), user\-Friendly\-Table\-Name(), and Visualizing.
+
+
+
+Referenced by mdt\-Sql\-Dialog\-::accept(), mdt\-Sql\-Dialog\-Old\-::accept(), child\-Widgets\-Are\-In\-Visaluzing\-State(), mdt\-Sql\-Dialog\-::reject(), and mdt\-Sql\-Dialog\-Old\-::reject().
+
+\hypertarget{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!child\-Widgets\-Are\-In\-Visaluzing\-State@{child\-Widgets\-Are\-In\-Visaluzing\-State}}
+\index{child\-Widgets\-Are\-In\-Visaluzing\-State@{child\-Widgets\-Are\-In\-Visaluzing\-State}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{child\-Widgets\-Are\-In\-Visaluzing\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Abstract\-Sql\-Widget\-::child\-Widgets\-Are\-In\-Visaluzing\-State (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}
 
 
 Check that child widgtes have no pending data. 
 
 
 
-if(w-\/$>$\hyperlink{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}{currentState()} != Visualizing)\{ warnUserAboutUnsavedRow(w-\/$>$\hyperlink{classmdt_abstract_sql_widget_a8207edaf31a7d988db5b86a4099ad4eb}{userFriendlyTableName()}); return false; \}
+Definition at line 366 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
-Definition at line 366 of file mdtAbstractSqlWidget.cpp.
+References all\-Data\-Are\-Saved().
 
-\hypertarget{classmdt_abstract_sql_widget_a10a2d7fff69ec7043db0df05cbbaa63c}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!currentData@{currentData}}
-\index{currentData@{currentData}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{currentData}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtAbstractSqlWidget::currentData (
+
+
+Referenced by all\-Data\-Are\-Saved(), mdt\-Sql\-Form\-Widget\-::set\-Current\-Index(), mdt\-Sql\-Form\-Widget\-::to\-First(), mdt\-Sql\-Form\-Widget\-::to\-Last(), mdt\-Sql\-Form\-Widget\-::to\-Next(), and mdt\-Sql\-Form\-Widget\-::to\-Previous().
+
+\hypertarget{classmdt_abstract_sql_widget_a10a2d7fff69ec7043db0df05cbbaa63c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!current\-Data@{current\-Data}}
+\index{current\-Data@{current\-Data}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{current\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Abstract\-Sql\-Widget\-::current\-Data (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName}
+\item[{const Q\-String \&}]{field\-Name}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_abstract_sql_widget_a10a2d7fff69ec7043db0df05cbbaa63c}
+) const}}\label{classmdt_abstract_sql_widget_a10a2d7fff69ec7043db0df05cbbaa63c}
 
 
 Get current data for given field name. 
 
 \begin{DoxyPrecond}{Precondition}
-(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 168 of file mdtAbstractSqlWidget.cpp.
+Definition at line 168 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!currentRow@{currentRow}}
-\index{currentRow@{currentRow}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{currentRow}]{\setlength{\rightskip}{0pt plus 5cm}virtual int mdtAbstractSqlWidget::currentRow (
+
+
+References current\-Row(), and data().
+
+
+
+Referenced by mdt\-Sql\-Form\-Old\-::current\-Data(), and mdt\-Sql\-Form\-::current\-Data().
+
+\hypertarget{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!current\-Row@{current\-Row}}
+\index{current\-Row@{current\-Row}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{current\-Row}]{\setlength{\rightskip}{0pt plus 5cm}virtual int mdt\-Abstract\-Sql\-Widget\-::current\-Row (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}
 
 
 Get the current row. 
@@ -455,129 +424,179 @@ Current row can be the currently selected row (case of a table view), or simply 
 
 Subclass must implement this method. 
 
-Implemented in \hyperlink{classmdt_sql_form_widget_a9588fdc58b30440077b8dcfa3a2fb3c0}{mdtSqlFormWidget}, and \hyperlink{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}{mdtSqlTableWidget}.
+Implemented in \hyperlink{classmdt_sql_form_widget_a9588fdc58b30440077b8dcfa3a2fb3c0}{mdt\-Sql\-Form\-Widget}, and \hyperlink{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}{mdt\-Sql\-Table\-Widget}.
 
-\hypertarget{classmdt_abstract_sql_widget_a182972cd54cf7e00322c0b6973ecbde2}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!currentRowChanged@{currentRowChanged}}
-\index{currentRowChanged@{currentRowChanged}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{currentRowChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::currentRowChanged (
+
+
+Referenced by add\-Child\-Widget(), current\-Data(), mdt\-Sql\-Form\-Old\-::current\-Row(), mdt\-Sql\-Form\-::current\-Row(), restore\-Primary\-Key\-Data\-To\-Model(), and set\-Current\-Data().
+
+\hypertarget{classmdt_abstract_sql_widget_a182972cd54cf7e00322c0b6973ecbde2}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!current\-Row\-Changed@{current\-Row\-Changed}}
+\index{current\-Row\-Changed@{current\-Row\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{current\-Row\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::current\-Row\-Changed (
 \begin{DoxyParamCaption}
 \item[{int}]{row}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a182972cd54cf7e00322c0b6973ecbde2}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a182972cd54cf7e00322c0b6973ecbde2}
 
 
 Emitted when current row has changed. 
 
 This is usefull, for example, in master/detail forms, to update child models filter.
 
-Subclass must emit this signal each time the user selects a new row. \hypertarget{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!data@{data}}
-\index{data@{data}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtAbstractSqlWidget::data (
+Subclass must emit this signal each time the user selects a new row. 
+
+Definition at line 339 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by add\-Child\-Widget().
+
+\hypertarget{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!current\-State@{current\-State}}
+\index{current\-State@{current\-State}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{current\-State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Sql\-Widget\-::state\-\_\-t} mdt\-Abstract\-Sql\-Widget\-::current\-State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}
+
+
+Get current state. 
+
+
+
+Definition at line 211 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+
+
+
+Referenced by all\-Data\-Are\-Saved(), mdt\-Sql\-Form\-Widget\-::set\-Current\-Index(), mdt\-Sql\-Form\-Widget\-::to\-First(), mdt\-Sql\-Form\-Widget\-::to\-Last(), mdt\-Sql\-Form\-Widget\-::to\-Next(), and mdt\-Sql\-Form\-Widget\-::to\-Previous().
+
+\hypertarget{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!data@{data}}
+\index{data@{data}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Abstract\-Sql\-Widget\-::data (
 \begin{DoxyParamCaption}
 \item[{int}]{row, }
-\item[{const QString \&}]{fieldName}
+\item[{const Q\-String \&}]{field\-Name}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}
+) const}}\label{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}
 
 
 Get data for given row and field name. 
 
 \begin{DoxyPrecond}{Precondition}
-(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 175 of file mdtAbstractSqlWidget.cpp.
+Definition at line 175 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a3401020fed292da2c3b565a536f0be47}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!displayDatabaseError@{displayDatabaseError}}
-\index{displayDatabaseError@{displayDatabaseError}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{displayDatabaseError}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::displayDatabaseError (
+
+
+References mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R, and M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C.
+
+
+
+Referenced by current\-Data(), mdt\-Sql\-Form\-Old\-::data(), and mdt\-Sql\-Form\-::data().
+
+\hypertarget{classmdt_abstract_sql_widget_a8ae6e67e3efb5051dc7a8b74571d4aa1}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!data\-Edited@{data\-Edited}}
+\index{data\-Edited@{data\-Edited}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{data\-Edited}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::data\-Edited (
 \begin{DoxyParamCaption}
-\item[{QSqlError}]{error}
+{}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a3401020fed292da2c3b565a536f0be47}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a8ae6e67e3efb5051dc7a8b74571d4aa1}
+
+
+Emitted when data was edited. 
+
+
+
+Definition at line 309 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets(), and set\-Current\-Data().
+
+\hypertarget{classmdt_abstract_sql_widget_a3401020fed292da2c3b565a536f0be47}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!display\-Database\-Error@{display\-Database\-Error}}
+\index{display\-Database\-Error@{display\-Database\-Error}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{display\-Database\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::display\-Database\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-Sql\-Error}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_abstract_sql_widget_a3401020fed292da2c3b565a536f0be47}
 
 
 Display a message to the user regarding error. 
 
-Internally, error will be logged with \hyperlink{classmdt_error}{mdtError} system.
+Internally, error will be logged with \hyperlink{classmdt_error}{mdt\-Error} system.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 290 of file mdtAbstractSqlWidget.cpp.
+Definition at line 290 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_aa79059c092c6bcda569ced7c0621a817}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!doInsert@{doInsert}}
-\index{doInsert@{doInsert}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{doInsert}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSqlWidget::doInsert (
+
+
+References mdt\-Error\-::\-Error, get\-User\-Readable\-Text\-From\-Mysql\-Error(), get\-User\-Readable\-Text\-From\-Sqlite\-Error(), M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Error\-::set\-System\-Error(), and user\-Friendly\-Table\-Name().
+
+
+
+Referenced by set\-Current\-Data().
+
+\hypertarget{classmdt_abstract_sql_widget_aa79059c092c6bcda569ced7c0621a817}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!do\-Insert@{do\-Insert}}
+\index{do\-Insert@{do\-Insert}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{do\-Insert}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdt\-Abstract\-Sql\-Widget\-::do\-Insert (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_aa79059c092c6bcda569ced7c0621a817}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classmdt_abstract_sql_widget_aa79059c092c6bcda569ced7c0621a817}
 
 
 Insert a row row to model. 
 
-Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false. \hypertarget{classmdt_abstract_sql_widget_a41c30652fa9775c7b3bc6cb51004d4d5}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!doRemove@{doRemove}}
-\index{doRemove@{doRemove}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{doRemove}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSqlWidget::doRemove (
+Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false. \hypertarget{classmdt_abstract_sql_widget_a41c30652fa9775c7b3bc6cb51004d4d5}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!do\-Remove@{do\-Remove}}
+\index{do\-Remove@{do\-Remove}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{do\-Remove}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdt\-Abstract\-Sql\-Widget\-::do\-Remove (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a41c30652fa9775c7b3bc6cb51004d4d5}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classmdt_abstract_sql_widget_a41c30652fa9775c7b3bc6cb51004d4d5}
 
 
 Remove current row from model. 
 
-Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false. \hypertarget{classmdt_abstract_sql_widget_a2c0cbbcd02be19767e68153ecbc2392d}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!doRevert@{doRevert}}
-\index{doRevert@{doRevert}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{doRevert}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSqlWidget::doRevert (
+Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false. \hypertarget{classmdt_abstract_sql_widget_a2c0cbbcd02be19767e68153ecbc2392d}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!do\-Revert@{do\-Revert}}
+\index{do\-Revert@{do\-Revert}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{do\-Revert}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdt\-Abstract\-Sql\-Widget\-::do\-Revert (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a2c0cbbcd02be19767e68153ecbc2392d}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classmdt_abstract_sql_widget_a2c0cbbcd02be19767e68153ecbc2392d}
 
 
 Revert current row from model. 
 
 Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false.
 
-Depending on subclass choosen EditStrategy, this method has potentially no effect. \hypertarget{classmdt_abstract_sql_widget_a048efd5f89be7c6e74d6988b7e95fc07}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!doRevertNewRow@{doRevertNewRow}}
-\index{doRevertNewRow@{doRevertNewRow}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{doRevertNewRow}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSqlWidget::doRevertNewRow (
+Depending on subclass choosen Edit\-Strategy, this method has potentially no effect. \hypertarget{classmdt_abstract_sql_widget_a048efd5f89be7c6e74d6988b7e95fc07}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!do\-Revert\-New\-Row@{do\-Revert\-New\-Row}}
+\index{do\-Revert\-New\-Row@{do\-Revert\-New\-Row}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{do\-Revert\-New\-Row}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdt\-Abstract\-Sql\-Widget\-::do\-Revert\-New\-Row (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a048efd5f89be7c6e74d6988b7e95fc07}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classmdt_abstract_sql_widget_a048efd5f89be7c6e74d6988b7e95fc07}
 
 
 Revert new row. 
 
-Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false. \hypertarget{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!doSetModel@{doSetModel}}
-\index{doSetModel@{doSetModel}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{doSetModel}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSqlWidget::doSetModel (
+Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false. \hypertarget{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!do\-Set\-Model@{do\-Set\-Model}}
+\index{do\-Set\-Model@{do\-Set\-Model}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{do\-Set\-Model}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdt\-Abstract\-Sql\-Widget\-::do\-Set\-Model (
 \begin{DoxyParamCaption}
-\item[{QSqlTableModel $\ast$}]{model}
+\item[{{\bf Q\-Sql\-Table\-Model} $\ast$}]{model}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}
 
 
 Set the table model. 
@@ -587,328 +606,501 @@ Subclass must implement this method.
 \begin{DoxyPrecond}{Precondition}
 model must be a valid pointer 
 \end{DoxyPrecond}
-\hypertarget{classmdt_abstract_sql_widget_a7a97e9c9f3b9c22650e4b55d095543ef}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!doSubmit@{doSubmit}}
-\index{doSubmit@{doSubmit}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{doSubmit}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSqlWidget::doSubmit (
+
+
+Referenced by set\-Model().
+
+\hypertarget{classmdt_abstract_sql_widget_a7a97e9c9f3b9c22650e4b55d095543ef}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!do\-Submit@{do\-Submit}}
+\index{do\-Submit@{do\-Submit}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{do\-Submit}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdt\-Abstract\-Sql\-Widget\-::do\-Submit (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a7a97e9c9f3b9c22650e4b55d095543ef}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classmdt_abstract_sql_widget_a7a97e9c9f3b9c22650e4b55d095543ef}
 
 
 Submit current row to model. 
 
 Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false.
 
-Depending on subclass choosen EditStrategy, this method has potentially no effect. \hypertarget{classmdt_abstract_sql_widget_ac546802e2910fc49c007eda5dbb3b3f7}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!doSubmitNewRow@{doSubmitNewRow}}
-\index{doSubmitNewRow@{doSubmitNewRow}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{doSubmitNewRow}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSqlWidget::doSubmitNewRow (
+Depending on subclass choosen Edit\-Strategy, this method has potentially no effect. \hypertarget{classmdt_abstract_sql_widget_ac546802e2910fc49c007eda5dbb3b3f7}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!do\-Submit\-New\-Row@{do\-Submit\-New\-Row}}
+\index{do\-Submit\-New\-Row@{do\-Submit\-New\-Row}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{do\-Submit\-New\-Row}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdt\-Abstract\-Sql\-Widget\-::do\-Submit\-New\-Row (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_ac546802e2910fc49c007eda5dbb3b3f7}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classmdt_abstract_sql_widget_ac546802e2910fc49c007eda5dbb3b3f7}
 
 
 Submit new row to model. 
 
-Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false. \hypertarget{classmdt_abstract_sql_widget_a4ad94a530c77292d122d38eb041da6e9}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!enableLocalEdition@{enableLocalEdition}}
-\index{enableLocalEdition@{enableLocalEdition}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{enableLocalEdition}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::enableLocalEdition (
+Subclass must implement this method. On problem, subclass should explain what goes wrong to the user and return false. \hypertarget{classmdt_abstract_sql_widget_a4ad94a530c77292d122d38eb041da6e9}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!enable\-Local\-Edition@{enable\-Local\-Edition}}
+\index{enable\-Local\-Edition@{enable\-Local\-Edition}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{enable\-Local\-Edition}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::enable\-Local\-Edition (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a4ad94a530c77292d122d38eb041da6e9}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_abstract_sql_widget_a4ad94a530c77292d122d38eb041da6e9}
 
 
 Enable local edition. 
 
 Will add insert/revert/save/delete buttons.
 
-In normal way, when using \hyperlink{classmdt_sql_window}{mdtSqlWindow}, local navigation is not needed. In master/detail forms, if this widget is a details (child) widget and edition is needed, then call this method.
+In normal way, when using \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window}, local navigation is not needed. In master/detail forms, if this widget is a details (child) widget and edition is needed, then call this method.
 
 This default implementation does nothing. 
 
-Reimplemented in \hyperlink{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}{mdtSqlTableWidget}.
+Reimplemented in \hyperlink{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}{mdt\-Sql\-Table\-Widget}.
 
 
 
-Definition at line 220 of file mdtAbstractSqlWidget.cpp.
+Definition at line 220 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a586e89097e9b4c27888695796ce945a0}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!enableLocalNavigation@{enableLocalNavigation}}
-\index{enableLocalNavigation@{enableLocalNavigation}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{enableLocalNavigation}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::enableLocalNavigation (
+\hypertarget{classmdt_abstract_sql_widget_a586e89097e9b4c27888695796ce945a0}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!enable\-Local\-Navigation@{enable\-Local\-Navigation}}
+\index{enable\-Local\-Navigation@{enable\-Local\-Navigation}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{enable\-Local\-Navigation}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::enable\-Local\-Navigation (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a586e89097e9b4c27888695796ce945a0}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_abstract_sql_widget_a586e89097e9b4c27888695796ce945a0}
 
 
 Enable local navigation. 
 
 Will build a navigation bar with $|$$<$$<$ $<$ $>$ $>$$>$$|$ buttons.
 
-In normal way, when using \hyperlink{classmdt_sql_window}{mdtSqlWindow}, local navigation is not needed. In master/detail forms, if this widget is a details (child) widget and navigation is needed, then call this method.
+In normal way, when using \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window}, local navigation is not needed. In master/detail forms, if this widget is a details (child) widget and navigation is needed, then call this method.
 
 This default implementation does nothing. 
 
-Definition at line 216 of file mdtAbstractSqlWidget.cpp.
+Definition at line 216 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!insert@{insert}}
-\index{insert@{insert}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::insert (
+\hypertarget{classmdt_abstract_sql_widget_a27d3a1a75cddf6653f919e5ff3f2e8b4}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!error\-Occured@{error\-Occured}}
+\index{error\-Occured@{error\-Occured}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{error\-Occured}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::error\-Occured (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a27d3a1a75cddf6653f919e5ff3f2e8b4}
+
+
+Emitted when a error occured. 
+
+
+
+Definition at line 297 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+\hypertarget{classmdt_abstract_sql_widget_a1081ced9b96f60b3b39c6085bfe305d4}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!get\-User\-Readable\-Text\-From\-Mysql\-Error@{get\-User\-Readable\-Text\-From\-Mysql\-Error}}
+\index{get\-User\-Readable\-Text\-From\-Mysql\-Error@{get\-User\-Readable\-Text\-From\-Mysql\-Error}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{get\-User\-Readable\-Text\-From\-Mysql\-Error}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Abstract\-Sql\-Widget\-::get\-User\-Readable\-Text\-From\-Mysql\-Error (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Error \&}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_abstract_sql_widget_a1081ced9b96f60b3b39c6085bfe305d4}
+
+
+Get message for the user regarding My\-Sql error number. 
+
+
+
+Definition at line 354 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+
+
+
+Referenced by display\-Database\-Error().
+
+\hypertarget{classmdt_abstract_sql_widget_aeeddeec556cc20c5c9a49559df7898d9}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!get\-User\-Readable\-Text\-From\-Sqlite\-Error@{get\-User\-Readable\-Text\-From\-Sqlite\-Error}}
+\index{get\-User\-Readable\-Text\-From\-Sqlite\-Error@{get\-User\-Readable\-Text\-From\-Sqlite\-Error}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{get\-User\-Readable\-Text\-From\-Sqlite\-Error}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Abstract\-Sql\-Widget\-::get\-User\-Readable\-Text\-From\-Sqlite\-Error (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Error \&}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_abstract_sql_widget_aeeddeec556cc20c5c9a49559df7898d9}
+
+
+Get message for the user regarding S\-Q\-Lite error number. 
+
+
+
+Definition at line 329 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+
+
+
+Referenced by display\-Database\-Error().
+
+\hypertarget{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!insert@{insert}}
+\index{insert@{insert}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::insert (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}
 
 
 Insert a new row to model. 
 
-Internally, \hyperlink{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{insertTriggered()} signal will be emitted. 
+Internally, \hyperlink{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{insert\-Triggered()} signal will be emitted. 
 
-Definition at line 250 of file mdtAbstractSqlWidget.cpp.
+Definition at line 250 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a909ba5b675f596ee5c5980e159cd2878}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!insertEnabledStateChanged@{insertEnabledStateChanged}}
-\index{insertEnabledStateChanged@{insertEnabledStateChanged}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{insertEnabledStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::insertEnabledStateChanged (
+
+
+References insert\-Triggered().
+
+
+
+Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition(), and mdt\-Sql\-Form\-::insert().
+
+\hypertarget{classmdt_abstract_sql_widget_a909ba5b675f596ee5c5980e159cd2878}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!insert\-Enabled\-State\-Changed@{insert\-Enabled\-State\-Changed}}
+\index{insert\-Enabled\-State\-Changed@{insert\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{insert\-Enabled\-State\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::insert\-Enabled\-State\-Changed (
 \begin{DoxyParamCaption}
 \item[{bool}]{enabled}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a909ba5b675f596ee5c5980e159cd2878}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a909ba5b675f596ee5c5980e159cd2878}
 
 
 Emitted when \hyperlink{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}{insert()} function goes enabled/disabled. 
 
-This is usefull to keep GUI control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdtSqlWindow} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!model@{model}}
-\index{model@{model}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}QSqlTableModel $\ast$ mdtAbstractSqlWidget::model (
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
+
+Definition at line 259 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
+
+\hypertarget{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!insert\-Triggered@{insert\-Triggered}}
+\index{insert\-Triggered@{insert\-Triggered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{insert\-Triggered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::insert\-Triggered (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}
+
+
+Emitted when \hyperlink{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}{insert()} was called. 
+
+
+
+Definition at line 285 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by insert().
+
+\hypertarget{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!model@{model}}
+\index{model@{model}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Q\-Sql\-Table\-Model} $\ast$ mdt\-Abstract\-Sql\-Widget\-::model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}
 
 
 Get current model. 
 
 Can return a null pointer if model was not set. 
 
-Definition at line 64 of file mdtAbstractSqlWidget.cpp.
+Definition at line 64 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!modelSelected@{modelSelected}}
-\index{modelSelected@{modelSelected}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{modelSelected}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::modelSelected (
+
+
+Referenced by mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), mdt\-Sql\-Form\-::add\-Child\-Table(), mdt\-Sql\-Table\-Widget\-::index\-List\-Of\-Selected\-Rows(), mdt\-Sql\-Table\-Widget\-::index\-List\-Of\-Selected\-Rows\-By\-Rows\-List(), mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets(), mdt\-Sql\-Form\-Old\-::model(), mdt\-Sql\-Form\-::model(), mdt\-Sql\-Form\-::select(), mdt\-Sql\-Table\-Widget\-::set\-Column\-Hidden(), mdt\-Sql\-Table\-Widget\-::set\-Current\-Index(), set\-Current\-Record(), mdt\-Sql\-Table\-Widget\-::set\-Default\-Column\-To\-Select(), mdt\-Sql\-Table\-Widget\-::set\-Header\-Data(), mdt\-Sql\-Form\-::set\-Main\-Table(), mdt\-Sql\-Form\-::set\-Main\-Table\-Filter(), set\-Model(), and mdt\-Sql\-Form\-Old\-::set\-Table().
+
+\hypertarget{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!model\-Selected@{model\-Selected}}
+\index{model\-Selected@{model\-Selected}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{model\-Selected}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::model\-Selected (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}
 
 
-Emitted when select() or setQuery() was called on (parent) model. 
+Emitted when select() or set\-Query() was called on (parent) model. 
 
-Notes: QSqlTableModel does not provide such signal. Here, the rowsRemoved() and rowsInserted() signal are used. It's also possible that this signal is emitted two times when model is updated with select(), setQuery() or setFilter(). \hypertarget{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!remove@{remove}}
-\index{remove@{remove}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::remove (
+Notes\-: \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} does not provide such signal. Here, the rows\-Removed() and rows\-Inserted() signal are used. It's also possible that this signal is emitted two times when model is updated with select(), set\-Query() or set\-Filter(). 
+
+Definition at line 346 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets(), mdt\-Sql\-Table\-Widget\-::mdt\-Sql\-Table\-Widget(), and set\-Model().
+
+\hypertarget{classmdt_abstract_sql_widget_aa514b36fecc323dfdf8eedeec7838dd1}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!operation\-Succeed@{operation\-Succeed}}
+\index{operation\-Succeed@{operation\-Succeed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{operation\-Succeed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::operation\-Succeed (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_aa514b36fecc323dfdf8eedeec7838dd1}
+
+
+Emitted when a operation succeed. 
+
+
+
+Definition at line 303 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+\hypertarget{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!remove@{remove}}
+\index{remove@{remove}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::remove (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}
 
 
 Remove a row from model. 
 
-Internally, \hyperlink{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{removeTriggered()} signal will be emitted. 
+Internally, \hyperlink{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{remove\-Triggered()} signal will be emitted. 
 
-Definition at line 255 of file mdtAbstractSqlWidget.cpp.
+Definition at line 255 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a9c536f5081b321e8df24316506fc19f3}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!removeEnabledStateChanged@{removeEnabledStateChanged}}
-\index{removeEnabledStateChanged@{removeEnabledStateChanged}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{removeEnabledStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::removeEnabledStateChanged (
+
+
+References remove\-Triggered().
+
+\hypertarget{classmdt_abstract_sql_widget_a9c536f5081b321e8df24316506fc19f3}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!remove\-Enabled\-State\-Changed@{remove\-Enabled\-State\-Changed}}
+\index{remove\-Enabled\-State\-Changed@{remove\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{remove\-Enabled\-State\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::remove\-Enabled\-State\-Changed (
 \begin{DoxyParamCaption}
 \item[{bool}]{enabled}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a9c536f5081b321e8df24316506fc19f3}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a9c536f5081b321e8df24316506fc19f3}
 
 
 Emitted when \hyperlink{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{remove()} function goes enabled/disabled. 
 
-This is usefull to keep GUI control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdtSqlWindow} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_ac93226881ba03311a6a95ecd2ddaa003}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!restorePrimaryKeyDataToModel@{restorePrimaryKeyDataToModel}}
-\index{restorePrimaryKeyDataToModel@{restorePrimaryKeyDataToModel}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{restorePrimaryKeyDataToModel}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSqlWidget::restorePrimaryKeyDataToModel (
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
+
+Definition at line 266 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
+
+\hypertarget{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!remove\-Triggered@{remove\-Triggered}}
+\index{remove\-Triggered@{remove\-Triggered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{remove\-Triggered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::remove\-Triggered (
 \begin{DoxyParamCaption}
-\item[{const QSqlRecord \&}]{previousRecord}
+{}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_ac93226881ba03311a6a95ecd2ddaa003}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}
+
+
+Emitted when \hyperlink{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{remove()} was called. 
+
+
+
+Definition at line 291 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by remove().
+
+\hypertarget{classmdt_abstract_sql_widget_ac93226881ba03311a6a95ecd2ddaa003}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!restore\-Primary\-Key\-Data\-To\-Model@{restore\-Primary\-Key\-Data\-To\-Model}}
+\index{restore\-Primary\-Key\-Data\-To\-Model@{restore\-Primary\-Key\-Data\-To\-Model}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{restore\-Primary\-Key\-Data\-To\-Model}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Abstract\-Sql\-Widget\-::restore\-Primary\-Key\-Data\-To\-Model (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Record \&}]{previous\-Record}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_abstract_sql_widget_ac93226881ba03311a6a95ecd2ddaa003}
 
 
 Restore primary key data to (parent) model. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em previousRecord} & Record that contains data in witch primary key data will be token, and sotred again into model if they differ. \\
+{\em previous\-Record} & Record that contains data in witch primary key data will be token, and sotred again into model if they differ. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyPrecond}{Precondition}
-(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before calling this method. 
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before calling this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 399 of file mdtAbstractSqlWidget.cpp.
+Definition at line 399 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!revert@{revert}}
-\index{revert@{revert}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{revert}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::revert (
+
+
+References current\-Row().
+
+\hypertarget{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!revert@{revert}}
+\index{revert@{revert}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{revert}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::revert (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}
 
 
 Revert current record from model. 
 
-Depending on subclass choosen EditStrategy, this method has potentially no effect.
+Depending on subclass choosen Edit\-Strategy, this method has potentially no effect.
 
-Internally, \hyperlink{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{revertTriggered()} signal will be emitted. 
+Internally, \hyperlink{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{revert\-Triggered()} signal will be emitted. 
 
-Definition at line 245 of file mdtAbstractSqlWidget.cpp.
+Definition at line 245 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_ada899f0c3f8388d2d3feac7c0c50884c}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!revertEnabledStateChanged@{revertEnabledStateChanged}}
-\index{revertEnabledStateChanged@{revertEnabledStateChanged}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{revertEnabledStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::revertEnabledStateChanged (
+
+
+References revert\-Triggered().
+
+
+
+Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
+
+\hypertarget{classmdt_abstract_sql_widget_ada899f0c3f8388d2d3feac7c0c50884c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!revert\-Enabled\-State\-Changed@{revert\-Enabled\-State\-Changed}}
+\index{revert\-Enabled\-State\-Changed@{revert\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{revert\-Enabled\-State\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::revert\-Enabled\-State\-Changed (
 \begin{DoxyParamCaption}
 \item[{bool}]{enabled}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_ada899f0c3f8388d2d3feac7c0c50884c}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_ada899f0c3f8388d2d3feac7c0c50884c}
 
 
 Emitted when \hyperlink{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}{revert()} function goes enabled/disabled. 
 
-This is usefull to keep GUI control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdtSqlWindow} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_a5e25e4a2e0dc56c06c530c9b543366f2}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!rowCount@{rowCount}}
-\index{rowCount@{rowCount}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{rowCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtAbstractSqlWidget::rowCount (
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
+
+Definition at line 252 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
+
+\hypertarget{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!revert\-Triggered@{revert\-Triggered}}
+\index{revert\-Triggered@{revert\-Triggered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{revert\-Triggered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::revert\-Triggered (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_abstract_sql_widget_a5e25e4a2e0dc56c06c530c9b543366f2}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}
+
+
+Emitted when \hyperlink{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}{revert()} was called. 
+
+
+
+Definition at line 279 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by revert().
+
+\hypertarget{classmdt_abstract_sql_widget_a5e25e4a2e0dc56c06c530c9b543366f2}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!row\-Count@{row\-Count}}
+\index{row\-Count@{row\-Count}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{row\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Abstract\-Sql\-Widget\-::row\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_abstract_sql_widget_a5e25e4a2e0dc56c06c530c9b543366f2}
 
 
 Get row count. 
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 204 of file mdtAbstractSqlWidget.cpp.
+Definition at line 204 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!setCurrentData@{setCurrentData}}
-\index{setCurrentData@{setCurrentData}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{setCurrentData}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSqlWidget::setCurrentData (
+
+
+Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets(), and set\-Current\-Record().
+
+\hypertarget{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!set\-Current\-Data@{set\-Current\-Data}}
+\index{set\-Current\-Data@{set\-Current\-Data}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{set\-Current\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Abstract\-Sql\-Widget\-::set\-Current\-Data (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName, }
-\item[{const QVariant \&}]{data, }
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-Variant \&}]{data, }
 \item[{bool}]{submit = {\ttfamily true}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}
+)}}\label{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}
 
 
 Set (update) data of current row (record) for given field name. 
 
 \begin{DoxyPrecond}{Precondition}
-(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{setModel()} before using this method. 
+(Parent) model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 130 of file mdtAbstractSqlWidget.cpp.
+Definition at line 130 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!setCurrentIndex@{setCurrentIndex}}
-\index{setCurrentIndex@{setCurrentIndex}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{setCurrentIndex}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSqlWidget::setCurrentIndex (
+
+
+References current\-Row(), data\-Edited(), display\-Database\-Error(), and set\-Current\-Index().
+
+
+
+Referenced by mdt\-Sql\-Form\-Old\-::set\-Current\-Data(), and mdt\-Sql\-Form\-::set\-Current\-Data().
+
+\hypertarget{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!set\-Current\-Index@{set\-Current\-Index}}
+\index{set\-Current\-Index@{set\-Current\-Index}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{set\-Current\-Index}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdt\-Abstract\-Sql\-Widget\-::set\-Current\-Index (
 \begin{DoxyParamCaption}
 \item[{int}]{row}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual, slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}
 
 
 Set row as current record. 
 
 Subclass must implement this method. Errors and user interactions must be handled by subclass. 
 
-Implemented in \hyperlink{classmdt_sql_form_widget_a982e8e8347ec4f98bf3df6980997a2db}{mdtSqlFormWidget}, and \hyperlink{classmdt_sql_table_widget_ae4945234973dcfcb8f2e20830e571fd4}{mdtSqlTableWidget}.
+Referenced by set\-Current\-Data(), set\-Current\-Record(), and mdt\-Sql\-Dialog\-Old\-::set\-Current\-Row().
 
-\hypertarget{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!setCurrentRecord@{setCurrentRecord}}
-\index{setCurrentRecord@{setCurrentRecord}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{setCurrentRecord}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSqlWidget::setCurrentRecord (
+\hypertarget{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!set\-Current\-Record@{set\-Current\-Record}}
+\index{set\-Current\-Record@{set\-Current\-Record}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{set\-Current\-Record}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Abstract\-Sql\-Widget\-::set\-Current\-Record (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName, }
-\item[{const QVariant \&}]{value}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-Variant \&}]{value}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}
 
 
 Set the first record that matches given criteria as current record (index). 
 
 
 \begin{DoxyParams}{Parameters}
-{\em fieldName} & Field that must contain searched value \\
+{\em field\-Name} & Field that must contain searched value \\
 \hline
 {\em value} & Value that must matche \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True if matching record was found (in this case, \hyperlink{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{setCurrentIndex()} is called to update currentRow), false else. 
+True if matching record was found (in this case, \hyperlink{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{set\-Current\-Index()} is called to update current\-Row), false else. 
 \end{DoxyReturn}
 
 
-Definition at line 260 of file mdtAbstractSqlWidget.cpp.
+Definition at line 260 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!setModel@{setModel}}
-\index{setModel@{setModel}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{setModel}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::setModel (
+
+
+References model(), row\-Count(), and set\-Current\-Index().
+
+
+
+Referenced by mdt\-Sql\-Dialog\-Old\-::set\-Current\-Row().
+
+\hypertarget{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!set\-Model@{set\-Model}}
+\index{set\-Model@{set\-Model}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{set\-Model}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::set\-Model (
 \begin{DoxyParamCaption}
-\item[{QSqlTableModel $\ast$}]{model}
+\item[{{\bf Q\-Sql\-Table\-Model} $\ast$}]{model}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}
+)}}\label{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}
 
 
 Set the table model. 
 
-Will call \hyperlink{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}{doSetModel()} , then start the internall state machine.
+Will call \hyperlink{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}{do\-Set\-Model()} , then start the internall state machine.
 
 \begin{DoxyPrecond}{Precondition}
 model must be a valid pointer 
@@ -917,197 +1109,327 @@ Internal state machine must not running.
 \end{DoxyPrecond}
 
 
-Definition at line 46 of file mdtAbstractSqlWidget.cpp.
+Definition at line 46 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!sqlWidgets@{sqlWidgets}}
-\index{sqlWidgets@{sqlWidgets}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{sqlWidgets}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtAbstractSqlWidget} $\ast$ $>$ mdtAbstractSqlWidget::sqlWidgets (
+
+
+References do\-Set\-Model(), model(), and model\-Selected().
+
+
+
+Referenced by mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), mdt\-Sql\-Form\-::add\-Child\-Table(), mdt\-Sql\-Form\-::set\-Main\-Table(), and mdt\-Sql\-Form\-Old\-::set\-Table().
+
+\hypertarget{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!set\-User\-Friendly\-Table\-Name@{set\-User\-Friendly\-Table\-Name}}
+\index{set\-User\-Friendly\-Table\-Name@{set\-User\-Friendly\-Table\-Name}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{set\-User\-Friendly\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::set\-User\-Friendly\-Table\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}
+
+
+Set the user friendly table name. 
+
+
+
+Definition at line 82 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+
+
+
+Referenced by mdt\-Sql\-Form\-Old\-::add\-Child\-Table(), mdt\-Sql\-Form\-::add\-Child\-Table(), mdt\-Sql\-Form\-::set\-Main\-Table(), and mdt\-Sql\-Form\-Old\-::set\-Table().
+
+\hypertarget{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!sql\-Widgets@{sql\-Widgets}}
+\index{sql\-Widgets@{sql\-Widgets}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{sql\-Widgets}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Abstract\-Sql\-Widget} $\ast$ $>$ mdt\-Abstract\-Sql\-Widget\-::sql\-Widgets (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}
+)}}\label{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}
 
 
-Get a list of all SQL widgets. 
+Get a list of all S\-Q\-L widgets. 
 
-Returned list will contain the parent SQL widget and all child SQL widgets 
+Returned list will contain the parent S\-Q\-L widget and all child S\-Q\-L widgets 
 
-Definition at line 116 of file mdtAbstractSqlWidget.cpp.
+Definition at line 116 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!submit@{submit}}
-\index{submit@{submit}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{submit}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::submit (
+
+
+Referenced by mdt\-Sql\-Form\-Old\-::sql\-Widget(), and mdt\-Sql\-Form\-::sql\-Widget().
+
+\hypertarget{classmdt_abstract_sql_widget_a925485d7acc131d438f6ea251c9b1fb9}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!state\-Editing\-Exited@{state\-Editing\-Exited}}
+\index{state\-Editing\-Exited@{state\-Editing\-Exited}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{state\-Editing\-Exited}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::state\-Editing\-Exited (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a925485d7acc131d438f6ea251c9b1fb9}
+
+
+Emitted when Editing state was exited. 
+
+
+
+Definition at line 327 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets().
+
+\hypertarget{classmdt_abstract_sql_widget_af4ed2a005f55ffe23ce6382f1ed3f68e}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!state\-Editing\-New\-Row\-Exited@{state\-Editing\-New\-Row\-Exited}}
+\index{state\-Editing\-New\-Row\-Exited@{state\-Editing\-New\-Row\-Exited}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{state\-Editing\-New\-Row\-Exited}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::state\-Editing\-New\-Row\-Exited (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_af4ed2a005f55ffe23ce6382f1ed3f68e}
+
+
+Emitted when Editing state was exited. 
+
+
+
+Definition at line 333 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets().
+
+\hypertarget{classmdt_abstract_sql_widget_a4acc0adbe6e002cd559642d3ea8e2d3a}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!state\-Visualizing\-Entered@{state\-Visualizing\-Entered}}
+\index{state\-Visualizing\-Entered@{state\-Visualizing\-Entered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{state\-Visualizing\-Entered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::state\-Visualizing\-Entered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a4acc0adbe6e002cd559642d3ea8e2d3a}
+
+
+Emitted when Visualizing state was entered. 
+
+
+
+Definition at line 315 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+\hypertarget{classmdt_abstract_sql_widget_a8f2eda6e219e49c972834a1e5c39e8ff}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!state\-Visualizing\-Exited@{state\-Visualizing\-Exited}}
+\index{state\-Visualizing\-Exited@{state\-Visualizing\-Exited}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{state\-Visualizing\-Exited}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::state\-Visualizing\-Exited (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a8f2eda6e219e49c972834a1e5c39e8ff}
+
+
+Emitted when Visualizing state was exited. 
+
+
+
+Definition at line 321 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+\hypertarget{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!submit@{submit}}
+\index{submit@{submit}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{submit}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::submit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}
 
 
 Submit current record to model. 
 
-Depending on subclass choosen EditStrategy, this method has potentially no effect.
+Depending on subclass choosen Edit\-Strategy, this method has potentially no effect.
 
-Internally, \hyperlink{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{submitTriggered()} signal will be emitted. 
+Internally, \hyperlink{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{submit\-Triggered()} signal will be emitted. 
 
-Definition at line 240 of file mdtAbstractSqlWidget.cpp.
+Definition at line 240 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
-\hypertarget{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!submitEnabledStateChanged@{submitEnabledStateChanged}}
-\index{submitEnabledStateChanged@{submitEnabledStateChanged}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{submitEnabledStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::submitEnabledStateChanged (
+
+
+References submit\-Triggered().
+
+
+
+Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
+
+\hypertarget{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!submit\-Enabled\-State\-Changed@{submit\-Enabled\-State\-Changed}}
+\index{submit\-Enabled\-State\-Changed@{submit\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{submit\-Enabled\-State\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::submit\-Enabled\-State\-Changed (
 \begin{DoxyParamCaption}
 \item[{bool}]{enabled}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}
 
 
 Emitted when \hyperlink{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}{submit()} function goes enabled/disabled. 
 
-This is usefull to keep GUI control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdtSqlWindow} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!toFirst@{toFirst}}
-\index{toFirst@{toFirst}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{toFirst}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSqlWidget::toFirst (
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
+
+Definition at line 245 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
+
+\hypertarget{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!submit\-Triggered@{submit\-Triggered}}
+\index{submit\-Triggered@{submit\-Triggered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{submit\-Triggered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::submit\-Triggered (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual, slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}
+
+
+Emitted when \hyperlink{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}{submit()} was called. 
+
+
+
+Definition at line 273 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+
+
+Referenced by submit().
+
+\hypertarget{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!to\-First@{to\-First}}
+\index{to\-First@{to\-First}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{to\-First}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdt\-Abstract\-Sql\-Widget\-::to\-First (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}
 
 
 Set first record as current record. 
 
-Subclass must implement this method. Errors and user interactions must be handled by subclass. 
-
-Implemented in \hyperlink{classmdt_sql_form_widget_a4bb7ddf419e845de2d1a7c1ef95e48a8}{mdtSqlFormWidget}.
-
-\hypertarget{classmdt_abstract_sql_widget_acc3e3e7e848a92a4a117f7147bc1f3c5}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!toFirstEnabledStateChanged@{toFirstEnabledStateChanged}}
-\index{toFirstEnabledStateChanged@{toFirstEnabledStateChanged}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{toFirstEnabledStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::toFirstEnabledStateChanged (
+Subclass must implement this method. Errors and user interactions must be handled by subclass. \hypertarget{classmdt_abstract_sql_widget_acc3e3e7e848a92a4a117f7147bc1f3c5}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!to\-First\-Enabled\-State\-Changed@{to\-First\-Enabled\-State\-Changed}}
+\index{to\-First\-Enabled\-State\-Changed@{to\-First\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{to\-First\-Enabled\-State\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::to\-First\-Enabled\-State\-Changed (
 \begin{DoxyParamCaption}
 \item[{bool}]{enabled}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_acc3e3e7e848a92a4a117f7147bc1f3c5}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_acc3e3e7e848a92a4a117f7147bc1f3c5}
 
 
-Emitted when \hyperlink{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}{toFirst()} function goes enabled/disabled. 
+Emitted when \hyperlink{classmdt_abstract_sql_widget_aaa27731864dbb9123ec6765dd21feb7f}{to\-First()} function goes enabled/disabled. 
 
-This is usefull to keep GUI control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdtSqlWindow} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!toLast@{toLast}}
-\index{toLast@{toLast}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{toLast}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSqlWidget::toLast (
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
+
+Definition at line 217 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+\hypertarget{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!to\-Last@{to\-Last}}
+\index{to\-Last@{to\-Last}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{to\-Last}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdt\-Abstract\-Sql\-Widget\-::to\-Last (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual, slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}
 
 
 Set last record as current record. 
 
-Subclass must implement this method. Errors and user interactions must be handled by subclass. 
-
-Implemented in \hyperlink{classmdt_sql_form_widget_aefbaa029ac6141ab3d12da2a27d30dda}{mdtSqlFormWidget}.
-
-\hypertarget{classmdt_abstract_sql_widget_a9b7e32907ed336c74746f7a5c6d87d92}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!toLastEnabledStateChanged@{toLastEnabledStateChanged}}
-\index{toLastEnabledStateChanged@{toLastEnabledStateChanged}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{toLastEnabledStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::toLastEnabledStateChanged (
+Subclass must implement this method. Errors and user interactions must be handled by subclass. \hypertarget{classmdt_abstract_sql_widget_a9b7e32907ed336c74746f7a5c6d87d92}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!to\-Last\-Enabled\-State\-Changed@{to\-Last\-Enabled\-State\-Changed}}
+\index{to\-Last\-Enabled\-State\-Changed@{to\-Last\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{to\-Last\-Enabled\-State\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::to\-Last\-Enabled\-State\-Changed (
 \begin{DoxyParamCaption}
 \item[{bool}]{enabled}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a9b7e32907ed336c74746f7a5c6d87d92}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a9b7e32907ed336c74746f7a5c6d87d92}
 
 
-Emitted when \hyperlink{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}{toLast()} function goes enabled/disabled. 
+Emitted when \hyperlink{classmdt_abstract_sql_widget_a681cc6234976eaa2f0e158248569b502}{to\-Last()} function goes enabled/disabled. 
 
-This is usefull to keep GUI control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdtSqlWindow} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!toNext@{toNext}}
-\index{toNext@{toNext}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{toNext}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSqlWidget::toNext (
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
+
+Definition at line 224 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+\hypertarget{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!to\-Next@{to\-Next}}
+\index{to\-Next@{to\-Next}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{to\-Next}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdt\-Abstract\-Sql\-Widget\-::to\-Next (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual, slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}
 
 
 Set next record as current record. 
 
-Subclass must implement this method. Errors and user interactions must be handled by subclass. 
-
-Implemented in \hyperlink{classmdt_sql_form_widget_a49496a848e015ed8335a2bfd33906000}{mdtSqlFormWidget}.
-
-\hypertarget{classmdt_abstract_sql_widget_a388c169696cea80ac170b0ee060e4c9f}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!toNextEnabledStateChanged@{toNextEnabledStateChanged}}
-\index{toNextEnabledStateChanged@{toNextEnabledStateChanged}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{toNextEnabledStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::toNextEnabledStateChanged (
+Subclass must implement this method. Errors and user interactions must be handled by subclass. \hypertarget{classmdt_abstract_sql_widget_a388c169696cea80ac170b0ee060e4c9f}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!to\-Next\-Enabled\-State\-Changed@{to\-Next\-Enabled\-State\-Changed}}
+\index{to\-Next\-Enabled\-State\-Changed@{to\-Next\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{to\-Next\-Enabled\-State\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::to\-Next\-Enabled\-State\-Changed (
 \begin{DoxyParamCaption}
 \item[{bool}]{enabled}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a388c169696cea80ac170b0ee060e4c9f}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_a388c169696cea80ac170b0ee060e4c9f}
 
 
-Emitted when \hyperlink{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}{toNext()} function goes enabled/disabled. 
+Emitted when \hyperlink{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f675cd88}{to\-Next()} function goes enabled/disabled. 
 
-This is usefull to keep GUI control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdtSqlWindow} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!toPrevious@{toPrevious}}
-\index{toPrevious@{toPrevious}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{toPrevious}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSqlWidget::toPrevious (
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
+
+Definition at line 231 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+\hypertarget{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!to\-Previous@{to\-Previous}}
+\index{to\-Previous@{to\-Previous}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{to\-Previous}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdt\-Abstract\-Sql\-Widget\-::to\-Previous (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual, slot\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}
 
 
 Set previous record as current record. 
 
-Subclass must implement this method. Errors and user interactions must be handled by subclass. 
-
-Implemented in \hyperlink{classmdt_sql_form_widget_a7dc4bc0b63b10d420f7ab04a43e4f371}{mdtSqlFormWidget}.
-
-\hypertarget{classmdt_abstract_sql_widget_acf241c34dcca6d283c8c1bf297841766}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!toPreviousEnabledStateChanged@{toPreviousEnabledStateChanged}}
-\index{toPreviousEnabledStateChanged@{toPreviousEnabledStateChanged}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{toPreviousEnabledStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSqlWidget::toPreviousEnabledStateChanged (
+Subclass must implement this method. Errors and user interactions must be handled by subclass. \hypertarget{classmdt_abstract_sql_widget_acf241c34dcca6d283c8c1bf297841766}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!to\-Previous\-Enabled\-State\-Changed@{to\-Previous\-Enabled\-State\-Changed}}
+\index{to\-Previous\-Enabled\-State\-Changed@{to\-Previous\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{to\-Previous\-Enabled\-State\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::to\-Previous\-Enabled\-State\-Changed (
 \begin{DoxyParamCaption}
 \item[{bool}]{enabled}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_abstract_sql_widget_acf241c34dcca6d283c8c1bf297841766}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_abstract_sql_widget_acf241c34dcca6d283c8c1bf297841766}
 
 
-Emitted when \hyperlink{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}{toPrevious()} function goes enabled/disabled. 
+Emitted when \hyperlink{classmdt_abstract_sql_widget_a342b13a8258536d228f8522dae2b9df7}{to\-Previous()} function goes enabled/disabled. 
 
-This is usefull to keep GUI control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdtSqlWindow} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_a8207edaf31a7d988db5b86a4099ad4eb}{
-\index{mdtAbstractSqlWidget@{mdtAbstractSqlWidget}!userFriendlyTableName@{userFriendlyTableName}}
-\index{userFriendlyTableName@{userFriendlyTableName}!mdtAbstractSqlWidget@{mdtAbstractSqlWidget}}
-\subsubsection[{userFriendlyTableName}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtAbstractSqlWidget::userFriendlyTableName (
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
+
+Definition at line 238 of file moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx.
+
+\hypertarget{classmdt_abstract_sql_widget_a8207edaf31a7d988db5b86a4099ad4eb}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!user\-Friendly\-Table\-Name@{user\-Friendly\-Table\-Name}}
+\index{user\-Friendly\-Table\-Name@{user\-Friendly\-Table\-Name}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{user\-Friendly\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Abstract\-Sql\-Widget\-::user\-Friendly\-Table\-Name (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_abstract_sql_widget_a8207edaf31a7d988db5b86a4099ad4eb}
+) const}}\label{classmdt_abstract_sql_widget_a8207edaf31a7d988db5b86a4099ad4eb}
 
 
 Get the user friendly table name. 
 
 If the user friendly table name was not set, the database table name is returned. If model was not set, a empty string is returned. 
 
-Definition at line 87 of file mdtAbstractSqlWidget.cpp.
+Definition at line 87 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Referenced by mdt\-Sql\-Form\-::add\-Child\-Table(), all\-Data\-Are\-Saved(), and display\-Database\-Error().
+
+\hypertarget{classmdt_abstract_sql_widget_ad20a178299c96790587b53380bb68282}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!warn\-User\-About\-Unsaved\-Row@{warn\-User\-About\-Unsaved\-Row}}
+\index{warn\-User\-About\-Unsaved\-Row@{warn\-User\-About\-Unsaved\-Row}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{warn\-User\-About\-Unsaved\-Row}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::warn\-User\-About\-Unsaved\-Row (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_abstract_sql_widget_ad20a178299c96790587b53380bb68282}
+
+
+Show a message box to the user to warn him that it should save/revert data. 
+
+
+
+Definition at line 388 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtAbstractSqlWidget.h\item 
-src/mdtutilsgui/mdtAbstractSqlWidget.cpp\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_abstract_sql_widget_8h}{mdt\-Abstract\-Sql\-Widget.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_abstract_sql_widget_8cpp}{mdt\-Abstract\-Sql\-Widget.\-cpp}\item 
+src/mdtutilsgui/\hyperlink{moc__mdt_abstract_sql_widget_8cxx}{moc\-\_\-mdt\-Abstract\-Sql\-Widget.\-cxx}\end{DoxyCompactItemize}

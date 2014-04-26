@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node5" href="$classmdt_port_term.html" title="Mini port treminal." alt="" coords="15,160,113,189"/>
+<map id="Ui::mdtPortTerm" name="Ui::mdtPortTerm">
+<area shape="rect" id="node5" href="$classmdt_port_term.html" title="Mini port treminal. " alt="" coords="15,160,113,189"/>
 <area shape="rect" id="node2" href="$class_ui__mdt_port_term.html" title="Ui_mdtPortTerm" alt="" coords="5,5,123,35"/>
 </map>

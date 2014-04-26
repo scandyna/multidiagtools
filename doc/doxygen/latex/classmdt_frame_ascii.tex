@@ -1,10 +1,13 @@
-\hypertarget{classmdt_frame_ascii}{
-\section{mdtFrameAscii Class Reference}
-\label{classmdt_frame_ascii}\index{mdtFrameAscii@{mdtFrameAscii}}
+\hypertarget{classmdt_frame_ascii}{\section{mdt\-Frame\-Ascii Class Reference}
+\label{classmdt_frame_ascii}\index{mdt\-Frame\-Ascii@{mdt\-Frame\-Ascii}}
 }
 
 
-Inheritance diagram for mdtFrameAscii:\nopagebreak
+{\ttfamily \#include $<$mdt\-Frame\-Ascii.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Frame\-Ascii\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,48 +16,89 @@ Inheritance diagram for mdtFrameAscii:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtFrameAscii:\nopagebreak
+Collaboration diagram for mdt\-Frame\-Ascii\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=162pt]{classmdt_frame_ascii__coll__graph}
+\includegraphics[width=256pt]{classmdt_frame_ascii__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_frame_ascii_a64509246c1fd81ae79009a1ef9e4149b}{
-void \hyperlink{classmdt_frame_ascii_a64509246c1fd81ae79009a1ef9e4149b}{setEofSeq} (const QByteArray \&eof)}
-\label{classmdt_frame_ascii_a64509246c1fd81ae79009a1ef9e4149b}
-
-\begin{DoxyCompactList}\small\item\em Set the end of frame sequence Note: if eof is empty, the null char ('$\backslash$0') is considered. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_frame_ascii_a9694c60a807fd2e80e293a66c193baaa}{
-int \hyperlink{classmdt_frame_ascii_a9694c60a807fd2e80e293a66c193baaa}{eofSeqLen} ()}
-\label{classmdt_frame_ascii_a9694c60a807fd2e80e293a66c193baaa}
-
+\hyperlink{classmdt_frame_ascii_a89f72b5d9da2b40d131fd1af337c84a6}{mdt\-Frame\-Ascii} ()
+\item 
+\hyperlink{classmdt_frame_ascii_a96554d3da1bbaa6dd695118c0e692190}{$\sim$mdt\-Frame\-Ascii} ()
+\item 
+void \hyperlink{classmdt_frame_ascii_a64509246c1fd81ae79009a1ef9e4149b}{set\-Eof\-Seq} (const Q\-Byte\-Array \&eof)
+\begin{DoxyCompactList}\small\item\em Set the end of frame sequence Note\-: if eof is empty, the null char ('\textbackslash{}0') is considered. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_frame_ascii_a9694c60a807fd2e80e293a66c193baaa}{eof\-Seq\-Len} ()
 \begin{DoxyCompactList}\small\item\em Get the length of the end of frame sequence. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{putData} (const char $\ast$data, int maxLen)
+int \hyperlink{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{put\-Data} (const char $\ast$data, int max\-Len)
 \begin{DoxyCompactList}\small\item\em Put data into the frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 6 of file mdtFrameAscii.h.
+Definition at line 6 of file mdt\-Frame\-Ascii.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_frame_ascii_a89f72b5d9da2b40d131fd1af337c84a6}{\index{mdt\-Frame\-Ascii@{mdt\-Frame\-Ascii}!mdt\-Frame\-Ascii@{mdt\-Frame\-Ascii}}
+\index{mdt\-Frame\-Ascii@{mdt\-Frame\-Ascii}!mdtFrameAscii@{mdt\-Frame\-Ascii}}
+\subsubsection[{mdt\-Frame\-Ascii}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Frame\-Ascii\-::mdt\-Frame\-Ascii (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_frame_ascii_a89f72b5d9da2b40d131fd1af337c84a6}
+
+
+Definition at line 5 of file mdt\-Frame\-Ascii.\-cpp.
+
+\hypertarget{classmdt_frame_ascii_a96554d3da1bbaa6dd695118c0e692190}{\index{mdt\-Frame\-Ascii@{mdt\-Frame\-Ascii}!$\sim$mdt\-Frame\-Ascii@{$\sim$mdt\-Frame\-Ascii}}
+\index{$\sim$mdt\-Frame\-Ascii@{$\sim$mdt\-Frame\-Ascii}!mdtFrameAscii@{mdt\-Frame\-Ascii}}
+\subsubsection[{$\sim$mdt\-Frame\-Ascii}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Frame\-Ascii\-::$\sim$mdt\-Frame\-Ascii (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_frame_ascii_a96554d3da1bbaa6dd695118c0e692190}
+
+
+Definition at line 12 of file mdt\-Frame\-Ascii.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{
-\index{mdtFrameAscii@{mdtFrameAscii}!putData@{putData}}
-\index{putData@{putData}!mdtFrameAscii@{mdtFrameAscii}}
-\subsubsection[{putData}]{\setlength{\rightskip}{0pt plus 5cm}int mdtFrameAscii::putData (
+\hypertarget{classmdt_frame_ascii_a9694c60a807fd2e80e293a66c193baaa}{\index{mdt\-Frame\-Ascii@{mdt\-Frame\-Ascii}!eof\-Seq\-Len@{eof\-Seq\-Len}}
+\index{eof\-Seq\-Len@{eof\-Seq\-Len}!mdtFrameAscii@{mdt\-Frame\-Ascii}}
+\subsubsection[{eof\-Seq\-Len}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Frame\-Ascii\-::eof\-Seq\-Len (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_frame_ascii_a9694c60a807fd2e80e293a66c193baaa}
+
+
+Get the length of the end of frame sequence. 
+
+
+
+Reimplemented from \hyperlink{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{mdt\-Frame}.
+
+
+
+Definition at line 30 of file mdt\-Frame\-Ascii.\-cpp.
+
+\hypertarget{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{\index{mdt\-Frame\-Ascii@{mdt\-Frame\-Ascii}!put\-Data@{put\-Data}}
+\index{put\-Data@{put\-Data}!mdtFrameAscii@{mdt\-Frame\-Ascii}}
+\subsubsection[{put\-Data}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Frame\-Ascii\-::put\-Data (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{data, }
 \item[{int}]{len}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}
 
 
 Put data into the frame. 
@@ -63,7 +107,7 @@ Must be implemented by specific frame subclass.
 
 This method is called by the read thread.
 
-Default implementation simply stores data, and set the EOF condition to true. This way, it's possible to use \hyperlink{classmdt_frame}{mdtFrame} for raw binary transfers.
+Default implementation simply stores data, and set the E\-O\-F condition to true. This way, it's possible to use \hyperlink{classmdt_frame}{mdt\-Frame} for raw binary transfers.
 
 
 \begin{DoxyParams}{Parameters}
@@ -80,15 +124,34 @@ The data pointer must be valid, and not be the internal pointer returned by data
 \end{DoxyPrecond}
 
 
-Reimplemented from \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{mdtFrame}.
+Reimplemented from \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{mdt\-Frame}.
 
 
 
-Definition at line 38 of file mdtFrameAscii.cpp.
+Definition at line 38 of file mdt\-Frame\-Ascii.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References mdt\-Frame\-::put\-Until().
+
+\hypertarget{classmdt_frame_ascii_a64509246c1fd81ae79009a1ef9e4149b}{\index{mdt\-Frame\-Ascii@{mdt\-Frame\-Ascii}!set\-Eof\-Seq@{set\-Eof\-Seq}}
+\index{set\-Eof\-Seq@{set\-Eof\-Seq}!mdtFrameAscii@{mdt\-Frame\-Ascii}}
+\subsubsection[{set\-Eof\-Seq}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Frame\-Ascii\-::set\-Eof\-Seq (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{eof}
+\end{DoxyParamCaption}
+)}}\label{classmdt_frame_ascii_a64509246c1fd81ae79009a1ef9e4149b}
+
+
+Set the end of frame sequence Note\-: if eof is empty, the null char ('\textbackslash{}0') is considered. 
+
+
+
+Definition at line 16 of file mdt\-Frame\-Ascii.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtFrameAscii.h\item 
-src/mdtutils/mdtFrameAscii.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_frame_ascii_8h}{mdt\-Frame\-Ascii.\-h}\item 
+src/mdtutils/\hyperlink{mdt_frame_ascii_8cpp}{mdt\-Frame\-Ascii.\-cpp}\end{DoxyCompactItemize}

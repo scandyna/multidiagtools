@@ -1,10 +1,13 @@
-\hypertarget{classmdt_serial_port}{
-\section{mdtSerialPort Class Reference}
-\label{classmdt_serial_port}\index{mdtSerialPort@{mdtSerialPort}}
+\hypertarget{classmdt_serial_port}{\section{mdt\-Serial\-Port Class Reference}
+\label{classmdt_serial_port}\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}}
 }
 
 
-Inheritance diagram for mdtSerialPort:\nopagebreak
+{\ttfamily \#include $<$mdt\-Serial\-Port.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Serial\-Port\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,88 +16,115 @@ Inheritance diagram for mdtSerialPort:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtSerialPort:\nopagebreak
+Collaboration diagram for mdt\-Serial\-Port\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=284pt]{classmdt_serial_port__coll__graph}
+\includegraphics[width=350pt]{classmdt_serial_port__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}{
-{\bfseries mdtSerialPort} (QObject $\ast$parent=0)}
-\label{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}
-
+\hyperlink{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}{mdt\-Serial\-Port} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \item 
-bool \hyperlink{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}{setBaudRate} (int rate)
+\hyperlink{classmdt_serial_port_a7149994f7b5eac8a13cfe57b465e1901}{$\sim$mdt\-Serial\-Port} ()
+\item 
+bool \hyperlink{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}{set\-Baud\-Rate} (int rate)
 \begin{DoxyCompactList}\small\item\em Set the baud rate. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195}{baudRate} ()
+int \hyperlink{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195}{baud\-Rate} ()
 \begin{DoxyCompactList}\small\item\em Get the baud rate. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_af39774b2d3c4121623253740660a0389}{setDataBits} (int n)
+bool \hyperlink{classmdt_serial_port_af39774b2d3c4121623253740660a0389}{set\-Data\-Bits} (int n)
 \begin{DoxyCompactList}\small\item\em Set number of data bits. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_serial_port_a65c92bdb5543c1fe0034169ffc88d09f}{dataBits} ()
+int \hyperlink{classmdt_serial_port_a65c92bdb5543c1fe0034169ffc88d09f}{data\-Bits} ()
 \begin{DoxyCompactList}\small\item\em Get number of data bits. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_a9471ebff90de41decee977566dd1571f}{setStopBits} (int n)
+bool \hyperlink{classmdt_serial_port_a9471ebff90de41decee977566dd1571f}{set\-Stop\-Bits} (int n)
 \begin{DoxyCompactList}\small\item\em Set number of stop bits. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_serial_port_a163a83bdcac2c81a5c6b097c4afde41f}{stopBits} ()
+int \hyperlink{classmdt_serial_port_a163a83bdcac2c81a5c6b097c4afde41f}{stop\-Bits} ()
 \begin{DoxyCompactList}\small\item\em Get number of stop bits. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_ae435f052a87dcd0b1829f1577bb5e58d}{setParity} (mdtSerialPortConfig::parity\_\-t p)
+bool \hyperlink{classmdt_serial_port_ae435f052a87dcd0b1829f1577bb5e58d}{set\-Parity} (\hyperlink{classmdt_serial_port_config_a4b9e444637cf0193a125fabdd67d8bfe}{mdt\-Serial\-Port\-Config\-::parity\-\_\-t} p)
 \begin{DoxyCompactList}\small\item\em Set parity check. \end{DoxyCompactList}\item 
-mdtSerialPortConfig::parity\_\-t \hyperlink{classmdt_serial_port_a98938e2c51d1888236b920903f99050a}{parity} ()
+\hyperlink{classmdt_serial_port_config_a4b9e444637cf0193a125fabdd67d8bfe}{mdt\-Serial\-Port\-Config\-::parity\-\_\-t} \hyperlink{classmdt_serial_port_a98938e2c51d1888236b920903f99050a}{parity} ()
 \begin{DoxyCompactList}\small\item\em Get configured parity. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_a175785be0dfe124254484822b7b8832e}{setFlowCtlRtsCts} (bool on)
-\begin{DoxyCompactList}\small\item\em Enable/diseable RTS/CTS flow control. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_a9315ed0c7854a09716a4585efb0094c7}{flowCtlRtsCtsOn} ()
-\begin{DoxyCompactList}\small\item\em Get configured state of RTS/CTS flow control. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_a34e2ac7b0d3cb7a6fb65756cbca2ce48}{setFlowCtlXonXoff} (bool on, char xonChar, char xoffChar)
-\begin{DoxyCompactList}\small\item\em Enable/diseable Xon/Xoff flow control. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4}{flowCtlXonXoffOn} ()
-\begin{DoxyCompactList}\small\item\em Get configured state of Xon/Xoff flow control. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}{setReadTimeout} (int timeout)
+bool \hyperlink{classmdt_serial_port_a175785be0dfe124254484822b7b8832e}{set\-Flow\-Ctl\-Rts\-Cts} (bool on)
+\begin{DoxyCompactList}\small\item\em Enable/diseable R\-T\-S/\-C\-T\-S flow control. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_serial_port_a9315ed0c7854a09716a4585efb0094c7}{flow\-Ctl\-Rts\-Cts\-On} ()
+\begin{DoxyCompactList}\small\item\em Get configured state of R\-T\-S/\-C\-T\-S flow control. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_serial_port_a34e2ac7b0d3cb7a6fb65756cbca2ce48}{set\-Flow\-Ctl\-Xon\-Xoff} (bool on, char xon\-Char, char xoff\-Char)
+\begin{DoxyCompactList}\small\item\em Enable/diseable Xon/\-Xoff flow control. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4}{flow\-Ctl\-Xon\-Xoff\-On} ()
+\begin{DoxyCompactList}\small\item\em Get configured state of Xon/\-Xoff flow control. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}{set\-Read\-Timeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}{setWriteTimeout} (int timeout)
+void \hyperlink{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}{set\-Write\-Timeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Set the write data timeout. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{waitForReadyRead} ()
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\-\_\-t} \hyperlink{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{wait\-For\-Ready\-Read} ()
 \begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
-qint64 \hyperlink{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{read} (char $\ast$data, qint64 maxSize)
+qint64 \hyperlink{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{read} (char $\ast$data, qint64 max\-Size)
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2fe}{suspendTransmission} ()
+bool \hyperlink{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2fe}{suspend\-Transmission} ()
 \begin{DoxyCompactList}\small\item\em Request to suspend transmission. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}{resumeTransmission} ()
+bool \hyperlink{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}{resume\-Transmission} ()
 \begin{DoxyCompactList}\small\item\em Request to resume transmission. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{waitEventWriteReady} ()
-\begin{DoxyCompactList}\small\item\em void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn()}; \end{DoxyCompactList}\item 
-qint64 \hyperlink{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{write} (const char $\ast$data, qint64 maxSize)
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\-\_\-t} \hyperlink{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{wait\-Event\-Write\-Ready} ()
+\begin{DoxyCompactList}\small\item\em void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flush\-In()}; \end{DoxyCompactList}\item 
+qint64 \hyperlink{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{write} (const char $\ast$data, qint64 max\-Size)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}{waitEventCtl} ()
-\begin{DoxyCompactList}\small\item\em void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut()}; \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{getCtlStates} ()
-\begin{DoxyCompactList}\small\item\em NOTE: \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{setRts} (bool on)
-\begin{DoxyCompactList}\small\item\em Enable/diseable the RTS (Request To Send) signal. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{setDtr} (bool on)
-\begin{DoxyCompactList}\small\item\em Enable/diseable the DTR (Data Terminal Ready) signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\-\_\-t} \hyperlink{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}{wait\-Event\-Ctl} ()
+\begin{DoxyCompactList}\small\item\em void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flush\-Out()}; \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{get\-Ctl\-States} ()
+\begin{DoxyCompactList}\small\item\em N\-O\-T\-E\-: \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{set\-Rts} (bool on)
+\begin{DoxyCompactList}\small\item\em Enable/diseable the R\-T\-S (Request To Send) signal. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{set\-Dtr} (bool on)
+\begin{DoxyCompactList}\small\item\em Enable/diseable the D\-T\-R (Data Terminal Ready) signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 40 of file mdtSerialPort.h.
+Definition at line 40 of file mdt\-Serial\-Port.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!mdt\-Serial\-Port@{mdt\-Serial\-Port}}
+\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{mdt\-Serial\-Port}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Serial\-Port\-::mdt\-Serial\-Port (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}
+
+
+Definition at line 35 of file mdt\-Serial\-Port.\-cpp.
+
+\hypertarget{classmdt_serial_port_a7149994f7b5eac8a13cfe57b465e1901}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!$\sim$mdt\-Serial\-Port@{$\sim$mdt\-Serial\-Port}}
+\index{$\sim$mdt\-Serial\-Port@{$\sim$mdt\-Serial\-Port}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{$\sim$mdt\-Serial\-Port}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Serial\-Port\-::$\sim$mdt\-Serial\-Port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_serial_port_a7149994f7b5eac8a13cfe57b465e1901}
+
+
+Definition at line 47 of file mdt\-Serial\-Port.\-cpp.
+
+
+
+References mdt\-Abstract\-Serial\-Port\-::close().
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195}{
-\index{mdtSerialPort@{mdtSerialPort}!baudRate@{baudRate}}
-\index{baudRate@{baudRate}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{baudRate}]{\setlength{\rightskip}{0pt plus 5cm}int mdtSerialPort::baudRate (
+\hypertarget{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!baud\-Rate@{baud\-Rate}}
+\index{baud\-Rate@{baud\-Rate}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{baud\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Serial\-Port\-::baud\-Rate (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195}
 
 
 Get the baud rate. 
@@ -106,21 +136,27 @@ Configured baud rate, or 0 on error.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_ad9f5b7e939c60cd3766d2bf76df4af4b}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_ad9f5b7e939c60cd3766d2bf76df4af4b}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 210 of file mdtSerialPort.cpp.
+Definition at line 210 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a65c92bdb5543c1fe0034169ffc88d09f}{
-\index{mdtSerialPort@{mdtSerialPort}!dataBits@{dataBits}}
-\index{dataBits@{dataBits}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{dataBits}]{\setlength{\rightskip}{0pt plus 5cm}int mdtSerialPort::dataBits (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by set\-Baud\-Rate().
+
+\hypertarget{classmdt_serial_port_a65c92bdb5543c1fe0034169ffc88d09f}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!data\-Bits@{data\-Bits}}
+\index{data\-Bits@{data\-Bits}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{data\-Bits}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Serial\-Port\-::data\-Bits (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a65c92bdb5543c1fe0034169ffc88d09f}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a65c92bdb5543c1fe0034169ffc88d09f}
 
 
 Get number of data bits. 
@@ -132,79 +168,97 @@ Configured data bits count or 0 on error.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_a63e2a14c416d9c3516ec74f5e37f4cc7}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_a63e2a14c416d9c3516ec74f5e37f4cc7}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 400 of file mdtSerialPort.cpp.
+Definition at line 400 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a9315ed0c7854a09716a4585efb0094c7}{
-\index{mdtSerialPort@{mdtSerialPort}!flowCtlRtsCtsOn@{flowCtlRtsCtsOn}}
-\index{flowCtlRtsCtsOn@{flowCtlRtsCtsOn}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{flowCtlRtsCtsOn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::flowCtlRtsCtsOn (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by set\-Data\-Bits().
+
+\hypertarget{classmdt_serial_port_a9315ed0c7854a09716a4585efb0094c7}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!flow\-Ctl\-Rts\-Cts\-On@{flow\-Ctl\-Rts\-Cts\-On}}
+\index{flow\-Ctl\-Rts\-Cts\-On@{flow\-Ctl\-Rts\-Cts\-On}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{flow\-Ctl\-Rts\-Cts\-On}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::flow\-Ctl\-Rts\-Cts\-On (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a9315ed0c7854a09716a4585efb0094c7}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a9315ed0c7854a09716a4585efb0094c7}
 
 
-Get configured state of RTS/CTS flow control. 
+Get configured state of R\-T\-S/\-C\-T\-S flow control. 
 
 The mutex is not handled by this method.
 
 \begin{DoxyReturn}{Returns}
-True if RTS/CTS flow control is enabled (and no error occured). 
+True if R\-T\-S/\-C\-T\-S flow control is enabled (and no error occured). 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_a7a1163b4d44d80369bd56c65af7942ad}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_a7a1163b4d44d80369bd56c65af7942ad}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 543 of file mdtSerialPort.cpp.
+Definition at line 543 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4}{
-\index{mdtSerialPort@{mdtSerialPort}!flowCtlXonXoffOn@{flowCtlXonXoffOn}}
-\index{flowCtlXonXoffOn@{flowCtlXonXoffOn}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{flowCtlXonXoffOn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::flowCtlXonXoffOn (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by resume\-Transmission(), set\-Flow\-Ctl\-Rts\-Cts(), and suspend\-Transmission().
+
+\hypertarget{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!flow\-Ctl\-Xon\-Xoff\-On@{flow\-Ctl\-Xon\-Xoff\-On}}
+\index{flow\-Ctl\-Xon\-Xoff\-On@{flow\-Ctl\-Xon\-Xoff\-On}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{flow\-Ctl\-Xon\-Xoff\-On}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::flow\-Ctl\-Xon\-Xoff\-On (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4}
 
 
-Get configured state of Xon/Xoff flow control. 
+Get configured state of Xon/\-Xoff flow control. 
 
 The mutex is not handled by this method.
 
 \begin{DoxyReturn}{Returns}
-True if Xon/Xoff flow control is enabled (and no error occured). 
+True if Xon/\-Xoff flow control is enabled (and no error occured). 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_a80074ba4e5bf44c3e2aebb82214499ee}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_a80074ba4e5bf44c3e2aebb82214499ee}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 582 of file mdtSerialPort.cpp.
+Definition at line 582 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{
-\index{mdtSerialPort@{mdtSerialPort}!getCtlStates@{getCtlStates}}
-\index{getCtlStates@{getCtlStates}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{getCtlStates}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::getCtlStates (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by resume\-Transmission(), set\-Flow\-Ctl\-Xon\-Xoff(), and suspend\-Transmission().
+
+\hypertarget{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!get\-Ctl\-States@{get\-Ctl\-States}}
+\index{get\-Ctl\-States@{get\-Ctl\-States}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{get\-Ctl\-States}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::get\-Ctl\-States (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}
 
 
-NOTE: 
+N\-O\-T\-E\-: 
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000071}{Todo}]Update name to : updateCtlStates ? \end{Desc}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000041}{Todo}]Update name to \-: update\-Ctl\-States ? \end{DoxyRefDesc}
 
 
 Get the control (modem line) signal states and update member flags
@@ -214,21 +268,23 @@ False on error, in this case, the thread will be stopped.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 818 of file mdtSerialPort.cpp.
+Definition at line 818 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a98938e2c51d1888236b920903f99050a}{
-\index{mdtSerialPort@{mdtSerialPort}!parity@{parity}}
-\index{parity@{parity}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{parity}]{\setlength{\rightskip}{0pt plus 5cm}mdtSerialPortConfig::parity\_\-t mdtSerialPort::parity (
+
+
+References mdt\-Abstract\-Serial\-Port\-::car\-Changed(), mdt\-Error\-::commit(), mdt\-Abstract\-Serial\-Port\-::cts\-Changed(), mdt\-Abstract\-Serial\-Port\-::dsr\-Changed(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R, mdt\-Abstract\-Serial\-Port\-::pv\-Car\-Is\-On, mdt\-Abstract\-Serial\-Port\-::pv\-Cts\-Is\-On, mdt\-Abstract\-Serial\-Port\-::pv\-Dsr\-Is\-On, mdt\-Abstract\-Serial\-Port\-::pv\-Rng\-Is\-On, mdt\-Abstract\-Serial\-Port\-::rng\-Changed(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_serial_port_a98938e2c51d1888236b920903f99050a}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!parity@{parity}}
+\index{parity@{parity}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{parity}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Serial\-Port\-Config\-::parity\-\_\-t} mdt\-Serial\-Port\-::parity (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a98938e2c51d1888236b920903f99050a}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a98938e2c51d1888236b920903f99050a}
 
 
 Get configured parity. 
@@ -236,59 +292,67 @@ Get configured parity.
 The mutex is not handled by this method.
 
 \begin{DoxyReturn}{Returns}
-Configured parity or NoParity on error. 
+Configured parity or No\-Parity on error. 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_ac361191b58789065fcea742019b958f9}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_ac361191b58789065fcea742019b958f9}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 500 of file mdtSerialPort.cpp.
+Definition at line 500 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{
-\index{mdtSerialPort@{mdtSerialPort}!read@{read}}
-\index{read@{read}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdtSerialPort::read (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, mdt\-Serial\-Port\-Config\-::\-No\-Parity, mdt\-Serial\-Port\-Config\-::\-Parity\-Even, mdt\-Serial\-Port\-Config\-::\-Parity\-Odd, and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by set\-Parity().
+
+\hypertarget{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!read@{read}}
+\index{read@{read}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdt\-Serial\-Port\-::read (
 \begin{DoxyParamCaption}
 \item[{char $\ast$}]{data, }
-\item[{qint64}]{maxSize}
+\item[{qint64}]{max\-Size}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}
 
 
 Read data from port. 
 
-This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.
+This method is called from \hyperlink{classmdt_port_read_thread}{mdt\-Port\-Read\-Thread} , and should not be used directly.
 
 Mutex is not handled by this method. 
 
-Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdt\-Abstract\-Port}.
 
 
 
-Definition at line 657 of file mdtSerialPort.cpp.
+Definition at line 657 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}{
-\index{mdtSerialPort@{mdtSerialPort}!resumeTransmission@{resumeTransmission}}
-\index{resumeTransmission@{resumeTransmission}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{resumeTransmission}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::resumeTransmission (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, mdt\-Abstract\-Port\-::\-Read\-Timeout, mdt\-Error\-::set\-System\-Error(), and mdt\-Abstract\-Port\-::\-Unhandled\-Error.
+
+\hypertarget{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!resume\-Transmission@{resume\-Transmission}}
+\index{resume\-Transmission@{resume\-Transmission}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{resume\-Transmission}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::resume\-Transmission (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}
 
 
 Request to resume transmission. 
 
-This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
+This method is called from \hyperlink{classmdt_port_read_thread}{mdt\-Port\-Read\-Thread} , and should not be used directly.\par
  Mutex is not handled by this method.
 
-Subclass notes:\par
+Subclass notes\-:\par
  This method must be implemented in subclass if requierd.\par
- Note about serial port subclass:\par
+ Note about serial port subclass\-:\par
  the right flow control must be used regarding enabled flow control.\par
  Default implementation does nothing.\par
 
@@ -298,21 +362,23 @@ False on error, in this case, the reader thread will be stopped.
 \end{DoxyReturn}
 
 
-Reimplemented from \hyperlink{classmdt_abstract_port_ad4a04c995df881593db0a309000be7a7}{mdtAbstractPort}.
+Reimplemented from \hyperlink{classmdt_abstract_port_ad4a04c995df881593db0a309000be7a7}{mdt\-Abstract\-Port}.
 
 
 
-Definition at line 706 of file mdtSerialPort.cpp.
+Definition at line 706 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}{
-\index{mdtSerialPort@{mdtSerialPort}!setBaudRate@{setBaudRate}}
-\index{setBaudRate@{setBaudRate}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setBaudRate}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::setBaudRate (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, flow\-Ctl\-Rts\-Cts\-On(), flow\-Ctl\-Xon\-Xoff\-On(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Baud\-Rate@{set\-Baud\-Rate}}
+\index{set\-Baud\-Rate@{set\-Baud\-Rate}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Baud\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::set\-Baud\-Rate (
 \begin{DoxyParamCaption}
 \item[{int}]{rate}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}
 
 
 Set the baud rate. 
@@ -324,21 +390,23 @@ True if baud rate is supported and could be set.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_ae250b30c1db5652bd2abe2caf1c9d5c7}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_ae250b30c1db5652bd2abe2caf1c9d5c7}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 53 of file mdtSerialPort.cpp.
+Definition at line 53 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_af39774b2d3c4121623253740660a0389}{
-\index{mdtSerialPort@{mdtSerialPort}!setDataBits@{setDataBits}}
-\index{setDataBits@{setDataBits}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setDataBits}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::setDataBits (
+
+
+References baud\-Rate(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_serial_port_af39774b2d3c4121623253740660a0389}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Data\-Bits@{set\-Data\-Bits}}
+\index{set\-Data\-Bits@{set\-Data\-Bits}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Data\-Bits}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::set\-Data\-Bits (
 \begin{DoxyParamCaption}
 \item[{int}]{n}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_af39774b2d3c4121623253740660a0389}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_af39774b2d3c4121623253740660a0389}
 
 
 Set number of data bits. 
@@ -350,24 +418,26 @@ True if data bits count is supported and could be set.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_a323e590d6ead87033985ffff1ecfae81}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_a323e590d6ead87033985ffff1ecfae81}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 362 of file mdtSerialPort.cpp.
+Definition at line 362 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{
-\index{mdtSerialPort@{mdtSerialPort}!setDtr@{setDtr}}
-\index{setDtr@{setDtr}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setDtr}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPort::setDtr (
+
+
+References mdt\-Error\-::commit(), data\-Bits(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Dtr@{set\-Dtr}}
+\index{set\-Dtr@{set\-Dtr}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Dtr}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Serial\-Port\-::set\-Dtr (
 \begin{DoxyParamCaption}
 \item[{bool}]{on}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}
 
 
-Enable/diseable the DTR (Data Terminal Ready) signal. 
+Enable/diseable the D\-T\-R (Data Terminal Ready) signal. 
 
 This method must be re-\/implemented in plateform specific subclass.\par
  If port is not open, this method must make no system call.
@@ -376,80 +446,86 @@ The mutex is handled in this method.
 
 
 \begin{DoxyParams}{Parameters}
-{\em on} & If true, DTR will be enabled, diseabled else \\
+{\em on} & If true, D\-T\-R will be enabled, diseabled else \\
 \hline
 \end{DoxyParams}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 893 of file mdtSerialPort.cpp.
+Definition at line 893 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a175785be0dfe124254484822b7b8832e}{
-\index{mdtSerialPort@{mdtSerialPort}!setFlowCtlRtsCts@{setFlowCtlRtsCts}}
-\index{setFlowCtlRtsCts@{setFlowCtlRtsCts}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setFlowCtlRtsCts}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::setFlowCtlRtsCts (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Abstract\-Port\-::is\-Open(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R, mdt\-Abstract\-Port\-::pv\-Mutex, and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_serial_port_a175785be0dfe124254484822b7b8832e}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Flow\-Ctl\-Rts\-Cts@{set\-Flow\-Ctl\-Rts\-Cts}}
+\index{set\-Flow\-Ctl\-Rts\-Cts@{set\-Flow\-Ctl\-Rts\-Cts}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Flow\-Ctl\-Rts\-Cts}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::set\-Flow\-Ctl\-Rts\-Cts (
 \begin{DoxyParamCaption}
 \item[{bool}]{on}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a175785be0dfe124254484822b7b8832e}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a175785be0dfe124254484822b7b8832e}
 
 
-Enable/diseable RTS/CTS flow control. 
+Enable/diseable R\-T\-S/\-C\-T\-S flow control. 
 
 The mutex is not handled by this method.
 
 \begin{DoxyReturn}{Returns}
-True if RTS/CTS flow control is supported and could be set. 
+True if R\-T\-S/\-C\-T\-S flow control is supported and could be set. 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_af01806f53cfc5ef90b34c0645cee3bdf}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_af01806f53cfc5ef90b34c0645cee3bdf}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 520 of file mdtSerialPort.cpp.
+Definition at line 520 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a34e2ac7b0d3cb7a6fb65756cbca2ce48}{
-\index{mdtSerialPort@{mdtSerialPort}!setFlowCtlXonXoff@{setFlowCtlXonXoff}}
-\index{setFlowCtlXonXoff@{setFlowCtlXonXoff}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setFlowCtlXonXoff}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::setFlowCtlXonXoff (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, flow\-Ctl\-Rts\-Cts\-On(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_serial_port_a34e2ac7b0d3cb7a6fb65756cbca2ce48}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Flow\-Ctl\-Xon\-Xoff@{set\-Flow\-Ctl\-Xon\-Xoff}}
+\index{set\-Flow\-Ctl\-Xon\-Xoff@{set\-Flow\-Ctl\-Xon\-Xoff}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Flow\-Ctl\-Xon\-Xoff}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::set\-Flow\-Ctl\-Xon\-Xoff (
 \begin{DoxyParamCaption}
 \item[{bool}]{on, }
-\item[{char}]{xonChar, }
-\item[{char}]{xoffChar}
+\item[{char}]{xon\-Char, }
+\item[{char}]{xoff\-Char}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a34e2ac7b0d3cb7a6fb65756cbca2ce48}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a34e2ac7b0d3cb7a6fb65756cbca2ce48}
 
 
-Enable/diseable Xon/Xoff flow control. 
+Enable/diseable Xon/\-Xoff flow control. 
 
 The mutex is not handled by this method.
 
 \begin{DoxyReturn}{Returns}
-True if Xon/Xoff flow control is supported and could be set. 
+True if Xon/\-Xoff flow control is supported and could be set. 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_a05b35143f7b048ebcb2295fdc2ac5013}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_a05b35143f7b048ebcb2295fdc2ac5013}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 557 of file mdtSerialPort.cpp.
+Definition at line 557 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_ae435f052a87dcd0b1829f1577bb5e58d}{
-\index{mdtSerialPort@{mdtSerialPort}!setParity@{setParity}}
-\index{setParity@{setParity}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setParity}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::setParity (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, flow\-Ctl\-Xon\-Xoff\-On(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_serial_port_ae435f052a87dcd0b1829f1577bb5e58d}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Parity@{set\-Parity}}
+\index{set\-Parity@{set\-Parity}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Parity}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::set\-Parity (
 \begin{DoxyParamCaption}
-\item[{mdtSerialPortConfig::parity\_\-t}]{p}
+\item[{{\bf mdt\-Serial\-Port\-Config\-::parity\-\_\-t}}]{p}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_ae435f052a87dcd0b1829f1577bb5e58d}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_ae435f052a87dcd0b1829f1577bb5e58d}
 
 
 Set parity check. 
@@ -461,45 +537,45 @@ True if parity check is supported and could be set.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_ac9c6990ac9861f21dcfe27c989b78545}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_ac9c6990ac9861f21dcfe27c989b78545}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 468 of file mdtSerialPort.cpp.
+Definition at line 468 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}{
-\index{mdtSerialPort@{mdtSerialPort}!setReadTimeout@{setReadTimeout}}
-\index{setReadTimeout@{setReadTimeout}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setReadTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPort::setReadTimeout (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, mdt\-Serial\-Port\-Config\-::\-No\-Parity, parity(), mdt\-Serial\-Port\-Config\-::\-Parity\-Odd, and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Read\-Timeout@{set\-Read\-Timeout}}
+\index{set\-Read\-Timeout@{set\-Read\-Timeout}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Read\-Timeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Serial\-Port\-::set\-Read\-Timeout (
 \begin{DoxyParamCaption}
 \item[{int}]{timeout}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}
 
 
 Set the read data timeout. 
 
 The mutex is not handled by this method. 
 
-Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{mdt\-Abstract\-Port}.
 
 
 
-Definition at line 596 of file mdtSerialPort.cpp.
+Definition at line 596 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{
-\index{mdtSerialPort@{mdtSerialPort}!setRts@{setRts}}
-\index{setRts@{setRts}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setRts}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPort::setRts (
+\hypertarget{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Rts@{set\-Rts}}
+\index{set\-Rts@{set\-Rts}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Rts}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Serial\-Port\-::set\-Rts (
 \begin{DoxyParamCaption}
 \item[{bool}]{on}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}
 
 
-Enable/diseable the RTS (Request To Send) signal. 
+Enable/diseable the R\-T\-S (Request To Send) signal. 
 
 This method must be re-\/implemented in plateform specific subclass.\par
  If port is not open, this method must make no system call.
@@ -508,26 +584,28 @@ The mutex is handled in this method.
 
 
 \begin{DoxyParams}{Parameters}
-{\em on} & If true, RTS will be enabled, diseabled else \\
+{\em on} & If true, R\-T\-S will be enabled, diseabled else \\
 \hline
 \end{DoxyParams}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 879 of file mdtSerialPort.cpp.
+Definition at line 879 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a9471ebff90de41decee977566dd1571f}{
-\index{mdtSerialPort@{mdtSerialPort}!setStopBits@{setStopBits}}
-\index{setStopBits@{setStopBits}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setStopBits}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::setStopBits (
+
+
+References mdt\-Abstract\-Port\-::is\-Open(), and mdt\-Abstract\-Port\-::pv\-Mutex.
+
+\hypertarget{classmdt_serial_port_a9471ebff90de41decee977566dd1571f}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Stop\-Bits@{set\-Stop\-Bits}}
+\index{set\-Stop\-Bits@{set\-Stop\-Bits}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Stop\-Bits}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::set\-Stop\-Bits (
 \begin{DoxyParamCaption}
 \item[{int}]{n}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a9471ebff90de41decee977566dd1571f}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a9471ebff90de41decee977566dd1571f}
 
 
 Set number of stop bits. 
@@ -539,42 +617,42 @@ True if stop bits count is supported and could be set.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_a164c7be802a04805e5b401fc5011208b}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_a164c7be802a04805e5b401fc5011208b}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 427 of file mdtSerialPort.cpp.
+Definition at line 427 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}{
-\index{mdtSerialPort@{mdtSerialPort}!setWriteTimeout@{setWriteTimeout}}
-\index{setWriteTimeout@{setWriteTimeout}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{setWriteTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPort::setWriteTimeout (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, mdt\-Error\-::set\-System\-Error(), and stop\-Bits().
+
+\hypertarget{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!set\-Write\-Timeout@{set\-Write\-Timeout}}
+\index{set\-Write\-Timeout@{set\-Write\-Timeout}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{set\-Write\-Timeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Serial\-Port\-::set\-Write\-Timeout (
 \begin{DoxyParamCaption}
 \item[{int}]{timeout}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}
 
 
 Set the write data timeout. 
 
 The mutex is not handled by this method. 
 
-Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{mdt\-Abstract\-Port}.
 
 
 
-Definition at line 607 of file mdtSerialPort.cpp.
+Definition at line 607 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a163a83bdcac2c81a5c6b097c4afde41f}{
-\index{mdtSerialPort@{mdtSerialPort}!stopBits@{stopBits}}
-\index{stopBits@{stopBits}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{stopBits}]{\setlength{\rightskip}{0pt plus 5cm}int mdtSerialPort::stopBits (
+\hypertarget{classmdt_serial_port_a163a83bdcac2c81a5c6b097c4afde41f}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!stop\-Bits@{stop\-Bits}}
+\index{stop\-Bits@{stop\-Bits}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{stop\-Bits}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Serial\-Port\-::stop\-Bits (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a163a83bdcac2c81a5c6b097c4afde41f}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a163a83bdcac2c81a5c6b097c4afde41f}
 
 
 Get number of stop bits. 
@@ -586,31 +664,37 @@ Configured stop bits count or -\/1 on error.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_serial_port_abae48c24634c3e2d298f1cff98b250ed}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_abae48c24634c3e2d298f1cff98b250ed}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 452 of file mdtSerialPort.cpp.
+Definition at line 452 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2fe}{
-\index{mdtSerialPort@{mdtSerialPort}!suspendTransmission@{suspendTransmission}}
-\index{suspendTransmission@{suspendTransmission}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{suspendTransmission}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::suspendTransmission (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by set\-Stop\-Bits().
+
+\hypertarget{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2fe}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!suspend\-Transmission@{suspend\-Transmission}}
+\index{suspend\-Transmission@{suspend\-Transmission}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{suspend\-Transmission}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Serial\-Port\-::suspend\-Transmission (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2fe}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2fe}
 
 
 Request to suspend transmission. 
 
-This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
+This method is called from \hyperlink{classmdt_port_read_thread}{mdt\-Port\-Read\-Thread} , and should not be used directly.\par
  Mutex is not handled by this method.
 
-Subclass notes:\par
+Subclass notes\-:\par
  This method must be implemented in subclass if requierd.\par
- Note about serial port subclass:\par
+ Note about serial port subclass\-:\par
  the right flow control must be used regarding enabled flow control.\par
  Default implementation does nothing.\par
 
@@ -620,118 +704,130 @@ False on error, in this case, the reader thread will be stopped.
 \end{DoxyReturn}
 
 
-Reimplemented from \hyperlink{classmdt_abstract_port_aff3d79248baf96e670eba6d2fef700b9}{mdtAbstractPort}.
+Reimplemented from \hyperlink{classmdt_abstract_port_aff3d79248baf96e670eba6d2fef700b9}{mdt\-Abstract\-Port}.
 
 
 
-Definition at line 683 of file mdtSerialPort.cpp.
+Definition at line 683 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}{
-\index{mdtSerialPort@{mdtSerialPort}!waitEventCtl@{waitEventCtl}}
-\index{waitEventCtl@{waitEventCtl}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{waitEventCtl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtSerialPort::waitEventCtl (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, flow\-Ctl\-Rts\-Cts\-On(), flow\-Ctl\-Xon\-Xoff\-On(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!wait\-Event\-Ctl@{wait\-Event\-Ctl}}
+\index{wait\-Event\-Ctl@{wait\-Event\-Ctl}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{wait\-Event\-Ctl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Serial\-Port\-::wait\-Event\-Ctl (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}
 
 
-void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut()}; 
+void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flush\-Out()}; 
 
 Wait until a control (modem line) signal state changes
 
-This method is called from \hyperlink{classmdt_serial_port_ctl_thread}{mdtSerialPortCtlThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+This method is called from \hyperlink{classmdt_serial_port_ctl_thread}{mdt\-Serial\-Port\-Ctl\-Thread} , and should not be used directly.\par
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lock\-Mutex()}. The mutex is locked when method returns. 
 
-Implements \hyperlink{classmdt_abstract_serial_port_a146bf17f4f11c173e9b123bace0f2ddf}{mdtAbstractSerialPort}.
+Implements \hyperlink{classmdt_abstract_serial_port_a146bf17f4f11c173e9b123bace0f2ddf}{mdt\-Abstract\-Serial\-Port}.
 
 
 
-Definition at line 792 of file mdtSerialPort.cpp.
+Definition at line 792 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{
-\index{mdtSerialPort@{mdtSerialPort}!waitEventWriteReady@{waitEventWriteReady}}
-\index{waitEventWriteReady@{waitEventWriteReady}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{waitEventWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtSerialPort::waitEventWriteReady (
+
+
+References mdt\-Error\-::commit(), mdt\-Abstract\-Port\-::\-Control\-Canceled, mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R, mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Abstract\-Port\-::pv\-Mutex, mdt\-Error\-::set\-System\-Error(), and mdt\-Abstract\-Port\-::\-Unhandled\-Error.
+
+\hypertarget{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!wait\-Event\-Write\-Ready@{wait\-Event\-Write\-Ready}}
+\index{wait\-Event\-Write\-Ready@{wait\-Event\-Write\-Ready}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{wait\-Event\-Write\-Ready}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Serial\-Port\-::wait\-Event\-Write\-Ready (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}
 
 
-void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn()}; 
+void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flush\-In()}; 
 
 Wait until data can be written to port.
 
-This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+This method is called from \hyperlink{classmdt_port_write_thread}{mdt\-Port\-Write\-Thread} , and should not be used directly.\par
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lock\-Mutex()}. The mutex is locked when method returns. 
 
-Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdt\-Abstract\-Port}.
 
 
 
-Definition at line 729 of file mdtSerialPort.cpp.
+Definition at line 729 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{
-\index{mdtSerialPort@{mdtSerialPort}!waitForReadyRead@{waitForReadyRead}}
-\index{waitForReadyRead@{waitForReadyRead}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtSerialPort::waitForReadyRead (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R, mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Abstract\-Port\-::pv\-Mutex, mdt\-Error\-::set\-System\-Error(), mdt\-Abstract\-Port\-::\-Unhandled\-Error, mdt\-Abstract\-Port\-::\-Write\-Canceled, and mdt\-Abstract\-Port\-::\-Write\-Timeout.
+
+\hypertarget{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!wait\-For\-Ready\-Read@{wait\-For\-Ready\-Read}}
+\index{wait\-For\-Ready\-Read@{wait\-For\-Ready\-Read}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{wait\-For\-Ready\-Read}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Serial\-Port\-::wait\-For\-Ready\-Read (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}
 
 
 Wait until data is available on port. 
 
-This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+This method is called from \hyperlink{classmdt_port_read_thread}{mdt\-Port\-Read\-Thread} , and should not be used directly.\par
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lock\-Mutex()}. The mutex is locked when method returns. 
 
-Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdt\-Abstract\-Port}.
 
 
 
-Definition at line 618 of file mdtSerialPort.cpp.
+Definition at line 618 of file mdt\-Serial\-Port.\-cpp.
 
-\hypertarget{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{
-\index{mdtSerialPort@{mdtSerialPort}!write@{write}}
-\index{write@{write}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdtSerialPort::write (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-U\-N\-D\-E\-F\-I\-N\-E\-D\-\_\-\-E\-R\-R\-O\-R, mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Abstract\-Port\-::pv\-Mutex, mdt\-Abstract\-Port\-::\-Read\-Canceled, mdt\-Abstract\-Port\-::\-Read\-Timeout, mdt\-Error\-::set\-System\-Error(), and mdt\-Abstract\-Port\-::\-Unhandled\-Error.
+
+\hypertarget{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{\index{mdt\-Serial\-Port@{mdt\-Serial\-Port}!write@{write}}
+\index{write@{write}!mdtSerialPort@{mdt\-Serial\-Port}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdt\-Serial\-Port\-::write (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{data, }
-\item[{qint64}]{maxSize}
+\item[{qint64}]{max\-Size}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}
 
 
 Write data to port. 
 
-This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.
+This method is called from \hyperlink{classmdt_port_write_thread}{mdt\-Port\-Write\-Thread} , and should not be used directly.
 
 Mutex is not handled by this method.
 
-Subclass notes:\par
+Subclass notes\-:\par
  This method must be implemented in subclass.\par
 
 
 \begin{DoxyReturn}{Returns}
-Number of bytes written, or error $<$ 0 (see error\_\-t) 
+Number of bytes written, or error $<$ 0 (see error\-\_\-t) 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{mdt\-Abstract\-Port}.
 
 
 
-Definition at line 768 of file mdtSerialPort.cpp.
+Definition at line 768 of file mdt\-Serial\-Port.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-S\-E\-R\-I\-A\-L\-\_\-\-P\-O\-R\-T\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, mdt\-Error\-::set\-System\-Error(), and mdt\-Abstract\-Port\-::\-Unhandled\-Error.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtserialport/linux/mdtSerialPort.h\item 
-src/mdtserialport/linux/mdtSerialPort.cpp\end{DoxyCompactItemize}
+src/mdtserialport/linux/\hyperlink{mdt_serial_port_8h}{mdt\-Serial\-Port.\-h}\item 
+src/mdtserialport/linux/\hyperlink{mdt_serial_port_8cpp}{mdt\-Serial\-Port.\-cpp}\end{DoxyCompactItemize}

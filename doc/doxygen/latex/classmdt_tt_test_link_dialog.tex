@@ -1,0 +1,198 @@
+\hypertarget{classmdt_tt_test_link_dialog}{\section{mdt\-Tt\-Test\-Link\-Dialog Class Reference}
+\label{classmdt_tt_test_link_dialog}\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+}
+
+
+Dialog that provide test link edition.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Test\-Link\-Dialog.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Tt\-Test\-Link\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{classmdt_tt_test_link_dialog__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Tt\-Test\-Link\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_tt_test_link_dialog__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_tt_test_link_dialog_ac65efc1af939c5059176651d65d3c7ae}{mdt\-Tt\-Test\-Link\-Dialog} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, Q\-Sql\-Database db)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_link_dialog_a5732e2c5680256dd468540ae47172fbe}{$\sim$mdt\-Tt\-Test\-Link\-Dialog} ()
+\item 
+void \hyperlink{classmdt_tt_test_link_dialog_a82c51c0f0fc03eaa731297cf3bdf4f10}{set\-Test\-Node} (const Q\-Variant \&node\-Id)
+\begin{DoxyCompactList}\small\item\em Set test node. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_link_dialog_a0a67dbfcdac8800ef091fc040539b148}{set\-Dut\-Unit} (const Q\-Variant \&unit\-Id)
+\begin{DoxyCompactList}\small\item\em Set D\-U\-T unit. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_link_dialog_a0466396e733c0e20f5c8fe1cc11fb8ec}{set\-Test\-Connection} (const Q\-Variant \&unit\-Connection\-Id)
+\begin{DoxyCompactList}\small\item\em Set test connection. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_link_dialog_a3fc219ea7c9e271848f181ed00ca7156}{set\-Dut\-Connection} (const Q\-Variant \&unit\-Connection\-Id)
+\begin{DoxyCompactList}\small\item\em Set D\-U\-T connection. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_link_dialog_ad5ba0637cab1c517a541742abc1dfbb4}{set\-Link\-Data} (const \hyperlink{classmdt_tt_test_link_data}{mdt\-Tt\-Test\-Link\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Set link data. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_link_data}{mdt\-Tt\-Test\-Link\-Data} \hyperlink{classmdt_tt_test_link_dialog_a0af064a9831a15e5b0478e9346d802c6}{link\-Data} () const 
+\begin{DoxyCompactList}\small\item\em Get link data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Dialog that provide test link edition. 
+
+Definition at line 34 of file mdt\-Tt\-Test\-Link\-Dialog.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_tt_test_link_dialog_ac65efc1af939c5059176651d65d3c7ae}{\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}!mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}!mdtTtTestLinkDialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+\subsubsection[{mdt\-Tt\-Test\-Link\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Link\-Dialog\-::mdt\-Tt\-Test\-Link\-Dialog (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{parent, }
+\item[{Q\-Sql\-Database}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_link_dialog_ac65efc1af939c5059176651d65d3c7ae}
+
+
+Constructor. 
+
+
+
+Definition at line 33 of file mdt\-Tt\-Test\-Link\-Dialog.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::last\-Error(), Ui\-\_\-mdt\-Tt\-Test\-Link\-Dialog\-::pb\-Linked\-Connections\-Info, Ui\-\_\-mdt\-Tt\-Test\-Link\-Dialog\-::pb\-Select\-Dut\-Connection, Ui\-\_\-mdt\-Tt\-Test\-Link\-Dialog\-::pb\-Select\-Dut\-Unit, Ui\-\_\-mdt\-Tt\-Test\-Link\-Dialog\-::pb\-Select\-Test\-Connection, Ui\-\_\-mdt\-Tt\-Test\-Link\-Dialog\-::pb\-Select\-Test\-Unit, mdt\-Tt\-Test\-Link\-Data\-::setup(), Ui\-\_\-mdt\-Tt\-Test\-Link\-Dialog\-::setup\-Ui(), mdt\-Error\-::system\-Text(), and mdt\-Error\-::text().
+
+\hypertarget{classmdt_tt_test_link_dialog_a5732e2c5680256dd468540ae47172fbe}{\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}!$\sim$mdt\-Tt\-Test\-Link\-Dialog@{$\sim$mdt\-Tt\-Test\-Link\-Dialog}}
+\index{$\sim$mdt\-Tt\-Test\-Link\-Dialog@{$\sim$mdt\-Tt\-Test\-Link\-Dialog}!mdtTtTestLinkDialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+\subsubsection[{$\sim$mdt\-Tt\-Test\-Link\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Link\-Dialog\-::$\sim$mdt\-Tt\-Test\-Link\-Dialog (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_link_dialog_a5732e2c5680256dd468540ae47172fbe}
+
+
+Definition at line 61 of file mdt\-Tt\-Test\-Link\-Dialog.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_test_link_dialog_a0af064a9831a15e5b0478e9346d802c6}{\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}!link\-Data@{link\-Data}}
+\index{link\-Data@{link\-Data}!mdtTtTestLinkDialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+\subsubsection[{link\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tt\-Test\-Link\-Data} mdt\-Tt\-Test\-Link\-Dialog\-::link\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_test_link_dialog_a0af064a9831a15e5b0478e9346d802c6}
+
+
+Get link data. 
+
+
+
+Definition at line 72 of file mdt\-Tt\-Test\-Link\-Dialog.\-h.
+
+\hypertarget{classmdt_tt_test_link_dialog_a3fc219ea7c9e271848f181ed00ca7156}{\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}!set\-Dut\-Connection@{set\-Dut\-Connection}}
+\index{set\-Dut\-Connection@{set\-Dut\-Connection}!mdtTtTestLinkDialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+\subsubsection[{set\-Dut\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Link\-Dialog\-::set\-Dut\-Connection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connection\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_link_dialog_a3fc219ea7c9e271848f181ed00ca7156}
+
+
+Set D\-U\-T connection. 
+
+
+
+Definition at line 83 of file mdt\-Tt\-Test\-Link\-Dialog.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::set\-Value().
+
+\hypertarget{classmdt_tt_test_link_dialog_a0a67dbfcdac8800ef091fc040539b148}{\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}!set\-Dut\-Unit@{set\-Dut\-Unit}}
+\index{set\-Dut\-Unit@{set\-Dut\-Unit}!mdtTtTestLinkDialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+\subsubsection[{set\-Dut\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Link\-Dialog\-::set\-Dut\-Unit (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_link_dialog_a0a67dbfcdac8800ef091fc040539b148}
+
+
+Set D\-U\-T unit. 
+
+
+
+Definition at line 71 of file mdt\-Tt\-Test\-Link\-Dialog.\-cpp.
+
+\hypertarget{classmdt_tt_test_link_dialog_ad5ba0637cab1c517a541742abc1dfbb4}{\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}!set\-Link\-Data@{set\-Link\-Data}}
+\index{set\-Link\-Data@{set\-Link\-Data}!mdtTtTestLinkDialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+\subsubsection[{set\-Link\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Link\-Dialog\-::set\-Link\-Data (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Tt\-Test\-Link\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_link_dialog_ad5ba0637cab1c517a541742abc1dfbb4}
+
+
+Set link data. 
+
+
+
+Definition at line 89 of file mdt\-Tt\-Test\-Link\-Dialog.\-cpp.
+
+\hypertarget{classmdt_tt_test_link_dialog_a0466396e733c0e20f5c8fe1cc11fb8ec}{\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}!set\-Test\-Connection@{set\-Test\-Connection}}
+\index{set\-Test\-Connection@{set\-Test\-Connection}!mdtTtTestLinkDialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+\subsubsection[{set\-Test\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Link\-Dialog\-::set\-Test\-Connection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connection\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_link_dialog_a0466396e733c0e20f5c8fe1cc11fb8ec}
+
+
+Set test connection. 
+
+
+
+Definition at line 77 of file mdt\-Tt\-Test\-Link\-Dialog.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::set\-Value().
+
+\hypertarget{classmdt_tt_test_link_dialog_a82c51c0f0fc03eaa731297cf3bdf4f10}{\index{mdt\-Tt\-Test\-Link\-Dialog@{mdt\-Tt\-Test\-Link\-Dialog}!set\-Test\-Node@{set\-Test\-Node}}
+\index{set\-Test\-Node@{set\-Test\-Node}!mdtTtTestLinkDialog@{mdt\-Tt\-Test\-Link\-Dialog}}
+\subsubsection[{set\-Test\-Node}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Link\-Dialog\-::set\-Test\-Node (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{node\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_link_dialog_a82c51c0f0fc03eaa731297cf3bdf4f10}
+
+
+Set test node. 
+
+Note\-: node I\-D is the database identifier (P\-K) 
+
+Definition at line 65 of file mdt\-Tt\-Test\-Link\-Dialog.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_link_dialog_8h}{mdt\-Tt\-Test\-Link\-Dialog.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_link_dialog_8cpp}{mdt\-Tt\-Test\-Link\-Dialog.\-cpp}\end{DoxyCompactItemize}

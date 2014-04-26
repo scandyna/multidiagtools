@@ -1,81 +1,122 @@
-\hypertarget{classmdt_time}{
-\section{mdtTime Class Reference}
-\label{classmdt_time}\index{mdtTime@{mdtTime}}
+\hypertarget{classmdt_time}{\section{mdt\-Time Class Reference}
+\label{classmdt_time}\index{mdt\-Time@{mdt\-Time}}
 }
 
 
-Help class based on QTime.  
+Help class based on \hyperlink{class_q_time}{Q\-Time}.  
 
 
 
 
-{\ttfamily \#include $<$mdtTime.h$>$}
+{\ttfamily \#include $<$mdt\-Time.\-h$>$}
 
+
+
+Inheritance diagram for mdt\-Time\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=134pt]{classmdt_time__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Time\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=134pt]{classmdt_time__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{
-void \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop} ()}
-\label{classmdt_time_aa833a5d3857b988caec2b35b035801a6}
-
+\hyperlink{classmdt_time_a05be7355170acb9ed4b8854872091fb5}{mdt\-Time} ()
+\item 
+void \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop} ()
 \begin{DoxyCompactList}\small\item\em Stop the time count. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_time_abbd22fa3b8a33b8c82e0544c20c41af1}{elapsed} () const 
-\begin{DoxyCompactList}\small\item\em Returns elapsed time since \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} was called \mbox{[}ms\mbox{]} At first, start() must be called, than \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()}. Note: this function is different that QTime::elapsed() \end{DoxyCompactList}\item 
-double \hyperlink{classmdt_time_aabd78c0447eea8a95a9fd88adc4cb6a0}{elapsedSec} ()
-\begin{DoxyCompactList}\small\item\em Returns elapsed time since \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} was called \mbox{[}s\mbox{]} See: \hyperlink{classmdt_time_abbd22fa3b8a33b8c82e0544c20c41af1}{elapsed()} for more details. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns elapsed time since \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} was called \mbox{[}ms\mbox{]} At first, start() must be called, than \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()}. Note\-: this function is different that Q\-Time\-::elapsed() \end{DoxyCompactList}\item 
+double \hyperlink{classmdt_time_aabd78c0447eea8a95a9fd88adc4cb6a0}{elapsed\-Sec} ()
+\begin{DoxyCompactList}\small\item\em Returns elapsed time since \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} was called \mbox{[}s\mbox{]} See\-: \hyperlink{classmdt_time_abbd22fa3b8a33b8c82e0544c20c41af1}{elapsed()} for more details. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Help class based on QTime. 
+Help class based on \hyperlink{class_q_time}{Q\-Time}. 
 
-Definition at line 8 of file mdtTime.h.
+Definition at line 8 of file mdt\-Time.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_time_a05be7355170acb9ed4b8854872091fb5}{\index{mdt\-Time@{mdt\-Time}!mdt\-Time@{mdt\-Time}}
+\index{mdt\-Time@{mdt\-Time}!mdtTime@{mdt\-Time}}
+\subsubsection[{mdt\-Time}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Time\-::mdt\-Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_time_a05be7355170acb9ed4b8854872091fb5}
+
+
+Definition at line 3 of file mdt\-Time.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_time_abbd22fa3b8a33b8c82e0544c20c41af1}{
-\index{mdtTime@{mdtTime}!elapsed@{elapsed}}
-\index{elapsed@{elapsed}!mdtTime@{mdtTime}}
-\subsubsection[{elapsed}]{\setlength{\rightskip}{0pt plus 5cm}int mdtTime::elapsed (
+\hypertarget{classmdt_time_abbd22fa3b8a33b8c82e0544c20c41af1}{\index{mdt\-Time@{mdt\-Time}!elapsed@{elapsed}}
+\index{elapsed@{elapsed}!mdtTime@{mdt\-Time}}
+\subsubsection[{elapsed}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Time\-::elapsed (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_time_abbd22fa3b8a33b8c82e0544c20c41af1}
+) const}}\label{classmdt_time_abbd22fa3b8a33b8c82e0544c20c41af1}
 
 
-Returns elapsed time since \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} was called \mbox{[}ms\mbox{]} At first, start() must be called, than \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()}. Note: this function is different that QTime::elapsed() 
+Returns elapsed time since \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} was called \mbox{[}ms\mbox{]} At first, start() must be called, than \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()}. Note\-: this function is different that Q\-Time\-::elapsed() 
 
 \begin{DoxyReturn}{Returns}
 Time since last call of \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} \mbox{[}ms\mbox{]} 
 \end{DoxyReturn}
 
 
-Definition at line 13 of file mdtTime.cpp.
+Definition at line 13 of file mdt\-Time.\-cpp.
 
-\hypertarget{classmdt_time_aabd78c0447eea8a95a9fd88adc4cb6a0}{
-\index{mdtTime@{mdtTime}!elapsedSec@{elapsedSec}}
-\index{elapsedSec@{elapsedSec}!mdtTime@{mdtTime}}
-\subsubsection[{elapsedSec}]{\setlength{\rightskip}{0pt plus 5cm}double mdtTime::elapsedSec (
+\hypertarget{classmdt_time_aabd78c0447eea8a95a9fd88adc4cb6a0}{\index{mdt\-Time@{mdt\-Time}!elapsed\-Sec@{elapsed\-Sec}}
+\index{elapsed\-Sec@{elapsed\-Sec}!mdtTime@{mdt\-Time}}
+\subsubsection[{elapsed\-Sec}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Time\-::elapsed\-Sec (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_time_aabd78c0447eea8a95a9fd88adc4cb6a0}
+)}}\label{classmdt_time_aabd78c0447eea8a95a9fd88adc4cb6a0}
 
 
-Returns elapsed time since \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} was called \mbox{[}s\mbox{]} See: \hyperlink{classmdt_time_abbd22fa3b8a33b8c82e0544c20c41af1}{elapsed()} for more details. 
+Returns elapsed time since \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} was called \mbox{[}s\mbox{]} See\-: \hyperlink{classmdt_time_abbd22fa3b8a33b8c82e0544c20c41af1}{elapsed()} for more details. 
 
 \begin{DoxyReturn}{Returns}
 Time since last call of \hyperlink{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{stop()} \mbox{[}s\mbox{]} 
 \end{DoxyReturn}
 
 
-Definition at line 18 of file mdtTime.cpp.
+Definition at line 18 of file mdt\-Time.\-cpp.
+
+\hypertarget{classmdt_time_aa833a5d3857b988caec2b35b035801a6}{\index{mdt\-Time@{mdt\-Time}!stop@{stop}}
+\index{stop@{stop}!mdtTime@{mdt\-Time}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Time\-::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_time_aa833a5d3857b988caec2b35b035801a6}
+
+
+Stop the time count. 
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Definition at line 8 of file mdt\-Time.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtTime.h\item 
-src/mdtutils/mdtTime.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_time_8h}{mdt\-Time.\-h}\item 
+src/mdtutils/\hyperlink{mdt_time_8cpp}{mdt\-Time.\-cpp}\end{DoxyCompactItemize}

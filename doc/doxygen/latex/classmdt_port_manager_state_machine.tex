@@ -1,6 +1,5 @@
-\hypertarget{classmdt_port_manager_state_machine}{
-\section{mdtPortManagerStateMachine Class Reference}
-\label{classmdt_port_manager_state_machine}\index{mdtPortManagerStateMachine@{mdtPortManagerStateMachine}}
+\hypertarget{classmdt_port_manager_state_machine}{\section{mdt\-Port\-Manager\-State\-Machine Class Reference}
+\label{classmdt_port_manager_state_machine}\index{mdt\-Port\-Manager\-State\-Machine@{mdt\-Port\-Manager\-State\-Machine}}
 }
 
 
@@ -9,11 +8,11 @@ State machine for port manager.
 
 
 
-{\ttfamily \#include $<$mdtPortManagerStateMachine.h$>$}
+{\ttfamily \#include $<$mdt\-Port\-Manager\-State\-Machine.\-h$>$}
 
 
 
-Inheritance diagram for mdtPortManagerStateMachine:\nopagebreak
+Inheritance diagram for mdt\-Port\-Manager\-State\-Machine\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,32 +21,30 @@ Inheritance diagram for mdtPortManagerStateMachine:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtPortManagerStateMachine:\nopagebreak
+Collaboration diagram for mdt\-Port\-Manager\-State\-Machine\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=295pt]{classmdt_port_manager_state_machine__coll__graph}
+\includegraphics[width=228pt]{classmdt_port_manager_state_machine__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_port_manager_state_machine_a1e5e5c8c2d5338d8d719de75aebfe987}{mdtPortManagerStateMachine} (QObject $\ast$parent=0)
+\hyperlink{classmdt_port_manager_state_machine_a1e5e5c8c2d5338d8d719de75aebfe987}{mdt\-Port\-Manager\-State\-Machine} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_manager_state_machine_a4402d5fd2fdc1bcbfd0db105f7b2df61}{
-\hyperlink{classmdt_port_manager_state_machine_a4402d5fd2fdc1bcbfd0db105f7b2df61}{$\sim$mdtPortManagerStateMachine} ()}
-\label{classmdt_port_manager_state_machine_a4402d5fd2fdc1bcbfd0db105f7b2df61}
-
+\hyperlink{classmdt_port_manager_state_machine_a4402d5fd2fdc1bcbfd0db105f7b2df61}{$\sim$mdt\-Port\-Manager\-State\-Machine} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_manager_state_machine_a114c1775a071d8cabf484e22638b4fc1}{buildMainStateMachine} (\hyperlink{classmdt_port_manager}{mdtPortManager} $\ast$portManager)
+void \hyperlink{classmdt_port_manager_state_machine_a114c1775a071d8cabf484e22638b4fc1}{build\-Main\-State\-Machine} (\hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} $\ast$port\-Manager)
 \begin{DoxyCompactList}\small\item\em Build main state machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_port_manager_state_machine_a174b87f542465ddf3ee0d5db734eff40}{buildRunningSubMachine} (\hyperlink{classmdt_port_manager}{mdtPortManager} $\ast$portManager, \hyperlink{classmdt_state}{mdtState} $\ast$parentState)
+void \hyperlink{classmdt_port_manager_state_machine_a174b87f542465ddf3ee0d5db734eff40}{build\-Running\-Sub\-Machine} (\hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} $\ast$port\-Manager, \hyperlink{classmdt_state}{mdt\-State} $\ast$parent\-State)
 \begin{DoxyCompactList}\small\item\em Build the Running sub machine. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_manager_state_machine_ad1f31fb972594b42b91359483316915f}{buildConnectedSubMachine} (\hyperlink{classmdt_port_manager}{mdtPortManager} $\ast$portManager, \hyperlink{classmdt_state}{mdtState} $\ast$parentState)
+void \hyperlink{classmdt_port_manager_state_machine_ad1f31fb972594b42b91359483316915f}{build\-Connected\-Sub\-Machine} (\hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} $\ast$port\-Manager, \hyperlink{classmdt_state}{mdt\-State} $\ast$parent\-State)
 \begin{DoxyCompactList}\small\item\em Build the Connected sub machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
@@ -57,100 +54,131 @@ A port manager can receive events form different objects, like threads and main 
 
 This class helps port manager to keep a coherent state and react only on allowed events regarding current state. 
 
-Definition at line 39 of file mdtPortManagerStateMachine.h.
+Definition at line 39 of file mdt\-Port\-Manager\-State\-Machine.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_port_manager_state_machine_a1e5e5c8c2d5338d8d719de75aebfe987}{
-\index{mdtPortManagerStateMachine@{mdtPortManagerStateMachine}!mdtPortManagerStateMachine@{mdtPortManagerStateMachine}}
-\index{mdtPortManagerStateMachine@{mdtPortManagerStateMachine}!mdtPortManagerStateMachine@{mdtPortManagerStateMachine}}
-\subsubsection[{mdtPortManagerStateMachine}]{\setlength{\rightskip}{0pt plus 5cm}mdtPortManagerStateMachine::mdtPortManagerStateMachine (
+\hypertarget{classmdt_port_manager_state_machine_a1e5e5c8c2d5338d8d719de75aebfe987}{\index{mdt\-Port\-Manager\-State\-Machine@{mdt\-Port\-Manager\-State\-Machine}!mdt\-Port\-Manager\-State\-Machine@{mdt\-Port\-Manager\-State\-Machine}}
+\index{mdt\-Port\-Manager\-State\-Machine@{mdt\-Port\-Manager\-State\-Machine}!mdtPortManagerStateMachine@{mdt\-Port\-Manager\-State\-Machine}}
+\subsubsection[{mdt\-Port\-Manager\-State\-Machine}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Port\-Manager\-State\-Machine\-::mdt\-Port\-Manager\-State\-Machine (
 \begin{DoxyParamCaption}
-\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_manager_state_machine_a1e5e5c8c2d5338d8d719de75aebfe987}
+)}}\label{classmdt_port_manager_state_machine_a1e5e5c8c2d5338d8d719de75aebfe987}
 
 
 Constructor. 
 
-Will build the state machine by calling \hyperlink{classmdt_port_manager_state_machine_a114c1775a071d8cabf484e22638b4fc1}{buildMainStateMachine()} 
+Will build the state machine by calling \hyperlink{classmdt_port_manager_state_machine_a114c1775a071d8cabf484e22638b4fc1}{build\-Main\-State\-Machine()} 
 
-Definition at line 26 of file mdtPortManagerStateMachine.cpp.
+Definition at line 26 of file mdt\-Port\-Manager\-State\-Machine.\-cpp.
+
+\hypertarget{classmdt_port_manager_state_machine_a4402d5fd2fdc1bcbfd0db105f7b2df61}{\index{mdt\-Port\-Manager\-State\-Machine@{mdt\-Port\-Manager\-State\-Machine}!$\sim$mdt\-Port\-Manager\-State\-Machine@{$\sim$mdt\-Port\-Manager\-State\-Machine}}
+\index{$\sim$mdt\-Port\-Manager\-State\-Machine@{$\sim$mdt\-Port\-Manager\-State\-Machine}!mdtPortManagerStateMachine@{mdt\-Port\-Manager\-State\-Machine}}
+\subsubsection[{$\sim$mdt\-Port\-Manager\-State\-Machine}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Port\-Manager\-State\-Machine\-::$\sim$mdt\-Port\-Manager\-State\-Machine (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_manager_state_machine_a4402d5fd2fdc1bcbfd0db105f7b2df61}
+
+
+Destructor. 
+
+
+
+Definition at line 46 of file mdt\-Port\-Manager\-State\-Machine.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_port_manager_state_machine_ad1f31fb972594b42b91359483316915f}{
-\index{mdtPortManagerStateMachine@{mdtPortManagerStateMachine}!buildConnectedSubMachine@{buildConnectedSubMachine}}
-\index{buildConnectedSubMachine@{buildConnectedSubMachine}!mdtPortManagerStateMachine@{mdtPortManagerStateMachine}}
-\subsubsection[{buildConnectedSubMachine}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManagerStateMachine::buildConnectedSubMachine (
+\hypertarget{classmdt_port_manager_state_machine_ad1f31fb972594b42b91359483316915f}{\index{mdt\-Port\-Manager\-State\-Machine@{mdt\-Port\-Manager\-State\-Machine}!build\-Connected\-Sub\-Machine@{build\-Connected\-Sub\-Machine}}
+\index{build\-Connected\-Sub\-Machine@{build\-Connected\-Sub\-Machine}!mdtPortManagerStateMachine@{mdt\-Port\-Manager\-State\-Machine}}
+\subsubsection[{build\-Connected\-Sub\-Machine}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Manager\-State\-Machine\-::build\-Connected\-Sub\-Machine (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtPortManager} $\ast$}]{portManager, }
-\item[{{\bf mdtState} $\ast$}]{parentState}
+\item[{{\bf mdt\-Port\-Manager} $\ast$}]{port\-Manager, }
+\item[{{\bf mdt\-State} $\ast$}]{parent\-State}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_port_manager_state_machine_ad1f31fb972594b42b91359483316915f}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_port_manager_state_machine_ad1f31fb972594b42b91359483316915f}
 
 
 Build the Connected sub machine. 
 
  \begin{DoxyPrecond}{Precondition}
-portManager must be a valid pointer 
+port\-Manager must be a valid pointer 
 
-parentState must be a valid pointer 
+parent\-State must be a valid pointer 
 \end{DoxyPrecond}
 
 
-Definition at line 145 of file mdtPortManagerStateMachine.cpp.
+Definition at line 145 of file mdt\-Port\-Manager\-State\-Machine.\-cpp.
 
-\hypertarget{classmdt_port_manager_state_machine_a114c1775a071d8cabf484e22638b4fc1}{
-\index{mdtPortManagerStateMachine@{mdtPortManagerStateMachine}!buildMainStateMachine@{buildMainStateMachine}}
-\index{buildMainStateMachine@{buildMainStateMachine}!mdtPortManagerStateMachine@{mdtPortManagerStateMachine}}
-\subsubsection[{buildMainStateMachine}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManagerStateMachine::buildMainStateMachine (
+
+
+References mdt\-Port\-Manager\-::\-Busy, mdt\-Led\-::\-Green, mdt\-Led\-::\-Orange, mdt\-Port\-Manager\-::\-Ready, mdt\-State\-::set\-Led\-Color\-Id(), mdt\-State\-::set\-Led\-On(), mdt\-State\-::set\-Notify\-Entered\-To\-Ui(), and mdt\-State\-::set\-Text().
+
+
+
+Referenced by build\-Running\-Sub\-Machine().
+
+\hypertarget{classmdt_port_manager_state_machine_a114c1775a071d8cabf484e22638b4fc1}{\index{mdt\-Port\-Manager\-State\-Machine@{mdt\-Port\-Manager\-State\-Machine}!build\-Main\-State\-Machine@{build\-Main\-State\-Machine}}
+\index{build\-Main\-State\-Machine@{build\-Main\-State\-Machine}!mdtPortManagerStateMachine@{mdt\-Port\-Manager\-State\-Machine}}
+\subsubsection[{build\-Main\-State\-Machine}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtPortManager} $\ast$}]{portManager}
+\item[{{\bf mdt\-Port\-Manager} $\ast$}]{port\-Manager}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_manager_state_machine_a114c1775a071d8cabf484e22638b4fc1}
+)}}\label{classmdt_port_manager_state_machine_a114c1775a071d8cabf484e22638b4fc1}
 
 
 Build main state machine. 
 
  \begin{DoxyPrecond}{Precondition}
-portManager must be a valid pointer 
+port\-Manager must be a valid pointer 
 \end{DoxyPrecond}
 
 
-Definition at line 50 of file mdtPortManagerStateMachine.cpp.
+Definition at line 50 of file mdt\-Port\-Manager\-State\-Machine.\-cpp.
 
-\hypertarget{classmdt_port_manager_state_machine_a174b87f542465ddf3ee0d5db734eff40}{
-\index{mdtPortManagerStateMachine@{mdtPortManagerStateMachine}!buildRunningSubMachine@{buildRunningSubMachine}}
-\index{buildRunningSubMachine@{buildRunningSubMachine}!mdtPortManagerStateMachine@{mdtPortManagerStateMachine}}
-\subsubsection[{buildRunningSubMachine}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManagerStateMachine::buildRunningSubMachine (
+
+
+References build\-Running\-Sub\-Machine(), mdt\-Led\-::\-Green, mdt\-Port\-Manager\-::\-Port\-Closed, mdt\-Port\-Manager\-::\-Port\-Error, mdt\-Led\-::\-Red, mdt\-Port\-Manager\-::\-Running, mdt\-State\-::set\-Led\-Color\-Id(), mdt\-State\-::set\-Led\-On(), mdt\-State\-::set\-Notify\-Entered\-To\-Ui(), mdt\-State\-::set\-Text(), mdt\-Port\-Manager\-::\-Starting, mdt\-State\-Machine\-::state\-Changed(), mdt\-State\-Machine\-::state\-Changed\-For\-Ui(), mdt\-Port\-Manager\-::\-Stopped, mdt\-Port\-Manager\-::\-Stopping, and mdt\-State\-Machine\-::wait\-On\-State().
+
+
+
+Referenced by mdt\-Port\-Manager\-::mdt\-Port\-Manager().
+
+\hypertarget{classmdt_port_manager_state_machine_a174b87f542465ddf3ee0d5db734eff40}{\index{mdt\-Port\-Manager\-State\-Machine@{mdt\-Port\-Manager\-State\-Machine}!build\-Running\-Sub\-Machine@{build\-Running\-Sub\-Machine}}
+\index{build\-Running\-Sub\-Machine@{build\-Running\-Sub\-Machine}!mdtPortManagerStateMachine@{mdt\-Port\-Manager\-State\-Machine}}
+\subsubsection[{build\-Running\-Sub\-Machine}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Manager\-State\-Machine\-::build\-Running\-Sub\-Machine (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtPortManager} $\ast$}]{portManager, }
-\item[{{\bf mdtState} $\ast$}]{parentState}
+\item[{{\bf mdt\-Port\-Manager} $\ast$}]{port\-Manager, }
+\item[{{\bf mdt\-State} $\ast$}]{parent\-State}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_port_manager_state_machine_a174b87f542465ddf3ee0d5db734eff40}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_port_manager_state_machine_a174b87f542465ddf3ee0d5db734eff40}
 
 
 Build the Running sub machine. 
 
  \begin{DoxyPrecond}{Precondition}
-portManager must be a valid pointer 
+port\-Manager must be a valid pointer 
 
-parentState must be a valid pointer 
+parent\-State must be a valid pointer 
 \end{DoxyPrecond}
 
 
-Definition at line 106 of file mdtPortManagerStateMachine.cpp.
+Definition at line 106 of file mdt\-Port\-Manager\-State\-Machine.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References build\-Connected\-Sub\-Machine(), mdt\-Port\-Manager\-::\-Connected, mdt\-Port\-Manager\-::\-Connecting, mdt\-Port\-Manager\-::\-Disconnected, mdt\-Led\-::\-Green, mdt\-Led\-::\-Orange, mdt\-Port\-Manager\-::\-Port\-Ready, mdt\-State\-::set\-Led\-Color\-Id(), mdt\-State\-::set\-Led\-On(), mdt\-State\-::set\-Notify\-Entered\-To\-Ui(), and mdt\-State\-::set\-Text().
+
+
+
+Referenced by build\-Main\-State\-Machine().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtport/mdtPortManagerStateMachine.h\item 
-src/mdtport/mdtPortManagerStateMachine.cpp\end{DoxyCompactItemize}
+src/mdtport/\hyperlink{mdt_port_manager_state_machine_8h}{mdt\-Port\-Manager\-State\-Machine.\-h}\item 
+src/mdtport/\hyperlink{mdt_port_manager_state_machine_8cpp}{mdt\-Port\-Manager\-State\-Machine.\-cpp}\end{DoxyCompactItemize}

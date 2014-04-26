@@ -1,6 +1,5 @@
-\hypertarget{classmdt_port_transaction}{
-\section{mdtPortTransaction Class Reference}
-\label{classmdt_port_transaction}\index{mdtPortTransaction@{mdtPortTransaction}}
+\hypertarget{classmdt_port_transaction}{\section{mdt\-Port\-Transaction Class Reference}
+\label{classmdt_port_transaction}\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}}
 }
 
 
@@ -9,94 +8,55 @@ Store port transaction identifications data.
 
 
 
-{\ttfamily \#include $<$mdtPortTransaction.h$>$}
+{\ttfamily \#include $<$mdt\-Port\-Transaction.\-h$>$}
 
-
-
-Collaboration diagram for mdtPortTransaction:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=236pt]{classmdt_port_transaction__coll__graph}
-\end{center}
-\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_port_transaction_ad1ad236620299408bb3c5b6f573ea6ba}{mdtPortTransaction} ()
+\hyperlink{classmdt_port_transaction_ad1ad236620299408bb3c5b6f573ea6ba}{mdt\-Port\-Transaction} ()
 \begin{DoxyCompactList}\small\item\em Construct a empty transaction. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_ae20476e75c2ab1997ddfb82c1bac5549}{
-\hyperlink{classmdt_port_transaction_ae20476e75c2ab1997ddfb82c1bac5549}{$\sim$mdtPortTransaction} ()}
-\label{classmdt_port_transaction_ae20476e75c2ab1997ddfb82c1bac5549}
-
+\hyperlink{classmdt_port_transaction_ae20476e75c2ab1997ddfb82c1bac5549}{$\sim$mdt\-Port\-Transaction} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_transaction_a5f7b04df58291d52e61c5bd1b7f7bb7f}{clear} ()
 \begin{DoxyCompactList}\small\item\em Clear transaction. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_transaction_a3f0ff197ba4b58f0dd206e6151109fde}{setId} (int id)
+void \hyperlink{classmdt_port_transaction_a3f0ff197ba4b58f0dd206e6151109fde}{set\-Id} (int \hyperlink{classmdt_port_transaction_ae68abafb0501c98f85147adc176d8d83}{id})
 \begin{DoxyCompactList}\small\item\em Set transaction identifer. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_transaction_ae68abafb0501c98f85147adc176d8d83}{id} () const 
 \begin{DoxyCompactList}\small\item\em Get id. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_transaction_a4398eb06986d858d3d0a63f6a290f0bf}{setType} (int type)
+void \hyperlink{classmdt_port_transaction_a4398eb06986d858d3d0a63f6a290f0bf}{set\-Type} (int \hyperlink{classmdt_port_transaction_aa8acfc909bb1956b16cca02d721357f4}{type})
 \begin{DoxyCompactList}\small\item\em Set type. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_transaction_aa8acfc909bb1956b16cca02d721357f4}{type} () const 
 \begin{DoxyCompactList}\small\item\em Get type. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_transaction_a122a98e4e93295c9907ed7cd0bde1f19}{setIo} (\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$io, bool isInput)
-\begin{DoxyCompactList}\small\item\em Set the concerned analog I/O. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}{setIo} (\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$io, bool isInput)
-\begin{DoxyCompactList}\small\item\em Set the concerned digital I/O. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_port_transaction_a59409e826441bcff560ea3e44b885d64}{analogIo} ()
-\begin{DoxyCompactList}\small\item\em Get the concerned analog I/O. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_port_transaction_a0515e5ded32eb76047586fdb6274d3eb}{digitalIo} ()
-\begin{DoxyCompactList}\small\item\em Set the concerned digital I/O. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_ad49afb93f44aca47ded0e03018f8266f}{
-void \hyperlink{classmdt_port_transaction_ad49afb93f44aca47ded0e03018f8266f}{setIsInput} (bool isInput)}
-\label{classmdt_port_transaction_ad49afb93f44aca47ded0e03018f8266f}
-
-\begin{DoxyCompactList}\small\item\em Set the isInput flag. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_a2aaf0f003556d7f93ec2d3846589673d}{
-bool \hyperlink{classmdt_port_transaction_a2aaf0f003556d7f93ec2d3846589673d}{isInput} () const }
-\label{classmdt_port_transaction_a2aaf0f003556d7f93ec2d3846589673d}
-
-\begin{DoxyCompactList}\small\item\em Get the isInput flag. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_af628e8888c15525777504111a687b6a0}{
-bool \hyperlink{classmdt_port_transaction_af628e8888c15525777504111a687b6a0}{isOutput} () const }
-\label{classmdt_port_transaction_af628e8888c15525777504111a687b6a0}
-
-\begin{DoxyCompactList}\small\item\em Get the isOutput flag. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_a9487e13f95c553cead6e2043573615d9}{
-void \hyperlink{classmdt_port_transaction_a9487e13f95c553cead6e2043573615d9}{setData} (const QByteArray \&data)}
-\label{classmdt_port_transaction_a9487e13f95c553cead6e2043573615d9}
-
+void \hyperlink{classmdt_port_transaction_a122a98e4e93295c9907ed7cd0bde1f19}{set\-Io} (\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$io, bool \hyperlink{classmdt_port_transaction_a2aaf0f003556d7f93ec2d3846589673d}{is\-Input})
+\begin{DoxyCompactList}\small\item\em Set the concerned analog I/\-O. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}{set\-Io} (\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$io, bool \hyperlink{classmdt_port_transaction_a2aaf0f003556d7f93ec2d3846589673d}{is\-Input})
+\begin{DoxyCompactList}\small\item\em Set the concerned digital I/\-O. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$ \hyperlink{classmdt_port_transaction_a59409e826441bcff560ea3e44b885d64}{analog\-Io} ()
+\begin{DoxyCompactList}\small\item\em Get the concerned analog I/\-O. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$ \hyperlink{classmdt_port_transaction_a0515e5ded32eb76047586fdb6274d3eb}{digital\-Io} ()
+\begin{DoxyCompactList}\small\item\em Set the concerned digital I/\-O. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_transaction_ad49afb93f44aca47ded0e03018f8266f}{set\-Is\-Input} (bool \hyperlink{classmdt_port_transaction_a2aaf0f003556d7f93ec2d3846589673d}{is\-Input})
+\begin{DoxyCompactList}\small\item\em Set the is\-Input flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_transaction_a2aaf0f003556d7f93ec2d3846589673d}{is\-Input} () const 
+\begin{DoxyCompactList}\small\item\em Get the is\-Input flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_transaction_af628e8888c15525777504111a687b6a0}{is\-Output} () const 
+\begin{DoxyCompactList}\small\item\em Get the is\-Output flag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_transaction_a9487e13f95c553cead6e2043573615d9}{set\-Data} (const Q\-Byte\-Array \&\hyperlink{classmdt_port_transaction_a2b4f95dae82de8853e12138b4db616a0}{data})
 \begin{DoxyCompactList}\small\item\em Set data by copy. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_a2b4f95dae82de8853e12138b4db616a0}{
-QByteArray \hyperlink{classmdt_port_transaction_a2b4f95dae82de8853e12138b4db616a0}{data} () const }
-\label{classmdt_port_transaction_a2b4f95dae82de8853e12138b4db616a0}
-
+Q\-Byte\-Array \hyperlink{classmdt_port_transaction_a2b4f95dae82de8853e12138b4db616a0}{data} () const 
 \begin{DoxyCompactList}\small\item\em Get stored data. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}{setQueryReplyMode} (bool mode)
+void \hyperlink{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}{set\-Query\-Reply\-Mode} (bool mode)
 \begin{DoxyCompactList}\small\item\em Set query/reply mode. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_transaction_a9da1cc7a191cd21a2e532d277aa3c628}{isQueryReplyMode} () const 
+bool \hyperlink{classmdt_port_transaction_a9da1cc7a191cd21a2e532d277aa3c628}{is\-Query\-Reply\-Mode} () const 
 \begin{DoxyCompactList}\small\item\em Get the query/reply mode flag. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_a7f43ee802c0dee3ee77b45188378f86e}{
-void \hyperlink{classmdt_port_transaction_a7f43ee802c0dee3ee77b45188378f86e}{setAddress} (int address)}
-\label{classmdt_port_transaction_a7f43ee802c0dee3ee77b45188378f86e}
-
+void \hyperlink{classmdt_port_transaction_a7f43ee802c0dee3ee77b45188378f86e}{set\-Address} (int \hyperlink{classmdt_port_transaction_a0c454829c2d1c2ea1b8bcc9797b2d46b}{address})
 \begin{DoxyCompactList}\small\item\em Set address. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_a0c454829c2d1c2ea1b8bcc9797b2d46b}{
-int \hyperlink{classmdt_port_transaction_a0c454829c2d1c2ea1b8bcc9797b2d46b}{address} () const }
-\label{classmdt_port_transaction_a0c454829c2d1c2ea1b8bcc9797b2d46b}
-
+int \hyperlink{classmdt_port_transaction_a0c454829c2d1c2ea1b8bcc9797b2d46b}{address} () const 
 \begin{DoxyCompactList}\small\item\em Get address. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_a1d68527258d24907b7fe113aa364c1a3}{
-void \hyperlink{classmdt_port_transaction_a1d68527258d24907b7fe113aa364c1a3}{setIoCount} (int n)}
-\label{classmdt_port_transaction_a1d68527258d24907b7fe113aa364c1a3}
-
-\begin{DoxyCompactList}\small\item\em Set the number of I/Os concerned by transaction. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_transaction_ac51fba329cc3467ebd6b8eaf913a1413}{
-int \hyperlink{classmdt_port_transaction_ac51fba329cc3467ebd6b8eaf913a1413}{ioCount} () const }
-\label{classmdt_port_transaction_ac51fba329cc3467ebd6b8eaf913a1413}
-
-\begin{DoxyCompactList}\small\item\em Get the number of I/Os concerned by transaction. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_port_transaction_a1d68527258d24907b7fe113aa364c1a3}{set\-Io\-Count} (int n)
+\begin{DoxyCompactList}\small\item\em Set the number of I/\-Os concerned by transaction. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_transaction_ac51fba329cc3467ebd6b8eaf913a1413}{io\-Count} () const 
+\begin{DoxyCompactList}\small\item\em Get the number of I/\-Os concerned by transaction. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -104,241 +64,455 @@ Store port transaction identifications data.
 
 After a query was sent to a device, a bit later a response will come back.
 
-It's not allways easy, as decoder method, to know what type of query was sent in the past, witch I/O the answer will concern, ...
+It's not allways easy, as decoder method, to know what type of query was sent in the past, witch I/\-O the answer will concern, ...
 
-This class helps \hyperlink{classmdt_port_manager}{mdtPortManager} and \hyperlink{classmdt_device}{mdtDevice} for that. 
+This class helps \hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} and \hyperlink{classmdt_device}{mdt\-Device} for that. 
 
-Definition at line 39 of file mdtPortTransaction.h.
+Definition at line 39 of file mdt\-Port\-Transaction.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_port_transaction_ad1ad236620299408bb3c5b6f573ea6ba}{
-\index{mdtPortTransaction@{mdtPortTransaction}!mdtPortTransaction@{mdtPortTransaction}}
-\index{mdtPortTransaction@{mdtPortTransaction}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{mdtPortTransaction}]{\setlength{\rightskip}{0pt plus 5cm}mdtPortTransaction::mdtPortTransaction (
+\hypertarget{classmdt_port_transaction_ad1ad236620299408bb3c5b6f573ea6ba}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!mdt\-Port\-Transaction@{mdt\-Port\-Transaction}}
+\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{mdt\-Port\-Transaction}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Port\-Transaction\-::mdt\-Port\-Transaction (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_ad1ad236620299408bb3c5b6f573ea6ba}
+)}}\label{classmdt_port_transaction_ad1ad236620299408bb3c5b6f573ea6ba}
 
 
 Construct a empty transaction. 
 
 See \hyperlink{classmdt_port_transaction_a5f7b04df58291d52e61c5bd1b7f7bb7f}{clear()} for details about empty transaction. 
 
-Definition at line 23 of file mdtPortTransaction.cpp.
+Definition at line 23 of file mdt\-Port\-Transaction.\-cpp.
+
+
+
+References clear().
+
+\hypertarget{classmdt_port_transaction_ae20476e75c2ab1997ddfb82c1bac5549}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!$\sim$mdt\-Port\-Transaction@{$\sim$mdt\-Port\-Transaction}}
+\index{$\sim$mdt\-Port\-Transaction@{$\sim$mdt\-Port\-Transaction}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{$\sim$mdt\-Port\-Transaction}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Port\-Transaction\-::$\sim$mdt\-Port\-Transaction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_transaction_ae20476e75c2ab1997ddfb82c1bac5549}
+
+
+Destructor. 
+
+
+
+Definition at line 28 of file mdt\-Port\-Transaction.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_port_transaction_a59409e826441bcff560ea3e44b885d64}{
-\index{mdtPortTransaction@{mdtPortTransaction}!analogIo@{analogIo}}
-\index{analogIo@{analogIo}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{analogIo}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAnalogIo} $\ast$ mdtPortTransaction::analogIo (
+\hypertarget{classmdt_port_transaction_a0c454829c2d1c2ea1b8bcc9797b2d46b}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!address@{address}}
+\index{address@{address}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{address}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Port\-Transaction\-::address (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_a59409e826441bcff560ea3e44b885d64}
+) const}}\label{classmdt_port_transaction_a0c454829c2d1c2ea1b8bcc9797b2d46b}
 
 
-Get the concerned analog I/O. 
+Get address. 
 
-See setIo(mdtAnalogIo$\ast$) for details. 
 
-Definition at line 84 of file mdtPortTransaction.cpp.
 
-\hypertarget{classmdt_port_transaction_a5f7b04df58291d52e61c5bd1b7f7bb7f}{
-\index{mdtPortTransaction@{mdtPortTransaction}!clear@{clear}}
-\index{clear@{clear}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTransaction::clear (
+Definition at line 136 of file mdt\-Port\-Transaction.\-cpp.
+
+
+
+Referenced by mdt\-Device\-Modbus\-::read\-Analog\-Input(), mdt\-Device\-Modbus\-::read\-Analog\-Inputs(), mdt\-Device\-Modbus\-::read\-Analog\-Output(), mdt\-Device\-Modbus\-::read\-Analog\-Outputs(), mdt\-Device\-Modbus\-::read\-Digital\-Input(), mdt\-Device\-Modbus\-::read\-Digital\-Inputs(), mdt\-Device\-Modbus\-::read\-Digital\-Output(), mdt\-Device\-Modbus\-::read\-Digital\-Outputs(), set\-Address(), mdt\-Device\-Modbus\-::write\-Analog\-Output(), and mdt\-Device\-Modbus\-::write\-Digital\-Output().
+
+\hypertarget{classmdt_port_transaction_a59409e826441bcff560ea3e44b885d64}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!analog\-Io@{analog\-Io}}
+\index{analog\-Io@{analog\-Io}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{analog\-Io}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Analog\-Io} $\ast$ mdt\-Port\-Transaction\-::analog\-Io (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_a5f7b04df58291d52e61c5bd1b7f7bb7f}
+)}}\label{classmdt_port_transaction_a59409e826441bcff560ea3e44b885d64}
+
+
+Get the concerned analog I/\-O. 
+
+See set\-Io(mdt\-Analog\-Io$\ast$) for details. 
+
+Definition at line 84 of file mdt\-Port\-Transaction.\-cpp.
+
+\hypertarget{classmdt_port_transaction_a5f7b04df58291d52e61c5bd1b7f7bb7f}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!clear@{clear}}
+\index{clear@{clear}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_transaction_a5f7b04df58291d52e61c5bd1b7f7bb7f}
 
 
 Clear transaction. 
 
-A empty transaction has following values:
+A empty transaction has following values\-:
 \begin{DoxyItemize}
-\item id: 0
-\item type: 0
-\item analogIo: Null
-\item digitalIo: Null
-\item ioCount: 0
-\item isInput: false
-\item isOutput: false
-\item data: empty
-\item isQueryReplyMode: false
-\item address: 0 
+\item id\-: 0
+\item type\-: 0
+\item analog\-Io\-: Null
+\item digital\-Io\-: Null
+\item io\-Count\-: 0
+\item is\-Input\-: false
+\item is\-Output\-: false
+\item data\-: empty
+\item is\-Query\-Reply\-Mode\-: false
+\item address\-: 0 
 \end{DoxyItemize}
 
-Definition at line 32 of file mdtPortTransaction.cpp.
+Definition at line 32 of file mdt\-Port\-Transaction.\-cpp.
 
-\hypertarget{classmdt_port_transaction_a0515e5ded32eb76047586fdb6274d3eb}{
-\index{mdtPortTransaction@{mdtPortTransaction}!digitalIo@{digitalIo}}
-\index{digitalIo@{digitalIo}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{digitalIo}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDigitalIo} $\ast$ mdtPortTransaction::digitalIo (
+
+
+Referenced by mdt\-Port\-Manager\-::get\-New\-Transaction(), and mdt\-Port\-Transaction().
+
+\hypertarget{classmdt_port_transaction_a2b4f95dae82de8853e12138b4db616a0}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!data@{data}}
+\index{data@{data}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Byte\-Array mdt\-Port\-Transaction\-::data (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_a0515e5ded32eb76047586fdb6274d3eb}
+) const}}\label{classmdt_port_transaction_a2b4f95dae82de8853e12138b4db616a0}
 
 
-Set the concerned digital I/O. 
+Get stored data. 
 
-See setIo(mdtDigitalIo$\ast$) for details. 
 
-Definition at line 89 of file mdtPortTransaction.cpp.
 
-\hypertarget{classmdt_port_transaction_ae68abafb0501c98f85147adc176d8d83}{
-\index{mdtPortTransaction@{mdtPortTransaction}!id@{id}}
-\index{id@{id}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortTransaction::id (
+Definition at line 116 of file mdt\-Port\-Transaction.\-cpp.
+
+
+
+Referenced by mdt\-Port\-Term\-::append\-Readen\-Data(), mdt\-Port\-Manager\-::readen\-Frame(), mdt\-Port\-Manager\-::readen\-Frames(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and mdt\-Port\-Manager\-::send\-Data().
+
+\hypertarget{classmdt_port_transaction_a0515e5ded32eb76047586fdb6274d3eb}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!digital\-Io@{digital\-Io}}
+\index{digital\-Io@{digital\-Io}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{digital\-Io}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Digital\-Io} $\ast$ mdt\-Port\-Transaction\-::digital\-Io (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_port_transaction_ae68abafb0501c98f85147adc176d8d83}
+)}}\label{classmdt_port_transaction_a0515e5ded32eb76047586fdb6274d3eb}
+
+
+Set the concerned digital I/\-O. 
+
+See set\-Io(mdt\-Digital\-Io$\ast$) for details. 
+
+Definition at line 89 of file mdt\-Port\-Transaction.\-cpp.
+
+\hypertarget{classmdt_port_transaction_ae68abafb0501c98f85147adc176d8d83}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!id@{id}}
+\index{id@{id}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Port\-Transaction\-::id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_port_transaction_ae68abafb0501c98f85147adc176d8d83}
 
 
 Get id. 
 
-See \hyperlink{classmdt_port_transaction_a3f0ff197ba4b58f0dd206e6151109fde}{setId()} for details. 
+See \hyperlink{classmdt_port_transaction_a3f0ff197ba4b58f0dd206e6151109fde}{set\-Id()} for details. 
 
-Definition at line 51 of file mdtPortTransaction.cpp.
+Definition at line 51 of file mdt\-Port\-Transaction.\-cpp.
 
-\hypertarget{classmdt_port_transaction_a9da1cc7a191cd21a2e532d277aa3c628}{
-\index{mdtPortTransaction@{mdtPortTransaction}!isQueryReplyMode@{isQueryReplyMode}}
-\index{isQueryReplyMode@{isQueryReplyMode}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{isQueryReplyMode}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortTransaction::isQueryReplyMode (
+
+
+Referenced by mdt\-Port\-Manager\-::add\-Transaction\-Done(), mdt\-Port\-Manager\-::add\-Transaction\-Pending(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), mdt\-Port\-Manager\-::send\-Data(), set\-Id(), and mdt\-Port\-Manager\-::transaction\-Done().
+
+\hypertarget{classmdt_port_transaction_ac51fba329cc3467ebd6b8eaf913a1413}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!io\-Count@{io\-Count}}
+\index{io\-Count@{io\-Count}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{io\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Port\-Transaction\-::io\-Count (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_port_transaction_a9da1cc7a191cd21a2e532d277aa3c628}
+) const}}\label{classmdt_port_transaction_ac51fba329cc3467ebd6b8eaf913a1413}
+
+
+Get the number of I/\-Os concerned by transaction. 
+
+
+
+Definition at line 146 of file mdt\-Port\-Transaction.\-cpp.
+
+
+
+Referenced by mdt\-Device\-Modbus\-::read\-Analog\-Inputs(), mdt\-Device\-Modbus\-::read\-Analog\-Outputs(), mdt\-Device\-Modbus\-::read\-Digital\-Inputs(), and mdt\-Device\-Modbus\-::read\-Digital\-Outputs().
+
+\hypertarget{classmdt_port_transaction_a2aaf0f003556d7f93ec2d3846589673d}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!is\-Input@{is\-Input}}
+\index{is\-Input@{is\-Input}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{is\-Input}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Port\-Transaction\-::is\-Input (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_port_transaction_a2aaf0f003556d7f93ec2d3846589673d}
+
+
+Get the is\-Input flag. 
+
+
+
+Definition at line 100 of file mdt\-Port\-Transaction.\-cpp.
+
+
+
+Referenced by set\-Io(), and set\-Is\-Input().
+
+\hypertarget{classmdt_port_transaction_af628e8888c15525777504111a687b6a0}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!is\-Output@{is\-Output}}
+\index{is\-Output@{is\-Output}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{is\-Output}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Port\-Transaction\-::is\-Output (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_port_transaction_af628e8888c15525777504111a687b6a0}
+
+
+Get the is\-Output flag. 
+
+
+
+Definition at line 105 of file mdt\-Port\-Transaction.\-cpp.
+
+\hypertarget{classmdt_port_transaction_a9da1cc7a191cd21a2e532d277aa3c628}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!is\-Query\-Reply\-Mode@{is\-Query\-Reply\-Mode}}
+\index{is\-Query\-Reply\-Mode@{is\-Query\-Reply\-Mode}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{is\-Query\-Reply\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Port\-Transaction\-::is\-Query\-Reply\-Mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_port_transaction_a9da1cc7a191cd21a2e532d277aa3c628}
 
 
 Get the query/reply mode flag. 
 
-See \hyperlink{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}{setQueryReplyMode()} for details. 
+See \hyperlink{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}{set\-Query\-Reply\-Mode()} for details. 
 
-Definition at line 126 of file mdtPortTransaction.cpp.
+Definition at line 126 of file mdt\-Port\-Transaction.\-cpp.
 
-\hypertarget{classmdt_port_transaction_a3f0ff197ba4b58f0dd206e6151109fde}{
-\index{mdtPortTransaction@{mdtPortTransaction}!setId@{setId}}
-\index{setId@{setId}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{setId}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTransaction::setId (
+
+
+Referenced by mdt\-Port\-Manager\-::commit\-Frames().
+
+\hypertarget{classmdt_port_transaction_a7f43ee802c0dee3ee77b45188378f86e}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!set\-Address@{set\-Address}}
+\index{set\-Address@{set\-Address}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{set\-Address}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::set\-Address (
+\begin{DoxyParamCaption}
+\item[{int}]{address}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_transaction_a7f43ee802c0dee3ee77b45188378f86e}
+
+
+Set address. 
+
+
+
+Definition at line 131 of file mdt\-Port\-Transaction.\-cpp.
+
+
+
+References address().
+
+
+
+Referenced by mdt\-Device\-::get\-Analog\-Inputs(), mdt\-Device\-::get\-Analog\-Input\-Value(), mdt\-Device\-::get\-Analog\-Outputs(), mdt\-Device\-::get\-Analog\-Output\-Value(), mdt\-Device\-::get\-Digital\-Inputs(), mdt\-Device\-::get\-Digital\-Input\-Value(), mdt\-Device\-::get\-Digital\-Outputs(), mdt\-Device\-::get\-Digital\-Output\-Value(), mdt\-Device\-::set\-Analog\-Outputs(), mdt\-Device\-::set\-Analog\-Output\-Value(), mdt\-Device\-::set\-Digital\-Outputs(), and mdt\-Device\-::set\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_port_transaction_a9487e13f95c553cead6e2043573615d9}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!set\-Data@{set\-Data}}
+\index{set\-Data@{set\-Data}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{set\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::set\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_transaction_a9487e13f95c553cead6e2043573615d9}
+
+
+Set data by copy. 
+
+
+
+Definition at line 110 of file mdt\-Port\-Transaction.\-cpp.
+
+
+
+Referenced by mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Device\-Modbus\-::read\-Analog\-Input(), mdt\-Device\-Modbus\-::read\-Analog\-Inputs(), mdt\-Device\-Modbus\-::read\-Analog\-Output(), mdt\-Device\-Modbus\-::read\-Analog\-Outputs(), mdt\-Device\-Modbus\-::read\-Digital\-Input(), mdt\-Device\-Modbus\-::read\-Digital\-Inputs(), mdt\-Device\-Modbus\-::read\-Digital\-Output(), mdt\-Device\-Modbus\-::read\-Digital\-Outputs(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), mdt\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), mdt\-Device\-Modbus\-::write\-Analog\-Output(), mdt\-Device\-Modbus\-::write\-Analog\-Outputs(), mdt\-Device\-Modbus\-::write\-Digital\-Output(), and mdt\-Device\-Modbus\-::write\-Digital\-Outputs().
+
+\hypertarget{classmdt_port_transaction_a3f0ff197ba4b58f0dd206e6151109fde}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::set\-Id (
 \begin{DoxyParamCaption}
 \item[{int}]{id}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_a3f0ff197ba4b58f0dd206e6151109fde}
+)}}\label{classmdt_port_transaction_a3f0ff197ba4b58f0dd206e6151109fde}
 
 
 Set transaction identifer. 
 
-Depending used protocol, id can be a transaction ID as defined in MODBUS/TCP, a bTag used in USBTMC or what else. 
+Depending used protocol, id can be a transaction I\-D as defined in M\-O\-D\-B\-U\-S/\-T\-C\-P, a b\-Tag used in U\-S\-B\-T\-M\-C or what else. 
 
-Definition at line 46 of file mdtPortTransaction.cpp.
+Definition at line 46 of file mdt\-Port\-Transaction.\-cpp.
 
-\hypertarget{classmdt_port_transaction_a122a98e4e93295c9907ed7cd0bde1f19}{
-\index{mdtPortTransaction@{mdtPortTransaction}!setIo@{setIo}}
-\index{setIo@{setIo}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{setIo}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTransaction::setIo (
+
+
+References id().
+
+
+
+Referenced by mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), mdt\-Port\-Manager\-::send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+
+\hypertarget{classmdt_port_transaction_a122a98e4e93295c9907ed7cd0bde1f19}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!set\-Io@{set\-Io}}
+\index{set\-Io@{set\-Io}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{set\-Io}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::set\-Io (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtAnalogIo} $\ast$}]{io, }
-\item[{bool}]{isInput}
+\item[{{\bf mdt\-Analog\-Io} $\ast$}]{io, }
+\item[{bool}]{is\-Input}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_a122a98e4e93295c9907ed7cd0bde1f19}
+)}}\label{classmdt_port_transaction_a122a98e4e93295c9907ed7cd0bde1f19}
 
 
-Set the concerned analog I/O. 
+Set the concerned analog I/\-O. 
 
-If a query concerns a specific I/O, it's possible to reference the I/O object here. 
+If a query concerns a specific I/\-O, it's possible to reference the I/\-O object here. 
 
-Definition at line 66 of file mdtPortTransaction.cpp.
+Definition at line 66 of file mdt\-Port\-Transaction.\-cpp.
 
-\hypertarget{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}{
-\index{mdtPortTransaction@{mdtPortTransaction}!setIo@{setIo}}
-\index{setIo@{setIo}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{setIo}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTransaction::setIo (
+
+
+References is\-Input().
+
+
+
+Referenced by mdt\-Device\-::get\-Analog\-Input\-Value(), mdt\-Device\-::get\-Analog\-Output\-Value(), mdt\-Device\-::get\-Digital\-Input\-Value(), mdt\-Device\-::get\-Digital\-Output\-Value(), mdt\-Device\-::set\-Analog\-Output\-Value(), and mdt\-Device\-::set\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!set\-Io@{set\-Io}}
+\index{set\-Io@{set\-Io}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{set\-Io}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::set\-Io (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtDigitalIo} $\ast$}]{io, }
-\item[{bool}]{isInput}
+\item[{{\bf mdt\-Digital\-Io} $\ast$}]{io, }
+\item[{bool}]{is\-Input}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}
+)}}\label{classmdt_port_transaction_a4062fb0e9a1d5fea0ec934bff54cd519}
 
 
-Set the concerned digital I/O. 
+Set the concerned digital I/\-O. 
 
-If a query concerns a specific I/O, it's possible to reference the I/O object here. 
+If a query concerns a specific I/\-O, it's possible to reference the I/\-O object here. 
 
-Definition at line 75 of file mdtPortTransaction.cpp.
+Definition at line 75 of file mdt\-Port\-Transaction.\-cpp.
 
-\hypertarget{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}{
-\index{mdtPortTransaction@{mdtPortTransaction}!setQueryReplyMode@{setQueryReplyMode}}
-\index{setQueryReplyMode@{setQueryReplyMode}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{setQueryReplyMode}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTransaction::setQueryReplyMode (
+
+
+References is\-Input().
+
+\hypertarget{classmdt_port_transaction_a1d68527258d24907b7fe113aa364c1a3}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!set\-Io\-Count@{set\-Io\-Count}}
+\index{set\-Io\-Count@{set\-Io\-Count}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{set\-Io\-Count}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::set\-Io\-Count (
+\begin{DoxyParamCaption}
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_transaction_a1d68527258d24907b7fe113aa364c1a3}
+
+
+Set the number of I/\-Os concerned by transaction. 
+
+
+
+Definition at line 141 of file mdt\-Port\-Transaction.\-cpp.
+
+
+
+Referenced by mdt\-Device\-::get\-Analog\-Inputs(), mdt\-Device\-::get\-Analog\-Outputs(), mdt\-Device\-::get\-Digital\-Inputs(), mdt\-Device\-::get\-Digital\-Outputs(), mdt\-Device\-::set\-Analog\-Outputs(), and mdt\-Device\-::set\-Digital\-Outputs().
+
+\hypertarget{classmdt_port_transaction_ad49afb93f44aca47ded0e03018f8266f}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!set\-Is\-Input@{set\-Is\-Input}}
+\index{set\-Is\-Input@{set\-Is\-Input}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{set\-Is\-Input}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::set\-Is\-Input (
+\begin{DoxyParamCaption}
+\item[{bool}]{is\-Input}
+\end{DoxyParamCaption}
+)}}\label{classmdt_port_transaction_ad49afb93f44aca47ded0e03018f8266f}
+
+
+Set the is\-Input flag. 
+
+
+
+Definition at line 94 of file mdt\-Port\-Transaction.\-cpp.
+
+
+
+References is\-Input().
+
+\hypertarget{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!set\-Query\-Reply\-Mode@{set\-Query\-Reply\-Mode}}
+\index{set\-Query\-Reply\-Mode@{set\-Query\-Reply\-Mode}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{set\-Query\-Reply\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode (
 \begin{DoxyParamCaption}
 \item[{bool}]{mode}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}
+)}}\label{classmdt_port_transaction_a6bd68a89059c790f475b8ff78c943656}
 
 
 Set query/reply mode. 
 
 In query/reply mode, port manager will not remove frame from done transactions queue just after signal was emited, but keep it until a read was made.
 
-See \hyperlink{classmdt_port_manager}{mdtPortManager} for details. 
+See \hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} for details. 
 
-Definition at line 121 of file mdtPortTransaction.cpp.
+Definition at line 121 of file mdt\-Port\-Transaction.\-cpp.
 
-\hypertarget{classmdt_port_transaction_a4398eb06986d858d3d0a63f6a290f0bf}{
-\index{mdtPortTransaction@{mdtPortTransaction}!setType@{setType}}
-\index{setType@{setType}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{setType}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTransaction::setType (
+
+
+Referenced by mdt\-Device\-Scpi\-::check\-Device\-Error(), mdt\-Device\-::get\-Analog\-Inputs(), mdt\-Device\-::get\-Analog\-Input\-Value(), mdt\-Device\-::get\-Analog\-Outputs(), mdt\-Device\-::get\-Analog\-Output\-Value(), mdt\-Device\-::get\-Digital\-Inputs(), mdt\-Device\-::get\-Digital\-Input\-Value(), mdt\-Device\-::get\-Digital\-Outputs(), mdt\-Device\-::get\-Digital\-Output\-Value(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Device\-U3606\-A\-::get\-Measure\-Configuration(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), mdt\-Port\-Manager\-::send\-Data(), mdt\-Usbtmc\-Port\-Manager\-::send\-Query(), mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request(), mdt\-Device\-::set\-Analog\-Outputs(), mdt\-Device\-::set\-Analog\-Output\-Value(), mdt\-Device\-::set\-Digital\-Outputs(), mdt\-Device\-::set\-Digital\-Output\-Value(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values().
+
+\hypertarget{classmdt_port_transaction_a4398eb06986d858d3d0a63f6a290f0bf}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!set\-Type@{set\-Type}}
+\index{set\-Type@{set\-Type}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{set\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Transaction\-::set\-Type (
 \begin{DoxyParamCaption}
 \item[{int}]{type}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_transaction_a4398eb06986d858d3d0a63f6a290f0bf}
+)}}\label{classmdt_port_transaction_a4398eb06986d858d3d0a63f6a290f0bf}
 
 
 Set type. 
 
-A typical usage is SCPI query/request type. See \hyperlink{classmdt_frame_codec_scpi}{mdtFrameCodecScpi} for details. 
+A typical usage is S\-C\-P\-I query/request type. See \hyperlink{classmdt_frame_codec_scpi}{mdt\-Frame\-Codec\-Scpi} for details. 
 
-Definition at line 56 of file mdtPortTransaction.cpp.
+Definition at line 56 of file mdt\-Port\-Transaction.\-cpp.
 
-\hypertarget{classmdt_port_transaction_aa8acfc909bb1956b16cca02d721357f4}{
-\index{mdtPortTransaction@{mdtPortTransaction}!type@{type}}
-\index{type@{type}!mdtPortTransaction@{mdtPortTransaction}}
-\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortTransaction::type (
+
+
+References type().
+
+
+
+Referenced by mdt\-Device\-Scpi\-::check\-Device\-Error(), mdt\-Device\-U3606\-A\-::get\-Measure\-Configuration(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Query().
+
+\hypertarget{classmdt_port_transaction_aa8acfc909bb1956b16cca02d721357f4}{\index{mdt\-Port\-Transaction@{mdt\-Port\-Transaction}!type@{type}}
+\index{type@{type}!mdtPortTransaction@{mdt\-Port\-Transaction}}
+\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Port\-Transaction\-::type (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_port_transaction_aa8acfc909bb1956b16cca02d721357f4}
+) const}}\label{classmdt_port_transaction_aa8acfc909bb1956b16cca02d721357f4}
 
 
 Get type. 
 
-See \hyperlink{classmdt_port_transaction_a4398eb06986d858d3d0a63f6a290f0bf}{setType()} for details 
+See \hyperlink{classmdt_port_transaction_a4398eb06986d858d3d0a63f6a290f0bf}{set\-Type()} for details 
 
-Definition at line 61 of file mdtPortTransaction.cpp.
+Definition at line 61 of file mdt\-Port\-Transaction.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+Referenced by set\-Type().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtport/mdtPortTransaction.h\item 
-src/mdtport/mdtPortTransaction.cpp\end{DoxyCompactItemize}
+src/mdtport/\hyperlink{mdt_port_transaction_8h}{mdt\-Port\-Transaction.\-h}\item 
+src/mdtport/\hyperlink{mdt_port_transaction_8cpp}{mdt\-Port\-Transaction.\-cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,125 @@
+\hypertarget{classmdt_cl_article_connection_data}{\section{mdt\-Cl\-Article\-Connection\-Data Class Reference}
+\label{classmdt_cl_article_connection_data}\index{mdt\-Cl\-Article\-Connection\-Data@{mdt\-Cl\-Article\-Connection\-Data}}
+}
+
+
+Data container class for article connection data.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Article\-Connection\-Data.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Cl\-Article\-Connection\-Data\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{classmdt_cl_article_connection_data__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Cl\-Article\-Connection\-Data\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{classmdt_cl_article_connection_data__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_cl_article_connection_data_a617e468db5962199637a4e00534728ea}{mdt\-Cl\-Article\-Connection\-Data} ()
+\begin{DoxyCompactList}\small\item\em Construct a empty \hyperlink{classmdt_cl_article_connection_data}{mdt\-Cl\-Article\-Connection\-Data}. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_article_connection_data_a55b2069ec175c131375c25e2194d6d95}{mdt\-Cl\-Article\-Connection\-Data} (const Q\-Sql\-Record \&record)
+\begin{DoxyCompactList}\small\item\em Contruct a \hyperlink{classmdt_cl_article_connection_data}{mdt\-Cl\-Article\-Connection\-Data} from a Q\-Sql\-Record. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_article_connection_data_a224a769e87de03c2ced03b64a1c4a6ad}{setup} (Q\-Sql\-Database db)
+\begin{DoxyCompactList}\small\item\em Setup fields from Article\-Connection\-\_\-tbl. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Data container class for article connection data. 
+
+Permit to echange data with Article\-Connection\-\_\-tbl.
+
+This class was made for data edition. It is also mandatory that fields matches Article\-Connection\-\_\-tbl. To get data from a view, witch also can miss fields, or have different field name, considere Q\-Sql\-Record. 
+
+Definition at line 38 of file mdt\-Cl\-Article\-Connection\-Data.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_cl_article_connection_data_a617e468db5962199637a4e00534728ea}{\index{mdt\-Cl\-Article\-Connection\-Data@{mdt\-Cl\-Article\-Connection\-Data}!mdt\-Cl\-Article\-Connection\-Data@{mdt\-Cl\-Article\-Connection\-Data}}
+\index{mdt\-Cl\-Article\-Connection\-Data@{mdt\-Cl\-Article\-Connection\-Data}!mdtClArticleConnectionData@{mdt\-Cl\-Article\-Connection\-Data}}
+\subsubsection[{mdt\-Cl\-Article\-Connection\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Article\-Connection\-Data\-::mdt\-Cl\-Article\-Connection\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_connection_data_a617e468db5962199637a4e00534728ea}
+
+
+Construct a empty \hyperlink{classmdt_cl_article_connection_data}{mdt\-Cl\-Article\-Connection\-Data}. 
+
+
+
+Definition at line 25 of file mdt\-Cl\-Article\-Connection\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_article_connection_data_a55b2069ec175c131375c25e2194d6d95}{\index{mdt\-Cl\-Article\-Connection\-Data@{mdt\-Cl\-Article\-Connection\-Data}!mdt\-Cl\-Article\-Connection\-Data@{mdt\-Cl\-Article\-Connection\-Data}}
+\index{mdt\-Cl\-Article\-Connection\-Data@{mdt\-Cl\-Article\-Connection\-Data}!mdtClArticleConnectionData@{mdt\-Cl\-Article\-Connection\-Data}}
+\subsubsection[{mdt\-Cl\-Article\-Connection\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Article\-Connection\-Data\-::mdt\-Cl\-Article\-Connection\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Record \&}]{record}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_connection_data_a55b2069ec175c131375c25e2194d6d95}
+
+
+Contruct a \hyperlink{classmdt_cl_article_connection_data}{mdt\-Cl\-Article\-Connection\-Data} from a Q\-Sql\-Record. 
+
+Note\-: if this method is used, setup is not relevant.
+
+\begin{DoxyPrecond}{Precondition}
+All fields from Article\-Connection\-\_\-tbl must exist in record 
+\end{DoxyPrecond}
+
+
+Definition at line 30 of file mdt\-Cl\-Article\-Connection\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::index\-Of().
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_article_connection_data_a224a769e87de03c2ced03b64a1c4a6ad}{\index{mdt\-Cl\-Article\-Connection\-Data@{mdt\-Cl\-Article\-Connection\-Data}!setup@{setup}}
+\index{setup@{setup}!mdtClArticleConnectionData@{mdt\-Cl\-Article\-Connection\-Data}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Article\-Connection\-Data\-::setup (
+\begin{DoxyParamCaption}
+\item[{Q\-Sql\-Database}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_connection_data_a224a769e87de03c2ced03b64a1c4a6ad}
+
+
+Setup fields from Article\-Connection\-\_\-tbl. 
+
+
+
+Definition at line 44 of file mdt\-Cl\-Article\-Connection\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-All\-Fields().
+
+
+
+Referenced by mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), and mdt\-Cl\-Unit\-Connection\-Data\-::setup().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_article_connection_data_8h}{mdt\-Cl\-Article\-Connection\-Data.\-h}\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_article_connection_data_8cpp}{mdt\-Cl\-Article\-Connection\-Data.\-cpp}\end{DoxyCompactItemize}

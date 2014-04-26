@@ -1,0 +1,241 @@
+\hypertarget{classmdt_cl_connector_data}{\section{mdt\-Cl\-Connector\-Data Class Reference}
+\label{classmdt_cl_connector_data}\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}}
+}
+
+
+Data container class for connector data.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Connector\-Data.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Cl\-Connector\-Data\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=188pt]{classmdt_cl_connector_data__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Cl\-Connector\-Data\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=188pt]{classmdt_cl_connector_data__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_cl_connector_data_a69e30904bf05ecb44183ee5fc66aa377}{mdt\-Cl\-Connector\-Data} ()
+\begin{DoxyCompactList}\small\item\em Construct a empty \hyperlink{classmdt_cl_connector_data}{mdt\-Cl\-Connector\-Data}. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_connector_data_a48a9a7bdef4b641083055336672d0862}{mdt\-Cl\-Connector\-Data} (const Q\-Sql\-Record \&record)
+\begin{DoxyCompactList}\small\item\em Contruct a \hyperlink{classmdt_cl_connector_data}{mdt\-Cl\-Connector\-Data} from a Q\-Sql\-Record. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_connector_data_a0b198ee358c5abf389b0fac77e7ab732}{setup} (const Q\-Sql\-Database \&db)
+\begin{DoxyCompactList}\small\item\em Setup fields from Connector\-\_\-tbl. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_connector_data_a1a3f7803aa42908fb80b30a6554ef2b8}{set\-Contact\-Data\-List} (const Q\-List$<$ \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} $>$ \&data\-List)
+\begin{DoxyCompactList}\small\item\em Add a list of contact data. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} $>$ \hyperlink{classmdt_cl_connector_data_ac7a6caf92298a5520731a60f14c8f4c6}{contact\-Data\-List} () const 
+\begin{DoxyCompactList}\small\item\em Get list of contact data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_connector_data_ad8d4fcc7b07e80fa596e4c803b32e8ce}{add\-Contact\-Data} (const \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \&data)
+\begin{DoxyCompactList}\small\item\em Add contact data. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_connector_data_a32052ee555252356a8d906e99bcdb12b}{set\-Contact\-Data} (const Q\-Variant \&contact\-Id, const \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \&data)
+\begin{DoxyCompactList}\small\item\em Update existing contact data. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \hyperlink{classmdt_cl_connector_data_a78891da8c55308802efe83dd9bdfa496}{contact\-Data} (const Q\-Variant \&contact\-Id, bool $\ast$ok) const 
+\begin{DoxyCompactList}\small\item\em Get contact data for given contact I\-D. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Data container class for connector data. 
+
+Permit to echange data with Connector\-\_\-tbl and Connector\-Contact\-\_\-tbl. 
+
+Definition at line 34 of file mdt\-Cl\-Connector\-Data.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_cl_connector_data_a69e30904bf05ecb44183ee5fc66aa377}{\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}}
+\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!mdtClConnectorData@{mdt\-Cl\-Connector\-Data}}
+\subsubsection[{mdt\-Cl\-Connector\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Connector\-Data\-::mdt\-Cl\-Connector\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_connector_data_a69e30904bf05ecb44183ee5fc66aa377}
+
+
+Construct a empty \hyperlink{classmdt_cl_connector_data}{mdt\-Cl\-Connector\-Data}. 
+
+
+
+Definition at line 26 of file mdt\-Cl\-Connector\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_connector_data_a48a9a7bdef4b641083055336672d0862}{\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}}
+\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!mdtClConnectorData@{mdt\-Cl\-Connector\-Data}}
+\subsubsection[{mdt\-Cl\-Connector\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Connector\-Data\-::mdt\-Cl\-Connector\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Record \&}]{record}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_connector_data_a48a9a7bdef4b641083055336672d0862}
+
+
+Contruct a \hyperlink{classmdt_cl_connector_data}{mdt\-Cl\-Connector\-Data} from a Q\-Sql\-Record. 
+
+Note\-: if this method is used, setup is not relevant.
+
+\begin{DoxyPrecond}{Precondition}
+All fields from Connector\-\_\-tbl must exist in record 
+\end{DoxyPrecond}
+
+
+Definition at line 30 of file mdt\-Cl\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::contains().
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_connector_data_ad8d4fcc7b07e80fa596e4c803b32e8ce}{\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!add\-Contact\-Data@{add\-Contact\-Data}}
+\index{add\-Contact\-Data@{add\-Contact\-Data}!mdtClConnectorData@{mdt\-Cl\-Connector\-Data}}
+\subsubsection[{add\-Contact\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Connector\-Data\-::add\-Contact\-Data (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Sql\-Record} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_connector_data_ad8d4fcc7b07e80fa596e4c803b32e8ce}
+
+
+Add contact data. 
+
+Will also update Connector\-\_\-\-Id\-\_\-\-F\-K in data.
+
+\begin{DoxyPrecond}{Precondition}
+data must contains following fields\-:
+\begin{DoxyItemize}
+\item Id\-\_\-\-P\-K
+\item Connector\-\_\-\-Id\-\_\-\-F\-K 
+\end{DoxyItemize}
+\end{DoxyPrecond}
+
+
+Definition at line 56 of file mdt\-Cl\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::contains(), mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
+
+\hypertarget{classmdt_cl_connector_data_a78891da8c55308802efe83dd9bdfa496}{\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!contact\-Data@{contact\-Data}}
+\index{contact\-Data@{contact\-Data}!mdtClConnectorData@{mdt\-Cl\-Connector\-Data}}
+\subsubsection[{contact\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Sql\-Record} mdt\-Cl\-Connector\-Data\-::contact\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{contact\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_connector_data_a78891da8c55308802efe83dd9bdfa496}
+
+
+Get contact data for given contact I\-D. 
+
+Return the contact data for witch Id\-\_\-\-P\-K matches given contact\-Id. ok will be set to false if contact\-Id was not found. 
+
+Definition at line 84 of file mdt\-Cl\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::mdt\-Sql\-Record().
+
+\hypertarget{classmdt_cl_connector_data_ac7a6caf92298a5520731a60f14c8f4c6}{\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!contact\-Data\-List@{contact\-Data\-List}}
+\index{contact\-Data\-List@{contact\-Data\-List}!mdtClConnectorData@{mdt\-Cl\-Connector\-Data}}
+\subsubsection[{contact\-Data\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Sql\-Record} $>$ mdt\-Cl\-Connector\-Data\-::contact\-Data\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_cl_connector_data_ac7a6caf92298a5520731a60f14c8f4c6}
+
+
+Get list of contact data. 
+
+
+
+Definition at line 51 of file mdt\-Cl\-Connector\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_connector_data_a32052ee555252356a8d906e99bcdb12b}{\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!set\-Contact\-Data@{set\-Contact\-Data}}
+\index{set\-Contact\-Data@{set\-Contact\-Data}!mdtClConnectorData@{mdt\-Cl\-Connector\-Data}}
+\subsubsection[{set\-Contact\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Connector\-Data\-::set\-Contact\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{contact\-Id, }
+\item[{const {\bf mdt\-Sql\-Record} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_connector_data_a32052ee555252356a8d906e99bcdb12b}
+
+
+Update existing contact data. 
+
+Will update contact data for witch Id\-\_\-\-P\-K matches given contact\-Id.
+
+\begin{DoxyReturn}{Returns}
+False if contact\-Id was not found. 
+\end{DoxyReturn}
+
+
+Definition at line 66 of file mdt\-Cl\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Sql\-Record\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_cl_connector_data_a1a3f7803aa42908fb80b30a6554ef2b8}{\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!set\-Contact\-Data\-List@{set\-Contact\-Data\-List}}
+\index{set\-Contact\-Data\-List@{set\-Contact\-Data\-List}!mdtClConnectorData@{mdt\-Cl\-Connector\-Data}}
+\subsubsection[{set\-Contact\-Data\-List}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Connector\-Data\-::set\-Contact\-Data\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Sql\-Record} $>$ \&}]{data\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_connector_data_a1a3f7803aa42908fb80b30a6554ef2b8}
+
+
+Add a list of contact data. 
+
+By using this method, the caller is responsible to give valid records, that contains needed fields.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_cl_connector_data_ad8d4fcc7b07e80fa596e4c803b32e8ce}{add\-Contact\-Data()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 46 of file mdt\-Cl\-Connector\-Data.\-cpp.
+
+\hypertarget{classmdt_cl_connector_data_a0b198ee358c5abf389b0fac77e7ab732}{\index{mdt\-Cl\-Connector\-Data@{mdt\-Cl\-Connector\-Data}!setup@{setup}}
+\index{setup@{setup}!mdtClConnectorData@{mdt\-Cl\-Connector\-Data}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Connector\-Data\-::setup (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Database \&}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_connector_data_a0b198ee358c5abf389b0fac77e7ab732}
+
+
+Setup fields from Connector\-\_\-tbl. 
+
+
+
+Definition at line 38 of file mdt\-Cl\-Connector\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-All\-Fields().
+
+
+
+Referenced by mdt\-Cl\-Article\-Connector\-Data\-::setup(), and mdt\-Cl\-Unit\-Connector\-Data\-::setup().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_connector_data_8h}{mdt\-Cl\-Connector\-Data.\-h}\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_connector_data_8cpp}{mdt\-Cl\-Connector\-Data.\-cpp}\end{DoxyCompactItemize}

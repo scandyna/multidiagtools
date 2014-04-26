@@ -1,245 +1,229 @@
-\hypertarget{classmdt_data_table_model}{
-\section{mdtDataTableModel Class Reference}
-\label{classmdt_data_table_model}\index{mdtDataTableModel@{mdtDataTableModel}}
+\hypertarget{classmdt_data_table_model}{\section{mdt\-Data\-Table\-Model Class Reference}
+\label{classmdt_data_table_model}\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}}
 }
+
+
+{\ttfamily \#include $<$mdt\-Data\-Table\-Model.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Data\-Table\-Model\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{classmdt_data_table_model__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Data\-Table\-Model\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{classmdt_data_table_model__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_data_table_model_abb59a97c41fea89a44c7b728774ef2ee}{
-{\bfseries mdtDataTableModel} (QObject $\ast$parent=0, QSqlDatabase db=QSqlDatabase())}
-\label{classmdt_data_table_model_abb59a97c41fea89a44c7b728774ef2ee}
-
+\hyperlink{classmdt_data_table_model_abb59a97c41fea89a44c7b728774ef2ee}{mdt\-Data\-Table\-Model} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0, Q\-Sql\-Database db=Q\-Sql\-Database())
 \item 
-void \hyperlink{classmdt_data_table_model_a75d4204a5d388756605422110d3afca1}{setTable} (const QString \&tableName)
+\hyperlink{classmdt_data_table_model_a1d4acd3ab7e8f7759f09c4fb687321b1}{$\sim$mdt\-Data\-Table\-Model} ()
+\item 
+void \hyperlink{classmdt_data_table_model_a75d4204a5d388756605422110d3afca1}{set\-Table} (const Q\-String \&table\-Name)
 \begin{DoxyCompactList}\small\item\em Set table name. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_data_table_model_a42046e42fdca91fe77fe48e70fed4d18}{addRow} (const QMap$<$ QString, QVariant $>$ \&data, int role=Qt::EditRole)
+bool \hyperlink{classmdt_data_table_model_a42046e42fdca91fe77fe48e70fed4d18}{add\-Row} (const Q\-Map$<$ Q\-String, Q\-Variant $>$ \&data, int role=Qt\-::\-Edit\-Role)
 \begin{DoxyCompactList}\small\item\em Add a row of data in model. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_data_table_model_a9c83ac307174ed88eb2204b336d38ee2}{addRow} (const QList$<$ QVariant $>$ \&data, bool pkNotInData, int role=Qt::EditRole)
+bool \hyperlink{classmdt_data_table_model_a9c83ac307174ed88eb2204b336d38ee2}{add\-Row} (const Q\-List$<$ Q\-Variant $>$ \&data, bool pk\-Not\-In\-Data, int role=Qt\-::\-Edit\-Role)
 \begin{DoxyCompactList}\small\item\em Add a row of data in model. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_data_table_model_a2834bc9663aa478bac5147d2ca7e16ee}{addRow} (const QStringList \&data, bool pkNotInData, int role=Qt::EditRole)
+bool \hyperlink{classmdt_data_table_model_a2834bc9663aa478bac5147d2ca7e16ee}{add\-Row} (const Q\-String\-List \&data, bool pk\-Not\-In\-Data, int role=Qt\-::\-Edit\-Role)
 \begin{DoxyCompactList}\small\item\em Add a row of data in model. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_data_table_model_a359a37d1719c0f56110875888466e331}{addRows} (const QList$<$ QStringList $>$ \&rows, const \hyperlink{classmdt_field_map}{mdtFieldMap} \&fieldMap, int role=Qt::EditRole)
+bool \hyperlink{classmdt_data_table_model_a359a37d1719c0f56110875888466e331}{add\-Rows} (const Q\-List$<$ Q\-String\-List $>$ \&rows, const \hyperlink{classmdt_field_map}{mdt\-Field\-Map} \&field\-Map, int role=Qt\-::\-Edit\-Role)
 \begin{DoxyCompactList}\small\item\em Add some rows of data in model. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_data_table_model_a2f502214413e2f12e8df7252ba5f9046}{setData} (int row, int column, const QVariant \&value, int role=Qt::EditRole)
+bool \hyperlink{classmdt_data_table_model_a2f502214413e2f12e8df7252ba5f9046}{set\-Data} (int row, int column, const Q\-Variant \&value, int role=Qt\-::\-Edit\-Role)
 \begin{DoxyCompactList}\small\item\em Set data for a given index in model. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_data_table_model_ac819eaaee0cb3251658dd0865abdd5f7}{setData} (int row, const QString \&field, const QVariant \&value, int role=Qt::EditRole)
+bool \hyperlink{classmdt_data_table_model_ac819eaaee0cb3251658dd0865abdd5f7}{set\-Data} (int row, const Q\-String \&field, const Q\-Variant \&value, int role=Qt\-::\-Edit\-Role)
 \begin{DoxyCompactList}\small\item\em Set data for a given index in model. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 41 of file mdtDataTableModel.h.
+Definition at line 41 of file mdt\-Data\-Table\-Model.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_data_table_model_abb59a97c41fea89a44c7b728774ef2ee}{\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}}
+\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!mdtDataTableModel@{mdt\-Data\-Table\-Model}}
+\subsubsection[{mdt\-Data\-Table\-Model}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Data\-Table\-Model\-::mdt\-Data\-Table\-Model (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}, }
+\item[{Q\-Sql\-Database}]{db = {\ttfamily QSqlDatabase()}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_data_table_model_abb59a97c41fea89a44c7b728774ef2ee}
+
+
+Definition at line 26 of file mdt\-Data\-Table\-Model.\-cpp.
+
+\hypertarget{classmdt_data_table_model_a1d4acd3ab7e8f7759f09c4fb687321b1}{\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!$\sim$mdt\-Data\-Table\-Model@{$\sim$mdt\-Data\-Table\-Model}}
+\index{$\sim$mdt\-Data\-Table\-Model@{$\sim$mdt\-Data\-Table\-Model}!mdtDataTableModel@{mdt\-Data\-Table\-Model}}
+\subsubsection[{$\sim$mdt\-Data\-Table\-Model}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Data\-Table\-Model\-::$\sim$mdt\-Data\-Table\-Model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_data_table_model_a1d4acd3ab7e8f7759f09c4fb687321b1}
+
+
+Definition at line 31 of file mdt\-Data\-Table\-Model.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_data_table_model_a42046e42fdca91fe77fe48e70fed4d18}{
-\index{mdtDataTableModel@{mdtDataTableModel}!addRow@{addRow}}
-\index{addRow@{addRow}!mdtDataTableModel@{mdtDataTableModel}}
-\subsubsection[{addRow}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableModel::addRow (
+\hypertarget{classmdt_data_table_model_a42046e42fdca91fe77fe48e70fed4d18}{\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!add\-Row@{add\-Row}}
+\index{add\-Row@{add\-Row}!mdtDataTableModel@{mdt\-Data\-Table\-Model}}
+\subsubsection[{add\-Row}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Data\-Table\-Model\-::add\-Row (
 \begin{DoxyParamCaption}
-\item[{const QMap$<$ QString, QVariant $>$ \&}]{data, }
-\item[{int}]{role = {\ttfamily Qt::EditRole}}
+\item[{const Q\-Map$<$ Q\-String, Q\-Variant $>$ \&}]{data, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:EditRole}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_data_table_model_a42046e42fdca91fe77fe48e70fed4d18}
+)}}\label{classmdt_data_table_model_a42046e42fdca91fe77fe48e70fed4d18}
 
 
 Add a row of data in model. 
 
-This is a helper method wich uses QSqlTableModel's insert/setData methods. Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
+This is a helper method wich uses \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}'s insert/set\-Data methods. Note\-: submit() or submit\-All() (for On\-Manual\-Submit strategy) is done internally.
 
 
 \begin{DoxyParams}{Parameters}
 {\em data} & A map with field name as key and associate data to add. \\
 \hline
-{\em role} & See QSqlTableModel. \\
+{\em role} & See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success. See QSqlTableModel for known errors. 
+True on success. See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} for known errors. 
 \end{DoxyReturn}
 
 
-qDebug() $<$$<$ \_\-\_\-FUNCTION\_\-\_\- $<$$<$ \char`\"{}: reverting row \char`\"{} $<$$<$ modelRowIndex; 
+Definition at line 47 of file mdt\-Data\-Table\-Model.\-cpp.
 
-
-
-Definition at line 47 of file mdtDataTableModel.cpp.
-
-\hypertarget{classmdt_data_table_model_a2834bc9663aa478bac5147d2ca7e16ee}{
-\index{mdtDataTableModel@{mdtDataTableModel}!addRow@{addRow}}
-\index{addRow@{addRow}!mdtDataTableModel@{mdtDataTableModel}}
-\subsubsection[{addRow}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableModel::addRow (
+\hypertarget{classmdt_data_table_model_a9c83ac307174ed88eb2204b336d38ee2}{\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!add\-Row@{add\-Row}}
+\index{add\-Row@{add\-Row}!mdtDataTableModel@{mdt\-Data\-Table\-Model}}
+\subsubsection[{add\-Row}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Data\-Table\-Model\-::add\-Row (
 \begin{DoxyParamCaption}
-\item[{const QStringList \&}]{data, }
-\item[{bool}]{pkNotInData, }
-\item[{int}]{role = {\ttfamily Qt::EditRole}}
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{data, }
+\item[{bool}]{pk\-Not\-In\-Data, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:EditRole}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_data_table_model_a2834bc9663aa478bac5147d2ca7e16ee}
+)}}\label{classmdt_data_table_model_a9c83ac307174ed88eb2204b336d38ee2}
 
 
 Add a row of data in model. 
 
-This is a helper method wich uses QSqlTableModel's insert/setData methods. Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
+This is a helper method wich uses \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}'s insert/set\-Data methods. Note\-: submit() or submit\-All() (for On\-Manual\-Submit strategy) is done internally.
 
 
 \begin{DoxyParams}{Parameters}
-{\em data} & A list of data items for the row. Data will be converted to field's format. Note: if field order is unknow, use addRow(const QMap$<$QString,QVariant$>$, int) . \\
+{\em data} & A list of data items for the row. Note\-: if field order is unknow, use add\-Row(const Q\-Map$<$Q\-String,Q\-Variant$>$, int) . \\
 \hline
-{\em pkNotInData} & Set true if primary key is not contained in data (must also be auto generated). \\
+{\em pk\-Not\-In\-Data} & Set true if primary key is not contained in data (must also be auto generated). \\
 \hline
-{\em role} & See QSqlTableModel. \\
+{\em role} & See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success. False if a data conversion failed, or other error. See QSqlTableModel for known errors. 
+True on success. See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} for known errors. 
 \end{DoxyReturn}
 
 
-qDebug() $<$$<$ \_\-\_\-FUNCTION\_\-\_\- $<$$<$ \char`\"{}: reverting row \char`\"{} $<$$<$ modelRowIndex;
+Definition at line 67 of file mdt\-Data\-Table\-Model.\-cpp.
 
-qDebug() $<$$<$ \_\-\_\-FUNCTION\_\-\_\- $<$$<$ \char`\"{}: reverting row \char`\"{} $<$$<$ modelRowIndex; 
-
-
-
-Definition at line 99 of file mdtDataTableModel.cpp.
-
-\hypertarget{classmdt_data_table_model_a9c83ac307174ed88eb2204b336d38ee2}{
-\index{mdtDataTableModel@{mdtDataTableModel}!addRow@{addRow}}
-\index{addRow@{addRow}!mdtDataTableModel@{mdtDataTableModel}}
-\subsubsection[{addRow}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableModel::addRow (
+\hypertarget{classmdt_data_table_model_a2834bc9663aa478bac5147d2ca7e16ee}{\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!add\-Row@{add\-Row}}
+\index{add\-Row@{add\-Row}!mdtDataTableModel@{mdt\-Data\-Table\-Model}}
+\subsubsection[{add\-Row}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Data\-Table\-Model\-::add\-Row (
 \begin{DoxyParamCaption}
-\item[{const QList$<$ QVariant $>$ \&}]{data, }
-\item[{bool}]{pkNotInData, }
-\item[{int}]{role = {\ttfamily Qt::EditRole}}
+\item[{const Q\-String\-List \&}]{data, }
+\item[{bool}]{pk\-Not\-In\-Data, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:EditRole}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_data_table_model_a9c83ac307174ed88eb2204b336d38ee2}
+)}}\label{classmdt_data_table_model_a2834bc9663aa478bac5147d2ca7e16ee}
 
 
 Add a row of data in model. 
 
-This is a helper method wich uses QSqlTableModel's insert/setData methods. Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
+This is a helper method wich uses \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}'s insert/set\-Data methods. Note\-: submit() or submit\-All() (for On\-Manual\-Submit strategy) is done internally.
 
 
 \begin{DoxyParams}{Parameters}
-{\em data} & A list of data items for the row. Note: if field order is unknow, use addRow(const QMap$<$QString,QVariant$>$, int) . \\
+{\em data} & A list of data items for the row. Data will be converted to field's format. Note\-: if field order is unknow, use add\-Row(const Q\-Map$<$Q\-String,Q\-Variant$>$, int) . \\
 \hline
-{\em pkNotInData} & Set true if primary key is not contained in data (must also be auto generated). \\
+{\em pk\-Not\-In\-Data} & Set true if primary key is not contained in data (must also be auto generated). \\
 \hline
-{\em role} & See QSqlTableModel. \\
+{\em role} & See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success. See QSqlTableModel for known errors. 
+True on success. False if a data conversion failed, or other error. See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} for known errors. 
 \end{DoxyReturn}
 
 
-qDebug() $<$$<$ \_\-\_\-FUNCTION\_\-\_\- $<$$<$ \char`\"{}: reverting row \char`\"{} $<$$<$ modelRowIndex;
+Definition at line 99 of file mdt\-Data\-Table\-Model.\-cpp.
 
-qDebug() $<$$<$ \_\-\_\-FUNCTION\_\-\_\- $<$$<$ \char`\"{}: reverting row \char`\"{} $<$$<$ modelRowIndex; 
-
-
-
-Definition at line 67 of file mdtDataTableModel.cpp.
-
-\hypertarget{classmdt_data_table_model_a359a37d1719c0f56110875888466e331}{
-\index{mdtDataTableModel@{mdtDataTableModel}!addRows@{addRows}}
-\index{addRows@{addRows}!mdtDataTableModel@{mdtDataTableModel}}
-\subsubsection[{addRows}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableModel::addRows (
+\hypertarget{classmdt_data_table_model_a359a37d1719c0f56110875888466e331}{\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!add\-Rows@{add\-Rows}}
+\index{add\-Rows@{add\-Rows}!mdtDataTableModel@{mdt\-Data\-Table\-Model}}
+\subsubsection[{add\-Rows}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Data\-Table\-Model\-::add\-Rows (
 \begin{DoxyParamCaption}
-\item[{const QList$<$ QStringList $>$ \&}]{rows, }
-\item[{const {\bf mdtFieldMap} \&}]{fieldMap, }
-\item[{int}]{role = {\ttfamily Qt::EditRole}}
+\item[{const Q\-List$<$ Q\-String\-List $>$ \&}]{rows, }
+\item[{const {\bf mdt\-Field\-Map} \&}]{field\-Map, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:EditRole}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_data_table_model_a359a37d1719c0f56110875888466e331}
+)}}\label{classmdt_data_table_model_a359a37d1719c0f56110875888466e331}
 
 
 Add some rows of data in model. 
 
-This is a helper method wich uses QSqlTableModel's insert/setData methods. Notes:
+This is a helper method wich uses \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}'s insert/set\-Data methods. Notes\-:
 \begin{DoxyItemize}
-\item submitAll() is done internally when all rows are stored in model.
-\item This method will fail if edit strategy is not OnManualSubmit (See QSqlTableModel documentations for details).
+\item submit\-All() is done internally when all rows are stored in model.
+\item This method will fail if edit strategy is not On\-Manual\-Submit (See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} documentations for details).
 \end{DoxyItemize}
 
 
 \begin{DoxyParams}{Parameters}
-{\em rows} & A list of rows containing data items (columns). Data will be converted regarding fieldMap. \\
+{\em rows} & A list of rows containing data items (columns). Data will be converted regarding field\-Map. \\
 \hline
-{\em fieldMap} & Correspondence between rows field indexes and model indexes. See \hyperlink{classmdt_field_map}{mdtFieldMap} for details. \\
+{\em field\-Map} & Correspondence between rows field indexes and model indexes. See \hyperlink{classmdt_field_map}{mdt\-Field\-Map} for details. \\
 \hline
-{\em role} & See QSqlTableModel. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-True on success, false else. See QSqlTableModel for known errors. 
-\end{DoxyReturn}
-
-
-qDebug() $<$$<$ \_\-\_\-FUNCTION\_\-\_\- $<$$<$ \char`\"{}: reverting row \char`\"{} $<$$<$ modelRowIndex; 
-
-
-
-Definition at line 131 of file mdtDataTableModel.cpp.
-
-\hypertarget{classmdt_data_table_model_ac819eaaee0cb3251658dd0865abdd5f7}{
-\index{mdtDataTableModel@{mdtDataTableModel}!setData@{setData}}
-\index{setData@{setData}!mdtDataTableModel@{mdtDataTableModel}}
-\subsubsection[{setData}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableModel::setData (
-\begin{DoxyParamCaption}
-\item[{int}]{row, }
-\item[{const QString \&}]{field, }
-\item[{const QVariant \&}]{value, }
-\item[{int}]{role = {\ttfamily Qt::EditRole}}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_data_table_model_ac819eaaee0cb3251658dd0865abdd5f7}
-
-
-Set data for a given index in model. 
-
-This is a helper method wich uses QSqlTableModel's setData methods. Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
-
-
-\begin{DoxyParams}{Parameters}
-{\em row} & Row to update. \\
-\hline
-{\em field} & Name of field to update. \\
-\hline
-{\em value} & Value to set at given index. \\
-\hline
-{\em role} & See QSqlTableModel. \\
+{\em role} & See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success. If row is out of bound or field not exists, false is returned. See QSqlTableModel for details. 
+True on success, false else. See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} for known errors. 
 \end{DoxyReturn}
 
 
-Definition at line 172 of file mdtDataTableModel.cpp.
+Definition at line 131 of file mdt\-Data\-Table\-Model.\-cpp.
 
-\hypertarget{classmdt_data_table_model_a2f502214413e2f12e8df7252ba5f9046}{
-\index{mdtDataTableModel@{mdtDataTableModel}!setData@{setData}}
-\index{setData@{setData}!mdtDataTableModel@{mdtDataTableModel}}
-\subsubsection[{setData}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableModel::setData (
+
+
+References mdt\-Field\-Map\-::data\-For\-Destination\-Field\-Index().
+
+\hypertarget{classmdt_data_table_model_a2f502214413e2f12e8df7252ba5f9046}{\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!set\-Data@{set\-Data}}
+\index{set\-Data@{set\-Data}!mdtDataTableModel@{mdt\-Data\-Table\-Model}}
+\subsubsection[{set\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Data\-Table\-Model\-::set\-Data (
 \begin{DoxyParamCaption}
 \item[{int}]{row, }
 \item[{int}]{column, }
-\item[{const QVariant \&}]{value, }
-\item[{int}]{role = {\ttfamily Qt::EditRole}}
+\item[{const Q\-Variant \&}]{value, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:EditRole}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_data_table_model_a2f502214413e2f12e8df7252ba5f9046}
+)}}\label{classmdt_data_table_model_a2f502214413e2f12e8df7252ba5f9046}
 
 
 Set data for a given index in model. 
 
-This is a helper method wich uses QSqlTableModel's setData methods. Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
+This is a helper method wich uses \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}'s set\-Data methods. Note\-: submit() or submit\-All() (for On\-Manual\-Submit strategy) is done internally.
 
 
 \begin{DoxyParams}{Parameters}
@@ -249,40 +233,76 @@ This is a helper method wich uses QSqlTableModel's setData methods. Note: submit
 \hline
 {\em value} & Value to set at given index. \\
 \hline
-{\em role} & See QSqlTableModel. \\
+{\em role} & See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success. If row or column are out of bound, false is returned. See QSqlTableModel for details. 
+True on success. If row or column are out of bound, false is returned. See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} for details. 
 \end{DoxyReturn}
 
 
-qDebug() $<$$<$ \_\-\_\-FUNCTION\_\-\_\- $<$$<$ \char`\"{}: reverting row \char`\"{} $<$$<$ row; revertRow(row); 
+Definition at line 161 of file mdt\-Data\-Table\-Model.\-cpp.
 
 
 
-Definition at line 161 of file mdtDataTableModel.cpp.
+Referenced by set\-Data().
 
-\hypertarget{classmdt_data_table_model_a75d4204a5d388756605422110d3afca1}{
-\index{mdtDataTableModel@{mdtDataTableModel}!setTable@{setTable}}
-\index{setTable@{setTable}!mdtDataTableModel@{mdtDataTableModel}}
-\subsubsection[{setTable}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDataTableModel::setTable (
+\hypertarget{classmdt_data_table_model_ac819eaaee0cb3251658dd0865abdd5f7}{\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!set\-Data@{set\-Data}}
+\index{set\-Data@{set\-Data}!mdtDataTableModel@{mdt\-Data\-Table\-Model}}
+\subsubsection[{set\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Data\-Table\-Model\-::set\-Data (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName}
+\item[{int}]{row, }
+\item[{const Q\-String \&}]{field, }
+\item[{const Q\-Variant \&}]{value, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:EditRole}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_data_table_model_a75d4204a5d388756605422110d3afca1}
+)}}\label{classmdt_data_table_model_ac819eaaee0cb3251658dd0865abdd5f7}
+
+
+Set data for a given index in model. 
+
+This is a helper method wich uses \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}'s set\-Data methods. Note\-: submit() or submit\-All() (for On\-Manual\-Submit strategy) is done internally.
+
+
+\begin{DoxyParams}{Parameters}
+{\em row} & Row to update. \\
+\hline
+{\em field} & Name of field to update. \\
+\hline
+{\em value} & Value to set at given index. \\
+\hline
+{\em role} & See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success. If row is out of bound or field not exists, false is returned. See \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} for details. 
+\end{DoxyReturn}
+
+
+Definition at line 172 of file mdt\-Data\-Table\-Model.\-cpp.
+
+
+
+References set\-Data().
+
+\hypertarget{classmdt_data_table_model_a75d4204a5d388756605422110d3afca1}{\index{mdt\-Data\-Table\-Model@{mdt\-Data\-Table\-Model}!set\-Table@{set\-Table}}
+\index{set\-Table@{set\-Table}!mdtDataTableModel@{mdt\-Data\-Table\-Model}}
+\subsubsection[{set\-Table}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Data\-Table\-Model\-::set\-Table (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_data_table_model_a75d4204a5d388756605422110d3afca1}
 
 
 Set table name. 
 
-Will fetch some informations on fields and call QSqlTableModel::setTable(). 
+Will fetch some informations on fields and call Q\-Sql\-Table\-Model\-::set\-Table(). 
 
-Definition at line 35 of file mdtDataTableModel.cpp.
+Definition at line 35 of file mdt\-Data\-Table\-Model.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtDataTableModel.h\item 
-src/mdtutilsgui/mdtDataTableModel.cpp\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_data_table_model_8h}{mdt\-Data\-Table\-Model.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_data_table_model_8cpp}{mdt\-Data\-Table\-Model.\-cpp}\end{DoxyCompactItemize}

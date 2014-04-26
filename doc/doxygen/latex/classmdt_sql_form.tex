@@ -1,198 +1,194 @@
-\hypertarget{classmdt_sql_form}{
-\section{mdtSqlForm Class Reference}
-\label{classmdt_sql_form}\index{mdtSqlForm@{mdtSqlForm}}
+\hypertarget{classmdt_sql_form}{\section{mdt\-Sql\-Form Class Reference}
+\label{classmdt_sql_form}\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}}
 }
 
 
-Base class for high level SQL widgets API.  
+Base class for high level S\-Q\-L widgets A\-P\-I.  
 
 
 
 
-{\ttfamily \#include $<$mdtSqlForm.h$>$}
+{\ttfamily \#include $<$mdt\-Sql\-Form.\-h$>$}
 
 
 
-Collaboration diagram for mdtSqlForm:\nopagebreak
+Inheritance diagram for mdt\-Sql\-Form\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=259pt]{classmdt_sql_form__coll__graph}
+\includegraphics[width=350pt]{classmdt_sql_form__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Sql\-Form\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=218pt]{classmdt_sql_form__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_sql_form_a607993f0d35207668c0f220d77bd9298}{mdtSqlForm} (QWidget $\ast$parent, QSqlDatabase db)
+\hyperlink{classmdt_sql_form_a607993f0d35207668c0f220d77bd9298}{mdt\-Sql\-Form} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, Q\-Sql\-Database db)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_form_ab4538979323566433a20bb71118525a5}{
-virtual \hyperlink{classmdt_sql_form_ab4538979323566433a20bb71118525a5}{$\sim$mdtSqlForm} ()}
-\label{classmdt_sql_form_ab4538979323566433a20bb71118525a5}
-
+virtual \hyperlink{classmdt_sql_form_ab4538979323566433a20bb71118525a5}{$\sim$mdt\-Sql\-Form} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} $\ast$ \hyperlink{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{mainSqlWidget} ()
-\begin{DoxyCompactList}\small\item\em Get the main SQL widget. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_form_ab03dd80e9de62362dd77161ef6bd6fc2}{setMainTable} (const QString \&tableName, const QString \&userFriendlyTableName)
+\hyperlink{classmdt_sql_form_widget}{mdt\-Sql\-Form\-Widget} $\ast$ \hyperlink{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{main\-Sql\-Widget} ()
+\begin{DoxyCompactList}\small\item\em Get the main S\-Q\-L widget. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_form_ab03dd80e9de62362dd77161ef6bd6fc2}{set\-Main\-Table} (const Q\-String \&table\-Name, const Q\-String \&user\-Friendly\-Table\-Name)
 \begin{DoxyCompactList}\small\item\em Set the main (or parent) table of the form. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_form_ac2de4ee6f27d7411c2404771585204ae}{setMainTable} (const QString \&tableName, const QString \&userFriendlyTableName, QSqlDatabase db)
+bool \hyperlink{classmdt_sql_form_ac2de4ee6f27d7411c2404771585204ae}{set\-Main\-Table} (const Q\-String \&table\-Name, const Q\-String \&user\-Friendly\-Table\-Name, Q\-Sql\-Database db)
 \begin{DoxyCompactList}\small\item\em Set the main (or parent) table of the form. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}{addChildTable} (const QString \&tableName, const QString \&userFriendlyTableName)
+bool \hyperlink{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}{add\-Child\-Table} (const Q\-String \&table\-Name, const Q\-String \&user\-Friendly\-Table\-Name)
 \begin{DoxyCompactList}\small\item\em Add a child table to the form. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_form_a2a3af0bab78caee638b89aecdc1a2f62}{addChildTable} (const QString \&tableName, const QString \&userFriendlyTableName, QSqlDatabase db)
+bool \hyperlink{classmdt_sql_form_a2a3af0bab78caee638b89aecdc1a2f62}{add\-Child\-Table} (const Q\-String \&table\-Name, const Q\-String \&user\-Friendly\-Table\-Name, Q\-Sql\-Database db)
 \begin{DoxyCompactList}\small\item\em Add a child table to the form. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}{addChildWidget} (QWidget $\ast$widget, const QString \&label, const QIcon \&icon=QIcon())
-\begin{DoxyCompactList}\small\item\em Add a widget to the internal QTabWidget. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}{addRelation} (const QString \&parentFieldName, const QString \&childTableName, const QString \&childFieldName, const QString \&operatorWithPreviousItem=\char`\"{}AND\char`\"{})
+void \hyperlink{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}{add\-Child\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$widget, const Q\-String \&label, const Q\-Icon \&icon=Q\-Icon())
+\begin{DoxyCompactList}\small\item\em Add a widget to the internal Q\-Tab\-Widget. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}{add\-Relation} (const Q\-String \&parent\-Field\-Name, const Q\-String \&child\-Table\-Name, const Q\-String \&child\-Field\-Name, const Q\-String \&operator\-With\-Previous\-Item=\char`\"{}A\-N\-D\char`\"{})
 \begin{DoxyCompactList}\small\item\em Add a relation between main table and a child table. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} $\ast$ \hyperlink{classmdt_sql_form_a1ea800b795e3ead97e6a0452ab305d65}{sqlWidget} (const QString \&tableName)
-\begin{DoxyCompactList}\small\item\em Get instance of the stored SQL widget related to a table name. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_form_a59dc3afec69c8b6a18ed7fccb42c70ad}{
-\hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} $\ast$ {\bfseries sqlFormWidget} (const QString \&tableName)}
-\label{classmdt_sql_form_a59dc3afec69c8b6a18ed7fccb42c70ad}
-
+\hyperlink{classmdt_abstract_sql_widget}{mdt\-Abstract\-Sql\-Widget} $\ast$ \hyperlink{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{sql\-Widget} (const Q\-String \&table\-Name)
+\begin{DoxyCompactList}\small\item\em Get instance of the stored S\-Q\-L widget related to a table name. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_sql_form_widget}{mdt\-Sql\-Form\-Widget} $\ast$ \hyperlink{classmdt_sql_form_a59dc3afec69c8b6a18ed7fccb42c70ad}{sql\-Form\-Widget} (const Q\-String \&table\-Name)
 \item 
-\hypertarget{classmdt_sql_form_a6a17f32077fb7cc33139c3dc26a8d011}{
-\hyperlink{classmdt_sql_table_widget}{mdtSqlTableWidget} $\ast$ {\bfseries sqlTableWidget} (const QString \&tableName)}
-\label{classmdt_sql_form_a6a17f32077fb7cc33139c3dc26a8d011}
-
+\hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget} $\ast$ \hyperlink{classmdt_sql_form_a6a17f32077fb7cc33139c3dc26a8d011}{sql\-Table\-Widget} (const Q\-String \&table\-Name)
 \item 
-\hypertarget{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}{
-QSqlDatabase \hyperlink{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}{database} ()}
-\label{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}
-
+Q\-Sql\-Database \hyperlink{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}{database} ()
 \begin{DoxyCompactList}\small\item\em Get database that was given by constructor. \end{DoxyCompactList}\item 
-QSqlDatabase \hyperlink{classmdt_sql_form_aa9c2ce2607760a8ebebf3d88779637d4}{database} (const QString \&tableName)
+Q\-Sql\-Database \hyperlink{classmdt_sql_form_aa9c2ce2607760a8ebebf3d88779637d4}{database} (const Q\-String \&table\-Name)
 \begin{DoxyCompactList}\small\item\em Get database that acts on given table name. \end{DoxyCompactList}\item 
-QSqlTableModel $\ast$ \hyperlink{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}{model} (const QString \&tableName)
+\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$ \hyperlink{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}{model} (const Q\-String \&table\-Name)
 \begin{DoxyCompactList}\small\item\em Get model that acts on given table name. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_form_a2a2f564fe934cc8997b07f90abb771e1}{select} ()
 \begin{DoxyCompactList}\small\item\em Call select on model that acts on main table name. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_form_ae9a1f8c03e5ac8ccd01fa804356abd01}{select} (const QString \&tableName)
+bool \hyperlink{classmdt_sql_form_ae9a1f8c03e5ac8ccd01fa804356abd01}{select} (const Q\-String \&table\-Name)
 \begin{DoxyCompactList}\small\item\em Call select on model that acts on given table name. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_form_abfc6d7f49debf02f5016923cbd422f2f}{setMainTableFilter} (const QString \&fieldName, const QVariant \&matchData)
+bool \hyperlink{classmdt_sql_form_abfc6d7f49debf02f5016923cbd422f2f}{set\-Main\-Table\-Filter} (const Q\-String \&field\-Name, const Q\-Variant \&match\-Data)
 \begin{DoxyCompactList}\small\item\em Set main table's filter. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_error}{mdtError} \hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{lastError} () const 
-\begin{DoxyCompactList}\small\item\em Get last error of model that acts on tableName. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_form_a7521d231f24663ee1d2acb904387353b}{
-void \hyperlink{classmdt_sql_form_a7521d231f24663ee1d2acb904387353b}{displayLastError} ()}
-\label{classmdt_sql_form_a7521d231f24663ee1d2acb904387353b}
-
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error of model that acts on table\-Name. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_form_a7521d231f24663ee1d2acb904387353b}{display\-Last\-Error} ()
 \begin{DoxyCompactList}\small\item\em Display last error in a message box. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}{rowCount} (const QString \&tableName)
+int \hyperlink{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}{row\-Count} (const Q\-String \&table\-Name)
 \begin{DoxyCompactList}\small\item\em Get the row count for given table name. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}{currentRow} (const QString \&tableName)
+int \hyperlink{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}{current\-Row} (const Q\-String \&table\-Name)
 \begin{DoxyCompactList}\small\item\em Get the current row of given table name. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{setCurrentData} (const QString \&tableName, const QString \&fieldName, const QVariant \&data, bool submit=true)
+bool \hyperlink{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{set\-Current\-Data} (const Q\-String \&table\-Name, const Q\-String \&field\-Name, const Q\-Variant \&\hyperlink{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{data}, bool submit=true)
 \begin{DoxyCompactList}\small\item\em Set (update) data of current row (record) for given table and field name. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}{currentData} (const QString \&tableName, const QString \&fieldName)
+Q\-Variant \hyperlink{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}{current\-Data} (const Q\-String \&table\-Name, const Q\-String \&field\-Name)
 \begin{DoxyCompactList}\small\item\em Get current data for given table and field name. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{data} (const QString \&tableName, int row, const QString \&fieldName)
+Q\-Variant \hyperlink{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{data} (const Q\-String \&table\-Name, int row, const Q\-String \&field\-Name)
 \begin{DoxyCompactList}\small\item\em Get data for given table , row and field name. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}{
-void \hyperlink{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}{insert} ()}
-\label{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}
-
-\begin{DoxyCompactList}\small\item\em Call insert method on mainSqlWidget. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_sql_form_a27fe6e45aa5d4d7782aad9833e6de20b}{setupTables} ()
+void \hyperlink{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}{insert} ()
+\begin{DoxyCompactList}\small\item\em Call insert method on main\-Sql\-Widget. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_sql_form_a27fe6e45aa5d4d7782aad9833e6de20b}{setup\-Tables} ()
 \begin{DoxyCompactList}\small\item\em Setup tables. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_error}{mdtError} \& \hyperlink{classmdt_sql_form_abee43c43913605ad585ad163b998fca4}{lastErrorW} ()
-\begin{DoxyCompactList}\small\item\em Get lastError ogject for write acces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{classmdt_error}{mdt\-Error} \& \hyperlink{classmdt_sql_form_abee43c43913605ad585ad163b998fca4}{last\-Error\-W} ()
+\begin{DoxyCompactList}\small\item\em Get last\-Error ogject for write acces. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_form_afc24e8dedd1249a29708347fdff560fd}{
-\hyperlink{classmdt_error}{mdtError} {\bfseries pvLastError}}
-\label{classmdt_sql_form_afc24e8dedd1249a29708347fdff560fd}
-
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_sql_form_afc24e8dedd1249a29708347fdff560fd}{pv\-Last\-Error}
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Base class for high level SQL widgets API. 
+Base class for high level S\-Q\-L widgets A\-P\-I. 
 
-To create SQL GUI's, some clases are available:
+To create S\-Q\-L G\-U\-I's, some clases are available\-:
 \begin{DoxyItemize}
-\item \hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget}
-\item \hyperlink{classmdt_sql_table_widget}{mdtSqlTableWidget}
-\item \hyperlink{classmdt_sql_relation}{mdtSqlRelation}
+\item \hyperlink{classmdt_sql_form_widget}{mdt\-Sql\-Form\-Widget}
+\item \hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget}
+\item \hyperlink{classmdt_sql_relation}{mdt\-Sql\-Relation}
 \end{DoxyItemize}
 
 They help to deal with several common problems, but they need several code (creating objects, configure them, handle memory, ...).
 
-This class was made to have less code for common database GUI .
+This class was made to have less code for common database G\-U\-I .
 
-The mainSqlWidget is based on a \hyperlink{classmdt_sql_form_widget}{mdtSqlFormWidget} , and is placed on the upper part of the form . When adding child table with \hyperlink{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}{addChildTable()} , a instance of \hyperlink{classmdt_sql_table_widget}{mdtSqlTableWidget} is created, and placed to a QTabWidget . It is also possible to add a non database related widget, using \hyperlink{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}{addChildWidget()} . In this case, the given widget is simply added to the internal QTabWidget . 
+The main\-Sql\-Widget is based on a \hyperlink{classmdt_sql_form_widget}{mdt\-Sql\-Form\-Widget} , and is placed on the upper part of the form . When adding child table with \hyperlink{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}{add\-Child\-Table()} , a instance of \hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget} is created, and placed to a Q\-Tab\-Widget . It is also possible to add a non database related widget, using \hyperlink{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}{add\-Child\-Widget()} . In this case, the given widget is simply added to the internal Q\-Tab\-Widget . 
 
-Definition at line 61 of file mdtSqlForm.h.
+Definition at line 61 of file mdt\-Sql\-Form.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_sql_form_a607993f0d35207668c0f220d77bd9298}{
-\index{mdtSqlForm@{mdtSqlForm}!mdtSqlForm@{mdtSqlForm}}
-\index{mdtSqlForm@{mdtSqlForm}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{mdtSqlForm}]{\setlength{\rightskip}{0pt plus 5cm}mdtSqlForm::mdtSqlForm (
+\hypertarget{classmdt_sql_form_a607993f0d35207668c0f220d77bd9298}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!mdt\-Sql\-Form@{mdt\-Sql\-Form}}
+\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{mdt\-Sql\-Form}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Form\-::mdt\-Sql\-Form (
 \begin{DoxyParamCaption}
-\item[{QWidget $\ast$}]{parent, }
-\item[{QSqlDatabase}]{db}
+\item[{{\bf Q\-Widget} $\ast$}]{parent, }
+\item[{Q\-Sql\-Database}]{db}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a607993f0d35207668c0f220d77bd9298}
+)}}\label{classmdt_sql_form_a607993f0d35207668c0f220d77bd9298}
 
 
 Constructor. 
 
-Given database will be used whenn adding new tables with \hyperlink{classmdt_sql_form_ab03dd80e9de62362dd77161ef6bd6fc2}{setMainTable(const QString\&, const QString\&)} and \hyperlink{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}{addChildTable(const QString\&, const QString\&)} .
+Given database will be used whenn adding new tables with \hyperlink{classmdt_sql_form_ab03dd80e9de62362dd77161ef6bd6fc2}{set\-Main\-Table(const Q\-String\&, const Q\-String\&)} and \hyperlink{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}{add\-Child\-Table(const Q\-String\&, const Q\-String\&)} .
 
 \hyperlink{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}{database()} will also return this version . 
 
-Definition at line 36 of file mdtSqlForm.cpp.
+Definition at line 36 of file mdt\-Sql\-Form.\-cpp.
+
+\hypertarget{classmdt_sql_form_ab4538979323566433a20bb71118525a5}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!$\sim$mdt\-Sql\-Form@{$\sim$mdt\-Sql\-Form}}
+\index{$\sim$mdt\-Sql\-Form@{$\sim$mdt\-Sql\-Form}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{$\sim$mdt\-Sql\-Form}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Form\-::$\sim$mdt\-Sql\-Form (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_form_ab4538979323566433a20bb71118525a5}
+
+
+Destructor. 
+
+
+
+Definition at line 47 of file mdt\-Sql\-Form.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}{
-\index{mdtSqlForm@{mdtSqlForm}!addChildTable@{addChildTable}}
-\index{addChildTable@{addChildTable}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{addChildTable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::addChildTable (
+\hypertarget{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!add\-Child\-Table@{add\-Child\-Table}}
+\index{add\-Child\-Table@{add\-Child\-Table}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{add\-Child\-Table}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::add\-Child\-Table (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName, }
-\item[{const QString \&}]{userFriendlyTableName}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-String \&}]{user\-Friendly\-Table\-Name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}
+)}}\label{classmdt_sql_form_a3504a54f26777ed38efce5cc151a1dbf}
 
 
 Add a child table to the form. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em tableName} & Table on witch the new (internally created) widget must act. \\
+{\em table\-Name} & Table on witch the new (internally created) widget must act. \\
 \hline
-{\em userFriendlyTableName} & If set, will be used at places that are visible from user. \\
+{\em user\-Friendly\-Table\-Name} & If set, will be used at places that are visible from user. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success, false if given table name does not exist or on some other errors (database not open, access privileges, ...). False can also be returned if main table was not set (see setTable() ). 
+True on success, false if given table name does not exist or on some other errors (database not open, access privileges, ...). False can also be returned if main table was not set (see set\-Table() ). 
 \end{DoxyReturn}
 
 
-Definition at line 92 of file mdtSqlForm.cpp.
+Definition at line 92 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_a2a3af0bab78caee638b89aecdc1a2f62}{
-\index{mdtSqlForm@{mdtSqlForm}!addChildTable@{addChildTable}}
-\index{addChildTable@{addChildTable}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{addChildTable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::addChildTable (
+\hypertarget{classmdt_sql_form_a2a3af0bab78caee638b89aecdc1a2f62}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!add\-Child\-Table@{add\-Child\-Table}}
+\index{add\-Child\-Table@{add\-Child\-Table}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{add\-Child\-Table}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::add\-Child\-Table (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName, }
-\item[{const QString \&}]{userFriendlyTableName, }
-\item[{QSqlDatabase}]{db}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-String \&}]{user\-Friendly\-Table\-Name, }
+\item[{Q\-Sql\-Database}]{db}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a2a3af0bab78caee638b89aecdc1a2f62}
+)}}\label{classmdt_sql_form_a2a3af0bab78caee638b89aecdc1a2f62}
 
 
 Add a child table to the form. 
@@ -201,343 +197,434 @@ This method is only useful if different tables have to act on different database
 
 
 \begin{DoxyParams}{Parameters}
-{\em tableName} & Table on witch the new (internally created) widget must act. \\
+{\em table\-Name} & Table on witch the new (internally created) widget must act. \\
 \hline
-{\em userFriendlyTableName} & If set, will be used at places that are visible from user. \\
+{\em user\-Friendly\-Table\-Name} & If set, will be used at places that are visible from user. \\
 \hline
-{\em db} & Database to use (pass a QSqlDatabase() if only one database is used). \\
+{\em db} & Database to use (pass a Q\-Sql\-Database() if only one database is used). \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success, false if given table name does not exist or on some other errors (database not open, access privileges, ...). False can also be returned if main table was not set (see setTable() ). 
+True on success, false if given table name does not exist or on some other errors (database not open, access privileges, ...). False can also be returned if main table was not set (see set\-Table() ). 
 \end{DoxyReturn}
 
 
-Definition at line 97 of file mdtSqlForm.cpp.
+Definition at line 97 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}{
-\index{mdtSqlForm@{mdtSqlForm}!addChildWidget@{addChildWidget}}
-\index{addChildWidget@{addChildWidget}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{addChildWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlForm::addChildWidget (
+
+
+References mdt\-Abstract\-Sql\-Widget\-::add\-Child\-Widget(), add\-Child\-Widget(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Abstract\-Sql\-Widget\-::model(), model(), pv\-Last\-Error, mdt\-Sql\-Relation\-::set\-Child\-Model(), mdt\-Error\-::set\-Error(), mdt\-Abstract\-Sql\-Widget\-::set\-Model(), mdt\-Sql\-Relation\-::set\-Parent\-Model(), mdt\-Error\-::set\-System\-Error(), mdt\-Abstract\-Sql\-Widget\-::set\-User\-Friendly\-Table\-Name(), and mdt\-Abstract\-Sql\-Widget\-::user\-Friendly\-Table\-Name().
+
+\hypertarget{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!add\-Child\-Widget@{add\-Child\-Widget}}
+\index{add\-Child\-Widget@{add\-Child\-Widget}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{add\-Child\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Form\-::add\-Child\-Widget (
 \begin{DoxyParamCaption}
-\item[{QWidget $\ast$}]{widget, }
-\item[{const QString \&}]{label, }
-\item[{const QIcon \&}]{icon = {\ttfamily QIcon()}}
+\item[{{\bf Q\-Widget} $\ast$}]{widget, }
+\item[{const Q\-String \&}]{label, }
+\item[{const Q\-Icon \&}]{icon = {\ttfamily QIcon()}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}
+)}}\label{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}
 
 
-Add a widget to the internal QTabWidget. 
+Add a widget to the internal Q\-Tab\-Widget. 
 
-Can be used if a widget that is not related to a database table must be placed in the QTabWidget .
+Can be used if a widget that is not related to a database table must be placed in the Q\-Tab\-Widget .
 
-Note: the given widget will be reparented, and also deleted when the form is destroyed . 
+Note\-: the given widget will be reparented, and also deleted when the form is destroyed . 
 
-Definition at line 141 of file mdtSqlForm.cpp.
+Definition at line 141 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}{
-\index{mdtSqlForm@{mdtSqlForm}!addRelation@{addRelation}}
-\index{addRelation@{addRelation}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{addRelation}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::addRelation (
+
+
+Referenced by add\-Child\-Table().
+
+\hypertarget{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!add\-Relation@{add\-Relation}}
+\index{add\-Relation@{add\-Relation}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{add\-Relation}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::add\-Relation (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{parentFieldName, }
-\item[{const QString \&}]{childTableName, }
-\item[{const QString \&}]{childFieldName, }
-\item[{const QString \&}]{operatorWithPreviousItem = {\ttfamily \char`\"{}AND\char`\"{}}}
+\item[{const Q\-String \&}]{parent\-Field\-Name, }
+\item[{const Q\-String \&}]{child\-Table\-Name, }
+\item[{const Q\-String \&}]{child\-Field\-Name, }
+\item[{const Q\-String \&}]{operator\-With\-Previous\-Item = {\ttfamily \char`\"{}AND\char`\"{}}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}
+)}}\label{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}
 
 
 Add a relation between main table and a child table. 
 
 \begin{DoxyReturn}{Returns}
-True on succes, false if childTableName or a field does not exit. 
+True on succes, false if child\-Table\-Name or a field does not exit. 
 \end{DoxyReturn}
 
 
-Definition at line 157 of file mdtSqlForm.cpp.
+Definition at line 157 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}{
-\index{mdtSqlForm@{mdtSqlForm}!currentData@{currentData}}
-\index{currentData@{currentData}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{currentData}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtSqlForm::currentData (
+
+
+References mdt\-Sql\-Relation\-::add\-Relation(), mdt\-Error\-::commit(), mdt\-Sql\-Form\-Widget\-::current\-Row(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Sql\-Relation\-::set\-Parent\-Current\-Index().
+
+\hypertarget{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!current\-Data@{current\-Data}}
+\index{current\-Data@{current\-Data}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{current\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Sql\-Form\-::current\-Data (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName, }
-\item[{const QString \&}]{fieldName}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-String \&}]{field\-Name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}
+)}}\label{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}
 
 
 Get current data for given table and field name. 
 
-Note that SQL widget related to given tableName is searched at each request. If several access to currentData is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a1ea800b795e3ead97e6a0452ab305d65}{sqlWidget()} , and call his \hyperlink{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}{currentData()} method.
+Note that S\-Q\-L widget related to given table\-Name is searched at each request. If several access to current\-Data is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{sql\-Widget()} , and call his \hyperlink{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}{current\-Data()} method.
 
 \begin{DoxyReturn}{Returns}
-Current value, or a invalid QVariant on error (f.ex. table or field not found). 
+Current value, or a invalid Q\-Variant on error (f.\-ex. table or field not found). 
 \end{DoxyReturn}
 
 
-Definition at line 399 of file mdtSqlForm.cpp.
+Definition at line 399 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}{
-\index{mdtSqlForm@{mdtSqlForm}!currentRow@{currentRow}}
-\index{currentRow@{currentRow}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{currentRow}]{\setlength{\rightskip}{0pt plus 5cm}int mdtSqlForm::currentRow (
+
+
+References mdt\-Error\-::commit(), mdt\-Abstract\-Sql\-Widget\-::current\-Data(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and sql\-Widget().
+
+\hypertarget{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!current\-Row@{current\-Row}}
+\index{current\-Row@{current\-Row}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{current\-Row}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Sql\-Form\-::current\-Row (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName}
+\item[{const Q\-String \&}]{table\-Name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}
+)}}\label{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}
 
 
 Get the current row of given table name. 
 
 Current row can be the currently selected row (case of a table view), or simply the current row that is displayed in a form view.
 
-Note that SQL widget related to given tableName is searched at each request. If several access to currentRow is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a1ea800b795e3ead97e6a0452ab305d65}{sqlWidget()} , and call his \hyperlink{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}{currentRow()} method.
+Note that S\-Q\-L widget related to given table\-Name is searched at each request. If several access to current\-Row is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{sql\-Widget()} , and call his \hyperlink{classmdt_sql_form_a855de08e9ddb3f7898ef4ceb0b0331f9}{current\-Row()} method.
 
 \begin{DoxyReturn}{Returns}
-Current row, or value $<$ 0 on error (f.ex. table not found). 
+Current row, or value $<$ 0 on error (f.\-ex. table not found). 
 \end{DoxyReturn}
 
 
-Definition at line 367 of file mdtSqlForm.cpp.
+Definition at line 367 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{
-\index{mdtSqlForm@{mdtSqlForm}!data@{data}}
-\index{data@{data}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtSqlForm::data (
+
+
+References mdt\-Error\-::commit(), mdt\-Abstract\-Sql\-Widget\-::current\-Row(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and sql\-Widget().
+
+\hypertarget{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!data@{data}}
+\index{data@{data}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Sql\-Form\-::data (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName, }
+\item[{const Q\-String \&}]{table\-Name, }
 \item[{int}]{row, }
-\item[{const QString \&}]{fieldName}
+\item[{const Q\-String \&}]{field\-Name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}
+)}}\label{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}
 
 
 Get data for given table , row and field name. 
 
-Note that SQL widget related to given tableName is searched at each request. If several access to data is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a1ea800b795e3ead97e6a0452ab305d65}{sqlWidget()} , and call his \hyperlink{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{data()} method.
+Note that S\-Q\-L widget related to given table\-Name is searched at each request. If several access to data is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{sql\-Widget()} , and call his \hyperlink{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{data()} method.
 
 \begin{DoxyReturn}{Returns}
-Current value, or a invalid QVariant on error (f.ex. table, row or field not found). 
+Current value, or a invalid Q\-Variant on error (f.\-ex. table, row or field not found). 
 \end{DoxyReturn}
 
 
-Definition at line 415 of file mdtSqlForm.cpp.
+Definition at line 415 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_aa9c2ce2607760a8ebebf3d88779637d4}{
-\index{mdtSqlForm@{mdtSqlForm}!database@{database}}
-\index{database@{database}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}QSqlDatabase mdtSqlForm::database (
+
+
+References mdt\-Error\-::commit(), mdt\-Abstract\-Sql\-Widget\-::data(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and sql\-Widget().
+
+\hypertarget{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!database@{database}}
+\index{database@{database}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Database mdt\-Sql\-Form\-::database (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName}
+{}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_aa9c2ce2607760a8ebebf3d88779637d4}
+)}}\label{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}
+
+
+Get database that was given by constructor. 
+
+
+
+Definition at line 220 of file mdt\-Sql\-Form.\-cpp.
+
+\hypertarget{classmdt_sql_form_aa9c2ce2607760a8ebebf3d88779637d4}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!database@{database}}
+\index{database@{database}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Database mdt\-Sql\-Form\-::database (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_form_aa9c2ce2607760a8ebebf3d88779637d4}
 
 
 Get database that acts on given table name. 
 
 \begin{DoxyReturn}{Returns}
-QSqlDatabase object that acts on given table, or \hyperlink{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}{database()} if table was not found . 
+Q\-Sql\-Database object that acts on given table, or \hyperlink{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}{database()} if table was not found . 
 \end{DoxyReturn}
 
 
-Definition at line 225 of file mdtSqlForm.cpp.
+Definition at line 225 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{
-\index{mdtSqlForm@{mdtSqlForm}!lastError@{lastError}}
-\index{lastError@{lastError}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{lastError}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtError} mdtSqlForm::lastError (
+
+
+References model().
+
+\hypertarget{classmdt_sql_form_a7521d231f24663ee1d2acb904387353b}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!display\-Last\-Error@{display\-Last\-Error}}
+\index{display\-Last\-Error@{display\-Last\-Error}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{display\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Form\-::display\-Last\-Error (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_sql_form_a04724293298421c404e93c58015cda5e}
+)}}\label{classmdt_sql_form_a7521d231f24663ee1d2acb904387353b}
 
 
-Get last error of model that acts on tableName. 
+Display last error in a message box. 
+
+
+
+Definition at line 342 of file mdt\-Sql\-Form.\-cpp.
+
+
+
+References mdt\-Error\-::level\-Icon(), pv\-Last\-Error, mdt\-Error\-::system\-Text(), and mdt\-Error\-::text().
+
+\hypertarget{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!insert@{insert}}
+\index{insert@{insert}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Form\-::insert (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}
+
+
+Call insert method on main\-Sql\-Widget. 
+
+
+
+Definition at line 431 of file mdt\-Sql\-Form.\-cpp.
+
+
+
+References mdt\-Abstract\-Sql\-Widget\-::insert().
+
+\hypertarget{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Form\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_form_a04724293298421c404e93c58015cda5e}
+
+
+Get last error of model that acts on table\-Name. 
 
 \begin{DoxyReturn}{Returns}
-A valid QSqlError if table was found and a error occured.QSqlError lastSqlError(const QString \&tableName);
+A valid Q\-Sql\-Error if table was found and a error occured.\-Q\-Sql\-Error last\-Sql\-Error(const Q\-String \&table\-Name);
 \end{DoxyReturn}
 Get last error
 
-QSqlError mdtSqlForm::lastSqlError(const QString \&tableName) \{ QSqlTableModel $\ast$m;
+Q\-Sql\-Error mdt\-Sql\-Form\-::last\-Sql\-Error(const Q\-String \&table\-Name) \{ \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$m;
 
-m = model(tableName); if(m == 0)\{ /mdtError e(MDT\_\-DATABASE\_\-ERROR, \char`\"{}Cannot find model that acts on table '\char`\"{} + tableName + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); pvLastError.setError(tr(\char`\"{}Cannot find model that acts on table '\char`\"{}) + tableName + tr(\char`\"{}'\char`\"{}), \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdtError::Error}); MDT\_\-ERROR\_\-SET\_\-SRC(pvLastError, \char`\"{}mdtSqlForm\char`\"{}); pvLastError.commit(); return QSqlError(); \}
+m = model(table\-Name); if(m == 0)\{ /mdt\-Error e(M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R, \char`\"{}\-Cannot find model that acts on table '\char`\"{} + table\-Name + \char`\"{}'\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdt\-Error\-::\-Error}); pv\-Last\-Error.\-set\-Error(tr(\char`\"{}\-Cannot find model that acts on table '\char`\"{}) + table\-Name + tr(\char`\"{}'\char`\"{}), \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdt\-Error\-::\-Error}); M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C(pv\-Last\-Error, \char`\"{}mdt\-Sql\-Form\char`\"{}); pv\-Last\-Error.\-commit(); return Q\-Sql\-Error(); \}
 
-return m-\/$>$\hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{lastError()}; \} 
+return m-\/$>$\hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{last\-Error()}; \} 
 
-Definition at line 337 of file mdtSqlForm.cpp.
+Definition at line 337 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_abee43c43913605ad585ad163b998fca4}{
-\index{mdtSqlForm@{mdtSqlForm}!lastErrorW@{lastErrorW}}
-\index{lastErrorW@{lastErrorW}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{lastErrorW}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtError} \& mdtSqlForm::lastErrorW (
+
+
+References pv\-Last\-Error.
+
+\hypertarget{classmdt_sql_form_abee43c43913605ad585ad163b998fca4}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!last\-Error\-W@{last\-Error\-W}}
+\index{last\-Error\-W@{last\-Error\-W}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{last\-Error\-W}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} \& mdt\-Sql\-Form\-::last\-Error\-W (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_sql_form_abee43c43913605ad585ad163b998fca4}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_form_abee43c43913605ad585ad163b998fca4}
 
 
-Get lastError ogject for write acces. 
+Get last\-Error ogject for write acces. 
 
-Subclass can use this method to set lastError 
+Subclass can use this method to set last\-Error 
 
-Definition at line 443 of file mdtSqlForm.cpp.
+Definition at line 443 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{
-\index{mdtSqlForm@{mdtSqlForm}!mainSqlWidget@{mainSqlWidget}}
-\index{mainSqlWidget@{mainSqlWidget}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{mainSqlWidget}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtSqlFormWidget} $\ast$ mdtSqlForm::mainSqlWidget (
+
+
+References pv\-Last\-Error.
+
+\hypertarget{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!main\-Sql\-Widget@{main\-Sql\-Widget}}
+\index{main\-Sql\-Widget@{main\-Sql\-Widget}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{main\-Sql\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Sql\-Form\-Widget} $\ast$ mdt\-Sql\-Form\-::main\-Sql\-Widget (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}
+)}}\label{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}
 
 
-Get the main SQL widget. 
+Get the main S\-Q\-L widget. 
 
-Use this method to get the widget to give as argument to setupUi() method of your Ui widget.
+Use this method to get the widget to give as argument to setup\-Ui() method of your \hyperlink{namespace_ui}{Ui} widget.
 
 \begin{DoxyPostcond}{Postcondition}
 Returns a valid object. 
 \end{DoxyPostcond}
 
 
-Definition at line 52 of file mdtSqlForm.cpp.
+Definition at line 52 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}{
-\index{mdtSqlForm@{mdtSqlForm}!model@{model}}
-\index{model@{model}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}QSqlTableModel $\ast$ mdtSqlForm::model (
+
+
+Referenced by mdt\-Sql\-Dialog\-::accept(), mdt\-Sql\-Dialog\-::disable\-Edition(), mdt\-Sql\-Dialog\-::enable\-Edition(), mdt\-Sql\-Window\-::enable\-Edition(), mdt\-Sql\-Window\-::enable\-Navigation(), and mdt\-Sql\-Dialog\-::reject().
+
+\hypertarget{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!model@{model}}
+\index{model@{model}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Q\-Sql\-Table\-Model} $\ast$ mdt\-Sql\-Form\-::model (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName}
+\item[{const Q\-String \&}]{table\-Name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}
+)}}\label{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}
 
 
 Get model that acts on given table name. 
 
 \begin{DoxyReturn}{Returns}
-QSqlTableModel object or a null pointer if table was not found. 
+\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} object or a null pointer if table was not found. 
 \end{DoxyReturn}
 
 
-Definition at line 237 of file mdtSqlForm.cpp.
+Definition at line 237 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}{
-\index{mdtSqlForm@{mdtSqlForm}!rowCount@{rowCount}}
-\index{rowCount@{rowCount}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{rowCount}]{\setlength{\rightskip}{0pt plus 5cm}int mdtSqlForm::rowCount (
+
+
+References mdt\-Abstract\-Sql\-Widget\-::model(), and sql\-Widget().
+
+
+
+Referenced by add\-Child\-Table(), database(), row\-Count(), select(), and set\-Main\-Table().
+
+\hypertarget{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!row\-Count@{row\-Count}}
+\index{row\-Count@{row\-Count}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{row\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Sql\-Form\-::row\-Count (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName}
+\item[{const Q\-String \&}]{table\-Name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}
+)}}\label{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}
 
 
 Get the row count for given table name. 
 
-Note that SQL widget related to given tableName is searched at each request. If several access to rowCount is needed, it can be better to get a pointer to related model with \hyperlink{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}{model()} , and call his \hyperlink{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}{rowCount()} method.
+Note that S\-Q\-L widget related to given table\-Name is searched at each request. If several access to row\-Count is needed, it can be better to get a pointer to related model with \hyperlink{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}{model()} , and call his \hyperlink{classmdt_sql_form_a7d50c271fc506764ed20dd88914d0ddc}{row\-Count()} method.
 
 \begin{DoxyReturn}{Returns}
-Row count, or value $<$ 0 on error (f.ex. table not found). 
+Row count, or value $<$ 0 on error (f.\-ex. table not found). 
 \end{DoxyReturn}
 
 
-Definition at line 352 of file mdtSqlForm.cpp.
-
-\hypertarget{classmdt_sql_form_ae9a1f8c03e5ac8ccd01fa804356abd01}{
-\index{mdtSqlForm@{mdtSqlForm}!select@{select}}
-\index{select@{select}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{select}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::select (
-\begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_ae9a1f8c03e5ac8ccd01fa804356abd01}
+Definition at line 352 of file mdt\-Sql\-Form.\-cpp.
 
 
-Call select on model that acts on given table name. 
 
-\begin{DoxyReturn}{Returns}
-True on success, false if tableName was not found or other error. On failure, the last error is avaliable with \hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{lastError()} 
-\end{DoxyReturn}
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, model(), pv\-Last\-Error, and mdt\-Error\-::set\-Error().
 
-
-Definition at line 264 of file mdtSqlForm.cpp.
-
-\hypertarget{classmdt_sql_form_a2a2f564fe934cc8997b07f90abb771e1}{
-\index{mdtSqlForm@{mdtSqlForm}!select@{select}}
-\index{select@{select}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{select}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::select (
+\hypertarget{classmdt_sql_form_a2a2f564fe934cc8997b07f90abb771e1}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!select@{select}}
+\index{select@{select}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{select}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::select (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a2a2f564fe934cc8997b07f90abb771e1}
+)}}\label{classmdt_sql_form_a2a2f564fe934cc8997b07f90abb771e1}
 
 
 Call select on model that acts on main table name. 
 
 \begin{DoxyReturn}{Returns}
-True on success, false on error. On failure, the last error is avaliable with \hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{lastError()} 
+True on success, false on error. On failure, the last error is avaliable with \hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{last\-Error()} 
 \end{DoxyReturn}
 
 
-Definition at line 249 of file mdtSqlForm.cpp.
+Definition at line 249 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{
-\index{mdtSqlForm@{mdtSqlForm}!setCurrentData@{setCurrentData}}
-\index{setCurrentData@{setCurrentData}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{setCurrentData}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::setCurrentData (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Abstract\-Sql\-Widget\-::model(), pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by set\-Main\-Table\-Filter().
+
+\hypertarget{classmdt_sql_form_ae9a1f8c03e5ac8ccd01fa804356abd01}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!select@{select}}
+\index{select@{select}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{select}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::select (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName, }
-\item[{const QString \&}]{fieldName, }
-\item[{const QVariant \&}]{data, }
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_form_ae9a1f8c03e5ac8ccd01fa804356abd01}
+
+
+Call select on model that acts on given table name. 
+
+\begin{DoxyReturn}{Returns}
+True on success, false if table\-Name was not found or other error. On failure, the last error is avaliable with \hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{last\-Error()} 
+\end{DoxyReturn}
+
+
+Definition at line 264 of file mdt\-Sql\-Form.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, model(), pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!set\-Current\-Data@{set\-Current\-Data}}
+\index{set\-Current\-Data@{set\-Current\-Data}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{set\-Current\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::set\-Current\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-Variant \&}]{data, }
 \item[{bool}]{submit = {\ttfamily true}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}
+)}}\label{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}
 
 
 Set (update) data of current row (record) for given table and field name. 
 
-Note that SQL widget related to given tableName is searched at each request. If several access to setCurrentData is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a1ea800b795e3ead97e6a0452ab305d65}{sqlWidget()} , and call his \hyperlink{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{setCurrentData()} method. 
+Note that S\-Q\-L widget related to given table\-Name is searched at each request. If several access to set\-Current\-Data is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{sql\-Widget()} , and call his \hyperlink{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{set\-Current\-Data()} method. 
 
-Definition at line 383 of file mdtSqlForm.cpp.
+Definition at line 383 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_ab03dd80e9de62362dd77161ef6bd6fc2}{
-\index{mdtSqlForm@{mdtSqlForm}!setMainTable@{setMainTable}}
-\index{setMainTable@{setMainTable}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{setMainTable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::setMainTable (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Abstract\-Sql\-Widget\-::set\-Current\-Data(), mdt\-Error\-::set\-Error(), and sql\-Widget().
+
+\hypertarget{classmdt_sql_form_ab03dd80e9de62362dd77161ef6bd6fc2}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!set\-Main\-Table@{set\-Main\-Table}}
+\index{set\-Main\-Table@{set\-Main\-Table}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{set\-Main\-Table}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::set\-Main\-Table (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName, }
-\item[{const QString \&}]{userFriendlyTableName}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-String \&}]{user\-Friendly\-Table\-Name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_ab03dd80e9de62362dd77161ef6bd6fc2}
+)}}\label{classmdt_sql_form_ab03dd80e9de62362dd77161ef6bd6fc2}
 
 
 Set the main (or parent) table of the form. 
 
-Note: be shure that your Ui::setupUi() was called on widget returned by \hyperlink{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{mainSqlWidget()} before.
+Note\-: be shure that your Ui\-::setup\-Ui() was called on widget returned by \hyperlink{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{main\-Sql\-Widget()} before.
 
 
 \begin{DoxyParams}{Parameters}
-{\em tableName} & Table on witch the form must act. \\
+{\em table\-Name} & Table on witch the form must act. \\
 \hline
-{\em userFriendlyTableName} & If set, will be used at places that are visible from user. \\
+{\em user\-Friendly\-Table\-Name} & If set, will be used at places that are visible from user. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -545,34 +632,32 @@ True on success, false if given table name does not exist or on some other error
 \end{DoxyReturn}
 
 
-Definition at line 59 of file mdtSqlForm.cpp.
+Definition at line 59 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_ac2de4ee6f27d7411c2404771585204ae}{
-\index{mdtSqlForm@{mdtSqlForm}!setMainTable@{setMainTable}}
-\index{setMainTable@{setMainTable}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{setMainTable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::setMainTable (
+\hypertarget{classmdt_sql_form_ac2de4ee6f27d7411c2404771585204ae}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!set\-Main\-Table@{set\-Main\-Table}}
+\index{set\-Main\-Table@{set\-Main\-Table}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{set\-Main\-Table}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::set\-Main\-Table (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName, }
-\item[{const QString \&}]{userFriendlyTableName, }
-\item[{QSqlDatabase}]{db}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-String \&}]{user\-Friendly\-Table\-Name, }
+\item[{Q\-Sql\-Database}]{db}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_ac2de4ee6f27d7411c2404771585204ae}
+)}}\label{classmdt_sql_form_ac2de4ee6f27d7411c2404771585204ae}
 
 
 Set the main (or parent) table of the form. 
 
-Note: be shure that your Ui::setupUi() was called on widget returned by \hyperlink{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{mainSqlWidget()} before.
+Note\-: be shure that your Ui\-::setup\-Ui() was called on widget returned by \hyperlink{classmdt_sql_form_a857fc9370e2054408ae8b42e8deedbf5}{main\-Sql\-Widget()} before.
 
 This method is only useful if different tables have to act on different databases .
 
 
 \begin{DoxyParams}{Parameters}
-{\em tableName} & Table on witch the form must act. \\
+{\em table\-Name} & Table on witch the form must act. \\
 \hline
-{\em userFriendlyTableName} & If set, will be used at places that are visible from user. \\
+{\em user\-Friendly\-Table\-Name} & If set, will be used at places that are visible from user. \\
 \hline
-{\em db} & Database to use (pass a QSqlDatabase() if only one database is used). \\
+{\em db} & Database to use (pass a Q\-Sql\-Database() if only one database is used). \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -580,70 +665,130 @@ True on success, false if given table name does not exist or on some other error
 \end{DoxyReturn}
 
 
-Definition at line 64 of file mdtSqlForm.cpp.
+Definition at line 64 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_abfc6d7f49debf02f5016923cbd422f2f}{
-\index{mdtSqlForm@{mdtSqlForm}!setMainTableFilter@{setMainTableFilter}}
-\index{setMainTableFilter@{setMainTableFilter}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{setMainTableFilter}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::setMainTableFilter (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Abstract\-Sql\-Widget\-::model(), model(), pv\-Last\-Error, mdt\-Error\-::set\-Error(), mdt\-Abstract\-Sql\-Widget\-::set\-Model(), mdt\-Error\-::set\-System\-Error(), and mdt\-Abstract\-Sql\-Widget\-::set\-User\-Friendly\-Table\-Name().
+
+\hypertarget{classmdt_sql_form_abfc6d7f49debf02f5016923cbd422f2f}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!set\-Main\-Table\-Filter@{set\-Main\-Table\-Filter}}
+\index{set\-Main\-Table\-Filter@{set\-Main\-Table\-Filter}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{set\-Main\-Table\-Filter}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::set\-Main\-Table\-Filter (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{fieldName, }
-\item[{const QVariant \&}]{matchData}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-Variant \&}]{match\-Data}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_abfc6d7f49debf02f5016923cbd422f2f}
+)}}\label{classmdt_sql_form_abfc6d7f49debf02f5016923cbd422f2f}
 
 
 Set main table's filter. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em fieldName} & Field that must match data \\
+{\em field\-Name} & Field that must match data \\
 \hline
-{\em matchData} & Match data\\
+{\em match\-Data} & Match data\\
 \hline
 \end{DoxyParams}
-Internally, a SQL statement is generated linke: fieldName = matchData 
+Internally, a S\-Q\-L statement is generated linke\-: field\-Name = match\-Data 
 
-Definition at line 279 of file mdtSqlForm.cpp.
+Definition at line 279 of file mdt\-Sql\-Form.\-cpp.
 
-\hypertarget{classmdt_sql_form_a27fe6e45aa5d4d7782aad9833e6de20b}{
-\index{mdtSqlForm@{mdtSqlForm}!setupTables@{setupTables}}
-\index{setupTables@{setupTables}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{setupTables}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlForm::setupTables (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Abstract\-Sql\-Widget\-::model(), pv\-Last\-Error, select(), and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_sql_form_a27fe6e45aa5d4d7782aad9833e6de20b}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!setup\-Tables@{setup\-Tables}}
+\index{setup\-Tables@{setup\-Tables}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{setup\-Tables}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::setup\-Tables (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_sql_form_a27fe6e45aa5d4d7782aad9833e6de20b}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_form_a27fe6e45aa5d4d7782aad9833e6de20b}
 
 
 Setup tables. 
 
 Must be re-\/implemented in subclass, default implementation does nothing . 
 
-Definition at line 438 of file mdtSqlForm.cpp.
+Reimplemented in \hyperlink{classmdt_cl_unit_editor_a962cfbdda9400a7cf99ba38eec0a4155}{mdt\-Cl\-Unit\-Editor}, \hyperlink{classmdt_cl_article_editor_aded93cdb635e69fdba0f8b59054c8fce}{mdt\-Cl\-Article\-Editor}, \hyperlink{classmdt_cl_vehicle_type_editor_aa23c76e65f52575a31616267757603ae}{mdt\-Cl\-Vehicle\-Type\-Editor}, \hyperlink{classmdt_tt_test_connection_cable_editor_a2a380953c8e3dce63532c70c484f2b91}{mdt\-Tt\-Test\-Connection\-Cable\-Editor}, \hyperlink{classmdt_cl_connector_editor_a6f3fdb1041ec8d562aac777471b7892f}{mdt\-Cl\-Connector\-Editor}, and \hyperlink{classmdt_tt_test_node_editor_ac8f144b6fb17a2dd6eec9eae7a824b6b}{mdt\-Tt\-Test\-Node\-Editor}.
 
-\hypertarget{classmdt_sql_form_a1ea800b795e3ead97e6a0452ab305d65}{
-\index{mdtSqlForm@{mdtSqlForm}!sqlWidget@{sqlWidget}}
-\index{sqlWidget@{sqlWidget}!mdtSqlForm@{mdtSqlForm}}
-\subsubsection[{sqlWidget}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractSqlWidget} $\ast$ mdtSqlForm::sqlWidget (
+
+
+Definition at line 438 of file mdt\-Sql\-Form.\-cpp.
+
+\hypertarget{classmdt_sql_form_a59dc3afec69c8b6a18ed7fccb42c70ad}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!sql\-Form\-Widget@{sql\-Form\-Widget}}
+\index{sql\-Form\-Widget@{sql\-Form\-Widget}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{sql\-Form\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Sql\-Form\-Widget} $\ast$ mdt\-Sql\-Form\-::sql\-Form\-Widget (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{tableName}
+\item[{const Q\-String \&}]{table\-Name}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_form_a1ea800b795e3ead97e6a0452ab305d65}
+)}}\label{classmdt_sql_form_a59dc3afec69c8b6a18ed7fccb42c70ad}
 
 
-Get instance of the stored SQL widget related to a table name. 
-
-Returns a null pointer if widget related to tableName was not found. 
-
-Definition at line 179 of file mdtSqlForm.cpp.
+Definition at line 196 of file mdt\-Sql\-Form.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References sql\-Widget().
+
+\hypertarget{classmdt_sql_form_a6a17f32077fb7cc33139c3dc26a8d011}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!sql\-Table\-Widget@{sql\-Table\-Widget}}
+\index{sql\-Table\-Widget@{sql\-Table\-Widget}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{sql\-Table\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Sql\-Table\-Widget} $\ast$ mdt\-Sql\-Form\-::sql\-Table\-Widget (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_form_a6a17f32077fb7cc33139c3dc26a8d011}
+
+
+Definition at line 208 of file mdt\-Sql\-Form.\-cpp.
+
+
+
+References sql\-Widget().
+
+\hypertarget{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!sql\-Widget@{sql\-Widget}}
+\index{sql\-Widget@{sql\-Widget}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{sql\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Form\-::sql\-Widget (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}
+
+
+Get instance of the stored S\-Q\-L widget related to a table name. 
+
+Returns a null pointer if widget related to table\-Name was not found.
+
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. 
+
+Definition at line 179 of file mdt\-Sql\-Form.\-cpp.
+
+
+
+References mdt\-Abstract\-Sql\-Widget\-::sql\-Widgets().
+
+
+
+Referenced by current\-Data(), current\-Row(), data(), model(), set\-Current\-Data(), sql\-Form\-Widget(), and sql\-Table\-Widget().
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_sql_form_afc24e8dedd1249a29708347fdff560fd}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!pv\-Last\-Error@{pv\-Last\-Error}}
+\index{pv\-Last\-Error@{pv\-Last\-Error}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Form\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_form_afc24e8dedd1249a29708347fdff560fd}
+
+
+Definition at line 299 of file mdt\-Sql\-Form.\-h.
+
+
+
+Referenced by add\-Child\-Table(), add\-Relation(), current\-Data(), current\-Row(), data(), display\-Last\-Error(), last\-Error(), last\-Error\-W(), row\-Count(), select(), set\-Current\-Data(), set\-Main\-Table(), and set\-Main\-Table\-Filter().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtdatabase/mdtSqlForm.h\item 
-src/mdtdatabase/mdtSqlForm.cpp\end{DoxyCompactItemize}
+src/mdtdatabase/\hyperlink{mdt_sql_form_8h}{mdt\-Sql\-Form.\-h}\item 
+src/mdtdatabase/\hyperlink{mdt_sql_form_8cpp}{mdt\-Sql\-Form.\-cpp}\end{DoxyCompactItemize}

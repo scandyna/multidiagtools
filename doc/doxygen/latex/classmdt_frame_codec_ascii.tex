@@ -1,10 +1,13 @@
-\hypertarget{classmdt_frame_codec_ascii}{
-\section{mdtFrameCodecAscii Class Reference}
-\label{classmdt_frame_codec_ascii}\index{mdtFrameCodecAscii@{mdtFrameCodecAscii}}
+\hypertarget{classmdt_frame_codec_ascii}{\section{mdt\-Frame\-Codec\-Ascii Class Reference}
+\label{classmdt_frame_codec_ascii}\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}}
 }
 
 
-Inheritance diagram for mdtFrameCodecAscii:\nopagebreak
+{\ttfamily \#include $<$mdt\-Frame\-Codec\-Ascii.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Frame\-Codec\-Ascii\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,136 +16,262 @@ Inheritance diagram for mdtFrameCodecAscii:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtFrameCodecAscii:\nopagebreak
+Collaboration diagram for mdt\-Frame\-Codec\-Ascii\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=190pt]{classmdt_frame_codec_ascii__coll__graph}
+\includegraphics[width=350pt]{classmdt_frame_codec_ascii__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_frame_codec_ascii_a771d983498fb298595afbb97ee7a40f1}{setEofSeq} (QByteArray \&eofSeq)
+\hyperlink{classmdt_frame_codec_ascii_af411727ef3d8a935a863f28c99eaa695}{mdt\-Frame\-Codec\-Ascii} ()
+\item 
+\hyperlink{classmdt_frame_codec_ascii_a5c0c37daf7f203a59ec9d0f3af361100}{$\sim$mdt\-Frame\-Codec\-Ascii} ()
+\item 
+void \hyperlink{classmdt_frame_codec_ascii_a771d983498fb298595afbb97ee7a40f1}{set\-Eof\-Seq} (Q\-Byte\-Array \&eof\-Seq)
 \begin{DoxyCompactList}\small\item\em Set the Eond Of Frame Sequence. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{
-void \hyperlink{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{trim} ()}
-\label{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}
-
+void \hyperlink{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{trim} ()
 \begin{DoxyCompactList}\small\item\em Remove whitespaces at begin and end of data frame. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_frame_codec_ascii_a119506d484a807d3486d47738ee22920}{
-void \hyperlink{classmdt_frame_codec_ascii_a119506d484a807d3486d47738ee22920}{setCaseUpper} ()}
-\label{classmdt_frame_codec_ascii_a119506d484a807d3486d47738ee22920}
-
+void \hyperlink{classmdt_frame_codec_ascii_a119506d484a807d3486d47738ee22920}{set\-Case\-Upper} ()
 \begin{DoxyCompactList}\small\item\em Set frame's data to upper case. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{
-QVariant \hyperlink{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{convertData} (const QString \&data) const }
-\label{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}
-
+Q\-Variant \hyperlink{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{convert\-Data} (const Q\-String \&data) const 
 \begin{DoxyCompactList}\small\item\em Convert a string to first matching type. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 bool \hyperlink{classmdt_frame_codec_ascii_a1dc1b7eda5e034c41b27c431227881e1}{clean} ()
 \begin{DoxyCompactList}\small\item\em Clean frame. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}{removeEofSeq} ()
+bool \hyperlink{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}{remove\-Eof\-Seq} ()
 \begin{DoxyCompactList}\small\item\em Remove the End Of Frame Sequence. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_frame_codec_ascii_a1f912b05801a0db32c9fca0f2450bdb1}{
-QString {\bfseries pvAsciiData}}
-\label{classmdt_frame_codec_ascii_a1f912b05801a0db32c9fca0f2450bdb1}
-
+Q\-String \hyperlink{classmdt_frame_codec_ascii_a1f912b05801a0db32c9fca0f2450bdb1}{pv\-Ascii\-Data}
 \item 
-\hypertarget{classmdt_frame_codec_ascii_ad44132c4e3db292c71831111da748c7a}{
-QByteArray {\bfseries pvEofSeq}}
-\label{classmdt_frame_codec_ascii_ad44132c4e3db292c71831111da748c7a}
-
+Q\-Byte\-Array \hyperlink{classmdt_frame_codec_ascii_ad44132c4e3db292c71831111da748c7a}{pv\-Eof\-Seq}
 \item 
-\hypertarget{classmdt_frame_codec_ascii_aa47c85e69bc7609e21efe89de0b8308d}{
-QStringList {\bfseries pvNodes}}
-\label{classmdt_frame_codec_ascii_aa47c85e69bc7609e21efe89de0b8308d}
-
+Q\-String\-List \hyperlink{classmdt_frame_codec_ascii_aa47c85e69bc7609e21efe89de0b8308d}{pv\-Nodes}
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 29 of file mdtFrameCodecAscii.h.
+Definition at line 29 of file mdt\-Frame\-Codec\-Ascii.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_frame_codec_ascii_af411727ef3d8a935a863f28c99eaa695}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}}
+\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{mdt\-Frame\-Codec\-Ascii}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Frame\-Codec\-Ascii\-::mdt\-Frame\-Codec\-Ascii (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_frame_codec_ascii_af411727ef3d8a935a863f28c99eaa695}
+
+
+Definition at line 25 of file mdt\-Frame\-Codec\-Ascii.\-cpp.
+
+
+
+References pv\-Eof\-Seq.
+
+\hypertarget{classmdt_frame_codec_ascii_a5c0c37daf7f203a59ec9d0f3af361100}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!$\sim$mdt\-Frame\-Codec\-Ascii@{$\sim$mdt\-Frame\-Codec\-Ascii}}
+\index{$\sim$mdt\-Frame\-Codec\-Ascii@{$\sim$mdt\-Frame\-Codec\-Ascii}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{$\sim$mdt\-Frame\-Codec\-Ascii}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Frame\-Codec\-Ascii\-::$\sim$mdt\-Frame\-Codec\-Ascii (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_frame_codec_ascii_a5c0c37daf7f203a59ec9d0f3af361100}
+
+
+Definition at line 30 of file mdt\-Frame\-Codec\-Ascii.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_frame_codec_ascii_a1dc1b7eda5e034c41b27c431227881e1}{
-\index{mdtFrameCodecAscii@{mdtFrameCodecAscii}!clean@{clean}}
-\index{clean@{clean}!mdtFrameCodecAscii@{mdtFrameCodecAscii}}
-\subsubsection[{clean}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecAscii::clean (
+\hypertarget{classmdt_frame_codec_ascii_a1dc1b7eda5e034c41b27c431227881e1}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!clean@{clean}}
+\index{clean@{clean}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{clean}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Ascii\-::clean (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_frame_codec_ascii_a1dc1b7eda5e034c41b27c431227881e1}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_frame_codec_ascii_a1dc1b7eda5e034c41b27c431227881e1}
 
 
 Clean frame. 
 
-Helper method that removes white spaces at beginning and end of internal data (see QString::trimmed() ). Next, the EOF seuqence is removed.
+Helper method that removes white spaces at beginning and end of internal data (see Q\-String\-::trimmed() ). Next, the E\-O\-F seuqence is removed.
 
-If a step fails, a message is added to \hyperlink{classmdt_error}{mdtError} system.
+If a step fails, a message is added to \hyperlink{classmdt_error}{mdt\-Error} system.
 
 \begin{DoxyReturn}{Returns}
-true if EOF could be removed, and data size is $>$ 0 after clean. 
+true if E\-O\-F could be removed, and data size is $>$ 0 after clean. 
 \end{DoxyReturn}
 
 
-Definition at line 92 of file mdtFrameCodecAscii.cpp.
+Definition at line 92 of file mdt\-Frame\-Codec\-Ascii.\-cpp.
 
-\hypertarget{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}{
-\index{mdtFrameCodecAscii@{mdtFrameCodecAscii}!removeEofSeq@{removeEofSeq}}
-\index{removeEofSeq@{removeEofSeq}!mdtFrameCodecAscii@{mdtFrameCodecAscii}}
-\subsubsection[{removeEofSeq}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecAscii::removeEofSeq (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R, pv\-Ascii\-Data, and remove\-Eof\-Seq().
+
+
+
+Referenced by mdt\-Frame\-Codec\-Scpi\-::decode\-Error(), mdt\-Frame\-Codec\-Scpi\-::decode\-Idn(), mdt\-Frame\-Codec\-Scpi\-::decode\-Scpi\-Version(), and mdt\-Frame\-Codec\-Scpi\-::decode\-Values().
+
+\hypertarget{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!convert\-Data@{convert\-Data}}
+\index{convert\-Data@{convert\-Data}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{convert\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Frame\-Codec\-Ascii\-::convert\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{data}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}
+
+
+Convert a string to first matching type. 
+
+
+
+Definition at line 59 of file mdt\-Frame\-Codec\-Ascii.\-cpp.
+
+
+
+Referenced by mdt\-Frame\-Codec\-Scpi\-::decode\-Function\-Parameters(), and mdt\-Frame\-Codec\-Scpi\-::decode\-Values().
+
+\hypertarget{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!remove\-Eof\-Seq@{remove\-Eof\-Seq}}
+\index{remove\-Eof\-Seq@{remove\-Eof\-Seq}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{remove\-Eof\-Seq}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Ascii\-::remove\-Eof\-Seq (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}
 
 
 Remove the End Of Frame Sequence. 
 
-Note: this method does nothing if EofSeq was not set 
+Note\-: this method does nothing if Eof\-Seq was not set 
 
-Definition at line 111 of file mdtFrameCodecAscii.cpp.
+Definition at line 111 of file mdt\-Frame\-Codec\-Ascii.\-cpp.
 
-\hypertarget{classmdt_frame_codec_ascii_a771d983498fb298595afbb97ee7a40f1}{
-\index{mdtFrameCodecAscii@{mdtFrameCodecAscii}!setEofSeq@{setEofSeq}}
-\index{setEofSeq@{setEofSeq}!mdtFrameCodecAscii@{mdtFrameCodecAscii}}
-\subsubsection[{setEofSeq}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameCodecAscii::setEofSeq (
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R, pv\-Ascii\-Data, and pv\-Eof\-Seq.
+
+
+
+Referenced by clean(), mdt\-Frame\-Codec\-Scpi\-::decode\-Function\-Parameters(), and mdt\-Frame\-Codec\-Scpi\-::decode\-Single\-Value\-Double().
+
+\hypertarget{classmdt_frame_codec_ascii_a119506d484a807d3486d47738ee22920}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!set\-Case\-Upper@{set\-Case\-Upper}}
+\index{set\-Case\-Upper@{set\-Case\-Upper}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{set\-Case\-Upper}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Frame\-Codec\-Ascii\-::set\-Case\-Upper (
 \begin{DoxyParamCaption}
-\item[{QByteArray \&}]{eofSeq}
+{}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_ascii_a771d983498fb298595afbb97ee7a40f1}
+)}}\label{classmdt_frame_codec_ascii_a119506d484a807d3486d47738ee22920}
+
+
+Set frame's data to upper case. 
+
+
+
+Definition at line 54 of file mdt\-Frame\-Codec\-Ascii.\-cpp.
+
+
+
+References pv\-Ascii\-Data.
+
+\hypertarget{classmdt_frame_codec_ascii_a771d983498fb298595afbb97ee7a40f1}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!set\-Eof\-Seq@{set\-Eof\-Seq}}
+\index{set\-Eof\-Seq@{set\-Eof\-Seq}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{set\-Eof\-Seq}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Frame\-Codec\-Ascii\-::set\-Eof\-Seq (
+\begin{DoxyParamCaption}
+\item[{Q\-Byte\-Array \&}]{eof\-Seq}
+\end{DoxyParamCaption}
+)}}\label{classmdt_frame_codec_ascii_a771d983498fb298595afbb97ee7a40f1}
 
 
 Set the Eond Of Frame Sequence. 
 
-When using mdtLibrary's communication classes, the endOfFrame sequence is allready removed. So, this setup is optional. \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_frame}{mdtFrame} 
+When using mdt\-Library's communication classes, the end\-Of\-Frame sequence is allready removed. So, this setup is optional. \begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_frame}{mdt\-Frame} 
 
-\hyperlink{classmdt_port}{mdtPort} 
+\hyperlink{classmdt_port}{mdt\-Port} 
 
-\hyperlink{classmdt_port_manager}{mdtPortManager} 
+\hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} 
 \end{DoxySeeAlso}
 
 
-Definition at line 34 of file mdtFrameCodecAscii.cpp.
+Definition at line 34 of file mdt\-Frame\-Codec\-Ascii.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+References pv\-Eof\-Seq.
+
+\hypertarget{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!trim@{trim}}
+\index{trim@{trim}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{trim}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Frame\-Codec\-Ascii\-::trim (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}
+
+
+Remove whitespaces at begin and end of data frame. 
+
+
+
+Definition at line 49 of file mdt\-Frame\-Codec\-Ascii.\-cpp.
+
+
+
+References pv\-Ascii\-Data.
+
+
+
+Referenced by mdt\-Frame\-Codec\-Scpi\-::decode\-Function\-Parameters(), and mdt\-Frame\-Codec\-Scpi\-::decode\-Single\-Value\-Double().
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_frame_codec_ascii_a1f912b05801a0db32c9fca0f2450bdb1}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!pv\-Ascii\-Data@{pv\-Ascii\-Data}}
+\index{pv\-Ascii\-Data@{pv\-Ascii\-Data}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{pv\-Ascii\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Frame\-Codec\-Ascii\-::pv\-Ascii\-Data\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_frame_codec_ascii_a1f912b05801a0db32c9fca0f2450bdb1}
+
+
+Definition at line 79 of file mdt\-Frame\-Codec\-Ascii.\-h.
+
+
+
+Referenced by clean(), mdt\-Frame\-Codec\-Scpi\-::decode\-Error(), mdt\-Frame\-Codec\-Scpi\-::decode\-Function\-Parameters(), mdt\-Frame\-Codec\-Scpi\-::decode\-Idn(), mdt\-Frame\-Codec\-Scpi\-::decode\-Scpi\-Version(), mdt\-Frame\-Codec\-Scpi\-::decode\-Single\-Value\-Double(), mdt\-Frame\-Codec\-Scpi\-::decode\-Values(), remove\-Eof\-Seq(), set\-Case\-Upper(), and trim().
+
+\hypertarget{classmdt_frame_codec_ascii_ad44132c4e3db292c71831111da748c7a}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!pv\-Eof\-Seq@{pv\-Eof\-Seq}}
+\index{pv\-Eof\-Seq@{pv\-Eof\-Seq}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{pv\-Eof\-Seq}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Byte\-Array mdt\-Frame\-Codec\-Ascii\-::pv\-Eof\-Seq\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_frame_codec_ascii_ad44132c4e3db292c71831111da748c7a}
+
+
+Definition at line 80 of file mdt\-Frame\-Codec\-Ascii.\-h.
+
+
+
+Referenced by mdt\-Frame\-Codec\-Ascii(), remove\-Eof\-Seq(), and set\-Eof\-Seq().
+
+\hypertarget{classmdt_frame_codec_ascii_aa47c85e69bc7609e21efe89de0b8308d}{\index{mdt\-Frame\-Codec\-Ascii@{mdt\-Frame\-Codec\-Ascii}!pv\-Nodes@{pv\-Nodes}}
+\index{pv\-Nodes@{pv\-Nodes}!mdtFrameCodecAscii@{mdt\-Frame\-Codec\-Ascii}}
+\subsubsection[{pv\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Frame\-Codec\-Ascii\-::pv\-Nodes\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_frame_codec_ascii_aa47c85e69bc7609e21efe89de0b8308d}
+
+
+Definition at line 81 of file mdt\-Frame\-Codec\-Ascii.\-h.
+
+
+
+Referenced by mdt\-Frame\-Codec\-Scpi\-U3606\-A\-::decode\-Configure(), mdt\-Frame\-Codec\-Scpi\-::decode\-Error(), mdt\-Frame\-Codec\-Scpi\-::decode\-Function\-Parameters(), mdt\-Frame\-Codec\-Scpi\-::decode\-Idn(), mdt\-Frame\-Codec\-Scpi\-::decode\-Scpi\-Version(), and mdt\-Frame\-Codec\-Scpi\-::decode\-Values().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtFrameCodecAscii.h\item 
-src/mdtutils/mdtFrameCodecAscii.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_frame_codec_ascii_8h}{mdt\-Frame\-Codec\-Ascii.\-h}\item 
+src/mdtutils/\hyperlink{mdt_frame_codec_ascii_8cpp}{mdt\-Frame\-Codec\-Ascii.\-cpp}\end{DoxyCompactItemize}

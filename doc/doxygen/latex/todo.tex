@@ -1,472 +1,193 @@
-\label{todo__todo000029}
-\hypertarget{todo__todo000029}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_abstract_port}{mdtAbstractPort} ]WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! 
-\end{DoxyDescription}
 
-\label{todo__todo000030}
-\hypertarget{todo__todo000030}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_abstract_port_a54b7bfb725c91b2c292a39275b877207}{mdtAbstractPort::flushInRequestPending}() ]Thread are to adapt. 
-\end{DoxyDescription}
-
-\label{todo__todo000031}
-\hypertarget{todo__todo000031}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_abstract_port_a2cc79d9288bebafaa183753dcf0807f3}{mdtAbstractPort::flushOutRequestPending}() ]Thread are to adapt. 
-\end{DoxyDescription}
-
-\label{todo__todo000070}
-\hypertarget{todo__todo000070}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} ]Comment this class 
-\end{DoxyDescription}
-
-\label{todo__todo000071}
-\hypertarget{todo__todo000071}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{mdtAbstractSerialPort::getCtlStates}()=0 ]Update name to : updateCtlStates ? 
-\end{DoxyDescription}
-
-\label{todo__todo000073}
-\hypertarget{todo__todo000073}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}{mdtCsvFile::clear}() ]Check new function in mdtAlgorithm 
-\end{DoxyDescription}
-
-\label{todo__todo000081}
-\hypertarget{todo__todo000081}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_data_table_manager_a8fa0924a76e8f3fec9617f690cc4e148}{mdtDataTableManager::dataSetDirectory}() const  ]Not used yet. 
-\end{DoxyDescription}
-
-\label{todo__todo000082}
-\hypertarget{todo__todo000082}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_data_table_manager_abe733f071ca77579522823598e79dd9a}{mdtDataTableManager::exportToCsvFile}(const QString \&filePath, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{mdtSqlDatabaseManager::createMode\_\-t} mode) ]Add: separator, data protection, escape char, EOL 
-
-Implement ... 
-\end{DoxyDescription}
-
-\label{todo__todo000080}
-\hypertarget{todo__todo000080}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_data_table_manager_a1e19b3f34c1b0a91bcae4396731efc57}{mdtDataTableManager::setDataSetDirectory}(const QDir \&dir) ]Not used yet. 
-\end{DoxyDescription}
-
-\label{todo__todo000006}
-\hypertarget{todo__todo000006}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_a79ca328ff9e9f413a38c1cc9c9267cee}{mdtDevice::lastError}() const  ]Not completly used currently, must be implemented in this class + subclasses . 
-\end{DoxyDescription}
-
-\label{todo__todo000007}
-\hypertarget{todo__todo000007}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{mdtDevice::waitTransactionDone}(int id) ]Adapt, comment
-\end{DoxyDescription}
-
-\label{todo__todo000033}
-\hypertarget{todo__todo000033}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}{mdtDeviceInfo::productName}() const  ]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdtUsbDeviceDescriptor} 
-\end{DoxyDescription}
-
-\label{todo__todo000032}
-\hypertarget{todo__todo000032}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_info_a207d7b6b49fd65726232e95cd9e0568c}{mdtDeviceInfo::vendorName}() const  ]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdtUsbDeviceDescriptor} 
-\end{DoxyDescription}
-
-\label{todo__todo000011}
-\hypertarget{todo__todo000011}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_abfcab17fbf05aab7843ae689316dd01f}{mdtDeviceModbus::connectToDevice}() ]Not implemented yet . 
-\end{DoxyDescription}
-
-\label{todo__todo000008}
-\hypertarget{todo__todo000008}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_ac69cfbe26681342ba05672ab63de2a1f}{mdtDeviceModbus::mdtDeviceModbus}(QObject $\ast$parent=0) ]Provisoire ! 
-\end{DoxyDescription}
-
-\label{todo__todo000012}
-\hypertarget{todo__todo000012}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_wago_aae46b00317190b70a59080e9b2917ed6}{mdtDeviceModbusWago::detectIos}(const QMap$<$ int, mdtDeviceModbusWagoModule $\ast$ $>$ specialModules=QMap$<$ int, \hyperlink{classmdt_device_modbus_wago_module}{mdtDeviceModbusWagoModule} $\ast$ $>$()) ]Handle adrress mapping of bus coupler (can be a problem with $>$ 256 I/O on 750-\/352 f.ex.) 
-
-Provisoire !!!! 
-\end{DoxyDescription}
-
-\label{todo__todo000015}
-\hypertarget{todo__todo000015}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_wago_module_ad803f3aa8d9777feaa5cdb3a4cccd316}{mdtDeviceModbusWagoModule::addRegisters}(int channelCount, int firstAddressRead, int firstAddressWrite) ]Gag avec adresses !! 
-\end{DoxyDescription}
-
-\label{todo__todo000016}
-\hypertarget{todo__todo000016}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_wago_module_aa775cffab72f7ed7cd92a48d26da3225}{mdtDeviceModbusWagoModule::readRegisters}(int firstChannel, int lastChannel, bool needDeviceSetupState) ]Implement needDeviceSetupState 
-
-Change to status byte of last channel + 1...... 
-\end{DoxyDescription}
-
-\label{todo__todo000019}
-\hypertarget{todo__todo000019}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_wago_module_a90bd4625c8b1efcd34cd56b31dc2f72c}{mdtDeviceModbusWagoModule::readStatusBytes}(int firstChannel, int lastChannel, bool needDeviceSetupState) ]Implement needDeviceSetupState 
-\end{DoxyDescription}
-
-\label{todo__todo000021}
-\hypertarget{todo__todo000021}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_wago_module_adf7431cd4d41d7839b42cc21badeabc5}{mdtDeviceModbusWagoModule::setupFromRegisterWord}(quint16 word) ]Adapt
-
-Implement 
-\end{DoxyDescription}
-
-\label{todo__todo000020}
-\hypertarget{todo__todo000020}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_wago_module_a92cf3b411849e57c1d392ffa1b2e2ce6}{mdtDeviceModbusWagoModule::writeControlBytes}(int firstChannel, int lastChannel, bool needDeviceSetupState) ]Implement needDeviceSetupState 
-\end{DoxyDescription}
-
-\label{todo__todo000018}
-\hypertarget{todo__todo000018}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_wago_module_a8fe809c91ccbf05f77c189fbaba12b91}{mdtDeviceModbusWagoModule::writeRegisters}(int firstChannel, int lastChannel, bool needDeviceSetupState) ]Implement needDeviceSetupState 
-\end{DoxyDescription}
-
-\label{todo__todo000022}
-\hypertarget{todo__todo000022}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_modbus_wago_module_rtd_a4d48b7646a6a1da76126f8b32aa6f499}{mdtDeviceModbusWagoModuleRtd::mdtDeviceModbusWagoModuleRtd}(bool autoDeleteIos, \hyperlink{classmdt_device_modbus_wago}{mdtDeviceModbusWago} $\ast$device) ]Finish/correct setIoCount(4); 
-\end{DoxyDescription}
-
-\label{todo__todo000025}
-\hypertarget{todo__todo000025}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_scpi_a65c6f747ac6c6fe727a7359f78139168}{mdtDeviceScpi::checkDeviceError}() ]Buggy, review !
-\end{DoxyDescription}
-
-\label{todo__todo000024}
-\hypertarget{todo__todo000024}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}{mdtDeviceScpi::connectToDevice}(const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo) ]Add DeviceNotFound error ? 
-\end{DoxyDescription}
-
-\label{todo__todo000026}
-\hypertarget{todo__todo000026}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_scpi_a16b6b0c77b1078da285f9d8d9ba52181}{mdtDeviceScpi::handleDeviceError}(const QList$<$ QVariant $>$ \&decodedValues) ]Buggy, review !
-\end{DoxyDescription}
-
-\label{todo__todo000027}
-\hypertarget{todo__todo000027}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_scpi_af1cc7d9c99832fa3a7b3c5764588c637}{mdtDeviceScpi::handleDeviceSpecificError}(int errNum, const QString \&errText, const QList$<$ QString $>$ \&deviceSpecificTexts) ]Buggy, review !
-\end{DoxyDescription}
-
-\label{todo__todo000005}
-\hypertarget{todo__todo000005}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_device_u3606_a_widget}{mdtDeviceU3606AWidget} ]A supprimer !(?)! 
-\end{DoxyDescription}
-
-\label{todo__todo000004}
-\hypertarget{todo__todo000004}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_device_u3606_a_widget_a653d85749d67555d8c3a43a779b6d2a2}{mdtDeviceU3606AWidget::mdtDeviceU3606AWidget}(QWidget $\ast$parent=0) ]A supprimer !(?)! 
-\end{DoxyDescription}
-
-\label{todo__todo000076}
-\hypertarget{todo__todo000076}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_frame_codec_k8055_a9dfe60529b0e80d5bbd3852fdea51b18}{mdtFrameCodecK8055::decode}(QByteArray \&data) ]check status field ?? 
-\end{DoxyDescription}
-
-\label{todo__todo000077}
-\hypertarget{todo__todo000077}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}{mdtFrameCodecScpi::decodeIEEEdataAscii}(const QByteArray \&data) ]Not implemented yet 
-\end{DoxyDescription}
-
-\label{todo__todo000078}
-\hypertarget{todo__todo000078}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{mdtFrameCodecScpi::decodeIEEEdataByte}(const QByteArray \&data) ]Not implemented yet 
-\end{DoxyDescription}
-
-\label{todo__todo000079}
-\hypertarget{todo__todo000079}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}{mdtFrameUsbTmc::putData}(const char $\ast$data, int maxLen) ]other bmTransferAttributes 
-\end{DoxyDescription}
-
-\label{todo__todo000035}
-\hypertarget{todo__todo000035}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_modbus_tcp_port_manager_ad941ea607f00db54aa6deb2866a539e9}{mdtModbusTcpPortManager::fromThreadNewFrameReaden}() ]Error on incomplete frame 
-
-check about transaction ID ? Should be a assertion ? 
-\end{DoxyDescription}
-
-\label{todo__todo000034}
-\hypertarget{todo__todo000034}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_modbus_tcp_port_manager_a208a3b2522795974836fd8aef406725a}{mdtModbusTcpPortManager::sendData}(\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction) ]Handle this ? 
-\end{DoxyDescription}
-
-\label{todo__todo000028}
-\hypertarget{todo__todo000028}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_port_lock}{mdtPortLock} ]Implement UUCP format in LCK.. files 
-\end{DoxyDescription}
-
-\label{todo__todo000040}
-\hypertarget{todo__todo000040}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_port_manager}{mdtPortManager} ]Port manager has no raison to inherit QThread -\/$>$ make it inherit QObject 
-
-Document init, open, close, ...
-\end{DoxyDescription}
-
-\label{todo__todo000039}
-\hypertarget{todo__todo000039}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{mdtPortManager::fromThreadNewFrameReaden}() ]A méditer: 
-\end{DoxyDescription}
-
-\label{todo__todo000042}
-\hypertarget{todo__todo000042}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtPortManager::openPort}() ]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} 
-
-Handle and/or display error $<$-\/ Note: no graphical dialog here ! Or.. yes ? 
-\end{DoxyDescription}
-
-\label{todo__todo000044}
-\hypertarget{todo__todo000044}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} ]suspendTransmission() call is no longer in getNewFrameRead(), must be handled in run() now. 
-\end{DoxyDescription}
-
-\label{todo__todo000045}
-\hypertarget{todo__todo000045}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_port_status_widget_a8fce28ddb290512f5681cf800ac17b81}{mdtPortStatusWidget::showMessage}(const QString \&message, const QString \&details, int timeout=0) ]Implement details ! 
-\end{DoxyDescription}
-
-\label{todo__todo000048}
-\hypertarget{todo__todo000048}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{mdtPortThread::errorOccured}(int error) ]Adapt threads + port managers
-\end{DoxyDescription}
-
-\label{todo__todo000046}
-\hypertarget{todo__todo000046}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_port_thread_abee1d2f9b67ca37cfd13e108ca978b36}{mdtPortThread::reconnect}(bool notify=true) ]emit connected() 
-
-notify ConnectionFailed 
-\end{DoxyDescription}
-
-\label{todo__todo000049}
-\hypertarget{todo__todo000049}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_port_thread_helper_aed853f4cedc143c62e7dad5e38ff4b8c}{mdtPortThreadHelper::getNewFrameRead}() ]Currently implemented in polling, should be done with a wait condition.
-\end{DoxyDescription}
-
-\label{todo__todo000050}
-\hypertarget{todo__todo000050}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_port_thread_helper_socket_aa77afb8d26e4863bd437e0d59efae7a7}{mdtPortThreadHelperSocket::mdtPortThreadHelperSocket}(QObject $\ast$parent=0) ]Implement socket options (think also about \hyperlink{classmdt_port_config}{mdtPortConfig}) 
-\end{DoxyDescription}
-
-\label{todo__todo000083}
-\hypertarget{todo__todo000083}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_database_manager_a336b722f66e13c5c9b09575642f7b273}{mdtSqlDatabaseManager::openDatabaseSqlite}(const QFileInfo \&fileInfo, const QString \&connectionName=QString()) ]Close here ?? 
-\end{DoxyDescription}
-
-\label{todo__todo000001}
-\hypertarget{todo__todo000001}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_dialog_affba1732b5f32db150d0e700ecc339f8}{mdtSqlDialog::accept}() ]Fix this ! 
-\end{DoxyDescription}
-
-\label{todo__todo000002}
-\hypertarget{todo__todo000002}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_dialog_ada1726d5861cb071fab7a1c31bc52abb}{mdtSqlDialog::reject}() ]Fix this ! 
-\end{DoxyDescription}
-
-\label{todo__todo000084}
-\hypertarget{todo__todo000084}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_dialog_old_a658d4a0a9bc97cb8a354a5b2157ab1a0}{mdtSqlDialogOld::setCurrentRow}(const QList$<$ QPair$<$ QString, QVariant $>$ $>$ \&matchList) ]Implement in \hyperlink{classmdt_abstract_sql_widget}{mdtAbstractSqlWidget} and here 
-\end{DoxyDescription}
-
-\label{todo__todo000087}
-\hypertarget{todo__todo000087}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_field_handler_ad482be9d476c3310373078a6cd949714}{mdtSqlFieldHandler::clearWidgetData}() ]Below becomes obselète 
-\end{DoxyDescription}
-
-\label{todo__todo000086}
-\hypertarget{todo__todo000086}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_field_handler_a91ab8160d5015b6030e7169ab7108d33}{mdtSqlFieldHandler::dataWidget}() ]Below becomes obselète 
-\end{DoxyDescription}
-
-\label{todo__todo000085}
-\hypertarget{todo__todo000085}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_sql_field_handler_abstract_data_widget}{mdtSqlFieldHandlerAbstractDataWidget} ]Implement other data editors (now only QLineEdit is implemented) 
-\end{DoxyDescription}
-
-\label{todo__todo000088}
-\hypertarget{todo__todo000088}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_sql_form_dialog}{mdtSqlFormDialog} ]Obselete this class 
-\end{DoxyDescription}
-
-\label{todo__todo000089}
-\hypertarget{todo__todo000089}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_form_widget_ace4f7fad749a4efe1233b61d071b3926}{mdtSqlFormWidget::mapFormWidgets}(const QString \&firstWidgetInTabOrder=QString()) ]Check redoundances with onCurrentIndexChanged() 
-\end{DoxyDescription}
-
-\label{todo__todo000090}
-\hypertarget{todo__todo000090}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_sql_form_window}{mdtSqlFormWindow} ]Obselete this class 
-\end{DoxyDescription}
-
-\label{todo__todo000093}
-\hypertarget{todo__todo000093}{}
- 
-\begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_sql_table_model}{mdtSqlTableModel} ]Check if not obselete ? 
-\end{DoxyDescription}
-
-\label{todo__todo000092}
-\hypertarget{todo__todo000092}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_table_model_ad423c1b0c74ecbbb575637b028c2574b}{mdtSqlTableModel::mdtSqlTableModel}(QObject $\ast$parent=0, QSqlDatabase db=QSqlDatabase()) ]Check if not obselete ? 
-\end{DoxyDescription}
-
-\label{todo__todo000003}
-\hypertarget{todo__todo000003}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_window_a961d587d63b0997a10db6728773a108f}{mdtSqlWindow::disableNavigation}() ]Possible ? 
-\end{DoxyDescription}
-
-\label{todo__todo000094}
-\hypertarget{todo__todo000094}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_sql_window_old_a5c1dd39dcead4e1f44e7c59c567caaeb}{mdtSqlWindowOld::disableNavigation}() ]Possible ? 
-\end{DoxyDescription}
-
-\label{todo__todo000053}
-\hypertarget{todo__todo000053}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usb_device_descriptor_a626afc71d8e72600f12259ac6f5a5866}{mdtUsbDeviceDescriptor::productName}() const  ]Parsing the usb.ids (see \href{http://www.linux-usb.org}{\tt http://www.linux-\/usb.org}) 
-\end{DoxyDescription}
-
-\label{todo__todo000052}
-\hypertarget{todo__todo000052}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usb_device_descriptor_ac2f746ebd5540b65bf00f82c991f5c3b}{mdtUsbDeviceDescriptor::vendorName}() const  ]Parsing the usb.ids (see \href{http://www.linux-usb.org}{\tt http://www.linux-\/usb.org}) 
-\end{DoxyDescription}
-
-\label{todo__todo000057}
-\hypertarget{todo__todo000057}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usb_port_manager_a34bf0ac118e586bf2547a98964a2230c}{mdtUsbPortManager::waitReadenControlResponse}() ]Adapt using internal timeouts + errors system 
-\end{DoxyDescription}
-
-\label{todo__todo000059}
-\hypertarget{todo__todo000059}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{mdtUsbtmcPortManager::fromThreadNewFrameReaden}() ]On complete frame, check bTag/bTagInverse, and INITIATE\_\-CLEAR on error. $<$-\/ Should be done in thread.. 
-
-Check ID coherence ? Should be a assertion ? 
-\end{DoxyDescription}
-
-\label{todo__todo000061}
-\hypertarget{todo__todo000061}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usbtmc_port_manager_ab1604a1c8f2e9192714d039dbf9a5158}{mdtUsbtmcPortManager::sendReadRequest}(bool enqueueResponse) ]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. 
-\end{DoxyDescription}
-
-\label{todo__todo000058}
-\hypertarget{todo__todo000058}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usbtmc_port_manager_a7bcc280bd4a26ed523832550b1e61553}{mdtUsbtmcPortManager::sendReadStatusByteRequest}() ]finish ! 
-\end{DoxyDescription}
+\begin{DoxyRefList}
+\item[\label{todo__todo000077}%
+\hypertarget{todo__todo000077}{}%
+Member \hyperlink{mdt_error_8h_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5}{mdt\-\_\-error\-\_\-t} ]Check if this is not obselete ? Errors are very specific, and per module/class error enum seems to be better than a central, very big and incoherent enum ...  
+\item[\label{todo__todo000016}%
+\hypertarget{todo__todo000016}{}%
+Class \hyperlink{classmdt_abstract_port}{mdt\-Abstract\-Port} ]Waiting\-Canceled, Write\-Canceled, Read\-Canceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd !  
+\item[\label{todo__todo000017}%
+\hypertarget{todo__todo000017}{}%
+Member \hyperlink{classmdt_abstract_port_a54b7bfb725c91b2c292a39275b877207}{mdt\-Abstract\-Port\-:\-:flush\-In\-Request\-Pending} ()]Thread are to adapt.  
+\item[\label{todo__todo000018}%
+\hypertarget{todo__todo000018}{}%
+Member \hyperlink{classmdt_abstract_port_a2cc79d9288bebafaa183753dcf0807f3}{mdt\-Abstract\-Port\-:\-:flush\-Out\-Request\-Pending} ()]Thread are to adapt.  
+\item[\label{todo__todo000040}%
+\hypertarget{todo__todo000040}{}%
+Class \hyperlink{classmdt_abstract_serial_port}{mdt\-Abstract\-Serial\-Port} ]Comment this class  
+\item[\label{todo__todo000041}%
+\hypertarget{todo__todo000041}{}%
+Member \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{mdt\-Abstract\-Serial\-Port\-:\-:get\-Ctl\-States} ()=0]Update name to \-: update\-Ctl\-States ?  
+\item[\label{todo__todo000044}%
+\hypertarget{todo__todo000044}{}%
+Member \hyperlink{classmdt_cl_link_ac32bfef9f23b431ea4d3d546e6c21361}{mdt\-Cl\-Link\-:\-:disconnect\-Connectors} (const Q\-Variant \&start\-Unit\-Connector\-Id, const Q\-Variant \&end\-Unit\-Connector\-Id, const Q\-List$<$ Q\-Variant $>$ \&start\-Vehicle\-Type\-Id\-List, const Q\-List$<$ Q\-Variant $>$ \&end\-Vehicle\-Type\-Id\-List)]In current version, vehicle type list are not token in acount. This will be the case once remove\-Link() is fixed. 
+
+In current version, vehicle type list are not token in acount. This will be the case once remove\-Link() is fixed.  
+\item[\label{todo__todo000043}%
+\hypertarget{todo__todo000043}{}%
+Member \hyperlink{classmdt_cl_link_a865c0cee1fab1c9209d139dcd70f9fbd}{mdt\-Cl\-Link\-:\-:remove\-Link} (const Q\-Variant \&unit\-Connection\-Start\-Id, const Q\-Variant \&unit\-Connection\-End\-Id, bool handle\-Transaction=true)]Wrong way for delete\-: will delete links for all vehicle type assoc. Check about a overloaded method that limits vehicle type assoc. , that only remove the link in Link\-\_\-tbl when no entry exists in Vehicle\-Type\-\_\-\-Link\-\_\-tbl  
+\item[\label{todo__todo000046}%
+\hypertarget{todo__todo000046}{}%
+Member \hyperlink{classmdt_cl_path_graph_a63ddfb9e8d64041ad17c992eac172a8a}{mdt\-Cl\-Path\-Graph\-:\-:last\-Error\-Message} () const ]Should become Obselete .  
+\item[\label{todo__todo000047}%
+\hypertarget{todo__todo000047}{}%
+Member \hyperlink{classmdt_cl_unit_a9aa3d52f4e6d79fa003d96e04be8223e}{mdt\-Cl\-Unit\-:\-:add\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List} (\hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} \&data, const Q\-List$<$ Q\-Variant $>$ \&article\-Connection\-Id\-List, bool copy\-Contact\-Name)]What is better ? 2 methods ?? Should coherence between article connection and article connector be done ? Or let add\-Connector() do it ? 
+\item[\label{todo__todo000048}%
+\hypertarget{todo__todo000048}{}%
+Member \hyperlink{classmdt_cl_unit_connection_data_a6922e05be582dd95de82bfe4dd8434f9}{mdt\-Cl\-Unit\-Connection\-Data\-:\-:mdt\-Cl\-Unit\-Connection\-Data} (const Q\-Sql\-Record \&record)]Check that the generated flag is updated (use has\-Data() for check...)  
+\item[\label{todo__todo000075}%
+\hypertarget{todo__todo000075}{}%
+Member \hyperlink{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}{mdt\-Csv\-File\-:\-:clear} ()]Check new function in mdt\-Algorithm  
+\item[\label{todo__todo000081}%
+\hypertarget{todo__todo000081}{}%
+Member \hyperlink{classmdt_data_table_manager_a8fa0924a76e8f3fec9617f690cc4e148}{mdt\-Data\-Table\-Manager\-:\-:data\-Set\-Directory} () const ]Not used yet.  
+\item[\label{todo__todo000082}%
+\hypertarget{todo__todo000082}{}%
+Member \hyperlink{classmdt_data_table_manager_abe733f071ca77579522823598e79dd9a}{mdt\-Data\-Table\-Manager\-:\-:export\-To\-Csv\-File} (const Q\-String \&file\-Path, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{mdt\-Sql\-Database\-Manager\-::create\-Mode\-\_\-t} mode)]Add\-: separator, data protection, escape char, E\-O\-L 
+
+Implement ...  
+\item[\label{todo__todo000080}%
+\hypertarget{todo__todo000080}{}%
+Member \hyperlink{classmdt_data_table_manager_a1e19b3f34c1b0a91bcae4396731efc57}{mdt\-Data\-Table\-Manager\-:\-:set\-Data\-Set\-Directory} (const Q\-Dir \&dir)]Not used yet.  
+\item[\label{todo__todo000003}%
+\hypertarget{todo__todo000003}{}%
+Member \hyperlink{classmdt_device_a79ca328ff9e9f413a38c1cc9c9267cee}{mdt\-Device\-:\-:last\-Error} () const ]Not completly used currently, must be implemented in this class + subclasses .  
+\item[\label{todo__todo000004}%
+\hypertarget{todo__todo000004}{}%
+Member \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{mdt\-Device\-:\-:wait\-Transaction\-Done} (int id)]Adapt, comment 
+\item[\label{todo__todo000020}%
+\hypertarget{todo__todo000020}{}%
+Member \hyperlink{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}{mdt\-Device\-Info\-:\-:product\-Name} () const ]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor}  
+\item[\label{todo__todo000019}%
+\hypertarget{todo__todo000019}{}%
+Member \hyperlink{classmdt_device_info_a207d7b6b49fd65726232e95cd9e0568c}{mdt\-Device\-Info\-:\-:vendor\-Name} () const ]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor}  
+\item[\label{todo__todo000006}%
+\hypertarget{todo__todo000006}{}%
+Member \hyperlink{classmdt_device_modbus_abfcab17fbf05aab7843ae689316dd01f}{mdt\-Device\-Modbus\-:\-:connect\-To\-Device} ()]Not implemented yet .  
+\item[\label{todo__todo000005}%
+\hypertarget{todo__todo000005}{}%
+Member \hyperlink{classmdt_device_modbus_ac69cfbe26681342ba05672ab63de2a1f}{mdt\-Device\-Modbus\-:\-:mdt\-Device\-Modbus} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)]Provisoire !  
+\item[\label{todo__todo000007}%
+\hypertarget{todo__todo000007}{}%
+Member \hyperlink{classmdt_device_modbus_wago_module_aa775cffab72f7ed7cd92a48d26da3225}{mdt\-Device\-Modbus\-Wago\-Module\-:\-:read\-Registers} (int first\-Channel, int last\-Channel, bool need\-Device\-Setup\-State)]Implement need\-Device\-Setup\-State  
+\item[\label{todo__todo000009}%
+\hypertarget{todo__todo000009}{}%
+Member \hyperlink{classmdt_device_modbus_wago_module_a90bd4625c8b1efcd34cd56b31dc2f72c}{mdt\-Device\-Modbus\-Wago\-Module\-:\-:read\-Status\-Bytes} (int first\-Channel, int last\-Channel, bool need\-Device\-Setup\-State)]Implement need\-Device\-Setup\-State  
+\item[\label{todo__todo000011}%
+\hypertarget{todo__todo000011}{}%
+Member \hyperlink{classmdt_device_modbus_wago_module_adf7431cd4d41d7839b42cc21badeabc5}{mdt\-Device\-Modbus\-Wago\-Module\-:\-:setup\-From\-Register\-Word} (quint16 word)]Adapt 
+\item[\label{todo__todo000010}%
+\hypertarget{todo__todo000010}{}%
+Member \hyperlink{classmdt_device_modbus_wago_module_a92cf3b411849e57c1d392ffa1b2e2ce6}{mdt\-Device\-Modbus\-Wago\-Module\-:\-:write\-Control\-Bytes} (int first\-Channel, int last\-Channel, bool need\-Device\-Setup\-State)]Implement need\-Device\-Setup\-State  
+\item[\label{todo__todo000008}%
+\hypertarget{todo__todo000008}{}%
+Member \hyperlink{classmdt_device_modbus_wago_module_a8fe809c91ccbf05f77c189fbaba12b91}{mdt\-Device\-Modbus\-Wago\-Module\-:\-:write\-Registers} (int first\-Channel, int last\-Channel, bool need\-Device\-Setup\-State)]Implement need\-Device\-Setup\-State  
+\item[\label{todo__todo000012}%
+\hypertarget{todo__todo000012}{}%
+Member \hyperlink{classmdt_device_scpi_a65c6f747ac6c6fe727a7359f78139168}{mdt\-Device\-Scpi\-:\-:check\-Device\-Error} ()]Buggy, review ! 
+\item[\label{todo__todo000013}%
+\hypertarget{todo__todo000013}{}%
+Member \hyperlink{classmdt_device_scpi_a16b6b0c77b1078da285f9d8d9ba52181}{mdt\-Device\-Scpi\-:\-:handle\-Device\-Error} (const Q\-List$<$ Q\-Variant $>$ \&decoded\-Values)]Buggy, review ! 
+\item[\label{todo__todo000014}%
+\hypertarget{todo__todo000014}{}%
+Member \hyperlink{classmdt_device_scpi_af1cc7d9c99832fa3a7b3c5764588c637}{mdt\-Device\-Scpi\-:\-:handle\-Device\-Specific\-Error} (int err\-Num, const Q\-String \&err\-Text, const Q\-List$<$ Q\-String $>$ \&device\-Specific\-Texts)]Buggy, review ! 
+\item[\label{todo__todo000002}%
+\hypertarget{todo__todo000002}{}%
+Class \hyperlink{classmdt_device_u3606_a_widget}{mdt\-Device\-U3606\-A\-Widget} ]A supprimer !(?)!  
+\item[\label{todo__todo000001}%
+\hypertarget{todo__todo000001}{}%
+Member \hyperlink{classmdt_device_u3606_a_widget_a653d85749d67555d8c3a43a779b6d2a2}{mdt\-Device\-U3606\-A\-Widget\-:\-:mdt\-Device\-U3606\-A\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent=0)]A supprimer !(?)!  
+\item[\label{todo__todo000078}%
+\hypertarget{todo__todo000078}{}%
+Member \hyperlink{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}{mdt\-Frame\-Codec\-Scpi\-:\-:decode\-I\-E\-E\-Edata\-Ascii} (const Q\-Byte\-Array \&data)]Not implemented yet  
+\item[\label{todo__todo000079}%
+\hypertarget{todo__todo000079}{}%
+Member \hyperlink{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{mdt\-Frame\-Codec\-Scpi\-:\-:decode\-I\-E\-E\-Edata\-Byte} (const Q\-Byte\-Array \&data)]Not implemented yet  
+\item[\label{todo__todo000015}%
+\hypertarget{todo__todo000015}{}%
+Class \hyperlink{classmdt_port_lock}{mdt\-Port\-Lock} ]Implement U\-U\-C\-P format in L\-C\-K.. files  
+\item[\label{todo__todo000022}%
+\hypertarget{todo__todo000022}{}%
+Class \hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} ]Port manager has no raison to inherit \hyperlink{class_q_thread}{Q\-Thread} -\/$>$ make it inherit \hyperlink{class_q_object}{Q\-Object} 
+
+Document init, open, close, ... 
+\item[\label{todo__todo000021}%
+\hypertarget{todo__todo000021}{}%
+Member \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{mdt\-Port\-Manager\-:\-:from\-Thread\-New\-Frame\-Readen} ()]A méditer\-:
+\begin{DoxyItemize}
+\item Lock le mutex
+\item Prendre les frames disponibles (-\/$>$ sdans une liste ...)
+\item Libéréer le mutex
+\item Effectier les traitements
+\item Lock le mutex
+\item Restituer les frames
+\item Libéréer le mutex  
+\end{DoxyItemize}
+\item[\label{todo__todo000024}%
+\hypertarget{todo__todo000024}{}%
+Member \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdt\-Port\-Manager\-:\-:open\-Port} ()]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t}  
+\item[\label{todo__todo000026}%
+\hypertarget{todo__todo000026}{}%
+Class \hyperlink{classmdt_port_read_thread}{mdt\-Port\-Read\-Thread} ]suspend\-Transmission() call is no longer in get\-New\-Frame\-Read(), must be handled in run() now.  
+\item[\label{todo__todo000027}%
+\hypertarget{todo__todo000027}{}%
+Member \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{mdt\-Port\-Thread\-:\-:error\-Occured} (int error)]Adapt threads + port managers 
+\item[\label{todo__todo000028}%
+\hypertarget{todo__todo000028}{}%
+Member \hyperlink{classmdt_port_thread_helper_aed853f4cedc143c62e7dad5e38ff4b8c}{mdt\-Port\-Thread\-Helper\-:\-:get\-New\-Frame\-Read} ()]Currently implemented in polling, should be done with a wait condition. 
+\item[\label{todo__todo000029}%
+\hypertarget{todo__todo000029}{}%
+Member \hyperlink{classmdt_port_thread_helper_socket_aa77afb8d26e4863bd437e0d59efae7a7}{mdt\-Port\-Thread\-Helper\-Socket\-:\-:mdt\-Port\-Thread\-Helper\-Socket} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)]Implement socket options (think also about \hyperlink{classmdt_port_config}{mdt\-Port\-Config})  
+\item[\label{todo__todo000083}%
+\hypertarget{todo__todo000083}{}%
+Member \hyperlink{classmdt_sql_dialog_old_a658d4a0a9bc97cb8a354a5b2157ab1a0}{mdt\-Sql\-Dialog\-Old\-:\-:set\-Current\-Row} (const Q\-List$<$ Q\-Pair$<$ Q\-String, Q\-Variant $>$ $>$ \&match\-List)]Implement in \hyperlink{classmdt_abstract_sql_widget}{mdt\-Abstract\-Sql\-Widget} and here  
+\item[\label{todo__todo000084}%
+\hypertarget{todo__todo000084}{}%
+Class \hyperlink{classmdt_sql_field_handler_abstract_data_widget}{mdt\-Sql\-Field\-Handler\-Abstract\-Data\-Widget} ]Implement other data editors (now only Q\-Line\-Edit is implemented)  
+\item[\label{todo__todo000085}%
+\hypertarget{todo__todo000085}{}%
+Class \hyperlink{classmdt_sql_form_dialog}{mdt\-Sql\-Form\-Dialog} ]Obselete this class  
+\item[\label{todo__todo000086}%
+\hypertarget{todo__todo000086}{}%
+Class \hyperlink{classmdt_sql_form_window}{mdt\-Sql\-Form\-Window} ]Obselete this class  
+\item[\label{todo__todo000089}%
+\hypertarget{todo__todo000089}{}%
+Class \hyperlink{classmdt_sql_table_model}{mdt\-Sql\-Table\-Model} ]Check if not obselete ?  
+\item[\label{todo__todo000088}%
+\hypertarget{todo__todo000088}{}%
+Member \hyperlink{classmdt_sql_table_model_ad423c1b0c74ecbbb575637b028c2574b}{mdt\-Sql\-Table\-Model\-:\-:mdt\-Sql\-Table\-Model} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0, Q\-Sql\-Database db=Q\-Sql\-Database())]Check if not obselete ?  
+\item[\label{todo__todo000051}%
+\hypertarget{todo__todo000051}{}%
+Class \hyperlink{classmdt_tt_base}{mdt\-Tt\-Base} ]Should inherit \hyperlink{class_q_object}{Q\-Object}, because\-:
+\begin{DoxyItemize}
+\item Use of tr()
+\item Use Q\-Object\-::destroyed() signal (see mdt\-Tt\-Test for a typical usecase)  
+\end{DoxyItemize}
+\item[\label{todo__todo000050}%
+\hypertarget{todo__todo000050}{}%
+Member \hyperlink{classmdt_tt_base_a6dbd221d1518e30c3692a7ba54b57c03}{mdt\-Tt\-Base\-:\-:mdt\-Tt\-Base} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent, Q\-Sql\-Database db)]Add tr() in errors  
+\item[\label{todo__todo000052}%
+\hypertarget{todo__todo000052}{}%
+Member \hyperlink{classmdt_tt_database_schema_ace92b340a68ce07ad477502a68de4514}{mdt\-Tt\-Database\-Schema\-:\-:check\-Schema} ()]Current version only checks that all expected tables exists . 
+\item[\label{todo__todo000073}%
+\hypertarget{todo__todo000073}{}%
+Member \hyperlink{classmdt_tt_test_connection_cable_a0fcfed15264ef80fbb9e566aaf0df4e5}{mdt\-Tt\-Test\-Connection\-Cable\-:\-:add\-Link} (const Q\-Variant \&test\-Connection\-Id, const Q\-Variant \&dut\-Connection\-Id, const Q\-Variant \&test\-Cable\-Id, const Q\-Variant \&identification, const Q\-Variant \&value)]Obselete this version  
+\item[\label{todo__todo000031}%
+\hypertarget{todo__todo000031}{}%
+Member \hyperlink{classmdt_usb_device_descriptor_a626afc71d8e72600f12259ac6f5a5866}{mdt\-Usb\-Device\-Descriptor\-:\-:product\-Name} () const ]Parsing the usb.\-ids (see \href{http://www.linux-usb.org}{\tt http\-://www.\-linux-\/usb.\-org})  
+\item[\label{todo__todo000030}%
+\hypertarget{todo__todo000030}{}%
+Member \hyperlink{classmdt_usb_device_descriptor_ac2f746ebd5540b65bf00f82c991f5c3b}{mdt\-Usb\-Device\-Descriptor\-:\-:vendor\-Name} () const ]Parsing the usb.\-ids (see \href{http://www.linux-usb.org}{\tt http\-://www.\-linux-\/usb.\-org})  
+\item[\label{todo__todo000032}%
+\hypertarget{todo__todo000032}{}%
+Member \hyperlink{classmdt_usb_port_manager_a34bf0ac118e586bf2547a98964a2230c}{mdt\-Usb\-Port\-Manager\-:\-:wait\-Readen\-Control\-Response} ()]Adapt using internal timeouts + errors system  
+\item[\label{todo__todo000034}%
+\hypertarget{todo__todo000034}{}%
+Member \hyperlink{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{mdt\-Usbtmc\-Port\-Manager\-:\-:from\-Thread\-New\-Frame\-Readen} ()]On complete frame, check b\-Tag/b\-Tag\-Inverse, and I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R on error. $<$-\/ Should be done in thread..  
+\item[\label{todo__todo000035}%
+\hypertarget{todo__todo000035}{}%
+Member \hyperlink{classmdt_usbtmc_port_manager_ab1604a1c8f2e9192714d039dbf9a5158}{mdt\-Usbtmc\-Port\-Manager\-:\-:send\-Read\-Request} (bool enqueue\-Response)]Sig\-Name is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true.  
+\item[\label{todo__todo000033}%
+\hypertarget{todo__todo000033}{}%
+Member \hyperlink{classmdt_usbtmc_port_manager_a7bcc280bd4a26ed523832550b1e61553}{mdt\-Usbtmc\-Port\-Manager\-:\-:send\-Read\-Status\-Byte\-Request} ()]finish ! 
+\end{DoxyRefList}

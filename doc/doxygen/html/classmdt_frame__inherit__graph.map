@@ -1,6 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$classmdt_frame_ascii.html" title="mdtFrameAscii" alt="" coords="5,83,115,112"/>
-<area shape="rect" id="node5" href="$classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame." alt="" coords="139,83,288,112"/>
-<area shape="rect" id="node7" href="$classmdt_frame_usb_control.html" title="USB Control frame." alt="" coords="312,83,459,112"/>
-<area shape="rect" id="node9" href="$classmdt_frame_usb_tmc.html" title="USBTMC frame." alt="" coords="483,83,613,112"/>
+<map id="mdtFrame" name="mdtFrame">
+<area shape="rect" id="node5" href="$classmdt_frame_ascii.html" title="mdtFrameAscii" alt="" coords="5,160,115,189"/>
+<area shape="rect" id="node7" href="$classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame. " alt="" coords="139,160,288,189"/>
+<area shape="rect" id="node9" href="$classmdt_frame_usb_control.html" title="USB Control frame. " alt="" coords="312,160,459,189"/>
+<area shape="rect" id="node11" href="$classmdt_frame_usb_tmc.html" title="USBTMC frame. " alt="" coords="483,160,613,189"/>
 </map>

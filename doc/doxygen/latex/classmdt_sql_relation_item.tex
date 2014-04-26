@@ -1,236 +1,380 @@
-\hypertarget{classmdt_sql_relation_item}{
-\section{mdtSqlRelationItem Class Reference}
-\label{classmdt_sql_relation_item}\index{mdtSqlRelationItem@{mdtSqlRelationItem}}
+\hypertarget{classmdt_sql_relation_item}{\section{mdt\-Sql\-Relation\-Item Class Reference}
+\label{classmdt_sql_relation_item}\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}}
 }
 
 
-Keep informations about a parent/child SQL relation.  
+Keep informations about a parent/child S\-Q\-L relation.  
 
 
 
 
-{\ttfamily \#include $<$mdtSqlRelationItem.h$>$}
+{\ttfamily \#include $<$mdt\-Sql\-Relation\-Item.\-h$>$}
 
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_sql_relation_item_a110c3a684a857767534829ac9f24cc54}{
-\hyperlink{classmdt_sql_relation_item_a110c3a684a857767534829ac9f24cc54}{mdtSqlRelationItem} ()}
-\label{classmdt_sql_relation_item_a110c3a684a857767534829ac9f24cc54}
-
+\hyperlink{classmdt_sql_relation_item_a110c3a684a857767534829ac9f24cc54}{mdt\-Sql\-Relation\-Item} ()
 \begin{DoxyCompactList}\small\item\em Build a empty relation item. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_a6ebcdbb9adbb8dbbd353e77176989d1b}{
-\hyperlink{classmdt_sql_relation_item_a6ebcdbb9adbb8dbbd353e77176989d1b}{$\sim$mdtSqlRelationItem} ()}
-\label{classmdt_sql_relation_item_a6ebcdbb9adbb8dbbd353e77176989d1b}
-
+\hyperlink{classmdt_sql_relation_item_a6ebcdbb9adbb8dbbd353e77176989d1b}{$\sim$mdt\-Sql\-Relation\-Item} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_a235cd2088688f36330938e6fdbd2ed18}{
-void \hyperlink{classmdt_sql_relation_item_a235cd2088688f36330938e6fdbd2ed18}{setParentField} (const QSqlField \&field)}
-\label{classmdt_sql_relation_item_a235cd2088688f36330938e6fdbd2ed18}
-
+void \hyperlink{classmdt_sql_relation_item_a235cd2088688f36330938e6fdbd2ed18}{set\-Parent\-Field} (const Q\-Sql\-Field \&field)
 \begin{DoxyCompactList}\small\item\em Set parent field. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_a63328f85e0b70aa1e588071f071a69b5}{
-void \hyperlink{classmdt_sql_relation_item_a63328f85e0b70aa1e588071f071a69b5}{setParentFieldIndex} (int index)}
-\label{classmdt_sql_relation_item_a63328f85e0b70aa1e588071f071a69b5}
-
+void \hyperlink{classmdt_sql_relation_item_a63328f85e0b70aa1e588071f071a69b5}{set\-Parent\-Field\-Index} (int index)
 \begin{DoxyCompactList}\small\item\em Set parent field index. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_a9a2ad2ee2590c1dea371e6b64c026a73}{
-void \hyperlink{classmdt_sql_relation_item_a9a2ad2ee2590c1dea371e6b64c026a73}{setChildField} (const QSqlField \&field)}
-\label{classmdt_sql_relation_item_a9a2ad2ee2590c1dea371e6b64c026a73}
-
+void \hyperlink{classmdt_sql_relation_item_a9a2ad2ee2590c1dea371e6b64c026a73}{set\-Child\-Field} (const Q\-Sql\-Field \&field)
 \begin{DoxyCompactList}\small\item\em Set child field. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_a870cfae68f4913225e0ae48554c3163f}{
-void \hyperlink{classmdt_sql_relation_item_a870cfae68f4913225e0ae48554c3163f}{setChildFieldIndex} (int index)}
-\label{classmdt_sql_relation_item_a870cfae68f4913225e0ae48554c3163f}
-
+void \hyperlink{classmdt_sql_relation_item_a870cfae68f4913225e0ae48554c3163f}{set\-Child\-Field\-Index} (int index)
 \begin{DoxyCompactList}\small\item\em Set child field index. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_aa660ce6575b4ce9ad9d551d0b284e528}{
-QString \hyperlink{classmdt_sql_relation_item_aa660ce6575b4ce9ad9d551d0b284e528}{parentFieldName} () const }
-\label{classmdt_sql_relation_item_aa660ce6575b4ce9ad9d551d0b284e528}
-
+Q\-String \hyperlink{classmdt_sql_relation_item_aa660ce6575b4ce9ad9d551d0b284e528}{parent\-Field\-Name} () const 
 \begin{DoxyCompactList}\small\item\em Get parent field name. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_a18d078e5e784de2d0e14cbb6238155f9}{
-int \hyperlink{classmdt_sql_relation_item_a18d078e5e784de2d0e14cbb6238155f9}{parentFieldIndex} () const }
-\label{classmdt_sql_relation_item_a18d078e5e784de2d0e14cbb6238155f9}
-
+int \hyperlink{classmdt_sql_relation_item_a18d078e5e784de2d0e14cbb6238155f9}{parent\-Field\-Index} () const 
 \begin{DoxyCompactList}\small\item\em Get parent field index. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_a8cd667086a4ace612b009b0eb7494a1c}{
-QString \hyperlink{classmdt_sql_relation_item_a8cd667086a4ace612b009b0eb7494a1c}{childFieldName} () const }
-\label{classmdt_sql_relation_item_a8cd667086a4ace612b009b0eb7494a1c}
-
+Q\-String \hyperlink{classmdt_sql_relation_item_a8cd667086a4ace612b009b0eb7494a1c}{child\-Field\-Name} () const 
 \begin{DoxyCompactList}\small\item\em Get child field name. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}{
-int \hyperlink{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}{childFieldIndex} () const }
-\label{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}
-
+int \hyperlink{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}{child\-Field\-Index} () const 
 \begin{DoxyCompactList}\small\item\em Get child field index. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}{nameProtection} () const 
+Q\-String \hyperlink{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}{name\-Protection} () const 
 \begin{DoxyCompactList}\small\item\em Get table/field protection. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}{dataProtection} () const 
+Q\-String \hyperlink{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}{data\-Protection} () const 
 \begin{DoxyCompactList}\small\item\em Get data protection. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}{
-QVariant::Type \hyperlink{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}{dataType} () const }
-\label{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}
-
+Q\-Variant\-::\-Type \hyperlink{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}{data\-Type} () const 
 \begin{DoxyCompactList}\small\item\em Get data type. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}{valueForNoDataFilter} () const 
+Q\-Variant \hyperlink{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}{value\-For\-No\-Data\-Filter} () const 
 \begin{DoxyCompactList}\small\item\em Get value for a filter that gives no data. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{setCopyParentToChildOnInsertion} (bool enable)
-\begin{DoxyCompactList}\small\item\em Set copyParentToChildOnInsertion flag. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}{copyParentToChildOnInsertion} () const 
-\begin{DoxyCompactList}\small\item\em Set copyParentToChildOnInsertion flag. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}{setRelationOperatorWithPreviousItem} (const QString \&operatorWithPreviousItem)
+void \hyperlink{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{set\-Copy\-Parent\-To\-Child\-On\-Insertion} (bool enable)
+\begin{DoxyCompactList}\small\item\em Set copy\-Parent\-To\-Child\-On\-Insertion flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}{copy\-Parent\-To\-Child\-On\-Insertion} () const 
+\begin{DoxyCompactList}\small\item\em Set copy\-Parent\-To\-Child\-On\-Insertion flag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}{set\-Relation\-Operator\-With\-Previous\-Item} (const Q\-String \&operator\-With\-Previous\-Item)
 \begin{DoxyCompactList}\small\item\em Set relation operator with previous item. \end{DoxyCompactList}\item 
-QString \hyperlink{classmdt_sql_relation_item_aad30a0f5b83e6efb0c43d87648369c11}{relationOperatorWithPreviousItem} () const 
+Q\-String \hyperlink{classmdt_sql_relation_item_aad30a0f5b83e6efb0c43d87648369c11}{relation\-Operator\-With\-Previous\-Item} () const 
 \begin{DoxyCompactList}\small\item\em Get relation operator with previous item. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Keep informations about a parent/child SQL relation. 
+Keep informations about a parent/child S\-Q\-L relation. 
 
-Definition at line 30 of file mdtSqlRelationItem.h.
+Definition at line 30 of file mdt\-Sql\-Relation\-Item.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_relation_item_a110c3a684a857767534829ac9f24cc54}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}}
+\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{mdt\-Sql\-Relation\-Item}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Relation\-Item\-::mdt\-Sql\-Relation\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_relation_item_a110c3a684a857767534829ac9f24cc54}
+
+
+Build a empty relation item. 
+
+
+
+Definition at line 24 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+\hypertarget{classmdt_sql_relation_item_a6ebcdbb9adbb8dbbd353e77176989d1b}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!$\sim$mdt\-Sql\-Relation\-Item@{$\sim$mdt\-Sql\-Relation\-Item}}
+\index{$\sim$mdt\-Sql\-Relation\-Item@{$\sim$mdt\-Sql\-Relation\-Item}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{$\sim$mdt\-Sql\-Relation\-Item}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Relation\-Item\-::$\sim$mdt\-Sql\-Relation\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_relation_item_a6ebcdbb9adbb8dbbd353e77176989d1b}
+
+
+Destructor. 
+
+
+
+Definition at line 32 of file mdt\-Sql\-Relation\-Item.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}{
-\index{mdtSqlRelationItem@{mdtSqlRelationItem}!copyParentToChildOnInsertion@{copyParentToChildOnInsertion}}
-\index{copyParentToChildOnInsertion@{copyParentToChildOnInsertion}!mdtSqlRelationItem@{mdtSqlRelationItem}}
-\subsubsection[{copyParentToChildOnInsertion}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSqlRelationItem::copyParentToChildOnInsertion (
+\hypertarget{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!child\-Field\-Index@{child\-Field\-Index}}
+\index{child\-Field\-Index@{child\-Field\-Index}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{child\-Field\-Index}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Sql\-Relation\-Item\-::child\-Field\-Index (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}
+) const}}\label{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}
 
 
-Set copyParentToChildOnInsertion flag. 
+Get child field index. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{setCopyParentToChildOnInsertion()} 
+
+
+Definition at line 87 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+\hypertarget{classmdt_sql_relation_item_a8cd667086a4ace612b009b0eb7494a1c}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!child\-Field\-Name@{child\-Field\-Name}}
+\index{child\-Field\-Name@{child\-Field\-Name}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{child\-Field\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Relation\-Item\-::child\-Field\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_relation_item_a8cd667086a4ace612b009b0eb7494a1c}
+
+
+Get child field name. 
+
+
+
+Definition at line 82 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+\hypertarget{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!copy\-Parent\-To\-Child\-On\-Insertion@{copy\-Parent\-To\-Child\-On\-Insertion}}
+\index{copy\-Parent\-To\-Child\-On\-Insertion@{copy\-Parent\-To\-Child\-On\-Insertion}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{copy\-Parent\-To\-Child\-On\-Insertion}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Relation\-Item\-::copy\-Parent\-To\-Child\-On\-Insertion (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_relation_item_a959affdf96c2d4882028270f9ae7cf00}
+
+
+Set copy\-Parent\-To\-Child\-On\-Insertion flag. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{set\-Copy\-Parent\-To\-Child\-On\-Insertion()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 117 of file mdtSqlRelationItem.cpp.
+Definition at line 117 of file mdt\-Sql\-Relation\-Item.\-cpp.
 
-\hypertarget{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}{
-\index{mdtSqlRelationItem@{mdtSqlRelationItem}!dataProtection@{dataProtection}}
-\index{dataProtection@{dataProtection}!mdtSqlRelationItem@{mdtSqlRelationItem}}
-\subsubsection[{dataProtection}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtSqlRelationItem::dataProtection (
+\hypertarget{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!data\-Protection@{data\-Protection}}
+\index{data\-Protection@{data\-Protection}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{data\-Protection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Relation\-Item\-::data\-Protection (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}
+) const}}\label{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}
 
 
 Get data protection. 
 
-Typical data protections are:
+Typical data protections are\-:
 \begin{DoxyItemize}
 \item ' for string type
 \item nothing for numeric type 
 \end{DoxyItemize}
 
-Definition at line 97 of file mdtSqlRelationItem.cpp.
+Definition at line 97 of file mdt\-Sql\-Relation\-Item.\-cpp.
 
-\hypertarget{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}{
-\index{mdtSqlRelationItem@{mdtSqlRelationItem}!nameProtection@{nameProtection}}
-\index{nameProtection@{nameProtection}!mdtSqlRelationItem@{mdtSqlRelationItem}}
-\subsubsection[{nameProtection}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtSqlRelationItem::nameProtection (
+\hypertarget{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!data\-Type@{data\-Type}}
+\index{data\-Type@{data\-Type}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{data\-Type}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant\-::\-Type mdt\-Sql\-Relation\-Item\-::data\-Type (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}
+) const}}\label{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}
+
+
+Get data type. 
+
+
+
+Definition at line 102 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+\hypertarget{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!name\-Protection@{name\-Protection}}
+\index{name\-Protection@{name\-Protection}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{name\-Protection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Relation\-Item\-::name\-Protection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_relation_item_a2aa445cebd77d6ce707b318f25cc709c}
 
 
 Get table/field protection. 
 
 Typical name protection is ` 
 
-Definition at line 92 of file mdtSqlRelationItem.cpp.
+Definition at line 92 of file mdt\-Sql\-Relation\-Item.\-cpp.
 
-\hypertarget{classmdt_sql_relation_item_aad30a0f5b83e6efb0c43d87648369c11}{
-\index{mdtSqlRelationItem@{mdtSqlRelationItem}!relationOperatorWithPreviousItem@{relationOperatorWithPreviousItem}}
-\index{relationOperatorWithPreviousItem@{relationOperatorWithPreviousItem}!mdtSqlRelationItem@{mdtSqlRelationItem}}
-\subsubsection[{relationOperatorWithPreviousItem}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtSqlRelationItem::relationOperatorWithPreviousItem (
+\hypertarget{classmdt_sql_relation_item_a18d078e5e784de2d0e14cbb6238155f9}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!parent\-Field\-Index@{parent\-Field\-Index}}
+\index{parent\-Field\-Index@{parent\-Field\-Index}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{parent\-Field\-Index}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Sql\-Relation\-Item\-::parent\-Field\-Index (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_sql_relation_item_aad30a0f5b83e6efb0c43d87648369c11}
+) const}}\label{classmdt_sql_relation_item_a18d078e5e784de2d0e14cbb6238155f9}
+
+
+Get parent field index. 
+
+
+
+Definition at line 77 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+\hypertarget{classmdt_sql_relation_item_aa660ce6575b4ce9ad9d551d0b284e528}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!parent\-Field\-Name@{parent\-Field\-Name}}
+\index{parent\-Field\-Name@{parent\-Field\-Name}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{parent\-Field\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Relation\-Item\-::parent\-Field\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_relation_item_aa660ce6575b4ce9ad9d551d0b284e528}
+
+
+Get parent field name. 
+
+
+
+Definition at line 72 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+\hypertarget{classmdt_sql_relation_item_aad30a0f5b83e6efb0c43d87648369c11}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!relation\-Operator\-With\-Previous\-Item@{relation\-Operator\-With\-Previous\-Item}}
+\index{relation\-Operator\-With\-Previous\-Item@{relation\-Operator\-With\-Previous\-Item}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{relation\-Operator\-With\-Previous\-Item}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Relation\-Item\-::relation\-Operator\-With\-Previous\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_relation_item_aad30a0f5b83e6efb0c43d87648369c11}
 
 
 Get relation operator with previous item. 
 
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}{setRelationOperatorWithPreviousItem()} 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}{set\-Relation\-Operator\-With\-Previous\-Item()} 
 \end{DoxySeeAlso}
 
 
-Definition at line 127 of file mdtSqlRelationItem.cpp.
+Definition at line 127 of file mdt\-Sql\-Relation\-Item.\-cpp.
 
-\hypertarget{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{
-\index{mdtSqlRelationItem@{mdtSqlRelationItem}!setCopyParentToChildOnInsertion@{setCopyParentToChildOnInsertion}}
-\index{setCopyParentToChildOnInsertion@{setCopyParentToChildOnInsertion}!mdtSqlRelationItem@{mdtSqlRelationItem}}
-\subsubsection[{setCopyParentToChildOnInsertion}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelationItem::setCopyParentToChildOnInsertion (
+\hypertarget{classmdt_sql_relation_item_a9a2ad2ee2590c1dea371e6b64c026a73}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!set\-Child\-Field@{set\-Child\-Field}}
+\index{set\-Child\-Field@{set\-Child\-Field}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{set\-Child\-Field}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Item\-::set\-Child\-Field (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Field \&}]{field}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_relation_item_a9a2ad2ee2590c1dea371e6b64c026a73}
+
+
+Set child field. 
+
+
+
+Definition at line 62 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+
+
+Referenced by mdt\-Sql\-Relation\-::add\-Relation().
+
+\hypertarget{classmdt_sql_relation_item_a870cfae68f4913225e0ae48554c3163f}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!set\-Child\-Field\-Index@{set\-Child\-Field\-Index}}
+\index{set\-Child\-Field\-Index@{set\-Child\-Field\-Index}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{set\-Child\-Field\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Item\-::set\-Child\-Field\-Index (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_relation_item_a870cfae68f4913225e0ae48554c3163f}
+
+
+Set child field index. 
+
+
+
+Definition at line 67 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+
+
+Referenced by mdt\-Sql\-Relation\-::add\-Relation().
+
+\hypertarget{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!set\-Copy\-Parent\-To\-Child\-On\-Insertion@{set\-Copy\-Parent\-To\-Child\-On\-Insertion}}
+\index{set\-Copy\-Parent\-To\-Child\-On\-Insertion@{set\-Copy\-Parent\-To\-Child\-On\-Insertion}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{set\-Copy\-Parent\-To\-Child\-On\-Insertion}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Item\-::set\-Copy\-Parent\-To\-Child\-On\-Insertion (
 \begin{DoxyParamCaption}
 \item[{bool}]{enable}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}
+)}}\label{classmdt_sql_relation_item_aa9826f0e86d7ba7acf046012bbf8a38f}
 
 
-Set copyParentToChildOnInsertion flag. 
+Set copy\-Parent\-To\-Child\-On\-Insertion flag. 
 
-Usually, a parent/child relation is based on a primary key in parent table and foreing key (that refers to parent PK) in child model. When inserting a new record in child table, parent table's primary key must be copied into foreing key fields in child table. Set this flag to true to enable this behaviour (see \hyperlink{classmdt_sql_relation}{mdtSqlRelation} for more details).
+Usually, a parent/child relation is based on a primary key in parent table and foreing key (that refers to parent P\-K) in child model. When inserting a new record in child table, parent table's primary key must be copied into foreing key fields in child table. Set this flag to true to enable this behaviour (see \hyperlink{classmdt_sql_relation}{mdt\-Sql\-Relation} for more details).
 
 By default, this flag is false. 
 
-Definition at line 112 of file mdtSqlRelationItem.cpp.
+Definition at line 112 of file mdt\-Sql\-Relation\-Item.\-cpp.
 
-\hypertarget{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}{
-\index{mdtSqlRelationItem@{mdtSqlRelationItem}!setRelationOperatorWithPreviousItem@{setRelationOperatorWithPreviousItem}}
-\index{setRelationOperatorWithPreviousItem@{setRelationOperatorWithPreviousItem}!mdtSqlRelationItem@{mdtSqlRelationItem}}
-\subsubsection[{setRelationOperatorWithPreviousItem}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlRelationItem::setRelationOperatorWithPreviousItem (
+
+
+Referenced by mdt\-Sql\-Relation\-::add\-Relation().
+
+\hypertarget{classmdt_sql_relation_item_a235cd2088688f36330938e6fdbd2ed18}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!set\-Parent\-Field@{set\-Parent\-Field}}
+\index{set\-Parent\-Field@{set\-Parent\-Field}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{set\-Parent\-Field}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Item\-::set\-Parent\-Field (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{operatorWithPreviousItem}
+\item[{const Q\-Sql\-Field \&}]{field}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}
+)}}\label{classmdt_sql_relation_item_a235cd2088688f36330938e6fdbd2ed18}
+
+
+Set parent field. 
+
+
+
+Definition at line 36 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+
+
+Referenced by mdt\-Sql\-Relation\-::add\-Relation().
+
+\hypertarget{classmdt_sql_relation_item_a63328f85e0b70aa1e588071f071a69b5}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!set\-Parent\-Field\-Index@{set\-Parent\-Field\-Index}}
+\index{set\-Parent\-Field\-Index@{set\-Parent\-Field\-Index}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{set\-Parent\-Field\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Item\-::set\-Parent\-Field\-Index (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_relation_item_a63328f85e0b70aa1e588071f071a69b5}
+
+
+Set parent field index. 
+
+
+
+Definition at line 57 of file mdt\-Sql\-Relation\-Item.\-cpp.
+
+
+
+Referenced by mdt\-Sql\-Relation\-::add\-Relation().
+
+\hypertarget{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!set\-Relation\-Operator\-With\-Previous\-Item@{set\-Relation\-Operator\-With\-Previous\-Item}}
+\index{set\-Relation\-Operator\-With\-Previous\-Item@{set\-Relation\-Operator\-With\-Previous\-Item}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{set\-Relation\-Operator\-With\-Previous\-Item}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Item\-::set\-Relation\-Operator\-With\-Previous\-Item (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{operator\-With\-Previous\-Item}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_relation_item_a00fd905a9b9e7d3f33ac73df0f1e8901}
 
 
 Set relation operator with previous item. 
 
-For most of cases, the relation operator between items is AND, that is the default. For some cases, it can be usefull to have a OR operator between 2 relation items. On this case, specify this here. 
+For most of cases, the relation operator between items is A\-N\-D, that is the default. For some cases, it can be usefull to have a O\-R operator between 2 relation items. On this case, specify this here. 
 
-Definition at line 122 of file mdtSqlRelationItem.cpp.
+Definition at line 122 of file mdt\-Sql\-Relation\-Item.\-cpp.
 
-\hypertarget{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}{
-\index{mdtSqlRelationItem@{mdtSqlRelationItem}!valueForNoDataFilter@{valueForNoDataFilter}}
-\index{valueForNoDataFilter@{valueForNoDataFilter}!mdtSqlRelationItem@{mdtSqlRelationItem}}
-\subsubsection[{valueForNoDataFilter}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtSqlRelationItem::valueForNoDataFilter (
+
+
+Referenced by mdt\-Sql\-Relation\-::add\-Relation().
+
+\hypertarget{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}{\index{mdt\-Sql\-Relation\-Item@{mdt\-Sql\-Relation\-Item}!value\-For\-No\-Data\-Filter@{value\-For\-No\-Data\-Filter}}
+\index{value\-For\-No\-Data\-Filter@{value\-For\-No\-Data\-Filter}!mdtSqlRelationItem@{mdt\-Sql\-Relation\-Item}}
+\subsubsection[{value\-For\-No\-Data\-Filter}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Sql\-Relation\-Item\-::value\-For\-No\-Data\-Filter (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}
+) const}}\label{classmdt_sql_relation_item_a3d2e24b35c88b246dac2a825019f037b}
 
 
 Get value for a filter that gives no data. 
 
-Typical values are:
+Typical values are\-:
 \begin{DoxyItemize}
 \item empty string
 \item -\/1 for numeric field 
 \end{DoxyItemize}
 
-Definition at line 107 of file mdtSqlRelationItem.cpp.
+Definition at line 107 of file mdt\-Sql\-Relation\-Item.\-cpp.
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/mdtSqlRelationItem.h\item 
-src/mdtutilsgui/mdtSqlRelationItem.cpp\end{DoxyCompactItemize}
+src/mdtutilsgui/\hyperlink{mdt_sql_relation_item_8h}{mdt\-Sql\-Relation\-Item.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_sql_relation_item_8cpp}{mdt\-Sql\-Relation\-Item.\-cpp}\end{DoxyCompactItemize}

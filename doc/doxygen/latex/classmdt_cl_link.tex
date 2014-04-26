@@ -1,0 +1,577 @@
+\hypertarget{classmdt_cl_link}{\section{mdt\-Cl\-Link Class Reference}
+\label{classmdt_cl_link}\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}}
+}
+
+
+Helper class for link management.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Link.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Cl\-Link\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=144pt]{classmdt_cl_link__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Cl\-Link\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{classmdt_cl_link__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_cl_link_a5cef1766f2f03106227227582eed0245}{mdt\-Cl\-Link} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent, Q\-Sql\-Database db)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_link_a1fa6ad3a2ecc7c5f2851c95152a7ed94}{$\sim$mdt\-Cl\-Link} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_aaf2a931c22263b7b5a573fbaf5ae2dc5}{build\-Vehicle\-Type\-Link\-Data\-List} (\hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} \&link\-Data, const Q\-List$<$ Q\-Variant $>$ \&vt\-Start\-Id\-List, const Q\-List$<$ Q\-Variant $>$ \&vt\-End\-Id\-List)
+\begin{DoxyCompactList}\small\item\em Build vehicle type link data based on given start and end vehicle I\-D lists. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_a65c1cc934c0f9b37434dbb44964623b1}{add\-Link} (const \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} \&link\-Data, bool handle\-Transaction=true)
+\begin{DoxyCompactList}\small\item\em Add a link. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_adeb5674e94942568e149d68c46caaf50}{add\-Links} (const Q\-List$<$ \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} $>$ \&link\-Data\-List, bool handle\-Transaction=true)
+\begin{DoxyCompactList}\small\item\em Add a list of links. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_aaf2bcec69c5108f45b1e2189978c07c6}{link\-Exists} (const Q\-Variant \&unit\-Connection\-Start\-Id, const Q\-Variant \&unit\-Connection\-End\-Id, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Check if a link exists. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} \hyperlink{classmdt_cl_link_ab84d16e3db0b15784594505e9996c0dc}{get\-Link\-Data} (const Q\-Variant \&unit\-Connection\-Start\-Id, const Q\-Variant \&unit\-Connection\-End\-Id, bool include\-Connection\-Data, bool include\-Vehicle\-Type\-Link\-Data, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Get link data. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_a20d0c8888a1674a6977940fcde654f60}{edit\-Link} (const Q\-Variant \&unit\-Connection\-Start\-Id, const Q\-Variant \&unit\-Connection\-End\-Id, const \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} \&link\-Data)
+\begin{DoxyCompactList}\small\item\em Edit a unit link. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_a865c0cee1fab1c9209d139dcd70f9fbd}{remove\-Link} (const Q\-Variant \&unit\-Connection\-Start\-Id, const Q\-Variant \&unit\-Connection\-End\-Id, bool handle\-Transaction=true)
+\begin{DoxyCompactList}\small\item\em Remove a unit link. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_ad89403d68ce0b31f0c8c21ad278e0f83}{remove\-Links} (const Q\-List$<$ Q\-Model\-Index\-List $>$ \&index\-List\-Of\-Selected\-Rows\-By\-Rows)
+\begin{DoxyCompactList}\small\item\em Remove each unit link that is contained in selection. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_cl_vehicle_type_link_data}{mdt\-Cl\-Vehicle\-Type\-Link\-Data} $>$ \hyperlink{classmdt_cl_link_ad7c30c7cfae5f38fc38133f550e2dd01}{get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id} (const Q\-Variant \&unit\-Id, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Get vehicle type link data for given unit I\-D. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_a44d152cef5aeb95a150335b225276892}{remove\-Vehicle\-Type\-Link\-By\-Unit\-Id} (const Q\-Variant \&unit\-Id, bool handle\-Transaction)
+\begin{DoxyCompactList}\small\item\em Remove vehicle type links for given unit I\-D. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_a6b3e1de445d4c70c057ff89df193854f}{remove\-Vehicle\-Type\-Links} (const Q\-List$<$ \hyperlink{classmdt_cl_vehicle_type_link_data}{mdt\-Cl\-Vehicle\-Type\-Link\-Data} $>$ \&vt\-Link\-List, bool handle\-Transaction)
+\begin{DoxyCompactList}\small\item\em Remove vehicle type links. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} $>$ \hyperlink{classmdt_cl_link_a13c49a669e9e5a7d228aeb6a238c8633}{get\-Connection\-Link\-List\-By\-Name} (const Q\-List$<$ \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} $>$ \&A, const Q\-List$<$ \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} $>$ \&B)
+\begin{DoxyCompactList}\small\item\em Get a list of connection links between A and B connections, by name. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_aaf6e10edf75e8228e69d4992dbd9cb42}{can\-Connect\-Connectors} (const \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} \&S, const \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} \&E)
+\begin{DoxyCompactList}\small\item\em Check if unit connector S can be connected with unit connector E. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_a54a51f45691831615c4c4c1b0bf30367}{can\-Connect\-Connectors} (const Q\-Variant \&start\-Unit\-Connector\-Id, const Q\-Variant \&end\-Unit\-Connector\-Id, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Check if unit connector start can be connected with unit connector end. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_cl_link_a17eb46d4b5b94b3d48956a05ae7d0a67}{sql\-For\-Connectable\-Unit\-Connectors\-Selection} (const Q\-Variant \&unit\-Connector\-Id, const Q\-Variant \&unit\-Id, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for connectable unit connector selection. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_a335a8475470ede4a5d9b8e01404d7230}{connect\-By\-Contact\-Name} (const \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} \&S, const \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} \&E, const Q\-Variant \&start\-Vehicle\-Type\-Id, const Q\-Variant \&end\-Vehicle\-Type\-Id)
+\begin{DoxyCompactList}\small\item\em Connect start and end connector by contact name. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_a429e8f4e2b46e3fd995db47ce430c6c4}{connect\-By\-Contact\-Name} (const Q\-Variant \&start\-Unit\-Connector\-Id, const Q\-Variant \&end\-Unit\-Connector\-Id, const Q\-Variant \&start\-Vehicle\-Type\-Id, const Q\-Variant \&end\-Vehicle\-Type\-Id)
+\begin{DoxyCompactList}\small\item\em Connect start and end connector by contact name. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_link_ac32bfef9f23b431ea4d3d546e6c21361}{disconnect\-Connectors} (const Q\-Variant \&start\-Unit\-Connector\-Id, const Q\-Variant \&end\-Unit\-Connector\-Id, const Q\-List$<$ Q\-Variant $>$ \&start\-Vehicle\-Type\-Id\-List, const Q\-List$<$ Q\-Variant $>$ \&end\-Vehicle\-Type\-Id\-List)
+\begin{DoxyCompactList}\small\item\em Disconnect connector S from E. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Helper class for link management. 
+
+Definition at line 36 of file mdt\-Cl\-Link.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_cl_link_a5cef1766f2f03106227227582eed0245}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!mdt\-Cl\-Link@{mdt\-Cl\-Link}}
+\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{mdt\-Cl\-Link}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Link\-::mdt\-Cl\-Link (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent, }
+\item[{Q\-Sql\-Database}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a5cef1766f2f03106227227582eed0245}
+
+
+Constructor. 
+
+
+
+Definition at line 32 of file mdt\-Cl\-Link.\-cpp.
+
+\hypertarget{classmdt_cl_link_a1fa6ad3a2ecc7c5f2851c95152a7ed94}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!$\sim$mdt\-Cl\-Link@{$\sim$mdt\-Cl\-Link}}
+\index{$\sim$mdt\-Cl\-Link@{$\sim$mdt\-Cl\-Link}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{$\sim$mdt\-Cl\-Link}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Link\-::$\sim$mdt\-Cl\-Link (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a1fa6ad3a2ecc7c5f2851c95152a7ed94}
+
+
+Destructor. 
+
+
+
+Definition at line 37 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_link_a65c1cc934c0f9b37434dbb44964623b1}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!add\-Link@{add\-Link}}
+\index{add\-Link@{add\-Link}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{add\-Link}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::add\-Link (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Cl\-Link\-Data} \&}]{link\-Data, }
+\item[{bool}]{handle\-Transaction = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a65c1cc934c0f9b37434dbb44964623b1}
+
+
+Add a link. 
+
+Will also add required vehicle type links stored in link\-Data. To generate vehicle type links, use \hyperlink{classmdt_cl_link_aaf2a931c22263b7b5a573fbaf5ae2dc5}{build\-Vehicle\-Type\-Link\-Data\-List()}. 
+
+Definition at line 84 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::rollback\-Transaction(), and mdt\-Cl\-Link\-Data\-::vehicle\-Type\-Link\-Data\-List().
+
+
+
+Referenced by add\-Links(), and edit\-Link().
+
+\hypertarget{classmdt_cl_link_adeb5674e94942568e149d68c46caaf50}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!add\-Links@{add\-Links}}
+\index{add\-Links@{add\-Links}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{add\-Links}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::add\-Links (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Cl\-Link\-Data} $>$ \&}]{link\-Data\-List, }
+\item[{bool}]{handle\-Transaction = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_adeb5674e94942568e149d68c46caaf50}
+
+
+Add a list of links. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_cl_link_a65c1cc934c0f9b37434dbb44964623b1}{add\-Link()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 115 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References add\-Link(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+
+
+Referenced by connect\-By\-Contact\-Name().
+
+\hypertarget{classmdt_cl_link_aaf2a931c22263b7b5a573fbaf5ae2dc5}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!build\-Vehicle\-Type\-Link\-Data\-List@{build\-Vehicle\-Type\-Link\-Data\-List}}
+\index{build\-Vehicle\-Type\-Link\-Data\-List@{build\-Vehicle\-Type\-Link\-Data\-List}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{build\-Vehicle\-Type\-Link\-Data\-List}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::build\-Vehicle\-Type\-Link\-Data\-List (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Cl\-Link\-Data} \&}]{link\-Data, }
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{vt\-Start\-Id\-List, }
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{vt\-End\-Id\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_aaf2a931c22263b7b5a573fbaf5ae2dc5}
+
+
+Build vehicle type link data based on given start and end vehicle I\-D lists. 
+
+The list is built regarding distinct cases\-:
+\begin{DoxyItemize}
+\item If both start and end vehicle types lists contains exactly the same count of items, each start I\-D is put together with each end I\-D , in the order of both lists.
+\item If one vehicle types list has only 1 item, and the other has many items, the I\-D of the 1 item list is copied to the other list (case of 1 vehicle type linked to many vehicle types) .
+\item All other cases are wrong. 
+\end{DoxyItemize}
+
+Definition at line 41 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Cl\-Link\-Data\-::add\-Vehicle\-Type\-Link\-Data(), mdt\-Cl\-Link\-Data\-::clear\-Vehicle\-Type\-Link\-Data\-List(), mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::set\-Vehicle\-Type\-End\-Id(), and mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::set\-Vehicle\-Type\-Start\-Id().
+
+
+
+Referenced by connect\-By\-Contact\-Name().
+
+\hypertarget{classmdt_cl_link_aaf6e10edf75e8228e69d4992dbd9cb42}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!can\-Connect\-Connectors@{can\-Connect\-Connectors}}
+\index{can\-Connect\-Connectors@{can\-Connect\-Connectors}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{can\-Connect\-Connectors}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::can\-Connect\-Connectors (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Cl\-Unit\-Connector\-Data} \&}]{S, }
+\item[{const {\bf mdt\-Cl\-Unit\-Connector\-Data} \&}]{E}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_aaf6e10edf75e8228e69d4992dbd9cb42}
+
+
+Check if unit connector S can be connected with unit connector E. 
+
+Currently, this method will only check if at least S and E have a socket/pin (or pin/socket) that have the same contact name. 
+
+Definition at line 429 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Cl\-Unit\-Connector\-Data\-::connection\-Data\-List(), and get\-Connection\-Link\-List\-By\-Name().
+
+
+
+Referenced by can\-Connect\-Connectors(), and sql\-For\-Connectable\-Unit\-Connectors\-Selection().
+
+\hypertarget{classmdt_cl_link_a54a51f45691831615c4c4c1b0bf30367}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!can\-Connect\-Connectors@{can\-Connect\-Connectors}}
+\index{can\-Connect\-Connectors@{can\-Connect\-Connectors}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{can\-Connect\-Connectors}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::can\-Connect\-Connectors (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{start\-Unit\-Connector\-Id, }
+\item[{const Q\-Variant \&}]{end\-Unit\-Connector\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a54a51f45691831615c4c4c1b0bf30367}
+
+
+Check if unit connector start can be connected with unit connector end. 
+
+Currently, this method will only check if at least S and E have a socket/pin (or pin/socket) that have the same contact name. 
+
+Definition at line 434 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References can\-Connect\-Connectors(), mdt\-Tt\-Base\-::database(), mdt\-Cl\-Unit\-::get\-Connector\-Data(), mdt\-Tt\-Base\-::last\-Error(), and mdt\-Tt\-Base\-::pv\-Last\-Error.
+
+\hypertarget{classmdt_cl_link_a335a8475470ede4a5d9b8e01404d7230}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!connect\-By\-Contact\-Name@{connect\-By\-Contact\-Name}}
+\index{connect\-By\-Contact\-Name@{connect\-By\-Contact\-Name}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{connect\-By\-Contact\-Name}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::connect\-By\-Contact\-Name (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Cl\-Unit\-Connector\-Data} \&}]{S, }
+\item[{const {\bf mdt\-Cl\-Unit\-Connector\-Data} \&}]{E, }
+\item[{const Q\-Variant \&}]{start\-Vehicle\-Type\-Id, }
+\item[{const Q\-Variant \&}]{end\-Vehicle\-Type\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a335a8475470ede4a5d9b8e01404d7230}
+
+
+Connect start and end connector by contact name. 
+
+Will create a link of type C\-O\-N\-N\-E\-C\-T\-I\-O\-N for each connection from start connector to a connection of end connector that can be connected. See \hyperlink{classmdt_cl_link_a13c49a669e9e5a7d228aeb6a238c8633}{get\-Connection\-Link\-List\-By\-Name()} for details. 
+
+Definition at line 518 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References add\-Links(), build\-Vehicle\-Type\-Link\-Data\-List(), mdt\-Error\-::commit(), mdt\-Cl\-Unit\-Connector\-Data\-::connection\-Data\-List(), get\-Connection\-Link\-List\-By\-Name(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), mdt\-Sql\-Record\-::value(), and mdt\-Error\-::\-Warning.
+
+
+
+Referenced by connect\-By\-Contact\-Name().
+
+\hypertarget{classmdt_cl_link_a429e8f4e2b46e3fd995db47ce430c6c4}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!connect\-By\-Contact\-Name@{connect\-By\-Contact\-Name}}
+\index{connect\-By\-Contact\-Name@{connect\-By\-Contact\-Name}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{connect\-By\-Contact\-Name}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::connect\-By\-Contact\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{start\-Unit\-Connector\-Id, }
+\item[{const Q\-Variant \&}]{end\-Unit\-Connector\-Id, }
+\item[{const Q\-Variant \&}]{start\-Vehicle\-Type\-Id, }
+\item[{const Q\-Variant \&}]{end\-Vehicle\-Type\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a429e8f4e2b46e3fd995db47ce430c6c4}
+
+
+Connect start and end connector by contact name. 
+
+Will create a link of type C\-O\-N\-N\-E\-C\-T\-I\-O\-N for each connection from start connector to a connection of end connector that can be connected. See \hyperlink{classmdt_cl_link_a13c49a669e9e5a7d228aeb6a238c8633}{get\-Connection\-Link\-List\-By\-Name()} for details. 
+
+Definition at line 549 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References connect\-By\-Contact\-Name(), mdt\-Tt\-Base\-::database(), mdt\-Cl\-Unit\-::get\-Connector\-Data(), mdt\-Tt\-Base\-::last\-Error(), and mdt\-Tt\-Base\-::pv\-Last\-Error.
+
+\hypertarget{classmdt_cl_link_ac32bfef9f23b431ea4d3d546e6c21361}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!disconnect\-Connectors@{disconnect\-Connectors}}
+\index{disconnect\-Connectors@{disconnect\-Connectors}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{disconnect\-Connectors}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::disconnect\-Connectors (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{start\-Unit\-Connector\-Id, }
+\item[{const Q\-Variant \&}]{end\-Unit\-Connector\-Id, }
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{start\-Vehicle\-Type\-Id\-List, }
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{end\-Vehicle\-Type\-Id\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_ac32bfef9f23b431ea4d3d546e6c21361}
+
+
+Disconnect connector S from E. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000044}{Todo}]In current version, vehicle type list are not token in acount. This will be the case once \hyperlink{classmdt_cl_link_a865c0cee1fab1c9209d139dcd70f9fbd}{remove\-Link()} is fixed. \end{DoxyRefDesc}
+bool disconnect\-Connectors(const mdt\-Cl\-Unit\-Connector\-Data \& S, const mdt\-Cl\-Unit\-Connector\-Data \& E, const Q\-List$<$\-Q\-Variant$>$ \& start\-Vehicle\-Type\-Id\-List, const Q\-List$<$\-Q\-Variant$>$ \& end\-Vehicle\-Type\-Id\-List);
+
+Disconnect connector S from E
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000045}{Todo}]In current version, vehicle type list are not token in acount. This will be the case once \hyperlink{classmdt_cl_link_a865c0cee1fab1c9209d139dcd70f9fbd}{remove\-Link()} is fixed. \end{DoxyRefDesc}
+
+
+bool mdt\-Cl\-Link\-::disconnect\-Connectors(const mdt\-Cl\-Unit\-Connector\-Data \& S, const mdt\-Cl\-Unit\-Connector\-Data \& E, const Q\-List$<$\-Q\-Variant$>$ \& start\-Vehicle\-Type\-Id\-List, const Q\-List$<$\-Q\-Variant$>$ \& end\-Vehicle\-Type\-Id\-List) \{ Q\-List$<$mdt\-Cl\-Link\-Data$>$ link\-Data\-List; int i;
+
+\} 
+
+Definition at line 579 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::get\-Data(), remove\-Link(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+\hypertarget{classmdt_cl_link_a20d0c8888a1674a6977940fcde654f60}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!edit\-Link@{edit\-Link}}
+\index{edit\-Link@{edit\-Link}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{edit\-Link}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::edit\-Link (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{unit\-Connection\-End\-Id, }
+\item[{const {\bf mdt\-Cl\-Link\-Data} \&}]{link\-Data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a20d0c8888a1674a6977940fcde654f60}
+
+
+Edit a unit link. 
+
+
+
+Definition at line 204 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References add\-Link(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), remove\-Link(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+\hypertarget{classmdt_cl_link_a13c49a669e9e5a7d228aeb6a238c8633}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!get\-Connection\-Link\-List\-By\-Name@{get\-Connection\-Link\-List\-By\-Name}}
+\index{get\-Connection\-Link\-List\-By\-Name@{get\-Connection\-Link\-List\-By\-Name}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{get\-Connection\-Link\-List\-By\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Cl\-Link\-Data} $>$ mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Cl\-Unit\-Connection\-Data} $>$ \&}]{A, }
+\item[{const Q\-List$<$ {\bf mdt\-Cl\-Unit\-Connection\-Data} $>$ \&}]{B}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a13c49a669e9e5a7d228aeb6a238c8633}
+
+
+Get a list of connection links between A and B connections, by name. 
+
+Will search connections that have the same name, and that can be connected together, in A and B list. Currently, connections can be connected if item of A is a pin and item of B is a socket, or in reverse case.
+
+This method is typically used to create connections links between 2 connectors (i.\-e. connect them).
+
+For each link that was found, following fields are also set\-:
+\begin{DoxyItemize}
+\item Unit\-Connection\-Start\-\_\-\-Id\-\_\-\-F\-K \-: I\-D of item in A
+\item Unit\-Connection\-End\-\_\-\-Id\-\_\-\-F\-K \-: I\-D of item in B
+\item Link\-Type\-\_\-\-Code\-\_\-\-F\-K \-: C\-O\-N\-N\-E\-C\-T\-I\-O\-N
+\item Link\-Direction\-\_\-\-Code\-\_\-\-F\-K \-: B\-I\-D 
+\end{DoxyItemize}
+
+Definition at line 374 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Cl\-Link\-Data\-::clear\-Values(), mdt\-Tt\-Base\-::database(), mdt\-Cl\-Link\-Data\-::set\-End\-Connection\-Data(), mdt\-Cl\-Link\-Data\-::set\-Start\-Connection\-Data(), mdt\-Cl\-Link\-Data\-::setup(), mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
+
+
+
+Referenced by can\-Connect\-Connectors(), and connect\-By\-Contact\-Name().
+
+\hypertarget{classmdt_cl_link_ab84d16e3db0b15784594505e9996c0dc}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!get\-Link\-Data@{get\-Link\-Data}}
+\index{get\-Link\-Data@{get\-Link\-Data}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{get\-Link\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Cl\-Link\-Data} mdt\-Cl\-Link\-::get\-Link\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{unit\-Connection\-End\-Id, }
+\item[{bool}]{include\-Connection\-Data, }
+\item[{bool}]{include\-Vehicle\-Type\-Link\-Data, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_ab84d16e3db0b15784594505e9996c0dc}
+
+
+Get link data. 
+
+
+
+Definition at line 156 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Tt\-Base\-::get\-Data(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_cl_link_ad7c30c7cfae5f38fc38133f550e2dd01}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id@{get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id}}
+\index{get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id@{get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Cl\-Vehicle\-Type\-Link\-Data} $>$ mdt\-Cl\-Link\-::get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_ad7c30c7cfae5f38fc38133f550e2dd01}
+
+
+Get vehicle type link data for given unit I\-D. 
+
+
+
+Definition at line 276 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::database(), mdt\-Tt\-Base\-::get\-Data(), mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::set\-Unit\-Connection\-End\-Id(), mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::set\-Unit\-Connection\-Start\-Id(), mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::set\-Vehicle\-Type\-End\-Id(), and mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::set\-Vehicle\-Type\-Start\-Id().
+
+
+
+Referenced by remove\-Vehicle\-Type\-Link\-By\-Unit\-Id().
+
+\hypertarget{classmdt_cl_link_aaf2bcec69c5108f45b1e2189978c07c6}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!link\-Exists@{link\-Exists}}
+\index{link\-Exists@{link\-Exists}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{link\-Exists}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::link\-Exists (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{unit\-Connection\-End\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_aaf2bcec69c5108f45b1e2189978c07c6}
+
+
+Check if a link exists. 
+
+
+
+Definition at line 141 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::get\-Data().
+
+\hypertarget{classmdt_cl_link_a865c0cee1fab1c9209d139dcd70f9fbd}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!remove\-Link@{remove\-Link}}
+\index{remove\-Link@{remove\-Link}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{remove\-Link}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::remove\-Link (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{unit\-Connection\-End\-Id, }
+\item[{bool}]{handle\-Transaction = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a865c0cee1fab1c9209d139dcd70f9fbd}
+
+
+Remove a unit link. 
+
+Will also remove all vehicle type related links
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000043}{Todo}]Wrong way for delete\-: will delete links for all vehicle type assoc. Check about a overloaded method that limits vehicle type assoc. , that only remove the link in Link\-\_\-tbl when no entry exists in Vehicle\-Type\-\_\-\-Link\-\_\-tbl \end{DoxyRefDesc}
+
+
+Definition at line 229 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::remove\-Data(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+
+
+Referenced by disconnect\-Connectors(), edit\-Link(), and remove\-Links().
+
+\hypertarget{classmdt_cl_link_ad89403d68ce0b31f0c8c21ad278e0f83}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!remove\-Links@{remove\-Links}}
+\index{remove\-Links@{remove\-Links}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{remove\-Links}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::remove\-Links (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ Q\-Model\-Index\-List $>$ \&}]{index\-List\-Of\-Selected\-Rows\-By\-Rows}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_ad89403d68ce0b31f0c8c21ad278e0f83}
+
+
+Remove each unit link that is contained in selection. 
+
+
+
+Definition at line 260 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References remove\-Link().
+
+\hypertarget{classmdt_cl_link_a44d152cef5aeb95a150335b225276892}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!remove\-Vehicle\-Type\-Link\-By\-Unit\-Id@{remove\-Vehicle\-Type\-Link\-By\-Unit\-Id}}
+\index{remove\-Vehicle\-Type\-Link\-By\-Unit\-Id@{remove\-Vehicle\-Type\-Link\-By\-Unit\-Id}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{remove\-Vehicle\-Type\-Link\-By\-Unit\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Link\-By\-Unit\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Id, }
+\item[{bool}]{handle\-Transaction}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a44d152cef5aeb95a150335b225276892}
+
+
+Remove vehicle type links for given unit I\-D. 
+
+
+
+Definition at line 310 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id(), and remove\-Vehicle\-Type\-Links().
+
+
+
+Referenced by mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments().
+
+\hypertarget{classmdt_cl_link_a6b3e1de445d4c70c057ff89df193854f}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!remove\-Vehicle\-Type\-Links@{remove\-Vehicle\-Type\-Links}}
+\index{remove\-Vehicle\-Type\-Links@{remove\-Vehicle\-Type\-Links}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{remove\-Vehicle\-Type\-Links}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Cl\-Vehicle\-Type\-Link\-Data} $>$ \&}]{vt\-Link\-List, }
+\item[{bool}]{handle\-Transaction}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a6b3e1de445d4c70c057ff89df193854f}
+
+
+Remove vehicle type links. 
+
+
+
+Definition at line 323 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Error\-::commit(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-System\-Error(), mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::unit\-Connection\-End\-Id(), mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::unit\-Connection\-Start\-Id(), mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::vehicle\-Type\-End\-Id(), and mdt\-Cl\-Vehicle\-Type\-Link\-Data\-::vehicle\-Type\-Start\-Id().
+
+
+
+Referenced by remove\-Vehicle\-Type\-Link\-By\-Unit\-Id().
+
+\hypertarget{classmdt_cl_link_a17eb46d4b5b94b3d48956a05ae7d0a67}{\index{mdt\-Cl\-Link@{mdt\-Cl\-Link}!sql\-For\-Connectable\-Unit\-Connectors\-Selection@{sql\-For\-Connectable\-Unit\-Connectors\-Selection}}
+\index{sql\-For\-Connectable\-Unit\-Connectors\-Selection@{sql\-For\-Connectable\-Unit\-Connectors\-Selection}!mdtClLink@{mdt\-Cl\-Link}}
+\subsubsection[{sql\-For\-Connectable\-Unit\-Connectors\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Cl\-Link\-::sql\-For\-Connectable\-Unit\-Connectors\-Selection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connector\-Id, }
+\item[{const Q\-Variant \&}]{unit\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_link_a17eb46d4b5b94b3d48956a05ae7d0a67}
+
+
+Get S\-Q\-L statement for connectable unit connector selection. 
+
+S\-Q\-L statement will select unit connectors that can be connected to given start unit connector I\-D. If given unit I\-D is not null, only connectors related to this unit will be included.
+
+\begin{DoxyReturn}{Returns}
+S\-Q\-L statement, or empty string on error. 
+\end{DoxyReturn}
+
+
+Definition at line 457 of file mdt\-Cl\-Link.\-cpp.
+
+
+
+References can\-Connect\-Connectors(), mdt\-Error\-::commit(), mdt\-Tt\-Base\-::get\-Data(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::\-Warning.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_link_8h}{mdt\-Cl\-Link.\-h}\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_link_8cpp}{mdt\-Cl\-Link.\-cpp}\end{DoxyCompactItemize}

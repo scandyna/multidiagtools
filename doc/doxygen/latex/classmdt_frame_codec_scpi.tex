@@ -1,19 +1,18 @@
-\hypertarget{classmdt_frame_codec_scpi}{
-\section{mdtFrameCodecScpi Class Reference}
-\label{classmdt_frame_codec_scpi}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}}
+\hypertarget{classmdt_frame_codec_scpi}{\section{mdt\-Frame\-Codec\-Scpi Class Reference}
+\label{classmdt_frame_codec_scpi}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}
 }
 
 
-\#include $<$QVariant$>$  
+\#include $<$\-Q\-Variant$>$  
 
 
 
 
-{\ttfamily \#include $<$mdtFrameCodecScpi.h$>$}
+{\ttfamily \#include $<$mdt\-Frame\-Codec\-Scpi.\-h$>$}
 
 
 
-Inheritance diagram for mdtFrameCodecScpi:\nopagebreak
+Inheritance diagram for mdt\-Frame\-Codec\-Scpi\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,368 +21,390 @@ Inheritance diagram for mdtFrameCodecScpi:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtFrameCodecScpi:\nopagebreak
+Collaboration diagram for mdt\-Frame\-Codec\-Scpi\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=190pt]{classmdt_frame_codec_scpi__coll__graph}
+\includegraphics[width=350pt]{classmdt_frame_codec_scpi__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9a}{query\_\-type\_\-t} \{ \par
-\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897}{QT\_\-UNKNOW} =  0, 
-\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082}{QT\_\-VALUE}, 
-\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa0f4f3edfd4d8b84dcbbff566de1278df}{QT\_\-SINGLE\_\-VALUE\_\-FLT}, 
-\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9}{QT\_\-IDN}, 
-\par
-\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5}{QT\_\-ERR}, 
-\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d}{QT\_\-CONF}
+enum \hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9a}{query\-\_\-type\-\_\-t} \{ \\*
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897}{Q\-T\-\_\-\-U\-N\-K\-N\-O\-W} = 0, 
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082}{Q\-T\-\_\-\-V\-A\-L\-U\-E}, 
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa0f4f3edfd4d8b84dcbbff566de1278df}{Q\-T\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-F\-L\-T}, 
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9}{Q\-T\-\_\-\-I\-D\-N}, 
+\\*
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5}{Q\-T\-\_\-\-E\-R\-R}, 
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d}{Q\-T\-\_\-\-C\-O\-N\-F}
  \}
 \begin{DoxyCompactList}\small\item\em Query type. \end{DoxyCompactList}\item 
-enum \hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}{waveform\_\-format\_\-t} \{ \hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a7f4b47afe74504dea43bb04c8c6fbe58}{WORD}, 
-\hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475aad91226f87cea7fab38f5cc7618f424c}{BYTE}, 
-\hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a957445cd510a5c4e6964e9b79e73af4d}{ASCII}
+enum \hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}{waveform\-\_\-format\-\_\-t} \{ \hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a7f4b47afe74504dea43bb04c8c6fbe58}{W\-O\-R\-D}, 
+\hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475aad91226f87cea7fab38f5cc7618f424c}{B\-Y\-T\-E}, 
+\hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a957445cd510a5c4e6964e9b79e73af4d}{A\-S\-C\-I\-I}
  \}
 \begin{DoxyCompactList}\small\item\em Format of waveform data. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-bool \hyperlink{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}{decodeValues} (const QByteArray \&data, QString sep=\char`\"{}:\char`\"{})
-\begin{DoxyCompactList}\small\item\em Decode SCPI value(s) \end{DoxyCompactList}\item 
-\hyperlink{classmdt_value}{mdtValue} \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{decodeSingleValueDouble} (const QByteArray \&data)
+\hyperlink{classmdt_frame_codec_scpi_a577bc18bb6bd855024438b4c73b1499b}{mdt\-Frame\-Codec\-Scpi} ()
+\item 
+virtual \hyperlink{classmdt_frame_codec_scpi_aba6cd4da3eb6ea22cb45d282858c7949}{$\sim$mdt\-Frame\-Codec\-Scpi} ()
+\item 
+bool \hyperlink{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}{decode\-Values} (const Q\-Byte\-Array \&data, Q\-String sep=\char`\"{}\-:\char`\"{})
+\begin{DoxyCompactList}\small\item\em Decode S\-C\-P\-I value(s) \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{decode\-Single\-Value\-Double} (const Q\-Byte\-Array \&data)
 \begin{DoxyCompactList}\small\item\em Decode a signle value in double floating format. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_value}{mdtValue} \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{checkFloatingValueValidity} (double x) const 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{check\-Floating\-Value\-Validity} (double x) const 
 \begin{DoxyCompactList}\small\item\em Check the validity of a floating value. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_frame_codec_scpi_ac928eac971706f5c78f36d0ae4dc0c42}{decodeFunctionParameters} (const QByteArray \&data)
+bool \hyperlink{classmdt_frame_codec_scpi_ac928eac971706f5c78f36d0ae4dc0c42}{decode\-Function\-Parameters} (const Q\-Byte\-Array \&data)
 \begin{DoxyCompactList}\small\item\em Decode reply of type function/parameter. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}{decodeIdn} (const QByteArray \&data)
-\begin{DoxyCompactList}\small\item\em Decode the IDN answer. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_frame_codec_scpi_a3ae1183cbe26272a7a025e89fc961042}{decodeScpiVersion} (const QByteArray \&data)
-\begin{DoxyCompactList}\small\item\em Decode the SCPI version returned by SYSTem:VERSion? query. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_frame_codec_scpi_a9e38d8afadc7ff37821620feea6b0899}{decodeError} (const QByteArray \&data)
+bool \hyperlink{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}{decode\-Idn} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Decode the I\-D\-N answer. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_frame_codec_scpi_a3ae1183cbe26272a7a025e89fc961042}{decode\-Scpi\-Version} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Decode the S\-C\-P\-I version returned by S\-Y\-S\-Tem\-:V\-E\-R\-Sion? query. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_frame_codec_scpi_a9e38d8afadc7ff37821620feea6b0899}{decode\-Error} (const Q\-Byte\-Array \&data)
 \begin{DoxyCompactList}\small\item\em Decode error answer. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_frame_codec_scpi_a4b07da48ad126c56db050a379700ac2b}{decodeIEEEblock} (const QByteArray \&data, \hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}{waveform\_\-format\_\-t} format)
-\begin{DoxyCompactList}\small\item\em Decode a IEEE block. \end{DoxyCompactList}\end{DoxyCompactItemize}
+bool \hyperlink{classmdt_frame_codec_scpi_a4b07da48ad126c56db050a379700ac2b}{decode\-I\-E\-E\-Eblock} (const Q\-Byte\-Array \&data, \hyperlink{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}{waveform\-\_\-format\-\_\-t} format)
+\begin{DoxyCompactList}\small\item\em Decode a I\-E\-E\-E block. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-bool \hyperlink{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}{decodeIEEEdataAscii} (const QByteArray \&data)
-\begin{DoxyCompactList}\small\item\em Decode a array of ASCII values. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{decodeIEEEdataByte} (const QByteArray \&data)
-\begin{DoxyCompactList}\small\item\em Decode a array of BYTE values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+bool \hyperlink{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}{decode\-I\-E\-E\-Edata\-Ascii} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Decode a array of A\-S\-C\-I\-I values. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{decode\-I\-E\-E\-Edata\-Byte} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Decode a array of B\-Y\-T\-E values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
-\#include $<$QVariant$>$ 
+\#include $<$\-Q\-Variant$>$ 
 
-Decode SCPI data 
+Decode S\-C\-P\-I data 
 
-Definition at line 30 of file mdtFrameCodecScpi.h.
+Definition at line 30 of file mdt\-Frame\-Codec\-Scpi.\-h.
 
 
 
 \subsection{Member Enumeration Documentation}
-\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9a}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!query\_\-type\_\-t@{query\_\-type\_\-t}}
-\index{query\_\-type\_\-t@{query\_\-type\_\-t}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{query\_\-type\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtFrameCodecScpi::query\_\-type\_\-t}}}
-\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9a}
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9a}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!query\-\_\-type\-\_\-t@{query\-\_\-type\-\_\-t}}
+\index{query\-\_\-type\-\_\-t@{query\-\_\-type\-\_\-t}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{query\-\_\-type\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Frame\-Codec\-Scpi\-::query\-\_\-type\-\_\-t}}}\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9a}
 
 
 Query type. 
 
 \begin{Desc}
-\item[Enumerator: ]\par
+\item[Enumerator]\par
 \begin{description}
-\index{QT\_\-UNKNOW@{QT\_\-UNKNOW}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-UNKNOW@{QT\_\-UNKNOW}}\item[{\em 
-\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897}{
-QT\_\-UNKNOW}
-\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897}
-}]Initial or unknown query/response type \index{QT\_\-VALUE@{QT\_\-VALUE}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-VALUE@{QT\_\-VALUE}}\item[{\em 
-\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082}{
-QT\_\-VALUE}
-\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082}
-}]Device returns one or more value(s) (int, double, date or string) \index{QT\_\-SINGLE\_\-VALUE\_\-FLT@{QT\_\-SINGLE\_\-VALUE\_\-FLT}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-SINGLE\_\-VALUE\_\-FLT@{QT\_\-SINGLE\_\-VALUE\_\-FLT}}\item[{\em 
-\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa0f4f3edfd4d8b84dcbbff566de1278df}{
-QT\_\-SINGLE\_\-VALUE\_\-FLT}
-\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa0f4f3edfd4d8b84dcbbff566de1278df}
-}]Device returns a floating value \index{QT\_\-IDN@{QT\_\-IDN}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-IDN@{QT\_\-IDN}}\item[{\em 
-\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9}{
-QT\_\-IDN}
-\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9}
-}]IDN query or response \index{QT\_\-ERR@{QT\_\-ERR}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-ERR@{QT\_\-ERR}}\item[{\em 
-\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5}{
-QT\_\-ERR}
-\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5}
-}]ERRor query or response \index{QT\_\-CONF@{QT\_\-CONF}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-CONF@{QT\_\-CONF}}\item[{\em 
-\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d}{
-QT\_\-CONF}
-\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d}
-}]CONFigure query or response type \end{description}
+\index{Q\-T\-\_\-\-U\-N\-K\-N\-O\-W@{Q\-T\-\_\-\-U\-N\-K\-N\-O\-W}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!Q\-T\-\_\-\-U\-N\-K\-N\-O\-W@{Q\-T\-\_\-\-U\-N\-K\-N\-O\-W}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897}{Q\-T\-\_\-\-U\-N\-K\-N\-O\-W}\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897}
+}]Initial or unknown query/response type \index{Q\-T\-\_\-\-V\-A\-L\-U\-E@{Q\-T\-\_\-\-V\-A\-L\-U\-E}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!Q\-T\-\_\-\-V\-A\-L\-U\-E@{Q\-T\-\_\-\-V\-A\-L\-U\-E}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082}{Q\-T\-\_\-\-V\-A\-L\-U\-E}\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082}
+}]Device returns one or more value(s) (int, double, date or string) \index{Q\-T\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-F\-L\-T@{Q\-T\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-F\-L\-T}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!Q\-T\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-F\-L\-T@{Q\-T\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-F\-L\-T}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa0f4f3edfd4d8b84dcbbff566de1278df}{Q\-T\-\_\-\-S\-I\-N\-G\-L\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-F\-L\-T}\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa0f4f3edfd4d8b84dcbbff566de1278df}
+}]Device returns a floating value \index{Q\-T\-\_\-\-I\-D\-N@{Q\-T\-\_\-\-I\-D\-N}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!Q\-T\-\_\-\-I\-D\-N@{Q\-T\-\_\-\-I\-D\-N}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9}{Q\-T\-\_\-\-I\-D\-N}\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9}
+}]I\-D\-N query or response \index{Q\-T\-\_\-\-E\-R\-R@{Q\-T\-\_\-\-E\-R\-R}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!Q\-T\-\_\-\-E\-R\-R@{Q\-T\-\_\-\-E\-R\-R}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5}{Q\-T\-\_\-\-E\-R\-R}\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5}
+}]E\-R\-Ror query or response \index{Q\-T\-\_\-\-C\-O\-N\-F@{Q\-T\-\_\-\-C\-O\-N\-F}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!Q\-T\-\_\-\-C\-O\-N\-F@{Q\-T\-\_\-\-C\-O\-N\-F}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d}{Q\-T\-\_\-\-C\-O\-N\-F}\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d}
+}]C\-O\-N\-Figure query or response type \end{description}
 \end{Desc}
 
 
+Definition at line 36 of file mdt\-Frame\-Codec\-Scpi.\-h.
 
-Definition at line 36 of file mdtFrameCodecScpi.h.
-
-\hypertarget{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!waveform\_\-format\_\-t@{waveform\_\-format\_\-t}}
-\index{waveform\_\-format\_\-t@{waveform\_\-format\_\-t}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{waveform\_\-format\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtFrameCodecScpi::waveform\_\-format\_\-t}}}
-\label{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}
+\hypertarget{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!waveform\-\_\-format\-\_\-t@{waveform\-\_\-format\-\_\-t}}
+\index{waveform\-\_\-format\-\_\-t@{waveform\-\_\-format\-\_\-t}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{waveform\-\_\-format\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Frame\-Codec\-Scpi\-::waveform\-\_\-format\-\_\-t}}}\label{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475}
 
 
 Format of waveform data. 
 
 \begin{Desc}
-\item[Enumerator: ]\par
+\item[Enumerator]\par
 \begin{description}
-\index{WORD@{WORD}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!WORD@{WORD}}\item[{\em 
-\hypertarget{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a7f4b47afe74504dea43bb04c8c6fbe58}{
-WORD}
-\label{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a7f4b47afe74504dea43bb04c8c6fbe58}
-}]16 bit data resolution \index{BYTE@{BYTE}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!BYTE@{BYTE}}\item[{\em 
-\hypertarget{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475aad91226f87cea7fab38f5cc7618f424c}{
-BYTE}
-\label{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475aad91226f87cea7fab38f5cc7618f424c}
-}]8 bit data resolution \index{ASCII@{ASCII}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!ASCII@{ASCII}}\item[{\em 
-\hypertarget{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a957445cd510a5c4e6964e9b79e73af4d}{
-ASCII}
-\label{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a957445cd510a5c4e6964e9b79e73af4d}
-}]ASCII float represented data \end{description}
+\index{W\-O\-R\-D@{W\-O\-R\-D}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!W\-O\-R\-D@{W\-O\-R\-D}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a7f4b47afe74504dea43bb04c8c6fbe58}{W\-O\-R\-D}\label{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a7f4b47afe74504dea43bb04c8c6fbe58}
+}]16 bit data resolution \index{B\-Y\-T\-E@{B\-Y\-T\-E}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!B\-Y\-T\-E@{B\-Y\-T\-E}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475aad91226f87cea7fab38f5cc7618f424c}{B\-Y\-T\-E}\label{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475aad91226f87cea7fab38f5cc7618f424c}
+}]8 bit data resolution \index{A\-S\-C\-I\-I@{A\-S\-C\-I\-I}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!A\-S\-C\-I\-I@{A\-S\-C\-I\-I}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a957445cd510a5c4e6964e9b79e73af4d}{A\-S\-C\-I\-I}\label{classmdt_frame_codec_scpi_a0562eccf33d8cf62e7a73a748a70c475a957445cd510a5c4e6964e9b79e73af4d}
+}]A\-S\-C\-I\-I float represented data \end{description}
 \end{Desc}
 
 
+Definition at line 47 of file mdt\-Frame\-Codec\-Scpi.\-h.
 
-Definition at line 47 of file mdtFrameCodecScpi.h.
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_frame_codec_scpi_a577bc18bb6bd855024438b4c73b1499b}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}}
+\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{mdt\-Frame\-Codec\-Scpi}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Frame\-Codec\-Scpi\-::mdt\-Frame\-Codec\-Scpi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_frame_codec_scpi_a577bc18bb6bd855024438b4c73b1499b}
+
+
+Definition at line 29 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
+
+\hypertarget{classmdt_frame_codec_scpi_aba6cd4da3eb6ea22cb45d282858c7949}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!$\sim$mdt\-Frame\-Codec\-Scpi@{$\sim$mdt\-Frame\-Codec\-Scpi}}
+\index{$\sim$mdt\-Frame\-Codec\-Scpi@{$\sim$mdt\-Frame\-Codec\-Scpi}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{$\sim$mdt\-Frame\-Codec\-Scpi}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Frame\-Codec\-Scpi\-::$\sim$mdt\-Frame\-Codec\-Scpi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_frame_codec_scpi_aba6cd4da3eb6ea22cb45d282858c7949}
+
+
+Definition at line 42 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!checkFloatingValueValidity@{checkFloatingValueValidity}}
-\index{checkFloatingValueValidity@{checkFloatingValueValidity}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{checkFloatingValueValidity}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtValue} mdtFrameCodecScpi::checkFloatingValueValidity (
+\hypertarget{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!check\-Floating\-Value\-Validity@{check\-Floating\-Value\-Validity}}
+\index{check\-Floating\-Value\-Validity@{check\-Floating\-Value\-Validity}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{check\-Floating\-Value\-Validity}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Frame\-Codec\-Scpi\-::check\-Floating\-Value\-Validity (
 \begin{DoxyParamCaption}
 \item[{double}]{x}
 \end{DoxyParamCaption}
-) const}}
-\label{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}
+) const}}\label{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}
 
 
 Check the validity of a floating value. 
 
-Check validity regarding SCPI-\/99, sections 7.2.1.4 (-\/infinity, +infinity) and 7.2.1.5 (NaN).
+Check validity regarding S\-C\-P\-I-\/99, sections 7.\-2.\-1.\-4 (-\/infinity, +infinity) and 7.\-2.\-1.\-5 (Na\-N).
 
 \begin{DoxyReturn}{Returns}
-A \hyperlink{classmdt_value}{mdtValue} that contains data of type Double. If x is NaN, a invalid \hyperlink{classmdt_value}{mdtValue} is returned.QVariant \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{checkFloatingValueValidity(double x) const};
+A \hyperlink{classmdt_value}{mdt\-Value} that contains data of type Double. If x is Na\-N, a invalid \hyperlink{classmdt_value}{mdt\-Value} is returned.\-Q\-Variant \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{check\-Floating\-Value\-Validity(double x) const};
 \end{DoxyReturn}
-QVariant \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{mdtFrameCodecScpi::checkFloatingValueValidity(double x) const} \{ Check about NaN if(qAbs(x -\/ pvNan) $<$= FLT\_\-EPSILON)\{ return QVariant(); \} Check about -\/OL and OL if((x $<$= (pvNinfinity+FLT\_\-EPSILON))$|$$|$(x $>$= (pvInfinity-\/FLT\_\-EPSILON)))\{ return QVariant(); \}
+Q\-Variant \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{mdt\-Frame\-Codec\-Scpi\-::check\-Floating\-Value\-Validity(double x) const} \{ Check about Na\-N if(q\-Abs(x -\/ pv\-Nan) $<$= F\-L\-T\-\_\-\-E\-P\-S\-I\-L\-O\-N)\{ return Q\-Variant(); \} Check about -\/\-O\-L and O\-L if((x $<$= (pv\-Ninfinity+\-F\-L\-T\-\_\-\-E\-P\-S\-I\-L\-O\-N))$|$$|$(x $>$= (pv\-Infinity-\/\-F\-L\-T\-\_\-\-E\-P\-S\-I\-L\-O\-N)))\{ return Q\-Variant(); \}
 
 return x; \} 
 
-Definition at line 195 of file mdtFrameCodecScpi.cpp.
+Definition at line 195 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
-\hypertarget{classmdt_frame_codec_scpi_a9e38d8afadc7ff37821620feea6b0899}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeError@{decodeError}}
-\index{decodeError@{decodeError}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeError}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeError (
+
+
+References mdt\-Value\-::set\-Value().
+
+
+
+Referenced by decode\-Function\-Parameters(), decode\-Single\-Value\-Double(), and decode\-Values().
+
+\hypertarget{classmdt_frame_codec_scpi_a9e38d8afadc7ff37821620feea6b0899}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!decode\-Error@{decode\-Error}}
+\index{decode\-Error@{decode\-Error}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{decode\-Error}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Scpi\-::decode\-Error (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data}
+\item[{const Q\-Byte\-Array \&}]{data}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_a9e38d8afadc7ff37821620feea6b0899}
+)}}\label{classmdt_frame_codec_scpi_a9e38d8afadc7ff37821620feea6b0899}
 
 
 Decode error answer. 
 
-When decode was done successfully, error is available with \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()}:
+When decode was done successfully, error is available with \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()}\-:
 \begin{DoxyItemize}
 \item Item 0 is the error number
 \item Item 1 is the error message string
 \item After item 1 are device's specific messages (if exists) 
 \end{DoxyItemize}
 
-Definition at line 348 of file mdtFrameCodecScpi.cpp.
+Definition at line 348 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
-\hypertarget{classmdt_frame_codec_scpi_ac928eac971706f5c78f36d0ae4dc0c42}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeFunctionParameters@{decodeFunctionParameters}}
-\index{decodeFunctionParameters@{decodeFunctionParameters}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeFunctionParameters}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeFunctionParameters (
+
+
+References mdt\-Frame\-Codec\-Ascii\-::clean(), mdt\-Error\-::commit(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Frame\-Codec\-Ascii\-::pv\-Ascii\-Data, mdt\-Frame\-Codec\-Ascii\-::pv\-Nodes, mdt\-Frame\-Codec\-::pv\-Values, mdt\-Algorithms\-::split\-String(), and mdt\-Error\-::\-Warning.
+
+\hypertarget{classmdt_frame_codec_scpi_ac928eac971706f5c78f36d0ae4dc0c42}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!decode\-Function\-Parameters@{decode\-Function\-Parameters}}
+\index{decode\-Function\-Parameters@{decode\-Function\-Parameters}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{decode\-Function\-Parameters}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Scpi\-::decode\-Function\-Parameters (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data}
+\item[{const Q\-Byte\-Array \&}]{data}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_ac928eac971706f5c78f36d0ae4dc0c42}
+)}}\label{classmdt_frame_codec_scpi_ac928eac971706f5c78f36d0ae4dc0c42}
 
 
 Decode reply of type function/parameter. 
 
-Typical query that returns $<$function$>$ $<$parameters$>$ form is CONFigure?. See SCPI-\/99 , chap. 3.
+Typical query that returns $<$function$>$ $<$parameters$>$ form is C\-O\-N\-Figure?. See S\-C\-P\-I-\/99 , chap. 3.
 
-After successfull decode, \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()} contains:
+After successfull decode, \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()} contains\-:
 \begin{DoxyItemize}
-\item Index 0: Function as string
-\item Index $>$1 (if available): parameters in converted form (double, int, ...). Note: if a parameter is a floating value, it's possible that it is invalid (+/-\/inf, Nan). 
+\item Index 0\-: Function as string
+\item Index $>$1 (if available)\-: parameters in converted form (double, int, ...). Note\-: if a parameter is a floating value, it's possible that it is invalid (+/-\/inf, Nan). 
 \end{DoxyItemize}
 
-value = checkFloatingValueValidity(value.toDouble()); 
+Definition at line 218 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
 
 
-Definition at line 218 of file mdtFrameCodecScpi.cpp.
+References check\-Floating\-Value\-Validity(), mdt\-Error\-::commit(), mdt\-Frame\-Codec\-Ascii\-::convert\-Data(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Frame\-Codec\-Ascii\-::pv\-Ascii\-Data, mdt\-Frame\-Codec\-Ascii\-::pv\-Nodes, mdt\-Frame\-Codec\-::pv\-Values, mdt\-Frame\-Codec\-Ascii\-::remove\-Eof\-Seq(), mdt\-Frame\-Codec\-Ascii\-::trim(), and mdt\-Error\-::\-Warning.
 
-\hypertarget{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIdn@{decodeIdn}}
-\index{decodeIdn@{decodeIdn}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeIdn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeIdn (
+
+
+Referenced by mdt\-Frame\-Codec\-Scpi\-U3606\-A\-::decode\-Configure().
+
+\hypertarget{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!decode\-Idn@{decode\-Idn}}
+\index{decode\-Idn@{decode\-Idn}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{decode\-Idn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Scpi\-::decode\-Idn (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data}
+\item[{const Q\-Byte\-Array \&}]{data}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}
+)}}\label{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}
 
 
-Decode the IDN answer. 
+Decode the I\-D\-N answer. 
 
 When decode was done, the values are available with \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()} 
 
-Definition at line 282 of file mdtFrameCodecScpi.cpp.
+Definition at line 282 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
-\hypertarget{classmdt_frame_codec_scpi_a4b07da48ad126c56db050a379700ac2b}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIEEEblock@{decodeIEEEblock}}
-\index{decodeIEEEblock@{decodeIEEEblock}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeIEEEblock}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeIEEEblock (
+
+
+References mdt\-Frame\-Codec\-Ascii\-::clean(), mdt\-Frame\-Codec\-Ascii\-::pv\-Ascii\-Data, mdt\-Frame\-Codec\-Ascii\-::pv\-Nodes, and mdt\-Frame\-Codec\-::pv\-Values.
+
+\hypertarget{classmdt_frame_codec_scpi_a4b07da48ad126c56db050a379700ac2b}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!decode\-I\-E\-E\-Eblock@{decode\-I\-E\-E\-Eblock}}
+\index{decode\-I\-E\-E\-Eblock@{decode\-I\-E\-E\-Eblock}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{decode\-I\-E\-E\-Eblock}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Scpi\-::decode\-I\-E\-E\-Eblock (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data, }
-\item[{{\bf mdtFrameCodecScpi::waveform\_\-format\_\-t}}]{format}
+\item[{const Q\-Byte\-Array \&}]{data, }
+\item[{{\bf mdt\-Frame\-Codec\-Scpi\-::waveform\-\_\-format\-\_\-t}}]{format}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_a4b07da48ad126c56db050a379700ac2b}
+)}}\label{classmdt_frame_codec_scpi_a4b07da48ad126c56db050a379700ac2b}
 
 
-Decode a IEEE block. 
+Decode a I\-E\-E\-E block. 
 
-NOTE: not implemented yet ! 
+N\-O\-T\-E\-: not implemented yet ! 
 
-Definition at line 391 of file mdtFrameCodecScpi.cpp.
+Definition at line 391 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
-\hypertarget{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIEEEdataAscii@{decodeIEEEdataAscii}}
-\index{decodeIEEEdataAscii@{decodeIEEEdataAscii}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeIEEEdataAscii}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeIEEEdataAscii (
+
+
+References A\-S\-C\-I\-I, B\-Y\-T\-E, mdt\-Error\-::commit(), decode\-I\-E\-E\-Edata\-Ascii(), decode\-I\-E\-E\-Edata\-Byte(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Frame\-Codec\-::pv\-Values, and mdt\-Error\-::\-Warning.
+
+\hypertarget{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!decode\-I\-E\-E\-Edata\-Ascii@{decode\-I\-E\-E\-Edata\-Ascii}}
+\index{decode\-I\-E\-E\-Edata\-Ascii@{decode\-I\-E\-E\-Edata\-Ascii}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{decode\-I\-E\-E\-Edata\-Ascii}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Scpi\-::decode\-I\-E\-E\-Edata\-Ascii (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data}
+\item[{const Q\-Byte\-Array \&}]{data}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}
 
 
-Decode a array of ASCII values. 
+Decode a array of A\-S\-C\-I\-I values. 
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000077}{Todo}]Not implemented yet \end{Desc}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000078}{Todo}]Not implemented yet \end{DoxyRefDesc}
 
 
-qDebug() $<$$<$ \char`\"{}Data: \char`\"{} $<$$<$ items;
-
-qDebug() $<$$<$ \char`\"{}Values: \char`\"{} $<$$<$ pvValues; 
+Definition at line 467 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
 
 
-Definition at line 467 of file mdtFrameCodecScpi.cpp.
+References mdt\-Frame\-Codec\-::pv\-Values.
 
-\hypertarget{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIEEEdataByte@{decodeIEEEdataByte}}
-\index{decodeIEEEdataByte@{decodeIEEEdataByte}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeIEEEdataByte}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeIEEEdataByte (
+
+
+Referenced by decode\-I\-E\-E\-Eblock().
+
+\hypertarget{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!decode\-I\-E\-E\-Edata\-Byte@{decode\-I\-E\-E\-Edata\-Byte}}
+\index{decode\-I\-E\-E\-Edata\-Byte@{decode\-I\-E\-E\-Edata\-Byte}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{decode\-I\-E\-E\-Edata\-Byte}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Scpi\-::decode\-I\-E\-E\-Edata\-Byte (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data}
+\item[{const Q\-Byte\-Array \&}]{data}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}
 
 
-Decode a array of BYTE values. 
+Decode a array of B\-Y\-T\-E values. 
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000078}{Todo}]Not implemented yet \end{Desc}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000079}{Todo}]Not implemented yet \end{DoxyRefDesc}
 
 
-int len = data.size()-\/1; // Last item is the term char
-
-qDebug() $<$$<$ \char`\"{}data\mbox{[}\char`\"{} $<$$<$ i $<$$<$ \char`\"{}\mbox{]}: \char`\"{} $<$$<$ (qint8)data.at(i) $<$$<$ \char`\"{} ,  0x\char`\"{} $<$$<$ hex $<$$<$ (qint8)data.at(i) $<$$<$ \char`\"{} , flt: \char`\"{} $<$$<$ (double)data.at(i)/127.0; 
+Definition at line 489 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
 
 
-Definition at line 489 of file mdtFrameCodecScpi.cpp.
+References mdt\-Frame\-Codec\-::pv\-Values.
 
-\hypertarget{classmdt_frame_codec_scpi_a3ae1183cbe26272a7a025e89fc961042}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeScpiVersion@{decodeScpiVersion}}
-\index{decodeScpiVersion@{decodeScpiVersion}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeScpiVersion}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeScpiVersion (
+
+
+Referenced by decode\-I\-E\-E\-Eblock().
+
+\hypertarget{classmdt_frame_codec_scpi_a3ae1183cbe26272a7a025e89fc961042}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!decode\-Scpi\-Version@{decode\-Scpi\-Version}}
+\index{decode\-Scpi\-Version@{decode\-Scpi\-Version}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{decode\-Scpi\-Version}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Scpi\-::decode\-Scpi\-Version (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data}
+\item[{const Q\-Byte\-Array \&}]{data}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_a3ae1183cbe26272a7a025e89fc961042}
+)}}\label{classmdt_frame_codec_scpi_a3ae1183cbe26272a7a025e89fc961042}
 
 
-Decode the SCPI version returned by SYSTem:VERSion? query. 
+Decode the S\-C\-P\-I version returned by S\-Y\-S\-Tem\-:V\-E\-R\-Sion? query. 
 
-After successfull decode, values will be stored as follow:
+After successfull decode, values will be stored as follow\-:
 \begin{DoxyItemize}
-\item Index 0: SCPI year as integer
-\item Index 1: SCPI revision 
+\item Index 0\-: S\-C\-P\-I year as integer
+\item Index 1\-: S\-C\-P\-I revision 
 \end{DoxyItemize}
 
-Definition at line 306 of file mdtFrameCodecScpi.cpp.
+Definition at line 306 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
-\hypertarget{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeSingleValueDouble@{decodeSingleValueDouble}}
-\index{decodeSingleValueDouble@{decodeSingleValueDouble}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeSingleValueDouble}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtValue} mdtFrameCodecScpi::decodeSingleValueDouble (
+
+
+References mdt\-Frame\-Codec\-Ascii\-::clean(), mdt\-Error\-::commit(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Frame\-Codec\-Ascii\-::pv\-Ascii\-Data, mdt\-Frame\-Codec\-Ascii\-::pv\-Nodes, mdt\-Frame\-Codec\-::pv\-Values, and mdt\-Error\-::\-Warning.
+
+\hypertarget{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!decode\-Single\-Value\-Double@{decode\-Single\-Value\-Double}}
+\index{decode\-Single\-Value\-Double@{decode\-Single\-Value\-Double}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{decode\-Single\-Value\-Double}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Frame\-Codec\-Scpi\-::decode\-Single\-Value\-Double (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data}
+\item[{const Q\-Byte\-Array \&}]{data}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}
+)}}\label{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}
 
 
 Decode a signle value in double floating format. 
 
-This method returns a QVariant. QVariant's internal data is converted to double. If value is not valid, the QVariant is cleared, so it is possible to check this with QVariant::isValid().
+This method returns a Q\-Variant. Q\-Variant's internal data is converted to double. If value is not valid, the Q\-Variant is cleared, so it is possible to check this with Q\-Variant\-::is\-Valid().
 
 \begin{DoxyReturn}{Returns}
-A \hyperlink{classmdt_value}{mdtValue} that contains data of type Double if decode and conversion to double could be done, else a invalid mdtValue.QVariant \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{decodeSingleValueDouble(const QByteArray \&data)};
+A \hyperlink{classmdt_value}{mdt\-Value} that contains data of type Double if decode and conversion to double could be done, else a invalid mdt\-Value.\-Q\-Variant \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{decode\-Single\-Value\-Double(const Q\-Byte\-Array \&data)};
 \end{DoxyReturn}
-QVariant \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray \&data)} \{ QVariant value;
+Q\-Variant \hyperlink{classmdt_frame_codec_scpi_ad2d7b41d0b3413074d770c5f512bee12}{mdt\-Frame\-Codec\-Scpi\-::decode\-Single\-Value\-Double(const Q\-Byte\-Array \&data)} \{ Q\-Variant value;
 
-Store raw data in local QString constainer pvAsciiData = data; Remove white spaces at begin and end \hyperlink{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{trim()}; remove EofSeq if(!removeEofSeq())\{ return value; \} Case of no data if(pvAsciiData.size() $<$ 1)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-FRAME\_\-DECODE\_\-ERROR, \char`\"{}Frame contains no data\char`\"{} , \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}{mdtError::Warning}); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtFrameCodecScpi\char`\"{}); e.commit(); return value; \} Convert and check value = pvAsciiData; if(value.canConvert(QVariant::Double))\{ if(value.convert(QVariant::Double))\{ value.setValue(checkFloatingValueValidity(value.toDouble())); return value; /return checkFloatingValueValidity(value.toDouble()); \} \}
+Store raw data in local Q\-String constainer pv\-Ascii\-Data = data; Remove white spaces at begin and end \hyperlink{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{trim()}; remove Eof\-Seq if(!remove\-Eof\-Seq())\{ return value; \} Case of no data if(pv\-Ascii\-Data.\-size() $<$ 1)\{ \hyperlink{classmdt_error}{mdt\-Error} e(M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R, \char`\"{}\-Frame contains no data\char`\"{} , \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8}{mdt\-Error\-::\-Warning}); M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C(e, \char`\"{}mdt\-Frame\-Codec\-Scpi\char`\"{}); e.\-commit(); return value; \} Convert and check value = pv\-Ascii\-Data; if(value.\-can\-Convert(\-Q\-Variant\-::\-Double))\{ if(value.\-convert(\-Q\-Variant\-::\-Double))\{ value.\-set\-Value(check\-Floating\-Value\-Validity(value.\-to\-Double())); return value; /return check\-Floating\-Value\-Validity(value.\-to\-Double()); \} \}
 
-return QVariant(); \} 
+return Q\-Variant(); \} 
 
-Definition at line 149 of file mdtFrameCodecScpi.cpp.
+Definition at line 149 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
-\hypertarget{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeValues@{decodeValues}}
-\index{decodeValues@{decodeValues}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeValues}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeValues (
+
+
+References check\-Floating\-Value\-Validity(), mdt\-Error\-::commit(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-F\-R\-A\-M\-E\-\_\-\-D\-E\-C\-O\-D\-E\-\_\-\-E\-R\-R\-O\-R, mdt\-Frame\-Codec\-Ascii\-::pv\-Ascii\-Data, mdt\-Frame\-Codec\-Ascii\-::remove\-Eof\-Seq(), mdt\-Frame\-Codec\-Ascii\-::trim(), and mdt\-Error\-::\-Warning.
+
+\hypertarget{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}{\index{mdt\-Frame\-Codec\-Scpi@{mdt\-Frame\-Codec\-Scpi}!decode\-Values@{decode\-Values}}
+\index{decode\-Values@{decode\-Values}!mdtFrameCodecScpi@{mdt\-Frame\-Codec\-Scpi}}
+\subsubsection[{decode\-Values}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Frame\-Codec\-Scpi\-::decode\-Values (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{data, }
-\item[{QString}]{sep = {\ttfamily \char`\"{}:\char`\"{}}}
+\item[{const Q\-Byte\-Array \&}]{data, }
+\item[{Q\-String}]{sep = {\ttfamily \char`\"{}\-:\char`\"{}}}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}
+)}}\label{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}
 
 
-Decode SCPI value(s) 
+Decode S\-C\-P\-I value(s) 
 
 After decode is done, values are available with \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()}.
 
-Internally, \hyperlink{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{mdtFrameCodecAscii::convertData()} is used for conversion. Additionnaly, if decoded type is double, the validity is checked with \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{checkFloatingValueValidity()}.
+Internally, \hyperlink{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{mdt\-Frame\-Codec\-Ascii\-::convert\-Data()} is used for conversion. Additionnaly, if decoded type is double, the validity is checked with \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{check\-Floating\-Value\-Validity()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -395,21 +416,17 @@ Internally, \hyperlink{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b
 \begin{DoxyReturn}{Returns}
 True if decode could be done.
 \end{DoxyReturn}
-Errors are logged with the \hyperlink{classmdt_error}{mdtError} system. 
+Errors are logged with the \hyperlink{classmdt_error}{mdt\-Error} system. 
 
-double fltValue;
-
-fltValue = value.toDouble(); Check about Nan if(qAbs(fltValue -\/ pvNan) $<$= FLT\_\-EPSILON)\{ value.clear(); \}else\{ Check about -\/OL and OL if((fltValue $<$= (pvNinfinity+FLT\_\-EPSILON))$|$$|$(fltValue $>$= (pvInfinity-\/FLT\_\-EPSILON)))\{ value.clear(); \} \}
-
-value = checkFloatingValueValidity(value.toDouble()); value.setValue(checkFloatingValueValidity(value.toDouble())); 
+Definition at line 46 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
 
 
 
-Definition at line 46 of file mdtFrameCodecScpi.cpp.
+References check\-Floating\-Value\-Validity(), mdt\-Frame\-Codec\-Ascii\-::clean(), mdt\-Frame\-Codec\-Ascii\-::convert\-Data(), mdt\-Frame\-Codec\-Ascii\-::pv\-Ascii\-Data, mdt\-Frame\-Codec\-Ascii\-::pv\-Nodes, mdt\-Frame\-Codec\-::pv\-Values, and mdt\-Value\-::set\-Value().
 
 
 
-The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutils/mdtFrameCodecScpi.h\item 
-src/mdtutils/mdtFrameCodecScpi.cpp\end{DoxyCompactItemize}
+src/mdtutils/\hyperlink{mdt_frame_codec_scpi_8h}{mdt\-Frame\-Codec\-Scpi.\-h}\item 
+src/mdtutils/\hyperlink{mdt_frame_codec_scpi_8cpp}{mdt\-Frame\-Codec\-Scpi.\-cpp}\end{DoxyCompactItemize}

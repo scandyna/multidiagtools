@@ -1,0 +1,31 @@
+<map id="src/mdtport/mdtUsbtmcPortSetupDialog.cpp" name="src/mdtport/mdtUsbtmcPortSetupDialog.cpp">
+<area shape="rect" id="node3" href="$mdt_usbtmc_port_setup_dialog_8h.html" title="mdtUsbtmcPortSetupDialog.h" alt="" coords="2755,101,2949,131"/>
+<area shape="rect" id="node170" href="$mdt_usbtmc_port_manager_8h.html" title="mdtUsbtmcPortManager.h" alt="" coords="3265,101,3439,131"/>
+<area shape="rect" id="node5" href="$mdt_abstract_port_setup_dialog_8h.html" title="mdtAbstractPortSetupDialog.h" alt="" coords="2532,179,2729,208"/>
+<area shape="rect" id="node76" href="$mdt_port_info_8h.html" title="mdtPortInfo.h" alt="" coords="2939,333,3040,363"/>
+<area shape="rect" id="node129" href="$mdt_port_config_widget_8h.html" title="mdtPortConfigWidget.h" alt="" coords="2351,179,2508,208"/>
+<area shape="rect" id="node158" href="$mdt_port_info_cb_handler_8h.html" title="mdtPortInfoCbHandler.h" alt="" coords="3115,333,3277,363"/>
+<area shape="rect" id="node15" href="$ui__mdt_abstract_port_setup_dialog_8h.html" title="ui_mdtAbstractPortSetupDialog.h" alt="" coords="2000,256,2216,285"/>
+<area shape="rect" id="node41" href="$mdt_port_manager_8h.html" title="mdtPortManager.h" alt="" coords="3740,256,3868,285"/>
+<area shape="rect" id="node48" href="$mdt_abstract_port_8h.html" title="mdtAbstractPort.h" alt="" coords="4547,411,4675,440"/>
+<area shape="rect" id="node50" href="$mdt_frame_8h.html" title="mdtFrame.h" alt="" coords="4696,565,4787,595"/>
+<area shape="rect" id="node61" href="$mdt_port_config_8h.html" title="mdtPortConfig.h" alt="" coords="3799,488,3916,517"/>
+<area shape="rect" id="node88" href="$mdt_port_thread_8h.html" title="mdtPortThread.h" alt="" coords="4168,333,4285,363"/>
+<area shape="rect" id="node90" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="3496,411,3579,440"/>
+<area shape="rect" id="node106" href="$mdt_port_transaction_8h.html" title="mdtPortTransaction.h" alt="" coords="3504,333,3651,363"/>
+<area shape="rect" id="node54" href="$mdt_frame_modbus_tcp_8h.html" title="mdtFrameModbusTcp.h" alt="" coords="4447,488,4607,517"/>
+<area shape="rect" id="node58" href="$mdt_frame_ascii_8h.html" title="mdtFrameAscii.h" alt="" coords="4681,488,4801,517"/>
+<area shape="rect" id="node83" href="$mdt_device_info_8h.html" title="mdtDeviceInfo.h" alt="" coords="2800,488,2917,517"/>
+<area shape="rect" id="node108" href="$mdt_analog_io_8h.html" title="mdtAnalogIo.h" alt="" coords="3240,411,3347,440"/>
+<area shape="rect" id="node120" href="$mdt_digital_io_8h.html" title="mdtDigitalIo.h" alt="" coords="3371,411,3472,440"/>
+<area shape="rect" id="node110" href="$mdt_abstract_io_8h.html" title="mdtAbstractIo.h" alt="" coords="3276,488,3391,517"/>
+<area shape="rect" id="node112" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="3283,565,3371,595"/>
+<area shape="rect" id="node131" href="$ui__mdt_port_config_widget_8h.html" title="ui_mdtPortConfigWidget.h" alt="" coords="1216,256,1389,285"/>
+<area shape="rect" id="node172" href="$mdt_usb_port_8h.html" title="mdtUsbPort.h" alt="" coords="4544,179,4645,208"/>
+<area shape="rect" id="node180" href="$mdt_usbtmc_port_thread_8h.html" title="mdtUsbtmcPortThread.h" alt="" coords="4829,179,4995,208"/>
+<area shape="rect" id="node204" href="$mdt_usb_port_manager_8h.html" title="mdtUsbPortManager.h" alt="" coords="4311,179,4463,208"/>
+<area shape="rect" id="node177" href="$mdt_frame_usb_control_8h.html" title="mdtFrameUsbControl.h" alt="" coords="5061,256,5219,285"/>
+<area shape="rect" id="node187" href="$mdt_usb_port_thread_8h.html" title="mdtUsbPortThread.h" alt="" coords="4896,256,5037,285"/>
+<area shape="rect" id="node198" href="$mdt_port_thread_helper_port_8h.html" title="mdtPortThreadHelperPort.h" alt="" coords="4640,256,4821,285"/>
+<area shape="rect" id="node200" href="$mdt_port_thread_helper_8h.html" title="mdtPortThreadHelper.h" alt="" coords="4461,333,4619,363"/>
+</map>
