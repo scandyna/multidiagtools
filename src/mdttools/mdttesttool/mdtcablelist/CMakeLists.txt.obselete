@@ -81,6 +81,8 @@ QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})
 # Fichiers à traiter par le compilateur uic
 QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 
+message("cable list, form files: ${FORM_FILES}")
+
 # Fichiers à traiter par le compilateur rcc
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 

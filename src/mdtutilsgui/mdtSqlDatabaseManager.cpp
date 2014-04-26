@@ -27,7 +27,7 @@
 #include <QSqlError>
 #include <QFileDialog>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlDatabaseManager::mdtSqlDatabaseManager(QObject *parent)
  : QObject(parent)
@@ -420,6 +420,7 @@ bool mdtSqlDatabaseManager::createTable(mdtSqlSchemaTable & table, createMode_t 
         if(!userChooseToOverwriteTable(table.tableName())){
           return false;
         }
+        /// \todo Should drop table here ?
         break;
       case OverwriteExisting:
         sql = table.sqlForDropTable();

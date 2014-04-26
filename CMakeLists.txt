@@ -156,7 +156,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 # * mdttools *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool")
-add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool/mdtcablelist")
+#add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool/mdtcablelist")
 
 # *** Tools section (executables) ***
 add_subdirectory("${PROJECT_SOURCE_DIR}/tools")
@@ -227,6 +227,7 @@ add_test (mdtDatabaseTestOld ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtda
 
 # * mdtdatabase *
 add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasetest)
+add_test (mdtDatabaseWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasewidgettest)
 
 # mdtIoWidgetTest
 add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowidgettest)

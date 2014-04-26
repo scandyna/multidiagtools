@@ -13,3 +13,11 @@ target_link_libraries(mdtdatabasetest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabasetest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdtdatabasetest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabasetest "mdttest")
+
+# * mdtDatabaseWidgetTest executable *
+QT4_WRAP_CPP(MDT_DATABASE_WIDGET_TEST_MOC "mdtDatabaseWidgetTest.h")
+add_executable(mdtdatabasewidgettest "mdtDatabaseWidgetTest.cpp" ${MDT_DATABASE_WIDGET_TEST_MOC})
+target_link_libraries(mdtdatabasewidgettest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasewidgettest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasewidgettest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasewidgettest "mdttest")

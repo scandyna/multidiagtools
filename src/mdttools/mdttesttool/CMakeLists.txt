@@ -5,16 +5,16 @@
 # Project
 project (multidiagtools)
 
-# Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
-set (HEADER_FILES 
+# Header files for mdtTestTool
+set (TT_HEADER_FILES 
           mdtTtTestConnectionCableEditor.h
           mdtTtTestLinkDialog.h
           mdtTtTestNodeEditor.h
           mdtTtTestNodeUnitDialog.h
     )
 
-# Liste des fichiers sources
-set (SOURCES_FILES 
+# Sources files for mdtTestTool
+set (TT_SOURCES_FILES 
           mdtTtBase.cpp
           mdtTtDatabaseSchema.cpp
           mdtTtTestLinkData.cpp
@@ -28,18 +28,84 @@ set (SOURCES_FILES
           mdtTtTestNodeUnitDialog.cpp
     )
 
-# Liste des fichiers ui
-set (FORM_FILES
+# Form files for mdtTestTool
+set (TT_FORM_FILES
           mdtTtTestConnectionCableEditor.ui
           mdtTtTestLinkDialog.ui
           mdtTtTestNodeEditor.ui
           mdtTtTestNodeUnitDialog.ui
     )
 
-# Liste des fichiers rcc (ressources)
-set (RESOURCE_FILES
-
+# Header files for mdtCableList
+set (CL_HEADER_FILES 
+          mdtcablelist/mdtClVehicleTypeEditor.h
+          mdtcablelist/mdtClConnectorEditor.h
+          mdtcablelist/mdtClArticleEditor.h
+          mdtcablelist/mdtClArticleComponentDialog.h
+          mdtcablelist/mdtClArticleConnectionDialog.h
+          mdtcablelist/mdtClArticleLinkDialog.h
+          mdtcablelist/mdtClPathGraphDialog.h
+          mdtcablelist/mdtClUnitConnectionDialog.h
+          mdtcablelist/mdtClUnitEditor.h
+          mdtcablelist/mdtClUnitLinkDialog.h
+          mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.h
     )
+
+# Source files for mdtCableList
+set (CL_SOURCES_FILES 
+          mdtcablelist/mdtClVehicleTypeEditor.cpp
+          mdtcablelist/mdtClConnectorData.cpp
+          mdtcablelist/mdtClConnectorEditor.cpp
+          mdtcablelist/mdtClArticle.cpp
+          mdtcablelist/mdtClArticleConnectorData.cpp
+          mdtcablelist/mdtClArticleConnectionData.cpp
+          mdtcablelist/mdtClArticleEditor.cpp
+          mdtcablelist/mdtClArticleComponentDialog.cpp
+          mdtcablelist/mdtClArticleConnectionDialog.cpp
+          mdtcablelist/mdtClArticleLinkDialog.cpp
+          mdtcablelist/mdtClPathGraph.cpp
+          mdtcablelist/mdtClPathGraphDialog.cpp
+          mdtcablelist/mdtClPathGraphicsConnection.cpp
+          mdtcablelist/mdtClPathGraphicsLink.cpp
+          mdtcablelist/mdtClUnit.cpp
+          mdtcablelist/mdtClUnitConnectorData.cpp
+          mdtcablelist/mdtClUnitConnectionData.cpp
+          mdtcablelist/mdtClUnitConnectionDialog.cpp
+          mdtcablelist/mdtClUnitEditor.cpp
+          mdtcablelist/mdtClLinkData.cpp
+          mdtcablelist/mdtClVehicleTypeLinkData.cpp
+          mdtcablelist/mdtClLink.cpp
+          mdtcablelist/mdtClUnitLinkDialog.cpp
+          mdtcablelist/mdtClUnitVehicleType.cpp
+          mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.cpp
+    )
+
+# Form files for mdtCableList
+set (CL_FORM_FILES
+          mdtcablelist/mdtClVehicleTypeEditor.ui
+          mdtcablelist/mdtClConnectorEditor.ui
+          mdtcablelist/mdtClArticleEditor.ui
+          mdtcablelist/mdtClArticleComponentDialog.ui
+          mdtcablelist/mdtClArticleConnectionDialog.ui
+          mdtcablelist/mdtClArticleLinkDialog.ui
+          mdtcablelist/mdtClPathGraphDialog.ui
+          mdtcablelist/mdtClUnitConnectionDialog.ui
+          mdtcablelist/mdtClUnitEditor.ui
+          mdtcablelist/mdtClUnitLinkDialog.ui
+          mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.ui
+    )
+
+# Header files for complete test tool
+set (HEADER_FILES ${TT_HEADER_FILES} ${CL_HEADER_FILES})
+
+# Source files for complete test tool
+set (SOURCES_FILES ${TT_SOURCES_FILES} ${CL_SOURCES_FILES})
+
+# Form files for complete test tool
+set (FORM_FILES ${TT_FORM_FILES} ${CL_FORM_FILES})
+
+# Form files for complete test tool
+set (RESOURCE_FILES  )
 
 
 # Fichiers à traiter par le compilateur moc

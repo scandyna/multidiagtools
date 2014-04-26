@@ -127,7 +127,7 @@ target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTL
 target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdttesttool${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} "mdtdport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcablelistexe${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 
