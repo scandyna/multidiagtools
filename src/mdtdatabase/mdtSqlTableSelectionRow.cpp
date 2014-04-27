@@ -18,41 +18,41 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DATABASE_WIDGET_TEST_H
-#define MDT_DATABASE_WIDGET_TEST_H
+#include "mdtSqlTableSelectionRow.h"
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QSqlDatabase>
-
-
-class mdtDatabaseWidgetTest : public mdtTest
+mdtSqlTableSelectionRow::mdtSqlTableSelectionRow() 
 {
- Q_OBJECT
+}
 
- private slots:
+void mdtSqlTableSelectionRow::clear() 
+{
+  pvItemList.clear();
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+void mdtSqlTableSelectionRow::addIndex(const QModelIndex & index, const QString & fieldName) 
+{
+  mdtSqlTableSelectionItem item(index, fieldName);
+  pvItemList.append(item);
+}
 
-  // Table selection tests
-  void sqlTableSelectionItemTest();
-  void sqlTableSelectionRowTest();
-  void sqlTableSelectionTest();
+QModelIndex mdtSqlTableSelectionRow::index(int internalColumnIndex) const 
+{
+  Q_ASSERT(internalColumnIndex >= 0);
+  Q_ASSERT(internalColumnIndex < pvItemList.size());
 
-  void sqlTableWidgetTest();
+  return pvItemList.at(internalColumnIndex).index();
+}
 
- private:
+QModelIndex mdtSqlTableSelectionRow::index(const QString & fieldName) const 
+{
+  int i;
 
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
+  for(i = 0; i < pvItemList.size(); ++i){
+    if(pvItemList.at(i).fieldName() == fieldName){
+      return pvItemList.at(i).index();
+    }
+  }
 
-  void populateTestDatabase();
-  void clearTestDatabaseData();
+  return QModelIndex();
+}
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-};
-
-#endif // #ifndef MDT_DATABASE_WIDGET_TEST_H

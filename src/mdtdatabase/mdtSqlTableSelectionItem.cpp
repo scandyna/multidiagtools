@@ -18,41 +18,11 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DATABASE_WIDGET_TEST_H
-#define MDT_DATABASE_WIDGET_TEST_H
+#include "mdtSqlTableSelectionItem.h"
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QSqlDatabase>
-
-
-class mdtDatabaseWidgetTest : public mdtTest
+mdtSqlTableSelectionItem::mdtSqlTableSelectionItem(const QModelIndex & index, const QString & fieldName) 
 {
- Q_OBJECT
+  pvIndex = index;
+  pvFieldName = fieldName;
+}
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  // Table selection tests
-  void sqlTableSelectionItemTest();
-  void sqlTableSelectionRowTest();
-  void sqlTableSelectionTest();
-
-  void sqlTableWidgetTest();
-
- private:
-
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  void populateTestDatabase();
-  void clearTestDatabaseData();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-};
-
-#endif // #ifndef MDT_DATABASE_WIDGET_TEST_H

@@ -18,41 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DATABASE_WIDGET_TEST_H
-#define MDT_DATABASE_WIDGET_TEST_H
+#ifndef MDT_SQL_TABLE_SELECTION_ITEM_H
+#define MDT_SQL_TABLE_SELECTION_ITEM_H
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QSqlDatabase>
+#include <QModelIndex>
+#include <QString>
 
-
-class mdtDatabaseWidgetTest : public mdtTest
+/*! \brief SQL table selection item container
+ */
+class mdtSqlTableSelectionItem
 {
- Q_OBJECT
+ public:
 
- private slots:
+  /*! \brief Constructor
+   */
+  mdtSqlTableSelectionItem(const QModelIndex & index, const QString & fieldName);
 
-  void initTestCase();
-  void cleanupTestCase();
+  /*! \brief Get index
+   */
+  inline  QModelIndex index() const { return pvIndex; }
 
-  // Table selection tests
-  void sqlTableSelectionItemTest();
-  void sqlTableSelectionRowTest();
-  void sqlTableSelectionTest();
-
-  void sqlTableWidgetTest();
+  /*! \brief Get field name
+   */
+  inline QString fieldName() const { return pvFieldName; }
 
  private:
 
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  void populateTestDatabase();
-  void clearTestDatabaseData();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
+  QModelIndex pvIndex;
+  QString pvFieldName;
 };
 
-#endif // #ifndef MDT_DATABASE_WIDGET_TEST_H
+#endif // #ifndef MDT_SQL_TABLE_SELECTION_ITEM_H

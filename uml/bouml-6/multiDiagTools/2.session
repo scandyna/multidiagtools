@@ -5,16 +5,15 @@ diagrams
     983 952 100 4 0 0
   classdiagram_ref 1073282 // mdtClUnitLinkDialog
     120 106 100 4 0 0
-  active  classdiagram_ref 1092994 // mdtClLinkedUnitConnectorInfoDialog
+  classdiagram_ref 1092994 // mdtClLinkedUnitConnectorInfoDialog
     983 952 100 4 0 0
+  active  classdiagram_ref 1106050 // mdtSqlTableSelection
+    983 952 100 4 24 0
 end
 show_stereotypes
-selected classdiagram_ref 1092994 // mdtClLinkedUnitConnectorInfoDialog
 open
-  class_ref 1180290 // mdtClLinkedUnitConnectorInfoDialog
-  classview_ref 563074 // mdtTbCoupler
-  classview_ref 628738 // Dialogs
-  
-  package_ref 134530 // mdtTest
+  classview_ref 602498 // Data
+  classview_ref 648578 // mdtSqlWidget
+  operation_ref 1990018 // dataList
 end
 end

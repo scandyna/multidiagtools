@@ -22,6 +22,9 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtApplication.h"
 #include "mdtSqlTableWidget.h"
+#include "mdtSqlTableSelectionItem.h"
+#include "mdtSqlTableSelectionRow.h"
+#include "mdtSqlTableSelection.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -47,7 +50,6 @@
 #include <QModelIndex>
 #include <QList>
 #include <QFileInfo>
-
 #include <QTableView>
 #include <QItemSelectionModel>
 
@@ -68,6 +70,217 @@ void mdtDatabaseWidgetTest::cleanupTestCase()
   QFile::remove(pvDatabaseManager.database().databaseName());
 }
 
+void mdtDatabaseWidgetTest::sqlTableSelectionItemTest()
+{
+  QSqlTableModel model;
+  QModelIndex index;
+
+  // Populate database and setup model
+  populateTestDatabase();
+  model.setTable("Client_tbl");
+  QVERIFY(model.select());
+  // Get index of first row, field Id_PK
+  index = model.index(0, model.fieldIndex("Id_PK"));
+  QVERIFY(index.isValid());
+  // Build table selection item and check
+  mdtSqlTableSelectionItem item(index, "Id_PK");
+  QVERIFY(item.index().isValid());
+  QCOMPARE(item.index().row(), 0);
+  QCOMPARE(item.fieldName(), QString("Id_PK"));
+  // Clear database data
+  clearTestDatabaseData();
+}
+
+void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
+{
+  QSqlTableModel model;
+  QModelIndex index;
+  mdtSqlTableSelectionRow row;
+
+  // Populate database and setup model
+  populateTestDatabase();
+  model.setTable("Client_tbl");
+  QVERIFY(model.select());
+
+  // Initial state
+  QCOMPARE(row.columnCount(), 0);
+  QCOMPARE(row.index(""), QModelIndex());
+  // Put a index and check
+  index = model.index(0, model.fieldIndex("Id_PK"));
+  QVERIFY(index.isValid());
+  row.addIndex(index, "Id_PK");
+  QCOMPARE(row.columnCount(), 1);
+  QCOMPARE(row.index(0), index);
+  QCOMPARE(row.index("Id_PK"), index);
+  // Put a index and check
+  index = model.index(0, model.fieldIndex("Remarks"));
+  QVERIFY(index.isValid());
+  row.addIndex(index, "Remarks");
+  QCOMPARE(row.columnCount(), 2);
+  QCOMPARE(row.index(1), index);
+  QCOMPARE(row.index("Remarks"), index);
+  // Clear
+  row.clear();
+  QCOMPARE(row.columnCount(), 0);
+  QCOMPARE(row.index(""), QModelIndex());
+  QCOMPARE(row.index("Id_PK"), QModelIndex());
+  QCOMPARE(row.index("Remarks"), QModelIndex());
+
+  // Clear database data
+  clearTestDatabaseData();
+}
+
+void mdtDatabaseWidgetTest::sqlTableSelectionTest()
+{
+  QSqlTableModel model;
+  QTableView view;
+  QItemSelectionModel *selectionModel;
+  QModelIndex index;
+  mdtSqlTableSelection s;
+  QStringList fieldList;
+  QList<QVariant> expectedDataList;
+
+  // Populate database and setup model + view
+  populateTestDatabase();
+  view.setModel(&model);
+  model.setTable("Client_tbl");
+  QVERIFY(model.select());
+  view.resize(500, 200);
+  view.show();
+  selectionModel = view.selectionModel();
+  QVERIFY(selectionModel != 0);
+  // Field list we need
+  fieldList << "Id_PK";
+
+  // Initial state
+  QCOMPARE(s.rowCount(), 0);
+  /*
+   * Select Id_PK from row 0 in view
+   */
+  selectionModel->clear();
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select);
+  // Set selection to table selection and check
+  s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  expectedDataList.clear();
+  expectedDataList << 1;
+  QCOMPARE(s.dataList("Id_PK"), expectedDataList);
+  /*
+   * Select Id_PK from row 1 in view
+   */
+  selectionModel->clear();
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select);
+  // Set selection to table selection and check
+  s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  expectedDataList.clear();
+  expectedDataList << 2;
+  QCOMPARE(s.dataList("Id_PK"), expectedDataList);
+  /*
+   * Select Id_PK from row 0 and 1 in view
+   */
+  selectionModel->clear();
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select);
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select);
+  // Set selection to table selection and check
+  s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  expectedDataList.clear();
+  expectedDataList << 1 << 2;
+  QCOMPARE(s.dataList("Id_PK"), expectedDataList);
+  /*
+   * Select FirstName from row 0
+   */
+  selectionModel->clear();
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select);
+  // Set selection to table selection and check
+  s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  expectedDataList.clear();
+  expectedDataList << 1;
+  QCOMPARE(s.dataList("Id_PK"), expectedDataList);
+  /*
+   * Select FirstName from row 1
+   */
+  selectionModel->clear();
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select);
+  // Set selection to table selection and check
+  s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  expectedDataList.clear();
+  expectedDataList << 2;
+  QCOMPARE(s.dataList("Id_PK"), expectedDataList);
+  /*
+   * Select FirstName from row 0 and Remarks from row 1
+   */
+  selectionModel->clear();
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select);
+  index = model.index(1, 2);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select);
+  // Set selection to table selection and check
+  s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  expectedDataList.clear();
+  expectedDataList << 1 << 2;
+  QCOMPARE(s.dataList("Id_PK"), expectedDataList);
+  /*
+   * Select complete rows 0 and 1
+   */
+  selectionModel->clear();
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  selectionModel->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+  // Set selection to table selection and check
+  s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  expectedDataList.clear();
+  expectedDataList << 1 << 2;
+  QCOMPARE(s.dataList("Id_PK"), expectedDataList);
+
+  // Clear
+  s.clear();
+  QCOMPARE(s.rowCount(), 0);
+  
+  /*
+   * Play
+   */
+  /*
+  while(view.isVisible()){
+    QTest::qWait(1000);
+  }
+  */
+
+  // Clear database data
+  clearTestDatabaseData();
+}
 
 void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 {
@@ -89,6 +302,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   while(sqlTableWidget->isVisible()){
     QTest::qWait(1000);
   }
+  
   // Clear database data
   clearTestDatabaseData();
 }

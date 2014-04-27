@@ -23,6 +23,9 @@ set (SOURCES_FILES
           mdtSqlRecord.cpp
           mdtSqlSelectionDialog.cpp
           mdtSqlTableWidget.cpp
+          mdtSqlTableSelectionItem.cpp
+          mdtSqlTableSelectionRow.cpp
+          mdtSqlTableSelection.cpp
     )
 
 # Qt ui files
