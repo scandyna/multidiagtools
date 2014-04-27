@@ -73,6 +73,10 @@ class mdtSortFilterProxyModel : public QSortFilterProxyModel
    */
   void addColumnToSortOrder(const QString &fieldName, Qt::SortOrder order = Qt::AscendingOrder);
 
+  /*! \brief Check if some coulumn was set to sort order
+   */
+  bool hasColumnToSort() const;
+
   /*! \brief Get list of indexes of columns that are in sort order
    *
    * Note: each call of this method will rebuild the list.

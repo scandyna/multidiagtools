@@ -286,6 +286,10 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 {
   mdtSqlTableWidget *sqlTableWidget;
   QSqlTableModel model;
+  QTableView *view;
+  mdtSqlTableSelection s;
+  QStringList fields;
+  QModelIndex index;
 
   // Populate database
   populateTestDatabase();
@@ -294,15 +298,62 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   model.select();
   sqlTableWidget = new mdtSqlTableWidget;
   sqlTableWidget->setModel(&model);
+  sqlTableWidget->resize(500, 300);
   sqlTableWidget->show();
+  view = sqlTableWidget->tableView();
+  QVERIFY(view != 0);
+  // Setup needed fields for selection
+  fields.clear();
+  fields << "Id_PK";
+
+  /*
+   * Check selection: select row 1
+   */
+  view->selectRow(1);
+  s = sqlTableWidget->currentSelection(fields);
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  // Check current data
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(2));
+  /*
+   * Check selection: select row 0
+   */
+  view->selectRow(0);
+  s = sqlTableWidget->currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  // Check current data
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(1));
+
+  /*
+   * Sort and check selection
+   */
+  sqlTableWidget->clearColumnsSortOrder();
+  sqlTableWidget->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
+  sqlTableWidget->sort();
+  // Select row 0 in view - we must have Id_PK 2
+  view->selectRow(0);
+  s = sqlTableWidget->currentSelection(fields);
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  // Check current data
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(2));
+  // Select row 1 in view - we must have Id_PK 1
+  view->selectRow(1);
+  s = sqlTableWidget->currentSelection(fields);
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  // Check current data
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(1));
 
   /*
    * Play
    */
+  /*
   while(sqlTableWidget->isVisible()){
     QTest::qWait(1000);
   }
-  
+  */
   // Clear database data
   clearTestDatabaseData();
 }

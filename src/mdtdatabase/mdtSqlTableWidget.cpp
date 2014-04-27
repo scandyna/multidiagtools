@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlTableWidget.h"
+#include "mdtSortFilterProxyModel.h"
 #include <QTableView>
 #include <QBoxLayout>
 #include <QVBoxLayout>
@@ -128,7 +129,14 @@ mdtSqlTableWidget::~mdtSqlTableWidget()
 
 int mdtSqlTableWidget::currentRow() const
 {
-  return pvTableView->currentIndex().row();
+  Q_ASSERT(proxyModel() != 0);
+
+  QModelIndex index;
+
+  qDebug() << "Current view index: " << pvTableView->currentIndex();
+  index = proxyModel()->mapToSource(pvTableView->currentIndex());
+  
+  return index.row();
 }
 
 void mdtSqlTableWidget::setEditionEnabled(bool enable)
@@ -281,6 +289,57 @@ void mdtSqlTableWidget::setDefaultColumnToSelect(const QString &fieldName)
   setDefaultColumnToSelect(model()->fieldIndex(fieldName));
 }
 
+void mdtSqlTableWidget::sort()
+{
+  Q_ASSERT(model() != 0);
+  Q_ASSERT(proxyModel() != 0);
+
+  if(!proxyModel()->hasColumnToSort()){
+    return;
+  }
+  // If model is empty, canFetchMore will allways return true, prevent this
+  if(model()->rowCount() < 1){
+    return;
+  }
+  while(model()->canFetchMore()){
+    model()->fetchMore();
+  }
+  pvTableView->sortByColumn(0);
+}
+
+mdtSqlTableSelection mdtSqlTableWidget::currentSelection(const QStringList &fieldList)
+{
+  Q_ASSERT(model() != 0);
+  Q_ASSERT(selectionModel() != 0);
+  Q_ASSERT(proxyModel() != 0);
+
+  mdtSqlTableSelection s;
+  QModelIndexList selectionIndexList;
+  QModelIndexList modelIndexList;
+  int i;
+
+  selectionIndexList = selectionModel()->selectedIndexes();
+  for(i = 0; i < selectionIndexList.size(); ++i){
+    modelIndexList.append(proxyModel()->mapToSource(selectionIndexList.at(i)));
+  }
+  s.setIndexList(modelIndexList, fieldList, model());
+
+  return s;
+}
+
+mdtSqlTableSelection mdtSqlTableWidget::currentSelection(const QString &field)
+{
+  Q_ASSERT(model() != 0);
+  Q_ASSERT(selectionModel() != 0);
+  Q_ASSERT(proxyModel() != 0);
+
+  QStringList fieldList;
+
+  fieldList.append(field);
+
+  return currentSelection(fieldList);
+}
+
 QList<QModelIndexList> mdtSqlTableWidget::indexListOfSelectedRowsByRowsList(const QList<int> &columnList)
 {
   Q_ASSERT(model() != 0);
@@ -430,6 +489,7 @@ void mdtSqlTableWidget::onCurrentRowChanged(const QModelIndex &current, const QM
     return;
   }
   if(current.isValid()){
+    sort();
     emit currentRowChanged(current.row());
   }else{
     emit currentRowChanged(-1);
@@ -440,6 +500,7 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
 {
   Q_ASSERT(pvTableView->selectionModel() != 0);
   Q_ASSERT(model() != 0);
+  Q_ASSERT(proxyModel() != 0);
 
   QModelIndex index;
 
@@ -467,7 +528,8 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
         insert();
       }
       // Select new current index
-      index = model()->index(index.row()+1, index.column());
+      ///index = model()->index(index.row()+1, index.column());
+      index = proxyModel()->index(index.row()+1, index.column());
       if(index.isValid()){
         switch(pvTableView->selectionBehavior()){
           case QAbstractItemView::SelectItems:
@@ -487,6 +549,7 @@ void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
 void mdtSqlTableWidget::onModelSelected()
 {
   Q_ASSERT(pvTableView->selectionModel() != 0);
+  Q_ASSERT(proxyModel() != 0);
 
   QModelIndex index;
 
@@ -494,7 +557,8 @@ void mdtSqlTableWidget::onModelSelected()
     return;
   }
   if(model()->rowCount() > 0){
-    index = model()->index(0, pvDefaultColumnToSelect);
+    ///index = model()->index(0, pvDefaultColumnToSelect);
+    index = proxyModel()->index(0, pvDefaultColumnToSelect);
     pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
     qDebug() << "mdtSqlTableWidget::onModelSelected() , selected index: " << index;
     pvTableView->resizeRowsToContents();
@@ -508,7 +572,7 @@ void mdtSqlTableWidget::doSetModel(QSqlTableModel *model)
   Q_ASSERT(model != 0);
 
   model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-  pvTableView->setModel(model);
+  pvTableView->setModel(proxyModel());
   connect(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(onDataChanged(const QModelIndex&, const QModelIndex&)));
   // A selection model is created after setModel() by view itself
   Q_ASSERT(pvTableView->selectionModel() != 0);

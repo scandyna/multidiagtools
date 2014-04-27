@@ -677,19 +677,27 @@ void mdtClUnitEditor::removeConnections()
   mdtSqlTableWidget *widget;
   mdtClUnit unit(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
   QString linksMsg;
   bool ok;
 
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
+  s = widget->currentSelection("UnitConnection_Id_PK");
+  if(s.rowCount() < 1){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRows("UnitConnection_Id_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // Check that selected connections are not related to some links
-  linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), indexes, &ok);
+  ///linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), indexes, &ok);
+  linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), s.dataList("UnitConnection_Id_PK"), &ok);
   if(!ok){
     pvLastError = unit.lastError();
     displayLastError();
@@ -715,7 +723,7 @@ void mdtClUnitEditor::removeConnections()
     return;
   }
   // Delete seleced rows
-  if(!unit.removeConnections(indexes)){
+  if(!unit.removeConnections(s)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
@@ -1427,6 +1435,10 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->setHeaderData("ArticleFunctionFR", tr("Article\nfunction\n(French)"));
   widget->setHeaderData("ArticleFunctionDE", tr("Article\nfunction\n(German)"));
   widget->setHeaderData("ArticleFunctionIT", tr("Article\nfunction\n(Italian)"));
+  // Enable sorting
+  widget->addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+  widget->sort();
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
 

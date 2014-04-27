@@ -69,6 +69,11 @@ void mdtSortFilterProxyModel::addColumnToSortOrder(const QString &fieldName, Qt:
   }
 }
 
+bool mdtSortFilterProxyModel::hasColumnToSort() const
+{
+  return (pvColumnsSortOrder.size() > 0);
+}
+
 QVector<int> mdtSortFilterProxyModel::sortedColumns() const
 {
   QVector<int> lst;

@@ -27,6 +27,7 @@
 #include "mdtTtBase.h"
 #include "mdtError.h"
 #include "mdtSqlRecord.h"
+#include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
 #include <QSqlRecord>
 #include <QSqlError>
@@ -235,6 +236,8 @@ class mdtClUnit : public mdtTtBase
 
   /*! \brief Get a list of links that are related to given unit ID
    *
+   * \deprecated
+   *
    * This is a helper method to display a message to the user in a simple way.
    *  Do not use the result for technical processing.
    */
@@ -261,12 +264,23 @@ class mdtClUnit : public mdtTtBase
 
   /*! \brief Remove each unit connection that is contained in selection
    *
+   * \deprecated
+   *
    * This is usefull used together with mdtSqlTableWidget .
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
   bool removeConnections(const QModelIndexList & indexListOfSelectedRows);
+
+  /*! \brief Remove each unit connection that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeConnections(const mdtSqlTableSelection & s);
 
   /*! \brief Add a unit connector
    *

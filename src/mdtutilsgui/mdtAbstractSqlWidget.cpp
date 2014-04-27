@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #include "mdtError.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlDataValidator.h"
+#include "mdtSortFilterProxyModel.h"
 #include <QState>
 #include <QStateMachine>
 #include <QMessageBox>
@@ -36,6 +37,7 @@ mdtAbstractSqlWidget::mdtAbstractSqlWidget(QWidget *parent)
  : QWidget(parent)
 {
   pvModel = 0;
+  pvProxyModel = new mdtSortFilterProxyModel(this);
   buildStateMachine();
 }
 
@@ -53,6 +55,7 @@ void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
     disconnect(pvModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
   }
   pvModel = model;
+  pvProxyModel->setSourceModel(pvModel);
   doSetModel(model);
   pvUserFriendlyTableName.clear();
   Q_ASSERT(pvModel == model);
@@ -235,6 +238,24 @@ bool mdtAbstractSqlWidget::allDataAreSaved()
   }
   // Check child SQL widgets
   return childWidgetsAreInVisaluzingState();
+}
+
+void mdtAbstractSqlWidget::clearColumnsSortOrder()
+{
+  Q_ASSERT(pvProxyModel != 0);
+
+  pvProxyModel->clearColumnsSortOrder();
+}
+
+void mdtAbstractSqlWidget::addColumnToSortOrder(const QString & fieldName, Qt::SortOrder order)
+{
+  Q_ASSERT(pvProxyModel != 0);
+
+  pvProxyModel->addColumnToSortOrder(fieldName, order);
+}
+
+void mdtAbstractSqlWidget::sort()
+{
 }
 
 void mdtAbstractSqlWidget::submit()
@@ -422,6 +443,16 @@ bool mdtAbstractSqlWidget::restorePrimaryKeyDataToModel(const QSqlRecord &previo
   }
 
   return true;
+}
+
+mdtSortFilterProxyModel * mdtAbstractSqlWidget::proxyModel()
+{
+  return pvProxyModel;
+}
+
+const mdtSortFilterProxyModel * mdtAbstractSqlWidget::proxyModel() const
+{
+  return pvProxyModel;
 }
 
 void mdtAbstractSqlWidget::onStateVisualizingEntered()

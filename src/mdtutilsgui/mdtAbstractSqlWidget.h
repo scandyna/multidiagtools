@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,6 +37,7 @@ class QStateMachine;
 class QSqlTableModel;
 class mdtSqlRelation;
 class mdtSqlDataValidator;
+class mdtSortFilterProxyModel;
 
 /*! \brief Base class to create database table GUI
  *
@@ -216,6 +217,39 @@ class mdtAbstractSqlWidget : public QWidget
    */
   bool allDataAreSaved();
 
+  /*! \brief Clear columns sort order
+   *
+   * \sa addColumnToSortOrder()
+   */
+  void clearColumnsSortOrder();
+
+  /*! \brief Add a column to columns sort order
+   *
+   * Columns sort order is similar meaning
+   *  than SQL ORDER BY clause.
+   *
+   * Internally, mdtSortFilterProxyModel is used, witch provide a natural sort for strings.
+   *
+   * For example, to sort columns in order "Id_PK", "FirstName", "LastName", all ascending, call:
+   *  - clearColumnsSortOrder();
+   *  - addColumnToSortOrder("Id_PK", Qt::AscendingOrder);
+   *  - addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+   *  - addColumnToSortOrder("LastName", Qt::AscendingOrder);
+   *
+   * Note: if given field not exists, it will simply be ignored.
+   *
+   * Note: to apply sorting, call sort()
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  void addColumnToSortOrder(const QString & fieldName, Qt::SortOrder order = Qt::AscendingOrder);
+
+  /*! \brief Sort data
+   *
+   * \sa addColumnToSortOrder()
+   */
+  virtual void sort();
+
  public slots:
 
   /*! \brief Submit current record to model
@@ -389,6 +423,19 @@ class mdtAbstractSqlWidget : public QWidget
    * \pre (Parent) model must be set with setModel() before calling this method.
    */
   bool restorePrimaryKeyDataToModel(const QSqlRecord &previousRecord);
+
+  /*! \brief Get internal proxy model
+   *
+   * Can be used by subclass to setup his view.
+   *
+   * Note: returned proxy model is allways valid, but has no valid
+   *       source model until model was set with setModel().
+   */
+  mdtSortFilterProxyModel * proxyModel();
+
+  /*! \brief Get internal proxy model
+   */
+  const mdtSortFilterProxyModel * proxyModel() const;
 
  signals:
 
@@ -631,6 +678,7 @@ class mdtAbstractSqlWidget : public QWidget
   bool checkBeforeSubmit();
 
   QSqlTableModel *pvModel;
+  mdtSortFilterProxyModel *pvProxyModel;
   // State machine members
   QState *pvStateVisualizing;
   QState *pvStateReverting;

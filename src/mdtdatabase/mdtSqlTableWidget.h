@@ -22,7 +22,7 @@
 #define MDT_SQL_TABLE_WIDGET_H
 
 #include "mdtAbstractSqlWidget.h"
-
+#include "mdtSqlTableSelection.h"
 #include <QModelIndex>
 #include <QStyledItemDelegate>
 #include <QString>
@@ -167,12 +167,39 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
 
   /*! \brief Set default column to select
    *
-   * \overload setDefaultColumnToSelect(int)
+   * Same as setDefaultColumnToSelect(int), but you can give a field name.
+   *
    * \pre Model must be set with setModel() before using this method.
    */
   void setDefaultColumnToSelect(const QString &fieldName);
 
+  /*! \brief Sort data
+   *
+   * \sa mdtAbstractSqlWidget::addColumnToSortOrder()
+   */
+  void sort();
+
+  /*! \brief Get current selection
+   *
+   * The returned selection will only contain data related
+   *  to given field list.
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  mdtSqlTableSelection currentSelection(const QStringList &fieldList);
+
+  /*! \brief Get current selection
+   *
+   * The returned selection will only contain data related
+   *  to given field.
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  mdtSqlTableSelection currentSelection(const QString &field);
+
   /*! \brief Get a list of currently selected indexes in a list of rows
+   *
+   * \deprecated
    *
    * Will return a list of indexes that contains only coulumns
    *  specified by columnList.
@@ -190,6 +217,8 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
 
   /*! \brief Get a list of currently selected indexes
    *
+   * \deprecated
+   *
    * Will return a list of indexes that contains only coulumns
    *  specified by columnList.
    * This alos works for multiple rows selection.
@@ -200,6 +229,8 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
 
   /*! \brief Get a list of currently selected indexes
    *
+   * \deprecated
+   *
    * Will return a list of indexes that contains only fields
    *  specified by fieldList.
    * This alos works for multiple rows selection.
@@ -209,6 +240,8 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
   QModelIndexList indexListOfSelectedRows(const QStringList &fieldList);
 
   /*! \brief Get a list of currently selected indexes
+   *
+   * \deprecated
    *
    * \overload indexListOfSelectedRows(const QStringList &)
    *

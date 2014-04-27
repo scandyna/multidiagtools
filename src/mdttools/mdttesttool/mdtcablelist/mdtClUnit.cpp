@@ -688,6 +688,28 @@ bool mdtClUnit::removeConnections(const QModelIndexList & indexListOfSelectedRow
   return true;
 }
 
+bool mdtClUnit::removeConnections(const mdtSqlTableSelection & s)
+{
+  QList<QVariant> idList;
+  int i;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  idList = s.dataList("UnitConnection_Id_PK");
+  for(i = 0; i < idList.size(); ++i){
+    if(!removeConnection(idList.at(i), false)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
 bool mdtClUnit::addConnector(const mdtClUnitConnectorData & data)
 {
   QSqlQuery query(database());
