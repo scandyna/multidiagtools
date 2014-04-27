@@ -134,26 +134,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8" title="Add a column to columns sort order. ">addColumnToSortOrder</a>(<span class="keyword">const</span> QString &amp;fieldName, Qt::SortOrder order = Qt::AscendingOrder);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  QVector&lt;int&gt; <a class="code" href="classmdt_sort_filter_proxy_model.html#a1a4d9fcee3a6817ae668c07ca2ec472f" title="Get list of indexes of columns that are in sort order. ">sortedColumns</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  Qt::SortOrder <a class="code" href="classmdt_sort_filter_proxy_model.html#a506fff2a1f483ff67989c64b2c4e3491" title="Get sort order for given column. ">sortOrder</a>(<span class="keywordtype">int</span> column) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordtype">bool</span> lessThan(<span class="keyword">const</span> QModelIndex &amp;left, <span class="keyword">const</span> QModelIndex &amp;right) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordtype">void</span> sort(<span class="keywordtype">int</span> column, Qt::SortOrder order = Qt::AscendingOrder);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  QList&lt;QPair&lt;int, Qt::SortOrder&gt; &gt;pvColumnsSortOrder;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sort_filter_proxy_model.html" title="Provide natural sort for Qt model/view. ">mdtSortFilterProxyModel</a>);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;};</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SORT_FILTER_PROXY_MODEL_H</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a2dcbaa1d5ffb38368a87e6b4834053f1" title="Check if some coulumn was set to sort order. ">hasColumnToSort</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  QVector&lt;int&gt; <a class="code" href="classmdt_sort_filter_proxy_model.html#a1a4d9fcee3a6817ae668c07ca2ec472f" title="Get list of indexes of columns that are in sort order. ">sortedColumns</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  Qt::SortOrder <a class="code" href="classmdt_sort_filter_proxy_model.html#a506fff2a1f483ff67989c64b2c4e3491" title="Get sort order for given column. ">sortOrder</a>(<span class="keywordtype">int</span> column) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordtype">bool</span> lessThan(<span class="keyword">const</span> QModelIndex &amp;left, <span class="keyword">const</span> QModelIndex &amp;right) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordtype">void</span> sort(<span class="keywordtype">int</span> column, Qt::SortOrder order = Qt::AscendingOrder);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  QList&lt;QPair&lt;int, Qt::SortOrder&gt; &gt;pvColumnsSortOrder;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sort_filter_proxy_model.html" title="Provide natural sort for Qt model/view. ">mdtSortFilterProxyModel</a>);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;};</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SORT_FILTER_PROXY_MODEL_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 26 2014 15:38:51 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 27 2014 18:00:26 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

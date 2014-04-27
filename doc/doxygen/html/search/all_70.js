@@ -48,6 +48,7 @@ var searchData=
   ['productid',['productId',['../classmdt_device_info.html#a53006d4fbaeb0ba2fd47057f36b9b813',1,'mdtDeviceInfo']]],
   ['productname',['productName',['../classmdt_device_info.html#afe4bbdc87acff59999905a0eeb812fe1',1,'mdtDeviceInfo::productName()'],['../classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866',1,'mdtUsbDeviceDescriptor::productName()']]],
   ['protocolid',['protocolId',['../classmdt_device_info.html#a9b3a09adc91393f3c3940f41ea0bf067',1,'mdtDeviceInfo']]],
+  ['proxymodel',['proxyModel',['../classmdt_abstract_sql_widget.html#ab522e27f86e2bab42616cac581f31ac5',1,'mdtAbstractSqlWidget::proxyModel()'],['../classmdt_abstract_sql_widget.html#ac3b54b54289e7366c5fa80091c0d48b4',1,'mdtAbstractSqlWidget::proxyModel() const ']]],
   ['psrr5060hz',['Psrr5060Hz',['../classmdt_device_modbus_wago_module_rtd.html#ae235a58228b7c648e7ab89af05ea5037a49f4e552e53ed0d5f7390ae9ca035f4e',1,'mdtDeviceModbusWagoModuleRtd']]],
   ['psrr50hz',['Psrr50Hz',['../classmdt_device_modbus_wago_module_rtd.html#ae235a58228b7c648e7ab89af05ea5037a4be76121444e7a6774fd6e0ba99ac984',1,'mdtDeviceModbusWagoModuleRtd']]],
   ['psrr60hz',['Psrr60Hz',['../classmdt_device_modbus_wago_module_rtd.html#ae235a58228b7c648e7ab89af05ea5037a50892e6683a97e25279a8ff1e3f4bcd6',1,'mdtDeviceModbusWagoModuleRtd']]],

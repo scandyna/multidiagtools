@@ -12,8 +12,7 @@ Helper class to mana unit and related data.
 
 
 
-Inheritance diagram for mdt\-Cl\-Unit\-:
-\nopagebreak
+Inheritance diagram for mdt\-Cl\-Unit\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,8 +21,7 @@ Inheritance diagram for mdt\-Cl\-Unit\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Cl\-Unit\-:
-\nopagebreak
+Collaboration diagram for mdt\-Cl\-Unit\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -79,10 +77,8 @@ Q\-String\-List \hyperlink{classmdt_cl_unit_a44ffa59c9588ca5afed64e8b1d94262c}{t
 \begin{DoxyCompactList}\small\item\em Get a list of links that are related to given unit I\-D. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_cl_unit_af87a65741ba7a6aa9f47a996005a9c3a}{to\-Unit\-Related\-Links\-List\-Str} (const Q\-Variant \&unit\-Id, const Q\-List$<$ Q\-Variant $>$ \&unit\-Connection\-Id\-List, bool $\ast$ok)
 \begin{DoxyCompactList}\small\item\em Get a list of links that are related to given unit I\-D. \end{DoxyCompactList}\item 
-Q\-String \hyperlink{classmdt_cl_unit_ab04f2394a504d8a5ecf26c3f986e6e13}{to\-Unit\-Related\-Links\-List\-Str} (const Q\-Variant \&unit\-Id, const Q\-Model\-Index\-List \&index\-List\-Of\-Selected\-Rows, bool $\ast$ok)
-\begin{DoxyCompactList}\small\item\em Get a list of links that are related to given unit I\-D. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_unit_a42b6918f809126d4ca1002c343f90316}{add\-Connection} (const \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \&data, bool single\-Transaction=true)
-\begin{DoxyCompactList}\small\item\em Add unit connection. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Get a list of links that are related to given unit I\-D. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_unit_a23c85173bd518a70e8fbae27f3e121ad}{add\-Connections} (const Q\-List$<$ \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} $>$ \&data\-List, bool single\-Transaction=true)
 \begin{DoxyCompactList}\small\item\em Add unit connections. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_unit_aac3afb2a4895a16f637b765b44cbca9e}{edit\-Connection} (const Q\-Variant \&connection\-Id, const \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \&data)
@@ -90,6 +86,8 @@ bool \hyperlink{classmdt_cl_unit_aac3afb2a4895a16f637b765b44cbca9e}{edit\-Connec
 bool \hyperlink{classmdt_cl_unit_aa4b4f148293abc335704515251ed4f5b}{remove\-Connection} (const Q\-Variant \&unit\-Connection\-Id, bool handle\-Transaction=true)
 \begin{DoxyCompactList}\small\item\em Remove a single unit connection. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_unit_a55db63f5cdc0185dbf84466f18414118}{remove\-Connections} (const Q\-Model\-Index\-List \&index\-List\-Of\-Selected\-Rows)
+\begin{DoxyCompactList}\small\item\em Remove each unit connection that is contained in selection. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_unit_a003f76bd0eaac138d3d2c3e9bf25ef08}{remove\-Connections} (const \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \&s)
 \begin{DoxyCompactList}\small\item\em Remove each unit connection that is contained in selection. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_unit_acafdba8ebc2f5044b096282ecc41da41}{add\-Connector} (const \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} \&data)
 \begin{DoxyCompactList}\small\item\em Add a unit connector. \end{DoxyCompactList}\item 
@@ -107,7 +105,7 @@ bool \hyperlink{classmdt_cl_unit_a35a35f22daf4a408f5400031c12ce3cf}{add\-Range} 
 \subsection{Detailed Description}
 Helper class to mana unit and related data. 
 
-Definition at line 41 of file mdt\-Cl\-Unit.\-h.
+Definition at line 42 of file mdt\-Cl\-Unit.\-h.
 
 
 
@@ -215,9 +213,15 @@ References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-
 )}}\label{classmdt_cl_unit_a42b6918f809126d4ca1002c343f90316}
 
 
-Add unit connection. 
+Get a list of links that are related to given unit I\-D. 
+
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000005}{Deprecated}]\end{DoxyRefDesc}
 
 
+This is a helper method to display a message to the user in a simple way. Do not use the result for technical processing.\-Q\-String to\-Unit\-Related\-Links\-List\-Str(const Q\-Variant \&unit\-Id, const Q\-Model\-Index\-List \& index\-List\-Of\-Selected\-Rows, bool $\ast$ok);
+
+Add unit connection 
 
 Definition at line 562 of file mdt\-Cl\-Unit.\-cpp.
 
@@ -332,7 +336,7 @@ If data contains connections, they will be added.
 
 Note\-: in connection data (contained in data), Unit\-\_\-\-Id\-\_\-\-F\-K and Unit\-Connector\-\_\-\-Id\-\_\-\-F\-K are not relevant, because they are token from data directly. 
 
-Definition at line 691 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 715 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -348,7 +352,7 @@ References add\-Connection(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::b
 )}}\label{classmdt_cl_unit_a35a35f22daf4a408f5400031c12ce3cf}
 
 
-Definition at line 808 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 832 of file mdt\-Cl\-Unit.\-cpp.
 
 \hypertarget{classmdt_cl_unit_aac3afb2a4895a16f637b765b44cbca9e}{\index{mdt\-Cl\-Unit@{mdt\-Cl\-Unit}!edit\-Connection@{edit\-Connection}}
 \index{edit\-Connection@{edit\-Connection}!mdtClUnit@{mdt\-Cl\-Unit}}
@@ -387,7 +391,7 @@ Edit connector name.
 
 
 
-Definition at line 744 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 768 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -650,18 +654,42 @@ Referenced by remove\-Connections(), and remove\-Connector().
 
 Remove each unit connection that is contained in selection. 
 
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000006}{Deprecated}]\end{DoxyRefDesc}
+
+
 This is usefull used together with \hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget} .
 
 \begin{DoxyReturn}{Returns}
 True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} . 
 \end{DoxyReturn}
+\hypertarget{classmdt_cl_unit_a003f76bd0eaac138d3d2c3e9bf25ef08}{\index{mdt\-Cl\-Unit@{mdt\-Cl\-Unit}!remove\-Connections@{remove\-Connections}}
+\index{remove\-Connections@{remove\-Connections}!mdtClUnit@{mdt\-Cl\-Unit}}
+\subsubsection[{remove\-Connections}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Unit\-::remove\-Connections (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Sql\-Table\-Selection} \&}]{s}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_a003f76bd0eaac138d3d2c3e9bf25ef08}
 
 
-Definition at line 671 of file mdt\-Cl\-Unit.\-cpp.
+Remove each unit connection that is contained in selection. 
+
+This is usefull used together with \hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget} .
+
+\begin{DoxyReturn}{Returns}
+True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} .
+\end{DoxyReturn}
+bool \hyperlink{classmdt_cl_unit_a55db63f5cdc0185dbf84466f18414118}{mdt\-Cl\-Unit\-::remove\-Connections(const Q\-Model\-Index\-List \& index\-List\-Of\-Selected\-Rows)} \{ int i;
+
+if(!begin\-Transaction())\{ return false; \} for(i = 0; i $<$ index\-List\-Of\-Selected\-Rows.\-size(); ++i)\{ if(!remove\-Connection(index\-List\-Of\-Selected\-Rows.\-at(i).data(), false))\{ \hyperlink{classmdt_tt_base_a7c736836397a8d65a28992e1a39c1be5}{rollback\-Transaction()}; return false; \} \} if(!commit\-Transaction())\{ return false; \}
+
+return true; \} 
+
+Definition at line 693 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
-References mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), remove\-Connection(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+References mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Sql\-Table\-Selection\-::data\-List(), remove\-Connection(), and mdt\-Tt\-Base\-::rollback\-Transaction().
 
 \hypertarget{classmdt_cl_unit_a86244b8f9b2ff41c05b32749c038813d}{\index{mdt\-Cl\-Unit@{mdt\-Cl\-Unit}!remove\-Connector@{remove\-Connector}}
 \index{remove\-Connector@{remove\-Connector}!mdtClUnit@{mdt\-Cl\-Unit}}
@@ -676,7 +704,7 @@ Remove a unit connector and its contacts.
 
 
 
-Definition at line 758 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 782 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -704,7 +732,7 @@ True on success, false else. To get reason of failure, use \hyperlink{classmdt_t
 \end{DoxyReturn}
 
 
-Definition at line 794 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 818 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -871,31 +899,6 @@ Definition at line 529 of file mdt\-Cl\-Unit.\-cpp.
 
 
 References to\-Unit\-Related\-Links\-List().
-
-
-
-Referenced by to\-Unit\-Related\-Links\-List\-Str().
-
-\hypertarget{classmdt_cl_unit_ab04f2394a504d8a5ecf26c3f986e6e13}{\index{mdt\-Cl\-Unit@{mdt\-Cl\-Unit}!to\-Unit\-Related\-Links\-List\-Str@{to\-Unit\-Related\-Links\-List\-Str}}
-\index{to\-Unit\-Related\-Links\-List\-Str@{to\-Unit\-Related\-Links\-List\-Str}!mdtClUnit@{mdt\-Cl\-Unit}}
-\subsubsection[{to\-Unit\-Related\-Links\-List\-Str}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Cl\-Unit\-::to\-Unit\-Related\-Links\-List\-Str (
-\begin{DoxyParamCaption}
-\item[{const Q\-Variant \&}]{unit\-Id, }
-\item[{const Q\-Model\-Index\-List \&}]{index\-List\-Of\-Selected\-Rows, }
-\item[{bool $\ast$}]{ok}
-\end{DoxyParamCaption}
-)}}\label{classmdt_cl_unit_ab04f2394a504d8a5ecf26c3f986e6e13}
-
-
-Get a list of links that are related to given unit I\-D. 
-
-This is a helper method to display a message to the user in a simple way. Do not use the result for technical processing. 
-
-Definition at line 548 of file mdt\-Cl\-Unit.\-cpp.
-
-
-
-References to\-Unit\-Related\-Links\-List\-Str().
 
 
 

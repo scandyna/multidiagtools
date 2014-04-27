@@ -20,7 +20,7 @@ var searchData=
   ['topreviousenabledstatechanged',['toPreviousEnabledStateChanged',['../classmdt_abstract_sql_widget.html#acf241c34dcca6d283c8c1bf297841766',1,'mdtAbstractSqlWidget']]],
   ['tounitrelatedarticleconnectioncount',['toUnitRelatedArticleConnectionCount',['../classmdt_cl_unit.html#aaa3bba512c75d0358283e25723abf2f9',1,'mdtClUnit']]],
   ['tounitrelatedlinkslist',['toUnitRelatedLinksList',['../classmdt_cl_unit.html#a44ffa59c9588ca5afed64e8b1d94262c',1,'mdtClUnit']]],
-  ['tounitrelatedlinksliststr',['toUnitRelatedLinksListStr',['../classmdt_cl_unit.html#af87a65741ba7a6aa9f47a996005a9c3a',1,'mdtClUnit::toUnitRelatedLinksListStr(const QVariant &amp;unitId, const QList&lt; QVariant &gt; &amp;unitConnectionIdList, bool *ok)'],['../classmdt_cl_unit.html#ab04f2394a504d8a5ecf26c3f986e6e13',1,'mdtClUnit::toUnitRelatedLinksListStr(const QVariant &amp;unitId, const QModelIndexList &amp;indexListOfSelectedRows, bool *ok)']]],
+  ['tounitrelatedlinksliststr',['toUnitRelatedLinksListStr',['../classmdt_cl_unit.html#af87a65741ba7a6aa9f47a996005a9c3a',1,'mdtClUnit']]],
   ['transactiondone',['transactionDone',['../classmdt_port_manager.html#a5869bcf6774a86fb9d3b00a0d4211bb5',1,'mdtPortManager']]],
   ['transactionid',['transactionId',['../classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48',1,'mdtFrameModbusTcp']]],
   ['transactionpending',['transactionPending',['../classmdt_port_manager.html#a18478707a9be7638b06cde48ced48297',1,'mdtPortManager']]],

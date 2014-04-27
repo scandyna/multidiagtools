@@ -1,17 +1,20 @@
 <map id="src/mdttools/mdttesttool/mdtTtTestNodeUnitDialog.cpp" name="src/mdttools/mdttesttool/mdtTtTestNodeUnitDialog.cpp">
-<area shape="rect" id="node3" href="$mdt_tt_test_node_unit_dialog_8h.html" title="mdtTtTestNodeUnitDialog.h" alt="" coords="327,101,511,131"/>
-<area shape="rect" id="node7" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="1173,411,1288,440"/>
-<area shape="rect" id="node30" href="$mdt_cl_unit_connection_data_8h.html" title="mdtClUnitConnectionData.h" alt="" coords="1204,256,1391,285"/>
-<area shape="rect" id="node52" href="$mdt_tt_test_node_unit_8h.html" title="mdtTtTestNodeUnit.h" alt="" coords="1696,101,1843,131"/>
-<area shape="rect" id="node76" href="$mdt_cl_unit_8h.html" title="mdtClUnit.h" alt="" coords="2517,101,2608,131"/>
-<area shape="rect" id="node79" href="$mdt_cl_unit_connector_data_8h.html" title="mdtClUnitConnectorData.h" alt="" coords="1569,179,1748,208"/>
-<area shape="rect" id="node126" href="$mdt_sql_selection_dialog_8h.html" title="mdtSqlSelectionDialog.h" alt="" coords="3076,333,3241,363"/>
-<area shape="rect" id="node5" href="$mdt_tt_test_node_unit_data_8h.html" title="mdtTtTestNodeUnitData.h" alt="" coords="717,179,893,208"/>
-<area shape="rect" id="node9" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1075,488,1157,517"/>
-<area shape="rect" id="node33" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="1325,333,1523,363"/>
-<area shape="rect" id="node55" href="$mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="2384,333,2480,363"/>
-<area shape="rect" id="node101" href="$mdt_cl_link_data_8h.html" title="mdtClLinkData.h" alt="" coords="2183,179,2303,208"/>
-<area shape="rect" id="node83" href="$mdt_cl_connector_data_8h.html" title="mdtClConnectorData.h" alt="" coords="1648,333,1803,363"/>
-<area shape="rect" id="node90" href="$mdt_cl_article_connector_data_8h.html" title="mdtClArticleConnectorData.h" alt="" coords="1496,256,1688,285"/>
-<area shape="rect" id="node105" href="$mdt_cl_vehicle_type_link_data_8h.html" title="mdtClVehicleTypeLinkData.h" alt="" coords="2283,256,2475,285"/>
+<area shape="rect" id="node3" href="$mdt_tt_test_node_unit_dialog_8h.html" title="mdtTtTestNodeUnitDialog.h" alt="" coords="3111,101,3295,131"/>
+<area shape="rect" id="node7" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="860,411,975,440"/>
+<area shape="rect" id="node30" href="$mdt_cl_unit_connection_data_8h.html" title="mdtClUnitConnectionData.h" alt="" coords="1335,256,1521,285"/>
+<area shape="rect" id="node52" href="$mdt_tt_test_node_unit_8h.html" title="mdtTtTestNodeUnit.h" alt="" coords="1529,101,1676,131"/>
+<area shape="rect" id="node76" href="$mdt_cl_unit_8h.html" title="mdtClUnit.h" alt="" coords="2093,101,2184,131"/>
+<area shape="rect" id="node79" href="$mdt_cl_unit_connector_data_8h.html" title="mdtClUnitConnectorData.h" alt="" coords="1025,179,1204,208"/>
+<area shape="rect" id="node140" href="$mdt_sql_selection_dialog_8h.html" title="mdtSqlSelectionDialog.h" alt="" coords="3011,333,3176,363"/>
+<area shape="rect" id="node5" href="$mdt_tt_test_node_unit_data_8h.html" title="mdtTtTestNodeUnitData.h" alt="" coords="1515,179,1691,208"/>
+<area shape="rect" id="node9" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="2025,488,2108,517"/>
+<area shape="rect" id="node33" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="863,333,1060,363"/>
+<area shape="rect" id="node55" href="$mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="1921,333,2017,363"/>
+<area shape="rect" id="node101" href="$mdt_cl_link_data_8h.html" title="mdtClLinkData.h" alt="" coords="1369,179,1489,208"/>
+<area shape="rect" id="node115" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="2367,256,2527,285"/>
+<area shape="rect" id="node83" href="$mdt_cl_connector_data_8h.html" title="mdtClConnectorData.h" alt="" coords="1135,333,1289,363"/>
+<area shape="rect" id="node90" href="$mdt_cl_article_connector_data_8h.html" title="mdtClArticleConnectorData.h" alt="" coords="865,256,1057,285"/>
+<area shape="rect" id="node105" href="$mdt_cl_vehicle_type_link_data_8h.html" title="mdtClVehicleTypeLinkData.h" alt="" coords="407,256,599,285"/>
+<area shape="rect" id="node117" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="2353,333,2540,363"/>
+<area shape="rect" id="node119" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="2545,411,2732,440"/>
 </map>

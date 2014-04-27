@@ -1,7 +1,9 @@
 <map id="src/mdtutilsgui/mdtSortFilterProxyModel.h" name="src/mdtutilsgui/mdtSortFilterProxyModel.h">
 <area shape="rect" id="node3" href="$mdt_sql_selection_dialog_8cpp.html" title="src/mdtdatabase/mdtSqlSelection\lDialog.cpp" alt="" coords="5,110,224,157"/>
-<area shape="rect" id="node5" href="$mdt_cl_linked_unit_connection_info_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClLinkedUnitConnection\lInfoDialog.cpp" alt="" coords="248,101,509,165"/>
-<area shape="rect" id="node7" href="$mdt_mv_sorting_setup_dialog_8cpp.html" title="src/mdtutilsgui/mdtMvSorting\lSetupDialog.cpp" alt="" coords="533,110,725,157"/>
-<area shape="rect" id="node9" href="$mdt_sort_filter_proxy_model_8cpp.html" title="src/mdtutilsgui/mdtSortFilter\lProxyModel.cpp" alt="" coords="749,110,936,157"/>
-<area shape="rect" id="node11" href="$mdt_sql_query_widget_8cpp.html" title="src/mdtutilsgui/mdtSqlQuery\lWidget.cpp" alt="" coords="960,110,1147,157"/>
+<area shape="rect" id="node5" href="$mdt_sql_table_widget_8cpp.html" title="src/mdtdatabase/mdtSqlTable\lWidget.cpp" alt="" coords="248,110,443,157"/>
+<area shape="rect" id="node7" href="$mdt_cl_linked_unit_connection_info_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClLinkedUnitConnection\lInfoDialog.cpp" alt="" coords="467,101,728,165"/>
+<area shape="rect" id="node9" href="$mdt_abstract_sql_widget_8cpp.html" title="src/mdtutilsgui/mdtAbstract\lSqlWidget.cpp" alt="" coords="752,110,933,157"/>
+<area shape="rect" id="node11" href="$mdt_mv_sorting_setup_dialog_8cpp.html" title="src/mdtutilsgui/mdtMvSorting\lSetupDialog.cpp" alt="" coords="957,110,1149,157"/>
+<area shape="rect" id="node13" href="$mdt_sort_filter_proxy_model_8cpp.html" title="src/mdtutilsgui/mdtSortFilter\lProxyModel.cpp" alt="" coords="1173,110,1360,157"/>
+<area shape="rect" id="node15" href="$mdt_sql_query_widget_8cpp.html" title="src/mdtutilsgui/mdtSqlQuery\lWidget.cpp" alt="" coords="1384,110,1571,157"/>
 </map>

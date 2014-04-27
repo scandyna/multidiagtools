@@ -241,7 +241,7 @@ class mdtClUnit : public mdtTtBase
    * This is a helper method to display a message to the user in a simple way.
    *  Do not use the result for technical processing.
    */
-  QString toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows, bool *ok);
+  ///QString toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows, bool *ok);
 
   /*! \brief Add unit connection
    */

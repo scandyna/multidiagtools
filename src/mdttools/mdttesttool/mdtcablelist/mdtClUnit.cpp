@@ -668,6 +668,7 @@ bool mdtClUnit::removeConnection(const QVariant & unitConnectionId, bool handleT
   return true;
 }
 
+/**
 bool mdtClUnit::removeConnections(const QModelIndexList & indexListOfSelectedRows)
 {
   int i;
@@ -687,6 +688,7 @@ bool mdtClUnit::removeConnections(const QModelIndexList & indexListOfSelectedRow
 
   return true;
 }
+*/
 
 bool mdtClUnit::removeConnections(const mdtSqlTableSelection & s)
 {

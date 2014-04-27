@@ -12,8 +12,7 @@ Table view based S\-Q\-L widget.
 
 
 
-Inheritance diagram for mdt\-Sql\-Table\-Widget\-:
-\nopagebreak
+Inheritance diagram for mdt\-Sql\-Table\-Widget\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,8 +21,7 @@ Inheritance diagram for mdt\-Sql\-Table\-Widget\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Sql\-Table\-Widget\-:
-\nopagebreak
+Collaboration diagram for mdt\-Sql\-Table\-Widget\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -62,10 +60,16 @@ void \hyperlink{classmdt_sql_table_widget_a466ff75bee2a0efd99c62994f65a5d18}{set
 \begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_ae1eefd42d91ea36fa4244d7f265d7222}{set\-Column\-Hidden} (const Q\-String \&field\-Name, bool hide)
 \begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_table_widget_a3b3d79485206f7f3468e125e38bd24f9}{set\-Default\-Column\-To\-Select} (int column)
+void \hyperlink{classmdt_sql_table_widget_a6c54d9c26f7bb6241607785586bcc52e}{set\-Default\-Column\-To\-Select} (int column)
 \begin{DoxyCompactList}\small\item\em Set default column to select. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_a17d60fda061030fdfe15be5445eadc76}{set\-Default\-Column\-To\-Select} (const Q\-String \&field\-Name)
-\item 
+\begin{DoxyCompactList}\small\item\em Set default column to select. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a5e1323816fce33680857048db8cbb255}{sort} ()
+\begin{DoxyCompactList}\small\item\em Sort data. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \hyperlink{classmdt_sql_table_widget_a65f1bb0ebf82f73ef4a61e53ec4a26a7}{current\-Selection} (const Q\-String\-List \&field\-List)
+\begin{DoxyCompactList}\small\item\em Get current selection. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \hyperlink{classmdt_sql_table_widget_adb4792d2ed64a9cce61bc429986ae9a1}{current\-Selection} (const Q\-String \&field)
+\begin{DoxyCompactList}\small\item\em Get current selection. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Model\-Index\-List $>$ \hyperlink{classmdt_sql_table_widget_af28a5a54efb31c29734fb5b2d7f0e2fa}{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List} (const Q\-List$<$ int $>$ \&column\-List)
 \begin{DoxyCompactList}\small\item\em Get a list of currently selected indexes in a list of rows. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Model\-Index\-List $>$ \hyperlink{classmdt_sql_table_widget_a5abe02dacc9fd8c0c33c27dbc5216d1b}{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List} (const Q\-String\-List \&field\-List)
@@ -102,7 +106,7 @@ Constructor.
 
 Setup a Q\-Table\-View and init some other things. The table view will not be editable, use \hyperlink{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{set\-Edition\-Enabled()} to alter this. 
 
-Definition at line 91 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 92 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -121,7 +125,7 @@ Destructor.
 
 
 
-Definition at line 125 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 126 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -139,7 +143,7 @@ Add a strech to local bar.
 
 
 
-Definition at line 205 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 213 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 \hypertarget{classmdt_sql_table_widget_a9c0ae7b87d1840f2fdcee6de763fe31a}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!add\-Widget\-To\-Local\-Bar@{add\-Widget\-To\-Local\-Bar}}
 \index{add\-Widget\-To\-Local\-Bar@{add\-Widget\-To\-Local\-Bar}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -161,7 +165,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 187 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 195 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 \hypertarget{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!current\-Row@{current\-Row}}
 \index{current\-Row@{current\-Row}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -180,7 +184,63 @@ Implements \hyperlink{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf
 
 
 
-Definition at line 129 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 130 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+
+
+References mdt\-Abstract\-Sql\-Widget\-::proxy\-Model().
+
+\hypertarget{classmdt_sql_table_widget_a65f1bb0ebf82f73ef4a61e53ec4a26a7}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!current\-Selection@{current\-Selection}}
+\index{current\-Selection@{current\-Selection}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{current\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Sql\-Table\-Selection} mdt\-Sql\-Table\-Widget\-::current\-Selection (
+\begin{DoxyParamCaption}
+\item[{const Q\-String\-List \&}]{field\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_table_widget_a65f1bb0ebf82f73ef4a61e53ec4a26a7}
+
+
+Get current selection. 
+
+The returned selection will only contain data related to given field list.
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 310 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+
+
+References mdt\-Abstract\-Sql\-Widget\-::model(), mdt\-Abstract\-Sql\-Widget\-::proxy\-Model(), selection\-Model(), and mdt\-Sql\-Table\-Selection\-::set\-Index\-List().
+
+
+
+Referenced by current\-Selection().
+
+\hypertarget{classmdt_sql_table_widget_adb4792d2ed64a9cce61bc429986ae9a1}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!current\-Selection@{current\-Selection}}
+\index{current\-Selection@{current\-Selection}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{current\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Sql\-Table\-Selection} mdt\-Sql\-Table\-Widget\-::current\-Selection (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_table_widget_adb4792d2ed64a9cce61bc429986ae9a1}
+
+
+Get current selection. 
+
+The returned selection will only contain data related to given field.
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 330 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+
+
+References current\-Selection(), mdt\-Abstract\-Sql\-Widget\-::model(), mdt\-Abstract\-Sql\-Widget\-::proxy\-Model(), and selection\-Model().
 
 \hypertarget{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!enable\-Local\-Edition@{enable\-Local\-Edition}}
 \index{enable\-Local\-Edition@{enable\-Local\-Edition}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -201,7 +261,7 @@ Reimplemented from \hyperlink{classmdt_abstract_sql_widget_a4ad94a530c77292d122d
 
 
 
-Definition at line 144 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 152 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -218,6 +278,10 @@ References mdt\-Abstract\-Sql\-Widget\-::insert(), mdt\-Abstract\-Sql\-Widget\-:
 
 Get a list of currently selected indexes. 
 
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000002}{Deprecated}]\end{DoxyRefDesc}
+
+
 Will return a list of indexes that contains only coulumns specified by column\-List. This alos works for multiple rows selection.
 
 \begin{DoxyPrecond}{Precondition}
@@ -225,7 +289,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 340 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 399 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -246,6 +310,10 @@ Referenced by index\-List\-Of\-Selected\-Rows().
 
 Get a list of currently selected indexes. 
 
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000003}{Deprecated}]\end{DoxyRefDesc}
+
+
 Will return a list of indexes that contains only fields specified by field\-List. This alos works for multiple rows selection.
 
 \begin{DoxyPrecond}{Precondition}
@@ -253,9 +321,13 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000004}{Deprecated}]\end{DoxyRefDesc}
+
+
 This is a variant for single column. 
 
-Definition at line 378 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 437 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -270,7 +342,7 @@ References index\-List\-Of\-Selected\-Rows(), mdt\-Abstract\-Sql\-Widget\-::mode
 )}}\label{classmdt_sql_table_widget_a9616d390c25a3b1e863e855e00172e42}
 
 
-Definition at line 393 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 452 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -287,6 +359,10 @@ References index\-List\-Of\-Selected\-Rows(), mdt\-Abstract\-Sql\-Widget\-::mode
 
 Get a list of currently selected indexes in a list of rows. 
 
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000001}{Deprecated}]\end{DoxyRefDesc}
+
+
 Will return a list of indexes that contains only coulumns specified by column\-List. This alos works for multiple rows selection.
 
 \begin{DoxyPrecond}{Precondition}
@@ -294,7 +370,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. 
 
-Definition at line 284 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 343 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -313,7 +389,7 @@ Referenced by index\-List\-Of\-Selected\-Rows\-By\-Rows\-List().
 )}}\label{classmdt_sql_table_widget_a5abe02dacc9fd8c0c33c27dbc5216d1b}
 
 
-Definition at line 325 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 384 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -332,11 +408,11 @@ Get internal table view's selection model.
 
 
 
-Definition at line 222 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 230 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
-Referenced by index\-List\-Of\-Selected\-Rows(), and index\-List\-Of\-Selected\-Rows\-By\-Rows\-List().
+Referenced by current\-Selection(), index\-List\-Of\-Selected\-Rows(), and index\-List\-Of\-Selected\-Rows\-By\-Rows\-List().
 
 \hypertarget{classmdt_sql_table_widget_a466ff75bee2a0efd99c62994f65a5d18}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Column\-Hidden@{set\-Column\-Hidden}}
 \index{set\-Column\-Hidden@{set\-Column\-Hidden}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -352,7 +428,7 @@ Set a coulumn as hidden.
 
 
 
-Definition at line 245 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 253 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -379,7 +455,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 253 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 261 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -398,19 +474,19 @@ Set row as current record.
 
 
 
-Definition at line 401 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 460 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
 References mdt\-Abstract\-Sql\-Widget\-::model().
 
-\hypertarget{classmdt_sql_table_widget_a3b3d79485206f7f3468e125e38bd24f9}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Default\-Column\-To\-Select@{set\-Default\-Column\-To\-Select}}
+\hypertarget{classmdt_sql_table_widget_a6c54d9c26f7bb6241607785586bcc52e}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Default\-Column\-To\-Select@{set\-Default\-Column\-To\-Select}}
 \index{set\-Default\-Column\-To\-Select@{set\-Default\-Column\-To\-Select}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
-\subsubsection[{set\-Default\-Column\-To\-Select}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Table\-Widget\-::set\-Default\-Column\-To\-Select (
+\subsubsection[{set\-Default\-Column\-To\-Select}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::set\-Default\-Column\-To\-Select (
 \begin{DoxyParamCaption}
 \item[{int}]{column}
 \end{DoxyParamCaption}
-)}}\label{classmdt_sql_table_widget_a3b3d79485206f7f3468e125e38bd24f9}
+)}}\label{classmdt_sql_table_widget_a6c54d9c26f7bb6241607785586bcc52e}
 
 
 Set default column to select. 
@@ -418,16 +494,11 @@ Set default column to select.
 Some methods have to update selection in table view. Here it's possible to define witch column must be selected in such case.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method.
-\end{DoxyPrecond}
-This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-
-\begin{DoxyPrecond}{Precondition}
 Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 266 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 274 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -446,7 +517,16 @@ Referenced by set\-Column\-Hidden(), and set\-Default\-Column\-To\-Select().
 )}}\label{classmdt_sql_table_widget_a17d60fda061030fdfe15be5445eadc76}
 
 
-Definition at line 277 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Set default column to select. 
+
+Same as \hyperlink{classmdt_sql_table_widget_a6c54d9c26f7bb6241607785586bcc52e}{set\-Default\-Column\-To\-Select(int)}, but you can give a field name.
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 285 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -465,7 +545,7 @@ Set edition enabled/disabled.
 
 
 
-Definition at line 134 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 142 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -488,11 +568,37 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 232 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 240 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
 References mdt\-Abstract\-Sql\-Widget\-::model().
+
+\hypertarget{classmdt_sql_table_widget_a5e1323816fce33680857048db8cbb255}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!sort@{sort}}
+\index{sort@{sort}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{sort}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::sort (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_table_widget_a5e1323816fce33680857048db8cbb255}
+
+
+Sort data. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_abstract_sql_widget_a3c03a6c43f4488b377aa72879c10e066}{mdt\-Abstract\-Sql\-Widget\-::add\-Column\-To\-Sort\-Order()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{classmdt_abstract_sql_widget_a2c83a26fe75b708948c80a51887075e9}{mdt\-Abstract\-Sql\-Widget}.
+
+
+
+Definition at line 292 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+
+
+References mdt\-Abstract\-Sql\-Widget\-::model(), mdt\-Abstract\-Sql\-Widget\-::proxy\-Model(), and mdt\-Abstract\-Sql\-Widget\-::row\-Count().
 
 \hypertarget{classmdt_sql_table_widget_af40eeb001ec262830daba6b311927ede}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!table\-View@{table\-View}}
 \index{table\-View@{table\-View}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -507,7 +613,7 @@ Get internal table view.
 
 
 
-Definition at line 227 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 235 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
