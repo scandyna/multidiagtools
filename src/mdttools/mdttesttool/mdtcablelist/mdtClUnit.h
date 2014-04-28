@@ -234,15 +234,6 @@ class mdtClUnit : public mdtTtBase
    */
   QString toUnitRelatedLinksListStr(const QVariant &unitId, const QList<QVariant> &unitConnectionIdList, bool *ok);
 
-  /*! \brief Get a list of links that are related to given unit ID
-   *
-   * \deprecated
-   *
-   * This is a helper method to display a message to the user in a simple way.
-   *  Do not use the result for technical processing.
-   */
-  ///QString toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows, bool *ok);
-
   /*! \brief Add unit connection
    */
   bool addConnection(const mdtClUnitConnectionData & data, bool singleTransaction = true);
@@ -261,17 +252,6 @@ class mdtClUnit : public mdtTtBase
   /*! \brief Remove a single unit connection
    */
   bool removeConnection(const QVariant & unitConnectionId, bool handleTransaction = true);
-
-  /*! \brief Remove each unit connection that is contained in selection
-   *
-   * \deprecated
-   *
-   * This is usefull used together with mdtSqlTableWidget .
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  bool removeConnections(const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief Remove each unit connection that is contained in selection
    *

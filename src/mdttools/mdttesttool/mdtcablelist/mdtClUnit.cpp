@@ -545,20 +545,6 @@ QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QList
   return str;
 }
 
-QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QModelIndexList & indexListOfSelectedRows, bool *ok)
-{
-  Q_ASSERT(ok != 0);
-
-  int i;
-  QList<QVariant> idList;
-
-  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
-    idList.append(indexListOfSelectedRows.at(i).data());
-  }
-
-  return toUnitRelatedLinksListStr(unitId, idList, ok);
-}
-
 bool mdtClUnit::addConnection(const mdtClUnitConnectionData & data, bool singleTransaction)
 {
   QSqlQuery query(database());
@@ -667,28 +653,6 @@ bool mdtClUnit::removeConnection(const QVariant & unitConnectionId, bool handleT
 
   return true;
 }
-
-/**
-bool mdtClUnit::removeConnections(const QModelIndexList & indexListOfSelectedRows)
-{
-  int i;
-
-  if(!beginTransaction()){
-    return false;
-  }
-  for(i = 0; i < indexListOfSelectedRows.size(); ++i){
-    if(!removeConnection(indexListOfSelectedRows.at(i).data(), false)){
-      rollbackTransaction();
-      return false;
-    }
-  }
-  if(!commitTransaction()){
-    return false;
-  }
-
-  return true;
-}
-*/
 
 bool mdtClUnit::removeConnections(const mdtSqlTableSelection & s)
 {

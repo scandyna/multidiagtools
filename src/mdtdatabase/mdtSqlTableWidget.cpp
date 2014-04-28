@@ -484,13 +484,27 @@ void mdtSqlTableWidget::onDataChanged(const QModelIndex &, const QModelIndex &)
 
 void mdtSqlTableWidget::onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
+  Q_ASSERT(proxyModel() != 0);
+
   if(!childWidgetsAreInVisaluzingState()){
     ///pvTableView->setCurrentIndex(previous);
     return;
   }
+  /*
+   * Here, we have to check the source of the received index.
+   * If it comes from selection model (from view),
+   *  we have to map the index to source model index,
+   *  else we have a problem when sorting is activ.
+   */
   if(current.isValid()){
     sort();
-    emit currentRowChanged(current.row());
+    if(current.model() == proxyModel()){
+      QModelIndex index;
+      index = proxyModel()->mapToSource(current);
+      emit currentRowChanged(index.row());
+    }else{
+      emit currentRowChanged(current.row());
+    }
   }else{
     emit currentRowChanged(-1);
   }

@@ -25,6 +25,7 @@
 #include "mdtSqlTableSelectionItem.h"
 #include "mdtSqlTableSelectionRow.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtSqlRelation.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -286,6 +287,9 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 {
   mdtSqlTableWidget *sqlTableWidget;
   QSqlTableModel model;
+  QSqlTableModel *addressModel;
+  mdtSqlTableWidget *addressWidget;
+  mdtSqlRelation *relation;
   QTableView *view;
   mdtSqlTableSelection s;
   QStringList fields;
@@ -347,15 +351,65 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(1));
 
   /*
+   * Add a table widget to show addresses
+   */
+  // Setup address model
+  addressModel = new QSqlTableModel(0, pvDatabaseManager.database());
+  addressModel->setTable("Address_tbl");
+  QVERIFY(addressModel->select());
+  // Setup address relation
+  relation = new mdtSqlRelation;
+  relation->setParentModel(sqlTableWidget->model());
+  relation->setChildModel(addressModel);
+  relation->addRelation("Id_PK", "Client_Id_FK", false);
+  // Setup address widget
+  addressWidget = new mdtSqlTableWidget;
+  addressWidget->setModel(addressModel);
+  addressWidget->resize(500, 250);
+  sqlTableWidget->addChildWidget(addressWidget, relation);
+  addressWidget->show();
+  /*
+   * Sort client ascending and check displayed addresses
+   */
+  // Sort client
+  sqlTableWidget->clearColumnsSortOrder();
+  sqlTableWidget->addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  sqlTableWidget->sort();
+  // Select row 0 and check
+  view->selectRow(0);
+  QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(1));
+  // Select row 1 and check
+  view->selectRow(1);
+  QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(2));
+  /*
+   * Sort client descending and check displayed addresses
+   */
+  // Sort client
+  sqlTableWidget->clearColumnsSortOrder();
+  sqlTableWidget->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
+  sqlTableWidget->sort();
+  // Select row 0 and check
+  view->selectRow(0);
+  QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(2));
+  // Select row 1 and check
+  view->selectRow(1);
+  QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(1));
+  // Select row 0 and check
+  view->selectRow(0);
+  QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(2));
+
+  /*
    * Play
    */
-  /*
+
+  
   while(sqlTableWidget->isVisible()){
     QTest::qWait(1000);
   }
-  */
-  // Clear database data
+  
+  // Cleanup
   clearTestDatabaseData();
+  delete sqlTableWidget;
 }
 
 
