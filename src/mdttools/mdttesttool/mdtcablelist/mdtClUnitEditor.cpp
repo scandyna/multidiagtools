@@ -34,6 +34,7 @@
 #include "mdtClPathGraph.h"
 #include "mdtClPathGraphDialog.h"
 #include "mdtClLinkedUnitConnectionInfoDialog.h"
+#include "mdtClLinkedUnitConnectorInfoDialog.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -550,6 +551,23 @@ void mdtClUnitEditor::removeConnectors()
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
+}
+
+void mdtClUnitEditor::viewLinkedConnectors()
+{
+  mdtClLinkedUnitConnectorInfoDialog dialog(this, database());
+  QVariant connectorId;
+  QList<QVariant> linkedConnectorIdList;
+
+  // Get current unit connection ID
+  connectorId = currentData("UnitConnector_view", "Id_PK");
+  if(connectorId.isNull()){
+    return;
+  }
+
+  // Setup and show dialog
+  dialog.setConnectors(connectorId, linkedConnectorIdList);
+  dialog.exec();
 }
 
 void mdtClUnitEditor::addConnection()
@@ -1334,6 +1352,7 @@ bool mdtClUnitEditor::setupUnitConnectorTable()
   QPushButton *pbAddArticleConnectorBasedConnector;
   QPushButton *pbEditConnectorName;
   QPushButton *pbRemoveConnectors;
+  QPushButton *pbViewLinkedConnectors;
 
   if(!addChildTable("UnitConnector_view", tr("Connectors"), database())){
     return false;
@@ -1367,7 +1386,12 @@ bool mdtClUnitEditor::setupUnitConnectorTable()
   widget->addWidgetToLocalBar(pbAddArticleConnectorBasedConnector);
   widget->addWidgetToLocalBar(pbEditConnectorName);
   widget->addWidgetToLocalBar(pbRemoveConnectors);
-  widget->addStretchToLocalBar();widget->addStretchToLocalBar();
+  // View linked connectors button
+  pbViewLinkedConnectors = new QPushButton(tr("Linked connectors"));
+  connect(pbViewLinkedConnectors, SIGNAL(clicked()), this, SLOT(viewLinkedConnectors()));
+  widget->addWidgetToLocalBar(pbViewLinkedConnectors);
+  // Stretch
+  widget->addStretchToLocalBar();
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
 

@@ -1,6 +1,6 @@
 format 206
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 24
+  revision 26
   modified_by 2 "philippe"
   // class settings
   
@@ -2915,7 +2915,7 @@ ${inlines}
 
     classdiagram 1092994 "mdtClLinkedUnitConnectorInfoDialog"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 1180290 "mdtClLinkedUnitConnectorInfoDialog"
@@ -2948,24 +2948,6 @@ ${inlines}
 	  b parent class_ref 1180418 // Ui::mdtClLinkedUnitConnectorInfoDialog
       end
 
-      classrelation 1479554 // pvProxyModel (<directional composition>)
-	relation 1466626 *-->
-	  a role_name "pvProxyModel" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1479554 // pvProxyModel (<directional composition>)
-	  b parent class_ref 720002 // mdtSortFilterProxyModel
-      end
-
-      classrelation 1479682 // pvModel (<directional composition>)
-	relation 1466754 *-->
-	  a role_name "pvModel" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1479682 // pvModel (<directional composition>)
-	  b parent class_ref 174338 // QSqlQueryModel
-      end
-
       operation 1981058 "mdtClLinkedUnitConnectorInfoDialog"
 	public explicit_return_type ""
 	nparams 2
@@ -2974,6 +2956,141 @@ ${inlines}
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2003074 "setConnectors"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "unitConnectorId" type class_ref 161154 // QVariant
+	  param in name "linkedConnectionIdList" type class_ref 161154 // QVariant
+	multiplicity "*"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1493250 // pvLinkedConnectorsWidget (<directional composition>)
+	relation 1480322 *-->
+	  a role_name "pvLinkedConnectorsWidget" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1493250 // pvLinkedConnectorsWidget (<directional composition>)
+	  b parent class_ref 686594 // mdtSqlTableWidget
+      end
+
+      classrelation 1493378 // pvLinkedConnectionsWidget (<directional composition>)
+	relation 1480450 *-->
+	  a role_name "pvLinkedConnectionsWidget" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1493378 // pvLinkedConnectionsWidget (<directional composition>)
+	  b parent class_ref 686594 // mdtSqlTableWidget
+      end
+
+      operation 2003202 "displayUnit"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2003330 "displayConnector"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2003458 "displayLinkedConnections"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2003586 "setupConnectorTable"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2003714 "setupLinkedConnectorsTable"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1493506 // <dependency>
+	relation 1480578 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 1493506 // <dependency>
+	  b parent class_ref 818818 // mdtClUnit
+      end
+
+      operation 2003842 "displayError"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "error" type class_ref 182402 // mdtError
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3952,6 +4069,30 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 1173634 // mdtClLinkedUnitConnectionInfoDialog
+      end
+    end
+
+    artifact 762498 "mdtClLinkedUnitConnectorInfoDialog"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 1180290 // mdtClLinkedUnitConnectorInfoDialog
       end
     end
   end

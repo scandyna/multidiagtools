@@ -93,6 +93,10 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   void removeConnectors();
 
+  /*! \brief View linked connectors
+   */
+  void viewLinkedConnectors();
+
   /*! \brief Add a connection to unit connection table
    */
   void addConnection();

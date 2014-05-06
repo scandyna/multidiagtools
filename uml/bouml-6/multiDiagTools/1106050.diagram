@@ -13,7 +13,7 @@ classcanvas 128386 class_ref 1187330 // mdtSqlTableSelectionItem
   xyz 296 583 3011
 end
 relationcanvas 128258 relation_ref 1473666 // <directional composition>
-  from ref 128002 z 3006 stereotype "<<list>>" xyz 355.5 284 3006 to ref 128130
+  from ref 128002 z 3006 stereotype "<<list>>" xyz 355 284 3006 to ref 128130
   role_a_pos 412 346 3000 no_role_b
   multiplicity_a_pos 387 346 3000 no_multiplicity_b
 end

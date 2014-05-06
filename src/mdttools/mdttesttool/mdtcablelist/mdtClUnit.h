@@ -37,7 +37,7 @@
 #include <QList>
 #include <QModelIndex>
 
-/*! \brief Helper class to mana unit and related data
+/*! \brief Helper class to manage unit and related data
  */
 class mdtClUnit : public mdtTtBase
 {
