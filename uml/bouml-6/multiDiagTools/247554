@@ -1,6 +1,6 @@
 format 206
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 28
+  revision 29
   modified_by 2 "philippe"
   // class settings
   
@@ -4010,6 +4010,7 @@ ${inlines}
     
     activitydiagramsettings
      end
+    associated_deployment_view deploymentview_ref 520194 // DirectLink
     classdiagram 1112578 "mdtClDirectLink"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
@@ -4162,6 +4163,35 @@ ${inlines}
 	
 	
 	
+      end
+    end
+  end
+
+  deploymentview 520194 "DirectLink"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 762498 "mdtClDirectLink"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+
+#endif // #ifndef ${NAME}_H
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 1193858 // mdtClDirectLink
       end
     end
   end

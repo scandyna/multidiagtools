@@ -920,7 +920,13 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   // Edit contact ID
   id = connectionData.value("Id_PK");
   connectionData.setValue("Id_PK", 30005);
-  QVERIFY(unit.editConnection(30005, connectionData));
+  QVERIFY(unit.editConnection(id, connectionData));
+  connectionData = unit.getConnectionData(30005, false, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(30005));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
+  QCOMPARE(connectionData.value("UnitConnector_Id_FK"), QVariant(300000));
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("P"));
   // Connection ID 30006
   connectionData = connectionDataList.at(1);
   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
@@ -929,8 +935,13 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   // Edit contact ID
   id = connectionData.value("Id_PK");
   connectionData.setValue("Id_PK", 30006);
-  QVERIFY(unit.editConnection(30006, connectionData));
-
+  QVERIFY(unit.editConnection(id, connectionData));
+  connectionData = unit.getConnectionData(30006, false, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(30006));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
+  QCOMPARE(connectionData.value("UnitConnector_Id_FK"), QVariant(300000));
+  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("S"));
   /*
    * Unit connector:
    *  - Id_PK : 400000 , Unit_Id_FK : 1000 , Connector_Id_FK : NULL , ArticleConnector_Id_FK : NULL , Name : Unit connector 400000

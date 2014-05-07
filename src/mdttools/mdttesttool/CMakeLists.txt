@@ -76,6 +76,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClLinkData.cpp
           mdtcablelist/mdtClVehicleTypeLinkData.cpp
           mdtcablelist/mdtClLink.cpp
+          mdtcablelist/mdtClDirectLink.cpp
           mdtcablelist/mdtClUnitLinkDialog.cpp
           mdtcablelist/mdtClUnitVehicleType.cpp
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.cpp

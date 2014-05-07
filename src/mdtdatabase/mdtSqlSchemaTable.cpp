@@ -23,7 +23,7 @@
 #include <QSqlError>
 #include <QStringList>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlSchemaTable::mdtSqlSchemaTable()
 {

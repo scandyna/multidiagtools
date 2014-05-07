@@ -58,6 +58,7 @@ class mdtCableListTest : public mdtTest
   void linkAutoConnectionTest();
 
   void pathGraphTest();
+  void directLinkTest();
 
  private:
 

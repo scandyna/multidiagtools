@@ -34,6 +34,7 @@
 #include "mdtClLink.h"
 #include "mdtClLinkData.h"
 #include "mdtClVehicleTypeLinkData.h"
+#include "mdtClDirectLink.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -1212,6 +1213,57 @@ void mdtCableListTest::pathGraphTest()
 {
   QFAIL("Test not implemented yet");
 }
+
+void mdtCableListTest::directLinkTest()
+{
+  mdtClDirectLink *dlnk;
+  QSqlRecord record;
+  QList<QSqlRecord> dataList;
+  QList<QVariant> idList;
+  QList<QVariant> expectedIdList;
+  QList<QVariant> allConnectionsIdList;
+  bool ok;
+  int i;
+
+  // Scenario
+  pvScenario->createSenario();
+  // Initial
+  dlnk = new mdtClDirectLink(0, pvDatabaseManager.database());
+  QVERIFY(pvDatabaseManager.database().tables().contains("DirectLink_tbl"));
+  record = pvDatabaseManager.database().record("DirectLink_tbl");
+  QVERIFY(record.contains("UnitConnectionStart_Id_FK"));
+  QVERIFY(record.contains("UnitConnectionEnd_Id_FK"));
+  // Get unit connections for next tests
+  dataList = dlnk->getData("SELECT Id_PK FROM UnitConnection_tbl", &ok);
+  QVERIFY(ok);
+  for(i = 0; i < dataList.size(); ++i){
+    allConnectionsIdList.append(dataList.at(i).value(0));
+  }
+  // getUnitConnectionIdListPartOfUnit test - Unit ID: 1000
+  expectedIdList.clear();
+  expectedIdList << 10000 << 10001 << 10005 << 30005 << 30006 << 40005 << 40006;
+  idList = dlnk->getUnitConnectionIdListPartOfUnit(allConnectionsIdList, 1000, &ok);
+  QVERIFY(ok);
+  QCOMPARE(idList, expectedIdList);
+  // getUnitConnectionIdListPartOfUnitConnector test - Unit connector ID: 500000
+  expectedIdList.clear();
+  expectedIdList << 50005 << 50006;
+  idList = dlnk->getUnitConnectionIdListPartOfUnitConnector(allConnectionsIdList, 500000, &ok);
+  QVERIFY(ok);
+  QCOMPARE(idList, expectedIdList);
+  // addLink test
+  QVERIFY(dlnk->addLink(10000, 20000));
+  dataList = dlnk->getData("SELECT * FROM DirectLink_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(10000));
+  QCOMPARE(dataList.at(0).value("UnitConnectionEnd_Id_FK"), QVariant(20000));
+
+  delete dlnk;
+  QVERIFY(!pvDatabaseManager.database().tables().contains("DirectLink_tbl"));
+  pvScenario->removeScenario();
+}
+
 
 /*
  * Test data manipulation methods
