@@ -1,5 +1,6 @@
 <map id="src/mdttools/mdttesttool/mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.h" name="src/mdttools/mdttesttool/mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.h">
 <area shape="rect" id="node3" href="$mdt_cl_linked_unit_connection_info_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClLinkedUnitConnection\lInfoDialog.cpp" alt="" coords="5,117,267,181"/>
 <area shape="rect" id="node5" href="$mdt_cl_unit_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitEditor.cpp" alt="" coords="291,126,509,173"/>
-<area shape="rect" id="node7" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="533,126,704,173"/>
+<area shape="rect" id="node7" href="$moc__mdt_cl_linked_unit_connection_info_dialog_8cxx.html" title="src/mdttools/mdttesttool\l/mdtcablelist/moc_mdtClLinkedUnit\lConnectionInfoDialog.cxx" alt="" coords="533,117,763,181"/>
+<area shape="rect" id="node9" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="787,126,957,173"/>
 </map>

@@ -127,7 +127,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; : <a class="code" href="class_q_main_window.html">QMainWindow</a>(parent, flags)</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// Setup GUI</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  setupUi(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="class_ui__mdt_modbus_io_tool.html#aeceaeaccbc3c38603c0fc35bd5fb2815">setupUi</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="comment">// Setup status bar</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  pvStatusWidget = <span class="keyword">new</span> <a class="code" href="classmdt_port_status_widget.html" title="Helper class to display port/device state and messages. ">mdtPortStatusWidget</a>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  statusBar()-&gt;addWidget(pvStatusWidget);</div>
@@ -137,7 +137,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  pvDeviceModbusWago-&gt;<a class="code" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518" title="Set the device name. ">setName</a>(<span class="stringliteral">&quot;Wago I/O 750&quot;</span>);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="comment">// Setup I/Os widget</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  pvDeviceIosWidget = <span class="keyword">new</span> <a class="code" href="classmdt_device_ios_widget.html" title="Display a set of I/O&#39;s. ">mdtDeviceIosWidget</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  saIos-&gt;setWidget(pvDeviceIosWidget);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="class_ui__mdt_modbus_io_tool.html#a0193061f662939b755bc31832269dd02">saIos</a>-&gt;setWidget(pvDeviceIosWidget);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="comment">// Make connections</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  connect(pvDeviceModbusWago, SIGNAL(stateChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(setState(<span class="keywordtype">int</span>)));</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  connect(pvDeviceModbusWago, SIGNAL(statusMessageChanged(<span class="keyword">const</span> QString&amp;, <span class="keyword">const</span> QString&amp;, <span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(showStatusMessage(<span class="keyword">const</span> QString&amp;, <span class="keyword">const</span> QString&amp;, <span class="keywordtype">int</span>)));</div>
@@ -150,12 +150,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  pvReady = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  pvConnectingToNode = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">// Actions</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  connect(action_Setup, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(setup()));</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  connect(<a class="code" href="class_ui__mdt_modbus_io_tool.html#a1e0b957f5e299ea57754889bf0a670ca">action_Setup</a>, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(setup()));</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  pvLanguageActionGroup = 0;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="comment">// Buttons</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  connect(pbConnect, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(connectToNode()));</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  connect(pbDisconnect, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(disconnectFromNode()));</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  connect(pbAbortScan, SIGNAL(clicked()), pvDeviceModbusWago-&gt;<a class="code" href="classmdt_device_modbus.html#ac547788aa95d46c00ddb1342eb46ef93" title="Get internal port manager instance. ">modbusTcpPortManager</a>(), SLOT(abortScan()));</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  connect(<a class="code" href="class_ui__mdt_modbus_io_tool.html#a68bab4d7e93a5f3d171b3b72957f1fd0">pbConnect</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(connectToNode()));</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  connect(<a class="code" href="class_ui__mdt_modbus_io_tool.html#ab2afd7755226736210df8078d253fd78">pbDisconnect</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(disconnectFromNode()));</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  connect(<a class="code" href="class_ui__mdt_modbus_io_tool.html#a60a00c62dd6ba2fa09f0100aa27e8534">pbAbortScan</a>, SIGNAL(clicked()), pvDeviceModbusWago-&gt;<a class="code" href="classmdt_device_modbus.html#ac547788aa95d46c00ddb1342eb46ef93" title="Get internal port manager instance. ">modbusTcpPortManager</a>(), SLOT(abortScan()));</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  setWindowTitle(tr(<span class="stringliteral">&quot;MODBUS I/O tool for Wago 750&quot;</span>));</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  pvDeviceModbusWago-&gt;<a class="code" href="classmdt_device_modbus.html#aed892b501f8cbd372ccfda1a4fafa536" title="Get internal port manager instance. ">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a0c460b47b12e38e708321be79f6343d8" title="Notify the current state. ">notifyCurrentState</a>();</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="comment">// Start periodic inputs query (will only start once device is ready, see mdtDevice doc for details)</span></div>
@@ -183,7 +183,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">if</span>(it.key() == currentTranslationKey){</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      action-&gt;setChecked(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    menu_Language-&gt;addAction(action);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a94583261b88e08ca386b793ff6133b0a">menu_Language</a>-&gt;addAction(action);</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    pvLanguageActionGroup-&gt;addAction(action);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    it++;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  }</div>
@@ -191,7 +191,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
 <div class="line"><a name="l00102"></a><span class="lineno"><a class="code" href="classmdt_modbus_io_tool.html#a5e0ccfb8e352242fffc3f65f442f4d2f">  102</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_modbus_io_tool.html#a5e0ccfb8e352242fffc3f65f442f4d2f" title="Retranslate. ">mdtModbusIoTool::retranslate</a>()</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  retranslateUi(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <a class="code" href="class_ui__mdt_modbus_io_tool.html#a5344c19fa7f91ed18bd9940dab02746b">retranslateUi</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> mdtModbusIoTool::setState(<span class="keywordtype">int</span> state)</div>
@@ -267,9 +267,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  setStateConnectingToNode();</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  </div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="comment">// Try to find and connect to device</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  pvDeviceModbusWago-&gt;<a class="code" href="classmdt_device_modbus.html#a64bfa566dbd8511e11d76c0b14191f17" title="Set hardware node id. ">setHardwareNodeId</a>(sbHwNodeId-&gt;value(), 8, 0);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  pvDeviceModbusWago-&gt;<a class="code" href="classmdt_device_modbus.html#a64bfa566dbd8511e11d76c0b14191f17" title="Set hardware node id. ">setHardwareNodeId</a>(<a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;value(), 8, 0);</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordflow">if</span>(pvDeviceModbusWago-&gt;<a class="code" href="classmdt_device_modbus_wago.html#ac15c95cee8dec98609278d0e0ab2b3ce" title="Connect to physical device. ">connectToDevice</a>(expectedHwNodeAddresses) != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314" title="Set the permanent text. ">setPermanentText</a>(tr(<span class="stringliteral">&quot;Device with HW node ID &quot;</span>) + QString::number(sbHwNodeId-&gt;value()) + tr(<span class="stringliteral">&quot; not found&quot;</span>));</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314" title="Set the permanent text. ">setPermanentText</a>(tr(<span class="stringliteral">&quot;Device with HW node ID &quot;</span>) + QString::number(<a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;value()) + tr(<span class="stringliteral">&quot; not found&quot;</span>));</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    setStateConnectingToNodeFinished();</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  }</div>
@@ -287,7 +287,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  pvDeviceIosWidget-&gt;<a class="code" href="classmdt_device_ios_widget.html#a8fc261333ffc1c3b705ae8609f687159" title="Add all I/O&#39;s as corresponding GUI representation. ">setDeviceIos</a>(pvDeviceModbusWago-&gt;<a class="code" href="classmdt_device.html#adb7099877ad2080961fae5a40117e9e5" title="Get the I/Os container. ">ios</a>());</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  pvDeviceModbusWago-&gt;<a class="code" href="classmdt_device.html#ab35b81b8eb68e161ac06ae882be39a25" title="Read all digital outputs on physical device and update (G)UI representation. ">getDigitalOutputs</a>(0);</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  showStatusMessage(tr(<span class="stringliteral">&quot;I/O detection done&quot;</span>), 1000);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  pvStatusDeviceInformations = tr(<span class="stringliteral">&quot;Connected to device with HW node ID &quot;</span>) + QString::number(sbHwNodeId-&gt;value());</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  pvStatusDeviceInformations = tr(<span class="stringliteral">&quot;Connected to device with HW node ID &quot;</span>) + QString::number(<a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;value());</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  setStateConnectingToNodeFinished();</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;}</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
@@ -311,10 +311,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="keywordtype">void</span> mdtModbusIoTool::setStateConnectingToNode()</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;{</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  pvConnectingToNode = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  pbDisconnect-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  pbAbortScan-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  pbConnect-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  sbHwNodeId-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  <a class="code" href="class_ui__mdt_modbus_io_tool.html#ab2afd7755226736210df8078d253fd78">pbDisconnect</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  <a class="code" href="class_ui__mdt_modbus_io_tool.html#a60a00c62dd6ba2fa09f0100aa27e8534">pbAbortScan</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  <a class="code" href="class_ui__mdt_modbus_io_tool.html#a68bab4d7e93a5f3d171b3b72957f1fd0">pbConnect</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;}</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="keywordtype">void</span> mdtModbusIoTool::setStateConnectingToNodeFinished()</div>
@@ -326,10 +326,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="keywordtype">void</span> mdtModbusIoTool::setStatePortClosed()</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;{</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  <span class="keywordflow">if</span>(!pvConnectingToNode){</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    pbDisconnect-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    pbAbortScan-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    pbConnect-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    sbHwNodeId-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ab2afd7755226736210df8078d253fd78">pbDisconnect</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a60a00c62dd6ba2fa09f0100aa27e8534">pbAbortScan</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a68bab4d7e93a5f3d171b3b72957f1fd0">pbConnect</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314" title="Set the permanent text. ">setPermanentText</a>(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  }</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;}</div>
@@ -337,10 +337,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="keywordtype">void</span> mdtModbusIoTool::setStateDisconnected()</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordflow">if</span>(!pvConnectingToNode){</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    pbDisconnect-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    pbAbortScan-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    pbConnect-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    sbHwNodeId-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ab2afd7755226736210df8078d253fd78">pbDisconnect</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a60a00c62dd6ba2fa09f0100aa27e8534">pbAbortScan</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a68bab4d7e93a5f3d171b3b72957f1fd0">pbConnect</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314" title="Set the permanent text. ">setPermanentText</a>(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  }</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;}</div>
@@ -348,10 +348,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="keywordtype">void</span> mdtModbusIoTool::setStateConnecting()</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;{</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  <span class="keywordflow">if</span>(!pvConnectingToNode){</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    pbDisconnect-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    pbAbortScan-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    pbConnect-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    sbHwNodeId-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ab2afd7755226736210df8078d253fd78">pbDisconnect</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a60a00c62dd6ba2fa09f0100aa27e8534">pbAbortScan</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a68bab4d7e93a5f3d171b3b72957f1fd0">pbConnect</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314" title="Set the permanent text. ">setPermanentText</a>(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  }</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;}</div>
@@ -359,10 +359,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="keywordtype">void</span> mdtModbusIoTool::setStateReady()</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;{</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  <span class="keywordflow">if</span>(!pvConnectingToNode){</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    pbDisconnect-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    pbAbortScan-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    pbConnect-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    sbHwNodeId-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ab2afd7755226736210df8078d253fd78">pbDisconnect</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a60a00c62dd6ba2fa09f0100aa27e8534">pbAbortScan</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a68bab4d7e93a5f3d171b3b72957f1fd0">pbConnect</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    pvStatusWidget-&gt;<a class="code" href="classmdt_port_status_widget.html#a1b7fd23b45d75ccc106242026f3f8314" title="Set the permanent text. ">setPermanentText</a>(pvStatusDeviceInformations);</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  }</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;}</div>
@@ -370,26 +370,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="keywordtype">void</span> mdtModbusIoTool::setStateBusy()</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;{</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  <span class="keywordflow">if</span>(!pvConnectingToNode){</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    pbDisconnect-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    pbAbortScan-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    pbConnect-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    sbHwNodeId-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ab2afd7755226736210df8078d253fd78">pbDisconnect</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a60a00c62dd6ba2fa09f0100aa27e8534">pbAbortScan</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a68bab4d7e93a5f3d171b3b72957f1fd0">pbConnect</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  }</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;}</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="keywordtype">void</span> mdtModbusIoTool::setStateError()</div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;{</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  <span class="keywordflow">if</span>(!pvConnectingToNode){</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    pbDisconnect-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    pbAbortScan-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    pbConnect-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    sbHwNodeId-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ab2afd7755226736210df8078d253fd78">pbDisconnect</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a60a00c62dd6ba2fa09f0100aa27e8534">pbAbortScan</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#a68bab4d7e93a5f3d171b3b72957f1fd0">pbConnect</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <a class="code" href="class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c">sbHwNodeId</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  }</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 27 2014 18:00:25 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

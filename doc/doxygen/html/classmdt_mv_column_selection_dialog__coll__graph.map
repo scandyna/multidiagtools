@@ -1,4 +1,6 @@
 <map id="mdtMvColumnSelectionDialog" name="mdtMvColumnSelectionDialog">
-<area shape="rect" id="node2" href="$classmdt_items_selector_dialog.html" title="Provide the user a dialog in witch he can choose items. " alt="" coords="33,83,196,112"/>
-<area shape="rect" id="node4" href="$class_q_dialog.html" title="QDialog" alt="" coords="5,5,75,35"/>
+<area shape="rect" id="node2" href="$classmdt_items_selector_dialog.html" title="Provide the user a dialog in witch he can choose items. " alt="" coords="816,377,979,407"/>
+<area shape="rect" id="node4" href="$class_q_dialog.html" title="QDialog" alt="" coords="639,356,708,385"/>
+<area shape="rect" id="node6" href="$class_ui_1_1mdt_items_selector_dialog.html" title="Ui::mdtItemsSelectorDialog" alt="" coords="583,409,764,439"/>
+<area shape="rect" id="node8" href="$class_ui__mdt_items_selector_dialog.html" title="Ui_mdtItemsSelectorDialog" alt="" coords="348,409,529,439"/>
 </map>

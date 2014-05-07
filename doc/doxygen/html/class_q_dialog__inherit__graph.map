@@ -4,20 +4,21 @@
 <area shape="rect" id="node13" href="$classmdt_cl_article_connection_dialog.html" title="Dialog for article connection edition. " alt="" coords="124,165,321,195"/>
 <area shape="rect" id="node15" href="$classmdt_cl_article_link_dialog.html" title="Dialog that let the user edit a article link. " alt="" coords="145,219,300,248"/>
 <area shape="rect" id="node17" href="$classmdt_cl_linked_unit_connection_info_dialog.html" title="Display informations about unit connections linked to a given unit connection. " alt="" coords="131,271,315,318"/>
-<area shape="rect" id="node19" href="$classmdt_cl_path_graph_dialog.html" title="Display a path from link list starting at a specified connection. " alt="" coords="145,341,300,371"/>
-<area shape="rect" id="node21" href="$classmdt_cl_unit_connection_dialog.html" title="Dialog for edition of a unit connection. " alt="" coords="131,395,315,424"/>
-<area shape="rect" id="node23" href="$classmdt_cl_unit_link_dialog.html" title="Dialog that let the user edit a unit link. " alt="" coords="152,448,293,477"/>
-<area shape="rect" id="node25" href="$classmdt_field_list_edition_dialog.html" title="Dialog that provides field list edition. " alt="" coords="137,501,308,531"/>
-<area shape="rect" id="node27" href="$classmdt_field_map_dialog.html" title="Dialog to manage field mapping. " alt="" coords="156,555,289,584"/>
-<area shape="rect" id="node29" href="$classmdt_field_map_item_dialog.html" title="A dialog to setup a field map item. " alt="" coords="143,608,303,637"/>
-<area shape="rect" id="node31" href="$classmdt_items_selector_dialog.html" title="Provide the user a dialog in witch he can choose items. " alt="" coords="141,661,304,691"/>
-<area shape="rect" id="node37" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor. " alt="" coords="173,715,272,744"/>
-<area shape="rect" id="node39" href="$classmdt_sql_selection_dialog.html" title="Provide a way for the user to select row in a set of data. " alt="" coords="145,768,300,797"/>
-<area shape="rect" id="node41" href="$classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. " alt="" coords="152,821,293,851"/>
-<area shape="rect" id="node43" href="$classmdt_tt_test_node_unit_dialog.html" title="Dialog for test node unit edition. " alt="" coords="136,875,309,904"/>
+<area shape="rect" id="node19" href="$classmdt_cl_linked_unit_connector_info_dialog.html" title="Dialog that displays linked connectors to a given unit connector. " alt="" coords="133,341,312,387"/>
+<area shape="rect" id="node21" href="$classmdt_cl_path_graph_dialog.html" title="Display a path from link list starting at a specified connection. " alt="" coords="145,411,300,440"/>
+<area shape="rect" id="node23" href="$classmdt_cl_unit_connection_dialog.html" title="Dialog for edition of a unit connection. " alt="" coords="131,464,315,493"/>
+<area shape="rect" id="node25" href="$classmdt_cl_unit_link_dialog.html" title="Dialog that let the user edit a unit link. " alt="" coords="152,517,293,547"/>
+<area shape="rect" id="node27" href="$classmdt_field_list_edition_dialog.html" title="Dialog that provides field list edition. " alt="" coords="137,571,308,600"/>
+<area shape="rect" id="node29" href="$classmdt_field_map_dialog.html" title="Dialog to manage field mapping. " alt="" coords="156,624,289,653"/>
+<area shape="rect" id="node31" href="$classmdt_field_map_item_dialog.html" title="A dialog to setup a field map item. " alt="" coords="143,677,303,707"/>
+<area shape="rect" id="node33" href="$classmdt_items_selector_dialog.html" title="Provide the user a dialog in witch he can choose items. " alt="" coords="141,731,304,760"/>
+<area shape="rect" id="node39" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor. " alt="" coords="173,784,272,813"/>
+<area shape="rect" id="node41" href="$classmdt_sql_selection_dialog.html" title="Provide a way for the user to select row in a set of data. " alt="" coords="145,837,300,867"/>
+<area shape="rect" id="node43" href="$classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. " alt="" coords="152,891,293,920"/>
+<area shape="rect" id="node45" href="$classmdt_tt_test_node_unit_dialog.html" title="Dialog for test node unit edition. " alt="" coords="136,944,309,973"/>
 <area shape="rect" id="node5" href="$classmdt_modbus_tcp_port_setup_dialog.html" title="mdtModbusTcpPortSetupDialog" alt="" coords="372,5,577,35"/>
 <area shape="rect" id="node7" href="$classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port. " alt="" coords="389,59,560,88"/>
 <area shape="rect" id="node9" href="$classmdt_usbtmc_port_setup_dialog.html" title="mdtUsbtmcPortSetupDialog" alt="" coords="383,112,567,141"/>
-<area shape="rect" id="node33" href="$classmdt_mv_column_selection_dialog.html" title="Let the user manage fields to display in table view. " alt="" coords="376,635,573,664"/>
-<area shape="rect" id="node35" href="$classmdt_mv_sorting_setup_dialog.html" title="Let the user manage columns sorting. " alt="" coords="388,688,561,717"/>
+<area shape="rect" id="node35" href="$classmdt_mv_column_selection_dialog.html" title="Let the user manage fields to display in table view. " alt="" coords="376,704,573,733"/>
+<area shape="rect" id="node37" href="$classmdt_mv_sorting_setup_dialog.html" title="Let the user manage columns sorting. " alt="" coords="388,757,561,787"/>
 </map>

@@ -1,0 +1,12 @@
+<map id="src/mdtserialport/ui_mdtSerialPortConfigWidget.h" name="src/mdtserialport/ui_mdtSerialPortConfigWidget.h">
+<area shape="rect" id="node3" href="$mdt_serial_port_config_widget_8h.html" title="src/mdtserialport/mdtSerial\lPortConfigWidget.h" alt="" coords="208,102,387,149"/>
+<area shape="rect" id="node5" href="$mdt_serial_port_config_widget_8cpp.html" title="src/mdtserialport/mdtSerial\lPortConfigWidget.cpp" alt="" coords="5,198,184,245"/>
+<area shape="rect" id="node7" href="$mdt_serial_port_setup_dialog_8h.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.h" alt="" coords="208,198,387,245"/>
+<area shape="rect" id="node22" href="$moc__mdt_serial_port_config_widget_8cxx.html" title="src/mdtserialport/moc\l_mdtSerialPortConfigWidget.cxx" alt="" coords="411,198,621,245"/>
+<area shape="rect" id="node9" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="157,399,253,428"/>
+<area shape="rect" id="node11" href="$mdt_serial_port_setup_dialog_8cpp.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.cpp" alt="" coords="101,294,280,341"/>
+<area shape="rect" id="node13" href="$moc__mdt_serial_port_setup_dialog_8cxx.html" title="src/mdtserialport/moc\l_mdtSerialPortSetupDialog.cxx" alt="" coords="304,294,507,341"/>
+<area shape="rect" id="node15" href="$mdt_port_term_8h.html" title="src/mdttools/mdtPortTerm.h" alt="" coords="531,303,715,332"/>
+<area shape="rect" id="node18" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="419,399,616,428"/>
+<area shape="rect" id="node20" href="$moc__mdt_port_term_8cxx.html" title="src/mdttools/moc_mdtPort\lTerm.cxx" alt="" coords="640,390,816,437"/>
+</map>

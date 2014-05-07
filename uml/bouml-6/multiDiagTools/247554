@@ -1,6 +1,6 @@
 format 206
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 26
+  revision 28
   modified_by 2 "philippe"
   // class settings
   
@@ -1653,7 +1653,6 @@ ${inlines}
     
     activitydiagramsettings
      end
-    associated_deployment_view deploymentview_ref 481026 // Unit
     classdiagram 753154 "mdtClUnitVehicle"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -3134,7 +3133,6 @@ ${inlines}
     
     activitydiagramsettings
      end
-    associated_deployment_view deploymentview_ref 487554 // Link
     classdiagram 772866 "mdtClLink"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -3996,156 +3994,174 @@ ${inlines}
     end
   end
 
-  deploymentview 481026 "Unit"
-    //deployment diagram settings
-    deploymentdiagramsettings
+  classview 655362 "DirectLink"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
      end
-    artifact 683650 "mdtClConnectorData"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-
-#endif // #ifndef ${NAME}_H
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 1106946 // mdtClConnectorData
-      end
-    end
-
-    artifact 683778 "mdtClArticleConnectionData"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-
-#endif // #ifndef ${NAME}_H
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 1113730 // mdtClArticleConnectionData
-      end
-    end
-
-    artifact 742786 "mdtClLinkedUnitConnectionInfoDialog"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-
-#endif // #ifndef ${NAME}_H
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 1173634 // mdtClLinkedUnitConnectionInfoDialog
-      end
-    end
-
-    artifact 762498 "mdtClLinkedUnitConnectorInfoDialog"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-
-#endif // #ifndef ${NAME}_H
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 1180290 // mdtClLinkedUnitConnectorInfoDialog
-      end
-    end
-  end
-
-  deploymentview 487554 "Link"
-    //deployment diagram settings
-    deploymentdiagramsettings
+    
+    
+    activitydiagramsettings
      end
-    artifact 690306 "mdtClLinkData"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-
-#endif // #ifndef ${NAME}_H
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 888194 // mdtClLinkData
-      end
+    classdiagram 1112578 "mdtClDirectLink"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
     end
 
-    artifact 696834 "mdtClVehicleTypeLinkData"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-
-#endif // #ifndef ${NAME}_H
+    class 1193858 "mdtClDirectLink"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
 "
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 1120386 // mdtClVehicleTypeLinkData
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1500034 // <generalisation>
+	relation 1487106 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1500034 // <generalisation>
+	  b parent class_ref 952962 // mdtTtBase
+      end
+
+      classrelation 1500162 // <dependency>
+	relation 1487234 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 1500162 // <dependency>
+	  b parent class_ref 917122 // mdtSqlDatabaseManager
+      end
+
+      operation 2010370 "mdtClDirectLink"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2017410 "~mdtClDirectLink"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2017282 "getUnitConnectionIdListPartOfUnit"
+	public return_type class_ref 161154 // QVariant
+	multiplicity "*"
+	nparams 3
+	  param in name "unitConnectionIdList" type class_ref 161154 // QVariant
+	multiplicity "*"
+	  param in name "unitId" type class_ref 161154 // QVariant
+	  param inout name "ok" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2017538 "getUnitConnectionIdListPartOfUnitConnector"
+	public return_type class_ref 161154 // QVariant
+	multiplicity "*"
+	nparams 3
+	  param in name "unitConnectionIdList" type class_ref 161154 // QVariant
+	multiplicity "*"
+	  param in name "unitConnectorId" type class_ref 161154 // QVariant
+	  param inout name "ok" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2017154 "addLink"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "unitConnectionStartId" type class_ref 161154 // QVariant
+	  param in name "unitConnectionEndId" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2010498 "createDirectLinkTable"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2010626 "removeDirectLinkTable"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end

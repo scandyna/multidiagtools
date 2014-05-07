@@ -1,6 +1,8 @@
 <map id="src/mdttools/mdttesttool/mdtcablelist/mdtClArticleLinkDialog.cpp" name="src/mdttools/mdttesttool/mdtcablelist/mdtClArticleLinkDialog.cpp">
-<area shape="rect" id="node3" href="$mdt_cl_article_link_dialog_8h.html" title="mdtClArticleLinkDialog.h" alt="" coords="425,117,591,147"/>
-<area shape="rect" id="node34" href="$mdt_sql_selection_dialog_8h.html" title="mdtSqlSelectionDialog.h" alt="" coords="856,117,1021,147"/>
-<area shape="rect" id="node7" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="403,195,517,224"/>
-<area shape="rect" id="node9" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="787,272,869,301"/>
+<area shape="rect" id="node3" href="$mdt_cl_article_link_dialog_8h.html" title="mdtClArticleLinkDialog.h" alt="" coords="644,117,809,147"/>
+<area shape="rect" id="node64" href="$mdt_sql_selection_dialog_8h.html" title="mdtSqlSelectionDialog.h" alt="" coords="1335,117,1500,147"/>
+<area shape="rect" id="node5" href="$ui__mdt_cl_article_link_dialog_8h.html" title="ui_mdtClArticleLinkDialog.h" alt="" coords="1825,195,2007,224"/>
+<area shape="rect" id="node37" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="381,195,496,224"/>
+<area shape="rect" id="node39" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="397,272,480,301"/>
+<area shape="rect" id="node66" href="$ui__mdt_sql_selection_dialog_8h.html" title="ui_mdtSqlSelectionDialog.h" alt="" coords="2385,195,2567,224"/>
 </map>

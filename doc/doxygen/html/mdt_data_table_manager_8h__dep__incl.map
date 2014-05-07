@@ -1,4 +1,5 @@
-<map id="src/mdtutilsgui/mdtDataTableManager.h" name="src/mdtutilsgui/mdtDataTableManager.h">
-<area shape="rect" id="node3" href="$mdt_tt_database_schema_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtDatabaseSchema.cpp" alt="" coords="5,102,195,149"/>
-<area shape="rect" id="node5" href="$mdt_data_table_manager_8cpp.html" title="src/mdtutilsgui/mdtDataTable\lManager.cpp" alt="" coords="219,102,411,149"/>
+<map id="src/mdtdatabase/mdtDataTableManager.h" name="src/mdtdatabase/mdtDataTableManager.h">
+<area shape="rect" id="node3" href="$mdt_data_table_manager_8cpp.html" title="src/mdtdatabase/mdtDataTable\lManager.cpp" alt="" coords="5,102,211,149"/>
+<area shape="rect" id="node5" href="$moc__mdt_data_table_manager_8cxx.html" title="src/mdtdatabase/moc\l_mdtDataTableManager.cxx" alt="" coords="235,102,421,149"/>
+<area shape="rect" id="node7" href="$mdt_tt_database_schema_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtDatabaseSchema.cpp" alt="" coords="445,102,635,149"/>
 </map>

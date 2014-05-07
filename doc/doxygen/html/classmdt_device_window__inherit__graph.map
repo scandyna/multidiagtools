@@ -1,3 +1,5 @@
 <map id="mdtDeviceWindow" name="mdtDeviceWindow">
-<area shape="rect" id="node2" href="$class_q_main_window.html" title="QMainWindow" alt="" coords="5,5,112,35"/>
+<area shape="rect" id="node2" href="$class_q_main_window.html" title="QMainWindow" alt="" coords="5,83,112,112"/>
+<area shape="rect" id="node4" href="$class_ui_1_1mdt_device_window.html" title="Ui::mdtDeviceWindow" alt="" coords="136,83,288,112"/>
+<area shape="rect" id="node6" href="$class_ui__mdt_device_window.html" title="Ui_mdtDeviceWindow" alt="" coords="136,5,288,35"/>
 </map>

@@ -206,7 +206,7 @@ This is a helper method to get a new frame in port's read frames pool.
 It can hapen that the read frames pool is empty. In this case, a error will be generated in the \hyperlink{classmdt_error}{mdt\-Error} log system, and notified with Read\-Pool\-Empty error. This method will also block ( sleep ) until a frame is available in read pool.
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000028}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000031}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{DoxyRefDesc}
 
 
 Note about port mutex handling\-:\par
@@ -418,6 +418,10 @@ Emited when a new frame is available.
 
 This signal is connected to mdt\-Port\-Thread\-::void \hyperlink{classmdt_port_thread_helper_a751006665ed9f110ade8ced5264a5f50}{new\-Frame\-Readen()} in \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{set\-Thread()}. 
 
+Definition at line 118 of file moc\-\_\-mdt\-Port\-Thread\-Helper.\-cxx.
+
+
+
 Referenced by set\-Thread(), and submit\-Current\-Read\-Frame().
 
 \hypertarget{classmdt_port_thread_helper_aaa98db16bfcc30d82e9d542fc2a52d6b}{\index{mdt\-Port\-Thread\-Helper@{mdt\-Port\-Thread\-Helper}!notify\-Error@{notify\-Error}}
@@ -459,6 +463,10 @@ Referenced by get\-New\-Frame\-Read(), handle\-Common\-Read\-Errors(), handle\-C
 Emitted when a read process begins. 
 
 This signal is connected to mdt\-Port\-Thread\-::void \hyperlink{classmdt_port_thread_helper_a78007ee41a04ffde474087a80858c0ce}{read\-Process\-Begin()} in \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{set\-Thread()}. 
+
+Definition at line 106 of file moc\-\_\-mdt\-Port\-Thread\-Helper.\-cxx.
+
+
 
 Referenced by set\-Thread(), and submit\-Readen\-Data().
 
@@ -749,6 +757,10 @@ Emitted when a write process begins.
 
 This signal is connected to mdt\-Port\-Thread\-::void \hyperlink{classmdt_port_thread_helper_a80df5929776f6c617b96f2184e2bc96d}{write\-Process\-Begin()} in \hyperlink{classmdt_port_thread_helper_af6c9d2cb2e9e922942236068bf634b0b}{set\-Thread()}. 
 
+Definition at line 112 of file moc\-\_\-mdt\-Port\-Thread\-Helper.\-cxx.
+
+
+
 Referenced by set\-Thread(), and mdt\-Port\-Thread\-Helper\-Port\-::write\-Data\-To\-Port().
 
 
@@ -781,4 +793,5 @@ Referenced by get\-New\-Frame\-Read(), get\-New\-Frame\-Write(), handle\-Common\
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/\hyperlink{mdt_port_thread_helper_8h}{mdt\-Port\-Thread\-Helper.\-h}\item 
-src/mdtport/\hyperlink{mdt_port_thread_helper_8cpp}{mdt\-Port\-Thread\-Helper.\-cpp}\end{DoxyCompactItemize}
+src/mdtport/\hyperlink{mdt_port_thread_helper_8cpp}{mdt\-Port\-Thread\-Helper.\-cpp}\item 
+src/mdtport/\hyperlink{moc__mdt_port_thread_helper_8cxx}{moc\-\_\-mdt\-Port\-Thread\-Helper.\-cxx}\end{DoxyCompactItemize}

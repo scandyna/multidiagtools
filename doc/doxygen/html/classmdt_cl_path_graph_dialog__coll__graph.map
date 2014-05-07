@@ -1,3 +1,5 @@
 <map id="mdtClPathGraphDialog" name="mdtClPathGraphDialog">
-<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="5,5,75,35"/>
+<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="40,181,109,211"/>
+<area shape="rect" id="node4" href="$class_ui_1_1mdt_cl_path_graph_dialog.html" title="Ui::mdtClPathGraphDialog" alt="" coords="133,181,309,211"/>
+<area shape="rect" id="node6" href="$class_ui__mdt_cl_path_graph_dialog.html" title="Ui_mdtClPathGraphDialog" alt="" coords="133,101,309,131"/>
 </map>

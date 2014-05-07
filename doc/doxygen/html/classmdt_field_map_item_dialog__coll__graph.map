@@ -1,3 +1,5 @@
 <map id="mdtFieldMapItemDialog" name="mdtFieldMapItemDialog">
-<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="5,5,75,35"/>
+<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="651,427,720,456"/>
+<area shape="rect" id="node4" href="$class_ui_1_1mdt_field_map_item_dialog.html" title="Ui::mdtFieldMapItemDialog" alt="" coords="595,480,776,509"/>
+<area shape="rect" id="node6" href="$class_ui__mdt_field_map_item_dialog.html" title="Ui_mdtFieldMapItemDialog" alt="" coords="364,480,543,509"/>
 </map>

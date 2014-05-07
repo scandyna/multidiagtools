@@ -111,7 +111,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> ****************************************************************************/</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_node_editor_8h.html">mdtTtTestNodeEditor.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_node_8h.html">mdtTtTestNode.h</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;ui_mdtTtTestNodeEditor.h&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ui__mdt_tt_test_node_editor_8h.html">ui_mdtTtTestNodeEditor.h</a>&quot;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_form_widget_8h.html">mdtSqlFormWidget.h</a>&quot;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_relation_8h.html">mdtSqlRelation.h</a>&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_table_widget_8h.html">mdtSqlTableWidget.h</a>&quot;</span></div>
@@ -448,15 +448,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;</div>
 <div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;<span class="keywordtype">bool</span> mdtTtTestNodeEditor::setupTestNodeTable()</div>
 <div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;{</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;  Ui::mdtTtTestNodeEditor tne;</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;  <a class="code" href="class_ui_1_1mdt_tt_test_node_editor.html">Ui::mdtTtTestNodeEditor</a> tne;</div>
 <div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;  <a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *testNodeModel;</div>
 <div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;  <a class="code" href="class_q_data_widget_mapper.html">QDataWidgetMapper</a> *baseVehicleTypeMapper;</div>
 <div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;  <a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *baseVehicleTypeModel;</div>
 <div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;  <a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. ">mdtSqlRelation</a> *baseVehicleTypeRelation;</div>
 <div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;</div>
 <div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;  <span class="comment">// Setup main form widget</span></div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;  tne.setupUi(<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>());</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;  connect(tne.pbSetVehicleType, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(setBaseVehicleType()));</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;  tne.<a class="code" href="class_ui__mdt_tt_test_node_editor.html#a3aee4d826be297242bbecbf92f55e791">setupUi</a>(<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>());</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;  connect(tne.<a class="code" href="class_ui__mdt_tt_test_node_editor.html#a8affa39aad17128e9c1cab6309cb52fc">pbSetVehicleType</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(setBaseVehicleType()));</div>
 <div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;  <span class="comment">// Setup form</span></div>
 <div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#ab03dd80e9de62362dd77161ef6bd6fc2" title="Set the main (or parent) table of the form. ">setMainTable</a>(<span class="stringliteral">&quot;TestNode_tbl&quot;</span>, <span class="stringliteral">&quot;Test node&quot;</span>, <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>())){</div>
 <div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
@@ -475,9 +475,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;  <span class="comment">// Setup base article widget mapper</span></div>
 <div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;  baseVehicleTypeMapper = <span class="keyword">new</span> <a class="code" href="class_q_data_widget_mapper.html">QDataWidgetMapper</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;  baseVehicleTypeMapper-&gt;setModel(baseVehicleTypeModel);</div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;  baseVehicleTypeMapper-&gt;addMapping(tne.leType, baseVehicleTypeModel-&gt;fieldIndex(<span class="stringliteral">&quot;Type&quot;</span>));</div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;  baseVehicleTypeMapper-&gt;addMapping(tne.leSubType, baseVehicleTypeModel-&gt;fieldIndex(<span class="stringliteral">&quot;SubType&quot;</span>));</div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;  baseVehicleTypeMapper-&gt;addMapping(tne.leSeriesNumber, baseVehicleTypeModel-&gt;fieldIndex(<span class="stringliteral">&quot;SeriesNumber&quot;</span>));</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;  baseVehicleTypeMapper-&gt;addMapping(tne.<a class="code" href="class_ui__mdt_tt_test_node_editor.html#a3b75c24851c96a8dd38b4782a532937b">leType</a>, baseVehicleTypeModel-&gt;fieldIndex(<span class="stringliteral">&quot;Type&quot;</span>));</div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;  baseVehicleTypeMapper-&gt;addMapping(tne.<a class="code" href="class_ui__mdt_tt_test_node_editor.html#aa13cb2bdfcae8b5180aa45fa692fe2db">leSubType</a>, baseVehicleTypeModel-&gt;fieldIndex(<span class="stringliteral">&quot;SubType&quot;</span>));</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;  baseVehicleTypeMapper-&gt;addMapping(tne.<a class="code" href="class_ui__mdt_tt_test_node_editor.html#ac00d23feaa8b6c0c15e6350b74f105c8">leSeriesNumber</a>, baseVehicleTypeModel-&gt;fieldIndex(<span class="stringliteral">&quot;SeriesNumber&quot;</span>));</div>
 <div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;  <span class="comment">// Setup base article relation</span></div>
 <div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;  baseVehicleTypeRelation = <span class="keyword">new</span> <a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. ">mdtSqlRelation</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;  baseVehicleTypeRelation-&gt;<a class="code" href="classmdt_sql_relation.html#a5ac3a82c5d3e33b5e40b86acfe7e2a03" title="Set the parent model. ">setParentModel</a>(testNodeModel);</div>
@@ -546,7 +546,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 27 2014 18:00:26 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

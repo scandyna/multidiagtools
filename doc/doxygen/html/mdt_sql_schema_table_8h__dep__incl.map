@@ -1,8 +1,9 @@
 <map id="src/mdtutilsgui/mdtSqlSchemaTable.h" name="src/mdtutilsgui/mdtSqlSchemaTable.h">
-<area shape="rect" id="node3" href="$mdt_tt_database_schema_8h.html" title="src/mdttools/mdttesttool\l/mdtTtDatabaseSchema.h" alt="" coords="13,102,187,149"/>
-<area shape="rect" id="node7" href="$mdt_data_table_manager_8h.html" title="src/mdtutilsgui/mdtDataTable\lManager.h" alt="" coords="211,102,403,149"/>
-<area shape="rect" id="node12" href="$mdt_sql_database_manager_8cpp.html" title="src/mdtutilsgui/mdtSqlDatabase\lManager.cpp" alt="" coords="427,102,635,149"/>
-<area shape="rect" id="node14" href="$mdt_sql_schema_table_8cpp.html" title="src/mdtutilsgui/mdtSqlSchema\lTable.cpp" alt="" coords="659,102,859,149"/>
-<area shape="rect" id="node5" href="$mdt_tt_database_schema_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtDatabaseSchema.cpp" alt="" coords="5,198,195,245"/>
-<area shape="rect" id="node10" href="$mdt_data_table_manager_8cpp.html" title="src/mdtutilsgui/mdtDataTable\lManager.cpp" alt="" coords="219,198,411,245"/>
+<area shape="rect" id="node3" href="$mdt_data_table_manager_8h.html" title="src/mdtdatabase/mdtDataTable\lManager.h" alt="" coords="224,102,429,149"/>
+<area shape="rect" id="node11" href="$mdt_tt_database_schema_8h.html" title="src/mdttools/mdttesttool\l/mdtTtDatabaseSchema.h" alt="" coords="453,102,627,149"/>
+<area shape="rect" id="node14" href="$mdt_sql_database_manager_8cpp.html" title="src/mdtutilsgui/mdtSqlDatabase\lManager.cpp" alt="" coords="651,102,859,149"/>
+<area shape="rect" id="node16" href="$mdt_sql_schema_table_8cpp.html" title="src/mdtutilsgui/mdtSqlSchema\lTable.cpp" alt="" coords="883,102,1083,149"/>
+<area shape="rect" id="node5" href="$mdt_data_table_manager_8cpp.html" title="src/mdtdatabase/mdtDataTable\lManager.cpp" alt="" coords="5,198,211,245"/>
+<area shape="rect" id="node7" href="$moc__mdt_data_table_manager_8cxx.html" title="src/mdtdatabase/moc\l_mdtDataTableManager.cxx" alt="" coords="235,198,421,245"/>
+<area shape="rect" id="node9" href="$mdt_tt_database_schema_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtDatabaseSchema.cpp" alt="" coords="445,198,635,245"/>
 </map>

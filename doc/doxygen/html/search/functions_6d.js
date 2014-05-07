@@ -40,6 +40,7 @@ var searchData=
   ['mdtcllink',['mdtClLink',['../classmdt_cl_link.html#a5cef1766f2f03106227227582eed0245',1,'mdtClLink']]],
   ['mdtcllinkdata',['mdtClLinkData',['../classmdt_cl_link_data.html#a43587d0adedeaa563bff5c7d98ffeb0e',1,'mdtClLinkData::mdtClLinkData()'],['../classmdt_cl_link_data.html#a654881d20f94810391926752112a775a',1,'mdtClLinkData::mdtClLinkData(const QSqlRecord &amp;record)']]],
   ['mdtcllinkedunitconnectioninfodialog',['mdtClLinkedUnitConnectionInfoDialog',['../classmdt_cl_linked_unit_connection_info_dialog.html#a435b36e611f1aecefe3b9fb8f33d77bc',1,'mdtClLinkedUnitConnectionInfoDialog']]],
+  ['mdtcllinkedunitconnectorinfodialog',['mdtClLinkedUnitConnectorInfoDialog',['../classmdt_cl_linked_unit_connector_info_dialog.html#a36a84cc99650e182da8a771445334869',1,'mdtClLinkedUnitConnectorInfoDialog']]],
   ['mdtclpathgraph',['mdtClPathGraph',['../classmdt_cl_path_graph.html#a3d2b4b4b0f32dc166e59e3c5384492e9',1,'mdtClPathGraph']]],
   ['mdtclpathgraphdialog',['mdtClPathGraphDialog',['../classmdt_cl_path_graph_dialog.html#afcc2054a4da9c47c1ffc6de248e8a410',1,'mdtClPathGraphDialog']]],
   ['mdtclpathgraphicsconnection',['mdtClPathGraphicsConnection',['../classmdt_cl_path_graphics_connection.html#a7674251ddd8a5a4b171c9b80c8d06044',1,'mdtClPathGraphicsConnection']]],

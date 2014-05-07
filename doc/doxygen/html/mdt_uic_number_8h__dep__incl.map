@@ -1,5 +1,6 @@
 <map id="src/mdtutils/mdtUicNumber.h" name="src/mdtutils/mdtUicNumber.h">
 <area shape="rect" id="node3" href="$mdt_uic_number_8cpp.html" title="src/mdtutils/mdtUicNumber.cpp" alt="" coords="5,92,211,121"/>
 <area shape="rect" id="node5" href="$mdt_uic_number_widget_8h.html" title="src/mdtutils/mdtUicNumber\lWidget.h" alt="" coords="235,83,416,130"/>
-<area shape="rect" id="node7" href="$mdt_uic_number_widget_8cpp.html" title="src/mdtutils/mdtUicNumber\lWidget.cpp" alt="" coords="235,179,416,226"/>
+<area shape="rect" id="node7" href="$mdt_uic_number_widget_8cpp.html" title="src/mdtutils/mdtUicNumber\lWidget.cpp" alt="" coords="124,179,305,226"/>
+<area shape="rect" id="node9" href="$moc__mdt_uic_number_widget_8cxx.html" title="src/mdtutils/moc_mdtUicNumber\lWidget.cxx" alt="" coords="329,179,543,226"/>
 </map>

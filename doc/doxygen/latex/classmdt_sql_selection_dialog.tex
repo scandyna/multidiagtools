@@ -12,7 +12,8 @@ Provide a way for the user to select row in a set of data.
 
 
 
-Inheritance diagram for mdt\-Sql\-Selection\-Dialog\-:\nopagebreak
+Inheritance diagram for mdt\-Sql\-Selection\-Dialog\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,11 +22,12 @@ Inheritance diagram for mdt\-Sql\-Selection\-Dialog\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Sql\-Selection\-Dialog\-:\nopagebreak
+Collaboration diagram for mdt\-Sql\-Selection\-Dialog\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=280pt]{classmdt_sql_selection_dialog__coll__graph}
+\includegraphics[width=350pt]{classmdt_sql_selection_dialog__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
@@ -78,6 +80,7 @@ Q\-Model\-Index\-List \hyperlink{classmdt_sql_selection_dialog_a85b7c1e3e156c141
 \begin{DoxyCompactList}\small\item\em Return data that user has selected. \end{DoxyCompactList}\item 
 Q\-Variant \hyperlink{classmdt_sql_selection_dialog_aab4943bc01e64f867791c15eea613e23}{selected\-Data} (int row, const Q\-String \&field\-Name)
 \begin{DoxyCompactList}\small\item\em Return data that user has selected. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
@@ -102,6 +105,10 @@ Constructor.
 
 
 Definition at line 35 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View, and Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::setup\-Ui().
 
 \hypertarget{classmdt_sql_selection_dialog_a586e3cb812e5e9634f42cb40bfd2d724}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!$\sim$mdt\-Sql\-Selection\-Dialog@{$\sim$mdt\-Sql\-Selection\-Dialog}}
 \index{$\sim$mdt\-Sql\-Selection\-Dialog@{$\sim$mdt\-Sql\-Selection\-Dialog}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
@@ -277,6 +284,10 @@ If row is out of bound or field\-Name not exists, a invalid Q\-Variant is return
 
 Definition at line 262 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
 \hypertarget{classmdt_sql_selection_dialog_affdf9a9936509c8b6ca141b8ff415995}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!selected\-Data\-Record@{selected\-Data\-Record}}
 \index{selected\-Data\-Record@{selected\-Data\-Record}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
 \subsubsection[{selected\-Data\-Record}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Record mdt\-Sql\-Selection\-Dialog\-::selected\-Data\-Record (
@@ -296,6 +307,10 @@ This method works only for single row selection.
 
 Definition at line 201 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
 \hypertarget{classmdt_sql_selection_dialog_a23592c799f3b8945b3f5e72082dc265b}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!selection\-Result@{selection\-Result}}
 \index{selection\-Result@{selection\-Result}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
 \subsubsection[{selection\-Result}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Sql\-Selection\-Dialog\-::selection\-Result (
@@ -314,6 +329,10 @@ If the user reject the dialog, a empty list is returned.
 This method works only for single row selection. 
 
 Definition at line 231 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
 
 \hypertarget{classmdt_sql_selection_dialog_a85b7c1e3e156c141315d0873fa36d4b3}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!selection\-Results@{selection\-Results}}
 \index{selection\-Results@{selection\-Results}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
@@ -353,6 +372,10 @@ Model must be set with set\-Model() before using this method.
 
 Definition at line 150 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
 \hypertarget{classmdt_sql_selection_dialog_a5265f64e773a64f34602ddf9b953821b}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Allow\-Empty\-Result@{set\-Allow\-Empty\-Result}}
 \index{set\-Allow\-Empty\-Result@{set\-Allow\-Empty\-Result}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
 \subsubsection[{set\-Allow\-Empty\-Result}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Allow\-Empty\-Result (
@@ -385,6 +408,10 @@ Set a coulumn as hidden.
 
 
 Definition at line 99 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
 
 
 
@@ -432,6 +459,10 @@ Model must be set with set\-Model() before using this method.
 
 Definition at line 85 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
 
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
+
 \hypertarget{classmdt_sql_selection_dialog_ab5ea543ebded60b4354c7c0902ca021f}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Message@{set\-Message}}
 \index{set\-Message@{set\-Message}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
 \subsubsection[{set\-Message}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Selection\-Dialog\-::set\-Message (
@@ -446,6 +477,10 @@ Set a message that will be displayed to the user.
 
 
 Definition at line 54 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Message\-Label.
 
 \hypertarget{classmdt_sql_selection_dialog_a7bc61efc9e0e0d141f6109cc86d1634d}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Query@{set\-Query}}
 \index{set\-Query@{set\-Query}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
@@ -463,6 +498,10 @@ Set S\-Q\-L query to display data.
 
 
 Definition at line 64 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
 
 \hypertarget{classmdt_sql_selection_dialog_a88311778de191bf78e351ea4370b9a6d}{\index{mdt\-Sql\-Selection\-Dialog@{mdt\-Sql\-Selection\-Dialog}!set\-Selection\-Result\-Columns@{set\-Selection\-Result\-Columns}}
 \index{set\-Selection\-Result\-Columns@{set\-Selection\-Result\-Columns}!mdtSqlSelectionDialog@{mdt\-Sql\-Selection\-Dialog}}
@@ -525,6 +564,10 @@ Sort data.
 
 
 Definition at line 138 of file mdt\-Sql\-Selection\-Dialog.\-cpp.
+
+
+
+References Ui\-\_\-mdt\-Sql\-Selection\-Dialog\-::pv\-Table\-View.
 
 
 

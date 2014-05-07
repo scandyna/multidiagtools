@@ -35,6 +35,11 @@ class mdtDatabaseTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
+  void sqlSchemaTableTest();
+  void sqlSchemaTableSqliteTest();
+
+  void databaseManagerTest();
+
   /// \todo Add mdtSqlForm test
   /// \todo Add mdtSqlWindow test
 

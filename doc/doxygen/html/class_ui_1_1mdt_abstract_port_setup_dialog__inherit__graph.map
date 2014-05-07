@@ -1,0 +1,7 @@
+<map id="Ui::mdtAbstractPortSetupDialog" name="Ui::mdtAbstractPortSetupDialog">
+<area shape="rect" id="node5" href="$classmdt_abstract_port_setup_dialog.html" title="Base class to build a port setup dialog. " alt="" coords="227,179,413,208"/>
+<area shape="rect" id="node2" href="$class_ui__mdt_abstract_port_setup_dialog.html" title="Ui_mdtAbstractPortSetupDialog" alt="" coords="216,5,424,35"/>
+<area shape="rect" id="node7" href="$classmdt_modbus_tcp_port_setup_dialog.html" title="mdtModbusTcpPortSetupDialog" alt="" coords="5,256,211,285"/>
+<area shape="rect" id="node9" href="$classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port. " alt="" coords="235,256,405,285"/>
+<area shape="rect" id="node11" href="$classmdt_usbtmc_port_setup_dialog.html" title="mdtUsbtmcPortSetupDialog" alt="" coords="429,256,613,285"/>
+</map>

@@ -13,6 +13,8 @@ set (HEADER_FILES
           mdtSqlDialog.h
           mdtSqlSelectionDialog.h
           mdtSqlTableWidget.h
+          mdtDataTableManager.h
+          mdtSqlDatabaseManager.h
     )
 
 # Liste des fichiers sources
@@ -26,12 +28,15 @@ set (SOURCES_FILES
           mdtSqlTableSelectionItem.cpp
           mdtSqlTableSelectionRow.cpp
           mdtSqlTableSelection.cpp
+          mdtDataTableManager.cpp
+          mdtSqlDatabaseManager.cpp
+          mdtSqlSchemaTable.cpp
     )
 
 # Qt ui files
 set (FORM_FILES
-	  mdtSqlWindow.ui
-	  mdtSqlSelectionDialog.ui
+          mdtSqlWindow.ui
+          mdtSqlSelectionDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)

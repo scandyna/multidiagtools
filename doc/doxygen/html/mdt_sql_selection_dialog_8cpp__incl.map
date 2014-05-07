@@ -1,5 +1,6 @@
 <map id="src/mdtdatabase/mdtSqlSelectionDialog.cpp" name="src/mdtdatabase/mdtSqlSelectionDialog.cpp">
 <area shape="rect" id="node3" href="$mdt_sql_selection_dialog_8h.html" title="mdtSqlSelectionDialog.h" alt="" coords="919,101,1084,131"/>
-<area shape="rect" id="node25" href="$mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="423,101,599,131"/>
-<area shape="rect" id="node35" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="287,101,369,131"/>
+<area shape="rect" id="node45" href="$mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="423,101,599,131"/>
+<area shape="rect" id="node55" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="287,101,369,131"/>
+<area shape="rect" id="node5" href="$ui__mdt_sql_selection_dialog_8h.html" title="ui_mdtSqlSelectionDialog.h" alt="" coords="1184,179,1365,208"/>
 </map>

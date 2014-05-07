@@ -1,7 +1,7 @@
 <map id="mdtTtBase" name="mdtTtBase">
 <area shape="rect" id="node5" href="$classmdt_cl_article.html" title="Helper class for Article and related tables edition. " alt="" coords="307,5,400,35"/>
 <area shape="rect" id="node7" href="$classmdt_cl_link.html" title="Helper class for link management. " alt="" coords="313,59,393,88"/>
-<area shape="rect" id="node9" href="$classmdt_cl_unit.html" title="Helper class to mana unit and related data. " alt="" coords="313,112,393,141"/>
+<area shape="rect" id="node9" href="$classmdt_cl_unit.html" title="Helper class to manage unit and related data. " alt="" coords="313,112,393,141"/>
 <area shape="rect" id="node11" href="$classmdt_cl_unit_vehicle_type.html" title="Helper class for Unit &lt;&#45;&gt; VehicleType assignments. " alt="" coords="277,165,429,195"/>
 <area shape="rect" id="node13" href="$classmdt_tt_test_connection_cable.html" title="Helper class for test connection cable edition. " alt="" coords="263,219,444,248"/>
 <area shape="rect" id="node15" href="$classmdt_tt_test_node.html" title="Helper class for test node edition. " alt="" coords="297,272,409,301"/>

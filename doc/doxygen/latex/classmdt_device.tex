@@ -1303,7 +1303,7 @@ Referenced by start(), and mdt\-Device\-Scpi\-::wait\-Operation\-Complete().
 Get last error. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000003}{Todo}]Not completly used currently, must be implemented in this class + subclasses . \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000006}{Todo}]Not completly used currently, must be implemented in this class + subclasses . \end{DoxyRefDesc}
 
 
 Definition at line 222 of file mdt\-Device.\-cpp.
@@ -2280,6 +2280,10 @@ This signal should be used by application developpers, and not directly \hyperli
 
 But, to display current state in a easier way (f.\-ex. using \hyperlink{classmdt_port_status_widget}{mdt\-Port\-Status\-Widget}), \hyperlink{classmdt_port_manager_ae00d513ed335fbd203852dcb7180005c}{mdt\-Port\-Manager\-::state\-Changed\-For\-Ui()} can be used. 
 
+Definition at line 131 of file moc\-\_\-mdt\-Device.\-cxx.
+
+
+
 Referenced by mdt\-Device\-D\-S\-O1000\-A\-::mdt\-Device\-D\-S\-O1000\-A(), mdt\-Device\-Modbus\-::mdt\-Device\-Modbus(), and mdt\-Device\-Scpi\-::mdt\-Device\-Scpi().
 
 \hypertarget{classmdt_device_a3fbc6e71241e2e9daa2d8557f870c03c}{\index{mdt\-Device@{mdt\-Device}!status\-Message\-Changed@{status\-Message\-Changed}}
@@ -2296,6 +2300,10 @@ Referenced by mdt\-Device\-D\-S\-O1000\-A\-::mdt\-Device\-D\-S\-O1000\-A(), mdt\
 Emitted when a new status message is to display. 
 
 Typically used with \hyperlink{classmdt_port_status_widget}{mdt\-Port\-Status\-Widget} 
+
+Definition at line 138 of file moc\-\_\-mdt\-Device.\-cxx.
+
+
 
 Referenced by mdt\-Device\-Modbus\-::mdt\-Device\-Modbus().
 
@@ -2359,7 +2367,7 @@ Referenced by mdt\-Device\-Modbus\-Wago\-Module\-::wait().
 Wait until a transaction is done without break the G\-U\-I's event loop. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000004}{Todo}]Adapt, comment\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000007}{Todo}]Adapt, comment\end{DoxyRefDesc}
 
 
 This is a helper method that provide a blocking wait. Internally, a couple of sleep and event processing is done, avoiding freezing the G\-U\-I.
@@ -2576,4 +2584,5 @@ Referenced by set\-Digital\-Outputs().
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
 src/mdtdevice/\hyperlink{mdt_device_8h}{mdt\-Device.\-h}\item 
-src/mdtdevice/\hyperlink{mdt_device_8cpp}{mdt\-Device.\-cpp}\end{DoxyCompactItemize}
+src/mdtdevice/\hyperlink{mdt_device_8cpp}{mdt\-Device.\-cpp}\item 
+src/mdtdevice/\hyperlink{moc__mdt_device_8cxx}{moc\-\_\-mdt\-Device.\-cxx}\end{DoxyCompactItemize}

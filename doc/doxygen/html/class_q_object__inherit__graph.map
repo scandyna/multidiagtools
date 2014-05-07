@@ -35,7 +35,7 @@
 <area shape="rect" id="node61" href="$classmdt_sql_form_widget_data_validator.html" title="mdtSqlFormWidgetDataValidator" alt="" coords="368,699,581,728"/>
 <area shape="rect" id="node69" href="$classmdt_cl_article.html" title="Helper class for Article and related tables edition. " alt="" coords="428,752,521,781"/>
 <area shape="rect" id="node71" href="$classmdt_cl_link.html" title="Helper class for link management. " alt="" coords="435,805,515,835"/>
-<area shape="rect" id="node73" href="$classmdt_cl_unit.html" title="Helper class to mana unit and related data. " alt="" coords="435,859,515,888"/>
+<area shape="rect" id="node73" href="$classmdt_cl_unit.html" title="Helper class to manage unit and related data. " alt="" coords="435,859,515,888"/>
 <area shape="rect" id="node75" href="$classmdt_cl_unit_vehicle_type.html" title="Helper class for Unit &lt;&#45;&gt; VehicleType assignments. " alt="" coords="399,912,551,941"/>
 <area shape="rect" id="node77" href="$classmdt_tt_test_connection_cable.html" title="Helper class for test connection cable edition. " alt="" coords="384,965,565,995"/>
 <area shape="rect" id="node79" href="$classmdt_tt_test_node.html" title="Helper class for test node edition. " alt="" coords="419,1019,531,1048"/>

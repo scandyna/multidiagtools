@@ -1,3 +1,5 @@
 <map id="mdtClUnitLinkDialog" name="mdtClUnitLinkDialog">
-<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="5,5,75,35"/>
+<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="5,83,75,112"/>
+<area shape="rect" id="node4" href="$class_ui_1_1mdt_cl_unit_link_dialog.html" title="Ui::mdtClUnitLinkDialog" alt="" coords="99,83,261,112"/>
+<area shape="rect" id="node6" href="$class_ui__mdt_cl_unit_link_dialog.html" title="Ui_mdtClUnitLinkDialog" alt="" coords="99,5,261,35"/>
 </map>

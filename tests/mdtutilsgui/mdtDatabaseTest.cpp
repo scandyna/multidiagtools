@@ -143,6 +143,7 @@ void mdtDatabaseTest::initTestCase()
   }
 }
 
+/**
 void mdtDatabaseTest::sqlSchemaTableTest()
 {
   mdtSqlSchemaTable st;
@@ -204,11 +205,13 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql = "DROP TABLE IF EXISTS `sandbox`.`Client_tbl`;\n";
   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
+  */
   /*
    * Simple Maria DB/MySQL Table:
    *  - Storage engine is specified
    *  - Charset is specified
    */
+  /**
   st.clear();
   st.setDriverName("QMYSQL");
   st.setDatabaseName("sandbox");
@@ -233,9 +236,11 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql = "DROP TABLE IF EXISTS `sandbox`.`Client_tbl`;\n";
   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
+  */
   /*
    * Second table that is child of Client_tbl
    */
+  /**
   st.clear();
   st.setDriverName("QMYSQL");
   st.setDatabaseName("sandbox");
@@ -275,11 +280,13 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql = "DROP TABLE IF EXISTS `sandbox`.`Address_tbl`;\n";
   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
+  */
   /*
    * Simple Sqlite Table:
    *  - Storage engine is specified (must be ignored)
    *  - Charset is specified
    */
+  /**
   st.clear();
   st.setDriverName("QSQLITE");
   st.setDatabaseName("sandbox");
@@ -303,6 +310,7 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
+  */
   /*
    * Simple Sqlite Table:
    *  - Storage engine is specified (must be ignored)
@@ -310,6 +318,7 @@ void mdtDatabaseTest::sqlSchemaTableTest()
    *  - A NON UNIQUE index is added (must be ignored)
    *  - A UNIQUE index is added
    */
+  /**
   st.clear();
   st.setDriverName("QSQLITE");
   st.setDatabaseName("sandbox");
@@ -344,10 +353,12 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
+  */
   /*
    * Second table for Sqlite that is child of Client_tbl
    *  Note: we added a non existant foreing key (had a bug when more than one was declared)
    */
+  /**
   st.clear();
   st.setDriverName("QSQLITE");
   st.setDatabaseName("sandbox");
@@ -400,7 +411,9 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   QCOMPARE(st2.sqlForDropTable(), expectedSql2);
 
 }
+*/
 
+  /**
 void mdtDatabaseTest::sqlSchemaTableSqliteTest()
 {
   // Try to really create a table with Sqlite
@@ -426,15 +439,9 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   // QSqlQuery must be created after db.open() was called.
   QSqlQuery q(db);
 
-  /*
-   * Enable foreing keys support
-   */
   sql = "PRAGMA foreign_keys = ON";
   QVERIFY(q.exec(sql));
 
-  /*
-   * Create Client table
-   */
   st.setDriverName(db.driverName());
   ///st.setDatabaseName(db.databaseName());
   st.setStorageEngineName("InnoDB");  // Must be ignored
@@ -465,9 +472,6 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QCOMPARE(field.name(), QString("Name"));
   QCOMPARE(field.type(), QVariant::String);
 
-  /*
-   * Create second table that is child of Client_tbl
-   */
   st.clear();
   st.setDriverName(db.driverName());
   ///st.setDatabaseName("sandbox");
@@ -521,6 +525,7 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   sql = "INSERT INTO Address_tbl (Street, Client_Id_FK) VALUES ('Street 2', 3)";
   QVERIFY(!q.exec(sql));
 }
+*/
 
 /// \todo Make data checks - Nothing is finished !!
 /// \todo Check about ' bugs
@@ -1180,6 +1185,7 @@ void mdtDatabaseTest::sqlDialogTest()
   */
 }
 
+/**
 void mdtDatabaseTest::databaseManagerTest()
 {
   mdtSqlDatabaseManager m;
@@ -1190,9 +1196,6 @@ void mdtDatabaseTest::databaseManagerTest()
   QTemporaryFile dbFile;
   QFileInfo dbFileInfo;
 
-  /*
-   * Check Sqlite database creation
-   */
   QVERIFY(dbFile.open());
   dbFileInfo.setFile(dbFile);
   dbFile.close();
@@ -1233,6 +1236,7 @@ void mdtDatabaseTest::databaseManagerTest()
   QVERIFY(m.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
   QVERIFY(m.database().tables().contains("Client_tbl"));
 }
+*/
 
 void mdtDatabaseTest::clickMessageBoxButton(QMessageBox::StandardButton button)
 {

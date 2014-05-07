@@ -20,7 +20,7 @@ set (HEADER_FILES
           mdtSqlTableModel.h
           #mdtSqlDataWidgetMapper.h
           mdtDataTableItemDelegate.h
-          mdtDataTableManager.h
+          #mdtDataTableManager.h
           mdtDataTableModel.h
           mdtFieldMapDialog.h
           mdtFieldMapItemDialog.h
@@ -38,7 +38,7 @@ set (HEADER_FILES
           mdtSortFilterProxyModel.h
           mdtSqlDataValidator.h
           mdtSqlFormWidgetDataValidator.h
-          mdtSqlDatabaseManager.h
+          #mdtSqlDatabaseManager.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -59,7 +59,7 @@ set (SOURCES_FILES
           mdtSqlTableModel.cpp
           #mdtSqlDataWidgetMapper.cpp
           mdtDataTableItemDelegate.cpp
-          mdtDataTableManager.cpp
+          #mdtDataTableManager.cpp
           mdtDataTableModel.cpp
           mdtFieldMap.cpp
           mdtFieldMapField.cpp
@@ -82,8 +82,8 @@ set (SOURCES_FILES
           mdtSortFilterProxyModel.cpp
           mdtSqlDataValidator.cpp
           mdtSqlFormWidgetDataValidator.cpp
-          mdtSqlSchemaTable.cpp
-          mdtSqlDatabaseManager.cpp
+          #mdtSqlSchemaTable.cpp
+          #mdtSqlDatabaseManager.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

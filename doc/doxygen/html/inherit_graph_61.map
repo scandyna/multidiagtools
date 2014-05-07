@@ -1,0 +1,57 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_q_dialog.html" title="QDialog" alt="" coords="331,544,400,573"/>
+<area shape="rect" id="node3" href="$classmdt_abstract_port_setup_dialog.html" title="Base class to build a port setup dialog. " alt="" coords="524,59,711,88"/>
+<area shape="rect" id="node11" href="$classmdt_cl_article_component_dialog.html" title="mdtClArticleComponentDialog" alt="" coords="519,125,716,155"/>
+<area shape="rect" id="node13" href="$classmdt_cl_article_connection_dialog.html" title="Dialog for article connection edition. " alt="" coords="519,188,716,217"/>
+<area shape="rect" id="node15" href="$classmdt_cl_article_link_dialog.html" title="Dialog that let the user edit a article link. " alt="" coords="540,245,695,275"/>
+<area shape="rect" id="node17" href="$classmdt_cl_linked_unit_connection_info_dialog.html" title="Display informations about unit connections linked to a given unit connection. " alt="" coords="525,298,709,345"/>
+<area shape="rect" id="node19" href="$classmdt_cl_linked_unit_connector_info_dialog.html" title="Dialog that displays linked connectors to a given unit connector. " alt="" coords="528,367,707,414"/>
+<area shape="rect" id="node21" href="$classmdt_cl_path_graph_dialog.html" title="Display a path from link list starting at a specified connection. " alt="" coords="540,437,695,467"/>
+<area shape="rect" id="node23" href="$classmdt_cl_unit_connection_dialog.html" title="Dialog for edition of a unit connection. " alt="" coords="525,491,709,520"/>
+<area shape="rect" id="node25" href="$classmdt_cl_unit_link_dialog.html" title="Dialog that let the user edit a unit link. " alt="" coords="547,597,688,627"/>
+<area shape="rect" id="node27" href="$classmdt_field_list_edition_dialog.html" title="Dialog that provides field list edition. " alt="" coords="532,651,703,680"/>
+<area shape="rect" id="node29" href="$classmdt_field_map_dialog.html" title="Dialog to manage field mapping. " alt="" coords="551,704,684,733"/>
+<area shape="rect" id="node31" href="$classmdt_field_map_item_dialog.html" title="A dialog to setup a field map item. " alt="" coords="537,757,697,787"/>
+<area shape="rect" id="node33" href="$classmdt_items_selector_dialog.html" title="Provide the user a dialog in witch he can choose items. " alt="" coords="536,811,699,840"/>
+<area shape="rect" id="node39" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor. " alt="" coords="568,544,667,573"/>
+<area shape="rect" id="node41" href="$classmdt_sql_selection_dialog.html" title="Provide a way for the user to select row in a set of data. " alt="" coords="540,864,695,893"/>
+<area shape="rect" id="node43" href="$classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. " alt="" coords="547,917,688,947"/>
+<area shape="rect" id="node45" href="$classmdt_tt_test_node_unit_dialog.html" title="Dialog for test node unit edition. " alt="" coords="531,971,704,1000"/>
+<area shape="rect" id="node5" href="$classmdt_modbus_tcp_port_setup_dialog.html" title="mdtModbusTcpPortSetupDialog" alt="" coords="767,5,972,35"/>
+<area shape="rect" id="node7" href="$classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port. " alt="" coords="784,59,955,88"/>
+<area shape="rect" id="node9" href="$classmdt_usbtmc_port_setup_dialog.html" title="mdtUsbtmcPortSetupDialog" alt="" coords="777,112,961,141"/>
+<area shape="rect" id="node35" href="$classmdt_mv_column_selection_dialog.html" title="Let the user manage fields to display in table view. " alt="" coords="771,837,968,867"/>
+<area shape="rect" id="node37" href="$classmdt_mv_sorting_setup_dialog.html" title="Let the user manage columns sorting. " alt="" coords="783,784,956,813"/>
+<area shape="rect" id="node46" href="$class_ui__mdt_abstract_port_setup_dialog.html" title="Ui_mdtAbstractPortSetupDialog" alt="" coords="5,45,213,75"/>
+<area shape="rect" id="node48" href="$class_ui_1_1mdt_abstract_port_setup_dialog.html" title="Ui::mdtAbstractPortSetup\lDialog" alt="" coords="280,37,451,83"/>
+<area shape="rect" id="node50" href="$class_ui__mdt_cl_article_component_dialog.html" title="Ui_mdtClArticleComponent\lDialog" alt="" coords="19,106,200,153"/>
+<area shape="rect" id="node52" href="$class_ui_1_1mdt_cl_article_component_dialog.html" title="Ui::mdtClArticleComponent\lDialog" alt="" coords="275,106,456,153"/>
+<area shape="rect" id="node54" href="$class_ui__mdt_cl_article_connection_dialog.html" title="Ui_mdtClArticleConnection\lDialog" alt="" coords="20,175,199,222"/>
+<area shape="rect" id="node56" href="$class_ui_1_1mdt_cl_article_connection_dialog.html" title="Ui::mdtClArticleConnection\lDialog" alt="" coords="275,175,456,222"/>
+<area shape="rect" id="node58" href="$class_ui__mdt_cl_article_link_dialog.html" title="Ui_mdtClArticleLinkDialog" alt="" coords="23,245,196,275"/>
+<area shape="rect" id="node60" href="$class_ui_1_1mdt_cl_article_link_dialog.html" title="Ui::mdtClArticleLinkDialog" alt="" coords="277,245,453,275"/>
+<area shape="rect" id="node62" href="$class_ui__mdt_cl_linked_unit_connection_info_dialog.html" title="Ui_mdtClLinkedUnitConnection\lInfoDialog" alt="" coords="7,298,212,345"/>
+<area shape="rect" id="node64" href="$class_ui_1_1mdt_cl_linked_unit_connection_info_dialog.html" title="Ui::mdtClLinkedUnitConnection\lInfoDialog" alt="" coords="263,298,468,345"/>
+<area shape="rect" id="node66" href="$class_ui__mdt_cl_linked_unit_connector_info_dialog.html" title="Ui_mdtClLinkedUnitConnector\lInfoDialog" alt="" coords="11,367,208,414"/>
+<area shape="rect" id="node68" href="$class_ui_1_1mdt_cl_linked_unit_connector_info_dialog.html" title="Ui::mdtClLinkedUnitConnector\lInfoDialog" alt="" coords="265,367,465,414"/>
+<area shape="rect" id="node70" href="$class_ui__mdt_cl_path_graph_dialog.html" title="Ui_mdtClPathGraphDialog" alt="" coords="21,437,197,467"/>
+<area shape="rect" id="node72" href="$class_ui_1_1mdt_cl_path_graph_dialog.html" title="Ui::mdtClPathGraphDialog" alt="" coords="277,437,453,467"/>
+<area shape="rect" id="node74" href="$class_ui__mdt_cl_unit_connection_dialog.html" title="Ui_mdtClUnitConnectionDialog" alt="" coords="8,491,211,520"/>
+<area shape="rect" id="node76" href="$class_ui_1_1mdt_cl_unit_connection_dialog.html" title="Ui::mdtClUnitConnectionDialog" alt="" coords="263,491,468,520"/>
+<area shape="rect" id="node78" href="$class_ui__mdt_cl_unit_link_dialog.html" title="Ui_mdtClUnitLinkDialog" alt="" coords="28,597,191,627"/>
+<area shape="rect" id="node80" href="$class_ui_1_1mdt_cl_unit_link_dialog.html" title="Ui::mdtClUnitLinkDialog" alt="" coords="284,597,447,627"/>
+<area shape="rect" id="node82" href="$class_ui__mdt_field_list_edition_dialog.html" title="Ui_mdtFieldListEditionDialog" alt="" coords="15,651,204,680"/>
+<area shape="rect" id="node84" href="$class_ui_1_1mdt_field_list_edition_dialog.html" title="Ui::mdtFieldListEditionDialog" alt="" coords="271,651,460,680"/>
+<area shape="rect" id="node86" href="$class_ui__mdt_field_map_dialog.html" title="Ui_mdtFieldMapDialog" alt="" coords="32,704,187,733"/>
+<area shape="rect" id="node88" href="$class_ui_1_1mdt_field_map_dialog.html" title="Ui::mdtFieldMapDialog" alt="" coords="288,704,443,733"/>
+<area shape="rect" id="node90" href="$class_ui__mdt_field_map_item_dialog.html" title="Ui_mdtFieldMapItemDialog" alt="" coords="20,757,199,787"/>
+<area shape="rect" id="node92" href="$class_ui_1_1mdt_field_map_item_dialog.html" title="Ui::mdtFieldMapItemDialog" alt="" coords="275,757,456,787"/>
+<area shape="rect" id="node94" href="$class_ui__mdt_items_selector_dialog.html" title="Ui_mdtItemsSelectorDialog" alt="" coords="19,811,200,840"/>
+<area shape="rect" id="node96" href="$class_ui_1_1mdt_items_selector_dialog.html" title="Ui::mdtItemsSelectorDialog" alt="" coords="275,811,456,840"/>
+<area shape="rect" id="node98" href="$class_ui__mdt_sql_selection_dialog.html" title="Ui_mdtSqlSelectionDialog" alt="" coords="23,864,196,893"/>
+<area shape="rect" id="node100" href="$class_ui_1_1mdt_sql_selection_dialog.html" title="Ui::mdtSqlSelectionDialog" alt="" coords="279,864,452,893"/>
+<area shape="rect" id="node102" href="$class_ui__mdt_tt_test_link_dialog.html" title="Ui_mdtTtTestLinkDialog" alt="" coords="28,917,191,947"/>
+<area shape="rect" id="node104" href="$class_ui_1_1mdt_tt_test_link_dialog.html" title="Ui::mdtTtTestLinkDialog" alt="" coords="284,917,447,947"/>
+<area shape="rect" id="node106" href="$class_ui__mdt_tt_test_node_unit_dialog.html" title="Ui_mdtTtTestNodeUnitDialog" alt="" coords="12,971,207,1000"/>
+<area shape="rect" id="node108" href="$class_ui_1_1mdt_tt_test_node_unit_dialog.html" title="Ui::mdtTtTestNodeUnitDialog" alt="" coords="268,971,463,1000"/>
+</map>

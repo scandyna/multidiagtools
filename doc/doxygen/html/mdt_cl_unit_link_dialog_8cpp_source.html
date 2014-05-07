@@ -132,54 +132,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  pvDatabase = db;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  pvLinkData.<a class="code" href="classmdt_cl_link_data.html#aea3186af58d6718f510e1fe509c6ffe4" title="Setup fields from Link_tbl. ">setup</a>(pvDatabase);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  setupUi(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aa2310fe0eeed6b9b24a590ae2d314f9b">setupUi</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  setWindowTitle(tr(<span class="stringliteral">&quot;Unit link edition&quot;</span>));</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="comment">// Setup link type</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  pvLinkTypeModel = <span class="keyword">new</span> QSqlQueryModel(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  pvLinkTypeModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Code_PK, NameEN, ValueUnit FROM LinkType_tbl ORDER BY NameEN&quot;</span>, pvDatabase);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  cbLinkType-&gt;setModel(pvLinkTypeModel);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  cbLinkType-&gt;setModelColumn(1);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  cbLinkType-&gt;setCurrentIndex(-1);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  connect(cbLinkType, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onCbLinkTypeCurrentIndexChanged(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aee6a2a148c7b6552d1531b189811c6c5">cbLinkType</a>-&gt;setModel(pvLinkTypeModel);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aee6a2a148c7b6552d1531b189811c6c5">cbLinkType</a>-&gt;setModelColumn(1);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aee6a2a148c7b6552d1531b189811c6c5">cbLinkType</a>-&gt;setCurrentIndex(-1);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aee6a2a148c7b6552d1531b189811c6c5">cbLinkType</a>, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onCbLinkTypeCurrentIndexChanged(<span class="keywordtype">int</span>)));</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="comment">// Setup link direction</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  pvLinkDirectionModel = <span class="keyword">new</span> QSqlQueryModel(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  pvLinkDirectionModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Code_PK, NameEN FROM LinkDirection_tbl&quot;</span>, pvDatabase);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  cbLinkDirection-&gt;setModel(pvLinkDirectionModel);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  cbLinkDirection-&gt;setModelColumn(1);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  connect(cbLinkDirection, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onCbLinkDirectionCurrentIndexChanged(<span class="keywordtype">int</span>)));</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  cbLinkDirection-&gt;setCurrentIndex(-1);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a0ce7ebc2f08ada01ae0108d72a8fd743">cbLinkDirection</a>-&gt;setModel(pvLinkDirectionModel);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a0ce7ebc2f08ada01ae0108d72a8fd743">cbLinkDirection</a>-&gt;setModelColumn(1);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a0ce7ebc2f08ada01ae0108d72a8fd743">cbLinkDirection</a>, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(onCbLinkDirectionCurrentIndexChanged(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a0ce7ebc2f08ada01ae0108d72a8fd743">cbLinkDirection</a>-&gt;setCurrentIndex(-1);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="comment">// Setup modification combobox</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  cbModification-&gt;addItem(<span class="stringliteral">&quot;new&quot;</span>, QVariant(<span class="stringliteral">&quot;new&quot;</span>));</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ad6114a32abcca7a6780dbda5ceb14f0b">cbModification</a>-&gt;addItem(<span class="stringliteral">&quot;new&quot;</span>, QVariant(<span class="stringliteral">&quot;new&quot;</span>));</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">// Setup since version combobox</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="comment">// Set default link type</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <a class="code" href="classmdt_cl_unit_link_dialog.html#a34ab2fabffeb5b889be8db9ac08add22" title="Display link type in combobox. ">setLinkTypeCode</a>(<span class="stringliteral">&quot;CABLELINK&quot;</span>);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="comment">// Setup unit</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  connect(pbStartUnit, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectStartUnit()));</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  connect(pbEndUnit, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectEndUnit()));</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#acd5fed0c4505ea55bbd9d1702aeaa772">pbStartUnit</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectStartUnit()));</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1f610d4a794903cc1a90a1a9881a5d0b">pbEndUnit</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectEndUnit()));</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="comment">// Setup connections</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  connect(pbStartConnection, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectStartConnection()));</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  connect(pbEndConnection, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectEndConnection()));</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ad3c8e8763cd7e3385df04239a7b2361c">pbStartConnection</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectStartConnection()));</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#acb5b15bd5a4135365b40c077fc0716cf">pbEndConnection</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectEndConnection()));</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="comment">// Setup vehicle types</span></div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  pvStartVehicleTypesModel = <span class="keyword">new</span> QSqlQueryModel(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  twStartVehicles-&gt;setModel(pvStartVehicleTypesModel);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  connect(pbStartVehicles, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectStartVehicleTypes()));</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1a12761bd3b7fb3d574e790013e29267">twStartVehicles</a>-&gt;setModel(pvStartVehicleTypesModel);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a76e41cf9a2d85ea9ad0e15d3f0f4ed91">pbStartVehicles</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectStartVehicleTypes()));</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  pvEndVehicleTypesModel = <span class="keyword">new</span> QSqlQueryModel(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  twEndVehicles-&gt;setModel(pvEndVehicleTypesModel);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  connect(pbEndVehicles, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectEndVehicleTypes()));</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ae2fed2def3422e176f545e0fb02985bf">twEndVehicles</a>-&gt;setModel(pvEndVehicleTypesModel);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a26d99c0c35027e17c59c764d89d67ed0">pbEndVehicles</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectEndVehicleTypes()));</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="comment">// Clear field labels</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  lbStartSchemaPosition-&gt;clear();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  lbStartAlias-&gt;clear();</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  lbStartCabinet-&gt;clear();</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  lbStartConnectorName-&gt;clear();</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  lbStartContactName-&gt;clear();</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  lbEndSchemaPosition-&gt;clear();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  lbEndAlias-&gt;clear();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  lbEndCabinet-&gt;clear();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  lbEndConnectorName-&gt;clear();</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  lbEndContactName-&gt;clear();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  lbUnit-&gt;clear();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a74c83cf4c55cf0f2c6a620d9b4eb797b">lbStartSchemaPosition</a>-&gt;clear();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aaeb0e65da0b05b329fbb191c58b37fed">lbStartAlias</a>-&gt;clear();</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1bd88ffdb86f483a98b1932714f55e96">lbStartCabinet</a>-&gt;clear();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aec7e5b510093d38360ec876841994d43">lbStartConnectorName</a>-&gt;clear();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a7c8f325f510ce4acdce55ec87ef06238">lbStartContactName</a>-&gt;clear();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ab5c0df8c3acbb95824f42463c3c6a1fb">lbEndSchemaPosition</a>-&gt;clear();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a48451594b62653e9e971b4f914b01c03">lbEndAlias</a>-&gt;clear();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a945d4c2d44bc0de5d98b539d75ae4a94">lbEndCabinet</a>-&gt;clear();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aa0d04d3f41a73baa6422f705aa1ca317">lbEndConnectorName</a>-&gt;clear();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ab4eef76ab71b7baf7700a88e75ad50f9">lbEndContactName</a>-&gt;clear();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ac5ea1fe529ad3b837ed545c823f81e92">lbUnit</a>-&gt;clear();</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
@@ -243,7 +243,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    index = pvLinkTypeModel-&gt;index(row, 0);</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    data = pvLinkTypeModel-&gt;data(index);</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">if</span>(data == code){</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      cbLinkType-&gt;setCurrentIndex(row);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aee6a2a148c7b6552d1531b189811c6c5">cbLinkType</a>-&gt;setCurrentIndex(row);</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    }</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  }</div>
@@ -255,7 +255,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  QVariant data;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  row = cbLinkType-&gt;currentIndex();</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  row = <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aee6a2a148c7b6552d1531b189811c6c5">cbLinkType</a>-&gt;currentIndex();</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keywordflow">if</span>(row &lt; 0){</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">return</span> data;</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  }</div>
@@ -275,7 +275,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    index = pvLinkDirectionModel-&gt;index(row, 0);</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    data = pvLinkDirectionModel-&gt;data(index);</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">if</span>(data == code){</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      cbLinkDirection-&gt;setCurrentIndex(row);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a0ce7ebc2f08ada01ae0108d72a8fd743">cbLinkDirection</a>-&gt;setCurrentIndex(row);</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    }</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  }</div>
@@ -287,7 +287,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  QVariant data;</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  row = cbLinkDirection-&gt;currentIndex();</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  row = <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a0ce7ebc2f08ada01ae0108d72a8fd743">cbLinkDirection</a>-&gt;currentIndex();</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  <span class="keywordflow">if</span>(row &lt; 0){</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keywordflow">return</span> data;</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  }</div>
@@ -304,12 +304,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  pvLinkData = data;</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <span class="comment">// Update common data</span></div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  leIdentification-&gt;setText(data.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Identification&quot;</span>).toString());</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a17fea8e34e0496a1dd5ed10091673f2a">leIdentification</a>-&gt;setText(data.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Identification&quot;</span>).toString());</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  updateModificationCombobox(data.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Modification&quot;</span>));</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  updateSinceVersionCombobox(data.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;SinceVersion&quot;</span>));</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  <a class="code" href="classmdt_cl_unit_link_dialog.html#a34ab2fabffeb5b889be8db9ac08add22" title="Display link type in combobox. ">setLinkTypeCode</a>(data.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;LinkType_Code_FK&quot;</span>));</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <a class="code" href="classmdt_cl_unit_link_dialog.html#a23220c3ea0f051e9155ee9a2a052b5ea" title="Display link direction in combobox. ">setLinkDirectionCode</a>(data.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;LinkDirection_Code_FK&quot;</span>));</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  sbValue-&gt;setValue(data.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Value&quot;</span>).toDouble());</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ac580c8a87b8a782c115e955752038e6a">sbValue</a>-&gt;setValue(data.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Value&quot;</span>).toDouble());</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="comment">// Update start/end units</span></div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  pvStartUnitId = pvLinkData.<a class="code" href="classmdt_cl_link_data.html#a571eacbdeb58564b340a1adce8b5541f" title="Get start connection data (RD) ">startConnectionData</a>().<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Unit_Id_FK&quot;</span>);</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  updateStartUnit();</div>
@@ -341,7 +341,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  QVariant data;</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordflow">if</span>(row &lt; 0){</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    lbUnit-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ac5ea1fe529ad3b837ed545c823f81e92">lbUnit</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  }</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <span class="comment">// We must update available directions regarding link type</span></div>
@@ -349,17 +349,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  data = pvLinkTypeModel-&gt;data(index);</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  <span class="keywordflow">if</span>(data == QVariant(<span class="stringliteral">&quot;DIODE&quot;</span>)){</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    pvLinkDirectionModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK &lt;&gt; &#39;BID&#39;&quot;</span>, pvDatabase);</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    cbLinkDirection-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    sbValue-&gt;setValue(0.7);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a0ce7ebc2f08ada01ae0108d72a8fd743">cbLinkDirection</a>-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ac580c8a87b8a782c115e955752038e6a">sbValue</a>-&gt;setValue(0.7);</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  }<span class="keywordflow">else</span>{</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    pvLinkDirectionModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK = &#39;BID&#39;&quot;</span>, pvDatabase);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    cbLinkDirection-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    sbValue-&gt;setValue(0.0);</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a0ce7ebc2f08ada01ae0108d72a8fd743">cbLinkDirection</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ac580c8a87b8a782c115e955752038e6a">sbValue</a>-&gt;setValue(0.0);</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  }</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="comment">// Update displayed unit (V, Ohm, ...)</span></div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  index = pvLinkTypeModel-&gt;index(row, 2);</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  data = pvLinkTypeModel-&gt;data(index);</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  lbUnit-&gt;setText(<span class="stringliteral">&quot;[&quot;</span> + data.toString() + <span class="stringliteral">&quot;]&quot;</span>);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ac5ea1fe529ad3b837ed545c823f81e92">lbUnit</a>-&gt;setText(<span class="stringliteral">&quot;[&quot;</span> + data.toString() + <span class="stringliteral">&quot;]&quot;</span>);</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  <span class="comment">// Update link data</span></div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;LinkType_Code_FK&quot;</span>, <a class="code" href="classmdt_cl_unit_link_dialog.html#aa7d8b93582d68113b6d00922e4979e78" title="Get selected link type code. ">linkTypeCode</a>());</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;}</div>
@@ -370,13 +370,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  QVariant data;</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  <span class="keywordflow">if</span>(row &lt; 0){</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    lbLinkDirectionAsciiPicture-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aaa9992fad9b3f06e4305151ab66c0e26">lbLinkDirectionAsciiPicture</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  }</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  <span class="comment">// Update the ASCII picture</span></div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  index = pvLinkDirectionModel-&gt;index(row, 2);</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  data = pvLinkDirectionModel-&gt;data(index);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  lbLinkDirectionAsciiPicture-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aaa9992fad9b3f06e4305151ab66c0e26">lbLinkDirectionAsciiPicture</a>-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  <span class="comment">// Update link data</span></div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;LinkDirection_Code_FK&quot;</span>, <a class="code" href="classmdt_cl_unit_link_dialog.html#a4ed022bb559da23be2d192b9e83c40e2" title="Get selected link direction code. ">linkDirectionCode</a>());</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;}</div>
@@ -458,7 +458,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;  <a class="code" href="classmdt_sql_selection_dialog.html" title="Provide a way for the user to select row in a set of data. ">mdtSqlSelectionDialog</a> selectionDialog(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  QString sql;</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  QList&lt;QVariant&gt; result;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to mana unit and related data. ">mdtClUnit</a> unit(<span class="keyword">this</span>, pvDatabase);</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(<span class="keyword">this</span>, pvDatabase);</div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;  <span class="comment">// Setup and run query</span></div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;  sql = <span class="stringliteral">&quot;SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = &quot;</span> + pvStartUnitId.toString();</div>
@@ -498,7 +498,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;  <a class="code" href="classmdt_sql_selection_dialog.html" title="Provide a way for the user to select row in a set of data. ">mdtSqlSelectionDialog</a> selectionDialog(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;  QString sql;</div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;  QList&lt;QVariant&gt; result;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to mana unit and related data. ">mdtClUnit</a> unit(<span class="keyword">this</span>, pvDatabase);</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(<span class="keyword">this</span>, pvDatabase);</div>
 <div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;</div>
 <div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;  <span class="comment">// Setup and run query</span></div>
 <div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;  sql = <span class="stringliteral">&quot;SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = &quot;</span> + pvEndUnitId.toString();</div>
@@ -630,10 +630,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::accept()</div>
 <div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;{</div>
 <div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;  <span class="comment">// Most of data are dynamically stored during edition, but some are to do here</span></div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Identification&quot;</span>, leIdentification-&gt;text());</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Modification&quot;</span>, cbModification-&gt;currentText());</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;SinceVersion&quot;</span>, cbSinceVersion-&gt;currentText());</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Value&quot;</span>, sbValue-&gt;value());</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Identification&quot;</span>, <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a17fea8e34e0496a1dd5ed10091673f2a">leIdentification</a>-&gt;text());</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Modification&quot;</span>, <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ad6114a32abcca7a6780dbda5ceb14f0b">cbModification</a>-&gt;currentText());</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;SinceVersion&quot;</span>, <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a7047e8b391f10f9526515a0daaed5254">cbSinceVersion</a>-&gt;currentText());</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Value&quot;</span>, <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ac580c8a87b8a782c115e955752038e6a">sbValue</a>-&gt;value());</div>
 <div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;  <span class="keywordflow">if</span>(!buildVehicleTypeLinkDataList()){</div>
 <div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;  }</div>
@@ -646,154 +646,154 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;{</div>
 <div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;  <span class="keywordflow">for</span>(row = 0; row &lt; cbModification-&gt;count(); ++row){</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;    <span class="keywordflow">if</span>(cbModification-&gt;itemData(row) == data){</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;      cbModification-&gt;setCurrentIndex(row);</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;  <span class="keywordflow">for</span>(row = 0; row &lt; <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ad6114a32abcca7a6780dbda5ceb14f0b">cbModification</a>-&gt;count(); ++row){</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ad6114a32abcca7a6780dbda5ceb14f0b">cbModification</a>-&gt;itemData(row) == data){</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;      <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ad6114a32abcca7a6780dbda5ceb14f0b">cbModification</a>-&gt;setCurrentIndex(row);</div>
 <div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;    }</div>
 <div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;  }</div>
 <div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;  <span class="comment">// Data not found</span></div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;  cbModification-&gt;setCurrentIndex(-1);</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ad6114a32abcca7a6780dbda5ceb14f0b">cbModification</a>-&gt;setCurrentIndex(-1);</div>
 <div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;}</div>
 <div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;</div>
 <div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::updateSinceVersionCombobox(<span class="keyword">const</span> QVariant &amp;data)</div>
 <div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;{</div>
 <div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;</div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;  <span class="keywordflow">for</span>(row = 0; row &lt; cbSinceVersion-&gt;count(); ++row){</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;    <span class="keywordflow">if</span>(cbSinceVersion-&gt;itemData(row) == data){</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;      cbSinceVersion-&gt;setCurrentIndex(row);</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;  <span class="keywordflow">for</span>(row = 0; row &lt; <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a7047e8b391f10f9526515a0daaed5254">cbSinceVersion</a>-&gt;count(); ++row){</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a7047e8b391f10f9526515a0daaed5254">cbSinceVersion</a>-&gt;itemData(row) == data){</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;      <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a7047e8b391f10f9526515a0daaed5254">cbSinceVersion</a>-&gt;setCurrentIndex(row);</div>
 <div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;    }</div>
 <div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;  }</div>
 <div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;  <span class="comment">// Data not found</span></div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;  cbSinceVersion-&gt;setCurrentIndex(-1);</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a7047e8b391f10f9526515a0daaed5254">cbSinceVersion</a>-&gt;setCurrentIndex(-1);</div>
 <div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;}</div>
 <div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;</div>
 <div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::updateStartUnit()</div>
 <div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;{</div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to mana unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
 <div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;  QString sql;</div>
 <div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;  QList&lt;QSqlRecord&gt; dataList;</div>
 <div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;  QSqlRecord data;</div>
 <div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
 <div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;  <span class="keywordflow">if</span>(pvStartUnitId.isNull()){</div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;    lbStartSchemaPosition-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;    lbStartAlias-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;    lbStartCabinet-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a74c83cf4c55cf0f2c6a620d9b4eb797b">lbStartSchemaPosition</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aaeb0e65da0b05b329fbb191c58b37fed">lbStartAlias</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1bd88ffdb86f483a98b1932714f55e96">lbStartCabinet</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;  }</div>
 <div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;  <span class="comment">// Get unit data</span></div>
 <div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;  sql = <span class="stringliteral">&quot;SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = &quot;</span> + pvStartUnitId.toString();</div>
 <div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;  dataList = unit.getData(sql, &amp;ok);</div>
 <div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;    lbStartSchemaPosition-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;    lbStartAlias-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;    lbStartCabinet-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a74c83cf4c55cf0f2c6a620d9b4eb797b">lbStartSchemaPosition</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aaeb0e65da0b05b329fbb191c58b37fed">lbStartAlias</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1bd88ffdb86f483a98b1932714f55e96">lbStartCabinet</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;  }</div>
 <div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;  Q_ASSERT(dataList.size() == 1);</div>
 <div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;  data = dataList.at(0);</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;  lbStartSchemaPosition-&gt;setText(data.value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;  lbStartAlias-&gt;setText(data.value(<span class="stringliteral">&quot;Alias&quot;</span>).toString());</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;  lbStartCabinet-&gt;setText(data.value(<span class="stringliteral">&quot;Cabinet&quot;</span>).toString());</div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a74c83cf4c55cf0f2c6a620d9b4eb797b">lbStartSchemaPosition</a>-&gt;setText(data.value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aaeb0e65da0b05b329fbb191c58b37fed">lbStartAlias</a>-&gt;setText(data.value(<span class="stringliteral">&quot;Alias&quot;</span>).toString());</div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1bd88ffdb86f483a98b1932714f55e96">lbStartCabinet</a>-&gt;setText(data.value(<span class="stringliteral">&quot;Cabinet&quot;</span>).toString());</div>
 <div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;}</div>
 <div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;</div>
 <div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::updateEndUnit()</div>
 <div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;{</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to mana unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
 <div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;  QString sql;</div>
 <div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;  QList&lt;QSqlRecord&gt; dataList;</div>
 <div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;  QSqlRecord data;</div>
 <div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
 <div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;</div>
 <div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;  <span class="keywordflow">if</span>(pvEndUnitId.isNull()){</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;    lbEndSchemaPosition-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;    lbEndAlias-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;    lbEndCabinet-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ab5c0df8c3acbb95824f42463c3c6a1fb">lbEndSchemaPosition</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a48451594b62653e9e971b4f914b01c03">lbEndAlias</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a945d4c2d44bc0de5d98b539d75ae4a94">lbEndCabinet</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;  }</div>
 <div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;  <span class="comment">// Get unit data</span></div>
 <div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;  sql = <span class="stringliteral">&quot;SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = &quot;</span> + pvEndUnitId.toString();</div>
 <div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;  dataList = unit.getData(sql, &amp;ok);</div>
 <div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;    lbEndSchemaPosition-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;    lbEndAlias-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    lbEndCabinet-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ab5c0df8c3acbb95824f42463c3c6a1fb">lbEndSchemaPosition</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a48451594b62653e9e971b4f914b01c03">lbEndAlias</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a945d4c2d44bc0de5d98b539d75ae4a94">lbEndCabinet</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
 <div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;  }</div>
 <div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;  Q_ASSERT(dataList.size() == 1);</div>
 <div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;  data = dataList.at(0);</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;  lbEndSchemaPosition-&gt;setText(data.value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;  lbEndAlias-&gt;setText(data.value(<span class="stringliteral">&quot;Alias&quot;</span>).toString());</div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;  lbEndCabinet-&gt;setText(data.value(<span class="stringliteral">&quot;Cabinet&quot;</span>).toString());</div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ab5c0df8c3acbb95824f42463c3c6a1fb">lbEndSchemaPosition</a>-&gt;setText(data.value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a48451594b62653e9e971b4f914b01c03">lbEndAlias</a>-&gt;setText(data.value(<span class="stringliteral">&quot;Alias&quot;</span>).toString());</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a945d4c2d44bc0de5d98b539d75ae4a94">lbEndCabinet</a>-&gt;setText(data.value(<span class="stringliteral">&quot;Cabinet&quot;</span>).toString());</div>
 <div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;}</div>
 <div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;</div>
 <div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;</div>
 <div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::updateStartConnection()</div>
 <div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;{</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to mana unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
 <div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;  <a class="code" href="classmdt_cl_unit_connection_data.html" title="Data container class for unit connection data. ">mdtClUnitConnectionData</a> connectionData;</div>
 <div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;  <a class="code" href="classmdt_cl_unit_connector_data.html" title="Data container class for article connector data. ">mdtClUnitConnectorData</a> connectorData;</div>
 <div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
 <div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;</div>
 <div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;  <span class="comment">// Set connection name</span></div>
 <div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnectionStart_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;    lbStartContactName-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;    lbStartConnectorName-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a7c8f325f510ce4acdce55ec87ef06238">lbStartContactName</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aec7e5b510093d38360ec876841994d43">lbStartConnectorName</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;    pvLinkData.<a class="code" href="classmdt_cl_link_data.html#a3f7d2e28043cf19aaa2d8cd3e15d4fe3" title="Set start connection data. ">setStartConnectionData</a>(<a class="code" href="classmdt_cl_unit_connection_data.html" title="Data container class for unit connection data. ">mdtClUnitConnectionData</a>());</div>
 <div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;  }</div>
 <div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;  connectionData = unit.getConnectionData(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnectionStart_Id_FK&quot;</span>), <span class="keyword">false</span>, &amp;ok);</div>
 <div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;    lbStartContactName-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a7c8f325f510ce4acdce55ec87ef06238">lbStartContactName</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
 <div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;    lbStartContactName-&gt;setText(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString());</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a7c8f325f510ce4acdce55ec87ef06238">lbStartContactName</a>-&gt;setText(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString());</div>
 <div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;    pvLinkData.<a class="code" href="classmdt_cl_link_data.html#a3f7d2e28043cf19aaa2d8cd3e15d4fe3" title="Set start connection data. ">setStartConnectionData</a>(connectionData);</div>
 <div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;  }</div>
 <div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;  <span class="comment">// Set connector name</span></div>
 <div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_cl_link_data.html#a571eacbdeb58564b340a1adce8b5541f" title="Get start connection data (RD) ">startConnectionData</a>().<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;    lbStartConnectorName-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aec7e5b510093d38360ec876841994d43">lbStartConnectorName</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;  }</div>
 <div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;  connectorData = unit.getConnectorData(pvLinkData.<a class="code" href="classmdt_cl_link_data.html#a571eacbdeb58564b340a1adce8b5541f" title="Get start connection data (RD) ">startConnectionData</a>().<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>), &amp;ok, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);</div>
 <div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    lbStartConnectorName-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aec7e5b510093d38360ec876841994d43">lbStartConnectorName</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
 <div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;  }</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;  lbStartConnectorName-&gt;setText(connectorData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Name&quot;</span>).toString());</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aec7e5b510093d38360ec876841994d43">lbStartConnectorName</a>-&gt;setText(connectorData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Name&quot;</span>).toString());</div>
 <div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;}</div>
 <div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;</div>
 <div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::updateEndConnection()</div>
 <div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;{</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to mana unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
 <div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;  <a class="code" href="classmdt_cl_unit_connection_data.html" title="Data container class for unit connection data. ">mdtClUnitConnectionData</a> connectionData;</div>
 <div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;  <a class="code" href="classmdt_cl_unit_connector_data.html" title="Data container class for article connector data. ">mdtClUnitConnectorData</a> connectorData;</div>
 <div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
 <div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;</div>
 <div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;  <span class="comment">// Set connection name</span></div>
 <div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnectionEnd_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;    lbEndContactName-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;    lbEndConnectorName-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ab4eef76ab71b7baf7700a88e75ad50f9">lbEndContactName</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aa0d04d3f41a73baa6422f705aa1ca317">lbEndConnectorName</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;    pvLinkData.<a class="code" href="classmdt_cl_link_data.html#ab693d2c53b3b0aa7d6f34b857078cb80" title="Set end connection data. ">setEndConnectionData</a>(<a class="code" href="classmdt_cl_unit_connection_data.html" title="Data container class for unit connection data. ">mdtClUnitConnectionData</a>());</div>
 <div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;  }</div>
 <div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;  connectionData = unit.getConnectionData(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnectionEnd_Id_FK&quot;</span>), <span class="keyword">false</span>, &amp;ok);</div>
 <div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    lbEndContactName-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ab4eef76ab71b7baf7700a88e75ad50f9">lbEndContactName</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
 <div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;    lbEndContactName-&gt;setText(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString());</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ab4eef76ab71b7baf7700a88e75ad50f9">lbEndContactName</a>-&gt;setText(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString());</div>
 <div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;    pvLinkData.<a class="code" href="classmdt_cl_link_data.html#ab693d2c53b3b0aa7d6f34b857078cb80" title="Set end connection data. ">setEndConnectionData</a>(connectionData);</div>
 <div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;  }</div>
 <div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;  <span class="comment">// Set connector name</span></div>
 <div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_cl_link_data.html#ae61b648f3a8b1461e06815b8ca6017f4" title="Get end connection data (RD) ">endConnectionData</a>().<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;    lbEndConnectorName-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aa0d04d3f41a73baa6422f705aa1ca317">lbEndConnectorName</a>-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;  }</div>
 <div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;  connectorData = unit.getConnectorData(pvLinkData.<a class="code" href="classmdt_cl_link_data.html#ae61b648f3a8b1461e06815b8ca6017f4" title="Get end connection data (RD) ">endConnectionData</a>().<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>), &amp;ok, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);</div>
 <div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;    lbEndConnectorName-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;    <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aa0d04d3f41a73baa6422f705aa1ca317">lbEndConnectorName</a>-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
 <div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;  }</div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;  lbEndConnectorName-&gt;setText(connectorData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Name&quot;</span>).toString());</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#aa0d04d3f41a73baa6422f705aa1ca317">lbEndConnectorName</a>-&gt;setText(connectorData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Name&quot;</span>).toString());</div>
 <div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;}</div>
 <div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;</div>
 <div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::setStartVehicleTypes(<span class="keyword">const</span> QVariant &amp;unitId)</div>
@@ -806,8 +806,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;  pvStartVehicleTypesModel-&gt;setHeaderData(0, Qt::Horizontal, tr(<span class="stringliteral">&quot;Type&quot;</span>));</div>
 <div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;  pvStartVehicleTypesModel-&gt;setHeaderData(1, Qt::Horizontal, tr(<span class="stringliteral">&quot;Sub type&quot;</span>));</div>
 <div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;  pvStartVehicleTypesModel-&gt;setHeaderData(2, Qt::Horizontal, tr(<span class="stringliteral">&quot;Serie&quot;</span>));</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;  twStartVehicles-&gt;setColumnHidden(3, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;  twStartVehicles-&gt;resizeColumnsToContents();</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1a12761bd3b7fb3d574e790013e29267">twStartVehicles</a>-&gt;setColumnHidden(3, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1a12761bd3b7fb3d574e790013e29267">twStartVehicles</a>-&gt;resizeColumnsToContents();</div>
 <div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;}</div>
 <div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;</div>
 <div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::updateStartVehicleTypes()</div>
@@ -848,8 +848,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;  pvStartVehicleTypesModel-&gt;setHeaderData(0, Qt::Horizontal, tr(<span class="stringliteral">&quot;Type&quot;</span>));</div>
 <div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;  pvStartVehicleTypesModel-&gt;setHeaderData(1, Qt::Horizontal, tr(<span class="stringliteral">&quot;Sub type&quot;</span>));</div>
 <div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;  pvStartVehicleTypesModel-&gt;setHeaderData(2, Qt::Horizontal, tr(<span class="stringliteral">&quot;Serie&quot;</span>));</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;  twStartVehicles-&gt;setColumnHidden(3, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;  twStartVehicles-&gt;resizeColumnsToContents();</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1a12761bd3b7fb3d574e790013e29267">twStartVehicles</a>-&gt;setColumnHidden(3, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#a1a12761bd3b7fb3d574e790013e29267">twStartVehicles</a>-&gt;resizeColumnsToContents();</div>
 <div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;}</div>
 <div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;</div>
 <div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::setEndVehicleTypes(<span class="keyword">const</span> QVariant &amp;unitId)</div>
@@ -862,8 +862,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;  pvEndVehicleTypesModel-&gt;setHeaderData(0, Qt::Horizontal, tr(<span class="stringliteral">&quot;Type&quot;</span>));</div>
 <div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;  pvEndVehicleTypesModel-&gt;setHeaderData(1, Qt::Horizontal, tr(<span class="stringliteral">&quot;Sub type&quot;</span>));</div>
 <div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;  pvEndVehicleTypesModel-&gt;setHeaderData(2, Qt::Horizontal, tr(<span class="stringliteral">&quot;Serie&quot;</span>));</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;  twEndVehicles-&gt;setColumnHidden(3, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;  twEndVehicles-&gt;resizeColumnsToContents();</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ae2fed2def3422e176f545e0fb02985bf">twEndVehicles</a>-&gt;setColumnHidden(3, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ae2fed2def3422e176f545e0fb02985bf">twEndVehicles</a>-&gt;resizeColumnsToContents();</div>
 <div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;}</div>
 <div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;</div>
 <div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;<span class="keywordtype">void</span> mdtClUnitLinkDialog::updateEndVehicleTypes()</div>
@@ -904,8 +904,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;  pvEndVehicleTypesModel-&gt;setHeaderData(0, Qt::Horizontal, tr(<span class="stringliteral">&quot;Type&quot;</span>));</div>
 <div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;  pvEndVehicleTypesModel-&gt;setHeaderData(1, Qt::Horizontal, tr(<span class="stringliteral">&quot;Sub type&quot;</span>));</div>
 <div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;  pvEndVehicleTypesModel-&gt;setHeaderData(2, Qt::Horizontal, tr(<span class="stringliteral">&quot;Serie&quot;</span>));</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;  twEndVehicles-&gt;setColumnHidden(3, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;  twEndVehicles-&gt;resizeColumnsToContents();</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ae2fed2def3422e176f545e0fb02985bf">twEndVehicles</a>-&gt;setColumnHidden(3, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;  <a class="code" href="class_ui__mdt_cl_unit_link_dialog.html#ae2fed2def3422e176f545e0fb02985bf">twEndVehicles</a>-&gt;resizeColumnsToContents();</div>
 <div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;}</div>
 <div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;</div>
 <div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;</div>
@@ -928,7 +928,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 27 2014 18:00:25 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

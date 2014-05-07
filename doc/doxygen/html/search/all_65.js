@@ -1,7 +1,7 @@
 var searchData=
 [
   ['edge_5ft',['edge_t',['../namespacemdt_cl_path_graph_private.html#a96eb891b98d89bbea2f573cd8f3accd2',1,'mdtClPathGraphPrivate']]],
-  ['edit',['edit',['../classmdt_tt_test_node_unit.html#a816cfe9014765ff66f040a11e057e285',1,'mdtTtTestNodeUnit::edit()'],['../classmdt_cl_unit_connection_dialog.html#a754889f1591eddb79b69de4c51532f43a855eaf8093ea6043e46688cc5115643f',1,'mdtClUnitConnectionDialog::Edit()']]],
+  ['edit',['Edit',['../classmdt_cl_unit_connection_dialog.html#a754889f1591eddb79b69de4c51532f43a855eaf8093ea6043e46688cc5115643f',1,'mdtClUnitConnectionDialog::Edit()'],['../classmdt_tt_test_node_unit.html#a816cfe9014765ff66f040a11e057e285',1,'mdtTtTestNodeUnit::edit()']]],
   ['editcomponent',['editComponent',['../classmdt_cl_article.html#a065c948e09af084586a4c1b110afefbb',1,'mdtClArticle']]],
   ['editconnection',['editConnection',['../classmdt_cl_article.html#add1dafdef4f6195860eed12c8722ff66',1,'mdtClArticle::editConnection()'],['../classmdt_cl_unit.html#aac3afb2a4895a16f637b765b44cbca9e',1,'mdtClUnit::editConnection()']]],
   ['editconnectorname',['editConnectorName',['../classmdt_cl_article.html#aed8a2fc638636a618409694a655e9819',1,'mdtClArticle::editConnectorName()'],['../classmdt_cl_unit.html#a7bb1ff9cc5469f45dbf244fd26d60329',1,'mdtClUnit::editConnectorName()']]],

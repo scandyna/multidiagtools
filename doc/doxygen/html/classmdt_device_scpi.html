@@ -413,7 +413,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00264">mdtPortManager::config()</a>, <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, <a class="el" href="mdt_port_config_8cpp_source.html#l00089">mdtPortConfig::readTimeout()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00182">mdtDevice::setBackToReadyStateTimeout()</a>, <a class="el" href="mdt_port_config_8cpp_source.html#l00084">mdtPortConfig::setReadTimeout()</a>, <a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d">mdtDevice::stateChanged()</a>, and <a class="el" href="mdt_port_config_8cpp_source.html#l00109">mdtPortConfig::writeTimeout()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00264">mdtPortManager::config()</a>, <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, <a class="el" href="mdt_port_config_8cpp_source.html#l00089">mdtPortConfig::readTimeout()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00182">mdtDevice::setBackToReadyStateTimeout()</a>, <a class="el" href="mdt_port_config_8cpp_source.html#l00084">mdtPortConfig::setReadTimeout()</a>, <a class="el" href="moc__mdt_device_8cxx_source.html#l00131">mdtDevice::stateChanged()</a>, and <a class="el" href="mdt_port_config_8cpp_source.html#l00109">mdtPortConfig::writeTimeout()</a>.</p>
 
 </div>
 </div>
@@ -459,7 +459,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Query device about error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
 <p>Will send the SYST:ERR? and return.</p>
 <p>Subclass notes:<br/>
  The SYST:ERR? query is sent to device. A new transaction is initalized, with type MDT_FC_SCPI_ERR. When subclass receives such transaction type, it should call <a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181" title="Handle device error. ">handleDeviceError()</a> without decoding frame.</p>
@@ -538,7 +538,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Handle device error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
 <p>This method is called from subclass's decodeReadenFrame(mdtPortTransaction) method when a frame of type MDT_FC_SCPI_ERR was received.</p>
 <p>Errors &lt;= 0 are handled directly. If error is &gt; 0, <a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637" title="Handle device&#39;s specific error. ">handleDeviceSpecificError()</a> is called.</p>
 <p>See the SCPI99 standard for more details.</p>
@@ -595,7 +595,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Handle device's specific error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Buggy, review !</dd></dl>
 <p>This method is called from <a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181" title="Handle device error. ">handleDeviceError()</a>.</p>
 <p>This default implementation simply log the error (with <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> system).</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -850,7 +850,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 27 2014 18:00:30 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 6 2014 09:34:21 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

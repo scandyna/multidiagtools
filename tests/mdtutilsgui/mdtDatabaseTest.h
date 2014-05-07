@@ -35,8 +35,8 @@ class mdtDatabaseTest : public mdtTest
   // Create database and tables
   void initTestCase();
 
-  void sqlSchemaTableTest();
-  void sqlSchemaTableSqliteTest();
+  ///void sqlSchemaTableTest();
+  ///void sqlSchemaTableSqliteTest();
 
   void relationsTest();
 
@@ -50,7 +50,7 @@ class mdtDatabaseTest : public mdtTest
 
   ///void sqlSelectionDialogTest();
 
-  void databaseManagerTest();
+  ///void databaseManagerTest();
 
   // Will Accept/reject the application's modal widget if not null
   void acceptModalDialog();

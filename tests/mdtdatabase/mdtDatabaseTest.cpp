@@ -22,6 +22,8 @@
 #include "mdtApplication.h"
 
 #include "mdtApplication.h"
+#include "mdtSqlDatabaseManager.h"
+#include "mdtSqlSchemaTable.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlSelectionDialog.h"
 #include <QTemporaryFile>
@@ -58,6 +60,547 @@ void mdtDatabaseTest::initTestCase()
 {
   createTestDatabase();
   clearTestDatabaseData();
+}
+
+void mdtDatabaseTest::sqlSchemaTableTest()
+{
+  mdtSqlSchemaTable st;
+  QString expectedSql;
+  QString expectedSql2; // For copy test, at end
+  QSqlField field;
+
+  // Initial
+  QVERIFY(st.sqlForCreateTable().isEmpty());
+  QVERIFY(st.sqlForDropTable().isEmpty());
+
+  // Simple Maria DB/MySQL table
+  st.setDriverName("QMYSQL");
+  st.setTableName("Client_tbl");
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setLength(0);
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  QCOMPARE(st.field("Id_PK").name(), QString("Id_PK"));
+  QCOMPARE(st.field("Id_PK").type(), QVariant::Int);
+  expectedSql =  "CREATE TABLE `Client_tbl` (\n";
+  expectedSql += "  `Id_PK` INT NOT NULL AUTO_INCREMENT,\n";
+  expectedSql += "  `Name` VARCHAR(50) DEFAULT NULL,\n";
+  expectedSql += "  PRIMARY KEY (`Id_PK`)\n";
+  expectedSql += ");\n";
+  QCOMPARE(st.sqlForCreateTable(), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS `Client_tbl`;\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql);
+
+  // Clear
+  st.clear();
+  QVERIFY(st.sqlForCreateTable().isEmpty());
+  QVERIFY(st.sqlForDropTable().isEmpty());
+
+  // Simple Maria DB/MySQL table - We specifiy a database to use
+  st.setDriverName("QMYSQL");
+  st.setDatabaseName("sandbox");
+  st.setTableName("Client_tbl");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  expectedSql =  "CREATE TABLE `sandbox`.`Client_tbl` (\n";
+  expectedSql += "  `Id_PK` INT NOT NULL AUTO_INCREMENT,\n";
+  expectedSql += "  `Name` VARCHAR(50) DEFAULT NULL,\n";
+  expectedSql += "  PRIMARY KEY (`Id_PK`)\n";
+  expectedSql += ");\n";
+  QCOMPARE(st.sqlForCreateTable(), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS `sandbox`.`Client_tbl`;\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql);
+
+  /*
+   * Simple Maria DB/MySQL Table:
+   *  - Storage engine is specified
+   *  - Charset is specified
+   */
+  st.clear();
+  st.setDriverName("QMYSQL");
+  st.setDatabaseName("sandbox");
+  st.setStorageEngineName("InnoDB");
+  st.setTableName("Client_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  expectedSql  = "CREATE TABLE `sandbox`.`Client_tbl` (\n";
+  expectedSql += "  `Id_PK` INT NOT NULL AUTO_INCREMENT,\n";
+  expectedSql += "  `Name` VARCHAR(50) DEFAULT NULL,\n";
+  expectedSql += "  PRIMARY KEY (`Id_PK`)\n";
+  expectedSql += ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;\n";
+  QCOMPARE(st.sqlForCreateTable(), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS `sandbox`.`Client_tbl`;\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql);
+
+  /*
+   * Second table that is child of Client_tbl
+   */
+  st.clear();
+  st.setDriverName("QMYSQL");
+  st.setDatabaseName("sandbox");
+  st.setStorageEngineName("InnoDB");
+  st.setTableName("Address_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Street");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Client_Id_FK");
+  field.setType(QVariant::Int);
+  field.setRequiredStatus(QSqlField::Required);
+  st.addField(field, false);
+  st.addIndex("Client_Id_FK_IDX", false);
+  QVERIFY(st.addFieldToIndex("Client_Id_FK_IDX", "Client_Id_FK"));
+  st.addForeignKey("Client_Id_FK1", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  QVERIFY(st.addFieldToForeignKey("Client_Id_FK1", "Client_Id_FK", "Id_PK"));
+  expectedSql  = "CREATE TABLE `sandbox`.`Address_tbl` (\n";
+  expectedSql += "  `Id_PK` INT NOT NULL AUTO_INCREMENT,\n";
+  expectedSql += "  `Street` VARCHAR(50) DEFAULT NULL,\n";
+  expectedSql += "  `Client_Id_FK` INT NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  PRIMARY KEY (`Id_PK`),\n";
+  expectedSql += "  INDEX `Client_Id_FK_IDX` (`Client_Id_FK`),\n";
+  expectedSql += "  FOREIGN KEY `Client_Id_FK1` (`Client_Id_FK`)\n";
+  expectedSql += "   REFERENCES `Client_tbl` (`Id_PK`)\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE\n";
+  expectedSql += ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;\n";
+  QCOMPARE(st.sqlForCreateTable(), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS `sandbox`.`Address_tbl`;\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql);
+
+  /*
+   * Simple Sqlite Table:
+   *  - Storage engine is specified (must be ignored)
+   *  - Charset is specified
+   */
+  st.clear();
+  st.setDriverName("QSQLITE");
+  st.setDatabaseName("sandbox");
+  st.setStorageEngineName("InnoDB");
+  st.setTableName("Client_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  expectedSql  = "CREATE TABLE 'sandbox'.'Client_tbl' (\n";
+  expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  'Name' VARCHAR(50) DEFAULT NULL COLLATE NOCASE\n";
+  expectedSql += ");\n";
+  QCOMPARE(st.sqlForCreateTable(), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql);
+
+  /*
+   * Simple Sqlite Table:
+   *  - Storage engine is specified (must be ignored)
+   *  - Charset is specified
+   *  - A NON UNIQUE index is added (must be ignored)
+   *  - A UNIQUE index is added
+   */
+  st.clear();
+  st.setDriverName("QSQLITE");
+  st.setDatabaseName("sandbox");
+  st.setStorageEngineName("InnoDB");
+  st.setTableName("Client_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("NameU");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  st.addIndex("Index", false);
+  QVERIFY(st.addFieldToIndex("Index", "Name"));
+  st.addIndex("IndexU", true);
+  QVERIFY(st.addFieldToIndex("IndexU", "NameU"));
+  expectedSql  = "CREATE TABLE 'sandbox'.'Client_tbl' (\n";
+  expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  'Name' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
+  expectedSql += "  'NameU' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
+  expectedSql += "  UNIQUE ('NameU')\n";
+  expectedSql += ");\n";
+  QCOMPARE(st.sqlForCreateTable(), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql);
+
+  /*
+   * Second table for Sqlite that is child of Client_tbl
+   *  Note: we added a non existant foreing key (had a bug when more than one was declared)
+   */
+  st.clear();
+  st.setDriverName("QSQLITE");
+  st.setDatabaseName("sandbox");
+  st.setStorageEngineName("InnoDB");
+  st.setTableName("Address_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Street");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Client_Id_FK");
+  field.setType(QVariant::Int);
+  field.setRequiredStatus(QSqlField::Required);
+  st.addField(field, false);
+  st.addIndex("Client_Id_FK_IDX", false);
+  QVERIFY(st.addFieldToIndex("Client_Id_FK_IDX", "Client_Id_FK"));
+  st.addForeignKey("Client_Id_FK1", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  QVERIFY(st.addFieldToForeignKey("Client_Id_FK1", "Client_Id_FK", "Id_PK"));
+  st.addForeignKey("Client_Id_FK2", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  QVERIFY(st.addFieldToForeignKey("Client_Id_FK2", "Client_Id_FK", "Id_PK"));
+  expectedSql  = "CREATE TABLE 'sandbox'.'Address_tbl' (\n";
+  expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  'Street' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
+  expectedSql += "  'Client_Id_FK' INT NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  FOREIGN KEY ('Client_Id_FK')\n";
+  expectedSql += "   REFERENCES 'Client_tbl' ('Id_PK')\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE,\n";
+  expectedSql += "  FOREIGN KEY ('Client_Id_FK')\n";
+  expectedSql += "   REFERENCES 'Client_tbl' ('Id_PK')\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE\n";
+  expectedSql += ");\n";
+  QCOMPARE(st.sqlForCreateTable(), expectedSql);
+  expectedSql2 = "DROP TABLE IF EXISTS 'sandbox'.'Address_tbl';\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql2);
+
+  // Copy test
+  mdtSqlSchemaTable st2;
+  QCOMPARE(st2.sqlForCreateTable(), QString());
+  QCOMPARE(st2.sqlForDropTable(), QString());
+  st2 = st;
+  QCOMPARE(st2.sqlForCreateTable(), expectedSql);
+  QCOMPARE(st2.sqlForDropTable(), expectedSql2);
+
+  /*
+   * Simple Sqlite temporary Table:
+   *  - Storage engine is specified (must be ignored)
+   *  - Charset is specified
+   */
+  st.clear();
+  st.setDriverName("QSQLITE");
+  st.setDatabaseName("sandbox");
+  st.setStorageEngineName("InnoDB");
+  st.setTableName("Client_tbl", "UTF8");
+  st.setTableTemporary(true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  expectedSql  = "CREATE TEMPORARY TABLE 'sandbox'.'Client_tbl' (\n";
+  expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  'Name' VARCHAR(50) DEFAULT NULL COLLATE NOCASE\n";
+  expectedSql += ");\n";
+  QCOMPARE(st.sqlForCreateTable(), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
+  QCOMPARE(st.sqlForDropTable(), expectedSql);
+
+}
+
+void mdtDatabaseTest::sqlSchemaTableSqliteTest()
+{
+  // Try to really create a table with Sqlite
+  QTemporaryFile tempFile;
+  QFileInfo dbFileInfo;
+  QSqlDatabase db;
+  QString sql;
+  mdtSqlSchemaTable st;
+  QSqlRecord record;
+  QSqlField field;
+
+  // Create a temp file that will be used for database
+  QVERIFY(tempFile.open());
+  tempFile.close();
+  dbFileInfo.setFile(tempFile.fileName() + ".db");
+  qDebug() << "DB file: " << dbFileInfo.filePath();
+
+  // Open database
+  db = QSqlDatabase::addDatabase("QSQLITE", "sqlSchemaTableSqliteTest");
+  db.setDatabaseName(dbFileInfo.filePath());
+  QVERIFY(db.open());
+
+  // QSqlQuery must be created after db.open() was called.
+  QSqlQuery q(db);
+
+  /*
+   * Enable foreing keys support
+   */
+  sql = "PRAGMA foreign_keys = ON";
+  QVERIFY(q.exec(sql));
+
+  /*
+   * Create Client table
+   */
+  st.setDriverName(db.driverName());
+  ///st.setDatabaseName(db.databaseName());
+  st.setStorageEngineName("InnoDB");  // Must be ignored
+  st.setTableName("Client_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  st.addIndex("Name_idx", true);
+  QVERIFY(st.addFieldToIndex("Name_idx", "Name"));
+  sql = st.sqlForDropTable();
+  QVERIFY(q.exec(sql));
+  sql = st.sqlForCreateTable();
+  QVERIFY(q.exec(sql));
+  // Check that table was correctly created
+  QVERIFY(db.tables().contains("Client_tbl"));
+  record = db.record("Client_tbl");
+  QCOMPARE(record.count(), 2);
+  field = record.field(0);
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.isAutoValue());
+  field = record.field(1);
+  QCOMPARE(field.name(), QString("Name"));
+  QCOMPARE(field.type(), QVariant::String);
+
+  /*
+   * Create second table that is child of Client_tbl
+   */
+  st.clear();
+  st.setDriverName(db.driverName());
+  ///st.setDatabaseName("sandbox");
+  st.setStorageEngineName("InnoDB");
+  st.setTableName("Address_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Street");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Client_Id_FK");
+  field.setType(QVariant::Int);
+  field.setRequiredStatus(QSqlField::Required);
+  st.addField(field, false);
+  st.addIndex("Client_Id_FK_IDX", false);
+  QVERIFY(st.addFieldToIndex("Client_Id_FK_IDX", "Client_Id_FK"));
+  st.addForeignKey("Client_Id_FK1", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  QVERIFY(st.addFieldToForeignKey("Client_Id_FK1", "Client_Id_FK", "Id_PK"));
+  sql = st.sqlForDropTable();
+  QVERIFY(q.exec(sql));
+  sql = st.sqlForCreateTable();
+  QVERIFY(q.exec(sql));
+  // Check that table was correctly created
+  QVERIFY(db.tables().contains("Address_tbl"));
+  record = db.record("Address_tbl");
+  QCOMPARE(record.count(), 3);
+  field = record.field(0);
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.isAutoValue());
+  field = record.field(1);
+  QCOMPARE(field.name(), QString("Street"));
+  QCOMPARE(field.type(), QVariant::String);
+  field = record.field(2);
+  QCOMPARE(field.name(), QString("Client_Id_FK"));
+  QCOMPARE(field.type(), QVariant::Int);
+
+  // Try to insert some data
+  sql = "INSERT INTO Client_tbl (Name) VALUES ('Name 1')";
+  QVERIFY(q.exec(sql));
+  sql = "INSERT INTO Client_tbl (Id_PK, Name) VALUES (2, 'Name 2')";
+  QVERIFY(q.exec(sql));
+  sql = "INSERT INTO Address_tbl (Street, Client_Id_FK) VALUES ('Street 1', 2)";
+  QVERIFY(q.exec(sql));
+  sql = "INSERT INTO Address_tbl (Street, Client_Id_FK) VALUES ('Street 2', 3)";
+  QVERIFY(!q.exec(sql));
+
+  /*
+   * Create Client2_tbl witch has the same structure than Client_tbl
+   */
+  st.clear();
+  QCOMPARE(st.fieldCount(), 0);
+  QVERIFY(st.setupFromTable("Client_tbl", db));
+  st.setTableName("Client2_tbl");
+  st.setTableTemporary(true);
+  QCOMPARE(st.field("Id_PK").name(), QString("Id_PK"));
+  QCOMPARE(st.field("Id_PK").type(), QVariant::Int);
+  QCOMPARE(st.field("Name").name(), QString("Name"));
+  QCOMPARE(st.field("Name").type(), QVariant::String);
+  sql = st.sqlForDropTable();
+  QVERIFY(q.exec(sql));
+  sql = st.sqlForCreateTable();
+  QVERIFY(q.exec(sql));
+  // Check that table was correctly created
+  QVERIFY(db.tables().contains("Client2_tbl"));
+  record = db.record("Client2_tbl");
+  QCOMPARE(record.count(), 2);
+  field = record.field(0);
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.isAutoValue());
+  field = record.field(1);
+  QCOMPARE(field.name(), QString("Name"));
+  QCOMPARE(field.type(), QVariant::String);
+
+  /*
+   * Create Address2_tbl witch has the same structure than Address_tbl
+   */
+  QVERIFY(st.setupFromTable("Address_tbl", db));
+  st.setTableName("Address2_tbl");
+  st.setTableTemporary(true);
+  st.updateForeignKeyReferingTable("Client_Id_FK_fk", "Client2_tbl");
+  QCOMPARE(st.field("Id_PK").name(), QString("Id_PK"));
+  QCOMPARE(st.field("Id_PK").type(), QVariant::Int);
+  QCOMPARE(st.field("Street").name(), QString("Street"));
+  QCOMPARE(st.field("Street").type(), QVariant::String);
+  QCOMPARE(st.field("Client_Id_FK").name(), QString("Client_Id_FK"));
+  QCOMPARE(st.field("Client_Id_FK").type(), QVariant::Int);
+  sql = st.sqlForDropTable();
+  QVERIFY(q.exec(sql));
+  sql = st.sqlForCreateTable();
+  QVERIFY(q.exec(sql));
+  // Check that table was correctly created
+  QVERIFY(db.tables().contains("Address2_tbl"));
+  record = db.record("Address2_tbl");
+  QCOMPARE(record.count(), 3);
+  field = record.field(0);
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.isAutoValue());
+  field = record.field(1);
+  QCOMPARE(field.name(), QString("Street"));
+  QCOMPARE(field.type(), QVariant::String);
+  field = record.field(2);
+  QCOMPARE(field.name(), QString("Client_Id_FK"));
+  QCOMPARE(field.type(), QVariant::Int);
+
+  // Try to insert some data
+  sql = "INSERT INTO Client2_tbl (Name) VALUES ('Name 1')";
+  QVERIFY(q.exec(sql));
+  sql = "INSERT INTO Client2_tbl (Id_PK, Name) VALUES (2, 'Name 2')";
+  QVERIFY(q.exec(sql));
+  sql = "INSERT INTO Address2_tbl (Street, Client_Id_FK) VALUES ('Street 1', 2)";
+  QVERIFY(q.exec(sql));
+  sql = "INSERT INTO Address2_tbl (Street, Client_Id_FK) VALUES ('Street 2', 3)";
+  QVERIFY(!q.exec(sql));
+
+}
+
+void mdtDatabaseTest::databaseManagerTest()
+{
+  mdtSqlDatabaseManager m;
+  QSqlDatabase db;
+  mdtSqlSchemaTable st;
+  QSqlField field;
+
+  QTemporaryFile dbFile;
+  QFileInfo dbFileInfo;
+
+  /*
+   * Check Sqlite database creation
+   */
+  QVERIFY(dbFile.open());
+  dbFileInfo.setFile(dbFile);
+  dbFile.close();
+  // database was never open, creation must work (file will be overwritten)
+  QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting, "databaseManagerTest"));
+  QVERIFY(m.database().isOpen());
+  // database exists and is allready open, must work
+  QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::KeepExisting, "databaseManagerTest"));
+  QVERIFY(m.database().isOpen());
+  // database exists and is allready open, must fail
+  QVERIFY(!m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::FailIfExists, "databaseManagerTest"));
+  // Check that manager not closes the database
+  QVERIFY(m.database().isOpen());
+  m.database().close();
+  QVERIFY(!m.database().isOpen());
+  // database is closed, but allready exists, must fail
+  QVERIFY(!m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::FailIfExists, "databaseManagerTest"));
+  QVERIFY(!m.database().isOpen());
+  // database is closed but exists. We want to overwite -> must work
+  QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting, "databaseManagerTest"));
+  QVERIFY(m.database().isOpen());
+  // Check table creation
+  st.setTableName("Client_tbl", "UTF8");
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  // Fisrt creation
+  QVERIFY(m.createTable(st, mdtSqlDatabaseManager::FailIfExists));
+  QVERIFY(m.database().tables().contains("Client_tbl"));
+  // Check overwite
+  QVERIFY(m.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
+  QVERIFY(m.database().tables().contains("Client_tbl"));
+  
+  // Cleanup
+  m.database().close();
+  QFile::remove(dbFileInfo.filePath());
 }
 
 void mdtDatabaseTest::sqlRecordTest()

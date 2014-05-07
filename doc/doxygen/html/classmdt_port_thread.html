@@ -236,7 +236,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00030">30</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_port_thread.html#a4266192826f09d8186ee8f9b646ac089">finished()</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00270">pvNativePthreadObject</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00264">pvPort</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00263">pvRunning</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00271">pvSigaction</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00281">sigactionHandle()</a>, and <a class="el" href="mdt_abstract_port_8h_source.html#l00084">mdtAbstractPort::UnhandledError</a>.</p>
+<p>References <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00147">finished()</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00270">pvNativePthreadObject</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00264">pvPort</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00263">pvRunning</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00271">pvSigaction</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00281">sigactionHandle()</a>, and <a class="el" href="mdt_abstract_port_8h_source.html#l00084">mdtAbstractPort::UnhandledError</a>.</p>
 
 </div>
 </div>
@@ -295,6 +295,8 @@ Protected Attributes</h2></td></tr>
 <li>Disconnection, connection, etc... are notified as error</li>
 <li>Some threads does not send this signal, because device connection is not handled directly by port protocol. </li>
 </ul>
+
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00154">154</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_thread_8cpp_source.html#l00230">reconnect()</a>.</p>
 
@@ -385,10 +387,12 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Emitted on error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>Adapt threads + port managers</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000030">Todo:</a></b></dt><dd>Adapt threads + port managers</dd></dl>
 <p>When a error occurs, this signal is emited.</p>
 <p>The error is one of the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error. ">mdtAbstractPort::error_t</a>.</p>
 <p><a class="el" href="classmdt_port_manager.html" title="Port manager base class. ">mdtPortManager</a> uses this signal. </p>
+
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00133">133</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_thread_8cpp_source.html#l00216">notifyError()</a>.</p>
 
@@ -417,6 +421,8 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Emitted when thread has finished executing. </p>
+
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00147">147</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_thread_8cpp_source.html#l00030">mdtPortThread()</a>.</p>
 
@@ -600,6 +606,8 @@ Protected Attributes</h2></td></tr>
 <dd>
 <a class="el" href="classmdt_port.html">mdtPort</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00127">127</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a30bdd11ef16d4f3321921c9d9b26399d"></a>
@@ -636,7 +644,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00216">216</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">errorOccured()</a>.</p>
+<p>References <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00133">errorOccured()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00343">mdtPortThreadHelper::notifyError()</a>, and <a class="el" href="mdt_port_thread_8cpp_source.html#l00230">reconnect()</a>.</p>
 
@@ -690,6 +698,8 @@ Protected Attributes</h2></td></tr>
 <p>Emitted when a read process begins. </p>
 <p>This can be used to display read state. Please consider that this signal is emitted each time the read process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms]) </p>
 
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00115">115</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ae71ae3aa58eb1f409a2b128e6ef3148b"></a>
@@ -715,6 +725,8 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Emitted when thread is started and ready. </p>
+
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00140">140</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
 
 </div>
 </div>
@@ -754,7 +766,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00230">230</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="classmdt_port_thread.html#a88070ed43976a83b6e4d289d6f1827bd">connected()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00082">mdtAbstractPort::Connecting</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00083">mdtAbstractPort::ConnectionFailed</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00079">mdtAbstractPort::Disconnected</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8h_source.html#l00040">MDT_PORT_IO_ERROR</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00061">mdtAbstractPort::NoError</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00216">notifyError()</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00264">pvPort</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00263">pvRunning</a>, <a class="el" href="mdt_abstract_port_8cpp_source.html#l00133">mdtAbstractPort::reconnect()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00084">mdtAbstractPort::UnhandledError</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00154">connected()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00082">mdtAbstractPort::Connecting</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00083">mdtAbstractPort::ConnectionFailed</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00079">mdtAbstractPort::Disconnected</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8h_source.html#l00040">MDT_PORT_IO_ERROR</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00061">mdtAbstractPort::NoError</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00216">notifyError()</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00264">pvPort</a>, <a class="el" href="mdt_port_thread_8h_source.html#l00263">pvRunning</a>, <a class="el" href="mdt_abstract_port_8cpp_source.html#l00133">mdtAbstractPort::reconnect()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00084">mdtAbstractPort::UnhandledError</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
 </div>
 </div>
@@ -998,6 +1010,8 @@ Port must have a valid configuration. </dd></dl>
 <p>Emitted when a write process begins. </p>
 <p>This can be used to display write state. Please consider that this signal is emitted each time the write process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms]) </p>
 
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00121">121</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -1100,11 +1114,12 @@ Port must have a valid configuration. </dd></dl>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_8h_source.html">mdtPortThread.h</a></li>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a></li>
+<li>src/mdtport/<a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 27 2014 18:00:31 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 6 2014 09:34:22 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>
