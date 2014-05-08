@@ -555,18 +555,24 @@ void mdtClUnitEditor::removeConnectors()
 
 void mdtClUnitEditor::viewLinkedConnectors()
 {
-  mdtClLinkedUnitConnectorInfoDialog dialog(this, database());
+  mdtClPathGraph graph(database());
+  mdtClLinkedUnitConnectorInfoDialog dialog(this, database(), &graph);
   QVariant connectorId;
-  QList<QVariant> linkedConnectorIdList;
 
   // Get current unit connection ID
   connectorId = currentData("UnitConnector_view", "Id_PK");
   if(connectorId.isNull()){
     return;
   }
+  // Load link list
+  if(!graph.loadLinkList()){
+    pvLastError = graph.lastError();
+    displayLastError();
+    return;
+  }
 
   // Setup and show dialog
-  dialog.setConnectors(connectorId, linkedConnectorIdList);
+  dialog.setConnector(connectorId);
   dialog.exec();
 }
 

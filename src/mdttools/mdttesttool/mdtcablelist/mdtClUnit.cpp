@@ -158,6 +158,47 @@ mdtClUnitConnectorData mdtClUnit::getConnectorData(const QVariant& unitConnector
   return getConnectorDataPv(sql, ok, includeConnectionData, includeArticleConnectorData, includeBaseConnectorData);
 }
 
+QList<QVariant> mdtClUnit::getConnectionIdListPartOfConnectorId(const QVariant & unitConnectorId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QString sql;
+  QList<QSqlRecord> dataList;
+  QList<QVariant> idList;
+  int i;
+
+  sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE UnitConnector_Id_FK = " + unitConnectorId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return idList;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    idList.append(dataList.at(i).value(0));
+  }
+
+  return idList;
+}
+
+QVariant mdtClUnit::getConnectorIdOfConnectionId(const QVariant & unitConnectionId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QString sql;
+  QList<QSqlRecord> dataList;
+
+  sql = "SELECT UnitConnector_Id_FK FROM UnitConnection_tbl WHERE Id_PK = " + unitConnectionId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    return QVariant();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0).value(0);
+}
+
 bool mdtClUnit::addConnectionDataListFromConnectorContactIdList(mdtClUnitConnectorData& data, const QList< QVariant >& connectorContactIdList)
 {
   mdtClArticle art(0, database());

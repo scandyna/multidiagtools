@@ -164,12 +164,6 @@ class mdtClLink : public mdtTtBase
    *
    * \todo In current version, vehicle type list are not token in acount. This will be the case once removeLink() is fixed.
    */
-  ///bool disconnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList);
-
-  /*! \brief Disconnect connector S from E
-   *
-   * \todo In current version, vehicle type list are not token in acount. This will be the case once removeLink() is fixed.
-   */
   bool disconnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList);
 
  private:

@@ -121,6 +121,14 @@ class mdtClUnit : public mdtTtBase
    */
   mdtClUnitConnectorData getConnectorData(const QVariant & unitConnectorId, bool *ok, bool includeConnectionData, bool includeArticleConnectorData, bool includeBaseConnectorData);
 
+  /*! \brief Get a list of unit connection ID that are part of given unit connector ID
+   */
+  QList<QVariant> getConnectionIdListPartOfConnectorId(const QVariant & unitConnectorId, bool *ok);
+
+  /*! \brief Get unit connector ID of given unit connection ID
+   */
+  QVariant getConnectorIdOfConnectionId(const QVariant & unitConnectionId, bool *ok);
+
   /*! \brief Add unit connections into unit connector data based on a list of given connector contact ID list
    *
    * Will also get some values from data (UnitConnector_tbl) and set it to created connections (UnitConnection_tbl):

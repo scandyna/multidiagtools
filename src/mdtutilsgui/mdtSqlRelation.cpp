@@ -226,5 +226,4 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
 void mdtSqlRelation::generateChildModelFilter()
 {
   pvChildModelFilter = pvChildModelRelationFilter;
-  ///qDebug() << "mdtSqlRelation, filter: " << pvChildModelFilter;
 }

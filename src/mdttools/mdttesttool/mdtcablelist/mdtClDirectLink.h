@@ -28,6 +28,8 @@
 #include <QList>
 #include <QSqlRecord>
 
+class mdtClPathGraph;
+
 /*! \brief Create a temporary table with direct links informations
  *
  * Real links are stored in Link_tbl.
@@ -73,6 +75,10 @@ class mdtClDirectLink : public mdtTtBase
   /*! \brief Will get data from LinkList_view for given start and end connections and put them into DirectLink_tbl
    */
   bool addLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId);
+
+  /*! \brief Add direct links for connections of connectors S and E that are linked together
+   */
+  bool addLinksByUnitConnector(const QVariant unitConnectorIdS, const QVariant unitConnectorIdE, mdtClPathGraph *graph);
 
  private:
 

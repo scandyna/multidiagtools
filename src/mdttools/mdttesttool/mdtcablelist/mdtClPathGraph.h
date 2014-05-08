@@ -72,16 +72,6 @@ namespace mdtClPathGraphPrivate
     boost::listS                                // EdgeList: listS (std::list)
   > graph_t;
 
-  /**
-  typedef boost::adjacency_list<
-    boost::vecS, boost::vecS, boost::directedS, // OutEdgeList: vecS (std::vector) , VertexList: vecS (std::vector) , Directed: directedS (Directed graph)
-    boost::no_property,                         // VertexProperties: no_property (None)
-    boost::property<boost::edge_bundle_t, mdtClPathGraphEdgeData>,
-    boost::no_property,                         // GraphProperties: no_property (None)
-    boost::listS                                // EdgeList: listS (std::list)
-  > graph_t;
-  */
-
   // Set vertex and edge types
   typedef boost::graph_traits<graph_t>::vertex_descriptor vertex_t;
   typedef boost::graph_traits<graph_t>::edge_descriptor edge_t;
@@ -122,8 +112,21 @@ class mdtClPathGraph
   bool loadLinkList();
 
   /*! \brief Get a list of unit connections IDs that are linked to a given connection
+   *
+   * Note: fromConnectionId is not included in result.
    */
   QList<QVariant> getLinkedConnectionIdList(const QVariant & fromConnectionId);
+
+  /*! \brief Get a list of unit connector ID that are linked to given one
+   *
+   * \param fromConnectorId Connector from witch linked ones will be searched
+   * \param connectionIdListToIgnore For example, if each connector has a GND, probably are they all connected together.
+   *                        In such case, this method has no sense.
+   *                        If given fromConnectorId contains such special connections, give their IDs here.
+   *
+   * Note: fromConnectorId is not included in result.
+   */
+  QList<QVariant> getLinkedConnectorIdList(const QVariant & fromConnectorId, bool *ok, const QList<QVariant> & connectionIdListToIgnore = QList<QVariant>());
 
   /*! \brief Draw the graphic representation starting from a connection
    */

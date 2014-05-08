@@ -189,6 +189,12 @@ class mdtCableListTestScenario
    *
    *  - UnitConnectionStart_Id_FK : 10001 , UnitConnectionEnd_Id_FK : 20000 , Identification : Link 10001<->20000 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
    *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 2
+   *
+   *  - UnitConnectionStart_Id_FK : 30005 , UnitConnectionEnd_Id_FK : 40005 , Identification : Link 30005<->40005 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
+   *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 1
+   *
+   *  - UnitConnectionStart_Id_FK : 40005 , UnitConnectionEnd_Id_FK : 50005 , Identification : Link 40005<->50005 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
+   *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 1
    */
   void createTestLinks();
   /*

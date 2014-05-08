@@ -567,15 +567,6 @@ bool mdtClLink::connectByContactName(const QVariant & startUnitConnectorId, cons
   return connectByContactName(S, E, startVehicleTypeId, endVehicleTypeId);
 }
 
-/**
-bool mdtClLink::disconnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList)
-{
-  QList<mdtClLinkData> linkDataList;
-  int i;
-
-}
-*/
-
 bool mdtClLink::disconnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList)
 {
   QString sql;

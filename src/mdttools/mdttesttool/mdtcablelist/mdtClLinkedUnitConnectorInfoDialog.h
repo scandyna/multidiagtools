@@ -30,6 +30,8 @@
 
 class mdtSqlTableWidget;
 class QWidget;
+class mdtClPathGraph;
+class mdtClDirectLink;
 
 /*! \brief Dialog that displays linked connectors to a given unit connector
  */
@@ -39,23 +41,27 @@ class mdtClLinkedUnitConnectorInfoDialog : public QDialog, private Ui::mdtClLink
 
  public:
 
-  /*! \brief
+  /*! \brief Constructor
    */
-  mdtClLinkedUnitConnectorInfoDialog(QWidget *parent, QSqlDatabase db);
+  mdtClLinkedUnitConnectorInfoDialog(QWidget *parent, QSqlDatabase db, mdtClPathGraph *graph);
 
-  /*! \brief
+  /*! \brief Set connector from witch linked ones must be searched
    */
-  void setConnectors(const QVariant & unitConnectorId, const QList<QVariant> & linkedConnectionIdList);
+  void setConnector(const QVariant & unitConnectorId);
 
  private:
 
-  /*! \brief
+  /*! \brief Display current connector information part
    */
-  void displayUnit();
+  void displayConnector(const QVariant & connectorId);
 
-  /*! \brief
+  /*! \brief Display unit information part
    */
-  void displayConnector();
+  void displayUnit(const QVariant & unitId);
+
+  /*! \brief Display linked connectors
+   */
+  void displayLinkedConnectors(const QVariant & fromConnectorId);
 
   /*! \brief
    */
@@ -67,9 +73,17 @@ class mdtClLinkedUnitConnectorInfoDialog : public QDialog, private Ui::mdtClLink
 
   /*! \brief Setup linked connectors table
    *
-   * Will also setup layout for gbLinkedConnectors group box
+   * Will also create direct link widget and setup layout for gbLinkedConnectors group box
    */
   void setupLinkedConnectorsTable();
+
+  /*! \brief Setup direct links table
+   */
+  void setupDirectLinkTable();
+
+  /*! \brief Populate direct link table
+   */
+  void populateDirectLinkTable(const QVariant & fromConnectorId, const QList<QVariant> & linkedConnectorsIdList);
 
   /*! \brief
    */
@@ -78,8 +92,10 @@ class mdtClLinkedUnitConnectorInfoDialog : public QDialog, private Ui::mdtClLink
   Q_DISABLE_COPY(mdtClLinkedUnitConnectorInfoDialog);
 
   mdtSqlTableWidget *pvLinkedConnectorsWidget;
-  mdtSqlTableWidget *pvLinkedConnectionsWidget;
+  mdtSqlTableWidget *pvDirectLinksWidget;
   QSqlDatabase pvDatabase;
+  mdtClPathGraph *pvGraph;
+  mdtClDirectLink *pvDirectLink;
 };
 
 #endif // #ifndef MDT_CL_LINKED_UNIT_CONNECTOR_INFO_DIALOG_H

@@ -807,12 +807,20 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
   QCOMPARE(connectionData.value("UnitConnector_Id_FK"), QVariant(100000));
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10005"));
+  // Check unit connections part of unit connector
+  idList = unit.getConnectionIdListPartOfConnectorId(100000, &ok);
+  QVERIFY(ok);
+  QCOMPARE(idList.size(), 1);
+  QVERIFY(idList.contains(10005));
+  // Check connector ID getter method
+  id = unit.getConnectorIdOfConnectionId(10005, &ok);
+  QVERIFY(ok);
+  QCOMPARE(id, QVariant(100000));
 
   /*
    * Unit connector 200000:
    *  - Id_PK : 200000 , Unit_Id_FK : 2000 , Connector_Id_FK : 1 , ArticleConnector_Id_FK : 200 , Name : Unit connector 200000
    *  -> Connection: Id_PK 20005 , ArticleConnection_Id_FK : 25 , ConnectionType_Code_FK : S , Name : Unit contact 20005
-   *  -> Connection: Id_PK 20006 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : P , Name : A
    */
   connectorData.clearValues();
   // Setup and add unit connector
@@ -854,6 +862,11 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(25));
   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("S"));
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 20005"));
+  // Check unit connections part of unit connector
+  idList = unit.getConnectionIdListPartOfConnectorId(200000, &ok);
+  QVERIFY(ok);
+  QCOMPARE(idList.size(), 1);
+  QVERIFY(idList.contains(20005));
 
   /*
    * Now remove unit connection 20005.
@@ -996,6 +1009,19 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("S"));
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("B"));
+  // Check unit connections part of unit connector
+  idList = unit.getConnectionIdListPartOfConnectorId(400000, &ok);
+  QVERIFY(ok);
+  QCOMPARE(idList.size(), 2);
+  QVERIFY(idList.contains(40005));
+  QVERIFY(idList.contains(40006));
+  // Check connector ID getter method
+  id = unit.getConnectorIdOfConnectionId(40005, &ok);
+  QVERIFY(ok);
+  QCOMPARE(id, QVariant(400000));
+  id = unit.getConnectorIdOfConnectionId(40006, &ok);
+  QVERIFY(ok);
+  QCOMPARE(id, QVariant(400000));
 
   /*
    * Unit connector:
@@ -1168,6 +1194,85 @@ void mdtCableListTestScenario::createTestLinks()
   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId(), QVariant(2));
   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId(), QVariant(10001));
   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId(), QVariant(20000));
+  /*
+   * Add link:
+   *  - UnitConnectionStart_Id_FK : 30005 , UnitConnectionEnd_Id_FK : 40005 , Identification : Link 30005<->40005 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
+   *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 1
+   */
+  startConnectionData = unit.getConnectionData(30005, false, &ok);
+  QVERIFY(ok);
+  endConnectionData = unit.getConnectionData(40005, false, &ok);
+  QVERIFY(ok);
+  // Setup vehicle link data
+  vtStartIdList.clear();
+  vtEndIdList.clear();
+  vtStartIdList.append(1);
+  vtEndIdList.append(1);
+  // Setup link data
+  linkData.setConnectionData(startConnectionData, endConnectionData);
+  linkData.setValue("Identification", "Link 30005<->40005");
+  linkData.setValue("LinkType_Code_FK", "CABLELINK");
+  linkData.setValue("LinkDirection_Code_FK", "BID");
+  QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
+  // Add link
+  QVERIFY(!lnk.linkExists(30005, 40005, &ok));
+  QVERIFY(ok);
+  QVERIFY(lnk.addLink(linkData));
+  QVERIFY(lnk.linkExists(30005, 40005, &ok));
+  QVERIFY(ok);
+  // Check back
+  linkData = lnk.getLinkData(30005, 40005, true, true, &ok);
+  QVERIFY(ok);
+  QCOMPARE(linkData.value("Identification"), QVariant("Link 30005<->40005"));
+  QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(30005));
+  QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(40005));
+  QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(30005));
+  QCOMPARE(linkData.endConnectionData().value("Id_PK"), QVariant(40005));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 1);
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId(), QVariant(1));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId(), QVariant(30005));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId(), QVariant(40005));
+
+  /*
+   * Add link:
+   *  - UnitConnectionStart_Id_FK : 40005 , UnitConnectionEnd_Id_FK : 50005 , Identification : Link 40005<->50005 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
+   *   -> VehicleTypeStart_Id_FK : 1 , VehicleTypeEnd_Id_FK : 1
+   */
+  startConnectionData = unit.getConnectionData(40005, false, &ok);
+  QVERIFY(ok);
+  endConnectionData = unit.getConnectionData(50005, false, &ok);
+  QVERIFY(ok);
+  // Setup vehicle link data
+  vtStartIdList.clear();
+  vtEndIdList.clear();
+  vtStartIdList.append(1);
+  vtEndIdList.append(1);
+  // Setup link data
+  linkData.setConnectionData(startConnectionData, endConnectionData);
+  linkData.setValue("Identification", "Link 40005<->50005");
+  linkData.setValue("LinkType_Code_FK", "CABLELINK");
+  linkData.setValue("LinkDirection_Code_FK", "BID");
+  QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
+  // Add link
+  QVERIFY(!lnk.linkExists(40005, 50005, &ok));
+  QVERIFY(ok);
+  QVERIFY(lnk.addLink(linkData));
+  QVERIFY(lnk.linkExists(40005, 50005, &ok));
+  QVERIFY(ok);
+  // Check back
+  linkData = lnk.getLinkData(40005, 50005, true, true, &ok);
+  QVERIFY(ok);
+  QCOMPARE(linkData.value("Identification"), QVariant("Link 40005<->50005"));
+  QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(40005));
+  QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(50005));
+  QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(40005));
+  QCOMPARE(linkData.endConnectionData().value("Id_PK"), QVariant(50005));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 1);
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId(), QVariant(1));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId(), QVariant(40005));
+  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId(), QVariant(50005));
 }
 
 void mdtCableListTestScenario::removeTestLinks()
@@ -1178,6 +1283,8 @@ void mdtCableListTestScenario::removeTestLinks()
 
   QVERIFY(lnk.removeLink(10000, 10001));
   QVERIFY(lnk.removeLink(10001, 20000));
+  QVERIFY(lnk.removeLink(30005, 40005));
+  QVERIFY(lnk.removeLink(40005, 50005));
   dataList = lnk.getData("SELECT * FROM VehicleType_Link_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 2); // 2 links added during unit connection creation

@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtClDirectLink.h"
 #include "mdtSqlSchemaTable.h"
+#include "mdtClUnit.h"
+#include "mdtClPathGraph.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QString>
@@ -154,6 +156,48 @@ bool mdtClDirectLink::addLink(const QVariant & unitConnectionStartId, const QVar
   return true;
 }
 
+/// \todo Add transactions
+bool mdtClDirectLink::addLinksByUnitConnector(const QVariant unitConnectorIdS, const QVariant unitConnectorIdE, mdtClPathGraph *graph)
+{
+  Q_ASSERT(graph != 0);
+
+  mdtClUnit unit(0, database());
+  QList<QVariant> leftConnectionIdList;
+  QList<QVariant> linkedConnectionIdList;
+  QVariant connectorId;
+  bool ok;
+  int i;
+  int k;
+
+  // Get list of connections from connector S
+  leftConnectionIdList = unit.getConnectionIdListPartOfConnectorId(unitConnectorIdS, &ok);
+  if(!ok){
+    pvLastError = unit.lastError();
+    return false;
+  }
+  // For each connection:
+  //  - get linked connections
+  //  - for each linked connection:
+  //    * get connector ID
+  //    * If connector ID is same as E, add a link
+  for(i = 0; i < leftConnectionIdList.size(); ++i){
+    linkedConnectionIdList = graph->getLinkedConnectionIdList(leftConnectionIdList.at(i));
+    for(k = 0; k < linkedConnectionIdList.size(); ++k){
+      connectorId = unit.getConnectorIdOfConnectionId(linkedConnectionIdList.at(k), &ok);
+      if(!ok){
+        return false;
+      }
+      if(connectorId == unitConnectorIdE){
+        if(!addLink(leftConnectionIdList.at(i), linkedConnectionIdList.at(k))){
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+}
+
 QList<QSqlRecord> mdtClDirectLink::getStartData(const QVariant & unitConnectionId, bool *ok)
 {
   Q_ASSERT(ok != 0);
@@ -162,7 +206,8 @@ QList<QSqlRecord> mdtClDirectLink::getStartData(const QVariant & unitConnectionI
 
   sql = "SELECT UnitConnectionStart_Id_FK, StartVehicleType_Id_PK, StartVehicleType, StartVehicleSubType,"\
         " StartVehicleSerie, StartUnit_Id_PK, StartSchemaPosition, StartAlias, StartCabinet, StartCoordinate, "\
-        " UnitConnectorStart_Id_FK, StartUnitConnectorName, StartUnitContactName, StartConnectionType_Code_FK "\
+        " UnitConnectorStart_Id_FK, StartUnitConnectorName, StartUnitContactName, StartConnectionType_Code_FK, "\
+        " StartFunctionEN, StartFunctionFR, StartFunctionDE, StartFunctionIT "\
         " FROM LinkList_view ";
   sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionId.toString();
 
@@ -177,7 +222,8 @@ QList<QSqlRecord> mdtClDirectLink::getEndData(const QVariant & unitConnectionId,
 
   sql = "SELECT UnitConnectionEnd_Id_FK, EndVehicleType_Id_PK, EndVehicleType, EndVehicleSubType,"\
         " EndVehicleSerie, EndUnit_Id_PK, EndSchemaPosition, EndAlias, EndCabinet, EndCoordinate, "\
-        " UnitConnectorEnd_Id_FK, EndUnitConnectorName, EndUnitContactName, EndConnectionType_Code_FK "\
+        " UnitConnectorEnd_Id_FK, EndUnitConnectorName, EndUnitContactName, EndConnectionType_Code_FK, "\
+        " EndFunctionEN, EndFunctionFR, EndFunctionDE, EndFunctionIT "\
         " FROM LinkList_view ";
   sql += " WHERE UnitConnectionEnd_Id_FK = " + unitConnectionId.toString();
 
@@ -225,6 +271,12 @@ mdtSqlRecord mdtClDirectLink::getRecordForTable(const QSqlRecord & leftData, con
   record.setValue("StartUnitConnectorName", leftData.value(11));
   record.setValue("StartUnitContactName", leftData.value(12));
   record.setValue("StartConnectionType_Code_FK", leftData.value(13));
+  
+  record.setValue("StartFunctionEN", leftData.value(14));
+  record.setValue("StartFunctionFR", leftData.value(15));
+  record.setValue("StartFunctionDE", leftData.value(16));
+  record.setValue("StartFunctionIT", leftData.value(17));
+  
   record.setValue("UnitConnectionEnd_Id_FK", rightData.value(0));
   record.setValue("EndVehicleType_Id_PK", rightData.value(1));
   record.setValue("EndVehicleType", rightData.value(2));
@@ -235,11 +287,19 @@ mdtSqlRecord mdtClDirectLink::getRecordForTable(const QSqlRecord & leftData, con
   record.setValue("EndAlias", rightData.value(7));
   record.setValue("EndCabinet", rightData.value(8));
   record.setValue("EndCoordinate", rightData.value(9));
-  record.setValue("EndConnectorStart_Id_FK", rightData.value(10));
+  record.setValue("UnitConnectorEnd_Id_FK", rightData.value(10));
   record.setValue("EndUnitConnectorName", rightData.value(11));
   record.setValue("EndUnitContactName", rightData.value(12));
   record.setValue("EndConnectionType_Code_FK", rightData.value(13));
 
+  record.setValue("EndFunctionEN", rightData.value(14));
+  record.setValue("EndFunctionFR", rightData.value(15));
+  record.setValue("EndFunctionDE", rightData.value(16));
+  record.setValue("EndFunctionIT", rightData.value(17));
+  
+  ///qDebug() << "REC: " << record;
+  ///qDebug() << "RDATA: " << rightData;
+  
   return record;
 }
 

@@ -35,6 +35,7 @@
 #include "mdtClLinkData.h"
 #include "mdtClVehicleTypeLinkData.h"
 #include "mdtClDirectLink.h"
+#include "mdtClPathGraph.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -826,17 +827,7 @@ void mdtCableListTest::linkTest()
 
   /// \todo suite
   // Create base structure
-  createTestVehicleTypes();
-  createTestArticles();
-  createTestConnectors();
-  createTestArticleConnections();
-  createTestArticleLinks();
-  createTestArticleConnectors();
-  createTestUnits();
-  createTestVehicleTypeUnitAssignations();
-  createTestUnitConnections();
-  // Add links
-  createTestLinks();
+  pvScenario->createSenario();
   // Get link data for a non existing link, ok must be false
   linkData = lnk.getLinkData(135, 45687, true, true, &ok);
   QVERIFY(!ok);
@@ -955,18 +946,30 @@ void mdtCableListTest::linkTest()
    *
    *  Remove Unit_Id_FK : 1000 , VehicleType_Id_FK : 1
    */
-  // Check that we have expected vehicle type links
+  // Check that we have expected vehicle type links: 10000-10001 , 10001-20000 , 30005-40005 , 40005-50005
   vtLinkDataList = lnk.getVehicleTypeLinkDataByUnitId(1000, &ok);
   QVERIFY(ok);
-  QCOMPARE(vtLinkDataList.size(), 2);
+  QCOMPARE(vtLinkDataList.size(), 4);
   QCOMPARE(vtLinkDataList.at(0).unitConnectionStartId(), QVariant(10000));
   QCOMPARE(vtLinkDataList.at(0).unitConnectionEndId(), QVariant(10001));
   QCOMPARE(vtLinkDataList.at(0).vehicleTypeStartId(), QVariant(1));
   QCOMPARE(vtLinkDataList.at(0).vehicleTypeEndId(), QVariant(1));
-  QCOMPARE(vtLinkDataList.at(1).unitConnectionStartId(), QVariant(10001));
-  QCOMPARE(vtLinkDataList.at(1).unitConnectionEndId(), QVariant(20000));
+
+  QCOMPARE(vtLinkDataList.at(1).unitConnectionStartId(), QVariant(30005));
+  QCOMPARE(vtLinkDataList.at(1).unitConnectionEndId(), QVariant(40005));
   QCOMPARE(vtLinkDataList.at(1).vehicleTypeStartId(), QVariant(1));
-  QCOMPARE(vtLinkDataList.at(1).vehicleTypeEndId(), QVariant(2));
+  QCOMPARE(vtLinkDataList.at(1).vehicleTypeEndId(), QVariant(1));
+
+  QCOMPARE(vtLinkDataList.at(3).unitConnectionStartId(), QVariant(10001));
+  QCOMPARE(vtLinkDataList.at(3).unitConnectionEndId(), QVariant(20000));
+  QCOMPARE(vtLinkDataList.at(3).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(vtLinkDataList.at(3).vehicleTypeEndId(), QVariant(2));
+
+  QCOMPARE(vtLinkDataList.at(2).unitConnectionStartId(), QVariant(40005));
+  QCOMPARE(vtLinkDataList.at(2).unitConnectionEndId(), QVariant(50005));
+  QCOMPARE(vtLinkDataList.at(2).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(vtLinkDataList.at(2).vehicleTypeEndId(), QVariant(1));
+
   // Remove assignation
   QVERIFY(uvt.removeUnitVehicleAssignment(1000, 1));
   // Check that links no longer exists
@@ -982,17 +985,7 @@ void mdtCableListTest::linkTest()
 
 
   // Cleanup
-  removeTestLinks();
-  removeTestUnitConnections();
-  removeTestUnitConnectors();
-  removeTestVehicleTypeUnitAssignations();
-  removeTestUnits();
-  removeTestArticleLinks();
-  removeTestArticleConnections();
-  removeTestArticleConnectors();
-  removeTestConnectors();
-  removeTestArticles();
-  removeTestVehicleTypes();
+  pvScenario->removeScenario();
 }
 
 void mdtCableListTest::linkAutoConnectionTest()
@@ -1211,12 +1204,40 @@ void mdtCableListTest::linkAutoConnectionTest()
 
 void mdtCableListTest::pathGraphTest()
 {
-  QFAIL("Test not implemented yet");
+  ///QFAIL("Test not implemented yet");
+  
+  mdtClPathGraph graph(pvDatabaseManager.database());
+  QList<QVariant> idList;
+  bool ok;
+
+  // Scenario
+  pvScenario->createSenario();
+  // Load link list
+  QVERIFY(graph.loadLinkList());
+  // Check linked connections
+  idList = graph.getLinkedConnectionIdList(10000);
+  QCOMPARE(idList.size(), 3);
+  QVERIFY(idList.contains(10001));
+  QVERIFY(idList.contains(20000));
+  QVERIFY(idList.contains(20001));
+  // Check linked connectors
+  idList = graph.getLinkedConnectorIdList(300000, &ok);
+  QVERIFY(ok);
+  
+  qDebug() << "Connectors linked to 300000: " << idList;
+  
+  QCOMPARE(idList.size(), 2);
+  QVERIFY(idList.contains(400000));
+  QVERIFY(idList.contains(500000));
+
+
+  pvScenario->removeScenario();
 }
 
 void mdtCableListTest::directLinkTest()
 {
   mdtClDirectLink *dlnk;
+  mdtClPathGraph graph(pvDatabaseManager.database());
   QSqlRecord record;
   QList<QSqlRecord> dataList;
   QList<QVariant> idList;
@@ -1227,6 +1248,8 @@ void mdtCableListTest::directLinkTest()
 
   // Scenario
   pvScenario->createSenario();
+  // Load link list
+  QVERIFY(graph.loadLinkList());
   // Initial
   dlnk = new mdtClDirectLink(0, pvDatabaseManager.database());
   QVERIFY(pvDatabaseManager.database().tables().contains("DirectLink_tbl"));
@@ -1252,12 +1275,28 @@ void mdtCableListTest::directLinkTest()
   QVERIFY(ok);
   QCOMPARE(idList, expectedIdList);
   // addLink test
+  QVERIFY(!dlnk->addLink(10000, QVariant()));
+  QVERIFY(!dlnk->addLink(QVariant(), 20000));
   QVERIFY(dlnk->addLink(10000, 20000));
   dataList = dlnk->getData("SELECT * FROM DirectLink_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(10000));
   QCOMPARE(dataList.at(0).value("UnitConnectionEnd_Id_FK"), QVariant(20000));
+  QVERIFY(dlnk->removeData("DirectLink_tbl", "UnitConnectionStart_Id_FK", 10000, "UnitConnectionEnd_Id_FK", 20000));
+  dataList = dlnk->getData("SELECT * FROM DirectLink_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  // Check link adding between 2 connectors
+  QVERIFY(dlnk->addLinksByUnitConnector(300000, 500000, &graph));
+  dataList = dlnk->getData("SELECT * FROM DirectLink_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(30005));
+  QCOMPARE(dataList.at(0).value("UnitConnectionEnd_Id_FK"), QVariant(50005));
+  QCOMPARE(dataList.at(0).value("UnitConnectorStart_Id_FK"), QVariant(300000));
+  QCOMPARE(dataList.at(0).value("UnitConnectorEnd_Id_FK"), QVariant(500000));
+
 
   delete dlnk;
   QVERIFY(!pvDatabaseManager.database().tables().contains("DirectLink_tbl"));

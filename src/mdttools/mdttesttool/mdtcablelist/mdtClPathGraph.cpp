@@ -21,6 +21,7 @@
 #include "mdtClPathGraph.h"
 #include "mdtClPathGraphicsConnection.h"
 #include "mdtClPathGraphicsLink.h"
+#include "mdtClUnit.h"
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -56,8 +57,6 @@ void mdtClPathGraphVisitor::examine_edge(edge_t e, const graph_t &g)
   Q_ASSERT(pvEdgeQueue != 0);
 
   mdtClPathGraphEdgeData edgeData = g[e];
-  ///mdtClPathGraphEdgeData edgeData = get(boost::edge_bundle, g)[e];
-  ///mdtClPathGraphEdgeData edgeData = get(boost::edge_bundle, g, e);
   pvEdgeQueue->enqueue(edgeData);
 }
 
@@ -206,6 +205,51 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromC
   }
 
   return connectionIdList;
+}
+
+QList<QVariant> mdtClPathGraph::getLinkedConnectorIdList(const QVariant & fromConnectorId, bool *ok, const QList<QVariant> & connectionIdListToIgnore)
+{
+  Q_ASSERT(ok != 0);
+
+  mdtClUnit unit(0, pvDatabase);
+  QVariant connectorId;
+  QList<QVariant> connectorIdList;
+  QList<QVariant> fromConnectionIdList;
+  QList<QVariant> linkedConnectionIdList;
+  int i;
+  int k;
+
+  // Get fromConnector's list of connections
+  fromConnectionIdList = unit.getConnectionIdListPartOfConnectorId(fromConnectorId, ok);
+  if(!*ok){
+    pvLastError = unit.lastError();
+    return connectorIdList;
+  }
+  // Remove connectionIdListToIgnore in fromConnectionIdList
+  for(i = 0; i < fromConnectionIdList.size(); ++i){
+    if(connectionIdListToIgnore.contains(fromConnectionIdList.at(i))){
+      fromConnectionIdList.removeAt(i);
+    }
+  }
+  // Add linked connectors for each connection
+  for(i = 0; i < fromConnectionIdList.size(); ++i){
+    // Get linked connections
+    linkedConnectionIdList = getLinkedConnectionIdList(fromConnectionIdList.at(i));
+    for(k = 0; k < linkedConnectionIdList.size(); ++k){
+      // Get connector ID
+      connectorId = unit.getConnectorIdOfConnectionId(linkedConnectionIdList.at(k), ok);
+      if(!*ok){
+        pvLastError = unit.lastError();
+        return connectorIdList;
+      }
+      // Add connector ID to result
+      if((!connectorId.isNull())&&(!connectorIdList.contains(connectorId))){
+        connectorIdList.append(connectorId);
+      }
+    }
+  }
+
+  return connectorIdList;
 }
 
 bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
