@@ -26,6 +26,8 @@
 #include <QDialog>
 #include <QSqlDatabase>
 #include <QList>
+#include <QVariant>
+#include <QModelIndex>
 
 class QWidget;
 class QSqlQueryModel;
@@ -43,12 +45,42 @@ class mdtClLinkedUnitConnectionInfoDialog : public QDialog, Ui::mdtClLinkedUnitC
    */
   mdtClLinkedUnitConnectionInfoDialog(QWidget *parent, QSqlDatabase db);
 
+  /*! \brief Set selection mode flag
+   *
+   * If selection mode flag is true,
+   *  Ok and Cancel buttons are diplayed, and dialog can be accepted.
+   *  Else, only close button id displayed.
+   */
+  void setSelectionModeEnabled(bool enable);
+
   /*! \brief Set connections
    *
    * \param unitConnectionId ID of unit connection for witch we want to see linked connections
    * \param linkedConnectionIdList List of IDs of linked connections
    */
   void setConnections(const QVariant & unitConnectionId, const QList<QVariant> & linkedConnectionIdList);
+
+  /*! \brief Get function string EN
+   */
+  QVariant functionStringEN() const;
+
+  /*! \brief Get function string FR
+   */
+  QVariant functionStringFR() const;
+
+  /*! \brief Get function string DE
+   */
+  QVariant functionStringDE() const;
+
+  /*! \brief Get function string IT
+   */
+  QVariant functionStringIT() const;
+
+ private slots:
+
+  /*! \brief Buld function strings and accept dialog (if selection is valid)
+   */
+  void accept();
 
  private:
 
@@ -72,11 +104,31 @@ class mdtClLinkedUnitConnectionInfoDialog : public QDialog, Ui::mdtClLinkedUnitC
    */
   void displayError(const mdtError & error);
 
+  /*! \brief Build function string EN
+   */
+  void builFunctionStringEN(const QModelIndex & index);
+
+  /*! \brief Build function string FR
+   */
+  void builFunctionStringFR(const QModelIndex & index);
+
+  /*! \brief Build function string DE
+   */
+  void builFunctionStringDE(const QModelIndex & index);
+
+  /*! \brief Build function string IT
+   */
+  void builFunctionStringIT(const QModelIndex & index);
+
   Q_DISABLE_COPY(mdtClLinkedUnitConnectionInfoDialog);
 
   mdtSortFilterProxyModel *pvProxyModel;
   QSqlQueryModel *pvModel;
   QSqlDatabase pvDatabase;
+  QString pvFunctionStringEN;
+  QString pvFunctionStringFR;
+  QString pvFunctionStringDE;
+  QString pvFunctionStringIT;
 };
 
 #endif // #ifndef MDT_CL_LINKED_UNIT_CONNECTION_INFO_DIALOG_H

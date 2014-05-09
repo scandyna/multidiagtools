@@ -27,6 +27,10 @@
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QMessageBox>
+#include <QItemSelectionModel>
+#include <QDialogButtonBox>
+
+#include <QDebug>
 
 mdtClLinkedUnitConnectionInfoDialog::mdtClLinkedUnitConnectionInfoDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
@@ -39,6 +43,7 @@ mdtClLinkedUnitConnectionInfoDialog::mdtClLinkedUnitConnectionInfoDialog(QWidget
   // Setup UI part
   setupUi(this);
   twLinkedConnections->setModel(pvProxyModel);
+  twLinkedConnections->setSelectionMode(QAbstractItemView::SingleSelection);
   lbSchemaPosition->clear();
   lbAlias->clear();
   lbCabinet->clear();
@@ -47,10 +52,67 @@ mdtClLinkedUnitConnectionInfoDialog::mdtClLinkedUnitConnectionInfoDialog(QWidget
   lbContact->clear();
 }
 
+void mdtClLinkedUnitConnectionInfoDialog::setSelectionModeEnabled(bool enable)
+{
+  if(enable){
+    buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+  }else{
+    buttonBox->setStandardButtons(QDialogButtonBox::Close);
+  }
+}
+
 void mdtClLinkedUnitConnectionInfoDialog::setConnections(const QVariant & unitConnectionId, const QList<QVariant> & linkedConnectionIdList) 
 {
   displayConnection(unitConnectionId);
   displayLinkedConnections(linkedConnectionIdList);
+}
+
+QVariant mdtClLinkedUnitConnectionInfoDialog::functionStringEN() const
+{
+  return pvFunctionStringEN;
+}
+
+QVariant mdtClLinkedUnitConnectionInfoDialog::functionStringFR() const
+{
+  return pvFunctionStringFR;
+}
+
+QVariant mdtClLinkedUnitConnectionInfoDialog::functionStringDE() const
+{
+  return pvFunctionStringDE;
+}
+
+QVariant mdtClLinkedUnitConnectionInfoDialog::functionStringIT() const
+{
+  return pvFunctionStringIT;
+}
+
+void mdtClLinkedUnitConnectionInfoDialog::accept()
+{
+  Q_ASSERT(pvModel != 0);
+  Q_ASSERT(pvProxyModel != 0);
+  Q_ASSERT(twLinkedConnections->selectionModel() != 0);
+
+  QModelIndexList selectedIndexes;
+  QModelIndex index;
+
+  // Get selected row to build function strings
+  selectedIndexes = selectedIndexes = twLinkedConnections->selectionModel()->selectedIndexes();
+  if(selectedIndexes.isEmpty()){
+    return;
+  }
+  Q_ASSERT(selectedIndexes.size() == 1);
+  index = pvProxyModel->mapToSource(selectedIndexes.at(0));
+  if(!index.isValid()){
+    return;
+  }
+  // Build function strings
+  builFunctionStringEN(index);
+  builFunctionStringFR(index);
+  builFunctionStringDE(index);
+  builFunctionStringIT(index);
+
+  QDialog::accept();
 }
 
 void mdtClLinkedUnitConnectionInfoDialog::displayConnection(const QVariant & connectionId) 
@@ -228,4 +290,100 @@ void mdtClLinkedUnitConnectionInfoDialog::displayError(const mdtError & error)
   msgBox.setDetailedText(error.systemText());
   msgBox.setIcon(error.levelIcon());
   msgBox.exec();
+}
+
+void mdtClLinkedUnitConnectionInfoDialog::builFunctionStringEN(const QModelIndex& index)
+{
+  Q_ASSERT(pvModel != 0);
+
+  QModelIndex dataIndex;
+
+  pvFunctionStringEN.clear();
+  if(!index.isValid()){
+    return;
+  }
+  // Set schema position
+  pvFunctionStringEN = "-> Pos. ";
+  dataIndex = pvModel->index(index.row(), 2);
+  pvFunctionStringEN += pvModel->data(dataIndex).toString();
+  // Set Alias
+  dataIndex = pvModel->index(index.row(), 3);
+  if(!pvModel->data(dataIndex).toString().isEmpty()){
+    pvFunctionStringEN += " (" + pvModel->data(dataIndex).toString() + "): ";
+  }
+  // Set function EN
+  dataIndex = pvModel->index(index.row(), 7);
+  pvFunctionStringEN += pvModel->data(dataIndex).toString();
+}
+
+void mdtClLinkedUnitConnectionInfoDialog::builFunctionStringFR(const QModelIndex& index)
+{
+  Q_ASSERT(pvModel != 0);
+
+  QModelIndex dataIndex;
+
+  pvFunctionStringFR.clear();
+  if(!index.isValid()){
+    return;
+  }
+  // Set schema position
+  pvFunctionStringFR = "-> Pos. ";
+  dataIndex = pvModel->index(index.row(), 2);
+  pvFunctionStringFR += pvModel->data(dataIndex).toString();
+  // Set Alias
+  dataIndex = pvModel->index(index.row(), 3);
+  if(!pvModel->data(dataIndex).toString().isEmpty()){
+    pvFunctionStringFR += " (" + pvModel->data(dataIndex).toString() + "): ";
+  }
+  // Set function EN
+  dataIndex = pvModel->index(index.row(), 8);
+  pvFunctionStringFR += pvModel->data(dataIndex).toString();
+}
+
+void mdtClLinkedUnitConnectionInfoDialog::builFunctionStringDE(const QModelIndex& index)
+{
+  Q_ASSERT(pvModel != 0);
+
+  QModelIndex dataIndex;
+
+  pvFunctionStringDE.clear();
+  if(!index.isValid()){
+    return;
+  }
+  // Set schema position
+  pvFunctionStringDE = "-> Pos. ";
+  dataIndex = pvModel->index(index.row(), 2);
+  pvFunctionStringDE += pvModel->data(dataIndex).toString();
+  // Set Alias
+  dataIndex = pvModel->index(index.row(), 3);
+  if(!pvModel->data(dataIndex).toString().isEmpty()){
+    pvFunctionStringDE += " (" + pvModel->data(dataIndex).toString() + "): ";
+  }
+  // Set function EN
+  dataIndex = pvModel->index(index.row(), 9);
+  pvFunctionStringDE += pvModel->data(dataIndex).toString();
+}
+
+void mdtClLinkedUnitConnectionInfoDialog::builFunctionStringIT(const QModelIndex& index)
+{
+  Q_ASSERT(pvModel != 0);
+
+  QModelIndex dataIndex;
+
+  pvFunctionStringIT.clear();
+  if(!index.isValid()){
+    return;
+  }
+  // Set schema position
+  pvFunctionStringIT = "-> Pos. ";
+  dataIndex = pvModel->index(index.row(), 2);
+  pvFunctionStringIT += pvModel->data(dataIndex).toString();
+  // Set Alias
+  dataIndex = pvModel->index(index.row(), 3);
+  if(!pvModel->data(dataIndex).toString().isEmpty()){
+    pvFunctionStringIT += " (" + pvModel->data(dataIndex).toString() + "): ";
+  }
+  // Set function EN
+  dataIndex = pvModel->index(index.row(), 10);
+  pvFunctionStringIT += pvModel->data(dataIndex).toString();
 }

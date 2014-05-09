@@ -350,9 +350,10 @@ void mdtClUnitEditor::addConnector()
     displayLastError();
     return;
   }
-  // Update connections view
+  // Update views
   select("UnitConnection_view");
   select("UnitConnector_view");
+  select("UnitLink_view");
 }
 
 void mdtClUnitEditor::addConnectorBasedConnector()
@@ -411,9 +412,10 @@ void mdtClUnitEditor::addConnectorBasedConnector()
     displayLastError();
     return;
   }
-  // Update connections view
+  // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
+  select("UnitLink_view");
 }
 
 void mdtClUnitEditor::addArticleConnectorBasedConnector()
@@ -478,9 +480,10 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
     displayLastError();
     return;
   }
-  // Update connections view
+  // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
+  select("UnitLink_view");
 }
 
 void mdtClUnitEditor::editConnectorName()
@@ -551,6 +554,7 @@ void mdtClUnitEditor::removeConnectors()
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
+  select("UnitLink_view");
 }
 
 void mdtClUnitEditor::viewLinkedConnectors()
@@ -688,6 +692,54 @@ void mdtClUnitEditor::editConnection()
   }
   // Edit connection
   if(!unit.editConnection(connectionId, dialog.data())){
+    pvLastError = unit.lastError();
+    displayLastError();
+    return;
+  }
+  // Update connections view
+  select("UnitConnection_view");
+}
+
+void mdtClUnitEditor::setFunctionsFromOtherConnection()
+{
+  mdtClLinkedUnitConnectionInfoDialog dialog(this, database());
+  mdtClUnit unit(0, database());
+  mdtClPathGraph graph(database());
+  QVariant connectionId;
+  QList<QVariant> linkedConnectionsIdList;
+  mdtClUnitConnectionData connectionData;
+  bool ok;
+
+  // Get current unit connection ID
+  connectionId = currentData("UnitConnection_view", "UnitConnection_Id_PK");
+  if(connectionId.isNull()){
+    return;
+  }
+  // Load link list and get linked connections
+  if(!graph.loadLinkList()){
+    pvLastError = graph.lastError();
+    displayLastError();
+    return;
+  }
+  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId);
+  // Get current connection data
+  connectionData = unit.getConnectionData(connectionId, true, &ok);
+  if(!ok){
+    pvLastError = unit.lastError();
+    displayLastError();
+  }
+  // Setup and show dialog
+  dialog.setConnections(connectionId, linkedConnectionsIdList);
+  dialog.setSelectionModeEnabled(true);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Update functions
+  connectionData.setValue("FunctionEN", dialog.functionStringEN());
+  connectionData.setValue("FunctionFR", dialog.functionStringFR());
+  connectionData.setValue("FunctionDE", dialog.functionStringDE());
+  connectionData.setValue("FunctionIT", dialog.functionStringIT());
+  if(!unit.editConnection(connectionId, connectionData)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
@@ -1411,6 +1463,7 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   QPushButton *pbAddConnection;
   QPushButton *pbAddArticleConnectionBasedConnection;
   QPushButton *pbEditConnection;
+  QPushButton *pbCopyFunctions;
   QPushButton *pbRemoveConnection;
   QPushButton *pbViewLinkedConnections;
 
@@ -1422,18 +1475,25 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   }
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
-  // Add the Add and remove buttons
+  // Add add connection button
   pbAddConnection = new QPushButton(tr("Add connection ..."));
-  pbAddArticleConnectionBasedConnection = new QPushButton(tr("Add art. connections ..."));
-  pbEditConnection = new QPushButton(tr("Edit connection ..."));
-  pbRemoveConnection = new QPushButton(tr("Remove connections"));
   connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
-  connect(pbAddArticleConnectionBasedConnection, SIGNAL(clicked()), this, SLOT(addArticleConnectionsBasedConnections()));
-  connect(pbEditConnection, SIGNAL(clicked()), this, SLOT(editConnection()));
-  connect(pbRemoveConnection, SIGNAL(clicked()), this, SLOT(removeConnections()));
   widget->addWidgetToLocalBar(pbAddConnection);
+  // Add add art. connection button
+  pbAddArticleConnectionBasedConnection = new QPushButton(tr("Add art. connections ..."));
+  connect(pbAddArticleConnectionBasedConnection, SIGNAL(clicked()), this, SLOT(addArticleConnectionsBasedConnections()));
   widget->addWidgetToLocalBar(pbAddArticleConnectionBasedConnection);
+  // Add edit connection button
+  pbEditConnection = new QPushButton(tr("Edit connection ..."));
+  connect(pbEditConnection, SIGNAL(clicked()), this, SLOT(editConnection()));
   widget->addWidgetToLocalBar(pbEditConnection);
+  // Add copy functions connection button
+  pbCopyFunctions = new QPushButton(tr("Set functions from ..."));
+  connect(pbCopyFunctions, SIGNAL(clicked()), this, SLOT(setFunctionsFromOtherConnection()));
+  widget->addWidgetToLocalBar(pbCopyFunctions);
+  // Add remove connection button
+  pbRemoveConnection = new QPushButton(tr("Remove connections"));
+  connect(pbRemoveConnection, SIGNAL(clicked()), this, SLOT(removeConnections()));
   widget->addWidgetToLocalBar(pbRemoveConnection);
   // View linked connections button
   pbViewLinkedConnections = new QPushButton(tr("Linked connections"));

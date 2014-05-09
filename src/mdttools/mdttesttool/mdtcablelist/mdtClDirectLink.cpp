@@ -297,8 +297,6 @@ mdtSqlRecord mdtClDirectLink::getRecordForTable(const QSqlRecord & leftData, con
   record.setValue("EndFunctionDE", rightData.value(16));
   record.setValue("EndFunctionIT", rightData.value(17));
   
-  ///qDebug() << "REC: " << record;
-  ///qDebug() << "RDATA: " << rightData;
   
   return record;
 }

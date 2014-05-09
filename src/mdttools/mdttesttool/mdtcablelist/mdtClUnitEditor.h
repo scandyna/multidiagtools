@@ -109,6 +109,10 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   void editConnection();
 
+  /*! \brief Copy function from another connection
+   */
+  void setFunctionsFromOtherConnection();
+
   /*! \brief Remove connection from unit connection table
    */
   void removeConnections();

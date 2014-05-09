@@ -2160,6 +2160,7 @@ bool mdtTtDatabaseSchema::createVehicleTypeUnitView()
         "Unit_tbl.Coordinate ,\n"\
         "Unit_tbl.Cabinet ,\n"\
         "Unit_tbl.SchemaPosition ,\n"\
+        "Unit_tbl.Alias ,\n"\
         "VehicleType_Unit_tbl.VehicleType_Id_FK ,\n"\
         "VehicleType_Unit_tbl.Unit_Id_FK\n"\
         "FROM VehicleType_Unit_tbl\n"\

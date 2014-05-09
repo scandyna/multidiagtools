@@ -124,6 +124,7 @@ void mdtClMainWindow::editVehicleType()
     pvVehicleTypeEditorWindow->resize(800, 500);
     pvVehicleTypeEditorWindow->enableNavigation();
     pvVehicleTypeEditorWindow->enableEdition();
+    pvVehicleTypeEditorWindow->setWindowTitle(tr("Vehicle type edition"));
   }
   Q_ASSERT(pvVehicleTypeEditor != 0);
   Q_ASSERT(pvVehicleTypeEditorWindow != 0);

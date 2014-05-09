@@ -105,6 +105,11 @@ bool mdtClVehicleTypeEditor::setupUnitTable()
   widget->setColumnHidden("Unit_Id_FK", true);
   // Give fields a user friendly name
   widget->setHeaderData("SchemaPosition", tr("Schema position"));
+  // Enable sorting
+  widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  widget->sort();
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
 
   return true;
 }
