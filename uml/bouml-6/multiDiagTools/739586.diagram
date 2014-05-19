@@ -14,7 +14,7 @@ classcanvas 128386 class_ref 765058 // ArticleConnection_tbl
 end
 classcanvas 128642 class_ref 765314 // UnitConnection_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 468.68 399.06 2000
+  xyz 535.68 394.06 2000
 end
 classcanvas 129154 class_ref 805250 // Link_tbl
   classdiagramsettings member_max_width 0 end
@@ -30,7 +30,7 @@ classcanvas 129794 class_ref 805506 // LinkDirection_tbl
 end
 note 130818 "For terminal ranges:
 A UnitConnection (designed with Id_PK) can be a range of another UnitConnection (wich is also designed by UnitConnection_Id_FK)"
-  xyzwh 787.62 713.96 2000 219 135
+  xyzwh 802.62 711.96 2000 219 135
 classcanvas 131074 class_ref 944386 // ArticleConnector_tbl
   classdiagramsettings member_max_width 0 end
   xyz 1360.48 280.94 2006
@@ -41,7 +41,7 @@ classcanvas 131714 class_ref 944642 // ArticleComponent_tbl
 end
 classcanvas 132354 class_ref 944770 // VehicleType_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 64.76 278.52 2000
+  xyz 7.76 223.52 2000
 end
 classcanvas 132482 class_ref 944898 // VehicleType_Unit_tbl
   classdiagramsettings member_max_width 0 end
@@ -49,7 +49,7 @@ classcanvas 132482 class_ref 944898 // VehicleType_Unit_tbl
 end
 classcanvas 132866 class_ref 945026 // VehicleType_Link_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 18.44 521.98 2000
+  xyz 2.44 546.98 2000
 end
 classcanvas 133762 class_ref 945154 // ArticleLink_tbl
   classdiagramsettings member_max_width 0 end
@@ -65,7 +65,7 @@ classcanvas 135554 class_ref 952194 // ConnectorContact_tbl
 end
 classcanvas 135938 class_ref 972674 // UnitConnector_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 327.5 250.8 2000
+  xyz 397.5 239.8 2000
 end
 classcanvas 136578 class_ref 1013250 // Cable_tbl
   classdiagramsettings member_max_width 0 end
@@ -81,6 +81,14 @@ classcanvas 137474 class_ref 1140354 // ConnectionType_tbl
   classdiagramsettings member_max_width 0 end
   xyz 913.8 554.9 2000
 end
+classcanvas 138626 class_ref 1207682 // LinkBeam_UnitStart_tbl
+  classdiagramsettings member_max_width 0 end
+  xyz 88 364 2000
+end
+classcanvas 139650 class_ref 1214210 // LinkBeam_UnitEnd_tbl
+  classdiagramsettings member_max_width 0 end
+  xyz 301 454 2005
+end
 relationcanvas 128258 relation_ref 949890 // <unidirectional association>
   decenter_begin 184
   decenter_end 293
@@ -94,6 +102,8 @@ relationcanvas 128514 relation_ref 950274 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 950530 // <unidirectional association>
+  decenter_begin 650
+  decenter_end 812
   from ref 128642 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -123,16 +133,16 @@ end
 relationcanvas 130050 relation_ref 1020674 // <unidirectional association>
   decenter_begin 629
   decenter_end 361
-  from ref 128130 z 2001 to point 787.4 114.8
-  line 130178 z 2001 to point 787.4 74.8
+  from ref 128130 z 2001 to point 787 114
+  line 130178 z 2001 to point 787 74
   line 130306 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 1020802 // <unidirectional association>
   decenter_begin 610
-  from ref 128642 z 2001 to point 799.6 588
-  line 130562 z 2001 to point 797.4 552.4
+  from ref 128642 z 2001 to point 866 583
+  line 130562 z 2001 to point 864 547
   line 130690 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -161,7 +171,8 @@ relationcanvas 132738 relation_ref 1168258 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132994 relation_ref 1168386 // <unidirectional association>
-  decenter_begin 259
+  decenter_begin 54
+  decenter_end 137
   from ref 132866 z 2001 to ref 132354
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -172,7 +183,8 @@ relationcanvas 133122 relation_ref 1168514 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 133250 relation_ref 1168642 // <unidirectional association>
-  decenter_begin 703
+  decenter_begin 166
+  decenter_end 339
   from ref 132866 z 2001 to ref 132354
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -295,6 +307,38 @@ end
 relationcanvas 137858 relation_ref 1425410 // <unidirectional association>
   decenter_begin 701
   from ref 128642 z 2001 to ref 137474
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 138754 relation_ref 1494530 // <unidirectional association>
+  geometry VH
+  decenter_begin 489
+  decenter_end 795
+  from ref 138626 z 2001 to point 200 179
+  line 138882 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 139394 relation_ref 1494914 // <unidirectional association>
+  decenter_begin 889
+  decenter_end 903
+  from ref 138626 z 2001 to ref 136706
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 139778 relation_ref 1501442 // <unidirectional association>
+  geometry HVr
+  from ref 139650 z 2006 to point 416 731
+  line 139906 z 2006 to ref 136706
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 140034 relation_ref 1501570 // <unidirectional association>
+  geometry VH
+  decenter_begin 229
+  decenter_end 887
+  from ref 139650 z 2006 to point 352 198
+  line 140290 z 2006 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

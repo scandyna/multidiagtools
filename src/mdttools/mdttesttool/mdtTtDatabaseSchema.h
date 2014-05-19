@@ -173,6 +173,18 @@ class mdtTtDatabaseSchema
    */
   bool setupLinkTable();
 
+  /*! \brief Setup LinkBeam_tbl
+   */
+  bool setupLinkBeamTable();
+
+  /*! \brief Setup LinkBeam_Unit_tbl
+   */
+  bool setupLinkBeamUnitStartTable();
+
+  /*! \brief Setup LinkBeam_Unit_tbl
+   */
+  bool setupLinkBeamUnitEndTable();
+
   /*! \brief
    */
   bool setupLinkDirectionTable();
@@ -326,6 +338,14 @@ class mdtTtDatabaseSchema
   /*! \brief
    */
   bool createLinkListView();
+
+  /*! \brief Create LinkBeam_UnitStart_view
+   */
+  bool createLinkBeamUnitStartView();
+
+  /*! \brief Create LinkBeam_UnitEnd_view
+   */
+  bool createLinkBeamUnitEndView();
 
   /*! \brief Create test link view
    *

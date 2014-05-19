@@ -147,6 +147,11 @@ void mdtSqlSelectionDialog::sort()
   pvTableView->sortByColumn(0);
 }
 
+void mdtSqlSelectionDialog::selectRow(int row)
+{
+  pvTableView->selectRow(row);
+}
+
 void mdtSqlSelectionDialog::selectRows(const QString &fieldName, const QVariant &matchData)
 {
   Q_ASSERT(pvModel != 0);
@@ -297,6 +302,28 @@ QVariant mdtSqlSelectionDialog::selectedData(int row, const QString &fieldName)
   return data;
 }
 
+mdtSqlTableSelection mdtSqlSelectionDialog::selection(const QStringList &fieldList)
+{
+  Q_ASSERT(pvModel != 0);
+
+  mdtSqlTableSelection s;
+
+  s.setIndexList(pvSelectedModelIndexes, fieldList, pvModel);
+
+  return s;
+}
+
+mdtSqlTableSelection mdtSqlSelectionDialog::selection(const QString &field)
+{
+  Q_ASSERT(pvModel != 0);
+
+  QStringList fieldList;
+
+  fieldList.append(field);
+
+  return selection(fieldList);
+}
+
 void mdtSqlSelectionDialog::reject()
 {
   QDialog::reject();
@@ -305,7 +332,7 @@ void mdtSqlSelectionDialog::reject()
 void mdtSqlSelectionDialog::accept()
 {
   buildSelectionResults();
-  if((pvSelectionResults.isEmpty())&&(!pvAllowEmptyResult)){
+  if((pvSelectedModelIndexes.isEmpty())&&(!pvAllowEmptyResult)){
     return;
   }
   QDialog::accept();
@@ -321,11 +348,14 @@ void mdtSqlSelectionDialog::buildSelectionResults()
   QModelIndex index;
   QModelIndexList selectedIndexes;
 
-  pvSelectionResults.clear();
+  pvSelectedModelIndexes.clear();
+  pvSelectionResults.clear(); /// \note Old API
   selectedIndexes = pvTableView->selectionModel()->selectedIndexes();
   for(i = 0; i < selectedIndexes.size(); ++i){
     index = pvProxyModel->index(selectedIndexes.at(i).row(), selectedIndexes.at(i).column());
     index = pvProxyModel->mapToSource(index);
+    pvSelectedModelIndexes.append(index);
+    /// \note Old API
     if((index.isValid()) && (pvSelectionResultColumns.contains(index.column()))){
       pvSelectionResults.append(index);
     }

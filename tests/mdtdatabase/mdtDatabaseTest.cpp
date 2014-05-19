@@ -839,6 +839,10 @@ void mdtDatabaseTest::sqlRecordTest()
   QCOMPARE(record.sqlForUpdate("Client_tbl", matchData), QString("UPDATE Client_tbl SET FirstName=? WHERE Id_PK=8 AND FirstName='Name 8' AND Remarks='Remark 8'"));
 }
 
+/** \todo This test uses the old selectionResult() API
+ * A new test is included in mdtDatabaseWidgetTest module, that uses new API (with mdtSqlTableSelection)
+ * Once all classes has migrated, this test can be suppressed.
+ */
 void mdtDatabaseTest::sqlSelectionDialogTest()
 {
   mdtSqlSelectionDialog *dialog;

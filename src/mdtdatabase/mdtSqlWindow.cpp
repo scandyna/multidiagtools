@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QKeySequence>
 #include <QVBoxLayout>
+#include <QIcon>
 
 #include <QDebug>
 
@@ -66,9 +67,13 @@ void mdtSqlWindow::enableNavigation()
 
   // Create actions
   actNavToFirst = new QAction("|<<", this);
+  actNavToFirst->setIcon(QIcon::fromTheme("go-first"));
   actNavToPrevious = new QAction("<", this);
+  actNavToPrevious->setIcon(QIcon::fromTheme("go-previous"));
   actNavToNext = new QAction(">", this);
+  actNavToNext->setIcon(QIcon::fromTheme("go-next"));
   actNavToLast = new QAction(">>|", this);
+  actNavToLast->setIcon(QIcon::fromTheme("go-last"));
   // Connect actions enable/disable
   connect(widget, SIGNAL(toFirstEnabledStateChanged(bool)), actNavToFirst, SLOT(setEnabled(bool)));
   connect(widget, SIGNAL(toPreviousEnabledStateChanged(bool)), actNavToPrevious, SLOT(setEnabled(bool)));
@@ -105,9 +110,13 @@ void mdtSqlWindow::enableEdition()
 
   // Create actions
   actInsert = new QAction(tr("New"), this);
+  actInsert->setIcon(QIcon::fromTheme("document-new"));
   actSubmit = new QAction(tr("Save"), this);
+  actSubmit->setIcon(QIcon::fromTheme("document-save"));
   actRevert = new QAction(tr("Cancel"), this);
+  actRevert->setIcon(QIcon::fromTheme("document-revert"));
   actRemove = new QAction(tr("Delete"), this);
+  actRemove->setIcon(QIcon::fromTheme("edit-delete"));
   // Setup shortcuts
   actInsert->setShortcut(QKeySequence::New);
   actSubmit->setShortcut(QKeySequence::Save);

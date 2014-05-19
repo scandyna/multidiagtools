@@ -26,6 +26,7 @@
 #include "mdtSqlTableSelectionRow.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtSqlRelation.h"
+#include "mdtSqlSelectionDialog.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -283,6 +284,144 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
   clearTestDatabaseData();
 }
 
+void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
+{
+  mdtSqlSelectionDialog *dialog;
+  QSqlQuery q;
+  QString sql;
+  mdtSqlTableSelection s;
+  QStringList fields;
+
+  // Populate database
+  populateTestDatabase();
+  /*
+   * Check single selection with 1 field, at column 0
+   */
+  sql = "SELECT * FROM Client_tbl";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, pvDatabaseManager.database());
+  dialog->selectRow(0);
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  s = dialog->selection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  delete dialog;
+  /*
+   * Check single selection with 1 field, at column 0 + sorting ASC
+   */
+  sql = "SELECT * FROM Client_tbl";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, pvDatabaseManager.database());
+  dialog->addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  dialog->sort();
+  dialog->selectRow(0);
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  s = dialog->selection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  delete dialog;
+  /*
+   * Check single selection with 1 field, at column 0 + sorting DESC
+   */
+  sql = "SELECT * FROM Client_tbl";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, pvDatabaseManager.database());
+  dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
+  dialog->sort();
+  dialog->selectRow(0);
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  s = dialog->selection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  delete dialog;
+  /*
+   * Check single selection with 1 field, at column 1
+   */
+  sql = "SELECT * FROM Client_tbl";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, pvDatabaseManager.database());
+  dialog->selectRow(0);
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  s = dialog->selection("FirstName");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "FirstName"), QVariant("Andy"));
+  delete dialog;
+  /*
+   * Check single selection with 2 fields
+   */
+  sql = "SELECT * FROM Client_tbl";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, pvDatabaseManager.database());
+  dialog->selectRow(0);
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  fields.clear();
+  fields << "Id_PK" << "FirstName";
+  s = dialog->selection(fields);
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(0, "FirstName"), QVariant("Andy"));
+  delete dialog;
+  /*
+   * Check multiple selection with 1 field
+   */
+  sql = "SELECT * FROM Client_tbl";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, pvDatabaseManager.database(), true);
+  dialog->selectRow(0);
+  dialog->selectRow(1);
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  s = dialog->selection("Id_PK");
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  delete dialog;
+  /*
+   * Check multiple selection with 1 field, sorting DESC
+   */
+  sql = "SELECT * FROM Client_tbl";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, pvDatabaseManager.database(), true);
+  dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
+  dialog->selectRow(0);
+  dialog->selectRow(1);
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  s = dialog->selection("Id_PK");
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  delete dialog;
+  /*
+   * Check multiple selection with 2 fields, sorting DESC
+   */
+  sql = "SELECT * FROM Client_tbl";
+  dialog = new mdtSqlSelectionDialog;
+  dialog->setQuery(sql, pvDatabaseManager.database(), true);
+  dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
+  dialog->selectRow(0);
+  dialog->selectRow(1);
+  QTimer::singleShot(50, dialog, SLOT(accept()));
+  QVERIFY(dialog->exec() == QDialog::Accepted);
+  fields.clear();
+  fields << "Id_PK" << "FirstName";
+  s = dialog->selection(fields);
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(0, "FirstName"), QVariant("Andy"));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  QCOMPARE(s.data(1, "FirstName"), QVariant("Bety"));
+  delete dialog;
+
+  // Cleanup
+  clearTestDatabaseData();
+}
+
 void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 {
   mdtSqlTableWidget *sqlTableWidget;
@@ -402,11 +541,11 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
    * Play
    */
 
-  
+  /*
   while(sqlTableWidget->isVisible()){
     QTest::qWait(1000);
   }
-  
+  */
   // Cleanup
   clearTestDatabaseData();
   delete sqlTableWidget;

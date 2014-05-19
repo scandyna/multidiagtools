@@ -39,6 +39,7 @@ class mdtSqlWindow;
 class mdtTtTestConnectionCableEditor;
 class mdtTtCableChecker;
 class mdtTtCableCheckerWindow;
+class mdtClLinkBeamEditor;
 
 class QAction;
 
@@ -87,6 +88,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Edit units
    */
   void editUnit();
+
+  /*! \brief Edit link beam
+   */
+  void editLinkBeam();
 
   /*! \brief Edit articles
    */
@@ -169,6 +174,9 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   // Unit editor
   mdtClUnitEditor *pvUnitEditor;
   mdtSqlWindow *pvUnitEditorWindow;
+  // Link beam editor
+  mdtClLinkBeamEditor *pvLinkBeamEditor;
+  mdtSqlWindow *pvLinkBeamEditorWindow;
   // Test node editor
   mdtTtTestNodeEditor *pvTestNodeEditor;
   mdtSqlWindow *pvTestNodeEditorWindow;

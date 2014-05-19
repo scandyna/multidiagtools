@@ -18,43 +18,67 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DATABASE_WIDGET_TEST_H
-#define MDT_DATABASE_WIDGET_TEST_H
+#ifndef MDT_CL_LINK_BEAM_EDITOR_H
+#define MDT_CL_LINK_BEAM_EDITOR_H
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QFileInfo>
-#include <QMessageBox>
+#include "mdtSqlForm.h"
 #include <QSqlDatabase>
 
+class mdtClLinkBeamEditor;
 
-class mdtDatabaseWidgetTest : public mdtTest
+/*! \brief Provides link beam edition to the user
+ */
+class mdtClLinkBeamEditor : public mdtSqlForm
 {
- Q_OBJECT
+  Q_OBJECT
+
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtClLinkBeamEditor(QWidget *parent, QSqlDatabase db);
+
+  /*! \brief Setup tables
+   */
+  bool setupTables();
 
  private slots:
 
-  void initTestCase();
-  void cleanupTestCase();
+  /*! \brief Add a start unit
+   */
+  void addStartUnit();
 
-  // Table selection tests
-  void sqlTableSelectionItemTest();
-  void sqlTableSelectionRowTest();
-  void sqlTableSelectionTest();
+  /*! \brief Remove start units
+   */
+  void removeStartUnits();
 
-  void sqlSelectionDialogTest();
+  /*! \brief Add a end unit
+   */
+  void addEndUnit();
 
-  void sqlTableWidgetTest();
+  /*! \brief Remove end units
+   */
+  void removeEndUnits();
 
  private:
 
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
+  /*! \brief Setup LinkBeam_tbl part
+   */
+  bool setupLinkBeamTable();
 
-  void populateTestDatabase();
-  void clearTestDatabaseData();
+  /*! \brief Setup UnitLink_view part
+   */
+  bool setupLinkTable();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
+  /*! \brief Setup LinkBeam_UnitStart_view part
+   */
+  bool setupStartUnitTable();
+
+  /*! \brief Setup LinkBeam_UnitEnd_view part
+   */
+  bool setupEndUnitTable();
+
+  Q_DISABLE_COPY(mdtClLinkBeamEditor);
 };
 
-#endif // #ifndef MDT_DATABASE_WIDGET_TEST_H
+#endif // #ifndef MDT_CL_LINK_BEAM_EDITOR_H

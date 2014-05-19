@@ -25,6 +25,7 @@
 #include "mdtClVehicleTypeEditor.h"
 #include "mdtClConnectorEditor.h"
 #include "mdtClUnitEditor.h"
+#include "mdtClLinkBeamEditor.h"
 #include "mdtClArticleEditor.h"
 #include "mdtTtTestConnectionCableEditor.h"
 #include "mdtTtTestNodeEditor.h"
@@ -60,6 +61,8 @@ mdtClMainWindow::mdtClMainWindow()
   pvUnitEditor = 0;
   pvTestNodeEditor = 0;
   pvTestConnectionCableEditor = 0;
+  pvLinkBeamEditor = 0;
+  pvLinkBeamEditorWindow = 0;
   pvTestConnectionCableEditorWindow = 0;
   pvTestEditor = 0;
   pvTestEditorWindow = 0;
@@ -186,6 +189,34 @@ void mdtClMainWindow::editUnit()
   Q_ASSERT(pvUnitEditorWindow != 0);
   pvUnitEditor->select();
   pvUnitEditorWindow->show();
+}
+
+void mdtClMainWindow::editLinkBeam()
+{
+  if(pvLinkBeamEditor == 0){
+    pvLinkBeamEditor = new mdtClLinkBeamEditor(this, pvDatabaseManager->database());
+    if(!pvLinkBeamEditor->setupTables()){
+      QMessageBox msgBox(this);
+      msgBox.setText(tr("Cannot setup link beam editor."));
+      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
+                                + qApp->applicationName() + tr(")"));
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.exec();
+      delete pvLinkBeamEditor;
+      pvLinkBeamEditor = 0;
+      return;
+    }
+    pvLinkBeamEditorWindow = new mdtSqlWindow(this);
+    pvLinkBeamEditorWindow->setSqlForm(pvLinkBeamEditor);
+    pvLinkBeamEditorWindow->resize(800, 500);
+    pvLinkBeamEditorWindow->enableNavigation();
+    pvLinkBeamEditorWindow->enableEdition();
+    pvLinkBeamEditorWindow->setWindowTitle(tr("Link beam edition"));
+  }
+  Q_ASSERT(pvLinkBeamEditor != 0);
+  Q_ASSERT(pvLinkBeamEditorWindow != 0);
+  pvLinkBeamEditor->select();
+  pvLinkBeamEditorWindow->show();
 }
 
 void mdtClMainWindow::editArticle()
@@ -396,6 +427,9 @@ void mdtClMainWindow::createActions()
   // Unit edition
   connect(actEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
   connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
+
+  // Link beam edition
+  connect(actEditLinkBeam, SIGNAL(triggered()), this, SLOT(editLinkBeam()));
 
   // Test connection cable
   connect(actEditTestConnectionCable, SIGNAL(triggered()), this, SLOT(editTestConnectionCable()));

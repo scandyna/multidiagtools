@@ -52,6 +52,9 @@
     <property name="text">
      <string>Edit vehicle types</string>
     </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -60,7 +63,7 @@
      <x>0</x>
      <y>0</y>
      <width>479</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -85,6 +88,8 @@
     <addaction name="actEditArticle"/>
     <addaction name="separator"/>
     <addaction name="actEditUnit"/>
+    <addaction name="separator"/>
+    <addaction name="actEditLinkBeam"/>
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">
@@ -114,11 +119,17 @@
    <addaction name="actOpenDatabase"/>
   </widget>
   <action name="actOpenDatabase">
+   <property name="icon">
+    <iconset theme="document-open"/>
+   </property>
    <property name="text">
     <string>&amp;Open a database</string>
    </property>
   </action>
   <action name="actCreateNewDatabase">
+   <property name="icon">
+    <iconset theme="document-new"/>
+   </property>
    <property name="text">
     <string>Create a &amp;new database</string>
    </property>
@@ -129,6 +140,9 @@
    </property>
   </action>
   <action name="ActQuit">
+   <property name="icon">
+    <iconset theme="application-exit"/>
+   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>
@@ -196,6 +210,11 @@
   <action name="actCableChecker">
    <property name="text">
     <string>&amp;Cable checker</string>
+   </property>
+  </action>
+  <action name="actEditLinkBeam">
+   <property name="text">
+    <string>Edit link &amp;beams</string>
    </property>
   </action>
  </widget>

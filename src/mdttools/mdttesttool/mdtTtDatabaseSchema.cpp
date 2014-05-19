@@ -240,6 +240,15 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupArticleLinkTable()){
     return false;
   }
+  if(!setupLinkBeamTable()){
+    return false;
+  }
+  if(!setupLinkBeamUnitStartTable()){
+    return false;
+  }
+  if(!setupLinkBeamUnitEndTable()){
+    return false;
+  }
   if(!setupLinkTable()){
     return false;
   }
@@ -334,6 +343,12 @@ bool mdtTtDatabaseSchema::createViews()
     return false;
   }
   if(!createLinkListView()){
+    return false;
+  }
+  if(!createLinkBeamUnitStartView()){
+    return false;
+  }
+  if(!createLinkBeamUnitEndView()){
     return false;
   }
   if(!createVehicleTypeUnitView()){
@@ -1422,6 +1437,11 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   field.setName("Value");
   field.setType(QVariant::Double);
   table.addField(field, false);
+  // LinkBeam_Id_FK
+  field = QSqlField();
+  field.setName("LinkBeam_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
   // Indexes
   table.addIndex("Direction_Id_FK_idx", false);
   if(!table.addFieldToIndex("Direction_Id_FK_idx", "LinkDirection_Code_FK")){
@@ -1439,6 +1459,11 @@ bool mdtTtDatabaseSchema::setupLinkTable()
     return false;
   }
   if(!table.addFieldToIndex("Link_ArticleLink_idx", "ArticleConnectionEnd_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("LinkBeam_Id_FK_idx", false);
+  if(!table.addFieldToIndex("LinkBeam_Id_FK_idx", "LinkBeam_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -1469,6 +1494,127 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   }
   table.addForeignKey("LinkType_Code_FK_fk2", "LinkType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("LinkType_Code_FK_fk2", "LinkType_Code_FK", "Code_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupLinkBeamTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("LinkBeam_tbl", "UTF8");
+
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Identification
+  field = QSqlField();
+  field.setName("Identification");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupLinkBeamUnitStartTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("LinkBeam_UnitStart_tbl", "UTF8");
+
+  // UnitStart_Id_FK
+  field.setName("Unit_Id_FK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // LinkBeam_Id_FK
+  field = QSqlField();
+  field.setName("LinkBeam_Id_FK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Indexes
+  table.addIndex("Unit_Id_FK_idx4", false);
+  if(!table.addFieldToIndex("Unit_Id_FK_idx4", "Unit_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("LinkBeam_Id_FK_idx2", false);
+  if(!table.addFieldToIndex("LinkBeam_Id_FK_idx2", "LinkBeam_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("Unit_Id_FK_fk4", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Unit_Id_FK_fk4", "Unit_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("LinkBeam_Id_FK_fk2", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk2", "LinkBeam_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupLinkBeamUnitEndTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("LinkBeam_UnitEnd_tbl", "UTF8");
+
+  // UnitStart_Id_FK
+  field.setName("Unit_Id_FK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // LinkBeam_Id_FK
+  field = QSqlField();
+  field.setName("LinkBeam_Id_FK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Indexes
+  table.addIndex("Unit_Id_FK_idx5", false);
+  if(!table.addFieldToIndex("Unit_Id_FK_idx5", "Unit_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("LinkBeam_Id_FK_idx3", false);
+  if(!table.addFieldToIndex("LinkBeam_Id_FK_idx3", "LinkBeam_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("Unit_Id_FK_fk5", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Unit_Id_FK_fk5", "Unit_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("LinkBeam_Id_FK_fk3", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk3", "LinkBeam_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -2459,6 +2605,7 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
 
   selectSql = "SELECT\n"\
               " LNK.Identification ,\n"\
+              " LNK.LinkBeam_Id_FK ,\n"\
               " US.SchemaPosition AS StartSchemaPosition ,\n"\
               " US.Alias AS StartAlias,\n"\
               " UCS.Name AS StartUnitConnectorName ,\n"\
@@ -2544,6 +2691,7 @@ bool mdtTtDatabaseSchema::createLinkListView()
   selectSql = "SELECT\n"\
               " LNK.UnitConnectionStart_Id_FK ,\n"\
               " LNK.UnitConnectionEnd_Id_FK ,\n"\
+              " LNK.LinkBeam_Id_FK ,\n"\
               " VS.Id_PK AS StartVehicleType_Id_PK,\n"\
               " VS.Type AS StartVehicleType ,\n"\
               " VS.SubType AS StartVehicleSubType ,\n"\
@@ -2611,6 +2759,40 @@ bool mdtTtDatabaseSchema::createLinkListView()
           "  ON LinkDirection_tbl.Code_PK = LNK.LinkDirection_Code_FK\n";
 
   return createView("LinkList_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createLinkBeamUnitStartView()
+{
+  QString sql, selectSql;
+
+  selectSql = "SELECT\n"\
+              " LB.Unit_Id_FK AS UnitStart_Id_FK,\n"\
+              " LB.LinkBeam_Id_FK,\n"\
+              " U.*";
+  sql = "CREATE VIEW LinkBeam_UnitStart_view AS\n";
+  sql += selectSql;
+  sql += "FROM LinkBeam_UnitStart_tbl LB\n"\
+         " JOIN Unit_tbl U\n"\
+         "  ON U.Id_PK = LB.Unit_Id_FK";
+
+  return createView("LinkBeam_UnitStart_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createLinkBeamUnitEndView()
+{
+  QString sql, selectSql;
+
+  selectSql = "SELECT\n"\
+              " LB.Unit_Id_FK AS UnitEnd_Id_FK,\n"\
+              " LB.LinkBeam_Id_FK,\n"\
+              " U.*";
+  sql = "CREATE VIEW LinkBeam_UnitEnd_view AS\n";
+  sql += selectSql;
+  sql += "FROM LinkBeam_UnitEnd_tbl LB\n"\
+         " JOIN Unit_tbl U\n"\
+         "  ON U.Id_PK = LB.Unit_Id_FK";
+
+  return createView("LinkBeam_UnitEnd_view", sql);
 }
 
 bool mdtTtDatabaseSchema::createTestLinkView()

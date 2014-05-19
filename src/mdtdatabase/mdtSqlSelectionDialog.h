@@ -22,6 +22,7 @@
 #define MDT_SQL_SELECTION_DIALOG_H
 
 #include "ui_mdtSqlSelectionDialog.h"
+#include "mdtSqlTableSelection.h"
 #include <QDialog>
 #include <QList>
 #include <QString>
@@ -125,6 +126,10 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    */
   void sort();
 
+  /*! \brief Select row
+   */
+  void selectRow(int row);
+
   /*! \brief Select rows
    *
    * Will select rows for witch data in field (designated by fieldName)
@@ -139,6 +144,7 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    * Note: if a given column is out of range, it will be simply ignored.
    *
    * \pre Model must be set with setModel() before using this method.
+   * \deprecated Use selection()
    */
   void setSelectionResultColumns(const QList<int> &columns);
 
@@ -147,6 +153,7 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    * Note: if a given field not exists, it will be simply ignored.
    *
    * \pre Model must be set with setModel() before using this method.
+   * \deprecated Use selection()
    */
   void setSelectionResultColumns(const QStringList &fields);
 
@@ -155,6 +162,7 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    * Note: if a given field not exists, it will be simply ignored.
    *
    * \pre Model must be set with setModel() before using this method.
+   * \deprecated Use selection()
    */
   void addSelectionResultColumn(const QString &field);
 
@@ -166,6 +174,7 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    * If the user reject the dialog, a empty record is returned.
    *
    * This method works only for single row selection.
+   * \deprecated Use selection()
    */
   QSqlRecord selectedDataRecord();
 
@@ -177,6 +186,8 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    * If the user reject the dialog, a empty list is returned.
    *
    * This method works only for single row selection.
+   *
+   * \deprecated Use selection()
    */
   QList<QVariant> selectionResult();
 
@@ -186,6 +197,8 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    *  setSelectionResultColumns() or addSelectionResultColumn() .
    *
    * This method alos works for multiple rows selection.
+   *
+   * \deprecated Use selection()
    */
   QModelIndexList selectionResults();
 
@@ -202,8 +215,24 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    *
    * If row is out of bound or fieldName not exists,
    *  a invalid QVariant is returned.
+   *
+   * \deprecated Use selection()
    */
   QVariant selectedData(int row, const QString &fieldName);
+
+  /*! \brief Get selection
+   *
+   * The returned selection will only contain data related
+   *  to given field list.
+   */
+  mdtSqlTableSelection selection(const QStringList &fieldList);
+
+  /*! \brief Get selection
+   *
+   * The returned selection will only contain data related
+   *  to given field.
+   */
+  mdtSqlTableSelection selection(const QString &field);
 
  public slots:
 
@@ -230,7 +259,8 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
   QSqlQueryModel *pvModel;
   mdtSortFilterProxyModel *pvProxyModel;
   QList<int> pvSelectionResultColumns;
-  QModelIndexList pvSelectionResults;
+  QModelIndexList pvSelectionResults; /// \note Old API
+  QModelIndexList pvSelectedModelIndexes; // Selected indexes, allready mapped to source model indexes
   bool pvAllowEmptyResult;            // If false, dialog cannot be accepted if nothing was selected
 };
 
