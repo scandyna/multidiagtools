@@ -107,6 +107,7 @@ void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
   // Initial state
   QCOMPARE(row.columnCount(), 0);
   QCOMPARE(row.index(""), QModelIndex());
+  QCOMPARE(row.fields().size(), 0);
   // Put a index and check
   index = model.index(0, model.fieldIndex("Id_PK"));
   QVERIFY(index.isValid());
@@ -114,6 +115,8 @@ void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
   QCOMPARE(row.columnCount(), 1);
   QCOMPARE(row.index(0), index);
   QCOMPARE(row.index("Id_PK"), index);
+  QCOMPARE(row.fields().size(), 1);
+  QCOMPARE(row.fields().at(0), QString("Id_PK"));
   // Put a index and check
   index = model.index(0, model.fieldIndex("Remarks"));
   QVERIFY(index.isValid());
@@ -121,12 +124,16 @@ void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
   QCOMPARE(row.columnCount(), 2);
   QCOMPARE(row.index(1), index);
   QCOMPARE(row.index("Remarks"), index);
+  QCOMPARE(row.fields().size(), 2);
+  QCOMPARE(row.fields().at(0), QString("Id_PK"));
+  QCOMPARE(row.fields().at(1), QString("Remarks"));
   // Clear
   row.clear();
   QCOMPARE(row.columnCount(), 0);
   QCOMPARE(row.index(""), QModelIndex());
   QCOMPARE(row.index("Id_PK"), QModelIndex());
   QCOMPARE(row.index("Remarks"), QModelIndex());
+  QCOMPARE(row.fields().size(), 0);
 
   // Clear database data
   clearTestDatabaseData();
@@ -156,6 +163,7 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
 
   // Initial state
   QCOMPARE(s.rowCount(), 0);
+  QVERIFY(s.isEmpty());
   /*
    * Select Id_PK from row 0 in view
    */
@@ -166,6 +174,9 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
   // Set selection to table selection and check
   s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
   QCOMPARE(s.rowCount(), 1);
+  QVERIFY(!s.isEmpty());
+  QCOMPARE(s.fields(0).size(), 1);
+  QCOMPARE(s.fields(0).at(0), QString("Id_PK"));
   QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
   expectedDataList.clear();
   expectedDataList << 1;
@@ -180,6 +191,9 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
   // Set selection to table selection and check
   s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
   QCOMPARE(s.rowCount(), 1);
+  QVERIFY(!s.isEmpty());
+  QCOMPARE(s.fields(0).size(), 1);
+  QCOMPARE(s.fields(0).at(0), QString("Id_PK"));
   QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
   expectedDataList.clear();
   expectedDataList << 2;
@@ -197,6 +211,11 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
   // Set selection to table selection and check
   s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
   QCOMPARE(s.rowCount(), 2);
+  QVERIFY(!s.isEmpty());
+  QCOMPARE(s.fields(0).size(), 1);
+  QCOMPARE(s.fields(0).at(0), QString("Id_PK"));
+  QCOMPARE(s.fields(1).size(), 1);
+  QCOMPARE(s.fields(1).at(0), QString("Id_PK"));
   QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
   QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
   expectedDataList.clear();
@@ -212,6 +231,9 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
   // Set selection to table selection and check
   s.setIndexList(selectionModel->selectedIndexes(), fieldList, &model);
   QCOMPARE(s.rowCount(), 1);
+  QVERIFY(!s.isEmpty());
+  QCOMPARE(s.fields(0).size(), 1);
+  QCOMPARE(s.fields(0).at(0), QString("Id_PK"));
   QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
   expectedDataList.clear();
   expectedDataList << 1;
@@ -270,7 +292,8 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
   // Clear
   s.clear();
   QCOMPARE(s.rowCount(), 0);
-  
+  QVERIFY(s.isEmpty());
+
   /*
    * Play
    */

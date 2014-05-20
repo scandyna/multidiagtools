@@ -64,8 +64,14 @@ bool mdtClLinkBeam::addStartUnit(const QVariant & unitId, const QVariant & linkB
   return addRecord(record, "LinkBeam_UnitStart_tbl");
 }
 
-bool mdtClLinkBeam::removeStartUnit(const QVariant & unitId, const QVariant & linkBeamId) 
+bool mdtClLinkBeam::removeStartUnit(const QVariant& unitId, const QVariant& linkBeamId, bool handleTransactions) 
 {
+  return removeData("LinkBeam_UnitStart_tbl", "Unit_Id_FK", unitId, "LinkBeam_Id_FK", linkBeamId);
+}
+
+bool mdtClLinkBeam::removeStartUnits(const mdtSqlTableSelection & s)
+{
+  return removeData("LinkBeam_UnitStart_tbl", s, true);
 }
 
 bool mdtClLinkBeam::addEndUnit(const QVariant & unitId, const QVariant & linkBeamId) 
@@ -84,5 +90,10 @@ bool mdtClLinkBeam::addEndUnit(const QVariant & unitId, const QVariant & linkBea
 
 bool mdtClLinkBeam::removeEndUnit(const QVariant & unitId, const QVariant & linkBeamId) 
 {
+  return removeData("LinkBeam_UnitEnd_tbl", "Unit_Id_FK", unitId, "LinkBeam_Id_FK", linkBeamId);
 }
 
+bool mdtClLinkBeam::removeEndUnits(const mdtSqlTableSelection & s)
+{
+  return removeData("LinkBeam_UnitEnd_tbl", s, true);
+}

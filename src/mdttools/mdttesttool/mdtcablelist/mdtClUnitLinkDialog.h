@@ -55,11 +55,27 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void setStartUnit(const QVariant &unitId);
 
+  /*! \brief Limit start unit selection to given list
+   */
+  void setStartUnitSelectionList(const QList<QVariant> & idList);
+
+  /*! \brief Clear start unit selection list
+   */
+  void clearStartUnitSelectionList();
+
   /*! \brief Set end unit
    *
    * This will also clear end connection and set end vehicle types.
    */
   void setEndUnit(const QVariant &unitId);
+
+  /*! \brief Limit end unit selection to given list
+   */
+  void setEndUnitSelectionList(const QList<QVariant> & idList);
+
+  /*! \brief Clear end unit selection list
+   */
+  void clearEndUnitSelectionList();
 
   /*! \brief Get selected start vehicle types
    */
@@ -181,7 +197,9 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   QSqlDatabase pvDatabase;
   QVariant pvStartUnitId;
+  QList<QVariant> pvStartUnitSelectionIdList;
   QVariant pvEndUnitId;
+  QList<QVariant> pvEndUnitSelectionIdList;
   QSqlQueryModel *pvLinkTypeModel;
   QSqlQueryModel *pvLinkDirectionModel;
   mdtClLinkData pvLinkData;

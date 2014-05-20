@@ -1574,7 +1574,6 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->addWidgetToLocalBar(pbConnectConnectors);
   // Strech
   widget->addStretchToLocalBar();
-  
   // Hide relation fields and PK
   widget->setColumnHidden("UnitConnectionStart_Id_FK", true);
   widget->setColumnHidden("UnitConnectionEnd_Id_FK", true);
@@ -1585,7 +1584,6 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->setColumnHidden("LinkDirection_Code_FK", true);
   widget->setColumnHidden("ArticleConnectionStart_Id_FK", true);
   widget->setColumnHidden("ArticleConnectionEnd_Id_FK", true);
-  widget->setColumnHidden("", true);
   // Give fields a user friendly name
   widget->setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
   widget->setHeaderData("StartAlias", tr("Start\nalias"));

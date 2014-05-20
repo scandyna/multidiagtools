@@ -56,3 +56,14 @@ QModelIndex mdtSqlTableSelectionRow::index(const QString & fieldName) const
   return QModelIndex();
 }
 
+QStringList mdtSqlTableSelectionRow::fields() const
+{
+  QStringList lst;
+  int i;
+
+  for(i = 0; i < pvItemList.size(); ++i){
+    lst.append(pvItemList.at(i).fieldName());
+  }
+
+  return lst;
+}

@@ -27,6 +27,7 @@
 #include "mdtTtTestLinkData.h"
 #include "mdtTtTestNodeUnit.h"
 #include "mdtTtTestNodeUnitData.h"
+#include "mdtSqlTableSelection.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -83,6 +84,11 @@ void mdtTestToolTest::mdtTtBaseTest()
   bool ok;
   QString sql;
   QStringList fields;
+  QModelIndexList indexList;
+  QModelIndex index;
+  mdtSqlTableSelection s;
+  QSqlQueryModel model;
+  QStringList fieldList;
 
   // Add data
   QVERIFY(record.addAllFields("VehicleType_tbl", b.database()));
@@ -177,6 +183,132 @@ void mdtTestToolTest::mdtTtBaseTest()
   data = dataList.at(0);
   QCOMPARE(data.value("Id_PK"), QVariant(2));
   QVERIFY(data.value("Type").isNull());
+  /*
+   * Check data removing from a mdtSqlTableSelection - Single field
+   */
+  fieldList.clear();
+  fieldList << "Id_PK";
+  // Add data
+  QVERIFY(record.addAllFields("VehicleType_tbl", b.database()));
+  record.setValue("Id_PK", 10);
+  record.setValue("Type", "Vehicle type 10");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.setValue("Id_PK", 11);
+  record.setValue("Type", "Vehicle type 11");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.setValue("Id_PK", 12);
+  record.setValue("Type", "Vehicle type 12");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.setValue("Id_PK", 13);
+  record.setValue("Type", "Vehicle type 13");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.setValue("Id_PK", 14);
+  record.setValue("Type", "Vehicle type 14");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  // Setup model
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  QCOMPARE(model.rowCount(), 6);
+  // Remove with selection of 1 row
+  indexList.clear();
+  index = model.index(0, 0);
+  indexList.append(index);
+  s.setIndexList(indexList, fieldList, &model);
+  QVERIFY(b.removeData("VehicleType_tbl", s, true));
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  QCOMPARE(model.rowCount(), 5);
+  // Remove with selection of 2 rows
+  indexList.clear();
+  index = model.index(0, 0);
+  indexList.append(index);
+  index = model.index(1, 0);
+  indexList.append(index);
+  s.setIndexList(indexList, fieldList, &model);
+  QVERIFY(b.removeData("VehicleType_tbl", s, true));
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  QCOMPARE(model.rowCount(), 3);
+  // Remove with selection of 3 rows
+  indexList.clear();
+  index = model.index(0, 0);
+  indexList.append(index);
+  index = model.index(1, 0);
+  indexList.append(index);
+  index = model.index(2, 0);
+  indexList.append(index);
+  s.setIndexList(indexList, fieldList, &model);
+  QVERIFY(b.removeData("VehicleType_tbl", s, true));
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  QCOMPARE(model.rowCount(), 0);
+  /*
+   * Check data removing from a mdtSqlTableSelection - 2 fields
+   */
+  fieldList.clear();
+  fieldList << "Id_PK" << "Type";
+  // Add data
+  QVERIFY(record.addAllFields("VehicleType_tbl", b.database()));
+  record.setValue("Id_PK", 10);
+  record.setValue("Type", "Vehicle type 10");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.setValue("Id_PK", 11);
+  record.setValue("Type", "Vehicle type 11");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.setValue("Id_PK", 12);
+  record.setValue("Type", "Vehicle type 12");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.setValue("Id_PK", 13);
+  record.setValue("Type", "Vehicle type 13");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.setValue("Id_PK", 14);
+  record.setValue("Type", "Vehicle type 14");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.setValue("Id_PK", 15);
+  record.setValue("Type", "Vehicle type 15");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  // Setup model
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  QCOMPARE(model.rowCount(), 6);
+  // Remove with selection of 1 row
+  indexList.clear();
+  index = model.index(0, 0);
+  indexList.append(index);
+  index = model.index(0, 1);
+  indexList.append(index);
+  s.setIndexList(indexList, fieldList, &model);
+  QVERIFY(b.removeData("VehicleType_tbl", s, true));
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  QCOMPARE(model.rowCount(), 5);
+  // Remove with selection of 2 rows
+  indexList.clear();
+  index = model.index(0, 0);
+  indexList.append(index);
+  index = model.index(0, 1);
+  indexList.append(index);
+  index = model.index(1, 0);
+  indexList.append(index);
+  index = model.index(1, 1);
+  indexList.append(index);
+  s.setIndexList(indexList, fieldList, &model);
+  QVERIFY(b.removeData("VehicleType_tbl", s, true));
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  QCOMPARE(model.rowCount(), 3);
+  // Remove with selection of 3 rows
+  indexList.clear();
+  index = model.index(0, 0);
+  indexList.append(index);
+  index = model.index(0, 1);
+  indexList.append(index);
+  index = model.index(1, 0);
+  indexList.append(index);
+  index = model.index(1, 1);
+  indexList.append(index);
+  index = model.index(2, 0);
+  indexList.append(index);
+  index = model.index(2, 1);
+  indexList.append(index);
+  s.setIndexList(indexList, fieldList, &model);
+  QVERIFY(b.removeData("VehicleType_tbl", s, true));
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  QCOMPARE(model.rowCount(), 0);
+
 }
 
 void mdtTestToolTest::mdtTtTestLinkDataTest()

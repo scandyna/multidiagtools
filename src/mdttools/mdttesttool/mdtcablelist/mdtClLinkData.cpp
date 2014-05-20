@@ -38,6 +38,7 @@ mdtClLinkData::mdtClLinkData(const QSqlRecord & record)
   Q_ASSERT(indexOf("SinceVersion") >= 0);
   Q_ASSERT(indexOf("Modification") >= 0);
   Q_ASSERT(indexOf("Value") >= 0);
+  Q_ASSERT(contains("LinkBeam_Id_FK"));
 }
 
 bool mdtClLinkData::setup(const QSqlDatabase & db) 

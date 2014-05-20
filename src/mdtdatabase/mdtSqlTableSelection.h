@@ -83,6 +83,10 @@ class mdtSqlTableSelection
    */
   inline int rowCount() const { return pvRowList.size(); }
 
+  /*! \brief Check if selection is empty
+   */
+  inline bool isEmpty() const { return pvRowList.isEmpty(); }
+
   /*! \brief Get data for given row and field name
    *
    * Note: row does not match any model index, it's a row index of internally stored selection rows.
@@ -90,6 +94,12 @@ class mdtSqlTableSelection
    * \pre row must be in a valid range ( 0 <= row < rowCount() ).
    */
   QVariant data(int row, const QString & fieldName) const;
+
+  /*! \brief Get a list of fields contained in given row
+   *
+   * \pre row must be in a valid range ( 0 <= row < rowCount() ).
+   */
+  QStringList fields(int row) const;
 
   /*! \brief Get a list of data for given field
    */

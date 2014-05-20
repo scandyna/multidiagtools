@@ -2766,7 +2766,7 @@ bool mdtTtDatabaseSchema::createLinkBeamUnitStartView()
   QString sql, selectSql;
 
   selectSql = "SELECT\n"\
-              " LB.Unit_Id_FK AS UnitStart_Id_FK,\n"\
+              " LB.Unit_Id_FK,\n"\
               " LB.LinkBeam_Id_FK,\n"\
               " U.*";
   sql = "CREATE VIEW LinkBeam_UnitStart_view AS\n";
@@ -2783,7 +2783,7 @@ bool mdtTtDatabaseSchema::createLinkBeamUnitEndView()
   QString sql, selectSql;
 
   selectSql = "SELECT\n"\
-              " LB.Unit_Id_FK AS UnitEnd_Id_FK,\n"\
+              " LB.Unit_Id_FK,\n"\
               " LB.LinkBeam_Id_FK,\n"\
               " U.*";
   sql = "CREATE VIEW LinkBeam_UnitEnd_view AS\n";

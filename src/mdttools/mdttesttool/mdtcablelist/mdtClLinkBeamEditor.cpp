@@ -25,9 +25,18 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtClUnitLinkDialog.h"
+#include "mdtClLink.h"
+#include "mdtClLinkData.h"
 #include <QPushButton>
 #include <QIcon>
 #include <QMessageBox>
+#include <QList>
+#include <QSqlTableModel>
+#include <QModelIndex>
+#include <QStringList>
+
+#include <QDebug>
 
 mdtClLinkBeamEditor::mdtClLinkBeamEditor(QWidget* parent, QSqlDatabase db)
  : mdtSqlForm(parent, db)
@@ -106,6 +115,7 @@ void mdtClLinkBeamEditor::addStartUnit()
 
 void mdtClLinkBeamEditor::removeStartUnits()
 {
+  mdtClLinkBeam lb(0, database());
   mdtSqlTableSelection s;
   mdtSqlTableWidget *widget;
   QVariant linkBeamId;
@@ -119,7 +129,7 @@ void mdtClLinkBeamEditor::removeStartUnits()
   // Get widget and selection
   widget = sqlTableWidget("LinkBeam_UnitStart_view");
   Q_ASSERT(widget != 0);
-  s = widget->currentSelection("UnitStart_Id_FK");
+  s = widget->currentSelection("Unit_Id_FK");
   if(s.rowCount() < 1){
     return;
   }
@@ -133,8 +143,11 @@ void mdtClLinkBeamEditor::removeStartUnits()
     return;
   }
   // Remove selected units
-
-
+  if(!lb.removeStartUnits(s)){
+    pvLastError = lb.lastError();
+    displayLastError();
+    return;
+  }
   // Update views
   select("LinkBeam_UnitStart_view");
 }
@@ -194,7 +207,152 @@ void mdtClLinkBeamEditor::addEndUnit()
 
 void mdtClLinkBeamEditor::removeEndUnits()
 {
+  mdtClLinkBeam lb(0, database());
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QVariant linkBeamId;
+  QMessageBox msgBox;
 
+  // Get current leank beam ID
+  linkBeamId = currentData("LinkBeam_tbl", "Id_PK");
+  if(linkBeamId.isNull()){
+    return;
+  }
+  // Get widget and selection
+  widget = sqlTableWidget("LinkBeam_UnitEnd_view");
+  Q_ASSERT(widget != 0);
+  s = widget->currentSelection("Unit_Id_FK");
+  if(s.rowCount() < 1){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove assignations between selected units and current link beam."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove selected units
+  if(!lb.removeEndUnits(s)){
+    pvLastError = lb.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("LinkBeam_UnitEnd_view");
+}
+
+void mdtClLinkBeamEditor::createLink()
+{
+  mdtClUnitLinkDialog dialog(0, database());
+  mdtClLink lnk(0, database());
+  mdtClLinkData linkData;
+  QVariant linkBeamId;
+  QVariant startUnitId;
+  QList<QVariant> startUnitIdList;
+  QVariant endUnitId;
+  QList<QVariant> endUnitIdList;
+  QSqlTableModel *m;
+  QModelIndex index;
+  int row;
+  int col;
+
+  // Get current leank beam ID
+  linkBeamId = currentData("LinkBeam_tbl", "Id_PK");
+  if(linkBeamId.isNull()){
+    return;
+  }
+  // Get start units
+  startUnitId = currentData("LinkBeam_UnitStart_view", "Unit_Id_FK");
+  m = model("LinkBeam_UnitStart_view");
+  Q_ASSERT(m != 0);
+  col = m->fieldIndex("Unit_Id_FK");
+  Q_ASSERT(col >= 0);
+  for(row = 0; row < m->rowCount(); ++row){
+    index = m->index(row, col);
+    startUnitIdList.append(m->data(index));
+  }
+  // Get end units
+  endUnitId = currentData("LinkBeam_UnitEnd_view", "Unit_Id_FK");
+  m = model("LinkBeam_UnitEnd_view");
+  Q_ASSERT(m != 0);
+  col = m->fieldIndex("Unit_Id_FK");
+  Q_ASSERT(col >= 0);
+  for(row = 0; row < m->rowCount(); ++row){
+    index = m->index(row, col);
+    endUnitIdList.append(m->data(index));
+  }
+  // Setup and show dialog
+  dialog.setStartUnitSelectionList(startUnitIdList);
+  dialog.setStartUnit(startUnitId);
+  dialog.setEndUnitSelectionList(endUnitIdList);
+  dialog.setEndUnit(endUnitId);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Update link data with current beam ID and add link to DB
+  linkData = dialog.linkData();
+  linkData.setValue("LinkBeam_Id_FK", linkBeamId);
+  if(!lnk.addLink(linkData)){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("UnitLink_view");
+}
+
+void mdtClLinkBeamEditor::addLink()
+{
+
+}
+
+void mdtClLinkBeamEditor::removeLinks()
+{
+
+}
+
+void mdtClLinkBeamEditor::deleteLinks()
+{
+  mdtClLink lnk(0, database());
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QVariant linkBeamId;
+  QMessageBox msgBox;
+  QStringList fields;
+
+  // Get current leank beam ID
+  linkBeamId = currentData("LinkBeam_tbl", "Id_PK");
+  if(linkBeamId.isNull()){
+    return;
+  }
+  // Get widget and selection
+  widget = sqlTableWidget("UnitLink_view");
+  Q_ASSERT(widget != 0);
+  fields << "UnitConnectionStart_Id_FK" << "UnitConnectionEnd_Id_FK";
+  s = widget->currentSelection(fields);
+  if(s.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to delete selected links."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove selected units
+  if(!lnk.removeLinks(s)){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("UnitLink_view");
 }
 
 bool mdtClLinkBeamEditor::setupLinkBeamTable() 
@@ -217,7 +375,10 @@ bool mdtClLinkBeamEditor::setupLinkBeamTable()
 bool mdtClLinkBeamEditor::setupLinkTable() 
 {
   mdtSqlTableWidget *widget;
+  QPushButton *pbCreateLink;
   QPushButton *pbAddLink;
+  QPushButton *pbRemoveLink;
+  QPushButton *pbDeleteLink;
 
   // Add link table
   if(!addChildTable("UnitLink_view", tr("Links"), database())){
@@ -230,11 +391,60 @@ bool mdtClLinkBeamEditor::setupLinkTable()
   // Get widget to continue setup
   widget = sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
+  // Hide relation fields and PK
+  widget->setColumnHidden("UnitConnectionStart_Id_FK", true);
+  widget->setColumnHidden("UnitConnectionEnd_Id_FK", true);
+  widget->setColumnHidden("ArticleLink_Id_FK", true);
+  widget->setColumnHidden("StartUnit_Id_FK", true);
+  widget->setColumnHidden("EndUnit_Id_FK", true);
+  widget->setColumnHidden("LinkType_Code_FK", true);
+  widget->setColumnHidden("LinkDirection_Code_FK", true);
+  widget->setColumnHidden("ArticleConnectionStart_Id_FK", true);
+  widget->setColumnHidden("ArticleConnectionEnd_Id_FK", true);
+  widget->setColumnHidden("LinkBeam_Id_FK", true);
+  // Give fields a user friendly name
+  widget->setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
+  widget->setHeaderData("StartAlias", tr("Start\nalias"));
+  widget->setHeaderData("StartUnitConnectorName", tr("Start\nconnector"));
+  widget->setHeaderData("StartUnitContactName", tr("Start\ncontact"));
+  widget->setHeaderData("EndSchemaPosition", tr("End\nschema pos."));
+  widget->setHeaderData("EndAlias", tr("End\nalias"));
+  widget->setHeaderData("EndUnitConnectorName", tr("End\nconnector"));
+  widget->setHeaderData("EndUnitContactName", tr("End\ncontact"));
+  widget->setHeaderData("SinceVersion", tr("Since\nversion"));
+  widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
+  widget->setHeaderData("ValueUnit", tr("Unit"));
+  widget->setHeaderData("LinkDirectionPictureAscii", tr("Direction"));
+  widget->setHeaderData("StartSchemaPage", tr("Start\nschema\npage"));
+  widget->setHeaderData("EndSchemaPage", tr("End\nschema\npage"));
+  widget->setHeaderData("StartFunctionEN", tr("Start\nfunction (ENG)"));
+  widget->setHeaderData("EndFunctionEN", tr("End\nfunction (ENG)"));
+  widget->setHeaderData("StartSignalName", tr("Start\nsignal"));
+  widget->setHeaderData("EndSignalName", tr("End\nsignal"));
+  widget->setHeaderData("StartSwAddress", tr("Start\nSW address"));
+  widget->setHeaderData("EndSwAddress", tr("End\nSW address"));
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
+  // Create link button
+  pbCreateLink = new QPushButton(tr("New ..."));
+  pbCreateLink->setIcon(QIcon::fromTheme("document-new"));
+  widget->addWidgetToLocalBar(pbCreateLink);
+  connect(pbCreateLink, SIGNAL(clicked()), this, SLOT(createLink()));
   // Add link button
   pbAddLink = new QPushButton(tr("Add ..."));
-  pbAddLink->setIcon(QIcon::fromTheme("document-new"));
+  pbAddLink->setIcon(QIcon::fromTheme("list-add"));
   widget->addWidgetToLocalBar(pbAddLink);
-  connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addStartUnit()));
+  connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
+  // Remove links button
+  pbRemoveLink = new QPushButton(tr("Remove ..."));
+  pbRemoveLink->setIcon(QIcon::fromTheme("list-remove"));
+  widget->addWidgetToLocalBar(pbRemoveLink);
+  connect(pbRemoveLink, SIGNAL(clicked()), this, SLOT(removeLinks()));
+  // Delete links button
+  pbDeleteLink = new QPushButton(tr("Delete ..."));
+  pbDeleteLink->setIcon(QIcon::fromTheme("edit-delete"));
+  widget->addWidgetToLocalBar(pbDeleteLink);
+  connect(pbDeleteLink, SIGNAL(clicked()), this, SLOT(deleteLinks()));
   widget->addStretchToLocalBar();
 
   return true;
@@ -257,7 +467,7 @@ bool mdtClLinkBeamEditor::setupStartUnitTable()
   // Get widget to continue setup
   widget = sqlTableWidget("LinkBeam_UnitStart_view");
   Q_ASSERT(widget != 0);
-  widget->setColumnHidden("UnitStart_Id_FK", true);
+  widget->setColumnHidden("Unit_Id_FK", true);
   widget->setColumnHidden("LinkBeam_Id_FK", true);
   widget->setColumnHidden("Id_PK", true);
   widget->setColumnHidden("Composite_Id_FK", true);
@@ -295,7 +505,7 @@ bool mdtClLinkBeamEditor::setupEndUnitTable()
   // Get widget to continue setup
   widget = sqlTableWidget("LinkBeam_UnitEnd_view");
   Q_ASSERT(widget != 0);
-  widget->setColumnHidden("UnitEnd_Id_FK", true);
+  widget->setColumnHidden("Unit_Id_FK", true);
   widget->setColumnHidden("LinkBeam_Id_FK", true);
   widget->setColumnHidden("Id_PK", true);
   widget->setColumnHidden("Composite_Id_FK", true);

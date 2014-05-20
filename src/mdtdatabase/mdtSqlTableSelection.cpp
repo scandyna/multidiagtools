@@ -79,6 +79,14 @@ QVariant mdtSqlTableSelection::data(int row, const QString & fieldName) const
   return index.data();
 }
 
+QStringList mdtSqlTableSelection::fields(int row) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < pvRowList.size());
+
+  return pvRowList.at(row).fields();
+}
+
 QList<QVariant> mdtSqlTableSelection::dataList(const QString & fieldName) const 
 {
   QList<QVariant> list;

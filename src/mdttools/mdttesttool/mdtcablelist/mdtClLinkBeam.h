@@ -22,6 +22,7 @@
 #define MDT_CL_LINK_BEAM_H
 
 #include "mdtTtBase.h"
+#include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QString>
@@ -54,17 +55,25 @@ class mdtClLinkBeam : public mdtTtBase
    */
   bool addStartUnit(const QVariant & unitId, const QVariant & linkBeamId);
 
-  /*! \brief
+  /*! \brief Remove a start unit
    */
-  bool removeStartUnit(const QVariant & unitId, const QVariant & linkBeamId);
+  bool removeStartUnit(const QVariant & unitId, const QVariant & linkBeamId, bool handleTransactions);
+
+  /*! \brief Remove start units from selection
+   */
+  bool removeStartUnits(const mdtSqlTableSelection & s);
 
   /*! \brief Add a end unit
    */
   bool addEndUnit(const QVariant & unitId, const QVariant & linkBeamId);
 
-  /*! \brief
+  /*! \brief Remove a end unit
    */
   bool removeEndUnit(const QVariant & unitId, const QVariant & linkBeamId);
+
+  /*! \brief Remove end units from selection
+   */
+  bool removeEndUnits(const mdtSqlTableSelection & s);
 
  private:
 

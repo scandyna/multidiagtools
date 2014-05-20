@@ -342,6 +342,95 @@ bool mdtTtBase::removeData(const QString & tableName, const QString & fieldName1
   return true;
 }
 
+bool mdtTtBase::removeData(const QString& tableName, const mdtSqlTableSelection & s, bool handleTransaction)
+{
+  QString sql;
+  int row;
+  QStringList fieldList;
+  QString field;
+  QVariant data;
+  QString delimiter;
+  int i;
+
+  if(s.isEmpty()){
+    return true;
+  }
+  // Generate SQL statement
+  sql = "DELETE FROM " + tableName;
+  Q_ASSERT(s.rowCount() > 0);
+  // Firs row
+  sql += " WHERE (";
+  fieldList = s.fields(0);
+  // First field
+  if(fieldList.size() > 0){
+    field = fieldList.at(0);
+    data = s.data(0, field);
+    delimiter = sqlDataDelimiter(data.type());
+    sql += field + "=" + delimiter + data.toString() + delimiter;
+  }
+  // Other fields
+  for(i = 1; i < fieldList.size(); ++i){
+    sql += " AND ";
+    field = fieldList.at(i);
+    data = s.data(0, field);
+    delimiter = sqlDataDelimiter(data.type());
+    sql += field + "=" + delimiter + data.toString() + delimiter;
+  }
+  sql += ")";
+  // Other rows
+  for(row = 1; row < s.rowCount(); ++row){
+    sql += " OR (";
+    fieldList = s.fields(row);
+    // First field
+    if(fieldList.size() > 0){
+      field = fieldList.at(0);
+      data = s.data(row, field);
+      delimiter = sqlDataDelimiter(data.type());
+      sql += field + "=" + delimiter + data.toString() + delimiter;
+    }
+    // Other fields
+    for(i = 1; i < fieldList.size(); ++i){
+      sql += " AND ";
+      field = fieldList.at(i);
+      data = s.data(row, field);
+      delimiter = sqlDataDelimiter(data.type());
+      sql += field + "=" + delimiter + data.toString() + delimiter;
+    }
+    sql += ")";
+  }
+  // Begin transaction
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
+  }
+  // Submit query
+  QSqlQuery query(database());
+  if(!query.exec(sql)){
+    QSqlError sqlError;
+    QString msg;
+    sqlError = query.lastError();
+    msg = tr("Cannot remove rows from table '") + tableName + tr("'.");
+    msg += "\n" + tr("SQL statement : '") + sql + tr("'.");
+    pvLastError.setError(msg, mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
+    if(handleTransaction){
+      rollbackTransaction();
+    }
+    pvLastError.commit();
+    return false;
+  }
+  // Commit
+  if(handleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
+  }
+
+  return true;
+}
+
 bool mdtTtBase::beginTransaction() 
 {
   if(!pvDatabase.transaction()){

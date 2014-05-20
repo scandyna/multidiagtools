@@ -25,6 +25,7 @@
 #include "mdtClLinkData.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
+#include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
 #include <QList>
 #include <QVariant>
@@ -91,6 +92,10 @@ class mdtClLink : public mdtTtBase
   /*! \brief Remove each unit link that is contained in selection
    */
   bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
+
+  /*! \brief Remove each unit link that is contained in selection
+   */
+  bool removeLinks(const mdtSqlTableSelection & s);
 
   /*! \brief Get vehicle type link data for given unit ID
    */

@@ -105,6 +105,16 @@ void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId)
   setStartVehicleTypes(unitId);
 }
 
+void mdtClUnitLinkDialog::setStartUnitSelectionList(const QList< QVariant >& idList)
+{
+  pvStartUnitSelectionIdList = idList;
+}
+
+void mdtClUnitLinkDialog::clearStartUnitSelectionList()
+{
+  pvStartUnitSelectionIdList.clear();
+}
+
 void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId)
 {
   pvLinkData.setEndConnectionData(mdtClUnitConnectionData());
@@ -112,6 +122,16 @@ void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId)
   updateEndUnit();
   updateEndConnection();
   setEndVehicleTypes(unitId);
+}
+
+void mdtClUnitLinkDialog::setEndUnitSelectionList(const QList< QVariant >& idList)
+{
+  pvEndUnitSelectionIdList = idList;
+}
+
+void mdtClUnitLinkDialog::clearEndUnitSelectionList()
+{
+  pvEndUnitSelectionIdList.clear();
 }
 
 const QList<QVariant> mdtClUnitLinkDialog::startVehicleTypeIdList() const
@@ -295,11 +315,25 @@ void mdtClUnitLinkDialog::selectStartUnit()
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
   QList<QVariant> result;
+  int i;
 
   // Setup and run query
   sql = "SELECT * FROM Unit_view ";
+  if(pvStartUnitSelectionIdList.size() > 0){
+    sql += " WHERE (Unit_Id_PK = " + pvStartUnitSelectionIdList.at(0).toString();
+    for(i = 1; i < pvStartUnitSelectionIdList.size(); ++i){
+      sql += " OR Unit_Id_PK = " + pvStartUnitSelectionIdList.at(i).toString();
+    }
+    sql += ")";
+  }
   if(!pvStartUnitId.isNull()){
-    sql += " WHERE Unit_Id_PK <> " + pvStartUnitId.toString();
+    if(pvStartUnitSelectionIdList.isEmpty()){
+      sql += " WHERE (";
+    }else{
+      sql += " AND (";
+    }
+    sql += "Unit_Id_PK <> " + pvStartUnitId.toString();
+    sql += ")";
   }
   // Setup and show dialog
   selectionDialog.setMessage(tr("Please select start unit:"));
@@ -331,11 +365,25 @@ void mdtClUnitLinkDialog::selectEndUnit()
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
   QList<QVariant> result;
+  int i;
 
   // Setup and run query
   sql = "SELECT * FROM Unit_view ";
+  if(pvEndUnitSelectionIdList.size() > 0){
+    sql += " WHERE (Unit_Id_PK = " + pvEndUnitSelectionIdList.at(0).toString();
+    for(i = 1; i < pvEndUnitSelectionIdList.size(); ++i){
+      sql += " OR Unit_Id_PK = " + pvEndUnitSelectionIdList.at(i).toString();
+    }
+    sql += ")";
+  }
   if(!pvEndUnitId.isNull()){
-    sql += " WHERE Unit_Id_PK <> " + pvEndUnitId.toString();
+    if(pvEndUnitSelectionIdList.isEmpty()){
+      sql += " WHERE (";
+    }else{
+      sql += " AND (";
+    }
+    sql += "Unit_Id_PK <> " + pvEndUnitId.toString();
+    sql += ")";
   }
   // Setup and show dialog
   selectionDialog.setMessage(tr("Please select end unit:"));

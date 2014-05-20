@@ -23,6 +23,7 @@
 
 #include "mdtSqlTableSelectionItem.h"
 #include <QList>
+#include <QStringList>
 
 
 /*! \brief SQL table selection row container
@@ -63,6 +64,10 @@ class mdtSqlTableSelectionRow
    * If field name not exists, a invalid model index is returned.
    */
   QModelIndex index(const QString & fieldName) const;
+
+  /*! \brief Get a list of feilds that are contained in row
+   */
+  QStringList fields() const;
 
  private:
 

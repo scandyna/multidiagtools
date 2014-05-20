@@ -60,6 +60,22 @@ class mdtClLinkBeamEditor : public mdtSqlForm
    */
   void removeEndUnits();
 
+  /*! \brief Create a new link
+   */
+  void createLink();
+
+  /*! \brief Add a existing link
+   */
+  void addLink();
+
+  /*! \brief Remove a link from link beam
+   */
+  void removeLinks();
+
+  /*! \brief Delete a link
+   */
+  void deleteLinks();
+
  private:
 
   /*! \brief Setup LinkBeam_tbl part

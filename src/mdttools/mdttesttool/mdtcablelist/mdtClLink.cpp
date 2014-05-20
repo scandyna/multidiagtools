@@ -273,6 +273,26 @@ bool mdtClLink::removeLinks(const QList<QModelIndexList> & indexListOfSelectedRo
   return true;
 }
 
+bool mdtClLink::removeLinks(const mdtSqlTableSelection & s)
+{
+  int i;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  for(i = 0; i < s.rowCount(); ++i){
+    if(!removeLink(s.data(i, "UnitConnectionStart_Id_FK"), s.data(i, "UnitConnectionEnd_Id_FK"), false)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
 QList<mdtClVehicleTypeLinkData> mdtClLink::getVehicleTypeLinkDataByUnitId(const QVariant & unitId, bool *ok)
 {
   Q_ASSERT(ok != 0);

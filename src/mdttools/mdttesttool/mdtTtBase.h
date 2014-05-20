@@ -23,6 +23,7 @@
 
 #include "mdtError.h"
 #include "mdtSqlRecord.h"
+#include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
 #include <QString>
 #include <QStringList>
@@ -160,6 +161,30 @@ class mdtTtBase : public QObject
    * \param matchData2 Data that match delete condition for second field.
    */
   bool removeData(const QString & tableName, const QString & fieldName1, const QVariant & matchData1, const QString & fieldName2, const QVariant & matchData2);
+
+  /*! \brief Remove data in given selection from given table
+   *
+   * A SQL statement will be built with a filter (WHERE clause).
+   *  For a given row, each field will be added with a AND clause.
+   *  Each row will be separated with a OR clause.
+   *
+   * For example, if we want to remove data from AB_tbl, and have following data in the selection:
+   *
+   *  <table border="1" cellpadding="5">
+   *    <tr><th>Row</th><th>Field name</th><th>Data</th></tr>
+   *    <tr><th>0</th><td>A_Id_FK</td><td>1</td></tr>
+   *    <tr><th>0</th><td>B_Id_FK</td><td>10</td></tr>
+   *    <tr><th>1</th><td>A_Id_FK</td><td>2</td></tr>
+   *    <tr><th>1</th><td>B_Id_FK</td><td>20</td></tr>
+   *  </table>
+   *
+   * the query will be: DELETE FROM AB_tbl WHERE (A_Id_FK=1 AND B_Id_FK=10) OR (A_Id_FK=2 AND B_Id_FK=20)
+   *
+   * \param tableName Name of table in witch data must be removed.
+   * \param s Selection (see detailed description).
+   * \param handleTransaction If true, a transaction will be initiated internally.
+   */
+  bool removeData(const QString & tableName, const mdtSqlTableSelection & s, bool handleTransaction);
 
  protected:
 
