@@ -35,6 +35,7 @@
 #include "mdtClLinkData.h"
 #include "mdtClVehicleTypeLinkData.h"
 #include "mdtClDirectLink.h"
+#include "mdtClLinkBeam.h"
 #include "mdtClPathGraph.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -1303,6 +1304,83 @@ void mdtCableListTest::directLinkTest()
   pvScenario->removeScenario();
 }
 
+void mdtCableListTest::linkBeamTest()
+{
+  mdtClLinkBeam lb(0, pvDatabaseManager.database());
+  mdtSqlRecord record;
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  // Scenario
+  pvScenario->createSenario();
+  /*
+   * Create a LinkBeam
+   */
+  QVERIFY(record.addAllFields("LinkBeam_tbl", pvDatabaseManager.database()));
+  record.setValue("Id_PK", 1);
+  record.setValue("Identification", "Link beam 1");
+  QVERIFY(lb.addRecord(record, "LinkBeam_tbl"));
+  dataList = lb.getData("SELECT * FROM LinkBeam_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(1));
+  QCOMPARE(dataList.at(0).value("Identification"), QVariant("Link beam 1"));
+  /*
+   * Add a start unit
+   */
+  QVERIFY(lb.addStartUnit(1000, 1));
+  dataList = lb.getData("SELECT * FROM LinkBeam_UnitStart_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.at(0).value("Unit_Id_FK"), QVariant(1000));
+  QCOMPARE(dataList.at(0).value("LinkBeam_Id_FK"), QVariant(1));
+  /*
+   * Add a end unit
+   */
+  QVERIFY(lb.addEndUnit(2000, 1));
+  dataList = lb.getData("SELECT * FROM LinkBeam_UnitEnd_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.at(0).value("Unit_Id_FK"), QVariant(2000));
+  QCOMPARE(dataList.at(0).value("LinkBeam_Id_FK"), QVariant(1));
+  /*
+   * Add (existing) link from unit connection ID 10000 -> 10001 to link beam 1
+   */
+  QVERIFY(lb.addLink(10000, 10001, 1));
+  dataList = lb.getData("SELECT * FROM UnitLink_view WHERE LinkBeam_Id_FK = 1", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(10000));
+  QCOMPARE(dataList.at(0).value("UnitConnectionEnd_Id_FK"), QVariant(10001));
+  QVERIFY(!dataList.at(0).value("LinkBeam_Id_FK").isNull());
+  QCOMPARE(dataList.at(0).value("LinkBeam_Id_FK"), QVariant(1));
+  /*
+   * Remove (existing) link from unit connection ID 10000 -> 10001 from link beam 1
+   */
+  QVERIFY(lb.removeLink(10000, 10001));
+  dataList = lb.getData("SELECT * FROM UnitLink_view WHERE UnitConnectionStart_Id_FK = 10000 AND UnitConnectionEnd_Id_FK = 10001", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QVERIFY(dataList.at(0).value("LinkBeam_Id_FK").isNull());
+
+  /*
+   * Remove start unit
+   */
+  QVERIFY(lb.removeStartUnit(1000, 1));
+  dataList = lb.getData("SELECT * FROM LinkBeam_UnitStart_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  /*
+   * Remove end unit
+   */
+  QVERIFY(lb.removeEndUnit(2000, 1));
+  dataList = lb.getData("SELECT * FROM LinkBeam_UnitEnd_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+
+  // Cleanup
+  pvScenario->removeScenario();
+}
 
 /*
  * Test data manipulation methods

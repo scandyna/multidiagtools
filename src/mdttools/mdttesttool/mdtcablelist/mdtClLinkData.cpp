@@ -38,7 +38,12 @@ mdtClLinkData::mdtClLinkData(const QSqlRecord & record)
   Q_ASSERT(indexOf("SinceVersion") >= 0);
   Q_ASSERT(indexOf("Modification") >= 0);
   Q_ASSERT(indexOf("Value") >= 0);
-  Q_ASSERT(contains("LinkBeam_Id_FK"));
+  /*
+   * Currently, mdtClUnit::getArticleLinkListUsingConnectionId() takes data from
+   *  ArticleLink_UnitConnection_view, witch doesen't contain LinkBeam_Id_FK.
+   *  So, we let this field optional here for the moment.
+   */
+  //Q_ASSERT(contains("LinkBeam_Id_FK"));
 }
 
 bool mdtClLinkData::setup(const QSqlDatabase & db) 

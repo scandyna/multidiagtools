@@ -26,6 +26,7 @@
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QString>
+#include <QList>
 
 class QObject;
 
@@ -51,13 +52,21 @@ class mdtClLinkBeam : public mdtTtBase
    */
   QString sqlForEndUnitSelection(const QVariant & linkBeamId);
 
+  /*! \brief Get SQL statement for link add selection
+   *
+   * List all links that starts from one of given start units,
+   *  and ends from one of given end units,
+   *  and that are not currently affected to a link beam.
+   */
+  QString sqlForLinkSelection(const QList<QVariant> & unitStartIdList, const QList<QVariant> & unitEndIdList) const;
+
   /*! \brief Add a start unit
    */
   bool addStartUnit(const QVariant & unitId, const QVariant & linkBeamId);
 
   /*! \brief Remove a start unit
    */
-  bool removeStartUnit(const QVariant & unitId, const QVariant & linkBeamId, bool handleTransactions);
+  bool removeStartUnit(const QVariant & unitId, const QVariant & linkBeamId);
 
   /*! \brief Remove start units from selection
    */
@@ -74,6 +83,18 @@ class mdtClLinkBeam : public mdtTtBase
   /*! \brief Remove end units from selection
    */
   bool removeEndUnits(const mdtSqlTableSelection & s);
+
+  /*! \brief Add a existing link to given link beam
+   */
+  bool addLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, const QVariant & linkBeamId);
+
+  /*! \brief Remove links from beam (will not delete links)
+   */
+  bool removeLinks(const mdtSqlTableSelection & s);
+
+  /*! \brief Remove a link from beam (will not delete links)
+   */
+  bool removeLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId);
 
  private:
 

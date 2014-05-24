@@ -50,7 +50,6 @@ set (CL_HEADER_FILES
           mdtcablelist/mdtClUnitLinkDialog.h
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.h
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.h
-          mdtcablelist/mdtClLinkBeam.h
           mdtcablelist/mdtClLinkBeamEditor.h
     )
 

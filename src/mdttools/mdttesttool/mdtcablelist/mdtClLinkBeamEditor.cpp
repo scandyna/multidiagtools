@@ -118,14 +118,8 @@ void mdtClLinkBeamEditor::removeStartUnits()
   mdtClLinkBeam lb(0, database());
   mdtSqlTableSelection s;
   mdtSqlTableWidget *widget;
-  QVariant linkBeamId;
   QMessageBox msgBox;
 
-  // Get current leank beam ID
-  linkBeamId = currentData("LinkBeam_tbl", "Id_PK");
-  if(linkBeamId.isNull()){
-    return;
-  }
   // Get widget and selection
   widget = sqlTableWidget("LinkBeam_UnitStart_view");
   Q_ASSERT(widget != 0);
@@ -161,7 +155,7 @@ void mdtClLinkBeamEditor::addEndUnit()
   QVariant linkBeamId;
   QString sql;
 
-  // Get current leank beam ID
+  // Get current link beam ID
   linkBeamId = currentData("LinkBeam_tbl", "Id_PK");
   if(linkBeamId.isNull()){
     return;
@@ -210,14 +204,8 @@ void mdtClLinkBeamEditor::removeEndUnits()
   mdtClLinkBeam lb(0, database());
   mdtSqlTableSelection s;
   mdtSqlTableWidget *widget;
-  QVariant linkBeamId;
   QMessageBox msgBox;
 
-  // Get current leank beam ID
-  linkBeamId = currentData("LinkBeam_tbl", "Id_PK");
-  if(linkBeamId.isNull()){
-    return;
-  }
   // Get widget and selection
   widget = sqlTableWidget("LinkBeam_UnitEnd_view");
   Q_ASSERT(widget != 0);
@@ -306,12 +294,147 @@ void mdtClLinkBeamEditor::createLink()
 
 void mdtClLinkBeamEditor::addLink()
 {
+  mdtClLinkBeam lb(0, database());
+  mdtSqlSelectionDialog selectionDialog;
+  QSqlTableModel *m;
+  QStringList fields;
+  mdtSqlTableSelection s;
+  QVariant startUnitConnectionId;
+  QVariant endUnitConnectionId;
+  QVariant linkBeamId;
+  QString sql;
+  QList<QVariant> startUnitIdList;
+  QList<QVariant> endUnitIdList;
+  int row;
+  int col;
+  QModelIndex index;
 
+  // Get current link beam ID
+  linkBeamId = currentData("LinkBeam_tbl", "Id_PK");
+  if(linkBeamId.isNull()){
+    return;
+  }
+  // Get start units
+  m = model("LinkBeam_UnitStart_view");
+  Q_ASSERT(m != 0);
+  col = m->fieldIndex("Unit_Id_FK");
+  Q_ASSERT(col >= 0);
+  for(row = 0; row < m->rowCount(); ++row){
+    index = m->index(row, col);
+    startUnitIdList.append(m->data(index));
+  }
+  // Get end units
+  m = model("LinkBeam_UnitEnd_view");
+  Q_ASSERT(m != 0);
+  col = m->fieldIndex("Unit_Id_FK");
+  Q_ASSERT(col >= 0);
+  for(row = 0; row < m->rowCount(); ++row){
+    index = m->index(row, col);
+    endUnitIdList.append(m->data(index));
+  }
+  // Setup and show dialog
+  sql = lb.sqlForLinkSelection(startUnitIdList, endUnitIdList);
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setMessage(tr("Select link:"));
+  selectionDialog.setColumnHidden("LinkBeam_Id_FK", true);
+  selectionDialog.setColumnHidden("UnitConnectionStart_Id_FK", true);
+  selectionDialog.setColumnHidden("UnitConnectionEnd_Id_FK", true);
+  selectionDialog.setColumnHidden("ArticleLink_Id_FK", true);
+  selectionDialog.setColumnHidden("StartUnit_Id_FK", true);
+  selectionDialog.setColumnHidden("EndUnit_Id_FK", true);
+  selectionDialog.setColumnHidden("LinkType_Code_FK", true);
+  selectionDialog.setColumnHidden("LinkDirection_Code_FK", true);
+  selectionDialog.setColumnHidden("ArticleConnectionStart_Id_FK", true);
+  selectionDialog.setColumnHidden("ArticleConnectionEnd_Id_FK", true);
+  selectionDialog.setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
+  selectionDialog.setHeaderData("StartAlias", tr("Start\nalias"));
+  selectionDialog.setHeaderData("StartUnitConnectorName", tr("Start\nconnector"));
+  selectionDialog.setHeaderData("StartUnitContactName", tr("Start\ncontact"));
+  selectionDialog.setHeaderData("EndSchemaPosition", tr("End\nschema pos."));
+  selectionDialog.setHeaderData("EndAlias", tr("End\nalias"));
+  selectionDialog.setHeaderData("EndUnitConnectorName", tr("End\nconnector"));
+  selectionDialog.setHeaderData("EndUnitContactName", tr("End\ncontact"));
+  selectionDialog.setHeaderData("SinceVersion", tr("Since\nversion"));
+  selectionDialog.setHeaderData("LinkTypeNameEN", tr("Link type"));
+  selectionDialog.setHeaderData("ValueUnit", tr("Unit"));
+  selectionDialog.setHeaderData("LinkDirectionPictureAscii", tr("Direction"));
+  selectionDialog.setHeaderData("StartSchemaPage", tr("Start\nschema\npage"));
+  selectionDialog.setHeaderData("EndSchemaPage", tr("End\nschema\npage"));
+  selectionDialog.setHeaderData("StartFunctionEN", tr("Start\nfunction (ENG)"));
+  selectionDialog.setHeaderData("EndFunctionEN", tr("End\nfunction (ENG)"));
+  selectionDialog.setHeaderData("StartSignalName", tr("Start\nsignal"));
+  selectionDialog.setHeaderData("EndSignalName", tr("End\nsignal"));
+  selectionDialog.setHeaderData("StartSwAddress", tr("Start\nSW address"));
+  selectionDialog.setHeaderData("EndSwAddress", tr("End\nSW address"));
+  selectionDialog.addColumnToSortOrder("Identification", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.resize(800, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Get selected link
+  fields << "UnitConnectionStart_Id_FK" << "UnitConnectionEnd_Id_FK";
+  s = selectionDialog.selection(fields);
+  if(s.rowCount() < 1){
+    return;
+  }
+  startUnitConnectionId = s.data(0, "UnitConnectionStart_Id_FK");
+  if(startUnitConnectionId.isNull()){
+    return;
+  }
+  endUnitConnectionId = s.data(0, "UnitConnectionEnd_Id_FK");
+  if(endUnitConnectionId.isNull()){
+    return;
+  }
+  // Add link
+  if(!lb.addLink(startUnitConnectionId, endUnitConnectionId, linkBeamId)){
+    pvLastError = lb.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("UnitLink_view");
 }
 
 void mdtClLinkBeamEditor::removeLinks()
 {
+  mdtClLinkBeam lb(0, database());
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QVariant linkBeamId;
+  QMessageBox msgBox;
+  QStringList fields;
 
+  // Get current link beam ID
+  linkBeamId = currentData("LinkBeam_tbl", "Id_PK");
+  if(linkBeamId.isNull()){
+    return;
+  }
+  // Get widget and selection
+  widget = sqlTableWidget("UnitLink_view");
+  Q_ASSERT(widget != 0);
+  fields << "UnitConnectionStart_Id_FK" << "UnitConnectionEnd_Id_FK";
+  s = widget->currentSelection(fields);
+  if(s.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove selected links from current link beam."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove selected units
+  if(!lb.removeLinks(s)){
+    pvLastError = lb.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("UnitLink_view");
 }
 
 void mdtClLinkBeamEditor::deleteLinks()

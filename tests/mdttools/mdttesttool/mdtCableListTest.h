@@ -60,6 +60,8 @@ class mdtCableListTest : public mdtTest
   void pathGraphTest();
   void directLinkTest();
 
+  void linkBeamTest();
+
  private:
 
   /*
