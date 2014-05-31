@@ -26,7 +26,19 @@
 #include <QString>
 #include <QTimer>
 
+#include <atomic>
+
 #include <QDebug>
+
+void mdtStateMachineTest::sandbox()
+{
+  std::atomic<int> i;
+
+  i = 25;
+  qDebug() << "i: " << i;
+  qDebug() << "i: " << i.load();
+}
+
 
 void mdtStateMachineTest::stateTest()
 {

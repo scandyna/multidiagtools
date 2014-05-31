@@ -1,6 +1,6 @@
 format 206
 "Qt4" // Qt4
-  revision 75
+  revision 76
   modified_by 2 "philippe"
   // class settings
   
@@ -390,6 +390,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 1521282 // <generalisation>
+	relation 1508354 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1521282 // <generalisation>
+	  b parent class_ref 138626 // QObject
       end
     end
 
@@ -920,6 +928,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 1521154 // <generalisation>
+	relation 1508226 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1521154 // <generalisation>
+	  b parent class_ref 138626 // QObject
       end
     end
 

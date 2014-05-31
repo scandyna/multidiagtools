@@ -1,6 +1,6 @@
 format 206
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 33
+  revision 34
   modified_by 2 "philippe"
   // class settings
   
@@ -425,6 +425,11 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
     activitydiagramsettings
      end
     classdiagram 1026690 "CableList"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 1138946 "Editors"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -2294,12 +2299,12 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 1232258 // <generalisation>
-	relation 1219330 ---|>
+      classrelation 1527938 // <generalisation>
+	relation 1515010 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 1232258 // <generalisation>
-	  b parent class_ref 952322 // mdtClEditor
+	    classrelation_ref 1527938 // <generalisation>
+	  b parent class_ref 1040386 // mdtSqlForm
       end
     end
 

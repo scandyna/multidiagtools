@@ -1,15 +1,14 @@
-window_sizes 1280 1005 324 950 952 0
+window_sizes 1280 1005 353 921 952 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1125634 // mdtClLinkBeam
-    950 952 100 4 24 0
+  classdiagram_ref 1026690 // CableList
+    736 761 100 4 0 0
+  active  classdiagram_ref 1138946 // Editors
+    921 952 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 2032002 // removeEndUnit
+selected classview_ref 615682 // VehicleType
 open
-  operation_ref 2031874 // removeStartUnit
-  classrelation_ref 1507074 // <dependency>
-  classrelation_ref 1506946 // <dependency>
-  operation_ref 2024706 // setupLinkTable
+  classview_ref 609154 // GlobalView
 end
 end

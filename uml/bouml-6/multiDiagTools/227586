@@ -1,6 +1,6 @@
 format 206
 "mdttesttool" // mdttools::mdttesttool
-  revision 21
+  revision 22
   modified_by 2 "philippe"
   // class settings
   
@@ -1358,7 +1358,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 1079938 "mdtTtTestNodeUnitDialog"
@@ -2133,14 +2132,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 1253250 // <generalisation>
-	relation 1240322 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1253250 // <generalisation>
-	  b parent class_ref 952322 // mdtClEditor
-      end
-
       operation 1769346 "mdtTtTestNodeEditor"
 	public explicit_return_type ""
 	nparams 2
@@ -2257,14 +2248,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 1280770 // <generalisation>
-	relation 1267842 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1280770 // <generalisation>
-	  b parent class_ref 952322 // mdtClEditor
-      end
-
       operation 1782658 "mdtTtTestModelEditor"
 	public explicit_return_type ""
 	nparams 2

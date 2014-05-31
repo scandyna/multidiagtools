@@ -29,6 +29,8 @@ class mdtStateMachineTest : public mdtTest
 
  private slots:
 
+  void sandbox();
+
   void stateTest();
 
   void stateMachineTest();

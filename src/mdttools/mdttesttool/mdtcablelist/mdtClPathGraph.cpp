@@ -362,9 +362,10 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
   QSqlQuery query(pvDatabase);
   QSqlRecord record;
   QString str;
+  QString strTmp;
 
-  sql = "SELECT StartVehicleType, StartVehicleSubType, StartCabinet, StartSchemaPosition, StartUnitConnectorName, StartUnitContactName, StartConnectionType_Code_FK, "\
-        "EndVehicleType, EndVehicleSubType, EndCabinet, EndSchemaPosition, EndUnitConnectorName, EndUnitContactName, EndConnectionType_Code_FK, Identification, "\
+  sql = "SELECT StartVehicleType, StartVehicleSubType, StartCabinet, StartSchemaPosition, StartAlias, StartUnitConnectorName, StartUnitContactName, StartConnectionType_Code_FK, "\
+        "EndVehicleType, EndVehicleSubType, EndCabinet, EndSchemaPosition, EndAlias, EndUnitConnectorName, EndUnitContactName, EndConnectionType_Code_FK, Identification, "\
         "LinkType_Code_FK "\
         "FROM LinkList_view ";
   sql += " WHERE UnitConnectionStart_Id_FK = " + QString::number(startConnectionId);
@@ -385,8 +386,18 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
   // Set start data
   str = record.value("StartVehicleType").toString() + "\n";
   str += record.value("StartVehicleSubType").toString() + "\n";
-  str += record.value("StartCabinet").toString() + "\n";
-  str += record.value("StartSchemaPosition").toString() + "\n";
+  strTmp = record.value("StartCabinet").toString().trimmed();
+  if(!strTmp.isEmpty()){
+    str += strTmp + "\n";
+  }
+  strTmp = record.value("StartSchemaPosition").toString().trimmed();
+  if(!strTmp.isEmpty()){
+    str += strTmp + "\n";
+  }
+  strTmp = record.value("StartAlias").toString().trimmed();
+  if(!strTmp.isEmpty()){
+    str += strTmp + "\n";
+  }
   str += record.value("StartUnitConnectorName").toString() + ";";
   str += record.value("StartUnitContactName").toString();
   startConnection->setText(str);
@@ -402,8 +413,18 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
   // Set end data
   str = record.value("EndVehicleType").toString() + "\n";
   str += record.value("EndVehicleSubType").toString() + "\n";
-  str += record.value("EndCabinet").toString() + "\n";
-  str += record.value("EndSchemaPosition").toString() + "\n";
+  strTmp = record.value("EndCabinet").toString().trimmed();
+  if(!strTmp.isEmpty()){
+    str += strTmp + "\n";
+  }
+  strTmp = record.value("EndSchemaPosition").toString().trimmed();
+  if(!strTmp.isEmpty()){
+    str += strTmp + "\n";
+  }
+  strTmp = record.value("EndAlias").toString().trimmed();
+  if(!strTmp.isEmpty()){
+    str += strTmp + "\n";
+  }
   str += record.value("EndUnitConnectorName").toString() + ";";
   str += record.value("EndUnitContactName").toString();
   endConnection->setText(str);

@@ -53,15 +53,21 @@ configure_file (
   "${PROJECT_SOURCE_DIR}/src/config.h"
 )
 
-# Some flags for compiler
+# Common flags for compiler
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wall -lm")
+
+# On UNIX, we allways add debug symbols (will be stripped and put into separate  .dbg files)
 if(UNIX)
-  # We allways add debug symbols (will be stripped and put into separate  .dbg files)
-  add_definitions("-Wall -ansi -O2 -lm -g")
-else(UNIX)
-  add_definitions("-Wall -ansi -O2 -lm")
-  # On Windows, we separate debug and release dlls
-  set(CMAKE_DEBUG_POSTFIX d)
+  if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+  endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 endif(UNIX)
+
+# On Windows, we separate debug and release dlls
+if(WIN32)
+  set(CMAKE_DEBUG_POSTFIX d)
+endif(WIN32)
 
 # We want GUI executables on Windows (not console)
 if(WIN32)

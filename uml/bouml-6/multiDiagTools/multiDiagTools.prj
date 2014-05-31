@@ -1,6 +1,6 @@
-format 204
+format 206
 "multiDiagTools"
-  revision 20
+  revision 21
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -63,4 +63,6 @@ format 204
   package_ref 134658 // ImportZms
 
   package_ref 221058 // sandbox
+
+  package_ref 260866 // Boost
 end
