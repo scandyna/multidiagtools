@@ -62,6 +62,11 @@ void mdtSqlWindow::enableNavigation()
 {
   Q_ASSERT(pvForm != 0);
 
+  // Check if navigation was allready enabled
+  if(actNavToFirst != 0){
+    return;
+  }
+
   mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
   Q_ASSERT(widget != 0);
 
@@ -97,6 +102,22 @@ void mdtSqlWindow::enableNavigation()
 
 void mdtSqlWindow::disableNavigation()
 {
+  // Check if navigation was allready diseabled
+  if(actNavToFirst == 0){
+    return;
+  }
+  tlbMain->removeAction(actNavToFirst);
+  delete actNavToFirst;
+  actNavToFirst = 0;
+  tlbMain->removeAction(actNavToPrevious);
+  delete actNavToPrevious;
+  actNavToPrevious = 0;
+  tlbMain->removeAction(actNavToNext);
+  delete actNavToNext;
+  actNavToNext = 0;
+  tlbMain->removeAction(actNavToLast);
+  delete actNavToLast;
+  actNavToLast = 0;
   // Remove actions from toolbar
   /// \todo Possible ?
 }
@@ -157,7 +178,7 @@ void mdtSqlWindow::closeEvent(QCloseEvent *event)
   Q_ASSERT(event != 0);
 
   // Check that all data are saved
-  if((pvForm != 0) && (!pvForm->mainSqlWidget()->allDataAreSaved())){
+  if((pvForm != 0) && (!pvForm->allDataAreSaved())){
     event->ignore();
   }else{
     event->accept();

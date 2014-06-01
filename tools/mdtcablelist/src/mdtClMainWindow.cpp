@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtClMainWindow.h"
 #include "mdtSqlWindow.h"
+#include "mdtSqlForm.h"
 #include "mdtSqlDatabaseManager.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtClVehicleTypeEditor.h"
@@ -33,11 +34,17 @@
 #include "mdtTtTestModelItemEditor.h"
 #include "mdtTtCableChecker.h"
 #include "mdtTtCableCheckerWindow.h"
+#include "mdtSqlTableWidget.h"
 #include <boost/concept_check.hpp>
 #include <QAction>
 #include <QMessageBox>
 #include <QApplication>
 #include <QFileInfo>
+#include <QMutableListIterator>
+#include <QCloseEvent>
+#include <QTabWidget>
+#include <QSqlTableModel>
+#include <QSqlError>
 
 #include <QDebug>
 
@@ -50,13 +57,13 @@ mdtClMainWindow::mdtClMainWindow()
   /// \todo provisoire
   initWorkDirectory();
   ///openDatabaseSqlite();
+  // Central widget
+  pvTabWidget = 0;
   // Editors - Will be setup on first call
-  pvVehicleTypeEditor = 0;
-  pvVehicleTypeEditorWindow = 0;
   pvConnectorEditor = 0;
   pvConnectorEditorWindow = 0;
-  pvArticleEditor = 0;
-  pvArticleEditorWindow = 0;
+  ///pvArticleEditor = 0;
+  ///pvArticleEditorWindow = 0;
 
   pvUnitEditor = 0;
   pvTestNodeEditor = 0;
@@ -86,14 +93,20 @@ void mdtClMainWindow::openDatabase()
 void mdtClMainWindow::closeDatabase()
 {
   /// \todo Check about data saving !!
+  /**
   delete pvVehicleTypeEditor;
   pvVehicleTypeEditor = 0;
+  */
   delete pvConnectorEditor;
   pvConnectorEditor = 0;
-  delete pvArticleEditor;
-  pvArticleEditor = 0;
+  ///delete pvArticleEditor;
+  ///pvArticleEditor = 0;
   delete pvUnitEditor;
   pvUnitEditor = 0;
+  
+  if(!deleteEditors()){
+    return;
+  }
   pvDatabaseManager->database().close();
 }
 
@@ -107,8 +120,36 @@ void mdtClMainWindow::importDatabase()
   importDatabaseSqlite();
 }
 
+void mdtClMainWindow::viewVehicleType()
+{
+  if(!displayTableView("VehicleType_tbl")){
+    createVehicleTypeTableView();
+  }
+}
+
 void mdtClMainWindow::editVehicleType()
 {
+  mdtClVehicleTypeEditor *editor;
+  mdtSqlWindow *window;
+
+  // Get or create editor
+  editor = getVehicleTypeEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  window->enableNavigation();
+  window->show();
+  
+  /**
   if(pvVehicleTypeEditor == 0){
     pvVehicleTypeEditor = new mdtClVehicleTypeEditor(this, pvDatabaseManager->database());
     if(!pvVehicleTypeEditor->setupTables()){
@@ -133,6 +174,7 @@ void mdtClMainWindow::editVehicleType()
   Q_ASSERT(pvVehicleTypeEditorWindow != 0);
   pvVehicleTypeEditor->select();
   pvVehicleTypeEditorWindow->show();
+  */
 }
 
 void mdtClMainWindow::editConnector()
@@ -219,8 +261,37 @@ void mdtClMainWindow::editLinkBeam()
   pvLinkBeamEditorWindow->show();
 }
 
+void mdtClMainWindow::viewArticle()
+{
+  if(!displayTableView("Article_tbl")){
+    createArticleTableView();
+  }
+}
+
 void mdtClMainWindow::editArticle()
 {
+  mdtClArticleEditor *editor;
+  mdtSqlWindow *window;
+
+  // Get or create editor
+  editor = getArticleEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  window->enableNavigation();
+  window->show();
+
+  
+  /**
   if(pvArticleEditor == 0){
     pvArticleEditor = new mdtClArticleEditor(this, pvDatabaseManager->database());
     if(!pvArticleEditor->setupTables()){
@@ -245,6 +316,7 @@ void mdtClMainWindow::editArticle()
   Q_ASSERT(pvArticleEditorWindow != 0);
   pvArticleEditor->select();
   pvArticleEditorWindow->show();
+  */
 }
 
 void mdtClMainWindow::editTestConnectionCable()
@@ -405,6 +477,252 @@ void mdtClMainWindow::disconnectTestCable()
 }
 */
 
+bool mdtClMainWindow::createVehicleTypeTableView()
+{
+  mdtSqlTableWidget *tableWidget;
+
+  tableWidget = createTableView("VehicleType_tbl", tr("Vehicle types"));
+  if(tableWidget == 0){
+    return false;
+  }
+
+  return true;
+}
+
+mdtClVehicleTypeEditor* mdtClMainWindow::getVehicleTypeEditor()
+{
+  mdtClVehicleTypeEditor *editor;
+
+  editor = getEditor<mdtClVehicleTypeEditor>();
+  if(editor != 0){
+    return editor;
+  }else{
+    return createVehicleTypeEditor();
+  }
+}
+
+mdtClVehicleTypeEditor *mdtClMainWindow::createVehicleTypeEditor()
+{
+  mdtClVehicleTypeEditor *editor;
+  mdtSqlWindow *window;
+
+  editor = new mdtClVehicleTypeEditor(0, pvDatabaseManager->database());
+  window = setupEditor(editor);
+  if(window == 0){
+    return 0;
+  }
+  window->setWindowTitle(tr("Vehicle type edition"));
+  window->resize(800, 600);
+
+  return editor;
+}
+
+bool mdtClMainWindow::createArticleTableView()
+{
+  mdtSqlTableWidget *tableWidget;
+
+  tableWidget = createTableView("Article_tbl", tr("Articles"));
+  if(tableWidget == 0){
+    return false;
+  }
+
+  return true;
+}
+
+mdtClArticleEditor *mdtClMainWindow::getArticleEditor()
+{
+  mdtClArticleEditor *editor;
+
+  editor = getEditor<mdtClArticleEditor>();
+  if(editor != 0){
+    return editor;
+  }else{
+    return createArticleEditor();
+  }
+}
+
+mdtClArticleEditor *mdtClMainWindow::createArticleEditor()
+{
+  mdtClArticleEditor *editor;
+  mdtSqlWindow *window;
+
+  editor = new mdtClArticleEditor(0, pvDatabaseManager->database());
+  window = setupEditor(editor);
+  if(window == 0){
+    return 0;
+  }
+  window->setWindowTitle(tr("Article edition"));
+  window->resize(800, 600);
+
+  return editor;
+}
+
+mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, const QString & userFriendlyTableName)
+{
+  mdtSqlTableWidget *tableWidget;
+  QSqlTableModel *model;
+  QString uftn;
+
+  // Check that we have currently a database open
+  if(!pvDatabaseManager->database().isOpen()){
+    displayWarning(tr("No database is open."), tr("Please open a database and try again."));
+    return 0;
+  }
+  // Set user friendly table name
+  if(userFriendlyTableName.isEmpty()){
+    uftn = tableName;
+  }else{
+    uftn = userFriendlyTableName;
+  }
+  // Setup model
+  model = new QSqlTableModel(this, pvDatabaseManager->database());
+  model->setTable(tableName);
+  if(!model->select()){
+    QSqlError sqlError = model->lastError();
+    mdtError e(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
+    e.commit();
+    displayError(e);
+    delete model;
+    return 0;
+  }
+  // Setup widget
+  tableWidget = new mdtSqlTableWidget;
+  tableWidget->setModel(model);
+  tableWidget->setUserFriendlyTableName(uftn);
+  // Setup tab widget (if needed)
+  if(pvTabWidget == 0){
+    pvTabWidget = new QTabWidget;
+    pvTabWidget->setTabsClosable(true);
+    setCentralWidget(pvTabWidget);  /// \todo Check if current central widget deleted ..
+  }
+  // Add view
+  pvTabWidget->addTab(tableWidget, uftn);
+  pvOpenViews.append(tableWidget);
+
+  return tableWidget;
+}
+
+bool mdtClMainWindow::displayTableView(const QString& tableName)
+{
+  mdtSqlTableWidget *tableWidget;
+  QSqlTableModel *model;
+  int i;
+
+  // Search requested table widget
+  for(i = 0; i < pvOpenViews.size(); ++i){
+    tableWidget = pvOpenViews.at(i);
+    Q_ASSERT(tableWidget != 0);
+    model = tableWidget->model();
+    Q_ASSERT(model != 0);
+    if(model->tableName() == tableName){
+      // We have the requested widget, refresh data
+      if(!model->select()){
+        QSqlError sqlError = model->lastError();
+        mdtError e(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
+        e.setSystemError(sqlError.number(), sqlError.text());
+        MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
+        e.commit();
+        return false;
+      }
+      // Show the widget - If a view exists in pvOpenViews, tab widget was allready created
+      Q_ASSERT(pvTabWidget != 0);
+      pvTabWidget->setCurrentWidget(tableWidget);
+      return true;
+    }
+  }
+  // Requested view was not found
+  return false;
+}
+
+mdtSqlWindow *mdtClMainWindow::setupEditor(mdtSqlForm *editor)
+{
+  Q_ASSERT(editor != 0);
+
+  mdtSqlWindow *window;
+
+  // Setup editor
+  if(!editor->setupTables()){
+    displayError(editor->lastError());
+    delete editor;
+    return 0;
+  }
+  // Setup window
+  window = new mdtSqlWindow(this);
+  window->setSqlForm(editor);
+  window->enableEdition();
+  pvOpenEditors.append(window);
+
+  return window;
+}
+
+template <class T> T *mdtClMainWindow::getEditor()
+{
+  int i;
+  mdtSqlForm *form;
+  T *editor;
+
+  for(i = 0; i < pvOpenEditors.size(); ++i){
+    form = pvOpenEditors.at(i)->sqlForm();
+    if(form != 0){
+      editor = dynamic_cast<T*>(form);
+      if(editor != 0){
+        return editor;
+      }
+    }
+  }
+
+  return 0;
+}
+
+mdtSqlWindow *mdtClMainWindow::getEditorWindow(mdtSqlForm *editor)
+{
+  int i;
+
+  for(i = 0; i < pvOpenEditors.size(); ++i){
+    if(pvOpenEditors.at(i)->sqlForm() == editor){
+      return pvOpenEditors.at(i);
+    }
+  }
+
+  return 0;
+}
+
+bool mdtClMainWindow::deleteEditors()
+{
+  QMutableListIterator<mdtSqlWindow*> it(pvOpenEditors);
+  mdtSqlWindow *window;
+  mdtSqlForm *form;
+
+  while(it.hasNext()){
+    window = it.next();
+    Q_ASSERT(window != 0);
+    form = window->sqlForm();
+    if(form != 0){
+      if(form->allDataAreSaved()){
+        it.remove();
+        delete window;
+      }else{
+        break;
+      }
+    }
+  }
+
+  return pvOpenEditors.isEmpty();
+}
+
+void mdtClMainWindow::closeEvent(QCloseEvent* event)
+{
+  Q_ASSERT(event != 0);
+
+  if(!deleteEditors()){
+    event->ignore();
+  }else{
+    event->accept();
+  }
+}
+
 void mdtClMainWindow::createActions()
 {
   // Open database
@@ -417,9 +735,11 @@ void mdtClMainWindow::createActions()
   connect(actImportDatabase, SIGNAL(triggered()), this, SLOT(importDatabase()));
 
   // Article edition
+  connect(actViewArticle, SIGNAL(triggered()), this, SLOT(viewArticle()));
   connect(actEditArticle, SIGNAL(triggered()), this, SLOT(editArticle()));
-  connect(pbEditArticle, SIGNAL(clicked()), this, SLOT(editArticle()));
+  ///connect(pbEditArticle, SIGNAL(clicked()), this, SLOT(editArticle()));
   // Vehicle type edition
+  connect(actViewVehicleType, SIGNAL(triggered()), this, SLOT(viewVehicleType()));
   connect(actEditVehicleType, SIGNAL(triggered()), this, SLOT(editVehicleType()));
   connect(pbEditVehicleType, SIGNAL(clicked()), this, SLOT(editVehicleType()));
   // Connector editor
@@ -579,5 +899,15 @@ void mdtClMainWindow::displayWarning(const QString & text , const QString & info
   msgBox.setText(text);
   msgBox.setInformativeText(informativeText);
   msgBox.setIcon(QMessageBox::Warning);
+  msgBox.exec();
+}
+
+void mdtClMainWindow::displayError(const mdtError & error)
+{
+  QMessageBox msgBox;
+
+  msgBox.setText(error.text());
+  msgBox.setDetailedText(error.systemText());
+  msgBox.setIcon(error.levelIcon());
   msgBox.exec();
 }

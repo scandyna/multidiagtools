@@ -61,6 +61,13 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    */
   void setSqlForm(mdtSqlForm *form);
 
+  /*! \brief Get SQL for
+   *
+   * Returns the SQL form that was set with setSqlForm(),
+   *  or a null pointer if it was not set.
+   */
+  mdtSqlForm *sqlForm() { return pvForm; }
+
   /*! \brief Enable navigation
    *
    * Will build a navigation bar

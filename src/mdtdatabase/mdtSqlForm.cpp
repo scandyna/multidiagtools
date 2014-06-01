@@ -65,6 +65,16 @@ bool mdtSqlForm::setMainTable(const QString &tableName, const QString &userFrien
 {
   QSqlTableModel *model;
 
+  // Check that db is open
+  if(!db.isOpen()){
+    QString msg;
+    msg = tr("Database is not open.") + "\n";
+    msg += tr("Please open a database and try again.");
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
+    return false;
+  }
   // Setup model
   model = pvMainSqlWidget->model();
   if(model == 0){
@@ -100,6 +110,16 @@ bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFrie
   mdtSqlTableWidget *widget;
   mdtSqlRelation *relation;
 
+  // Check that db is open
+  if(!db.isOpen()){
+    QString msg;
+    msg = tr("Database is not open.") + "\n";
+    msg += tr("Please open a database and try again.");
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
+    return false;
+  }
   // Check that main table was set
   if(pvMainSqlWidget->model() == 0){
     pvLastError.setError(tr("Cannot add child table '") + tableName + tr("' because no main table was set"), mdtError::Error);
@@ -257,8 +277,17 @@ bool mdtSqlForm::select()
     pvLastError.commit();
     return false;
   }
+  if(!m->select()){
+    QSqlError sqlError = m->lastError();
+    QString tableName = pvMainSqlWidget->userFriendlyTableName();
+    pvLastError.setError(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
+    return false;
+  }
 
-  return m->select();
+  return true;
 }
 
 bool mdtSqlForm::select(const QString &tableName)
@@ -272,8 +301,19 @@ bool mdtSqlForm::select(const QString &tableName)
     pvLastError.commit();
     return false;
   }
+  if(!m->select()){
+    QSqlError sqlError = m->lastError();
+    mdtAbstractSqlWidget *w = sqlWidget(tableName);
+    Q_ASSERT(w != 0);
+    QString tableName = w->userFriendlyTableName();
+    pvLastError.setError(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
+    return false;
+  }
 
-  return m->select();
+  return true;
 }
 
 bool mdtSqlForm::setMainTableFilter(const QString & fieldName, const QVariant & matchData)
@@ -438,6 +478,14 @@ void mdtSqlForm::insert()
 bool mdtSqlForm::setupTables()
 {
   return false;
+}
+
+bool mdtSqlForm::allDataAreSaved()
+{
+  if(pvMainSqlWidget == 0){
+    return true;
+  }
+  return pvMainSqlWidget->allDataAreSaved();
 }
 
 mdtError & mdtSqlForm::lastErrorW()

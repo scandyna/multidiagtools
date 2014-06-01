@@ -74,3 +74,5 @@ doc/bus/canbus/CiA
 # Other files #
 ###############
 customdb
+.kdev4
+multiDiagTools.kdev4

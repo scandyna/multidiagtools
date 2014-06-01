@@ -288,6 +288,14 @@ class mdtSqlForm : public QWidget
    */
   virtual bool setupTables();
 
+  /*! \brief Check if all data are saved
+   *
+   * Will call allDataAreSaved() on mainSqlWidget.
+   *
+   * \return true if all data are saved, false if a SQL widget has pending data.
+   */
+  bool allDataAreSaved();
+
  protected:
 
   /*! \brief Get lastError ogject for write acces

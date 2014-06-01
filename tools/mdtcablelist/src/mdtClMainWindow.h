@@ -26,7 +26,10 @@
 #include <QMainWindow>
 #include <QDir>
 #include <QString>
+#include <QList>
 
+class mdtSqlForm;
+class mdtSqlTableWidget;
 class mdtSqlDatabaseManager;
 class mdtClVehicleTypeEditor;
 class mdtClUnitEditor;
@@ -40,6 +43,7 @@ class mdtTtTestConnectionCableEditor;
 class mdtTtCableChecker;
 class mdtTtCableCheckerWindow;
 class mdtClLinkBeamEditor;
+class QTabWidget;
 
 class QAction;
 
@@ -77,6 +81,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void importDatabase();
 
+  /*! \brief View vehicle types
+   */
+  void viewVehicleType();
+
   /*! \brief Edit vehicle types
    */
   void editVehicleType();
@@ -92,6 +100,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Edit link beam
    */
   void editLinkBeam();
+
+  /*! \brief Edit articles
+   */
+  void viewArticle();
 
   /*! \brief Edit articles
    */
@@ -133,7 +145,93 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   Q_DISABLE_COPY(mdtClMainWindow);
 
+  /*! \brief Create vehicle type table view
+   */
+  bool createVehicleTypeTableView();
+
+  /*! \brief Get vehicle type editor
+   */
+  mdtClVehicleTypeEditor *getVehicleTypeEditor();
+
+  /*! \brief Create vehicle type editor
+   */
+  mdtClVehicleTypeEditor *createVehicleTypeEditor();
+
+  /*! \brief Create article table view
+   */
+  bool createArticleTableView();
+
+  /*! \brief Get article editor
+   */
+  mdtClArticleEditor *getArticleEditor();
+
+  /*! \brief Create article editor
+   */
+  mdtClArticleEditor *createArticleEditor();
+
+  /*! \brief Create a table view
+   *
+   * Will create a new SQL table widget that acts on given table name.
+   *  Common setup will also be done here.
+   *
+   * On success, a pointer to created table widget is returned,
+   *  null on failure.
+   *
+   * On success, the view is also added to pvTabWidget and pvOpenViews.
+   */
+  mdtSqlTableWidget *createTableView(const QString & tableName, const QString & userFriendlyTableName);
+
+  /*! \brief Display a table view
+   *
+   * If requested table view not exists in pvOpenViews,
+   *  this method returns false.
+   */
+  bool displayTableView(const QString & tableName);
+
+  /*! \brief Setup given editor in mdtSqlWindow
+   *
+   * Will do setup of things that are common to all editors,
+   *  such as calling setupTables(),
+   *  create and setup a new window, ...
+   *
+   * Returned pointer can be used, for example, to resize the editor.
+   *
+   * Freshliy created window will be added to open editors list.
+   *
+   * Note: if setup fails, the given editor will be destroyed,
+   *  and this method returns a null pointer.
+   *
+   * \pre editor must be a valid pointer.
+   */
+  mdtSqlWindow *setupEditor(mdtSqlForm *editor);
+
+  /*! \brief Get editor of type T
+   *
+   * If given editor of type T (for example mdtClVehicleTypeEditor)
+   *  exists in pvOpenEditors, a pointer to its instance is returned,
+   *  else a null pointer is returned.
+   */
+  template <class T> T *getEditor();
+
+  /*! \brief Get the window for given editor
+   */
+  mdtSqlWindow *getEditorWindow(mdtSqlForm *editor);
+
+  /*! \brief Delete editors
+   *
+   * Will try to close each open editor.
+   *  If a editor has unsaved data,
+   *  it will not be deleted, and this method returns false.
+   */
+  bool deleteEditors();
+
+  /*! \brief Give a chance to the user to save data before close
+   */
+  void closeEvent(QCloseEvent *event);
+
   /*! \brief Create actions
+   *
+   * \deprecated
    */
   void createActions();
 
@@ -159,18 +257,25 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void displayWarning(const QString & text, const QString & informativeText = "");
 
+  /*! \brief Display a error to the user
+   */
+  void displayError(const mdtError & error);
+
+  // View and editor container
+  QList<mdtSqlTableWidget*> pvOpenViews;
+  QList<mdtSqlWindow*> pvOpenEditors;
+
+  // Central widget
+  QTabWidget *pvTabWidget;
   // Database members
   mdtSqlDatabaseManager *pvDatabaseManager;
   QDir pvWorkDirectory;
-  // Vehicle type editor
-  mdtClVehicleTypeEditor *pvVehicleTypeEditor;
-  mdtSqlWindow *pvVehicleTypeEditorWindow;
   // Connector editor
   mdtClConnectorEditor *pvConnectorEditor;
   mdtSqlWindow *pvConnectorEditorWindow;
   // Articel editor
-  mdtClArticleEditor *pvArticleEditor;
-  mdtSqlWindow *pvArticleEditorWindow;
+  ///mdtClArticleEditor *pvArticleEditor;
+  ///mdtSqlWindow *pvArticleEditorWindow;
   // Unit editor
   mdtClUnitEditor *pvUnitEditor;
   mdtSqlWindow *pvUnitEditorWindow;
