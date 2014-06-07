@@ -89,17 +89,13 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editVehicleType();
 
-  /*! \brief Edir connectors
+  /*! \brief View connectors
+   */
+  void viewConnector();
+
+  /*! \brief Edit connectors
    */
   void editConnector();
-
-  /*! \brief Edit units
-   */
-  void editUnit();
-
-  /*! \brief Edit link beam
-   */
-  void editLinkBeam();
 
   /*! \brief Edit articles
    */
@@ -108,6 +104,26 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Edit articles
    */
   void editArticle();
+
+  /*! \brief View units
+   */
+  void viewUnit();
+
+  /*! \brief Edit units
+   */
+  void editUnit();
+
+  /*! \brief View link list
+   */
+  void viewLinkList();
+
+  /*! \brief View link beam
+   */
+  void viewLinkBeam();
+
+  /*! \brief Edit link beam
+   */
+  void editLinkBeam();
 
   /*! \brief Edit test node
    */
@@ -141,6 +157,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   ///void disconnectTestCable();
 
+  /*! \brief Called when user close a tab from pvTabWidget
+   */
+  void closeTableView(int index);
+
  private:
 
   Q_DISABLE_COPY(mdtClMainWindow);
@@ -157,6 +177,18 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   mdtClVehicleTypeEditor *createVehicleTypeEditor();
 
+  /*! \brief Create connector table view
+   */
+  bool createConnectorTableView();
+
+  /*! \brief Get connector editor
+   */
+  mdtClConnectorEditor *getConnectorEditor();
+
+  /*! \brief Create connector editor
+   */
+  mdtClConnectorEditor *createConnectorEditor();
+
   /*! \brief Create article table view
    */
   bool createArticleTableView();
@@ -168,6 +200,42 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Create article editor
    */
   mdtClArticleEditor *createArticleEditor();
+
+  /*! \brief Create unit table view
+   */
+  bool createUnitTableView();
+
+  /*! \brief Get unit editor
+   */
+  mdtClUnitEditor *getUnitEditor();
+
+  /*! \brief Create unit editor
+   */
+  mdtClUnitEditor *createUnitEditor();
+
+  /*! \brief Create link list table view
+   */
+  bool createLinkListTableView();
+
+  /*! \brief Create link beam table view
+   */
+  bool createLinkBeamTableView();
+
+  /*! \brief Get link beam editor
+   */
+  mdtClLinkBeamEditor *getLinkBeamEditor();
+
+  /*! \brief Create link beam editor
+   */
+  mdtClLinkBeamEditor *createLinkBeamEditor();
+
+  /*! \brief Get test node editor
+   */
+  mdtTtTestNodeEditor *getTestNodeEditor();
+
+  /*! \brief Create test node editor
+   */
+  mdtTtTestNodeEditor *createTestNodeEditor();
 
   /*! \brief Create a table view
    *
@@ -187,6 +255,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    *  this method returns false.
    */
   bool displayTableView(const QString & tableName);
+
+  /*! \brief Close and delete table views
+   */
+  void deleteTableviews();
 
   /*! \brief Setup given editor in mdtSqlWindow
    *
@@ -233,7 +305,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    *
    * \deprecated
    */
-  void createActions();
+  void connectActions();
 
   /*! \brief Init work directory
    */
@@ -264,33 +336,12 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   // View and editor container
   QList<mdtSqlTableWidget*> pvOpenViews;
   QList<mdtSqlWindow*> pvOpenEditors;
-
   // Central widget
   QTabWidget *pvTabWidget;
   // Database members
   mdtSqlDatabaseManager *pvDatabaseManager;
   QDir pvWorkDirectory;
-  // Connector editor
-  mdtClConnectorEditor *pvConnectorEditor;
-  mdtSqlWindow *pvConnectorEditorWindow;
-  // Articel editor
-  ///mdtClArticleEditor *pvArticleEditor;
-  ///mdtSqlWindow *pvArticleEditorWindow;
-  // Unit editor
-  mdtClUnitEditor *pvUnitEditor;
-  mdtSqlWindow *pvUnitEditorWindow;
-  // Link beam editor
-  mdtClLinkBeamEditor *pvLinkBeamEditor;
-  mdtSqlWindow *pvLinkBeamEditorWindow;
-  // Test node editor
-  mdtTtTestNodeEditor *pvTestNodeEditor;
-  mdtSqlWindow *pvTestNodeEditorWindow;
-  
-  // Editors
-  
-  
-  
-  
+
   // Test connection cable editor
   mdtTtTestConnectionCableEditor *pvTestConnectionCableEditor;
   mdtSqlWindow *pvTestConnectionCableEditorWindow;

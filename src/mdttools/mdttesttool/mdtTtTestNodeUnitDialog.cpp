@@ -39,10 +39,9 @@ mdtTtTestNodeUnitDialog::mdtTtTestNodeUnitDialog(QWidget *parent, QSqlDatabase d
   pvDatabase = db;
   // Setup UI
   setupUi(this);
-  setupBusComboBox();
+  ///setupBusComboBox();
   setupTypeComboBox();
   connect(pbSelectUnit, SIGNAL(clicked()), this, SLOT(selectBaseUnit()));
-  connect(pbSelectTestConnection, SIGNAL(clicked()), this, SLOT(selectTestConnection()));
   updateDialog();
 }
 
@@ -107,6 +106,7 @@ void mdtTtTestNodeUnitDialog::selectBaseUnit()
 
 ///|||UnitConnectorName|UnitContactName|SchemaPage|UnitFunctionEN|UnitFunctionFR|UnitFunctionDE|UnitFunctionIT|SignalName|SwAddress|ArticleConnectorName|ArticleContactName|IoType|ArticleFunctionEN|ArticleFunctionFR|ArticleFunctionDE|ArticleFunctionIT
 
+/**
 void mdtTtTestNodeUnitDialog::selectTestConnection() 
 {
   mdtTtTestNodeUnit tnu(0, pvDatabase);
@@ -146,15 +146,6 @@ void mdtTtTestNodeUnitDialog::selectTestConnection()
   ///selectionDialog.setColumnHidden("Type", true);
   ///selectionDialog.setColumnHidden("SubType", true);
   ///selectionDialog.setColumnHidden("SeriesNumber", true);
-  /**
-  selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
-  selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
-  selectionDialog.setHeaderData("DesignationEN", tr("Designation\n(English)"));
-  selectionDialog.setHeaderData("DesignationFR", tr("Designation\n(French)"));
-  selectionDialog.setHeaderData("DesignationDE", tr("Designation\n(German)"));
-  selectionDialog.setHeaderData("DesignationIT", tr("Designation\n(Italian)"));
-  selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
-  */
   selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
   selectionDialog.sort();
@@ -174,6 +165,7 @@ void mdtTtTestNodeUnitDialog::selectTestConnection()
   pvData.setTestConnectionData(connectionData);
   updateDialog();
 }
+*/
 
 void mdtTtTestNodeUnitDialog::accept() 
 {
@@ -181,7 +173,7 @@ void mdtTtTestNodeUnitDialog::accept()
   QStringList missingFields;
   int i;
 
-  storeBus();
+  ///storeBus();
   storeType();
   pvData.setValue("IoPosition", sbIoPosition->value());
   // Check required data
@@ -231,11 +223,12 @@ void mdtTtTestNodeUnitDialog::updateDialog()
   sbIoPosition->setValue(pvData.value("IoPosition").toInt());
   lbSchemaPosition->setText(unitData.value("SchemaPosition").toString());
   lbAlias->setText(unitData.value("Alias").toString());
-  displayTestConnection();
-  displayBus();
+  ///displayTestConnection();
+  ///displayBus();
   displayType();
 }
 
+/**
 void mdtTtTestNodeUnitDialog::displayTestConnection()
 {
   mdtClUnit unit(0, pvDatabase);
@@ -258,7 +251,9 @@ void mdtTtTestNodeUnitDialog::displayTestConnection()
   // Set contact name
   lbContactName->setText(pvData.testConnectionData().value("UnitContactName").toString());
 }
+*/
 
+/**
 void mdtTtTestNodeUnitDialog::displayBus()
 {
   int row;
@@ -276,6 +271,7 @@ void mdtTtTestNodeUnitDialog::storeBus()
 {
   pvData.setValue("Bus", cbBus->currentText());
 }
+*/
 
 void mdtTtTestNodeUnitDialog::displayType()
 {
@@ -312,12 +308,14 @@ void mdtTtTestNodeUnitDialog::storeType()
   pvData.setValue("Type_Code_FK", pvTypeModel.data(index));
 }
 
+/**
 void mdtTtTestNodeUnitDialog::setupBusComboBox() 
 {
   cbBus->clear();
   cbBus->addItem("BUSA");
   cbBus->addItem("BUSB");
 }
+*/
 
 void mdtTtTestNodeUnitDialog::setupTypeComboBox() 
 {

@@ -62,15 +62,12 @@ bool mdtTtTestNodeEditor::setupTables()
 void mdtTtTestNodeEditor::setBaseVehicleType()
 {
   mdtSqlSelectionDialog selectionDialog;
-  ///QSqlQueryModel model;
   QString sql;
   QVariant vehicleTypeId;
 
   // Setup vehicle type selection dialog and show it to user
   sql = "SELECT * FROM VehicleType_tbl;";
-  ///model.setQuery(sql, database());
   selectionDialog.setMessage("Please select vehicle type.");
-  ///selectionDialog.setModel(&model, false);
   selectionDialog.setQuery(sql, database(), false);
   ///selectionDialog.setColumnHidden("Id_PK", true);
   ///selectionDialog.setHeaderData("SubType", tr("Variant"));
@@ -84,6 +81,7 @@ void mdtTtTestNodeEditor::setBaseVehicleType()
   vehicleTypeId = selectionDialog.selectionResult().at(0);
   qDebug() << "VHC ID: " << vehicleTypeId;
   if(!setCurrentData("TestNode_tbl", "VehicleType_Id_FK_PK", vehicleTypeId)){
+    displayLastError();
     return;
   }
 }
@@ -578,12 +576,6 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
   if(!setMainTable("TestNode_tbl", "Test node", database())){
     return false;
   }
-  /**
-  sqlWindow()->enableNavigation();
-  sqlWindow()->enableEdition();
-  sqlWindow()->resize(800, 500);
-  sqlWindow()->setWindowTitle(tr("Test node edition"));
-  */
   /*
    * Setup base unit widget mapping
    */
@@ -636,8 +628,8 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   widget->setColumnHidden("Unit_Id_FK_PK", true);
   widget->setColumnHidden("TestNode_Id_FK", true);
   ///widget->setColumnHidden("Type_Code_FK", true);
-  widget->setColumnHidden("TestConnection_Id_FK", true);
-  widget->setColumnHidden("", true);
+  ///widget->setColumnHidden("TestConnection_Id_FK", true);
+  ///widget->setColumnHidden("", true);
   // Set fields a user friendly name
   widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
   widget->setHeaderData("UnitConnectorName", tr("Connector"));

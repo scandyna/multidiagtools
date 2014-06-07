@@ -255,7 +255,7 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupVehicleTypeLinkTable()){
     return false;
   }
-  /// \todo Move to test tool when created
+  // Test tool part
   if(!setupTestNodeTable()){
     return false;
   }
@@ -265,7 +265,19 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupTestNodeUnitTable()){
     return false;
   }
+  if(!setupTestNodeBusTable()){
+    return false;
+  }
+  if(!setupTestNodeUnitConnectionTable()){
+    return false;
+  }
   if(!setupTestCableTable()){
+    return false;
+  }
+  if(!setupTestCableTestNodeUnitTable()){
+    return false;
+  }
+  if(!setupTestCableDutUnitTable()){
     return false;
   }
   if(!setupTestLinkTable()){
@@ -357,15 +369,20 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestNodeUnitView()){
     return false;
   }
+  /**
   if(!createTestLinkView()){
     return false;
   }
+  */
   if(!createTestModelItemView()){
     return false;
   }
+  /**
   if(!createTestModelItemNodeUnitSetupView()){
     return false;
   }
+  */
+  /**
   if(!createTestModelItemNodeView()){
     return false;
   }
@@ -378,6 +395,7 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestItemNodeUnitSetupView()){
     return false;
   }
+  */
   return true;
 }
 
@@ -1739,7 +1757,12 @@ bool mdtTtDatabaseSchema::setupTestNodeTable()
     pvLastError = table.lastError();
     return false;
   }
-  // Foreign keys - None (cannot add FK to table of another database)
+  // Foreign keys
+  table.addForeignKey("VehicleType_Id_FK_PK_fk", "VehicleType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("VehicleType_Id_FK_PK_fk", "VehicleType_Id_FK_PK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
 
   pvTables.append(table);
 
@@ -1760,24 +1783,30 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
   field = QSqlField();
   field.setName("TestNode_Id_FK");
   field.setType(QVariant::Int);
+  field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
   // Type_Code_FK
   field = QSqlField();
   field.setName("Type_Code_FK");
   field.setType(QVariant::String);
   field.setLength(10);
+  field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
   // TestConnection_Id_FK
+  /**
   field = QSqlField();
   field.setName("TestConnection_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
+  */
   // (Measure) Bus
+  /**
   field = QSqlField();
   field.setName("Bus");
   field.setType(QVariant::String);
   field.setLength(30);
   table.addField(field, false);
+  */
   // IoPosition
   field = QSqlField();
   field.setName("IoPosition");
@@ -1799,12 +1828,19 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
     pvLastError = table.lastError();
     return false;
   }
+  /**
   table.addIndex("TestConnection_Id_FK_idx", false);
   if(!table.addFieldToIndex("TestConnection_Id_FK_idx", "TestConnection_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
-  // Foreign keys - No FK to Unit_tbl, because it will be in another database
+  */
+  // Foreign keys
+  table.addForeignKey("Unit_Id_FK_PK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Unit_Id_FK_PK_fk", "Unit_Id_FK_PK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   table.addForeignKey("TestNode_Id_FK_fk", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestNode_Id_FK_fk", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
     pvLastError = table.lastError();
@@ -1815,8 +1851,64 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
     pvLastError = table.lastError();
     return false;
   }
+  /**
   table.addForeignKey("TestConnection_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestConnection_Id_FK_fk", "TestConnection_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  */
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupTestNodeUnitConnectionTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestNodeUnitConnection_tbl", "UTF8");
+  // UnitConnection_Id_FK_PK
+  field.setName("UnitConnection_Id_FK_PK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // TestNodeUnit_Id_FK
+  field = QSqlField();
+  field.setName("TestNodeUnit_Id_FK");
+  field.setType(QVariant::Int);
+  field.setRequiredStatus(QSqlField::Required);
+  table.addField(field, false);
+  // TestNodeBus_Id_FK
+  field = QSqlField();
+  field.setName("TestNodeBus_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // Indexes
+  table.addIndex("TestNodeUnit_Id_FK_idx2", false);
+  if(!table.addFieldToIndex("TestNodeUnit_Id_FK_idx2", "TestNodeUnit_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("TestNodeBus_Id_FK_idx", false);
+  if(!table.addFieldToIndex("TestNodeBus_Id_FK_idx", "TestNodeBus_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("UnitConnection_Id_FK_PK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("UnitConnection_Id_FK_PK_fk", "UnitConnection_Id_FK_PK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestNodeUnit_Id_FK_fk2", "TestNodeUnit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestNodeUnit_Id_FK_fk2", "TestNodeUnit_Id_FK", "Unit_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestNodeBus_Id_FK_fk", "TestNodeBus_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestNodeBus_Id_FK_fk", "TestNodeBus_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -1861,6 +1953,110 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTypeTable()
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupTestNodeBusTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestNodeBus_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // TestNode_Id_FK
+  field = QSqlField();
+  field.setName("TestNode_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // NameEN
+  field = QSqlField();
+  field.setName("NameEN");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // Indexes
+  table.addIndex("TestNode_Id_FK_idx2", false);
+  if(!table.addFieldToIndex("TestNode_Id_FK_idx2", "TestNode_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("TestNode_Id_FK_fk2", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestNode_Id_FK_fk2", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupTestCableTestNodeUnitTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestCable_TestNodeUnit_tbl", "UTF8");
+  // TestNodeUnit_Id_FK
+  field.setName("TestNodeUnit_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // TestCable_Id_FK
+  field = QSqlField();
+  field.setName("TestCable_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Foreign keys
+  table.addForeignKey("TestNodeUnit_Id_FK_fk3", "TestNodeUnit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestNodeUnit_Id_FK_fk3", "TestNodeUnit_Id_FK", "Unit_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestCable_Id_FK_fk2", "TestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestCable_Id_FK_fk2", "TestCable_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupTestCableDutUnitTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestCable_DutUnit_tbl", "UTF8");
+  // TestNodeUnit_Id_FK
+  field.setName("DutUnit_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // TestCable_Id_FK
+  field = QSqlField();
+  field.setName("TestCable_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Foreign keys
+  table.addForeignKey("DutUnit_Id_FK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("DutUnit_Id_FK_fk", "DutUnit_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestCable_Id_FK_fk3", "TestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestCable_Id_FK_fk3", "TestCable_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
 
   pvTables.append(table);
 
@@ -1929,26 +2125,32 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
   field.setType(QVariant::Double);
   table.addField(field, false);
   // Indexes
-  /**
-  table.addIndex("TestConnection_Id_FK_idx2", false);
-  if(!table.addFieldToIndex("TestConnection_Id_FK_idx2", "TestConnection_Id_FK")){
+  table.addIndex("TestConnection_Id_FK_idx", false);
+  if(!table.addFieldToIndex("TestConnection_Id_FK_idx", "TestConnection_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
-  */
+  table.addIndex("DutConnection_Id_FK_idx", false);
+  if(!table.addFieldToIndex("DutConnection_Id_FK_idx", "DutConnection_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   table.addIndex("TestCable_Id_FK_idx", false);
   if(!table.addFieldToIndex("TestCable_Id_FK_idx", "TestCable_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
-  // Foreign keys - No FK to UnitConnection_tbl, because it will be in another database
-  /**
-  table.addForeignKey("TestConnection_Id_FK_fk2", "TestNodeUnit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("TestConnection_Id_FK_fk2", "TestConnection_Id_FK", "TestConnection_Id_FK")){
+  // Foreign keys
+  table.addForeignKey("TestConnection_Id_FK_fk2", "TestNodeUnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestConnection_Id_FK_fk2", "TestConnection_Id_FK", "UnitConnection_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  */
+  table.addForeignKey("DutConnection_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("DutConnection_Id_FK_fk", "DutConnection_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   table.addForeignKey("TestCable_Id_FK_fk", "TestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestCable_Id_FK_fk", "TestCable_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
@@ -2266,17 +2468,19 @@ bool mdtTtDatabaseSchema::createTestNodeUnitView()
         "TestNodeUnit_tbl.Unit_Id_FK_PK,\n"\
         "TestNodeUnit_tbl.TestNode_Id_FK,\n"\
         "TestNodeUnit_tbl.Type_Code_FK,\n"\
-        "TestNodeUnit_tbl.TestConnection_Id_FK,\n"\
+        /**"TestNodeUnit_tbl.TestConnection_Id_FK,\n"\ */
         "Unit_tbl.SchemaPosition,\n"\
-        "TestNodeUnit_tbl.Bus,\n"\
+        /**"TestNodeUnit_tbl.Bus,\n"\ */
         "TestNodeUnit_tbl.IoPosition,\n"\
-        "UnitConnector_tbl.Name AS UnitConnectorName,\n"\
+        /**"UnitConnector_tbl.Name AS UnitConnectorName,\n"\ */
+        /**
         "UnitConnection_tbl.UnitContactName,\n"\
         "UnitConnection_tbl.SignalName,\n"\
         "UnitConnection_tbl.FunctionEN,\n"\
         "UnitConnection_tbl.FunctionFR,\n"\
         "UnitConnection_tbl.FunctionDE,\n"\
         "UnitConnection_tbl.FunctionIT,\n"\
+        */
         "TestNodeUnitType_tbl.NameEN,\n"\
         "TestNodeUnitType_tbl.NameFR,\n"\
         "TestNodeUnitType_tbl.NameDE,\n"\
@@ -2284,10 +2488,14 @@ bool mdtTtDatabaseSchema::createTestNodeUnitView()
         "FROM TestNodeUnit_tbl\n"\
         " JOIN Unit_tbl\n"\
         "  ON Unit_tbl.Id_PK = TestNodeUnit_tbl.Unit_Id_FK_PK\n"\
+        /**
         " LEFT JOIN UnitConnection_tbl\n"\
         "  ON UnitConnection_tbl.Id_PK = TestNodeUnit_tbl.TestConnection_Id_FK\n"\
+        */
+        /**
         " LEFT JOIN UnitConnector_tbl\n"\
         "  ON UnitConnector_tbl.Id_PK = UnitConnection_tbl.UnitConnector_Id_FK\n"\
+        */
         " JOIN TestNodeUnitType_tbl\n"\
         "  ON TestNodeUnitType_tbl.Code_PK = TestNodeUnit_tbl.Type_Code_FK";
 
@@ -3298,6 +3506,12 @@ bool mdtTtDatabaseSchema::populateTestNodeUnitTypeTable()
   // Channel relay
   data.clear();
   data << "CHANELREL" << "Channel relay" << "Relai de canal" << "Kanal-Relais" << "Relè della Manica";
+  if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Test connector
+  data.clear();
+  data << "TESTCONNECTOR" << "Test connector" << "Connecteur de test" << "Test Stecker" << "Connettore di test";
   if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
     return false;
   }

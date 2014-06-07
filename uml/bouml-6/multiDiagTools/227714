@@ -1,6 +1,6 @@
-format 204
+format 206
 "DatabaseConceptual" // mdttools::mdttesttool::DatabaseConceptual
-  revision 5
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -260,6 +260,30 @@ ${inlines}
 "
 	    classrelation_ref 1179650 // <composition>
       end
+
+      classrelation 1548418 // (based on)
+	relation 1535362 ---- name "based on"
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1548418 // (based on)
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1548546 // (based on)
+      end
+
+      classrelation 1551362 // (links)
+	relation 1536770 ---- name "links"
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1551362 // (links)
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1551490 // (links)
+      end
     end
 
     class 764930 "ArticleConnection_tbl"
@@ -494,6 +518,22 @@ ${inlines}
       classrelation 1179906 // <association>
 	relation_ref 1167362 // <association>
       end
+
+      classrelation 1549698 // (based on)
+	relation 1536002 ---- name "based on"
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1549698 // (based on)
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1549826 // (based on)
+      end
+
+      classrelation 1550466 // DUT connection
+	relation_ref 1536258 // DUT connection
+      end
     end
 
     class 785282 "Link_tbl"
@@ -720,6 +760,10 @@ ${inlines}
 	    classrelation_ref 1177858 // <association>
 	  association_explicit_type "VehicleType_Link_tbl"
       end
+
+      classrelation 1549314 // based on
+	relation_ref 1535746 // based on
+      end
     end
 
     class 944130 "ArticleConnector"
@@ -876,6 +920,422 @@ ${inlines}
       classrelation 1196162 // <composition>
 	relation_ref 1183234 // <composition>
       end
+    end
+  end
+
+  classview 675330 "TestTool"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1152002 "TestTool"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1241218 "TestNode_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1548162 // <composition>
+	relation 1535234 *---
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1548162 // <composition>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1548290 // <composition>
+      end
+
+      classrelation 1548674 // <composition>
+	relation 1535490 *---
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1548674 // <composition>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1548802 // <composition>
+      end
+
+      classrelation 1549186 // (based on)
+	relation 1535746 ---- name "based on"
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1549186 // (based on)
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1549314 // based on
+      end
+    end
+
+    class 1241346 "TestNodeUnit_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1548290 // <composition>
+	relation_ref 1535234 // <composition>
+      end
+
+      classrelation 1548546 // (based on)
+	relation_ref 1535362 // based on
+      end
+
+      classrelation 1548930 // <association>
+	relation 1535618 ----
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1548930 // <association>
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1549058 // <association>
+      end
+
+      classrelation 1549442 // <composition>
+	relation 1535874 *---
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1549442 // <composition>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1549570 // <composition>
+      end
+
+      classrelation 1551234 // links
+	relation_ref 1536642 // links
+      end
+
+      classrelation 1552258 // <association>
+	relation_ref 1537154 // <association>
+      end
+    end
+
+    class 1241474 "TestNodeBus_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1548802 // <composition>
+	relation_ref 1535490 // <composition>
+      end
+
+      classrelation 1549954 // <composition>
+	relation 1536130 *---
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1549954 // <composition>
+	  b role_name "" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1550082 // <composition>
+      end
+    end
+
+    class 1241602 "TestNodeUnitType_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1549058 // <association>
+	relation_ref 1535618 // <association>
+      end
+    end
+
+    class 1241730 "TestNodeUnitConnection_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1549570 // <composition>
+	relation_ref 1535874 // <composition>
+      end
+
+      classrelation 1549826 // (based on)
+	relation_ref 1536002 // based on
+      end
+
+      classrelation 1550082 // <composition>
+	relation_ref 1536130 // <composition>
+      end
+
+      classrelation 1550722 // test connection
+	relation_ref 1536386 // test connection
+      end
+    end
+
+    class 1241858 "TestCable_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1550850 // <composition>
+	relation 1536514 *---
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1550850 // <composition>
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1550978 // <composition>
+      end
+
+      classrelation 1551106 // (links)
+	relation 1536642 ---- name "links"
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1551106 // (links)
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1551234 // links
+      end
+
+      classrelation 1551490 // (links)
+	relation_ref 1536770 // links
+      end
+    end
+
+    class 1241986 "TestLink_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1550210 // (DUT connection)
+	relation 1536258 ---- name "DUT connection"
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1550210 // (DUT connection)
+	  b role_name "" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1550466 // DUT connection
+      end
+
+      classrelation 1550594 // (test connection)
+	relation 1536386 ---- name "test connection"
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1550594 // (test connection)
+	  b role_name "" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1550722 // test connection
+      end
+
+      classrelation 1550978 // <composition>
+	relation_ref 1536514 // <composition>
+      end
+    end
+
+    class 1242114 "TestModel_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1551618 // <composition>
+	relation 1536898 *---
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1551618 // <composition>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1551746 // <composition>
+      end
+    end
+
+    class 1242242 "TestModelItem_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1551746 // <composition>
+	relation_ref 1536898 // <composition>
+      end
+
+      classrelation 1551874 // <composition>
+	relation 1537026 *---
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1551874 // <composition>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1552002 // <composition>
+      end
+    end
+
+    class 1242370 "TestNodeUnitSetup_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1552002 // <composition>
+	relation_ref 1537026 // <composition>
+      end
+
+      classrelation 1552130 // <association>
+	relation 1537154 ----
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1552130 // <association>
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1552258 // <association>
+      end
+    end
+
+    class 1242498 "TestModelSequence_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 1242626 "TestModelSequenceItem_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 end

@@ -50,7 +50,7 @@ class mdtTtTestNodeUnitDialog : public QDialog, Ui::mdtTtTestNodeUnitDialog
 
   void selectBaseUnit();
 
-  void selectTestConnection();
+  ///void selectTestConnection();
 
   void accept();
 
@@ -64,15 +64,15 @@ class mdtTtTestNodeUnitDialog : public QDialog, Ui::mdtTtTestNodeUnitDialog
 
   /*! \brief Display test connector and connection part regarding internal data
    */
-  void displayTestConnection();
+  ///void displayTestConnection();
 
   /*! \brief Update BUS combo box regarding internal data
    */
-  void displayBus();
+  ///void displayBus();
 
   /*! \brief Store selected BUS to internal data
    */
-  void storeBus();
+  ///void storeBus();
 
   /*! \brief Update node unit type combo box regarding internal data
    */
@@ -84,7 +84,7 @@ class mdtTtTestNodeUnitDialog : public QDialog, Ui::mdtTtTestNodeUnitDialog
 
   /*! \brief Setup and populate BUS combo box
    */
-  void setupBusComboBox();
+  ///void setupBusComboBox();
 
   /*! \brief Setup and populate node unit type combo box
    */

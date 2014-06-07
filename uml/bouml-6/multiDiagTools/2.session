@@ -1,17 +1,14 @@
-window_sizes 1280 978 353 921 925 0
+window_sizes 1280 1005 279 995 952 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1026690 // CableList
-    736 761 100 4 0 0
-  classdiagram_ref 1138946 // Editors
-    921 952 100 4 0 0
-  active  classdiagram_ref 1145474 // mdtClMainWindow
-    921 925 100 4 60 0
+  active  classdiagram_ref 1079810 // mdtTtTestNodeUnit
+    995 952 100 4 0 0
+  classdiagram_ref 1158530 // mdtTtTestNode
+    120 106 100 4 0 0
 end
 show_stereotypes
+selected classdiagram_ref 1079810 // mdtTtTestNodeUnit
 open
-  operation_ref 2046594 // getVehicleTypeView
-  operation_ref 2047234 // closeViews
-  classview_ref 609154 // GlobalView
+  classview_ref 635522 // mdtTtTestNode
 end
 end

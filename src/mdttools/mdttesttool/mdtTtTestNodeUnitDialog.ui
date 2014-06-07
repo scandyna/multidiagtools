@@ -6,151 +6,77 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>482</width>
-    <height>204</height>
+    <width>391</width>
+    <height>137</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Test node unit edition</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QFormLayout" name="formLayout">
+   <property name="fieldGrowthPolicy">
+    <enum>QFormLayout::ExpandingFieldsGrow</enum>
+   </property>
    <item row="0" column="0">
-    <layout class="QFormLayout" name="formLayout_3">
-     <item row="0" column="0">
-      <widget class="QLabel" name="lbBus">
+    <widget class="QLabel" name="lbSchemaPositionLabel">
+     <property name="text">
+      <string>Schema position:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="lbSchemaPosition">
        <property name="text">
-        <string>Bus:</string>
+        <string>Schema position</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="cbBus"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="lbIoPosition">
+     <item>
+      <widget class="QPushButton" name="pbSelectUnit">
        <property name="text">
-        <string>I/O position:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QSpinBox" name="sbIoPosition"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QComboBox" name="cbType"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="lbType">
-       <property name="text">
-        <string>Type:</string>
+        <string>...</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QGroupBox" name="gbUnitData">
-     <property name="font">
-      <font>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lbAliasLabel">
+     <property name="text">
+      <string>Alias:</string>
      </property>
-     <property name="title">
-      <string>Base unit</string>
-     </property>
-     <layout class="QFormLayout" name="formLayout_2">
-      <item row="0" column="0">
-       <widget class="QLabel" name="lbSchemaPositionLabel">
-        <property name="text">
-         <string>Schema position:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLabel" name="lbSchemaPosition">
-          <property name="text">
-           <string>Schema position</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pbSelectUnit">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="lbAliasLabel">
-        <property name="text">
-         <string>Alias:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="lbAlias">
-        <property name="text">
-         <string>Alias</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
-   <item row="1" column="2">
-    <widget class="QGroupBox" name="gbTestConnection">
-     <property name="title">
-      <string>Test connection</string>
+   <item row="1" column="1">
+    <widget class="QLabel" name="lbAlias">
+     <property name="text">
+      <string>Alias</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="lbTestConnectorLabel">
-          <property name="text">
-           <string>Connector:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="lbTestConnector">
-          <property name="text">
-           <string>Connector</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="lbContactNameLabel">
-          <property name="text">
-           <string>Contact:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="lbContactName">
-          <property name="text">
-           <string>Contact</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pbSelectTestConnection">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
-   <item row="2" column="1" colspan="2">
+   <item row="2" column="0">
+    <widget class="QLabel" name="lbIoPosition">
+     <property name="text">
+      <string>I/O position:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QSpinBox" name="sbIoPosition"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lbType">
+     <property name="text">
+      <string>Type:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QComboBox" name="cbType"/>
+   </item>
+   <item row="4" column="1">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

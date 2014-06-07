@@ -1,6 +1,6 @@
 format 206
 "mdttesttool" // mdttools::mdttesttool
-  revision 22
+  revision 23
   modified_by 2 "philippe"
   // class settings
   
@@ -1066,7 +1066,7 @@ ${inlines}
     end
   end
 
-  classview 635522 "mdtTtTestNodeUnit"
+  classview 635522 "mdtTtTestNode"
     
     classdiagramsettings member_max_width 0 end
     
@@ -1083,6 +1083,11 @@ ${inlines}
     activitydiagramsettings
      end
     associated_deployment_view deploymentview_ref 507138 // mdtTtTestNodeUnit
+    classdiagram 1158530 "mdtTtTestNode"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
     classdiagram 1079810 "mdtTtTestNodeUnit"
       classdiagramsettings member_max_width 0 end
       size A4

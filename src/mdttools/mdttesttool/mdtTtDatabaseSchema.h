@@ -189,33 +189,39 @@ class mdtTtDatabaseSchema
    */
   bool setupLinkDirectionTable();
 
-  /*! \brief Setup test node table
-   *
-   * \todo Move to test tool when created
+  /*! \brief Setup TestNode_tbl
    */
   bool setupTestNodeTable();
 
-  /*! \brief Setup test node unit table
-   *
-   * \todo Move to test tool when created
+  /*! \brief Setup TestNodeUnit_tbl
    */
   bool setupTestNodeUnitTable();
 
-  /*! \brief Setup test node unit type table
-   *
-   * \todo Move to test tool when created
+  /*! \brief Setup TestNodeUnitConnection_tbl
+   */
+  bool setupTestNodeUnitConnectionTable();
+
+  /*! \brief Setup TestNodeUnitType_tbl
    */
   bool setupTestNodeUnitTypeTable();
 
-  /*! \brief Setup test cable table
-   *
-   * \todo Move to test tool when created
+  /*! \brief Setup TestNodeBus_tbl
+   */
+  bool setupTestNodeBusTable();
+
+  /*! \brief Setup TestCable_TestNodeUnit_tbl
+   */
+  bool setupTestCableTestNodeUnitTable();
+
+  /*! \brief Setup TestCable_DutUnit_tbl
+   */
+  bool setupTestCableDutUnitTable();
+
+  /*! \brief Setup TestCable_tbl
    */
   bool setupTestCableTable();
 
-  /*! \brief Setup test link table
-   *
-   * \todo Move to test tool when created
+  /*! \brief Setup TestLink_tbl
    */
   bool setupTestLinkTable();
 
@@ -260,15 +266,6 @@ class mdtTtDatabaseSchema
   bool createView(const QString & viewName, const QString & sql);
 
   /*! \brief Create test node unit view
-   *
-   * TestNodeUnit is a unit with additionnal informations that
-   *  simplify the generation of test sequences and test cables .
-   *  TestConnection ID is not directly linked to a TestNodeUnit,
-   *  but is the connection of a test node that is related to this TestNodeUnit .
-   *  (F.ex. we could know that K1 is a channel relay, that is on BUSA,
-   *   and that it is related to pin a1 from X1 connector of the test node) .
-   *
-   * \todo Move to test tool when created
    */
   bool createTestNodeUnitView();
 

@@ -59,17 +59,9 @@ mdtClMainWindow::mdtClMainWindow()
   ///openDatabaseSqlite();
   // Central widget
   pvTabWidget = 0;
-  // Editors - Will be setup on first call
-  pvConnectorEditor = 0;
-  pvConnectorEditorWindow = 0;
-  ///pvArticleEditor = 0;
-  ///pvArticleEditorWindow = 0;
 
-  pvUnitEditor = 0;
-  pvTestNodeEditor = 0;
+  // Editors - Will be setup on first call
   pvTestConnectionCableEditor = 0;
-  pvLinkBeamEditor = 0;
-  pvLinkBeamEditorWindow = 0;
   pvTestConnectionCableEditorWindow = 0;
   pvTestEditor = 0;
   pvTestEditorWindow = 0;
@@ -78,7 +70,7 @@ mdtClMainWindow::mdtClMainWindow()
   pvCableChecker = 0;
   pvCableCheckerWindow = 0;
 
-  createActions();
+  connectActions();
 }
 
 mdtClMainWindow::~mdtClMainWindow()
@@ -92,21 +84,10 @@ void mdtClMainWindow::openDatabase()
 
 void mdtClMainWindow::closeDatabase()
 {
-  /// \todo Check about data saving !!
-  /**
-  delete pvVehicleTypeEditor;
-  pvVehicleTypeEditor = 0;
-  */
-  delete pvConnectorEditor;
-  pvConnectorEditor = 0;
-  ///delete pvArticleEditor;
-  ///pvArticleEditor = 0;
-  delete pvUnitEditor;
-  pvUnitEditor = 0;
-  
   if(!deleteEditors()){
     return;
   }
+  deleteTableviews();
   pvDatabaseManager->database().close();
 }
 
@@ -147,118 +128,39 @@ void mdtClMainWindow::editVehicleType()
     return;
   }
   window->enableNavigation();
+  window->raise();
   window->show();
-  
-  /**
-  if(pvVehicleTypeEditor == 0){
-    pvVehicleTypeEditor = new mdtClVehicleTypeEditor(this, pvDatabaseManager->database());
-    if(!pvVehicleTypeEditor->setupTables()){
-      QMessageBox msgBox(this);
-      msgBox.setText(tr("Cannot setup vehicle editor."));
-      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
-                                + qApp->applicationName() + tr(")"));
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      delete pvVehicleTypeEditor;
-      pvVehicleTypeEditor = 0;
-      return;
-    }
-    pvVehicleTypeEditorWindow = new mdtSqlWindow(this);
-    pvVehicleTypeEditorWindow->setSqlForm(pvVehicleTypeEditor);
-    pvVehicleTypeEditorWindow->resize(800, 500);
-    pvVehicleTypeEditorWindow->enableNavigation();
-    pvVehicleTypeEditorWindow->enableEdition();
-    pvVehicleTypeEditorWindow->setWindowTitle(tr("Vehicle type edition"));
+}
+
+void mdtClMainWindow::viewConnector()
+{
+  if(!displayTableView("Connector_tbl")){
+    createConnectorTableView();
   }
-  Q_ASSERT(pvVehicleTypeEditor != 0);
-  Q_ASSERT(pvVehicleTypeEditorWindow != 0);
-  pvVehicleTypeEditor->select();
-  pvVehicleTypeEditorWindow->show();
-  */
 }
 
 void mdtClMainWindow::editConnector()
 {
-  if(pvConnectorEditor == 0){
-    pvConnectorEditor = new mdtClConnectorEditor(this, pvDatabaseManager->database());
-    if(!pvConnectorEditor->setupTables()){
-      QMessageBox msgBox(this);
-      msgBox.setText(tr("Cannot setup connector editor."));
-      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
-                                + qApp->applicationName() + tr(")"));
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      delete pvConnectorEditor;
-      pvConnectorEditor = 0;
-      return;
-    }
-    pvConnectorEditorWindow = new mdtSqlWindow(this);
-    pvConnectorEditorWindow->setSqlForm(pvConnectorEditor);
-    pvConnectorEditorWindow->resize(800, 500);
-    pvConnectorEditorWindow->enableNavigation();
-    pvConnectorEditorWindow->enableEdition();
-    pvConnectorEditorWindow->setWindowTitle(tr("Connector edition"));
-  }
-  Q_ASSERT(pvConnectorEditor != 0);
-  Q_ASSERT(pvConnectorEditorWindow != 0);
-  pvConnectorEditor->select();
-  pvConnectorEditorWindow->show();
-}
+  mdtClConnectorEditor *editor;
+  mdtSqlWindow *window;
 
-void mdtClMainWindow::editUnit()
-{
-  if(pvUnitEditor == 0){
-    pvUnitEditor = new mdtClUnitEditor(this, pvDatabaseManager->database());
-    if(!pvUnitEditor->setupTables()){
-      QMessageBox msgBox(this);
-      msgBox.setText(tr("Cannot setup unit editor."));
-      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
-                                + qApp->applicationName() + tr(")"));
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      delete pvUnitEditor;
-      pvUnitEditor = 0;
-      return;
-    }
-    pvUnitEditorWindow = new mdtSqlWindow(this);
-    pvUnitEditorWindow->setSqlForm(pvUnitEditor);
-    pvUnitEditorWindow->resize(800, 500);
-    pvUnitEditorWindow->enableNavigation();
-    pvUnitEditorWindow->enableEdition();
-    pvUnitEditorWindow->setWindowTitle(tr("Unit edition"));
+  // Get or create editor
+  editor = getConnectorEditor();
+  if(editor == 0){
+    return;
   }
-  Q_ASSERT(pvUnitEditor != 0);
-  Q_ASSERT(pvUnitEditorWindow != 0);
-  pvUnitEditor->select();
-  pvUnitEditorWindow->show();
-}
-
-void mdtClMainWindow::editLinkBeam()
-{
-  if(pvLinkBeamEditor == 0){
-    pvLinkBeamEditor = new mdtClLinkBeamEditor(this, pvDatabaseManager->database());
-    if(!pvLinkBeamEditor->setupTables()){
-      QMessageBox msgBox(this);
-      msgBox.setText(tr("Cannot setup link beam editor."));
-      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
-                                + qApp->applicationName() + tr(")"));
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      delete pvLinkBeamEditor;
-      pvLinkBeamEditor = 0;
-      return;
-    }
-    pvLinkBeamEditorWindow = new mdtSqlWindow(this);
-    pvLinkBeamEditorWindow->setSqlForm(pvLinkBeamEditor);
-    pvLinkBeamEditorWindow->resize(800, 500);
-    pvLinkBeamEditorWindow->enableNavigation();
-    pvLinkBeamEditorWindow->enableEdition();
-    pvLinkBeamEditorWindow->setWindowTitle(tr("Link beam edition"));
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
   }
-  Q_ASSERT(pvLinkBeamEditor != 0);
-  Q_ASSERT(pvLinkBeamEditorWindow != 0);
-  pvLinkBeamEditor->select();
-  pvLinkBeamEditorWindow->show();
+  window->enableNavigation();
+  window->raise();
+  window->show();
 }
 
 void mdtClMainWindow::viewArticle()
@@ -288,35 +190,77 @@ void mdtClMainWindow::editArticle()
     return;
   }
   window->enableNavigation();
+  window->raise();
   window->show();
+}
 
-  
-  /**
-  if(pvArticleEditor == 0){
-    pvArticleEditor = new mdtClArticleEditor(this, pvDatabaseManager->database());
-    if(!pvArticleEditor->setupTables()){
-      QMessageBox msgBox(this);
-      msgBox.setText(tr("Cannot setup article editor."));
-      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
-                                + qApp->applicationName() + tr(")"));
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      delete pvArticleEditor;
-      pvArticleEditor = 0;
-      return;
-    }
-    pvArticleEditorWindow = new mdtSqlWindow(this);
-    pvArticleEditorWindow->setSqlForm(pvArticleEditor);
-    pvArticleEditorWindow->resize(800, 500);
-    pvArticleEditorWindow->enableNavigation();
-    pvArticleEditorWindow->enableEdition();
-    pvArticleEditorWindow->setWindowTitle(tr("Article edition"));
+void mdtClMainWindow::viewUnit()
+{
+  if(!displayTableView("Unit_tbl")){
+    createUnitTableView();
   }
-  Q_ASSERT(pvArticleEditor != 0);
-  Q_ASSERT(pvArticleEditorWindow != 0);
-  pvArticleEditor->select();
-  pvArticleEditorWindow->show();
-  */
+}
+
+void mdtClMainWindow::editUnit()
+{
+  mdtClUnitEditor *editor;
+  mdtSqlWindow *window;
+
+  // Get or create editor
+  editor = getUnitEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
+}
+
+void mdtClMainWindow::viewLinkList()
+{
+  if(!displayTableView("LinkList_view")){
+    createLinkListTableView();
+  }
+}
+
+void mdtClMainWindow::viewLinkBeam()
+{
+  if(!displayTableView("LinkBeam_tbl")){
+    createLinkBeamTableView();
+  }
+}
+
+void mdtClMainWindow::editLinkBeam()
+{
+  mdtClLinkBeamEditor *editor;
+  mdtSqlWindow *window;
+
+  // Get or create editor
+  editor = getLinkBeamEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
 }
 
 void mdtClMainWindow::editTestConnectionCable()
@@ -349,6 +293,27 @@ void mdtClMainWindow::editTestConnectionCable()
 
 void mdtClMainWindow::editTestNode()
 {
+  mdtTtTestNodeEditor *editor;
+  mdtSqlWindow *window;
+
+  // Get or create editor
+  editor = getTestNodeEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
+  /**
   if(pvTestNodeEditor == 0){
     pvTestNodeEditor = new mdtTtTestNodeEditor(this, pvDatabaseManager->database());
     if(!pvTestNodeEditor->setupTables()){
@@ -373,6 +338,7 @@ void mdtClMainWindow::editTestNode()
   Q_ASSERT(pvTestNodeEditorWindow != 0);
   pvTestNodeEditor->select();
   pvTestNodeEditorWindow->show();
+  */
 }
 
 void mdtClMainWindow::editTest()
@@ -477,6 +443,23 @@ void mdtClMainWindow::disconnectTestCable()
 }
 */
 
+void mdtClMainWindow::closeTableView(int index)
+{
+  QWidget *widget;
+  int i;
+
+  widget = pvTabWidget->widget(index);
+  pvTabWidget->removeTab(index);
+  for(i = 0; i < pvOpenViews.size(); ++i){
+    if(pvOpenViews.at(i) == widget){
+      pvOpenViews.removeAt(i);
+      delete widget;
+      widget = 0;
+    }
+  }
+  Q_ASSERT(widget == 0);
+}
+
 bool mdtClMainWindow::createVehicleTypeTableView()
 {
   mdtSqlTableWidget *tableWidget;
@@ -517,6 +500,46 @@ mdtClVehicleTypeEditor *mdtClMainWindow::createVehicleTypeEditor()
   return editor;
 }
 
+bool mdtClMainWindow::createConnectorTableView()
+{
+  mdtSqlTableWidget *tableWidget;
+
+  tableWidget = createTableView("Connector_tbl", tr("Connectors"));
+  if(tableWidget == 0){
+    return false;
+  }
+
+  return true;
+}
+
+mdtClConnectorEditor *mdtClMainWindow::getConnectorEditor()
+{
+  mdtClConnectorEditor *editor;
+
+  editor = getEditor<mdtClConnectorEditor>();
+  if(editor != 0){
+    return editor;
+  }else{
+    return createConnectorEditor();
+  }
+}
+
+mdtClConnectorEditor *mdtClMainWindow::createConnectorEditor()
+{
+  mdtClConnectorEditor *editor;
+  mdtSqlWindow *window;
+
+  editor = new mdtClConnectorEditor(0, pvDatabaseManager->database());
+  window = setupEditor(editor);
+  if(window == 0){
+    return 0;
+  }
+  window->setWindowTitle(tr("Connector edition"));
+  window->resize(800, 600);
+
+  return editor;
+}
+
 bool mdtClMainWindow::createArticleTableView()
 {
   mdtSqlTableWidget *tableWidget;
@@ -527,6 +550,13 @@ bool mdtClMainWindow::createArticleTableView()
   }
 
   return true;
+}
+
+void mdtClMainWindow::deleteTableviews()
+{
+  pvTabWidget->clear();
+  qDeleteAll(pvOpenViews);
+  pvOpenViews.clear();
 }
 
 mdtClArticleEditor *mdtClMainWindow::getArticleEditor()
@@ -552,6 +582,126 @@ mdtClArticleEditor *mdtClMainWindow::createArticleEditor()
     return 0;
   }
   window->setWindowTitle(tr("Article edition"));
+  window->resize(800, 600);
+
+  return editor;
+}
+
+bool mdtClMainWindow::createUnitTableView()
+{
+  mdtSqlTableWidget *tableWidget;
+
+  tableWidget = createTableView("Unit_tbl", tr("Units"));
+  if(tableWidget == 0){
+    return false;
+  }
+
+  return true;
+}
+
+mdtClUnitEditor *mdtClMainWindow::getUnitEditor()
+{
+  mdtClUnitEditor *editor;
+
+  editor = getEditor<mdtClUnitEditor>();
+  if(editor != 0){
+    return editor;
+  }else{
+    return createUnitEditor();
+  }
+}
+
+mdtClUnitEditor *mdtClMainWindow::createUnitEditor()
+{
+  mdtClUnitEditor *editor;
+  mdtSqlWindow *window;
+
+  editor = new mdtClUnitEditor(0, pvDatabaseManager->database());
+  window = setupEditor(editor);
+  if(window == 0){
+    return 0;
+  }
+  window->setWindowTitle(tr("Unit edition"));
+  window->resize(800, 600);
+
+  return editor;
+}
+
+bool mdtClMainWindow::createLinkListTableView()
+{
+  mdtSqlTableWidget *tableWidget;
+
+  tableWidget = createTableView("LinkList_view", tr("Link list"));
+  if(tableWidget == 0){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClMainWindow::createLinkBeamTableView()
+{
+  mdtSqlTableWidget *tableWidget;
+
+  tableWidget = createTableView("LinkBeam_tbl", tr("Link beams"));
+  if(tableWidget == 0){
+    return false;
+  }
+
+  return true;
+}
+
+mdtClLinkBeamEditor *mdtClMainWindow::getLinkBeamEditor()
+{
+  mdtClLinkBeamEditor *editor;
+
+  editor = getEditor<mdtClLinkBeamEditor>();
+  if(editor != 0){
+    return editor;
+  }else{
+    return createLinkBeamEditor();
+  }
+}
+
+mdtClLinkBeamEditor *mdtClMainWindow::createLinkBeamEditor()
+{
+  mdtClLinkBeamEditor *editor;
+  mdtSqlWindow *window;
+
+  editor = new mdtClLinkBeamEditor(0, pvDatabaseManager->database());
+  window = setupEditor(editor);
+  if(window == 0){
+    return 0;
+  }
+  window->setWindowTitle(tr("Link beam edition"));
+  window->resize(800, 600);
+
+  return editor;
+}
+
+mdtTtTestNodeEditor *mdtClMainWindow::getTestNodeEditor()
+{
+  mdtTtTestNodeEditor *editor;
+
+  editor = getEditor<mdtTtTestNodeEditor>();
+  if(editor != 0){
+    return editor;
+  }else{
+    return createTestNodeEditor();
+  }
+}
+
+mdtTtTestNodeEditor *mdtClMainWindow::createTestNodeEditor()
+{
+  mdtTtTestNodeEditor *editor;
+  mdtSqlWindow *window;
+
+  editor = new mdtTtTestNodeEditor(0, pvDatabaseManager->database());
+  window = setupEditor(editor);
+  if(window == 0){
+    return 0;
+  }
+  window->setWindowTitle(tr("Test node edition"));
   window->resize(800, 600);
 
   return editor;
@@ -596,6 +746,7 @@ mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, c
     pvTabWidget = new QTabWidget;
     pvTabWidget->setTabsClosable(true);
     setCentralWidget(pvTabWidget);  /// \todo Check if current central widget deleted ..
+    connect(pvTabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTableView(int)));
   }
   // Add view
   pvTabWidget->addTab(tableWidget, uftn);
@@ -723,7 +874,7 @@ void mdtClMainWindow::closeEvent(QCloseEvent* event)
   }
 }
 
-void mdtClMainWindow::createActions()
+void mdtClMainWindow::connectActions()
 {
   // Open database
   connect(actOpenDatabase, SIGNAL(triggered()), this, SLOT(openDatabase()));
@@ -734,21 +885,25 @@ void mdtClMainWindow::createActions()
   // Import database
   connect(actImportDatabase, SIGNAL(triggered()), this, SLOT(importDatabase()));
 
+  // Vehicle type edition
+  connect(actViewVehicleType, SIGNAL(triggered()), this, SLOT(viewVehicleType()));
+  connect(actEditVehicleType, SIGNAL(triggered()), this, SLOT(editVehicleType()));
+  ///connect(pbEditVehicleType, SIGNAL(clicked()), this, SLOT(editVehicleType()));
+  // Connector
+  connect(actViewConnector, SIGNAL(triggered()), this, SLOT(viewConnector()));
+  connect(actEditConnector, SIGNAL(triggered()), this, SLOT(editConnector()));
   // Article edition
   connect(actViewArticle, SIGNAL(triggered()), this, SLOT(viewArticle()));
   connect(actEditArticle, SIGNAL(triggered()), this, SLOT(editArticle()));
   ///connect(pbEditArticle, SIGNAL(clicked()), this, SLOT(editArticle()));
-  // Vehicle type edition
-  connect(actViewVehicleType, SIGNAL(triggered()), this, SLOT(viewVehicleType()));
-  connect(actEditVehicleType, SIGNAL(triggered()), this, SLOT(editVehicleType()));
-  connect(pbEditVehicleType, SIGNAL(clicked()), this, SLOT(editVehicleType()));
-  // Connector editor
-  connect(actEditConnector, SIGNAL(triggered()), this, SLOT(editConnector()));
   // Unit edition
+  connect(actViewUnit, SIGNAL(triggered()), this, SLOT(viewUnit()));
   connect(actEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
-  connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
-
-  // Link beam edition
+  ///connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
+  // Link list
+  connect(actViewLinkList, SIGNAL(triggered()), this, SLOT(viewLinkList()));
+  // Link beam
+  connect(actViewLinkBeam, SIGNAL(triggered()), this, SLOT(viewLinkBeam()));
   connect(actEditLinkBeam, SIGNAL(triggered()), this, SLOT(editLinkBeam()));
 
   // Test connection cable

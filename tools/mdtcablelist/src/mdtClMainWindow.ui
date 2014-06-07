@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>591</width>
+    <width>671</width>
     <height>377</height>
    </rect>
   </property>
@@ -62,7 +62,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>591</width>
+     <width>671</width>
      <height>21</height>
     </rect>
    </property>
@@ -82,12 +82,9 @@ p, li { white-space: pre-wrap; }
      <string>&amp;Edition</string>
     </property>
     <addaction name="separator"/>
-    <addaction name="actEditConnector"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
-    <addaction name="actEditUnit"/>
     <addaction name="separator"/>
-    <addaction name="actEditLinkBeam"/>
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">
@@ -115,10 +112,44 @@ p, li { white-space: pre-wrap; }
     <addaction name="actEditSelectedArticle"/>
     <addaction name="actEditArticle"/>
    </widget>
+   <widget class="QMenu" name="menu_Units">
+    <property name="title">
+     <string>&amp;Units</string>
+    </property>
+    <addaction name="actViewUnit"/>
+    <addaction name="actEditSelectedUnit"/>
+    <addaction name="actEditUnit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Connectors">
+    <property name="title">
+     <string>&amp;Connectors</string>
+    </property>
+    <addaction name="actViewConnector"/>
+    <addaction name="actEditSelectedConnector"/>
+    <addaction name="actEditConnector"/>
+   </widget>
+   <widget class="QMenu" name="menuLink_beams">
+    <property name="title">
+     <string>Link &amp;beams</string>
+    </property>
+    <addaction name="actViewLinkBeam"/>
+    <addaction name="actEditSelectedLinkBeam"/>
+    <addaction name="actEditLinkBeam"/>
+   </widget>
+   <widget class="QMenu" name="menu_Link_list">
+    <property name="title">
+     <string>&amp;Link list</string>
+    </property>
+    <addaction name="actViewLinkList"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edition"/>
    <addaction name="menuVehicle_types"/>
+   <addaction name="menu_Connectors"/>
    <addaction name="menu_Articles"/>
+   <addaction name="menu_Units"/>
+   <addaction name="menu_Link_list"/>
+   <addaction name="menuLink_beams"/>
    <addaction name="menuTest"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -181,12 +212,12 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actEditUnit">
    <property name="text">
-    <string>Edit &amp;units</string>
+    <string>Edit (all)</string>
    </property>
   </action>
   <action name="actEditConnector">
    <property name="text">
-    <string>Edit &amp;connectors</string>
+    <string>Edit (all)</string>
    </property>
   </action>
   <action name="actCreateTestConnectionCable">
@@ -262,6 +293,41 @@ p, li { white-space: pre-wrap; }
   <action name="actEditArticle">
    <property name="text">
     <string>Edit (all)</string>
+   </property>
+  </action>
+  <action name="actViewUnit">
+   <property name="text">
+    <string>&amp;View</string>
+   </property>
+  </action>
+  <action name="actEditSelectedUnit">
+   <property name="text">
+    <string>&amp;Edit selected</string>
+   </property>
+  </action>
+  <action name="actViewConnector">
+   <property name="text">
+    <string>&amp;View</string>
+   </property>
+  </action>
+  <action name="actEditSelectedConnector">
+   <property name="text">
+    <string>Edit selected</string>
+   </property>
+  </action>
+  <action name="actViewLinkBeam">
+   <property name="text">
+    <string>&amp;View</string>
+   </property>
+  </action>
+  <action name="actEditSelectedLinkBeam">
+   <property name="text">
+    <string>Edit selected</string>
+   </property>
+  </action>
+  <action name="actViewLinkList">
+   <property name="text">
+    <string>&amp;View</string>
    </property>
   </action>
  </widget>
