@@ -45,6 +45,7 @@
 #include <QTabWidget>
 #include <QSqlTableModel>
 #include <QSqlError>
+#include <QTableView>
 
 #include <QDebug>
 
@@ -196,7 +197,7 @@ void mdtClMainWindow::editArticle()
 
 void mdtClMainWindow::viewUnit()
 {
-  if(!displayTableView("Unit_tbl")){
+  if(!displayTableView("Unit_view")){
     createUnitTableView();
   }
 }
@@ -468,6 +469,20 @@ bool mdtClMainWindow::createVehicleTypeTableView()
   if(tableWidget == 0){
     return false;
   }
+  // Hide technical fields
+  tableWidget->setColumnHidden("Id_PK", true);
+  // Rename fields to user friendly ones
+  tableWidget->setHeaderData("Type", tr("Vehicle\ntype"));
+  tableWidget->setHeaderData("SubType", tr("Vehicle\nsub type"));
+  tableWidget->setHeaderData("SeriesNumber", tr("Vehicle\nserie"));
+  // Setup sorting
+  tableWidget->addColumnToSortOrder("Type", Qt::AscendingOrder);
+  tableWidget->addColumnToSortOrder("SubType", Qt::AscendingOrder);
+  tableWidget->addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
+  tableWidget->sort();
+  // Resize
+  tableWidget->tableView()->resizeColumnsToContents();
+  tableWidget->tableView()->resizeRowsToContents();
 
   return true;
 }
@@ -508,6 +523,20 @@ bool mdtClMainWindow::createConnectorTableView()
   if(tableWidget == 0){
     return false;
   }
+  // Hide technical fields
+  tableWidget->setColumnHidden("Id_PK", true);
+  // Rename fields to user friendly ones
+  tableWidget->setHeaderData("ContactQty", tr("Contact\nqty"));
+  tableWidget->setHeaderData("InsertRotation", tr("Insert\nrotation\ncode"));
+  tableWidget->setHeaderData("ManufacturerConfigCode", tr("Manufacturer\nconfiguration\ncode"));
+  tableWidget->setHeaderData("ManufacturerArticleCode", tr("Manufacturer\narticle\ncode"));
+  // Setup sorting
+  tableWidget->addColumnToSortOrder("Gender", Qt::AscendingOrder);
+  tableWidget->addColumnToSortOrder("ContactQty", Qt::AscendingOrder);
+  tableWidget->sort();
+  // Resize
+  tableWidget->tableView()->resizeColumnsToContents();
+  tableWidget->tableView()->resizeRowsToContents();
 
   return true;
 }
@@ -548,6 +577,19 @@ bool mdtClMainWindow::createArticleTableView()
   if(tableWidget == 0){
     return false;
   }
+  // Hide technical fields
+  tableWidget->setColumnHidden("Id_PK", true);
+  // Rename fields to user friendly ones
+  tableWidget->setHeaderData("ArticleCode", tr("Article\ncode"));
+  tableWidget->setHeaderData("IdentificationDocument", tr("Identification\ndocument"));
+  tableWidget->setHeaderData("ManufacturerCode", tr("Manufacturer\ncode"));
+  tableWidget->setHeaderData("ManufacturerIdentificationDocument", tr("Manufacturer\nidentification\ndocument"));
+  // Setup sorting
+  tableWidget->addColumnToSortOrder("ArticleCode", Qt::AscendingOrder);
+  tableWidget->sort();
+  // Resize
+  tableWidget->tableView()->resizeColumnsToContents();
+  tableWidget->tableView()->resizeRowsToContents();
 
   return true;
 }
@@ -591,10 +633,31 @@ bool mdtClMainWindow::createUnitTableView()
 {
   mdtSqlTableWidget *tableWidget;
 
-  tableWidget = createTableView("Unit_tbl", tr("Units"));
+  // Create table view
+  tableWidget = createTableView("Unit_view", tr("Units"));
   if(tableWidget == 0){
     return false;
   }
+  // Hide technical fields
+  tableWidget->setColumnHidden("VehicleType_Id_PK", true);
+  tableWidget->setColumnHidden("Unit_Id_PK", true);
+  tableWidget->setColumnHidden("Article_Id_PK", true);
+  tableWidget->setColumnHidden("", true);
+  tableWidget->setColumnHidden("", true);
+  // Rename fields to user friendly ones
+  tableWidget->setHeaderData("Type", tr("Vehicle\ntype"));
+  tableWidget->setHeaderData("SubType", tr("Vehicle\nsub type"));
+  tableWidget->setHeaderData("SeriesNumber", tr("Vehicle\nserie"));
+  tableWidget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  // Setup sorting
+  tableWidget->addColumnToSortOrder("Type", Qt::AscendingOrder);
+  tableWidget->addColumnToSortOrder("SubType", Qt::AscendingOrder);
+  tableWidget->addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
+  tableWidget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  tableWidget->sort();
+  // Resize
+  tableWidget->tableView()->resizeColumnsToContents();
+  tableWidget->tableView()->resizeRowsToContents();
 
   return true;
 }
@@ -751,6 +814,7 @@ mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, c
   // Add view
   pvTabWidget->addTab(tableWidget, uftn);
   pvOpenViews.append(tableWidget);
+  pvTabWidget->setCurrentWidget(tableWidget);
 
   return tableWidget;
 }

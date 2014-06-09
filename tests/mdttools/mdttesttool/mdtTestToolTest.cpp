@@ -28,6 +28,7 @@
 #include "mdtTtTestNodeUnit.h"
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtClUnitConnectionData.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -330,7 +331,8 @@ void mdtTestToolTest::mdtTtTestNodeUnitDataTest()
   mdtClUnitConnectionData connectionData;
 
   // Setup
-  QVERIFY(data.setup(pvDatabaseManager.database(), true));
+  ///QVERIFY(data.setup(pvDatabaseManager.database(), true));
+  QVERIFY(data.setup(pvDatabaseManager.database()));
   QVERIFY(data.contains("Unit_Id_FK_PK"));
   // Check setUnitData()
   QVERIFY(unitData.addAllFields("Unit_tbl", pvDatabaseManager.database()));
@@ -339,16 +341,18 @@ void mdtTestToolTest::mdtTtTestNodeUnitDataTest()
   QCOMPARE(data.value("Unit_Id_FK_PK"), QVariant(5));
   QCOMPARE(data.unitData().value("Id_PK"), QVariant(5));
   // Check setTestConnectionData()
+  /**
   QVERIFY(connectionData.setup(pvDatabaseManager.database(), false));
   connectionData.setValue("Id_PK", 3);
   data.setTestConnectionData(connectionData);
   QCOMPARE(data.value("TestConnection_Id_FK"), QVariant(3));
   QCOMPARE(data.testConnectionData().value("Id_PK"), QVariant(3));
+  */
   // Clear values
   data.clearValues();
   QVERIFY(data.value("Unit_Id_FK_PK").isNull());
   QVERIFY(data.unitData().value("Id_PK").isNull());
-  QVERIFY(data.testConnectionData().value("Id_PK").isNull());
+  ///QVERIFY(data.testConnectionData().value("Id_PK").isNull());
 
 }
 

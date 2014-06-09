@@ -66,6 +66,14 @@ class mdtTtTestNodeEditor : public mdtSqlForm
    */
   void removeUnits();
 
+  /*! \brief Affect a unit connection to a bus
+   */
+  void setBusToUnitConnection();
+
+  /*! \brief Remove a bus from unit connection
+   */
+  void removeBusFromUnitConnection();
+
  private:
 
   /*! \brief Select a TestNodeUnit type
@@ -112,6 +120,14 @@ class mdtTtTestNodeEditor : public mdtSqlForm
   /*! \brief Setup TestNodeUnit table
    */
   bool setupTestNodeUnitTable();
+
+  /*! \brief Setup TestNodeBus_tbl
+   */
+  bool setupTestNodeBusTable();
+
+  /*! \brief Setup TestNodeUnitConnection_view
+   */
+  bool setupTestNodeUnitConnectionTable();
 
   Q_DISABLE_COPY(mdtTtTestNodeEditor);
 };

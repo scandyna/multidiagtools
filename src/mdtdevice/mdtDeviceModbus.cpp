@@ -461,6 +461,7 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
 
 bool mdtDeviceModbus::queriesSequence()
 {
+  ///qDebug() << "mdtDeviceModbus::queriesSequence() ...";
   if(getAnalogInputs(true) < 0){
     return false;
   }

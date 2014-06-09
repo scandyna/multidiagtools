@@ -1179,7 +1179,6 @@ void mdtDevice::runQueries()
   if(currentState() != mdtPortManager::Ready){
     return;
   }
-
   queriesSequence();
 }
 
@@ -1385,8 +1384,10 @@ void mdtDevice::setStateConnecting(/*const QString &message*/)
 
 void mdtDevice::setStateReady()
 {
+  qDebug() << "mdtDevice: new state is Ready";
   // Check if we have to restart query timer
   if((pvAutoQueryEnabled)&&(isReady())){
+    qDebug() << "mdtDevice: starting query timer ...";
     pvQueryTimer->start();
   }
   // Update I/Os

@@ -39,7 +39,6 @@ mdtTtTestNodeUnitDialog::mdtTtTestNodeUnitDialog(QWidget *parent, QSqlDatabase d
   pvDatabase = db;
   // Setup UI
   setupUi(this);
-  ///setupBusComboBox();
   setupTypeComboBox();
   connect(pbSelectUnit, SIGNAL(clicked()), this, SLOT(selectBaseUnit()));
   updateDialog();
@@ -63,13 +62,18 @@ void mdtTtTestNodeUnitDialog::selectBaseUnit()
   QString sql;
   mdtSqlRecord unitData;
   bool ok;
+  QString testNodeId;
 
   if(pvData.value("TestNode_Id_FK").isNull()){
     return;
   }
   // Setup SQL
+  testNodeId = pvData.value("TestNode_Id_FK").toString();
   sql = "SELECT * FROM Unit_view ";
-  sql += " WHERE VehicleType_Id_PK = " + pvData.value("TestNode_Id_FK").toString();
+  sql += " WHERE VehicleType_Id_PK = " + testNodeId;
+  sql += " AND Unit_Id_PK NOT IN (";
+  sql += "  SELECT Unit_Id_FK_PK FROM TestNodeUnit_view WHERE TestNode_Id_FK = " + testNodeId;
+  sql += ")";
   // Setup and show dialog
   selectionDialog.setMessage("Please select unit:");
   selectionDialog.setQuery(sql, pvDatabase, false);
@@ -104,78 +108,18 @@ void mdtTtTestNodeUnitDialog::selectBaseUnit()
   updateDialog();
 }
 
-///|||UnitConnectorName|UnitContactName|SchemaPage|UnitFunctionEN|UnitFunctionFR|UnitFunctionDE|UnitFunctionIT|SignalName|SwAddress|ArticleConnectorName|ArticleContactName|IoType|ArticleFunctionEN|ArticleFunctionFR|ArticleFunctionDE|ArticleFunctionIT
-
-/**
-void mdtTtTestNodeUnitDialog::selectTestConnection() 
-{
-  mdtTtTestNodeUnit tnu(0, pvDatabase);
-  mdtClUnit unit(0, pvDatabase);
-  mdtSqlSelectionDialog selectionDialog;
-  QVariant unitId;
-  QList<QVariant> connectionIdList;
-  mdtClUnitConnectionData connectionData;
-  QString sql;
-  bool ok;
-
-  // Get unit ID
-  unitId = pvData.value("Unit_Id_FK_PK");
-  if(unitId.isNull()){
-    return;
-  }
-  // Get list of connections of unit ID
-  connectionIdList = tnu.getConnectionIdListOfUnitId(unitId, &ok);
-  if(!ok){
-    /// \todo Error message
-    return;
-  }
-  // For each connection ID, find linked connection IDs
-  connectionIdList = tnu.getConnectionIdListLinkedToConnectionIdList(connectionIdList, &ok);
-  if(!ok){
-    /// \todo Error message
-    return;
-  }
-  // Build SQL statement for selection
-  sql = tnu.sqlForTestConnectionSelection(connectionIdList);
-  // Setup and show dialog
-  selectionDialog.setMessage("Please select test connection:");
-  selectionDialog.setQuery(sql, pvDatabase, false);
-  selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
-  selectionDialog.setColumnHidden("Unit_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnection_Id_FK", true);
-  ///selectionDialog.setColumnHidden("Type", true);
-  ///selectionDialog.setColumnHidden("SubType", true);
-  ///selectionDialog.setColumnHidden("SeriesNumber", true);
-  selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
-  selectionDialog.sort();
-  selectionDialog.addSelectionResultColumn("UnitConnection_Id_PK");
-  selectionDialog.resize(700, 400);
-  selectionDialog.setWindowTitle(tr("Test connection selection"));
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return;
-  }
-  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
-  // Store result
-  connectionData = unit.getConnectionData(selectionDialog.selectionResult().at(0), false, &ok);
-  if(!ok){
-    /// \todo Error message
-    return;
-  }
-  pvData.setTestConnectionData(connectionData);
-  updateDialog();
-}
-*/
-
 void mdtTtTestNodeUnitDialog::accept() 
 {
   QString msg;
   QStringList missingFields;
   int i;
 
-  ///storeBus();
   storeType();
-  pvData.setValue("IoPosition", sbIoPosition->value());
+  if(sbIoPosition->value() < 0){
+    pvData.setValue("IoPosition", QVariant());
+  }else{
+    pvData.setValue("IoPosition", sbIoPosition->value());
+  }
   // Check required data
   if(pvData.value("Unit_Id_FK_PK").isNull()){
     missingFields << " - Unit";
@@ -183,15 +127,11 @@ void mdtTtTestNodeUnitDialog::accept()
   if(pvData.value("Type_Code_FK").isNull()){
     missingFields << " - Type";
   }
-  if(pvData.value("TestConnection_Id_FK").isNull()){
-    missingFields << " - Test connection";
-  }
-  if(pvData.value("Bus").isNull()){
-    missingFields << " - Bus";
-  }
+  /**
   if(pvData.value("IoPosition").isNull()){
     missingFields << " - I/O position";
   }
+  */
   if(!missingFields.isEmpty()){
     msg = tr("Some data are missing. Please check:") + "\n";
     for(i = 0; i < missingFields.size(); ++i){
@@ -220,58 +160,15 @@ void mdtTtTestNodeUnitDialog::updateDialog()
   // Get data
   unitData = pvData.unitData();
   // Update UI
-  sbIoPosition->setValue(pvData.value("IoPosition").toInt());
+  if(pvData.value("IoPosition").isNull()){
+    sbIoPosition->setValue(-1);
+  }else{
+    sbIoPosition->setValue(pvData.value("IoPosition").toInt());
+  }
   lbSchemaPosition->setText(unitData.value("SchemaPosition").toString());
   lbAlias->setText(unitData.value("Alias").toString());
-  ///displayTestConnection();
-  ///displayBus();
   displayType();
 }
-
-/**
-void mdtTtTestNodeUnitDialog::displayTestConnection()
-{
-  mdtClUnit unit(0, pvDatabase);
-  mdtClUnitConnectorData connectorData;
-  QVariant unitConnectorId;
-  bool ok;
-
-  // Set connector name
-  unitConnectorId = pvData.testConnectionData().value("UnitConnector_Id_FK");
-  if(unitConnectorId.isNull()){
-    lbTestConnector->clear();
-  }else{
-    connectorData = unit.getConnectorData(unitConnectorId, &ok, false, false, false);
-    if(ok){
-      lbTestConnector->setText(connectorData.value("Name").toString());
-    }else{
-      lbTestConnector->setText("<error!>");
-    }
-  }
-  // Set contact name
-  lbContactName->setText(pvData.testConnectionData().value("UnitContactName").toString());
-}
-*/
-
-/**
-void mdtTtTestNodeUnitDialog::displayBus()
-{
-  int row;
-
-  for(row = 0; row < cbBus->count(); ++row){
-    if(cbBus->itemText(row) == pvData.value("Bus").toString()){
-      cbBus->setCurrentIndex(row);
-      return;
-    }
-  }
-  cbBus->setCurrentIndex(-1);
-}
-
-void mdtTtTestNodeUnitDialog::storeBus()
-{
-  pvData.setValue("Bus", cbBus->currentText());
-}
-*/
 
 void mdtTtTestNodeUnitDialog::displayType()
 {
@@ -308,15 +205,6 @@ void mdtTtTestNodeUnitDialog::storeType()
   pvData.setValue("Type_Code_FK", pvTypeModel.data(index));
 }
 
-/**
-void mdtTtTestNodeUnitDialog::setupBusComboBox() 
-{
-  cbBus->clear();
-  cbBus->addItem("BUSA");
-  cbBus->addItem("BUSB");
-}
-*/
-
 void mdtTtTestNodeUnitDialog::setupTypeComboBox() 
 {
   QLocale locale;
@@ -342,6 +230,4 @@ void mdtTtTestNodeUnitDialog::setupTypeComboBox()
   pvTypeModel.setQuery(sql, pvDatabase);
   cbType->setModel(&pvTypeModel);
   cbType->setModelColumn(1);
-
 }
-

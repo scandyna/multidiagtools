@@ -73,10 +73,25 @@ class mdtTtTestNodeUnit : public mdtTtBase
    */
   bool remove(const QVariant & nodeUnitId);
 
+  /*! \brief Add a connection
+   */
+  bool addConnection(const QVariant & unitConnectionId, const QVariant & testNodeUnitId, const QVariant & testNodeBusId);
+
+  /*! \brief Add a list of connections
+   */
+  bool addConnections(const QList<QVariant> & unitConnectionIdList, const QVariant & testNodeUnitId, const QVariant & testNodeBusId, bool handleTransaction);
+
+  /*! \brief Add connections that are related to given test node unit
+   */
+  bool addConnections(const QVariant & testNodeUnitId, const QVariant & testNodeBusId, bool handleTransaction);
+
+  /*! \brief Set bus ID to given connection ID
+   */
+  bool setBusIdToConnection(const QVariant & unitConnectionId, const QVariant & busId);
+
  private:
 
   Q_DISABLE_COPY(mdtTtTestNodeUnit);
-  
 };
 
 #endif // #ifndef MDT_TT_TEST_NODE_UNIT_H

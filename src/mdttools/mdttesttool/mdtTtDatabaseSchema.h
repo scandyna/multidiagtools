@@ -265,10 +265,6 @@ class mdtTtDatabaseSchema
    */
   bool createView(const QString & viewName, const QString & sql);
 
-  /*! \brief Create test node unit view
-   */
-  bool createTestNodeUnitView();
-
   /*! \brief
    */
   bool createVehicleTypeUnitView();
@@ -343,6 +339,14 @@ class mdtTtDatabaseSchema
   /*! \brief Create LinkBeam_UnitEnd_view
    */
   bool createLinkBeamUnitEndView();
+
+  /*! \brief Create TestNodeUnitConnection_view
+   */
+  bool createTestNodeUnitView();
+
+  /*! \brief Create TestNodeUnitConnection_view
+   */
+  bool createTestNodeUnitConnectionView();
 
   /*! \brief Create test link view
    *

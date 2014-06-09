@@ -60,6 +60,10 @@ void mdtAlgorithmsTest::naturalCompareLessThanTest_data()
   QTest::newRow("Strings (z<abcd)") << "z" << "abcd" << false;
   QTest::newRow("Alphanum (F1<F2)") << "F1" << "F2" << true;
   QTest::newRow("Alphanum (F2<F10)") << "F2" << "F10" << true;
+  QTest::newRow("Alphanum (1+2<2)") << "1+2" << "2" << true;
+  QTest::newRow("Alphanum (1<1+)") << "1" << "1+" << true;
+  QTest::newRow("Alphanum (3<5+PE)") << "3" << "5+PE" << true;
+  QTest::newRow("Alphanum (5+PE<3)") << "5+PE" << "3" << false;
 }
 
 void mdtAlgorithmsTest::naturalSortTest()
@@ -88,6 +92,8 @@ void mdtAlgorithmsTest::naturalSortTest_data()
   // Found bug whenn, f.ex. ttyS0, ttyMXUSB0, ... connected
   QTest::newRow("Paths") << QString("/dev/ttyS0;/dev/ttyS15;/dev/ttyMXUSB1;/dev/ttyS10;/dev/ttyMXUSB10;/dev/ttyMXUSB0;/dev/ttyMXUSB2").split(";") \
                          << QString("/dev/ttyMXUSB0;/dev/ttyMXUSB1;/dev/ttyMXUSB2;/dev/ttyMXUSB10;/dev/ttyS0;/dev/ttyS10;/dev/ttyS15").split(";");
+  QTest::newRow("AlphaNum strings") << QString("3;5+PE").split(";") << QString("3;5+PE").split(";");
+  QTest::newRow("AlphaNum strings") << QString("5+PE;3").split(";") << QString("3;5+PE").split(";");
 }
 
 void mdtAlgorithmsTest::hexStringByteArrayTest()

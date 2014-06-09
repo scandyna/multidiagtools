@@ -31,12 +31,12 @@ mdtTtTestNodeUnitData::mdtTtTestNodeUnitData(const QSqlRecord & record)
   Q_ASSERT(contains("Unit_Id_FK_PK"));
   Q_ASSERT(contains("TestNode_Id_FK"));
   Q_ASSERT(contains("Type_Code_FK"));
-  Q_ASSERT(contains("TestConnection_Id_FK"));
-  Q_ASSERT(contains("Bus"));
+  ///Q_ASSERT(contains("TestConnection_Id_FK"));
+  ///Q_ASSERT(contains("Bus"));
   Q_ASSERT(contains("IoPosition"));
 }
 
-bool mdtTtTestNodeUnitData::setup(const QSqlDatabase& db, bool setupConnectionData)
+bool mdtTtTestNodeUnitData::setup(const QSqlDatabase& db/**, bool setupConnectionData*/)
 {
   if(!addAllFields("TestNodeUnit_tbl", db)){
     return false;
@@ -45,12 +45,14 @@ bool mdtTtTestNodeUnitData::setup(const QSqlDatabase& db, bool setupConnectionDa
     pvLastError = pvUnitData.lastError();
     return false;
   }
+  /**
   if(setupConnectionData){
     if(!pvTestConnectionData.setup(db, false)){
       pvLastError = pvTestConnectionData.lastError();
       return false;
     }
   }
+  */
 
   return true;
 }
@@ -58,7 +60,7 @@ bool mdtTtTestNodeUnitData::setup(const QSqlDatabase& db, bool setupConnectionDa
 void mdtTtTestNodeUnitData::clearValues()
 {
   pvUnitData.clearValues();
-  pvTestConnectionData.clearValues();
+  ///pvTestConnectionData.clearValues();
   mdtSqlRecord::clearValues();
 }
 
@@ -73,8 +75,10 @@ void mdtTtTestNodeUnitData::setUnitData(const mdtSqlRecord& data)
   pvUnitData = data;
 }
 
+/**
 void mdtTtTestNodeUnitData::setTestConnectionData(const mdtClUnitConnectionData& data)
 {
   setValue("TestConnection_Id_FK", data.value("Id_PK"));
   pvTestConnectionData = data;
 }
+*/

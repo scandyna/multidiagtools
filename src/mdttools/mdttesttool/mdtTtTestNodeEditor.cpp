@@ -56,6 +56,12 @@ bool mdtTtTestNodeEditor::setupTables()
   if(!setupTestNodeUnitTable()){
     return false;
   }
+  if(!setupTestNodeBusTable()){
+    return false;
+  }
+  if(!setupTestNodeUnitConnectionTable()){
+    return false;
+  }
   return true;
 }
 
@@ -99,7 +105,7 @@ void mdtTtTestNodeEditor::addUnit()
     return;
   }
   // Setup data
-  if(!data.setup(database(), true)){
+  if(!data.setup(database())){
     pvLastError = data.lastError();
     displayLastError();
     return;
@@ -117,6 +123,7 @@ void mdtTtTestNodeEditor::addUnit()
   }
   // Update UI
   select("TestNodeUnit_view");
+  select("TestNodeUnitConnection_view");
 }
 
 /**
@@ -258,6 +265,7 @@ void mdtTtTestNodeEditor::editUnit()
   }
   // Update UI
   select("TestNodeUnit_view");
+  select("TestNodeUnitConnection_view");
 
   /**
   mdtTtTestNodeUnitEditor *tnue;
@@ -321,6 +329,73 @@ void mdtTtTestNodeEditor::removeUnits()
   }
   // Update TestNodeUnit_view
   select("TestNodeUnit_view");
+}
+
+void mdtTtTestNodeEditor::setBusToUnitConnection()
+{
+  mdtTtTestNodeUnit tnu(0, database());
+  mdtSqlSelectionDialog selectionDialog;
+  QString sql;
+  QVariant testNodeId;
+  QVariant connectionId;
+  QVariant busId;
+  QString msg;
+
+  // Get test node ID
+  testNodeId = currentData("TestNode_tbl", "VehicleType_Id_FK_PK");
+  if(testNodeId.isNull()){
+    return;
+  }
+  // Get selected connection ID
+  connectionId = currentData("TestNodeUnitConnection_view", "UnitConnection_Id_FK_PK");
+  if(connectionId.isNull()){
+    return;
+  }
+  // Setup SQL statement to list busses
+  sql = "SELECT Id_PK, NameEN FROM TestNodeBus_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
+  // Setup and show dialog
+  msg = tr("Select the bus to affect:");
+  selectionDialog.setMessage(msg);
+  selectionDialog.setQuery(sql, database(), false);
+  ///selectionDialog.setColumnHidden("", true);
+  ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));
+  selectionDialog.resize(500, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  Q_ASSERT(selectionDialog.selection("Id_PK").rowCount() == 1);
+  busId = selectionDialog.selection("Id_PK").data(0, "Id_PK");
+  // Update connection
+  if(!tnu.setBusIdToConnection(connectionId, busId)){
+    pvLastError = tnu.lastError();
+    displayLastError();
+    return;
+  }
+  // Update UI
+  ///select("TestNodeUnit_view");
+  select("TestNodeUnitConnection_view");
+}
+
+void mdtTtTestNodeEditor::removeBusFromUnitConnection()
+{
+  mdtTtTestNodeUnit tnu(0, database());
+  QMessageBox msgBox;
+  QVariant connectionId;
+
+  // Get selected connection ID
+  connectionId = currentData("TestNodeUnitConnection_view", "UnitConnection_Id_FK_PK");
+  if(connectionId.isNull()){
+    return;
+  }
+  // Update connection
+  if(!tnu.setBusIdToConnection(connectionId, QVariant())){
+    pvLastError = tnu.lastError();
+    displayLastError();
+    return;
+  }
+  // Update UI
+  ///select("TestNodeUnit_view");
+  select("TestNodeUnitConnection_view");
 }
 
 QVariant mdtTtTestNodeEditor::selectTestNodeUnitType()
@@ -646,15 +721,84 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons
-  pbAddUnit = new QPushButton(tr("Add unit ..."));
+  pbAddUnit = new QPushButton(tr("Add ..."));
+  pbAddUnit->setIcon(QIcon::fromTheme("list-add"));
   connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addUnit()));
   widget->addWidgetToLocalBar(pbAddUnit);
   pbEditUnit = new QPushButton(tr("Edit unit"));
   connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
   widget->addWidgetToLocalBar(pbEditUnit);
-  pbRemoveUnit = new QPushButton(tr("Remove units"));
+  pbRemoveUnit = new QPushButton(tr("Remove"));
+  pbRemoveUnit->setIcon(QIcon::fromTheme("list-remove"));
   connect(pbRemoveUnit, SIGNAL(clicked()), this, SLOT(removeUnits()));
   widget->addWidgetToLocalBar(pbRemoveUnit);
+  widget->addStretchToLocalBar();
+
+  return true;
+}
+
+bool mdtTtTestNodeEditor::setupTestNodeBusTable()
+{
+  mdtSqlTableWidget *widget;
+
+  if(!addChildTable("TestNodeBus_tbl", tr("Bus"), database())){
+    return false;
+  }
+  if(!addRelation("VehicleType_Id_FK_PK", "TestNodeBus_tbl", "TestNode_Id_FK")){
+    return false;
+  }
+  widget = sqlTableWidget("TestNodeBus_tbl");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("TestNode_Id_FK", true);
+  // Set some attributes on table view
+  widget->enableLocalEdition();
+  widget->addColumnToSortOrder("NameEN", Qt::AscendingOrder);
+  widget->tableView()->resizeColumnsToContents();
+
+  return true;
+}
+
+bool mdtTtTestNodeEditor::setupTestNodeUnitConnectionTable()
+{
+  mdtSqlTableWidget *widget;
+  QPushButton *pbSetBus;
+  QPushButton *pbUnsetBus;
+
+  if(!addChildTable("TestNodeUnitConnection_view", tr("Unit connections"), database())){
+    return false;
+  }
+  if(!addRelation("VehicleType_Id_FK_PK", "TestNodeUnitConnection_view", "TestNode_Id_FK")){
+    return false;
+  }
+  widget = sqlTableWidget("TestNodeUnitConnection_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  widget->setColumnHidden("Unit_Id_FK_PK", true);
+  widget->setColumnHidden("TestNode_Id_FK", true);
+  widget->setColumnHidden("UnitConnection_Id_FK_PK", true);
+  widget->setColumnHidden("TestNodeUnit_Id_FK", true);
+  widget->setColumnHidden("TestNodeBus_Id_FK", true);
+
+  // Set fields a user friendly name
+  widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  widget->setHeaderData("ioPosition", tr("I/O\nposition"));
+  widget->setHeaderData("UnitConnectorName", tr("Connector"));
+  widget->setHeaderData("UnitContactName", tr("Contact"));
+  // Set some attributes on table view
+  widget->addColumnToSortOrder("", Qt::AscendingOrder);
+  widget->tableView()->resizeColumnsToContents();
+  // Set bus button
+  pbSetBus = new QPushButton(tr("Assign to bus ..."));
+  ///pbSetBus->setIcon(QIcon::fromTheme("list-add"));
+  connect(pbSetBus, SIGNAL(clicked()), this, SLOT(setBusToUnitConnection()));
+  widget->addWidgetToLocalBar(pbSetBus);
+  // Unset bus button
+  pbUnsetBus = new QPushButton(tr("Remove from bus ..."));
+  ///pbSetBus->setIcon(QIcon::fromTheme("list-add"));
+  connect(pbUnsetBus, SIGNAL(clicked()), this, SLOT(removeBusFromUnitConnection()));
+  widget->addWidgetToLocalBar(pbUnsetBus);
   widget->addStretchToLocalBar();
 
   return true;

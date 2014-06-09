@@ -21,6 +21,7 @@
 #include "mdtTtTestNodeUnit.h"
 #include "mdtClUnit.h"
 #include "mdtClPathGraph.h"
+#include "mdtSqlRecord.h"
 #include <QSqlRecord>
 
 #include <QDebug>
@@ -162,6 +163,7 @@ mdtTtTestNodeUnitData mdtTtTestNodeUnit::getData(const QVariant & nodeUnitId, bo
   }
   data.setUnitData(unitData);
   // Get test connection data, if required
+  /**
   if(includeTestConnectionData){
     mdtClUnitConnectionData connectionData;
     connectionData = unit.getConnectionData(data.value("TestConnection_Id_FK"), false, ok);
@@ -170,6 +172,7 @@ mdtTtTestNodeUnitData mdtTtTestNodeUnit::getData(const QVariant & nodeUnitId, bo
     }
     data.setTestConnectionData(connectionData);
   }
+  */
   // Done
   *ok = true;
 
@@ -178,7 +181,22 @@ mdtTtTestNodeUnitData mdtTtTestNodeUnit::getData(const QVariant & nodeUnitId, bo
 
 bool mdtTtTestNodeUnit::add(const mdtTtTestNodeUnitData & data) 
 {
-  return addRecord(data, "TestNodeUnit_tbl");
+  if(!beginTransaction()){
+    return false;
+  }
+  if(!addRecord(data, "TestNodeUnit_tbl")){
+    rollbackTransaction();
+    return false;
+  }
+  if(!addConnections(data.value("Unit_Id_FK_PK"), QVariant(), false)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtTtTestNodeUnit::edit(const QVariant & nodeUnitId, const mdtTtTestNodeUnitData & data) 
@@ -190,3 +208,87 @@ bool mdtTtTestNodeUnit::remove(const QVariant & nodeUnitId)
 {
 }
 
+bool mdtTtTestNodeUnit::addConnection(const QVariant & unitConnectionId, const QVariant & testNodeUnitId, const QVariant & testNodeBusId)
+{
+  mdtSqlRecord record;
+
+  // Setup record
+  if(!record.addAllFields("TestNodeUnitConnection_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  // set data
+  record.setValue("UnitConnection_Id_FK_PK", unitConnectionId);
+  record.setValue("TestNodeUnit_Id_FK", testNodeUnitId);
+  record.setValue("TestNodeBus_Id_FK", testNodeBusId);
+
+  // Add record
+  return addRecord(record, "TestNodeUnitConnection_tbl");
+}
+
+bool mdtTtTestNodeUnit::addConnections(const QList<QVariant> & unitConnectionIdList, const QVariant & testNodeUnitId, const QVariant & testNodeBusId, bool handleTransaction)
+{
+  int i;
+
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
+  }
+  for(i = 0; i < unitConnectionIdList.size(); ++i){
+    if(!addConnection(unitConnectionIdList.at(i), testNodeUnitId, testNodeBusId)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(handleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTestNodeUnit::addConnections(const QVariant & testNodeUnitId, const QVariant & testNodeBusId, bool handleTransaction)
+{
+  QString sql;
+  QList<QSqlRecord> dataList;
+  QList<QVariant> idList;
+  bool ok;
+  int i;
+
+  // Get list of connections that are part of given unit ID (i.e. testNodeUnitId)
+  sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + testNodeUnitId.toString();
+  dataList = mdtTtBase::getData(sql, &ok);
+  if(!ok){
+    return false;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    idList.append(dataList.at(i).value(0));
+  }
+
+  // Add connections
+  return addConnections(idList, testNodeUnitId, testNodeBusId, handleTransaction);
+}
+
+bool mdtTtTestNodeUnit::setBusIdToConnection(const QVariant & unitConnectionId, const QVariant & busId)
+{
+  QString sql;
+  QList<QSqlRecord> dataList;
+  mdtSqlRecord record;
+  bool ok;
+
+  // Get record of given unit connection ID
+  sql = "SELECT * FROM TestNodeUnitConnection_tbl WHERE UnitConnection_Id_FK_PK = " + unitConnectionId.toString();
+  dataList = mdtTtBase::getData(sql, &ok);
+  if(!ok){
+    return false;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  record = dataList.at(0);
+  // Edit record
+  record.setValue("TestNodeBus_Id_FK", busId);
+
+  return updateRecord("TestNodeUnitConnection_tbl", record, "UnitConnection_Id_FK_PK", unitConnectionId);
+}

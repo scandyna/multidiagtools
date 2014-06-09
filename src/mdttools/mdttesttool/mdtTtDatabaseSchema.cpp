@@ -369,6 +369,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestNodeUnitView()){
     return false;
   }
+  if(!createTestNodeUnitConnectionView()){
+    return false;
+  }
   /**
   if(!createTestLinkView()){
     return false;
@@ -2459,49 +2462,6 @@ bool mdtTtDatabaseSchema::createView(const QString & viewName, const QString & s
   return true;
 }
 
-bool mdtTtDatabaseSchema::createTestNodeUnitView()
-{
-  QString sql;
-
-  sql = "CREATE VIEW TestNodeUnit_view AS\n"\
-        "SELECT\n"\
-        "TestNodeUnit_tbl.Unit_Id_FK_PK,\n"\
-        "TestNodeUnit_tbl.TestNode_Id_FK,\n"\
-        "TestNodeUnit_tbl.Type_Code_FK,\n"\
-        /**"TestNodeUnit_tbl.TestConnection_Id_FK,\n"\ */
-        "Unit_tbl.SchemaPosition,\n"\
-        /**"TestNodeUnit_tbl.Bus,\n"\ */
-        "TestNodeUnit_tbl.IoPosition,\n"\
-        /**"UnitConnector_tbl.Name AS UnitConnectorName,\n"\ */
-        /**
-        "UnitConnection_tbl.UnitContactName,\n"\
-        "UnitConnection_tbl.SignalName,\n"\
-        "UnitConnection_tbl.FunctionEN,\n"\
-        "UnitConnection_tbl.FunctionFR,\n"\
-        "UnitConnection_tbl.FunctionDE,\n"\
-        "UnitConnection_tbl.FunctionIT,\n"\
-        */
-        "TestNodeUnitType_tbl.NameEN,\n"\
-        "TestNodeUnitType_tbl.NameFR,\n"\
-        "TestNodeUnitType_tbl.NameDE,\n"\
-        "TestNodeUnitType_tbl.NameIT\n"\
-        "FROM TestNodeUnit_tbl\n"\
-        " JOIN Unit_tbl\n"\
-        "  ON Unit_tbl.Id_PK = TestNodeUnit_tbl.Unit_Id_FK_PK\n"\
-        /**
-        " LEFT JOIN UnitConnection_tbl\n"\
-        "  ON UnitConnection_tbl.Id_PK = TestNodeUnit_tbl.TestConnection_Id_FK\n"\
-        */
-        /**
-        " LEFT JOIN UnitConnector_tbl\n"\
-        "  ON UnitConnector_tbl.Id_PK = UnitConnection_tbl.UnitConnector_Id_FK\n"\
-        */
-        " JOIN TestNodeUnitType_tbl\n"\
-        "  ON TestNodeUnitType_tbl.Code_PK = TestNodeUnit_tbl.Type_Code_FK";
-
-  return createView("TestNodeUnit_view", sql);
-}
-
 bool mdtTtDatabaseSchema::createVehicleTypeUnitView() 
 {
   QString sql;
@@ -3003,6 +2963,81 @@ bool mdtTtDatabaseSchema::createLinkBeamUnitEndView()
   return createView("LinkBeam_UnitEnd_view", sql);
 }
 
+bool mdtTtDatabaseSchema::createTestNodeUnitView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestNodeUnit_view AS\n"\
+        "SELECT\n"\
+        "TestNodeUnit_tbl.Unit_Id_FK_PK,\n"\
+        "TestNodeUnit_tbl.TestNode_Id_FK,\n"\
+        "TestNodeUnit_tbl.Type_Code_FK,\n"\
+        /**"TestNodeUnit_tbl.TestConnection_Id_FK,\n"\ */
+        "Unit_tbl.SchemaPosition,\n"\
+        /**"TestNodeUnit_tbl.Bus,\n"\ */
+        "TestNodeUnit_tbl.IoPosition,\n"\
+        /**"UnitConnector_tbl.Name AS UnitConnectorName,\n"\ */
+        /**
+        "UnitConnection_tbl.UnitContactName,\n"\
+        "UnitConnection_tbl.SignalName,\n"\
+        "UnitConnection_tbl.FunctionEN,\n"\
+        "UnitConnection_tbl.FunctionFR,\n"\
+        "UnitConnection_tbl.FunctionDE,\n"\
+        "UnitConnection_tbl.FunctionIT,\n"\
+        */
+        "TestNodeUnitType_tbl.NameEN,\n"\
+        "TestNodeUnitType_tbl.NameFR,\n"\
+        "TestNodeUnitType_tbl.NameDE,\n"\
+        "TestNodeUnitType_tbl.NameIT\n"\
+        "FROM TestNodeUnit_tbl\n"\
+        " JOIN Unit_tbl\n"\
+        "  ON Unit_tbl.Id_PK = TestNodeUnit_tbl.Unit_Id_FK_PK\n"\
+        /**
+        " LEFT JOIN UnitConnection_tbl\n"\
+        "  ON UnitConnection_tbl.Id_PK = TestNodeUnit_tbl.TestConnection_Id_FK\n"\
+        */
+        /**
+        " LEFT JOIN UnitConnector_tbl\n"\
+        "  ON UnitConnector_tbl.Id_PK = UnitConnection_tbl.UnitConnector_Id_FK\n"\
+        */
+        " JOIN TestNodeUnitType_tbl\n"\
+        "  ON TestNodeUnitType_tbl.Code_PK = TestNodeUnit_tbl.Type_Code_FK";
+
+  return createView("TestNodeUnit_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createTestNodeUnitConnectionView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestNodeUnitConnection_view AS\n"\
+        "SELECT\n"\
+        "U.SchemaPosition,\n"\
+        "U.Alias,\n"\
+        "TNU.Unit_Id_FK_PK,\n"\
+        "TNU.TestNode_Id_FK,\n"\
+        "TNU.IoPosition,\n"\
+        "UCNR.Name AS UnitConnectorName,\n"\
+        "TNUCNX.UnitConnection_Id_FK_PK,\n"\
+        "TNUCNX.TestNodeUnit_Id_FK,\n"\
+        "TNUCNX.TestNodeBus_Id_FK,\n"\
+        "UCNX.UnitContactName,\n"\
+        "TNB.NameEN AS Bus\n"\
+        "FROM TestNodeUnitConnection_tbl TNUCNX\n"\
+        " JOIN UnitConnection_tbl UCNX\n"\
+        "  ON UCNX.Id_PK = TNUCNX.UnitConnection_Id_FK_PK\n"\
+        " LEFT JOIN UnitConnector_tbl UCNR\n"\
+        "  ON UCNR.Id_PK = UCNX.UnitConnector_Id_FK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.Unit_Id_FK_PK = TNUCNX.TestNodeUnit_Id_FK\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " LEFT JOIN TestNodeBus_tbl TNB\n"\
+        "  ON TNB.Id_PK = TNUCNX.TestNodeBus_Id_FK\n";
+
+  return createView("TestNodeUnitConnection_view", sql);
+}
+
 bool mdtTtDatabaseSchema::createTestLinkView()
 {
   QString sql;
@@ -3019,7 +3054,7 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " TN.VehicleType_Id_FK_PK,\n"\
         " TN.NodeId,\n"\
         " TNU.Unit_Id_FK_PK,\n"\
-        " TNU.Bus,\n"\
+        /**" TNU.Bus,\n"\ */
         " TNU.IoPosition,\n"\
         " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
         " UCT.Name AS TestConnectorName,\n"\

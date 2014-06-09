@@ -22,7 +22,7 @@
 #define MDT_TT_TEST_NODE_UNIT_DATA_H
 
 #include "mdtSqlRecord.h"
-#include "mdtClUnitConnectionData.h"
+///#include "mdtClUnitConnectionData.h"
 #include <QSqlDatabase>
 
 /*! \brief Storage class for test node unit
@@ -47,7 +47,7 @@ class mdtTtTestNodeUnitData : public mdtSqlRecord
    *
    * Note: unit data part is allways setup.
    */
-  bool setup(const QSqlDatabase & db, bool setupConnectionData);
+  bool setup(const QSqlDatabase & db/**, bool setupConnectionData*/);
 
   /*! \brief Clear values
    */
@@ -69,16 +69,16 @@ class mdtTtTestNodeUnitData : public mdtSqlRecord
    *
    * Will also update TestConnection_Id_FK
    */
-  void setTestConnectionData(const mdtClUnitConnectionData & data);
+  ///void setTestConnectionData(const mdtClUnitConnectionData & data);
 
   /*! \brief Get test connection data
    */
-  inline mdtClUnitConnectionData testConnectionData() const { return pvTestConnectionData; }
+  ///inline mdtClUnitConnectionData testConnectionData() const { return pvTestConnectionData; }
 
  private:
 
   mdtSqlRecord pvUnitData;  // Unit_tbl data part
-  mdtClUnitConnectionData pvTestConnectionData;
+  ///mdtClUnitConnectionData pvTestConnectionData;
 };
 
 #endif // #ifndef MDT_TT_TEST_NODE_UNIT_DATA_H
