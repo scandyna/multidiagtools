@@ -199,8 +199,14 @@ bool mdtTtTestNodeUnit::addNodeUnit(const mdtTtTestNodeUnitData & data)
   return true;
 }
 
-bool mdtTtTestNodeUnit::edit(const QVariant & nodeUnitId, const mdtTtTestNodeUnitData & data) 
+bool mdtTtTestNodeUnit::editNodeUnit(const QVariant & nodeUnitId, const mdtTtTestNodeUnitData & data) 
 {
+  if(data.value("Unit_Id_FK_PK") != nodeUnitId){
+    pvLastError.setError(tr("Changing base unit is not supported."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeUnit");
+    pvLastError.commit();
+    return false;
+  }
   return updateRecord("TestNodeUnit_tbl", data, "Unit_Id_FK_PK", nodeUnitId);
 }
 

@@ -49,6 +49,12 @@ bool mdtTtTestConnectionCableEditor::setupTables()
   if(!setupTestLinkTable()){
     return false;
   }
+  if(!setupTestCableTestNodeUnitTable()){
+    return false;
+  }
+  if(!setupTestCableDutUnitTable()){
+    return false;
+  }
   return true;
 }
 
@@ -586,7 +592,7 @@ bool mdtTtTestConnectionCableEditor::setupTestCableTable()
     return false;
   }
   // Force a update
-  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+  ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   return true;
 }
@@ -596,7 +602,7 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddLink;
   QPushButton *pbEditLink;
-  QPushButton *pbGenerateLinks;
+  ///QPushButton *pbGenerateLinks;
   QPushButton *pbRemoveLinks;
 
   if(!addChildTable("TestLink_view", tr("Links"), database())){
@@ -632,11 +638,14 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons
+  /**
   pbGenerateLinks = new QPushButton(tr("Generate links ..."));
   connect(pbGenerateLinks, SIGNAL(clicked()), this, SLOT(generateLinks()));
   widget->addWidgetToLocalBar(pbGenerateLinks);
+  */
   // Add link button
   pbAddLink = new QPushButton(tr("Add link ..."));
+  pbAddLink->setIcon(QIcon::fromTheme("document-new"));
   connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
   widget->addWidgetToLocalBar(pbAddLink);
   // Edit link button
@@ -645,9 +654,84 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   widget->addWidgetToLocalBar(pbEditLink);
   // Remove links button
   pbRemoveLinks = new QPushButton(tr("Remove links ..."));
+  pbRemoveLinks->setIcon(QIcon::fromTheme("edit-delete"));
   connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
   widget->addWidgetToLocalBar(pbRemoveLinks);
   // Add stretch
+  widget->addStretchToLocalBar();
+
+  return true;
+}
+
+bool mdtTtTestConnectionCableEditor::setupTestCableTestNodeUnitTable()
+{
+  mdtSqlTableWidget *widget;
+  QPushButton *pbAddUnit;
+  QPushButton *pbRemoveUnits;
+
+  // Add link table
+  if(!addChildTable("TestCable_TestNodeUnit_view", tr("Test node units"), database())){
+    return false;
+  }
+  // Setup relation
+  if(!addRelation("Id_PK", "TestCable_TestNodeUnit_view", "TestCable_Id_FK")){
+    return false;
+  }
+  // Get widget to continue setup
+  widget = sqlTableWidget("TestCable_TestNodeUnit_view");
+  Q_ASSERT(widget != 0);
+  
+  widget->setColumnHidden("Id_PK", true);
+  
+  
+  widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  // Add unit button
+  pbAddUnit = new QPushButton(tr("Add ..."));
+  pbAddUnit->setIcon(QIcon::fromTheme("list-add"));
+  widget->addWidgetToLocalBar(pbAddUnit);
+  ///connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addStartUnit()));
+  // Remove units button
+  pbRemoveUnits = new QPushButton(tr("Remove ..."));
+  pbRemoveUnits->setIcon(QIcon::fromTheme("list-remove"));
+  widget->addWidgetToLocalBar(pbRemoveUnits);
+  ///connect(pbRemoveUnits, SIGNAL(clicked()), this, SLOT(removeStartUnits()));
+  widget->addStretchToLocalBar();
+
+  return true;
+}
+
+bool mdtTtTestConnectionCableEditor::setupTestCableDutUnitTable()
+{
+  mdtSqlTableWidget *widget;
+  QPushButton *pbAddUnit;
+  QPushButton *pbRemoveUnits;
+
+  // Add link table
+  if(!addChildTable("TestCable_DutUnit_view", tr("Test node units"), database())){
+    return false;
+  }
+  // Setup relation
+  if(!addRelation("Id_PK", "TestCable_DutUnit_view", "TestCable_Id_FK")){
+    return false;
+  }
+  // Get widget to continue setup
+  widget = sqlTableWidget("TestCable_DutUnit_view");
+  Q_ASSERT(widget != 0);
+  
+  widget->setColumnHidden("Id_PK", true);
+  
+  
+  widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  // Add unit button
+  pbAddUnit = new QPushButton(tr("Add ..."));
+  pbAddUnit->setIcon(QIcon::fromTheme("list-add"));
+  widget->addWidgetToLocalBar(pbAddUnit);
+  ///connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addStartUnit()));
+  // Remove units button
+  pbRemoveUnits = new QPushButton(tr("Remove ..."));
+  pbRemoveUnits->setIcon(QIcon::fromTheme("list-remove"));
+  widget->addWidgetToLocalBar(pbRemoveUnits);
+  ///connect(pbRemoveUnits, SIGNAL(clicked()), this, SLOT(removeStartUnits()));
   widget->addStretchToLocalBar();
 
   return true;

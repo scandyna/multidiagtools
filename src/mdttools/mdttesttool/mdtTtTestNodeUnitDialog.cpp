@@ -33,14 +33,19 @@
 #include <QMessageBox>
 #include <QModelIndex>
 
-mdtTtTestNodeUnitDialog::mdtTtTestNodeUnitDialog(QWidget *parent, QSqlDatabase db)
+mdtTtTestNodeUnitDialog::mdtTtTestNodeUnitDialog(QWidget *parent, QSqlDatabase db, mdtTtTestNodeUnitDialog::mode_t mode)
  : QDialog(parent)
 {
   pvDatabase = db;
   // Setup UI
   setupUi(this);
   setupTypeComboBox();
-  connect(pbSelectUnit, SIGNAL(clicked()), this, SLOT(selectBaseUnit()));
+  if(mode == Add){
+    pbSelectUnit->setVisible(true);
+    connect(pbSelectUnit, SIGNAL(clicked()), this, SLOT(selectBaseUnit()));
+  }else{
+    pbSelectUnit->setVisible(false);
+  }
   updateDialog();
 }
 

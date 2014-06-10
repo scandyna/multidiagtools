@@ -349,10 +349,16 @@ class mdtTtDatabaseSchema
   bool createTestNodeUnitConnectionView();
 
   /*! \brief Create test link view
-   *
-   * \todo Move to test tool when created
    */
   bool createTestLinkView();
+
+  /*! \brief Create TestCable_TestNodeUnit_view
+   */
+  bool createTestCableTestNodeUnitView();
+
+  /*! \brief Create TestCable_DutUnit_view
+   */
+  bool createTestCableDutUnitView();
 
   /*! \brief Create test item link view
    *

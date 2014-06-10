@@ -62,8 +62,6 @@ mdtClMainWindow::mdtClMainWindow()
   pvTabWidget = 0;
 
   // Editors - Will be setup on first call
-  pvTestConnectionCableEditor = 0;
-  pvTestConnectionCableEditorWindow = 0;
   pvTestEditor = 0;
   pvTestEditorWindow = 0;
   pvTestItemEditor = 0;
@@ -266,6 +264,28 @@ void mdtClMainWindow::editLinkBeam()
 
 void mdtClMainWindow::editTestConnectionCable()
 {
+  mdtTtTestConnectionCableEditor *editor;
+  mdtSqlWindow *window;
+
+  // Get or create editor
+  editor = getTestConnectionCableEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
+
+  /**
   if(pvTestConnectionCableEditor == 0){
     pvTestConnectionCableEditor = new mdtTtTestConnectionCableEditor(this, pvDatabaseManager->database());
     if(!pvTestConnectionCableEditor->setupTables()){
@@ -290,6 +310,7 @@ void mdtClMainWindow::editTestConnectionCable()
   Q_ASSERT(pvTestConnectionCableEditorWindow != 0);
   pvTestConnectionCableEditor->select();
   pvTestConnectionCableEditorWindow->show();
+  */
 }
 
 void mdtClMainWindow::editTestNode()
@@ -765,6 +786,34 @@ mdtTtTestNodeEditor *mdtClMainWindow::createTestNodeEditor()
     return 0;
   }
   window->setWindowTitle(tr("Test node edition"));
+  window->resize(800, 600);
+
+  return editor;
+}
+
+mdtTtTestConnectionCableEditor *mdtClMainWindow::getTestConnectionCableEditor()
+{
+  mdtTtTestConnectionCableEditor *editor;
+
+  editor = getEditor<mdtTtTestConnectionCableEditor>();
+  if(editor != 0){
+    return editor;
+  }else{
+    return createTestConnectionCableEditor();
+  }
+}
+
+mdtTtTestConnectionCableEditor *mdtClMainWindow::createTestConnectionCableEditor()
+{
+  mdtTtTestConnectionCableEditor *editor;
+  mdtSqlWindow *window;
+
+  editor = new mdtTtTestConnectionCableEditor(0, pvDatabaseManager->database());
+  window = setupEditor(editor);
+  if(window == 0){
+    return 0;
+  }
+  window->setWindowTitle(tr("Test cable edition"));
   window->resize(800, 600);
 
   return editor;

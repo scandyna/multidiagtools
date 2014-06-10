@@ -68,7 +68,7 @@ class mdtTtTestNodeUnit : public mdtTtBase
 
   /*! \brief Edit a test node unit
    */
-  bool edit(const QVariant & nodeUnitId, const mdtTtTestNodeUnitData & data);
+  bool editNodeUnit(const QVariant & nodeUnitId, const mdtTtTestNodeUnitData & data);
 
   /*! \brief Remove a test node unit
    *

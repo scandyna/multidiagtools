@@ -28,7 +28,6 @@
 #include "mdtTtTestNodeUnit.h"
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtTtTestNodeUnitDialog.h"
-///#include "mdtSqlDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -95,7 +94,7 @@ void mdtTtTestNodeEditor::setBaseVehicleType()
 void mdtTtTestNodeEditor::addUnit()
 {
   mdtTtTestNodeUnit tnu(0, database());
-  mdtTtTestNodeUnitDialog dialog(this, database());
+  mdtTtTestNodeUnitDialog dialog(this, database(), mdtTtTestNodeUnitDialog::Add);
   QVariant nodeId;
   mdtTtTestNodeUnitData data;
 
@@ -230,7 +229,7 @@ void mdtTtTestNodeEditor::addUnits()
 void mdtTtTestNodeEditor::editUnit()
 {
   mdtTtTestNodeUnit tnu(0, database());
-  mdtTtTestNodeUnitDialog dialog(this, database());
+  mdtTtTestNodeUnitDialog dialog(this, database(), mdtTtTestNodeUnitDialog::Edit);
   QVariant nodeId;
   QVariant unitId;
   mdtTtTestNodeUnitData data;
@@ -258,7 +257,7 @@ void mdtTtTestNodeEditor::editUnit()
     return;
   }
   // Update in DB
-  if(!tnu.edit(unitId, dialog.data())){
+  if(!tnu.editNodeUnit(unitId, dialog.data())){
     pvLastError = tnu.lastError();
     displayLastError();
     return;
@@ -266,36 +265,6 @@ void mdtTtTestNodeEditor::editUnit()
   // Update UI
   select("TestNodeUnit_view");
   select("TestNodeUnitConnection_view");
-
-  /**
-  mdtTtTestNodeUnitEditor *tnue;
-  mdtSqlDialog dialog;
-  QVariant testNodeUnitId;
-
-  testNodeUnitId = form()->currentData("TestNodeUnit_view", "Unit_Id_FK_PK");
-  if(testNodeUnitId.isNull()){
-    return;
-  }
-  tnue = new mdtTtTestNodeUnitEditor(0, database());
-  if(!tnue->setupTables()){
-    pvLastError = tnue->lastError();
-    displayLastError();
-    return;
-  }
-  if(!tnue->setMainTableFilter("Unit_Id_FK_PK", testNodeUnitId)){
-    pvLastError = tnue->lastError();
-    displayLastError();
-    delete tnue;
-    return;
-  }
-  dialog.setSqlForm(tnue);
-  dialog.resize(700, 400);
-  dialog.enableEdition();
-  dialog.setWindowTitle(tr("Test node unit edition"));
-  dialog.exec();
-  // Update TestNodeUnit_view
-  form()->select("TestNodeUnit_view");
-  */
 }
 
 void mdtTtTestNodeEditor::removeUnits()
@@ -303,7 +272,6 @@ void mdtTtTestNodeEditor::removeUnits()
   mdtSqlTableWidget *widget;
   mdtTtTestNodeUnit tnu(this, database());
   QMessageBox msgBox;
-  ///QModelIndexList indexes;
   mdtSqlTableSelection s;
 
   widget = sqlTableWidget("TestNodeUnit_view");
@@ -313,12 +281,6 @@ void mdtTtTestNodeEditor::removeUnits()
   if(s.isEmpty()){
     return;
   }
-  /**
-  indexes = widget->indexListOfSelectedRows("Unit_Id_FK_PK");
-  if(indexes.size() < 1){
-    return;
-  }
-  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove unit assignations."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -418,29 +380,14 @@ void mdtTtTestNodeEditor::removeBusFromUnitConnection()
 QVariant mdtTtTestNodeEditor::selectTestNodeUnitType()
 {
   mdtSqlSelectionDialog selectionDialog;
-  ///QSqlError sqlError;
-  ///QSqlQueryModel model;
   QString sql;
   QString msg;
 
   // Setup model
   sql = "SELECT * FROM TestNodeUnitType_tbl";
-  /**
-  model.setQuery(sql, database());
-  sqlError = model.lastError();
-  if(sqlError.isValid()){
-    pvLastError.setError(tr("Unable to get list test node unit types."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeEditor");
-    pvLastError.commit();
-    displayLastError();
-    return QVariant();
-  }
-  */
   // Setup and show dialog
   msg = tr("Select the type for units that will be linked.");
   selectionDialog.setMessage(msg);
-  ///selectionDialog.setModel(&model, false);
   selectionDialog.setQuery(sql, database(), false);
   ///selectionDialog.setColumnHidden("", true);
   ///selectionDialog.setHeaderData("Unit_Id_FK", tr("Variant"));

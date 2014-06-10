@@ -111,6 +111,14 @@ class mdtTtTestConnectionCableEditor : public mdtSqlForm
    */
   bool setupTestLinkTable();
 
+  /*! \brief Setup TestCable_TestNodeUnit_view
+   */
+  bool setupTestCableTestNodeUnitTable();
+
+  /*! \brief Setup TestCable_DutUnit_view
+   */
+  bool setupTestCableDutUnitTable();
+
   Q_DISABLE_COPY(mdtTtTestConnectionCableEditor);
 };
 

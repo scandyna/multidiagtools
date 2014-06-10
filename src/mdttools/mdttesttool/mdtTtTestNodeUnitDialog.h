@@ -37,9 +37,16 @@ class mdtTtTestNodeUnitDialog : public QDialog, Ui::mdtTtTestNodeUnitDialog
 
  public:
 
+  /*! \brief Mode
+   */
+  enum mode_t {
+                Add,  /*!< In this mode, user can select unit to use */
+                Edit  /*!< In this mode, user cannot change unit, only edit other data */
+              };
+
   /*! \brief Constructor
    */
-  mdtTtTestNodeUnitDialog(QWidget *parent, QSqlDatabase db);
+  mdtTtTestNodeUnitDialog(QWidget *parent, QSqlDatabase db, mode_t mode);
 
   void setData(const mdtTtTestNodeUnitData & data);
 

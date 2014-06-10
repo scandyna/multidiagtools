@@ -237,6 +237,14 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   mdtTtTestNodeEditor *createTestNodeEditor();
 
+  /*! \brief Get test connection cable editor
+   */
+  mdtTtTestConnectionCableEditor *getTestConnectionCableEditor();
+
+  /*! \brief Create test connection cable editor
+   */
+  mdtTtTestConnectionCableEditor *createTestConnectionCableEditor();
+
   /*! \brief Create a table view
    *
    * Will create a new SQL table widget that acts on given table name.
@@ -342,9 +350,6 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   mdtSqlDatabaseManager *pvDatabaseManager;
   QDir pvWorkDirectory;
 
-  // Test connection cable editor
-  mdtTtTestConnectionCableEditor *pvTestConnectionCableEditor;
-  mdtSqlWindow *pvTestConnectionCableEditorWindow;
   // Test editor
   mdtTtTestModelEditor *pvTestEditor;
   mdtSqlWindow *pvTestEditorWindow;
