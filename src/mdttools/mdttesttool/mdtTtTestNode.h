@@ -71,31 +71,31 @@ class mdtTtTestNode : public mdtTtBase
 
   /*! \brief Add a test node unit
    */
-  bool addTestNodeUnit(const mdtTtTestNodeUnitData & data);
+  ///bool addTestNodeUnit(const mdtTtTestNodeUnitData & data);
 
   /*! \brief Add a list of test node units
    */
-  bool addTestNodeUnits(const QList<mdtTtTestNodeUnitData> & dataList);
+  ///bool addTestNodeUnits(const QList<mdtTtTestNodeUnitData> & dataList);
 
   /*! \brief Add a test node unit
    */
-  bool addTestNodeUnit(const QVariant & UnitId, const QVariant & TestNodeId , const QVariant & typeCode, const QVariant & busName);
+  ///bool addTestNodeUnit(const QVariant & UnitId, const QVariant & TestNodeId , const QVariant & typeCode, const QVariant & busName);
 
   /*! \brief Add a list of test node units
    */
-  bool addTestNodeUnits(const QList<QVariant> & unitIdList, const QVariant & testNodeId , const QVariant & typeCode, const QVariant & busName);
+  ///bool addTestNodeUnits(const QList<QVariant> & unitIdList, const QVariant & testNodeId , const QVariant & typeCode, const QVariant & busName);
 
   /*! \brief Remove test node units
    */
-  bool removeTestNodeUnits(const QList<QVariant> & TestNodeIdList);
+  ///bool removeTestNodeUnits(const QList<QVariant> & TestNodeIdList);
 
   /*! \brief Remove test node units
    */
-  bool removeTestNodeUnits(const QModelIndexList & indexListOfSelectedRows);
+  ///bool removeTestNodeUnits(const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief Set test connection to given test node unit
    */
-  bool setTestConnection(const QVariant & testNodeUnitId, const QVariant & testConnectionId);
+  ///bool setTestConnection(const QVariant & testNodeUnitId, const QVariant & testConnectionId);
 };
 
 #endif // #ifndef MDT_TT_TEST_NODE_H

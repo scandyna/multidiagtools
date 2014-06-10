@@ -105,13 +105,13 @@ class mdtTtTestNodeEditor : public mdtSqlForm
    * If more than one connection is found, the user cann choose witch one to use .
    *  \todo Selection is not implemented now .
    */
-  bool assignTestConnectionToTestNodeUnit(const QVariant & testNodeUnitId, const QList<QVariant> & busSideTestNodeUnitConnectionIdList);
+  ///bool assignTestConnectionToTestNodeUnit(const QVariant & testNodeUnitId, const QList<QVariant> & busSideTestNodeUnitConnectionIdList);
 
   /*! \brief Assign a unit connection as test connection to a list of units
    *
    * \sa assignTestConnectionToTestNodeUnit()
    */
-  bool assignTestConnectionToTestNodeUnitLits(const QList<QVariant> & testNodeUnitIdList, const QList<QVariant> & busSideTestNodeUnitConnectionIdList);
+  ///bool assignTestConnectionToTestNodeUnitLits(const QList<QVariant> & testNodeUnitIdList, const QList<QVariant> & busSideTestNodeUnitConnectionIdList);
 
   /*! \brief Setup TestNode table (main form)
    */

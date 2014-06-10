@@ -184,11 +184,14 @@ QList<QVariant> mdtTtTestNode::getChannelTestConnectionIdList(const QVariant & t
   return testConnectionIdList;
 }
 
+/**
 bool mdtTtTestNode::addTestNodeUnit(const mdtTtTestNodeUnitData & data)
 {
   return addRecord(data, "TestNodeUnit_tbl");
 }
+*/
 
+/**
 bool mdtTtTestNode::addTestNodeUnits(const QList<mdtTtTestNodeUnitData> & dataList)
 {
   int i;
@@ -209,7 +212,9 @@ bool mdtTtTestNode::addTestNodeUnits(const QList<mdtTtTestNodeUnitData> & dataLi
   return true;
   ///return addRecordList(dataList, "TestNodeUnit_tbl", true);
 }
+*/
 
+/**
 bool mdtTtTestNode::addTestNodeUnit(const QVariant & UnitId, const QVariant & TestNodeId , const QVariant & typeCode, const QVariant & busName)
 {
   QString sql;
@@ -243,7 +248,9 @@ bool mdtTtTestNode::addTestNodeUnit(const QVariant & UnitId, const QVariant & Te
 
   return true;
 }
+*/
 
+/**
 bool mdtTtTestNode::addTestNodeUnits(const QList<QVariant> & unitIdList, const QVariant & testNodeId , const QVariant & typeCode, const QVariant & busName)
 {
   int i;
@@ -263,7 +270,9 @@ bool mdtTtTestNode::addTestNodeUnits(const QList<QVariant> & unitIdList, const Q
 
   return true;
 }
+*/
 
+/**
 bool mdtTtTestNode::removeTestNodeUnits(const QList<QVariant> & TestNodeIdList)
 {
   int i;
@@ -297,7 +306,9 @@ bool mdtTtTestNode::removeTestNodeUnits(const QList<QVariant> & TestNodeIdList)
 
   return true;
 }
+*/
 
+/**
 bool mdtTtTestNode::removeTestNodeUnits(const QModelIndexList & indexListOfSelectedRows)
 {
   int i;
@@ -309,7 +320,9 @@ bool mdtTtTestNode::removeTestNodeUnits(const QModelIndexList & indexListOfSelec
 
   return removeTestNodeUnits(idList);
 }
+*/
 
+/**
 bool mdtTtTestNode::setTestConnection(const QVariant & testNodeUnitId, const QVariant & testConnectionId)
 {
   QString sql;
@@ -341,3 +354,4 @@ bool mdtTtTestNode::setTestConnection(const QVariant & testNodeUnitId, const QVa
 
   return true;
 }
+*/

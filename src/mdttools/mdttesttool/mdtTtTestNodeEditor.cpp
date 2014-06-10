@@ -116,7 +116,7 @@ void mdtTtTestNodeEditor::addUnit()
     return;
   }
   // Add unit
-  if(!tnu.add(dialog.data())){
+  if(!tnu.addNodeUnit(dialog.data())){
     pvLastError = tnu.lastError();
     displayLastError();
     return;
@@ -301,17 +301,24 @@ void mdtTtTestNodeEditor::editUnit()
 void mdtTtTestNodeEditor::removeUnits()
 {
   mdtSqlTableWidget *widget;
-  mdtTtTestNode tn(this, database());
+  mdtTtTestNodeUnit tnu(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
 
   widget = sqlTableWidget("TestNodeUnit_view");
   Q_ASSERT(widget != 0);
-  // Get selected rows
+  // Get selection
+  s = widget->currentSelection("Unit_Id_FK_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRows("Unit_Id_FK_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove unit assignations."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -322,13 +329,14 @@ void mdtTtTestNodeEditor::removeUnits()
     return;
   }
   // Delete seleced rows
-  if(!tn.removeTestNodeUnits(indexes)){
-    pvLastError = tn.lastError();
+  if(!tnu.removeNodeUnits(s)){
+    pvLastError = tnu.lastError();
     displayLastError();
     return;
   }
-  // Update TestNodeUnit_view
+  // Update UI
   select("TestNodeUnit_view");
+  select("TestNodeUnitConnection_view");
 }
 
 void mdtTtTestNodeEditor::setBusToUnitConnection()
@@ -385,6 +393,15 @@ void mdtTtTestNodeEditor::removeBusFromUnitConnection()
   // Get selected connection ID
   connectionId = currentData("TestNodeUnitConnection_view", "UnitConnection_Id_FK_PK");
   if(connectionId.isNull()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove unit from bus."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
     return;
   }
   // Update connection
@@ -577,6 +594,7 @@ QVariant mdtTtTestNodeEditor::getBusName()
   return dialog.textValue().trimmed();
 }
 
+/**
 bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnit(const QVariant & testNodeUnitId, const QList<QVariant> & busSideTestNodeUnitConnectionIdList)
 {
   mdtTtTestNode tn(this, database());
@@ -620,7 +638,9 @@ bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnit(const QVariant & te
 
   return true;
 }
+*/
 
+  /**
 bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnitLits(const QList<QVariant> & testNodeUnitIdList, const QList<QVariant> & busSideTestNodeUnitConnectionIdList)
 {
   int i;
@@ -633,7 +653,7 @@ bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnitLits(const QList<QVa
 
   return true;
 }
-
+*/
 
 bool mdtTtTestNodeEditor::setupTestNodeTable()
 {

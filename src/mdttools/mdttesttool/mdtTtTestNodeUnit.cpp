@@ -179,7 +179,7 @@ mdtTtTestNodeUnitData mdtTtTestNodeUnit::getData(const QVariant & nodeUnitId, bo
   return data;
 }
 
-bool mdtTtTestNodeUnit::add(const mdtTtTestNodeUnitData & data) 
+bool mdtTtTestNodeUnit::addNodeUnit(const mdtTtTestNodeUnitData & data) 
 {
   if(!beginTransaction()){
     return false;
@@ -204,8 +204,56 @@ bool mdtTtTestNodeUnit::edit(const QVariant & nodeUnitId, const mdtTtTestNodeUni
   return updateRecord("TestNodeUnit_tbl", data, "Unit_Id_FK_PK", nodeUnitId);
 }
 
-bool mdtTtTestNodeUnit::remove(const QVariant & nodeUnitId) 
+bool mdtTtTestNodeUnit::removeNodeUnit(const QVariant & nodeUnitId, bool handleTransaction) 
 {
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
+  }
+  // Remove connections
+  if(!removeConnections(nodeUnitId, false)){
+    if(handleTransaction){
+      rollbackTransaction();
+    }
+    return false;
+  }
+  // Remove test node unit
+  if(!removeData("TestNodeUnit_tbl", "Unit_Id_FK_PK", nodeUnitId)){
+    if(handleTransaction){
+      rollbackTransaction();
+    }
+    return false;
+  }
+  if(handleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTestNodeUnit::removeNodeUnits(const mdtSqlTableSelection & s)
+{
+  QList<QVariant> idList;
+  int i;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  idList = s.dataList("Unit_Id_FK_PK");
+  for(i = 0; i < idList.size(); ++i){
+    if(!removeNodeUnit(idList.at(i), false)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtTtTestNodeUnit::addConnection(const QVariant & unitConnectionId, const QVariant & testNodeUnitId, const QVariant & testNodeBusId)
@@ -237,7 +285,9 @@ bool mdtTtTestNodeUnit::addConnections(const QList<QVariant> & unitConnectionIdL
   }
   for(i = 0; i < unitConnectionIdList.size(); ++i){
     if(!addConnection(unitConnectionIdList.at(i), testNodeUnitId, testNodeBusId)){
-      rollbackTransaction();
+      if(handleTransaction){
+        rollbackTransaction();
+      }
       return false;
     }
   }
@@ -252,24 +302,64 @@ bool mdtTtTestNodeUnit::addConnections(const QList<QVariant> & unitConnectionIdL
 
 bool mdtTtTestNodeUnit::addConnections(const QVariant & testNodeUnitId, const QVariant & testNodeBusId, bool handleTransaction)
 {
-  QString sql;
-  QList<QSqlRecord> dataList;
   QList<QVariant> idList;
   bool ok;
-  int i;
 
   // Get list of connections that are part of given unit ID (i.e. testNodeUnitId)
-  sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + testNodeUnitId.toString();
-  dataList = mdtTtBase::getData(sql, &ok);
+  idList = getConnectionIdListOfUnitId(testNodeUnitId, &ok);
   if(!ok){
     return false;
-  }
-  for(i = 0; i < dataList.size(); ++i){
-    idList.append(dataList.at(i).value(0));
   }
 
   // Add connections
   return addConnections(idList, testNodeUnitId, testNodeBusId, handleTransaction);
+}
+
+bool mdtTtTestNodeUnit::removeConnection(const QVariant & unitConnectionId)
+{
+  return removeData("TestNodeUnitConnection_tbl", "UnitConnection_Id_FK_PK", unitConnectionId);
+}
+
+bool mdtTtTestNodeUnit::removeConnections(const QList<QVariant> & unitConnectionIdList, bool handleTransaction)
+{
+  int i;
+
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
+  }
+  for(i = 0; i < unitConnectionIdList.size(); ++i){
+    if(!removeConnection(unitConnectionIdList.at(i))){
+      if(handleTransaction){
+        rollbackTransaction();
+      }
+      return false;
+    }
+  }
+  if(handleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTestNodeUnit::removeConnections(const QVariant & testNodeUnitId, bool handleTransaction)
+{
+  QList<QVariant> idList;
+  bool ok;
+
+  // Get list of connections that are part of given unit ID (i.e. testNodeUnitId)
+  idList = getConnectionIdListOfUnitId(testNodeUnitId, &ok);
+  if(!ok){
+    return false;
+  }
+  qDebug() << "Removing connection for NodeUnitId " << testNodeUnitId << " : " << idList;
+
+  // Remove connections
+  return removeConnections(idList, handleTransaction);
 }
 
 bool mdtTtTestNodeUnit::setBusIdToConnection(const QVariant & unitConnectionId, const QVariant & busId)

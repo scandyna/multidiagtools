@@ -24,6 +24,7 @@
 
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtTtBase.h"
+#include "mdtSqlTableSelection.h"
 #include <QVariant>
 #include <QList>
 #include <QSqlDatabase>
@@ -63,15 +64,23 @@ class mdtTtTestNodeUnit : public mdtTtBase
 
   /*! \brief Add a test node unit
    */
-  bool add(const mdtTtTestNodeUnitData & data);
+  bool addNodeUnit(const mdtTtTestNodeUnitData & data);
 
   /*! \brief Edit a test node unit
    */
   bool edit(const QVariant & nodeUnitId, const mdtTtTestNodeUnitData & data);
 
   /*! \brief Remove a test node unit
+   *
+   * Will also remove related connections from TestNodeUnitConnection_tbl
    */
-  bool remove(const QVariant & nodeUnitId);
+  bool removeNodeUnit(const QVariant & nodeUnitId, bool handleTransaction);
+
+ /*! \brief Remove test node units
+   *
+   * Will also remove related connections from TestNodeUnitConnection_tbl
+   */
+  bool removeNodeUnits(const mdtSqlTableSelection & s);
 
   /*! \brief Add a connection
    */
@@ -84,6 +93,18 @@ class mdtTtTestNodeUnit : public mdtTtBase
   /*! \brief Add connections that are related to given test node unit
    */
   bool addConnections(const QVariant & testNodeUnitId, const QVariant & testNodeBusId, bool handleTransaction);
+
+  /*! \brief Remove a test node unit connection from TestNodeUnitConnection_tbl
+   */
+  bool removeConnection(const QVariant & unitConnectionId);
+
+  /*! \brief Remove given test node unit connections from TestNodeUnitConnection_tbl
+   */
+  bool removeConnections(const QList<QVariant> & unitConnectionIdList, bool handleTransaction);
+
+  /*! \brief Remove connections for given test node unit ID
+   */
+  bool removeConnections(const QVariant & testNodeUnitId, bool handleTransaction);
 
   /*! \brief Set bus ID to given connection ID
    */
