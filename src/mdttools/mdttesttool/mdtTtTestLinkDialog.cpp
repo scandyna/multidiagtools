@@ -20,15 +20,20 @@
  ****************************************************************************/
 #include "mdtTtTestLinkDialog.h"
 #include "mdtClUnit.h"
+#include "mdtTtTestNodeUnit.h"
+#include "mdtTtTestNodeUnitData.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtSqlTableSelection.h"
 #include "mdtClPathGraph.h"
 #include "mdtClLinkedUnitConnectionInfoDialog.h"
 #include <QMessageBox>
 #include <QSqlRecord>
 #include <QList>
 #include <QStringList>
+
+#include <QDebug>
 
 mdtTtTestLinkDialog::mdtTtTestLinkDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
@@ -47,12 +52,12 @@ mdtTtTestLinkDialog::mdtTtTestLinkDialog(QWidget *parent, QSqlDatabase db)
   }
   // Setup UI
   setupUi(this);
-  connect(pbSelectTestUnit, SIGNAL(clicked()), this, SLOT(selectTestNode()));
+  connect(pbSelectTestUnit, SIGNAL(clicked()), this, SLOT(selectTestNodeUnit()));
   connect(pbSelectDutUnit, SIGNAL(clicked()), this, SLOT(selectDutUnit()));
   connect(pbSelectTestConnection, SIGNAL(clicked()), this, SLOT(selectTestConnection()));
   connect(pbSelectDutConnection, SIGNAL(clicked()), this, SLOT(selectDutConnection()));
   connect(pbLinkedConnectionsInfo, SIGNAL(clicked()), this, SLOT(viewDutLinkedConnections()));
-  displayTestNode();
+  displayTestNodeUnit();
   displayDutUnit();
   displayTestConnection();
   displayDutConnection();
@@ -62,16 +67,26 @@ mdtTtTestLinkDialog::~mdtTtTestLinkDialog()
 {
 }
 
-void mdtTtTestLinkDialog::setTestNode(const QVariant & nodeId) 
+void mdtTtTestLinkDialog::setTestNodeUnit(const QVariant & nodeUnitId) 
 {
-  pvTestNodeId = nodeId;
-  displayTestNode();
+  pvTestNodeUnitId = nodeUnitId;
+  displayTestNodeUnit();
+}
+
+void mdtTtTestLinkDialog::setTestNodeUnitSelectionList(const QList< QVariant >& idList)
+{
+  pvTestNodeUnitSelectionIdList = idList;
 }
 
 void mdtTtTestLinkDialog::setDutUnit(const QVariant & unitId) 
 {
   pvDutUnitId = unitId;
   displayDutUnit();
+}
+
+void mdtTtTestLinkDialog::setDutUnitSelectionList(const QList< QVariant >& idList)
+{
+  pvDutUnitSelectionIdList = idList;
 }
 
 void mdtTtTestLinkDialog::setTestConnection(const QVariant & unitConnectionId) 
@@ -93,19 +108,33 @@ void mdtTtTestLinkDialog::setLinkData(const mdtTtTestLinkData & data)
   displayDutConnection();
 }
 
-void mdtTtTestLinkDialog::selectTestNode()
+void mdtTtTestLinkDialog::selectTestNodeUnit()
 {
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
-  QList<QVariant> result;
+  mdtSqlTableSelection s;
+  int i;
+  ///QList<QVariant> result;
 
-  // Setup and run query
-  /**
-  sql = "SELECT * FROM Unit_view ";
-  if(!pvTestNodeId.isNull()){
-    sql += " WHERE Unit_Id_PK <> " + pvTestNodeId.toString();
+  // Setup SQL statement
+  sql = "SELECT * FROM TestNodeUnit_view";
+  if(pvTestNodeUnitSelectionIdList.size() > 0){
+    sql += " WHERE (Unit_Id_FK_PK = " + pvTestNodeUnitSelectionIdList.at(0).toString();
+    for(i = 0; i < pvTestNodeUnitSelectionIdList.size(); ++i){
+      sql += " OR Unit_Id_FK_PK = " + pvTestNodeUnitSelectionIdList.at(i).toString();
+    }
+    sql += ")";
   }
-  */
+  if(!pvTestNodeUnitId.isNull()){
+    if(pvTestNodeUnitSelectionIdList.isEmpty()){
+      sql += " WHERE (";
+    }else{
+      sql += " AND (";
+    }
+    sql += "Unit_Id_FK_PK <> " + pvTestNodeUnitId.toString();
+    sql += ")";
+  }
+  /**
   sql = "SELECT VehicleType_Id_FK_PK, Type, SubType, SeriesNumber, NodeId";
   sql += " FROM TestNode_tbl";
   sql += " JOIN VehicleType_tbl";
@@ -113,38 +142,60 @@ void mdtTtTestLinkDialog::selectTestNode()
   if(!pvTestNodeId.isNull()){
     sql += " WHERE VehicleType_Id_FK_PK <> " + pvTestNodeId.toString();
   }
+  */
   // Setup and show dialog
-  selectionDialog.setMessage(tr("Please select test node:"));
+  selectionDialog.setMessage(tr("Please select test node unit:"));
   selectionDialog.setQuery(sql, pvDatabase, false);
-  selectionDialog.setColumnHidden("VehicleType_Id_FK_PK", true);
-  selectionDialog.setHeaderData("Type", tr("Type"));
-  selectionDialog.setHeaderData("SubType", tr("Sub type"));
-  selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
-  selectionDialog.setHeaderData("NodeId", tr("Node ID"));
-  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+  selectionDialog.setColumnHidden("Unit_Id_FK_PK", true);
+  
+  selectionDialog.setHeaderData("", tr(""));
+
+  selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   selectionDialog.sort();
-  selectionDialog.addSelectionResultColumn("VehicleType_Id_FK_PK");
+  ///selectionDialog.addSelectionResultColumn("VehicleType_Id_FK_PK");
   selectionDialog.resize(700, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
+  s = selectionDialog.selection("Unit_Id_FK_PK");
+  Q_ASSERT(s.rowCount() == 1);
+  // Store unit and update GUI
+  setTestConnection(QVariant());
+  setTestNodeUnit(s.data(0, "Unit_Id_FK_PK"));
+  /**
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
   // Store unit and update GUI
   setTestConnection(QVariant());
   setTestNode(result.at(0));
+  */
 }
 
 void mdtTtTestLinkDialog::selectDutUnit()
 {
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
-  QList<QVariant> result;
+  mdtSqlTableSelection s;
+  int i;
+  ///QList<QVariant> result;
 
-  // Setup and run query
+  // Setup SQL statement
   sql = "SELECT * FROM Unit_view ";
+  if(pvDutUnitSelectionIdList.size() > 0){
+    sql += " WHERE (Unit_Id_PK = " + pvDutUnitSelectionIdList.at(0).toString();
+    for(i = 0; i < pvDutUnitSelectionIdList.size(); ++i){
+      sql += " OR Unit_Id_PK = " + pvDutUnitSelectionIdList.at(i).toString();
+    }
+    sql += ")";
+  }
   if(!pvDutUnitId.isNull()){
-    sql += " WHERE Unit_Id_PK <> " + pvDutUnitId.toString();
+    if(pvDutUnitSelectionIdList.isEmpty()){
+      sql += " WHERE (";
+    }else{
+      sql += " AND (";
+    }
+    sql += "Unit_Id_PK <> " + pvDutUnitId.toString();
+    sql += ")";
   }
   // Setup and show dialog
   selectionDialog.setMessage(tr("Please select DUT unit:"));
@@ -159,34 +210,74 @@ void mdtTtTestLinkDialog::selectDutUnit()
   selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
   selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   selectionDialog.sort();
-  selectionDialog.addSelectionResultColumn("Unit_Id_PK");
+  ///selectionDialog.addSelectionResultColumn("Unit_Id_PK");
   selectionDialog.resize(800, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
+  s = selectionDialog.selection("Unit_Id_PK");
+  Q_ASSERT(s.rowCount() == 1);
+  // Store unit and update GUI
+  setDutConnection(QVariant());
+  setDutUnit(s.data(0, "Unit_Id_PK"));
+  /**
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
   // Store unit and update GUI
   setDutConnection(QVariant());
   setDutUnit(result.at(0));
+  */
 }
 
 void mdtTtTestLinkDialog::selectTestConnection() 
 {
   mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlTableSelection s;
   QString sql;
-  QList<QVariant> result;
-  mdtClUnit unit(this, pvDatabase);
+  ///QList<QVariant> result;
+  ///mdtClUnit unit(this, pvDatabase);
 
+  if(pvTestNodeUnitId.isNull()){
+    return;
+  }
+  // Setup SQL statement
+  sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvTestNodeUnitId.toString();
+  // Setup and show dialog
+  selectionDialog.setMessage("Please select DUT connection:");
+  selectionDialog.setQuery(sql, pvDatabase, false);
+  selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
+  selectionDialog.setColumnHidden("Unit_Id_FK", true);
+  selectionDialog.setColumnHidden("ArticleConnection_Id_FK", true);
+  selectionDialog.setHeaderData("SchemaPage", tr("Schema\npage"));
+  selectionDialog.setHeaderData("UnitFunctionEN", tr("Unit\nfunction (ENG)"));
+  selectionDialog.setHeaderData("SignalName", tr("Signal name"));
+  selectionDialog.setHeaderData("SwAddress", tr("SW address"));
+  selectionDialog.setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
+  selectionDialog.setHeaderData("UnitContactName", tr("Unit\ncontact"));
+  selectionDialog.setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
+  selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
+  selectionDialog.setHeaderData("IoType", tr("I/O type"));
+  selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
+  selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.resize(800, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("UnitConnection_Id_PK");
+  Q_ASSERT(s.rowCount() == 1);
+  pvLinkData.setValue("TestConnection_Id_FK", s.data(0, "UnitConnection_Id_PK"));
+  displayTestConnection();
   /**
   if(pvTestUnitId.isNull()){
     return;
   }
   */
+  /**
   // Setup and run query
   sql = "SELECT TestNode_Id_FK, TestConnection_Id_FK, UnitConnectorName, UnitContactName, Bus, SchemaPosition, NameEN, NameFR, NameDE, NameIT, IoPosition";
   sql += " FROM TestNodeUnit_view";
-  
   // Setup and show dialog
   selectionDialog.setMessage("Please select test box connection:");
   selectionDialog.setQuery(sql, pvDatabase, false);
@@ -204,7 +295,7 @@ void mdtTtTestLinkDialog::selectTestConnection()
   selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
   selectionDialog.sort();
   selectionDialog.addSelectionResultColumn("TestConnection_Id_FK");
-  selectionDialog.resize(700, 400);
+  selectionDialog.resize(800, 400);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
@@ -213,6 +304,7 @@ void mdtTtTestLinkDialog::selectTestConnection()
   // Get connection data and update
   pvLinkData.setValue("TestConnection_Id_FK", result.at(0));
   displayTestConnection();
+  */
 }
 
 void mdtTtTestLinkDialog::selectDutConnection() 
@@ -225,7 +317,7 @@ void mdtTtTestLinkDialog::selectDutConnection()
   if(pvDutUnitId.isNull()){
     return;
   }
-  // Setup and run query
+  // Setup SQL statement
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvDutUnitId.toString();
   // Setup and show dialog
   selectionDialog.setMessage("Please select DUT connection:");
@@ -245,7 +337,7 @@ void mdtTtTestLinkDialog::selectDutConnection()
   selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
   
   selectionDialog.addSelectionResultColumn("UnitConnection_Id_PK");
-  selectionDialog.resize(700, 400);
+  selectionDialog.resize(800, 400);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
@@ -319,21 +411,36 @@ void mdtTtTestLinkDialog::reject()
   QDialog::reject();
 }
 
-void mdtTtTestLinkDialog::displayTestNode()
+void mdtTtTestLinkDialog::displayTestNodeUnit()
 {
-  mdtClUnit unit(0, pvDatabase);
-  QString sql;
-  QList<QSqlRecord> dataList;
-  QSqlRecord data;
+  ///mdtClUnit unit(0, pvDatabase);
+  mdtTtTestNodeUnit tnu(0, pvDatabase);
+  mdtTtTestNodeUnitData data;
+  ///QString sql;
+  ///QList<QSqlRecord> dataList;
+  ///QSqlRecord data;
   bool ok;
 
-  if(pvTestNodeId.isNull()){
-    lbTestNodeType->clear();
-    lbTestNodeSubType->clear();
-    lbTestNodeNodeId->clear();
+  qDebug() << "displayTestNodeUnit() - pvTestNodeUnitId: " << pvTestNodeUnitId;
+  
+  if(pvTestNodeUnitId.isNull()){
+    lbTnuSchemaPosition->clear();
+    lbTnuAlias->clear();
   }else{
-    // Get test node data
+    // Get test node unit data
+    qDebug() << "displayTestNodeUnit() - getting data ...";
+    data = tnu.getData(pvTestNodeUnitId, &ok, false);
+    if(!ok){
+      lbTnuSchemaPosition->setText("<Error!>");
+      lbTnuAlias->setText("<Error!>");
+      return;
+    }
+    qDebug() << "displayTestNodeUnit() - data: " << data;
+    lbTnuSchemaPosition->setText(data.unitData().value("SchemaPosition").toString());
+    lbTnuAlias->setText(data.unitData().value("Alias").toString());
+
     ///sql = "SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = " + pvTestNodeId.toString();
+    /**
     sql = "SELECT VehicleType_Id_FK_PK, Type, SubType, SeriesNumber, NodeId";
     sql += " FROM TestNode_tbl";
     sql += " JOIN VehicleType_tbl";
@@ -351,6 +458,7 @@ void mdtTtTestLinkDialog::displayTestNode()
     lbTestNodeType->setText(data.value("Type").toString());
     lbTestNodeSubType->setText(data.value("SubType").toString());
     lbTestNodeNodeId->setText(data.value("NodeId").toString());
+    */
   }
 }
 

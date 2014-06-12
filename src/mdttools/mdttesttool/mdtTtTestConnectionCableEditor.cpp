@@ -22,12 +22,15 @@
 #include "ui_mdtTtTestConnectionCableEditor.h"
 #include "mdtTtTestConnectionCable.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtSqlTableSelection.h"
 #include "mdtTtTestNode.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtTtTestLinkDialog.h"
 #include <QSqlQueryModel>
+#include <QSqlTableModel>
+#include <QModelIndex>
 #include <QTableView>
 #include <QSqlError>
 #include <QString>
@@ -58,19 +61,220 @@ bool mdtTtTestConnectionCableEditor::setupTables()
   return true;
 }
 
+void mdtTtTestConnectionCableEditor::addTestNodeUnit()
+{
+  mdtTtTestConnectionCable tcc(0, database());
+  mdtSqlSelectionDialog selectionDialog;
+  mdtSqlTableSelection s;
+  QVariant testCableId;
+  QVariant testNodeUnitId;
+  QString sql;
+
+  // Get current test cable ID
+  testCableId = currentData("TestCable_tbl", "Id_PK");
+  if(testCableId.isNull()){
+    return;
+  }
+  // Setup and show dialog
+  sql = tcc.sqlForTestNodeUnitSelection(testCableId);
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setMessage(tr("Select a unit that is a test connector:"));
+  selectionDialog.setColumnHidden("SeriesNumber", true);
+  selectionDialog.setColumnHidden("Unit_Id_FK_PK", true);
+  selectionDialog.setHeaderData("Type", tr("Test system"));
+  selectionDialog.setHeaderData("SubType", tr("Test node"));
+  selectionDialog.setHeaderData("NodeId", tr("Node ID"));
+  selectionDialog.setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  selectionDialog.setHeaderData("TestNodeUnitTypeEN", tr("Type\n(English)"));
+  selectionDialog.setHeaderData("TestNodeUnitTypeFR", tr("Type\n(Frensh)"));
+  selectionDialog.setHeaderData("TestNodeUnitTypeDE", tr("Type\n(German)"));
+  selectionDialog.setHeaderData("TestNodeUnitTypeIT", tr("Type\n(Italian)"));
+  selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.resize(800, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("Unit_Id_FK_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  testNodeUnitId = s.data(0, "Unit_Id_FK_PK");
+  // Add unit
+  if(!tcc.addTestNodeUnit(testNodeUnitId, testCableId)){
+    pvLastError = tcc.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestCable_TestNodeUnit_view");
+}
+
+void mdtTtTestConnectionCableEditor::removeTestNodeUnits()
+{
+  mdtTtTestConnectionCable tcc(0, database());
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QMessageBox msgBox;
+
+  // Get widget and selection
+  widget = sqlTableWidget("TestCable_TestNodeUnit_view");
+  Q_ASSERT(widget != 0);
+  s = widget->currentSelection("TestNodeUnit_Id_FK");
+  if(s.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove assignations between selected node units and current test cable."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove selected units
+  if(!tcc.removeTestNodeUnits(s)){
+    pvLastError = tcc.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestCable_TestNodeUnit_view");
+}
+
+void mdtTtTestConnectionCableEditor::addDutUnit()
+{
+  mdtTtTestConnectionCable tcc(0, database());
+  mdtSqlSelectionDialog selectionDialog;
+  mdtSqlTableSelection s;
+  QVariant testCableId;
+  QVariant dutUnitId;
+  QString sql;
+
+  // Get current test cable ID
+  testCableId = currentData("TestCable_tbl", "Id_PK");
+  if(testCableId.isNull()){
+    return;
+  }
+  // Setup and show dialog
+  sql = tcc.sqlForDutUnitSelection(testCableId);
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setMessage(tr("Select a unit (DUT):"));
+  selectionDialog.setColumnHidden("VehicleType_Id_PK", true);
+  selectionDialog.setColumnHidden("Unit_Id_PK", true);
+  selectionDialog.setColumnHidden("Article_Id_PK", true);
+  selectionDialog.setColumnHidden("Coordinate", true);
+  selectionDialog.setColumnHidden("Cabinet", true);
+  selectionDialog.setHeaderData("Type", tr("Vehicle\ntype"));
+  selectionDialog.setHeaderData("SubType", tr("Vehicle\nsub type"));
+  selectionDialog.setHeaderData("SeriesNumber", tr("Vehicle\nserie"));
+  selectionDialog.setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  selectionDialog.setHeaderData("ArticleCode", tr("Article\ncode"));
+  selectionDialog.setHeaderData("DesignationEN", tr("Designation\n(English)"));
+  selectionDialog.setHeaderData("DesignationFR", tr("Designation\n(Frensh)"));
+  selectionDialog.setHeaderData("DesignationDE", tr("Designation\n(German)"));
+  selectionDialog.setHeaderData("DesignationIT", tr("Designation\n(Italian)"));
+  selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.resize(800, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("Unit_Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  dutUnitId = s.data(0, "Unit_Id_PK");
+  // Add unit
+  if(!tcc.addDutUnit(dutUnitId, testCableId)){
+    pvLastError = tcc.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestCable_DutUnit_view");
+}
+
+void mdtTtTestConnectionCableEditor::removeDutUnits()
+{
+  mdtTtTestConnectionCable tcc(0, database());
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QMessageBox msgBox;
+  // Get widget and selection
+  widget = sqlTableWidget("TestCable_DutUnit_view");
+  Q_ASSERT(widget != 0);
+  s = widget->currentSelection("DutUnit_Id_FK");
+  if(s.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove assignations between selected DUT units and current test cable."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove selected units
+  if(!tcc.removeDutUnits(s)){
+    pvLastError = tcc.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestCable_DutUnit_view");
+}
+
 void mdtTtTestConnectionCableEditor::addLink()
 {
   mdtTtTestConnectionCable tcc(this, database());
   mdtTtTestLinkDialog dialog(this, database());
   QVariant cableId;
   mdtTtTestLinkData linkData;
+  QVariant testNodeUnitId;
+  QList<QVariant> testNodeUnitIdList;
+  QVariant dutUnitId;
+  QList<QVariant> dutUnitIdList;
+  QSqlTableModel *m;
+  QModelIndex index;
+  int row;
+  int col;
 
   // Get cable ID
   cableId = currentData("TestCable_tbl", "Id_PK");
   if(cableId.isNull()){
     return;
   }
-  // Show dialog
+  // Get test node units
+  testNodeUnitId = currentData("TestCable_TestNodeUnit_view", "TestNodeUnit_Id_FK");
+  m = model("TestCable_TestNodeUnit_view");
+  Q_ASSERT(m != 0);
+  col = m->fieldIndex("TestNodeUnit_Id_FK");
+  Q_ASSERT(col >= 0);
+  for(row = 0; row < m->rowCount(); ++row){
+    index = m->index(row, col);
+    testNodeUnitIdList.append(m->data(index));
+  }
+  // Get DUT units
+  dutUnitId = currentData("TestCable_DutUnit_view", "DutUnit_Id_FK");
+  m = model("TestCable_DutUnit_view");
+  Q_ASSERT(m != 0);
+  col = m->fieldIndex("DutUnit_Id_FK");
+  Q_ASSERT(col >= 0);
+  for(row = 0; row < m->rowCount(); ++row){
+    index = m->index(row, col);
+    dutUnitIdList.append(m->data(index));
+  }
+  // Setup and show dialog
+  dialog.setTestNodeUnitSelectionList(testNodeUnitIdList);
+  dialog.setTestNodeUnit(testNodeUnitId);
+  dialog.setDutUnitSelectionList(dutUnitIdList);
+  dialog.setDutUnit(dutUnitId);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
@@ -92,24 +296,22 @@ void mdtTtTestConnectionCableEditor::editLink()
   mdtSqlTableWidget *widget;
   mdtTtTestConnectionCable tcc(this, database());
   mdtTtTestLinkDialog dialog(this, database());
-  QVariant testNodeId;
+  QVariant testNodeUnitId;
+  QList<QVariant> testNodeUnitIdList;
+  QVariant testConnectionId;
   QVariant dutUnitId;
-  QVariant testConnectionId, dutConnectionId;
+  QList<QVariant> dutUnitIdList;
+  QVariant dutConnectionId;
+  QSqlTableModel *m;
+  QModelIndex index;
+  int row;
+  int col;
   mdtTtTestLinkData linkData;
   bool ok;
 
   widget = sqlTableWidget("TestLink_view");
   Q_ASSERT(widget != 0);
 
-  // Get test node and DUT unit IDs
-  testNodeId = widget->currentData("VehicleType_Id_FK_PK");
-  if(testNodeId.isNull()){
-    return;
-  }
-  dutUnitId = widget->currentData("DutUnitId");
-  if(dutUnitId.isNull()){
-    return;
-  }
   // Get test and DUT connection IDs
   testConnectionId = widget->currentData("TestConnection_Id_FK");
   if(testConnectionId.isNull()){
@@ -119,6 +321,40 @@ void mdtTtTestConnectionCableEditor::editLink()
   if(dutConnectionId.isNull()){
     return;
   }
+  // Get test node units
+  testNodeUnitId = widget->currentData("Unit_Id_FK_PK");
+  m = model("TestCable_TestNodeUnit_view");
+  Q_ASSERT(m != 0);
+  col = m->fieldIndex("TestNodeUnit_Id_FK");
+  Q_ASSERT(col >= 0);
+  for(row = 0; row < m->rowCount(); ++row){
+    index = m->index(row, col);
+    testNodeUnitIdList.append(m->data(index));
+  }
+  // Get DUT units
+  dutUnitId = widget->currentData("DutUnitId");
+  m = model("TestCable_DutUnit_view");
+  Q_ASSERT(m != 0);
+  col = m->fieldIndex("DutUnit_Id_FK");
+  Q_ASSERT(col >= 0);
+  for(row = 0; row < m->rowCount(); ++row){
+    index = m->index(row, col);
+    dutUnitIdList.append(m->data(index));
+  }
+
+  
+  /**
+  // Get test node and DUT unit IDs
+  testNodeId = widget->currentData("VehicleType_Id_FK_PK");
+  if(testNodeId.isNull()){
+    return;
+  }
+  dutUnitId = widget->currentData("DutUnitId");
+  if(dutUnitId.isNull()){
+    return;
+  }
+  */
+
   // Get link data
   linkData = tcc.getLinkData(testConnectionId, dutConnectionId, &ok);
   if(!ok){
@@ -129,8 +365,10 @@ void mdtTtTestConnectionCableEditor::editLink()
   
   qDebug() << "Cable ID (1): " << linkData.value("TestCable_Id_FK");
   
-  // Set data to dialog and show
-  dialog.setTestNode(testNodeId);
+  // Setup and show dialog
+  dialog.setTestNodeUnitSelectionList(testNodeUnitIdList);
+  dialog.setTestNodeUnit(testNodeUnitId);
+  dialog.setDutUnitSelectionList(dutUnitIdList);
   dialog.setDutUnit(dutUnitId);
   dialog.setLinkData(linkData);
   if(dialog.exec() != QDialog::Accepted){
@@ -680,21 +918,38 @@ bool mdtTtTestConnectionCableEditor::setupTestCableTestNodeUnitTable()
   // Get widget to continue setup
   widget = sqlTableWidget("TestCable_TestNodeUnit_view");
   Q_ASSERT(widget != 0);
-  
+  ///widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("TestNodeUnit_Id_FK", true);
+  widget->setColumnHidden("TestCable_Id_FK", true);
+  widget->setColumnHidden("Unit_Id_FK_PK", true);
+  widget->setColumnHidden("TestNode_Id_FK", true);
+  widget->setColumnHidden("Type_Code_FK", true);
+  widget->setColumnHidden("Composite_Id_FK", true);
+  widget->setColumnHidden("Article_Id_FK", true);
   widget->setColumnHidden("Id_PK", true);
-  
-  
+  widget->setColumnHidden("SeriesNumber", true);
   widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  widget->setHeaderData("IoPosition", tr("I/O\nposition"));
+  widget->setHeaderData("Type", tr("Test system"));
+  widget->setHeaderData("SubType", tr("Test node"));
+  widget->setHeaderData("TestNodeUnitTypeEN", tr("Type\n(English)"));
+  widget->setHeaderData("TestNodeUnitTypeFR", tr("Type\n(Frensh)"));
+  widget->setHeaderData("TestNodeUnitTypeDE", tr("Type\n(German)"));
+  widget->setHeaderData("TestNodeUnitTypeIT", tr("Type\n(Italian)"));
+  widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  widget->sort();
+  widget->tableView()->resizeColumnsToContents();
+  widget->tableView()->resizeRowsToContents();
   // Add unit button
   pbAddUnit = new QPushButton(tr("Add ..."));
   pbAddUnit->setIcon(QIcon::fromTheme("list-add"));
   widget->addWidgetToLocalBar(pbAddUnit);
-  ///connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addStartUnit()));
+  connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addTestNodeUnit()));
   // Remove units button
   pbRemoveUnits = new QPushButton(tr("Remove ..."));
   pbRemoveUnits->setIcon(QIcon::fromTheme("list-remove"));
   widget->addWidgetToLocalBar(pbRemoveUnits);
-  ///connect(pbRemoveUnits, SIGNAL(clicked()), this, SLOT(removeStartUnits()));
+  connect(pbRemoveUnits, SIGNAL(clicked()), this, SLOT(removeTestNodeUnits()));
   widget->addStretchToLocalBar();
 
   return true;
@@ -707,7 +962,7 @@ bool mdtTtTestConnectionCableEditor::setupTestCableDutUnitTable()
   QPushButton *pbRemoveUnits;
 
   // Add link table
-  if(!addChildTable("TestCable_DutUnit_view", tr("Test node units"), database())){
+  if(!addChildTable("TestCable_DutUnit_view", tr("DUT units"), database())){
     return false;
   }
   // Setup relation
@@ -717,21 +972,30 @@ bool mdtTtTestConnectionCableEditor::setupTestCableDutUnitTable()
   // Get widget to continue setup
   widget = sqlTableWidget("TestCable_DutUnit_view");
   Q_ASSERT(widget != 0);
-  
   widget->setColumnHidden("Id_PK", true);
-  
-  
+  widget->setColumnHidden("DutUnit_Id_FK", true);
+  widget->setColumnHidden("TestCable_Id_FK", true);
+  widget->setColumnHidden("Composite_Id_FK", true);
+  widget->setColumnHidden("Article_Id_FK", true);
   widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  widget->setHeaderData("DesignationEN", tr("Designation\n(English)"));
+  widget->setHeaderData("DesignationFR", tr("Designation\n(Frensh)"));
+  widget->setHeaderData("DesignationDE", tr("Designation\n(German)"));
+  widget->setHeaderData("DesignationIT", tr("Designation\n(Italian)"));
+  widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  widget->sort();
+  widget->tableView()->resizeColumnsToContents();
+  widget->tableView()->resizeRowsToContents();
   // Add unit button
   pbAddUnit = new QPushButton(tr("Add ..."));
   pbAddUnit->setIcon(QIcon::fromTheme("list-add"));
   widget->addWidgetToLocalBar(pbAddUnit);
-  ///connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addStartUnit()));
+  connect(pbAddUnit, SIGNAL(clicked()), this, SLOT(addDutUnit()));
   // Remove units button
   pbRemoveUnits = new QPushButton(tr("Remove ..."));
   pbRemoveUnits->setIcon(QIcon::fromTheme("list-remove"));
   widget->addWidgetToLocalBar(pbRemoveUnits);
-  ///connect(pbRemoveUnits, SIGNAL(clicked()), this, SLOT(removeStartUnits()));
+  connect(pbRemoveUnits, SIGNAL(clicked()), this, SLOT(removeDutUnits()));
   widget->addStretchToLocalBar();
 
   return true;

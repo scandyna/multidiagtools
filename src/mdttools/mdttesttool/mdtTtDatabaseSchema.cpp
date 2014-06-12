@@ -2627,15 +2627,15 @@ bool mdtTtDatabaseSchema::createUnitView()
 
   sql = "CREATE VIEW Unit_view AS\n"\
         "SELECT\n"\
+        " Unit_tbl.Id_PK AS Unit_Id_PK ,\n"\
+        " Unit_tbl.SchemaPosition,\n"\
+        " Unit_tbl.Alias ,\n"\
+        " Unit_tbl.Coordinate ,\n"\
+        " Unit_tbl.Cabinet ,\n"\
         " VehicleType_tbl.Id_PK AS VehicleType_Id_PK,\n"\
         " VehicleType_tbl.Type,\n"\
         " VehicleType_tbl.SubType,\n"\
         " VehicleType_tbl.SeriesNumber,\n"\
-        " Unit_tbl.Id_PK AS Unit_Id_PK ,\n"\
-        " Unit_tbl.Coordinate ,\n"\
-        " Unit_tbl.Cabinet ,\n"\
-        " Unit_tbl.SchemaPosition ,\n"\
-        " Unit_tbl.Alias ,\n"\
         " Article_tbl.Id_PK AS Article_Id_PK ,\n"\
         " Article_tbl.ArticleCode ,\n"\
         " Article_tbl.DesignationEN,\n"\
@@ -3052,11 +3052,8 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " LNK.TestCable_Id_FK,\n"\
         " LNK.TestConnection_Id_FK,\n"\
         " LNK.DutConnection_Id_FK,\n"\
-        " VTN.Type AS TestNodeType,\n"\
-        " VTN.SubType AS TestNodeSubType,\n"\
-        " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
-        " TN.VehicleType_Id_FK_PK,\n"\
-        " TN.NodeId,\n"\
+        " LNK.Identification AS TestLinkIdentification,\n"\
+        " LNK.Value AS TestLinkValue,\n"\
         " TNU.Unit_Id_FK_PK,\n"\
         " TNB.NameEN AS Bus,\n"\
         " TNU.IoPosition,\n"\
@@ -3068,8 +3065,14 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " UD.Alias AS DutUnitAlias,\n"\
         " UCD.Name AS DutConnectorName,\n"\
         " UCNXD.UnitContactName AS DutContactName,\n"\
-        " LNK.Identification AS TestLinkIdentification,\n"\
-        " LNK.Value AS TestLinkValue\n"\
+        " VTN.Type AS TestNodeType,\n"\
+        " VTN.SubType AS TestNodeSubType,\n"\
+        " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
+        " TN.VehicleType_Id_FK_PK,\n"\
+        " TN.NodeId,\n"\
+        " UVT.Type,\n"\
+        " UVT.SubType,\n"\
+        " UVT.SeriesNumber\n"\
         "FROM TestLink_tbl LNK\n"\
         " JOIN TestNodeUnitConnection_tbl TNUCNX\n"\
         "  ON TNUCNX.UnitConnection_Id_FK_PK = LNK.TestConnection_Id_FK\n"\
@@ -3085,14 +3088,18 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
         " JOIN VehicleType_tbl VTN\n"\
         "  ON VTN.Id_PK = TN.VehicleType_Id_FK_PK\n"\
-        " JOIN TestNodeBus_tbl TNB\n"\
-        "  ON TNB.TestNode_Id_FK = TN.VehicleType_Id_FK_PK\n"\
+        " LEFT JOIN TestNodeBus_tbl TNB\n"\
+        "  ON TNB.Id_PK = TNUCNX.TestNodeBus_Id_FK\n"\
         " JOIN UnitConnection_tbl UCNXD\n"\
         "  ON UCNXD.Id_PK = LNK.DutConnection_Id_FK\n"\
         " LEFT JOIN UnitConnector_tbl UCD\n"\
         "  ON UCD.Id_PK = UCNXD.UnitConnector_Id_FK\n"\
         " JOIN Unit_tbl UD\n"\
-        "  ON UD.Id_PK = UCNXD.Unit_Id_FK\n";
+        "  ON UD.Id_PK = UCNXD.Unit_Id_FK\n"\
+        " JOIN VehicleType_Unit_tbl UVTU\n"\
+        "  ON UVTU.Unit_Id_FK = UD.Id_PK\n"\
+        " JOIN VehicleType_tbl UVT\n"\
+        "  ON UVT.Id_PK = UVTU.VehicleType_Id_FK\n";
 
   return createView("TestLink_view", sql);
 }
@@ -3103,15 +3110,29 @@ bool mdtTtDatabaseSchema::createTestCableTestNodeUnitView()
 
   selectSql = "SELECT\n"\
               " TCTNU.*,\n"\
+              " U.SchemaPosition,\n"\
+              " U.Alias,\n"\
               " TNU.*,\n"\
-              " U.*";
+              " TNUT.NameEN AS TestNodeUnitTypeEN,\n"\
+              " TNUT.NameEN AS TestNodeUnitTypeFR,\n"\
+              " TNUT.NameEN AS TestNodeUnitTypeDE,\n"\
+              " TNUT.NameEN AS TestNodeUnitTypeIT,\n"\
+              " VT.Type,\n"\
+              " VT.SubType,\n"\
+              " VT.SeriesNumber\n";
   sql = "CREATE VIEW TestCable_TestNodeUnit_view AS\n";
   sql += selectSql;
   sql += "FROM TestCable_TestNodeUnit_tbl TCTNU\n"\
          " JOIN TestNodeUnit_tbl TNU\n"\
          "  ON TNU.Unit_Id_FK_PK = TCTNU.TestNodeUnit_Id_FK\n"\
          " JOIN Unit_tbl U\n"\
-         "  ON U.Id_PK = TNU.Unit_Id_FK_PK";
+         "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+         " JOIN TestNodeUnitType_tbl TNUT\n"\
+         "  ON TNUT.Code_PK = TNU.Type_Code_FK\n"\
+         " JOIN TestNode_tbl TN\n"\
+         "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+         " JOIN VehicleType_tbl VT\n"\
+         "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
 
   return createView("TestCable_TestNodeUnit_view", sql);
 }
@@ -3122,12 +3143,22 @@ bool mdtTtDatabaseSchema::createTestCableDutUnitView()
 
   selectSql = "SELECT\n"\
               " TCDU.*,\n"\
-              " U.*";
+              " U.SchemaPosition,\n"\
+              " U.Alias,\n"\
+              " U.Cabinet,\n"\
+              " U.Coordinate,\n"\
+              " A.ArticleCode,\n"\
+              " A.DesignationEN,\n"\
+              " A.DesignationFR,\n"\
+              " A.DesignationDE,\n"\
+              " A.DesignationIT\n";
   sql = "CREATE VIEW TestCable_DutUnit_view AS\n";
   sql += selectSql;
   sql += "FROM TestCable_DutUnit_tbl TCDU\n"\
          " JOIN Unit_tbl U\n"\
-         "  ON U.Id_PK = TCDU.DutUnit_Id_FK";
+         "  ON U.Id_PK = TCDU.DutUnit_Id_FK"\
+         " JOIN Article_tbl A\n"\
+         "  ON A.Id_PK = U.Article_Id_FK";
 
   return createView("TestCable_DutUnit_view", sql);
 }

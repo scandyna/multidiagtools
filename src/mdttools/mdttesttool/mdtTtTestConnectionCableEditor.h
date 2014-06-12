@@ -60,6 +60,22 @@ class mdtTtTestConnectionCableEditor : public mdtSqlForm
 
  private slots:
 
+  /*! \brief Add a test node unit
+   */
+  void addTestNodeUnit();
+
+  /*! \brief Remove test nod units
+   */
+  void removeTestNodeUnits();
+
+  /*! \brief Add a DUT unit
+   */
+  void addDutUnit();
+
+  /*! \brief Remove DUT units
+   */
+  void removeDutUnits();
+
   /*! \brief Add a link
    */
   void addLink();

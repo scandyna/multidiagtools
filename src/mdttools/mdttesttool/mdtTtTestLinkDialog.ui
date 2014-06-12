@@ -50,7 +50,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QLabel" name="lbTestNodeLabel">
+         <widget class="QLabel" name="lbTestNodeUnitLabel">
           <property name="font">
            <font>
             <weight>75</weight>
@@ -61,7 +61,7 @@
            <string notr="true"/>
           </property>
           <property name="text">
-           <string>Test node</string>
+           <string>Test node unit</string>
           </property>
          </widget>
         </item>
@@ -69,45 +69,34 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <layout class="QFormLayout" name="formLayout">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::ExpandingFieldsGrow</enum>
+            </property>
             <item row="0" column="0">
-             <widget class="QLabel" name="lbTestNodeTypeLabel">
+             <widget class="QLabel" name="lbTnuSchemaPositionLabel">
               <property name="text">
-               <string>Type:</string>
+               <string>Schema position:</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="lbTestNodeType">
+             <widget class="QLabel" name="lbTnuSchemaPosition">
               <property name="text">
-               <string>Type</string>
+               <string>Schema position</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="lbTestNodeSubTypeLabel">
+             <widget class="QLabel" name="lbTnuAliasLabel">
               <property name="text">
-               <string>Sub type:</string>
+               <string>Alias:</string>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="lbTestNodeSubType">
+             <widget class="QLabel" name="lbTnuAlias">
               <property name="text">
-               <string>Sub type</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="lbTestNodeNodeIdLabel">
-              <property name="text">
-               <string>Node ID:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="lbTestNodeNodeId">
-              <property name="text">
-               <string>Node ID</string>
+               <string>Alias</string>
               </property>
              </widget>
             </item>

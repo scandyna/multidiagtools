@@ -21,6 +21,7 @@
 #include "mdtTtTestConnectionCable.h"
 #include "mdtClPathGraph.h"
 #include "mdtClUnit.h"
+#include "mdtSqlRecord.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QMutableListIterator>
@@ -37,6 +38,90 @@ mdtTtTestConnectionCable::~mdtTtTestConnectionCable()
 {
   delete pvPathGraph;
 }
+
+QString mdtTtTestConnectionCable::sqlForTestNodeUnitSelection(const QVariant & testCableId)
+{
+  QString sql;
+
+  sql = "SELECT\n"\
+        " U.SchemaPosition,\n"\
+        " U.Alias,\n"\
+        " TNU.Unit_Id_FK_PK,\n"\
+        " TNUT.NameEN AS TestNodeUnitTypeEN,\n"\
+        " TNUT.NameEN AS TestNodeUnitTypeFR,\n"\
+        " TNUT.NameEN AS TestNodeUnitTypeDE,\n"\
+        " TNUT.NameEN AS TestNodeUnitTypeIT,\n"\
+        " VT.Type,\n"\
+        " VT.SubType,\n"\
+        " VT.SeriesNumber,\n"\
+        " TN.NodeId\n";
+  sql += "FROM TestNodeUnit_tbl TNU\n"\
+         " JOIN TestNode_tbl TN\n"\
+         "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+         " JOIN VehicleType_tbl VT\n"\
+         "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n"\
+         " JOIN Unit_tbl U\n"\
+         "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+         " JOIN TestNodeUnitType_tbl TNUT\n"\
+         "  ON TNUT.Code_PK = TNU.Type_Code_FK\n";
+  sql += "WHERE Unit_Id_FK_PK NOT IN (";
+  sql += "SELECT TestNodeUnit_Id_FK FROM TestCable_TestNodeUnit_tbl WHERE TestCable_Id_FK = " + testCableId.toString();
+  sql += ")";
+
+  return sql;
+}
+
+QString mdtTtTestConnectionCable::sqlForDutUnitSelection(const QVariant & testCableId)
+{
+  QString sql;
+
+  sql = "SELECT * FROM Unit_view ";
+  sql += "WHERE Unit_Id_PK NOT IN (";
+  sql += "SELECT DutUnit_Id_FK FROM TestCable_DutUnit_tbl WHERE TestCable_Id_FK = " + testCableId.toString();
+  sql += ")";
+
+  return sql;
+}
+
+bool mdtTtTestConnectionCable::addTestNodeUnit(const QVariant & testNodeUnitId, const QVariant & testCableId)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("TestCable_TestNodeUnit_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  record.setValue("TestNodeUnit_Id_FK", testNodeUnitId);
+  record.setValue("TestCable_Id_FK", testCableId);
+
+  return addRecord(record, "TestCable_TestNodeUnit_tbl");
+}
+
+bool mdtTtTestConnectionCable::removeTestNodeUnits(const mdtSqlTableSelection & s)
+{
+  return removeData("TestCable_TestNodeUnit_tbl", s, true);
+}
+
+bool mdtTtTestConnectionCable::addDutUnit(const QVariant & unitId, const QVariant & testCableId)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("TestCable_DutUnit_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  record.setValue("DutUnit_Id_FK", unitId);
+  record.setValue("TestCable_Id_FK", testCableId);
+
+  return addRecord(record, "TestCable_DutUnit_tbl");
+}
+
+bool mdtTtTestConnectionCable::removeDutUnits(const mdtSqlTableSelection & s)
+{
+  return removeData("TestCable_DutUnit_tbl", s, true);
+}
+
+
 
 QString mdtTtTestConnectionCable::sqlForTestNodeSelection() const
 {

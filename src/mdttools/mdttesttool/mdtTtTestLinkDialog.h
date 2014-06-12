@@ -45,15 +45,21 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
    */
   ~mdtTtTestLinkDialog();
 
-  /*! \brief Set test node
-   *
-   * Note: node ID is the database identifier (PK)
+  /*! \brief Set test node unit
    */
-  void setTestNode(const QVariant & nodeId);
+  void setTestNodeUnit(const QVariant & nodeUnitId);
+
+  /*! \brief Limit test node unit selection to given list
+   */
+  void setTestNodeUnitSelectionList(const QList<QVariant> & idList);
 
   /*! \brief Set DUT unit
    */
   void setDutUnit(const QVariant & unitId);
+
+  /*! \brief Limit DUT unit selection to given list
+   */
+  void setDutUnitSelectionList(const QList<QVariant> & idList);
 
   /*! \brief Set test connection
    */
@@ -75,7 +81,7 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
 
   /*! \brief Select test unit
    */
-  void selectTestNode();
+  void selectTestNodeUnit();
 
   /*! \brief Select DUT unit
    */
@@ -103,9 +109,9 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
 
  private:
 
-  /*! \brief Display test node informations
+  /*! \brief Display test node unit informations
    */
-  void displayTestNode();
+  void displayTestNodeUnit();
 
   /*! \brief Display DUT unit informations
    */
@@ -123,8 +129,10 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
 
   QSqlDatabase pvDatabase;
   mdtTtTestLinkData pvLinkData;
-  QVariant pvTestNodeId;
+  QVariant pvTestNodeUnitId;
+  QList<QVariant> pvTestNodeUnitSelectionIdList;
   QVariant pvDutUnitId;
+  QList<QVariant> pvDutUnitSelectionIdList;
 };
 
 #endif // #ifndef MDT_TT_TEST_LINK_DIALOG_H

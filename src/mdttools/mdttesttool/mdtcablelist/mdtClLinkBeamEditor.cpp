@@ -69,7 +69,7 @@ void mdtClLinkBeamEditor::addStartUnit()
   QVariant linkBeamId;
   QString sql;
 
-  // Get current leank beam ID
+  // Get current link beam ID
   linkBeamId = currentData("LinkBeam_tbl", "Id_PK");
   if(linkBeamId.isNull()){
     return;

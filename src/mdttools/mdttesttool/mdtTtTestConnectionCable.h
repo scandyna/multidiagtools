@@ -44,6 +44,35 @@ class mdtTtTestConnectionCable : public mdtTtBase
    */
   ~mdtTtTestConnectionCable();
 
+  /*! \brief Get SQL statement for test node unit selection
+   *
+   * List all test node units that are not currently affected to given test cable.
+   */
+  QString sqlForTestNodeUnitSelection(const QVariant & testCableId);
+
+  /*! \brief Get SQL statement for DUT unit selection
+   *
+   * List all DUT units that are not currently affected to given test cable.
+   */
+  QString sqlForDutUnitSelection(const QVariant & testCableId);
+
+  /*! \brief Add a test node unit
+   */
+  bool addTestNodeUnit(const QVariant & testNodeUnitId, const QVariant & testCableId);
+
+  /*! \brief Remove test node units
+   */
+  bool removeTestNodeUnits(const mdtSqlTableSelection & s);
+
+  /*! \brief Add a DUT unit
+   */
+  bool addDutUnit(const QVariant & unitId, const QVariant & testCableId);
+
+  /*! \brief Remove DUT units
+   */
+  bool removeDutUnits(const mdtSqlTableSelection & s);
+
+  
   /*! \brief Get SQL statement for test node selection
    */
   QString sqlForTestNodeSelection() const;
