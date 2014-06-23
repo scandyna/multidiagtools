@@ -1,14 +1,19 @@
 window_sizes 1280 1005 279 995 952 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1079810 // mdtTtTestNodeUnit
+  classdiagram_ref 927874 // TestNode
+    796 761 100 18 0 0
+  active  classdiagram_ref 941058 // Test
+    995 952 80 3 180 0
+  classdiagram_ref 1152002 // TestTool
     995 952 100 4 0 0
-  classdiagram_ref 1158530 // mdtTtTestNode
-    120 106 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1079810 // mdtTtTestNodeUnit
+selected attribute_ref 1217794 // TestModel_Id_FK
 open
-  classview_ref 635522 // mdtTtTestNode
+  classview_ref 675330 // TestTool
+  class_ref 1006210 // TestModelItem_tbl
+  class_ref 1262466 // TestModelItemTestLink_tbl
+  class_ref 1268994 // TestModel_TestNode_tbl
 end
 end

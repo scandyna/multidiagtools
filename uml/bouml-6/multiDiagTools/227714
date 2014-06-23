@@ -1,6 +1,6 @@
 format 206
 "DatabaseConceptual" // mdttools::mdttesttool::DatabaseConceptual
-  revision 7
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -993,6 +993,18 @@ ${inlines}
 "
 	    classrelation_ref 1549314 // based on
       end
+
+      classrelation 1579522 // <association>
+	relation 1564290 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1579522 // <association>
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1579650 // <association>
+      end
     end
 
     class 1241346 "TestNodeUnit_tbl"
@@ -1215,6 +1227,10 @@ ${inlines}
       classrelation 1550978 // <composition>
 	relation_ref 1536514 // <composition>
       end
+
+      classrelation 1572738 // <association>
+	relation_ref 1557506 // <association>
+      end
     end
 
     class 1242114 "TestModel_tbl"
@@ -1241,6 +1257,10 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1551746 // <composition>
+      end
+
+      classrelation 1579650 // <association>
+	relation_ref 1564290 // <association>
       end
     end
 
@@ -1272,6 +1292,19 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1552002 // <composition>
+      end
+
+      classrelation 1572610 // <association>
+	relation 1557506 ----
+	  a role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1572610 // <association>
+	  b role_name "" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 1572738 // <association>
+	  association_type class_ref 1262338 // TestModelItemTestLink_tbl
       end
     end
 
@@ -1323,6 +1356,22 @@ ${inlines}
     end
 
     class 1242626 "TestModelSequenceItem_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 1262338 "TestModelItemTestLink_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

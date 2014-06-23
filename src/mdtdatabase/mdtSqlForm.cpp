@@ -420,6 +420,17 @@ int mdtSqlForm::currentRow(const QString &tableName)
   return w->currentRow();
 }
 
+bool mdtSqlForm::setCurrentRecord(const QString &fieldName, const QVariant &value)
+{
+  if(pvMainSqlWidget == 0){
+    pvLastError.setError(tr("Cannot set current record because main table was not set."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
+    return false;
+  }
+  return pvMainSqlWidget->setCurrentRecord(fieldName, value);
+}
+
 bool mdtSqlForm::setCurrentData(const QString &tableName, const QString &fieldName, const QVariant &data, bool submit)
 {
   mdtAbstractSqlWidget *w;

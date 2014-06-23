@@ -27,6 +27,7 @@
 #include <QDir>
 #include <QString>
 #include <QList>
+#include <QMap>
 
 class mdtSqlForm;
 class mdtSqlTableWidget;
@@ -37,14 +38,13 @@ class mdtClConnectorEditor;
 class mdtClArticleEditor;
 class mdtTtTestNodeEditor;
 class mdtTtTestModelEditor;
-class mdtTtTestModelItemEditor;
+///class mdtTtTestModelItemEditor;
 class mdtSqlWindow;
 class mdtTtTestConnectionCableEditor;
 class mdtTtCableChecker;
 class mdtTtCableCheckerWindow;
 class mdtClLinkBeamEditor;
 class QTabWidget;
-
 class QAction;
 
 /*! \brief Main cable list window
@@ -85,6 +85,14 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void viewVehicleType();
 
+  /*! \brief Update vehicle type menu
+   */
+  void updateVehicleTypeMenu();
+
+  /*! \brief Update the list of working vehicle types
+   */
+  void updateWorkingOnVehicleTypes();
+
   /*! \brief Edit vehicle types
    */
   void editVehicleType();
@@ -113,6 +121,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editUnit();
 
+  /*! \brief Edit selected unit
+   */
+  void editSelectedUnit();
+
   /*! \brief View link list
    */
   void viewLinkList();
@@ -139,7 +151,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   /*! \brief Edit test items
    */
-  void editTestItem();
+  ///void editTestItem();
 
   /*! \brief Run cable checker
    */
@@ -168,6 +180,16 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Create vehicle type table view
    */
   bool createVehicleTypeTableView();
+
+  /*! \brief Create the vehicle types actions
+   *
+   * Will also update vehicle types menu
+   */
+  bool createVehicleTypeActions();
+
+  /*! \brief Remove vehicle type actions
+   */
+  void removeVehicleTypeActions();
 
   /*! \brief Get vehicle type editor
    */
@@ -245,6 +267,14 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   mdtTtTestConnectionCableEditor *createTestConnectionCableEditor();
 
+  /*! \brief Get test model editor
+   */
+  mdtTtTestModelEditor *getTestModelEditor();
+
+  /*! \brief Create test model editor
+   */
+  mdtTtTestModelEditor *createTestModelEditor();
+
   /*! \brief Create a table view
    *
    * Will create a new SQL table widget that acts on given table name.
@@ -256,6 +286,13 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    * On success, the view is also added to pvTabWidget and pvOpenViews.
    */
   mdtSqlTableWidget *createTableView(const QString & tableName, const QString & userFriendlyTableName);
+
+  /*! \brief Get a table view
+   *
+   * If requested table view not exists in pvOpenViews,
+   *  this method returns a null pointer.
+   */
+  mdtSqlTableWidget *getTableView(const QString & tableName);
 
   /*! \brief Display a table view
    *
@@ -344,18 +381,18 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   // View and editor container
   QList<mdtSqlTableWidget*> pvOpenViews;
   QList<mdtSqlWindow*> pvOpenEditors;
+  // Vehicle types
+  QMap<QAction*, int> pvVehicleTypeActions;
+  QList<QVariant> pvWorkingOnVehicleTypeList;
   // Central widget
   QTabWidget *pvTabWidget;
   // Database members
   mdtSqlDatabaseManager *pvDatabaseManager;
   QDir pvWorkDirectory;
 
-  // Test editor
-  mdtTtTestModelEditor *pvTestEditor;
-  mdtSqlWindow *pvTestEditorWindow;
   // Test item editor
-  mdtTtTestModelItemEditor *pvTestItemEditor;
-  mdtSqlWindow *pvTestItemEditorWindow;
+  ///mdtTtTestModelItemEditor *pvTestItemEditor;
+  ///mdtSqlWindow *pvTestItemEditorWindow;
   // Cable checker
   mdtTtCableChecker *pvCableChecker;
   mdtTtCableCheckerWindow *pvCableCheckerWindow;

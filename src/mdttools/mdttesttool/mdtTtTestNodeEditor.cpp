@@ -686,6 +686,9 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   widget->setHeaderData("NameDE", tr("Type (DEU)"));
   widget->setHeaderData("NameIT", tr("Type (ITA)"));
   // Set some attributes on table view
+  widget->addColumnToSortOrder("IoPosition", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  widget->sort();
   widget->tableView()->resizeColumnsToContents();
   // Add buttons
   pbAddUnit = new QPushButton(tr("Add ..."));

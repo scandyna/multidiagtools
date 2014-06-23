@@ -245,6 +245,12 @@ void mdtTtTestConnectionCableEditor::addLink()
   int row;
   int col;
 
+  // Setup link data
+  if(!linkData.setup(database())){
+    pvLastError = linkData.lastError();
+    displayLastError();
+    return;
+  }
   // Get cable ID
   cableId = currentData("TestCable_tbl", "Id_PK");
   if(cableId.isNull()){
@@ -271,6 +277,8 @@ void mdtTtTestConnectionCableEditor::addLink()
     dutUnitIdList.append(m->data(index));
   }
   // Setup and show dialog
+  linkData.setValue("TestCable_Id_FK", cableId);
+  dialog.setLinkData(linkData);
   dialog.setTestNodeUnitSelectionList(testNodeUnitIdList);
   dialog.setTestNodeUnit(testNodeUnitId);
   dialog.setDutUnitSelectionList(dutUnitIdList);
@@ -280,7 +288,6 @@ void mdtTtTestConnectionCableEditor::addLink()
   }
   // Update data with cable ID
   linkData = dialog.linkData();
-  linkData.setValue("TestCable_Id_FK", cableId);
   // Add to DB
   if(!tcc.addLink(linkData)){
     pvLastError = tcc.lastError();
@@ -341,20 +348,6 @@ void mdtTtTestConnectionCableEditor::editLink()
     index = m->index(row, col);
     dutUnitIdList.append(m->data(index));
   }
-
-  
-  /**
-  // Get test node and DUT unit IDs
-  testNodeId = widget->currentData("VehicleType_Id_FK_PK");
-  if(testNodeId.isNull()){
-    return;
-  }
-  dutUnitId = widget->currentData("DutUnitId");
-  if(dutUnitId.isNull()){
-    return;
-  }
-  */
-
   // Get link data
   linkData = tcc.getLinkData(testConnectionId, dutConnectionId, &ok);
   if(!ok){
@@ -362,9 +355,6 @@ void mdtTtTestConnectionCableEditor::editLink()
     displayLastError();
     return;
   }
-  
-  qDebug() << "Cable ID (1): " << linkData.value("TestCable_Id_FK");
-  
   // Setup and show dialog
   dialog.setTestNodeUnitSelectionList(testNodeUnitIdList);
   dialog.setTestNodeUnit(testNodeUnitId);
@@ -375,9 +365,6 @@ void mdtTtTestConnectionCableEditor::editLink()
     return;
   }
   // Edit link data in DB
-  
-  qDebug() << "Cable ID (1): " << dialog.linkData().value("TestCable_Id_FK");
-  
   if(!tcc.editLink(testConnectionId, dutConnectionId, dialog.linkData())){
     pvLastError = tcc.lastError();
     displayLastError();

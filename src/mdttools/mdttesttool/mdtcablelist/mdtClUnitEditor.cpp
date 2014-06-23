@@ -91,6 +91,38 @@ bool mdtClUnitEditor::setupTables()
   return true;
 }
 
+bool mdtClUnitEditor::setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList)
+{
+  QSqlTableModel *m;
+  QString sql;
+  int i;
+
+  if(vtIdList.isEmpty()){
+    return true;
+  }
+  // Get main table model
+  m = model("Unit_tbl");
+  if(m == 0){
+    pvLastError.setError(tr("Cannot set vehicle type filter because model was not set on 'Unit_tbl'."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitEditor");
+    pvLastError.commit();
+    return false;
+  }
+  // Build the WHERE clause for the filter
+  Q_ASSERT(vtIdList.size() > 0);
+  sql = "Id_PK IN (";
+  sql += "SELECT Unit_Id_FK FROM VehicleType_Unit_tbl WHERE VehicleType_Id_FK = " + vtIdList.at(0).toString();
+  for(i = 1; i < vtIdList.size(); ++i){
+    sql += " OR VehicleType_Id_FK = " + vtIdList.at(i).toString();
+  }
+  sql += ")";
+  
+  qDebug() << "SQL: " << sql;
+  m->setFilter(sql);
+
+  return true;
+}
+
 void mdtClUnitEditor::assignVehicle()
 {
   mdtSqlSelectionDialog selectionDialog;
@@ -910,7 +942,8 @@ void mdtClUnitEditor::removeLinks()
   mdtSqlTableWidget *widget;
   mdtClLink lnk(0, database());
   QMessageBox msgBox;
-  QList<QModelIndexList> indexes;
+  ///QList<QModelIndexList> indexes;
+  mdtSqlTableSelection s;
   QSqlError sqlError;
   QStringList fields;
 
@@ -918,10 +951,16 @@ void mdtClUnitEditor::removeLinks()
   Q_ASSERT(widget != 0);
   // Get selected rows
   fields << "UnitConnectionStart_Id_FK" << "UnitConnectionEnd_Id_FK";
+  s = widget->currentSelection(fields);
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRowsByRowsList(fields);
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove links attached to current unit."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -932,7 +971,7 @@ void mdtClUnitEditor::removeLinks()
     return;
   }
   // Delete seleced rows
-  if(!lnk.removeLinks(indexes)){
+  if(!lnk.removeLinks(s)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
@@ -1605,6 +1644,14 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->setHeaderData("EndSignalName", tr("End\nsignal"));
   widget->setHeaderData("StartSwAddress", tr("Start\nSW address"));
   widget->setHeaderData("EndSwAddress", tr("End\nSW address"));
+  // Setup sorting
+  widget->addColumnToSortOrder("StartSchemaPosition", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("StartUnitConnectorName", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("StartUnitContactName", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("EndSchemaPosition", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("EndUnitConnectorName", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("EndUnitContactName", Qt::AscendingOrder);
+  widget->sort();
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
 

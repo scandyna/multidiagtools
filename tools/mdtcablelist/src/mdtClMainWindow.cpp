@@ -31,10 +31,12 @@
 #include "mdtTtTestConnectionCableEditor.h"
 #include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestModelEditor.h"
-#include "mdtTtTestModelItemEditor.h"
+///#include "mdtTtTestModelItemEditor.h"
 #include "mdtTtCableChecker.h"
 #include "mdtTtCableCheckerWindow.h"
 #include "mdtSqlTableWidget.h"
+#include "mdtSqlFormWidget.h"
+#include "mdtSqlTableSelection.h"
 #include <boost/concept_check.hpp>
 #include <QAction>
 #include <QMessageBox>
@@ -44,8 +46,11 @@
 #include <QCloseEvent>
 #include <QTabWidget>
 #include <QSqlTableModel>
+#include <QSqlQuery>
 #include <QSqlError>
 #include <QTableView>
+#include <QMapIterator>
+#include <QMutableMapIterator>
 
 #include <QDebug>
 
@@ -62,10 +67,8 @@ mdtClMainWindow::mdtClMainWindow()
   pvTabWidget = 0;
 
   // Editors - Will be setup on first call
-  pvTestEditor = 0;
-  pvTestEditorWindow = 0;
-  pvTestItemEditor = 0;
-  pvTestItemEditorWindow = 0;
+  ///pvTestItemEditor = 0;
+  ///pvTestItemEditorWindow = 0;
   pvCableChecker = 0;
   pvCableCheckerWindow = 0;
 
@@ -79,6 +82,7 @@ mdtClMainWindow::~mdtClMainWindow()
 void mdtClMainWindow::openDatabase()
 {
   openDatabaseSqlite();
+  createVehicleTypeActions();
 }
 
 void mdtClMainWindow::closeDatabase()
@@ -105,6 +109,38 @@ void mdtClMainWindow::viewVehicleType()
   if(!displayTableView("VehicleType_tbl")){
     createVehicleTypeTableView();
   }
+}
+
+void mdtClMainWindow::updateWorkingOnVehicleTypes()
+{
+  QMapIterator<QAction*, int> it(pvVehicleTypeActions);
+  QAction *action;
+  mdtClUnitEditor *editor;
+
+  pvWorkingOnVehicleTypeList.clear();
+  while(it.hasNext()){
+    it.next();
+    action = it.key();
+    Q_ASSERT(action != 0);
+    if(action->isChecked()){
+      pvWorkingOnVehicleTypeList.append(it.value());
+    }
+  }
+  qDebug() << "Working on vehicle type: " << pvWorkingOnVehicleTypeList;
+  // Update unit editor
+  editor = getUnitEditor();
+  if(editor == 0){
+    return;
+  }
+  if(!editor->setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeList)){
+    displayError(editor->lastError());
+  }
+}
+
+void mdtClMainWindow::updateVehicleTypeMenu()
+{
+  removeVehicleTypeActions();
+  createVehicleTypeActions();
 }
 
 void mdtClMainWindow::editVehicleType()
@@ -224,6 +260,46 @@ void mdtClMainWindow::editUnit()
   window->show();
 }
 
+void mdtClMainWindow::editSelectedUnit()
+{
+  mdtSqlTableSelection s;
+  mdtClUnitEditor *editor;
+  mdtSqlWindow *window;
+  mdtSqlTableWidget *view;
+
+  // Get unit view
+  view = getTableView("Unit_view");
+  if(view == 0){
+    return;
+  }
+  // Get ID of selected unit
+  s = view->currentSelection("Unit_Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  // Get or create editor
+  editor = getUnitEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  if(!editor->setCurrentRecord("Id_PK", s.data(0, "Unit_Id_PK"))){
+    displayError(editor->lastError());
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
+}
+
 void mdtClMainWindow::viewLinkList()
 {
   if(!displayTableView("LinkList_view")){
@@ -284,33 +360,6 @@ void mdtClMainWindow::editTestConnectionCable()
   window->enableNavigation();
   window->raise();
   window->show();
-
-  /**
-  if(pvTestConnectionCableEditor == 0){
-    pvTestConnectionCableEditor = new mdtTtTestConnectionCableEditor(this, pvDatabaseManager->database());
-    if(!pvTestConnectionCableEditor->setupTables()){
-      QMessageBox msgBox(this);
-      msgBox.setText(tr("Cannot setup test connection cable editor."));
-      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
-                                + qApp->applicationName() + tr(")"));
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      delete pvTestConnectionCableEditor;
-      pvTestConnectionCableEditor = 0;
-      return;
-    }
-    pvTestConnectionCableEditorWindow = new mdtSqlWindow(this);
-    pvTestConnectionCableEditorWindow->setSqlForm(pvTestConnectionCableEditor);
-    pvTestConnectionCableEditorWindow->resize(800, 500);
-    pvTestConnectionCableEditorWindow->enableNavigation();
-    pvTestConnectionCableEditorWindow->enableEdition();
-    pvTestConnectionCableEditorWindow->setWindowTitle(tr("Test cable edition"));
-  }
-  Q_ASSERT(pvTestConnectionCableEditor != 0);
-  Q_ASSERT(pvTestConnectionCableEditorWindow != 0);
-  pvTestConnectionCableEditor->select();
-  pvTestConnectionCableEditorWindow->show();
-  */
 }
 
 void mdtClMainWindow::editTestNode()
@@ -335,61 +384,33 @@ void mdtClMainWindow::editTestNode()
   window->enableNavigation();
   window->raise();
   window->show();
-  /**
-  if(pvTestNodeEditor == 0){
-    pvTestNodeEditor = new mdtTtTestNodeEditor(this, pvDatabaseManager->database());
-    if(!pvTestNodeEditor->setupTables()){
-      QMessageBox msgBox(this);
-      msgBox.setText(tr("Cannot setup test node editor."));
-      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
-                                + qApp->applicationName() + tr(")"));
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      delete pvTestNodeEditor;
-      pvTestNodeEditor = 0;
-      return;
-    }
-    pvTestNodeEditorWindow = new mdtSqlWindow(this);
-    pvTestNodeEditorWindow->setSqlForm(pvTestNodeEditor);
-    pvTestNodeEditorWindow->resize(800, 500);
-    pvTestNodeEditorWindow->enableNavigation();
-    pvTestNodeEditorWindow->enableEdition();
-    pvTestNodeEditorWindow->setWindowTitle(tr("Test node edition"));
-  }
-  Q_ASSERT(pvTestNodeEditor != 0);
-  Q_ASSERT(pvTestNodeEditorWindow != 0);
-  pvTestNodeEditor->select();
-  pvTestNodeEditorWindow->show();
-  */
 }
 
 void mdtClMainWindow::editTest()
 {
-  if(pvTestEditor == 0){
-    pvTestEditor = new mdtTtTestModelEditor(this, pvDatabaseManager->database());
-    if(!pvTestEditor->setupTables()){
-      QMessageBox msgBox(this);
-      msgBox.setText(tr("Cannot setup test editor."));
-      msgBox.setInformativeText(tr("This can happen if selected database has wrong format (is also not a database made for ")\
-                                + qApp->applicationName() + tr(")"));
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      delete pvTestEditor;
-      pvTestEditor = 0;
-      return;
-    }
-    pvTestEditorWindow = new mdtSqlWindow(this);
-    pvTestEditorWindow->setSqlForm(pvTestEditor);
-    pvTestEditorWindow->resize(800, 500);
-    pvTestEditorWindow->enableNavigation();
-    pvTestEditorWindow->enableEdition();
+  mdtTtTestModelEditor *editor;
+  mdtSqlWindow *window;
+
+  // Get or create editor
+  editor = getTestModelEditor();
+  if(editor == 0){
+    return;
   }
-  Q_ASSERT(pvTestEditor != 0);
-  Q_ASSERT(pvTestEditorWindow != 0);
-  pvTestEditor->select();
-  pvTestEditorWindow->show();
+  Q_ASSERT(editor != 0);
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
 }
 
+/**
 void mdtClMainWindow::editTestItem()
 {
   if(pvTestItemEditor == 0){
@@ -416,6 +437,7 @@ void mdtClMainWindow::editTestItem()
   pvTestItemEditor->select();
   pvTestItemEditorWindow->show();
 }
+*/
 
 void mdtClMainWindow::runCableChecker()
 {
@@ -508,6 +530,65 @@ bool mdtClMainWindow::createVehicleTypeTableView()
   return true;
 }
 
+bool mdtClMainWindow::createVehicleTypeActions()
+{
+  QSqlQuery query(pvDatabaseManager->database());
+  QString sql;
+  QAction *action;
+  QString txt;
+  int vehicleTypeId;
+
+  // Get vehicle types from DB
+  sql = "SELECT Id_PK, Type, SubType, SeriesNumber FROM VehicleType_tbl";
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    mdtError e(tr("Unable to get vehicle type list."), mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
+    e.commit();
+    displayError(e);
+    return false;
+  }
+  // Create actions
+  while(query.next()){
+    txt = query.value(1).toString() + " , " + query.value(2).toString() + " , " + query.value(3).toString();
+    action = new QAction(txt, this);
+    action->setCheckable(true);
+    action->setChecked(true);
+    Q_ASSERT(!query.value(0).isNull());
+    vehicleTypeId = query.value(0).toInt();
+    pvVehicleTypeActions.insert(action, vehicleTypeId);
+    ///pvWorkingOnVehicleTypeList.append(vehicleTypeId);
+  }
+  // Add actions to menu
+  ///menuVehicle_types->addSeparator();
+  QMapIterator<QAction*, int> it(pvVehicleTypeActions);
+  while(it.hasNext()){
+    it.next();
+    Q_ASSERT(it.key() != 0);
+    menuVehicle_types->addAction(it.key());
+    connect(it.key(), SIGNAL(toggled(bool)), this, SLOT(updateWorkingOnVehicleTypes()));
+  }
+  updateWorkingOnVehicleTypes();
+
+  return true;
+}
+
+void mdtClMainWindow::removeVehicleTypeActions()
+{
+  QAction *action;
+  QMutableMapIterator<QAction*, int> it(pvVehicleTypeActions);
+  while(it.hasNext()){
+    it.next();
+    action = it.key();
+    Q_ASSERT(action != 0);
+    disconnect(action, SIGNAL(toggled(bool)), this, SLOT(updateWorkingOnVehicleTypes()));
+    menuVehicle_types->removeAction(action);
+    delete action;
+    it.remove();
+  }
+}
+
 mdtClVehicleTypeEditor* mdtClMainWindow::getVehicleTypeEditor()
 {
   mdtClVehicleTypeEditor *editor;
@@ -526,6 +607,8 @@ mdtClVehicleTypeEditor *mdtClMainWindow::createVehicleTypeEditor()
   mdtSqlWindow *window;
 
   editor = new mdtClVehicleTypeEditor(0, pvDatabaseManager->database());
+  Q_ASSERT(editor->mainSqlWidget() != 0);
+  connect(editor->mainSqlWidget(), SIGNAL(stateVisualizingEntered()), this, SLOT(updateVehicleTypeMenu()));
   window = setupEditor(editor);
   if(window == 0){
     return 0;
@@ -659,12 +742,13 @@ bool mdtClMainWindow::createUnitTableView()
   if(tableWidget == 0){
     return false;
   }
+  // Connect the double clicked signalt to current unit edition
+  Q_ASSERT(tableWidget->tableView() != 0);
+  connect(tableWidget->tableView(), SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(editSelectedUnit()));
   // Hide technical fields
   tableWidget->setColumnHidden("VehicleType_Id_PK", true);
   tableWidget->setColumnHidden("Unit_Id_PK", true);
   tableWidget->setColumnHidden("Article_Id_PK", true);
-  tableWidget->setColumnHidden("", true);
-  tableWidget->setColumnHidden("", true);
   // Rename fields to user friendly ones
   tableWidget->setHeaderData("Type", tr("Vehicle\ntype"));
   tableWidget->setHeaderData("SubType", tr("Vehicle\nsub type"));
@@ -819,6 +903,34 @@ mdtTtTestConnectionCableEditor *mdtClMainWindow::createTestConnectionCableEditor
   return editor;
 }
 
+mdtTtTestModelEditor *mdtClMainWindow::getTestModelEditor()
+{
+  mdtTtTestModelEditor *editor;
+
+  editor = getEditor<mdtTtTestModelEditor>();
+  if(editor != 0){
+    return editor;
+  }else{
+    return createTestModelEditor();
+  }
+}
+
+mdtTtTestModelEditor *mdtClMainWindow::createTestModelEditor()
+{
+  mdtTtTestModelEditor *editor;
+  mdtSqlWindow *window;
+
+  editor = new mdtTtTestModelEditor(0, pvDatabaseManager->database());
+  window = setupEditor(editor);
+  if(window == 0){
+    return 0;
+  }
+  window->setWindowTitle(tr("Test edition"));
+  window->resize(800, 600);
+
+  return editor;
+}
+
 mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, const QString & userFriendlyTableName)
 {
   mdtSqlTableWidget *tableWidget;
@@ -868,7 +980,7 @@ mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, c
   return tableWidget;
 }
 
-bool mdtClMainWindow::displayTableView(const QString& tableName)
+mdtSqlTableWidget *mdtClMainWindow::getTableView(const QString & tableName)
 {
   mdtSqlTableWidget *tableWidget;
   QSqlTableModel *model;
@@ -881,23 +993,41 @@ bool mdtClMainWindow::displayTableView(const QString& tableName)
     model = tableWidget->model();
     Q_ASSERT(model != 0);
     if(model->tableName() == tableName){
-      // We have the requested widget, refresh data
-      if(!model->select()){
-        QSqlError sqlError = model->lastError();
-        mdtError e(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
-        e.setSystemError(sqlError.number(), sqlError.text());
-        MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
-        e.commit();
-        return false;
-      }
-      // Show the widget - If a view exists in pvOpenViews, tab widget was allready created
-      Q_ASSERT(pvTabWidget != 0);
-      pvTabWidget->setCurrentWidget(tableWidget);
-      return true;
+      return tableWidget;
     }
   }
-  // Requested view was not found
-  return false;
+
+  return 0;
+}
+
+bool mdtClMainWindow::displayTableView(const QString& tableName)
+{
+  mdtSqlTableWidget *tableWidget;
+  QSqlTableModel *model;
+  ///int i;
+
+  // Search requested table widget
+  tableWidget = getTableView(tableName);
+  if(tableWidget == 0){
+    return false;
+  }
+  // We have the requested widget, refresh data
+  Q_ASSERT(tableWidget != 0);
+  model = tableWidget->model();
+  Q_ASSERT(model != 0);
+  if(!model->select()){
+    QSqlError sqlError = model->lastError();
+    mdtError e(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
+    e.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
+    e.commit();
+    return false;
+  }
+  // Show the widget - If a view exists in pvOpenViews, tab widget was allready created
+  Q_ASSERT(pvTabWidget != 0);
+  pvTabWidget->setCurrentWidget(tableWidget);
+
+  return true;
 }
 
 mdtSqlWindow *mdtClMainWindow::setupEditor(mdtSqlForm *editor)
@@ -1012,6 +1142,7 @@ void mdtClMainWindow::connectActions()
   // Unit edition
   connect(actViewUnit, SIGNAL(triggered()), this, SLOT(viewUnit()));
   connect(actEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
+  connect(actEditSelectedUnit, SIGNAL(triggered()), this, SLOT(editSelectedUnit()));
   ///connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
   // Link list
   connect(actViewLinkList, SIGNAL(triggered()), this, SLOT(viewLinkList()));

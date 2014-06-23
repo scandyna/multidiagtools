@@ -10,8 +10,8 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 # Header files containing Qt Q_OBJECT macro
 set (HEADER_FILES
           src/mdtClMainWindow.h
-          src/mdtTtTestModelEditor.h
-          src/mdtTtTestModelItemEditor.h
+          #src/mdtTtTestModelEditor.h
+          #src/mdtTtTestModelItemEditor.h
           src/mdtTtCableChecker.h
           src/mdtTtCableCheckerWindow.h
           src/mdtTtTestNodeUnitEditor.h
@@ -23,10 +23,10 @@ set (SOURCES_FILES
           src/main.cpp
           src/mdtClConnectionData.cpp
           src/mdtClMainWindow.cpp
-          src/mdtTtTestModelEditor.cpp
-          src/mdtTtTestModel.cpp
-          src/mdtTtTestModelItemEditor.cpp
-          src/mdtTtTestModelItem.cpp
+          #src/mdtTtTestModelEditor.cpp
+          #src/mdtTtTestModel.cpp
+          #src/mdtTtTestModelItemEditor.cpp
+          #src/mdtTtTestModelItem.cpp
           src/mdtTtTest.cpp
           src/mdtTtCableChecker.cpp
           src/mdtTtCableCheckerWindow.cpp
@@ -37,8 +37,8 @@ set (SOURCES_FILES
 # Qt ui files
 set (FORM_FILES
           src/mdtClMainWindow.ui
-          src/mdtTtTestModelEditor.ui
-          src/mdtTtTestModelItemEditor.ui
+          #src/mdtTtTestModelEditor.ui
+          #src/mdtTtTestModelItemEditor.ui
           src/mdtTtCableChecker.ui
           src/mdtTtCableCheckerWindow.ui
           src/mdtTtTestNodeUnitEditor.ui

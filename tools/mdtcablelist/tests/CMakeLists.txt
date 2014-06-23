@@ -29,8 +29,8 @@ set (TEST_HEADER_FILES
           ../src/mdtClMainWindow.h
           #../src/mdtCcTestConnectionCableEditor.h
           #../src/mdtTtTestNodeEditor.h
-          ../src/mdtTtTestModelEditor.h
-          ../src/mdtTtTestModelItemEditor.h
+          #../src/mdtTtTestModelEditor.h
+          #../src/mdtTtTestModelItemEditor.h
           ../src/mdtTtCableChecker.h
           ../src/mdtTtCableCheckerWindow.h
           ../src/mdtTtTestNodeUnitEditor.h
@@ -70,10 +70,10 @@ set (TEST_SOURCES_FILES
           #../src/mdtCcTestConnectionCableEditor.cpp
           #../src/mdtTtTestNodeEditor.cpp
           #../src/mdtTtTestNode.cpp
-          ../src/mdtTtTestModelEditor.cpp
-          ../src/mdtTtTestModel.cpp
-          ../src/mdtTtTestModelItemEditor.cpp
-          ../src/mdtTtTestModelItem.cpp
+          #../src/mdtTtTestModelEditor.cpp
+          #../src/mdtTtTestModel.cpp
+          #../src/mdtTtTestModelItemEditor.cpp
+          #../src/mdtTtTestModelItem.cpp
           ../src/mdtTtTest.cpp
           ../src/mdtTtCableChecker.cpp
           ../src/mdtTtCableCheckerWindow.cpp
@@ -99,8 +99,8 @@ set (TEST_FORM_FILES
           #../src/mdtClPathGraphDialog.ui
           ../src/mdtClMainWindow.ui
           #../src/mdtTtTestNodeEditor.ui
-          ../src/mdtTtTestModelEditor.ui
-          ../src/mdtTtTestModelItemEditor.ui
+          #../src/mdtTtTestModelEditor.ui
+          #../src/mdtTtTestModelItemEditor.ui
           #../src/mdtCcTestConnectionCableEditor.ui
           ../src/mdtTtCableChecker.ui
           ../src/mdtTtCableCheckerWindow.ui

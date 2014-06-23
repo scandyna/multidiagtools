@@ -257,22 +257,6 @@ bool mdtClLink::removeLink(const QVariant & unitConnectionStartId, const QVarian
   return true;
 }
 
-bool mdtClLink::removeLinks(const QList<QModelIndexList> & indexListOfSelectedRowsByRows)
-{
-  int row;
-  QModelIndexList indexes;
-
-  for(row = 0; row < indexListOfSelectedRowsByRows.size(); ++row){
-    indexes = indexListOfSelectedRowsByRows.at(row);
-    Q_ASSERT(indexes.size() == 2);
-    if(!removeLink(indexes.at(0).data(), indexes.at(1).data())){
-      return false;
-    }
-  }
-
-  return true;
-}
-
 bool mdtClLink::removeLinks(const mdtSqlTableSelection & s)
 {
   int i;

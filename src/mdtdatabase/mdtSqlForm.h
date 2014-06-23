@@ -247,6 +247,18 @@ class mdtSqlForm : public QWidget
    */
   int currentRow(const QString &tableName);
 
+  /*! \brief Set the first record that matches given criteria as current record (index).
+   *
+   * This method will act on main table witch was set with setMainTable().
+   *
+   * \param fieldName Field that must contain searched value
+   * \param value Value that must matche
+   * \return True if matching record was found
+   *          (in this case, setCurrentIndex() is called on sql widget witch acts on main table to update currentRow),
+   *          false else.
+   */
+  bool setCurrentRecord(const QString &fieldName, const QVariant &value);
+
   /*! \brief Set (update) data of current row (record) for given table and field name
    *
    * Note that SQL widget related to given tableName is searched

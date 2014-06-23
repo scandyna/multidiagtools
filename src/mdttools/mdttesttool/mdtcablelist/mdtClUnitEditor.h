@@ -51,6 +51,10 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   bool setupTables();
 
+  /*! \brief Set working on vehicle type ID list
+   */
+  bool setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList);
+
  private slots:
 
   /*! \brief Assign a vehicle to current unit

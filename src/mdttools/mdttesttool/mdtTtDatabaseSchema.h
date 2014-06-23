@@ -225,11 +225,13 @@ class mdtTtDatabaseSchema
    */
   bool setupTestLinkTable();
 
-  /*! \brief Setup test table
-   *
-   * \todo Move to test tool when created
+  /*! \brief Setup TestModel_tbl
    */
   bool setupTestModelTable();
+
+  /*! \brief Setup TestModel_TestNode_tbl
+   */
+  bool setupTestModelTestNodeTable();
 
   /*! \brief Setup test item table
    *
@@ -359,6 +361,10 @@ class mdtTtDatabaseSchema
   /*! \brief Create TestCable_DutUnit_view
    */
   bool createTestCableDutUnitView();
+
+  /*! \brief Create TestModel_TestNode_view
+   */
+  bool createTestModelTestNodeView();
 
   /*! \brief Create test item link view
    *

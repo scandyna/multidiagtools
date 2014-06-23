@@ -32,6 +32,26 @@ mdtTtTestModel::mdtTtTestModel(QObject *parent, QSqlDatabase db)
 {
 }
 
+QString mdtTtTestModel::sqlForTestNodeSelection(const QVariant & testModelId) const
+{
+  QString sql;
+
+  sql = "SELECT\n"\
+        " TN.VehicleType_Id_FK_PK,\n"\
+        " TN.NodeId,\n"\
+        " VT.Type,\n"\
+        " VT.SubType,\n"\
+        " VT.SeriesNumber\n"\
+        "FROM TestNode_tbl TN\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
+  sql += "WHERE VT.Id_PK NOT IN (";
+  sql += " SELECT TestNode_Id_FK FROM TestModel_TestNode_tbl WHERE TestModel_Id_FK = " + testModelId.toString();
+  sql += ")";
+
+  return sql;
+}
+
 QList<QVariant> mdtTtTestModel::getListOfTestItemIdListByTestId(const QVariant & testId)
 {
   QString sql;
@@ -183,6 +203,25 @@ QList<QVariant> mdtTtTestModel::getTestNodeUnitSetupIdList(const QVariant & test
   }
 
   return tnusIdList;
+}
+
+bool mdtTtTestModel::addTestNode(const QVariant & testNodeId, const QVariant & testModelId)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("TestModel_TestNode_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  record.setValue("TestNode_Id_FK", testNodeId);
+  record.setValue("TestModel_Id_FK", testModelId);
+
+  return addRecord(record, "TestModel_TestNode_tbl");
+}
+
+bool mdtTtTestModel::removeTestNodes(const mdtSqlTableSelection & s)
+{
+  return removeData("TestModel_TestNode_tbl", s, true);
 }
 
 bool mdtTtTestModel::addTestItem(const QVariant & testId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId, const QVariant & expectedValue)

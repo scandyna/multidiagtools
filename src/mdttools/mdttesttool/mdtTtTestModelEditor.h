@@ -40,7 +40,15 @@ class mdtTtTestModelEditor : public mdtSqlForm
    */
   bool setupTables();
 
- public slots:
+ private slots:
+
+  /*! \brief Add a test node
+   */
+  void addTestNode();
+
+  /*! \brief Remove test nodes
+   */
+  void removeTestNodes();
 
   /*! \brief Add a test item
    */
@@ -76,17 +84,17 @@ class mdtTtTestModelEditor : public mdtSqlForm
    */
   bool setupTestTable();
 
-  /*! \brief Setup test link table
-   */
-  bool setupTestItemTable();
-
   /*! \brief Setup used nodes table
    */
   bool setupTestNodeTable();
 
+  /*! \brief Setup test link table
+   */
+  ///bool setupTestItemTable();
+
   /*! \brief Setup test node unit setup table
    */
-  bool setupTestNodeUnitSetupTable();
+  ///bool setupTestNodeUnitSetupTable();
 
   Q_DISABLE_COPY(mdtTtTestModelEditor);
 };

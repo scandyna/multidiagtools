@@ -22,11 +22,12 @@
 #include "ui_mdtTtTestModelEditor.h"
 #include "mdtTtTestModel.h"
 #include "mdtTtTestModelItem.h"
-#include "mdtTtTestModelItemEditor.h"
+///#include "mdtTtTestModelItemEditor.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtSqlTableSelection.h"
 #include "mdtSqlDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
@@ -53,16 +54,91 @@ bool mdtTtTestModelEditor::setupTables()
   if(!setupTestTable()){
     return false;
   }
+  if(!setupTestNodeTable()){
+    return false;
+  }
+  /**
   if(!setupTestItemTable()){
     return false;
   }
   if(!setupTestNodeUnitSetupTable()){
     return false;
   }
-  if(!setupTestNodeTable()){
-    return false;
-  }
+  */
   return true;
+}
+
+void mdtTtTestModelEditor::addTestNode()
+{
+  mdtTtTestModel tm(0, database());
+  mdtSqlSelectionDialog selectionDialog;
+  mdtSqlTableSelection s;
+  QVariant testModelId;
+  QVariant testNodeId;
+  QString sql;
+
+  // Get current test model ID
+  testModelId = currentData("TestModel_tbl", "Id_PK");
+  if(testModelId.isNull()){
+    return;
+  }
+  // Setup and show dialog
+  sql = tm.sqlForTestNodeSelection(testModelId);
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setMessage(tr("Select a test node:"));
+  selectionDialog.resize(800, 600);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("VehicleType_Id_FK_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  testNodeId = s.data(0, "VehicleType_Id_FK_PK");
+  // Add test node
+  if(!tm.addTestNode(testNodeId, testModelId)){
+    pvLastError = tm.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestModel_TestNode_view");
+}
+
+void mdtTtTestModelEditor::removeTestNodes()
+{
+  mdtTtTestModel tm(0, database());
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QMessageBox msgBox;
+  QStringList fields;
+
+  // Get widget and selection
+  widget = sqlTableWidget("TestModel_TestNode_view");
+  Q_ASSERT(widget != 0);
+  fields << "TestNode_Id_FK" << "TestModel_Id_FK";
+  s = widget->currentSelection(fields);
+  if(s.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove assignations between selected test node and current test model."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove selected nodes
+  if(!tm.removeTestNodes(s)){
+    pvLastError = tm.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestModel_TestNode_view");
 }
 
 void mdtTtTestModelEditor::addTestItem() 
@@ -111,6 +187,7 @@ void mdtTtTestModelEditor::addTestItem()
 
 void mdtTtTestModelEditor::editTestItem()
 {
+  /**
   mdtTtTestModelItemEditor *tie;
   mdtSqlDialog dialog;
   QVariant currentTestItemId;
@@ -139,6 +216,7 @@ void mdtTtTestModelEditor::editTestItem()
   select("TestModelItem_view");
   select("TestModelItemNode_view");
   select("TestModelItemNodeUnitSetup_view");
+  */
 }
 
 void mdtTtTestModelEditor::removeTestItem() 
@@ -339,6 +417,41 @@ bool mdtTtTestModelEditor::setupTestTable()
   return true;
 }
 
+bool mdtTtTestModelEditor::setupTestNodeTable()
+{
+  mdtSqlTableWidget *widget;
+  QPushButton *pbAddTestNode;
+  QPushButton *pbRemodeTestNode;
+
+  if(!addChildTable("TestModel_TestNode_view", tr("Test nodes"), database())){
+    return false;
+  }
+  if(!addRelation("Id_PK", "TestModel_TestNode_view", "TestModel_Id_FK")){
+    return false;
+  }
+  widget = sqlTableWidget("TestModel_TestNode_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  ///widget->setColumnHidden("", true);
+  // Set fields a user friendly name
+  ///widget->setHeaderData("", tr(""));
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
+  // Add buttons
+  pbAddTestNode = new QPushButton(tr("Add ..."));
+  pbAddTestNode->setIcon(QIcon::fromTheme("list-add"));
+  widget->addWidgetToLocalBar(pbAddTestNode);
+  connect(pbAddTestNode, SIGNAL(clicked()), this, SLOT(addTestNode()));
+  pbRemodeTestNode = new QPushButton(tr("Remove ..."));
+  pbRemodeTestNode->setIcon(QIcon::fromTheme("list-remove"));
+  widget->addWidgetToLocalBar(pbRemodeTestNode);
+  connect(pbRemodeTestNode, SIGNAL(clicked()), this, SLOT(removeTestNodes()));
+  widget->addStretchToLocalBar();
+
+  return true;
+}
+
+/**
 bool mdtTtTestModelEditor::setupTestItemTable() 
 {
   mdtSqlTableWidget *widget;
@@ -391,7 +504,9 @@ bool mdtTtTestModelEditor::setupTestItemTable()
 
   return true;
 }
+*/
 
+/**
 bool mdtTtTestModelEditor::setupTestNodeUnitSetupTable() 
 {
   mdtSqlTableWidget *widget;
@@ -423,26 +538,4 @@ bool mdtTtTestModelEditor::setupTestNodeUnitSetupTable()
 
   return true;
 }
-
-bool mdtTtTestModelEditor::setupTestNodeTable()
-{
-  mdtSqlTableWidget *widget;
-
-  if(!addChildTable("TestModelItemNode_view", tr("Used nodes"), database())){
-    return false;
-  }
-  if(!addRelation("Id_PK", "TestModelItemNode_view", "TestModel_Id_FK")){
-    return false;
-  }
-  widget = sqlTableWidget("TestModelItemNode_view");
-  Q_ASSERT(widget != 0);
-  // Hide technical fields
-  ///widget->setColumnHidden("", true);
-  // Set fields a user friendly name
-  ///widget->setHeaderData("", tr(""));
-  // Set some attributes on table view
-  widget->tableView()->resizeColumnsToContents();
-  // Add buttons
-
-  return true;
-}
+*/

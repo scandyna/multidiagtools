@@ -46,15 +46,15 @@ classcanvas 131970 class_ref 1241986 // TestLink_tbl
 end
 classcanvas 132866 class_ref 1242114 // TestModel_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 21 709 2000
+  xyz 37 726 2000
 end
 classcanvas 132994 class_ref 1242242 // TestModelItem_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 244.5 708.5 2000
+  xyz 245.5 727.5 2000
 end
 classcanvas 133250 class_ref 1242370 // TestNodeUnitSetup_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 134 578.5 2000
+  xyz 193 641.5 2000
 end
 classcanvas 133634 class_ref 1242498 // TestModelSequence_tbl
   classdiagramsettings member_max_width 0 end
@@ -64,19 +64,23 @@ classcanvas 133762 class_ref 1242626 // TestModelSequenceItem_tbl
   classdiagramsettings member_max_width 0 end
   xyz 386 807 2000
 end
+classcanvas 134274 class_ref 1262338 // TestModelItemTestLink_tbl
+  classdiagramsettings member_max_width 0 end
+  xyz 605 808 2000
+end
 relationcanvas 128130 relation_ref 949762 // <association>
-  from ref 128002 z 2011 to point 295.5 37.5
-  line 128258 z 2011 to point 295.5 67.5
+  from ref 128002 z 2011 to point 295 37
+  line 128258 z 2011 to point 295 67
   line 128386 z 2011 to ref 128002
   role_a_pos 247 39 3000 role_b_pos 251 27 3000
   multiplicity_a_pos 294 69 3000 multiplicity_b_pos 292 57 3000
 end
 relationcanvas 128642 relation_ref 978946 // <association>
-  from ref 128514 z 3006 to point 610 35.5
-  line 128770 z 3006 to point 610 65.5
+  from ref 128514 z 3006 to point 610 35
+  line 128770 z 3006 to point 610 65
   line 128898 z 3006 to ref 128514
-  role_a_pos 591 40 3000 role_b_pos 563 20 3000
-  multiplicity_a_pos 609 70 3000 multiplicity_b_pos 622 50 3000
+  role_a_pos 592 40 3000 role_b_pos 564 21 3000
+  multiplicity_a_pos 610 70 3000 multiplicity_b_pos 623 51 3000
 end
 relationcanvas 129026 relation_ref 950402 // <composition>
   from ref 128002 z 3006 to ref 128514
@@ -100,11 +104,11 @@ relationcanvas 129794 relation_ref 978690 // <association>
 end
 relationcanvas 130050 relation_ref 1535490 // <composition>
   geometry VH
-  decenter_begin 736
-  from ref 129154 z 2001 to point 99 489
+  decenter_begin 705
+  from ref 129154 z 2001 to point 96 489
   line 131202 z 2001 to ref 129922
   no_role_a no_role_b
-  multiplicity_a_pos 486 499 3000 multiplicity_b_pos 84 343 3000
+  multiplicity_a_pos 487 499 3000 multiplicity_b_pos 81 343 3000
 end
 relationcanvas 130306 relation_ref 1535618 // <association>
   from ref 129282 z 2001 to ref 130178
@@ -150,13 +154,13 @@ relationcanvas 132098 relation_ref 1536258 // DUT connection
   decenter_end 924
   from ref 131970 z 3006 label "DUT connection" italic max_width 255 xyz 725 308 3006 to ref 128514
   no_role_a no_role_b
-  multiplicity_a_pos 745 85 3000 multiplicity_b_pos 751 551 3000
+  multiplicity_a_pos 746 86 3000 multiplicity_b_pos 751 551 3000
 end
 relationcanvas 132226 relation_ref 1536386 // test connection
   decenter_end 917
   from ref 131970 z 2001 label "test connection" italic max_width 255 xyz 651 438 2001 to ref 131330
   no_role_a no_role_b
-  multiplicity_a_pos 641 346 3000 multiplicity_b_pos 701 551 3000
+  multiplicity_a_pos 642 346 3000 multiplicity_b_pos 701 551 3000
 end
 relationcanvas 132354 relation_ref 1536514 // <composition>
   from ref 131842 z 2001 to ref 131970
@@ -179,17 +183,33 @@ end
 relationcanvas 133122 relation_ref 1536898 // <composition>
   from ref 132866 z 2001 to ref 132994
   no_role_a no_role_b
-  multiplicity_a_pos 213 737 3000 multiplicity_b_pos 129 737 3000
+  multiplicity_a_pos 214 755 3000 multiplicity_b_pos 145 755 3000
 end
 relationcanvas 133378 relation_ref 1537026 // <composition>
   from ref 132994 z 2001 to ref 133250
   no_role_a no_role_b
-  multiplicity_a_pos 203 628 3000 multiplicity_b_pos 268 685 3000
+  multiplicity_a_pos 251 691 3000 multiplicity_b_pos 278 704 3000
 end
 relationcanvas 133506 relation_ref 1537154 // <association>
-  decenter_begin 796
+  decenter_begin 745
   from ref 133250 z 2001 to ref 129282
   no_role_a no_role_b
-  multiplicity_a_pos 282 344 3000 multiplicity_b_pos 229 555 3000
+  multiplicity_a_pos 288 344 3000 multiplicity_b_pos 279 618 3000
 end
+relationcanvas 134018 relation_ref 1557506 // <association>
+  geometry HV
+  from ref 132994 z 2001 to point 747 746
+  line 134146 z 2001 to ref 131970
+  no_role_a no_role_b
+  multiplicity_a_pos 719 624 3000 multiplicity_b_pos 381 756 3000
+end
+relationcanvas 134530 relation_ref 1564290 // <association>
+  decenter_begin 263
+  decenter_end 181
+  from ref 129154 z 2001 to ref 132866
+  no_role_a no_role_b
+  multiplicity_a_pos 24 703 3000 multiplicity_b_pos 26 343 3000
+end
+line 134402 -_-_ decenter_begin 854
+  from ref 134018 z 2002 to ref 134274
 end

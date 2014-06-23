@@ -286,6 +286,9 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupTestModelTable()){
     return false;
   }
+  if(!setupTestModelTestNodeTable()){
+    return false;
+  }
   if(!setupTestModelItemTable()){
     return false;
   }
@@ -379,6 +382,9 @@ bool mdtTtDatabaseSchema::createViews()
     return false;
   }
   if(!createTestCableDutUnitView()){
+    return false;
+  }
+  if(!createTestModelTestNodeView()){
     return false;
   }
   if(!createTestModelItemView()){
@@ -2192,6 +2198,38 @@ bool mdtTtDatabaseSchema::setupTestModelTable()
   return true;
 }
 
+bool mdtTtDatabaseSchema::setupTestModelTestNodeTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestModel_TestNode_tbl", "UTF8");
+  // TestModel_Id_FK
+  field.setName("TestModel_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // TestNode_Id_FK
+  field = QSqlField();
+  field.setName("TestNode_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Foreign keys
+  table.addForeignKey("TestModel_Id_FK_fk3", "TestModel_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestModel_Id_FK_fk3", "TestModel_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestNode_Id_FK_fk3", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestNode_Id_FK_fk3", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
 bool mdtTtDatabaseSchema::setupTestModelItemTable()
 {
   mdtSqlSchemaTable table;
@@ -3161,6 +3199,26 @@ bool mdtTtDatabaseSchema::createTestCableDutUnitView()
          "  ON A.Id_PK = U.Article_Id_FK";
 
   return createView("TestCable_DutUnit_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createTestModelTestNodeView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestModel_TestNode_view AS\n"\
+        "SELECT\n"\
+        " TMTN.*,\n"\
+        " TN.NodeId,\n"\
+        " VT.Type,\n"\
+        " VT.SubType,\n"\
+        " VT.SeriesNumber\n"\
+        "FROM TestModel_TestNode_tbl TMTN\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TMTN.TestNode_Id_FK\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK";
+
+  return createView("TestModel_TestNode_view", sql);
 }
 
 bool mdtTtDatabaseSchema::createTestModelItemView()

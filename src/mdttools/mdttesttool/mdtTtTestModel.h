@@ -22,6 +22,7 @@
 #define MDT_TT_TEST_MODEL_H
 
 #include "mdtTtBase.h"
+#include "mdtSqlTableSelection.h"
 #include <QVariant>
 #include <QList>
 #include <QModelIndex>
@@ -35,6 +36,12 @@ class mdtTtTestModel : public mdtTtBase
   /*! \brief Constructor
    */
   mdtTtTestModel(QObject *parent, QSqlDatabase db);
+
+  /*! \brief Get SQL statement for test node selection
+   *
+   * Will list all test nodes that are not currently assigned to given test model
+   */
+  QString sqlForTestNodeSelection(const QVariant & testModelId) const;
 
   /*! \brief Get a list of test item IDs for given test ID
    */
@@ -61,6 +68,14 @@ class mdtTtTestModel : public mdtTtBase
   /*! \brief Get list of test node unit setup for given test ID
    */
   QList<QVariant> getTestNodeUnitSetupIdList(const QVariant & testId);
+
+  /*! \brief Add a test node
+   */
+  bool addTestNode(const QVariant & testNodeId, const QVariant & testModelId);
+
+  /*! \brief Remove a test node
+   */
+  bool removeTestNodes(const mdtSqlTableSelection & s);
 
   /*! \brief Add a test item
    */
