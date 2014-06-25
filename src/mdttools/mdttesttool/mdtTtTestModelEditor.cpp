@@ -22,7 +22,8 @@
 #include "ui_mdtTtTestModelEditor.h"
 #include "mdtTtTestModel.h"
 #include "mdtTtTestModelItem.h"
-///#include "mdtTtTestModelItemEditor.h"
+#include "mdtTtTestModelItemDialog.h"
+#include "mdtTtTestModelItemEditor.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
@@ -57,10 +58,10 @@ bool mdtTtTestModelEditor::setupTables()
   if(!setupTestNodeTable()){
     return false;
   }
-  /**
   if(!setupTestItemTable()){
     return false;
   }
+  /**
   if(!setupTestNodeUnitSetupTable()){
     return false;
   }
@@ -141,6 +142,7 @@ void mdtTtTestModelEditor::removeTestNodes()
   select("TestModel_TestNode_view");
 }
 
+/**
 void mdtTtTestModelEditor::addTestItem() 
 {
   mdtTtTestModel tm(this, database());
@@ -179,20 +181,56 @@ void mdtTtTestModelEditor::addTestItem()
     return;
   }
   // Update GUI
-  select("TestModelItem_view");
+  select("TestModelItem_tbl");
   select("TestModelItemNode_view");
   // Generate setup
   generateTestNodeUnitSetupList();
 }
+*/
+
+
+/**
+void mdtTtTestModelEditor::addTestItem()
+{
+  mdtTtTestModelItemDialog dialog(0, database());
+  
+  if(!dialog.setTestModelItemId(QVariant())){
+    return;
+  }
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+}
+*/
+
+void mdtTtTestModelEditor::addTestItem()
+{
+  mdtTtTestModelItemEditor *tie;
+  mdtSqlDialog dialog;
+
+  tie = new mdtTtTestModelItemEditor(0, database());
+  if(!tie->setupTables()){
+    pvLastError = tie->lastError();
+    displayLastError();
+    return;
+  }
+  
+  
+
+  dialog.setSqlForm(tie);
+  dialog.resize(700, 400);
+  dialog.enableEdition();
+  dialog.exec();
+
+}
 
 void mdtTtTestModelEditor::editTestItem()
 {
-  /**
   mdtTtTestModelItemEditor *tie;
   mdtSqlDialog dialog;
   QVariant currentTestItemId;
 
-  currentTestItemId = currentData("TestModelItem_view", "Id_PK");
+  currentTestItemId = currentData("TestModelItem_tbl", "Id_PK");
   if(currentTestItemId.isNull()){
     return;
   }
@@ -213,10 +251,9 @@ void mdtTtTestModelEditor::editTestItem()
   dialog.enableEdition();
   dialog.exec();
   // Update connections table
-  select("TestModelItem_view");
+  select("TestModelItem_tbl");
   select("TestModelItemNode_view");
   select("TestModelItemNodeUnitSetup_view");
-  */
 }
 
 void mdtTtTestModelEditor::removeTestItem() 
@@ -226,7 +263,7 @@ void mdtTtTestModelEditor::removeTestItem()
   QMessageBox msgBox;
   QModelIndexList indexes;
 
-  widget = sqlTableWidget("TestModelItem_view");
+  widget = sqlTableWidget("TestModelItem_tbl");
   Q_ASSERT(widget != 0);
   // Get selected rows
   indexes = widget->indexListOfSelectedRows("Id_PK");
@@ -250,7 +287,7 @@ void mdtTtTestModelEditor::removeTestItem()
     return;
   }
   // Update connections table
-  select("TestModelItem_view");
+  select("TestModelItem_tbl");
   select("TestModelItemNode_view");
 }
 
@@ -451,7 +488,6 @@ bool mdtTtTestModelEditor::setupTestNodeTable()
   return true;
 }
 
-/**
 bool mdtTtTestModelEditor::setupTestItemTable() 
 {
   mdtSqlTableWidget *widget;
@@ -459,35 +495,19 @@ bool mdtTtTestModelEditor::setupTestItemTable()
   QPushButton *pbEditTestItem;
   QPushButton *pbRemoveTestItem;
 
-  if(!addChildTable("TestModelItem_view", tr("Test items"), database())){
+  if(!addChildTable("TestModelItem_tbl", tr("Test items"), database())){
     return false;
   }
-  if(!addRelation("Id_PK", "TestModelItem_view", "TestModel_Id_FK")){
+  if(!addRelation("Id_PK", "TestModelItem_tbl", "TestModel_Id_FK")){
     return false;
   }
-  widget = sqlTableWidget("TestModelItem_view");
+  widget = sqlTableWidget("TestModelItem_tbl");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("TestModel_Id_FK", true);
-  widget->setColumnHidden("TestLinkBusA_Id_FK", true);
-  widget->setColumnHidden("TestLinkBusB_Id_FK", true);
-  widget->setColumnHidden("TestConnectorNameBusA", true);
-  widget->setColumnHidden("TestContactNameBusA", true);
-  widget->setColumnHidden("TestConnectorNameBusB", true);
-  widget->setColumnHidden("TestContactNameBusB", true);
   // Set fields a user friendly name
   widget->setHeaderData("SequenceNumber", tr("Seq. #"));
   widget->setHeaderData("ExpectedValue", tr("Value\nExpected"));
-  ///widget->setHeaderData("TestConnectorNameBusA", tr("Test\nConnector\nBus A"));
-  ///widget->setHeaderData("TestConnectorNameBusB", tr("Test\nConnector\nBus B"));
-  ///widget->setHeaderData("TestContactNameBusA", tr("Test\nContact\nBus A"));
-  ///widget->setHeaderData("TestContactNameBusB", tr("Test\nContact\nBus B"));
-  widget->setHeaderData("DutUnitSchemaPositionBusA", tr("DUT BUS A"));
-  widget->setHeaderData("DutUnitSchemaPositionBusB", tr("DUT BUS B"));
-  widget->setHeaderData("DutConnectorNameBusA", tr("DUT\nConnector\nBus A"));
-  widget->setHeaderData("DutConnectorNameBusB", tr("DUT\nConnector\nBus B"));
-  widget->setHeaderData("DutContactNameBusA", tr("DUT\nContact\nBus A"));
-  widget->setHeaderData("DutContactNameBusB", tr("DUT\nContact\nBus B"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons
@@ -504,7 +524,6 @@ bool mdtTtTestModelEditor::setupTestItemTable()
 
   return true;
 }
-*/
 
 /**
 bool mdtTtTestModelEditor::setupTestNodeUnitSetupTable() 

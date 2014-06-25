@@ -134,6 +134,16 @@ void mdtClUnitLinkDialog::clearEndUnitSelectionList()
   pvEndUnitSelectionIdList.clear();
 }
 
+void mdtClUnitLinkDialog::setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList)
+{
+  pvWorkingOnVehicleTypeIdList = vtIdList;
+}
+
+void mdtClUnitLinkDialog::clearWorkingOnVehicleTypeList()
+{
+  pvWorkingOnVehicleTypeIdList.clear();
+}
+
 const QList<QVariant> mdtClUnitLinkDialog::startVehicleTypeIdList() const
 {
   QList<QVariant> idList;
@@ -317,7 +327,7 @@ void mdtClUnitLinkDialog::selectStartUnit()
   QList<QVariant> result;
   int i;
 
-  // Setup and run query
+  // Setup SQL query statement
   sql = "SELECT * FROM Unit_view ";
   if(pvStartUnitSelectionIdList.size() > 0){
     sql += " WHERE (Unit_Id_PK = " + pvStartUnitSelectionIdList.at(0).toString();
@@ -333,6 +343,19 @@ void mdtClUnitLinkDialog::selectStartUnit()
       sql += " AND (";
     }
     sql += "Unit_Id_PK <> " + pvStartUnitId.toString();
+    sql += ")";
+  }
+  if(pvWorkingOnVehicleTypeIdList.size() > 0){
+    if((pvStartUnitSelectionIdList.isEmpty())&&(pvStartUnitId.isNull())){
+      sql += " WHERE (";
+    }else{
+      sql += " AND (";
+    }
+    Q_ASSERT(pvWorkingOnVehicleTypeIdList.size() > 0);
+    sql += " VehicleType_Id_PK = " + pvWorkingOnVehicleTypeIdList.at(0).toString();
+    for(i = 1; i < pvWorkingOnVehicleTypeIdList.size(); ++i){
+      sql += " OR VehicleType_Id_PK = " + pvWorkingOnVehicleTypeIdList.at(i).toString();
+    }
     sql += ")";
   }
   // Setup and show dialog
@@ -383,6 +406,19 @@ void mdtClUnitLinkDialog::selectEndUnit()
       sql += " AND (";
     }
     sql += "Unit_Id_PK <> " + pvEndUnitId.toString();
+    sql += ")";
+  }
+  if(pvWorkingOnVehicleTypeIdList.size() > 0){
+    if((pvEndUnitSelectionIdList.isEmpty())&&(pvEndUnitId.isNull())){
+      sql += " WHERE (";
+    }else{
+      sql += " AND (";
+    }
+    Q_ASSERT(pvWorkingOnVehicleTypeIdList.size() > 0);
+    sql += " VehicleType_Id_PK = " + pvWorkingOnVehicleTypeIdList.at(0).toString();
+    for(i = 1; i < pvWorkingOnVehicleTypeIdList.size(); ++i){
+      sql += " OR VehicleType_Id_PK = " + pvWorkingOnVehicleTypeIdList.at(i).toString();
+    }
     sql += ")";
   }
   // Setup and show dialog

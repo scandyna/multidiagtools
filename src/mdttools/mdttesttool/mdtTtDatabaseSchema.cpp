@@ -292,6 +292,9 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupTestModelItemTable()){
     return false;
   }
+  if(!setupTestModelItemTestLinkTable()){
+    return false;
+  }
   if(!setupTestNodeUnitSetupTable()){
     return false;
   }
@@ -387,9 +390,14 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestModelTestNodeView()){
     return false;
   }
+  if(!createTestModelItemTestLinkView()){
+    return false;
+  }
+  /**
   if(!createTestModelItemView()){
     return false;
   }
+  */
   /**
   if(!createTestModelItemNodeUnitSetupView()){
     return false;
@@ -2248,6 +2256,7 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   table.addField(field, false);
   // TestLinkBusA_Id_FK
   field = QSqlField();
+  /**
   field.setName("TestLinkBusA_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
@@ -2256,6 +2265,7 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   field.setName("TestLinkBusB_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
+  */
   // SequenceNumber
   field = QSqlField();
   field.setName("SequenceNumber");
@@ -2272,6 +2282,7 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
     pvLastError = table.lastError();
     return false;
   }
+  /**
   table.addIndex("TestLinkBusA_Id_FK_idx", false);
   if(!table.addFieldToIndex("TestLinkBusA_Id_FK_idx", "TestLinkBusA_Id_FK")){
     pvLastError = table.lastError();
@@ -2282,12 +2293,14 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
     pvLastError = table.lastError();
     return false;
   }
+  */
   // Foreign keys
   table.addForeignKey("TestModel_Id_FK_fk", "TestModel_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestModel_Id_FK_fk", "TestModel_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
+  /**
   table.addForeignKey("TestLinkBusA_Id_FK_fk", "TestLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestLinkBusA_Id_FK_fk", "TestLinkBusA_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
@@ -2295,6 +2308,40 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   }
   table.addForeignKey("TestLinkBusB_Id_FK_fk", "TestLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestLinkBusB_Id_FK_fk", "TestLinkBusB_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  */
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupTestModelItemTestLinkTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestModelItem_TestLink_tbl", "UTF8");
+  // TestModelItem_Id_FK
+  field = QSqlField();
+  field.setName("TestModelItem_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // TestLink_Id_FK
+  field = QSqlField();
+  field.setName("TestLink_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Foreign keys
+  table.addForeignKey("TestModelItem_Id_FK_fk3", "TestModelItem_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestModelItem_Id_FK_fk3", "TestModelItem_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestLink_Id_FK_fk", "TestLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestLink_Id_FK_fk", "TestLink_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -3221,6 +3268,72 @@ bool mdtTtDatabaseSchema::createTestModelTestNodeView()
   return createView("TestModel_TestNode_view", sql);
 }
 
+bool mdtTtDatabaseSchema::createTestModelItemTestLinkView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestModelItem_TestLink_view AS\n"\
+        "SELECT\n"\
+        " TMITL.*,\n"\
+        " TL.TestConnection_Id_FK,\n"\
+        " TL.DutConnection_Id_FK,\n"\
+        " TL.Identification,\n"\
+        " TL.Value,\n"\
+        " TNU.Unit_Id_FK_PK,\n"\
+        " TNB.NameEN AS Bus,\n"\
+        " TNU.IoPosition,\n"\
+        " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
+        " UCT.Name AS TestConnectorName,\n"\
+        " UCNXT.UnitContactName AS TestContactName,\n"\
+        " UD.Id_PK AS DutUnitId,\n"\
+        " UD.SchemaPosition AS DutUnitSchemaPosition,\n"\
+        " UD.Alias AS DutUnitAlias,\n"\
+        " UCD.Name AS DutConnectorName,\n"\
+        " UCNXD.UnitContactName AS DutContactName,\n"\
+        " VTN.Type AS TestNodeType,\n"\
+        " VTN.SubType AS TestNodeSubType,\n"\
+        " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
+        " TN.VehicleType_Id_FK_PK,\n"\
+        " TN.NodeId,\n"\
+        " UVT.Type,\n"\
+        " UVT.SubType,\n"\
+        " UVT.SeriesNumber\n"\
+        "FROM TestModelItem_TestLink_tbl TMITL\n"\
+        " JOIN TestLink_tbl TL\n"\
+        "  ON TL.Id_PK = TMITL.TestLink_Id_FK\n"\
+        " JOIN TestNodeUnitConnection_tbl TNUCNX\n"\
+        "  ON TNUCNX.UnitConnection_Id_FK_PK = TL.TestConnection_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXT\n"\
+        "  ON UCNXT.Id_PK = TL.TestConnection_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCT\n"\
+        "  ON UCT.Id_PK = UCNXT.UnitConnector_Id_FK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.Unit_Id_FK_PK = TNUCNX.TestNodeUnit_Id_FK\n"\
+        " JOIN Unit_tbl UTNU\n"\
+        "  ON UTNU.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+        " JOIN VehicleType_tbl VTN\n"\
+        "  ON VTN.Id_PK = TN.VehicleType_Id_FK_PK\n"\
+        " LEFT JOIN TestNodeBus_tbl TNB\n"\
+        "  ON TNB.Id_PK = TNUCNX.TestNodeBus_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXD\n"\
+        "  ON UCNXD.Id_PK = TL.DutConnection_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCD\n"\
+        "  ON UCD.Id_PK = UCNXD.UnitConnector_Id_FK\n"\
+        " JOIN Unit_tbl UD\n"\
+        "  ON UD.Id_PK = UCNXD.Unit_Id_FK\n"\
+        " JOIN VehicleType_Unit_tbl UVTU\n"\
+        "  ON UVTU.Unit_Id_FK = UD.Id_PK\n"\
+        " JOIN VehicleType_tbl UVT\n"\
+        "  ON UVT.Id_PK = UVTU.VehicleType_Id_FK\n";
+
+  return createView("TestModelItem_TestLink_view", sql);
+}
+
+
+
+/**
 bool mdtTtDatabaseSchema::createTestModelItemView()
 {
   QString sql;
@@ -3272,6 +3385,7 @@ bool mdtTtDatabaseSchema::createTestModelItemView()
 
   return createView("TestModelItem_view", sql);
 }
+*/
 
 bool mdtTtDatabaseSchema::createTestModelItemNodeUnitSetupView()
 {
@@ -3303,6 +3417,7 @@ bool mdtTtDatabaseSchema::createTestModelItemNodeUnitSetupView()
   return createView("TestModelItemNodeUnitSetup_view", sql);
 }
 
+/**
 bool mdtTtDatabaseSchema::createTestModelItemNodeView()
 {
   QString sql;
@@ -3325,7 +3440,8 @@ bool mdtTtDatabaseSchema::createTestModelItemNodeView()
 
   return createView("TestModelItemNode_view", sql);
 }
-
+*/
+/**
 bool mdtTtDatabaseSchema::createTestModelItemNodeUnitView()
 {
   QString sql;
@@ -3356,6 +3472,7 @@ bool mdtTtDatabaseSchema::createTestModelItemNodeUnitView()
 
   return createView("TestModelItemNodeUnit_view", sql);
 }
+*/
 
 bool mdtTtDatabaseSchema::createTestItemView()
 {

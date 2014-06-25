@@ -77,6 +77,18 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void clearEndUnitSelectionList();
 
+  /*! \brief Set the vehicle type ID list on witch we are working on
+   *
+   * This will limit the unit selections to those that exists for given vehicle types.
+   */
+  void setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList);
+
+  /*! \brief Clear the working on vehicle type list
+   *
+   * \sa setWorkingOnVehicleTypeIdList()
+   */
+  void clearWorkingOnVehicleTypeList();
+
   /*! \brief Get selected start vehicle types
    */
   const QList<QVariant> startVehicleTypeIdList() const;
@@ -207,6 +219,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   QList<QVariant> pvStartVehicleTypesIdList;
   QSqlQueryModel *pvEndVehicleTypesModel;
   QList<QVariant> pvEndVehicleTypesIdList;
+  QList<QVariant> pvWorkingOnVehicleTypeIdList;
 };
 
 #endif // #ifndef MDT_CL_UNIT_LINK_DIALOG_H

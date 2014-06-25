@@ -274,6 +274,9 @@ void mdtTtTestLinkDialog::selectDutConnection()
   selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
   selectionDialog.setHeaderData("IoType", tr("I/O type"));
   selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
+  selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+  selectionDialog.sort();
   selectionDialog.resize(800, 400);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;

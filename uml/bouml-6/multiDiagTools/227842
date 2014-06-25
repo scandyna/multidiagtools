@@ -1,6 +1,6 @@
 format 206
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 38
+  revision 39
   modified_by 2 "philippe"
   // class settings
   
@@ -3362,7 +3362,7 @@ ${inlines}
       end
     end
 
-    class 1262466 "TestModelItemTestLink_tbl"
+    class 1262466 "TestModelItem_TestLink_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

@@ -19,8 +19,10 @@
  **
  ****************************************************************************/
 #include "mdtTtTestNode.h"
+#include "mdtTtTestNodeUnit.h"
 #include "mdtClPathGraph.h"
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QSqlError>
 
 mdtTtTestNode::mdtTtTestNode(QObject *parent, QSqlDatabase db)
@@ -182,4 +184,36 @@ QList<QVariant> mdtTtTestNode::getChannelTestConnectionIdList(const QVariant & t
   }
 
   return testConnectionIdList;
+}
+
+bool mdtTtTestNode::addMissingConnections(const QVariant & testNodeId)
+{
+  QList<QSqlRecord> dataList;
+  mdtTtTestNodeUnit tnu(0, database());
+  QString sql;
+  bool ok;
+  int i;
+
+  // Get ID list of node units
+  sql = "SELECT Unit_Id_FK_PK FROM TestNodeUnit_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
+  dataList = getData(sql, &ok);
+  if(!ok){
+    return false;
+  }
+  // Update connections for each unit
+  if(!beginTransaction()){
+    return false;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    if(!tnu.addConnections(dataList.at(i).value(0), QVariant(), false)){
+      pvLastError = tnu.lastError();
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
 }

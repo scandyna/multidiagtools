@@ -59,9 +59,11 @@ bool mdtTtTestModelItemEditor::setupTables()
   if(!setupTestLinkTable()){
     return false;
   }
+  /**
   if(!setupTestNodeUnitSetupTable()){
     return false;
   }
+  */
   return true;
 }
 
@@ -235,33 +237,31 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbSetTestLink;
 
-  if(!addChildTable("TestModelItem_view", tr("Link"), database())){
+  if(!addChildTable("TestModelItem_TestLink_view", tr("Test links"), database())){
     return false;
   }
-  if(!addRelation("Id_PK", "TestModelItem_view", "Id_PK")){
+  if(!addRelation("Id_PK", "TestModelItem_TestLink_view", "TestModelItem_Id_FK")){
     return false;
   }
-  widget = sqlTableWidget("TestModelItem_view");
+  widget = sqlTableWidget("TestModelItem_TestLink_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
-  widget->setColumnHidden("Id_PK", true);
-  widget->setColumnHidden("TestModel_Id_FK", true);
-  widget->setColumnHidden("TestLinkBusA_Id_FK", true);
-  widget->setColumnHidden("TestLinkBusB_Id_FK", true);
-  widget->setColumnHidden("SequenceNumber", true);
-  widget->setColumnHidden("ExpectedValue", true);
-  // Set fields a user friendly name
-  ///widget->setHeaderData("ExpectedValue", tr("Value\nExpected"));
-  widget->setHeaderData("TestConnectorNameBusA", tr("Test\nConnector\nBus A"));
-  widget->setHeaderData("TestConnectorNameBusB", tr("Test\nConnector\nBus B"));
-  widget->setHeaderData("TestContactNameBusA", tr("Test\nContact\nBus A"));
-  widget->setHeaderData("TestContactNameBusB", tr("Test\nContact\nBus B"));
-  widget->setHeaderData("DutUnitSchemaPositionBusA", tr("DUT BUS A"));
-  widget->setHeaderData("DutUnitSchemaPositionBusB", tr("DUT BUS B"));
-  widget->setHeaderData("DutConnectorNameBusA", tr("DUT\nConnector\nBus A"));
-  widget->setHeaderData("DutConnectorNameBusB", tr("DUT\nConnector\nBus B"));
-  widget->setHeaderData("DutContactNameBusA", tr("DUT\nContact\nBus A"));
-  widget->setHeaderData("DutContactNameBusB", tr("DUT\nContact\nBus B"));
+  widget->setColumnHidden("TestModelItem_Id_FK", true);
+  widget->setColumnHidden("TestLink_Id_FK", true);
+  widget->setColumnHidden("TestConnection_Id_FK", true);
+  widget->setColumnHidden("DutConnection_Id_FK", true);
+  widget->setColumnHidden("Unit_Id_FK_PK", true);
+  widget->setColumnHidden("DutUnitId", true);
+  widget->setColumnHidden("VehicleType_Id_FK_PK", true);
+  // Rename visible fields to something human friendly
+  widget->setHeaderData("IoPosition", tr("I/O\nPos."));
+  widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nunit\nschema pos."));
+  widget->setHeaderData("TestConnectorName", tr("Test\nconnector"));
+  widget->setHeaderData("TestContactName", tr("Test\ncontact"));
+  widget->setHeaderData("DutUnitSchemaPosition", tr("DUT\nSchema pos."));
+  widget->setHeaderData("DutUnitAlias", tr("DUT\nalias"));
+  widget->setHeaderData("DutConnectorName", tr("DUT\nconnector"));
+  widget->setHeaderData("DutContactName", tr("DUT\ncontact"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons

@@ -68,6 +68,14 @@ class mdtTtTestNode : public mdtTtBase
   /*! \brief Get a list of channel test connections for given bus name and node ID
    */
   QList<QVariant> getChannelTestConnectionIdList(const QVariant & testNodeId, const QVariant & busName);
+
+  /*! \brief Update node unit connections of given test node
+   *
+   * For each unit contained in given test node, the missing connections
+   *  (those that exist in UnitConnection_tbl but not in TestNodeUnitConnection_tbl)
+   *  will be added in TestNodeUnitConnection_tbl.
+   */
+  bool addMissingConnections(const QVariant & testNodeId);
 };
 
 #endif // #ifndef MDT_TT_TEST_NODE_H

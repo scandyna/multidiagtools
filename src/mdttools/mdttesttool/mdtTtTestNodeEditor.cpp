@@ -301,6 +301,26 @@ void mdtTtTestNodeEditor::removeUnits()
   select("TestNodeUnitConnection_view");
 }
 
+void mdtTtTestNodeEditor::updateConnections()
+{
+  mdtTtTestNode tn(0, database());
+  QVariant testNodeId;
+
+  // Get test node ID
+  testNodeId = currentData("TestNode_tbl", "VehicleType_Id_FK_PK");
+  if(testNodeId.isNull()){
+    return;
+  }
+  // Update connections
+  if(!tn.addMissingConnections(testNodeId)){
+    pvLastError = tn.lastError();
+    displayLastError();
+    return;
+  }
+  // Update UI
+  select("TestNodeUnitConnection_view");
+}
+
 void mdtTtTestNodeEditor::setBusToUnitConnection()
 {
   mdtTtTestNodeUnit tnu(0, database());
@@ -733,6 +753,7 @@ bool mdtTtTestNodeEditor::setupTestNodeBusTable()
 bool mdtTtTestNodeEditor::setupTestNodeUnitConnectionTable()
 {
   mdtSqlTableWidget *widget;
+  QPushButton *pbUpdateConnections;
   QPushButton *pbSetBus;
   QPushButton *pbUnsetBus;
 
@@ -757,8 +778,16 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitConnectionTable()
   widget->setHeaderData("UnitConnectorName", tr("Connector"));
   widget->setHeaderData("UnitContactName", tr("Contact"));
   // Set some attributes on table view
-  widget->addColumnToSortOrder("", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+  widget->sort();
   widget->tableView()->resizeColumnsToContents();
+  // Update connections button
+  pbUpdateConnections = new QPushButton(tr("Update connections"));
+  ///pbSetBus->setIcon(QIcon::fromTheme("list-add"));
+  connect(pbUpdateConnections, SIGNAL(clicked()), this, SLOT(updateConnections()));
+  widget->addWidgetToLocalBar(pbUpdateConnections);
   // Set bus button
   pbSetBus = new QPushButton(tr("Assign to bus ..."));
   ///pbSetBus->setIcon(QIcon::fromTheme("list-add"));

@@ -90,7 +90,7 @@ class mdtTtTestModelEditor : public mdtSqlForm
 
   /*! \brief Setup test link table
    */
-  ///bool setupTestItemTable();
+  bool setupTestItemTable();
 
   /*! \brief Setup test node unit setup table
    */

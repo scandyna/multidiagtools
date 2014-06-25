@@ -239,6 +239,10 @@ class mdtTtDatabaseSchema
    */
   bool setupTestModelItemTable();
 
+  /*! \brief Setup TestModelItem_TestLink_tbl
+   */
+  bool setupTestModelItemTestLinkTable();
+
   /*! \brief Setup test node unit setup table
    *
    * \todo Move to test tool when created
@@ -366,11 +370,16 @@ class mdtTtDatabaseSchema
    */
   bool createTestModelTestNodeView();
 
+  /*! \brief Create TestModelItem_TestLink_view
+   */
+  bool createTestModelItemTestLinkView();
+
+
   /*! \brief Create test item link view
    *
    * \todo Move to test tool when created
    */
-  bool createTestModelItemView();
+  ///bool createTestModelItemView();
 
   /*! \brief Create test model item node unit view
    *
@@ -382,7 +391,7 @@ class mdtTtDatabaseSchema
    *
    * \todo Move to test tool when created
    */
-  bool createTestModelItemNodeView();
+  ///bool createTestModelItemNodeView();
 
   /*! \brief Create view to get test result item
    *
@@ -400,7 +409,7 @@ class mdtTtDatabaseSchema
    *
    * \todo Move to test tool when created
    */
-  bool createTestModelItemNodeUnitView();
+  ///bool createTestModelItemNodeUnitView();
 
   /*! \brief Check if given PK data exists in given table name
    */

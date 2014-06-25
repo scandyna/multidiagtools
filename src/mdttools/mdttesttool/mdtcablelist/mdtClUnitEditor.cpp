@@ -97,9 +97,7 @@ bool mdtClUnitEditor::setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtId
   QString sql;
   int i;
 
-  if(vtIdList.isEmpty()){
-    return true;
-  }
+  pvWorkingOnVehicleTypeIdList = vtIdList;
   // Get main table model
   m = model("Unit_tbl");
   if(m == 0){
@@ -109,15 +107,18 @@ bool mdtClUnitEditor::setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtId
     return false;
   }
   // Build the WHERE clause for the filter
-  Q_ASSERT(vtIdList.size() > 0);
+  if(pvWorkingOnVehicleTypeIdList.isEmpty()){
+    m->setFilter("");
+    return true;
+  }
+  Q_ASSERT(pvWorkingOnVehicleTypeIdList.size() > 0);
   sql = "Id_PK IN (";
-  sql += "SELECT Unit_Id_FK FROM VehicleType_Unit_tbl WHERE VehicleType_Id_FK = " + vtIdList.at(0).toString();
-  for(i = 1; i < vtIdList.size(); ++i){
-    sql += " OR VehicleType_Id_FK = " + vtIdList.at(i).toString();
+  sql += "SELECT Unit_Id_FK FROM VehicleType_Unit_tbl WHERE VehicleType_Id_FK = " + pvWorkingOnVehicleTypeIdList.at(0).toString();
+  for(i = 1; i < pvWorkingOnVehicleTypeIdList.size(); ++i){
+    sql += " OR VehicleType_Id_FK = " + pvWorkingOnVehicleTypeIdList.at(i).toString();
   }
   sql += ")";
-  
-  qDebug() << "SQL: " << sql;
+
   m->setFilter(sql);
 
   return true;
@@ -875,6 +876,7 @@ void mdtClUnitEditor::addLink()
   if(unitId.isNull()){
     return;
   }
+  dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
   dialog.setStartUnit(unitId);
   if(dialog.exec() != QDialog::Accepted){
     return;
@@ -923,6 +925,7 @@ void mdtClUnitEditor::editLink()
     return;
   }
   // Setup and show dialog
+  dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
   dialog.setLinkData(linkData);
   if(dialog.exec() != QDialog::Accepted){
     return;

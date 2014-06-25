@@ -51,6 +51,8 @@ class mdtTtTestNodeUnit : public mdtTtBase
   QList<QVariant> getConnectionIdListOfUnitId(const QVariant & unitId, bool *ok);
 
   /*! \brief Get unit connection IDs that are linked to given unit connection IDs
+   *
+   * Will return IDs that not currently exists in TestNodeUnitConnection_tbl.
    */
   QList<QVariant> getConnectionIdListLinkedToConnectionIdList(const QList<QVariant> connectionIdList, bool *ok);
 

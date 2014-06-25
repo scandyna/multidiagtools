@@ -59,6 +59,9 @@ QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & 
   int i;
 
   sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + unitId.toString();
+  sql += " AND Id_PK NOT IN (";
+  sql += "SELECT UnitConnection_Id_FK_PK FROM TestNodeUnitConnection_tbl";
+  sql += ")";
   dataList = mdtTtBase::getData(sql, ok);
   if(!*ok){
     return idList;

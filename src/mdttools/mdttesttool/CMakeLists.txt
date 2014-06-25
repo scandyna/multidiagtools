@@ -12,6 +12,8 @@ set (TT_HEADER_FILES
           mdtTtTestNodeEditor.h
           mdtTtTestNodeUnitDialog.h
           mdtTtTestModelEditor.h
+          mdtTtTestModelItemDialog.h
+          mdtTtTestModelItemEditor.h
     )
 
 # Sources files for mdtTestTool
@@ -30,6 +32,8 @@ set (TT_SOURCES_FILES
           mdtTtTestModelEditor.cpp
           mdtTtTestModel.cpp
           mdtTtTestModelItem.cpp
+          mdtTtTestModelItemDialog.cpp
+          mdtTtTestModelItemEditor.cpp
     )
 
 # Form files for mdtTestTool
@@ -39,6 +43,8 @@ set (TT_FORM_FILES
           mdtTtTestNodeEditor.ui
           mdtTtTestNodeUnitDialog.ui
           mdtTtTestModelEditor.ui
+          mdtTtTestModelItemDialog.ui
+          mdtTtTestModelItemEditor.ui
     )
 
 # Header files for mdtCableList

@@ -224,6 +224,8 @@ class mdtClUnitEditor : public mdtSqlForm
   bool setupVehicleTable();
 
   Q_DISABLE_COPY(mdtClUnitEditor);
+
+  QList<QVariant> pvWorkingOnVehicleTypeIdList;
 };
 
 #endif  // #ifndef

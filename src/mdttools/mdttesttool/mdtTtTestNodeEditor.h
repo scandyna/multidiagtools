@@ -66,6 +66,12 @@ class mdtTtTestNodeEditor : public mdtSqlForm
    */
   void removeUnits();
 
+  /*! \brief Update node unit connections
+   *
+   * Will add connections that are missing in TestNodeUnitConnection_tbl.
+   */
+  void updateConnections();
+
   /*! \brief Affect a unit connection to a bus
    */
   void setBusToUnitConnection();
