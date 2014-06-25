@@ -206,22 +206,37 @@ void mdtTtTestModelEditor::addTestItem()
 void mdtTtTestModelEditor::addTestItem()
 {
   mdtTtTestModelItemEditor *tie;
+  mdtTtTestModel tm(0, database());
   mdtSqlDialog dialog;
+  QVariant testModelId;
+  QVariant seqNumber;
 
+  // Get current test model ID
+  testModelId = currentData("TestModel_tbl", "Id_PK");
+  if(testModelId.isNull()){
+    return;
+  }
+  // Get next sequence number
+  seqNumber = tm.getNextSequenceNumber(testModelId);
+  if(seqNumber.isNull()){
+    return;
+  }
+  // Create and setup item editors and dialog
   tie = new mdtTtTestModelItemEditor(0, database());
   if(!tie->setupTables()){
     pvLastError = tie->lastError();
     displayLastError();
     return;
   }
-  
-  
-
   dialog.setSqlForm(tie);
-  dialog.resize(700, 400);
+  dialog.resize(900, 500);
   dialog.enableEdition();
+  tie->insert();
+  tie->setTestModelId(testModelId);
+  tie->setSequenceNumber(seqNumber);
   dialog.exec();
-
+  // Update views
+  select("TestModelItem_tbl");
 }
 
 void mdtTtTestModelEditor::editTestItem()
@@ -247,13 +262,13 @@ void mdtTtTestModelEditor::editTestItem()
     return;
   }
   dialog.setSqlForm(tie);
-  dialog.resize(700, 400);
+  dialog.resize(900, 500);
   dialog.enableEdition();
   dialog.exec();
   // Update connections table
   select("TestModelItem_tbl");
-  select("TestModelItemNode_view");
-  select("TestModelItemNodeUnitSetup_view");
+  ///select("TestModelItemNode_view");
+  ///select("TestModelItemNodeUnitSetup_view");
 }
 
 void mdtTtTestModelEditor::removeTestItem() 
@@ -288,7 +303,7 @@ void mdtTtTestModelEditor::removeTestItem()
   }
   // Update connections table
   select("TestModelItem_tbl");
-  select("TestModelItemNode_view");
+  ///select("TestModelItemNode_view");
 }
 
 void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
@@ -509,6 +524,8 @@ bool mdtTtTestModelEditor::setupTestItemTable()
   widget->setHeaderData("SequenceNumber", tr("Seq. #"));
   widget->setHeaderData("ExpectedValue", tr("Value\nExpected"));
   // Set some attributes on table view
+  widget->addColumnToSortOrder("SequenceNumber", Qt::AscendingOrder);
+  widget->sort();
   widget->tableView()->resizeColumnsToContents();
   // Add buttons
   pbAddTestItem = new QPushButton(tr("Add item"));

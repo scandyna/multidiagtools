@@ -22,7 +22,9 @@
 #define MDT_TT_TEST_MODEL_ITEM_H
 
 #include "mdtTtBase.h"
+#include "mdtSqlTableSelection.h"
 #include <QVariant>
+#include <QString>
 #include <QModelIndex>
 
 /*! \brief Helper class for test item edition
@@ -35,6 +37,13 @@ class mdtTtTestModelItem : public mdtTtBase
    */
   mdtTtTestModelItem(QObject *parent, QSqlDatabase db);
 
+  /*! \brief Get SQL statement for test link selection.
+   *
+   * List all test links that not exists in TestModelItem_TestLink_tbl
+   *  for given test model item ID
+   */
+  QString sqlForTestLinkSelection(const QVariant & testModelItemId) const;
+
   /*! \brief Get a list of used node unit IDs for given test item ID
    *
    * If given type is not null, only matching test node unit will be returned
@@ -45,9 +54,17 @@ class mdtTtTestModelItem : public mdtTtBase
    */
   QList<QVariant> getTestNodeUnitSetupIdList(const QVariant & testItemId);
 
+  /*! \brief Add a test link
+   */
+  bool addTestLink(const QVariant & testModelItemId, const QVariant & testLinkId);
+
+  /*! \brief Remove test links
+   */
+  bool removeTestLinks(const mdtSqlTableSelection & s);
+
   /*! \brief Set test link
    */
-  bool setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId);
+  ///bool setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId);
 
   /*! \brief Generate test node unit setup for given test item ID
    */

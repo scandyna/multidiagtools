@@ -23,8 +23,12 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlDataValidator.h"
 #include "mdtSortFilterProxyModel.h"
+
+#include "mdtState.h"
+#include "mdtStateMachine.h"
 #include <QState>
 #include <QStateMachine>
+
 #include <QMessageBox>
 #include <QSqlTableModel>
 #include <QSqlDatabase>
@@ -62,6 +66,7 @@ void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
   connect(pvModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
   connect(pvModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
   pvStateMachine->start();
+  pvStateMachine->waitOnState(Visualizing);
 }
 
 QSqlTableModel *mdtAbstractSqlWidget::model()
@@ -213,7 +218,11 @@ int mdtAbstractSqlWidget::rowCount() const
 
 mdtAbstractSqlWidget::state_t mdtAbstractSqlWidget::currentState() const
 {
-  return pvCurrentState;
+  Q_ASSERT(pvStateMachine != 0);
+
+  return static_cast<state_t>(pvStateMachine->currentState());
+
+  ///return pvCurrentState;
 }
 
 void mdtAbstractSqlWidget::enableLocalNavigation()
@@ -306,6 +315,16 @@ bool mdtAbstractSqlWidget::setCurrentRecord(const QString &fieldName, const QVar
   }
 
   return false;
+}
+
+bool mdtAbstractSqlWidget::reEnterVisualizingState()
+{
+  if(currentState() != Visualizing){
+    return false;
+  }
+  onStateVisualizingEntered();
+
+  return true;
 }
 
 void mdtAbstractSqlWidget::displayDatabaseError(QSqlError error)
@@ -457,8 +476,8 @@ const mdtSortFilterProxyModel * mdtAbstractSqlWidget::proxyModel() const
 
 void mdtAbstractSqlWidget::onStateVisualizingEntered()
 {
-  pvCurrentState = Visualizing;
-  qDebug() << __FUNCTION__;
+  ///pvCurrentState = Visualizing;
+  qDebug() << pvModel->tableName() <<  __FUNCTION__;
 
   enableChildWidgets();
   emit insertEnabledStateChanged(true);
@@ -480,7 +499,7 @@ void mdtAbstractSqlWidget::onStateVisualizingExited()
 void mdtAbstractSqlWidget::onStateEditingEntered()
 {
   qDebug() << __FUNCTION__;
-  pvCurrentState = Editing;
+  ///pvCurrentState = Editing;
   emit submitEnabledStateChanged(true);
   emit revertEnabledStateChanged(true);
 }
@@ -495,7 +514,7 @@ void mdtAbstractSqlWidget::onStateEditingExited()
 
 void mdtAbstractSqlWidget::onStateSubmittingEntered()
 {
-  pvCurrentState = Submitting;
+  ///pvCurrentState = Submitting;
   qDebug() << __FUNCTION__;
 
   if(!checkBeforeSubmit()){
@@ -514,7 +533,7 @@ void mdtAbstractSqlWidget::onStateRevertingEntered()
   int ret;
   QMessageBox msgBox;
 
-  pvCurrentState = Reverting;
+  ///pvCurrentState = Reverting;
   qDebug() << __FUNCTION__;
 
   // We ask confirmation to the user
@@ -539,7 +558,7 @@ void mdtAbstractSqlWidget::onStateRevertingEntered()
 
 void mdtAbstractSqlWidget::onStateInsertingEntered()
 {
-  pvCurrentState = Inserting;
+  ///pvCurrentState = Inserting;
   qDebug() << __FUNCTION__;
 
   if(!childWidgetsAreInVisaluzingState()){
@@ -556,7 +575,7 @@ void mdtAbstractSqlWidget::onStateInsertingEntered()
 
 void mdtAbstractSqlWidget::onStateEditingNewRowEntered()
 {
-  pvCurrentState = EditingNewRow;
+  ///pvCurrentState = EditingNewRow;
   qDebug() << __FUNCTION__;
   emit submitEnabledStateChanged(true);
   emit revertEnabledStateChanged(true);
@@ -572,7 +591,7 @@ void mdtAbstractSqlWidget::onStateEditingNewRowExited()
 
 void mdtAbstractSqlWidget::onStateSubmittingNewRowEntered()
 {
-  pvCurrentState = SubmittingNewRow;
+  ///pvCurrentState = SubmittingNewRow;
   qDebug() << __FUNCTION__;
 
   if(!checkBeforeSubmit()){
@@ -591,7 +610,7 @@ void mdtAbstractSqlWidget::onStateRevertingNewRowEntered()
   int ret;
   QMessageBox msgBox;
 
-  pvCurrentState = RevertingNewRow;
+  ///pvCurrentState = RevertingNewRow;
   qDebug() << __FUNCTION__;
 
   // We ask confirmation to the user
@@ -620,7 +639,7 @@ void mdtAbstractSqlWidget::onStateRemovingEntered()
 
   qDebug() << __FUNCTION__;
 
-  pvCurrentState = Removing;
+  ///pvCurrentState = Removing;
   // If no row exists, we do nothing
   if(rowCount() < 1){
     emit operationSucceed();
@@ -654,6 +673,7 @@ void mdtAbstractSqlWidget::enableChildWidgets()
 void mdtAbstractSqlWidget::buildStateMachine()
 {
   // Create objects
+  /**
   pvStateMachine = new QStateMachine(this);
   pvStateVisualizing = new QState;
   pvStateReverting = new QState;
@@ -664,6 +684,17 @@ void mdtAbstractSqlWidget::buildStateMachine()
   pvStateRevertingNewRow = new QState;
   pvStateSubmittingNewRow = new QState;
   pvStateRemoving = new QState;
+  */
+  pvStateMachine = new mdtStateMachine(this);
+  pvStateVisualizing = new mdtState(Visualizing);
+  pvStateReverting = new mdtState(Reverting);
+  pvStateEditing = new mdtState(Editing);
+  pvStateSubmitting = new mdtState(Submitting);
+  pvStateInserting = new mdtState(Inserting);
+  pvStateEditingNewRow = new mdtState(EditingNewRow);
+  pvStateRevertingNewRow = new mdtState(RevertingNewRow);
+  pvStateSubmittingNewRow = new mdtState(SubmittingNewRow);
+  pvStateRemoving = new mdtState(Removing);
   // Setup transitions
   connect(pvStateVisualizing, SIGNAL(entered()), this, SLOT(onStateVisualizingEntered()));
   connect(pvStateVisualizing, SIGNAL(exited()), this, SLOT(onStateVisualizingExited()));
@@ -706,7 +737,7 @@ void mdtAbstractSqlWidget::buildStateMachine()
   pvStateMachine->addState(pvStateSubmittingNewRow);
   pvStateMachine->addState(pvStateRemoving);
   pvStateMachine->setInitialState(pvStateVisualizing);
-  pvCurrentState = Visualizing;
+  ///pvCurrentState = Visualizing;
   /**
   emit submitEnabledStateChanged(false);
   emit revertEnabledStateChanged(false);

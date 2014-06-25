@@ -61,6 +61,7 @@ void mdtSqlWindow::setSqlForm(mdtSqlForm *form)
 void mdtSqlWindow::enableNavigation()
 {
   Q_ASSERT(pvForm != 0);
+  Q_ASSERT(pvForm->mainSqlWidget() != 0);
 
   // Check if navigation was allready enabled
   if(actNavToFirst != 0){
@@ -98,6 +99,8 @@ void mdtSqlWindow::enableNavigation()
   tlbMain->addAction(actNavToPrevious);
   tlbMain->addAction(actNavToNext);
   tlbMain->addAction(actNavToLast);
+  // Update buttons first time
+  pvForm->mainSqlWidget()->reEnterVisualizingState();
 }
 
 void mdtSqlWindow::disableNavigation()
@@ -167,6 +170,8 @@ void mdtSqlWindow::enableEdition()
   tlbMain->addAction(actSubmit);
   tlbMain->addAction(actRevert);
   tlbMain->addAction(actRemove);
+  // Update buttons first time
+  widget->reEnterVisualizingState();
 }
 
 void mdtSqlWindow::disableEdition()

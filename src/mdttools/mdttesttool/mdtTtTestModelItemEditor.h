@@ -22,6 +22,7 @@
 #define MDT_TT_TEST_MODEL_ITEM_EDITOR_H
 
 #include "mdtSqlForm.h"
+#include <QVariant>
 
 /*! \brief Test item editor
  */
@@ -40,11 +41,27 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
    */
   bool setupTables();
 
+  /*! \brief Set test model ID
+   */
+  void setTestModelId(const QVariant & id);
+
+  /*! \brief Set sequence number
+   */
+  void setSequenceNumber(const QVariant & seqNumber);
+
  private slots:
+
+  /*! \brief Add a test link
+   */
+  void addTestLink();
+
+  /*! \brief Remove test links
+   */
+  void removeTestLinks();
 
   /*! \brief Set test link
    */
-  void setTestLink();
+  ///void setTestLink();
 
   /*! \brief Generate test nodue unit setup
    */

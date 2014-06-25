@@ -61,9 +61,9 @@ class mdtTtTestModel : public mdtTtBase
    *
    * This method is used to create test items .
    *  It will get the highest sequence number
-   *  existing for given testId, and return the next number .
+   *  existing for given testModelId, and return the next number .
    */
-  QVariant getNextSequenceNumber(const QVariant & testId);
+  QVariant getNextSequenceNumber(const QVariant & testModelId);
 
   /*! \brief Get list of test node unit setup for given test ID
    */

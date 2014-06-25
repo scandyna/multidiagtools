@@ -25,17 +25,20 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtSqlTableSelection.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
 #include <QVariant>
 #include <QString>
 #include <QPushButton>
+#include <QIcon>
 #include <QSqlError>
 #include <QModelIndex>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QList>
+#include <QStringList>
 
 #include <QDebug>
 
@@ -67,6 +70,112 @@ bool mdtTtTestModelItemEditor::setupTables()
   return true;
 }
 
+void mdtTtTestModelItemEditor::setTestModelId(const QVariant & id)
+{
+  if(!setCurrentData("TestModelItem_tbl", "TestModel_Id_FK", id, false)){
+    displayLastError();
+  }
+}
+
+void mdtTtTestModelItemEditor::setSequenceNumber(const QVariant & seqNumber)
+{
+  if(!setCurrentData("TestModelItem_tbl", "SequenceNumber", seqNumber, false)){
+    displayLastError();
+  }
+}
+
+void mdtTtTestModelItemEditor::addTestLink()
+{
+  mdtTtTestModelItem tmi(0, database());
+  QVariant testModelItemId;
+  QVariant testLinkId;
+  mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlTableSelection s;
+  QString sql;
+
+  // Get test model item ID
+  testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
+  if(testModelItemId.isNull()){
+    return;
+  }
+  // Setup and show dialog for test link selection
+  sql = tmi.sqlForTestLinkSelection(testModelItemId);
+  selectionDialog.setMessage(tr("Please select a test link to use."));
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.setColumnHidden("TestCable_Id_FK", true);
+  selectionDialog.setColumnHidden("TestConnection_Id_FK", true);
+  selectionDialog.setColumnHidden("DutConnection_Id_FK", true);
+  selectionDialog.setColumnHidden("TestLinkValue", true);
+  selectionDialog.setColumnHidden("Unit_Id_FK_PK", true);
+  selectionDialog.setColumnHidden("IoPosition", true);
+  selectionDialog.setColumnHidden("Bus", true);
+  selectionDialog.setColumnHidden("VehicleType_Id_FK_PK", true);
+  selectionDialog.setHeaderData("TestLinkIdentification", tr("Identification"));
+  selectionDialog.setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nunit\nschema pos."));
+  selectionDialog.setHeaderData("TestConnectorName", tr("Test\nconnector"));
+  selectionDialog.setHeaderData("TestContactName", tr("Test\ncontact"));
+  selectionDialog.setHeaderData("DutUnitSchemaPosition", tr("DUT\nSchema pos."));
+  selectionDialog.setHeaderData("DutUnitAlias", tr("DUT\nalias"));
+  selectionDialog.setHeaderData("DutConnectorName", tr("DUT\nconnector"));
+  selectionDialog.setHeaderData("DutContactName", tr("DUT\ncontact"));
+  selectionDialog.resize(800, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  testLinkId = s.data(0, "Id_PK");
+  // Add to db
+  if(!tmi.addTestLink(testModelItemId, testLinkId)){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestModelItem_TestLink_view");
+}
+
+void mdtTtTestModelItemEditor::removeTestLinks()
+{
+  mdtTtTestModelItem tmi(0, database());
+  QStringList fields;
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QMessageBox msgBox;
+
+  // Get widget and selection
+  widget = sqlTableWidget("TestModelItem_TestLink_view");
+  Q_ASSERT(widget != 0);
+  fields << "TestModelItem_Id_FK" << "TestLink_Id_FK";
+  s = widget->currentSelection(fields);
+  if(s.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove test links from current test item."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove selected units
+  if(!tmi.removeTestLinks(s)){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestModelItem_TestLink_view");
+}
+
+
+/**
 void mdtTtTestModelItemEditor::setTestLink()
 {
   mdtTtTestModelItem tmi(this, database());
@@ -100,6 +209,7 @@ void mdtTtTestModelItemEditor::setTestLink()
   // Update setup
   generateTestNodeUnitSetup();
 }
+*/
 
 void mdtTtTestModelItemEditor::generateTestNodeUnitSetup()
 {
@@ -227,7 +337,7 @@ bool mdtTtTestModelItemEditor::setupTestItemTable()
     return false;
   }
   // Force a update
-  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+  ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   return true;
 }
@@ -235,7 +345,8 @@ bool mdtTtTestModelItemEditor::setupTestItemTable()
 bool mdtTtTestModelItemEditor::setupTestLinkTable() 
 {
   mdtSqlTableWidget *widget;
-  QPushButton *pbSetTestLink;
+  QPushButton *pbAddTestLink;
+  QPushButton *pbRemoveTestLinks;
 
   if(!addChildTable("TestModelItem_TestLink_view", tr("Test links"), database())){
     return false;
@@ -264,10 +375,16 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   widget->setHeaderData("DutContactName", tr("DUT\ncontact"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
-  // Add buttons
-  pbSetTestLink = new QPushButton(tr("Set test link ..."));
-  connect(pbSetTestLink, SIGNAL(clicked()), this, SLOT(setTestLink()));
-  widget->addWidgetToLocalBar(pbSetTestLink);
+  // Add link button
+  pbAddTestLink = new QPushButton(tr("Add..."));
+  pbAddTestLink->setIcon(QIcon::fromTheme("list-add"));
+  connect(pbAddTestLink, SIGNAL(clicked()), this, SLOT(addTestLink()));
+  widget->addWidgetToLocalBar(pbAddTestLink);
+  // Remove links button
+  pbRemoveTestLinks = new QPushButton(tr("Remove..."));
+  pbRemoveTestLinks->setIcon(QIcon::fromTheme("list-remove"));
+  connect(pbRemoveTestLinks, SIGNAL(clicked()), this, SLOT(removeTestLinks()));
+  widget->addWidgetToLocalBar(pbRemoveTestLinks);
   widget->addStretchToLocalBar();
 
   return true;

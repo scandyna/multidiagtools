@@ -150,14 +150,14 @@ QList<QVariant> mdtTtTestModel::getListOfUnusedNodeUnitIdListByTestId(const QVar
   return nodeUnitIdList;
 }
 
-QVariant mdtTtTestModel::getNextSequenceNumber(const QVariant & testId)
+QVariant mdtTtTestModel::getNextSequenceNumber(const QVariant & testModelId)
 {
   QString sql;
   QSqlError sqlError;
   QSqlQuery query(database());
   QVariant lastNumber;
 
-  sql = "SELECT SequenceNumber FROM TestModelItem_tbl WHERE TestModel_Id_FK = " + testId.toString() + " ORDER BY SequenceNumber ASC";
+  sql = "SELECT SequenceNumber FROM TestModelItem_tbl WHERE TestModel_Id_FK = " + testModelId.toString() + " ORDER BY SequenceNumber ASC";
   if(!query.exec(sql)){
     sqlError = query.lastError();
     pvLastError.setError("Cannot get list of seuqnec number", mdtError::Error);

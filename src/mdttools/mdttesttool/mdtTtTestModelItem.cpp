@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTtTestModelItem.h"
+#include "mdtSqlRecord.h"
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>
@@ -29,6 +30,17 @@
 mdtTtTestModelItem::mdtTtTestModelItem(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
 {
+}
+
+QString mdtTtTestModelItem::sqlForTestLinkSelection(const QVariant & testModelItemId) const
+{
+  QString sql;
+
+  sql = "SELECT * FROM TestLink_view WHERE Id_PK NOT IN (";
+  sql += " SELECT TestLink_Id_FK FROM TestModelItem_TestLink_tbl WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+  sql += ")";
+
+  return sql;
 }
 
 QList<QVariant> mdtTtTestModelItem::getUsedNodeUnitIdList(const QVariant & testItemId, const QVariant & type)
@@ -90,6 +102,26 @@ QList<QVariant> mdtTtTestModelItem::getTestNodeUnitSetupIdList(const QVariant & 
   return tnusIdList;
 }
 
+bool mdtTtTestModelItem::addTestLink(const QVariant & testModelItemId, const QVariant & testLinkId)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("TestModelItem_TestLink_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  record.setValue("TestModelItem_Id_FK", testModelItemId);
+  record.setValue("TestLink_Id_FK", testLinkId);
+
+  return addRecord(record, "TestModelItem_TestLink_tbl");
+}
+
+bool mdtTtTestModelItem::removeTestLinks(const mdtSqlTableSelection & s)
+{
+  return removeData("TestModelItem_TestLink_tbl", s, true);
+}
+
+/**
 bool mdtTtTestModelItem::setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId)
 {
   QString sql;
@@ -123,6 +155,7 @@ bool mdtTtTestModelItem::setTestLink(const QVariant & testItemId, const QVariant
 
   return true;
 }
+*/
 
 bool mdtTtTestModelItem::generateTestNodeUnitSetup(const QVariant & testItemId)
 {

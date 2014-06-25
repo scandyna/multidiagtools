@@ -2252,6 +2252,7 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   // TestModel_Id_FK
   field = QSqlField();
   field.setName("TestModel_Id_FK");
+  field.setRequiredStatus(QSqlField::Required);
   field.setType(QVariant::Int);
   table.addField(field, false);
   // TestLinkBusA_Id_FK

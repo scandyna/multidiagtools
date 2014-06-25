@@ -70,6 +70,7 @@ void mdtSqlDialog::setSqlForm(mdtSqlForm *form)
 void mdtSqlDialog::enableEdition()
 {
   Q_ASSERT(pvForm != 0);
+  Q_ASSERT(pvForm->mainSqlWidget() != 0);
 
   mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
   Q_ASSERT(widget != 0);
@@ -85,6 +86,8 @@ void mdtSqlDialog::enableEdition()
   // Connect buttons triggers
   connect(pbSubmit, SIGNAL(clicked()), widget, SLOT(submit()));
   connect(pbRevert, SIGNAL(clicked()), widget, SLOT(revert()));
+  // Update buttons first time
+  pvForm->mainSqlWidget()->reEnterVisualizingState();
 }
 
 void mdtSqlDialog::disableEdition()

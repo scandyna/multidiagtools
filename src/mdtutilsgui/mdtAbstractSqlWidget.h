@@ -32,8 +32,15 @@
 #include <QModelIndex>
 
 class QSqlTableModel;
+
+class mdtState;
+class mdtStateMachine;
+
 class QState;
 class QStateMachine;
+
+
+
 class QSqlTableModel;
 class mdtSqlRelation;
 class mdtSqlDataValidator;
@@ -326,6 +333,16 @@ class mdtAbstractSqlWidget : public QWidget
    *          false else.
    */
   bool setCurrentRecord(const QString &fieldName, const QVariant &value);
+
+  /*! \brief Re-enter in visualizing state
+   *
+   * Will call onStateVisualizingEntered(),
+   *  witch will emit some signals (like submitEnabledStateChanged()).
+   *  This method will fail if currentState is not really Visualizing.
+   *
+   * This functionnality is used by mdtSqlWindow and mdtSqlDialog.
+   */
+  bool reEnterVisualizingState();
 
  protected:
 
@@ -680,6 +697,7 @@ class mdtAbstractSqlWidget : public QWidget
   QSqlTableModel *pvModel;
   mdtSortFilterProxyModel *pvProxyModel;
   // State machine members
+  /**
   QState *pvStateVisualizing;
   QState *pvStateReverting;
   QState *pvStateEditing;
@@ -689,8 +707,21 @@ class mdtAbstractSqlWidget : public QWidget
   QState *pvStateRevertingNewRow;
   QState *pvStateSubmittingNewRow;
   QState *pvStateRemoving;
+  */
+  mdtState *pvStateVisualizing;
+  mdtState *pvStateReverting;
+  mdtState *pvStateEditing;
+  mdtState *pvStateSubmitting;
+  mdtState *pvStateInserting;
+  mdtState *pvStateEditingNewRow;
+  mdtState *pvStateRevertingNewRow;
+  mdtState *pvStateSubmittingNewRow;
+  mdtState *pvStateRemoving;
+  /**
   QStateMachine *pvStateMachine;
   state_t pvCurrentState;
+  */
+  mdtStateMachine *pvStateMachine;
   // Memebrs for child widgets support
   QList<mdtSqlRelation*> pvRelations;
   QList<mdtAbstractSqlWidget*> pvChildWidgets;
