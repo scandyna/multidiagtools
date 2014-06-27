@@ -21,6 +21,8 @@
 #include "mdtTtTestModelItemEditor.h"
 #include "ui_mdtTtTestModelItemEditor.h"
 #include "mdtTtTestModelItem.h"
+#include "mdtTtTestNodeUnitSetupData.h"
+#include "mdtTtTestNodeUnitSetupDialog.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
@@ -62,11 +64,9 @@ bool mdtTtTestModelItemEditor::setupTables()
   if(!setupTestLinkTable()){
     return false;
   }
-  /**
   if(!setupTestNodeUnitSetupTable()){
     return false;
   }
-  */
   return true;
 }
 
@@ -172,6 +172,144 @@ void mdtTtTestModelItemEditor::removeTestLinks()
   }
   // Update views
   select("TestModelItem_TestLink_view");
+}
+
+void mdtTtTestModelItemEditor::addNodeUnit()
+{
+  mdtTtTestModelItem tmi(0, database());
+  QVariant testModelItemId;
+  mdtTtTestNodeUnitSetupData data;
+  mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlTableSelection s;
+  QString sql;
+
+  // Get test model item ID
+  testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
+  if(testModelItemId.isNull()){
+    return;
+  }
+  // Setup data
+  if(!data.setup(database())){
+    pvLastError = data.lastError();
+    displayLastError();
+    return;
+  }
+  data.setValue("TestModelItem_Id_FK", testModelItemId);
+  // Setup and show dialog for test link selection
+  sql = tmi.sqlForTestNodeUnitSelection(testModelItemId);
+  selectionDialog.setMessage(tr("Please select a test node unit to use."));
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setColumnHidden("Unit_Id_FK_PK", true);
+  selectionDialog.setColumnHidden("TestNode_Id_FK", true);
+  selectionDialog.setColumnHidden("Type_Code_FK", true);
+  selectionDialog.setHeaderData("SchemaPosition", tr("Schema\npos."));
+  selectionDialog.setHeaderData("NameEN", tr("Type"));
+  selectionDialog.setHeaderData("NameFR", tr("Type"));
+  selectionDialog.setHeaderData("NameDE", tr("Type"));
+  selectionDialog.setHeaderData("NameIT", tr("Type"));
+  selectionDialog.setHeaderData("Type", tr("Test system"));
+  selectionDialog.setHeaderData("SubType", tr("Test node"));
+  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.resize(800, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("Unit_Id_FK_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  data.setValue("TestNodeUnit_Id_FK", s.data(0, "Unit_Id_FK_PK"));
+  // Add to db
+  if(!tmi.addTestNodeUnitSetup(data)){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestNodeUnitSetup_view");
+}
+
+void mdtTtTestModelItemEditor::setupNodeUnit()
+{
+  mdtTtTestModelItem tmi(0, database());
+  mdtTtTestNodeUnitSetupDialog dialog(this, database());
+  mdtTtTestNodeUnitSetupData data;
+  QVariant testModelItemId;
+  QVariant testNodeUnitId;
+  bool ok;
+
+  // Get test model item ID
+  testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
+  if(testModelItemId.isNull()){
+    return;
+  }
+  // Get test node unit ID
+  testNodeUnitId = currentData("TestNodeUnitSetup_view", "TestNodeUnit_Id_FK");
+  if(testNodeUnitId.isNull()){
+    return;
+  }
+  // Get data
+  data = tmi.getNodeUnitSetupData(testModelItemId, testNodeUnitId, &ok);
+  if(!ok){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return;
+  }
+  qDebug() << "Data: " << data;
+  // Setup and show dialog
+  dialog.setData(data);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Update in db
+  data = dialog.data();
+  if(!tmi.updateNodeUnitData(testModelItemId, testNodeUnitId, data)){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestNodeUnitSetup_view");
+}
+
+void mdtTtTestModelItemEditor::removeNodeUnits()
+{
+  mdtTtTestModelItem tmi(0, database());
+  QStringList fields;
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QMessageBox msgBox;
+
+  // Get widget and selection
+  widget = sqlTableWidget("TestNodeUnitSetup_view");
+  Q_ASSERT(widget != 0);
+  fields << "TestModelItem_Id_FK" << "TestNodeUnit_Id_FK";
+  s = widget->currentSelection(fields);
+  if(s.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove test node units from current setup list."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove selected units
+  if(!tmi.removeTestNodeUnitSetups(s)){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestNodeUnitSetup_view");
 }
 
 
@@ -393,24 +531,55 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
 bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable() 
 {
   mdtSqlTableWidget *widget;
-  QPushButton *pbGenerateTestNodeUnitSetup;
-  QPushButton *pbRemoveTestNodeUnitSetup;
+  QPushButton *pbAddNodeUnit;
+  QPushButton *pbSetupNodeUnit;
+  QPushButton *pbRemoveNodeUnits;
+  ///QPushButton *pbGenerateTestNodeUnitSetup;
+  ///QPushButton *pbRemoveTestNodeUnitSetup;
 
-  if(!addChildTable("TestModelItemNodeUnitSetup_view", tr("Node unit setup"), database())){
+  if(!addChildTable("TestNodeUnitSetup_view", tr("Node unit setup"), database())){
     return false;
   }
-  if(!addRelation("Id_PK", "TestModelItemNodeUnitSetup_view", "TestModelItem_Id_FK")){
+  if(!addRelation("Id_PK", "TestNodeUnitSetup_view", "TestModelItem_Id_FK")){
     return false;
   }
-  widget = sqlTableWidget("TestModelItemNodeUnitSetup_view");
+  widget = sqlTableWidget("TestNodeUnitSetup_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
-  ///widget->setColumnHidden("", true);
+  widget->setColumnHidden("TestModelItem_Id_FK", true);
+  widget->setColumnHidden("TestNodeUnit_Id_FK", true);
+  widget->setColumnHidden("TestNode_Id_FK", true);
+  widget->setColumnHidden("IoPosition", true);
+  widget->setColumnHidden("Type_Code_FK", true);
   // Set fields a user friendly name
-  ///widget->setHeaderData("", tr(""));
+  widget->setHeaderData("SchemaPosition", tr("Schema\npos."));
+  widget->setHeaderData("NameEN", tr("Type (English)"));
+  widget->setHeaderData("NameFR", tr("Type (Frensh)"));
+  widget->setHeaderData("NameDE", tr("Type (German)"));
+  widget->setHeaderData("NameIT", tr("Type (Italian)"));
   // Set some attributes on table view
+  widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  widget->sort();
   widget->tableView()->resizeColumnsToContents();
+  // Add node unit button
+  pbAddNodeUnit = new QPushButton(tr("Add unit ..."));
+  pbAddNodeUnit->setIcon(QIcon::fromTheme("list-add"));
+  connect(pbAddNodeUnit, SIGNAL(clicked()), this, SLOT(addNodeUnit()));
+  widget->addWidgetToLocalBar(pbAddNodeUnit);
+  // Setup unit button
+  pbSetupNodeUnit = new QPushButton(tr("Setup unit ..."));
+  connect(pbSetupNodeUnit, SIGNAL(clicked()), this, SLOT(setupNodeUnit()));
+  widget->addWidgetToLocalBar(pbSetupNodeUnit);
+  // Remove units button
+  pbRemoveNodeUnits = new QPushButton(tr("Remove units ..."));
+  pbRemoveNodeUnits->setIcon(QIcon::fromTheme("list-remove"));
+  connect(pbRemoveNodeUnits, SIGNAL(clicked()), this, SLOT(removeNodeUnits()));
+  widget->addWidgetToLocalBar(pbRemoveNodeUnits);
+  widget->addStretchToLocalBar();
+
+  
   // Add buttons
+  /**
   pbGenerateTestNodeUnitSetup = new QPushButton(tr("Generate setup"));
   connect(pbGenerateTestNodeUnitSetup, SIGNAL(clicked()), this, SLOT(generateTestNodeUnitSetup()));
   widget->addWidgetToLocalBar(pbGenerateTestNodeUnitSetup);
@@ -418,6 +587,7 @@ bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable()
   connect(pbRemoveTestNodeUnitSetup, SIGNAL(clicked()), this, SLOT(removeTestNodeUnitSetup()));
   widget->addWidgetToLocalBar(pbRemoveTestNodeUnitSetup);
   widget->addStretchToLocalBar();
+  */
 
   return true;
 }

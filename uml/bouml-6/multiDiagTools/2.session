@@ -7,10 +7,11 @@ diagrams
     995 952 80 3 180 0
 end
 show_stereotypes
-selected classdiagram_ref 1152002 // TestTool
+selected attribute_ref 1042946 // TestNodeUnit_Id_FK
 open
   classview_ref 675330 // TestTool
   class_ref 1006210 // TestModelItem_tbl
+  class_ref 1006722 // TestNodeUnitSetup_tbl
   class_ref 1262466 // TestModelItem_TestLink_tbl
   class_ref 1268994 // TestModel_TestNode_tbl
 end

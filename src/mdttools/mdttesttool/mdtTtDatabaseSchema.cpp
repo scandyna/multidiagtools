@@ -393,6 +393,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestModelItemTestLinkView()){
     return false;
   }
+  if(!createTestNodeUnitSetupView()){
+    return false;
+  }
   /**
   if(!createTestModelItemView()){
     return false;
@@ -2359,20 +2362,24 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
 
   table.setTableName("TestNodeUnitSetup_tbl", "UTF8");
   // Id_PK
+  /**
   field.setName("Id_PK");
   field.setType(QVariant::Int);
   field.setAutoValue(true);
   table.addField(field, true);
+  */
   // TestModelItem_Id_FK
   field = QSqlField();
   field.setName("TestModelItem_Id_FK");
   field.setType(QVariant::Int);
-  table.addField(field, false);
+  table.addField(field, true);
+  ///field.setRequiredStatus(QSqlField::Required);
   // TestNodeUnit_Id_FK
   field = QSqlField();
   field.setName("TestNodeUnit_Id_FK");
   field.setType(QVariant::Int);
-  table.addField(field, false);
+  ///field.setRequiredStatus(QSqlField::Required);
+  table.addField(field, true);
   // State (ON/OFF)
   field = QSqlField();
   field.setName("State");
@@ -2384,6 +2391,7 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
   field.setType(QVariant::Double);
   table.addField(field, false);
   // Indexes
+  /**
   table.addIndex("TestModelItem_Id_FK_idx", false);
   if(!table.addFieldToIndex("TestModelItem_Id_FK_idx", "TestModelItem_Id_FK")){
     pvLastError = table.lastError();
@@ -2394,6 +2402,7 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
     pvLastError = table.lastError();
     return false;
   }
+  */
   // Foreign keys
   table.addForeignKey("TestModelItem_Id_FK_fk", "TestModelItem_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestModelItem_Id_FK_fk", "TestModelItem_Id_FK", "Id_PK")){
@@ -3332,6 +3341,32 @@ bool mdtTtDatabaseSchema::createTestModelItemTestLinkView()
   return createView("TestModelItem_TestLink_view", sql);
 }
 
+bool mdtTtDatabaseSchema::createTestNodeUnitSetupView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestNodeUnitSetup_view AS\n"\
+        "SELECT\n"\
+        " TNU.TestNode_Id_FK,\n"\
+        " TNU.Type_Code_FK,\n"\
+        " TNU.IoPosition,\n"\
+        " U.SchemaPosition,\n"\
+        " U.Alias,\n"\
+        " TNUS.*,\n"\
+        " TNUT.NameEN,\n"\
+        " TNUT.NameFR,\n"\
+        " TNUT.NameDE,\n"\
+        " TNUT.NameIT\n"\
+        "FROM TestNodeUnitSetup_tbl TNUS\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNodeUnitType_tbl TNUT\n"\
+        "  ON TNUT.Code_PK = TNU.Type_Code_FK";
+
+  return createView("TestNodeUnitSetup_view", sql);
+}
 
 
 /**
@@ -3388,6 +3423,7 @@ bool mdtTtDatabaseSchema::createTestModelItemView()
 }
 */
 
+/**
 bool mdtTtDatabaseSchema::createTestModelItemNodeUnitSetupView()
 {
   QString sql;
@@ -3417,6 +3453,7 @@ bool mdtTtDatabaseSchema::createTestModelItemNodeUnitSetupView()
 
   return createView("TestModelItemNodeUnitSetup_view", sql);
 }
+*/
 
 /**
 bool mdtTtDatabaseSchema::createTestModelItemNodeView()

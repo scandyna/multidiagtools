@@ -77,7 +77,7 @@ set (TEST_SOURCES_FILES
           ../src/mdtTtTest.cpp
           ../src/mdtTtCableChecker.cpp
           ../src/mdtTtCableCheckerWindow.cpp
-          ../src/mdtTtTestNodeUnitSetupData.cpp
+          #../src/mdtTtTestNodeUnitSetupData.cpp
           #../src/mdtTtTestNodeUnitData.cpp
           ../src/mdtTtTestNodeUnitEditor.cpp
     )

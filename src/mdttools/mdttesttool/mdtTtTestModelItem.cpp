@@ -24,6 +24,7 @@
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QString>
+#include <QLocale>
 
 #include <QDebug>
 
@@ -39,6 +40,55 @@ QString mdtTtTestModelItem::sqlForTestLinkSelection(const QVariant & testModelIt
   sql = "SELECT * FROM TestLink_view WHERE Id_PK NOT IN (";
   sql += " SELECT TestLink_Id_FK FROM TestModelItem_TestLink_tbl WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
   sql += ")";
+
+  return sql;
+}
+
+QString mdtTtTestModelItem::sqlForTestNodeUnitSelection(const QVariant & testModelItemId, const QList<QVariant> & limitToUnitIdList) const
+{
+  QString sql;
+  QLocale locale;
+  QString tnTypeField;
+
+  // Select test node unit type field regarding language
+  switch(locale.language()){
+    case QLocale::French:
+      tnTypeField = "NameFR";
+      break;
+    case QLocale::German:
+      tnTypeField = "NameDE";
+      break;
+    case QLocale::Italian:
+      tnTypeField = "NameIT";
+      break;
+    default:
+      tnTypeField = "NameEN";
+  }
+  // Generate base of SQL statement
+  sql = "SELECT\n"\
+        " TNU.Unit_Id_FK_PK,\n"\
+        " TNU.TestNode_Id_FK,\n"\
+        " TNU.Type_Code_FK,\n"\
+        " U.SchemaPosition,\n"\
+        " U.Alias,\n";
+  sql += " TNUT." + tnTypeField + ",\n"\
+        " VT.Type,\n"\
+        " VT.SubType,\n"\
+        " VT.SeriesNumber\n"\
+        "FROM TestNodeUnit_tbl TNU\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNodeUnitType_tbl TNUT\n"\
+        "  ON TNUT.Code_PK = TNU.Type_Code_FK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK";
+  // Don't show allready used units
+  sql += " WHERE Unit_Id_FK_PK NOT IN(";
+  sql += " SELECT TestNodeUnit_Id_FK FROM TestNodeUnitSetup_tbl WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+  sql += ")";
+
 
   return sql;
 }
@@ -119,6 +169,59 @@ bool mdtTtTestModelItem::addTestLink(const QVariant & testModelItemId, const QVa
 bool mdtTtTestModelItem::removeTestLinks(const mdtSqlTableSelection & s)
 {
   return removeData("TestModelItem_TestLink_tbl", s, true);
+}
+
+bool mdtTtTestModelItem::addTestNodeUnitSetup(const mdtTtTestNodeUnitSetupData & data)
+{
+  return addRecord(data, "TestNodeUnitSetup_tbl");
+}
+
+mdtTtTestNodeUnitSetupData mdtTtTestModelItem::getNodeUnitSetupData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  mdtTtTestNodeUnitSetupData data;
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = "SELECT * FROM TestNodeUnitSetup_tbl ";
+  sql += " WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+  sql += " AND TestNodeUnit_Id_FK = " + testNodeUnitId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return data;
+  }
+  if(dataList.isEmpty()){
+    return data;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  data = dataList.at(0);
+
+  return data;
+}
+
+bool mdtTtTestModelItem::updateNodeUnitData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, const mdtTtTestNodeUnitSetupData & data)
+{
+  mdtSqlRecord matchData;
+
+  // Setup match data
+  if(!matchData.addField("TestModelItem_Id_FK", "TestNodeUnitSetup_tbl", database())){
+    pvLastError = matchData.lastError();
+    return false;
+  }
+  if(!matchData.addField("TestNodeUnit_Id_FK", "TestNodeUnitSetup_tbl", database())){
+    pvLastError = matchData.lastError();
+    return false;
+  }
+  matchData.setValue("TestModelItem_Id_FK", testModelItemId);
+  matchData.setValue("TestNodeUnit_Id_FK", testNodeUnitId);
+
+  return updateRecord("TestNodeUnitSetup_tbl", data, matchData);
+}
+
+bool mdtTtTestModelItem::removeTestNodeUnitSetups(const mdtSqlTableSelection & s)
+{
+  return removeData("TestNodeUnitSetup_tbl", s, true);
 }
 
 /**

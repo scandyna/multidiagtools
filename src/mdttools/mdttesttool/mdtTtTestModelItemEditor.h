@@ -59,6 +59,18 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
    */
   void removeTestLinks();
 
+  /*! \brief Add a test node unit to setup list
+   */
+  void addNodeUnit();
+
+  /*! \brief Setup a test node unit
+   */
+  void setupNodeUnit();
+
+  /*! \brief Remove test node units from setup list
+   */
+  void removeNodeUnits();
+
   /*! \brief Set test link
    */
   ///void setTestLink();

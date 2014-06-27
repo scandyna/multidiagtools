@@ -374,6 +374,9 @@ class mdtTtDatabaseSchema
    */
   bool createTestModelItemTestLinkView();
 
+  /*! \brief Create TestNodeUnitSetup_view
+   */
+  bool createTestNodeUnitSetupView();
 
   /*! \brief Create test item link view
    *
@@ -385,7 +388,7 @@ class mdtTtDatabaseSchema
    *
    * \todo Move to test tool when created
    */
-  bool createTestModelItemNodeUnitSetupView();
+  ///bool createTestModelItemNodeUnitSetupView();
 
   /*! \brief Create view to get nodes used by a test item
    *

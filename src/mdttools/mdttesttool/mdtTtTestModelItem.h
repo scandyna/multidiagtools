@@ -23,9 +23,11 @@
 
 #include "mdtTtBase.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtTtTestNodeUnitSetupData.h"
 #include <QVariant>
 #include <QString>
 #include <QModelIndex>
+#include <QList>
 
 /*! \brief Helper class for test item edition
  */
@@ -44,6 +46,16 @@ class mdtTtTestModelItem : public mdtTtBase
    */
   QString sqlForTestLinkSelection(const QVariant & testModelItemId) const;
 
+  /*! \brief Get SQL statement for test node unit selection
+   *
+   * List all test node units that not exists
+   *  in TestNodeUnitSetup_tbl for given testModelItemId.
+   *
+   * If limitToUnitIdList is not empty,
+   *  the statement will only include data for given IDs.
+   */
+  QString sqlForTestNodeUnitSelection(const QVariant & testModelItemId, const QList<QVariant> & limitToUnitIdList = QList<QVariant>()) const;
+
   /*! \brief Get a list of used node unit IDs for given test item ID
    *
    * If given type is not null, only matching test node unit will be returned
@@ -61,6 +73,22 @@ class mdtTtTestModelItem : public mdtTtBase
   /*! \brief Remove test links
    */
   bool removeTestLinks(const mdtSqlTableSelection & s);
+
+  /*! \brief Add a test node unit to TestNodeUnitSetup_tbl
+   */
+  bool addTestNodeUnitSetup(const mdtTtTestNodeUnitSetupData & data);
+
+  /*! \brief Get test node unit setup data
+   */
+  mdtTtTestNodeUnitSetupData getNodeUnitSetupData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, bool *ok);
+
+  /*! \brief Update test node unit setup data
+   */
+  bool updateNodeUnitData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, const mdtTtTestNodeUnitSetupData & data);
+
+  /*! \brief Remove test node units from TestNodeUnitSetup_tbl
+   */
+  bool removeTestNodeUnitSetups(const mdtSqlTableSelection & s);
 
   /*! \brief Set test link
    */

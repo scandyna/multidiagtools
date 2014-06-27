@@ -30,7 +30,7 @@ set (SOURCES_FILES
           src/mdtTtTest.cpp
           src/mdtTtCableChecker.cpp
           src/mdtTtCableCheckerWindow.cpp
-          src/mdtTtTestNodeUnitSetupData.cpp
+          #src/mdtTtTestNodeUnitSetupData.cpp
           src/mdtTtTestNodeUnitEditor.cpp
     )
 
