@@ -76,6 +76,10 @@ class mdtTtTestNode : public mdtTtBase
    *  will be added in TestNodeUnitConnection_tbl.
    */
   bool addMissingConnections(const QVariant & testNodeId);
+
+ private:
+
+  Q_DISABLE_COPY(mdtTtTestNode);
 };
 
 #endif // #ifndef MDT_TT_TEST_NODE_H

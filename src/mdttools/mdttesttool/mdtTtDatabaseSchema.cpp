@@ -2275,10 +2275,24 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   field.setName("SequenceNumber");
   field.setType(QVariant::Int);
   table.addField(field, false);
+  // DesignationEN
+  field = QSqlField();
+  field.setName("DesignationEN");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  table.addField(field, false);
+
   // ExpectedValue
   field = QSqlField();
   field.setName("ExpectedValue");
   field.setType(QVariant::Double);
+  table.addField(field, false);
+  
+  // ValueUnit
+  field = QSqlField();
+  field.setName("ValueUnit");
+  field.setType(QVariant::String);
+  field.setLength(10);
   table.addField(field, false);
   // Indexes
   table.addIndex("TestModel_Id_FK_idx", false);
@@ -2389,6 +2403,12 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
   field = QSqlField();
   field.setName("Value");
   field.setType(QVariant::Double);
+  table.addField(field, false);
+  // Command (for example, SCPI)
+  field = QSqlField();
+  field.setName("Command");
+  field.setType(QVariant::String);
+  field.setLength(100);
   table.addField(field, false);
   // Indexes
   /**
@@ -3834,6 +3854,18 @@ bool mdtTtDatabaseSchema::populateTestNodeUnitTypeTable()
   // Test connector
   data.clear();
   data << "TESTCONNECTOR" << "Test connector" << "Connecteur de test" << "Test Stecker" << "Connettore di test";
+  if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Analog output
+  data.clear();
+  data << "AO" << "Analog output" << "Sortie analogique" << "Analog Ausgabe" << "Uscita analogica";
+  if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Analog input
+  data.clear();
+  data << "AI" << "Analog input" << "Entrée analogique" << "Analog Eingabe" << "Ingresso analogica";
   if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
     return false;
   }

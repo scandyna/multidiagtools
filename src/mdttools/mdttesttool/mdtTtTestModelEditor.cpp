@@ -22,7 +22,6 @@
 #include "ui_mdtTtTestModelEditor.h"
 #include "mdtTtTestModel.h"
 #include "mdtTtTestModelItem.h"
-#include "mdtTtTestModelItemDialog.h"
 #include "mdtTtTestModelItemEditor.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"

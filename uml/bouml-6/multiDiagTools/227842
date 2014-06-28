@@ -1,6 +1,6 @@
 format 206
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 40
+  revision 42
   modified_by 2 "philippe"
   // class settings
   
@@ -2238,6 +2238,15 @@ ${inlines}
 	    classrelation_ref 1246082 // <unidirectional association>
 	  b parent class_ref 944770 // VehicleType_tbl
       end
+
+      classrelation 1586690 // <unidirectional association>
+	relation 1571202 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1586690 // <unidirectional association>
+	  b parent class_ref 1275650 // TestNodeType_tbl
+      end
     end
 
     class 992770 "TestNodeUnit_tbl"
@@ -2506,6 +2515,54 @@ ${inlines}
 	MysqlColumn
       end
 
+      attribute 1231234 "DesignationEN"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1231362 "DesignationFR"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1231490 "DesignationDE"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1231618 "DesignationIT"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 1042050 "ExpectedValue"
 	private explicit_type "double"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -2573,6 +2630,18 @@ ${inlines}
 "
 	    classrelation_ref 1274114 // <unidirectional association>
 	  b parent class_ref 1020418 // TestModel_tbl
+      end
+
+      attribute 1231746 "ValueUnit"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
@@ -2696,6 +2765,18 @@ ${inlines}
 
       attribute 1043202 "Value"
 	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1231106 "Command"
+	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3456,6 +3537,58 @@ ${inlines}
       attribute 1217794 "TestModel_Id_FK"
 	private explicit_type "int"
 	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 1275650 "TestNodeType_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 1224322 "Id_PK"
+	private explicit_type "int"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1224450 "className"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1224578 "NameEN"
+	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

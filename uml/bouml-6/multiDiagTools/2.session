@@ -4,15 +4,20 @@ diagrams
   classdiagram_ref 927874 // TestNode
     796 761 100 18 0 0
   active  classdiagram_ref 941058 // Test
-    995 952 80 3 180 0
+    995 952 80 3 156 0
+  classdiagram_ref 1152002 // TestTool
+    120 106 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 1042946 // TestNodeUnit_Id_FK
+selected attribute_ref 1231746 // ValueUnit
 open
   classview_ref 675330 // TestTool
-  class_ref 1006210 // TestModelItem_tbl
+  classview_ref 483970 // CableList
+  attribute_ref 1231362 // DesignationFR
+  attribute_ref 1231618 // DesignationIT
+  classrelation_ref 1274114 // <unidirectional association>
   class_ref 1006722 // TestNodeUnitSetup_tbl
-  class_ref 1262466 // TestModelItem_TestLink_tbl
-  class_ref 1268994 // TestModel_TestNode_tbl
+  class_ref 1275650 // TestNodeType_tbl
+  class_ref 1053698 // mdtTtTest
 end
 end

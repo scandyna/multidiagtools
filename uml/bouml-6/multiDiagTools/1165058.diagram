@@ -1,0 +1,19 @@
+format 206
+
+classcanvas 128002 class_ref 1275522 // mdtTtTestGui
+  classdiagramsettings member_max_width 0 end
+  xyz 66 342 2000
+end
+classcanvas 128130 class_ref 1040386 // mdtSqlForm
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 470 103 2005
+end
+classcanvas 128386 class_ref 309250 // mdtDevice
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 584 181 2000
+end
+classcanvas 128514 class_ref 1053698 // mdtTtTest
+  classdiagramsettings member_max_width 0 end
+  xyz 447 331 2000
+end
+end

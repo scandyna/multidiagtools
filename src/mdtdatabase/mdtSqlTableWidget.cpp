@@ -189,6 +189,8 @@ void mdtSqlTableWidget::enableLocalEdition()
   pvNavigationLayout->addWidget(pbRevert);
   pvNavigationLayout->addWidget(pbRemove);
   pvNavigationLayout->addStretch();
+  // Update buttons first time
+  reEnterVisualizingState();
   setEditionEnabled(true);
 }
 

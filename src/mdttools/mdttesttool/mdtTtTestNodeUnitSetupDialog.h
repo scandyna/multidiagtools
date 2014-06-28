@@ -52,6 +52,10 @@ class mdtTtTestNodeUnitSetupDialog : public QDialog, Ui::mdtTtTestNodeUnitSetupD
    */
   void accept();
 
+  /*! \brief Update State check box text
+   */
+  void updateStateText(int state);
+
  private:
 
   /*! \brief Display data in dialog

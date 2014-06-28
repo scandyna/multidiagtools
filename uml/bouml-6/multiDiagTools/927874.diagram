@@ -37,8 +37,8 @@ classcanvas 131586 class_ref 805250 // Link_tbl
   xyz 918.5 64.8 2022
 end
 relationcanvas 128642 relation_ref 1020674 // <unidirectional association>
-  from ref 128514 z 2011 to point 525.3 149.9
-  line 128770 z 2011 to point 525.3 179.9
+  from ref 128514 z 2011 to point 525 149
+  line 128770 z 2011 to point 525 179
   line 128898 z 2011 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -79,8 +79,8 @@ relationcanvas 130434 relation_ref 950530 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 1020802 // <unidirectional association>
-  from ref 130306 z 2017 to point 678 154.4
-  line 130690 z 2017 to point 678 190.8
+  from ref 130306 z 2017 to point 678 154
+  line 130690 z 2017 to point 678 190
   line 130818 z 2017 to ref 130306
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

@@ -25,6 +25,7 @@ mdtTtTestNodeUnitSetupDialog::mdtTtTestNodeUnitSetupDialog(QWidget *parent, QSql
  : QDialog(parent)
 {
   setupUi(this);
+  connect(cbState, SIGNAL(stateChanged(int)), this, SLOT(updateStateText(int)));
 }
 
 void mdtTtTestNodeUnitSetupDialog::setData(const mdtTtTestNodeUnitSetupData & data)
@@ -39,28 +40,38 @@ void mdtTtTestNodeUnitSetupDialog::accept()
   QDialog::accept();
 }
 
+void mdtTtTestNodeUnitSetupDialog::updateStateText(int state)
+{
+  switch(state){
+    case Qt::Checked:
+      cbState->setText("On");
+      break;
+    case Qt::Unchecked:
+      cbState->setText("Off");
+      break;
+    case Qt::PartiallyChecked:
+      cbState->setText("Null");
+      break;
+  }
+}
+
 void mdtTtTestNodeUnitSetupDialog::displayData()
 {
   QVariant val;
-  bool on;
 
   // Update state checkbox
   val = pvData.value("State");
   if(val.isNull()){
     cbState->setCheckState(Qt::PartiallyChecked);
-    cbState->setText("Null");
   }else{
-    on = val.toBool();
-    cbState->setChecked(on);
-    if(on){
-      cbState->setText("On");
-    }else{
-      cbState->setText("Off");
-    }
+    cbState->setChecked(val.toBool());
   }
   // Update value spinbox
   val = pvData.value("Value");
   sbValue->setValue(val.toDouble());
+  // Update command text edit
+  val = pvData.value("Command");
+  teCommand->setPlainText(val.toString());
 }
 
 void mdtTtTestNodeUnitSetupDialog::updateData()
@@ -79,4 +90,6 @@ void mdtTtTestNodeUnitSetupDialog::updateData()
   }
   // Update value
   pvData.setValue("Value", sbValue->value());
+  // Update command
+  pvData.setValue("Command", teCommand->toPlainText());
 }
