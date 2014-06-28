@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtTtTestNodeUnitSetupDialog.h"
 #include <QVariant>
+#include <cfloat>
+#include <QtGlobal>
 
 mdtTtTestNodeUnitSetupDialog::mdtTtTestNodeUnitSetupDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
@@ -68,7 +70,11 @@ void mdtTtTestNodeUnitSetupDialog::displayData()
   }
   // Update value spinbox
   val = pvData.value("Value");
-  sbValue->setValue(val.toDouble());
+  if(val.isNull()){
+    sbValue->setValue(sbValue->minimum());
+  }else{
+    sbValue->setValue(val.toDouble());
+  }
   // Update command text edit
   val = pvData.value("Command");
   teCommand->setPlainText(val.toString());
@@ -89,7 +95,11 @@ void mdtTtTestNodeUnitSetupDialog::updateData()
       break;
   }
   // Update value
-  pvData.setValue("Value", sbValue->value());
+  if(qAbs<double>(sbValue->value() - sbValue->minimum()) < DBL_EPSILON){
+    pvData.setValue("Value", QVariant());
+  }else{
+    pvData.setValue("Value", sbValue->value());
+  }
   // Update command
   pvData.setValue("Command", teCommand->toPlainText());
 }

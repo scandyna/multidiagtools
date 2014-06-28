@@ -21,11 +21,11 @@ mdtSqlRecord mdtTtTestNodeUnitData::unitData()
 {
 }
 
-void mdtTtTestNodeUnitData::setConnectionData(const mdtClUnitConnectionData & data) 
+void mdtTtTestNodeUnitData::setTestConnectionData(const mdtClUnitConnectionData & data) 
 {
 }
 
-mdtClUnitConnectionData mdtTtTestNodeUnitData::connectionData(const  & ) 
+mdtClUnitConnectionData mdtTtTestNodeUnitData::testConnectionData(const  & ) 
 {
 }
 

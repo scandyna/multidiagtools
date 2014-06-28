@@ -230,6 +230,7 @@ void mdtTtTestModelEditor::addTestItem()
   dialog.setSqlForm(tie);
   dialog.resize(900, 500);
   dialog.enableEdition();
+  dialog.setWindowTitle(tr("Test node unit edition"));
   tie->insert();
   tie->setTestModelId(testModelId);
   tie->setSequenceNumber(seqNumber);
@@ -263,6 +264,7 @@ void mdtTtTestModelEditor::editTestItem()
   dialog.setSqlForm(tie);
   dialog.resize(900, 500);
   dialog.enableEdition();
+  dialog.setWindowTitle(tr("Test node unit edition"));
   dialog.exec();
   // Update connections table
   select("TestModelItem_tbl");

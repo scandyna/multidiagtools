@@ -23,12 +23,23 @@
 
 #include "mdtSqlRecord.h"
 #include <QSqlDatabase>
+#include <QString>
 
 /*! \brief Storage class for test node unit
  */
 class mdtTtTestNodeUnitSetupData : public mdtSqlRecord
 {
  public:
+
+  /*! \brief I/O type
+   */
+  enum io_type_t {
+                  Unknown = 0,    /*!< Unknown I/O type */
+                  AnalogInput,    /*!< Analog input */
+                  AnalogOutput,   /*!< Analog output */
+                  DigitalInput,   /*!< Digital input */
+                  DigitalOutput   /*!< Digital output */
+                 };
 
   /*! \brief Construct a empty test node data container
    */
@@ -43,6 +54,25 @@ class mdtTtTestNodeUnitSetupData : public mdtSqlRecord
   /*! \brief Setup fields from TestNodeUnitSetup_tbl
    */
   bool setup(const QSqlDatabase & db);
+
+  /*! \brief Get I/O type
+   *
+   * I/O type is only avaliable if data comes from TestNodeUnitSetup_view.
+   */
+  io_type_t ioType() const;
+
+  /*! \brief Get I/O position
+   *
+   * I/O position is only avaliable if data comes from TestNodeUnitSetup_view.
+   */
+  int ioPosition() const;
+
+  /*! \brief Get schema position
+   *
+   * Schema position is only avaliable if data comes from TestNodeUnitSetup_view.
+   */
+  QString schemaPosition() const;
+
 };
 
 #endif // #ifndef MDT_TT_TEST_NODE_UNIT_SETUP_DATA_H

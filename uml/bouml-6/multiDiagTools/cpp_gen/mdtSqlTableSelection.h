@@ -15,11 +15,7 @@ class mdtSqlTableSelection
 
   void clear();
 
-  void addIndex(const QModelIndex & index, const QSqlTableModel & model);
-
-  void addIndexList(const QModelIndex & indexList, const QStringList & fieldList, const QSqlTableModel & model);
-
-  void setIndexList(const QModelIndex & indexList, const QStringList & fieldList, const QSqlTableModel & model);
+  void setIndexList(const QModelIndex & indexList, const QStringList & fieldList, const QSqlQueryModel & model);
 
   int rowCount() const;
 

@@ -1,6 +1,6 @@
 format 206
 "mdttesttool" // mdttools::mdttesttool
-  revision 25
+  revision 27
   modified_by 2 "philippe"
   // class settings
   
@@ -2652,7 +2652,7 @@ ${inlines}
       end
     end
 
-    classdiagram 987394 "mdtTtTestNodeUnitSetupData"
+    classdiagram 987394 "TestNodeSetup"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -2671,104 +2671,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 1087362 "Id"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1829250 // Id
-	set_oper operation_ref 1829378 // setId
-      end
-
-      attribute 1087490 "State"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1829506 // State
-	set_oper operation_ref 1829634 // setState
-      end
-
-      attribute 1087618 "Value"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1829762 // Value
-	set_oper operation_ref 1829890 // setValue
-      end
-
-      attribute 1088130 "schemaPosition"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1830786 // schemaPosition
-	set_oper operation_ref 1830914 // setschemaPosition
-      end
-
-      attribute 1088002 "NodeId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1830530 // NodeId
-	set_oper operation_ref 1830658 // setNodeId
-      end
-
-      attribute 1087746 "TestModelItemId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1830018 // TestModelItemId
-	set_oper operation_ref 1830146 // setTestModelItemId
-      end
-
-      attribute 1087874 "TestItemId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 1830274 // TestItemId
-	set_oper operation_ref 1830402 // setTestItemId
-      end
-
       operation 1829122 "mdtTtTestNodeUnitSetupData"
 	public explicit_return_type ""
 	nparams 0
@@ -2784,319 +2686,89 @@ ${inlines}
 	
       end
 
-      operation 1829250 "Id"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1087362 // Id
+      classrelation 1593218 // <generalisation>
+	relation 1577730 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1593218 // <generalisation>
+	  b parent class_ref 1067266 // mdtSqlRecord
       end
 
-      operation 1829378 "setId"
-	force_body_gen public explicit_return_type "void"
+      operation 2054146 "mdtTtTestNodeUnitSetupData"
+	public explicit_return_type ""
 	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+	  param in name "record" type class_ref 404994 // QSqlRecord
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
 {
-  pvId = ${p0};
-}
+  ${body}}
 "
-	cpp_name_spec "set${name}"
 	
-	java_name_spec "set${Name}"
 	
-	php_name_spec "set${Name}"
 	
-	python_name_spec "set${Name}"
 	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1087362 // Id
       end
 
-      operation 1829506 "State"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvState;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1087490 // State
-      end
-
-      operation 1829634 "setState"
-	force_body_gen public explicit_return_type "void"
+      operation 2054274 "setup"
+	public explicit_return_type "bool"
 	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
-  pvState = ${p0};
-}
+  ${body}}
 "
-	cpp_name_spec "set${name}"
 	
-	java_name_spec "set${Name}"
 	
-	php_name_spec "set${Name}"
 	
-	python_name_spec "set${Name}"
 	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1087490 // State
       end
 
-      operation 1829762 "Value"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
+      operation 2054402 "ioType"
+	public explicit_return_type "io_type_t"
 	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
-  return pvValue;
-}
+  ${body}}
 "
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
 	
-	python_name_spec "get${Name}"
 	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1087618 // Value
+	
+	
       end
 
-      operation 1829890 "setValue"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvValue = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1087618 // Value
-      end
-
-      operation 1830018 "TestModelItemId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
+      operation 2054530 "ioPosition"
+	public explicit_return_type "int"
 	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
-  return pvTestModelItemId;
-}
+  ${body}}
 "
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
 	
-	python_name_spec "get${Name}"
 	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1087746 // TestModelItemId
+	
+	
       end
 
-      operation 1830146 "setTestModelItemId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvTestModelItemId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1087746 // TestModelItemId
-      end
-
-      operation 1830274 "TestItemId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
+      operation 2054658 "schemaPosition"
+	public explicit_return_type "string"
 	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
-  return pvTestItemId;
-}
+  ${body}}
 "
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
 	
-	python_name_spec "get${Name}"
 	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1087874 // TestItemId
-      end
-
-      operation 1830402 "setTestItemId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvTestItemId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
 	
-	java_name_spec "set${Name}"
 	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1087874 // TestItemId
-      end
-
-      operation 1830530 "NodeId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvNodeId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1088002 // NodeId
-      end
-
-      operation 1830658 "setNodeId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvNodeId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1088002 // NodeId
-      end
-
-      operation 1830786 "schemaPosition"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvschemaPosition;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1088130 // schemaPosition
-      end
-
-      operation 1830914 "setschemaPosition"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvschemaPosition = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1088130 // schemaPosition
       end
     end
 
@@ -3114,6 +2786,120 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    class 1282178 "mdtTtTestNodeSetupData"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1593346 // pvUnitSetupData (<directional composition>)
+	relation 1577858 *-->
+	  stereotype "list"
+	  a role_name "pvUnitSetupData" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1593346 // pvUnitSetupData (<directional composition>)
+	  b parent class_ref 1060738 // mdtTtTestNodeUnitSetupData
+      end
+
+      attribute 1238274 "NodeIdentification"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 2054786 "setNodeIdentification"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2054914 "nodeIdentification"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2055042 "clearUnitSetup"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2055170 "addUnitSetup"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "data" type class_ref 1060738 // mdtTtTestNodeUnitSetupData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2055298 "unitSetupList"
+	public explicit_return_type "QList<mdtTtTestNodeUnitSetupData>"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 

@@ -261,6 +261,9 @@ void mdtTtTestModelItemEditor::setupNodeUnit()
     return;
   }
   qDebug() << "Data: " << data;
+  qDebug() << "I/O type: " << data.ioType();
+  qDebug() << "I/O pos: " << data.ioPosition();
+  qDebug() << "schema pos: " << data.schemaPosition();
   // Setup and show dialog
   dialog.setData(data);
   if(dialog.exec() != QDialog::Accepted){

@@ -10,11 +10,11 @@ void mdtMvSortingSetupDialog::accept()
 {
 }
 
-void mdtMvSortingSetupDialog::displayAvailableFields() 
+void mdtMvSortingSetupDialog::displayAvailableColumns() 
 {
 }
 
-void mdtMvSortingSetupDialog::displaySortedFields() 
+void mdtMvSortingSetupDialog::displaySortedColumns() 
 {
 }
 

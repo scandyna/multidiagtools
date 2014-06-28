@@ -25,9 +25,9 @@ class mdtTtTestNodeUnitData : public mdtSqlRecord
 
   mdtSqlRecord unitData();
 
-  void setConnectionData(const mdtClUnitConnectionData & data);
+  void setTestConnectionData(const mdtClUnitConnectionData & data);
 
-  mdtClUnitConnectionData connectionData(const  & );
+  mdtClUnitConnectionData testConnectionData(const  & );
 
 };
 

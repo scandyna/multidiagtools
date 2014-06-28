@@ -76,3 +76,5 @@ doc/bus/canbus/CiA
 customdb
 .kdev4
 multiDiagTools.kdev4
+uml/bouml-6/multiDiagTools/cpp_gen/
+

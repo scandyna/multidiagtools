@@ -19,9 +19,9 @@ class mdtMvSortingSetupDialog : public mdtItemsSelectorDialog
 
 
   private:
-  void displayAvailableFields();
+  void displayAvailableColumns();
 
-  void displaySortedFields();
+  void displaySortedColumns();
 
   void applySelectedColumns();
 

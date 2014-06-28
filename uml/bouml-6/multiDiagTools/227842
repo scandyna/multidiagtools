@@ -1,6 +1,6 @@
 format 206
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 42
+  revision 43
   modified_by 2 "philippe"
   // class settings
   
@@ -2217,8 +2217,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1027202 "NodeId"
-	private explicit_type "int"
+      attribute 1027202 "NodeIdentification"
+	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

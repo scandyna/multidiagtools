@@ -2,6 +2,8 @@
 #define _MDTCLLINKBEAMEDITOR_H
 
 
+class mdtClLinkBeam;
+
 class mdtClLinkBeamEditor : public mdtSqlForm
 {
   public:

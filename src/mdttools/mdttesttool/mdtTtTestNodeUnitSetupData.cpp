@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtTtTestNodeUnitSetupData.h"
-#include <QString>
 
 mdtTtTestNodeUnitSetupData::mdtTtTestNodeUnitSetupData()
 {
@@ -41,4 +40,44 @@ bool mdtTtTestNodeUnitSetupData::setup(const QSqlDatabase& db)
   }
 
   return true;
+}
+
+mdtTtTestNodeUnitSetupData::io_type_t mdtTtTestNodeUnitSetupData::ioType() const
+{
+  QVariant var;
+  QString strType;
+
+  var = value("Type_Code_FK");
+  if(var.isNull()){
+    return Unknown;
+  }
+  strType = var.toString();
+  if(strType == "AI"){
+    return AnalogInput;
+  }else if(strType == "AO"){
+    return AnalogOutput;
+  }else if(strType == "DI"){
+    return DigitalInput;
+  }else if((strType == "DO")||(strType == "CHANELREL")||(strType == "BUSCPLREL")){
+    return DigitalOutput;
+  }
+
+  return Unknown;
+}
+
+int mdtTtTestNodeUnitSetupData::ioPosition() const
+{
+  QVariant var;
+
+  var = value("IoPosition");
+  if(var.isNull()){
+    return 0;
+  }
+
+  return var.toInt();
+}
+
+QString mdtTtTestNodeUnitSetupData::schemaPosition() const
+{
+  return value("SchemaPosition").toString();
 }

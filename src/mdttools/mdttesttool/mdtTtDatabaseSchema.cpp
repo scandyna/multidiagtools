@@ -144,12 +144,18 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   sourceTables.removeAll("LinkType_tbl");
   sourceTables.removeAll("TestNodeUnitType_tbl");
   // Copy tables
+  tableManager.enableProgressDialog(true);
   if(!pvDatabaseManager->setForeignKeysEnabled(false)){
     pvLastError = pvDatabaseManager->lastError();
     return false;
   }
   for(i = 0; i < sourceTables.size(); ++i){
     tableManager.clearFieldMap();
+    /**
+    if(sourceTables.at(i) == "TestNode_tbl"){
+      tableManager.addFieldMapping("NodeId", "NodeIdentification", "", QVariant::String);
+    }
+    */
     if(!tableManager.copyTable(sourceTables.at(i), sourceTables.at(i), mdtSqlDatabaseManager::KeepExisting, sourceDbManager.database(), pvDatabaseManager->database())){
       pvLastError = tableManager.lastError();
       return false;
@@ -1770,10 +1776,11 @@ bool mdtTtDatabaseSchema::setupTestNodeTable()
   field.setName("VehicleType_Id_FK_PK");
   field.setType(QVariant::Int);
   table.addField(field, true);
-  // NodeId
+  // NodeIdentification
   field = QSqlField();
-  field.setName("NodeId");
-  field.setType(QVariant::Int);
+  field.setName("NodeIdentification");
+  field.setType(QVariant::String);
+  field.setLength(50);
   table.addField(field, false);
   // Indexes
   table.addIndex("VehicleType_Id_FK_PK_idx", false);
@@ -3184,7 +3191,7 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " VTN.SubType AS TestNodeSubType,\n"\
         " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
         " TN.VehicleType_Id_FK_PK,\n"\
-        " TN.NodeId,\n"\
+        " TN.NodeIdentification,\n"\
         " UVT.Type,\n"\
         " UVT.SubType,\n"\
         " UVT.SeriesNumber\n"\
@@ -3285,7 +3292,7 @@ bool mdtTtDatabaseSchema::createTestModelTestNodeView()
   sql = "CREATE VIEW TestModel_TestNode_view AS\n"\
         "SELECT\n"\
         " TMTN.*,\n"\
-        " TN.NodeId,\n"\
+        " TN.NodeIdentification,\n"\
         " VT.Type,\n"\
         " VT.SubType,\n"\
         " VT.SeriesNumber\n"\
@@ -3324,7 +3331,7 @@ bool mdtTtDatabaseSchema::createTestModelItemTestLinkView()
         " VTN.SubType AS TestNodeSubType,\n"\
         " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
         " TN.VehicleType_Id_FK_PK,\n"\
-        " TN.NodeId,\n"\
+        " TN.NodeIdentification,\n"\
         " UVT.Type,\n"\
         " UVT.SubType,\n"\
         " UVT.SeriesNumber\n"\
@@ -3459,7 +3466,7 @@ bool mdtTtDatabaseSchema::createTestModelItemNodeUnitSetupView()
         " TNUS.Value,\n"\
         " TNU.Bus,\n"\
         " TNU.IoPosition,\n"\
-        " TN.NodeId\n"\
+        " TN.NodeIdentification\n"\
         "FROM TestNodeUnitSetup_tbl TNUS\n"\
         " JOIN TestModelItem_tbl TMI\n"\
         "  ON TMI.Id_PK = TNUS.TestModelItem_Id_FK\n"\
@@ -3514,7 +3521,7 @@ bool mdtTtDatabaseSchema::createTestModelItemNodeUnitView()
         " TNU.IoPosition,\n"\
         " TNU.Type_Code_FK,\n"\
         " TN.VehicleType_Id_FK_PK AS TestNode_Id_FK,\n"\
-        " TN.NodeId\n"\
+        " TN.NodeIdentification\n"\
         "FROM TestModelItem_tbl TMI\n"\
         " JOIN TestLink_tbl LNKA\n"\
         "  ON LNKA.Id_PK = TMI.TestLinkBusA_Id_FK\n"\
@@ -3605,7 +3612,7 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
         " TNUS.Value,\n"\
         " TNU.Bus,\n"\
         " TNU.IoPosition,\n"\
-        " TN.NodeId\n"\
+        " TN.NodeIdentification\n"\
         "FROM TestItem_tbl TI\n"\
         " JOIN TestModelItem_tbl TMI\n"\
         "  ON TMI.Id_PK = TI.TestModelItem_Id_FK\n"\

@@ -10,15 +10,7 @@ void mdtSqlTableSelection::clear()
 {
 }
 
-void mdtSqlTableSelection::addIndex(const QModelIndex & index, const QSqlTableModel & model) 
-{
-}
-
-void mdtSqlTableSelection::addIndexList(const QModelIndex & indexList, const QStringList & fieldList, const QSqlTableModel & model) 
-{
-}
-
-void mdtSqlTableSelection::setIndexList(const QModelIndex & indexList, const QStringList & fieldList, const QSqlTableModel & model) 
+void mdtSqlTableSelection::setIndexList(const QModelIndex & indexList, const QStringList & fieldList, const QSqlQueryModel & model) 
 {
 }
 

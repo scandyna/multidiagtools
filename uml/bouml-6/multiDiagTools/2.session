@@ -1,23 +1,32 @@
-window_sizes 1280 1005 279 995 952 0
+window_sizes 1280 978 381 893 925 0
 cleanlooks_style
 diagrams
   classdiagram_ref 927874 // TestNode
     796 761 100 18 0 0
-  active  classdiagram_ref 941058 // Test
-    995 952 80 3 156 0
+  classdiagram_ref 941058 // Test
+    995 952 80 3 144 0
   classdiagram_ref 1152002 // TestTool
     120 106 100 4 0 0
+  classdiagram_ref 934402 // mdtTtTestNode
+    120 106 100 4 0 0
+  classdiagram_ref 980738 // mdtTtTest
+    120 106 100 4 0 0
+  active  classdiagram_ref 987394 // TestNodeSetup
+    893 925 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 1231746 // ValueUnit
+selected classdiagram_ref 987394 // TestNodeSetup
 open
   classview_ref 675330 // TestTool
   classview_ref 483970 // CableList
+  class_ref 992642 // TestNode_tbl
   attribute_ref 1231362 // DesignationFR
   attribute_ref 1231618 // DesignationIT
   classrelation_ref 1274114 // <unidirectional association>
   class_ref 1006722 // TestNodeUnitSetup_tbl
   class_ref 1275650 // TestNodeType_tbl
   class_ref 1053698 // mdtTtTest
+  class_ref 1060738 // mdtTtTestNodeUnitSetupData
+  class_ref 1282178 // mdtTtTestNodeSetupData
 end
 end

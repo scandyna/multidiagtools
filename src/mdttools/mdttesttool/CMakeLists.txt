@@ -35,6 +35,7 @@ set (TT_SOURCES_FILES
           mdtTtTestModelItemEditor.cpp
           mdtTtTestNodeUnitSetupData.cpp
           mdtTtTestNodeUnitSetupDialog.cpp
+          mdtTtTestNodeSetupData.cpp
     )
 
 # Form files for mdtTestTool

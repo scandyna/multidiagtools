@@ -1,5 +1,6 @@
 
 #include "mdtClLinkBeamEditor.h"
+#include "mdtClLinkBeam.h"
 
 mdtClLinkBeamEditor::mdtClLinkBeamEditor(const QWidget & parent, const QSqlDatabase & db) 
 {
